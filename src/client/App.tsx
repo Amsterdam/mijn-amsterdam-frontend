@@ -365,7 +365,7 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route
-              path={AppRoutes['ERFPACHTv2/FACTUREN']}
+              path={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
               component={ErfpachtFacturen}
             />
           )}

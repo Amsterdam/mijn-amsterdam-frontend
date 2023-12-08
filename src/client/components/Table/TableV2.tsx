@@ -49,7 +49,7 @@ export interface TableProps<T> {
   className?: string;
   titleKey?: keyof T | string;
   displayProps?: DisplayProps<T>;
-  colWidths?: number[];
+  gridColStyles?: string[];
 }
 
 export function TableV2<T extends ObjectWithOptionalId>({
@@ -57,7 +57,7 @@ export function TableV2<T extends ObjectWithOptionalId>({
   displayProps,
   titleKey = 'title',
   className,
-  colWidths,
+  gridColStyles,
 }: TableProps<T>) {
   const defaultDisplayProps: DisplayProps<Unshaped> = { [titleKey]: ' ' };
   const displayPropsFinal = !displayProps ? defaultDisplayProps : displayProps;
@@ -70,24 +70,35 @@ export function TableV2<T extends ObjectWithOptionalId>({
   const FirstHeadCellTag = !!displayPropsFinal[titleKey] ? 'th' : 'td';
 
   return (
-    <table className={classnames(styles.Table, className)}>
-      <colgroup>
-        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
-        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
-        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
-        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
-        <col className="amsterdam-grid-cell amsterdam-grid-cell--span-1" />
-      </colgroup>
+    <table
+      className={classnames(
+        styles.Table,
+        !!gridColStyles && styles.Table__grid,
+        className
+      )}
+    >
       {hasDisplayPropTableHeadingLabels && (
         <thead>
-          <tr className={styles.TableRow}>
-            {!!items[0] && titleKey in items[0] && (
-              <FirstHeadCellTag>{displayPropsFinal[titleKey]}</FirstHeadCellTag>
+          <tr
+            className={classnames(
+              styles.TableRow,
+              !!gridColStyles && styles.TableRow__Grid
             )}
-            {displayPropEntries.map(([key, label]) => {
+          >
+            {!!items[0] && titleKey in items[0] && (
+              <FirstHeadCellTag className={gridColStyles?.[0]}>
+                {displayPropsFinal[titleKey]}
+              </FirstHeadCellTag>
+            )}
+            {displayPropEntries.map(([key, label], index) => {
               const HeadingCellElement = !!label ? 'th' : 'td';
               return (
-                <HeadingCellElement key={`th-${key}`}>
+                <HeadingCellElement
+                  key={`th-${key}`}
+                  className={
+                    gridColStyles?.[index + (titleKey in items?.[0] ? 1 : 0)]
+                  }
+                >
                   {label}
                 </HeadingCellElement>
               );
@@ -99,13 +110,28 @@ export function TableV2<T extends ObjectWithOptionalId>({
         {items.map((item, index) => (
           <tr
             key={item.id ?? `${String(titleKey)}-${index}`}
-            className={styles.TableRow}
+            className={classnames(
+              styles.TableRow,
+              !!gridColStyles && styles.TableRow__Grid
+            )}
           >
             {titleKey in item && (
-              <td className={styles.DisplayPropTitle}>{item[titleKey]}</td>
+              <td
+                className={classnames(
+                  styles.DisplayPropTitle,
+                  gridColStyles?.[0]
+                )}
+              >
+                {item[titleKey]}
+              </td>
             )}
-            {displayPropEntries.map(([key, label]) => (
-              <td key={`td-${key}`}>{item[key]}</td>
+            {displayPropEntries.map(([key, label], index) => (
+              <td
+                key={`td-${key}`}
+                className={gridColStyles?.[index + (titleKey in item ? 1 : 0)]}
+              >
+                {item[key]}
+              </td>
             ))}
           </tr>
         ))}

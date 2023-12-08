@@ -41,7 +41,6 @@
 
 .FacturenBetaler {
   padding: 0;
-  gap: 0;
 
   dl dd {
     margin-bottom: 0;
@@ -49,58 +48,37 @@
 }
 
 .ColumnList {
-  // li {
-  // &:nth-child(3n - 2) {
-  //   border: 1px solid red;
-  // }
-
-  // /* Apply styles to items in the second column */
-  // &:nth-child(3n - 1) {
-  //   border: 1px solid blue;
-  // }
-
-  // /* Apply styles to items in the third column */
-  // &:nth-child(3n) {
-  //   border: 1px solid green;
-  // }
-  // grid-template-columns: repeat(var(--amsterdam-grid-wide-column-count), 1fr);
   @media screen and (min-width: $amsterdam-breakpoint-medium) {
     grid-auto-flow: column;
-    grid-template-columns: repeat(var(--amsterdam-grid-wide-column-count), 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-column-gap: var(--amsterdam-grid-gap);
-
-    .col1 {
-      grid-column-start: 1;
-      grid-column-end: span 6;
-    }
-
-    .col2 {
-      grid-column-start: 7;
-      grid-column-end: span 6;
-    }
+    grid-template-rows: repeat(20, 1fr); // Will be replaced dynamically
   }
 
   @media screen and (min-width: $amsterdam-breakpoint-wide) {
-    .col1 {
-      grid-column-start: 1;
-      grid-column-end: span 4;
-    }
-
-    .col2 {
-      grid-column-start: 5;
-      grid-column-end: span 4;
-    }
-
-    .col3 {
-      grid-column-start: 9;
-      grid-column-end: span 4;
-    }
+    grid-template-columns: repeat(3, 1fr);
   }
+}
 
-  // &:nth-child(4n - 4) {
-  //   border: 1px solid blue;
-  //   grid-column-start: 7;
-  //   grid-column-end: span 2;
-  // }
-  // }
+
+.FacturenTable {}
+
+.FacturenTable_col1 {
+  grid-column-start: 1;
+  grid-column-end: span 2;
+}
+
+.FacturenTable_col2 {
+  grid-column-start: 3;
+  grid-column-end: span 2;
+}
+
+.FacturenTable_col3 {
+  grid-column-start: 5;
+  grid-column-end: span 2;
+}
+
+.FacturenTable_col4 {
+  grid-column-start: 7;
+  grid-column-end: span 2;
 }

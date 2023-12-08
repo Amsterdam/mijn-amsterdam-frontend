@@ -22,6 +22,7 @@ interface ListPagePaginatedProps {
   isLoading: boolean;
   isError: boolean;
   errorText?: string;
+  tableGridColStyles?: string[];
 }
 
 export function ListPagePaginated({
@@ -36,6 +37,7 @@ export function ListPagePaginated({
   isLoading,
   isError,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
+  tableGridColStyles,
 }: ListPagePaginatedProps) {
   const history = useHistory();
 
@@ -83,6 +85,7 @@ export function ListPagePaginated({
               titleKey={titleKey}
               items={itemsPaginated}
               displayProps={displayProps}
+              gridColStyles={tableGridColStyles}
             />
             {items.length > pageSize && (
               <PaginationV2

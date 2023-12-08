@@ -17,6 +17,7 @@ import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
+import styles from './Erfpacht.module.scss';
 
 interface DisplayPropsDossiers {
   voorkeursadres: string;
@@ -36,7 +37,7 @@ interface DisplayPropsFacturen {
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
   const dossiers_ = addLinkElementToProperty(
-    ERFPACHTv2.content?.dossiers ?? [],
+    ERFPACHTv2.content?.dossiers?.dossiers ?? [],
     'voorkeursadres'
   );
   const dossiers = Array.from({ length: 20 }, () => dossiers_)
@@ -47,7 +48,7 @@ export function useErfpachtV2Data() {
         id: d.id,
       });
     });
-  const openFacturen_ = ERFPACHTv2.content?.openFacturen ?? [];
+  const openFacturen_ = ERFPACHTv2.content?.openstaandeFacturen?.facturen ?? [];
   const openFacturen = Array.from({ length: 20 }, () => openFacturen_)
     .flat()
     .map((f, index) => {
@@ -125,30 +126,6 @@ export default function Erfpacht() {
             <MaParagraph>
               Hieronder ziet u de gegevens van uw erfpachtrechten.
             </MaParagraph>
-            <Heading level={4} size="level-4">
-              Factuur naar nieuw adres
-            </Heading>
-            <MaParagraph>
-              Wilt u uw facturen voor erfpacht en canon op een nieuw adres
-              ontvangen? Stuur een e-mail naar{' '}
-              <Link href="mailto:erfpachtadministratie@amsterdam.nl">
-                erfpachtadministratie@amsterdam.nl
-              </Link>
-              . Zet in het onderwerp 'Adreswijziging'. Vermeld in de mail uw
-              debiteurennummer of het E-dossiernummer en uw nieuwe
-              adresgegevens. U krijgt binnen 3 werkdagen een reactie.
-            </MaParagraph>
-            <Heading level={4} size="level-4">
-              Factuur via e-mail
-            </Heading>
-            <MaParagraph>
-              U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw
-              e-mailadres en debiteurennummer naar{' '}
-              <Link href="mailto:debiteurenadministratie@amsterdam.nl">
-                debiteurenadministratie@amsterdam.nl
-              </Link>
-              .
-            </MaParagraph>
             <UnorderedList markers={false}>
               <UnorderedList.Item>
                 <Link
@@ -201,9 +178,14 @@ export default function Erfpacht() {
 
               {!!dossiers.length ? (
                 <TableV2
+                  className={styles.DossiersTable}
                   titleKey="voorkeursadres"
                   items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
                   displayProps={displayPropsDossiers ?? {}}
+                  gridColStyles={[
+                    styles.DossiersTable_col1,
+                    styles.DossiersTable_col2,
+                  ]}
                 />
               ) : (
                 <MaParagraph>
@@ -228,6 +210,13 @@ export default function Erfpacht() {
                   titleKey="dossieradres"
                   items={openFacturen.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
                   displayProps={displayPropsOpenFacturen ?? {}}
+                  gridColStyles={[
+                    styles.FacturenTable_col1,
+                    styles.FacturenTable_col2,
+                    styles.FacturenTable_col3,
+                    styles.FacturenTable_col4,
+                    styles.FacturenTable_col5,
+                  ]}
                 />
               ) : (
                 <MaParagraph>
@@ -238,7 +227,7 @@ export default function Erfpacht() {
               <MaParagraph textAlign="right">
                 <LinkToListPage
                   count={openFacturen.length}
-                  route={AppRoutes['ERFPACHTv2/FACTUREN']}
+                  route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
                 />
               </MaParagraph>
             </Grid.Cell>

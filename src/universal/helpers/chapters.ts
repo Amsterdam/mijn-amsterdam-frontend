@@ -117,7 +117,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
       return (
         FeatureToggle.erfpachtV2Active &&
         !isLoading(ERFPACHTv2) &&
-        !!ERFPACHTv2.content?.dossiers?.length
+        !!ERFPACHTv2.content?.dossiers?.dossiers?.length
       );
 
     case Chapters.SUBSIDIE:

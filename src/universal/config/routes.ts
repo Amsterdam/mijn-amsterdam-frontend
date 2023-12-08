@@ -63,7 +63,8 @@ export const AppRoutes = {
   ERFPACHTv2: '/erfpacht',
   'ERFPACHTv2/DOSSIERS': '/erfpacht/dossiers/:page?',
   'ERFPACHTv2/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
-  'ERFPACHTv2/FACTUREN': '/erfpacht/facturen/:page?',
+  'ERFPACHTv2/OPEN_FACTUREN': '/erfpacht/open-facturen/:page?',
+  'ERFPACHTv2/ALLE_FACTUREN': '/erfpacht/facturen/:page?',
 } as const;
 
 export const AppRoutesRedirect = [

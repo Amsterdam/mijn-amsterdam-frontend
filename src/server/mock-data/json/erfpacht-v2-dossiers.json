@@ -77,5 +77,25 @@
     }
   ],
   "titelDossiersKop": "Erfpachtrechten",
-  "titelOpenFacturenKop": "Openstaande Facturen"
+  "titelOpenFacturenKop": "Open facturen",
+  "openstaandeFacturen": [
+    {
+      "dossierAdres": "Dam 1 Amsterdam",
+      "titelFacturenDossierAdres": "Adres",
+      "status": "Openstaand",
+      "titelFacturenStatus": "Status",
+      "stopcode": "string",
+      "open": true,
+      "notaNummer": "AMI.FI2_DEBITEURFACTUUR.documentnummer",
+      "titelFacturenNotaNummer": "Factuurnummer",
+      "factuurBedrag": "string",
+      "formattedFactuurBedrag": "€ 12,34",
+      "titelFacturenFactuurBedrag": "Factuurbedrag",
+      "openstaandBedrag": "string",
+      "formattedOpenstaandBedrag": "€ 12,34",
+      "titelFacturenOpenstaandBedrag": "Openstaand",
+      "vervalDatum": "2023-11-24",
+      "titelFacturenVervaldatum": "Vervaldatum"
+    }
+  ]
 }

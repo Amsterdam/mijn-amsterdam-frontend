@@ -15,10 +15,10 @@ export default function ErfpachtFacturen() {
   return (
     <ListPagePaginated
       items={openFacturen}
-      title={`Alle open facturen`}
-      appRoute={AppRoutes['ERFPACHTv2/FACTUREN']}
+      title={`Alle ${titleOpenFacturen?.toLocaleLowerCase()}`}
+      appRoute={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
       appRouteBack={AppRoutes['ERFPACHTv2']}
-      displayProps={displayPropsOpenFacturen}
+      displayProps={displayPropsOpenFacturen ?? {}}
       chapter={Chapters.ERFPACHTv2}
       titleKey="dossieradres"
       isLoading={isLoading(ERFPACHTv2)}

@@ -1,4 +1,4 @@
-import { Link } from '@amsterdam/design-system-react';
+import { Button, Link } from '@amsterdam/design-system-react';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { generatePath, useHistory, useLocation } from 'react-router-dom';
 
@@ -20,14 +20,14 @@ export function LinkToListPage({
   const history = useHistory();
   const routeGenerated = generatePath(route, params);
   return count > threshold ? (
-    <Link
+    <Button
       onClick={(e) => {
         e.preventDefault();
         history.push(routeGenerated);
       }}
-      href={routeGenerated}
+      // href={routeGenerated}
     >
       {label}
-    </Link>
+    </Button>
   ) : null;
 }

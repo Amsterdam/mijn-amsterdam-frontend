@@ -25,18 +25,9 @@ import {
   useTabletScreen,
   useWidescreen,
 } from '../../hooks';
-
-function gridClassName(index: number, count: number, divide: number = 3) {
-  if (divide <= 0) {
-    return undefined;
-  }
-  const sep = Math.round(count / divide);
-  for (let i = 1; i <= divide; i++) {
-    if (index < i * sep) {
-      return styles[`col${i}`];
-    }
-  }
-}
+import { MaParagraph } from '../../components/Paragraph/Paragraph';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 
 export default function ErfpachtDossierDetail() {
   const { dossierNummerUrlParam } = useParams<{
@@ -53,6 +44,9 @@ export default function ErfpachtDossierDetail() {
   const noContent = !api.isLoading && !dossier;
   const isWideScreen = useWidescreen();
   const isMediumScreen = useMediumScreen();
+  const relaties = dossier?.relaties
+    ? Array.from({ length: 20 }, () => dossier.relaties).flat()
+    : [];
 
   return (
     <DetailPage className={styles.ErfpachtDetail}>
@@ -63,7 +57,7 @@ export default function ErfpachtDossierDetail() {
         }}
         icon={<ChapterIcon />}
       >
-        {dossier?.title ?? ChapterTitles.ERFPACHTv2}
+        {dossier?.title ?? `${ChapterTitles.ERFPACHTv2}dossier`}
       </PageHeading>
       <Screen>
         <DesignSystemStyleAdjust />
@@ -116,23 +110,22 @@ export default function ErfpachtDossierDetail() {
                   <dd>{dossier.eersteUitgifte}</dd>
                   <dt>Erfpachters</dt>
                   <dd>
-                    <OrderedList markers={false} className={styles.ColumnList}>
-                      {Array.from({ length: 20 }, () => dossier.relaties)
-                        .flat()
-                        ?.map((relatie, index, all) => {
-                          return (
-                            <OrderedList.Item
-                              key={relatie.relatieNaam}
-                              className={gridClassName(
-                                index,
-                                all.length,
-                                isMediumScreen ? (isWideScreen ? 3 : 2) : 0
-                              )}
-                            >
-                              {index}-{relatie.relatieNaam}
-                            </OrderedList.Item>
-                          );
-                        })}
+                    <OrderedList
+                      markers={false}
+                      className={styles.ColumnList}
+                      style={{
+                        gridTemplateRows: `repeat(${Math.ceil(
+                          relaties.length / 3
+                        )}, 1fr)`,
+                      }}
+                    >
+                      {relaties?.map((relatie, index, all) => {
+                        return (
+                          <OrderedList.Item key={relatie.relatieNaam}>
+                            {index}-{relatie.relatieNaam}
+                          </OrderedList.Item>
+                        );
+                      })}
                     </OrderedList>
                   </dd>
                 </dl>
@@ -159,30 +152,32 @@ export default function ErfpachtDossierDetail() {
 
               <Grid.Cell start={1} span={10} className={styles.Sectio1}>
                 <CollapsiblePanel title="Bijzondere bepalingen">
-                  {!!dossier.bestemmingen && (
+                  {!!dossier.bijzondereBepalingen && (
                     <table>
                       <thead>
                         <tr>
                           <th>
                             {
-                              dossier.bestemmingen?.[0]
+                              dossier.bijzondereBepalingen?.[0]
                                 .titelBestemmingOmschrijving
                             }
                           </th>
                           <th>Oppervlakte</th>
                         </tr>
                       </thead>
-                      {dossier.bestemmingen.map((bestemming) => {
-                        return (
-                          <tr key={bestemming.omschrijving}>
-                            <td>{bestemming.omschrijving}</td>
-                            <td>
-                              {bestemming.oppervlakte}
-                              {bestemming.eenheid}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                      {dossier.bijzondereBepalingen.map(
+                        (bijzondereBepaling) => {
+                          return (
+                            <tr key={bijzondereBepaling.omschrijving}>
+                              <td>{bijzondereBepaling.omschrijving}</td>
+                              <td>
+                                {bijzondereBepaling.oppervlakte}
+                                {bijzondereBepaling.eenheid}
+                              </td>
+                            </tr>
+                          );
+                        }
+                      )}
                     </table>
                   )}
                 </CollapsiblePanel>
@@ -190,7 +185,7 @@ export default function ErfpachtDossierDetail() {
               <Grid.Cell
                 className={classname(styles.Section, styles.Section_Financieel)}
                 start={1}
-                span={11}
+                span={12}
               >
                 <CollapsiblePanel title="Financieel">
                   <Heading level={3} className={styles.Section__heading}>
@@ -264,15 +259,13 @@ export default function ErfpachtDossierDetail() {
                             <dt>{periode.titelFinancieelToekomstigeCanon}</dt>
                             <dd>
                               <OrderedList markers={false}>
-                                {periode.canonOmschrijvingen.map(
-                                  (omschrijving) => {
-                                    return (
-                                      <OrderedList.Item>
-                                        {omschrijving}
-                                      </OrderedList.Item>
-                                    );
-                                  }
-                                )}
+                                {periode.canons.map((canon) => {
+                                  return (
+                                    <OrderedList.Item>
+                                      {canon.samengesteld}
+                                    </OrderedList.Item>
+                                  );
+                                })}
                               </OrderedList>
                             </dd>
                           </dl>
@@ -282,9 +275,36 @@ export default function ErfpachtDossierDetail() {
                   )}
                 </CollapsiblePanel>
               </Grid.Cell>
-              <Grid.Cell className={styles.Section} start={1} span={11}>
+              <Grid.Cell className={styles.Section} start={1} span={12}>
                 <CollapsiblePanel title="Facturen">
                   <Grid className={styles.FacturenBetaler}>
+                    <Grid.Cell start={1} span={9}>
+                      <Heading level={4} size="level-4">
+                        Factuur naar nieuw adres
+                      </Heading>
+                      <MaParagraph>
+                        Wilt u uw facturen voor erfpacht en canon op een nieuw
+                        adres ontvangen? Stuur een e-mail naar{' '}
+                        <Link href="mailto:erfpachtadministratie@amsterdam.nl">
+                          erfpachtadministratie@amsterdam.nl
+                        </Link>
+                        . Zet in het onderwerp 'Adreswijziging'. Vermeld in de
+                        mail uw debiteurennummer of het E-dossiernummer en uw
+                        nieuwe adresgegevens. U krijgt binnen 3 werkdagen een
+                        reactie.
+                      </MaParagraph>
+                      <Heading level={4} size="level-4">
+                        Factuur via e-mail
+                      </Heading>
+                      <MaParagraph>
+                        U kunt uw facturen ook per e-mail krijgen. Mail hiervoor
+                        uw e-mailadres en debiteurennummer naar{' '}
+                        <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+                          debiteurenadministratie@amsterdam.nl
+                        </Link>
+                        .
+                      </MaParagraph>
+                    </Grid.Cell>
                     <Grid.Cell span={3} start={1}>
                       {!!dossier.facturen && (
                         <dl>
@@ -301,27 +321,38 @@ export default function ErfpachtDossierDetail() {
                         </dl>
                       )}
                     </Grid.Cell>
-                    <Grid.Cell start={1} span={11}>
-                      {!!dossier.facturen?.notas?.length && (
+                    <Grid.Cell start={1} span={12}>
+                      {!!dossier.facturen?.facturen?.length && (
                         <TableV2
+                          gridColStyles={[
+                            styles.FacturenTable_col1,
+                            styles.FacturenTable_col2,
+                            styles.FacturenTable_col3,
+                            styles.FacturenTable_col4,
+                          ]}
                           titleKey="dossieradres"
-                          items={dossier.facturen.notas}
+                          items={dossier.facturen.facturen.slice(0, 3)}
+                          className={styles.FacturenTable}
                           displayProps={{
-                            notaNummer:
-                              dossier.facturen.notas?.[0]
-                                .titelFacturenNotaNummer,
+                            notaNummer: dossier.facturen.titelFacturenNummer,
                             formattedFactuurBedrag:
-                              dossier.facturen.notas?.[0]
-                                .titelFacturenFactuurBedrag,
-                            status:
-                              dossier.facturen.notas?.[0].titelFacturenStatus,
+                              dossier.facturen.titelFacturenFactuurBedrag,
+                            status: dossier.facturen.titelFacturenStatus,
                             vervalDatum:
-                              dossier.facturen.notas?.[0]
-                                .titelFacturenVervaldatum,
+                              dossier.facturen.titelFacturenVervaldatum,
                           }}
                         />
                       )}
-                      {!dossier.facturen?.notas?.length && (
+                      {dossier.facturen?.facturen?.length >
+                        MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+                        <MaParagraph textAlign="right">
+                          <LinkToListPage
+                            count={dossier.facturen.facturen.length}
+                            route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+                          />
+                        </MaParagraph>
+                      )}
+                      {!dossier.facturen?.facturen?.length && (
                         <Paragraph>U heeft geen facturen.</Paragraph>
                       )}
                     </Grid.Cell>

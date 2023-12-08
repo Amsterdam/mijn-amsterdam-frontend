@@ -132,7 +132,7 @@ function transformIsErfpachterResponseSource(
   };
 }
 
-interface ErfpachtDossierDetailNota {
+interface ErfpachtDossierFactuur {
   dossierAdres: string;
   titelFacturenDossierAdres: string;
   status: string;
@@ -155,15 +155,20 @@ interface ErfpachtDossierDetailToekomstigePeriode {
   periodeVan: string;
   titelFinancieelToekomstigePeriodeVan: string;
   periodeTm: string;
+  periodeSamengesteld: string;
   algemeneBepaling: string;
   titelFinancieelToekomstigeAlgemeneBepaling: string;
   regime: string;
   titelFinancieelToekomstigeRegime: string;
-  canonOmschrijvingen: string[];
+  afgekocht: string;
+  titelAfgekocht: string;
+  betalenVanaf: string;
+  titelBetalenVanaf: string;
+  canons: ErfpachtCanon[];
   titelFinancieelToekomstigeCanon: string;
 }
 
-interface ErfpachtDossierDetailHuidigePeriodeCanon {
+interface ErfpachtCanon {
   canonBedrag: string;
   formattedCanonBedrag: string;
   canonBeginJaar: string;
@@ -174,11 +179,15 @@ interface ErfpachtDossierDetailHuidigePeriode {
   periodeVan: string;
   titelFinancieelPeriodeVan: string;
   periodeTm: string;
+  periodeSamengesteld: string;
   algemeneBepaling: string;
   titelFinancieelAlgemeneBepaling: string;
   regime: string;
   titelFinancieelRegime: string;
-  canons: ErfpachtDossierDetailHuidigePeriodeCanon[];
+  afgekocht: string;
+  titelAfgekocht: string;
+  titelGeenCanon: string;
+  canons: ErfpachtCanon[];
   titelFinancieelCanon: 'Canon';
 }
 
@@ -208,39 +217,58 @@ interface ErfpachtDossierDetailJuridisch {
   titelSoortErfpacht: string;
 }
 
-interface ErfpachtDossierDetailBestemming {
-  samengesteldeOmschrijving: string;
+interface ErfpachtDossierDetailBijzondereBepaling {
+  omschrijving: string;
   titelBestemmingOmschrijving: string;
   categorie: string;
-  subCategorie: string;
-  omschrijving: string;
   oppervlakte: number;
+  titelOppervlakte: string;
   eenheid: string;
-  titelBestemmingEenheidBVO: string;
-  titelBestemmingEenheidGO: string;
+  samengesteldeOppervlakteEenheid: string;
 }
 
 interface ErfpachtV2DossiersDetailSource {
   dossierNummer: string;
   titelDossierNummer: string;
-  voorkeursadres: string;
-  titelVoorkeursadres: string;
-  kadastraleaanduidingen: ErfpachtDossierDetailKadastraleAanduiding[];
-  titelKadastraleaanduiding: string;
   eersteUitgifte: string;
   titelEersteUitgifte: string;
+  voorkeursadres: string;
+  titelVoorkeursadres: string;
+  titelKopVastgoed: string;
+  titelKopErfpachter: string;
+  titelKopJuridisch: string;
+  titelKopBijzondereBepalingen: string;
+  titelKopFinancieel: string;
+  titelKopFacturen: string;
+  kadastraleaanduidingen: ErfpachtDossierDetailKadastraleAanduiding[];
+  titelKadastraleaanduiding: string;
   relaties: ErfpachtDossierDetailRelatie[];
   titelBetaler: string;
   juridisch: ErfpachtDossierDetailJuridisch;
-  bestemmingen: ErfpachtDossierDetailBestemming[];
+  bijzondereBepalingen: ErfpachtDossierDetailBijzondereBepaling[];
   financieel: {
     huidigePeriode: ErfpachtDossierDetailHuidigePeriode;
     toekomstigePeriodeList: ErfpachtDossierDetailToekomstigePeriode[];
   };
   facturen: {
     betaler: string;
+    titelBetaler: string;
     debiteurnummer: string;
-    notas: ErfpachtDossierDetailNota[];
+    titelDebiteurNummer: string;
+    titelFacturen: string;
+    titelVerklarendeTekstFacturen: string;
+    titelVerklarendeTekstFacturen2: string;
+    titelFactuurZoekveld: string;
+    titelFacturenDossierAdres: string;
+    titelFacturenStatus: string;
+    titelFacturenNummer: string;
+    titelFacturenFactuurBedrag: string;
+    titelFacturenOpenstaandBedrag: string;
+    titelFacturenVervaldatum: string;
+    titelResultatenGevonden: string;
+    titelGeenResultatenGevonden: string;
+    titelFactuurHelpTekstRegel1: string;
+    facturen: ErfpachtDossierFactuur[];
   };
 }
 
@@ -254,7 +282,7 @@ interface ErfpachtDossierPropsFrontend {
 export type ErfpachtV2DossiersDetail = ErfpachtV2DossiersDetailSource &
   ErfpachtDossierPropsFrontend;
 
-interface ErfpachtV2DossiersSource {
+interface ErfpachtV2DossierSource {
   dossierNummer: string;
   titelDossierNummer: string;
   voorkeursadres: string;
@@ -263,24 +291,65 @@ interface ErfpachtV2DossiersSource {
   zaaknummer: string;
   titelWijzigingsAanvragen: string;
   wijzigingsAanvragen: string[];
+  titelResultatenGevonden: string;
+  titelGeenResultatenGevonden: string;
+  titelDossierZoekveld: string;
+  titelDossierHelpTekstRegel1: string;
+  titelDossierHelpTekstRegel2: string;
 }
 
 interface ErfpachtV2DossiersResponseSource {
+  titelStartPaginaKop: string;
+  titelVerklarendeTekstStartPagina: string;
+  titelLinkErfpachtrechten: string;
   titelDossiersKop: string;
-  dossiers: ErfpachtV2DossiersSource[];
+  dossiers: {
+    dossiers: ErfpachtV2DossierSource[];
+    titelDossierNummer: string;
+    titelVoorkeursadres: string;
+    titelZaaknummer: string;
+    titelWijzigingsAanvragen: string;
+    titelResultatenGevonden: string;
+    titelGeenResultatenGevonden: string;
+    titelDossierZoekveld: string;
+    titelDossierHelpTekstRegel1: string;
+    titelDossierHelpTekstRegel2: string;
+  };
   titelOpenFacturenKop: string;
-  openFacturen: ErfpachtDossierDetailNota[];
+  titelLinkFacturen: string;
+  openstaandeFacturen: {
+    betaler: string;
+    titelBetaler: string;
+    debiteurnummer: string;
+    titelDebiteurNummer: string;
+    titelFacturen: string;
+    titelVerklarendeTekstFacturen: string;
+    titelVerklarendeTekstFacturen2: string;
+    titelFactuurZoekveld: string;
+    titelFacturenDossierAdres: string;
+    titelFacturenStatus: string;
+    titelFacturenNummer: string;
+    titelFacturenFactuurBedrag: string;
+    titelFacturenOpenstaandBedrag: string;
+    titelFacturenVervaldatum: string;
+    titelResultatenGevonden: string;
+    titelGeenResultatenGevonden: string;
+    titelFactuurHelpTekstRegel1: string;
+    facturen: ErfpachtDossierFactuur[];
+  };
 }
 
-export type ErfpachtV2Dossiers = ErfpachtV2DossiersSource &
+export type ErfpachtV2Dossier = ErfpachtV2DossierSource &
   ErfpachtDossierPropsFrontend;
 
 interface ErfpachtV2DossiersResponse extends ErfpachtV2DossiersResponseSource {
-  dossiers: ErfpachtV2Dossiers[];
+  dossiers: ErfpachtV2DossiersResponseSource['dossiers'] & {
+    dossiers: ErfpachtV2Dossier[];
+  };
 }
 
-function addErfpachtDossierPropertiesForFrontend<
-  T extends ErfpachtV2DossiersSource | ErfpachtV2DossiersDetailSource,
+function transformErfpachtDossierProperties<
+  T extends ErfpachtV2DossierSource | ErfpachtV2DossiersDetailSource,
 >(dossier: T): T & ErfpachtDossierPropsFrontend {
   const dossierNummerUrlParam = `E${dossier.dossierNummer
     .split(/E|\//)
@@ -304,6 +373,10 @@ function addErfpachtDossierPropertiesForFrontend<
     );
   }
 
+  if ('eersteUitgifte' in dossier) {
+    dossier.eersteUitgifte = defaultDateFormat(dossier.eersteUitgifte);
+  }
+
   return {
     ...dossier,
     id,
@@ -319,18 +392,19 @@ function addErfpachtDossierPropertiesForFrontend<
 }
 
 function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
-  if (response?.dossiers?.length) {
-    response.dossiers = response.dossiers.map((dossier) => {
-      return addErfpachtDossierPropertiesForFrontend(dossier);
+  if (response?.dossiers?.dossiers?.length) {
+    response.dossiers.dossiers = response.dossiers?.dossiers.map((dossier) => {
+      return transformErfpachtDossierProperties(dossier);
     });
   }
-  if (response?.openFacturen?.length) {
-    response.openFacturen = response.openFacturen.map((factuur) => {
-      return {
-        ...factuur,
-        vervalDatum: defaultDateFormat(factuur.vervalDatum),
-      };
-    });
+  if (response?.openstaandeFacturen?.facturen?.length) {
+    response.openstaandeFacturen.facturen =
+      response.openstaandeFacturen?.facturen.map((factuur) => {
+        return {
+          ...factuur,
+          vervalDatum: defaultDateFormat(factuur.vervalDatum),
+        };
+      });
   }
   return response;
 }
@@ -341,41 +415,15 @@ export async function fetchErfpachtV2(
 ) {
   const config = getApiConfig('ERFPACHTv2');
 
-  const dossierInfoResponseEmpty_: ErfpachtV2DossiersResponse = {
-    dossiers: [],
-    openFacturen: [],
-    titelDossiersKop: '',
-    titelOpenFacturenKop: '',
-  };
-
-  const dossierInfoResponseEmpty = apiSuccessResult(dossierInfoResponseEmpty_);
-
-  const isErfpachterResponse = await requestData<Erfpachtv2ErpachterResponse>(
+  return requestData<ErfpachtV2DossiersResponse>(
     {
       ...config,
-      url: `${config.url}/vernise/api/erfpachter `,
-      transformResponse: transformIsErfpachterResponseSource,
+      url: `${config.url}/vernise/api/dossierinfo`,
+      transformResponse: transformDossierResponse,
     },
     requestID,
     authProfileAndToken
   );
-
-  if (isErfpachterResponse.status === 'OK') {
-    if (isErfpachterResponse.content.isKnown) {
-      return requestData<ErfpachtV2DossiersResponse>(
-        {
-          ...config,
-          url: `${config.url}/vernise/api/dossierinfo`,
-          transformResponse: transformDossierResponse,
-        },
-        requestID
-      );
-    }
-
-    return dossierInfoResponseEmpty;
-  }
-
-  return isErfpachterResponse;
 }
 
 export async function fetchErfpachtV2DossiersDetail(
@@ -392,9 +440,10 @@ export async function fetchErfpachtV2DossiersDetail(
     {
       ...config,
       url: `${config.url}/vernise/api/dossierinfo/${dossierNummerUrlParam}`,
-      transformResponse: addErfpachtDossierPropertiesForFrontend,
+      transformResponse: transformErfpachtDossierProperties,
     },
-    requestID
+    requestID,
+    authProfileAndToken
   );
 
   return dossierInfoResponse;

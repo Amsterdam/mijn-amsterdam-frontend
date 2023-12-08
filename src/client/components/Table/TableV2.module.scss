@@ -1,15 +1,21 @@
 .Table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 3rem;
+  border-spacing: 0 var(--amsterdam-grid-gap);
+  text-align: left;
+}
 
-  thead {
+.Table__grid {
+  border-spacing: 0;
 
-    td,
-    th {
-      // font-weight: var(--amsterdam-typography-font-weight-bold);
-      text-align: left;
-    }
+  thead>tr {
+    margin-top: var(--amsterdam-grid-gap);
   }
+}
 
+.TableRow__Grid {
+  display: grid;
+  grid-template-columns: repeat(var(--amsterdam-grid-wide-column-count), 1fr);
+  gap: var(--amsterdam-grid-gap);
+  margin-bottom: var(--amsterdam-grid-gap);
 }

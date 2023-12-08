@@ -1,0 +1,37 @@
+.DossiersTable {}
+
+.DossiersTable_col1 {
+  grid-column-start: 1;
+  grid-column-end: span 3;
+}
+
+.DossiersTable_col2 {
+  grid-column-start: 4;
+  grid-column-end: span 3;
+}
+
+
+.FacturenTable_col1 {
+  grid-column-start: 1;
+  grid-column-end: span 3;
+}
+
+.FacturenTable_col2 {
+  grid-column-start: 4;
+  grid-column-end: span 2;
+}
+
+.FacturenTable_col3 {
+  grid-column-start: 6;
+  grid-column-end: span 2;
+}
+
+.FacturenTable_col4 {
+  grid-column-start: 8;
+  grid-column-end: span 2;
+}
+
+.FacturenTable_col5 {
+  grid-column-start: 10;
+  grid-column-end: span 3;
+}
