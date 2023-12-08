@@ -415,15 +415,35 @@ export async function fetchErfpachtV2(
 ) {
   const config = getApiConfig('ERFPACHTv2');
 
-  return requestData<ErfpachtV2DossiersResponse>(
+  const dossierInfoResponseEmpty = apiSuccessResult(null);
+
+  const isErfpachterResponse = await requestData<Erfpachtv2ErpachterResponse>(
     {
       ...config,
-      url: `${config.url}/vernise/api/dossierinfo`,
-      transformResponse: transformDossierResponse,
+      url: `${config.url}/vernise/api/erfpachter `,
+      transformResponse: transformIsErfpachterResponseSource,
     },
     requestID,
     authProfileAndToken
   );
+
+  if (isErfpachterResponse.status === 'OK') {
+    if (isErfpachterResponse.content.isKnown) {
+      return requestData<ErfpachtV2DossiersResponse | null>(
+        {
+          ...config,
+          url: `${config.url}/vernise/api/dossierinfo`,
+          transformResponse: transformDossierResponse,
+        },
+        requestID,
+        authProfileAndToken
+      );
+    }
+
+    return dossierInfoResponseEmpty;
+  }
+
+  return isErfpachterResponse;
 }
 
 export async function fetchErfpachtV2DossiersDetail(
