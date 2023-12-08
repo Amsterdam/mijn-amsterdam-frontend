@@ -8,42 +8,85 @@ import {
   Screen,
 } from '@amsterdam/design-system-react';
 import classname from 'classnames';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { atom, useRecoilState } from 'recoil';
+import type { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
+import {
+  AppRoutes,
+  Chapter,
+  ChapterTitles,
+  Chapters,
+} from '../../../universal/config';
 import { ApiResponse, apiPristineResult } from '../../../universal/helpers';
 import { ChapterIcon, DetailPage, PageHeading } from '../../components';
+import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
+import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
+import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import { MaParagraph } from '../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../components/Table/TableV2';
 import { BFFApiUrls } from '../../config/api';
-import { useDataApi } from '../../hooks/api/useDataApi';
-import type { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
-import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
-import styles from './ErfpachtDossierDetail.module.scss';
-import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
-import {
-  useMediumScreen,
-  usePhoneScreen,
-  useTabletScreen,
-  useWidescreen,
-} from '../../hooks';
-import { MaParagraph } from '../../components/Paragraph/Paragraph';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import { useDataApi } from '../../hooks/api/useDataApi';
+import styles from './ErfpachtDossierDetail.module.scss';
+
+export const apiDataAtom = atom<Record<string, Record<string, any>>>({
+  key: 'appstate-secondary',
+  default: {},
+});
+
+function useAppStateSecondary<T extends unknown>(
+  url: string,
+  chapter: Chapter,
+  recordId: string
+) {
+  const [apiData, setApiData] = useRecoilState(apiDataAtom);
+  const isApiDataCached = chapter in apiData && recordId in apiData[chapter];
+
+  const [api] = useDataApi<ApiResponse<T | null>>(
+    {
+      url,
+      postpone: isApiDataCached,
+    },
+    apiPristineResult(null)
+  );
+
+  useEffect(() => {
+    if (!isApiDataCached && !!api.data.content) {
+      setApiData((state) => {
+        let localState = state[chapter];
+        if (!localState) {
+          localState = {};
+        }
+        localState = {
+          ...localState,
+          [recordId]: api.data.content as T,
+        };
+        return {
+          ...state,
+          [chapter]: localState,
+        };
+      });
+    }
+  }, [isApiDataCached, api, recordId]);
+
+  return [
+    apiData?.[chapter]?.[recordId] as ErfpachtV2DossiersDetail,
+    api,
+  ] as const;
+}
 
 export default function ErfpachtDossierDetail() {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
-  const [api] = useDataApi<ApiResponse<ErfpachtV2DossiersDetail | null>>(
-    {
-      url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    },
-    apiPristineResult(null)
-  );
 
-  const dossier = api.data.content;
+  const [dossier, api] = useAppStateSecondary<ErfpachtV2DossiersDetail>(
+    `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
+    Chapters.ERFPACHTv2,
+    dossierNummerUrlParam
+  );
   const noContent = !api.isLoading && !dossier;
-  const isWideScreen = useWidescreen();
-  const isMediumScreen = useMediumScreen();
   const relaties = dossier?.relaties
     ? Array.from({ length: 20 }, () => dossier.relaties ?? []).flat()
     : [];

@@ -28,7 +28,7 @@ interface DisplayPropsDossiers {
 
 interface DisplayPropsFacturen {
   dossierAdres: string;
-  notaNummer: string;
+  factuurNummer: string;
   formattedFactuurBedrag: string;
   status: string;
   vervalDatum: string;
@@ -80,7 +80,7 @@ export function useErfpachtV2Data() {
     const [openFactuur] = openFacturen;
     displayPropsOpenFacturen = {
       dossierAdres: openFactuur.titelFacturenDossierAdres,
-      notaNummer: openFactuur.titelFacturenNummer,
+      factuurNummer: openFactuur.titelFacturenNummer,
       formattedFactuurBedrag: openFactuur.titelFacturenFactuurBedrag,
       status: openFactuur.titelFacturenStatus,
       vervalDatum: openFactuur.titelFacturenVervaldatum,
