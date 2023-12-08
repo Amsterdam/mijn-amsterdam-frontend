@@ -139,8 +139,8 @@ interface ErfpachtDossierFactuur {
   titelFacturenStatus: string;
   stopcode: string;
   open: boolean;
-  notaNummer: string;
-  titelFacturenNotaNummer: string;
+  factuurNummer: string;
+  titelFacturenNummer: string;
   factuurBedrag: string;
   formattedFactuurBedrag: string;
   titelFacturenFactuurBedrag: string;
@@ -254,7 +254,7 @@ interface ErfpachtV2DossiersDetailSource {
     betaler: string;
     titelBetaler: string;
     debiteurnummer: string;
-    titelDebiteurNummer: string;
+    titelDebiteurnummer: string;
     titelFacturen: string;
     titelVerklarendeTekstFacturen: string;
     titelVerklarendeTekstFacturen2: string;

@@ -162,17 +162,24 @@ export default function ErfpachtDossierDetail() {
                                 .titelBestemmingOmschrijving
                             }
                           </th>
-                          <th>Oppervlakte</th>
+                          <th>
+                            {dossier.bijzondereBepalingen?.[0].titelOppervlakte}
+                          </th>
                         </tr>
                       </thead>
                       {dossier.bijzondereBepalingen.map(
                         (bijzondereBepaling) => {
                           return (
-                            <tr key={bijzondereBepaling.omschrijving}>
+                            <tr
+                              key={
+                                bijzondereBepaling.samengesteldeOppervlakteEenheid
+                              }
+                            >
                               <td>{bijzondereBepaling.omschrijving}</td>
                               <td>
-                                {bijzondereBepaling.oppervlakte}
-                                {bijzondereBepaling.eenheid}
+                                {
+                                  bijzondereBepaling.samengesteldeOppervlakteEenheid
+                                }
                               </td>
                             </tr>
                           );
@@ -193,9 +200,7 @@ export default function ErfpachtDossierDetail() {
                       dossier.financieel?.huidigePeriode
                         .titelFinancieelPeriodeVan
                     }{' '}
-                    {dossier.financieel?.huidigePeriode.periodeVan}{' '}
-                    {!!dossier.financieel?.huidigePeriode.periodeTm && 't/m '}
-                    {dossier.financieel?.huidigePeriode.periodeTm}
+                    {dossier.financieel?.huidigePeriode.periodeSamengesteld}
                   </Heading>
                   {!!dossier.financieel?.huidigePeriode && (
                     <dl>
@@ -308,7 +313,7 @@ export default function ErfpachtDossierDetail() {
                     <Grid.Cell span={3} start={1}>
                       {!!dossier.facturen && (
                         <dl>
-                          <dt>{dossier.titelBetaler}</dt>
+                          <dt>{dossier.facturen.titelBetaler}</dt>
                           <dd>{dossier.facturen.betaler}</dd>
                         </dl>
                       )}
@@ -316,7 +321,7 @@ export default function ErfpachtDossierDetail() {
                     <Grid.Cell span={3} start={4}>
                       {!!dossier.facturen && (
                         <dl>
-                          <dt>Debiteurnummer</dt>
+                          <dt>{dossier.facturen.titelDebiteurnummer}</dt>
                           <dd>{dossier.facturen.debiteurnummer}</dd>
                         </dl>
                       )}
@@ -334,7 +339,7 @@ export default function ErfpachtDossierDetail() {
                           items={dossier.facturen.facturen.slice(0, 3)}
                           className={styles.FacturenTable}
                           displayProps={{
-                            notaNummer: dossier.facturen.titelFacturenNummer,
+                            factuurNummer: dossier.facturen.titelFacturenNummer,
                             formattedFactuurBedrag:
                               dossier.facturen.titelFacturenFactuurBedrag,
                             status: dossier.facturen.titelFacturenStatus,
