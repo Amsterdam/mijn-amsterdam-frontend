@@ -188,6 +188,8 @@ export default function Erfpacht() {
                   gridColStyles={[
                     styles.DossiersTable_col1,
                     styles.DossiersTable_col2,
+                    styles.DossiersTable_col3,
+                    styles.DossiersTable_col4,
                   ]}
                 />
               ) : (

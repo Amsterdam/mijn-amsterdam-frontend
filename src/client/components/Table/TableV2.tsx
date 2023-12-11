@@ -1,15 +1,13 @@
+import { Link } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { isValidElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import {
   capitalizeFirstLetter,
   entries,
   keys,
 } from '../../../universal/helpers';
 import { LinkProps, Unshaped } from '../../../universal/types';
-import Linkd from '../Button/Button';
 import styles from './TableV2.module.scss';
-import InnerHtml from '../InnerHtml/InnerHtml';
-import { Link } from '@amsterdam/design-system-react';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -48,7 +46,7 @@ export interface TableProps<T> {
   items: T[];
   className?: string;
   titleKey?: keyof T | string;
-  displayProps?: DisplayProps<T>;
+  displayProps?: DisplayProps<T> | null;
   gridColStyles?: string[];
 }
 

@@ -3,6 +3,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/TablePagePaginated/ListPagePaginated';
 import { useErfpachtV2Data } from './Erfpacht';
+import styles from './Erfpacht.module.scss';
 
 export default function ErfpachtDossiers() {
   const { ERFPACHTv2, dossiers, displayPropsDossiers, titleDossiers } =
@@ -19,6 +20,12 @@ export default function ErfpachtDossiers() {
       titleKey="voorkeursadres"
       isLoading={isLoading(ERFPACHTv2)}
       isError={isError(ERFPACHTv2)}
+      tableGridColStyles={[
+        styles.DossiersTable_col1,
+        styles.DossiersTable_col2,
+        styles.DossiersTable_col3,
+        styles.DossiersTable_col4,
+      ]}
     />
   );
 }

@@ -17,7 +17,7 @@ interface ListPagePaginatedProps {
   appRoute: string;
   appRouteBack: string;
   title: string;
-  displayProps: TableProps<object>['displayProps'];
+  displayProps: TableProps<object>['displayProps'] | null;
   titleKey?: string;
   isLoading: boolean;
   isError: boolean;
