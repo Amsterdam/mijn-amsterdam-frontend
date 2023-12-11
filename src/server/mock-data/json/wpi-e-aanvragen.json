@@ -820,6 +820,20 @@
           ],
           "id": "informatieOntvangen",
           "status": "Informatie ontvangen"
+        },
+        {
+          "datePublished": "2023-12-03T17:20:06+02:00",
+          "documents": [
+            {
+              "datePublished": "2023-12-03T17:20:06+02:00",
+              "dcteId": "5641",
+              "id": "4400001198",
+              "title": "Brief Bbz",
+              "url": "/wpi/document?id=4400001198&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "algemeenBatchDocument",
+          "status": "Brief"
         }
       ],
       "title": "Bbz"

@@ -22,6 +22,8 @@ import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
+import { addToBlackList } from './services/session-blacklist';
+import UID from 'uid-safe';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
@@ -51,9 +53,11 @@ authRouterDevelopment.get(
         ? req.params.user
         : Object.keys(testAccounts)[0];
     const userId = testAccounts[userName];
+    const sessionID = UID.sync(18);
     const appSessionCookieValue = await generateDevSessionCookieValue(
       authMethod,
-      userId
+      userId,
+      sessionID
     );
 
     countLoggedInVisit(userId, authMethod);
@@ -89,7 +93,9 @@ authRouterDevelopment.get(
 
 authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
   const auth = await getAuth(req);
-
+  if (auth.profile.sid) {
+    await addToBlackList(auth.profile.sid);
+  }
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
   let redirectUrl = `${process.env.MA_FRONTEND_URL}`;

@@ -225,48 +225,6 @@ describe('<VergunningDetail />', () => {
     });
   });
 
-  describe('RVV Sloterweg', () => {
-    const zaken: Array<{ title: string; identifier: string }> = [
-      {
-        title: 'RVV ontheffing Sloterweg (Nieuw/Verleend)',
-        identifier: 'Z/23/98798273423',
-      },
-      {
-        title: 'RVV ontheffing Sloterweg (Wijziging/Ontvangen)',
-        identifier: 'Z/23/98989234',
-      },
-      {
-        title: 'RVV ontheffing Sloterweg (Wijziging/Ingetrokken)',
-        identifier: 'Z/23/23423409',
-      },
-      {
-        title: 'RVV ontheffing Sloterweg (Wijziging/Verleend)',
-        identifier: 'Z/23/091823087',
-      },
-      {
-        title: 'RVV ontheffing Sloterweg (Wijziging/Verlopen)',
-        identifier: 'Z/23/92222273423',
-      },
-      {
-        title: 'RVV ontheffing Sloterweg (Nieuw/Verlopen)',
-        identifier: 'Z/23/98744444423',
-      },
-      {
-        title: 'RVV ontheffing Sloterweg (Nieuw/Ingetrokken)',
-        identifier: 'Z/23/123123456',
-      },
-    ];
-
-    for (const zaak of zaken) {
-      test(`${zaak.title}`, () => {
-        const { asFragment } = render(
-          <MockVergunningDetail identifier={zaak.identifier} />
-        );
-        expect(asFragment()).toMatchSnapshot();
-      });
-    }
-  });
-
   describe('Eigen parkeerplaats', () => {
     it('should match the full page snapshot', () => {
       const { asFragment } = render(

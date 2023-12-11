@@ -21,6 +21,7 @@ import {
   verifyAuthenticated,
 } from './helpers/app';
 import { countLoggedInVisit } from './services/visitors';
+import { addToBlackList } from './services/session-blacklist';
 
 export const router = express.Router();
 
@@ -259,6 +260,7 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
       return res.send(
         apiSuccessResult({
           tokenData: await decodeOIDCToken(auth.token),
+          token: auth.token,
           profile: auth.profile,
         })
       );
@@ -301,7 +303,9 @@ function logout(postLogoutRedirectUrl: string) {
     }
 
     const auth = await getAuth(req);
-
+    if (auth.profile.sid) {
+      await addToBlackList(auth.profile.sid);
+    }
     res.oidc.logout({
       returnTo: postLogoutRedirectUrl,
       logoutParams: {

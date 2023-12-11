@@ -222,6 +222,9 @@ async function searchBag(keywords: string) {
 
   const response = await axios.get<SearchEntry[]>(url, {
     transformResponse: addAxiosResponseTransform(transformSearchBagresponse),
+    headers: {
+      'X-Api-Key': import.meta.env.BFF_DATA_AMSTERDAM_API_KEY,
+    },
   });
 
   return response.data;

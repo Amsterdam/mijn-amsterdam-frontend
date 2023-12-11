@@ -46,7 +46,7 @@ export type MaFeature<
   G extends GeoJSON.Geometry = Exclude<
     GeoJSON.Geometry,
     GeoJSON.GeometryCollection
-  >
+  >,
 > = GeoJSON.Feature<G, DatasetFeatureProperties>;
 export type MaPointFeature = MaFeature<GeoJSON.Point>;
 export type MaPolylineFeature = MaFeature<
@@ -145,6 +145,11 @@ export const datasetEndpoints: Record<
     idKeyList: 'id_nummer',
     idKeyDetail: 'idNummer',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   evenementen: {
     listUrl: dsoApiListUrl('evenementen/evenementen'),
@@ -153,6 +158,11 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
     // NOTE: Tried URL as unique ID but various events point to the same URL.
     // additionalStaticFieldNames: ['url'],
     // idKeyList: 'url',
@@ -169,6 +179,11 @@ export const datasetEndpoints: Record<
     idKeyList: 'officielebekendmakingen_id',
     idKeyDetail: 'officielebekendmakingenId',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   parkeerzones: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
@@ -181,6 +196,11 @@ export const datasetEndpoints: Record<
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   parkeerzones_uitzondering: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones_uitzondering'),
@@ -194,6 +214,11 @@ export const datasetEndpoints: Record<
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   zwembad: {
     listUrl: dsoApiListUrl('sport/zwembad'),
@@ -202,6 +227,11 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   sportpark: {
     listUrl: dsoApiListUrl('sport/sportpark'),
@@ -211,6 +241,11 @@ export const datasetEndpoints: Record<
     zIndex: zIndexPane.SPORTPARK,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   sportveld: {
     listUrl: dsoApiListUrl('sport/sportveld'),
@@ -220,6 +255,11 @@ export const datasetEndpoints: Record<
     zIndex: zIndexPane.SPORTVELD,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   gymzaal: {
     listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'gymzaal'),
@@ -229,6 +269,11 @@ export const datasetEndpoints: Record<
     additionalStaticFieldNames: ['type'],
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   sportzaal: {
     listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'sportzaal'),
@@ -237,6 +282,11 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   sporthal: {
     listUrl: dsoApiListUrl('sport/sporthal'),
@@ -245,6 +295,11 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   sportaanbieder: {
     listUrl: dsoApiListUrl('sport/sportaanbieder', 2000),
@@ -253,6 +308,11 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   openbaresportplek: {
     listUrl: dsoApiListUrl('sport/openbaresportplek'),
@@ -261,6 +321,11 @@ export const datasetEndpoints: Record<
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   hardlooproute: {
     listUrl: dsoApiListUrl('sport/hardlooproute'),
@@ -270,6 +335,11 @@ export const datasetEndpoints: Record<
     zIndex: zIndexPane.HARDLOOPROUTE,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   bedrijveninvesteringszones: {
     listUrl: dsoApiListUrl(
@@ -285,6 +355,11 @@ export const datasetEndpoints: Record<
     idKeyList: 'naam',
     idKeyDetail: 'naam',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   wior: {
     listUrl: () => {
@@ -301,6 +376,11 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometrie',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    requestConfig: {
+      headers: {
+        'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
+      },
+    },
   },
   meldingenBuurt: {
     listUrl: () =>

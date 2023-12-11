@@ -44,12 +44,22 @@ parameters:
   - name: btdDeploy
     type: boolean
     default: true
+  - name: dtapName
+    type: string
+    default: none
+    values:
+      - none
+      - t
+      - a
+      - p
 
   - name: updateAppSettings
     type: boolean
     default: false
 
 variables:
+  - name: btdDeploy
+    value: ${{ parameters.btdDeploy }}
   - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
       - name: dtapName
         value: t
@@ -59,11 +69,9 @@ variables:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
       - name: btdDeploy
         value: false
-  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      - name: btdDeploy
-        value: ${{ parameters.btdDeploy }}
+  - ${{ if ne(parameters.dtapName, 'none') }}:
       - name: dtapName
-        value: t
+        value: ${{ parameters.dtapName }}
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
