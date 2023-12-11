@@ -21,6 +21,7 @@ export function LinkToListPage({
   const routeGenerated = generatePath(route, params);
   return count > threshold ? (
     <Button
+      variant="tertiary"
       onClick={(e) => {
         e.preventDefault();
         history.push(routeGenerated);
