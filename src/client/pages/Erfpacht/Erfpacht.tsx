@@ -36,8 +36,9 @@ interface DisplayPropsFacturen {
 
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
+  const dossiersBase = ERFPACHTv2.content?.dossiers;
   const dossiers_ = addLinkElementToProperty(
-    ERFPACHTv2.content?.dossiers?.dossiers ?? [],
+    dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );
   const dossiers = Array.from({ length: 20 }, () => dossiers_)
@@ -62,20 +63,21 @@ export function useErfpachtV2Data() {
   let displayPropsOpenFacturen: DisplayPropsFacturen | null = null;
   let titleOpenFacturen = ERFPACHTv2.content?.titelOpenFacturenKop;
 
-  if (dossiers.length) {
-    const [dossier] = dossiers;
+  if (!!dossiersBase) {
     displayPropsDossiers = {
-      voorkeursadres: dossier.titelVoorkeursadres,
-      dossierNummer: dossier.titelDossierNummer,
+      voorkeursadres: dossiersBase.titelVoorkeursAdres,
+      dossierNummer: dossiersBase.titelDossiernummer,
     };
-    if ('zaaknummer' in dossier) {
-      displayPropsDossiers.zaaknummer = dossier.titelZaaknummer;
+
+    if (!!dossiers?.length && 'zaaknummer' in dossiers[0]) {
+      displayPropsDossiers.zaaknummer = dossiersBase.titelZaakNummer;
     }
-    if ('wijzigingsAanvragen' in dossier) {
+    if (!!dossiers?.length && 'wijzigingsAanvragen' in dossiers[0]) {
       displayPropsDossiers.wijzigingsAanvragen =
-        dossier.titelWijzigingsAanvragen;
+        dossiersBase.titelWijzigingsAanvragen;
     }
   }
+
   if (openFacturen.length) {
     const [openFactuur] = openFacturen;
     displayPropsOpenFacturen = {
@@ -86,6 +88,7 @@ export function useErfpachtV2Data() {
       vervalDatum: openFactuur.titelFacturenVervaldatum,
     };
   }
+
   return {
     ERFPACHTv2,
     openFacturen,

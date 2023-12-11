@@ -305,9 +305,9 @@ interface ErfpachtV2DossiersResponseSource {
   titelDossiersKop: string;
   dossiers?: {
     dossiers: ErfpachtV2DossierSource[];
-    titelDossierNummer: string;
-    titelVoorkeursadres: string;
-    titelZaaknummer: string;
+    titelDossiernummer: string;
+    titelVoorkeursAdres: string;
+    titelZaakNummer: string;
     titelWijzigingsAanvragen: string;
     titelResultatenGevonden: string;
     titelGeenResultatenGevonden: string;
