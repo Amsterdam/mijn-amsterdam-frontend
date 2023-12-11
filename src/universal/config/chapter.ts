@@ -3,7 +3,7 @@ import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 
-// Within the team we call these Themes
+// Within the team we call these Themes / Thema's
 export type Chapter =
   | 'AFVAL'
   | 'BELASTINGEN'
@@ -35,6 +35,8 @@ export type Chapter =
   | 'BODEM'
   | string;
 
+export type BagChapter = `${Chapter}_BAG`;
+
 export const Chapters: Record<Chapter, Chapter> = {
   AFVAL: 'AFVAL',
   BELASTINGEN: 'BELASTINGEN',
@@ -65,6 +67,12 @@ export const Chapters: Record<Chapter, Chapter> = {
   AVG: 'AVG',
   BODEM: 'BODEM',
 };
+
+export const BagChapters: Record<Chapter, BagChapter> = Object.fromEntries(
+  Object.entries(Chapters).map(([key, key2]) => {
+    return [key, `${key2}_BAG`];
+  })
+);
 
 // These are used for PageHeadings and link title props for example.
 export const ChapterTitles: { [chapter in Chapter]: string } = {
