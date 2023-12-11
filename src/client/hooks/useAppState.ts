@@ -175,11 +175,7 @@ export function isAppStateReady(
   return (
     !!profileStates.length &&
     profileStates.every(([appStateKey, state]) => {
-      return (
-        !appStateKey.endsWith('_BAG') &&
-        typeof state !== 'undefined' &&
-        state.status !== 'PRISTINE'
-      );
+      return typeof state !== 'undefined' && state.status !== 'PRISTINE';
     })
   );
 }
@@ -239,4 +235,25 @@ export function useAppStateBagApi<T extends unknown>({
   }, [isApiDataCached, api, key]);
 
   return [appState?.[bagChapter]?.[key] as T, api] as const;
+}
+
+export function useRemoveAppStateBagData() {
+  const [appState, setAppState] = useRecoilState(appStateAtom);
+  return useCallback(
+    ({ bagChapter, key: keyExpected }: Omit<AppStateBagApiParams, 'url'>) => {
+      const local = appState[bagChapter];
+      if (!!local) {
+        setAppState(
+          Object.assign({}, appState, {
+            [bagChapter]: Object.fromEntries(
+              Object.entries(local).filter(([key]) => {
+                return keyExpected !== key;
+              })
+            ),
+          })
+        );
+      }
+    },
+    [appState]
+  );
 }

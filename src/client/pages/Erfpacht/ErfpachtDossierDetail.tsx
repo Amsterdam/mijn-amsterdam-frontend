@@ -23,7 +23,10 @@ import { MaParagraph } from '../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../components/Table/TableV2';
 import { BFFApiUrls } from '../../config/api';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import { useAppStateBagApi } from '../../hooks/useAppState';
+import {
+  useAppStateBagApi,
+  useRemoveAppStateBagData,
+} from '../../hooks/useAppState';
 import styles from './ErfpachtDossierDetail.module.scss';
 
 export default function ErfpachtDossierDetail() {
@@ -36,9 +39,17 @@ export default function ErfpachtDossierDetail() {
     bagChapter: BagChapters.ERFPACHTv2,
     key: dossierNummerUrlParam,
   });
+  const removeAppStateBagData = useRemoveAppStateBagData();
   const noContent = !api.isLoading && !dossier;
   const relaties = dossier?.relaties
-    ? Array.from({ length: 20 }, () => dossier.relaties ?? []).flat()
+    ? Array.from({ length: 20 }, () => dossier.relaties ?? [])
+        .flat()
+        .map((r, index) => {
+          return {
+            ...r,
+            relatieNaam: `${index}-${r.relatieNaam}`,
+          };
+        })
     : [];
 
   return (
@@ -71,7 +82,6 @@ export default function ErfpachtDossierDetail() {
               </Alert>
             </Grid.Cell>
           )}
-
           {!!dossier && (
             <>
               <Grid.Cell start={1} span={12}>
@@ -90,7 +100,7 @@ export default function ErfpachtDossierDetail() {
                         (kadestraleAanduiding) => {
                           return (
                             <OrderedList.Item
-                              key={kadestraleAanduiding.perceelsnummer}
+                              key={kadestraleAanduiding.samengesteld}
                             >
                               {kadestraleAanduiding.samengesteld}
                             </OrderedList.Item>
@@ -115,7 +125,7 @@ export default function ErfpachtDossierDetail() {
                       {relaties?.map((relatie, index, all) => {
                         return (
                           <OrderedList.Item key={relatie.relatieNaam}>
-                            {index}-{relatie.relatieNaam}
+                            {relatie.relatieNaam}
                           </OrderedList.Item>
                         );
                       })}
