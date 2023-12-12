@@ -23,7 +23,7 @@ describe('simple-connect/cleopatra', () => {
         profileType: 'private',
         authMethod: 'digid',
       })
-    ).toMatchInlineSnapshot(`"{\\"bsn\\":\\"test-digid\\"}"`);
+    ).toMatchInlineSnapshot(`"{"bsn":"test-digid"}"`);
 
     expect(
       getJSONRequestPayload({
@@ -31,7 +31,7 @@ describe('simple-connect/cleopatra', () => {
         profileType: 'commercial',
         authMethod: 'eherkenning',
       })
-    ).toMatchInlineSnapshot(`"{\\"kvk\\":\\"test-eherk\\"}"`);
+    ).toMatchInlineSnapshot(`"{"kvk":"test-eherk"}"`);
   });
 
   test('fetchMilieuzone null content', async () => {

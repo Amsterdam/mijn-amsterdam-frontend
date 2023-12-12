@@ -11,7 +11,7 @@ import { SSE_ERROR_MESSAGE } from './useSSE';
 
 import { act, waitFor } from '@testing-library/react';
 import {
-  SpyInstance,
+  MockInstance,
   afterEach,
   beforeEach,
   describe,
@@ -28,9 +28,9 @@ describe('useAppState', () => {
 
   const initialAppState = appStateModule.PRISTINE_APPSTATE;
 
-  let dataApiSpy: SpyInstance;
-  let axiosGetSpy: SpyInstance;
-  let sseSpy: SpyInstance;
+  let dataApiSpy: MockInstance;
+  let axiosGetSpy: MockInstance;
+  let sseSpy: MockInstance;
 
   beforeEach(() => {
     dataApiSpy = vi.spyOn(dataApiHook, 'useDataApi');

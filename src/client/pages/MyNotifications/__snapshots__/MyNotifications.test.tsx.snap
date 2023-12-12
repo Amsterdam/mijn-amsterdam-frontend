@@ -84,7 +84,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               disabled=""
             >
               <h4
-                class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
+                class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
               >
                 Notification
               </h4>
@@ -178,7 +178,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               disabled=""
             >
               <h4
-                class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
+                class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
               >
                 Notification
               </h4>
@@ -271,7 +271,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               disabled=""
             >
               <h4
-                class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
+                class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
               >
                 Notification
               </h4>
@@ -376,7 +376,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               disabled=""
             >
               <h4
-                class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
+                class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
               >
                 Welkom op Mijn Amsterdam!
               </h4>

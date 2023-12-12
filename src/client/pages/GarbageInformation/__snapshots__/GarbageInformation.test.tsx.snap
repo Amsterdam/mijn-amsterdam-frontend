@@ -378,7 +378,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Papier\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -510,7 +510,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Glas\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -574,7 +574,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Textiel\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -606,7 +606,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       <p>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14"
+          href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
         >
           <svg
             aria-hidden="true"
@@ -1079,7 +1079,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Papier\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -1211,7 +1211,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Glas\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -1275,7 +1275,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Textiel\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -1307,7 +1307,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       <p>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14"
+          href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
         >
           <svg
             aria-hidden="true"
@@ -2013,7 +2013,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Papier\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -2145,7 +2145,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Glas\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -2209,7 +2209,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
               <dd>
                 <a
                   class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-                  href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Textiel\\"%3A1}}}}"
+                  href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
                 </a>
@@ -2241,7 +2241,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       <p>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14"
+          href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
         >
           <svg
             aria-hidden="true"
