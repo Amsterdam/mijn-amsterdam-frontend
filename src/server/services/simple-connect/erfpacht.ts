@@ -463,7 +463,9 @@ export async function fetchErfpachtV2DossiersDetail(
   const dossierInfoResponse = await requestData<ErfpachtV2DossiersDetail>(
     {
       ...config,
-      url: `${config.url}/vernise/api/dossierinfo/${dossierNummerUrlParam}`,
+      url: new URL(
+        `${config.url}/vernise/api/dossierinfo/${dossierNummerUrlParam}`
+      ).toString(),
       transformResponse: transformErfpachtDossierProperties,
     },
     requestID,
