@@ -377,6 +377,26 @@ function transformErfpachtDossierProperties<
     dossier.eersteUitgifte = defaultDateFormat(dossier.eersteUitgifte);
   }
 
+  if ('facturen' in dossier && 'facturen' in dossier.facturen) {
+    dossier.facturen.facturen = dossier.facturen.facturen?.map((factuur) => {
+      factuur.vervalDatum = defaultDateFormat(factuur.vervalDatum);
+      return factuur;
+    });
+  }
+
+  if (
+    'financieel' in dossier &&
+    !!dossier.financieel?.huidigePeriode.periodeSamengesteld
+  ) {
+    dossier.financieel.huidigePeriode.periodeSamengesteld = `${defaultDateFormat(
+      dossier.financieel.huidigePeriode.periodeVan
+    )} t/m ${
+      dossier.financieel.huidigePeriode.periodeTm
+        ? `${defaultDateFormat(dossier.financieel.huidigePeriode.periodeTm)}`
+        : '-'
+    }`;
+  }
+
   return {
     ...dossier,
     id,

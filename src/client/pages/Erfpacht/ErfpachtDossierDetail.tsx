@@ -42,16 +42,13 @@ export default function ErfpachtDossierDetail() {
     key: dossierNummerUrlParam,
   });
   const noContent = !api.isLoading && !dossier;
-  const relaties = dossier?.relaties
-    ? Array.from({ length: 20 }, () => dossier.relaties ?? [])
-        .flat()
-        .map((r, index) => {
-          return {
-            ...r,
-            relatieNaam: `${index}-${r.relatieNaam}`,
-          };
-        })
-    : [];
+  const relaties =
+    dossier?.relaties?.map((r, index) => {
+      return {
+        ...r,
+        relatieNaam: `${index}-${r.relatieNaam}`,
+      };
+    }) ?? [];
 
   return (
     <DetailPage className={styles.ErfpachtDetail}>
@@ -233,27 +230,36 @@ export default function ErfpachtDossierDetail() {
                         {dossier.financieel.huidigePeriode.algemeneBepaling}
                       </dd>
                       <dt>
+                        {dossier.financieel.huidigePeriode.titelAfgekocht}
+                      </dt>
+                      <dd>{dossier.financieel.huidigePeriode.afgekocht}</dd>
+                      {/* <dt>
                         {
                           dossier.financieel.huidigePeriode
                             .titelFinancieelRegime
                         }
                       </dt>
-                      <dd>{dossier.financieel.huidigePeriode.regime}</dd>
+                      <dd>{dossier.financieel.huidigePeriode.regime}</dd> */}
                       <dt>
                         {dossier.financieel.huidigePeriode.titelFinancieelCanon}
                       </dt>
                       <dd>
-                        <OrderedList markers={false}>
-                          {dossier.financieel?.huidigePeriode?.canons?.map(
-                            (canon) => {
-                              return (
-                                <OrderedList.Item key={canon.samengesteld}>
-                                  {canon.samengesteld}
-                                </OrderedList.Item>
-                              );
-                            }
-                          )}
-                        </OrderedList>
+                        {!!dossier.financieel?.huidigePeriode?.canons
+                          ?.length ? (
+                          <OrderedList markers={false}>
+                            {dossier.financieel?.huidigePeriode?.canons?.map(
+                              (canon) => {
+                                return (
+                                  <OrderedList.Item key={canon.samengesteld}>
+                                    {canon.samengesteld}
+                                  </OrderedList.Item>
+                                );
+                              }
+                            )}
+                          </OrderedList>
+                        ) : (
+                          dossier.financieel.huidigePeriode.titelGeenCanon
+                        )}
                       </dd>
                     </dl>
                   )}

@@ -42,26 +42,11 @@ interface DisplayPropsFacturen {
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
   const dossiersBase = ERFPACHTv2.content?.dossiers;
-  const dossiers_ = addLinkElementToProperty(
+  const dossiers = addLinkElementToProperty(
     dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );
-  const dossiers = Array.from({ length: 20 }, () => dossiers_)
-    .flat()
-    .map((d, index) => {
-      return Object.assign({}, d, {
-        dossierNummer: `${index} - ${d.dossierNummer}`,
-        id: d.id,
-      });
-    });
-  const openFacturen_ = ERFPACHTv2.content?.openstaandeFacturen?.facturen ?? [];
-  const openFacturen = Array.from({ length: 20 }, () => openFacturen_)
-    .flat()
-    .map((f, index) => {
-      return Object.assign({}, f, {
-        dossierAdres: `${index} - ${f.dossierAdres}`,
-      });
-    });
+  const openFacturen = ERFPACHTv2.content?.openstaandeFacturen?.facturen ?? [];
 
   let displayPropsDossiers: DisplayPropsDossiers | null = null;
   let titleDossiers = ERFPACHTv2.content?.titelDossiersKop;

@@ -90,7 +90,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
   ERFPACHT: 'Erfpacht',
-  ERFPACHTv2: 'Erfpacht',
+  ERFPACHTv2: 'Erfpacht V2',
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
