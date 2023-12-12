@@ -1,13 +1,7 @@
-import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
 import { generatePath } from 'react-router-dom';
-import slugMe from 'slugme';
 import { AppRoutes, Chapters } from '../../../universal/config';
-import {
-  apiSuccessResult,
-  defaultDateFormat,
-} from '../../../universal/helpers';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { defaultDateFormat } from '../../../universal/helpers';
 import { LinkProps } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -273,7 +267,6 @@ interface ErfpachtV2DossiersDetailSource {
 }
 
 interface ErfpachtDossierPropsFrontend {
-  id: string;
   dossierNummerUrlParam: string;
   link: LinkProps;
   title: string;
@@ -355,10 +348,6 @@ function transformErfpachtDossierProperties<
   const dossierNummerUrlParam = `E${dossier.dossierNummer
     .split(/E|\//)
     .join('.')}`;
-  const [id] = encrypt(
-    dossier.dossierNummer,
-    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  );
   const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
@@ -400,7 +389,6 @@ function transformErfpachtDossierProperties<
 
   return {
     ...dossier,
-    id,
     dossierNummerUrlParam,
     title,
     link: {
@@ -472,10 +460,6 @@ export async function fetchErfpachtV2DossiersDetail(
   dossierNummerUrlParam: string
 ) {
   const config = getApiConfig('ERFPACHTv2');
-  // const dossierNummer = decrypt(
-  //   dossierNummerEncrypted,
-  //   process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  // );
   const dossierInfoResponse = await requestData<ErfpachtV2DossiersDetail>(
     {
       ...config,
