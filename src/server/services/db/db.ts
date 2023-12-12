@@ -1,4 +1,5 @@
 import { IS_PG } from './config';
+import { FeatureToggle } from '../../../universal/config';
 
 type DBAdapter = {
   query: (query: string, values?: any[] | undefined) => Promise<unknown>;
@@ -6,5 +7,10 @@ type DBAdapter = {
   queryALL: (query: string, values?: any[] | undefined) => Promise<unknown>;
 };
 
-export const db: () => Promise<DBAdapter> = () =>
-  IS_PG ? import('./postgres') : import('./sqlite3');
+export const db: () => Promise<DBAdapter> = () => {
+  if (FeatureToggle.dbEnabled) {
+    return import('./fake-db');
+  }
+  return   IS_PG ? import('./postgres') : import('./sqlite3');
+}
+

@@ -40,6 +40,7 @@ export const FeatureToggle = {
   ehKetenmachtigingActive: !IS_PRODUCTION,
   bodemActive: true,
   stadspasRequestsActive: false,
+  dbEnabled: false,
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';
