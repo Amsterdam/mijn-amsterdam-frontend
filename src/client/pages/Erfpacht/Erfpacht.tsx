@@ -9,7 +9,12 @@ import {
 } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { ChapterIcon, OverviewPage, PageHeading } from '../../components';
+import {
+  ChapterIcon,
+  LoadingContent,
+  OverviewPage,
+  PageHeading,
+} from '../../components';
 import { useAppStateGetter } from '../../hooks';
 import { TableV2 } from '../../components/Table/TableV2';
 import { MaParagraph } from '../../components/Paragraph/Paragraph';
@@ -169,7 +174,16 @@ export default function Erfpacht() {
 
           {isLoading(ERFPACHTv2) && (
             <Grid.Cell fullWidth>
-              <Paragraph>Erfpacht gegevens worden opgehaald...</Paragraph>
+              <LoadingContent
+                barConfig={[
+                  ['20rem', '4rem', '4rem'],
+                  ['40rem', '2rem', '4rem'],
+                  ['40rem', '2rem', '8rem'],
+                  ['30rem', '4rem', '4rem'],
+                  ['40rem', '2rem', '4rem'],
+                  ['40rem', '2rem', '4rem'],
+                ]}
+              />
             </Grid.Cell>
           )}
 

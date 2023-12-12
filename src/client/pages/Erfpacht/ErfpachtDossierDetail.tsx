@@ -15,7 +15,12 @@ import {
   BagChapters,
   ChapterTitles,
 } from '../../../universal/config';
-import { ChapterIcon, DetailPage, PageHeading } from '../../components';
+import {
+  ChapterIcon,
+  DetailPage,
+  LoadingContent,
+  PageHeading,
+} from '../../components';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
@@ -67,11 +72,25 @@ export default function ErfpachtDossierDetail() {
         <DesignSystemStyleAdjust />
         <Grid className={styles.Grid}>
           {api.isLoading && (
-            <Grid.Cell fullWidth>
-              <Paragraph>
-                Erfpacht dossier gegevens worden opgehaald...
-              </Paragraph>
-            </Grid.Cell>
+            <LoadingContent
+              barConfig={[
+                ['12rem', '2rem', '.5rem'],
+                ['8rem', '2rem', '4rem'],
+                ['5rem', '2rem', '.5rem'],
+                ['16rem', '2rem', '4rem'],
+                ['20rem', '2rem', '.5rem'],
+                ['16rem', '2rem', '4rem'],
+                ['20rem', '2rem', '.5rem'],
+                ['16rem', '2rem', '4rem'],
+                ['8rem', '2rem', '.5rem'],
+                ['20rem', '2rem', '.5rem'],
+                ['20rem', '2rem', '4rem'],
+                ['14rem', '4rem', '4rem'],
+                ['14rem', '4rem', '4rem'],
+                ['14rem', '4rem', '4rem'],
+                ['14rem', '4rem', '4rem'],
+              ]}
+            />
           )}
           {(api.isError || noContent) && (
             <Grid.Cell fullWidth>
@@ -82,6 +101,7 @@ export default function ErfpachtDossierDetail() {
               </Alert>
             </Grid.Cell>
           )}
+
           {!!dossier && (
             <>
               <Grid.Cell start={1} span={12}>
