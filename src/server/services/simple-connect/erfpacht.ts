@@ -401,7 +401,12 @@ function transformErfpachtDossierProperties<
 }
 
 function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
-  const hasDossiers = response?.dossiers?.dossiers?.length;
+  const hasDossiers = !!response?.dossiers?.dossiers?.length;
+
+  if (response === null) {
+    response = {} as ErfpachtV2DossiersResponse;
+  }
+
   if (hasDossiers) {
     response.dossiers.dossiers = response.dossiers?.dossiers.map((dossier) => {
       return transformErfpachtDossierProperties(dossier);
@@ -418,9 +423,7 @@ function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
       });
   }
 
-  if (hasDossiers) {
-    response.isKnown = true;
-  }
+  response.isKnown = hasDossiers;
 
   return response;
 }
@@ -432,7 +435,7 @@ export async function fetchErfpachtV2(
   const config = getApiConfig('ERFPACHTv2');
 
   if (authProfileAndToken.profile.profileType === 'commercial') {
-    return requestData<ErfpachtV2DossiersResponse | { isKnown: boolean }>(
+    return requestData<ErfpachtV2DossiersResponse>(
       {
         ...config,
         url: `${config.url}/vernise/api/erfpachter`,
