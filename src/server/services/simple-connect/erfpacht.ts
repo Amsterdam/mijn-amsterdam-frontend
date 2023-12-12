@@ -344,8 +344,9 @@ export type ErfpachtV2Dossier = ErfpachtV2DossierSource &
 
 interface ErfpachtV2DossiersResponse extends ErfpachtV2DossiersResponseSource {
   dossiers: ErfpachtV2DossiersResponseSource['dossiers'] & {
-    dossiers: ErfpachtV2Dossier[];
+    dossiers?: ErfpachtV2Dossier[];
   };
+  isKnown: boolean;
 }
 
 function transformErfpachtDossierProperties<
@@ -412,11 +413,13 @@ function transformErfpachtDossierProperties<
 }
 
 function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
-  if (response?.dossiers?.dossiers?.length) {
+  const hasDossiers = response?.dossiers?.dossiers?.length;
+  if (hasDossiers) {
     response.dossiers.dossiers = response.dossiers?.dossiers.map((dossier) => {
       return transformErfpachtDossierProperties(dossier);
     });
   }
+
   if (response?.openstaandeFacturen?.facturen?.length) {
     response.openstaandeFacturen.facturen =
       response.openstaandeFacturen?.facturen.map((factuur) => {
@@ -426,6 +429,11 @@ function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
         };
       });
   }
+
+  if (hasDossiers) {
+    response.isKnown = true;
+  }
+
   return response;
 }
 
@@ -434,6 +442,18 @@ export async function fetchErfpachtV2(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('ERFPACHTv2');
+
+  if (authProfileAndToken.profile.profileType === 'commercial') {
+    return requestData<ErfpachtV2DossiersResponse | { isKnown: boolean }>(
+      {
+        ...config,
+        url: `${config.url}/vernise/api/erfpachter`,
+        transformResponse: transformIsErfpachterResponseSource,
+      },
+      requestID,
+      authProfileAndToken
+    );
+  }
 
   return requestData<ErfpachtV2DossiersResponse>(
     {

@@ -260,7 +260,14 @@ export const myChaptersMenuItems: ChapterMenuItem[] = [
     title: ChapterTitles.ERFPACHTv2,
     id: Chapters.ERFPACHTv2,
     to: AppRoutes.ERFPACHTv2,
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private'],
+  },
+  {
+    title: ChapterTitles.ERFPACHTv2,
+    id: Chapters.ERFPACHTv2,
+    to: ExternalUrls.ERFPACHTv2_ZAKELIJK,
+    profileTypes: ['commercial'],
+    rel: 'external',
   },
   {
     title: ChapterTitles.ERFPACHT,
