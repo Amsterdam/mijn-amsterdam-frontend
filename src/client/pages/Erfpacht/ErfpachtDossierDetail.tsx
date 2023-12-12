@@ -42,13 +42,7 @@ export default function ErfpachtDossierDetail() {
     key: dossierNummerUrlParam,
   });
   const noContent = !api.isLoading && !dossier;
-  const relaties =
-    dossier?.relaties?.map((r, index) => {
-      return {
-        ...r,
-        relatieNaam: `${index}-${r.relatieNaam}`,
-      };
-    }) ?? [];
+  const relaties = dossier?.relaties ?? [];
 
   return (
     <DetailPage className={styles.ErfpachtDetail}>
