@@ -1,7 +1,7 @@
 import { Alert, Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import { useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { ChapterIcon, OverviewPage, PageHeading } from '..';
+import { ChapterIcon, LoadingContent, OverviewPage, PageHeading } from '..';
 import { Chapter } from '../../../universal/config';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { TableProps } from '../Table/Table';
@@ -15,6 +15,7 @@ interface ListPagePaginatedProps {
   pageSize?: number;
   chapter?: Chapter;
   appRoute: string;
+  appRouteParams?: Record<string, string> | null;
   appRouteBack: string;
   title: string;
   displayProps: TableProps<object>['displayProps'] | null;
@@ -30,6 +31,7 @@ export function ListPagePaginated({
   chapter,
   title,
   appRoute,
+  appRouteParams = null,
   appRouteBack,
   pageSize = DEFAULT_PAGE_SIZE,
   displayProps,
@@ -81,12 +83,23 @@ export function ListPagePaginated({
             </Grid.Cell>
           )}
           <Grid.Cell fullWidth>
-            <TableV2
-              titleKey={titleKey}
-              items={itemsPaginated}
-              displayProps={displayProps}
-              gridColStyles={tableGridColStyles}
-            />
+            {isLoading && (
+              <LoadingContent
+                barConfig={[
+                  ['100%', '2rem', '2rem'],
+                  ['100%', '2rem', '2rem'],
+                  ['100%', '2rem', '2rem'],
+                ]}
+              />
+            )}
+            {!isLoading && (
+              <TableV2
+                titleKey={titleKey}
+                items={itemsPaginated}
+                displayProps={displayProps}
+                gridColStyles={tableGridColStyles}
+              />
+            )}
             {items.length > pageSize && (
               <PaginationV2
                 totalCount={total}
@@ -95,6 +108,7 @@ export function ListPagePaginated({
                 onPageClick={(page: number) => {
                   history.push(
                     generatePath(appRoute, {
+                      ...appRouteParams,
                       page,
                     })
                   );

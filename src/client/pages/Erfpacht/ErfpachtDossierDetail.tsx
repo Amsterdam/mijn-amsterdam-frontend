@@ -8,7 +8,7 @@ import {
   Screen,
 } from '@amsterdam/design-system-react';
 import classname from 'classnames';
-import { useParams } from 'react-router-dom';
+import { useParams, generatePath } from 'react-router-dom';
 import type { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
 import {
   AppRoutes,
@@ -28,10 +28,7 @@ import { MaParagraph } from '../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../components/Table/TableV2';
 import { BFFApiUrls } from '../../config/api';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import {
-  useAppStateBagApi,
-  useRemoveAppStateBagData,
-} from '../../hooks/useAppState';
+import { useAppStateBagApi } from '../../hooks/useAppState';
 import styles from './ErfpachtDossierDetail.module.scss';
 
 export default function ErfpachtDossierDetail() {
@@ -44,7 +41,6 @@ export default function ErfpachtDossierDetail() {
     bagChapter: BagChapters.ERFPACHTv2,
     key: dossierNummerUrlParam,
   });
-  const removeAppStateBagData = useRemoveAppStateBagData();
   const noContent = !api.isLoading && !dossier;
   const relaties = dossier?.relaties
     ? Array.from({ length: 20 }, () => dossier.relaties ?? [])
@@ -377,7 +373,10 @@ export default function ErfpachtDossierDetail() {
                           <MaParagraph textAlign="right">
                             <LinkToListPage
                               count={dossier.facturen.facturen.length}
-                              route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+                              route={generatePath(
+                                AppRoutes['ERFPACHTv2/ALLE_FACTUREN'],
+                                { dossierNummerUrlParam }
+                              )}
                             />
                           </MaParagraph>
                         )}

@@ -119,6 +119,9 @@ const ErfpachtDossiers = lazy(
 const ErfpachtFacturen = lazy(
   () => import('./pages/Erfpacht/ErfpachtFacturen')
 );
+const ErfpachtOpenFacturen = lazy(
+  () => import('./pages/Erfpacht/ErfpachtOpenFacturen')
+);
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -365,8 +368,14 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route
-              path={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+              path={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
               component={ErfpachtFacturen}
+            />
+          )}
+          {FeatureToggle.erfpachtV2Active && (
+            <Route
+              path={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+              component={ErfpachtOpenFacturen}
             />
           )}
           {FeatureToggle.erfpachtV2Active && (

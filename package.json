@@ -127,19 +127,19 @@
     "typescript": "^5.2.2",
     "uid-safe": "^2.1.5",
     "use-debounce": "^10.0.0",
-    "vite-plugin-svgr": "^4.1.0",
     "xlsx": "file:vendor/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.4",
     "@types/express-http-proxy": "^1.6.3",
     "@types/jsonpath": "^0.2.1",
-    "@vitejs/plugin-react": "^4.0.1",
+    "@vitejs/plugin-react": "^4.2.1",
     "jsdom": "^22.1.0",
     "mockdate": "^3.0.5",
     "nock": "^13.2.2",
     "sass": "^1.63.6",
-    "vite": "^4.3.9",
-    "vitest": "^0.34.6"
+    "vite": "^5.0.8",
+    "vite-plugin-svgr": "^4.2.0",
+    "vitest": "^1.0.4"
   }
 }
