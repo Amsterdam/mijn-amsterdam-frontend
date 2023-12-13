@@ -24,20 +24,20 @@ import { addLinkElementToProperty } from '../../components/Table/Table';
 import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 import styles from './Erfpacht.module.scss';
 
-interface DisplayPropsDossiers {
+type DisplayPropsDossiers = Record<string, string> & {
   voorkeursadres: string;
   dossierNummer: string;
   zaaknummer?: string;
   wijzigingsAanvragen?: string;
-}
+};
 
-interface DisplayPropsFacturen {
-  dossierAdres: string;
+type DisplayPropsFacturen = Record<string, string> & {
+  dossierAdres?: string;
   factuurNummer: string;
   formattedFactuurBedrag: string;
-  status: string;
+  status?: string;
   vervalDatum: string;
-}
+};
 
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
@@ -46,11 +46,15 @@ export function useErfpachtV2Data() {
     dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );
-  const openFacturen = ERFPACHTv2.content?.openstaandeFacturen?.facturen ?? [];
+  const openFacturenBase = ERFPACHTv2.content?.openstaandeFacturen;
+  const openFacturen = Array.from({ length: 6 })
+    .map(() => openFacturenBase?.facturen ?? [])
+    .flat();
 
   let displayPropsDossiers: DisplayPropsDossiers | null = null;
   let titleDossiers = ERFPACHTv2.content?.titelDossiersKop;
   let displayPropsOpenFacturen: DisplayPropsFacturen | null = null;
+  let displayPropsAlleFacturen: DisplayPropsFacturen | null = null;
   let titleOpenFacturen = ERFPACHTv2.content?.titelOpenFacturenKop;
 
   if (!!dossiersBase) {
@@ -68,14 +72,21 @@ export function useErfpachtV2Data() {
     }
   }
 
-  if (openFacturen.length) {
-    const [openFactuur] = openFacturen;
+  if (!!openFacturenBase) {
     displayPropsOpenFacturen = {
-      dossierAdres: openFactuur.titelFacturenDossierAdres,
-      factuurNummer: openFactuur.titelFacturenNummer,
-      formattedFactuurBedrag: openFactuur.titelFacturenFactuurBedrag,
-      status: openFactuur.titelFacturenStatus,
-      vervalDatum: openFactuur.titelFacturenVervaldatum,
+      dossierAdres: openFacturenBase.titelFacturenDossierAdres,
+      factuurNummer: openFacturenBase.titelFacturenNummer,
+      formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
+      vervalDatum: openFacturenBase.titelFacturenVervaldatum,
+    };
+  }
+
+  if (!!openFacturenBase) {
+    displayPropsAlleFacturen = {
+      factuurNummer: openFacturenBase.titelFacturenNummer,
+      formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
+      status: openFacturenBase.titelFacturenStatus,
+      vervalDatum: openFacturenBase.titelFacturenVervaldatum,
     };
   }
 
@@ -85,8 +96,23 @@ export function useErfpachtV2Data() {
     dossiers,
     displayPropsDossiers,
     displayPropsOpenFacturen,
+    displayPropsAlleFacturen,
     titleDossiers,
     titleOpenFacturen,
+    colStyles: {
+      openFacturenTable: [
+        styles.OpenFacturenTable_col1,
+        styles.OpenFacturenTable_col2,
+        styles.OpenFacturenTable_col3,
+        styles.OpenFacturenTable_col4,
+      ],
+      facturenTable: [
+        styles.FacturenTable_col1,
+        styles.FacturenTable_col2,
+        styles.FacturenTable_col3,
+        styles.FacturenTable_col4,
+      ],
+    },
   };
 }
 
@@ -99,6 +125,7 @@ export default function Erfpacht() {
     displayPropsOpenFacturen,
     titleDossiers,
     titleOpenFacturen,
+    colStyles,
   } = useErfpachtV2Data();
 
   return (
@@ -115,7 +142,7 @@ export default function Erfpacht() {
       <Screen>
         <DesignSystemStyleAdjust />
         <Grid>
-          <Grid.Cell span={7} start={1}>
+          <Grid.Cell span={{ narrow: 4, medium: 8, wide: 11 }}>
             <MaParagraph>
               Hieronder ziet u de gegevens van uw erfpachtrechten.
             </MaParagraph>
@@ -181,7 +208,6 @@ export default function Erfpacht() {
               {!!dossiers.length ? (
                 <TableV2
                   className={styles.DossiersTable}
-                  titleKey="voorkeursadres"
                   items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
                   displayProps={displayPropsDossiers ?? {}}
                   gridColStyles={[
@@ -211,16 +237,9 @@ export default function Erfpacht() {
               </Heading>
               {!!openFacturen.length ? (
                 <TableV2
-                  titleKey="dossieradres"
                   items={openFacturen.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
                   displayProps={displayPropsOpenFacturen ?? {}}
-                  gridColStyles={[
-                    styles.FacturenTable_col1,
-                    styles.FacturenTable_col2,
-                    styles.FacturenTable_col3,
-                    styles.FacturenTable_col4,
-                    styles.FacturenTable_col5,
-                  ]}
+                  gridColStyles={colStyles.openFacturenTable}
                 />
               ) : (
                 <MaParagraph>

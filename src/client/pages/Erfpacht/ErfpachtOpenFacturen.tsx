@@ -11,6 +11,7 @@ export default function ErfpachtFacturen() {
     openFacturen,
     displayPropsOpenFacturen,
     titleOpenFacturen,
+    colStyles,
   } = useErfpachtV2Data();
 
   return (
@@ -24,13 +25,7 @@ export default function ErfpachtFacturen() {
       titleKey="dossieradres"
       isLoading={isLoading(ERFPACHTv2)}
       isError={isError(ERFPACHTv2)}
-      tableGridColStyles={[
-        styles.FacturenTable_col1,
-        styles.FacturenTable_col2,
-        styles.FacturenTable_col3,
-        styles.FacturenTable_col4,
-        styles.FacturenTable_col5,
-      ]}
+      tableGridColStyles={colStyles.openFacturenTable}
     />
   );
 }

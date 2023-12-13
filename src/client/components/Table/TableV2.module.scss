@@ -8,14 +8,20 @@
 .Table__grid {
   border-spacing: 0;
 
+  td,
+  th {
+    overflow-wrap: anywhere;
+  }
+
   thead>tr {
     margin-top: var(--amsterdam-grid-gap);
   }
 }
 
 .TableRow__Grid {
-  display: grid;
-  grid-template-columns: repeat(var(--amsterdam-grid-wide-column-count), 1fr);
-  gap: var(--amsterdam-grid-gap);
   margin-bottom: var(--amsterdam-grid-gap);
+
+  thead & {
+    margin-bottom: calc(var(--amsterdam-grid-gap) / 1.7);
+  }
 }

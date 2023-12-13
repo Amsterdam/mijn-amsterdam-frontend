@@ -1,48 +1,174 @@
 @import '../../styles/_global.scss';
 
-.DossiersTable_col1 {
-  grid-column-start: 1;
-  grid-column-end: span 4;
-}
-
-.DossiersTable_col2 {
-  grid-column-start: 5;
-  grid-column-end: span 3;
-}
-
-.DossiersTable_col3 {
-  grid-column-start: 8;
-  grid-column-end: span 3;
-}
-
-.DossiersTable_col4 {
-  grid-column-start: 11;
-  grid-column-end: span 2;
-}
-
-@media screen and (min-width: $amsterdam-breakpoint-medium) {
-  .FacturenTable_col1 {
+.DossiersTable {
+  &_col1 {
     grid-column-start: 1;
-    grid-column-end: span 4;
-  }
-
-  .FacturenTable_col2 {
-    grid-column-start: 5;
     grid-column-end: span 2;
   }
 
-  .FacturenTable_col3 {
-    grid-column-start: 7;
+  &_col2 {
+    grid-column-start: 3;
     grid-column-end: span 2;
   }
 
-  .FacturenTable_col4 {
-    grid-column-start: 9;
-    grid-column-end: span 2;
+  &_col3,
+  &_col4 {
+    display: none;
   }
 
-  .FacturenTable_col5 {
-    grid-column-start: 11;
-    grid-column-end: span 2;
+  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+    &_col1 {
+      grid-column-start: 1;
+      grid-column-end: span 3;
+    }
+
+    &_col2 {
+      grid-column-start: 4;
+      grid-column-end: span 3;
+    }
+
+    &_col3 {
+      grid-column-start: 7;
+      grid-column-end: span 3;
+      display: initial;
+    }
+
+    &_col4 {
+      grid-column-start: 10;
+      grid-column-end: span 2;
+      display: initial;
+    }
   }
 }
+
+.FacturenTable {
+  &_col1 {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+  }
+
+  &_col2 {
+    grid-column-start: 3;
+    grid-column-end: span 1;
+  }
+
+  &_col3 {
+    grid-column-start: 4;
+    grid-column-end: span 1;
+  }
+
+  &_col4 {
+    display: none;
+  }
+
+  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+    &_col1 {
+      grid-column-start: 1;
+      grid-column-end: span 2;
+    }
+
+    &_col2 {
+      grid-column-start: 3;
+      grid-column-end: span 2;
+    }
+
+    &_col3 {
+      grid-column-start: 5;
+      grid-column-end: span 2;
+    }
+
+    &_col4 {
+      grid-column-start: 7;
+      grid-column-end: span 4;
+      display: initial;
+    }
+  }
+}
+
+.OpenFacturenTable {
+  &_col1 {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+  }
+
+  &_col2 {
+    grid-column-start: 3;
+    grid-column-end: span 1;
+  }
+
+  &_col3 {
+    grid-column-start: 4;
+    grid-column-end: span 1;
+  }
+
+  &_col4 {
+    display: none;
+  }
+
+  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+    &_col1 {
+      grid-column-start: 1;
+      grid-column-end: span 3;
+    }
+
+    &_col2 {
+      grid-column-start: 4;
+      grid-column-end: span 2;
+    }
+
+    &_col3 {
+      grid-column-start: 6;
+      grid-column-end: span 2;
+    }
+
+    &_col4 {
+      grid-column-start: 8;
+      grid-column-end: span 4;
+      display: initial;
+    }
+  }
+}
+
+// .AlleFacturenTable {
+//   &_col1 {
+//     grid-column-start: 1;
+//     grid-column-end: span 2;
+//   }
+
+//   &_col2 {
+//     grid-column-start: 3;
+//     grid-column-end: span 1;
+//   }
+
+//   &_col3 {
+//     grid-column-start: 4;
+//     grid-column-end: span 1;
+//   }
+
+//   &_col4 {
+//     display: none;
+//   }
+
+//   @media screen and (min-width: $amsterdam-breakpoint-medium) {
+//     &_col1 {
+//       grid-column-start: 1;
+//       grid-column-end: span 4;
+//     }
+
+//     &_col2 {
+//       grid-column-start: 5;
+//       grid-column-end: span 2;
+//     }
+
+//     &_col3 {
+//       grid-column-start: 7;
+//       grid-column-end: span 2;
+//     }
+
+//     &_col4 {
+//       grid-column-start: 9;
+//       grid-column-end: span 2;
+//       display: initial;
+//     }
+//   }
+// }

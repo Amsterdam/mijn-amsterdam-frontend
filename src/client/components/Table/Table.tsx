@@ -61,7 +61,7 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [propertyName]: (
-        <MARouterLink variant="inline" href={item.link.to}>
+        <MARouterLink fatNoUnderline href={item.link.to}>
           {capitalizeFirstLetter(label)}
         </MARouterLink>
       ),
@@ -75,7 +75,7 @@ export interface TableProps<T> {
   items: T[];
   className?: string;
   titleKey?: keyof T | string;
-  displayProps?: DisplayProps<T>;
+  displayProps: DisplayProps<T>;
 }
 
 interface TdValueProps {

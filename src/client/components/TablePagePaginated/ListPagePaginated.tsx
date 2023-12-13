@@ -1,5 +1,5 @@
 import { Alert, Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { ChapterIcon, LoadingContent, OverviewPage, PageHeading } from '..';
 import { Chapter } from '../../../universal/config';
@@ -11,35 +11,37 @@ import { DesignSystemStyleAdjust } from '../DesignSystemStyleAdjust/DesignSystem
 const DEFAULT_PAGE_SIZE = 10;
 
 interface ListPagePaginatedProps {
+  appRoute: string;
+  appRouteBack: string;
+  appRouteParams?: Record<string, string> | null;
+  body?: ReactNode;
+  chapter?: Chapter;
+  displayProps: Record<string, string> | null;
+  errorText?: string;
+  isError: boolean;
+  isLoading: boolean;
   items: object[];
   pageSize?: number;
-  chapter?: Chapter;
-  appRoute: string;
-  appRouteParams?: Record<string, string> | null;
-  appRouteBack: string;
-  title: string;
-  displayProps: TableProps<object>['displayProps'] | null;
-  titleKey?: string;
-  isLoading: boolean;
-  isError: boolean;
-  errorText?: string;
   tableGridColStyles?: string[];
+  title: string;
+  titleKey?: string;
 }
 
 export function ListPagePaginated({
-  items,
-  chapter,
-  title,
   appRoute,
-  appRouteParams = null,
   appRouteBack,
-  pageSize = DEFAULT_PAGE_SIZE,
+  appRouteParams = null,
+  body,
+  chapter,
   displayProps,
-  titleKey,
-  isLoading,
-  isError,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
+  isError,
+  isLoading,
+  items,
+  pageSize = DEFAULT_PAGE_SIZE,
   tableGridColStyles,
+  title,
+  titleKey,
 }: ListPagePaginatedProps) {
   const history = useHistory();
 
@@ -75,6 +77,7 @@ export function ListPagePaginated({
       </PageHeading>
       <Screen>
         <Grid>
+          {!!body && <Grid.Cell fullWidth>{body}</Grid.Cell>}
           {isError && (
             <Grid.Cell fullWidth>
               <Alert title="Foutmelding" icon severity="error">
@@ -94,7 +97,6 @@ export function ListPagePaginated({
             )}
             {!isLoading && (
               <TableV2
-                titleKey={titleKey}
                 items={itemsPaginated}
                 displayProps={displayProps}
                 gridColStyles={tableGridColStyles}

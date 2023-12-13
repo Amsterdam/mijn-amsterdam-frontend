@@ -95,10 +95,10 @@
     "titelFactuurZoekveld": "Factuurnummer",
     "titelBetaler": "Betaler",
     "titelDebiteurNummer": "Debiteurnummer",
-    "titelFacturenDossierAdres": "Adres erfpachtrecht",
+    "titelFacturenDossierAdres": "Adres",
     "titelFacturenStatus": "Status",
     "titelFacturenNummer": "Factuurnummer",
-    "titelFacturenFactuurBedrag": "Factuurbedrag",
+    "titelFacturenFactuurBedrag": "Bedrag",
     "titelFacturenOpenstaandBedrag": "Status",
     "titelFacturenVervaldatum": "Vervaldatum",
     "titelResultatenGevonden": " resultaten gevonden",
@@ -107,7 +107,7 @@
     "facturen": [
       {
         "dossierAdres": "Esther de Boer-v Rijkstr 62",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "status": "Openstaand",
         "titelFacturenStatus": "Status",
@@ -126,7 +126,7 @@
       },
       {
         "dossierAdres": "Esther de Boer-v Rijkstr 62",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "status": "Openstaand",
         "titelFacturenStatus": "Status",

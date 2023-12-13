@@ -111,7 +111,7 @@ const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
 const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
 const Erfpacht = lazy(() => import('./pages/Erfpacht/Erfpacht'));
 const ErfpachtDossierDetail = lazy(
-  () => import('./pages/Erfpacht/ErfpachtDossierDetail')
+  () => import('./pages/Erfpacht/DossierDetail/ErfpachtDossierDetail')
 );
 const ErfpachtDossiers = lazy(
   () => import('./pages/Erfpacht/ErfpachtDossiers')

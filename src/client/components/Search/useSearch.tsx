@@ -130,11 +130,12 @@ export function generateSearchIndexPageEntries(
     );
   });
 
-  return apiConfigs.flatMap((apiConfig) =>
-    apiConfig
-      .getApiBaseItems(appState[apiConfig.stateKey].content)
-      .map((item) => generateSearchIndexPageEntry(item, apiConfig))
-  );
+  return apiConfigs.flatMap((apiConfig) => {
+    const apiContent = appState[apiConfig.stateKey]?.content;
+    return apiConfig
+      .getApiBaseItems(apiContent)
+      .map((item) => generateSearchIndexPageEntry(item, apiConfig));
+  });
 }
 
 interface AmsterdamSearchResult {

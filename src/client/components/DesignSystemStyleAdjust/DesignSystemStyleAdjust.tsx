@@ -7,6 +7,9 @@ export function DesignSystemStyleAdjust() {
             // --mams-font-size-body: initial;
             // --mams-line-height: initial;
           }
+          .amsterdam-grid .amsterdam-grid {
+            --amsterdam-grid-padding-inline: 0
+          }
           .amsterdam-screen.amsterdam-screen--wide {
             font-family: var(--amsterdam-heading-font-family);
           }

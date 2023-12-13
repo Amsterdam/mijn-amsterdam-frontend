@@ -16,7 +16,7 @@
   "titelKopFacturen": "Facturen",
   "kadastraleaanduidingen": [
     {
-      "titelAdres": "Adres erfpachtrecht",
+      "titelAdres": "Adres",
       "adres": "Pijnackerstraat 22 H",
       "titelKadastraleAanduiding": "Kadastrale aanduiding",
       "gemeenteCode": "ASD18",
@@ -76,6 +76,15 @@
     "titelErfpachtUitgegeven": "Datum eerste uitgifte"
   },
   "bijzondereBepalingen": [
+    {
+      "omschrijving": "Wonen/Koopwoning/Woning",
+      "titelBestemmingOmschrijving": "Bestemming",
+      "categorie": "Wonen",
+      "oppervlakte": "35",
+      "samengesteldeOppervlakteEenheid": "Bruto vloeroppervlak: 35 m2",
+      "titelOppervlakte": "Oppervlakte",
+      "eenheid": "m² BVO"
+    },
     {
       "omschrijving": "Wonen/Koopwoning/Woning",
       "titelBestemmingOmschrijving": "Bestemming",
@@ -152,7 +161,7 @@
     "facturen": [
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -171,7 +180,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -191,7 +200,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -211,7 +220,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -231,7 +240,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -251,7 +260,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -271,7 +280,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -290,7 +299,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -309,7 +318,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -328,7 +337,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -347,7 +356,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -366,7 +375,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -385,7 +394,7 @@
       },
       {
         "dossierAdres": "Pijnackerstraat 22 H",
-        "titelFacturenDossierAdres": "Adres erfpachtrecht",
+        "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "dossierNummer": "E477/46",
         "status": "Voldaan",
@@ -403,7 +412,7 @@
         "open": false
       }
     ],
-    "titelFacturenDossierAdres": "Adres erfpachtrecht",
+    "titelFacturenDossierAdres": "Adres",
     "titelFacturenStatus": "Status",
     "titelFacturenNummer": "Factuurnummer",
     "titelFacturenFactuurBedrag": "Factuurbedrag",

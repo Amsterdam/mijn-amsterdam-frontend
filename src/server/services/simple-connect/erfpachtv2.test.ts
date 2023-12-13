@@ -1,16 +1,10 @@
-import { createDecipheriv } from 'crypto';
 import { describe, expect, test } from 'vitest';
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../helpers/app';
-import {
-  fetchErfpacht,
-  fetchErfpachtNotifications,
-  fetchErfpachtV2,
-  getConfigMain,
-} from './erfpacht';
-import ERFPACHTv2_DOSSIERS from '../../mock-data/json/erfpacht-v2-dossiers.json';
 import ERFPACHTv2_DOSSIERINFO_DETAILS from '../../mock-data/json/erfpacht-v2-dossierinfo-bsn.json';
+import ERFPACHTv2_DOSSIERS from '../../mock-data/json/erfpacht-v2-dossiers.json';
 import ERFPACHTv2_ERFPACHTER from '../../mock-data/json/erfpacht-v2-erfpachter.json';
+import { fetchErfpachtV2 } from './erfpacht';
 
 // const mocks = vi.hoisted(() => {
 //   return {

@@ -5,6 +5,9 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Erfpacht from './Erfpacht';
+import ERFPACHTv2_DOSSIERINFO_DETAILS from '../../../server/mock-data/json/erfpacht-v2-dossiers.json';
+import ERFPACHTv2_DOSSIERS from '../../../server/mock-data/json/erfpacht-v2-dossiers.json';
+import ERFPACHTv2_ERFPACHTER from '../../../server/mock-data/json/erfpacht-v2-erfpachter.json';
 
 const testState: any = {
   ERFPACHTv2: { status: 'OK', content: null },

@@ -145,7 +145,7 @@ interface ErfpachtDossierFactuur {
   titelFacturenVervaldatum: string;
 }
 
-interface ErfpachtDossierDetailToekomstigePeriode {
+export interface ErfpachtDossierDetailToekomstigePeriode {
   periodeVan: string;
   titelFinancieelToekomstigePeriodeVan: string;
   periodeTm: string;
@@ -162,14 +162,14 @@ interface ErfpachtDossierDetailToekomstigePeriode {
   titelFinancieelToekomstigeCanon: string;
 }
 
-interface ErfpachtCanon {
+export interface ErfpachtCanon {
   canonBedrag: string;
   formattedCanonBedrag: string;
   canonBeginJaar: string;
   samengesteld: string;
 }
 
-interface ErfpachtDossierDetailHuidigePeriode {
+export interface ErfpachtDossierDetailHuidigePeriode {
   periodeVan: string;
   titelFinancieelPeriodeVan: string;
   periodeTm: string;
@@ -247,8 +247,8 @@ interface ErfpachtV2DossiersDetailSource {
   facturen: {
     betaler: string;
     titelBetaler: string;
-    debiteurnummer: string;
-    titelDebiteurnummer: string;
+    debiteurNummer: string;
+    titelDebiteurNummer: string;
     titelFacturen: string;
     titelVerklarendeTekstFacturen: string;
     titelVerklarendeTekstFacturen2: string;
@@ -335,7 +335,8 @@ interface ErfpachtV2DossiersResponseSource {
 export type ErfpachtV2Dossier = ErfpachtV2DossierSource &
   ErfpachtDossierPropsFrontend;
 
-interface ErfpachtV2DossiersResponse extends ErfpachtV2DossiersResponseSource {
+export interface ErfpachtV2DossiersResponse
+  extends ErfpachtV2DossiersResponseSource {
   dossiers: ErfpachtV2DossiersResponseSource['dossiers'] & {
     dossiers?: ErfpachtV2Dossier[];
   };
