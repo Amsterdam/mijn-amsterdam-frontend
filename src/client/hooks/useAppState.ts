@@ -163,7 +163,7 @@ export function isAppStateReady(
         (isLegacyProfileType && !stateConfig?.profileTypes?.length) ||
         stateConfig?.profileTypes?.includes(profileType);
 
-      if (!stateConfig) {
+      if (!stateConfig && !key.endsWith('_BAG')) {
         Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);
       }
 

@@ -6,7 +6,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/TablePagePaginated/ListPagePaginated';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 import { useErfpachtV2Data } from './Erfpacht';
-import styles from './ErfpachtDossierDetail.module.scss';
+import styles from './DossierDetail/ErfpachtDossierDetail.module.scss';
 import { BFFApiUrls } from '../../config/api';
 import { DataList } from '../../components/DataList/DataList';
 
@@ -26,30 +26,32 @@ export default function ErfpachtFacturen() {
   return (
     <ListPagePaginated
       body={
-        <DataList
-          className={styles.FacturenBetalerDebiteur}
-          rows={[
-            {
-              rows: [
-                {
-                  label: dossier.titelVoorkeursadres,
-                  content: dossier.voorkeursadres,
-                  className: styles.FacturenBetalerDebiteur_Col1,
-                },
-                {
-                  label: dossier.facturen.titelBetaler,
-                  content: dossier.facturen.betaler,
-                  className: styles.FacturenBetalerDebiteur_Col2,
-                },
-                {
-                  label: dossier.facturen.titelDebiteurNummer,
-                  content: dossier.facturen.debiteurNummer,
-                  className: styles.FacturenBetalerDebiteur_Col3,
-                },
-              ],
-            },
-          ]}
-        />
+        !!dossier && (
+          <DataList
+            className={styles.FacturenBetalerDebiteur}
+            rows={[
+              {
+                rows: [
+                  {
+                    label: dossier.titelVoorkeursadres,
+                    content: dossier.voorkeursadres,
+                    className: styles.FacturenBetalerDebiteur_Col1,
+                  },
+                  {
+                    label: dossier.facturen.titelBetaler,
+                    content: dossier.facturen.betaler,
+                    className: styles.FacturenBetalerDebiteur_Col2,
+                  },
+                  {
+                    label: dossier.facturen.titelDebiteurNummer,
+                    content: dossier.facturen.debiteurNummer,
+                    className: styles.FacturenBetalerDebiteur_Col3,
+                  },
+                ],
+              },
+            ]}
+          />
+        )
       }
       items={dossier?.facturen?.facturen ?? []}
       title={`Alle ${

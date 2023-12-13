@@ -69,7 +69,11 @@ export function DataList({ className, rows }: DataListProps) {
         'rows' in row ? (
           <DataListRowsWithWrapper key={`row-${index}`} rows={row.rows} />
         ) : (
-          <DataListRow label={row.label} content={row.content} />
+          <DataListRow
+            key={`row-${index}`}
+            label={row.label}
+            content={row.content}
+          />
         )
       )}
     </dl>
