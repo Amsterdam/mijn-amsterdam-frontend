@@ -14,7 +14,6 @@ import { transformSourceData } from '../data-transform/appState';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { IS_TEST } from '../../universal/config';
 
 const fallbackServiceRequestOptions = {
   postpone: true,

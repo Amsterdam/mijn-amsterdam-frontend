@@ -34,7 +34,7 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
 
 function getCert(envVarName: string | undefined) {
   // TODO: Should be only decodeBase64EncodedCertificateFromEnv when we've migrated to AZ
-  return IS_TEST
+  return IS_TAP
     ? decodeBase64EncodedCertificateFromEnv(envVarName)
     : getCertificateSync(envVarName);
 }
