@@ -5,7 +5,7 @@ import fs from 'fs';
 import https from 'https';
 import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TAP, IS_TEST } from '../universal/config/env';
+import { IS_OT, IS_TAP } from '../universal/config/env';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
