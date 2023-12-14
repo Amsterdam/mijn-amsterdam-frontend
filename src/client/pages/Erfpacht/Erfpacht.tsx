@@ -1,11 +1,11 @@
 import {
   Alert,
-  Heading,
   Grid,
-  Screen,
+  Heading,
   Link,
-  UnorderedList,
   Paragraph,
+  Screen,
+  UnorderedList,
 } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -15,106 +15,14 @@ import {
   OverviewPage,
   PageHeading,
 } from '../../components';
-import { useAppStateGetter } from '../../hooks';
-import { TableV2 } from '../../components/Table/TableV2';
-import { MaParagraph } from '../../components/Paragraph/Paragraph';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
-import { addLinkElementToProperty } from '../../components/Table/Table';
 import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
+import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import { MaParagraph } from '../../components/Paragraph/Paragraph';
+import { TableV2 } from '../../components/Table/TableV2';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import styles from './Erfpacht.module.scss';
-
-type DisplayPropsDossiers = Record<string, string> & {
-  voorkeursadres: string;
-  dossierNummer: string;
-  zaaknummer?: string;
-  wijzigingsAanvragen?: string;
-};
-
-type DisplayPropsFacturen = Record<string, string> & {
-  dossierAdres?: string;
-  factuurNummer: string;
-  formattedFactuurBedrag: string;
-  status?: string;
-  vervalDatum: string;
-};
-
-export function useErfpachtV2Data() {
-  const { ERFPACHTv2 } = useAppStateGetter();
-  const dossiersBase = ERFPACHTv2.content?.dossiers;
-  const dossiers = addLinkElementToProperty(
-    dossiersBase?.dossiers ?? [],
-    'voorkeursadres'
-  );
-  const openFacturenBase = ERFPACHTv2.content?.openstaandeFacturen;
-  const openFacturen = Array.from({ length: 6 })
-    .map(() => openFacturenBase?.facturen ?? [])
-    .flat();
-
-  let displayPropsDossiers: DisplayPropsDossiers | null = null;
-  let titleDossiers = ERFPACHTv2.content?.titelDossiersKop;
-  let displayPropsOpenFacturen: DisplayPropsFacturen | null = null;
-  let displayPropsAlleFacturen: DisplayPropsFacturen | null = null;
-  let titleOpenFacturen = ERFPACHTv2.content?.titelOpenFacturenKop;
-
-  if (!!dossiersBase) {
-    displayPropsDossiers = {
-      voorkeursadres: dossiersBase.titelVoorkeursAdres,
-      dossierNummer: dossiersBase.titelDossiernummer,
-    };
-
-    if (!!dossiers?.length && 'zaaknummer' in dossiers[0]) {
-      displayPropsDossiers.zaaknummer = dossiersBase.titelZaakNummer;
-    }
-    if (!!dossiers?.length && 'wijzigingsAanvragen' in dossiers[0]) {
-      displayPropsDossiers.wijzigingsAanvragen =
-        dossiersBase.titelWijzigingsAanvragen;
-    }
-  }
-
-  if (!!openFacturenBase) {
-    displayPropsOpenFacturen = {
-      dossierAdres: openFacturenBase.titelFacturenDossierAdres,
-      factuurNummer: openFacturenBase.titelFacturenNummer,
-      formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
-      vervalDatum: openFacturenBase.titelFacturenVervaldatum,
-    };
-  }
-
-  if (!!openFacturenBase) {
-    displayPropsAlleFacturen = {
-      factuurNummer: openFacturenBase.titelFacturenNummer,
-      formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
-      status: openFacturenBase.titelFacturenStatus,
-      vervalDatum: openFacturenBase.titelFacturenVervaldatum,
-    };
-  }
-
-  return {
-    ERFPACHTv2,
-    openFacturen,
-    dossiers,
-    displayPropsDossiers,
-    displayPropsOpenFacturen,
-    displayPropsAlleFacturen,
-    titleDossiers,
-    titleOpenFacturen,
-    colStyles: {
-      openFacturenTable: [
-        styles.OpenFacturenTable_col1,
-        styles.OpenFacturenTable_col2,
-        styles.OpenFacturenTable_col3,
-        styles.OpenFacturenTable_col4,
-      ],
-      facturenTable: [
-        styles.FacturenTable_col1,
-        styles.FacturenTable_col2,
-        styles.FacturenTable_col3,
-        styles.FacturenTable_col4,
-      ],
-    },
-  };
-}
+import { OpenFacturenListGrouped } from './ErfpachtOpenFacturen';
+import { useErfpachtV2Data } from './erfpachtData.hook';
 
 export default function Erfpacht() {
   const {
@@ -126,6 +34,7 @@ export default function Erfpacht() {
     titleDossiers,
     titleOpenFacturen,
     colStyles,
+    isMediumScreen,
   } = useErfpachtV2Data();
 
   return (
@@ -142,7 +51,7 @@ export default function Erfpacht() {
       <Screen>
         <DesignSystemStyleAdjust />
         <Grid>
-          <Grid.Cell span={{ narrow: 4, medium: 8, wide: 11 }}>
+          <Grid.Cell fullWidth>
             <MaParagraph>
               Hieronder ziet u de gegevens van uw erfpachtrechten.
             </MaParagraph>
@@ -209,13 +118,8 @@ export default function Erfpacht() {
                 <TableV2
                   className={styles.DossiersTable}
                   items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
-                  displayProps={displayPropsDossiers ?? {}}
-                  gridColStyles={[
-                    styles.DossiersTable_col1,
-                    styles.DossiersTable_col2,
-                    styles.DossiersTable_col3,
-                    styles.DossiersTable_col4,
-                  ]}
+                  displayProps={displayPropsDossiers}
+                  gridColStyles={colStyles.dossiersTable}
                 />
               ) : (
                 <MaParagraph>
@@ -232,15 +136,32 @@ export default function Erfpacht() {
                   />
                 </MaParagraph>
               )}
-              <Heading level={3} size="level-2">
-                {titleOpenFacturen ?? 'Open facturen'}
-              </Heading>
+
+              {dossiers.length > 1 && (
+                <Heading level={3} size="level-2">
+                  {titleOpenFacturen ?? 'Open facturen'}
+                </Heading>
+              )}
               {!!openFacturen.length ? (
-                <TableV2
-                  items={openFacturen.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
-                  displayProps={displayPropsOpenFacturen ?? {}}
-                  gridColStyles={colStyles.openFacturenTable}
-                />
+                isMediumScreen ? (
+                  <TableV2
+                    items={openFacturen.slice(
+                      0,
+                      MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                    )}
+                    displayProps={displayPropsOpenFacturen}
+                    gridColStyles={colStyles.openFacturenTable}
+                  />
+                ) : (
+                  <OpenFacturenListGrouped
+                    facturen={openFacturen.slice(
+                      0,
+                      MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                    )}
+                    displayProps={displayPropsOpenFacturen}
+                    gridColStyles={colStyles.openFacturenTable}
+                  />
+                )
               ) : (
                 <MaParagraph>
                   U heeft geen{' '}

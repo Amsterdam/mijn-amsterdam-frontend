@@ -30,7 +30,11 @@
   --mams-font-size-rem-adjust: 62.5%;
   --mams-font-size-body: 1.6rem;
   --mams-line-height: 1.375;
+
+  // --amsterdam-grid-narrow-column-count: 8;
+  // --amsterdam-grid-medium-column-count: 12;
 }
+
 
 // Remove padding from nested grids
 .amsterdam-grid .amsterdam-grid {

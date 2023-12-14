@@ -1,20 +1,6 @@
 @import '../../styles/_global.scss';
 
 .DossiersTable {
-  &_col1 {
-    grid-column-start: 1;
-    grid-column-end: span 2;
-  }
-
-  &_col2 {
-    grid-column-start: 3;
-    grid-column-end: span 2;
-  }
-
-  &_col3,
-  &_col4 {
-    display: none;
-  }
 
   @media screen and (min-width: $amsterdam-breakpoint-medium) {
     &_col1 {
@@ -24,85 +10,73 @@
 
     &_col2 {
       grid-column-start: 4;
-      grid-column-end: span 3;
+      grid-column-end: span 2;
     }
 
     &_col3 {
-      grid-column-start: 7;
-      grid-column-end: span 3;
-      display: initial;
+      grid-column-start: 6;
+      grid-column-end: span 2;
     }
 
     &_col4 {
-      grid-column-start: 10;
-      grid-column-end: span 2;
-      display: initial;
+      grid-column-start: 8;
+      grid-column-end: span 1;
     }
   }
-}
 
-.FacturenTable {
-  &_col1 {
-    grid-column-start: 1;
-    grid-column-end: span 2;
-  }
-
-  &_col2 {
-    grid-column-start: 3;
-    grid-column-end: span 1;
-  }
-
-  &_col3 {
-    grid-column-start: 4;
-    grid-column-end: span 1;
-  }
-
-  &_col4 {
-    display: none;
-  }
-
-  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+  @media screen and (min-width: $amsterdam-breakpoint-wide) {
     &_col1 {
       grid-column-start: 1;
-      grid-column-end: span 2;
+      grid-column-end: span 4;
     }
 
     &_col2 {
-      grid-column-start: 3;
-      grid-column-end: span 2;
+      grid-column-start: 5;
+      grid-column-end: span 3;
     }
 
     &_col3 {
-      grid-column-start: 5;
-      grid-column-end: span 2;
+      grid-column-start: 8;
+      grid-column-end: span 3;
     }
 
     &_col4 {
-      grid-column-start: 7;
-      grid-column-end: span 4;
-      display: initial;
+      grid-column-start: 11;
+      grid-column-end: span 2;
     }
   }
 }
 
+// .FacturenTable {
+
+//   @media screen and (min-width: $amsterdam-breakpoint-wide) {
+//     &_col1 {
+//       grid-column-start: 1;
+//       grid-column-end: span 2;
+//     }
+
+//     &_col2 {
+//       grid-column-start: 3;
+//       grid-column-end: span 2;
+//     }
+
+//     &_col3 {
+//       grid-column-start: 5;
+//       grid-column-end: span 2;
+//
+//     }
+
+//     &_col4 {
+//       grid-column-start: 7;
+//       grid-column-end: span 2;
+//
+//     }
+//   }
+// }
+.FacturenTable,
 .OpenFacturenTable {
-  &_col1 {
-    grid-column-start: 1;
-    grid-column-end: span 2;
-  }
-
-  &_col2 {
-    grid-column-start: 3;
-    grid-column-end: span 1;
-  }
-
-  &_col3 {
-    grid-column-start: 4;
-    grid-column-end: span 1;
-  }
-
-  &_col4 {
-    display: none;
+  &__smallScreen {
+    margin-bottom: 3rem;
   }
 
   @media screen and (min-width: $amsterdam-breakpoint-medium) {
@@ -124,7 +98,28 @@
     &_col4 {
       grid-column-start: 8;
       grid-column-end: span 4;
-      display: initial;
+    }
+  }
+
+  @media screen and (min-width: $amsterdam-breakpoint-wide) {
+    &_col1 {
+      grid-column-start: 1;
+      grid-column-end: span 3;
+    }
+
+    &_col2 {
+      grid-column-start: 4;
+      grid-column-end: span 3;
+    }
+
+    &_col3 {
+      grid-column-start: 7;
+      grid-column-end: span 3;
+    }
+
+    &_col4 {
+      grid-column-start: 10;
+      grid-column-end: span 3;
     }
   }
 }
@@ -168,7 +163,7 @@
 //     &_col4 {
 //       grid-column-start: 9;
 //       grid-column-end: span 2;
-//       display: initial;
+//
 //     }
 //   }
 // }

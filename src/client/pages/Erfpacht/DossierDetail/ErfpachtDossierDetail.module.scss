@@ -27,12 +27,24 @@
 
   &_Col1 {
     grid-column-start: 1;
-    grid-column-end: span 3;
+    grid-column-end: span 2;
   }
 
   &_Col2 {
-    grid-column-start: 4;
-    grid-column-end: span 3;
+    grid-column-start: 3;
+    grid-column-end: span 2;
+  }
+
+  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+    &_Col1 {
+      grid-column-start: 1;
+      grid-column-end: span 3;
+    }
+
+    &_Col2 {
+      grid-column-start: 4;
+      grid-column-end: span 3;
+    }
   }
 }
 

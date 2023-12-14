@@ -1,11 +1,7 @@
 import { Link } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { ReactNode } from 'react';
-import {
-  capitalizeFirstLetter,
-  entries,
-  keys,
-} from '../../../universal/helpers';
+import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
 import { LinkProps, Unshaped } from '../../../universal/types';
 import styles from './TableV2.module.scss';
 
@@ -40,9 +36,11 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
-type DisplayProps<T> = { [Property in keyof T]+?: string | number | ReactNode };
+export type DisplayProps<T> = {
+  [Property in keyof T]+?: string | number | ReactNode;
+};
 
-export interface TableProps<T> {
+export interface TableV2Props<T> {
   items: T[];
   className?: string;
   displayProps: DisplayProps<T> | null;
@@ -56,14 +54,14 @@ export function TableV2<T extends ObjectWithOptionalId>({
   className,
   gridColStyles,
   showTHead = true,
-}: TableProps<T>) {
-  const displayPropEntries = entries(displayProps);
+}: TableV2Props<T>) {
+  const displayPropEntries = displayProps !== null ? entries(displayProps) : [];
 
   return (
     <table
       className={classnames(
         styles.Table,
-        !!gridColStyles && styles.Table__grid,
+        !!gridColStyles?.length && styles.Table__grid,
         className
       )}
     >
@@ -72,7 +70,10 @@ export function TableV2<T extends ObjectWithOptionalId>({
           <tr
             className={classnames(
               styles.TableRow,
-              !!gridColStyles && ['amsterdam-grid', styles.TableRow__Grid]
+              !!gridColStyles?.length && [
+                'amsterdam-grid',
+                styles.TableRow__Grid,
+              ]
             )}
           >
             {displayPropEntries.map(([key, label], index) => {
@@ -95,7 +96,10 @@ export function TableV2<T extends ObjectWithOptionalId>({
             key={item.id ?? `tr-${index}`}
             className={classnames(
               styles.TableRow,
-              !!gridColStyles && ['amsterdam-grid', styles.TableRow__Grid]
+              !!gridColStyles?.length && [
+                'amsterdam-grid',
+                styles.TableRow__Grid,
+              ]
             )}
           >
             {displayPropEntries.map(([key, label], index) => (

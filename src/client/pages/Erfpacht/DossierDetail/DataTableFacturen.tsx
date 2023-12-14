@@ -6,7 +6,7 @@ import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPag
 import { MaParagraph } from '../../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { useErfpachtV2Data } from '../Erfpacht';
+import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { ErfpachtDataListProps } from './DataListGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 
@@ -33,7 +33,7 @@ export function DataTableFacturen({ dossier }: ErfpachtDataListProps) {
   ];
   return (
     <Grid className={styles.FacturenBetaler}>
-      <Grid.Cell span={{ narrow: 4, medium: 8, wide: 12 }}>
+      <Grid.Cell fullWidth>
         <Heading level={4} size="level-4">
           Factuur naar nieuw adres
         </Heading>

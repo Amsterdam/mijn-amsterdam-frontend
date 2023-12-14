@@ -125,7 +125,25 @@
         "open": true
       },
       {
-        "dossierAdres": "Esther de Boer-v Rijkstr 62",
+        "dossierAdres": "Dit en Dat plein 66",
+        "titelFacturenDossierAdres": "Adres",
+        "titelDossierNummer": "Erfpachtdossier",
+        "status": "Openstaand",
+        "titelFacturenStatus": "Status",
+        "factuurNummer": "17219057",
+        "titelFacturenNummer": "Factuurnummer",
+        "factuurBedrag": "43.02",
+        "formattedFactuurBedrag": "€ 43,02",
+        "titelFacturenFactuurBedrag": "Factuurbedrag",
+        "openstaandBedrag": "0.0",
+        "formattedOpenstaandBedrag": "€ 0,00",
+        "titelFacturenOpenstaandBedrag": "Status",
+        "vervalDatum": "2023-10-16",
+        "titelFacturenVervaldatum": "Vervaldatum",
+        "open": true
+      },
+      {
+        "dossierAdres": "Kweikade 33 H",
         "titelFacturenDossierAdres": "Adres",
         "titelDossierNummer": "Erfpachtdossier",
         "status": "Openstaand",

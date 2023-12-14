@@ -126,7 +126,7 @@ function transformIsErfpachterResponseSource(
   };
 }
 
-interface ErfpachtDossierFactuur {
+export interface ErfpachtDossierFactuur {
   dossierAdres: string;
   titelFacturenDossierAdres: string;
   status: string;
@@ -143,6 +143,9 @@ interface ErfpachtDossierFactuur {
   titelFacturenOpenstaandBedrag: string;
   vervalDatum: string;
   titelFacturenVervaldatum: string;
+
+  // Added
+  dossierNummerUrlParam: string;
 }
 
 export interface ErfpachtDossierDetailToekomstigePeriode {
@@ -343,12 +346,14 @@ export interface ErfpachtV2DossiersResponse
   isKnown: boolean;
 }
 
+function getDossierNummerUrlParam(dossierNummer: string) {
+  return `E${dossierNummer.split(/E|\//).join('.')}`;
+}
+
 function transformErfpachtDossierProperties<
   T extends ErfpachtV2DossierSource | ErfpachtV2DossiersDetailSource,
 >(dossier: T): T & ErfpachtDossierPropsFrontend {
-  const dossierNummerUrlParam = `E${dossier.dossierNummer
-    .split(/E|\//)
-    .join('.')}`;
+  const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
   const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
@@ -371,6 +376,9 @@ function transformErfpachtDossierProperties<
   if ('facturen' in dossier && 'facturen' in dossier.facturen) {
     dossier.facturen.facturen = dossier.facturen.facturen?.map((factuur) => {
       factuur.vervalDatum = defaultDateFormat(factuur.vervalDatum);
+      factuur.dossierNummerUrlParam = getDossierNummerUrlParam(
+        dossier.dossierNummer
+      );
       return factuur;
     });
   }
@@ -419,6 +427,7 @@ function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
       response.openstaandeFacturen?.facturen.map((factuur) => {
         return {
           ...factuur,
+          dossierNummerUrlParam: getDossierNummerUrlParam(factuur.dossierAdres),
           vervalDatum: defaultDateFormat(factuur.vervalDatum),
         };
       });
