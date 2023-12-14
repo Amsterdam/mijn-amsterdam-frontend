@@ -4,6 +4,7 @@ trigger:
     include:
       - testen
       - az-acceptance
+      - main
   paths:
     include:
       - src/client
@@ -65,7 +66,7 @@ variables:
   - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
       - name: dtapName
         value: t
-  - ${{ if eq(variables['Build.SourceBranchName'], 'az-acceptance') }}:
+  - ${{ if or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main')) }}:
       - name: dtapName
         value: a
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
