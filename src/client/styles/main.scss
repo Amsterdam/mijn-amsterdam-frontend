@@ -32,6 +32,11 @@
   --mams-line-height: 1.375;
 }
 
+// Remove padding from nested grids
+.amsterdam-grid .amsterdam-grid {
+  --amsterdam-grid-padding-inline: 0
+}
+
 *,
 *:before,
 *:after {
