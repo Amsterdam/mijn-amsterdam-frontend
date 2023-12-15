@@ -46,6 +46,8 @@ const CASE_TYPES_WITH_WORKFLOW = [
   CaseType.RVVSloterweg,
   CaseType.EigenParkeerplaats,
   CaseType.EigenParkeerplaatsOpheffen,
+  CaseType.TouringcarDagontheffing,
+  CaseType.TouringcarJaarontheffing,
 ];
 
 export const woonVergunningTypes = [

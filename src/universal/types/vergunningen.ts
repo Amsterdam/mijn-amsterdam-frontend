@@ -25,4 +25,6 @@ export enum CaseType {
   RVVSloterweg = 'RVV Sloterweg',
   EigenParkeerplaats = 'Eigen parkeerplaats',
   EigenParkeerplaatsOpheffen = 'Eigen parkeerplaats opheffen',
+  TouringcarDagontheffing = 'Touringcar Dagontheffing',
+  TouringcarJaarontheffing = 'Touringcar Jaarontheffing',
 }
