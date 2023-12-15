@@ -148,10 +148,7 @@ const correctiemail: WpiRequestStatusLabels = {
           document.url
         }`,
         title: 'Bekijk de mail',
-        download: documentDownloadName({
-          datePublished: requestProcess.datePublished,
-          title: 'Bbz-brief',
-        }),
+        download:  document.title.split(/\n/)[0],
       };
     },
   },
@@ -204,10 +201,7 @@ const algemeenBatchDocument: WpiRequestStatusLabels = {
           document.url
         }`,
         title: 'Bekijk de brief voor meer details.',
-        download: documentDownloadName({
-          datePublished: requestProcess.datePublished,
-          title: 'Bbz-brief',
-        }),
+        download:  document.title.split(/\n/)[0],
       };
     },
   },
