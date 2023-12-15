@@ -326,7 +326,8 @@ export type Vergunning =
   | EigenParkeerplaats
   | EigenParkeerplaatsOpheffen
   | TouringcarDagontheffing
-  | TouringcarJaarontheffing;
+  | TouringcarJaarontheffing
+  | WerkEnVervoerOpStraat;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
