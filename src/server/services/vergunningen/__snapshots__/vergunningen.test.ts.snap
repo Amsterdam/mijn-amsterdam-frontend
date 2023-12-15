@@ -106,6 +106,20 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       },
       {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-11-17",
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        
+        (9998877) ingetrokken.",
+        "id": "vergunning-3970992213-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/3970992213",
+        },
+        "subject": "3970992213",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken) ingetrokken",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2023-11-14",
         "description": "Uw aanvraag voor een touringcar jaarontheffing is in behandeling genomen.",
         "id": "vergunning-852482654-notification",
@@ -649,6 +663,20 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         },
         "subject": "3368771494",
         "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw/Verleend) ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2023-11-17",
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        
+        (9998877) ingetrokken.",
+        "id": "vergunning-3970992213-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/rvv-sloterweg/3970992213",
+        },
+        "subject": "3970992213",
+        "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken) ingetrokken",
       },
       {
         "chapter": "VERGUNNINGEN",
