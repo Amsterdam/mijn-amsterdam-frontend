@@ -267,7 +267,25 @@ export const notificationContent: NotificationContent = {
       description: () => 'Uw eigen parkeerplaats is opgezegd.',
     },
   },
-  [CaseType.RVVHeleStad]: defaultNotificationLabels.short,
+  [CaseType.RVVHeleStad]: {
+    requested: {
+      ...requestedShort,
+      title: (item) => `Aanvraag ${item.title} ontvangen`,
+      description: (item) => `Uw aanvraag voor een ${item.title} is ontvangen.`,
+    },
+    inProgress: {
+      ...inProgressShort,
+      title: (item) => `Aanvraag ${item.title} in behandeling`,
+      description: (item) =>
+        `Uw aanvraag voor een ${item.title} is in behandeling genomen.`,
+    },
+    done: {
+      ...doneShort,
+      title: (item) => `Aanvraag ${item.title} afgehandeld`,
+      description: (item) =>
+        `Uw aanvraag voor een ${item.title} is afgehandeld.`,
+    },
+  },
   [CaseType.RVVSloterweg]: {
     requested: {
       ...requestedShort,
