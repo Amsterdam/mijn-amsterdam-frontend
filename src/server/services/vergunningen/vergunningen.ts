@@ -284,6 +284,20 @@ export interface EigenParkeerplaatsOpheffen
   dateEnd: string | null;
 }
 
+export interface WerkEnVervoerOpStraat extends VergunningBase {
+  dateStart: string | null;
+  dateEnd: string | null;
+  licensePlates: string | null;
+  destination: string | null;
+  parkingspace: boolean;
+  eParkingspace: boolean;
+  block: boolean;
+  rvv: boolean;
+  eRvv: boolean;
+  vezip: boolean;
+  bicycleRack: boolean;
+}
+
 export type Vergunning =
   | TVMRVVObject
   | GPK
