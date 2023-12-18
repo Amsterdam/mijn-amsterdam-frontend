@@ -42,6 +42,8 @@ export async function queryALL(queryString: string, values?: any[]) {
   return result?.rows ?? [];
 }
 
+export const id = 'postgres';
+
 process.on('beforeExit', () => {
   pool.end();
 });

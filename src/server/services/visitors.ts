@@ -191,7 +191,6 @@ export async function loginStats(req: Request, res: Response) {
   const dateMinResult = (await queryGET(queries.dateMinAll)) as {
     date_min: string | Date;
   };
-
   const dateMaxResult = (await queryGET(queries.dateMaxAll)) as {
     date_max: string | Date;
   };
