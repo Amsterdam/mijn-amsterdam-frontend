@@ -12,27 +12,6 @@ export function WVOS({ vergunning }: { vergunning: WerkEnVervoerOpStraat }) {
 
       {!!vergunning.location && <Location location={vergunning.location} />}
 
-      <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
-
-      {isGranted && (
-        <>
-          <InfoDetail
-            label="Van"
-            value={
-              vergunning.dateStart
-                ? defaultDateFormat(vergunning.dateStart)
-                : '-'
-            }
-          />
-          <InfoDetail
-            label="Tot en met"
-            value={
-              vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-            }
-          />
-        </>
-      )}
-
       <InfoDetail
         label="Werkzaamheden"
         value={
