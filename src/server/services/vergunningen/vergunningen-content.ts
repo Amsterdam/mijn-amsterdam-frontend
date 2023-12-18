@@ -417,4 +417,5 @@ export const notificationContent: NotificationContent = {
     },
   },
   [CaseType.TouringcarJaarontheffing]: defaultNotificationLabels.short,
+  [CaseType.WVOS]: defaultNotificationLabels.long,
 };

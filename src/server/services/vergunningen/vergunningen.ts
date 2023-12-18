@@ -4,7 +4,6 @@ import { Chapters } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
 import { hash, sortAlpha } from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
@@ -284,18 +283,21 @@ export interface EigenParkeerplaatsOpheffen
   dateEnd: string | null;
 }
 
-export interface WerkEnVervoerOpStraat extends VergunningBase {
+export interface WerkEnVervoerOpStraat extends VergunningWithLocation {
+  caseType: CaseType.WVOS;
   dateStart: string | null;
   dateEnd: string | null;
   licensePlates: string | null;
-  destination: string | null;
-  parkingspace: boolean;
-  eParkingspace: boolean;
   block: boolean;
-  rvv: boolean;
-  eRvv: boolean;
-  vezip: boolean;
   bicycleRack: boolean;
+  eParkingspace: boolean;
+  filming: boolean;
+  night: boolean;
+  object: boolean;
+  parkingspace: boolean;
+  eRvv: boolean;
+  rvv: boolean;
+  vezip: boolean;
 }
 
 export type Vergunning =

@@ -27,5 +27,5 @@ export enum CaseType {
   EigenParkeerplaatsOpheffen = 'Eigen parkeerplaats opheffen',
   TouringcarDagontheffing = 'Touringcar Dagontheffing',
   TouringcarJaarontheffing = 'Touringcar Jaarontheffing',
-  WVOS = 'Werken en vervoer op straat',
+  WVOS = 'Werk en vervoer op straat',
 }
