@@ -1,5 +1,4 @@
-import { IS_PG } from './config';
-import { FeatureToggle } from '../../../universal/config';
+import { IS_DISABLED, IS_PG } from './config';
 
 type DBAdapter = {
   id: string;
@@ -9,7 +8,7 @@ type DBAdapter = {
 };
 
 export const db: () => Promise<DBAdapter> = () => {
-  if (FeatureToggle.dbDisabled) {
+  if (IS_DISABLED) {
     return import('./fake-db');
   }
   return IS_PG ? import('./postgres') : import('./sqlite3');
