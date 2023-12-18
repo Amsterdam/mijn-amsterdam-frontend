@@ -10,9 +10,6 @@ export function DesignSystemStyleAdjust() {
           .amsterdam-grid .amsterdam-grid {
             --amsterdam-grid-padding-inline: 0
           }
-          .amsterdam-screen.amsterdam-screen--wide {
-            font-family: var(--amsterdam-heading-font-family);
-          }
           td,dd {
             font-size: var(--amsterdam-paragraph-spacious-medium-font-size);
             line-height: var(--amsterdam-paragraph-spacious-medium-line-height);
