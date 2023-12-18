@@ -9,9 +9,8 @@ type DBAdapter = {
 };
 
 export const db: () => Promise<DBAdapter> = () => {
-  if (FeatureToggle.dbEnabled) {
+  if (FeatureToggle.dbDisabled) {
     return import('./fake-db');
   }
-  return   IS_PG ? import('./postgres') : import('./sqlite3');
-}
-
+  return IS_PG ? import('./postgres') : import('./sqlite3');
+};
