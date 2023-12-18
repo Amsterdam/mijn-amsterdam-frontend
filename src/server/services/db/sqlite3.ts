@@ -58,6 +58,8 @@ export function execDB(query: string) {
   return db.exec(query);
 }
 
+export const id = 'sqlite3';
+
 process.on('beforeExit', () => {
   db.close();
 });
