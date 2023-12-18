@@ -10,6 +10,7 @@ import {
   BZB,
   BZP,
   RVVSloterweg,
+  TouringcarDagontheffing,
   Vergunning,
   VergunningExpirable,
 } from './vergunningen';
@@ -380,4 +381,40 @@ export const notificationContent: NotificationContent = {
         (${(item as RVVSloterweg).licensePlates}) ingetrokken.`,
     },
   },
+  [CaseType.TouringcarDagontheffing]: {
+    requested: {
+      ...requestedShort,
+      title: (item) =>
+        `Aanvraag ${item.title} (${
+          (item as TouringcarDagontheffing).licensePlate
+        }) ontvangen`,
+      description: (item) =>
+        `Wij hebben uw aanvraag ${item.title} (${
+          (item as TouringcarDagontheffing).licensePlate
+        }) ontvangen.`,
+    },
+    inProgress: {
+      ...inProgressShort,
+      title: (item) =>
+        `Aanvraag ${item.title} (${
+          (item as TouringcarDagontheffing).licensePlate
+        }) in behandeling`,
+      description: (item) =>
+        `Wij hebben uw aanvraag ${item.title} (${
+          (item as TouringcarDagontheffing).licensePlate
+        }) in behandeling genomen.`,
+    },
+    done: {
+      ...doneShort,
+      title: (item) =>
+        `Aanvraag ${item.title} (${
+          (item as TouringcarDagontheffing).licensePlate
+        }) afgehandeld`,
+      description: (item) =>
+        `Wij hebben uw aanvraag ${item.title} (${
+          (item as TouringcarDagontheffing).licensePlate
+        }) afgehandeld.`,
+    },
+  },
+  [CaseType.TouringcarJaarontheffing]: defaultNotificationLabels.short,
 };

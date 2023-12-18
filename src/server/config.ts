@@ -5,13 +5,15 @@ import fs from 'fs';
 import https from 'https';
 import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TAP, IS_TEST } from '../universal/config/env';
+import { IS_OT, IS_TAP } from '../universal/config/env';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
   ApiSuccessResponse,
 } from './../universal/helpers/api';
 import { TokenData } from './helpers/app';
+
+const IS_AZ = process.env.BFF_ON_AZ === 'true';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && process.env[envVarName];
@@ -34,7 +36,7 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
 
 function getCert(envVarName: string | undefined) {
   // TODO: Should be only decodeBase64EncodedCertificateFromEnv when we've migrated to AZ
-  return IS_TEST
+  return IS_AZ
     ? decodeBase64EncodedCertificateFromEnv(envVarName)
     : getCertificateSync(envVarName);
 }

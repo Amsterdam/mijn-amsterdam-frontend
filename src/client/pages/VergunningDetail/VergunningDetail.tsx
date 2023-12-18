@@ -38,6 +38,7 @@ import { Woonvergunningen } from './Woonvergunningen';
 import { ZwaarVerkeer } from './ZwaarVerkeer';
 import { EigenParkeerplaats } from './EigenParkeerplaats';
 import { EigenParkeerplaatsOpheffen } from './EigenParkeerplaatsOpheffen';
+import { Touringcar } from './Touringcar';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -122,6 +123,10 @@ export default function VergunningDetail() {
             )}
             {Vergunning.caseType === CaseType.EigenParkeerplaatsOpheffen && (
               <EigenParkeerplaatsOpheffen vergunning={Vergunning} />
+            )}
+            {(Vergunning.caseType === CaseType.TouringcarDagontheffing ||
+              Vergunning.caseType === CaseType.TouringcarJaarontheffing) && (
+              <Touringcar vergunning={Vergunning} />
             )}
 
             {isWoonvergunning(Vergunning) && (
