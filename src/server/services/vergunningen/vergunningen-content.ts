@@ -336,7 +336,7 @@ export const notificationContent: NotificationContent = {
       title: (item) =>
         `Aanvraag${
           (item as RVVSloterweg).requestType === 'Wijziging'
-            ? ' kentekenwijziging RVV ontheffing'
+            ? ' kentekenwijziging'
             : ''
         } ${item.title} verleend`,
       datePublished: (item) =>
