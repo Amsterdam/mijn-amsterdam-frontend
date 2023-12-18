@@ -1,9 +1,13 @@
-import { WerkEnVervoerOpStraat } from '../../../server/services';
+import { WerkzaamhedenEnVervoerOpStraat } from '../../../server/services';
 import { InfoDetail } from '../../components';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { Location } from './Location';
 
-export function WVOS({ vergunning }: { vergunning: WerkEnVervoerOpStraat }) {
+export function WVOS({
+  vergunning,
+}: {
+  vergunning: WerkzaamhedenEnVervoerOpStraat;
+}) {
   const isGranted = vergunning.decision === 'Verleend';
 
   return (

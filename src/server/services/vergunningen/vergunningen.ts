@@ -283,7 +283,7 @@ export interface EigenParkeerplaatsOpheffen
   dateEnd: string | null;
 }
 
-export interface WerkEnVervoerOpStraat extends VergunningWithLocation {
+export interface WerkzaamhedenEnVervoerOpStraat extends VergunningWithLocation {
   caseType: CaseType.WVOS;
   dateStart: string | null;
   dateEnd: string | null;
@@ -329,7 +329,7 @@ export type Vergunning =
   | EigenParkeerplaatsOpheffen
   | TouringcarDagontheffing
   | TouringcarJaarontheffing
-  | WerkEnVervoerOpStraat;
+  | WerkzaamhedenEnVervoerOpStraat;
 
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
