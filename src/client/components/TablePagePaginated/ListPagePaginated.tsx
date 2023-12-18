@@ -6,7 +6,6 @@ import { Chapter } from '../../../universal/config';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { TableProps } from '../Table/Table';
 import { TableV2 } from '../Table/TableV2';
-import { DesignSystemStyleAdjust } from '../DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -67,7 +66,6 @@ export function ListPagePaginated({
 
   return (
     <OverviewPage>
-      <DesignSystemStyleAdjust />
       <PageHeading
         icon={<ChapterIcon chapter={chapter} />}
         backLink={{ to: appRouteBack, title: 'Overzicht' }}

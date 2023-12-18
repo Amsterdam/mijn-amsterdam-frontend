@@ -13,16 +13,15 @@ import {
   PageHeading,
 } from '../../../components';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { DesignSystemStyleAdjust } from '../../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 import { BarConfig } from '../../../components/LoadingContent/LoadingContent';
 import { BFFApiUrls } from '../../../config/api';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
-import styles from './ErfpachtDossierDetail.module.scss';
+import { DataTableBijzondereBepalingen } from './DataListBijzondereBepalingen';
 import { DataListGeneral } from './DataListGeneral';
 import { DataListJuridisch } from './DataListJuridisch';
-import { DataTableBijzondereBepalingen } from './DataListBijzondereBepalingen';
 import { DataListsFinancieel } from './DataListsFinancieel';
 import { DataTableFacturen } from './DataTableFacturen';
+import styles from './ErfpachtDossierDetail.module.scss';
 
 const loadingContentBarConfig: BarConfig = [
   ['12rem', '2rem', '.5rem'],
@@ -66,7 +65,6 @@ export default function ErfpachtDossierDetail() {
         {dossier?.title ?? `${ChapterTitles.ERFPACHTv2}dossier`}
       </PageHeading>
       <Screen>
-        <DesignSystemStyleAdjust />
         <Grid className={styles.Grid}>
           {api.isLoading && (
             <LoadingContent barConfig={loadingContentBarConfig} />

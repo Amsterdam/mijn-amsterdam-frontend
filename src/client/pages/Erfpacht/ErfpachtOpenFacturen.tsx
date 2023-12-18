@@ -4,7 +4,6 @@ import { Chapters } from '../../../universal/config/chapter';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
 import { ChapterIcon, OverviewPage, PageHeading } from '../../components';
-import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 import {
   DisplayProps,
   TableV2,
@@ -63,7 +62,6 @@ export default function ErfpachtOpenFacturen() {
 
   return (
     <OverviewPage>
-      <DesignSystemStyleAdjust />
       <PageHeading
         icon={<ChapterIcon chapter={Chapters.ERFPACHTv2} />}
         backLink={{ to: AppRoutes.ERFPACHTv2, title: 'Overzicht' }}

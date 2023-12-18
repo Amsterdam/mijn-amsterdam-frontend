@@ -1,5 +1,7 @@
 @import '../../styles/_global.scss';
 
+@include DesignSystemStyleAdjust();
+
 .DossiersTable {
 
   @media screen and (min-width: $amsterdam-breakpoint-medium) {

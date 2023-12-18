@@ -15,7 +15,6 @@ import {
   OverviewPage,
   PageHeading,
 } from '../../components';
-import { DesignSystemStyleAdjust } from '../../components/DesignSystemStyleAdjust/DesignSystemStyleAdjust';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { MaParagraph } from '../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../components/Table/TableV2';
@@ -49,7 +48,6 @@ export default function Erfpacht() {
         {ChapterTitles.ERFPACHTv2}
       </PageHeading>
       <Screen>
-        <DesignSystemStyleAdjust />
         <Grid>
           <Grid.Cell fullWidth>
             <MaParagraph>
