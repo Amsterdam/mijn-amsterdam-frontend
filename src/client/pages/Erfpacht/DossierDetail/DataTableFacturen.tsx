@@ -9,6 +9,7 @@ import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { ErfpachtDataListProps } from './DataListGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
+import classNames from 'classnames';
 
 export function DataTableFacturen({ dossier }: ErfpachtDataListProps) {
   const { displayPropsAlleFacturen, colStyles } = useErfpachtV2Data();
@@ -27,6 +28,15 @@ export function DataTableFacturen({ dossier }: ErfpachtDataListProps) {
           label: dossier.facturen.titelDebiteurNummer,
           content: dossier.facturen.debiteurNummer,
           className: styles.FacturenBetalerDebiteur_Col2,
+        },
+        {
+          label: null,
+          content: (
+            <Link href="http://wijzigen" variant="inList">
+              Betaler wijzigen
+            </Link>
+          ),
+          className: styles.FacturenBetalerDebiteur_Col3,
         },
       ],
     },
@@ -68,7 +78,10 @@ export function DataTableFacturen({ dossier }: ErfpachtDataListProps) {
           <TableV2
             gridColStyles={colStyles.facturenTable}
             items={dossier.facturen.facturen.slice(0, 3)}
-            className={styles.FacturenTable}
+            className={classNames(
+              styles.FacturenTable,
+              styles.DossierDetailFacturenTable
+            )}
             displayProps={displayPropsAlleFacturen}
           />
         )}

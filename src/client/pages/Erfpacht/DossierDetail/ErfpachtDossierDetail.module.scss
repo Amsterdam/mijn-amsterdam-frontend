@@ -24,8 +24,20 @@
   }
 }
 
+.DossierDetailFacturenTable {
+  >thead>tr {
+    margin-top: 0;
+  }
+}
+
 .FacturenBetalerDebiteur {
   padding: 0;
+
+  @media screen and (max-width: $amsterdam-breakpoint-medium) {
+    dd {
+      margin: 0;
+    }
+  }
 
   &_Col1 {
     grid-column-start: 1;
@@ -37,6 +49,11 @@
     grid-column-end: span 2;
   }
 
+  &_Col3 {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+  }
+
   @media screen and (min-width: $amsterdam-breakpoint-medium) {
     &_Col1 {
       grid-column-start: 1;
@@ -45,6 +62,11 @@
 
     &_Col2 {
       grid-column-start: 4;
+      grid-column-end: span 3;
+    }
+
+    &_Col3 {
+      grid-column-start: 7;
       grid-column-end: span 3;
     }
   }
