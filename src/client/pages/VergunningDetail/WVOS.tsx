@@ -41,7 +41,7 @@ export function WVOS({
         }
       />
 
-      {!!vergunning.processed && (
+      {isGranted && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
