@@ -162,6 +162,7 @@ export function isAppStateReady(
         (isLegacyProfileType && !stateConfig?.profileTypes?.length) ||
         stateConfig?.profileTypes?.includes(profileType);
 
+      // NOTE: The appState keys ending with _BAG are not considered a fixed/known portion of the appstate.
       if (!stateConfig && !key.endsWith('_BAG')) {
         Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);
       }
@@ -195,6 +196,8 @@ export interface AppStateBagApiParams {
   key: string;
 }
 
+// Use this hook for loading additional data that needs to be persisted in the state. For example additional data loaded if a user navigates to a detailpage
+// that requires fetching data that wasn't retrieved initially.
 export function useAppStateBagApi<T extends unknown>({
   url,
   bagChapter,
