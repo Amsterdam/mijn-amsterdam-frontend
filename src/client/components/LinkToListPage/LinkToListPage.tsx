@@ -26,7 +26,6 @@ export function LinkToListPage({
         e.preventDefault();
         history.push(routeGenerated);
       }}
-      // href={routeGenerated}
     >
       {label}
     </Button>
