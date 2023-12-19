@@ -120,7 +120,7 @@ describe('<Erfpacht />', () => {
     expect(screen.getByText('E900/33')).toBeInTheDocument();
     expect(screen.getByText('E123/456')).toBeInTheDocument();
 
-    expect(screen.getAllByText('Toon meer').length).toBe(2);
+    expect(screen.getAllByText('Toon meer').length).toBe(1);
 
     expect(screen.queryByText('E7418/35')).not.toBeInTheDocument();
     expect(screen.queryByText('E477/48')).not.toBeInTheDocument();
