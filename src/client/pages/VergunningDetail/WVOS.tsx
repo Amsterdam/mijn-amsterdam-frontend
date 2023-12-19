@@ -17,6 +17,7 @@ export function WVOS({
 
       <InfoDetail
         label="Werkzaamheden"
+        valueWrapperElement="div"
         value={
           <ul>
             {(vergunning.vezip || vergunning.rvv || vergunning.eRvv) && (
