@@ -106,7 +106,7 @@ export default function Erfpacht() {
             </Grid.Cell>
           )}
 
-          {!isLoading(ERFPACHTv2) && (
+          {!isLoading(ERFPACHTv2) && !isError(ERFPACHTv2) && (
             <Grid.Cell fullWidth>
               <Heading level={3} size="level-2">
                 {titleDossiers ?? 'Erfpachtrechten'}
@@ -135,11 +135,10 @@ export default function Erfpacht() {
                 </MaParagraph>
               )}
 
-              {dossiers.length > 1 && (
-                <Heading level={3} size="level-2">
-                  {titleOpenFacturen ?? 'Open facturen'}
-                </Heading>
-              )}
+              <Heading level={3} size="level-2">
+                {titleOpenFacturen ?? 'Openstaande facturen'}
+              </Heading>
+
               {!!openFacturen.length ? (
                 isMediumScreen ? (
                   <TableV2
@@ -163,7 +162,7 @@ export default function Erfpacht() {
               ) : (
                 <MaParagraph>
                   U heeft geen{' '}
-                  {titleOpenFacturen?.toLowerCase() ?? 'open facturen'}.
+                  {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
                 </MaParagraph>
               )}
               <MaParagraph textAlign="right">

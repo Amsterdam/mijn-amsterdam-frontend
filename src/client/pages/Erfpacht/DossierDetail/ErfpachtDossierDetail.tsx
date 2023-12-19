@@ -73,7 +73,7 @@ export default function ErfpachtDossierDetail() {
             <Grid.Cell fullWidth>
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>
-                  We kunnen op dit moment geen erfpacht dossiers tonen.
+                  We kunnen op dit moment geen erfpacht dossier tonen.
                 </Paragraph>
               </Alert>
             </Grid.Cell>

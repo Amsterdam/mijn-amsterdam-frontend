@@ -6,6 +6,7 @@ import { Chapter } from '../../../universal/config';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { TableProps } from '../Table/Table';
 import { TableV2 } from '../Table/TableV2';
+import { MaParagraph } from '../Paragraph/Paragraph';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -17,6 +18,7 @@ interface ListPagePaginatedProps {
   chapter?: Chapter;
   displayProps: Record<string, string> | null;
   errorText?: string;
+  noItemsText?: string;
   isError: boolean;
   isLoading: boolean;
   items: object[];
@@ -34,6 +36,7 @@ export function ListPagePaginated({
   chapter,
   displayProps,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
+  noItemsText = 'U heet geen gegevens op deze pagina.',
   isError,
   isLoading,
   items,
@@ -93,27 +96,36 @@ export function ListPagePaginated({
                 ]}
               />
             )}
-            {!isLoading && (
-              <TableV2
-                items={itemsPaginated}
-                displayProps={displayProps}
-                gridColStyles={tableGridColStyles}
-              />
-            )}
-            {items.length > pageSize && (
-              <PaginationV2
-                totalCount={total}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageClick={(page: number) => {
-                  history.push(
-                    generatePath(appRoute, {
-                      ...appRouteParams,
-                      page,
-                    })
-                  );
-                }}
-              />
+            {!isError && (
+              <>
+                {!itemsPaginated.length && !!noItemsText && (
+                  <Grid.Cell fullWidth>
+                    <MaParagraph>{noItemsText}</MaParagraph>
+                  </Grid.Cell>
+                )}
+                {!isLoading && !!itemsPaginated.length && (
+                  <TableV2
+                    items={itemsPaginated}
+                    displayProps={displayProps}
+                    gridColStyles={tableGridColStyles}
+                  />
+                )}
+                {items.length > pageSize && (
+                  <PaginationV2
+                    totalCount={total}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageClick={(page: number) => {
+                      history.push(
+                        generatePath(appRoute, {
+                          ...appRouteParams,
+                          page,
+                        })
+                      );
+                    }}
+                  />
+                )}
+              </>
             )}
           </Grid.Cell>
         </Grid>

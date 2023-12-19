@@ -1,8 +1,15 @@
-import { Grid, Heading, Screen } from '@amsterdam/design-system-react';
+import React from 'react';
+import {
+  Alert,
+  Grid,
+  Heading,
+  Paragraph,
+  Screen,
+} from '@amsterdam/design-system-react';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
 import { Chapters } from '../../../universal/config/chapter';
 import { AppRoutes } from '../../../universal/config/routes';
-import { isLoading } from '../../../universal/helpers/api';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { ChapterIcon, OverviewPage, PageHeading } from '../../components';
 import {
   DisplayProps,
@@ -11,6 +18,7 @@ import {
 } from '../../components/Table/TableV2';
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
+import { MaParagraph } from '../../components/Paragraph/Paragraph';
 
 interface OpenFacturenListGroupedProps {
   facturen: ErfpachtDossierFactuur[];
@@ -35,17 +43,17 @@ export function OpenFacturenListGrouped({
   );
   return Object.entries(facturenGrouped).map(([adres, facturen]) => {
     return (
-      <>
-        <Grid.Cell fullWidth key={adres}>
-          <Heading level={3}>{adres}</Heading>
-          <TableV2
-            items={facturen}
-            displayProps={displayProps}
-            className={styles.OpenFacturenTable__smallScreen}
-            gridColStyles={gridColStyles}
-          />
-        </Grid.Cell>
-      </>
+      <Grid.Cell fullWidth key={adres}>
+        <Heading data-testid={adres} level={3}>
+          {adres}
+        </Heading>
+        <TableV2
+          items={facturen}
+          displayProps={displayProps}
+          className={styles.OpenFacturenTable__smallScreen}
+          gridColStyles={gridColStyles}
+        />
+      </Grid.Cell>
     );
   });
 }
@@ -67,25 +75,46 @@ export default function ErfpachtOpenFacturen() {
         backLink={{ to: AppRoutes.ERFPACHTv2, title: 'Overzicht' }}
         isLoading={isLoading(ERFPACHTv2)}
       >
-        {`Alle ${titleOpenFacturen?.toLocaleLowerCase()}`}
+        {`Alle ${
+          titleOpenFacturen?.toLocaleLowerCase() ?? 'openstaande facturen'
+        }`}
       </PageHeading>
       <Screen>
         <Grid>
-          <Grid.Cell fullWidth>
-            {isMediumScreen ? (
-              <TableV2
-                items={openFacturen}
-                displayProps={displayPropsOpenFacturen}
-                gridColStyles={colStyles.openFacturenTable}
-              />
+          {isError(ERFPACHTv2) && (
+            <Grid.Cell fullWidth>
+              <Alert title="Foutmelding" icon severity="error">
+                <Paragraph>
+                  We kunnen op dit moment geen openstaande facturen tonen.
+                </Paragraph>
+              </Alert>
+            </Grid.Cell>
+          )}
+
+          {!isError(ERFPACHTv2) &&
+            !!openFacturen.length &&
+            (isMediumScreen ? (
+              <Grid.Cell fullWidth>
+                <TableV2
+                  items={openFacturen}
+                  displayProps={displayPropsOpenFacturen}
+                  gridColStyles={colStyles.openFacturenTable}
+                />
+              </Grid.Cell>
             ) : (
               <OpenFacturenListGrouped
                 facturen={openFacturen}
                 displayProps={displayPropsOpenFacturen}
-                // gridColStyles={colStyles.openFacturenTable}
               />
-            )}
-          </Grid.Cell>
+            ))}
+          {!openFacturen.length && (
+            <Grid.Cell fullWidth>
+              <MaParagraph>
+                U heeft geen{' '}
+                {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
+              </MaParagraph>
+            </Grid.Cell>
+          )}
         </Grid>
       </Screen>
     </OverviewPage>

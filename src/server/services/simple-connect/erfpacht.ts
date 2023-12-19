@@ -350,7 +350,7 @@ function getDossierNummerUrlParam(dossierNummer: string) {
   return `E${dossierNummer.split(/E|\//).join('.')}`;
 }
 
-function transformErfpachtDossierProperties<
+export function transformErfpachtDossierProperties<
   T extends ErfpachtV2DossierSource | ErfpachtV2DossiersDetailSource,
 >(dossier: T): T & ErfpachtDossierPropsFrontend {
   const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
@@ -409,7 +409,7 @@ function transformErfpachtDossierProperties<
   };
 }
 
-function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
+export function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
   const hasDossiers = !!response?.dossiers?.dossiers?.length;
 
   if (response === null) {

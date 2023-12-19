@@ -32,8 +32,10 @@ export default function ErfpachtFacturen() {
       }
       items={dossier?.facturen?.facturen ?? []}
       title={`Alle ${
-        dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'Facturen'
+        dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'facturen'
       }`}
+      errorText="We kunnen op dit moment geen facturen tonen."
+      noItemsText="U heeft geen facturen."
       appRoute={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
       appRouteParams={{ dossierNummerUrlParam }}
       appRouteBack={AppRoutes['ERFPACHTv2']}

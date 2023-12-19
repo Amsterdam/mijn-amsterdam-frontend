@@ -205,6 +205,7 @@ export function useAppStateBagApi<T extends unknown>({
 }: AppStateBagApiParams) {
   const [appState, setAppState] = useRecoilState(appStateAtom);
   const isApiDataCached =
+    typeof appState[bagChapter] !== null &&
     typeof appState[bagChapter] === 'object' &&
     typeof appState[bagChapter] !== 'undefined' &&
     key in appState[bagChapter]!;

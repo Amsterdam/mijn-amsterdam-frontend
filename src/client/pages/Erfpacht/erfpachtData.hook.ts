@@ -27,9 +27,7 @@ export function useErfpachtV2Data() {
     'voorkeursadres'
   );
   const openFacturenBase = ERFPACHTv2.content?.openstaandeFacturen;
-  const openFacturen = Array.from({ length: 2 })
-    .map(() => openFacturenBase?.facturen ?? [])
-    .flat();
+  const openFacturen = openFacturenBase?.facturen ?? [];
 
   let displayPropsDossiers: DisplayPropsDossiers | null = null;
   let titleDossiers = ERFPACHTv2.content?.titelDossiersKop;
