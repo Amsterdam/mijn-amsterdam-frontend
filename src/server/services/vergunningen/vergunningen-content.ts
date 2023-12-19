@@ -417,4 +417,19 @@ export const notificationContent: NotificationContent = {
     },
   },
   [CaseType.TouringcarJaarontheffing]: defaultNotificationLabels.short,
+  [CaseType.WVOS]: {
+    requested: {
+      ...requested,
+      description: (item) => `Uw aanvraag voor ${item.title} is ontvangen.`,
+    },
+    inProgress: {
+      ...inProgress,
+      description: (item) =>
+        `Uw aanvraag voor ${item.title} is in behandeling genomen.`,
+    },
+    done: {
+      ...done,
+      description: (item) => `Uw aanvraag voor ${item.title} is afgehandeld.`,
+    },
+  },
 };

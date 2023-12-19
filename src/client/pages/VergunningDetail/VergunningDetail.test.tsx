@@ -260,4 +260,20 @@ describe('<VergunningDetail />', () => {
       expect(asFragment()).toMatchSnapshot();
     });
   });
+
+  describe('WVOS', () => {
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/2230585" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('should match the full page snapshot', () => {
+      const { asFragment } = render(
+        <MockVergunningDetail identifier="Z/23/2230696" />
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
 });

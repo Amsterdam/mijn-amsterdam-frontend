@@ -39,6 +39,7 @@ import { ZwaarVerkeer } from './ZwaarVerkeer';
 import { EigenParkeerplaats } from './EigenParkeerplaats';
 import { EigenParkeerplaatsOpheffen } from './EigenParkeerplaatsOpheffen';
 import { Touringcar } from './Touringcar';
+import { WVOS } from './WVOS';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
@@ -127,6 +128,9 @@ export default function VergunningDetail() {
             {(Vergunning.caseType === CaseType.TouringcarDagontheffing ||
               Vergunning.caseType === CaseType.TouringcarJaarontheffing) && (
               <Touringcar vergunning={Vergunning} />
+            )}
+            {Vergunning.caseType === CaseType.WVOS && (
+              <WVOS vergunning={Vergunning} />
             )}
 
             {isWoonvergunning(Vergunning) && (
