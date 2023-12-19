@@ -113,7 +113,8 @@ export function getRVVSloterwegLineItems(
       id: 'status-gewijzigd',
       status: 'Gewijzigd',
       datePublished:
-        (isExpired ? vergunning.dateEnd : vergunning.dateDecision) ?? '',
+        (isExpiredByEndDate ? vergunning.dateEnd : vergunning.dateDecision) ??
+        '',
       description,
       documents: [],
       isActive: true,
