@@ -1,6 +1,5 @@
 import { WerkzaamhedenEnVervoerOpStraat } from '../../../server/services';
 import { InfoDetail } from '../../components';
-import { defaultDateFormat } from '../../../universal/helpers';
 import { Location } from './Location';
 
 export function WVOS({
@@ -25,7 +24,7 @@ export function WVOS({
                 Rijden of een voertuig neerzetten waar dat normaal niet mag
               </li>
             )}
-            {vergunning.object && <li>Object neerzetten</li>}
+            {vergunning.object && <li>Object(en) neerzetten</li>}
             {(vergunning.parkingspace || vergunning.eParkingspace) && (
               <li>Parkeervakken reserveren</li>
             )}
