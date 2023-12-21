@@ -19,6 +19,7 @@ import {
   hasTozo,
   hasValidId,
   hasValidIdForVoting,
+  hasIdExpieringDuringPeak,
   hasValidStadspasRequest,
   is18OrOlder,
   isBetween17and18,
@@ -158,6 +159,30 @@ describe('predicates', () => {
         const appState = getMockAppState(datumAfloop);
 
         expect(hasValidIdForVoting(appState)).toBe(expected);
+      });
+    });
+    describe('hasIdExpieringDuringPeak', () => {
+      const getMockAppState = (datumAfloop: string) => {
+        const BRPCopy = { ...BRP };
+
+        BRPCopy.content.identiteitsbewijzen.forEach((i) => {
+          i.datumAfloop = datumAfloop;
+        });
+
+        return getBRPAppState(BRPCopy);
+      };
+
+      it.each([
+        [false, '2002-07-26'],
+        [false, '2017-07-24'],
+        [true, '2024-03-01'],
+        [true, '2024-07-24'],
+        [false, '2024-09-01'],
+        [false, '2028-07-24'],
+      ])('should return %s for datumAfloop %s', (expected, datumAfloop) => {
+        const appState = getMockAppState(datumAfloop);
+
+        expect(hasIdExpieringDuringPeak(appState)).toBe(expected);
       });
     });
 
