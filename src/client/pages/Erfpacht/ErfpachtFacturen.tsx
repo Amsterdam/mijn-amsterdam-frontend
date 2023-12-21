@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
 import { BagChapters, Chapters } from '../../../universal/config/chapter';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ListPagePaginated } from '../../components/TablePagePaginated/ListPagePaginated';
+import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { BFFApiUrls } from '../../config/api';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 import { useErfpachtV2Data } from './erfpachtData.hook';

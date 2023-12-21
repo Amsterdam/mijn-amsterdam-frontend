@@ -4,9 +4,8 @@ import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { ChapterIcon, LoadingContent, OverviewPage, PageHeading } from '..';
 import { Chapter } from '../../../universal/config';
 import { PaginationV2 } from '../Pagination/PaginationV2';
-import { TableProps } from '../Table/Table';
-import { TableV2 } from '../Table/TableV2';
 import { MaParagraph } from '../Paragraph/Paragraph';
+import { TableV2 } from '../Table/TableV2';
 
 const DEFAULT_PAGE_SIZE = 10;
 

@@ -1,7 +1,7 @@
 import { Chapters } from '../../../universal/config/chapter';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ListPagePaginated } from '../../components/TablePagePaginated/ListPagePaginated';
+import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 
 export default function ErfpachtDossiers() {
