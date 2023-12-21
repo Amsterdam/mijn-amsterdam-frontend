@@ -52,10 +52,13 @@ export function getDatasetEndpointConfig(
     datasetEndpoints
   )
     .filter(([id, config]) => {
+      if (config.disabled) {
+        return false;
+      }
       const hasDatasetId =
         DATASETS[id] &&
-        Object.keys(DATASETS[id].datasets).some((datasetId) =>
-          endpointIDs?.includes(datasetId)
+        Object.keys(DATASETS[id].datasets).some(
+          (datasetId) => endpointIDs?.includes(datasetId)
         );
       const isEndpoint = endpointIDs?.includes(id);
 
