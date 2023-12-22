@@ -41,7 +41,7 @@ const BrpDocumentCallToAction:  Record<string, string> = {
   };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
-  const inOnderzoek = data?.persoon?.adresInOnderzoek;
+  const inOnderzoek = !!data?.persoon?.adresInOnderzoek;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
     ? defaultDateFormat(data?.persoon.datumVertrekUitNederland)
