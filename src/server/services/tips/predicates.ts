@@ -32,15 +32,6 @@ export const hasValidId: TipsPredicateFN = (
   });
 };
 
-export const hasIdExpieringDuringPeak: TipsPredicateFN = (
-  appState,
-) => {
-  const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
-  return ids.some((idBewijs: Identiteitsbewijs) => {
-    const afloop = new Date(idBewijs.datumAfloop);
-    return new Date('2024-03-01') <= afloop && afloop < new Date('2024-09-01');
-  });
-};
 // To use an ID for voting it needs an expiration date with a maximum of five years ago.
 export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
   const dateOfVote = new Date('2023-11-20'); // Minus 2 days for request processing.

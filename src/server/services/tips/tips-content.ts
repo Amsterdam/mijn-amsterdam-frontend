@@ -4,7 +4,6 @@ import {
   hasBnBTransitionRight,
   hasBnBVergunning,
   hasDutchNationality,
-  hasIdExpieringDuringPeak,
   hasKidsBetweenAges2And18,
   hasKidsBetweenAges4And11,
   hasStadspasGroeneStip,
@@ -324,32 +323,6 @@ export const tips: Tip[] = [
     link: {
       title: 'Bekijk de voorwaarden',
       to: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B0391171C-BA2E-40D2-8CBE-F013192D09A6%7D',
-    },
-  },
-  {
-    id: 'mijn-44',
-    owner: '',
-    dateActiveStart: '2023-12-21',
-    dateActiveEnd: '2024-03-01',
-    active: true,
-    priority: 10,
-    datePublished: '2023-12-21',
-    title: 'Voorkom drukte: verleng je paspoort/ID op tijd',
-    chapter: Chapters.BRP,
-    profileTypes: ['private'],
-    description:
-  'Uw reisdocument is binnenkort niet meer geldig. U heeft een paspoort of ID-kaart nodig om naar andere landen te gaan en om te laten zien wie u bent. \n Het is slim om ruim op tijd uw nieuwe paspoort of ID-kaart aan te vragen. Het liefst een paar weken van tevoren. Binnenkort is het erg druk op het Stadsloket. Vraag uw nieuwe paspoort of ID-kaart daarom nu aan. Tip: in de ochtend is het rustiger bij het Stadsloket.',
-    predicates: [
-      hasIdExpieringDuringPeak,
-      is18OrOlder,
-      not(hasStadspasGroeneStip),
-      hasDutchNationality,
-    ],
-    reason:
-      'U ziet deze tip omdat u een reisdocument heeft dat komt te vervallen tussen maart en september',
-    link: {
-      title: 'Hoe vraag je het aan?',
-      to: "https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/paspoort-id-kaart-aanvragen-18-jaar",
     },
   },
 ];
