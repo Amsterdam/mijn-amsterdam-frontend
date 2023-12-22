@@ -70,17 +70,6 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
     }
   );
 
-  const documentsExpiringBeforePeak = data.identiteitsbewijzen?.filter(
-    (document) => {
-      const days = differenceInCalendarDays(
-        new Date(document.datumAfloop),
-        compareDate
-      );
-
-      return  days > 0  && new Date(document.datumAfloop) < ID_BEWIJS_PEAK_DATE_START 
-    }
-  );
-
   const documentsExpiringDuringPeak = data.identiteitsbewijzen?.filter(
     (document) => {
       const afloop = new Date(document.datumAfloop)
@@ -129,8 +118,8 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
     });
   }
 
-  if (documentsExpiringDuringPeak?.length) {
-    documentsExpiringDuringPeak.forEach((document) => {
+  if (!documentsExpiringDuringPeak?.length && willExpireSoonDocuments?.length) {
+    willExpireSoonDocuments.forEach((document) => {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
@@ -150,29 +139,6 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       });
     });
   }
-
-  // TODO uncomment after 1-3-2023
-  // if (willExpireSoonDocuments?.length) {
-  //   willExpireSoonDocuments.forEach((document) => {
-  //     const docTitle =
-  //       BrpDocumentTitles[document.documentType] || document.documentType;
-  //     notifications.push({
-  //       chapter: Chapters.BURGERZAKEN,
-  //       datePublished: compareDate.toISOString(),
-  //       isAlert: true,
-  //       hideDatePublished: true,
-  //       id: `${document.documentType}-datum-afloop-binnekort`,
-  //       title: `Uw ${docTitle} verloopt binnenkort`,
-  //       description: `Vanaf ${defaultDateFormat(
-  //         document.datumAfloop
-  //       )} is uw ${docTitle} niet meer geldig.`,
-  //       link: {
-  //         to: BrpDocumentCallToAction[document.documentType],
-  //         title: `Vraag uw nieuwe ${docTitle} aan`,
-  //       },
-  //     });
-  //   });
-  // }
 
   if (inOnderzoek) {
     notifications.push({
