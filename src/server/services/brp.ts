@@ -16,7 +16,7 @@ import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 
-const DAYS_BEFORE_EXPIRATION = 120;
+const DAYS_BEFORE_EXPIRATION = 120; // T
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
 
 const BrpDocumentTitles: Record<string, string> = {
@@ -26,29 +26,15 @@ const BrpDocumentTitles: Record<string, string> = {
   rijbewijs: 'rijbewijs',
 };
 
-const BrpDocumentCallToAction: Record<
-  'isExpired' | 'willExpire',
-  Record<string, string>
-> = {
-  isExpired: {
+const BrpDocumentCallToAction:  Record<string, string> = {
     paspoort:
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
     'europese identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     'nederlandse identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    rijbewijs: '',
-  },
-  willExpire: {
-    paspoort:
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
-    'europese identiteitskaart':
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    'nederlandse identiteitskaart':
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    rijbewijs: '',
-  },
-};
+    rijbewijs: 'https://www.amsterdam.nl/burgerzaken/rijbewijs/rijbewijs-verlengen-categorie-toevoegen/',
+  };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const inOnderzoek = data?.persoon?.adresInOnderzoek;
@@ -80,6 +66,11 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
     }
   );
 
+  const documentsExpiringDuringPeak = data.identiteitsbewijzen?.filter(
+    (document) => {
+      return new Date(document.datumAfloop) < new Date('2024-10-01') 
+    }
+  );
   if (expiredDocuments?.length) {
     expiredDocuments.forEach((document) => {
       const docTitle =
@@ -95,34 +86,54 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
           document.datumAfloop
         )} is uw ${docTitle} niet meer geldig.`,
         link: {
-          to: BrpDocumentCallToAction.isExpired[document.documentType],
+          to: BrpDocumentCallToAction[document.documentType],
           title: `Vraag uw nieuwe ${docTitle} aan`,
         },
       });
     });
   }
 
-  if (willExpireSoonDocuments?.length) {
-    willExpireSoonDocuments.forEach((document) => {
+  if (documentsExpiringDuringPeak?.length) {
+    documentsExpiringDuringPeak.forEach((document) => {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
         chapter: Chapters.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
-        hideDatePublished: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
-        title: `Uw ${docTitle} verloopt binnenkort`,
-        description: `Vanaf ${defaultDateFormat(
-          document.datumAfloop
-        )} is uw ${docTitle} niet meer geldig.`,
+        title: `Voorkom vertraging en verleng uw ${docTitle} op tijd`,
+        description: `Vanaf maart tot de zomervakantie wordt het erg druk op het Stadsloket. Vraag uw nieuwe ${docTitle}, dat verloopt op ${defaultDateFormat( document.datumAfloop)}, daarom ruim van te voren aan. Tip: in de ochtend is het rustiger bij het Stadsloket.`,
         link: {
-          to: BrpDocumentCallToAction.isExpired[document.documentType],
+          to: BrpDocumentCallToAction[document.documentType],
           title: `Vraag uw nieuwe ${docTitle} aan`,
         },
       });
     });
   }
+
+  // TODO uncomment after 1-3-2023
+  // if (willExpireSoonDocuments?.length) {
+  //   willExpireSoonDocuments.forEach((document) => {
+  //     const docTitle =
+  //       BrpDocumentTitles[document.documentType] || document.documentType;
+  //     notifications.push({
+  //       chapter: Chapters.BURGERZAKEN,
+  //       datePublished: compareDate.toISOString(),
+  //       isAlert: true,
+  //       hideDatePublished: true,
+  //       id: `${document.documentType}-datum-afloop-binnekort`,
+  //       title: `Uw ${docTitle} verloopt binnenkort`,
+  //       description: `Vanaf ${defaultDateFormat(
+  //         document.datumAfloop
+  //       )} is uw ${docTitle} niet meer geldig.`,
+  //       link: {
+  //         to: BrpDocumentCallToAction[document.documentType],
+  //         title: `Vraag uw nieuwe ${docTitle} aan`,
+  //       },
+  //     });
+  //   });
+  // }
 
   if (inOnderzoek) {
     notifications.push({
