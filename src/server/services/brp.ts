@@ -103,7 +103,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
         isAlert: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
         title: `Voorkom vertraging en verleng uw ${docTitle} op tijd`,
-        description: `Vanaf maart tot de zomervakantie wordt het erg druk op het Stadsloket. Vraag uw nieuwe ${docTitle}, dat verloopt op ${defaultDateFormat( document.datumAfloop)}, daarom ruim van te voren aan. Tip: in de ochtend is het rustiger bij het Stadsloket.`,
+        description: `Vanaf maart tot de zomervakantie wordt het erg druk op het Stadsloket. Uw huidige ${docTitle} verloopt op ${defaultDateFormat( document.datumAfloop)}, vraag uw nieuwe ${docTitle} daarom ruim van te voren aan. Tip: in de ochtend is het rustiger bij het Stadsloket.`,
         link: {
           to: BrpDocumentCallToAction[document.documentType],
           title: `Vraag uw nieuwe ${docTitle} aan`,
