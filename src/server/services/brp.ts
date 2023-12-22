@@ -16,7 +16,7 @@ import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 
-const DAYS_BEFORE_EXPIRATION = 120; // T
+const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
 
 // You need a id valid for 2 more month when returning to NL. So everyone with a expiring id before this date will probably want to renew their id before the summer holidays --> this creates a peak at the Stadsloket from march onwards.
