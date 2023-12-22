@@ -53,7 +53,7 @@ exports[`RVV Sloterweg status line items > RVV ontheffing Laan van Vlaanderen (N
     "status": "In behandeling",
   },
   {
-    "datePublished": "2023-07-03T00:00:00",
+    "datePublished": "2023-07-02T00:00:00",
     "description": "Wij hebben uw aanvraag voor een RVV ontheffing Laan van Vlaanderen YY-123-A verleend.",
     "documents": [],
     "id": "status-afgehandeld",
@@ -190,7 +190,7 @@ exports[`RVV Sloterweg status line items > RVV ontheffing Sloterweg (Nieuw/Verlo
     "status": "In behandeling",
   },
   {
-    "datePublished": "2023-07-03T00:00:00",
+    "datePublished": "2023-07-02T00:00:00",
     "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg ZZ-122-A verleend.",
     "documents": [],
     "id": "status-afgehandeld",
@@ -295,7 +295,7 @@ exports[`RVV Sloterweg status line items > RVV ontheffing Sloterweg (Wijziging/V
     "status": "In behandeling",
   },
   {
-    "datePublished": "2023-07-03T00:00:00",
+    "datePublished": "2023-07-28T00:00:00",
     "description": "Wij hebben uw kentekenwijziging voor een RVV ontheffing Sloterweg (Wijziging/Verlopen) verleend.",
     "documents": [],
     "id": "status-afgehandeld",
@@ -368,7 +368,7 @@ exports[`RVV Sloterweg status line items > RVV ontheffing Sloterweg West (Nieuw 
     "status": "In behandeling",
   },
   {
-    "datePublished": "2023-09-01",
+    "datePublished": "2023-08-31",
     "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West PR067L verleend.",
     "documents": [],
     "id": "status-afgehandeld",
@@ -514,7 +514,7 @@ exports[`RVV Sloterweg status line items > RVV ontheffing Sloterweg West (Wijzig
     "status": "In behandeling",
   },
   {
-    "datePublished": "2023-09-01",
+    "datePublished": "2023-08-31",
     "description": "Wij hebben uw kentekenwijziging voor een RVV ontheffing Sloterweg West (Wijziging vervallen) verleend.",
     "documents": [],
     "id": "status-afgehandeld",
