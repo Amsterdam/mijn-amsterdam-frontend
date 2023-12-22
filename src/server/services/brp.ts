@@ -73,7 +73,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const documentsExpiringDuringPeak = data.identiteitsbewijzen?.filter(
     (document) => {
       const afloop = new Date(document.datumAfloop)
-      return ID_BEWIJS_PEAK_DATE_START <afloop && new Date(document.datumAfloop) < ID_BEWIJS_PEAK_DATE_END 
+      return afloop >= ID_BEWIJS_PEAK_DATE_START && afloop <= ID_BEWIJS_PEAK_DATE_END 
     }
   );
 
