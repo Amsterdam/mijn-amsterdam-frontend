@@ -41,7 +41,7 @@ const BrpDocumentCallToAction:  Record<string, string> = {
   };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
-  const inOnderzoek = data?.persoon?.adresInOnderzoek;
+  const adresInOnderzoek = data?.persoon?.adresInOnderzoek;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
     ? defaultDateFormat(data?.persoon.datumVertrekUitNederland)
@@ -140,7 +140,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
     });
   }
 
-  if (inOnderzoek) {
+  if (adresInOnderzoek) {
     notifications.push({
       chapter: Chapters.BRP,
       datePublished: compareDate.toISOString(),
@@ -148,7 +148,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
       description:
-        inOnderzoek === '080000'
+        adresInOnderzoek === '080000'
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
