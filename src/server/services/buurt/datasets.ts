@@ -99,6 +99,7 @@ export interface DatasetConfig {
   idKeyDetail?: string;
   geometryKey?: string;
   triesUntilConsiderdStale: number;
+  disabled?: boolean;
 }
 
 function dsoApiListUrl(
@@ -184,6 +185,8 @@ export const datasetEndpoints: Record<
         'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
       },
     },
+    // NOTE: Zie https://gemeente-amsterdam.atlassian.net/browse/MIJN-7467
+    disabled: true,
   },
   parkeerzones: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
