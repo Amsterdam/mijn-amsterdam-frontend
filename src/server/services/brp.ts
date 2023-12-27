@@ -19,6 +19,10 @@ import { AuthProfileAndToken } from '../helpers/app';
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
 
+// You need a id valid for 2 more month when returning to NL. So everyone with a expiring id before this date will probably want to renew their id before the summer holidays --> this creates a peak at the Stadsloket from march onwards.
+const ID_BEWIJS_PEAK_DATE_START = new Date('2024-03-01'); 
+const ID_BEWIJS_PEAK_DATE_END = new Date('2024-10-01'); 
+
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
   'europese identiteitskaart': 'ID-kaart',
@@ -26,32 +30,18 @@ const BrpDocumentTitles: Record<string, string> = {
   rijbewijs: 'rijbewijs',
 };
 
-const BrpDocumentCallToAction: Record<
-  'isExpired' | 'willExpire',
-  Record<string, string>
-> = {
-  isExpired: {
+const BrpDocumentCallToAction:  Record<string, string> = {
     paspoort:
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
     'europese identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     'nederlandse identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    rijbewijs: '',
-  },
-  willExpire: {
-    paspoort:
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
-    'europese identiteitskaart':
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    'nederlandse identiteitskaart':
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    rijbewijs: '',
-  },
-};
+    rijbewijs: 'https://www.amsterdam.nl/burgerzaken/rijbewijs/rijbewijs-verlengen-categorie-toevoegen/',
+  };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
-  const inOnderzoek = data?.persoon?.adresInOnderzoek;
+  const adresInOnderzoek = data?.persoon?.adresInOnderzoek;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
     ? defaultDateFormat(data?.persoon.datumVertrekUitNederland)
@@ -80,6 +70,13 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
     }
   );
 
+  const documentsExpiringDuringPeak = data.identiteitsbewijzen?.filter(
+    (document) => {
+      const afloop = new Date(document.datumAfloop)
+      return afloop >= ID_BEWIJS_PEAK_DATE_START && afloop <= ID_BEWIJS_PEAK_DATE_END 
+    }
+  );
+
   if (expiredDocuments?.length) {
     expiredDocuments.forEach((document) => {
       const docTitle =
@@ -95,14 +92,33 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
           document.datumAfloop
         )} is uw ${docTitle} niet meer geldig.`,
         link: {
-          to: BrpDocumentCallToAction.isExpired[document.documentType],
+          to: BrpDocumentCallToAction[document.documentType],
           title: `Vraag uw nieuwe ${docTitle} aan`,
         },
       });
     });
   }
 
-  if (willExpireSoonDocuments?.length) {
+  if (documentsExpiringDuringPeak?.length) {
+    documentsExpiringDuringPeak.forEach((document) => {
+      const docTitle =
+        BrpDocumentTitles[document.documentType] || document.documentType;
+      notifications.push({
+        chapter: Chapters.BURGERZAKEN,
+        datePublished: compareDate.toISOString(),
+        isAlert: true,
+        id: `${document.documentType}-datum-afloop-binnekort`,
+        title: `Voorkom vertraging en verleng uw ${docTitle} op tijd`,
+        description: `Vanaf maart tot de zomervakantie wordt het erg druk op het Stadsloket. Uw huidige ${docTitle} verloopt op ${defaultDateFormat( document.datumAfloop)}, vraag uw nieuwe ${docTitle} daarom ruim van te voren aan. Tip: in de ochtend is het rustiger bij het Stadsloket.`,
+        link: {
+          to: BrpDocumentCallToAction[document.documentType],
+          title: `Vraag uw nieuwe ${docTitle} aan`,
+        },
+      });
+    });
+  }
+
+  if (!documentsExpiringDuringPeak?.length && willExpireSoonDocuments?.length) {
     willExpireSoonDocuments.forEach((document) => {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
@@ -117,14 +133,14 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
           document.datumAfloop
         )} is uw ${docTitle} niet meer geldig.`,
         link: {
-          to: BrpDocumentCallToAction.isExpired[document.documentType],
+          to: BrpDocumentCallToAction[document.documentType],
           title: `Vraag uw nieuwe ${docTitle} aan`,
         },
       });
     });
   }
 
-  if (inOnderzoek) {
+  if (adresInOnderzoek) {
     notifications.push({
       chapter: Chapters.BRP,
       datePublished: compareDate.toISOString(),
@@ -132,7 +148,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
       description:
-        inOnderzoek === '080000'
+        adresInOnderzoek === '080000'
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {

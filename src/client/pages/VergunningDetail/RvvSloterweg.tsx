@@ -81,11 +81,12 @@ export function getRVVSloterwegLineItems(
     {
       id: 'status-afgehandeld',
       status: 'Afgehandeld',
-      datePublished: !!vergunning.dateDecision
-        ? vergunning.dateDecision
-        : !!vergunning.dateWorkflowVerleend
-        ? vergunning.dateWorkflowVerleend
-        : '',
+      datePublished:
+        !vergunning.dateWorkflowVerleend && !!vergunning.dateDecision
+          ? vergunning.dateDecision
+          : !!vergunning.dateWorkflowVerleend
+          ? vergunning.dateWorkflowVerleend
+          : '',
       description: descriptionAfgehandeld,
       documents: [],
       isActive: (isGranted && !hasDecision) || (!isGranted && hasDecision),
