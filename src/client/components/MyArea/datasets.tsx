@@ -14,6 +14,7 @@ import {
   IconBasketbal,
   IconBekendmaking,
   IconBread,
+  IconChargePoint,
   IconCivieleConstructies,
   IconEvenement,
   IconFitness,
@@ -60,6 +61,13 @@ export const datasetIcons: Record<
   string,
   ReactNode | Record<string, ReactElement<any>>
 > = {
+  laadpalen: {
+    laadpalen: (
+      <DatasetIcon className={styles.DatasetIcon__valid}>
+        <IconChargePoint fill={Colors.white} />
+      </DatasetIcon>
+    ),
+  },
   afvalcontainers: {
     afvalcontainers: (
       <DatasetIcon className={styles.DatasetIcon__grey}>

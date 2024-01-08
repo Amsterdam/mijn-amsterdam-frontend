@@ -252,7 +252,7 @@ export async function loadFeatureDetail(
     ? `${detailUrl}?${config.idKeyDetail}=${id}`
     : `${detailUrl}${id}`;
 
-  // Some of of the datasets don't have a specific endpoint to retrieve the details of a datapoint (via detailsUrl).
+  // Some of the datasets don't have a specific endpoint to retrieve the details of a datapoint (via detailsUrl).
   // In such cases the details are provided along with the list of all datapoints (via the listUrl).
   if (!detailUrl) {
     const listUrl =
@@ -279,7 +279,36 @@ export async function loadFeatureDetail(
     );
   }
 
-  const response = await requestData(requestConfig, requestID);
+  // In some cases the details of a datapoint are derived from the combined list of all datapoints.
+  if (config.transformDetailFromCombinedList) {
+    requestConfig.transformResponse = (responseData) => {
+      return config.transformList!(datasetId, config, responseData);
+    };
+  }
+
+  if (config.requestConfig?.nextUrls) {
+    requestConfig.nextUrls = config.requestConfig?.nextUrls;
+  }
+  if (config.requestConfig?.maximumAmountOfPages) {
+    requestConfig.maximumAmountOfPages =
+      config.requestConfig?.maximumAmountOfPages;
+  }
+
+  if (config.requestConfig?.combinePaginatedResults) {
+    requestConfig.combinePaginatedResults =
+      config.requestConfig?.combinePaginatedResults;
+  }
+
+  const response: any = await requestData(requestConfig, requestID);
+
+  if (datasetConfig[1]?.transformDetailFromCombinedList) {
+    response.content = datasetConfig[1]?.transformDetailFromCombinedList(
+      datasetId,
+      config,
+      id,
+      response.content
+    );
+  }
 
   if (response.status === 'OK') {
     const item = discoverSingleApiEmbeddedResponse(response.content);

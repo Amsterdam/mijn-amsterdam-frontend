@@ -6,15 +6,16 @@ import Alert from '../../../Alert/Alert';
 import LoadingContent from '../../../LoadingContent/LoadingContent';
 import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks';
 import styles from '../PanelComponent.module.scss';
-import MyArePanelContentAfval from './Afval';
-import MyArePanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
-import MyArePanelContentBekendmaking from './Bekendmaking';
-import MyArePanelContentEvenementen from './Evenementen';
+import MyAreaPanelContentAfval from './Afval';
+import MyAreaPanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
+import MyAreaPanelContentBekendmaking from './Bekendmaking';
+import MyAreaPanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
-import MyArePanelContentMeldingenBuurt from './MeldingenBuurt';
-import MyArePanelContentParkeren from './Parkeren';
-import MyArePanelContentSport from './Sport';
-import MyArePanelContentWIOR from './Wior';
+import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt';
+import MyAreaPanelContentParkeren from './Parkeren';
+import MyAreaPanelContentSport from './Sport';
+import MyAreaPanelContentWIOR from './Wior';
+import MyAreaPanelContentOplaadpunten from './Oplaadpunten';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;
@@ -28,58 +29,65 @@ function MyAreaPanelContentSwitch({
   switch (datasetCategoryId) {
     case 'sport':
       return (
-        <MyArePanelContentSport
+        <MyAreaPanelContentSport
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
       );
     case 'afvalcontainers':
       return (
-        <MyArePanelContentAfval
+        <MyAreaPanelContentAfval
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
       );
     case 'evenementen':
       return (
-        <MyArePanelContentEvenementen
+        <MyAreaPanelContentEvenementen
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
       );
     case 'bekendmakingen':
       return (
-        <MyArePanelContentBekendmaking
+        <MyAreaPanelContentBekendmaking
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
       );
     case 'parkeren':
       return (
-        <MyArePanelContentParkeren
+        <MyAreaPanelContentParkeren
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
       );
     case 'bedrijveninvesteringszones':
       return (
-        <MyArePanelContentBedrijvenInvesteringsZones
+        <MyAreaPanelContentBedrijvenInvesteringsZones
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
       );
     case 'wior':
       return (
-        <MyArePanelContentWIOR
+        <MyAreaPanelContentWIOR
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
       );
     case 'meldingenBuurt':
       return (
-        <MyArePanelContentMeldingenBuurt
+        <MyAreaPanelContentMeldingenBuurt
           datasetId={feature?.datasetId}
           panelItem={feature}
+        />
+      );
+    case 'laadpalen':
+      return (
+        <MyAreaPanelContentOplaadpunten
+          panelItem={feature}
+          datasetId={feature?.datasetId}
         />
       );
   }
