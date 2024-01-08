@@ -73,7 +73,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * If this flag _and_ a custom Authorization header is configured for a request, the custom Header takes presedence.
    */
   passthroughOIDCToken?: boolean;
-  debugRequestConfig?: boolean;
 
   combinePaginatedResults?: <T>(
     responseData: any,
@@ -104,7 +103,6 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   passthroughOIDCToken: false,
   page: 1,
   maximumAmountOfPages: 0,
-  debugRequestConfig: IS_DEBUG,
 };
 
 export type SourceApiKey =
