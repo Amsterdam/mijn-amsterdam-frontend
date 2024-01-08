@@ -34,6 +34,24 @@ export const axiosRequest = axios.create({
   headers: { 'User-Agent': 'mijn-amsterdam-bff' },
 });
 
+if (IS_DEBUG) {
+  axiosRequest.interceptors.request.use((request) => {
+    console.log(
+      'Source-api-request: Starting Request',
+      JSON.stringify(request, null, 2)
+    );
+    return request;
+  });
+
+  axiosRequest.interceptors.response.use((response) => {
+    console.log(
+      'Source-api-request: Response:',
+      JSON.stringify(response, null, 2)
+    );
+    return response;
+  });
+}
+
 export const cache = new memoryCache.Cache<string, any>();
 
 function enableMockAdapter() {
