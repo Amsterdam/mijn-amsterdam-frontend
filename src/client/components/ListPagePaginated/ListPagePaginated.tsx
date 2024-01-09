@@ -24,7 +24,6 @@ interface ListPagePaginatedProps {
   pageSize?: number;
   tableGridColStyles?: string[];
   title: string;
-  titleKey?: string;
 }
 
 export function ListPagePaginated({
@@ -42,7 +41,6 @@ export function ListPagePaginated({
   pageSize = DEFAULT_PAGE_SIZE,
   tableGridColStyles,
   title,
-  titleKey,
 }: ListPagePaginatedProps) {
   const history = useHistory();
 

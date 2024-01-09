@@ -83,7 +83,6 @@ export function useErfpachtV2Data() {
     displayPropsAlleFacturen,
     titleDossiers,
     titleOpenFacturen,
-    // colStyles: {} as any,
     colStyles: isMediumScreen
       ? {
           openFacturenTable: [
