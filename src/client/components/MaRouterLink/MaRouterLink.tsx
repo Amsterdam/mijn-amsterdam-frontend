@@ -19,7 +19,10 @@ export function MARouterLink({
   let className_ = className;
 
   if (fatNoUnderline === true) {
-    className_ = classNames(className, styles.MaRouterLink__no_underline_fat);
+    className_ = classNames(
+      className,
+      styles['MaRouterLink__no-underline-fat']
+    );
   }
 
   return (
