@@ -13,17 +13,17 @@ interface ListPagePaginatedProps {
   appRoute: string;
   appRouteBack: string;
   appRouteParams?: Record<string, string> | null;
-  body?: ReactNode;
-  chapter?: Chapter;
   displayProps: Record<string, string> | null;
-  errorText?: string;
-  noItemsText?: string;
   isError: boolean;
   isLoading: boolean;
   items: object[];
+  title: string;
+  body?: ReactNode;
+  chapter?: Chapter;
+  errorText?: string;
+  noItemsText?: string;
   pageSize?: number;
   tableGridColStyles?: string[];
-  title: string;
 }
 
 export function ListPagePaginated({
