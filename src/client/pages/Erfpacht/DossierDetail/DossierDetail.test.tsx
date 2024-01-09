@@ -184,30 +184,31 @@ describe('<Erfpacht/DossierDetail />', () => {
     });
   });
 
-  // test('Renders Dossier Detailpage with error', async () => {
-  //   const testState = {
-  //     ERFPACHTv2: {
-  //       status: 'ERROR',
-  //       content: null,
-  //     },
-  //   } as AppState;
+  test('Renders Dossier Detailpage with error', async () => {
+    const testState = {
+      ERFPACHTv2: {
+        status: 'ERROR',
+        content: null,
+      },
+    } as AppState;
 
-  //   bffApi
-  //     .get('/services/erfpachtv2/dossier/E.123.123')
-  //     .reply(500, { content: null, status: 'ERROR' });
+    //http://bff-api-host/services/erfpachtv2/dossier/E.123.123
+    bffApi
+      .get('/services/erfpachtv2/dossier/E.123.123')
+      .reply(500, { content: null, status: 'ERROR' });
 
-  //   const screen = render(
-  //     <Component
-  //       initializeState={(snapshot) => {
-  //         snapshot.set(appStateAtom, testState);
-  //       }}
-  //     />
-  //   );
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Foutmelding')).toBeInTheDocument();
-  //     expect(
-  //       screen.getByText('We kunnen op dit moment geen facturen tonen.')
-  //     ).toBeInTheDocument();
-  //   });
-  // });
+    const screen = render(
+      <Component
+        initializeState={(snapshot) => {
+          snapshot.set(appStateAtom, testState);
+        }}
+      />
+    );
+    await waitFor(() => {
+      expect(screen.getByText('Foutmelding')).toBeInTheDocument();
+      expect(
+        screen.getByText('We kunnen op dit moment geen erfpacht dossier tonen.')
+      ).toBeInTheDocument();
+    });
+  });
 });

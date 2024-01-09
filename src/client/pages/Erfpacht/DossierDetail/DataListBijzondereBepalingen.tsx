@@ -1,5 +1,5 @@
 import { TableV2 } from '../../../components/Table/TableV2';
-import { ErfpachtDatalistProps } from './DatalistGeneral';
+import { ErfpachtDatalistProps } from './DataListGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 
 export function DataTableBijzondereBepalingen({

@@ -217,7 +217,6 @@ export function useAppStateBagApi<T extends unknown>({
     },
     apiPristineResult(null)
   );
-
   useEffect(() => {
     if (!isApiDataCached && !!api.data.content) {
       setAppState((state) => {

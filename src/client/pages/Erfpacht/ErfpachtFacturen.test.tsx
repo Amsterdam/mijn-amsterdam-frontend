@@ -128,54 +128,6 @@ describe('<ErfpachtOpenFacturen />', () => {
     });
   });
 
-  // test('Renders Facturen List Page with data on a small screen device', () => {
-  //   const testState = {
-  //     ERFPACHTv2: {
-  //       status: 'OK',
-  //       content: dossiersTransformed,
-  //     },
-  //   } as AppState;
-
-  //   const screen = render(
-  //     <Component
-  //       initializeState={(snapshot) => {
-  //         snapshot.set(appStateAtom, testState);
-  //       }}
-  //     />
-  //   );
-
-  //   vi.doMock('../../hooks/media.hook', (importActual) => {
-  //     return {
-  //       ...importActual(),
-  //       useMediumScreen: vi.fn().mockReturnValueOnce(true),
-  //     };
-  //   });
-
-  //   expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
-  //   expect(
-  //     screen.queryByText('U heeft geen openstaande facturen.')
-  //   ).not.toBeInTheDocument();
-
-  //   expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
-  //   expect(screen.getByTestId('Bijkehuim 44 H')).toBeInTheDocument();
-  //   expect(screen.getByText('Dit en Dat plein 66')).toBeInTheDocument();
-  //   expect(screen.getByTestId('Dit en Dat plein 66')).toBeInTheDocument();
-  //   expect(screen.getByText('Kweikade 33 H')).toBeInTheDocument();
-  //   expect(screen.getByTestId('Kweikade 33 H')).toBeInTheDocument();
-
-  //   expect(screen.getByText('A.123123123')).toBeInTheDocument();
-  //   expect(screen.getByText('B.123123123')).toBeInTheDocument();
-  //   expect(screen.getByText('C.123123123')).toBeInTheDocument();
-
-  //   expect(screen.getByText('€ 55,02')).toBeInTheDocument();
-  //   expect(screen.getByText('€ 43,02')).toBeInTheDocument();
-  //   expect(screen.getByText('€ 123,02')).toBeInTheDocument();
-
-  //   expect(screen.getByText('16 april 2023')).toBeInTheDocument();
-  //   expect(screen.getByText('16 oktober 2023')).toBeInTheDocument();
-  //   expect(screen.getByText('16 december 2023')).toBeInTheDocument();
-  // });
-
   test('Renders Facturen List Page with error', async () => {
     const testState = {
       ERFPACHTv2: {

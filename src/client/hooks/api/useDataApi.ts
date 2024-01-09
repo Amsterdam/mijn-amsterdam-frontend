@@ -217,8 +217,8 @@ export function addAxiosResponseTransform(
     ...(Array.isArray(axios.defaults.transformResponse)
       ? axios.defaults.transformResponse
       : axios.defaults.transformResponse
-      ? [axios.defaults.transformResponse]
-      : []),
+        ? [axios.defaults.transformResponse]
+        : []),
     ...(Array.isArray(transformer) ? transformer : [transformer]),
   ];
 }
