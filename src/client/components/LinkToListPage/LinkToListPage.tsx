@@ -1,6 +1,6 @@
 import { Button, Link } from '@amsterdam/design-system-react';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import { generatePath, useHistory, useLocation } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 
 interface LinkToListPageProps {
   count: number;
