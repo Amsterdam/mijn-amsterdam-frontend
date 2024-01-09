@@ -10,8 +10,8 @@ interface Row {
 function DataListRow({ label, content }: Row) {
   return (
     <>
-      <dt className={styles.DataList_title}>{label}</dt>
-      <dd className={styles.DataList_description}>{content}</dd>
+      <dt className={styles.DataList__title}>{label}</dt>
+      <dd className={styles.DataList__description}>{content}</dd>
     </>
   );
 }
@@ -25,8 +25,8 @@ interface WrappedRow {
 function DataListRowWrapped({ label, content, className }: WrappedRow) {
   return (
     <div className={className}>
-      <dt className={styles.DataList_title}>{label}</dt>
-      <dd className={styles.DataList_description}>{content}</dd>
+      <dt className={styles.DataList__title}>{label}</dt>
+      <dd className={styles.DataList__description}>{content}</dd>
     </div>
   );
 }
@@ -41,7 +41,7 @@ function DataListRowsWithWrapper({ rows, className }: RowSet) {
     <div
       className={classNames(
         'amsterdam-grid',
-        styles.DataList_rowWrapper,
+        styles.DataList__rowWrapper,
         className
       )}
     >
