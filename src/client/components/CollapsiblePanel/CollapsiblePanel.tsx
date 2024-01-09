@@ -3,11 +3,11 @@ import { ReactNode, useState } from 'react';
 import styles from './CollapsiblePanel.module.scss';
 
 interface CollapsiblePanelHeadingProps {
-  toggle: () => void;
-  title: string;
   isCollapsed: boolean;
-  buttonLabelExpanded?: string;
+  title: string;
+  toggle: () => void;
   buttonLabelCollapsed?: string;
+  buttonLabelExpanded?: string;
 }
 
 export function CollapsiblePanelHeading({
@@ -33,9 +33,9 @@ type CollapsiblePanelProps = Omit<
   CollapsiblePanelHeadingProps,
   'toggle' | 'isCollapsed'
 > & {
+  children: ReactNode;
   title: CollapsiblePanelHeadingProps['title'];
   startCollapsed?: boolean;
-  children: ReactNode;
 };
 
 export function CollapsiblePanel({
