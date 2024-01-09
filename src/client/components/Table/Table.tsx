@@ -72,10 +72,10 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
 type DisplayProps<T> = { [Property in keyof T]+?: string | number | ReactNode };
 
 export interface TableProps<T> {
+  displayProps: DisplayProps<T>;
   items: T[];
   className?: string;
   titleKey?: keyof T | string;
-  displayProps: DisplayProps<T>;
 }
 
 interface TdValueProps {
