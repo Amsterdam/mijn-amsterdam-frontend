@@ -41,7 +41,7 @@ function DataListRowsWithWrapper({ rows, className }: RowSet) {
     <div
       className={classNames(
         'amsterdam-grid',
-        styles.DataList__rowWrapper,
+        styles['DataList__row-wrapper'],
         className
       )}
     >
