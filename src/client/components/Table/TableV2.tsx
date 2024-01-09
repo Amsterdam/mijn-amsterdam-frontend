@@ -41,9 +41,9 @@ export type DisplayProps<T> = {
 };
 
 export interface TableV2Props<T> {
+  displayProps: DisplayProps<T> | null;
   items: T[];
   className?: string;
-  displayProps: DisplayProps<T> | null;
   gridColStyles?: string[];
   showTHead?: boolean;
 }
