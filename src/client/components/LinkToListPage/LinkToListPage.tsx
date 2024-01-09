@@ -3,11 +3,11 @@ import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { generatePath, useHistory, useLocation } from 'react-router-dom';
 
 interface LinkToListPageProps {
-  label?: string;
-  threshold?: number;
   count: number;
   route: string;
+  label?: string;
   params?: Record<string, any>;
+  threshold?: number;
 }
 
 export function LinkToListPage({
