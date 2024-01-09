@@ -3,9 +3,9 @@ import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
 } from '../../../../server/services/simple-connect/erfpacht';
-import { DataList } from '../../../components/DataList/DataList';
-import { ErfpachtDataListProps } from './DataListGeneral';
-import { DataListCanons } from './DataListcanons';
+import { Datalist } from '../../../components/Datalist/Datalist';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
+import { DatalistCanons } from './Datalistcanons';
 import styles from './ErfpachtDossierDetail.module.scss';
 
 interface DatalistFinancieelPeriodeProps<T> {
@@ -26,7 +26,7 @@ function DatalistFinancieelPeriode({
     },
     {
       label: periode.titelFinancieelCanon,
-      content: <DataListCanons canons={periode.canons} />,
+      content: <DatalistCanons canons={periode.canons} />,
     },
   ];
   return (
@@ -34,12 +34,12 @@ function DatalistFinancieelPeriode({
       <Heading level={3} className={styles.Section_heading}>
         {periode.titelFinancieelPeriodeVan} {periode.periodeSamengesteld}
       </Heading>
-      <DataList rows={rows} />
+      <Datalist rows={rows} />
     </>
   );
 }
 
-function DataListHuidigePeriode({ dossier }: ErfpachtDataListProps) {
+function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
   if (dossier.financieel?.huidigePeriode) {
     return (
       <DatalistFinancieelPeriode periode={dossier.financieel.huidigePeriode} />
@@ -47,7 +47,7 @@ function DataListHuidigePeriode({ dossier }: ErfpachtDataListProps) {
   }
   return null;
 }
-function DataListToekomstigePeriode({
+function DatalistToekomstigePeriode({
   periode,
 }: DatalistFinancieelPeriodeProps<ErfpachtDossierDetailToekomstigePeriode>) {
   const rows = [
@@ -61,7 +61,7 @@ function DataListToekomstigePeriode({
     },
     {
       label: periode.titelFinancieelToekomstigeCanon,
-      content: <DataListCanons canons={periode.canons} />,
+      content: <DatalistCanons canons={periode.canons} />,
     },
   ];
   return (
@@ -70,22 +70,22 @@ function DataListToekomstigePeriode({
         {periode.titelFinancieelToekomstigePeriodeVan}{' '}
         {periode.periodeSamengesteld}
       </Heading>
-      <DataList rows={rows} />
+      <Datalist rows={rows} />
     </>
   );
 }
 
-function DataListToekomstigePeriodes({ dossier }: ErfpachtDataListProps) {
+function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
   return dossier.financieel?.toekomstigePeriodeList?.map((periode) => (
-    <DataListToekomstigePeriode periode={periode} />
+    <DatalistToekomstigePeriode periode={periode} />
   ));
 }
 
-export function DataListsFinancieel({ dossier }: ErfpachtDataListProps) {
+export function DatalistsFinancieel({ dossier }: ErfpachtDatalistProps) {
   return (
     <>
-      <DataListHuidigePeriode dossier={dossier} />
-      <DataListToekomstigePeriodes dossier={dossier} />
+      <DatalistHuidigePeriode dossier={dossier} />
+      <DatalistToekomstigePeriodes dossier={dossier} />
     </>
   );
 }

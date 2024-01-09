@@ -1,8 +1,8 @@
 import { Link } from '@amsterdam/design-system-react';
-import { DataList } from '../../../components/DataList/DataList';
-import { ErfpachtDataListProps } from './DataListGeneral';
+import { Datalist } from '../../../components/Datalist/Datalist';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
 
-export function DataListJuridisch({ dossier }: ErfpachtDataListProps) {
+export function DatalistJuridisch({ dossier }: ErfpachtDatalistProps) {
   if (dossier.juridisch) {
     const rows = [
       {
@@ -18,7 +18,7 @@ export function DataListJuridisch({ dossier }: ErfpachtDataListProps) {
         content: dossier.juridisch.uitgeschrevenSoortErfpacht,
       },
     ];
-    return <DataList rows={rows} />;
+    return <Datalist rows={rows} />;
   }
   return null;
 }

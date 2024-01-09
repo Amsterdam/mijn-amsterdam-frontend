@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import styles from './DataList.module.scss';
+import styles from './Datalist.module.scss';
 import classNames from 'classnames';
 
 interface Row {
@@ -7,11 +7,11 @@ interface Row {
   content: ReactNode;
 }
 
-function DataListRow({ label, content }: Row) {
+function DatalistRow({ label, content }: Row) {
   return (
     <>
-      <dt className={styles.DataList__title}>{label}</dt>
-      <dd className={styles.DataList__description}>{content}</dd>
+      <dt className={styles.Datalist__title}>{label}</dt>
+      <dd className={styles.Datalist__description}>{content}</dd>
     </>
   );
 }
@@ -22,11 +22,11 @@ interface WrappedRow {
   className?: string;
 }
 
-function DataListRowWrapped({ label, content, className }: WrappedRow) {
+function DatalistRowWrapped({ label, content, className }: WrappedRow) {
   return (
     <div className={className}>
-      <dt className={styles.DataList__title}>{label}</dt>
-      <dd className={styles.DataList__description}>{content}</dd>
+      <dt className={styles.Datalist__title}>{label}</dt>
+      <dd className={styles.Datalist__description}>{content}</dd>
     </div>
   );
 }
@@ -36,17 +36,17 @@ interface RowSet {
   className?: string;
 }
 
-function DataListRowsWithWrapper({ rows, className }: RowSet) {
+function DatalistRowsWithWrapper({ rows, className }: RowSet) {
   return (
     <div
       className={classNames(
         'amsterdam-grid',
-        styles['DataList__row-wrapper'],
+        styles['Datalist__row-wrapper'],
         className
       )}
     >
       {rows.map((row) => (
-        <DataListRowWrapped
+        <DatalistRowWrapped
           key={`row-${row.label}`}
           label={row.label}
           content={row.content}
@@ -57,19 +57,19 @@ function DataListRowsWithWrapper({ rows, className }: RowSet) {
   );
 }
 
-interface DataListProps {
+interface DatalistProps {
   rows: Row[] | RowSet[];
   className?: string;
 }
 
-export function DataList({ className, rows }: DataListProps) {
+export function Datalist({ className, rows }: DatalistProps) {
   return (
-    <dl className={classNames(styles.DataList, className)}>
+    <dl className={classNames(styles.Datalist, className)}>
       {rows.map((row, index) =>
         'rows' in row ? (
-          <DataListRowsWithWrapper key={`row-${index}`} rows={row.rows} />
+          <DatalistRowsWithWrapper key={`row-${index}`} rows={row.rows} />
         ) : (
-          <DataListRow
+          <DatalistRow
             key={`row-${index}`}
             label={row.label}
             content={row.content}

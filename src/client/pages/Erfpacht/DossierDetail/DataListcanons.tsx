@@ -1,11 +1,11 @@
 import { OrderedList } from '@amsterdam/design-system-react';
 import { ErfpachtCanon } from '../../../../server/services/simple-connect/erfpacht';
 
-interface DataListCanonsProps {
+interface DatalistCanonsProps {
   canons?: ErfpachtCanon[];
 }
 
-export function DataListCanons({ canons }: DataListCanonsProps) {
+export function DatalistCanons({ canons }: DatalistCanonsProps) {
   if (!!canons?.length) {
     return (
       <OrderedList markers={false}>

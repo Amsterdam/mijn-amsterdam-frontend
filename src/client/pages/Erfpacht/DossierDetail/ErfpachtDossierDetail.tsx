@@ -16,10 +16,10 @@ import { CollapsiblePanel } from '../../../components/CollapsiblePanel/Collapsib
 import { BarConfig } from '../../../components/LoadingContent/LoadingContent';
 import { BFFApiUrls } from '../../../config/api';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
-import { DataTableBijzondereBepalingen } from './DataListBijzondereBepalingen';
-import { DataListGeneral } from './DataListGeneral';
-import { DataListJuridisch } from './DataListJuridisch';
-import { DataListsFinancieel } from './DataListsFinancieel';
+import { DataTableBijzondereBepalingen } from './DatalistBijzondereBepalingen';
+import { DatalistGeneral } from './DatalistGeneral';
+import { DatalistJuridisch } from './DatalistJuridisch';
+import { DatalistsFinancieel } from './DatalistsFinancieel';
 import { DataTableFacturen } from './DataTableFacturen';
 import styles from './ErfpachtDossierDetail.module.scss';
 
@@ -82,12 +82,12 @@ export default function ErfpachtDossierDetail() {
           {!!dossier && (
             <>
               <Grid.Cell fullWidth>
-                <DataListGeneral dossier={dossier} />
+                <DatalistGeneral dossier={dossier} />
               </Grid.Cell>
 
               <Grid.Cell fullWidth>
                 <CollapsiblePanel title={dossier.titelKopJuridisch}>
-                  <DataListJuridisch dossier={dossier} />
+                  <DatalistJuridisch dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 
@@ -99,7 +99,7 @@ export default function ErfpachtDossierDetail() {
 
               <Grid.Cell fullWidth>
                 <CollapsiblePanel title={dossier.titelKopFinancieel}>
-                  <DataListsFinancieel dossier={dossier} />
+                  <DatalistsFinancieel dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 

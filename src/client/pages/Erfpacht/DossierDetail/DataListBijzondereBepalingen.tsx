@@ -1,10 +1,10 @@
 import { TableV2 } from '../../../components/Table/TableV2';
-import { ErfpachtDataListProps } from './DataListGeneral';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 
 export function DataTableBijzondereBepalingen({
   dossier,
-}: ErfpachtDataListProps) {
+}: ErfpachtDatalistProps) {
   if (!!dossier.bijzondereBepalingen?.length) {
     const displayPropsBijzondereBepalingen = {
       omschrijving: dossier.bijzondereBepalingen[0].titelBestemmingOmschrijving,

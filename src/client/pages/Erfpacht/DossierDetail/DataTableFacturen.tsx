@@ -1,17 +1,17 @@
 import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router-dom';
 import { AppRoutes } from '../../../../universal/config';
-import { DataList } from '../../../components/DataList/DataList';
+import { Datalist } from '../../../components/Datalist/Datalist';
 import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage';
 import { MaParagraph } from '../../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { useErfpachtV2Data } from '../erfpachtData.hook';
-import { ErfpachtDataListProps } from './DataListGeneral';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 import classNames from 'classnames';
 
-export function DataTableFacturen({ dossier }: ErfpachtDataListProps) {
+export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
   const { displayPropsAlleFacturen, colStyles } = useErfpachtV2Data();
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
@@ -70,7 +70,7 @@ export function DataTableFacturen({ dossier }: ErfpachtDataListProps) {
         </MaParagraph>
       </Grid.Cell>
       <Grid.Cell fullWidth>
-        <DataList
+        <Datalist
           className={styles.FacturenBetalerDebiteur}
           rows={facturenBetalerDebiteurRows}
         />

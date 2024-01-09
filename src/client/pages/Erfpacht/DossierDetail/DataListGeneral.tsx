@@ -1,13 +1,13 @@
 import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
-import { DataList } from '../../../components/DataList/DataList';
+import { Datalist } from '../../../components/Datalist/Datalist';
 import { ErfpachtersList } from './ErfpachtersList';
 import { KadastraleAanduidingList } from './KadastraleAanduidingList';
 
-export interface ErfpachtDataListProps {
+export interface ErfpachtDatalistProps {
   dossier: ErfpachtV2DossiersDetail;
 }
 
-export function DataListGeneral({ dossier }: ErfpachtDataListProps) {
+export function DatalistGeneral({ dossier }: ErfpachtDatalistProps) {
   const rows = [
     {
       label: dossier.titelDossierNummer,
@@ -35,5 +35,5 @@ export function DataListGeneral({ dossier }: ErfpachtDataListProps) {
     },
   ];
 
-  return <DataList rows={rows} />;
+  return <Datalist rows={rows} />;
 }
