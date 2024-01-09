@@ -4,8 +4,8 @@ import {
   ErfpachtDossierDetailToekomstigePeriode,
 } from '../../../../server/services/simple-connect/erfpacht';
 import { Datalist } from '../../../components/Datalist/Datalist';
-import { DatalistCanons } from './DataListCanons';
-import { ErfpachtDatalistProps } from './DataListGeneral';
+import { DatalistCanons } from './DatalistCanons';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 
 interface DatalistFinancieelPeriodeProps<T> {

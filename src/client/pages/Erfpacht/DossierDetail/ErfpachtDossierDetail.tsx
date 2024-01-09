@@ -16,10 +16,10 @@ import { CollapsiblePanel } from '../../../components/CollapsiblePanel/Collapsib
 import { BarConfig } from '../../../components/LoadingContent/LoadingContent';
 import { BFFApiUrls } from '../../../config/api';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
-import { DataTableBijzondereBepalingen } from './DataListBijzondereBepalingen';
-import { DatalistGeneral } from './DataListGeneral';
-import { DatalistJuridisch } from './DataListJuridisch';
-import { DatalistsFinancieel } from './DataListsFinancieel';
+import { DataTableBijzondereBepalingen } from './DatalistBijzondereBepalingen';
+import { DatalistGeneral } from './DatalistGeneral';
+import { DatalistJuridisch } from './DatalistJuridisch';
+import { DatalistsFinancieel } from './DatalistsFinancieel';
 import { DataTableFacturen } from './DataTableFacturen';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { useEffect } from 'react';

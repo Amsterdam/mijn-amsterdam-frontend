@@ -7,7 +7,7 @@ import { MaParagraph } from '../../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { useErfpachtV2Data } from '../erfpachtData.hook';
-import { ErfpachtDatalistProps } from './DataListGeneral';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 import classNames from 'classnames';
 
