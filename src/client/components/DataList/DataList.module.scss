@@ -5,13 +5,13 @@
     grid-auto-flow: column;
   }
 
-  // TODO: Find a way to use the h4 style without re-declarin
-  &__title {
+  // TODO: Find a way to use the h4 style without re-declaring
+  &_title {
     font-family: var(--amsterdam-heading-font-family);
     font-weight: var(--amsterdam-heading-font-weight);
   }
 
-  &__description {
+  &_description {
     padding: 0;
     margin: 0 0 2rem 0;
   }
