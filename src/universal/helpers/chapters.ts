@@ -12,6 +12,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     WPI_TONK,
     WPI_BBZ,
     ERFPACHT,
+    ERFPACHTv2,
     AFVAL,
     BRP,
     BELASTINGEN,
@@ -111,6 +112,16 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
 
     case Chapters.ERFPACHT:
       return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
+
+    case Chapters.ERFPACHTv2:
+      return (
+        FeatureToggle.erfpachtV2Active &&
+        !isLoading(ERFPACHTv2) &&
+        ERFPACHTv2.content !== null &&
+        (('dossiers' in ERFPACHTv2.content &&
+          !!ERFPACHTv2.content.dossiers.dossiers?.length) ||
+          !!ERFPACHTv2.content?.isKnown)
+      );
 
     case Chapters.SUBSIDIE:
       return !isLoading(SUBSIDIE) && SUBSIDIE.content?.isKnown === true;

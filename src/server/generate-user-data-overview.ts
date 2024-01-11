@@ -304,7 +304,8 @@ function getUserChapters(serviceResults: ServiceResults) {
   const items = chapterItems.filter((item) => {
     // Check to see if Chapter has been loaded or if it is directly available
     return (
-      item.isAlwaysVisible || isChapterActive(item, serviceResults as AppState)
+      item.isAlwaysVisible ||
+      isChapterActive(item, serviceResults as unknown as AppState)
     );
   });
 
@@ -368,17 +369,20 @@ function getRowValues(
   serviceResults: ServiceResults,
   paths: any[]
 ): Record<string, string | number> {
-  const user = paths.reduce((acc, { path, label, transform }) => {
-    let value = null;
-    if (path) {
-      [value] = jsonpath.query(serviceResults, path);
-    }
-    if (transform) {
-      value = transform(value, serviceResults);
-    }
-    acc[label] = value;
-    return acc;
-  }, {} as Record<string, string | number>);
+  const user = paths.reduce(
+    (acc, { path, label, transform }) => {
+      let value = null;
+      if (path) {
+        [value] = jsonpath.query(serviceResults, path);
+      }
+      if (transform) {
+        value = transform(value, serviceResults);
+      }
+      acc[label] = value;
+      return acc;
+    },
+    {} as Record<string, string | number>
+  );
 
   return user;
 }

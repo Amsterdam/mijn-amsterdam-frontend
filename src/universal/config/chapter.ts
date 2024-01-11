@@ -3,7 +3,7 @@ import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 
-// Within the team we call these Themes
+// Within the team we call these Themes / Thema's
 export type Chapter =
   | 'AFVAL'
   | 'BELASTINGEN'
@@ -19,6 +19,7 @@ export type Chapter =
   | 'NOTIFICATIONS'
   | 'ROOT'
   | 'ERFPACHT'
+  | 'ERFPACHTv2'
   | 'ZORG'
   | 'VERGUNNINGEN'
   | 'KVK'
@@ -33,6 +34,8 @@ export type Chapter =
   | 'AVG'
   | 'BODEM'
   | string;
+
+export type BagChapter = `${Chapter}_BAG`;
 
 export const Chapters: Record<Chapter, Chapter> = {
   AFVAL: 'AFVAL',
@@ -49,6 +52,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   NOTIFICATIONS: 'NOTIFICATIONS',
   ROOT: 'ROOT',
   ERFPACHT: 'ERFPACHT',
+  ERFPACHTv2: 'ERFPACHTv2',
   ZORG: 'ZORG',
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
@@ -63,6 +67,12 @@ export const Chapters: Record<Chapter, Chapter> = {
   AVG: 'AVG',
   BODEM: 'BODEM',
 };
+
+export const BagChapters: Record<Chapter, BagChapter> = Object.fromEntries(
+  Object.entries(Chapters).map(([key, key2]) => {
+    return [key, `${key2}_BAG`];
+  })
+);
 
 // These are used for PageHeadings and link title props for example.
 export const ChapterTitles: { [chapter in Chapter]: string } = {
@@ -80,6 +90,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
   ERFPACHT: 'Erfpacht',
+  ERFPACHTv2: 'Erfpacht V2',
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
@@ -181,6 +192,11 @@ export const DocumentTitles: {
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
   [AppRoutes.BODEM]: 'Bodem | overzicht',
   [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
+  [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
+  [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
+  [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
+  [AppRoutes['ERFPACHTv2/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
+  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: 'Erfpacht | dossier',
   [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
@@ -239,6 +255,19 @@ export const myChaptersMenuItems: ChapterMenuItem[] = [
     to: ExternalUrls.SSO_ERFPACHT || '',
     rel: 'external',
     profileTypes: ['private'],
+  },
+  {
+    title: ChapterTitles.ERFPACHTv2,
+    id: Chapters.ERFPACHTv2,
+    to: AppRoutes.ERFPACHTv2,
+    profileTypes: ['private'],
+  },
+  {
+    title: ChapterTitles.ERFPACHTv2,
+    id: Chapters.ERFPACHTv2,
+    to: ExternalUrls.ERFPACHTv2_ZAKELIJK,
+    profileTypes: ['commercial'],
+    rel: 'external',
   },
   {
     title: ChapterTitles.ERFPACHT,

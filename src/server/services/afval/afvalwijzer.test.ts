@@ -32,7 +32,7 @@ describe('Afvalwijzer service', () => {
         fractionData as GarbageFractionData
       )
     ).toMatchInlineSnapshot(
-      `"Kerstbomen kun je van 2 t/m 13 januari kwijt op een <a href=\\"https://kaart.amsterdam.nl/ophaalpunten-kerstbomen-2023\\">inleverplek in de buurt</a>"`
+      `"Kerstbomen kun je van 2 t/m 13 januari kwijt op een <a href="https://kaart.amsterdam.nl/ophaalpunten-kerstbomen-2023">inleverplek in de buurt</a>"`
     );
   });
 
@@ -48,7 +48,7 @@ describe('Afvalwijzer service', () => {
         fractionData as GarbageFractionData
       )
     ).toMatchInlineSnapshot(
-      `"<p>dingen <a href=\\"https://amsterdam.nl\\">test</a></p>"`
+      `"<p>dingen <a href="https://amsterdam.nl">test</a></p>"`
     );
   });
 
@@ -85,7 +85,7 @@ describe('Afvalwijzer service', () => {
       .toMatchInlineSnapshot(`
         {
           "title": "Somewhere in a galaxy far away",
-          "to": "/buurt?datasetIds=[\\"afvalcontainers\\"]&zoom=14&filters={\\"afvalcontainers\\"%3A{\\"fractie_omschrijving\\"%3A{\\"values\\"%3A{\\"Textiel\\"%3A1}}}}",
+          "to": "/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}",
         }
       `);
   });
@@ -128,8 +128,8 @@ describe('Afvalwijzer service', () => {
         },
         "kalendermelding": null,
         "ophaaldagen": "Maandag en donderdag",
-        "opmerking": "Of breng het naar <a href=\\"https://kaart.amsterdam.nl/afvalpunten\\">een Afvalpunt</a>",
-        "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href=\\"https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum\\" rel=\\"noopener noreferrer\\">aanvullende regels</a> van kracht.",
+        "opmerking": "Of breng het naar <a href="https://kaart.amsterdam.nl/afvalpunten">een Afvalpunt</a>",
+        "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.",
         "titel": "Grof afval",
         "waar": "Aan de rand van de stoep of op de vaste plek",
       }
@@ -200,8 +200,8 @@ describe('Afvalwijzer service', () => {
             },
             "kalendermelding": null,
             "ophaaldagen": "Maandag en donderdag",
-            "opmerking": "Of breng het naar <a href=\\"https://kaart.amsterdam.nl/afvalpunten\\">een Afvalpunt</a>",
-            "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href=\\"https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum\\" rel=\\"noopener noreferrer\\">aanvullende regels</a> van kracht.",
+            "opmerking": "Of breng het naar <a href="https://kaart.amsterdam.nl/afvalpunten">een Afvalpunt</a>",
+            "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.",
             "titel": "Grof afval",
             "waar": "Aan de rand van de stoep of op de vaste plek",
           },

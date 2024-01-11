@@ -58,6 +58,14 @@ export const AppRoutes = {
   BFF_500_ERROR: '/server-error-500',
   BODEM: '/bodem',
   'BODEM/LOOD_METING': '/lood-meting/:id',
+
+  // Erfpacht v2
+  ERFPACHTv2: '/erfpacht',
+  'ERFPACHTv2/DOSSIERS': '/erfpacht/dossiers/:page?',
+  'ERFPACHTv2/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
+  'ERFPACHTv2/OPEN_FACTUREN': '/erfpacht/open-facturen/:page?',
+  'ERFPACHTv2/ALLE_FACTUREN':
+    '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
 } as const;
 
 export const AppRoutesRedirect = [
@@ -167,6 +175,8 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
     '/toeristische-verhuur/vergunning',
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
+
+  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
   [AppRoutes['SIA/DETAIL/OPEN']]: (match: Match) =>
     `/yivi/open-melding/${match.params?.id}`,

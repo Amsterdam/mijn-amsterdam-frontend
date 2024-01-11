@@ -1,4 +1,7 @@
-import { ThumbsDown, ThumbsUp } from '@amsterdam/design-system-react-icons';
+import {
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+} from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
@@ -97,14 +100,14 @@ export default function Sia() {
             href="https://surveys.enalyzer.com/survey/linkindex?pid=b8m7pam2&mening=positief"
             rel="noopener noreferrer"
           >
-            <ThumbsUp /> Positief
+            <ThumbsUpIcon /> Positief
           </a>
           <a
             className={classNames(styles.SurveyThumbs, styles.SurveyThumbsDown)}
             href="https://surveys.enalyzer.com/survey/linkindex?pid=b8m7pam2&mening=negatief"
             rel="noopener noreferrer"
           >
-            <ThumbsDown /> Negatief
+            <ThumbsDownIcon /> Negatief
           </a>
         </p>
         <MaintenanceNotifications page="sia-meldingen" />

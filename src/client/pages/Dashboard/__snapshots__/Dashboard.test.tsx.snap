@@ -41,7 +41,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
+                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -151,7 +151,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
+                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -261,7 +261,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading--3 _NotificationHeader_63df5c"
+                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>

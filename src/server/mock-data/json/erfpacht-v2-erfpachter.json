@@ -1,5 +1,11 @@
 {
-  "isErfpachter": true,
+  "erfpachter": true,
   "relationID": "string",
-  "name": "string"
+  "relationCode": "string",
+  "name": "string",
+  "email": "string",
+  "phoneNumber": "string",
+  "aantalRechten": 0,
+  "laatsteMutatieDatum": "string",
+  "businessType": "Notariskantoor"
 }

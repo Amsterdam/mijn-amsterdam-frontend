@@ -109,6 +109,19 @@ const BFF500Error = lazy(() => import('./pages/BffError/BffError'));
 
 const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
 const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
+const Erfpacht = lazy(() => import('./pages/Erfpacht/Erfpacht'));
+const ErfpachtDossierDetail = lazy(
+  () => import('./pages/Erfpacht/DossierDetail/ErfpachtDossierDetail')
+);
+const ErfpachtDossiers = lazy(
+  () => import('./pages/Erfpacht/ErfpachtDossiers')
+);
+const ErfpachtFacturen = lazy(
+  () => import('./pages/Erfpacht/ErfpachtFacturen')
+);
+const ErfpachtOpenFacturen = lazy(
+  () => import('./pages/Erfpacht/ErfpachtOpenFacturen')
+);
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -345,6 +358,34 @@ function AppAuthenticated() {
               path={AppRoutes['BODEM/LOOD_METING']}
               component={LoodMeting}
             />
+          )}
+
+          {FeatureToggle.erfpachtV2Active && (
+            <Route
+              path={AppRoutes['ERFPACHTv2/DOSSIERS']}
+              component={ErfpachtDossiers}
+            />
+          )}
+          {FeatureToggle.erfpachtV2Active && (
+            <Route
+              path={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
+              component={ErfpachtFacturen}
+            />
+          )}
+          {FeatureToggle.erfpachtV2Active && (
+            <Route
+              path={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+              component={ErfpachtOpenFacturen}
+            />
+          )}
+          {FeatureToggle.erfpachtV2Active && (
+            <Route
+              path={AppRoutes['ERFPACHTv2/DOSSIERDETAIL']}
+              component={ErfpachtDossierDetail}
+            />
+          )}
+          {FeatureToggle.erfpachtV2Active && (
+            <Route path={AppRoutes.ERFPACHTv2} component={Erfpacht} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />

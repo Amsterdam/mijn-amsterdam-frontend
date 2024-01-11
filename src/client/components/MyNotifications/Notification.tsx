@@ -76,11 +76,7 @@ const Notification = ({
           disabled={!smallVariant}
           onClick={() => toggleCollapsed(!isCollapsed)}
         >
-          <Heading
-            className={styles.NotificationHeader}
-            level={4}
-            size="level-3"
-          >
+          <Heading className={styles.NotificationHeader} level={4}>
             {notification.title}
           </Heading>
           {!notification.Icon ? (

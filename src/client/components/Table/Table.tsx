@@ -9,6 +9,9 @@ import { LinkProps, Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import styles from './Table.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
+import { Link } from '@amsterdam/design-system-react';
+import { useHistory } from 'react-router-dom';
+import { MARouterLink } from '../MaRouterLink/MaRouterLink';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -41,13 +44,38 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
+export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
+  items: T[],
+  propertyName: keyof T = 'title'
+) {
+  return items.map((item) => {
+    if (!item.link?.to) {
+      return item;
+    }
+
+    let label: string = item[propertyName];
+    if (typeof label !== 'string') {
+      label = 'Onbekend item';
+    }
+
+    return {
+      ...item,
+      [propertyName]: (
+        <MARouterLink fatNoUnderline href={item.link.to}>
+          {capitalizeFirstLetter(label)}
+        </MARouterLink>
+      ),
+    };
+  });
+}
+
 type DisplayProps<T> = { [Property in keyof T]+?: string | number | ReactNode };
 
 export interface TableProps<T> {
   items: T[];
   className?: string;
   titleKey?: keyof T | string;
-  displayProps?: DisplayProps<T>;
+  displayProps: DisplayProps<T>;
 }
 
 interface TdValueProps {

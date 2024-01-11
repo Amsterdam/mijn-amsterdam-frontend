@@ -1,15 +1,19 @@
 import * as Sentry from '@sentry/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
-import { ApiPristineResponse } from '../../universal/helpers';
+import {
+  ApiPristineResponse,
+  apiPristineResult,
+  ApiResponse,
+} from '../../universal/helpers';
 
+import { BagChapter } from '../../universal/config';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { IS_TEST } from '../../universal/config';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -158,7 +162,7 @@ export function isAppStateReady(
         (isLegacyProfileType && !stateConfig?.profileTypes?.length) ||
         stateConfig?.profileTypes?.includes(profileType);
 
-      if (!stateConfig) {
+      if (!stateConfig && !key.endsWith('_BAG')) {
         Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);
       }
 
@@ -170,7 +174,7 @@ export function isAppStateReady(
   return (
     !!profileStates.length &&
     profileStates.every(([appStateKey, state]) => {
-      return state.status !== 'PRISTINE';
+      return typeof state !== 'undefined' && state.status !== 'PRISTINE';
     })
   );
 }
@@ -182,5 +186,73 @@ export function useAppStateReady() {
   return useMemo(
     () => isAppStateReady(appState, PRISTINE_APPSTATE, profileType),
     [appState, profileType]
+  );
+}
+
+export interface AppStateBagApiParams {
+  url: string;
+  bagChapter: BagChapter;
+  key: string;
+}
+
+export function useAppStateBagApi<T extends unknown>({
+  url,
+  bagChapter,
+  key,
+}: AppStateBagApiParams) {
+  const [appState, setAppState] = useRecoilState(appStateAtom);
+  const isApiDataCached =
+    typeof appState[bagChapter] === 'object' &&
+    typeof appState[bagChapter] !== 'undefined' &&
+    key in appState[bagChapter]!;
+
+  const [api] = useDataApi<ApiResponse<T | null>>(
+    {
+      url,
+      postpone: isApiDataCached,
+    },
+    apiPristineResult(null)
+  );
+
+  useEffect(() => {
+    if (!isApiDataCached && !!api.data.content) {
+      setAppState((state) => {
+        let localState = state[bagChapter];
+        if (!localState) {
+          localState = {};
+        }
+        localState = {
+          ...localState,
+          [key]: api.data.content as T,
+        };
+        return {
+          ...state,
+          [bagChapter]: localState,
+        };
+      });
+    }
+  }, [isApiDataCached, api, key]);
+
+  return [appState?.[bagChapter]?.[key] as T, api] as const;
+}
+
+export function useRemoveAppStateBagData() {
+  const [appState, setAppState] = useRecoilState(appStateAtom);
+  return useCallback(
+    ({ bagChapter, key: keyExpected }: Omit<AppStateBagApiParams, 'url'>) => {
+      const local = appState[bagChapter];
+      if (!!local) {
+        setAppState(
+          Object.assign({}, appState, {
+            [bagChapter]: Object.fromEntries(
+              Object.entries(local).filter(([key]) => {
+                return keyExpected !== key;
+              })
+            ),
+          })
+        );
+      }
+    },
+    [appState]
   );
 }
