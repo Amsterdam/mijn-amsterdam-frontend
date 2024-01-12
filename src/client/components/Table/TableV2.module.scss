@@ -1,0 +1,27 @@
+.Table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 var(--amsterdam-grid-gap);
+  text-align: left;
+}
+
+.Table__grid {
+  border-spacing: 0;
+
+  td,
+  th {
+    overflow-wrap: anywhere;
+  }
+
+  thead>tr {
+    margin-top: var(--amsterdam-grid-gap);
+  }
+}
+
+.TableRow__Grid {
+  margin-bottom: var(--amsterdam-grid-gap);
+
+  thead & {
+    margin-bottom: calc(var(--amsterdam-grid-gap) / 1.7);
+  }
+}

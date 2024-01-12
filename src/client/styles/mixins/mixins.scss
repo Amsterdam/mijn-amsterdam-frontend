@@ -70,27 +70,29 @@
 }
 
 @mixin select($names...) {
-  $selectors: ();
+  $selectors: (
+  );
 
-  @each $name in $names {
-    $selectors: append($selectors, ('[class*="#{$name}"]'), comma);
-  }
+@each $name in $names {
+  $selectors: append($selectors, ('[class*="#{$name}"]'), comma);
+}
 
-  #{$selectors} {
-    @content;
-  }
+#{$selectors} {
+  @content;
+}
 }
 
 @mixin select-id($names...) {
-  $selectors: ();
+  $selectors: (
+  );
 
-  @each $name in $names {
-    $selectors: append($selectors, ('[id="#{$name}"]'), comma);
-  }
+@each $name in $names {
+  $selectors: append($selectors, ('[id="#{$name}"]'), comma);
+}
 
-  #{$selectors} {
-    @content;
-  }
+#{$selectors} {
+  @content;
+}
 }
 
 @mixin hoverCapable {
@@ -190,4 +192,33 @@
   }
 
   @return $string;
+}
+
+@mixin DesignSystemStyleAdjust {
+  :root {
+    // --mams-font-size-rem-adjust: initial;
+    // --mams-font-size-body: initial;
+    // --mams-line-height: initial;
+  }
+
+  .amsterdam-grid .amsterdam-grid {
+    --amsterdam-grid-padding-inline: 0
+  }
+
+  .amsterdam-screen.amsterdam-screen--wide {
+    font-family: var(--amsterdam-heading-font-family);
+  }
+
+  td,
+  dd {
+    font-size: var(--amsterdam-paragraph-spacious-medium-font-size);
+    line-height: var(--amsterdam-paragraph-spacious-medium-line-height);
+  }
+
+  th,
+  dt {
+    font-size: var(--amsterdam-paragraph-spacious-medium-font-size);
+    line-height: var(--amsterdam-paragraph-spacious-medium-line-height);
+    font-weight: var(--amsterdam-heading-font-weight);
+  }
 }

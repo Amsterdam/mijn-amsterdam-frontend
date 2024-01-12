@@ -37,6 +37,10 @@ import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
 import { SIAItem } from '../../../server/services/sia';
 import { AVGRequest } from '../../../server/services/avg/types';
+import {
+  ErfpachtV2Dossier,
+  ErfpachtV2DossiersResponse,
+} from '../../../server/services/simple-connect/erfpacht';
 
 export interface SearchEntry {
   url: string;
@@ -208,6 +212,17 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'VERGUNNINGEN' as keyof AppState,
     displayTitle: (vergunning: Vergunning) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
+    },
+  },
+  {
+    stateKey: 'ERFPACHTv2' as keyof AppState,
+    getApiBaseItems: (
+      erfpachtV2DossiersResponse: ErfpachtV2DossiersResponse
+    ): ErfpachtV2Dossier[] => {
+      return erfpachtV2DossiersResponse?.dossiers?.dossiers ?? [];
+    },
+    displayTitle: (dossier: ErfpachtV2Dossier) => (term: string) => {
+      return displayPath(term, [dossier.title]);
     },
   },
   {

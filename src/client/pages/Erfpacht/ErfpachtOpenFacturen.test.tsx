@@ -1,0 +1,164 @@
+import { render } from '@testing-library/react';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import ERFPACHTv2_DOSSIERS from '../../../server/mock-data/json/erfpacht-v2-dossiers.json';
+import { transformDossierResponse } from '../../../server/services/simple-connect/erfpacht';
+import { AppRoutes } from '../../../universal/config';
+import { AppState } from '../../AppState';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
+import ErfpachtOpenFacturen from './ErfpachtOpenFacturen';
+
+describe('<ErfpachtOpenFacturen />', () => {
+  const routeEntry = generatePath(AppRoutes['ERFPACHTv2/OPEN_FACTUREN']);
+  const routePath = AppRoutes['ERFPACHTv2/OPEN_FACTUREN'];
+
+  const dossiersTransformed = transformDossierResponse(
+    ERFPACHTv2_DOSSIERS as any
+  );
+
+  const Component = ({
+    initializeState,
+  }: {
+    initializeState: (snapshot: MutableSnapshot) => void;
+  }) => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={ErfpachtOpenFacturen}
+      initializeState={initializeState}
+    />
+  );
+
+  test('Renders Open Facturen List Page no data', () => {
+    const testState = {
+      ERFPACHTv2: {
+        status: 'OK',
+        content: null,
+      },
+    } as AppState;
+
+    const screen = render(
+      <Component
+        initializeState={(snapshot) => {
+          snapshot.set(appStateAtom, testState);
+        }}
+      />
+    );
+
+    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
+    expect(
+      screen.getByText('U heeft geen openstaande facturen.')
+    ).toBeInTheDocument();
+  });
+
+  test('Renders Open Facturen List Page with data', () => {
+    const testState = {
+      ERFPACHTv2: {
+        status: 'OK',
+        content: dossiersTransformed,
+      },
+    } as AppState;
+
+    const screen = render(
+      <Component
+        initializeState={(snapshot) => {
+          snapshot.set(appStateAtom, testState);
+        }}
+      />
+    );
+
+    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
+    expect(
+      screen.queryByText('U heeft geen openstaande facturen.')
+    ).not.toBeInTheDocument();
+
+    expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
+    expect(screen.getByText('Dit en Dat plein 66')).toBeInTheDocument();
+    expect(screen.getByText('Kweikade 33 H')).toBeInTheDocument();
+
+    expect(screen.getByText('A.123123123')).toBeInTheDocument();
+    expect(screen.getByText('B.123123123')).toBeInTheDocument();
+    expect(screen.getByText('C.123123123')).toBeInTheDocument();
+
+    expect(screen.getByText('€ 55,02')).toBeInTheDocument();
+    expect(screen.getByText('€ 43,02')).toBeInTheDocument();
+    expect(screen.getByText('€ 123,02')).toBeInTheDocument();
+
+    expect(screen.getByText('16 april 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 oktober 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 december 2023')).toBeInTheDocument();
+  });
+
+  test('Renders Open Facturen List Page with data on a small screen device', () => {
+    const testState = {
+      ERFPACHTv2: {
+        status: 'OK',
+        content: dossiersTransformed,
+      },
+    } as AppState;
+
+    const screen = render(
+      <Component
+        initializeState={(snapshot) => {
+          snapshot.set(appStateAtom, testState);
+        }}
+      />
+    );
+
+    vi.doMock('../../hooks/media.hook', (importActual) => {
+      return {
+        ...importActual(),
+        useMediumScreen: vi.fn().mockReturnValueOnce(true),
+      };
+    });
+
+    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
+    expect(
+      screen.queryByText('U heeft geen openstaande facturen.')
+    ).not.toBeInTheDocument();
+
+    expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
+    expect(screen.getByTestId('Bijkehuim 44 H')).toBeInTheDocument();
+    expect(screen.getByText('Dit en Dat plein 66')).toBeInTheDocument();
+    expect(screen.getByTestId('Dit en Dat plein 66')).toBeInTheDocument();
+    expect(screen.getByText('Kweikade 33 H')).toBeInTheDocument();
+    expect(screen.getByTestId('Kweikade 33 H')).toBeInTheDocument();
+
+    expect(screen.getByText('A.123123123')).toBeInTheDocument();
+    expect(screen.getByText('B.123123123')).toBeInTheDocument();
+    expect(screen.getByText('C.123123123')).toBeInTheDocument();
+
+    expect(screen.getByText('€ 55,02')).toBeInTheDocument();
+    expect(screen.getByText('€ 43,02')).toBeInTheDocument();
+    expect(screen.getByText('€ 123,02')).toBeInTheDocument();
+
+    expect(screen.getByText('16 april 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 oktober 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 december 2023')).toBeInTheDocument();
+  });
+
+  test('Renders Open Facturen List Page with error', () => {
+    const testState = {
+      ERFPACHTv2: {
+        status: 'ERROR',
+        content: null,
+      },
+    } as AppState;
+
+    const screen = render(
+      <Component
+        initializeState={(snapshot) => {
+          snapshot.set(appStateAtom, testState);
+        }}
+      />
+    );
+
+    expect(screen.getByText('Foutmelding')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'We kunnen op dit moment geen openstaande facturen tonen.'
+      )
+    ).toBeInTheDocument();
+  });
+});

@@ -1,0 +1,103 @@
+@import '../../../styles/global';
+
+@include DesignSystemStyleAdjust();
+
+.DossierDetail__ordered_list {
+  margin-bottom: 2rem;
+}
+
+.Section_heading {
+  margin-bottom: 1rem;
+}
+
+
+.ColumnList {
+  // @media screen and (min-width: $amsterdam-breakpoint-medium) {
+  grid-auto-flow: column;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: var(--amsterdam-grid-gap);
+  grid-template-rows: repeat(20, 1fr); // Will be replaced dynamically
+  // }
+
+  @media screen and (min-width: $amsterdam-breakpoint-wide) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.DossierDetailFacturenTable {
+  >thead>tr {
+    margin-top: 0;
+  }
+}
+
+.FacturenBetalerDebiteur {
+  padding: 0;
+
+  @media screen and (max-width: $amsterdam-breakpoint-medium) {
+    dd {
+      margin: 0;
+    }
+  }
+
+  &_Col1 {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+  }
+
+  &_Col2 {
+    grid-column-start: 3;
+    grid-column-end: span 2;
+  }
+
+  &_Col3 {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+  }
+
+  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+    &_Col1 {
+      grid-column-start: 1;
+      grid-column-end: span 3;
+    }
+
+    &_Col2 {
+      grid-column-start: 4;
+      grid-column-end: span 3;
+    }
+
+    &_Col3 {
+      grid-column-start: 7;
+      grid-column-end: span 3;
+    }
+  }
+}
+
+.BijzondereBepalingen {
+  padding: 0;
+
+  tr {
+    --amsterdam-grid-gap: 0;
+  }
+
+  &_Col1 {
+    grid-column-start: 1;
+    grid-column-end: span 2;
+  }
+
+  &_Col2 {
+    grid-column-start: 3;
+    grid-column-end: span 2;
+  }
+
+  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+    &_Col1 {
+      grid-column-start: 1;
+      grid-column-end: span 4;
+    }
+
+    &_Col2 {
+      grid-column-start: 5;
+      grid-column-end: span 4;
+    }
+  }
+}

@@ -84,10 +84,14 @@ export function usePhoneScreen(): boolean {
   return useMediaLayout({ maxWidth: Breakpoints.phone });
 }
 
-export function useWidescreen(): boolean {
-  return useMediaLayout({ minWidth: Breakpoints.wideScreen });
-}
-
 export function useLandScape(): boolean {
   return useMediaLayout({ orientation: 'landscape' });
+}
+
+export function useWidescreen(): boolean {
+  return useMediaLayout({ minWidth: Breakpoints.minWidthWideScreen });
+}
+
+export function useMediumScreen(): boolean {
+  return useMediaLayout({ minWidth: Breakpoints.minWidthMediumScreen });
 }

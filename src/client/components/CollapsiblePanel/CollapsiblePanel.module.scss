@@ -1,0 +1,12 @@
+.CollapsiblePanelHeading {
+  display: flex;
+  align-items: baseline;
+
+  button {
+    margin-left: .5rem;
+  }
+}
+
+.CollapsiblePanel {
+  padding-top: 2rem;
+}

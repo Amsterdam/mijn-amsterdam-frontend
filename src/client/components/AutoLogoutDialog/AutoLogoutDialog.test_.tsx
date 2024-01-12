@@ -4,7 +4,7 @@
 import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RecoilRoot } from 'recoil';
-import { SpyInstance, describe, expect, it, vi } from 'vitest';
+import { MockInstance, describe, expect, it, vi } from 'vitest';
 import { sessionAtom } from '../../hooks/api/useSessionApi';
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 
@@ -24,7 +24,7 @@ describe('AutoLogoutDialog', () => {
     secondsSessionRenewRequestInterval: 2,
   };
   const map: any = {};
-  let listenerSpy: SpyInstance;
+  let listenerSpy: MockInstance;
   window.addEventListener = vi.fn((event, callback: any) => {
     map[event] = (...args: any) => {
       callback && callback(...args);

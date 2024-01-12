@@ -73,7 +73,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * If this flag _and_ a custom Authorization header is configured for a request, the custom Header takes presedence.
    */
   passthroughOIDCToken?: boolean;
-  debugRequestConfig?: boolean;
 
   combinePaginatedResults?: <T>(
     responseData: any,
@@ -104,7 +103,6 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   passthroughOIDCToken: false,
   page: 1,
   maximumAmountOfPages: 0,
-  debugRequestConfig: IS_DEBUG,
 };
 
 export type SourceApiKey =
@@ -231,14 +229,14 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
   },
   ERFPACHTv2: {
-    url: process.env.BFF_ERFPACHT_API_URL_ONT,
+    url: process.env.BFF_ERFPACHT_API_URL,
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent({
       ca: IS_TAP ? getCert(process.env.BFF_SERVER_CLIENT_CERT) : [],
     }),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
-      !process.env.BFF_ERFPACHT_API_URL_ONT,
+      !process.env.BFF_ERFPACHT_API_URL,
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
     },
@@ -355,6 +353,10 @@ export const BffEndpoints = {
 
   // Bezwaren
   BEZWAREN_ATTACHMENTS: '/services/bezwaren/:id/attachments',
+
+  // ErfpachtV2
+  ERFPACHTv2_DOSSIER_DETAILS:
+    '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

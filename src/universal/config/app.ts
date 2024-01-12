@@ -26,6 +26,7 @@ export const FeatureToggle = {
   isSearchEnabled: true,
   meldingenBuurtActive: true,
   inkomenBBZActive: true,
+  erfpachtV2Active: !IS_PRODUCTION,
   erfpachtV2EndpointActive: !IS_PRODUCTION,
   subsidieActive: true,
   wiorMeldingen: true,
@@ -59,6 +60,9 @@ export const ExternalUrls = {
   SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''
   }.amsterdam.nl/saml/login/alias/mijnErfpachtBurger`,
+  ERFPACHTv2_ZAKELIJK: `https://erfpacht${
+    !IS_PRODUCTION ? '.acc' : ''
+  }.amsterdam.nl`,
   EH_SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''
   }.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk`,

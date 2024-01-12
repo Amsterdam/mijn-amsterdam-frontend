@@ -34,6 +34,29 @@ export const axiosRequest = axios.create({
   headers: { 'User-Agent': 'mijn-amsterdam-bff' },
 });
 
+if (IS_DEBUG) {
+  axiosRequest.interceptors.request.use((request) => {
+    console.log(
+      'Source-api-request::Request:',
+      request.url,
+      request.params,
+      request.headers
+    );
+    return request;
+  });
+
+  axiosRequest.interceptors.response.use((response) => {
+    console.log(
+      'Source-api-request::Response:',
+      response.request.res?.responseUrl ??
+        response.request?.responseURL ??
+        'onbekende.url',
+      response.data
+    );
+    return response;
+  });
+}
+
 export const cache = new memoryCache.Cache<string, any>();
 
 function enableMockAdapter() {
@@ -204,10 +227,6 @@ export async function requestData<T>(
     cancelTimeout = setTimeout(() => {
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout!);
-
-    if (requestConfig.debugRequestConfig) {
-      console.log(requestConfig);
-    }
 
     const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
     const response: AxiosResponse<T> = await request;

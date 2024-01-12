@@ -10,6 +10,7 @@ import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
+  IS_DEBUG,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
@@ -150,8 +151,20 @@ export function addServiceResultHandler(
   servicePromise: Promise<any>,
   serviceName: string
 ) {
+  if (IS_DEBUG) {
+    console.log(
+      'Service-controller: adding service result handler for ',
+      serviceName
+    );
+  }
   return servicePromise.then((data) => {
     sendMessage(res, serviceName, 'message', data);
+    if (IS_DEBUG) {
+      console.log(
+        'Service-controller: service result message sent for',
+        serviceName
+      );
+    }
     return data;
   });
 }

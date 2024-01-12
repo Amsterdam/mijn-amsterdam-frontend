@@ -281,13 +281,13 @@ export function createToeristischeVerhuurNotification(
   item: ToeristischeVerhuurVergunning,
   items: ToeristischeVerhuurVergunning[]
 ): MyNotification {
-  let title = 'Toeristische verhuur';
-  let description = 'Er is een update in uw toeristische verhuur overzicht.';
+  const vergunningTitleLower = item.title.toLowerCase();
+
+  let title = `Aanvraag ${vergunningTitleLower} in behandeling`;
+  let description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
   let datePublished = item.dateRequest;
   let cta = 'Bekijk uw aanvraag';
   let linkTo: string = AppRoutes.TOERISTISCHE_VERHUUR;
-
-  const vergunningTitleLower = item.title.toLowerCase();
 
   if (
     item.title === 'Vergunning bed & breakfast' ||
@@ -303,6 +303,9 @@ export function createToeristischeVerhuurNotification(
       item.title === 'Vergunning bed & breakfast'
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
         : 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/';
+
+    linkTo = ctaLinkToDetail;
+
     switch (true) {
       // B&B + Vakantieverhuurvergunning
       case item.decision === 'Verleend' &&
@@ -356,14 +359,6 @@ export function createToeristischeVerhuurNotification(
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished = item.dateDecision || item.dateRequest;
-        break;
-      // Fallback for both B&B + Vakantieverhuurvergunning
-      default:
-        title = `Aanvraag ${vergunningTitleLower} in behandeling`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.identifier} in behandeling.`;
-        cta = `Bekijk uw aanvraag`;
-        linkTo = ctaLinkToDetail;
-        datePublished = item.dateRequest;
         break;
     }
   }

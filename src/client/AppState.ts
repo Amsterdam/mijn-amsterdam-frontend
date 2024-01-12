@@ -1,12 +1,15 @@
 import { createContext } from 'react';
 import type { ServiceID, ServicesType } from '../server/services/controller';
-import { FeatureToggle } from '../universal/config';
-import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
+import { BagChapter, FeatureToggle } from '../universal/config';
+import { ApiResponse, apiPristineResult } from '../universal/helpers/api';
 
 export type AppState = {
   [key in ServiceID]: ApiResponse<
     ReturnTypeAsync<ServicesType[key]>['content']
   >;
+} & {
+  // A place to store additional data not loaded initially but needs to be stored persistently in the app.
+  [key in BagChapter]?: Record<string, any>;
 };
 
 export const PRISTINE_APPSTATE: AppState = {
@@ -46,7 +49,10 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   ERFPACHT: apiPristineResult({ isKnown: false }),
-  ERFPACHTv2: apiPristineResult(null),
+  ERFPACHTv2: apiPristineResult(null, {
+    isActive: FeatureToggle.erfpachtV2Active,
+    profileTypes: ['private', 'commercial'],
+  }),
   SUBSIDIE: apiPristineResult(
     { isKnown: false, notifications: [] },
     { isActive: FeatureToggle.subsidieActive }

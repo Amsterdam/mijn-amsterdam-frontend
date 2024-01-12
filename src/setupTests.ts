@@ -52,6 +52,10 @@ process.env.BFF_OIDC_USERINFO_ENDPOINT = `${bffApiHost}/oidc/userinfo`;
 process.env.BFF_MIJN_ERFPACHT_API_KEY = 'foo-bar-123';
 process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_MIJN_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
+
+// V2
+process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
+
 process.env.BFF_LVV_API_URL = `${remoteApiHost}/lvv`;
 process.env.BFF_SMILE_USERNAME = 'test2';
 process.env.BFF_SMILE_PASSWORD = 'testpwd2';

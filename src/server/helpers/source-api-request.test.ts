@@ -3,7 +3,7 @@ import {
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { ApiUrlEntries, BFF_MS_API_BASE_URL } from '../config';
+import { ApiUrlEntries } from '../config';
 import { AuthProfileAndToken } from './app';
 import {
   axiosRequest,
@@ -21,7 +21,7 @@ import {
   expect,
   it,
   test,
-  SpyInstance,
+  MockInstance,
   afterAll,
 } from 'vitest';
 import { remoteApiHost } from '../../setupTests';
@@ -44,7 +44,7 @@ describe('requestData.ts', () => {
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params`;
   const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params`;
 
-  let axiosRequestSpy: SpyInstance;
+  let axiosRequestSpy: MockInstance;
 
   beforeAll(() => {
     vi.useFakeTimers();

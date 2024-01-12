@@ -1,5 +1,4 @@
 import { FeatureToggle } from '../../universal/config';
-import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError } from '../../universal/types';
 import { AppState } from '../AppState';
@@ -16,6 +15,7 @@ export const BFFApiUrls = {
   SERVICES_CMS_URL: `${BFF_API_BASE_URL}/services/cms`,
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
+  ERFPACHTv2_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpachtv2/dossier`,
 };
 
 // Urls directly used from front-end
@@ -51,6 +51,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
   WPI_STADSPAS_stadspas: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
+  ERFPACHTv2: 'Erfpacht',
   SUBSIDIE: 'Subsidies',
   AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
