@@ -29,11 +29,6 @@
     "not ie > 0",
     "not op_mini all"
   ],
-  "overrides": {
-    "vite": {
-      "rollup": "npm:@rollup/wasm-node"
-    }
-  },
   "dependencies": {
     "@amsterdam/design-system-assets": "^0.1.5",
     "@amsterdam/design-system-css": "^0.2.0",
@@ -144,6 +139,9 @@
     "vite": "^5.0.10",
     "vitest": "^1.1.0",
     "xlsx": "file:vendor/xlsx-0.20.0.tgz"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   },
   "devDependencies": {}
 }
