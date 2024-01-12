@@ -29,6 +29,11 @@
     "not ie > 0",
     "not op_mini all"
   ],
+  "overrides": {
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
+  },
   "dependencies": {
     "@amsterdam/design-system-assets": "^0.1.5",
     "@amsterdam/design-system-css": "^0.2.0",
