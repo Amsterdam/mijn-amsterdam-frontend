@@ -53,7 +53,7 @@ interface CMSFeedItem {
   feedid: string;
 }
 
-export interface CMSMaintenanceNotification {
+export interface CMSMaintenanceNotification extends MyNotification {
   title: string;
   datePublished: string;
   dateStart: string;
@@ -75,6 +75,8 @@ function transformCMSEventResponse(
       'storingsmeldingen/alle-meldingen-mijn-amsterdam',
       ''
     ),
+    chapter: Chapters.NOTIFICATIONS,
+    isAlert: true,
     datePublished: new Date().toISOString(),
   } as CMSMaintenanceNotification;
 
