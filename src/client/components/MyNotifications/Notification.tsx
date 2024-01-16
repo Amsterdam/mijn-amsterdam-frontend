@@ -9,14 +9,13 @@ import {
   MyNotification as MyNotificationBase,
   SVGComponent,
 } from '../../../universal/types';
-import { IconChevronRight } from '../../assets/icons';
+import { IconChevronRight, IconInfo } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import {
   trackItemClick,
   useContentDimensions,
   useProfileTypeValue,
 } from '../../hooks';
-import { IconInfo } from '../../assets/icons';
 import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import { DocumentLink } from '../DocumentList/DocumentList';
