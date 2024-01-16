@@ -1,4 +1,7 @@
-trigger: none
+trigger:
+  branches:
+    include:
+      - production-release-v*
 pr: none
 
 resources:
@@ -21,16 +24,11 @@ parameters:
 
   - name: dtapName
     type: string
-    default: none
+    default: t
     values:
-      - none
       - t
       - a
       - p
-
-  - name: updateAppSettings
-    type: boolean
-    default: false
 
   - name: btdAppBFF
     type: boolean
@@ -39,30 +37,47 @@ parameters:
     type: boolean
     default: true
 
+  - name: updateAppSettings
+    type: boolean
+    default: false
+
 variables:
-  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+  - name: dtapName
+    value: ${{ parameters.dtapName }}
+
+  - name: btdBuild
+    value: ${{ parameters.btdBuild }}
+  - name: btdTest
+    value: ${{ parameters.btdTest }}
+  - name: btdDeploy
+    value: ${{ parameters.btdDeploy }}
+
+  - name: btdAppBFF
+    value: ${{ parameters.btdAppBFF }}
+  - name: btdAppUI
+    value: ${{ parameters.btdAppUI }}
+
+  - ${{ if in(variables['Build.SourceBranchName'], 'production-release') }}:
       - name: dtapName
-        value: t
-  - ${{ if eq(variables['Build.SourceBranchName'], 'az-acceptance') }}:
-      - name: dtapName
-        value: a
-  - ${{ if ne(parameters.dtapName, 'none') }}:
-      - name: dtapName
-        value: ${{ parameters.dtapName }}
-  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+        value: p
+      - name: btdBuild
+        value: true
+      - name: btdTest
+        value: true
       - name: btdDeploy
-        value: false
-  - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-      - name: btdDeploy
-        value: ${{ parameters.btdDeploy }}
+        value: true
+      - name: btdAppBFF
+        value: true
+      - name: btdAppUI
+        value: true
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
       dtapName: ${{ variables.dtapName }}
-      btdBuild: ${{ parameters.btdBuild }}
-      btdTest: ${{ parameters.btdTest }}
+      btdBuild: ${{ variables.btdBuild }}
+      btdTest: ${{ variables.btdTest }}
       btdDeploy: ${{ variables.btdDeploy }}
-      btdAppBFF: ${{ parameters.btdAppBFF }}
-      btdAppUI: ${{ parameters.btdAppUI }}
+      btdAppBFF: ${{ variables.btdAppBFF }}
+      btdAppUI: ${{ variables.btdAppUI }}
       updateAppSettings: ${{ parameters.updateAppSettings }}
