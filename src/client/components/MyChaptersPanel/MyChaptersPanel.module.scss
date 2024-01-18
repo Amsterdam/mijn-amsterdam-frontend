@@ -30,20 +30,7 @@
   }
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
-    width: calc(50% - 0.5rem);
     margin-bottom: 1rem;
-
-    &:nth-child(odd) {
-      @include mq-gt-phone() {
-        margin-right: 0.5rem;
-      }
-    }
-
-    &:nth-child(even) {
-      @include mq-gt-phone() {
-        margin-left: 0.5rem;
-      }
-    }
 
     @include mq-tablet() {
       padding-left: 0;
@@ -51,7 +38,7 @@
 
       @include mq-gt-phone() {
         width: auto;
-        min-width: 18.5rem;
+        min-width: 100%;
       }
 
       &:nth-child(even) {

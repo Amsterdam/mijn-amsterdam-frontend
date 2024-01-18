@@ -137,7 +137,7 @@ const PROFILE = callService(fetchProfile);
 const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 
-// Special services that aggeragates NOTIFICATIONS from various services
+// Special services that aggregates NOTIFICATIONS from various services
 const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
   const profileType = await getProfileType(req);
 
@@ -153,10 +153,12 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
 
   const notifications: Array<MyNotification> = [
     ...tipNotifications,
-    ...chapterNotifications,
+    ...chapterNotifications, // can have tips as well
   ];
 
-  return apiSuccessResult(sortNotifications(notifications));
+  const notificationsWithTipsInserted = sortNotifications(notifications);
+
+  return apiSuccessResult(notificationsWithTipsInserted);
 };
 
 // Store all services for type derivation

@@ -76,7 +76,9 @@ const Notification = ({
           onClick={() => toggleCollapsed(!isCollapsed)}
         >
           <Heading className={styles.NotificationHeader} level={4}>
-            {notification.title}
+            {notification.isTip
+              ? `Tip: ${notification.title}`
+              : notification.title}
           </Heading>
           {!notification.Icon ? (
             <ChapterIcon
