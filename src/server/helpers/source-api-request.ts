@@ -129,20 +129,6 @@ export function clearSessionCache(requestID: requestID) {
   }
 }
 
-function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
-  // parse link header and get value of rel="next" url
-  const links = headers.link.split(',');
-  const next = links.find(
-    (link: string) => link.includes('rel="next"') && link.includes(';')
-  );
-  if (next === undefined) {
-    throw new Error('Something went wrong while parsing the link header.');
-  }
-
-  const rawUrl = next.split(';')[0].trim();
-  return rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
-}
-
 function getRequestConfigCacheKey(
   requestID: string,
   requestConfig: DataRequestConfig
@@ -228,36 +214,18 @@ export async function requestData<T>(
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout!);
 
-    const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
-    const response: AxiosResponse<T> = await request;
+    let response: AxiosResponse<T>;
 
-    // if we have a next link
-    if (
-      requestConfig?.page &&
-      requestConfig?.maximumAmountOfPages &&
-      requestConfig?.page < requestConfig?.maximumAmountOfPages &&
-      response.headers?.link?.includes('rel="next"') &&
-      typeof requestConfig.combinePaginatedResults === 'function'
-    ) {
-      const headers = response.headers;
-      const nextUrl = getNextUrlFromLinkHeader(headers as AxiosResponseHeaders);
-
-      const newRequest = {
-        ...requestConfig,
-        url: nextUrl,
-        page: requestConfig.page + 1,
-      };
-
-      response.data = await requestConfig.combinePaginatedResults<T>(
-        response.data,
-        await requestData(newRequest, requestID, authProfileAndToken)
-      );
+    if (requestConfig.request) {
+      response = await requestConfig.request<T>(requestConfig);
+    } else {
+      response = await axiosRequest.request<T>(requestConfig);
     }
-
-    const responseData = apiSuccessResult<T>(response.data);
 
     // Clears the timeout after the above request promise is settled
     clearTimeout(cancelTimeout);
+
+    const responseData = apiSuccessResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
     if (cache.get(cacheKey)) {
@@ -331,4 +299,20 @@ export function findApiByRequestUrl(
   });
   const apiName = api ? api[0] : 'unknown';
   return apiName;
+}
+
+export function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
+  // parse link header and get value of rel="next" url
+  const links = headers.link.split(',');
+  const next = links.find(
+    (link: string) => link.includes('rel="next"') && link.includes(';')
+  );
+
+  if (!next) {
+    return null;
+  }
+
+  const rawUrl = next.split(';')[0].trim();
+  const strippedUrl = rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
+  return new URL(strippedUrl);
 }
