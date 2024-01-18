@@ -1,5 +1,6 @@
 import { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
+import slug from 'slugme';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
 import { IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
@@ -407,7 +408,7 @@ export const datasetEndpoints: Record<
   },
 };
 
-async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
+export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
   const maxPages = 5;
 
   let nextRequestConfig = { ...requestConfig };
@@ -436,12 +437,13 @@ async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
         url: nextUrl.toString(),
       };
 
-      response = await axiosRequest.request(nextRequestConfig);
+      response = await axiosRequest.request<DatasetFeatures>(nextRequestConfig);
 
       combinedResponseData = combinedResponseData.concat(response.data);
 
       responseIteration++;
     } else {
+      // Couldn't find what we are looking for. Break the loop.
       break;
     }
   }
@@ -451,13 +453,13 @@ async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
   return response;
 }
 
-function transformMeldingenBuurtResponse(
+export function transformMeldingenBuurtResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
-) {
+  responseData: { features: DatasetFeatures }
+): DatasetFeatures {
   const features =
-    responseData?.features.map((feature: any, index: number) => {
+    responseData?.features?.map((feature: any) => {
       const categorie = feature.properties.category.parent.slug;
 
       const dataSetConfig =
@@ -466,7 +468,13 @@ function transformMeldingenBuurtResponse(
 
       const displayCat = capitalizeFirstLetter(categorie);
 
-      if (config.idKeyList) feature.properties[config.idKeyList] = index;
+      if (config.idKeyList) {
+        feature.properties[config.idKeyList] = slug(
+          feature.properties.category.slug +
+            '-' +
+            feature.properties.created_at.replaceAll('-', '')
+        );
+      }
 
       feature.properties.categorie = categorie;
       if (dataSetConfig && !(displayCat in dataSetConfig)) {
