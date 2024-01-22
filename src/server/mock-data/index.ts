@@ -225,7 +225,6 @@ export const mockDataConfig: MockDataConfig = {
     {
       status: (config: any) => (isCommercialUser(config) ? 200 : 200),
       responseData: async (config: any) => {
-        console.log('meldingen page 1');
         return loadMockApiResponseJson({
           features: [SIA_MELDINGEN_BUURT.features[0]],
         });
@@ -238,7 +237,6 @@ export const mockDataConfig: MockDataConfig = {
     {
       status: (config: any) => (isCommercialUser(config) ? 200 : 200),
       responseData: async (config: any) => {
-        console.log('meldingen page 2');
         return loadMockApiResponseJson({
           features: [SIA_MELDINGEN_BUURT.features[1]],
         });
@@ -251,7 +249,6 @@ export const mockDataConfig: MockDataConfig = {
     {
       status: (config: any) => (isCommercialUser(config) ? 200 : 200),
       responseData: async (config: any) => {
-        console.log('meldingen page 3');
         return loadMockApiResponseJson({
           features: [SIA_MELDINGEN_BUURT.features[2]],
         });
