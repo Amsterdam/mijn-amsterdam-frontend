@@ -77,7 +77,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 
   /**
    * If you want to combine the responseData of multiple requests into on you can use this function.
-   * It wil fire a next request right after the response succeeded, you can merge the response data
+   * It will fire a next request right after the response succeeded, you can merge the response data
    * Mind you, the cancelTimeout might have to be increased because you'll probably make multiple requests pretending as one.
    */
   request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
