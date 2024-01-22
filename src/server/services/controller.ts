@@ -153,7 +153,7 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
 
   const notifications: Array<MyNotification> = [
     ...tipNotifications,
-    ...chapterNotifications, // can have tips as well
+    ...chapterNotifications,
   ];
 
   const notificationsWithTipsInserted = sortNotifications(notifications);
