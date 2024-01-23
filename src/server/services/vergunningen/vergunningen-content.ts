@@ -11,6 +11,7 @@ import {
   BZP,
   RVVSloterweg,
   TouringcarDagontheffing,
+  TouringcarJaarontheffing,
   Vergunning,
   VergunningExpirable,
 } from './vergunningen';
@@ -151,6 +152,58 @@ const defaultNotificationLabels: Record<string, NotificatonContentLabels> = {
     requested: requestedShort,
     inProgress: inProgressShort,
     done: doneShort,
+  },
+};
+
+function touringcarTitle(
+  item: TouringcarDagontheffing | TouringcarJaarontheffing,
+  status: 'ontvangen' | 'in behandeling' | 'afgehandeld'
+) {
+  if (item.caseType === CaseType.TouringcarDagontheffing) {
+    return `Aanvraag ${item.title} (${item.licensePlate}) ${status}`;
+  } else {
+    if (item.routetest) {
+      return `Aanvraag ${item.title} (${item.licensePlates}) ${status}`;
+    }
+    return `Aanvraag ${item.title} ${status}`;
+  }
+}
+
+function touringcarDescription(
+  item: TouringcarDagontheffing | TouringcarJaarontheffing,
+  status: 'ontvangen' | 'in behandeling genomen' | 'afgehandeld'
+) {
+  if (item.caseType === CaseType.TouringcarDagontheffing) {
+    return `Wij hebben uw aanvraag ${item.title} (${item.licensePlate}) ${status}.`;
+  } else {
+    if (item.routetest) {
+      return `Wij hebben uw aanvraag ${item.title} (${item.licensePlates}) ${status}.`;
+    }
+    return `Wij hebben uw aanvraag ${item.title} ${status}.`;
+  }
+}
+
+const touringcarLabels = {
+  requested: {
+    ...requestedShort,
+    title: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
+      touringcarTitle(item, 'ontvangen'),
+    description: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
+      touringcarDescription(item, 'ontvangen'),
+  },
+  inProgress: {
+    ...inProgressShort,
+    title: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
+      touringcarTitle(item, 'in behandeling'),
+    description: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
+      touringcarDescription(item, 'in behandeling genomen'),
+  },
+  done: {
+    ...doneShort,
+    title: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
+      touringcarTitle(item, 'afgehandeld'),
+    description: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
+      touringcarDescription(item, 'afgehandeld'),
   },
 };
 
@@ -381,42 +434,10 @@ export const notificationContent: NotificationContent = {
         (${(item as RVVSloterweg).licensePlates}) ingetrokken.`,
     },
   },
-  [CaseType.TouringcarDagontheffing]: {
-    requested: {
-      ...requestedShort,
-      title: (item) =>
-        `Aanvraag ${item.title} (${
-          (item as TouringcarDagontheffing).licensePlate
-        }) ontvangen`,
-      description: (item) =>
-        `Wij hebben uw aanvraag ${item.title} (${
-          (item as TouringcarDagontheffing).licensePlate
-        }) ontvangen.`,
-    },
-    inProgress: {
-      ...inProgressShort,
-      title: (item) =>
-        `Aanvraag ${item.title} (${
-          (item as TouringcarDagontheffing).licensePlate
-        }) in behandeling`,
-      description: (item) =>
-        `Wij hebben uw aanvraag ${item.title} (${
-          (item as TouringcarDagontheffing).licensePlate
-        }) in behandeling genomen.`,
-    },
-    done: {
-      ...doneShort,
-      title: (item) =>
-        `Aanvraag ${item.title} (${
-          (item as TouringcarDagontheffing).licensePlate
-        }) afgehandeld`,
-      description: (item) =>
-        `Wij hebben uw aanvraag ${item.title} (${
-          (item as TouringcarDagontheffing).licensePlate
-        }) afgehandeld.`,
-    },
-  },
-  [CaseType.TouringcarJaarontheffing]: defaultNotificationLabels.short,
+  [CaseType.TouringcarDagontheffing]:
+    touringcarLabels as NotificatonContentLabels,
+  [CaseType.TouringcarJaarontheffing]:
+    touringcarLabels as NotificatonContentLabels,
   [CaseType.WVOS]: {
     requested: {
       ...requested,

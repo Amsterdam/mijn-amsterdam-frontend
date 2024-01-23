@@ -133,14 +133,14 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-11-14",
-        "description": "Wij hebben uw aanvraag voor een touringcar jaarontheffing in behandeling genomen.",
+        "description": "Wij hebben uw aanvraag Touringcar jaarontheffing in behandeling genomen.",
         "id": "vergunning-852482654-notification",
         "link": {
           "title": "Bekijk details",
           "to": "/vergunningen/touringcar-jaarontheffing/852482654",
         },
         "subject": "852482654",
-        "title": "Aanvraag touringcar jaarontheffing in behandeling",
+        "title": "Aanvraag Touringcar jaarontheffing in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -705,14 +705,14 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-11-14",
-        "description": "Wij hebben uw aanvraag voor een touringcar jaarontheffing in behandeling genomen.",
+        "description": "Wij hebben uw aanvraag Touringcar jaarontheffing in behandeling genomen.",
         "id": "vergunning-852482654-notification",
         "link": {
           "title": "Bekijk details",
           "to": "/vergunningen/touringcar-jaarontheffing/852482654",
         },
         "subject": "852482654",
-        "title": "Aanvraag touringcar jaarontheffing in behandeling",
+        "title": "Aanvraag Touringcar jaarontheffing in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
