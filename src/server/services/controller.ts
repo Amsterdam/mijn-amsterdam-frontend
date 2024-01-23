@@ -146,7 +146,7 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
     return apiSuccessResult([]);
   }
 
-  const [tipNotifications, chapterNotifications] = await Promise.all([
+  const [tipNotifications, chapterAndTipNotifications] = await Promise.all([
     getTipNotifications(requestID, req),
     fetchTipsAndNotifications(requestID, await getAuth(req)),
   ]);
