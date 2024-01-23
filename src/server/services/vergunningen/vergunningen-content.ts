@@ -121,7 +121,7 @@ const done: NotificationLabels = {
 const requestedShort: NotificationLabels = {
   title: requested.title,
   description: (item, titleLower) =>
-    `Wij hebben uw aanvraag voor een ${item.title} ontvangen.`,
+    `Wij hebben uw aanvraag voor een ${titleLower} ontvangen.`,
   datePublished: requested.datePublished,
   link,
 };
@@ -129,7 +129,7 @@ const requestedShort: NotificationLabels = {
 const inProgressShort: NotificationLabels = {
   title: inProgress.title,
   description: (item, titleLower) =>
-    `Wij hebben uw aanvraag voor een ${item.title} in behandeling genomen.`,
+    `Wij hebben uw aanvraag voor een ${titleLower} in behandeling genomen.`,
   datePublished: inProgress.datePublished,
   link,
 };
@@ -137,7 +137,7 @@ const inProgressShort: NotificationLabels = {
 const doneShort: NotificationLabels = {
   title: done.title,
   description: (item, titleLower) =>
-    `Wij hebben uw aanvraag voor een ${item.title} afgehandeld.`,
+    `Wij hebben uw aanvraag voor een ${titleLower} afgehandeld.`,
   datePublished: done.datePublished,
   link,
 };
