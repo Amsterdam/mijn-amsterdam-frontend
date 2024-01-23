@@ -27,6 +27,7 @@ import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-v
 import SIA_HISTORY from './json/sia-history.json';
 import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
 import SIA from './json/sia-meldingen.json';
+import SIA_MELDINGEN_BUURT from './json/sia-meldingen-buurt.json';
 import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
@@ -220,6 +221,39 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(SIA_HISTORY);
     },
   },
+  ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1']:
+    {
+      status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+      responseData: async (config: any) => {
+        return loadMockApiResponseJson({
+          features: [SIA_MELDINGEN_BUURT.features[0]],
+        });
+      },
+      headers: {
+        link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=2>; rel="next"',
+      },
+    },
+  ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=2']:
+    {
+      status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+      responseData: async (config: any) => {
+        return loadMockApiResponseJson({
+          features: [SIA_MELDINGEN_BUURT.features[1]],
+        });
+      },
+      headers: {
+        link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3>; rel="next"',
+      },
+    },
+  ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3']:
+    {
+      status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+      responseData: async (config: any) => {
+        return loadMockApiResponseJson({
+          features: [SIA_MELDINGEN_BUURT.features[2]],
+        });
+      },
+    },
   [String(process.env.BFF_SIA_IAM_TOKEN_ENDPOINT)]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     method: 'post',

@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
@@ -11,7 +11,8 @@ import {
   ApiPostponeResponse,
   ApiSuccessResponse,
 } from './../universal/helpers/api';
-import { TokenData } from './helpers/app';
+import { AuthProfileAndToken, TokenData } from './helpers/app';
+import { requestData } from './helpers';
 
 const IS_AZ = process.env.BFF_ON_AZ === 'true';
 
@@ -74,16 +75,12 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    */
   passthroughOIDCToken?: boolean;
 
-  combinePaginatedResults?: <T>(
-    responseData: any,
-    newRequest:
-      | ApiSuccessResponse<T>
-      | ApiErrorResponse<null>
-      | ApiPostponeResponse
-  ) => any;
-
-  page?: number;
-  maximumAmountOfPages?: number;
+  /**
+   * If you want to combine the responseData of multiple requests into on you can use this function.
+   * It will fire a next request right after the response succeeded, you can merge the response data
+   * Mind you, the cancelTimeout might have to be increased because you'll probably make multiple requests pretending as one.
+   */
+  request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
 }
 
 export const ONE_SECOND_MS = 1000;
@@ -101,8 +98,6 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
   passthroughOIDCToken: false,
-  page: 1,
-  maximumAmountOfPages: 0,
 };
 
 export type SourceApiKey =

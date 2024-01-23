@@ -1,18 +1,21 @@
+import { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
+import slug from 'slugme';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { OTAP_ENV, IS_PRODUCTION } from '../../../universal/config/env';
+import { IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
 import {
+  DATASETS,
   DatasetCategoryId,
   DatasetId,
   DatasetPropertyFilter,
   DatasetPropertyName,
   DatasetPropertyValue,
-  DATASETS,
   FeatureType,
 } from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { DataRequestConfig } from '../../config';
+import { axiosRequest, getNextUrlFromLinkHeader } from '../../helpers';
 import {
   discoverSingleApiEmbeddedResponse,
   getApiEmbeddedResponse,
@@ -389,7 +392,7 @@ export const datasetEndpoints: Record<
     listUrl: () =>
       `https://${
         OTAP_ENV === 'production' ? '' : 'acc.'
-      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770,52.256977,5.106206,52.467268&geopage=1`,
+      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1`,
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
@@ -397,24 +400,66 @@ export const datasetEndpoints: Record<
     geometryKey: 'geometry',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     idKeyList: 'ma_melding_id',
+    cache: false,
     requestConfig: {
-      combinePaginatedResults: (responseData, newResponse) => {
-        return newResponse.content === null
-          ? responseData
-          : responseData.concat(newResponse.content);
-      },
-      maximumAmountOfPages: 5,
+      request: fetchMeldingenBuurt,
+      cancelTimeout: 30000,
     },
   },
 };
 
-function transformMeldingenBuurtResponse(
+export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
+  const maxPages = 5;
+
+  let nextRequestConfig = { ...requestConfig };
+  let response: AxiosResponse = await axiosRequest.request(nextRequestConfig);
+  let responseIteration = 0;
+  let combinedResponseData: DatasetFeatures = response.data;
+
+  while (true) {
+    if (response.headers?.link?.includes('rel="next"')) {
+      const nextUrl = getNextUrlFromLinkHeader(
+        response.headers as AxiosResponseHeaders
+      );
+      const nextPage = nextUrl?.searchParams.get('page');
+
+      // Stop fetching next when reaching maxPages.
+      if (
+        responseIteration === maxPages || // Safeguard if api response does not supply page parameter correctly
+        !nextUrl ||
+        (nextUrl && nextPage && parseInt(nextPage, 10) > maxPages)
+      ) {
+        break;
+      }
+
+      nextRequestConfig = {
+        ...requestConfig,
+        url: nextUrl.toString(),
+      };
+
+      response = await axiosRequest.request<DatasetFeatures>(nextRequestConfig);
+
+      combinedResponseData = combinedResponseData.concat(response.data);
+
+      responseIteration++;
+    } else {
+      // Couldn't find what we are looking for. Break the loop.
+      break;
+    }
+  }
+
+  response.data = combinedResponseData;
+
+  return response;
+}
+
+export function transformMeldingenBuurtResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
-) {
+  responseData: { features: DatasetFeatures }
+): DatasetFeatures {
   const features =
-    responseData?.features.map((feature: any, index: number) => {
+    responseData?.features?.map((feature: any) => {
       const categorie = feature.properties.category.parent.slug;
 
       const dataSetConfig =
@@ -423,7 +468,13 @@ function transformMeldingenBuurtResponse(
 
       const displayCat = capitalizeFirstLetter(categorie);
 
-      if (config.idKeyList) feature.properties[config.idKeyList] = index;
+      if (config.idKeyList) {
+        feature.properties[config.idKeyList] = slug(
+          feature.properties.category.slug +
+            '-' +
+            feature.properties.created_at.replaceAll('-', '')
+        );
+      }
 
       feature.properties.categorie = categorie;
       if (dataSetConfig && !(displayCat in dataSetConfig)) {

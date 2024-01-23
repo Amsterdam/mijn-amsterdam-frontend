@@ -1,7 +1,6 @@
 import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
-import slug from 'slugme';
 import { Chapters, FeatureToggle } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
@@ -18,11 +17,11 @@ import {
   isDateInPast,
 } from '../../universal/helpers/date';
 import {
+  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   hasOtherActualVergunningOfSameType,
   isActualNotification,
   isExpired,
   isNearEndDate,
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from '../../universal/helpers/vergunningen';
 import { MyNotification } from '../../universal/types';
 import { CaseType } from '../../universal/types/vergunningen';
@@ -32,10 +31,10 @@ import { AuthProfileAndToken } from '../helpers/app';
 import { isAmsterdamAddress } from './buurt/helpers';
 import {
   BBVergunning,
-  fetchVergunningen,
-  toeristischeVerhuurVergunningTypes,
   VakantieverhuurVergunningaanvraag,
   Vergunning,
+  fetchVergunningen,
+  toeristischeVerhuurVergunningTypes,
 } from './vergunningen/vergunningen';
 
 export interface ToeristischeVerhuurRegistratieNumberSource {
