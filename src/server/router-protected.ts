@@ -83,6 +83,7 @@ router.use(
     {
       memoizeHost: false,
       proxyReqPathResolver: function (req) {
+        console.log('PROXY:', req.url);
         return IS_AP ? `/api${req.url}` : req.url;
       },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
