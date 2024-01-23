@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 export const tableNameLoginCount =
-  process.env.BFF_LOGIN_COUNT_TABLE ?? 'login_count';
+  process.env.BFF_LOGIN_COUNT_TABLE || 'login_count';
 
 const SQLITE3_DB_PATH_FILE = `${process.env.BFF_DB_FILE ?? ''}`;
 

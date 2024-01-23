@@ -128,7 +128,7 @@ app.use(function (req, res, next) {
 
 ////////////////////////////////////////////////////////////////////////
 ///// [ACCEPTANCE - PRODUCTION]
-///// Public routes Voor Test - Acceptance - Development
+///// Public routes Voor Acceptance - Development
 ////////////////////////////////////////////////////////////////////////
 if (IS_AP && !IS_OT) {
   app.use(oidcRouter);

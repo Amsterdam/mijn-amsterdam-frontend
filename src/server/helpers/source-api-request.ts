@@ -50,8 +50,7 @@ if (IS_DEBUG) {
       'Source-api-request::Response:',
       response.request.res?.responseUrl ??
         response.request?.responseURL ??
-        'onbekende.url',
-      response.data
+        'onbekende.url'
     );
     return response;
   });
