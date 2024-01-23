@@ -41,7 +41,7 @@ export function Touringcar({
               }
             />
             <InfoDetail
-              label="Tot en met"
+              label="Tot"
               value={
                 vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
               }
@@ -60,20 +60,20 @@ export function Touringcar({
                       `${vergunning.dateStart}T${vergunning.timeStart}`
                     )
                   : vergunning.dateStart
-                  ? defaultDateFormat(vergunning.dateStart)
-                  : '-'
+                    ? defaultDateFormat(vergunning.dateStart)
+                    : '-'
               }
             />
             <InfoDetail
-              label="Tot en met"
+              label="Tot"
               value={
                 vergunning?.timeEnd && vergunning?.dateEnd
                   ? defaultDateTimeFormat(
                       `${vergunning.dateEnd}T${vergunning.timeEnd}`
                     )
                   : vergunning.dateEnd
-                  ? defaultDateFormat(vergunning.dateEnd)
-                  : '-'
+                    ? defaultDateFormat(vergunning.dateEnd)
+                    : '-'
               }
             />
           </InfoDetailGroup>
