@@ -7,7 +7,7 @@ import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 import {
   defaultDateFormat,
-  defaultDateTimeFormat,
+  dateTimeFormatYear,
 } from '../../../universal/helpers';
 
 export function Touringcar({
@@ -22,7 +22,10 @@ export function Touringcar({
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
 
       {vergunning.caseType === CaseType.TouringcarJaarontheffing ? (
-        <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
+        <InfoDetail
+          label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
+          value={vergunning.licensePlates}
+        />
       ) : (
         <InfoDetail label="Kenteken" value={vergunning.licensePlate} />
       )}
@@ -56,7 +59,7 @@ export function Touringcar({
               label="Van"
               value={
                 vergunning?.timeStart && vergunning?.dateStart
-                  ? defaultDateTimeFormat(
+                  ? dateTimeFormatYear(
                       `${vergunning.dateStart}T${vergunning.timeStart}`
                     )
                   : vergunning.dateStart
@@ -68,7 +71,7 @@ export function Touringcar({
               label="Tot"
               value={
                 vergunning?.timeEnd && vergunning?.dateEnd
-                  ? defaultDateTimeFormat(
+                  ? dateTimeFormatYear(
                       `${vergunning.dateEnd}T${vergunning.timeEnd}`
                     )
                   : vergunning.dateEnd
