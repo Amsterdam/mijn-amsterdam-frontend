@@ -28,12 +28,27 @@ import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 
 export function sortNotifications(notifications: MyNotification[]) {
-  return (
-    notifications
-      .sort(dateSort('datePublished', 'desc'))
-      // Put the alerts on the top regardless of the publication date
-      .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0))
-  );
+  // sort the notifications with and without a tip
+  let sorted = notifications
+    .sort(dateSort('datePublished', 'desc'))
+    // Put the alerts on the top regardless of the publication date
+    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+
+  const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
+
+  const notificationsWithTips = sorted.filter((n) => n.isTip);
+
+  // Insert a tip after every 3 notifications
+  return notificationsWithoutTips.reduce((acc, notification, index) => {
+    if (index !== 0 && index % 3 === 0 && notificationsWithTips.length > 0) {
+      const tip = notificationsWithTips.shift();
+      if (tip) {
+        acc.push(tip);
+      }
+    }
+    acc.push(notification);
+    return acc;
+  }, [] as MyNotification[]);
 }
 
 export function getTipsAndNotificationsFromApiResults(
