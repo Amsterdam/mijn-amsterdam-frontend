@@ -371,35 +371,111 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               </div>
             </div>
           </li>
-        </ul>
-        <p
-          class="_FooterLink_63df5c"
-        >
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="/overzicht-updates"
+          <li
+            class="_MyNotificationItem_63df5c"
           >
-            <svg
-              aria-hidden="true"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <aside
+              class="_MetaInfo_63df5c"
             >
-              <title>
-                chevron-rechts-icoon
-              </title>
-              <polygon
-                points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-              />
-            </svg>
-            Alle updates
-          </a>
-        </p>
+              <button
+                aria-expanded="false"
+                class="_TitleToggle_63df5c"
+              >
+                <h4
+                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
+                >
+                  Welkom op Mijn Amsterdam!
+                </h4>
+                <svg
+                  aria-label="Actueel"
+                  class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                  fill="#EC0000"
+                  focusable="false"
+                  height="31px"
+                  viewBox="0 0 30 31"
+                  width="30px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <title>
+                    bel-icoon
+                  </title>
+                  <path
+                    d="M12,27 L1,27 L1,23 C3.209139,23 5,21.209139 5,19 L5,11 C5,6.581722 8.581722,3 13,3 L14,3 C14,1.8954305 14.8954305,1 16,1 C17.1045695,1 18,1.8954305 18,3 L19,3 C23.418278,3 27,6.581722 27,11 L27,19 C27,21.209139 28.790861,23 31,23 L31,27 L20,27 C20,29.209139 18.209139,31 16,31 C13.790861,31 12,29.209139 12,27 Z M14,27 C14,28.1045695 14.8954305,29 16,29 C17.1045695,29 18,28.1045695 18,27 L14,27 Z M9,11 L9,19 C9,20.4571486 8.61042286,21.8233065 7.92974244,23 L24.0702576,23 C23.3895771,21.8233065 23,20.4571486 23,19 L23,11 C23,8.790861 21.209139,7 19,7 L13,7 C10.790861,7 9,8.790861 9,11 Z"
+                  />
+                </svg>
+                <div
+                  class="_MetaInfoSecondary_63df5c"
+                >
+                  <em
+                    class="_ChapterIndication_63df5c"
+                  >
+                    Actueel
+                  </em>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="_CaretIcon_63df5c"
+                  focusable="false"
+                  height="32px"
+                  viewBox="0 0 32 32"
+                  width="32px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <title>
+                    chevron-rechts-icoon
+                  </title>
+                  <polygon
+                    points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                  />
+                </svg>
+              </button>
+            </aside>
+            <div
+              aria-hidden="true"
+              class="_Body_63df5c"
+              style="height: 0px;"
+            >
+              <div>
+                <div
+                  class="_Description_63df5c"
+                >
+                  Mijn Amsterdam is nog volop in ontwikkeling. Er komt steeds meer informatie bij.
+                </div>
+                <p
+                  class="_Action_63df5c"
+                >
+                  <a
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    href="/"
+                    title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <title>
+                        chevron-rechts-icoon
+                      </title>
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
+                    Laat ons weten wat u ervan vindt
+                  </a>
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
       <div
         class="_Panel_090d4d _MyChaptersPanel_7d9f25"

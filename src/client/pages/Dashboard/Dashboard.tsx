@@ -17,7 +17,7 @@ import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
 
-const MAX_NOTIFICATIONS_VISIBLE = 3;
+const MAX_NOTIFICATIONS_VISIBLE = 6;
 
 export default function Dashboard() {
   const appState = useAppStateGetter();
