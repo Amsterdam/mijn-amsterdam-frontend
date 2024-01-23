@@ -120,7 +120,7 @@ const done: NotificationLabels = {
 const requestedShort: NotificationLabels = {
   title: requested.title,
   description: (item, titleLower) =>
-    `Uw aanvraag voor een ${titleLower} is ontvangen.`,
+    `Wij hebben uw aanvraag voor een ${titleLower} ontvangen.`,
   datePublished: requested.datePublished,
   link,
 };
@@ -128,7 +128,7 @@ const requestedShort: NotificationLabels = {
 const inProgressShort: NotificationLabels = {
   title: inProgress.title,
   description: (item, titleLower) =>
-    `Uw aanvraag voor een ${titleLower} is in behandeling genomen.`,
+    `Wij hebben uw aanvraag voor een ${titleLower} in behandeling genomen.`,
   datePublished: inProgress.datePublished,
   link,
 };
@@ -136,7 +136,7 @@ const inProgressShort: NotificationLabels = {
 const doneShort: NotificationLabels = {
   title: done.title,
   description: (item, titleLower) =>
-    `Uw aanvraag voor een ${titleLower} is afgehandeld.`,
+    `Wij hebben uw aanvraag voor een ${titleLower} afgehandeld.`,
   datePublished: done.datePublished,
   link,
 };
@@ -343,8 +343,8 @@ export const notificationContent: NotificationContent = {
         (!!item.dateDecision
           ? item.dateDecision
           : !!(item as RVVSloterweg).dateWorkflowVerleend
-          ? (item as RVVSloterweg).dateWorkflowVerleend
-          : item.dateRequest) ?? '',
+            ? (item as RVVSloterweg).dateWorkflowVerleend
+            : item.dateRequest) ?? '',
       description: (item) =>
         `Wij hebben uw aanvraag voor een${
           (item as RVVSloterweg).requestType === 'Wijziging'
