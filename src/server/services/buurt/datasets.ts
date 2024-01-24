@@ -5,12 +5,12 @@ import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
 import { IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
 import {
-  DATASETS,
   DatasetCategoryId,
   DatasetId,
   DatasetPropertyFilter,
   DatasetPropertyName,
   DatasetPropertyValue,
+  DATASETS,
   FeatureType,
 } from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
@@ -91,6 +91,7 @@ export interface DatasetConfig {
     id: string,
     data: any
   ) => any;
+  nextUrls?: string[];
   requestConfig?: DataRequestConfig;
   cache?: boolean;
   cacheTimeMinutes?: number;
@@ -406,7 +407,42 @@ export const datasetEndpoints: Record<
       cancelTimeout: 30000,
     },
   },
+  laadpalen: {
+    listUrl:
+      'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:normaal_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    transformList: transformLaadpalenResponse,
+    transformDetail: transformLaadpalenDetailResponse,
+    idKeyList: 'id',
+    featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    geometryKey: 'geometry',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    additionalStaticFieldNames: ['connector_type', 'charging_cap_max', 'url'],
+    requestConfig: {
+      headers: {},
+      request: fetchLaadpalen,
+      cancelTimeout: 30000,
+      nextUrls: [
+        'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+      ],
+    },
+  },
 };
+
+function transformLaadpalenResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features =
+    responseData?.features.map((feature: any, index: number) => {
+      return {
+        ...feature,
+      };
+    }) || [];
+
+  return transformDsoApiListResponse(datasetId, config, { features });
+}
 
 export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
   const maxPages = 5;
@@ -485,6 +521,37 @@ export function transformMeldingenBuurtResponse(
     }) || [];
 
   return transformDsoApiListResponse(datasetId, config, { features });
+}
+
+export async function fetchLaadpalen(requestConfig: DataRequestConfig) {
+  const urls = [requestConfig.url, ...(requestConfig.nextUrls || [])];
+  const requests = urls?.map((url) => {
+    return axiosRequest.request<DatasetFeatures>({
+      ...requestConfig,
+      url,
+    });
+  });
+
+  let responses: any;
+
+  try {
+    responses = await Promise.all(requests);
+  } catch (error) {
+    return error;
+  }
+
+  responses = responses.filter((res: any) => res.data);
+
+  // If transformDetail is called return the first response for the detail view
+  if (responses[0].data._embedded) return responses[0];
+
+  // Combine all responses into one for the list view
+  if (responses.length > 1) {
+    responses[0].data = responses.slice(1).reduce((acc: any, response: any) => {
+      return acc.concat(response.data);
+    }, responses[0].data);
+  }
+  return responses[0];
 }
 
 function createCustomFractieOmschrijving(featureProps: any) {
@@ -580,6 +647,27 @@ function transformMeldingDetailResponse(
     categorie: item?.properties?.category?.parent?.name,
     subcategorie: item?.properties?.category?.name,
     datumCreatie: item?.properties?.created_at,
+  };
+}
+
+function transformLaadpalenDetailResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  id: string,
+  responseData: any
+) {
+  let item = responseData.features?.find(
+    (item: any) => item.properties.id === id
+  );
+
+  if (!item) {
+    return null;
+  }
+
+  return {
+    _embedded: {
+      laadpaal: [{ ...item.properties, availability: responseData.name }],
+    },
   };
 }
 

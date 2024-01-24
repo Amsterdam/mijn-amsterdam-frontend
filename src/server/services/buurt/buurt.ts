@@ -279,36 +279,15 @@ export async function loadFeatureDetail(
     );
   }
 
-  // In some cases the details of a datapoint are derived from the combined list of all datapoints.
-  if (config.transformDetailFromCombinedList) {
-    requestConfig.transformResponse = (responseData) => {
-      return config.transformList!(datasetId, config, responseData);
-    };
-  }
-
   if (config.requestConfig?.nextUrls) {
     requestConfig.nextUrls = config.requestConfig?.nextUrls;
   }
-  if (config.requestConfig?.maximumAmountOfPages) {
-    requestConfig.maximumAmountOfPages =
-      config.requestConfig?.maximumAmountOfPages;
-  }
 
-  if (config.requestConfig?.combinePaginatedResults) {
-    requestConfig.combinePaginatedResults =
-      config.requestConfig?.combinePaginatedResults;
+  if (config.requestConfig?.request) {
+    requestConfig.request = config.requestConfig.request;
   }
 
   const response: any = await requestData(requestConfig, requestID);
-
-  if (datasetConfig[1]?.transformDetailFromCombinedList) {
-    response.content = datasetConfig[1]?.transformDetailFromCombinedList(
-      datasetId,
-      config,
-      id,
-      response.content
-    );
-  }
 
   if (response.status === 'OK') {
     const item = discoverSingleApiEmbeddedResponse(response.content);

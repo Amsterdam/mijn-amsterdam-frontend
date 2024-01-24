@@ -10,14 +10,13 @@ export default function MyArePanelContentLaadpalen({
   datasetId,
   panelItem,
 }: Props) {
-  const url = panelItem.url;
-  const typeName = url.split('TYPENAMES=')[1].split('&')[0];
-  let title;
-  if (typeName === 'ms:normaal_beschikbaar') {
-    title = 'Beschikbaar';
-  } else if (typeName === 'ms:snel_beschikbaar') {
+  let title = '';
+  if (panelItem.availability === 'normaal_beschikbaar') {
+    title = 'Normaal beschikbaar';
+  } else if (panelItem.availability === 'snel_beschikbaar') {
     title = 'Snel beschikbaar';
   }
+
   return (
     <GenericBase title={title} supTitle="Laadpalen">
       {!!panelItem.connector_type && (
