@@ -34,7 +34,9 @@ export function convertTipToNotication(tip: MyTip): MyNotification {
   } as MyNotification;
 }
 
-export function prefixTips(notification: MyNotification): MyNotification {
+export function prefixTipNotification(
+  notification: MyNotification
+): MyNotification {
   return {
     ...notification,
     title: `${!notification.title.startsWith('Tip: ') ? 'Tip: ' : ''}${

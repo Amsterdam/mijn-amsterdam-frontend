@@ -4,7 +4,10 @@ import BRP from '../../mock-data/json/brp.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
 import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
-import { createTipsFromServiceResults } from './tips-service';
+import {
+  createTipsFromServiceResults,
+  prefixTipNotification,
+} from './tips-service';
 
 import {
   vi,
@@ -109,5 +112,31 @@ describe('createTipsFromServiceResults', () => {
     });
 
     expect(tips.content?.find((t) => t.id === 'mijn-43')).toBeTruthy();
+  });
+
+  it('should prefix a tip with "Tip: " if it does not already start with "Tip: "', async () => {
+    const tip = {
+      id: 'test',
+      title: 'test',
+      description: 'test',
+      chapter: 'test',
+      datePublished: 'test',
+      isTip: true,
+      isAlert: false,
+      tipReason: 'test',
+    };
+
+    const result = prefixTipNotification(tip);
+
+    expect(result.title).toBe('Tip: test');
+
+    const tip2 = {
+      ...tip,
+      title: 'Tip: test',
+    };
+
+    const result2 = prefixTipNotification(tip2);
+
+    expect(result2.title).toBe('Tip: test');
   });
 });
