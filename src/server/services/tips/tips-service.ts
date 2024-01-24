@@ -34,6 +34,15 @@ export function convertTipToNotication(tip: MyTip): MyNotification {
   } as MyNotification;
 }
 
+export function prefixTips(notification: MyNotification): MyNotification {
+  return {
+    ...notification,
+    title: `${!notification.title.startsWith('Tip: ') ? 'Tip: ' : ''}${
+      notification.title
+    }`,
+  };
+}
+
 export async function createTipsFromServiceResults(
   profileType: ProfileType,
   {

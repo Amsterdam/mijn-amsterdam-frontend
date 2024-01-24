@@ -21,7 +21,7 @@ import {
   fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
 } from './simple-connect';
-import { convertTipToNotication } from './tips/tips-service';
+import { convertTipToNotication, prefixTips } from './tips/tips-service';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
@@ -101,7 +101,8 @@ export function getTipsAndNotificationsFromApiResults(
       }
       return notification;
     })
-    .map(convertTipToNotication);
+    .map(convertTipToNotication)
+    .map(prefixTips);
 
   return [...notificationsResult, ...tipsResult];
 }
