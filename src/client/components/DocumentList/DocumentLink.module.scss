@@ -1,0 +1,52 @@
+@import '../../styles/_global.scss';
+
+// DocumentLink
+.DocumentLinkWrap {
+  position: relative;
+  display: block;
+  padding-left: 1.8rem;
+}
+
+.DocumentLink {
+  display: block;
+  position: relative;
+  line-height: 1.2;
+  white-space: pre-wrap;
+  text-align: left;
+
+  svg {
+    top: 0;
+    transform: none;
+  }
+}
+
+.DocumentLinkError {
+  padding-left: 0.3rem;
+
+  @include select('Button_Icon') {
+    width: 2rem;
+    height: 2rem;
+    fill: $color-support-warning;
+    margin-bottom: -4px;
+  }
+}
+
+.DownloadInfo {
+  padding-left: 0.3rem;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.DownloadIcon {
+  display: block;
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  left: 0;
+  top: 0;
+
+  >div {
+    position: relative;
+    transform: translateY(0.3rem);
+  }
+}

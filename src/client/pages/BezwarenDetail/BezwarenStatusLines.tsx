@@ -1,6 +1,7 @@
 import type { BezwaarStatus } from '../../../server/services/bezwaren/types';
-import { EMPTY_UUID } from '../../../universal/helpers/bezwaren';
 import { StatusLine } from '../../components';
+
+const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
 
 function transformBezwaarStatusToStatusLines(statussen: BezwaarStatus[]) {
   const index = statussen.findIndex((s) => s.uuid === EMPTY_UUID);
@@ -30,11 +31,11 @@ const BezwarenStatusLines = ({
   return (
     <StatusLine
       className=""
-      trackCategory="AVG verzoek detail / status"
+      trackCategory="Bezwaar detail / status"
       items={statusLineItems}
       id={`bezwaar-detail-${id}`}
       documentPathForTracking={(document) =>
-        `/downloads/avg-verzoek/${document.title}`
+        `/downloads/bezwaren/${document.title}`
       }
     />
   );

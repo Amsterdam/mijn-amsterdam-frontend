@@ -18,7 +18,7 @@ import {
 } from '../../hooks';
 import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
-import { DocumentLink } from '../DocumentList/DocumentList';
+import { DocumentLink } from '../DocumentList/DocumentLink';
 import styles from './MyNotifications.module.scss';
 
 export interface MyNotification extends MyNotificationBase {

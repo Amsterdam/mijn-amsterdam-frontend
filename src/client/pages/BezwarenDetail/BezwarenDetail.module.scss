@@ -1,9 +1,18 @@
-.documentlist {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+@import '../../styles/_global.scss';
 
-  > li {
-    padding-bottom: 1rem;
+.DocumentListHeader {
+  display: flex;
+  padding-top: 1.6rem;
+
+  >* {
+    flex: 1;
+    flex-basis: 50%;
+  }
+
+  &_Date {
+    font-size: var(--amsterdam-heading-spacious-level-4-font-size);
+    line-height: var(--amsterdam-heading-spacious-level-4-line-height);
+    font-family: var(--amsterdam-heading-font-family);
+    font-weight: var(--amsterdam-heading-font-weight);
   }
 }

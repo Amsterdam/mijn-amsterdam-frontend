@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, isValidElement } from 'react';
 import styles from './InfoDetail.module.scss';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import classnames from 'classnames';
@@ -6,7 +6,7 @@ import { Heading } from '@amsterdam/design-system-react';
 
 export interface InfoDetailGroupProps {
   children: ComponentChildren;
-  label?: string;
+  label?: ReactNode;
   className?: string;
 }
 
@@ -17,6 +17,18 @@ export interface InfoDetailProps {
   className?: string;
 }
 
+export interface InfoDetailHeadingProps {
+  label: string;
+}
+
+export function InfoDetailHeading({ label }: InfoDetailHeadingProps) {
+  return (
+    <Heading level={3} size="level-4" className={styles.Label}>
+      {label}
+    </Heading>
+  );
+}
+
 export function InfoDetailGroup({
   children,
   label,
@@ -24,11 +36,8 @@ export function InfoDetailGroup({
 }: InfoDetailGroupProps) {
   return (
     <div className={classnames(styles.InfoDetailGroup, className)}>
-      {!!label && (
-        <Heading level={3} size="level-4" className={styles.Label}>
-          {label}
-        </Heading>
-      )}
+      {typeof label === 'string' && <InfoDetailHeading label={label} />}
+      {typeof label !== 'string' && isValidElement(label) && label}
       <div className={styles.InfoDetailGroupContent}>{children}</div>
     </div>
   );
@@ -43,9 +52,7 @@ export default function InfoDetail({
   const ELValue = valueWrapperElement;
   return (
     <div className={classnames(styles.InfoDetail, className)}>
-      <Heading level={3} size="level-4" className={styles.Label}>
-        {label}
-      </Heading>
+      <InfoDetailHeading label={label} />
       <ELValue className={styles.Value}>{value}</ELValue>
     </div>
   );
