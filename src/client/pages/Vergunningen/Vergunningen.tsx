@@ -39,6 +39,8 @@ export const DISPLAY_PROPS_HISTORY = {
 const titleTransformMap: Record<string, any> = {
   [CaseType.TouringcarJaarontheffing]:
     getCustomTitleForVergunningWithLicensePlates,
+  [CaseType.TouringcarDagontheffing]:
+    getCustomTitleForVergunningWithLicensePlates,
 };
 
 export default function Vergunningen() {

@@ -5376,7 +5376,9 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
         </h3>
         <p
           class="_Value_6f1df2"
-        />
+        >
+          123-23-SH
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
