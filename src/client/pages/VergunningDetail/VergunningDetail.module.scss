@@ -37,9 +37,3 @@
 .Disclaimer {
   color: $color-neutral-grey4;
 }
-
-.DiscardedIndication {
-  @include select('InfoDetail_Value') {
-    text-decoration: line-through;
-  }
-}

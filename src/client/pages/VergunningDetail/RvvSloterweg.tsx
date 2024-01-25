@@ -146,7 +146,6 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
         />
         {vergunning.previousLicensePlates && (
           <InfoDetail
-            className={styles.DiscardedIndication}
             label="Oud kenteken"
             value={vergunning.previousLicensePlates}
           />
