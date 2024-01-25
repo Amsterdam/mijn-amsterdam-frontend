@@ -4,7 +4,10 @@ import BRP from '../../mock-data/json/brp.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
 import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
-import { createTipsFromServiceResults } from './tips-service';
+import {
+  createTipsFromServiceResults,
+  prefixTipNotification,
+} from './tips-service';
 
 import {
   vi,
@@ -109,5 +112,58 @@ describe('createTipsFromServiceResults', () => {
     });
 
     expect(tips.content?.find((t) => t.id === 'mijn-43')).toBeTruthy();
+  });
+
+  describe('prefixTipNotification', () => {
+    const tip = {
+      id: 'test',
+      title: 'test',
+      description: 'test',
+      chapter: 'test',
+      datePublished: 'test',
+      isTip: true,
+      isAlert: false,
+      tipReason: 'test',
+    };
+    it('should prefix a tip notification with "Tip: "', async () => {
+      const result = prefixTipNotification(tip);
+
+      expect(result.title).toBe('Tip: test');
+
+      const result2 = prefixTipNotification({
+        ...tip,
+        title: 'tip: test',
+      });
+
+      expect(result2.title).toBe('Tip: test');
+
+      const result3 = prefixTipNotification({
+        ...tip,
+        title: 'tip test',
+      });
+
+      expect(result3.title).toBe('Tip: test');
+
+      const result4 = prefixTipNotification({
+        ...tip,
+        title: 'tip:test',
+      });
+
+      expect(result4.title).toBe('Tip: test');
+
+      const result5 = prefixTipNotification({
+        ...tip,
+        title: 'test',
+      });
+
+      expect(result5.title).toBe('Tip: test');
+
+      const result6 = prefixTipNotification({
+        ...tip,
+        title: 'Tip: test',
+      });
+
+      expect(result6.title).toBe('Tip: test');
+    });
   });
 });
