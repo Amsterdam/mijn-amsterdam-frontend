@@ -155,7 +155,6 @@ relayDevRouter.get(RelayPathsAllowed.WPI_STADSPAS_TRANSACTIES, (req, res) => {
 relayDevRouter.get(
   RelayPathsAllowed.VERGUNNINGEN_LIST_DOCUMENTS,
   (req, res) => {
-    console.log('huuu');
     return res.send(VERGUNNINGEN_LIST_DOCUMENTS);
   }
 );
