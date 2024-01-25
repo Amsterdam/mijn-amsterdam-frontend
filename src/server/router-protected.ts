@@ -1,9 +1,8 @@
 import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { IS_AP } from '../universal/config/env';
 import { pick } from '../universal/helpers/utils';
-import { BffEndpoints } from './config';
+import { BffEndpoints, IS_AZ } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
@@ -83,7 +82,7 @@ router.use(
     {
       memoizeHost: false,
       proxyReqPathResolver: function (req) {
-        return IS_AP ? `/api${req.url}` : req.url;
+        return !IS_AZ ? `/api${req.url}` : req.url;
       },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);

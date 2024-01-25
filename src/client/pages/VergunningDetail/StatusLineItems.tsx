@@ -46,7 +46,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         description: '',
         documents: [],
         isActive: inProgressActive,
-        isChecked: hasDateWorkflowActive,
+        isChecked: hasDateWorkflowActive || isDone,
       },
       {
         id: 'last-item',

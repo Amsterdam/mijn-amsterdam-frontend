@@ -34,6 +34,20 @@ export function convertTipToNotication(tip: MyTip): MyNotification {
   } as MyNotification;
 }
 
+export function prefixTipNotification(
+  notification: MyNotification
+): MyNotification {
+  const pattern = /^(\s*tip\s*:?\s*)/i;
+  const matches = notification.title.match(pattern);
+  return {
+    ...notification,
+    title:
+      matches && matches?.length > 0
+        ? notification.title.replace(pattern, 'Tip: ')
+        : 'Tip: ' + notification.title,
+  };
+}
+
 export async function createTipsFromServiceResults(
   profileType: ProfileType,
   {
