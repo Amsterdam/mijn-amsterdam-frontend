@@ -1,7 +1,6 @@
 @import '../../styles/_global.scss';
 
-.VergunningDetail {
-}
+.VergunningDetail {}
 
 .VergunningStatus {
   margin-top: 4rem;
@@ -22,12 +21,13 @@
 }
 
 .EvenementMelding_DateAndTime {
-  > * {
+  >* {
     white-space: nowrap;
   }
 }
 
 .DateAndTime_SingleLine {
+
   // So we can show the dates on a single line we remove padding on the p
   p {
     padding-right: 0px;
@@ -36,4 +36,10 @@
 
 .Disclaimer {
   color: $color-neutral-grey4;
+}
+
+.DiscardedIndication {
+  @include select('InfoDetail_Value') {
+    text-decoration: line-through;
+  }
 }
