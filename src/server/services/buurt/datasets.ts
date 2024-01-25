@@ -3,7 +3,7 @@ import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
+import { IS_AP, IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
   DatasetId,
@@ -91,7 +91,6 @@ export interface DatasetConfig {
     id: string,
     data: any
   ) => any;
-  nextUrls?: string[];
   requestConfig?: DataRequestConfig;
   cache?: boolean;
   cacheTimeMinutes?: number;
@@ -410,7 +409,7 @@ export const datasetEndpoints: Record<
   laadpalen: {
     listUrl:
       'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:normaal_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    transformList: transformLaadpalenResponse,
+    transformList: transformDsoApiListResponse,
     transformDetail: transformLaadpalenDetailResponse,
     idKeyList: 'id',
     featureType: 'Point',
@@ -426,23 +425,9 @@ export const datasetEndpoints: Record<
         'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
       ],
     },
+    disabled: IS_AP,
   },
 };
-
-function transformLaadpalenResponse(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  responseData: any
-) {
-  const features =
-    responseData?.features.map((feature: any, index: number) => {
-      return {
-        ...feature,
-      };
-    }) || [];
-
-  return transformDsoApiListResponse(datasetId, config, { features });
-}
 
 export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
   const maxPages = 5;
@@ -656,7 +641,7 @@ function transformLaadpalenDetailResponse(
   id: string,
   responseData: any
 ) {
-  let item = responseData.features?.find(
+  const item = responseData.features?.find(
     (item: any) => item.properties.id === id
   );
 
