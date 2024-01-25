@@ -95,6 +95,7 @@ const BezwarenDetail = () => {
                   );
                   return (
                     <InfoDetailGroup
+                      key={category}
                       label={
                         <div className={styles.DocumentListHeader}>
                           <InfoDetailHeading

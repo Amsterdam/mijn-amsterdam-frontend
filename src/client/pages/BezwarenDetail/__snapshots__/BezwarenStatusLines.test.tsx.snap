@@ -44,16 +44,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
               29 maart 2023
             </time>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
       <li
@@ -87,16 +77,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
               02 april 2023
             </time>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
       <li
@@ -130,16 +110,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
               05 april 2023
             </time>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
     </ul>
@@ -191,16 +161,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is i
               29 maart 2023
             </time>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
       <li
@@ -234,16 +194,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is i
               02 april 2023
             </time>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
       <li
@@ -272,16 +222,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is i
               Afgehandeld
             </strong>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
     </ul>
@@ -333,16 +273,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is r
               29 maart 2023
             </time>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
       <li
@@ -371,16 +301,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is r
               In behandeling
             </strong>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
       <li
@@ -409,16 +329,6 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is r
               Afgehandeld
             </strong>
           </div>
-          <div
-            class="_Panel_a12ff2 _Panel--description_a12ff2"
-          >
-            <div
-              class="_PanelContent_a12ff2"
-            />
-          </div>
-          <div
-            class="_Panel_a12ff2 _Panel--documents_a12ff2"
-          />
         </div>
       </li>
     </ul>

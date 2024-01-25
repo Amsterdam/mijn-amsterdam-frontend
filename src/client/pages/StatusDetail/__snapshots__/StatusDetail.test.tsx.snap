@@ -130,10 +130,10 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
                   class="_DocumentListItem_7ed0ad"
                 >
                   <span
-                    class="_DocumentLinkWrap_7ed0ad"
+                    class="_DocumentLinkWrap_81c3b4"
                   >
                     <span
-                      class="_DownloadIcon_7ed0ad"
+                      class="_DownloadIcon_81c3b4"
                     >
                       <svg
                         aria-hidden="true"
@@ -153,7 +153,7 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
                       </svg>
                     </span>
                     <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
                       href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
                       rel="external noopener noreferrer"
                     >
@@ -207,9 +207,6 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
                 </p>
               </div>
             </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
           </div>
         </li>
       </ul>
@@ -349,10 +346,10 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
                   class="_DocumentListItem_7ed0ad"
                 >
                   <span
-                    class="_DocumentLinkWrap_7ed0ad"
+                    class="_DocumentLinkWrap_81c3b4"
                   >
                     <span
-                      class="_DownloadIcon_7ed0ad"
+                      class="_DownloadIcon_81c3b4"
                     >
                       <svg
                         aria-hidden="true"
@@ -372,7 +369,7 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
                       </svg>
                     </span>
                     <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
                       href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
                       rel="external noopener noreferrer"
                     >
@@ -423,9 +420,6 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
                 </p>
               </div>
             </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
           </div>
         </li>
       </ul>
@@ -554,9 +548,6 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
                 </p>
               </div>
             </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
           </div>
         </li>
         <li
@@ -611,10 +602,10 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
                   class="_DocumentListItem_7ed0ad"
                 >
                   <span
-                    class="_DocumentLinkWrap_7ed0ad"
+                    class="_DocumentLinkWrap_81c3b4"
                   >
                     <span
-                      class="_DownloadIcon_7ed0ad"
+                      class="_DownloadIcon_81c3b4"
                     >
                       <svg
                         aria-hidden="true"
@@ -634,7 +625,7 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
                       </svg>
                     </span>
                     <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
                       href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
                       rel="external noopener noreferrer"
                     >
