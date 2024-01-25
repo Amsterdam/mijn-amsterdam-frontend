@@ -37,11 +37,14 @@ export function convertTipToNotication(tip: MyTip): MyNotification {
 export function prefixTipNotification(
   notification: MyNotification
 ): MyNotification {
+  const pattern = /^(\s*tip\s*:?\s*)/i;
+  const matches = notification.title.match(pattern);
   return {
     ...notification,
-    title: `${!notification.title.startsWith('Tip: ') ? 'Tip: ' : ''}${
-      notification.title
-    }`,
+    title:
+      matches && matches?.length > 0
+        ? notification.title.replace(pattern, 'Tip: ')
+        : 'Tip: ' + notification.title,
   };
 }
 

@@ -114,7 +114,7 @@ describe('createTipsFromServiceResults', () => {
     expect(tips.content?.find((t) => t.id === 'mijn-43')).toBeTruthy();
   });
 
-  it('should prefix a tip with "Tip: " if it does not already start with "Tip: "', async () => {
+  describe('prefixTipNotification', () => {
     const tip = {
       id: 'test',
       title: 'test',
@@ -125,18 +125,45 @@ describe('createTipsFromServiceResults', () => {
       isAlert: false,
       tipReason: 'test',
     };
+    it('should prefix a tip notification with "Tip: "', async () => {
+      const result = prefixTipNotification(tip);
 
-    const result = prefixTipNotification(tip);
+      expect(result.title).toBe('Tip: test');
 
-    expect(result.title).toBe('Tip: test');
+      const result2 = prefixTipNotification({
+        ...tip,
+        title: 'tip: test',
+      });
 
-    const tip2 = {
-      ...tip,
-      title: 'Tip: test',
-    };
+      expect(result2.title).toBe('Tip: test');
 
-    const result2 = prefixTipNotification(tip2);
+      const result3 = prefixTipNotification({
+        ...tip,
+        title: 'tip test',
+      });
 
-    expect(result2.title).toBe('Tip: test');
+      expect(result3.title).toBe('Tip: test');
+
+      const result4 = prefixTipNotification({
+        ...tip,
+        title: 'tip:test',
+      });
+
+      expect(result4.title).toBe('Tip: test');
+
+      const result5 = prefixTipNotification({
+        ...tip,
+        title: 'test',
+      });
+
+      expect(result5.title).toBe('Tip: test');
+
+      const result6 = prefixTipNotification({
+        ...tip,
+        title: 'Tip: test',
+      });
+
+      expect(result6.title).toBe('Tip: test');
+    });
   });
 });
