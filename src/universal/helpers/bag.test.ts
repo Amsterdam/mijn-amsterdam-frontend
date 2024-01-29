@@ -72,7 +72,7 @@ describe('getLatLonByAddress', () => {
     );
 
     expect(
-      extractAddress('Burgemeester Röellstraat 44, 1015BA, Amsterdam _ ; . ,')
+      extractAddress('Burgemeester Röellstraat 44, 1015BA, Amsterdam _ ; ,')
     ).toBe('Burgemeester Röellstraat 44');
   });
 

@@ -1,7 +1,5 @@
 @import '../../styles/_global.scss';
 
-.VergunningDetail {}
-
 .VergunningStatus {
   margin-top: 4rem;
 }
@@ -36,4 +34,10 @@
 
 .Disclaimer {
   color: $color-neutral-grey4;
+}
+
+.LicensePlatesList {
+  margin: 0;
+  padding-left: 2rem;
+  columns: 3;
 }
