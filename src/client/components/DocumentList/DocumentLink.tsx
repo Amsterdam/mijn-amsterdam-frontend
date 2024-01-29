@@ -28,7 +28,7 @@ function addFileType(url: string) {
   const defaultType = 'pdf';
   const splitUrl = url.split('.');
 
-  // No . in the url then add a filetype.
+  // NOTE: if we don't fond a  "." in the url then add a default filetype.
   if (splitUrl.length === 1) {
     return `${url}.${defaultType}`;
   }
