@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import {
   IS_AP,
+  IS_AZ,
   IS_DEVELOPMENT,
   IS_OT,
   IS_PRODUCTION,
@@ -38,7 +39,6 @@ import {
   securityHeaders,
   RELEASE_VERSION,
   BffEndpoints,
-  IS_AZ,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { authRouterDevelopment, relayDevRouter } from './router-development';

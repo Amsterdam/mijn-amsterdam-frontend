@@ -20,6 +20,7 @@ export default defineConfig({
     MA_GIT_SHA: JSON.stringify(process.env.MA_GIT_SHA || '-1'),
     MA_TEST_ACCOUNTS: JSON.stringify(process.env.MA_TEST_ACCOUNTS || ''),
     MA_PROFILE_DEV_ID: JSON.stringify(process.env.MA_PROFILE_DEV_ID || ''),
+    MA_IS_AZ: JSON.stringify(process.env.MA_IS_AZ || false),
   },
   envPrefix: 'REACT_APP_',
   build: {

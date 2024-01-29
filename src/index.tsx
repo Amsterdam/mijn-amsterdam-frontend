@@ -1,12 +1,10 @@
 import * as Sentry from '@sentry/react';
+import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
-
-import { createRoot } from 'react-dom/client';
 import './client/styles/main.scss';
-import { IS_DEVELOPMENT, OTAP_ENV } from './universal/config/env';
-import { IS_AZ } from './server/config';
+import { IS_AZ, IS_DEVELOPMENT, OTAP_ENV } from './universal/config/env';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||

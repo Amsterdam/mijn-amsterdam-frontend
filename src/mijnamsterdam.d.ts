@@ -17,8 +17,8 @@ type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
 ) => Promise<infer R>
   ? R
   : T extends (...args: any) => infer R
-  ? R
-  : any;
+    ? R
+    : any;
 
 type ProfileType = 'private' | 'private-attributes' | 'commercial';
 
@@ -58,3 +58,6 @@ declare const MA_GIT_SHA: string;
 
 // The ID of current build
 declare const MA_BUILD_ID: string;
+
+// Is the app built on azure or not.
+declare const MA_IS_AZ: boolean;
