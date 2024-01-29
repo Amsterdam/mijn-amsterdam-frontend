@@ -3085,7 +3085,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         <p
           class="_Value_6f1df2"
         >
-          J.J. Cremerplein 54I 1054 TM Amsterdam
+          J.J. Cremerplein 54-1 1054 TM Amsterdam
           <button
             class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
           >
@@ -3354,7 +3354,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         <p
           class="_Value_6f1df2"
         >
-          J.J. Cremerplein 54I 1054 TM Amsterdam
+          J.J. Cremerplein 54-1 1054 TM Amsterdam
           <button
             class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
           >
@@ -5045,50 +5045,50 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
         >
           Kenteken(s)
         </h3>
-        <p
+        <div
           class="_Value_6f1df2"
-        />
-        <ul
-          class="_LicensePlatesList_28a267"
         >
-          <li>
-            EE-123-C
-          </li>
-          <li>
-            DD-122-X
-          </li>
-          <li>
-            EE-123-C
-          </li>
-          <li>
-            DD-122-X
-          </li>
-          <li>
-            EE-123-C
-          </li>
-          <li>
-            DD-122-X
-          </li>
-          <li>
-            EE-123-C
-          </li>
-          <li>
-            DD-122-X
-          </li>
-          <li>
-            EE-123-C
-          </li>
-          <li>
-            DD-122-X
-          </li>
-          <li>
-            EE-123-C
-          </li>
-          <li>
-            DD-122-X
-          </li>
-        </ul>
-        <p />
+          <ul
+            class="_LicensePlatesList_28a267"
+          >
+            <li>
+              EE-123-C
+            </li>
+            <li>
+              DD-122-X
+            </li>
+            <li>
+              EE-123-C
+            </li>
+            <li>
+              DD-122-X
+            </li>
+            <li>
+              EE-123-C
+            </li>
+            <li>
+              DD-122-X
+            </li>
+            <li>
+              EE-123-C
+            </li>
+            <li>
+              DD-122-X
+            </li>
+            <li>
+              EE-123-C
+            </li>
+            <li>
+              DD-122-X
+            </li>
+            <li>
+              EE-123-C
+            </li>
+            <li>
+              DD-122-X
+            </li>
+          </ul>
+        </div>
       </div>
       <div
         class="_InfoDetail_6f1df2"

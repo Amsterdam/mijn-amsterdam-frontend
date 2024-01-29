@@ -24,6 +24,7 @@ export function Touringcar({
 
       {vergunning.caseType === CaseType.TouringcarJaarontheffing ? (
         <InfoDetail
+          valueWrapperElement="div"
           label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
           value={
             vergunning.licensePlates?.includes(' | ') ? (
