@@ -9,8 +9,10 @@ function getAppMode(): AppModeName {
 
 function getIsAz(): boolean {
   const isAz =
-    typeof MA_IS_AZ !== 'undefined' ? MA_IS_AZ : process.env.MA_IS_AZ;
-  return (isAz || false) as boolean;
+    typeof MA_IS_AZ !== 'undefined'
+      ? MA_IS_AZ === 'true'
+      : process.env.MA_IS_AZ === 'true';
+  return isAz;
 }
 
 export function getOtapEnv(): OtapEnvName {

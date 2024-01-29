@@ -60,4 +60,4 @@ declare const MA_GIT_SHA: string;
 declare const MA_BUILD_ID: string;
 
 // Is the app built on azure or not.
-declare const MA_IS_AZ: boolean;
+declare const MA_IS_AZ: string;
