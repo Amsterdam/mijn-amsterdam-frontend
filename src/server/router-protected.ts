@@ -14,7 +14,7 @@ import {
   fetchSignalsListByStatus,
 } from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { IS_AZ } from '../universal/config';
+import { IS_AZ } from '../universal/config/env';
 
 export const router = express.Router();
 
