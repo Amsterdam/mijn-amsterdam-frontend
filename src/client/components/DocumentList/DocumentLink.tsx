@@ -17,7 +17,7 @@ interface DocumentLinkProps {
 }
 
 function downloadFile(docDownload: GenericDocument) {
-  var link = document.createElement('a');
+  const link = document.createElement('a');
   link.href = docDownload.url;
   const downloadName = addFileType(docDownload.download || docDownload.title);
   link.download = downloadName;
