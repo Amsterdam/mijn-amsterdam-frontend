@@ -194,6 +194,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 17 januari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -227,6 +237,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 13 januari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -260,6 +280,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 08 februari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -440,6 +470,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 07 februari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -473,6 +513,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 07 februari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -506,6 +556,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 08 februari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -639,6 +699,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 17 januari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -672,6 +742,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 13 januari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -705,6 +785,16 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
                 08 februari 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -907,6 +997,16 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
                 17 oktober 2021
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -940,6 +1040,16 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
                 17 oktober 2021
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -968,6 +1078,16 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -1184,6 +1304,16 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
                 13 juli 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1217,6 +1347,16 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
                 13 juli 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1250,6 +1390,16 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
                 31 juli 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -1430,6 +1580,16 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
                 07 april 2021
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1463,6 +1623,16 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
                 07 april 2021
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1491,6 +1661,16 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -1702,6 +1882,16 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
                 31 augustus 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1735,6 +1925,16 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
                 31 augustus 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1768,6 +1968,16 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
                 01 september 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -1929,6 +2139,16 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
                 01 september 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1962,6 +2182,16 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
                 01 september 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -1990,6 +2220,16 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -2137,6 +2377,16 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
                 01 september 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2170,6 +2420,16 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
                 01 september 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2198,6 +2458,16 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -2408,6 +2678,16 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
                 31 augustus 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2441,6 +2721,16 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
                 31 augustus 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2474,6 +2764,16 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
                 01 september 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -2706,6 +3006,16 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
                 10 oktober 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2734,6 +3044,16 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
                 In behandeling
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2762,6 +3082,16 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -2928,6 +3258,16 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
                 13 oktober 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2956,6 +3296,16 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
                 In behandeling
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -2984,6 +3334,16 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -3192,6 +3552,16 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
                 03 januari 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -3225,6 +3595,16 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
                 03 januari 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -3253,6 +3633,16 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -3475,6 +3865,16 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
                 01 januari 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -3508,6 +3908,16 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
                 01 januari 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -3541,6 +3951,16 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
                 02 januari 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -3757,6 +4177,16 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
                 13 juli 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -3790,6 +4220,16 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
                 13 juli 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -3823,6 +4263,16 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
                 15 september 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -3975,6 +4425,16 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
                 01 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4003,6 +4463,16 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
                 In behandeling
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4031,6 +4501,16 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -4214,6 +4694,16 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
                 20 april 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4247,6 +4737,16 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
                 25 april 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4275,6 +4775,16 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -4427,6 +4937,16 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
                 01 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4460,6 +4980,16 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
                 01 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4493,6 +5023,16 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
                 01 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -4645,6 +5185,16 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
                 01 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4678,6 +5228,16 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
                 01 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4706,6 +5266,16 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -4797,24 +5367,16 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Kenteken
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            />
-          </div>
-        </div>
+          Kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        />
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -4887,6 +5449,16 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
                 13 november 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4920,6 +5492,16 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
                 13 november 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -4953,6 +5535,16 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
                 13 november 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -5044,24 +5636,18 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
         </p>
       </div>
       <div
-        class="_InfoDetailGroup_6f1df2"
+        class="_InfoDetail_6f1df2"
       >
-        <div
-          class="_InfoDetailGroupContent_6f1df2"
+        <h3
+          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
         >
-          <div
-            class="_InfoDetail_6f1df2"
-          >
-            <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
-            >
-              Kenteken(s)
-            </h3>
-            <p
-              class="_Value_6f1df2"
-            />
-          </div>
-        </div>
+          Kenteken(s)
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X
+        </p>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -5120,6 +5706,16 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
                 14 november 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5153,6 +5749,16 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
                 14 november 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5181,6 +5787,16 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -5333,6 +5949,16 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
                 27 oktober 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5366,6 +5992,16 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
                 01 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5394,6 +6030,16 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -5582,6 +6228,16 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
                 18 december 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5615,6 +6271,16 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
                 18 december 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5643,6 +6309,16 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -5822,6 +6498,16 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
                 17 december 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5855,6 +6541,16 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
                 18 december 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -5888,6 +6584,16 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
                 18 december 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -6085,6 +6791,16 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
                 19 oktober 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -6118,6 +6834,16 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
                 21 oktober 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -6146,6 +6872,16 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>

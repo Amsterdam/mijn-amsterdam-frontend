@@ -3,6 +3,7 @@ import { LinkProps } from 'react-router-dom';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
+  getCustomTitleForVergunningWithLicensePlates,
   hasWorkflow,
 } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
@@ -156,17 +157,11 @@ const defaultNotificationLabels: Record<string, NotificatonContentLabels> = {
 };
 
 function touringcarTitle(
-  item: TouringcarDagontheffing | TouringcarJaarontheffing,
+  vergunning: TouringcarDagontheffing | TouringcarJaarontheffing,
   status: 'ontvangen' | 'in behandeling' | 'afgehandeld'
 ) {
-  if (item.caseType === CaseType.TouringcarDagontheffing) {
-    return `Aanvraag ${item.title} (${item.licensePlate}) ${status}`;
-  } else {
-    if (item.routetest) {
-      return `Aanvraag ${item.title} (${item.licensePlates}) ${status}`;
-    }
-    return `Aanvraag ${item.title} ${status}`;
-  }
+  const titleBase = getCustomTitleForVergunningWithLicensePlates(vergunning);
+  return `${titleBase} ${status}`;
 }
 
 function touringcarDescription(
@@ -353,8 +348,8 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } 
-        RVV ontheffing ${(item as RVVSloterweg).area} 
+        }
+        RVV ontheffing ${(item as RVVSloterweg).area}
         ${
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
@@ -375,8 +370,8 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } 
-        RVV ontheffing ${(item as RVVSloterweg).area} 
+        }
+        RVV ontheffing ${(item as RVVSloterweg).area}
         ${
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
@@ -403,8 +398,8 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } 
-        RVV ontheffing ${(item as RVVSloterweg).area} 
+        }
+        RVV ontheffing ${(item as RVVSloterweg).area}
         ${
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
@@ -425,7 +420,7 @@ export const notificationContent: NotificationContent = {
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? ' kentekenwijziging'
             : ''
-        } RVV ontheffing ${(item as RVVSloterweg).area} 
+        } RVV ontheffing ${(item as RVVSloterweg).area}
         ${
           (item as RVVSloterweg).requestType === 'Wijziging'
             ? `van (${(item as RVVSloterweg).previousLicensePlates}) naar `
