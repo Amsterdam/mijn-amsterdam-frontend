@@ -20,21 +20,22 @@ export function Touringcar({
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
-
-      {vergunning.caseType === CaseType.TouringcarJaarontheffing ? (
-        <InfoDetail
-          label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
-          value={vergunning.licensePlates}
-        />
-      ) : (
-        <InfoDetail label="Kenteken" value={vergunning.licensePlate} />
-      )}
+      <InfoDetailGroup>
+        {vergunning.caseType === CaseType.TouringcarJaarontheffing ? (
+          <InfoDetail
+            label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
+            value={vergunning.licensePlates}
+          />
+        ) : (
+          <InfoDetail label="Kenteken" value={vergunning.licensePlate} />
+        )}
+      </InfoDetailGroup>
 
       <InfoDetail label="Bestemming" value={vergunning.destination} />
 
       {isGranted &&
         vergunning.caseType === CaseType.TouringcarJaarontheffing && (
-          <>
+          <InfoDetailGroup>
             <InfoDetail
               label="Van"
               value={
@@ -49,7 +50,7 @@ export function Touringcar({
                 vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
               }
             />
-          </>
+          </InfoDetailGroup>
         )}
 
       {isGranted &&

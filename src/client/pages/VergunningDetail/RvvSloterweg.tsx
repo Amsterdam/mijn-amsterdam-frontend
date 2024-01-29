@@ -3,6 +3,7 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import { StatusLineItem } from '../../../universal/types';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
+import styles from './VergunningDetail.module.scss';
 
 const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
 const RVV_SLOTERWEG_RESULT_EXPIRED = 'Verlopen';
@@ -85,8 +86,8 @@ export function getRVVSloterwegLineItems(
         !vergunning.dateWorkflowVerleend && !!vergunning.dateDecision
           ? vergunning.dateDecision
           : !!vergunning.dateWorkflowVerleend
-          ? vergunning.dateWorkflowVerleend
-          : '',
+            ? vergunning.dateWorkflowVerleend
+            : '',
       description: descriptionAfgehandeld,
       documents: [],
       isActive: (isGranted && !hasDecision) || (!isGranted && hasDecision),
@@ -138,16 +139,18 @@ export function RvvSloterweg({ vergunning }: { vergunning: RVVSloterweg }) {
       )}
       <InfoDetail label="Zone" value={vergunning.area} />
 
-      <InfoDetail
-        label={isChangeRequest ? 'Nieuw kenteken' : 'Kenteken'}
-        value={vergunning.licensePlates}
-      />
-      {vergunning.previousLicensePlates && (
+      <InfoDetailGroup>
         <InfoDetail
-          label="Oud kenteken"
-          value={vergunning.previousLicensePlates}
+          label={isChangeRequest ? 'Nieuw kenteken' : 'Kenteken'}
+          value={vergunning.licensePlates}
         />
-      )}
+        {vergunning.previousLicensePlates && (
+          <InfoDetail
+            label="Oud kenteken"
+            value={vergunning.previousLicensePlates}
+          />
+        )}
+      </InfoDetailGroup>
       <InfoDetailGroup>
         <InfoDetail
           label="Van"

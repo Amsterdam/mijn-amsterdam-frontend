@@ -147,7 +147,10 @@ app.get(BffEndpoints.STATUS_HEALTH2, (_req, res) => {
 ////////////////////////////////////////////////////////////////////////
 if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
-  app.use(relayDevRouter);
+}
+///// [DEVELOPENT ONLY] /////
+if (IS_OT) {
+  app.use(`${BFF_BASE_PATH + BffEndpoints.API_RELAY}`, relayDevRouter);
 }
 
 ////////////////////////////////////////////////////////////////////////

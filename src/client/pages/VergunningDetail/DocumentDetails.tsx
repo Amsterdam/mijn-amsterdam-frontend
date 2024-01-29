@@ -10,7 +10,9 @@ import {
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
 import DocumentList from '../../components/DocumentList/DocumentList';
-import InfoDetail from '../../components/InfoDetail/InfoDetail';
+import InfoDetail, {
+  InfoDetailGroup,
+} from '../../components/InfoDetail/InfoDetail';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { relayApiUrl } from '../../utils/utils';
@@ -72,27 +74,23 @@ export function DocumentDetails({
   }
 
   return (
-    <InfoDetail
-      valueWrapperElement="div"
-      label="Documenten"
-      value={
-        isLoadingDocuments ? (
-          <LoadingContent
-            barConfig={[
-              ['100%', '2rem', '1rem'],
-              ['100%', '2rem', '1rem'],
-            ]}
-          />
-        ) : !!documents?.length ? (
-          <DocumentList
-            documents={documents}
-            isExpandedView={true}
-            trackPath={trackPath}
-          />
-        ) : (
-          <span>Geen documenten beschikbaar</span>
-        )
-      }
-    />
+    <InfoDetailGroup label="Documenten">
+      {isLoadingDocuments ? (
+        <LoadingContent
+          barConfig={[
+            ['100%', '2rem', '1rem'],
+            ['100%', '2rem', '1rem'],
+          ]}
+        />
+      ) : !!documents?.length ? (
+        <DocumentList
+          documents={documents}
+          isExpandedView={true}
+          trackPath={trackPath}
+        />
+      ) : (
+        <span>Geen documenten beschikbaar</span>
+      )}
+    </InfoDetailGroup>
   );
 }

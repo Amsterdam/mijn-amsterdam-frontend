@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { AppState } from '../../AppState';
-import { DocumentLink } from '../../components/DocumentList/DocumentList';
+import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { relayApiUrl } from '../../utils/utils';
 
 export function useAddDocumentLinkComponents(
