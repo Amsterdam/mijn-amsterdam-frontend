@@ -26,11 +26,15 @@ export function Touringcar({
         <InfoDetail
           label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
           value={
-            <ul className={styles.LicensePlatesList}>
-              {vergunning.licensePlates
-                ?.split(' | ')
-                .map((plate) => <li>{plate}</li>)}
-            </ul>
+            vergunning.licensePlates?.includes(' | ') ? (
+              <ul className={styles.LicensePlatesList}>
+                {vergunning.licensePlates
+                  ?.split(' | ')
+                  .map((plate) => <li>{plate}</li>)}
+              </ul>
+            ) : (
+              vergunning.licensePlates
+            )
           }
         />
       ) : (

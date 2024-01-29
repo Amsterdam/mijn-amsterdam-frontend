@@ -169,10 +169,10 @@ function touringcarDescription(
   status: 'ontvangen' | 'in behandeling genomen' | 'afgehandeld'
 ) {
   if (item.caseType === CaseType.TouringcarDagontheffing) {
-    return `Wij hebben uw aanvraag ${item.title} (${item.licensePlate}) ${status}.`;
+    return `Wij hebben uw aanvraag ${item.title} ${status}.`;
   } else {
     if (item.routetest) {
-      return `Wij hebben uw aanvraag ${item.title} (${item.licensePlates}) ${status}.`;
+      return `Wij hebben uw aanvraag ${item.title} ${status}.`;
     }
     return `Wij hebben uw aanvraag ${item.title} ${status}.`;
   }
@@ -182,21 +182,23 @@ const touringcarLabels = {
   requested: {
     ...requestedShort,
     title: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
-      touringcarTitle(item, 'ontvangen'),
+      `Aanvraag ${touringcarTitle(item, 'ontvangen')}`,
+
     description: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
       touringcarDescription(item, 'ontvangen'),
   },
   inProgress: {
     ...inProgressShort,
     title: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
-      touringcarTitle(item, 'in behandeling'),
+      `Aanvraag ${touringcarTitle(item, 'in behandeling')}`,
+
     description: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
       touringcarDescription(item, 'in behandeling genomen'),
   },
   done: {
     ...doneShort,
     title: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
-      touringcarTitle(item, 'afgehandeld'),
+      `Aanvraag ${touringcarTitle(item, 'afgehandeld')}`,
     description: (item: TouringcarDagontheffing | TouringcarJaarontheffing) =>
       touringcarDescription(item, 'afgehandeld'),
   },

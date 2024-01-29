@@ -77,8 +77,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing Laan van Vlaanderen 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging
+        RVV ontheffing Laan van Vlaanderen
         van (PR067L) naar 
         (AAYYAA) in behandeling genomen.",
         "id": "vergunning-1132545854-notification",
@@ -92,8 +92,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-07-23T11:21:33",
-        "description": "Wij hebben uw aanvraag voor een 
-        RVV ontheffing Vaan van Laanderen 
+        "description": "Wij hebben uw aanvraag voor een
+        RVV ontheffing Vaan van Laanderen
         
         (YY-123-A, ZZ-122-A) ontvangen.",
         "id": "vergunning-3368771494-notification",
@@ -107,7 +107,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
-        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
         
         (9998877) ingetrokken.",
         "id": "vergunning-3970992213-notification",
@@ -140,7 +140,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
           "to": "/vergunningen/touringcar-jaarontheffing/852482654",
         },
         "subject": "852482654",
-        "title": "Aanvraag Touringcar jaarontheffing in behandeling",
+        "title": "Aanvraag Touringcar jaarontheffing (EE-123-C... +11) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -169,8 +169,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing Laan van Vlaanderen 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging
+        RVV ontheffing Laan van Vlaanderen
         van (PR067L) naar 
         (TT148N) in behandeling genomen.",
         "id": "vergunning-3593173882-notification",
@@ -184,8 +184,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging
+        RVV ontheffing Sloterweg West
         van (PR067L) naar 
         (TT148N) ontvangen.",
         "id": "vergunning-1623553971-notification",
@@ -199,8 +199,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
-        "description": "Wij hebben uw aanvraag voor een 
-        RVV ontheffing Sloterweg 
+        "description": "Wij hebben uw aanvraag voor een
+        RVV ontheffing Sloterweg
         
         (37BHK4) ontvangen.",
         "id": "vergunning-1097314015-notification",
@@ -214,8 +214,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-08-17",
-        "description": "Wij hebben uw aanvraag voor een 
-        RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een
+        RVV ontheffing Sloterweg West
         
         (37BHK4) ontvangen.",
         "id": "vergunning-4069415615-notification",
@@ -265,7 +265,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
-        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
         
         (1234356) ingetrokken.",
         "id": "vergunning-2720598005-notification",
@@ -649,8 +649,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing Laan van Vlaanderen 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging
+        RVV ontheffing Laan van Vlaanderen
         van (PR067L) naar 
         (AAYYAA) in behandeling genomen.",
         "id": "vergunning-1132545854-notification",
@@ -664,8 +664,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-07-23T11:21:33",
-        "description": "Wij hebben uw aanvraag voor een 
-        RVV ontheffing Vaan van Laanderen 
+        "description": "Wij hebben uw aanvraag voor een
+        RVV ontheffing Vaan van Laanderen
         
         (YY-123-A, ZZ-122-A) ontvangen.",
         "id": "vergunning-3368771494-notification",
@@ -679,7 +679,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
-        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
         
         (9998877) ingetrokken.",
         "id": "vergunning-3970992213-notification",
@@ -712,7 +712,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
           "to": "/vergunningen/touringcar-jaarontheffing/852482654",
         },
         "subject": "852482654",
-        "title": "Aanvraag Touringcar jaarontheffing in behandeling",
+        "title": "Aanvraag Touringcar jaarontheffing (EE-123-C... +11) in behandeling",
       },
       {
         "chapter": "VERGUNNINGEN",
@@ -741,8 +741,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing Laan van Vlaanderen 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging
+        RVV ontheffing Laan van Vlaanderen
         van (PR067L) naar 
         (TT148N) in behandeling genomen.",
         "id": "vergunning-3593173882-notification",
@@ -756,8 +756,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
-        "description": "Wij hebben uw aanvraag voor een kentekenwijziging 
-        RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een kentekenwijziging
+        RVV ontheffing Sloterweg West
         van (PR067L) naar 
         (TT148N) ontvangen.",
         "id": "vergunning-1623553971-notification",
@@ -771,8 +771,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
-        "description": "Wij hebben uw aanvraag voor een 
-        RVV ontheffing Sloterweg 
+        "description": "Wij hebben uw aanvraag voor een
+        RVV ontheffing Sloterweg
         
         (37BHK4) ontvangen.",
         "id": "vergunning-1097314015-notification",
@@ -786,8 +786,8 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-08-17",
-        "description": "Wij hebben uw aanvraag voor een 
-        RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een
+        RVV ontheffing Sloterweg West
         
         (37BHK4) ontvangen.",
         "id": "vergunning-4069415615-notification",
@@ -837,7 +837,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
-        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West 
+        "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
         
         (1234356) ingetrokken.",
         "id": "vergunning-2720598005-notification",
@@ -1476,7 +1476,7 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "documentsUrl": "/decosjoin/listdocuments/gAAAAABlXNqVlR9g-ekMrh6MpOBfEFIHrNTr2tdvCr-SoMYPFBnD8MQkMkFN0kxWp4oRSu6n1btPv6LWeTLu9WKB3NFdu2L1AN2LHLNQ0gNj9ZB0io4VxEQb8ZYjgk4Nbbm9vOYnOEb8",
     "id": "852482654",
     "identifier": "Z/23/2230478",
-    "licensePlates": null,
+    "licensePlates": "EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X",
     "link": {
       "title": "Bekijk hoe het met uw aanvraag staat",
       "to": "/vergunningen/touringcar-jaarontheffing/852482654",
@@ -1499,7 +1499,7 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "documentsUrl": "/decosjoin/listdocuments/gAAAAABlXNqVnVGdoGqOFz21eRmDFSNN3k553dltbWJyQWn7uGIIzpwgG0ELy1wL9djx8L_kazU4vXurqSJzL6xoEwQIjhYFhPnLdnHCgVL1k64YDwuriYpPUkquArZLHH1wRbFBxqrS",
     "id": "2260364373",
     "identifier": "Z/23/2230474",
-    "licensePlate": null,
+    "licensePlate": "123-23-SH",
     "link": {
       "title": "Bekijk hoe het met uw aanvraag staat",
       "to": "/vergunningen/touringcar-dagontheffing/2260364373",
