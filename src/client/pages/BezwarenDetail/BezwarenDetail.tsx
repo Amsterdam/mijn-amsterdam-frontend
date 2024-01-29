@@ -114,44 +114,6 @@ const BezwarenDetail = () => {
                       <DocumentList documents={docs} showDatePublished />
                     </InfoDetailGroup>
                   );
-
-                  // return (
-                  //   <InfoDetailGroup key={category}>
-                  //     <InfoDetail
-                  //       valueWrapperElement="div"
-                  //       label={`Document${
-                  //         bezwaar.documenten.length > 1 ? 'en' : ''
-                  //       } ${category.toLowerCase()}`}
-                  //       value={
-                  //         <ul className={styles.documentlist}>
-                  //           {docs.map((document) => (
-                  //             <li key={`document-link-${document.id}`}>
-                  //               <DocumentLink
-                  //                 document={document}
-                  //                 trackPath={() =>
-                  //                   `bezwaar/document/${document.title}`
-                  //                 }
-                  //               ></DocumentLink>
-                  //             </li>
-                  //           ))}
-                  //         </ul>
-                  //       }
-                  //     />
-                  //     <InfoDetail
-                  //       valueWrapperElement="div"
-                  //       label="Datum"
-                  //       value={
-                  //         <ul className={styles.documentlist}>
-                  //           {docs.map((document) => (
-                  //             <li key={`document-date-${document.id}`}>
-                  //               {document.datePublished}
-                  //             </li>
-                  //           ))}
-                  //         </ul>
-                  //       }
-                  //     />
-                  //   </InfoDetailGroup>
-                  // );
                 })}
               </>
             )}
