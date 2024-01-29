@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import {
   IS_AP,
+  IS_AZ,
   IS_DEVELOPMENT,
   IS_OT,
   IS_PRODUCTION,
@@ -49,7 +50,7 @@ import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 
 const sentryOptions: Sentry.NodeOptions = {
   dsn: process.env.BFF_SENTRY_DSN,
-  environment: OTAP_ENV,
+  environment: `${IS_AZ ? 'az-' : ''}${OTAP_ENV}`,
   debug: IS_DEVELOPMENT,
   autoSessionTracking: false,
   beforeSend(event, hint) {

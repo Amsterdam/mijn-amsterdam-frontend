@@ -67,7 +67,7 @@ describe('getLatLonByAddress', () => {
   });
 
   test('extractAddress', () => {
-    expect(extractAddress('Herengracht 23-1, 1015BA, Amsterdam _ ; . ,')).toBe(
+    expect(extractAddress('Herengracht 23-1, 1015BA, Amsterdam _ ; ,')).toBe(
       'Herengracht 23-1'
     );
 

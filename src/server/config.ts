@@ -5,10 +5,8 @@ import fs from 'fs';
 import https from 'https';
 import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TAP } from '../universal/config/env';
+import { IS_AZ, IS_OT, IS_TAP } from '../universal/config/env';
 import { TokenData } from './helpers/app';
-
-export const IS_AZ = process.env.BFF_ON_AZ === 'true';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && process.env[envVarName];
