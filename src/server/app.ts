@@ -38,6 +38,7 @@ import {
   securityHeaders,
   RELEASE_VERSION,
   BffEndpoints,
+  IS_AZ,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
@@ -49,7 +50,7 @@ import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 
 const sentryOptions: Sentry.NodeOptions = {
   dsn: process.env.BFF_SENTRY_DSN,
-  environment: OTAP_ENV,
+  environment: `${IS_AZ ? 'az-' : ''}${OTAP_ENV}`,
   debug: IS_DEVELOPMENT,
   autoSessionTracking: false,
   beforeSend(event, hint) {

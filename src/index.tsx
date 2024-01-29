@@ -6,6 +6,7 @@ import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import { createRoot } from 'react-dom/client';
 import './client/styles/main.scss';
 import { IS_DEVELOPMENT, OTAP_ENV } from './universal/config/env';
+import { IS_AZ } from './server/config';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -25,7 +26,7 @@ console.info(
 
 Sentry.init({
   dsn: import.meta.env.REACT_APP_SENTRY_DSN,
-  environment: OTAP_ENV,
+  environment: `${IS_AZ ? 'az-' : ''}${OTAP_ENV}`,
   debug: IS_DEVELOPMENT,
   ignoreErrors: [
     'a[b].target.className.indexOf is not a function',
