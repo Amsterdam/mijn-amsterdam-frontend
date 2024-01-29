@@ -5647,9 +5647,48 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
         </h3>
         <p
           class="_Value_6f1df2"
+        />
+        <ul
+          class="_LicensePlatesList_28a267"
         >
-          EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X | EE-123-C | DD-122-X
-        </p>
+          <li>
+            EE-123-C
+          </li>
+          <li>
+            DD-122-X
+          </li>
+          <li>
+            EE-123-C
+          </li>
+          <li>
+            DD-122-X
+          </li>
+          <li>
+            EE-123-C
+          </li>
+          <li>
+            DD-122-X
+          </li>
+          <li>
+            EE-123-C
+          </li>
+          <li>
+            DD-122-X
+          </li>
+          <li>
+            EE-123-C
+          </li>
+          <li>
+            DD-122-X
+          </li>
+          <li>
+            EE-123-C
+          </li>
+          <li>
+            DD-122-X
+          </li>
+        </ul>
+        <p />
       </div>
       <div
         class="_InfoDetail_6f1df2"
