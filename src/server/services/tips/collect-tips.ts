@@ -10,8 +10,6 @@ function tipsFilter(serviceResults: ServiceResults, now: Date = new Date()) {
       return false;
     }
 
-    console.log(now);
-
     // If there is a dateStart exclude the tip if the start date is in the future.
     // If there is a dateEnd exclude the tip if the date end is in the past.
     if (
@@ -52,10 +50,6 @@ export function collectTips(
     filteredTips = filteredTips.filter((t) =>
       t.profileTypes.includes(profileType)
     );
-  }
-
-  if (IS_TEST) {
-    compareDate;
   }
 
   filteredTips = filteredTips.filter(tipsFilter(serviceResults, compareDate));
