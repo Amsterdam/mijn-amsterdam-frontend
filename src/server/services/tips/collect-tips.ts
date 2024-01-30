@@ -1,15 +1,16 @@
+import { IS_TEST } from '../../../universal/config';
 import { MyTip } from '../../../universal/types';
 import { ServiceResults, Tip } from './tip-types';
 import { tips } from './tips-content';
 
-function tipsFilter(serviceResults: ServiceResults) {
-  const now = new Date();
-
+function tipsFilter(serviceResults: ServiceResults, now: Date = new Date()) {
   return (t: Tip) => {
     // We want only active tips.
     if (!t.active) {
       return false;
     }
+
+    console.log(now);
 
     // If there is a dateStart exclude the tip if the start date is in the future.
     // If there is a dateEnd exclude the tip if the date end is in the past.
@@ -33,7 +34,8 @@ function tipsFilter(serviceResults: ServiceResults) {
 
 export function collectTips(
   serviceResults: ServiceResults,
-  profileType?: ProfileType
+  profileType?: ProfileType,
+  compareDate?: Date
 ): MyTip[] {
   /**
    * Iterate over tips database and filter out requested tips based on props:
@@ -52,7 +54,11 @@ export function collectTips(
     );
   }
 
-  filteredTips = filteredTips.filter(tipsFilter(serviceResults));
+  if (IS_TEST) {
+    compareDate;
+  }
+
+  filteredTips = filteredTips.filter(tipsFilter(serviceResults, compareDate));
 
   return filteredTips.map((t) => ({
     id: t.id,

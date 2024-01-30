@@ -7,13 +7,19 @@ import {
   ApiResponse,
 } from '../../universal/helpers';
 
-import { BagChapter } from '../../universal/config';
+import {
+  BagChapter,
+  FeatureToggle,
+  IS_AP,
+  IS_TEST,
+} from '../../universal/config';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
+import { useLocation } from 'react-router-dom';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -39,6 +45,8 @@ export function useAppStateFallbackService({
     fallbackServiceRequestOptions,
     null
   );
+
+  const location = useLocation();
 
   const appStateError = useCallback(
     (message: string) => {
@@ -82,6 +90,21 @@ export function useAppStateFallbackService({
   }, [api, appStateError, setAppState, isEnabled]);
 }
 
+let streamEndpointUrl = BFFApiUrls.SERVICES_SSE;
+
+// For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
+// See also: universal/config/app.ts : streamEndpointQueryParamKeys
+if (FeatureToggle.passQueryParamsToStreamUrl) {
+  const testStreamEndpointUrl = new URL(streamEndpointUrl);
+  if (location.search !== '') {
+    const windowUrl = new URL(window.location.href);
+    for (const [param, value] of windowUrl.searchParams) {
+      testStreamEndpointUrl.searchParams.set(param, value);
+    }
+    streamEndpointUrl = testStreamEndpointUrl.toString();
+  }
+}
+
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
  * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
@@ -121,7 +144,7 @@ export function useAppStateRemote() {
   }, []);
 
   useSSE({
-    path: BFFApiUrls.SERVICES_SSE,
+    path: streamEndpointUrl,
     eventName: 'message',
     callback: onEvent,
     postpone: isFallbackServiceEnabled,

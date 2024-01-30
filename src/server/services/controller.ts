@@ -1,5 +1,9 @@
 import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
+import {
+  FeatureToggle,
+  streamEndpointQueryParamKeys,
+} from '../../universal/config';
 import { omit } from '../../universal/helpers';
 import {
   apiErrorResult,
@@ -138,7 +142,7 @@ const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 
 // Special services that aggregates NOTIFICATIONS from various services
-const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
+export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
   const profileType = await getProfileType(req);
 
   // No notifications for this profile type
@@ -410,8 +414,17 @@ export async function getTipNotifications(
     {
       serviceResults,
       tipsDirectlyFromServices: [],
+      compareDate:
+        FeatureToggle.passQueryParamsToStreamUrl &&
+        req.query[streamEndpointQueryParamKeys.tipsCompareDate]
+          ? new Date(
+              req.query[streamEndpointQueryParamKeys.tipsCompareDate] as string
+            )
+          : new Date(),
     }
   );
+
+  console.log(tipNotifications);
 
   return tipNotifications.map(convertTipToNotication);
 }

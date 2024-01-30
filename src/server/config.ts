@@ -329,6 +329,7 @@ export const BffEndpoints = {
   ROOT: '/',
   API_RELAY: '/relay',
   SERVICES_ALL: '/services/all',
+  SERVICES_TIPS: '/services/tips',
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
