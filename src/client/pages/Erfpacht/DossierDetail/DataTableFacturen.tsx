@@ -32,8 +32,12 @@ export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
         {
           label: null,
           content: (
-            <Link href="http://wijzigen" variant="inList">
-              Betaler wijzigen
+            <Link
+              href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=Dossiernummer: ${dossier.dossierNummer}%0D%0ARelatiecode: ${dossier.relaties?.[0].relatieNaam}%0D%0ADebiteurnummer: ${dossier.facturen?.debiteurNummer}`}
+              rel="noopener noreferrer"
+              variant="inList"
+            >
+              Betaler aanpassen
             </Link>
           ),
           className: styles.FacturenBetalerDebiteur_Col3,
@@ -50,7 +54,10 @@ export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
         <MaParagraph>
           Wilt u uw facturen voor erfpacht en canon op een nieuw adres
           ontvangen? Stuur een e-mail naar{' '}
-          <Link href="mailto:erfpachtadministratie@amsterdam.nl">
+          <Link
+            rel="noopener noreferrer"
+            href="mailto:erfpachtadministratie@amsterdam.nl"
+          >
             erfpachtadministratie@amsterdam.nl
           </Link>
           . Zet in het onderwerp 'Adreswijziging'. Vermeld in de mail uw
@@ -63,7 +70,10 @@ export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
         <MaParagraph>
           U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw
           e-mailadres en debiteurennummer naar{' '}
-          <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+          <Link
+            rel="noopener noreferrer"
+            href="mailto:debiteurenadministratie@amsterdam.nl"
+          >
             debiteurenadministratie@amsterdam.nl
           </Link>
           .
