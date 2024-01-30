@@ -429,7 +429,5 @@ export async function getTipNotifications(
     }
   );
 
-  console.log(tipNotifications);
-
   return tipNotifications.map(convertTipToNotication);
 }
