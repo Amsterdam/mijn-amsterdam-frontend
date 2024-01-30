@@ -49,9 +49,9 @@
       "titelErfpachter": "Erfpachter",
       "titelRelatieCode": "Relatiecode",
       "relatieNaam": "H.J de Gruyter",
-      "relatieCode": "20114893",
+      "relatieCode": "123-abc",
       "erfpachter": true,
-      "betaler": false,
+      "betaler": true,
       "indicatieGeheim": false
     },
     {

@@ -11,14 +11,17 @@ import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 import classNames from 'classnames';
 
-export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
+export function DataTableFacturen({
+  dossier,
+  relatieCode,
+}: ErfpachtDatalistProps) {
   const { displayPropsAlleFacturen, colStyles } = useErfpachtV2Data();
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
-  const myRelatieCode = ''; // TODO: where to get this
+  console.log('relatieCode', relatieCode);
   const betaler = dossier.relaties?.find((relatie) => relatie.betaler);
-  const isBetaler = betaler?.relatieCode === myRelatieCode;
+  const isBetaler = betaler?.relatieCode === relatieCode;
   const facturenBetalerDebiteurRows = [
     {
       rows: [
@@ -34,7 +37,7 @@ export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
         },
         {
           label: null,
-          content: betaler ? (
+          content: isBetaler ? (
             <Link
               href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=Dossiernummer: ${
                 dossier.dossierNummer
