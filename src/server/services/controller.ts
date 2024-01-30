@@ -46,6 +46,7 @@ import {
 import {
   convertTipToNotication,
   createTipsFromServiceResults,
+  prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -162,7 +163,7 @@ export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
     if (notification.isTip) {
       notification.hideDatePublished = true;
     }
-    return notification;
+    return prefixTipNotification(notification);
   });
 
   const notificationsWithTipsInserted = sortNotifications(notifications);
