@@ -158,7 +158,12 @@ export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
   const notifications: Array<MyNotification> = [
     ...tipNotifications,
     ...chapterAndTipNotifications,
-  ];
+  ].map((notification) => {
+    if (notification.isTip) {
+      notification.hideDatePublished = true;
+    }
+    return notification;
+  });
 
   const notificationsWithTipsInserted = sortNotifications(notifications);
 
@@ -416,7 +421,7 @@ export async function getTipNotifications(
       tipsDirectlyFromServices: [],
       compareDate:
         FeatureToggle.passQueryParamsToStreamUrl &&
-        req.query[streamEndpointQueryParamKeys.tipsCompareDate]
+        req.query?.[streamEndpointQueryParamKeys.tipsCompareDate]
           ? new Date(
               req.query[streamEndpointQueryParamKeys.tipsCompareDate] as string
             )

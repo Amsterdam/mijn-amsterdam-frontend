@@ -30,7 +30,10 @@ import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 
-export function sortNotifications(notifications: MyNotification[]) {
+export function sortNotifications(
+  notifications: MyNotification[],
+  doRandomize: boolean = true
+) {
   // sort the notifications with and without a tip
   let sorted = notifications
     .sort(dateSort('datePublished', 'desc'))
@@ -39,19 +42,37 @@ export function sortNotifications(notifications: MyNotification[]) {
 
   const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
 
-  const notificationsWithTips = sorted.filter((n) => n.isTip);
+  let notificationsWithTips = sorted.filter((n) => n.isTip);
+
+  if (doRandomize) {
+    // Simple randomization
+    notificationsWithTips = notificationsWithTips
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  }
 
   // Insert a tip after every 3 notifications
-  return notificationsWithoutTips.reduce((acc, notification, index) => {
-    if (index !== 0 && index % 3 === 0 && notificationsWithTips.length > 0) {
-      const tip = notificationsWithTips.shift();
-      if (tip) {
-        acc.push(tip);
+  const notificationsWithTipsInserted = notificationsWithoutTips.reduce(
+    (acc, notification, index) => {
+      if (index !== 0 && index % 3 === 0 && notificationsWithTips.length > 0) {
+        const tip = notificationsWithTips.shift();
+        if (tip) {
+          acc.push(tip);
+        }
       }
-    }
-    acc.push(notification);
-    return acc;
-  }, [] as MyNotification[]);
+      acc.push(notification);
+      return acc;
+    },
+    [] as MyNotification[]
+  );
+
+  // Add the remaining tips at the end.
+  if (notificationsWithTips.length) {
+    notificationsWithTipsInserted.push(...notificationsWithTips);
+  }
+
+  return notificationsWithTipsInserted;
 }
 
 export function getTipsAndNotificationsFromApiResults(

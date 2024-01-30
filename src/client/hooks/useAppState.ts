@@ -1,25 +1,19 @@
 import * as Sentry from '@sentry/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
+import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
 import {
   ApiPristineResponse,
-  apiPristineResult,
   ApiResponse,
+  apiPristineResult,
 } from '../../universal/helpers';
 
-import {
-  BagChapter,
-  FeatureToggle,
-  IS_AP,
-  IS_TEST,
-} from '../../universal/config';
-import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
+import { BagChapter, FeatureToggle } from '../../universal/config';
+import { AppState, PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { useLocation } from 'react-router-dom';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -45,8 +39,6 @@ export function useAppStateFallbackService({
     fallbackServiceRequestOptions,
     null
   );
-
-  const location = useLocation();
 
   const appStateError = useCallback(
     (message: string) => {
