@@ -16,29 +16,39 @@ export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
+  const myRelatieCode = ''; // TODO: where to get this
+  const betaler = dossier.relaties?.find((relatie) => relatie.betaler);
+  const isBetaler = betaler?.relatieCode === myRelatieCode;
   const facturenBetalerDebiteurRows = [
     {
       rows: [
         {
           label: dossier.facturen.titelBetaler,
-          content: dossier.facturen.betaler,
+          content: dossier.facturen.betaler || '-',
           className: styles.FacturenBetalerDebiteur_Col1,
         },
         {
           label: dossier.facturen.titelDebiteurNummer,
-          content: dossier.facturen.debiteurNummer,
+          content: dossier.facturen.debiteurNummer || '-',
           className: styles.FacturenBetalerDebiteur_Col2,
         },
         {
           label: null,
-          content: (
+          content: betaler ? (
             <Link
-              href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=Dossiernummer: ${dossier.dossierNummer}%0D%0ARelatiecode: ${dossier.relaties?.[0].relatieNaam}%0D%0ADebiteurnummer: ${dossier.facturen?.debiteurNummer}`}
+              href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=Dossiernummer: ${
+                dossier.dossierNummer
+              }%0D%0ARelatiecode: ${dossier.relaties?.find(
+                (relatie) => relatie.betaler
+              )?.relatieCode}%0D%0ADebiteurnummer: ${dossier.facturen
+                ?.debiteurNummer}`}
               rel="noopener noreferrer"
               variant="inList"
             >
               Betaler aanpassen
             </Link>
+          ) : (
+            ''
           ),
           className: styles.FacturenBetalerDebiteur_Col3,
         },

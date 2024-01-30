@@ -5,7 +5,7 @@
   "titelEersteUitgifte": "Datum eerste uitgifte",
   "voorkeursadres": "Dit en dat plein 22 H",
   "titelVoorkeursadres": "Adres",
-  "betaler": "H.J de Gruyter",
+  "betaler": null,
   "titelBetaler": "Betaler",
   "titelKopSamenvatting": "Samenvatting",
   "titelKopVastgoed": "Vastgoed",
@@ -51,7 +51,7 @@
       "relatieNaam": "H.J de Gruyter",
       "relatieCode": "20114893",
       "erfpachter": true,
-      "betaler": true,
+      "betaler": false,
       "indicatieGeheim": false
     },
     {
@@ -154,7 +154,7 @@
     "titelFacturen": "Facturen",
     "titelVerklarendeTekstFacturen": "Hier vindt u een overzicht van uw erfpachtfacturen van de afgelopen 2 jaar. Daarnaast ziet u eventueel oudere facturen die nog openstaan.",
     "titelFactuurZoekveld": "Factuurnummer",
-    "betaler": "DEBITEUR 186698",
+    "betaler": null,
     "titelBetaler": "Betaler",
     "debiteurNummer": "186698",
     "titelDebiteurNummer": "Debiteurnummer",

@@ -116,13 +116,18 @@ interface Erfpachtv2ErpachterResponseSource {
 
 interface Erfpachtv2ErpachterResponse {
   isKnown: boolean;
+  relatieCode: Erfpachtv2ErpachterResponseSource['relationCode'];
+  profileType: ProfileType;
 }
 
 function transformIsErfpachterResponseSource(
-  response: Erfpachtv2ErpachterResponseSource
+  responseData: Erfpachtv2ErpachterResponseSource
 ): Erfpachtv2ErpachterResponse {
   return {
-    isKnown: response.erfpachter,
+    isKnown: responseData.erfpachter,
+    relatieCode: responseData.relationCode,
+    profileType:
+      responseData.businessType === 'zakelijk' ? 'commercial' : 'private',
   };
 }
 
@@ -202,6 +207,7 @@ interface ErfpachtDossierDetailRelatie {
   relatieNaam: string;
   betaler: boolean;
   indicatieGeheim: boolean;
+  relatieCode: string;
 }
 
 interface ErfpachtDossierDetailJuridisch {
@@ -344,6 +350,7 @@ export interface ErfpachtV2DossiersResponse
     dossiers?: ErfpachtV2Dossier[];
   };
   isKnown: boolean;
+  relatieCode: string;
 }
 
 function getDossierNummerUrlParam(dossierNummer: string) {
@@ -409,22 +416,27 @@ export function transformErfpachtDossierProperties<
   };
 }
 
-export function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
-  const hasDossiers = !!response?.dossiers?.dossiers?.length;
+export function transformDossierResponse(
+  responseData: ErfpachtV2DossiersResponse,
+  relatieCode: Erfpachtv2ErpachterResponseSource['relationCode']
+) {
+  const hasDossiers = !!responseData?.dossiers?.dossiers?.length;
 
-  if (response === null) {
-    response = {} as ErfpachtV2DossiersResponse;
+  if (responseData === null) {
+    responseData = {} as ErfpachtV2DossiersResponse;
   }
 
   if (hasDossiers) {
-    response.dossiers.dossiers = response.dossiers?.dossiers.map((dossier) => {
-      return transformErfpachtDossierProperties(dossier);
-    });
+    responseData.dossiers.dossiers = responseData.dossiers?.dossiers.map(
+      (dossier) => {
+        return transformErfpachtDossierProperties(dossier);
+      }
+    );
   }
 
-  if (response?.openstaandeFacturen?.facturen?.length) {
-    response.openstaandeFacturen.facturen =
-      response.openstaandeFacturen?.facturen.map((factuur) => {
+  if (responseData?.openstaandeFacturen?.facturen?.length) {
+    responseData.openstaandeFacturen.facturen =
+      responseData.openstaandeFacturen?.facturen.map((factuur) => {
         return {
           ...factuur,
           dossierNummerUrlParam: getDossierNummerUrlParam(factuur.dossierAdres),
@@ -433,9 +445,10 @@ export function transformDossierResponse(response: ErfpachtV2DossiersResponse) {
       });
   }
 
-  response.isKnown = hasDossiers;
+  responseData.relatieCode = relatieCode;
+  responseData.isKnown = hasDossiers;
 
-  return response;
+  return responseData;
 }
 
 export async function fetchErfpachtV2(
@@ -444,27 +457,37 @@ export async function fetchErfpachtV2(
 ) {
   const config = getApiConfig('ERFPACHTv2');
 
+  const erfpachterResponse = await requestData<Erfpachtv2ErpachterResponse>(
+    {
+      ...config,
+      url: `${config.url}/vernise/api/erfpachter`,
+      transformResponse: transformIsErfpachterResponseSource,
+    },
+    requestID,
+    authProfileAndToken
+  );
+
   if (authProfileAndToken.profile.profileType === 'commercial') {
+    return erfpachterResponse;
+  }
+
+  if (!!erfpachterResponse.content?.isKnown) {
     return requestData<ErfpachtV2DossiersResponse>(
       {
         ...config,
-        url: `${config.url}/vernise/api/erfpachter`,
-        transformResponse: transformIsErfpachterResponseSource,
+        url: `${config.url}/vernise/api/dossierinfo`,
+        transformResponse: (responseData) =>
+          transformDossierResponse(
+            responseData,
+            erfpachterResponse.content.relatieCode
+          ),
       },
       requestID,
       authProfileAndToken
     );
   }
 
-  return requestData<ErfpachtV2DossiersResponse>(
-    {
-      ...config,
-      url: `${config.url}/vernise/api/dossierinfo`,
-      transformResponse: transformDossierResponse,
-    },
-    requestID,
-    authProfileAndToken
-  );
+  return erfpachterResponse;
 }
 
 export async function fetchErfpachtV2DossiersDetail(

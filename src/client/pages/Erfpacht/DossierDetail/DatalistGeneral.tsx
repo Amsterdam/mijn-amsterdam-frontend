@@ -5,6 +5,7 @@ import { KadastraleAanduidingList } from './KadastraleAanduidingList';
 
 export interface ErfpachtDatalistProps {
   dossier: ErfpachtV2DossiersDetail;
+  relatieCode?: string;
 }
 
 export function DatalistGeneral({ dossier }: ErfpachtDatalistProps) {

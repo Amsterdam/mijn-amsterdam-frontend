@@ -23,6 +23,7 @@ import { DatalistsFinancieel } from './DatalistsFinancieel';
 import { DataTableFacturen } from './DataTableFacturen';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { useEffect } from 'react';
+import { useErfpachtV2Data } from '../erfpachtData.hook';
 
 const loadingContentBarConfig: BarConfig = [
   ['12rem', '2rem', '.5rem'],
@@ -46,7 +47,7 @@ export default function ErfpachtDossierDetail() {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
-
+  const { ERFPACHTv2 } = useErfpachtV2Data();
   const [dossier, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
     url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
     bagChapter: BagChapters.ERFPACHTv2,
@@ -106,7 +107,10 @@ export default function ErfpachtDossierDetail() {
 
               <Grid.Cell className={styles.Section} fullWidth>
                 <CollapsiblePanel title="Facturen">
-                  <DataTableFacturen dossier={dossier} />
+                  <DataTableFacturen
+                    dossier={dossier}
+                    relatieCode={ERFPACHTv2.content?.relatieCode}
+                  />
                 </CollapsiblePanel>
               </Grid.Cell>
             </>
