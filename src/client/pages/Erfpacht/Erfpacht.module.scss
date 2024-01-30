@@ -49,32 +49,6 @@
   }
 }
 
-// .FacturenTable {
-
-//   @media screen and (min-width: $amsterdam-breakpoint-wide) {
-//     &_col1 {
-//       grid-column-start: 1;
-//       grid-column-end: span 2;
-//     }
-
-//     &_col2 {
-//       grid-column-start: 3;
-//       grid-column-end: span 2;
-//     }
-
-//     &_col3 {
-//       grid-column-start: 5;
-//       grid-column-end: span 2;
-//
-//     }
-
-//     &_col4 {
-//       grid-column-start: 7;
-//       grid-column-end: span 2;
-//
-//     }
-//   }
-// }
 .FacturenTable,
 .OpenFacturenTable {
   &__smallScreen {
@@ -125,47 +99,3 @@
     }
   }
 }
-
-// .AlleFacturenTable {
-//   &_col1 {
-//     grid-column-start: 1;
-//     grid-column-end: span 2;
-//   }
-
-//   &_col2 {
-//     grid-column-start: 3;
-//     grid-column-end: span 1;
-//   }
-
-//   &_col3 {
-//     grid-column-start: 4;
-//     grid-column-end: span 1;
-//   }
-
-//   &_col4 {
-//     display: none;
-//   }
-
-//   @media screen and (min-width: $amsterdam-breakpoint-medium) {
-//     &_col1 {
-//       grid-column-start: 1;
-//       grid-column-end: span 4;
-//     }
-
-//     &_col2 {
-//       grid-column-start: 5;
-//       grid-column-end: span 2;
-//     }
-
-//     &_col3 {
-//       grid-column-start: 7;
-//       grid-column-end: span 2;
-//     }
-
-//     &_col4 {
-//       grid-column-start: 9;
-//       grid-column-end: span 2;
-//
-//     }
-//   }
-// }

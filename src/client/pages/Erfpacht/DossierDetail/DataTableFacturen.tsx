@@ -19,7 +19,10 @@ export function DataTableFacturen({
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
-  console.log('relatieCode', relatieCode);
+  const mailBody = `Dossiernummer: ${
+    dossier.dossierNummer
+  }%0D%0ARelatiecode: ${dossier.relaties?.find((relatie) => relatie.betaler)
+    ?.relatieCode}%0D%0ADebiteurnummer: ${dossier.facturen?.debiteurNummer}`;
   const betaler = dossier.relaties?.find((relatie) => relatie.betaler);
   const isBetaler = betaler?.relatieCode === relatieCode;
   const facturenBetalerDebiteurRows = [
@@ -39,12 +42,7 @@ export function DataTableFacturen({
           label: null,
           content: isBetaler ? (
             <Link
-              href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=Dossiernummer: ${
-                dossier.dossierNummer
-              }%0D%0ARelatiecode: ${dossier.relaties?.find(
-                (relatie) => relatie.betaler
-              )?.relatieCode}%0D%0ADebiteurnummer: ${dossier.facturen
-                ?.debiteurNummer}`}
+              href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=${mailBody}`}
               rel="noopener noreferrer"
               variant="inList"
             >
@@ -69,7 +67,7 @@ export function DataTableFacturen({
           ontvangen? Stuur een e-mail naar{' '}
           <Link
             rel="noopener noreferrer"
-            href="mailto:erfpachtadministratie@amsterdam.nl"
+            href={`mailto:erfpachtadministratie@amsterdam.nl?subject=Adreswijziging facturen erfpacht en canon&body=${mailBody}`}
           >
             erfpachtadministratie@amsterdam.nl
           </Link>
@@ -85,7 +83,7 @@ export function DataTableFacturen({
           e-mailadres en debiteurennummer naar{' '}
           <Link
             rel="noopener noreferrer"
-            href="mailto:debiteurenadministratie@amsterdam.nl"
+            href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturen per e-mail ontvangen&body=${mailBody}`}
           >
             debiteurenadministratie@amsterdam.nl
           </Link>
