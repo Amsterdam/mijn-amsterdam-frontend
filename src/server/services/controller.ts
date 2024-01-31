@@ -162,7 +162,7 @@ export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
   ].map((notification) => {
     if (notification.isTip) {
       notification.hideDatePublished = true;
-      prefixTipNotification(notification);
+      return prefixTipNotification(notification);
     }
     return notification;
   });
