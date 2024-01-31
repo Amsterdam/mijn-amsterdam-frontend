@@ -7,7 +7,14 @@ export function DatalistJuridisch({ dossier }: ErfpachtDatalistProps) {
     const rows = [
       {
         label: dossier.juridisch.titelAlgemeneBepaling,
-        content: <Link href="">{dossier.juridisch.algemeneBepaling}</Link>,
+        content: (
+          <Link
+            rel="noopener noreferrer"
+            href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/algemene-bepalingen/"
+          >
+            {dossier.juridisch.algemeneBepaling}
+          </Link>
+        ),
       },
       {
         label: dossier.juridisch.titelIngangsdatum,
