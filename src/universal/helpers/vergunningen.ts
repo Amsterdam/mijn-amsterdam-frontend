@@ -5,6 +5,8 @@ import type {
   OnttrekkingsvergunningSloop,
   VormenVanWoonruimte,
   Splitsingsvergunning,
+  TouringcarDagontheffing,
+  TouringcarJaarontheffing,
 } from '../../server/services/vergunningen/vergunningen';
 import {
   Vergunning,
@@ -130,4 +132,20 @@ export function showDocuments(caseType: CaseType) {
   const isExcluded =
     EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY.includes(caseType);
   return !isExcluded;
+}
+
+export function getCustomTitleForVergunningWithLicensePlates(
+  vergunning: TouringcarDagontheffing | TouringcarJaarontheffing
+) {
+  if (vergunning.caseType === CaseType.TouringcarDagontheffing) {
+    return `${vergunning.title} (${vergunning.licensePlate})`;
+  } else {
+    const plates = vergunning.licensePlates?.split(' | ');
+    if (plates?.length === 1) {
+      return `${vergunning.title} (${vergunning.licensePlates})`;
+    } else if (!!plates && plates?.length > 1) {
+      return `${vergunning.title} (${plates[0]}... +${plates.length - 1})`;
+    }
+    return vergunning.title;
+  }
 }

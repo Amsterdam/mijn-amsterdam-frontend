@@ -9,6 +9,7 @@ import {
   defaultDateFormat,
   dateTimeFormatYear,
 } from '../../../universal/helpers';
+import styles from './VergunningDetail.module.scss';
 
 export function Touringcar({
   vergunning,
@@ -23,8 +24,19 @@ export function Touringcar({
 
       {vergunning.caseType === CaseType.TouringcarJaarontheffing ? (
         <InfoDetail
+          valueWrapperElement="div"
           label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
-          value={vergunning.licensePlates}
+          value={
+            vergunning.licensePlates?.includes(' | ') ? (
+              <ul className={styles.LicensePlatesList}>
+                {vergunning.licensePlates
+                  ?.split(' | ')
+                  .map((plate) => <li>{plate}</li>)}
+              </ul>
+            ) : (
+              vergunning.licensePlates
+            )
+          }
         />
       ) : (
         <InfoDetail label="Kenteken" value={vergunning.licensePlate} />
@@ -34,7 +46,7 @@ export function Touringcar({
 
       {isGranted &&
         vergunning.caseType === CaseType.TouringcarJaarontheffing && (
-          <>
+          <InfoDetailGroup>
             <InfoDetail
               label="Van"
               value={
@@ -49,7 +61,7 @@ export function Touringcar({
                 vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
               }
             />
-          </>
+          </InfoDetailGroup>
         )}
 
       {isGranted &&

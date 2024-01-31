@@ -426,7 +426,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Touringcar jaarontheffing
+                    Touringcar jaarontheffing (EE-123-C... +11)
                   </span>
                 </td>
                 <td
@@ -2790,7 +2790,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                     Soort vergunning:
                   </span>
                   <span>
-                    Touringcar dagontheffing
+                    Touringcar dagontheffing (123-23-SH)
                   </span>
                 </td>
                 <td

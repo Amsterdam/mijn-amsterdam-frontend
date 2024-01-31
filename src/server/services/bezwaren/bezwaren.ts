@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import axios from 'axios';
-import * as jose from 'jose'
+import * as jose from 'jose';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
@@ -10,6 +10,7 @@ import {
   defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
+import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -25,8 +26,6 @@ import {
   Kenmerk,
   kenmerkKey,
 } from './types';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import { EMPTY_UUID } from '../../../universal/helpers/bezwaren';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 10 (per page) = 50 bezwaren
 
@@ -427,7 +426,9 @@ async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   }
 
   const secret = new TextEncoder().encode(process.env.BFF_BEZWAREN_TOKEN_KEY);
-  const jwt = await new jose.SignJWT(tokenData).setProtectedHeader({ alg: 'HS256', typ: 'JWT' }).sign(secret)
+  const jwt = await new jose.SignJWT(tokenData)
+    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+    .sign(secret);
 
   const header = {
     'Content-Type': 'application/json',

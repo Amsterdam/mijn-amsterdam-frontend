@@ -1,34 +1,9 @@
 @import '../../styles/_global.scss';
 
-.DocumentLink {
-  display: block;
-  font-weight: normal;
-  position: relative;
-  line-height: 1.2;
-  font-weight: 500;
-  white-space: pre-wrap;
-  text-align: left;
-
-  svg {
-    top: 0;
-    transform: none;
-  }
-}
-
-.DocumentListItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.6rem;
-
-  @include mq-phone {
-    display: block;
-    margin-bottom: 2rem;
-  }
-}
-
 .DocumentList {
   @include reset-list-style;
+
+  padding-bottom: 2.5rem;
 
   &--expandedView {
     @include select('DocumentLink') {
@@ -37,37 +12,21 @@
     }
   }
 }
-.DocumentLinkWrap {
-  position: relative;
-  display: block;
-  padding-left: 1.8rem;
-}
 
-.DocumentLinkError {
-  padding-left: 0.3rem;
-  @include select('Button_Icon') {
-    width: 2rem;
-    height: 2rem;
-    fill: $color-support-warning;
-    margin-bottom: -4px;
+.DocumentListItem {
+  display: flex;
+  align-items: baseline;
+  vertical-align: top;
+  margin-bottom: 0.6rem;
+  font-size: 1.8rem;
+
+  >* {
+    flex: 1;
+    flex-basis: 50%;
   }
-}
 
-.DownloadInfo {
-  padding-left: 0.3rem;
-  font-size: 0.8em;
-  white-space: nowrap;
-}
-
-.DownloadIcon {
-  display: block;
-  position: absolute;
-  width: 1.4rem;
-  height: 1.4rem;
-  left: 0;
-  top: 0;
-  > div {
-    position: relative;
-    transform: translateY(0.3rem);
+  @include mq-phone {
+    display: block;
+    margin-bottom: 2rem;
   }
 }

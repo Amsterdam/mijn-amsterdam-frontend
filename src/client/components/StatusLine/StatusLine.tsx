@@ -307,12 +307,16 @@ export default function StatusLine({
                 datePublished={item.datePublished}
                 status={item.status}
               />
-              <StatusLinePanelDescription content={item.description} />
-              <StatusLinePanelDocuments
-                documents={item.documents}
-                altDocumentContent={item.altDocumentContent}
-                trackPath={documentPathForTracking}
-              />
+              {!!item.description && (
+                <StatusLinePanelDescription content={item.description} />
+              )}
+              {!!item.documents?.length && (
+                <StatusLinePanelDocuments
+                  documents={item.documents}
+                  altDocumentContent={item.altDocumentContent}
+                  trackPath={documentPathForTracking}
+                />
+              )}
             </LineItem>
           ))}
         </ul>

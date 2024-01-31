@@ -5,8 +5,8 @@ import { Adres } from '../types/brp';
 export function extractAddress(rawAddress: string) {
   // Strip down to Street + Housenumber
   const address = rawAddress
-    // Remove everything but alphanumeric, dash and space
-    .replace(/[^0-9-\s\p{Script=Latin}+]/giu, '')
+    // Remove everything but alphanumeric, dash, dot and space
+    .replace(/[^0-9-\.\s\p{Script=Latin}+]/giu, '')
     // Remove woonplaats
     .replace(/(Amsterdam|Weesp)/gi, '')
     // Remove postalcode

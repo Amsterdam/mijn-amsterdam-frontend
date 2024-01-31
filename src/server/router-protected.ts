@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 import { pick } from '../universal/helpers/utils';
-import { BffEndpoints, IS_AZ } from './config';
+import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
@@ -14,6 +14,7 @@ import {
   fetchSignalsListByStatus,
 } from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
+import { IS_AZ } from '../universal/config/env';
 
 export const router = express.Router();
 
@@ -82,6 +83,7 @@ router.use(
     {
       memoizeHost: false,
       proxyReqPathResolver: function (req) {
+        // TODO: Remove AZ condition after migration
         return !IS_AZ ? `/api${req.url}` : req.url;
       },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {

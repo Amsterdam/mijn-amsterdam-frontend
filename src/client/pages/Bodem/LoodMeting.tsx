@@ -13,7 +13,7 @@ import {
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import LoodStatusLines from './LoodStatusLines';
 import { Location } from '../VergunningDetail/Location';
-import { DocumentLink } from '../../components/DocumentList/DocumentList';
+import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 
 export default function LoodMeting() {
   const { BODEM } = useAppStateGetter();

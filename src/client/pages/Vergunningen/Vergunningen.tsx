@@ -1,12 +1,14 @@
 import { useMemo } from 'react';
 
-import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
+import type {
+  TouringcarJaarontheffing,
+  Vergunning,
+} from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
-  addTitleLinkComponent,
   Alert,
   ChapterIcon,
   Linkd,
@@ -15,10 +17,12 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
+import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal/helpers/vergunningen';
 
 export const DISPLAY_PROPS = {
   identifier: 'Kenmerk',
@@ -30,6 +34,13 @@ export const DISPLAY_PROPS_HISTORY = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
   decision: 'Resultaat',
+};
+
+const titleTransformMap: Record<string, any> = {
+  [CaseType.TouringcarJaarontheffing]:
+    getCustomTitleForVergunningWithLicensePlates,
+  [CaseType.TouringcarDagontheffing]:
+    getCustomTitleForVergunningWithLicensePlates,
 };
 
 export default function Vergunningen() {
@@ -44,6 +55,10 @@ export default function Vergunningen() {
       .map((item) => {
         return {
           ...item,
+          title:
+            item.caseType in titleTransformMap
+              ? titleTransformMap[item.caseType](item)
+              : item.title,
           dateRequest: defaultDateFormat(item.dateRequest),
         };
       });

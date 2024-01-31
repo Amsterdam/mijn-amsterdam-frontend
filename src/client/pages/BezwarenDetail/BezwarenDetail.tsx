@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter, usePhoneScreen } from '../../hooks';
 import {
   defaultDateFormat,
   isError,
@@ -15,9 +15,12 @@ import {
   PageHeading,
 } from '../../components';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
+import {
+  InfoDetailGroup,
+  InfoDetailHeading,
+} from '../../components/InfoDetail/InfoDetail';
 import BezwarenStatusLines from './BezwarenStatusLines';
-import { DocumentLink } from '../../components/DocumentList/DocumentList';
+import DocumentList from '../../components/DocumentList/DocumentList';
 import styles from './BezwarenDetail.module.scss';
 import { TextClamp } from '../../components/InfoDetail/TextClamp';
 
@@ -25,13 +28,15 @@ const BezwarenDetail = () => {
   const { BEZWAREN } = useAppStateGetter();
   const { uuid } = useParams<{ uuid: string }>();
 
-  const bezwaar = BEZWAREN.content?.find((b) => b.uuid === uuid);
+  const bezwaar = BEZWAREN.content?.find((b) => b.uuid === uuid) ?? null;
 
   const noContent = !isLoading(BEZWAREN) && !bezwaar;
 
   const documentCategories = uniqueArray(
     !bezwaar ? [] : bezwaar.documenten.map((d) => d.dossiertype).filter(Boolean)
   ).sort();
+
+  const isSmallScreen = usePhoneScreen();
 
   return (
     <DetailPage>
@@ -89,40 +94,24 @@ const BezwarenDetail = () => {
                     (d) => d.dossiertype === category
                   );
                   return (
-                    <InfoDetailGroup key={category}>
-                      <InfoDetail
-                        valueWrapperElement="div"
-                        label={`Document${
-                          bezwaar.documenten.length > 1 ? 'en' : ''
-                        } ${category.toLowerCase()}`}
-                        value={
-                          <ul className={styles.documentlist}>
-                            {docs.map((document) => (
-                              <li key={`document-link-${document.id}`}>
-                                <DocumentLink
-                                  document={document}
-                                  trackPath={() =>
-                                    `bezwaar/document/${document.titel}`
-                                  }
-                                ></DocumentLink>
-                              </li>
-                            ))}
-                          </ul>
-                        }
-                      />
-                      <InfoDetail
-                        valueWrapperElement="div"
-                        label="Datum"
-                        value={
-                          <ul className={styles.documentlist}>
-                            {docs.map((document) => (
-                              <li key={`document-date-${document.id}`}>
-                                {document.datePublished}
-                              </li>
-                            ))}
-                          </ul>
-                        }
-                      />
+                    <InfoDetailGroup
+                      key={category}
+                      label={
+                        <div className={styles.DocumentListHeader}>
+                          <InfoDetailHeading
+                            label={`Document${
+                              bezwaar.documenten.length > 1 ? 'en' : ''
+                            } ${category.toLowerCase()}`}
+                          />
+                          {!isSmallScreen && (
+                            <span className={styles.DocumentListHeader_Date}>
+                              Datum
+                            </span>
+                          )}
+                        </div>
+                      }
+                    >
+                      <DocumentList documents={docs} showDatePublished />
                     </InfoDetailGroup>
                   );
                 })}
@@ -131,7 +120,7 @@ const BezwarenDetail = () => {
           </>
         )}
       </PageContent>
-      {!!bezwaar && (
+      {!!bezwaar?.statussen && !!bezwaar?.uuid && (
         <BezwarenStatusLines id={bezwaar.uuid} statussen={bezwaar.statussen} />
       )}
     </DetailPage>

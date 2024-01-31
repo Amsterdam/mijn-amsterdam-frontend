@@ -195,12 +195,6 @@
       overflow: hidden;
     }
 
-    &--description {
-      @include media-q('>tablet') {
-        flex: 0 0 38rem;
-      }
-    }
-
     &--status {
       padding: 1.8rem 0 1.8rem 6.5rem;
     }
@@ -211,6 +205,16 @@
       &--status {
         padding: 1.8rem 1rem 1rem 3rem;
         position: static;
+      }
+    }
+
+    &--description {
+      @include media-q('>tablet') {
+        flex: 0 0 38rem;
+      }
+
+      @include mq-tablet {
+        padding-top: 0;
       }
     }
   }
