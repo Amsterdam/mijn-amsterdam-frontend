@@ -15,7 +15,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import styles from './MyNotifications.module.scss';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 12;
 
 export default function MyNotificationsPage() {
   const { NOTIFICATIONS } = useAppStateGetter();
