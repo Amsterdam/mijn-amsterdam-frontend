@@ -92,7 +92,10 @@ describe('<Erfpacht />', () => {
     const testState = {
       ERFPACHTv2: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHTv2_DOSSIERS as any),
+        content: transformDossierResponse(
+          ERFPACHTv2_DOSSIERS as any,
+          '123-abc'
+        ),
       },
     } as AppState;
 

@@ -121,13 +121,13 @@ interface Erfpachtv2ErpachterResponse {
 }
 
 function transformIsErfpachterResponseSource(
-  responseData: Erfpachtv2ErpachterResponseSource
+  responseData: Erfpachtv2ErpachterResponseSource,
+  profileType: ProfileType
 ): Erfpachtv2ErpachterResponse {
   return {
-    isKnown: responseData.erfpachter,
-    relatieCode: responseData.relationCode,
-    profileType:
-      responseData.businessType === 'zakelijk' ? 'commercial' : 'private',
+    isKnown: !!responseData?.erfpachter,
+    relatieCode: responseData?.relationCode,
+    profileType,
   };
 }
 
@@ -461,7 +461,11 @@ export async function fetchErfpachtV2(
     {
       ...config,
       url: `${config.url}/vernise/api/erfpachter`,
-      transformResponse: transformIsErfpachterResponseSource,
+      transformResponse: (responseData) =>
+        transformIsErfpachterResponseSource(
+          responseData,
+          authProfileAndToken.profile.profileType
+        ),
     },
     requestID,
     authProfileAndToken

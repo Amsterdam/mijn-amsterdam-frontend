@@ -212,6 +212,7 @@ exports[`simple-connect/erfpacht > fetchErfpachtV2: dossiers 1`] = `
       "titelResultatenGevonden": " resultaten gevonden",
       "titelVerklarendeTekstFacturen": "Hier vindt u een overzicht van uw erfpachtfacturen van de afgelopen 2 jaar. Daarnaast ziet u eventueel oudere facturen die nog openstaan.",
     },
+    "relatieCode": "123-abc",
     "titelDossiersKop": "Erfpachtrechten",
     "titelLinkErfpachtrechten": "Bekijk alle erfpachtrechten",
     "titelLinkFacturen": "Bekijk alle facturen",
