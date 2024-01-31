@@ -45,7 +45,7 @@ export function collectTips(
 
   let filteredTips = tips;
 
-  // If we get a profileType first filter all tips using it.
+  // If a profileType is provided, use it to filter the tips.
   if (profileType) {
     filteredTips = filteredTips.filter((t) =>
       t.profileTypes.includes(profileType)
