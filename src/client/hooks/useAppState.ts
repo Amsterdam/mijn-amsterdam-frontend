@@ -7,7 +7,11 @@ import {
   apiPristineResult,
 } from '../../universal/helpers';
 
-import { BagChapter, FeatureToggle } from '../../universal/config';
+import {
+  BagChapter,
+  FeatureToggle,
+  streamEndpointQueryParamKeys,
+} from '../../universal/config';
 import { AppState, PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
@@ -82,20 +86,34 @@ export function useAppStateFallbackService({
   }, [api, appStateError, setAppState, isEnabled]);
 }
 
-let streamEndpointUrl = BFFApiUrls.SERVICES_SSE;
+export function addParamsToStreamEndpoint(
+  url: string,
+  searchParams: string = location.search
+) {
+  let streamEndpointUrl = url;
 
-// For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
-// See also: universal/config/app.ts : streamEndpointQueryParamKeys
-if (FeatureToggle.passQueryParamsToStreamUrl) {
-  const testStreamEndpointUrl = new URL(streamEndpointUrl);
-  if (location.search !== '') {
-    const windowUrl = new URL(window.location.href);
-    for (const [param, value] of windowUrl.searchParams) {
-      testStreamEndpointUrl.searchParams.set(param, value);
+  // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
+  // See also: universal/config/app.ts : streamEndpointQueryParamKeys
+  if (FeatureToggle.passQueryParamsToStreamUrl) {
+    let testStreamEndpointUrl = streamEndpointUrl;
+    if (searchParams !== '') {
+      const locationParams = new URLSearchParams(searchParams);
+      const newUrlSearchParams = new URLSearchParams();
+      for (const [param, value] of locationParams.entries()) {
+        if (param in streamEndpointQueryParamKeys) {
+          newUrlSearchParams.set(param, value);
+        }
+      }
+      if (newUrlSearchParams.size) {
+        streamEndpointUrl = `${testStreamEndpointUrl}?${newUrlSearchParams.toString()}`;
+      }
     }
-    streamEndpointUrl = testStreamEndpointUrl.toString();
   }
+
+  return streamEndpointUrl;
 }
+
+const streamEndpoint = addParamsToStreamEndpoint(BFFApiUrls.SERVICES_SSE);
 
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
@@ -136,7 +154,7 @@ export function useAppStateRemote() {
   }, []);
 
   useSSE({
-    path: streamEndpointUrl,
+    path: streamEndpoint,
     eventName: 'message',
     callback: onEvent,
     postpone: isFallbackServiceEnabled,
