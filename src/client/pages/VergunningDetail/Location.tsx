@@ -51,7 +51,7 @@ export function Location({
       url: '',
       postpone: true,
       headers: {
-        'X-Api-Key': import.meta.env.BFF_DATA_AMSTERDAM_API_KEY,
+        'X-Api-Key': import.meta.env.REACT_APP_DATA_AMSTERDAM_API_KEY,
       },
     },
     null

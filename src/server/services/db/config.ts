@@ -6,7 +6,7 @@ import {
   FeatureToggle,
 } from '../../../universal/config';
 
-export const IS_PG = IS_AP;
+export const IS_PG = process.env.BFF_DB_PG_ENABLED === 'true' || IS_AP;
 
 export const IS_DISABLED = FeatureToggle.dbDisabled;
 
