@@ -90,6 +90,8 @@ RUN npm run bff-api:build
 ########################################################################################################################
 FROM nginx:latest as deploy-frontend
 
+ENV TZ=Europe/Amsterdam
+
 WORKDIR /app
 
 ARG MA_FRONTEND_HOST=mijn.amsterdam.nl
