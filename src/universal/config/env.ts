@@ -8,6 +8,7 @@ function getAppMode(): AppModeName {
 }
 
 function getIsAz(): boolean {
+  console.log(MA_IS_AZ);
   const isAz =
     typeof MA_IS_AZ !== 'undefined'
       ? MA_IS_AZ === 'true'

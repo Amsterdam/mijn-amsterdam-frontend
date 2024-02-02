@@ -141,7 +141,7 @@ ENV MA_BUILD_ID=$MA_BUILD_ID
 ARG MA_GIT_SHA=-1
 ENV MA_GIT_SHA=$MA_GIT_SHA
 
-ARG MA_IS_AZ
+ARG MA_IS_AZ=unknown
 ENV MA_IS_AZ=$MA_IS_AZ
 
 # Tell node to use the OpenSSL (OS installed) Certificates
