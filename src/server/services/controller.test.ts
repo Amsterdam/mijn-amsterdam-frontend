@@ -172,7 +172,7 @@ describe('controller', () => {
     expect(result).toMatchInlineSnapshot('[]');
   });
 
-  test('getTipNotifications private', async () => {
+  test('getTipNotifications commercial', async () => {
     vi.spyOn(helpers, 'getAuth').mockResolvedValue({
       profile: {
         id: '90006178',

@@ -5,7 +5,11 @@ import * as appStateModule from '../AppState';
 import { renderRecoilHook } from '../utils/renderRecoilHook';
 import { newEventSourceMock } from './EventSourceMock';
 import * as dataApiHook from './api/useDataApi';
-import { isAppStateReady, useAppStateRemote } from './useAppState';
+import {
+  addParamsToStreamEndpoint,
+  isAppStateReady,
+  useAppStateRemote,
+} from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 
@@ -19,6 +23,7 @@ import {
   it,
   vi,
 } from 'vitest';
+import { FeatureToggle } from '../../universal/config/app';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
@@ -184,5 +189,30 @@ describe('useAppState', () => {
       expect(isReady).toBe(true);
       expect(spy).toHaveBeenCalledWith('unknown stateConfig key: BLAP');
     });
+  });
+
+  test('addParamsToStreamEndpoint', () => {
+    const origValue = FeatureToggle.passQueryParamsToStreamUrl;
+    FeatureToggle.passQueryParamsToStreamUrl = false;
+
+    expect(addParamsToStreamEndpoint('/foo/bar')).toBe('/foo/bar');
+
+    expect(
+      addParamsToStreamEndpoint(
+        '/foo/bar',
+        '?tipsCompareDate=2021-05-23&fooBar=blap'
+      )
+    ).toBe('/foo/bar');
+
+    FeatureToggle.passQueryParamsToStreamUrl = true;
+
+    expect(
+      addParamsToStreamEndpoint(
+        '/foo/bar',
+        '?tipsCompareDate=2021-05-23&fooBar=blap'
+      )
+    ).toBe('/foo/bar?tipsCompareDate=2021-05-23');
+
+    FeatureToggle.passQueryParamsToStreamUrl = origValue;
   });
 });

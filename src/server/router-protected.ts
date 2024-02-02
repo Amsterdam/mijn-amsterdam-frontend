@@ -1,12 +1,17 @@
 import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
+import { IS_AZ } from '../universal/config/env';
 import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
-import { loadServicesAll, loadServicesSSE } from './services/controller';
+import {
+  NOTIFICATIONS,
+  loadServicesAll,
+  loadServicesSSE,
+} from './services/controller';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import {
   fetchSignalAttachments,
@@ -14,7 +19,6 @@ import {
   fetchSignalsListByStatus,
 } from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { IS_AZ } from '../universal/config/env';
 
 export const router = express.Router();
 
@@ -36,6 +40,21 @@ router.get(
     try {
       const response = await loadServicesAll(req, res);
       return res.json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  BffEndpoints.SERVICES_TIPS,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const response = await NOTIFICATIONS(res.locals.requestID, req);
+      const tips = response.content.filter(
+        (notification) => notification.isTip
+      );
+      return res.json(tips);
     } catch (error) {
       next(error);
     }
