@@ -28,7 +28,6 @@ parameters:
     values:
       - t
       - a
-      - p
 
   - name: btdAppBFF
     type: boolean
@@ -57,7 +56,7 @@ variables:
   - name: btdAppUI
     value: ${{ parameters.btdAppUI }}
 
-  - ${{ if in(variables['Build.SourceBranchName'], 'production-release') }}:
+  - ${{ if contains(variables['Build.SourceBranchName'], 'production-release') }}:
       - name: dtapName
         value: p
       - name: btdBuild

@@ -52,7 +52,6 @@ parameters:
       - none
       - t
       - a
-      - p
 
   - name: updateAppSettings
     type: boolean
