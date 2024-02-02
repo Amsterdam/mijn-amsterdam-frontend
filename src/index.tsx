@@ -22,8 +22,6 @@ console.info(
   MA_BUILD_ID ?? '-1'
 );
 
-console.log(`isaz:${IS_AZ ? 'az-' : ''}${OTAP_ENV}`);
-
 Sentry.init({
   dsn: import.meta.env.REACT_APP_SENTRY_DSN,
   environment: `${IS_AZ ? 'az-' : ''}${OTAP_ENV}`,
