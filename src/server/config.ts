@@ -334,6 +334,10 @@ export const BffEndpoints = {
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
 
+  // Legacy login links (still used in other portals)
+  LEGACY_LOGIN_API_LOGIN: '/api/login',
+  LEGACY_LOGIN_API1_LOGIN: '/api1/login',
+
   // Signalen endpoints
   SIA_ATTACHMENTS: '/services/signals/:id/attachments',
   SIA_HISTORY: '/services/signals/:id/history',

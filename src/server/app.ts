@@ -44,7 +44,7 @@ import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
-import { router as publicRouter } from './router-public';
+import { legacyRouter, router as publicRouter } from './router-public';
 import { adminRouter } from './router-admin';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 
@@ -134,6 +134,8 @@ app.use(function (req, res, next) {
 if (IS_AP && !IS_OT) {
   app.use(oidcRouter);
 }
+
+app.use(legacyRouter);
 
 app.use(BFF_BASE_PATH, publicRouter);
 
