@@ -283,7 +283,7 @@ export async function loadFeatureDetail(
     requestConfig.request = config.requestConfig.request;
   }
 
-  const response: any = await requestData(requestConfig, requestID);
+  const response = await requestData(requestConfig, requestID);
 
   if (response.status === 'OK') {
     const item = discoverSingleApiEmbeddedResponse(response.content);

@@ -510,32 +510,15 @@ export async function fetchLaadpalen(requestConfig: DataRequestConfig) {
     requestConfig.url,
     'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
   ];
-  const requests = urls?.map((url) => {
+  const requests = urls.map((url) => {
     return axiosRequest.request<DatasetFeatures>({
       ...requestConfig,
       url,
     });
   });
 
-  let responses: any;
-
-  try {
-    responses = await Promise.all(requests);
-  } catch (error) {
-    return error;
-  }
-
-  responses = responses.filter((res: any) => res.data);
-
-  // If transformDetail is called return the first response for the detail view
-  if (responses[0].data._embedded) return responses[0];
-
-  // Combine all responses into one for the list view
-  if (responses.length > 1) {
-    responses[0].data = responses.slice(1).reduce((acc: any, response: any) => {
-      return acc.concat(response.data);
-    }, responses[0].data);
-  }
+  const responses: AxiosResponse[] = await Promise.all(requests);
+  responses[0].data = responses.map((response) => response.data).flat();
   return responses[0];
 }
 
