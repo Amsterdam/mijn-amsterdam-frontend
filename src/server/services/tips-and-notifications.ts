@@ -29,6 +29,7 @@ import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
+import { fetchSVWINotifications } from './simple-connect/svwi';
 
 export function sortNotifications(
   notifications: MyNotification[],
@@ -188,6 +189,7 @@ const notificationServices: NotificationServices = {
         authProfileAndToken.profile.profileType
       ),
     fetchWpi: fetchWpiNotifications,
+    fetchSVWI: fetchSVWINotifications,
     klachten: fetchKlachtenNotifications,
     horeca: fetchHorecaNotifications,
     avg: fetchAVGNotifications,

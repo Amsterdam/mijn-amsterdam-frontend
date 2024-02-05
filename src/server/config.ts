@@ -97,6 +97,7 @@ export type SourceApiKey =
   | 'WPI_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
   | 'WPI_STADSPAS'
+  | 'SVWI'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
   | 'BEZWAREN_DOCUMENT'
@@ -143,6 +144,10 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   WPI_STADSPAS: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
+    passthroughOIDCToken: true,
+  },
+  SVWI: {
+    url: `${process.env.SVWI_API_BASE_URL}/mijnamsterdam/v1/autorisatie/tegel`,
     passthroughOIDCToken: true,
   },
   BEZWAREN_LIST: {

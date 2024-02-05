@@ -1,0 +1,63 @@
+import { describe, expect, test } from 'vitest';
+import { AuthProfileAndToken } from '../../helpers/app';
+import { remoteApi } from '../../../test-utils';
+import { fetchSVWI } from './svwi';
+import SVWI from '../../../../src/server/mock-data/json/svwi.json';
+
+vi.mock('../../../universal/config/app', async (importOriginal) => {
+  const module = (await importOriginal()) as any;
+
+  return {
+    ...module,
+    FeatureToggle: {
+      ...module.FeatureToggle,
+      svwiLinkActive: true,
+    },
+  };
+});
+
+describe('simple-connect/svwi', () => {
+  const REQUEST_ID = 'test-x-789';
+  const authProfileAndToken: AuthProfileAndToken = {
+    profile: {
+      authMethod: 'digid',
+      profileType: 'private',
+      id: 'TEST-DIGID-BSN',
+    },
+    token: 'xxxxxx',
+  };
+
+  test('fetchSvwi should give isknow equals true', async () => {
+    remoteApi.get('/mijnamsterdam/v1/autorisatie/tegel').reply(200, SVWI);
+
+    const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
+
+    expect(responseContent).toMatchInlineSnapshot(`
+  {
+    "content": {
+      "isKnown": true,
+    },
+    "status": "OK",
+  }
+  `);
+  });
+
+  test('fetchSvwi should give isknow equals false', async () => {
+    const SVWIWithUnknown = { ...SVWI, gebruikerBekend: false };
+
+    remoteApi
+      .get('/mijnamsterdam/v1/autorisatie/tegel')
+      .reply(200, SVWIWithUnknown);
+
+    const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
+
+    expect(responseContent).toMatchInlineSnapshot(`
+  {
+    "content": {
+      "isKnown": false,
+    },
+    "status": "OK",
+  }
+  `);
+  });
+});
