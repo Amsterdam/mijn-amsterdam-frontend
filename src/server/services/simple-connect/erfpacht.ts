@@ -471,11 +471,10 @@ export async function fetchErfpachtV2(
     authProfileAndToken
   );
 
-  if (authProfileAndToken.profile.profileType === 'commercial') {
-    return erfpachterResponse;
-  }
-
-  if (!!erfpachterResponse.content?.isKnown) {
+  if (
+    !!erfpachterResponse.content?.isKnown &&
+    authProfileAndToken.profile.profileType !== 'commercial' // Commerciële  gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
+  ) {
     return requestData<ErfpachtV2DossiersResponse>(
       {
         ...config,
