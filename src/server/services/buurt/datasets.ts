@@ -421,9 +421,6 @@ export const datasetEndpoints: Record<
       headers: {},
       request: fetchLaadpalen,
       cancelTimeout: 30000,
-      nextUrls: [
-        'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-      ],
     },
     disabled: IS_PRODUCTION,
   },
@@ -509,7 +506,10 @@ export function transformMeldingenBuurtResponse(
 }
 
 export async function fetchLaadpalen(requestConfig: DataRequestConfig) {
-  const urls = [requestConfig.url, ...(requestConfig.nextUrls || [])];
+  const urls = [
+    requestConfig.url,
+    'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+  ];
   const requests = urls?.map((url) => {
     return axiosRequest.request<DatasetFeatures>({
       ...requestConfig,

@@ -279,10 +279,6 @@ export async function loadFeatureDetail(
     );
   }
 
-  if (config.requestConfig?.nextUrls) {
-    requestConfig.nextUrls = config.requestConfig?.nextUrls;
-  }
-
   if (config.requestConfig?.request) {
     requestConfig.request = config.requestConfig.request;
   }

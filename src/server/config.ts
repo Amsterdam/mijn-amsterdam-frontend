@@ -54,7 +54,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   cancelTimeout?: number;
   postponeFetch?: boolean;
   urls?: Record<string, string>;
-  nextUrls?: string[];
 
   /**
    * The cacheKey is important if the automatically generated key doesn't suffice. For example if the url changes every request.
