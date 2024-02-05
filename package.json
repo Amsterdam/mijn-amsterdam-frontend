@@ -32,7 +32,7 @@
   "dependencies": {
     "@amsterdam/design-system-assets": "^0.1.5",
     "@amsterdam/design-system-css": "^0.2.0",
-    "@amsterdam/design-system-react-icons": "^0.1.10",
+    "@amsterdam/design-system-react-icons": "^0.1.12",
     "@amsterdam/design-system-react": "^0.2.0",
     "@amsterdam/design-system-tokens": "^0.2.0",
     "@amsterdam/piwik-tracker": "^2.0.3",
