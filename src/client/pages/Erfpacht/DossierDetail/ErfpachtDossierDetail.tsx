@@ -72,7 +72,7 @@ export default function ErfpachtDossierDetail() {
             <LoadingContent barConfig={loadingContentBarConfig} />
           )}
           {(api.isError || noContent) && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>
                   We kunnen op dit moment geen erfpacht dossier tonen.
@@ -83,29 +83,29 @@ export default function ErfpachtDossierDetail() {
 
           {!!dossier && (
             <>
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <DatalistGeneral dossier={dossier} />
               </Grid.Cell>
 
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <CollapsiblePanel title={dossier.titelKopJuridisch}>
                   <DatalistJuridisch dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <CollapsiblePanel title={dossier.titelKopBijzondereBepalingen}>
                   <DataTableBijzondereBepalingen dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <CollapsiblePanel title={dossier.titelKopFinancieel}>
                   <DatalistsFinancieel dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 
-              <Grid.Cell className={styles.Section} fullWidth>
+              <Grid.Cell className={styles.Section} span="all">
                 <CollapsiblePanel title="Facturen">
                   <DataTableFacturen
                     dossier={dossier}

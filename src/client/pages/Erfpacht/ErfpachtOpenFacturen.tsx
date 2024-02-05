@@ -43,7 +43,7 @@ export function OpenFacturenListGrouped({
   );
   return Object.entries(facturenGrouped).map(([adres, facturen]) => {
     return (
-      <Grid.Cell fullWidth key={adres}>
+      <Grid.Cell span="all" key={adres}>
         <Heading data-testid={adres} level={3}>
           {adres}
         </Heading>
@@ -82,7 +82,7 @@ export default function ErfpachtOpenFacturen() {
       <Screen>
         <Grid>
           {isError(ERFPACHTv2) && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>
                   We kunnen op dit moment geen openstaande facturen tonen.
@@ -94,7 +94,7 @@ export default function ErfpachtOpenFacturen() {
           {!isError(ERFPACHTv2) &&
             !!openFacturen.length &&
             (isMediumScreen ? (
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <TableV2
                   items={openFacturen}
                   displayProps={displayPropsOpenFacturen}
@@ -108,7 +108,7 @@ export default function ErfpachtOpenFacturen() {
               />
             ))}
           {!openFacturen.length && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <MaParagraph>
                 U heeft geen{' '}
                 {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.

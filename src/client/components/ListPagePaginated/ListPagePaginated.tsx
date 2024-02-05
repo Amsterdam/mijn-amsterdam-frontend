@@ -75,15 +75,15 @@ export function ListPagePaginated({
       </PageHeading>
       <Screen>
         <Grid>
-          {!!body && <Grid.Cell fullWidth>{body}</Grid.Cell>}
+          {!!body && <Grid.Cell span="all">{body}</Grid.Cell>}
           {isError && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>{errorText}</Paragraph>
               </Alert>
             </Grid.Cell>
           )}
-          <Grid.Cell fullWidth>
+          <Grid.Cell span="all">
             {isLoading && (
               <LoadingContent
                 barConfig={[
@@ -96,7 +96,7 @@ export function ListPagePaginated({
             {!isError && (
               <>
                 {!itemsPaginated.length && !!noItemsText && (
-                  <Grid.Cell fullWidth>
+                  <Grid.Cell span="all">
                     <MaParagraph>{noItemsText}</MaParagraph>
                   </Grid.Cell>
                 )}

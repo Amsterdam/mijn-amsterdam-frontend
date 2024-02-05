@@ -58,7 +58,7 @@ export function DataTableFacturen({
   ];
   return (
     <Grid className={styles.FacturenBetaler}>
-      <Grid.Cell fullWidth>
+      <Grid.Cell span="all">
         <Heading level={4} size="level-4">
           Factuur naar nieuw adres
         </Heading>
@@ -90,7 +90,7 @@ export function DataTableFacturen({
           .
         </MaParagraph>
       </Grid.Cell>
-      <Grid.Cell fullWidth>
+      <Grid.Cell span="all">
         <Datalist
           className={styles.FacturenBetalerDebiteur}
           rows={facturenBetalerDebiteurRows}
