@@ -1,7 +1,7 @@
 {
   "erfpachter": true,
   "relationID": "string",
-  "relationCode": "string",
+  "relationCode": "123-abc",
   "name": "string",
   "email": "string",
   "phoneNumber": "string",

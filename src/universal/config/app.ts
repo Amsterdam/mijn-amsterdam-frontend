@@ -1,5 +1,5 @@
 import { isDateInPast } from '../helpers/date';
-import { IS_PRODUCTION } from './env';
+import { IS_AP, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   garbageInformationPage: true,
@@ -42,6 +42,13 @@ export const FeatureToggle = {
   bodemActive: true,
   stadspasRequestsActive: false,
   dbDisabled: false,
+  passQueryParamsToStreamUrl: !IS_AP,
+};
+
+// For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
+// For example, tipsCompareDate=2023-01-31 this will change the date that is used to compare with dates being used in the tips controller.
+export const streamEndpointQueryParamKeys = {
+  tipsCompareDate: 'tipsCompareDate',
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';
@@ -60,8 +67,8 @@ export const ExternalUrls = {
   SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''
   }.amsterdam.nl/saml/login/alias/mijnErfpachtBurger`,
-  ERFPACHTv2_ZAKELIJK: `https://erfpacht${
-    !IS_PRODUCTION ? '.acc' : ''
+  ERFPACHTv2_ZAKELIJK: `https://erfpachtzakelijk${
+    !IS_PRODUCTION ? '-ont' : ''
   }.amsterdam.nl`,
   EH_SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''

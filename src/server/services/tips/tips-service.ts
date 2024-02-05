@@ -53,12 +53,16 @@ export async function createTipsFromServiceResults(
   {
     serviceResults,
     tipsDirectlyFromServices,
+    compareDate,
   }: {
     serviceResults: ServiceResults | null;
     tipsDirectlyFromServices: MyTip[];
+    compareDate?: Date;
   }
 ) {
-  let tips = serviceResults ? collectTips(serviceResults, profileType) : [];
+  let tips = serviceResults
+    ? collectTips(serviceResults, profileType, compareDate)
+    : [];
   tips = tips.concat(tipsDirectlyFromServices);
   tips.sort(prioritySort);
 

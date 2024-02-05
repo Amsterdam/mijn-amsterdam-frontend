@@ -31,7 +31,7 @@ export function Touringcar({
               <ul className={styles.LicensePlatesList}>
                 {vergunning.licensePlates
                   ?.split(' | ')
-                  .map((plate) => <li>{plate}</li>)}
+                  .map((plate, index) => <li key={plate + index}>{plate}</li>)}
               </ul>
             ) : (
               vergunning.licensePlates

@@ -147,3 +147,13 @@ router.get(
     });
   }
 );
+
+export const legacyRouter = express.Router();
+
+legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (req, res) => {
+  return res.redirect(BffEndpoints.AUTH_LOGIN_DIGID);
+});
+
+legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (req, res) => {
+  return res.redirect(BffEndpoints.AUTH_LOGIN_EHERKENNING);
+});

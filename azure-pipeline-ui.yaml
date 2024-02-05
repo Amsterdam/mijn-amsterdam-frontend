@@ -35,7 +35,7 @@ resources:
     - repository: MamsInfra
       type: git
       name: MijnAmsterdam/mijn-amsterdam-infra
-      ref: refs/heads/pipeline-fe
+      ref: refs/heads/main
 
 parameters:
   - name: btdBuild
@@ -54,7 +54,6 @@ parameters:
       - none
       - t
       - a
-      - p
 
   - name: updateAppSettings
     type: boolean

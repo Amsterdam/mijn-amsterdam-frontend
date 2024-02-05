@@ -11,30 +11,45 @@ import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 import classNames from 'classnames';
 
-export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
+export function DataTableFacturen({
+  dossier,
+  relatieCode,
+}: ErfpachtDatalistProps) {
   const { displayPropsAlleFacturen, colStyles } = useErfpachtV2Data();
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
+  const mailBody = `Dossiernummer: ${
+    dossier.dossierNummer
+  }%0D%0ARelatiecode: ${dossier.relaties?.find((relatie) => relatie.betaler)
+    ?.relatieCode}%0D%0ADebiteurnummer: ${dossier.facturen?.debiteurNummer}`;
+  const betaler = dossier.relaties?.find((relatie) => relatie.betaler);
+  const isBetaler = betaler?.relatieCode === relatieCode;
   const facturenBetalerDebiteurRows = [
     {
       rows: [
         {
           label: dossier.facturen.titelBetaler,
-          content: dossier.facturen.betaler,
+          content: dossier.facturen.betaler || '-',
           className: styles.FacturenBetalerDebiteur_Col1,
         },
         {
           label: dossier.facturen.titelDebiteurNummer,
-          content: dossier.facturen.debiteurNummer,
+          content: dossier.facturen.debiteurNummer || '-',
           className: styles.FacturenBetalerDebiteur_Col2,
         },
         {
           label: null,
-          content: (
-            <Link href="http://wijzigen" variant="inList">
-              Betaler wijzigen
+          content: isBetaler ? (
+            <Link
+              href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=${mailBody}`}
+              rel="noopener noreferrer"
+              variant="inList"
+            >
+              Betaler aanpassen
             </Link>
+          ) : (
+            ''
           ),
           className: styles.FacturenBetalerDebiteur_Col3,
         },
@@ -43,14 +58,17 @@ export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
   ];
   return (
     <Grid className={styles.FacturenBetaler}>
-      <Grid.Cell fullWidth>
+      <Grid.Cell span="all">
         <Heading level={4} size="level-4">
           Factuur naar nieuw adres
         </Heading>
         <MaParagraph>
           Wilt u uw facturen voor erfpacht en canon op een nieuw adres
           ontvangen? Stuur een e-mail naar{' '}
-          <Link href="mailto:erfpachtadministratie@amsterdam.nl">
+          <Link
+            rel="noopener noreferrer"
+            href={`mailto:erfpachtadministratie@amsterdam.nl?subject=Adreswijziging facturen erfpacht en canon&body=${mailBody}`}
+          >
             erfpachtadministratie@amsterdam.nl
           </Link>
           . Zet in het onderwerp 'Adreswijziging'. Vermeld in de mail uw
@@ -63,13 +81,16 @@ export function DataTableFacturen({ dossier }: ErfpachtDatalistProps) {
         <MaParagraph>
           U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw
           e-mailadres en debiteurennummer naar{' '}
-          <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+          <Link
+            rel="noopener noreferrer"
+            href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturen per e-mail ontvangen&body=${mailBody}`}
+          >
             debiteurenadministratie@amsterdam.nl
           </Link>
           .
         </MaParagraph>
       </Grid.Cell>
-      <Grid.Cell fullWidth>
+      <Grid.Cell span="all">
         <Datalist
           className={styles.FacturenBetalerDebiteur}
           rows={facturenBetalerDebiteurRows}

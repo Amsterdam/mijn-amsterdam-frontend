@@ -1,5 +1,9 @@
 import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
+import {
+  FeatureToggle,
+  streamEndpointQueryParamKeys,
+} from '../../universal/config';
 import { omit } from '../../universal/helpers';
 import {
   apiErrorResult,
@@ -42,6 +46,7 @@ import {
 import {
   convertTipToNotication,
   createTipsFromServiceResults,
+  prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -138,7 +143,7 @@ const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 
 // Special services that aggregates NOTIFICATIONS from various services
-const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
+export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
   const profileType = await getProfileType(req);
 
   // No notifications for this profile type
@@ -154,7 +159,13 @@ const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
   const notifications: Array<MyNotification> = [
     ...tipNotifications,
     ...chapterAndTipNotifications,
-  ];
+  ].map((notification) => {
+    if (notification.isTip) {
+      notification.hideDatePublished = true;
+      return prefixTipNotification(notification);
+    }
+    return notification;
+  });
 
   const notificationsWithTipsInserted = sortNotifications(notifications);
 
@@ -410,6 +421,13 @@ export async function getTipNotifications(
     {
       serviceResults,
       tipsDirectlyFromServices: [],
+      compareDate:
+        FeatureToggle.passQueryParamsToStreamUrl &&
+        req.query?.[streamEndpointQueryParamKeys.tipsCompareDate]
+          ? new Date(
+              req.query[streamEndpointQueryParamKeys.tipsCompareDate] as string
+            )
+          : new Date(),
     }
   );
 

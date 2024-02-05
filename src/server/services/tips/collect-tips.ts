@@ -1,10 +1,9 @@
+import { IS_TEST } from '../../../universal/config';
 import { MyTip } from '../../../universal/types';
 import { ServiceResults, Tip } from './tip-types';
 import { tips } from './tips-content';
 
-function tipsFilter(serviceResults: ServiceResults) {
-  const now = new Date();
-
+function tipsFilter(serviceResults: ServiceResults, now: Date = new Date()) {
   return (t: Tip) => {
     // We want only active tips.
     if (!t.active) {
@@ -33,7 +32,8 @@ function tipsFilter(serviceResults: ServiceResults) {
 
 export function collectTips(
   serviceResults: ServiceResults,
-  profileType?: ProfileType
+  profileType?: ProfileType,
+  compareDate?: Date
 ): MyTip[] {
   /**
    * Iterate over tips database and filter out requested tips based on props:
@@ -45,14 +45,14 @@ export function collectTips(
 
   let filteredTips = tips;
 
-  // If we get a profileType first filter all tips using it.
+  // If a profileType is provided, use it to filter the tips.
   if (profileType) {
     filteredTips = filteredTips.filter((t) =>
       t.profileTypes.includes(profileType)
     );
   }
 
-  filteredTips = filteredTips.filter(tipsFilter(serviceResults));
+  filteredTips = filteredTips.filter(tipsFilter(serviceResults, compareDate));
 
   return filteredTips.map((t) => ({
     id: t.id,
