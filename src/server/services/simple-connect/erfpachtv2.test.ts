@@ -37,6 +37,7 @@ describe('simple-connect/erfpacht', () => {
   };
 
   test('fetchErfpachtV2: null', async () => {
+    remoteApi.get('/erfpachtv2/vernise/api/erfpachter').reply(200, null as any);
     remoteApi
       .get('/erfpachtv2/vernise/api/dossierinfo')
       .reply(200, null as any);
@@ -49,6 +50,8 @@ describe('simple-connect/erfpacht', () => {
       {
         "content": {
           "isKnown": false,
+          "profileType": "private",
+          "relatieCode": undefined,
         },
         "status": "OK",
       }
@@ -56,6 +59,9 @@ describe('simple-connect/erfpacht', () => {
   });
 
   test('fetchErfpachtV2: dossiers', async () => {
+    remoteApi
+      .get('/erfpachtv2/vernise/api/erfpachter')
+      .reply(200, { erfpachter: true, relationCode: '123-abc' } as any);
     remoteApi
       .get('/erfpachtv2/vernise/api/dossierinfo')
       .reply(200, ERFPACHTv2_DOSSIERS);
@@ -68,6 +74,9 @@ describe('simple-connect/erfpacht', () => {
   });
 
   test('fetchErfpachtV2: dossier detail', async () => {
+    remoteApi
+      .get('/erfpachtv2/vernise/api/erfpachter')
+      .reply(200, { erfpachter: true, relationCode: '123-abc' } as any);
     remoteApi
       .get('/erfpachtv2/vernise/api/dossierinfo/E.477.46')
       .reply(200, ERFPACHTv2_DOSSIERINFO_DETAILS);
@@ -94,6 +103,8 @@ describe('simple-connect/erfpacht', () => {
       {
         "content": {
           "isKnown": true,
+          "profileType": "commercial",
+          "relatieCode": "123-abc",
         },
         "status": "OK",
       }

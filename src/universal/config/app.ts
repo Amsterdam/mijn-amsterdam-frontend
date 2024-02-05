@@ -67,8 +67,8 @@ export const ExternalUrls = {
   SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''
   }.amsterdam.nl/saml/login/alias/mijnErfpachtBurger`,
-  ERFPACHTv2_ZAKELIJK: `https://erfpacht${
-    !IS_PRODUCTION ? '.acc' : ''
+  ERFPACHTv2_ZAKELIJK: `https://erfpachtzakelijk${
+    !IS_PRODUCTION ? '-ont' : ''
   }.amsterdam.nl`,
   EH_SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''

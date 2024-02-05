@@ -16,8 +16,6 @@ import MockApp from '../../MockApp';
 import ErfpachtDossierDetail from './ErfpachtDossierDetail';
 
 describe('<Erfpacht/DossierDetail />', () => {
-  const user = userEvent.setup();
-
   const routeEntry = generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {
     dossierNummerUrlParam: 'E.123.123',
   });
@@ -77,7 +75,10 @@ describe('<Erfpacht/DossierDetail />', () => {
     const testState = {
       ERFPACHTv2: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHTv2_DOSSIERS as any),
+        content: transformDossierResponse(
+          ERFPACHTv2_DOSSIERS as any,
+          '123-abc'
+        ),
       },
     } as AppState;
 
@@ -126,7 +127,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(screen.queryByText('Verberg')).toBeInTheDocument();
       expect(screen.queryAllByText('Toon').length).toBe(3);
       expect(screen.getByText('DEBITEUR 186698')).toBeInTheDocument();
-      expect(screen.getByText('Betaler wijzigen')).toBeInTheDocument();
+      expect(screen.getByText('Betaler aanpassen')).toBeInTheDocument();
       expect(screen.getByText('Toon meer')).toBeInTheDocument();
 
       for (const factuur of facturenPage1) {

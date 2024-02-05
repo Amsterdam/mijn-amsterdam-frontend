@@ -5,7 +5,7 @@
   "titelEersteUitgifte": "Datum eerste uitgifte",
   "voorkeursadres": "Dit en dat plein 22 H",
   "titelVoorkeursadres": "Adres",
-  "betaler": "H.J de Gruyter",
+  "betaler": null,
   "titelBetaler": "Betaler",
   "titelKopSamenvatting": "Samenvatting",
   "titelKopVastgoed": "Vastgoed",
@@ -49,7 +49,7 @@
       "titelErfpachter": "Erfpachter",
       "titelRelatieCode": "Relatiecode",
       "relatieNaam": "H.J de Gruyter",
-      "relatieCode": "20114893",
+      "relatieCode": "123-abc",
       "erfpachter": true,
       "betaler": true,
       "indicatieGeheim": false

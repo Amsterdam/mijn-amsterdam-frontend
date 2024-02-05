@@ -49,7 +49,7 @@ export default function Erfpacht() {
       </PageHeading>
       <Screen>
         <Grid>
-          <Grid.Cell fullWidth>
+          <Grid.Cell span="all">
             <MaParagraph>
               Hieronder ziet u de gegevens van uw erfpachtrechten.
             </MaParagraph>
@@ -82,7 +82,7 @@ export default function Erfpacht() {
           </Grid.Cell>
 
           {isError(ERFPACHTv2) && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>
                   We kunnen op dit moment geen erfpachtrechten tonen.
@@ -92,7 +92,7 @@ export default function Erfpacht() {
           )}
 
           {isLoading(ERFPACHTv2) && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <LoadingContent
                 barConfig={[
                   ['20rem', '4rem', '4rem'],
@@ -107,7 +107,7 @@ export default function Erfpacht() {
           )}
 
           {!isLoading(ERFPACHTv2) && !isError(ERFPACHTv2) && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <Heading level={3} size="level-2">
                 {titleDossiers ?? 'Erfpachtrechten'}
               </Heading>

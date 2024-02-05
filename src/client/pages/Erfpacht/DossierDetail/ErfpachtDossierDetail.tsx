@@ -23,6 +23,7 @@ import { DatalistsFinancieel } from './DatalistsFinancieel';
 import { DataTableFacturen } from './DataTableFacturen';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { useEffect } from 'react';
+import { useErfpachtV2Data } from '../erfpachtData.hook';
 
 const loadingContentBarConfig: BarConfig = [
   ['12rem', '2rem', '.5rem'],
@@ -46,7 +47,7 @@ export default function ErfpachtDossierDetail() {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
-
+  const { ERFPACHTv2 } = useErfpachtV2Data();
   const [dossier, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
     url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
     bagChapter: BagChapters.ERFPACHTv2,
@@ -71,7 +72,7 @@ export default function ErfpachtDossierDetail() {
             <LoadingContent barConfig={loadingContentBarConfig} />
           )}
           {(api.isError || noContent) && (
-            <Grid.Cell fullWidth>
+            <Grid.Cell span="all">
               <Alert title="Foutmelding" icon severity="error">
                 <Paragraph>
                   We kunnen op dit moment geen erfpacht dossier tonen.
@@ -82,31 +83,34 @@ export default function ErfpachtDossierDetail() {
 
           {!!dossier && (
             <>
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <DatalistGeneral dossier={dossier} />
               </Grid.Cell>
 
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <CollapsiblePanel title={dossier.titelKopJuridisch}>
                   <DatalistJuridisch dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <CollapsiblePanel title={dossier.titelKopBijzondereBepalingen}>
                   <DataTableBijzondereBepalingen dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 
-              <Grid.Cell fullWidth>
+              <Grid.Cell span="all">
                 <CollapsiblePanel title={dossier.titelKopFinancieel}>
                   <DatalistsFinancieel dossier={dossier} />
                 </CollapsiblePanel>
               </Grid.Cell>
 
-              <Grid.Cell className={styles.Section} fullWidth>
+              <Grid.Cell className={styles.Section} span="all">
                 <CollapsiblePanel title="Facturen">
-                  <DataTableFacturen dossier={dossier} />
+                  <DataTableFacturen
+                    dossier={dossier}
+                    relatieCode={ERFPACHTv2.content?.relatieCode}
+                  />
                 </CollapsiblePanel>
               </Grid.Cell>
             </>
