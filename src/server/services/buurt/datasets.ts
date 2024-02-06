@@ -3,14 +3,14 @@ import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
 import { Colors } from '../../../universal/config/app';
-import { IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
+import { IS_AP, IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
 import {
-  DATASETS,
   DatasetCategoryId,
   DatasetId,
   DatasetPropertyFilter,
   DatasetPropertyName,
   DatasetPropertyValue,
+  DATASETS,
   FeatureType,
 } from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
@@ -406,6 +406,24 @@ export const datasetEndpoints: Record<
       cancelTimeout: 30000,
     },
   },
+  laadpalen: {
+    listUrl:
+      'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:normaal_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    transformList: transformDsoApiListResponse,
+    transformDetail: transformLaadpalenDetailResponse,
+    idKeyList: 'id',
+    featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    geometryKey: 'geometry',
+    triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
+    additionalStaticFieldNames: ['connector_type', 'charging_cap_max', 'url'],
+    requestConfig: {
+      headers: {},
+      request: fetchLaadpalen,
+      cancelTimeout: 30000,
+    },
+    disabled: IS_PRODUCTION,
+  },
 };
 
 export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
@@ -485,6 +503,23 @@ export function transformMeldingenBuurtResponse(
     }) || [];
 
   return transformDsoApiListResponse(datasetId, config, { features });
+}
+
+export async function fetchLaadpalen(requestConfig: DataRequestConfig) {
+  const urls = [
+    requestConfig.url,
+    'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+  ];
+  const requests = urls.map((url) => {
+    return axiosRequest.request<DatasetFeatures>({
+      ...requestConfig,
+      url,
+    });
+  });
+
+  const responses: AxiosResponse[] = await Promise.all(requests);
+  responses[0].data = responses.map((response) => response.data).flat();
+  return responses[0];
 }
 
 function createCustomFractieOmschrijving(featureProps: any) {
@@ -580,6 +615,27 @@ function transformMeldingDetailResponse(
     categorie: item?.properties?.category?.parent?.name,
     subcategorie: item?.properties?.category?.name,
     datumCreatie: item?.properties?.created_at,
+  };
+}
+
+function transformLaadpalenDetailResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  id: string,
+  responseData: any
+) {
+  const item = responseData.features?.find(
+    (item: any) => item.properties.id === id
+  );
+
+  if (!item) {
+    return null;
+  }
+
+  return {
+    _embedded: {
+      laadpaal: [{ ...item.properties, availability: responseData.name }],
+    },
   };
 }
 

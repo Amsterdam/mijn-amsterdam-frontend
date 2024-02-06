@@ -252,7 +252,7 @@ export async function loadFeatureDetail(
     ? `${detailUrl}?${config.idKeyDetail}=${id}`
     : `${detailUrl}${id}`;
 
-  // Some of of the datasets don't have a specific endpoint to retrieve the details of a datapoint (via detailsUrl).
+  // Some of the datasets don't have a specific endpoint to retrieve the details of a datapoint (via detailsUrl).
   // In such cases the details are provided along with the list of all datapoints (via the listUrl).
   if (!detailUrl) {
     const listUrl =
@@ -277,6 +277,10 @@ export async function loadFeatureDetail(
       config,
       id
     );
+  }
+
+  if (config.requestConfig?.request) {
+    requestConfig.request = config.requestConfig.request;
   }
 
   const response = await requestData(requestConfig, requestID);

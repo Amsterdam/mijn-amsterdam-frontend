@@ -64,6 +64,24 @@ if (month !== 11 && month !== 0) {
 }
 
 export const DATASETS: DatasetCategories = {
+  laadpalen: {
+    title: 'Laadpalen',
+    datasets: {
+      laadpalen: {
+        title: 'Laadpalen',
+        filters: {
+          connector_type: {
+            title: 'Connector type',
+            sort: 'asc',
+          },
+          charging_cap_max: {
+            title: 'Wattage',
+            sort: 'asc',
+          },
+        },
+      },
+    },
+  },
   afvalcontainers: {
     title: 'Afvalcontainers',
     datasets: {

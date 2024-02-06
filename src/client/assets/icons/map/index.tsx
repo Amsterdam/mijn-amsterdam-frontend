@@ -6,6 +6,7 @@ export { default as IconAfvalPapier } from './paper.svg?react';
 export { default as IconAfvalRest } from './rest-afval.svg?react';
 export { default as IconAfvalGrofAfval } from './grof-afval.svg?react';
 
+export { default as IconChargePoint } from './charge-point.svg?react';
 export { default as IconAuto } from './car.svg?react';
 export { default as IconBekendmaking } from './bekendmaking.svg?react';
 export { default as IconEvenement } from './evenement.svg?react';
