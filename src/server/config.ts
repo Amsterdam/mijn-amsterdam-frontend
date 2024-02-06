@@ -392,13 +392,13 @@ export const BffEndpoints = {
 
   CMS_CONTENT: '/services/cms',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
-  CACHE_OVERVIEW: '/status/cache',
-  LOGIN_STATS: '/status/logins/:authMethod?',
-  LOGIN_RAW: '/status/logins/table',
-  SESSION_BLACKLIST_RAW: '/status/session-blacklist/table',
+  CACHE_OVERVIEW: '/admin/cache',
+  LOGIN_STATS: '/admin/logins/:authMethod?',
+  LOGIN_RAW: '/admin/logins/table',
+  SESSION_BLACKLIST_RAW: '/admin/session-blacklist/table',
   STATUS_HEALTH: '/status/health',
   STATUS_HEALTH2: '/bff/status/health',
-  TEST_ACCOUNTS_OVERVIEW: '/status/user-data-overview',
+  TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
