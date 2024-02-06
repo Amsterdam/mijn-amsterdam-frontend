@@ -12,7 +12,7 @@ export function encrypt(
   encryptionKey: string
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
   const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv('aes-256-cbc', encryptionKey, iv);
+  const cipher = crypto.createCipheriv('aes-192-cbc', encryptionKey, iv);
   const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
 
   return [Buffer.concat([iv, encrypted]).toString('base64url'), encrypted, iv];
@@ -25,7 +25,7 @@ export function decrypt(encryptedValue: string, encryptionKey: string) {
   const dataBuffer = decodedBuffer.slice(16);
 
   const decipheriv = crypto.createDecipheriv(
-    'aes-256-cbc',
+    'aes-192-cbc',
     keyBuffer,
     ivBuffer
   );
