@@ -12,7 +12,7 @@ function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
   const iv = crypto.randomBytes(16).toString('base64').slice(0, 16);
   const ivBuffer = Buffer.from(iv, 'utf-8');
-  const cipher = crypto.createCipheriv('aes-192-cbc', encryptionKey, ivBuffer);
+  const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
 
   return [ivBuffer.toString(), encrypted.toString('base64url')] as const;
