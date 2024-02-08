@@ -1,8 +1,6 @@
 import { Buffer } from 'buffer';
 import crypto from 'crypto';
 
-console.log(crypto.getCiphers());
-
 type Base64IvEncryptedValue = string;
 type EncryptedValue = Buffer;
 type Iv = Buffer;
