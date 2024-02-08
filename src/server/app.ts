@@ -20,7 +20,6 @@ if (IS_DEVELOPMENT) {
 import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 
 import express, {
   ErrorRequestHandler,
@@ -35,17 +34,16 @@ import morgan from 'morgan';
 import {
   BFF_BASE_PATH,
   BFF_PORT,
-  corsOptions,
-  securityHeaders,
-  RELEASE_VERSION,
   BffEndpoints,
+  RELEASE_VERSION,
+  securityHeaders,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
+import { adminRouter } from './router-admin';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
-import { adminRouter } from './router-admin';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 
 const sentryOptions: Sentry.NodeOptions = {
@@ -107,7 +105,6 @@ app.use(express.json());
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cookieParser());
-app.use(cors(corsOptions));
 app.use(compression());
 
 // Generate request id

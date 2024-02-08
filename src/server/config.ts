@@ -1,5 +1,4 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
@@ -541,11 +540,6 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   get yivi() {
     return oidcConfigYivi.clientID;
   },
-};
-
-export const corsOptions: CorsOptions = {
-  origin: process.env.MA_FRONTEND_URL,
-  credentials: true,
 };
 
 export const DEV_JWK_PUBLIC: any = {
