@@ -172,7 +172,8 @@ CMD /usr/local/bin/docker-entrypoint-bff.sh
 FROM deploy-bff as deploy-bff-az
 
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
-ENV SSH_PASSWD "root:Docker!"
+ARG SSH_PASSWD
+ENV SSH_PASSWD=$SSH_PASSWD
 
 RUN apt-get install -y --no-install-recommends openssh-server \
   && echo "$SSH_PASSWD" | chpasswd
