@@ -154,7 +154,7 @@ const BezwarenDetail = () => {
           <LoadingContent barConfig={loadingContentBarConfig2} />
         </PageContent>
       )}
-      {api.isDirty && !!bezwaar?.uuid && (
+      {!!bezwaarDetail && !!bezwaar?.uuid && (
         <BezwarenStatusLines id={bezwaar.uuid} statussen={statussen} />
       )}
     </DetailPage>
