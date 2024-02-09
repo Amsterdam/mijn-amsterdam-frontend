@@ -15,6 +15,7 @@ import {
   ChapterIcon,
   DetailPage,
   InfoDetail,
+  LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
@@ -33,6 +34,19 @@ import styles from './BezwarenDetail.module.scss';
 import { TextClamp } from '../../components/InfoDetail/TextClamp';
 import { BFFApiUrls } from '../../config/api';
 import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
+import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+
+const loadingContentBarConfig: BarConfig = [
+  ['30rem', '2rem', '1rem'],
+  ['50rem', '2rem', '1rem'],
+  ['40rem', '2rem', '1rem'],
+];
+
+const loadingContentBarConfig2: BarConfig = [
+  ['30rem', '4rem', '2rem'],
+  ['30rem', '4rem', '2rem'],
+  ['30rem', '4rem', '2rem'],
+];
 
 const BezwarenDetail = () => {
   const { BEZWAREN } = useAppStateGetter();
@@ -104,6 +118,9 @@ const BezwarenDetail = () => {
             {bezwaar.einddatum && bezwaar.resultaat && (
               <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
             )}
+            {api.isLoading && (
+              <LoadingContent barConfig={loadingContentBarConfig} />
+            )}
             {documentCategories.length > 0 && (
               <>
                 {documentCategories.map((category) => {
@@ -137,7 +154,12 @@ const BezwarenDetail = () => {
           </>
         )}
       </PageContent>
-      {!!statussen && !!bezwaar?.uuid && (
+      {api.isLoading && (
+        <PageContent>
+          <LoadingContent barConfig={loadingContentBarConfig2} />
+        </PageContent>
+      )}
+      {!!bezwaar?.uuid && (
         <BezwarenStatusLines id={bezwaar.uuid} statussen={statussen} />
       )}
     </DetailPage>
