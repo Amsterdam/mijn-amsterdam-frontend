@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { defaultDateFormat, sortAlpha } from '../../../universal/helpers';
 import { LinkProps } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -427,11 +427,11 @@ export function transformDossierResponse(
   }
 
   if (hasDossiers) {
-    responseData.dossiers.dossiers = responseData.dossiers?.dossiers.map(
-      (dossier) => {
+    responseData.dossiers.dossiers = responseData.dossiers?.dossiers
+      .map((dossier) => {
         return transformErfpachtDossierProperties(dossier);
-      }
-    );
+      })
+      .sort(sortAlpha('voorkeursadres', 'asc'));
   }
 
   if (responseData?.openstaandeFacturen?.facturen?.length) {
