@@ -35,12 +35,7 @@ import { TextClamp } from '../../components/InfoDetail/TextClamp';
 import { BFFApiUrls } from '../../config/api';
 import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
-
-const loadingContentBarConfig: BarConfig = [
-  ['30rem', '2rem', '1rem'],
-  ['50rem', '2rem', '1rem'],
-  ['40rem', '2rem', '1rem'],
-];
+import { Heading } from '@amsterdam/design-system-react';
 
 const loadingContentBarConfig2: BarConfig = [
   ['30rem', '4rem', '2rem'],
@@ -83,7 +78,7 @@ const BezwarenDetail = () => {
       </PageHeading>
 
       <PageContent>
-        {(isError(BEZWAREN) || noContent) && (
+        {(isError(BEZWAREN) || noContent || api.isError) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
@@ -117,9 +112,6 @@ const BezwarenDetail = () => {
             )}
             {bezwaar.einddatum && bezwaar.resultaat && (
               <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
-            )}
-            {api.isLoading && (
-              <LoadingContent barConfig={loadingContentBarConfig} />
             )}
             {documentCategories.length > 0 && (
               <>
@@ -156,10 +148,13 @@ const BezwarenDetail = () => {
       </PageContent>
       {api.isLoading && (
         <PageContent>
+          <Heading level={4} size="level-4">
+            Status
+          </Heading>
           <LoadingContent barConfig={loadingContentBarConfig2} />
         </PageContent>
       )}
-      {!!bezwaar?.uuid && (
+      {api.isDirty && !!bezwaar?.uuid && (
         <BezwarenStatusLines id={bezwaar.uuid} statussen={statussen} />
       )}
     </DetailPage>
