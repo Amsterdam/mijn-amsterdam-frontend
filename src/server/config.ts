@@ -299,16 +299,23 @@ export function getApiConfig(
 ): DataRequestConfig {
   let apiConfig = ApiConfig[name];
 
+  // Take of the agent because it cannot be jsonCopied.
+  const agent = apiConfig.httpsAgent;
+  delete apiConfig.httpsAgent;
+
+  // Copy the config to prevent assigning privacy/identity related information across requests
+  let apiConfigCopy = jsonCopy(apiConfig);
+
   // copy the config and transfer the https agent instance.
-  if (apiConfig.httpsAgent) {
-    const agent = apiConfig.httpsAgent;
-    apiConfig = jsonCopy(apiConfig);
+  if (agent) {
+    // re-assign the agent
     apiConfig.httpsAgent = agent;
-  } else {
-    apiConfig = jsonCopy(apiConfig);
+
+    // also assign agent to copy
+    apiConfigCopy.httpsAgent = agent;
   }
 
-  return Object.assign({}, apiConfig, config);
+  return Object.assign(apiConfigCopy, config);
 }
 
 export const RelayPathsAllowed = {
