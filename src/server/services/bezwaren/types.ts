@@ -48,6 +48,7 @@ export type Bezwaar = {
   omschrijving: string | null;
   toelichting: string | null;
   status: string | null;
+  statusdatum: string | null;
   datumbesluit: string | null;
   datumIntrekking: string | null;
   einddatum: string | null;

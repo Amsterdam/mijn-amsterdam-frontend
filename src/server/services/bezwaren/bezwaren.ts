@@ -27,7 +27,7 @@ import {
   kenmerkKey,
 } from './types';
 
-const MAX_PAGE_COUNT = 5; // Should amount to 5 * 10 (per page) = 50 bezwaren
+const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
@@ -123,6 +123,7 @@ function transformBezwarenResults(
             omschrijving: bezwaarBron.omschrijving,
             toelichting: bezwaarBron.toelichting,
             status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
+            statusdatum: getKenmerkValue(bezwaarBron.kenmerken, 'statusdatum'),
             statussen: [],
             datumbesluit: besluitdatum,
             datumIntrekking: getKenmerkValue(
@@ -364,37 +365,33 @@ export async function fetchBezwarenNotifications(
 }
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
-  const index = bezwaar.statussen.findIndex(
-    (s) => s.statustoelichting === bezwaar.status
-  );
-  const activeIndex = index === -1 ? 0 : index;
-  const activeStatus = bezwaar.statussen[activeIndex];
-
   const notification: MyNotification = {
     chapter: Chapters.BEZWAREN,
     id: bezwaar.identificatie,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
-    datePublished: activeStatus.datum,
+    datePublished: bezwaar.statusdatum ?? bezwaar.startdatum,
     link: {
       to: bezwaar.link.to,
       title: 'Bekijk uw bezwaar',
     },
   };
 
-  if (activeStatus.statustoelichting === 'Beoordeling bezwaarschrift') {
-    notification.title = 'Beoordeling in behandeling nemen bezwaar';
-    notification.description = `Wij kijken of we uw bezwaar ${bezwaar.identificatie} inhoudelijk in behandeling kunnen nemen.`;
-  }
+  switch (bezwaar.status) {
+    case 'Beoordeling bezwaarschrift':
+      notification.title = 'Beoordeling in behandeling nemen bezwaar';
+      notification.description = `Wij kijken of we uw bezwaar ${bezwaar.identificatie} inhoudelijk in behandeling kunnen nemen.`;
+      break;
 
-  if (activeStatus.statustoelichting === 'In behandeling') {
-    notification.title = 'Bezwaar in behandeling';
-    notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} in behandeling genomen.`;
-  }
+    case 'In behandeling':
+      notification.title = 'Bezwaar in behandeling';
+      notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} in behandeling genomen.`;
+      break;
 
-  if (activeStatus.statustoelichting === 'Afgehandeld') {
-    notification.title = 'Bezwaar afgehandeld';
-    notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} afgehandeld.`;
+    case 'Afgehandeld':
+      notification.title = 'Bezwaar afgehandeld';
+      notification.description = `Wij hebben uw bezwaar ${bezwaar.identificatie} afgehandeld.`;
+      break;
   }
 
   return notification;
