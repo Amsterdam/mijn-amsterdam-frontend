@@ -83,7 +83,7 @@ export default function Erfpacht() {
 
           {isError(ERFPACHTv2) && (
             <Grid.Cell span="all">
-              <Alert title="Foutmelding" icon severity="error">
+              <Alert title="Foutmelding" severity="error">
                 <Paragraph>
                   We kunnen op dit moment geen erfpachtrechten tonen.
                 </Paragraph>
