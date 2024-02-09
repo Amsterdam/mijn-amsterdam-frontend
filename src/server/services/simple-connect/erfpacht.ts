@@ -361,7 +361,7 @@ export function transformErfpachtDossierProperties<
   T extends ErfpachtV2DossierSource | ErfpachtV2DossiersDetailSource,
 >(dossier: T): T & ErfpachtDossierPropsFrontend {
   const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
-  const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
+  const title = `${dossier.dossierNummer}: ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
   if ('relaties' in dossier && !!dossier.relaties) {
