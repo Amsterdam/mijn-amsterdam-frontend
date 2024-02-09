@@ -30,11 +30,11 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@amsterdam/design-system-assets": "^0.1.6",
-    "@amsterdam/design-system-css": "^0.3.0",
-    "@amsterdam/design-system-react": "^0.3.0",
-    "@amsterdam/design-system-react-icons": "^0.1.11",
-    "@amsterdam/design-system-tokens": "^0.3.0",
+    "@amsterdam/design-system-assets": "^0.1.7",
+    "@amsterdam/design-system-css": "^0.4.0",
+    "@amsterdam/design-system-react": "^0.4.0",
+    "@amsterdam/design-system-react-icons": "^0.1.12",
+    "@amsterdam/design-system-tokens": "^0.4.0",
     "@amsterdam/piwik-tracker": "^2.0.3",
     "@amsterdam/react-maps": "^1.1.1",
     "@sentry/node": "^7.90.0",
