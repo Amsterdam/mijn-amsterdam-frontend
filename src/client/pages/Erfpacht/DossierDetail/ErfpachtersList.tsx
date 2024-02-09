@@ -26,6 +26,7 @@ export function ErfpachtersList({ erfpachters }: ErfpachtersListProps) {
           gridTemplateRows: `repeat(${erfpachters.length}, 1fr)`,
         };
   }
+
   if (erfpachters?.length) {
     return (
       <OrderedList
