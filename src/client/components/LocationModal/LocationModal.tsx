@@ -18,7 +18,7 @@ import { trackPageView } from '../../hooks';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './LocationModal.module.scss';
 
-interface LocationModalProps {
+export interface LocationModalProps {
   // The address for determining latlng
   location?: string | null;
   // Label for InfoDetail
