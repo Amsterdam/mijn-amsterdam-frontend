@@ -6,6 +6,7 @@ import bezwarenDocumenten from '../../mock-data/json/bezwaren-documents.json';
 import bezwarenStatus from '../../mock-data/json/bezwaren-status.json';
 import bezwarenApiResponse from '../../mock-data/json/bezwaren.json';
 import {
+  fetchBezwaarDetail,
   fetchBezwaarDocument,
   fetchBezwaren,
   fetchBezwarenNotifications,
@@ -159,33 +160,38 @@ describe('Bezwaren', () => {
       });
     });
 
-    describe('regular flow', () => {
-      beforeEach(() => {
-        remoteApi
-          .post(`${endpointBase}/_zoek?page=1`)
-          .reply(200, {
-            ...bezwarenApiResponse,
-            count: 8,
-          })
-          .post(`${endpointBase}/_zoek?page=2`)
-          .reply(200, {
-            ...bezwarenApiResponse,
-            count: 8,
-          })
-          .get((uri) => uri.includes('/enkelvoudiginformatieobjecten'))
-          .times(8)
-          .reply(200, bezwarenDocumenten)
-          .get((uri) => uri.includes('/statussen'))
-          .times(8)
-          .reply(200, bezwarenStatus);
-      });
+    it('should fetch more results', async () => {
+      remoteApi
+        .post(`${endpointBase}/_zoek?page=1`)
+        .reply(200, {
+          ...bezwarenApiResponse,
+          count: 8,
+        })
+        .post(`${endpointBase}/_zoek?page=2`)
+        .reply(200, {
+          ...bezwarenApiResponse,
+          count: 8,
+        });
+      const res = await fetchBezwaren(requestId, profileAndToken);
 
-      it('should fetch more results', async () => {
-        const res = await fetchBezwaren(requestId, profileAndToken);
+      expect(res.status).toEqual('OK');
+      expect(res.content?.length).toEqual(8);
+    });
 
-        expect(res.status).toEqual('OK');
-        expect(res.content?.length).toEqual(8);
-      });
+    it('should fetch more results', async () => {
+      remoteApi
+        .get((uri) => uri.includes('/enkelvoudiginformatieobjecten'))
+        .times(1)
+        .reply(200, bezwarenDocumenten)
+        .get((uri) => uri.includes('/statussen'))
+        .times(1)
+        .reply(200, bezwarenStatus);
+
+      const res = await fetchBezwaarDetail(requestId, profileAndToken, 'xxx');
+
+      expect(res.status).toEqual('OK');
+      expect(res.content?.statussen?.length).toBeGreaterThan(0);
+      expect(res.content?.documents?.length).toBeGreaterThan(0);
     });
   });
 });
