@@ -23,7 +23,7 @@ export interface InfoDetailHeadingProps {
 
 export function InfoDetailHeading({ label }: InfoDetailHeadingProps) {
   return (
-    <Heading level={3} size="level-5" className={styles.Label}>
+    <Heading level={3} size="level-4" className={styles.Label}>
       {label}
     </Heading>
   );
