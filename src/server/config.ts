@@ -297,7 +297,17 @@ export function getApiConfig(
   name: SourceApiKey,
   config: DataRequestConfig = {}
 ): DataRequestConfig {
-  const apiConfig = ApiConfig[name] ? jsonCopy(ApiConfig[name]) : {};
+  let apiConfig = ApiConfig[name];
+
+  // copy the config and transfer the https agent instance.
+  if (apiConfig.httpsAgent) {
+    const agent = apiConfig.httpsAgent;
+    apiConfig = jsonCopy(apiConfig);
+    apiConfig.httpsAgent = agent;
+  } else {
+    apiConfig = jsonCopy(apiConfig);
+  }
+
   return Object.assign({}, apiConfig, config);
 }
 
