@@ -72,20 +72,20 @@ export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
 }
 
-export function sortAlpha(
-  key: string,
+export function sortAlpha<T extends unknown>(
+  key: keyof T,
   direction: 'asc' | 'desc' = 'asc',
   casing?: 'lower' | 'upper'
 ) {
-  return (a: Record<string, any>, b: Record<string, any>) => {
+  return (a: T, b: T) => {
     const sortASC = direction === 'asc';
-    let aValue = a[key];
-    let bValue = b[key];
+    let aValue = a[key] as string;
+    let bValue = b[key] as string;
 
     switch (casing) {
       case 'upper':
-        aValue = aValue.upper();
-        bValue = bValue.upper();
+        aValue = aValue.toLocaleUpperCase();
+        bValue = bValue.toLocaleUpperCase();
         break;
       case 'lower':
         aValue = aValue.toLocaleLowerCase();
