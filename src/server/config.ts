@@ -7,6 +7,7 @@ import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
 import { IS_AZ, IS_OT, IS_TAP } from '../universal/config/env';
 import { TokenData } from './helpers/app';
+import { jsonCopy } from '../universal/helpers/utils';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && process.env[envVarName];
@@ -292,8 +293,12 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 export type ApiUrlEntries = ApiUrlEntry[];
 export const apiUrlEntries = Object.entries(ApiUrls) as ApiUrlEntries;
 
-export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
-  return Object.assign({}, ApiConfig[name] || {}, config || {});
+export function getApiConfig(
+  name: SourceApiKey,
+  config: DataRequestConfig = {}
+): DataRequestConfig {
+  const apiConfig = ApiConfig[name] ? jsonCopy(ApiConfig[name]) : {};
+  return Object.assign({}, apiConfig, config);
 }
 
 export const RelayPathsAllowed = {
@@ -333,22 +338,19 @@ export const BffEndpoints = {
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
+  CMS_CONTENT: '/services/cms',
+  CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
+  CACHE_OVERVIEW: '/status/cache',
+  LOGIN_STATS: '/status/logins/:authMethod?',
+  LOGIN_RAW: '/status/logins/table',
+  SESSION_BLACKLIST_RAW: '/status/session-blacklist/table',
+  STATUS_HEALTH: '/status/health',
+  STATUS_HEALTH2: '/bff/status/health',
+  TEST_ACCOUNTS_OVERVIEW: '/status/user-data-overview',
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
-
-  // Signalen endpoints
-  SIA_ATTACHMENTS: '/services/signals/:id/attachments',
-  SIA_HISTORY: '/services/signals/:id/history',
-  SIA_LIST: '/services/signals/:status/:page',
-
-  // Bezwaren
-  BEZWAREN_ATTACHMENTS: '/services/bezwaren/:id/attachments',
-
-  // ErfpachtV2
-  ERFPACHTv2_DOSSIER_DETAILS:
-    '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 
   // start: OIDC config
   AUTH_BASE_DIGID,
@@ -390,16 +392,21 @@ export const BffEndpoints = {
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
 
-  CMS_CONTENT: '/services/cms',
-  CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
-  CACHE_OVERVIEW: '/status/cache',
-  LOGIN_STATS: '/status/logins/:authMethod?',
-  LOGIN_RAW: '/status/logins/table',
-  SESSION_BLACKLIST_RAW: '/status/session-blacklist/table',
-  STATUS_HEALTH: '/status/health',
-  STATUS_HEALTH2: '/bff/status/health',
-  TEST_ACCOUNTS_OVERVIEW: '/status/user-data-overview',
-  LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
+  // Bodem / loodmetingen
+  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
+
+  // Signalen endpoints
+  SIA_ATTACHMENTS: '/services/signals/:id/attachments',
+  SIA_HISTORY: '/services/signals/:id/history',
+  SIA_LIST: '/services/signals/:status/:page',
+
+  // Bezwaren
+  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document/:id',
+  BEZWAREN_DETAIL: '/services/bezwaren/:id',
+
+  // ErfpachtV2
+  ERFPACHTv2_DOSSIER_DETAILS:
+    '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
@@ -407,7 +414,6 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH2,
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
-  BffEndpoints.CACHE_OVERVIEW,
 ];
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes

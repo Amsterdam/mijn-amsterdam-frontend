@@ -1,5 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { useAppStateGetter, usePhoneScreen } from '../../hooks';
+import {
+  useAppStateBagApi,
+  useAppStateGetter,
+  usePhoneScreen,
+} from '../../hooks';
 import {
   defaultDateFormat,
   isError,
@@ -14,7 +18,11 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import {
+  AppRoutes,
+  BagChapters,
+  ChapterTitles,
+} from '../../../universal/config';
 import {
   InfoDetailGroup,
   InfoDetailHeading,
@@ -23,6 +31,8 @@ import BezwarenStatusLines from './BezwarenStatusLines';
 import DocumentList from '../../components/DocumentList/DocumentList';
 import styles from './BezwarenDetail.module.scss';
 import { TextClamp } from '../../components/InfoDetail/TextClamp';
+import { BFFApiUrls } from '../../config/api';
+import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
 
 const BezwarenDetail = () => {
   const { BEZWAREN } = useAppStateGetter();
@@ -30,10 +40,17 @@ const BezwarenDetail = () => {
 
   const bezwaar = BEZWAREN.content?.find((b) => b.uuid === uuid) ?? null;
 
-  const noContent = !isLoading(BEZWAREN) && !bezwaar;
+  const [bezwaarDetail, api] = useAppStateBagApi<BezwaarDetail | null>({
+    url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuid}`,
+    bagChapter: BagChapters.BEZWAREN,
+    key: uuid,
+  });
 
+  const noContent = !isLoading(BEZWAREN) && !bezwaar;
+  const documents = bezwaarDetail?.documents ?? [];
+  const statussen = bezwaarDetail?.statussen ?? [];
   const documentCategories = uniqueArray(
-    !bezwaar ? [] : bezwaar.documenten.map((d) => d.dossiertype).filter(Boolean)
+    documents.map((d) => d.dossiertype).filter(Boolean)
   ).sort();
 
   const isSmallScreen = usePhoneScreen();
@@ -90,7 +107,7 @@ const BezwarenDetail = () => {
             {documentCategories.length > 0 && (
               <>
                 {documentCategories.map((category) => {
-                  const docs = bezwaar.documenten.filter(
+                  const docs = documents.filter(
                     (d) => d.dossiertype === category
                   );
                   return (
@@ -100,7 +117,7 @@ const BezwarenDetail = () => {
                         <div className={styles.DocumentListHeader}>
                           <InfoDetailHeading
                             label={`Document${
-                              bezwaar.documenten.length > 1 ? 'en' : ''
+                              documents.length > 1 ? 'en' : ''
                             } ${category.toLowerCase()}`}
                           />
                           {!isSmallScreen && (
@@ -120,8 +137,8 @@ const BezwarenDetail = () => {
           </>
         )}
       </PageContent>
-      {!!bezwaar?.statussen && !!bezwaar?.uuid && (
-        <BezwarenStatusLines id={bezwaar.uuid} statussen={bezwaar.statussen} />
+      {!!statussen && !!bezwaar?.uuid && (
+        <BezwarenStatusLines id={bezwaar.uuid} statussen={statussen} />
       )}
     </DetailPage>
   );
