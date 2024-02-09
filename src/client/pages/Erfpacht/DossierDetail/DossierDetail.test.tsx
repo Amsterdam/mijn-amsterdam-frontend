@@ -98,7 +98,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('E123/456 - Dit en dat plein 22 H')
+        screen.getByText('E123/456: Dit en dat plein 22 H')
       ).toBeInTheDocument();
       expect(screen.getByText('12132/345345/456757/ff')).toBeInTheDocument();
       expect(screen.getByText('H.J de Gruyter')).toBeInTheDocument();
