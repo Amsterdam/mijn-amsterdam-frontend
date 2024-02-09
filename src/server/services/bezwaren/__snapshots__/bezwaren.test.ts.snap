@@ -49,6 +49,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "resultaat": "Niet-ontvankelijk",
       "startdatum": "2023-04-25",
       "status": null,
+      "statusdatum": null,
       "statussen": [
         {
           "datum": "2023-09-15T10:00:00+02:00",
@@ -116,6 +117,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "resultaat": "Gegrond",
       "startdatum": "2023-04-03",
       "status": "In behandeling",
+      "statusdatum": null,
       "statussen": [
         {
           "datum": "2023-09-15T10:00:00+02:00",
@@ -183,6 +185,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "resultaat": null,
       "startdatum": "2022-11-04",
       "status": null,
+      "statusdatum": null,
       "statussen": [
         {
           "datum": "2023-09-15T10:00:00+02:00",
@@ -250,6 +253,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "resultaat": null,
       "startdatum": "2022-11-04",
       "status": "Afgehandeld",
+      "statusdatum": "2023-08-23",
       "statussen": [
         {
           "datum": "2023-09-15T10:00:00+02:00",

@@ -207,6 +207,10 @@
         {
           "kenmerk": "statustekst",
           "bron": "Afgehandeld"
+        },
+        {
+          "kenmerk": "statusdatum",
+          "bron": "2023-08-23"
         }
       ],
       "archiefnominatie": null,
