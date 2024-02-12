@@ -10,6 +10,7 @@ import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 import classNames from 'classnames';
+import { WijzigenLink } from './WijzigenLink';
 
 export function DataTableFacturen({
   dossier,
@@ -19,10 +20,9 @@ export function DataTableFacturen({
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
-  const mailBody = `Dossiernummer: ${
-    dossier.dossierNummer
-  }%0D%0ARelatiecode: ${dossier.relaties?.find((relatie) => relatie.betaler)
-    ?.relatieCode}%0D%0ADebiteurnummer: ${dossier.facturen?.debiteurNummer}`;
+  const debiteurNummer = dossier.facturen?.debiteurNummer ?? '';
+  const dossierNummer = dossier.dossierNummer;
+
   const betaler = dossier.relaties?.find((relatie) => relatie.betaler);
   const isBetaler = betaler?.relatieCode === relatieCode;
   const facturenBetalerDebiteurRows = [
@@ -41,13 +41,12 @@ export function DataTableFacturen({
         {
           label: null,
           content: isBetaler ? (
-            <Link
-              href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaler wijzigen&body=${mailBody}`}
-              rel="noopener noreferrer"
-              variant="inList"
-            >
-              Betaler aanpassen
-            </Link>
+            <WijzigenLink
+              linkVariant="inList"
+              debiteurNummer={dossier.facturen?.debiteurNummer}
+              relatieCode={relatieCode}
+              dossierNummer={dossierNummer}
+            />
           ) : (
             ''
           ),
@@ -65,12 +64,14 @@ export function DataTableFacturen({
         <MaParagraph>
           Wilt u uw facturen voor erfpacht en canon op een nieuw adres
           ontvangen? Stuur een e-mail naar{' '}
-          <Link
-            rel="noopener noreferrer"
-            href={`mailto:erfpachtadministratie@amsterdam.nl?subject=Adreswijziging facturen erfpacht en canon&body=${mailBody}`}
-          >
-            erfpachtadministratie@amsterdam.nl
-          </Link>
+          <WijzigenLink
+            debiteurNummer={dossier.facturen?.debiteurNummer}
+            relatieCode={relatieCode}
+            dossierNummer={dossierNummer}
+            subject="Adreswijziging facturen erfpacht en canon"
+            email="erfpachtadministratie@amsterdam.nl"
+            label="erfpachtadministratie@amsterdam.nl"
+          />
           . Zet in het onderwerp 'Adreswijziging'. Vermeld in de mail uw
           debiteurennummer of het E-dossiernummer en uw nieuwe adresgegevens. U
           krijgt binnen 3 werkdagen een reactie.
@@ -81,12 +82,14 @@ export function DataTableFacturen({
         <MaParagraph>
           U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw
           e-mailadres en debiteurennummer naar{' '}
-          <Link
-            rel="noopener noreferrer"
-            href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturen per e-mail ontvangen&body=${mailBody}`}
-          >
-            debiteurenadministratie@amsterdam.nl
-          </Link>
+          <WijzigenLink
+            debiteurNummer={dossier.facturen?.debiteurNummer}
+            relatieCode={relatieCode}
+            dossierNummer={dossierNummer}
+            subject="Facturen per e-mail ontvangen"
+            email="debiteurenadministratie@amsterdam.nl"
+            label="debiteurenadministratie@amsterdam.nl"
+          />
           .
         </MaParagraph>
       </Grid.Cell>
