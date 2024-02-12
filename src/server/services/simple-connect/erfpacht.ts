@@ -390,19 +390,6 @@ export function transformErfpachtDossierProperties<
     });
   }
 
-  if (
-    'financieel' in dossier &&
-    !!dossier.financieel?.huidigePeriode.periodeSamengesteld
-  ) {
-    dossier.financieel.huidigePeriode.periodeSamengesteld = `${defaultDateFormat(
-      dossier.financieel.huidigePeriode.periodeVan
-    )} t/m ${
-      dossier.financieel.huidigePeriode.periodeTm
-        ? `${defaultDateFormat(dossier.financieel.huidigePeriode.periodeTm)}`
-        : '-'
-    }`;
-  }
-
   return {
     ...dossier,
     dossierNummerUrlParam,
