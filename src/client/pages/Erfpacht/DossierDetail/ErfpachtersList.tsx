@@ -47,7 +47,7 @@ export function ErfpachtersList({
           return (
             <OrderedList.Item key={relatie.relatieNaam}>
               {relatie.relatieNaam}{' '}
-              {relatie.betaler && relatie.relatieCode === relatieCode ? (
+              {relatie.betaler && relatie.relatieCode !== relatieCode ? (
                 <WijzigenLink
                   linkVariant="inList"
                   relatieCode={relatie.relatieCode}
