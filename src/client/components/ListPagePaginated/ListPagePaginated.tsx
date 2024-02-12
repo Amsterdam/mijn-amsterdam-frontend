@@ -34,7 +34,7 @@ export function ListPagePaginated({
   chapter,
   displayProps,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
-  noItemsText = 'U heet geen gegevens op deze pagina.',
+  noItemsText = 'U heeft (nog) geen gegevens op deze pagina.',
   isError,
   isLoading,
   items,
