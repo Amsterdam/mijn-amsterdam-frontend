@@ -20,7 +20,6 @@ export function DataTableFacturen({
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
-  const debiteurNummer = dossier.facturen?.debiteurNummer ?? '';
   const dossierNummer = dossier.dossierNummer;
 
   const betaler = dossier.relaties?.find((relatie) => relatie.betaler);

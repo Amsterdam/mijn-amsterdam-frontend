@@ -10,7 +10,10 @@ export interface ErfpachtDatalistProps {
   relatieCode?: string;
 }
 
-export function DatalistGeneral({ dossier }: ErfpachtDatalistProps) {
+export function DatalistGeneral({
+  dossier,
+  relatieCode,
+}: ErfpachtDatalistProps) {
   const rows = [
     {
       label: dossier.titelDossierNummer,
@@ -45,6 +48,7 @@ export function DatalistGeneral({ dossier }: ErfpachtDatalistProps) {
           erfpachters={dossier.relaties}
           dossierNummer={dossier.dossierNummer}
           debiteurNummer={dossier.facturen.debiteurNummer}
+          relatieCode={relatieCode}
         />
       ),
     },

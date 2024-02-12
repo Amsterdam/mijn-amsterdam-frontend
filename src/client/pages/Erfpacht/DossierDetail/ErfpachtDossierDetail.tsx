@@ -84,7 +84,10 @@ export default function ErfpachtDossierDetail() {
           {!!dossier && (
             <>
               <Grid.Cell span="all">
-                <DatalistGeneral dossier={dossier} />
+                <DatalistGeneral
+                  dossier={dossier}
+                  relatieCode={ERFPACHTv2.content?.relatieCode}
+                />
               </Grid.Cell>
 
               <Grid.Cell span="all">
