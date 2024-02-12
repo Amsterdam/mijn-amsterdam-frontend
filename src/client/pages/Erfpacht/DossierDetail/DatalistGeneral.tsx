@@ -40,7 +40,13 @@ export function DatalistGeneral({ dossier }: ErfpachtDatalistProps) {
     },
     {
       label: dossier.titelKopErfpachter,
-      content: <ErfpachtersList erfpachters={dossier.relaties} />,
+      content: (
+        <ErfpachtersList
+          erfpachters={dossier.relaties}
+          dossierNummer={dossier.dossierNummer}
+          debiteurNummer={dossier.facturen.debiteurNummer}
+        />
+      ),
     },
   ];
 
