@@ -39,7 +39,7 @@ export function DataTableFacturen({
         },
         {
           label: null,
-          content: isBetaler ? (
+          content: !isBetaler ? (
             <WijzigenLink
               linkVariant="inList"
               debiteurNummer={dossier.facturen?.debiteurNummer}
