@@ -8,12 +8,14 @@ interface ErfpachtersListProps {
   erfpachters?: ErfpachtV2DossiersDetail['relaties'];
   debiteurNummer?: string;
   dossierNummer?: string;
+  relatieCode?: string;
 }
 
 export function ErfpachtersList({
   erfpachters,
   debiteurNummer,
   dossierNummer,
+  relatieCode,
 }: ErfpachtersListProps) {
   const isMediumScreen = useMediumScreen();
   const colCount = isMediumScreen ? 3 : 2;
@@ -45,7 +47,7 @@ export function ErfpachtersList({
           return (
             <OrderedList.Item key={relatie.relatieNaam}>
               {relatie.relatieNaam}{' '}
-              {relatie.betaler ? (
+              {relatie.betaler && relatie.relatieCode === relatieCode ? (
                 <WijzigenLink
                   linkVariant="inList"
                   relatieCode={relatie.relatieCode}
