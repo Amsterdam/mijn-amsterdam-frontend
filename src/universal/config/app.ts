@@ -125,7 +125,9 @@ export const ExternalUrls = {
 
   DIGID_AANVRAGEN:
     'https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen',
-  SVWI: 'https://mijnwpi-test.mendixcloud.com/p/overzicht',
+  SVWI: `https://mijn.werkeninkomen${
+    !IS_PRODUCTION ? '-acc' : ''
+  }.amsterdam.nl/`,
 };
 
 // NOTE: Keep up-to-date with _colors.scss
