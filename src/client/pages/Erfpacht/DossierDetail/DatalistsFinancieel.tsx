@@ -38,7 +38,7 @@ function DatalistFinancieelPeriode({
   ];
   return (
     <>
-      <Heading level={3} className={styles.Section_heading}>
+      <Heading level={3} size="level-4" className={styles.Section_heading}>
         {periode.titelFinancieelPeriodeVan} {periode.periodeSamengesteld}
       </Heading>
       <Datalist rows={rows} />
