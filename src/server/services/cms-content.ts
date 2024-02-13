@@ -286,9 +286,12 @@ export async function fetchCMSCONTENT(
   const [generalInfo, footer] = await Promise.allSettled(requests);
 
   let generalInfoContent = getSettledResult(generalInfo).content;
-  let footerContent = modifyFooterContent
-    ? modifyFooterContent(getSettledResult(footer).content)
-    : getSettledResult(footer).content;
+  let footerContent = getSettledResult(footer).content;
+
+  if (modifyFooterContent) {
+    footerContent = modifyFooterContent(footerContent);
+  }
+
 
   const cmsContent = {
     generalInfo: generalInfoContent as CMSPageContent | null,
