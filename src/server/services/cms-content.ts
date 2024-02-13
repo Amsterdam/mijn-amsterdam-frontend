@@ -12,6 +12,7 @@ import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import FileCache from '../helpers/file-cache';
+import { parse } from 'html-to-ast';
 
 const TAGS_ALLOWED = [
   'a',
@@ -245,9 +246,28 @@ async function getFooter(requestID: requestID, forceRenew: boolean = false) {
     });
 }
 
-export async function fetchCMSCONTENT(
+function modifyFooterContent(content: CMSFooterContent) {
+  let blocks = content.blocks.map((block) => {
+    return {
+      ...block,
+      description: block.description ? parse(block.description) : null,
+    };
+  });
+
+  return { ...content, blocks };
+}
+
+export async function fetchCMSCONTENTV2(
   requestID: requestID,
   query?: Record<string, string>
+) {
+  return await fetchCMSCONTENT(requestID, query, modifyFooterContent);
+}
+
+export async function fetchCMSCONTENT(
+  requestID: requestID,
+  query?: Record<string, string>,
+  modifyFooterContent?: any
 ) {
   const forceRenew = !!(query?.forceRenew === 'true');
 
@@ -266,7 +286,9 @@ export async function fetchCMSCONTENT(
   const [generalInfo, footer] = await Promise.allSettled(requests);
 
   let generalInfoContent = getSettledResult(generalInfo).content;
-  let footerContent = getSettledResult(footer).content;
+  let footerContent = modifyFooterContent
+    ? modifyFooterContent(getSettledResult(footer).content)
+    : getSettledResult(footer).content;
 
   const cmsContent = {
     generalInfo: generalInfoContent as CMSPageContent | null,
