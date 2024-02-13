@@ -390,6 +390,7 @@ export const BffEndpoints = {
   // end: OIDC config
 
   CMS_CONTENT: '/services/cms',
+  FOOTER: '/services/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/admin/cache',
   LOGIN_STATS: '/admin/visitors/:authMethod?',

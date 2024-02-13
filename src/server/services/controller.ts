@@ -23,7 +23,7 @@ import { fetchAVG } from './avg/avg';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
-import { fetchCMSCONTENT, fetchCMSCONTENTV2 } from './cms-content';
+import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchMyLocation } from './home';
 import { fetchHorecaVergunningen } from './horeca';
@@ -84,7 +84,6 @@ function getServiceTipsMap(profileType: ProfileType) {
  */
 // Public services
 const CMS_CONTENT = callPublicService(fetchCMSCONTENT);
-const CMS_CONTENT_V2 = callPublicService(fetchCMSCONTENTV2);
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
 );
@@ -177,7 +176,6 @@ export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
 const SERVICES_INDEX = {
   BRP,
   CMS_CONTENT,
-  CMS_CONTENT_V2,
   CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
   KREFIA,
@@ -218,7 +216,6 @@ type PrivateServices = Omit<ServicesType, 'PROFILE' | 'SIA'>;
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
   | 'CMS_CONTENT'
-  | 'CMS_CONTENT_V2'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'NOTIFICATIONS'
   | 'PROFILE'
@@ -230,7 +227,6 @@ type CommercialServices = Pick<
   | 'AFVAL'
   | 'AFVALPUNTEN'
   | 'CMS_CONTENT'
-  | 'CMS_CONTENT_V2'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
@@ -259,7 +255,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVALPUNTEN,
     BRP,
     CMS_CONTENT,
-    CMS_CONTENT_V2,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     ERFPACHTv2,
@@ -288,7 +283,6 @@ export const servicesByProfileType: ServicesByProfileType = {
   },
   'private-attributes': {
     CMS_CONTENT,
-    CMS_CONTENT_V2,
     CMS_MAINTENANCE_NOTIFICATIONS,
     NOTIFICATIONS,
     PROFILE,
@@ -298,7 +292,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVAL,
     AFVALPUNTEN,
     CMS_CONTENT,
-    CMS_CONTENT_V2,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     ERFPACHTv2,
