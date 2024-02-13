@@ -4,6 +4,10 @@
   @include select(amsterdam-heading) {
     margin-bottom: 1.6rem;
   }
+
+  @include mq-phone() {
+    margin-top: 2rem;
+  }
 }
 
 .LinkList {

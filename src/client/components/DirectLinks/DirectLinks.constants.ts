@@ -4,7 +4,6 @@ import { ExternalUrls } from '../../config/app';
 export interface DirectLink {
   title: string;
   url?: string;
-  isPhoneScreenLink?: true;
   isExternalLink?: true;
   id?: string;
   isActive: boolean;
@@ -44,7 +43,6 @@ const GenericLinks: Record<string, DirectLink> = {
   MIJN_OMGEVING: {
     title: 'Mijn omgeving',
     url: AppRoutes.BUURT,
-    isPhoneScreenLink: true,
     id: 'MyAreaHeader',
     isActive: true,
   },
