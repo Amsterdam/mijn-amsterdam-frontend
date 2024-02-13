@@ -6,6 +6,7 @@ import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import {
   fetchCMSCONTENT,
+  fetchCmsFooter,
   fetchDataset,
   fetchSearchConfig,
   loadClusterDatasets,
@@ -29,6 +30,16 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
   const requestID = res.locals.requestID;
   try {
     const response = await fetchCMSCONTENT(requestID, queryParams(req));
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(BffEndpoints.FOOTER, async (req, res, next) => {
+  const requestID = res.locals.requestID;
+  try {
+    const response = await fetchCmsFooter(requestID, queryParams(req));
     return res.json(response);
   } catch (error) {
     next(error);
