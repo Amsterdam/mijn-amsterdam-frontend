@@ -101,3 +101,11 @@
     }
   }
 }
+
+.periodeSamengesteld {
+  display: block;
+
+  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+    display: inline;
+  }
+}
