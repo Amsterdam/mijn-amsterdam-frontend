@@ -175,12 +175,8 @@
 .Panel:nth-child(2) {
   width: 24rem;
 
-  li {
-
-    // white-space: nowrap;
-    a {
-      font-weight: bold;
-    }
+  li a {
+    font-weight: bold;
   }
 
   @include mq-tablet() {
