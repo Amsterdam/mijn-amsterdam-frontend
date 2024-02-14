@@ -248,13 +248,17 @@ export async function loadFeatureDetail(
   id: string
 ) {
   const [datasetConfig] = getDatasetEndpointConfig([datasetId]);
-  const fileCache = getDatasetFileCache(datasetId, datasetConfig[1]);
+  const [, config] = datasetConfig ?? [];
 
-  if (!datasetConfig) {
-    return apiErrorResult(`Unknown dataset ${datasetId}`, null);
+  if (!config) {
+    return apiErrorResult(
+      `No DatasetConfig found for dataset with id ${datasetId}`,
+      null
+    );
   }
 
-  const [, config] = datasetConfig;
+  const fileCache = getDatasetFileCache(datasetId, config);
+
   const detailUrl =
     typeof config.detailUrl === 'function'
       ? config.detailUrl(config)
@@ -281,7 +285,7 @@ export async function loadFeatureDetail(
     } else {
       // No detail url and no transformer found, we can't proceed with returning detail data.
       return apiErrorResult(
-        `No url or transformer found for dataset detail ${id}`,
+        `No url or transformer found for dataset ${datasetId} and detail ${id}`,
         null
       );
     }

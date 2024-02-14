@@ -2,6 +2,7 @@ import {
   DatasetFilterSelection,
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config';
+import { jsonCopy, omit } from '../../../universal/helpers';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -14,6 +15,7 @@ import {
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   DatasetConfig,
+  DatasetFeatureProperties,
 } from './datasets';
 import {
   createDynamicFilterConfig,
@@ -158,7 +160,7 @@ describe('Buurt services', () => {
   });
 
   it('Should fetchDataset, cache and return cached dataset on future invocations', async () => {
-    (FileCache as Mock).mockImplementation(mockFileCache);
+    (FileCache as Mock).mockImplementationOnce(mockFileCache);
     (requestData as Mock).mockResolvedValue(DUMMY_DATA_RESPONSE);
     (getDynamicDatasetFilters as Mock).mockReturnValue(
       DATASET_FILTER_CONFIG_MOCK
@@ -215,8 +217,7 @@ describe('Buurt services', () => {
   });
 
   it('Should loadDatasetFeatures', async () => {
-    (FileCache as Mock).mockImplementation(mockFileCache);
-
+    (FileCache as Mock).mockImplementationOnce(mockFileCache);
     (requestData as Mock)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE2)
@@ -253,7 +254,7 @@ describe('Buurt services', () => {
   });
 
   it('Should loadPolylineFeatures', async () => {
-    (FileCache as Mock).mockImplementation(mockFileCache);
+    (FileCache as Mock).mockImplementationOnce(mockFileCache);
     (requestData as Mock)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE)
       .mockResolvedValueOnce(DUMMY_DATA_RESPONSE2);
@@ -343,8 +344,13 @@ describe('Buurt services', () => {
     expect(result).toEqual(DUMMY_DATA_DETAIL_RESPONSE);
   });
 
-  it('Should fail to loadFeatureDetail', async () => {
-    (getDatasetEndpointConfig as Mock).mockReturnValueOnce([]);
+  it('Should fail to loadFeatureDetail because no url or transformer found', async () => {
+    const datasetConfig2 = omit(jsonCopy(datasetConfig), ['detailUrl']);
+
+    (getDatasetEndpointConfig as Mock).mockReturnValueOnce([
+      [datasetId, datasetConfig2],
+    ]);
+
     const detailItemId = 'x';
     const result = await service.loadFeatureDetail(
       requestID,
@@ -353,7 +359,69 @@ describe('Buurt services', () => {
     );
 
     expect(result).toEqual(
-      apiErrorResult(`Unknown dataset ${datasetId}`, null)
+      apiErrorResult(
+        `No url or transformer found for dataset ${datasetId} and detail ${detailItemId}`,
+        null
+      )
+    );
+  });
+
+  (FileCache as Mock).mockImplementationOnce(mockFileCache);
+  it('Should loadFeatureDetail from cached dataset', async () => {
+    const features = ['foo', 'bar'];
+
+    cacheGetKey.mockReturnValueOnce(jsonCopy(features));
+
+    const datasetConfig2 = omit(jsonCopy(datasetConfig), ['detailUrl']);
+    const detailItemId = 'x-detail';
+
+    datasetConfig2.transformDetail = (
+      responseData: any,
+      options: DatasetFeatureProperties
+    ) => {
+      const cachedFeatures = options.datasetCache.getKey('features');
+      expect(responseData).toBe(null);
+      expect(options.id).toBe(detailItemId);
+      expect(options.datasetId).toBe(datasetId);
+      expect(cachedFeatures).toStrictEqual(features);
+      return cachedFeatures[0];
+    };
+
+    (getDatasetEndpointConfig as Mock).mockReturnValueOnce([
+      [datasetId, datasetConfig2],
+    ]);
+
+    (requestData as Mock).mockResolvedValueOnce(DUMMY_DATA_DETAIL_RESPONSE);
+
+    const result = await service.loadFeatureDetail(
+      requestID,
+      datasetId,
+      detailItemId
+    );
+
+    expect(result).toStrictEqual({
+      status: 'OK',
+      content: 'foo',
+    });
+
+    expect(requestData).not.toHaveBeenCalled();
+  });
+
+  it('Should fail to loadFeatureDetail', async () => {
+    (getDatasetEndpointConfig as Mock).mockReturnValueOnce([]);
+
+    const detailItemId = 'x';
+    const result = await service.loadFeatureDetail(
+      requestID,
+      datasetId,
+      detailItemId
+    );
+
+    expect(result).toEqual(
+      apiErrorResult(
+        `No DatasetConfig found for dataset with id ${datasetId}`,
+        null
+      )
     );
   });
 });
