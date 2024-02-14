@@ -21,12 +21,12 @@ import {
 import {
   createDynamicFilterConfig,
   datasetApiResult,
-  discoverSingleDsoApiEmbeddedResponse,
   filterAndRefineFeatures,
   filterPolylineFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
 } from './helpers';
+import { discoverSingleDsoApiEmbeddedResponse } from './dso-helpers';
 
 const fileCaches: Record<string, FileCache> = {};
 

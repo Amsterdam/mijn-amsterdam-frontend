@@ -15,16 +15,18 @@ import {
   filterDatasetFeatures,
   filterPointFeaturesWithinBoundingBox,
   filterPolylineFeaturesWithinBoundingBox,
-  getDsoApiEmbeddedResponse,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
   getPropertyFilters,
   isCoordWithingBoundingBox,
   recursiveCoordinateSwap,
   refineFilterSelection,
-  transformGenericApiListResponse,
 } from './helpers';
 import { remoteApiHost } from '../../../setupTests';
+import {
+  getDsoApiEmbeddedResponse,
+  transformGenericApiListResponse,
+} from './dso-helpers';
 
 const DSO_API_RESULT = {
   _links: {
