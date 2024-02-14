@@ -119,14 +119,14 @@ describe('<Erfpacht />', () => {
       screen.queryByText('U heeft geen openstaande facturen.')
     ).not.toBeInTheDocument();
 
-    expect(screen.getByText('E6470/243')).toBeInTheDocument();
+    expect(screen.getByText('E477/48')).toBeInTheDocument();
+    expect(screen.getByText('E7418/35')).toBeInTheDocument();
     expect(screen.getByText('E900/33')).toBeInTheDocument();
-    expect(screen.getByText('E123/456')).toBeInTheDocument();
 
     expect(screen.getAllByText('Toon meer').length).toBe(1);
 
-    expect(screen.queryByText('E7418/35')).not.toBeInTheDocument();
-    expect(screen.queryByText('E477/48')).not.toBeInTheDocument();
+    expect(screen.queryByText('E123/456')).not.toBeInTheDocument();
+    expect(screen.queryByText('E6470/243')).not.toBeInTheDocument();
 
     expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
     expect(screen.getByText('Dit en Dat plein 66')).toBeInTheDocument();

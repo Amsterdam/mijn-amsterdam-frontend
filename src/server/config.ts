@@ -1,5 +1,4 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CorsOptions } from 'cors';
 import { ConfigParams } from 'express-openid-connect';
 import fs from 'fs';
 import https from 'https';
@@ -391,14 +390,15 @@ export const BffEndpoints = {
   // end: OIDC config
 
   CMS_CONTENT: '/services/cms',
+  FOOTER: '/services/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
-  CACHE_OVERVIEW: '/status/cache',
-  LOGIN_STATS: '/status/logins/:authMethod?',
-  LOGIN_RAW: '/status/logins/table',
-  SESSION_BLACKLIST_RAW: '/status/session-blacklist/table',
+  CACHE_OVERVIEW: '/admin/cache',
+  LOGIN_STATS: '/admin/visitors/:authMethod?',
+  LOGIN_RAW: '/admin/visitors/table',
+  SESSION_BLACKLIST_RAW: '/admin/session-blacklist/table',
   STATUS_HEALTH: '/status/health',
   STATUS_HEALTH2: '/bff/status/health',
-  TEST_ACCOUNTS_OVERVIEW: '/status/user-data-overview',
+  TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
   LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
 };
 
@@ -541,11 +541,6 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   get yivi() {
     return oidcConfigYivi.clientID;
   },
-};
-
-export const corsOptions: CorsOptions = {
-  origin: process.env.MA_FRONTEND_URL,
-  credentials: true,
 };
 
 export const DEV_JWK_PUBLIC: any = {

@@ -12,6 +12,8 @@ import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import FileCache from '../helpers/file-cache';
+import { parse } from 'html-to-ast';
+import { Attr } from 'html-to-ast/dist/types';
 
 const TAGS_ALLOWED = [
   'a',
@@ -62,10 +64,22 @@ interface CMSPageContent {
   content: string;
 }
 
+interface AstNode {
+  type?: string;
+  text?: string;
+  content?: string;
+  voidElement?: boolean;
+  name?: string;
+  style?: string[];
+  attrs?: Attr;
+  children?: AstNode[];
+  comment?: string;
+}
+
 interface FooterBlock {
   id: string;
   title: string;
-  description: string | null;
+  description: string | AstNode[] | null;
   links: LinkProps[];
 }
 
@@ -245,9 +259,21 @@ async function getFooter(requestID: requestID, forceRenew: boolean = false) {
     });
 }
 
-export async function fetchCMSCONTENT(
+function modifyFooterContent(content: CMSFooterContent) {
+  let blocks = content.blocks.map((block) => {
+    return {
+      ...block,
+      description: block.description ? parse(<string>block.description) : null,
+    };
+  });
+
+  return { ...content, blocks };
+}
+
+async function fetchCmsBase(
   requestID: requestID,
-  query?: Record<string, string>
+  query?: Record<string, string>,
+  shouldMofidyFooterContent: boolean = false
 ) {
   const forceRenew = !!(query?.forceRenew === 'true');
 
@@ -266,14 +292,38 @@ export async function fetchCMSCONTENT(
   const [generalInfo, footer] = await Promise.allSettled(requests);
 
   let generalInfoContent = getSettledResult(generalInfo).content;
-  let footerContent = getSettledResult(footer).content;
+  let footerContent = getSettledResult(footer).content as CMSFooterContent;
 
-  const cmsContent = {
+  if (shouldMofidyFooterContent) {
+    footerContent = modifyFooterContent(footerContent);
+  }
+
+  return {
     generalInfo: generalInfoContent as CMSPageContent | null,
     footer: footerContent as CMSFooterContent | null,
   };
+}
 
-  return apiSuccessResult(cmsContent);
+export async function fetchCmsFooter(
+  requestID: requestID,
+  query?: Record<string, string>
+) {
+  const response = await fetchCmsBase(requestID, query, true);
+  return apiSuccessResult(response.footer);
+}
+
+export async function fetchCMSCONTENT(
+  requestID: requestID,
+  query?: Record<string, string>,
+  shouldMofidyFooterContent: boolean = false
+) {
+  const response = await fetchCmsBase(
+    requestID,
+    query,
+    shouldMofidyFooterContent
+  );
+
+  return apiSuccessResult(response);
 }
 
 const searchFileCache = new FileCache({
