@@ -5,6 +5,7 @@ import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';
 import { IS_AZ, IS_DEVELOPMENT, OTAP_ENV } from './universal/config/env';
+import { ErrorInfo } from 'react';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -45,8 +46,9 @@ Sentry.init({
   },
 });
 
-const sendToSentry = (error: Error, info: { componentStack: string }) => {
-  Sentry.captureException(error, {
+const sendToSentry = (error: Error, info: ErrorInfo) => {
+  Sentry.captureMessage(`Kritieke applicatie fout: ${error.message}`, {
+    level: 'fatal',
     extra: {
       componentStack: info.componentStack,
     },

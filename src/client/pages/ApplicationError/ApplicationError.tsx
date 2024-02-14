@@ -87,6 +87,12 @@ export default function ApplicationError({ error }: FallbackProps) {
             Lukt het dan nog niet? Probeer het dan later nog eens.
           </p>
           <p>
+            Gebruikt u Google Translate?
+            <br />
+            Deze browser extensie veroorzaakt soms problemen, mogelijk werkt de
+            pagina beter wanneer u deze extensie niet gebruikt.
+          </p>
+          <p>
             Als het probleem zich blijft voordoen maak melding bij “Uw mening”
             aan de rechter zijkant van deze pagina.
           </p>
