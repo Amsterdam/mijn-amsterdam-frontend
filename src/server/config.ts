@@ -4,7 +4,7 @@ import fs from 'fs';
 import https from 'https';
 import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_AZ, IS_OT, IS_TAP } from '../universal/config/env';
+import { IS_AZ, IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { TokenData } from './helpers/app';
 
 export function getCertificateSync(envVarName: string | undefined) {
@@ -570,7 +570,7 @@ export const DEV_JWK_PRIVATE: any = {
 export const DEV_JWT =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
-export const securityHeaders = {
+export const securityHeaders: Record<string, string> = {
   'Permissions-Policy':
     'geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()',
   'Referrer-Policy': 'same-origin',
@@ -591,3 +591,8 @@ export const securityHeaders = {
     require-trusted-types-for 'script'
   `.replace(/\n/g, ''),
 };
+
+// if (IS_DEVELOPMENT) {
+//   securityHeaders['Access-Control-Allow-Origin'] = '*';
+//   securityHeaders['Access-Control-Allow-Credentials'] = 'true';
+// }

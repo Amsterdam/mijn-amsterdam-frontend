@@ -30,7 +30,7 @@ import express, {
 } from 'express';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
-
+import cors from 'cors';
 import {
   BFF_BASE_PATH,
   BFF_PORT,
@@ -97,6 +97,15 @@ app.use(
     '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
   )
 );
+
+if (IS_DEVELOPMENT) {
+  app.use(
+    cors({
+      origin: process.env.MA_FRONTEND_URL,
+      credentials: true,
+    })
+  );
+}
 
 // Json body parsing
 app.use(express.json());
