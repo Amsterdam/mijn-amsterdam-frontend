@@ -147,8 +147,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   SVWI: {
-    url: `${process.env.SVWI_API_BASE_URL}/mijnamsterdam/v1/autorisatie/tegel`,
+    url: `${process.env.BFF_SVWI_API_BASE_URL}/mijnamsterdam/v1/autorisatie/tegel`,
     passthroughOIDCToken: true,
+    postponeFetch: !FeatureToggle.svwiLinkActive,
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
