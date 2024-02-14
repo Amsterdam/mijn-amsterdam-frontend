@@ -86,11 +86,17 @@ export function transformNotificationsDefault(
 export async function fetchTipsAndNotifications(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
-  chapter: Chapter
+  chapter: Chapter,
+  authProfileAndToken?: AuthProfileAndToken
 ): Promise<
   ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
 > {
-  const response = await fetchService(requestID, apiConfig, true);
+  const response = await fetchService(
+    requestID,
+    apiConfig,
+    true,
+    authProfileAndToken
+  );
 
   if (response.status === 'OK') {
     const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> =
