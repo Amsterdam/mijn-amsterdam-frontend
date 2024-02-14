@@ -31,7 +31,9 @@ export async function fetchSVWINotifications(
 ) {
   return await fetchTipsAndNotifications(
     requestID,
-    getConfigSVWI(authProfileAndToken.token),
+    getApiConfig('SVWI', {
+    transformResponse: transformSVWIResponse,
+  }),
     Chapters.SVWI,
     authProfileAndToken
   );
