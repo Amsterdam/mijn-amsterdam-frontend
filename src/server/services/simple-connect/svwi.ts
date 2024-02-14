@@ -32,6 +32,7 @@ export async function fetchSVWINotifications(
   return await fetchTipsAndNotifications(
     requestID,
     getConfigSVWI(authProfileAndToken.token),
-    Chapters.SVWI
+    Chapters.SVWI,
+    authProfileAndToken
   );
 }
