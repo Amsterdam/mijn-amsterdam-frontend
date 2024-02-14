@@ -22,7 +22,7 @@ import {
   dsoApiListUrl,
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
-} from './helpers';
+} from './dso-helpers';
 
 enum zIndexPane {
   PARKEERZONES = '650',

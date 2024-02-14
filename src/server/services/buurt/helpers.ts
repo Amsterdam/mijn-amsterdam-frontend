@@ -22,13 +22,13 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import type {
   DatasetConfig,
-  datasetEndpoints,
   DatasetFeatureProperties,
   DatasetFeatures,
   DatasetResponse,
   MaFeature,
   MaPointFeature,
 } from './datasets';
+import { datasetEndpoints } from './datasets';
 
 export function dsoApiListUrl(
   dataset: string,
