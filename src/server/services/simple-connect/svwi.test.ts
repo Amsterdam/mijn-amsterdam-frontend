@@ -42,7 +42,7 @@ describe('simple-connect/svwi', () => {
   `);
   });
 
-  test('fetchSvwi should give isknow equals false', async () => {
+  test('fetchSvwi should give isKnown equals false', async () => {
     const SVWIWithUnknown = { ...SVWI, gebruikerBekend: false };
 
     remoteApi
