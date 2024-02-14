@@ -35,6 +35,7 @@ import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
 import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
 import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
 import WPI_STADSPAS from './json/wpi-stadspas.json';
+import SVWI from './json/svwi.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -168,6 +169,15 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return loadMockApiResponseJson(WPI_SPECIFICATIES);
+    },
+  },
+  [String(ApiUrls.SVWI)]: {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return loadMockApiResponseJson(SVWI);
     },
   },
   [String(ApiUrls.ERFPACHTv2)]: {

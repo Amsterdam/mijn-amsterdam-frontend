@@ -391,6 +391,13 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
+    isEnabled: true,
+    stateKey: 'SVWI' as keyof AppState,
+    displayTitle(item: any) {
+      return (term: string) => displayPath(term, [item.title]);
+    },
+  },
+  {
     isEnabled: FeatureToggle.bodemActive,
     stateKey: 'BODEM' as keyof AppState,
     displayTitle(item: LoodMeting) {

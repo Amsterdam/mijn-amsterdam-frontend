@@ -43,6 +43,7 @@ export const FeatureToggle = {
   stadspasRequestsActive: false,
   dbDisabled: false,
   passQueryParamsToStreamUrl: !IS_AP,
+  laadpalenActive: !IS_PRODUCTION,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
@@ -106,9 +107,6 @@ export const ExternalUrls = {
   WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
-  SSO_SVWI: !IS_PRODUCTION
-    ? 'https://mijnwpi-test.mendixcloud.com/p/overzicht'
-    : '',
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
@@ -128,6 +126,9 @@ export const ExternalUrls = {
 
   DIGID_AANVRAGEN:
     'https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen',
+  SVWI: `https://mijn.werkeninkomen${
+    !IS_PRODUCTION ? '-acc' : ''
+  }.amsterdam.nl/`,
 };
 
 // NOTE: Keep up-to-date with _colors.scss

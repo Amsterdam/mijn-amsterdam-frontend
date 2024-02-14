@@ -2,7 +2,7 @@ import { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
-import { Colors } from '../../../universal/config/app';
+import { Colors, FeatureToggle } from '../../../universal/config/app';
 import { IS_AP, IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
 import {
   DatasetCategoryId,
@@ -422,7 +422,7 @@ export const datasetEndpoints: Record<
       request: fetchLaadpalen,
       cancelTimeout: 30000,
     },
-    disabled: IS_PRODUCTION,
+    disabled: !FeatureToggle.laadpalenActive,
   },
 };
 

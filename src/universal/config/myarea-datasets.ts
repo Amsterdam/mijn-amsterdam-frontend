@@ -62,9 +62,9 @@ const month = new Date().getMonth();
 if (month !== 11 && month !== 0) {
   excludeFractieOmschrijving.push('Kerstboom');
 }
-
 export const DATASETS: DatasetCategories = {
   laadpalen: {
+    isDisabled: !FeatureToggle.laadpalenActive,
     title: 'Laadpalen',
     datasets: {
       laadpalen: {

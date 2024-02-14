@@ -8,6 +8,7 @@ import {
 import { MyNotification, MyTip } from '../../../universal/types';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
+import { AuthProfileAndToken } from '../../helpers/app';
 
 export interface ApiPatternResponseA {
   tips?: MyTip[];
@@ -32,7 +33,8 @@ const transformApiResponseDefault: AxiosResponseTransformer = (
 export async function fetchService<T extends ApiPatternResponseA>(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
-  includeTipsAndNotifications: boolean = false
+  includeTipsAndNotifications: boolean = false,
+  authProfileAndToken?: AuthProfileAndToken
 ): Promise<ApiResponse<T | null>> {
   const transformResponse = [transformApiResponseDefault].concat(
     apiConfig.transformResponse ?? []
@@ -42,7 +44,11 @@ export async function fetchService<T extends ApiPatternResponseA>(
     transformResponse,
   };
 
-  const response = await requestData<T>(apiConfigMerged, requestID);
+  const response = await requestData<T>(
+    apiConfigMerged,
+    requestID,
+    authProfileAndToken
+  );
 
   if (response.status === 'OK' && !includeTipsAndNotifications) {
     return Object.assign({}, response, {
@@ -80,11 +86,17 @@ export function transformNotificationsDefault(
 export async function fetchTipsAndNotifications(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
-  chapter: Chapter
+  chapter: Chapter,
+  authProfileAndToken?: AuthProfileAndToken
 ): Promise<
   ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
 > {
-  const response = await fetchService(requestID, apiConfig, true);
+  const response = await fetchService(
+    requestID,
+    apiConfig,
+    true,
+    authProfileAndToken
+  );
 
   if (response.status === 'OK') {
     const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> =
