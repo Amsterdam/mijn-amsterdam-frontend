@@ -130,7 +130,7 @@
     "react-test-renderer": "^18.2.0",
     "recoil": "^0.7.7",
     "sanitize-html": "^2.11.0",
-    "sass": "^1.69.5",
+    "sass": "^1.70.0",
     "slugme": "^1.1.1",
     "supercluster": "^7.1.5",
     "throttle-debounce": "^5.0.0",
