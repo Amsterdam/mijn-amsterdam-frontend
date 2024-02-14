@@ -16,12 +16,6 @@ const GenericLinks: Record<string, DirectLink> = {
     id: 'Uitleg',
     isActive: true,
   },
-  MIJN_SUBSIDIE: {
-    title: 'Mijn Subsidies',
-    url: ExternalUrls.MIJN_SUBSIDIES,
-    isExternalLink: true,
-    isActive: true,
-  },
   STADSBANK_VAN_LENING: {
     title: 'Stadsbank van Lening',
     url: ExternalUrls.STADSBANK_VAN_LENING,
@@ -38,12 +32,6 @@ const GenericLinks: Record<string, DirectLink> = {
     title: 'Amsterdam.nl',
     url: ExternalUrls.AMSTERDAM,
     isExternalLink: true,
-    isActive: true,
-  },
-  MIJN_OMGEVING: {
-    title: 'Mijn omgeving',
-    url: AppRoutes.BUURT,
-    id: 'MyAreaHeader',
     isActive: true,
   },
   MIJN_OVERHEID_ONDERNEMERS: {
