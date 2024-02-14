@@ -28,7 +28,7 @@ describe('simple-connect/svwi', () => {
   };
 
   test('fetchSvwi should give isknow equals true', async () => {
-    remoteApi.get('/mijnamsterdam/v1/autorisatie/tegel').reply(200, SVWI);
+    remoteApi.get('/mijnamsterdam/v1/autorisatie/tegel').matchHeader('Authorization', `Bearer ${authProfileAndToken.token}`).reply(200, SVWI);
 
     const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
 
