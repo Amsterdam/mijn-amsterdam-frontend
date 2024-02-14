@@ -5,7 +5,7 @@ const afvalUrls: Record<string, string> = {
   rest: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7BC5AC6694-CB65-4ED8-B5B3-6794BEA279FD%7D',
   glas: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7B881CBA8B-AB9F-43DF-910F-6B5DF7A91080%7D',
   papier:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B95B69586-623A-4333-9322-A48FF8424B77%7D',
+    'https://www.amsterdam.nl/veelgevraagd/dit-mag-wel-en-niet-in-de-papiercontainer-944aa-kp',
   textiel:
     'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BD68460AA-EB08-4132-A69F-7763CD8431A2%7D',
   gft: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B4FDB05A6-EA6F-4475-A359-C19AD3578CF5%7D',
