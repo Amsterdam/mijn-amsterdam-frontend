@@ -6,7 +6,6 @@ import Linkd from '../Button/Button';
 import classnames from 'classnames';
 import { entries } from '../../../universal/helpers';
 import styles from './DirectLinks.module.scss';
-import { usePhoneScreen } from '../../hooks/media.hook';
 
 export default function DirectLinks({
   id = 'DirectLinks',
@@ -14,7 +13,6 @@ export default function DirectLinks({
   profileType,
   ...otherProps
 }: HTMLAttributes<HTMLDivElement> & { profileType: ProfileType }) {
-  const isPhoneScreen = usePhoneScreen();
   return (
     <div
       {...otherProps}
@@ -27,9 +25,6 @@ export default function DirectLinks({
       <ul className={styles.LinkList}>
         {entries(LINKS[profileType])
           .filter(([, { url, isActive }]) => !!url && isActive)
-          .filter(([, { isPhoneScreenLink }]) =>
-            isPhoneScreen ? isPhoneScreenLink : true
-          )
           .map((link) => {
             const [linkName, { url, title, isExternalLink, id }] = link;
             return (

@@ -4,7 +4,6 @@ import { ExternalUrls } from '../../config/app';
 export interface DirectLink {
   title: string;
   url?: string;
-  isPhoneScreenLink?: true;
   isExternalLink?: true;
   id?: string;
   isActive: boolean;
@@ -15,12 +14,6 @@ const GenericLinks: Record<string, DirectLink> = {
     title: 'Dit ziet u in Mijn Amsterdam',
     url: AppRoutes.GENERAL_INFO,
     id: 'Uitleg',
-    isActive: true,
-  },
-  MIJN_SUBSIDIE: {
-    title: 'Mijn Subsidies',
-    url: ExternalUrls.MIJN_SUBSIDIES,
-    isExternalLink: true,
     isActive: true,
   },
   STADSBANK_VAN_LENING: {
@@ -39,13 +32,6 @@ const GenericLinks: Record<string, DirectLink> = {
     title: 'Amsterdam.nl',
     url: ExternalUrls.AMSTERDAM,
     isExternalLink: true,
-    isActive: true,
-  },
-  MIJN_OMGEVING: {
-    title: 'Mijn omgeving',
-    url: AppRoutes.BUURT,
-    isPhoneScreenLink: true,
-    id: 'MyAreaHeader',
     isActive: true,
   },
   MIJN_OVERHEID_ONDERNEMERS: {
