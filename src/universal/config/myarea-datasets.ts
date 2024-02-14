@@ -64,6 +64,7 @@ if (month !== 11 && month !== 0) {
 }
 export const DATASETS: DatasetCategories = {
   laadpalen: {
+    isDisabled: !FeatureToggle.laadpalenActive,
     title: 'Laadpalen',
     datasets: {
       laadpalen: {
