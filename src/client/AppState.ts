@@ -46,6 +46,7 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   SVWI: apiPristineResult(null, {
+    isActive: FeatureToggle.svwiLinkActive,
     profileTypes: ['private'],
   }),
   WMO: apiPristineResult([], {

@@ -63,7 +63,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   AFVALPUNTEN: 'Afvalpunten',
-  SVWI: 'SVWI tegel',
+  SVWI: 'Werk & Inkomen portaal',
   KVK: 'Mijn onderneming',
   SIA: 'Mijn meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
