@@ -250,8 +250,6 @@ export async function loadFeatureDetail(
   const [datasetConfig] = getDatasetEndpointConfig([datasetId]);
   const fileCache = getDatasetFileCache(datasetId, datasetConfig[1]);
 
-  console.log(fileCache.getKey('features')[0], datasetConfig);
-
   if (!datasetConfig) {
     return apiErrorResult(`Unknown dataset ${datasetId}`, null);
   }
