@@ -159,6 +159,11 @@ describe('Buurt services', () => {
     vi.resetAllMocks();
   });
 
+  afterAll(() => {
+    vi.resetModules();
+    vi.restoreAllMocks();
+  });
+
   it('Should fetchDataset, cache and return cached dataset on future invocations', async () => {
     (FileCache as Mock).mockImplementationOnce(mockFileCache);
     (requestData as Mock).mockResolvedValue(DUMMY_DATA_RESPONSE);

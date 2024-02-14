@@ -20,7 +20,7 @@ import {
 } from '../../../universal/helpers';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import {
+import type {
   DatasetConfig,
   datasetEndpoints,
   DatasetFeatureProperties,
