@@ -422,7 +422,7 @@ export const datasetEndpoints: Record<
       request: fetchLaadpalen,
       cancelTimeout: 30000,
     },
-    disabled: IS_PRODUCTION || !FeatureToggle.laadpalenActive,
+    disabled: !FeatureToggle.laadpalenActive,
   },
 };
 
