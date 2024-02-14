@@ -13,13 +13,18 @@
 .TopBar {
   display: flex;
   min-height: 30rem;
+
   @include mq-tablet {
     min-height: 16.7rem;
   }
+
   padding: 3rem 0 5rem;
 
-  &, a, a:hover {
+  &,
+  a,
+  a:hover {
     color: $color-white;
+
     @include select(Button_Icon) {
       fill: $color-white;
     }
@@ -27,6 +32,11 @@
 
   p {
     margin: 0;
+
+    +h3 {
+      margin-top: 2rem;
+      margin-bottom: 0;
+    }
   }
 
   h3 {
@@ -41,8 +51,11 @@
 
     li {
       margin-bottom: .8rem;
+
       @include select(Button__plain) {
-        &, &:visited {
+
+        &,
+        &:visited {
           color: $color-white;
         }
       }
@@ -67,6 +80,7 @@
   .InnerContainer {
     display: flex;
     flex-direction: row;
+
     @include select(Link) {
       margin-right: 3rem;
       font-size: .9em;
@@ -82,7 +96,7 @@
       display: none;
     }
 
-    h3 {
+    >h3 {
       padding-left: 2.8rem;
       margin-top: 1.4rem;
       width: fit-content;
@@ -115,7 +129,7 @@
         }
       }
 
-      + .Panel {
+      +.Panel {
         margin-top: 4rem;
       }
     }
@@ -144,8 +158,9 @@
         left: 0;
         max-height: 0;
         max-width: 0;
-        position: absolute ;
+        position: absolute;
       }
+
       strong {
         display: block;
       }
@@ -160,11 +175,8 @@
 .Panel:nth-child(2) {
   width: 24rem;
 
-  li {
-    // white-space: nowrap;
-    a {
-      font-weight: bold;
-    }
+  li a {
+    font-weight: bold;
   }
 
   @include mq-tablet() {
@@ -175,6 +187,7 @@
 
 .Panel:nth-child(3) {
   width: 32rem;
+
   @include mq-tablet() {
     width: 100%;
   }

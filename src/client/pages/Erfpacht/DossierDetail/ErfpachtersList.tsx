@@ -1,13 +1,22 @@
-import { OrderedList } from '@amsterdam/design-system-react';
+import { Link, OrderedList } from '@amsterdam/design-system-react';
 import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { useMediumScreen } from '../../../hooks';
+import { WijzigenLink } from './WijzigenLink';
 
 interface ErfpachtersListProps {
   erfpachters?: ErfpachtV2DossiersDetail['relaties'];
+  debiteurNummer?: string;
+  dossierNummer?: string;
+  relatieCode?: string;
 }
 
-export function ErfpachtersList({ erfpachters }: ErfpachtersListProps) {
+export function ErfpachtersList({
+  erfpachters,
+  debiteurNummer,
+  dossierNummer,
+  relatieCode,
+}: ErfpachtersListProps) {
   const isMediumScreen = useMediumScreen();
   const colCount = isMediumScreen ? 3 : 2;
   const rowsPerCol = isMediumScreen ? 12 : 4;
@@ -26,6 +35,7 @@ export function ErfpachtersList({ erfpachters }: ErfpachtersListProps) {
           gridTemplateRows: `repeat(${erfpachters.length}, 1fr)`,
         };
   }
+
   if (erfpachters?.length) {
     return (
       <OrderedList
@@ -36,7 +46,17 @@ export function ErfpachtersList({ erfpachters }: ErfpachtersListProps) {
         {erfpachters.map((relatie, index, all) => {
           return (
             <OrderedList.Item key={relatie.relatieNaam}>
-              {relatie.relatieNaam}
+              {relatie.relatieNaam}{' '}
+              {relatie.betaler && relatie.relatieCode !== relatieCode ? (
+                <WijzigenLink
+                  linkVariant="inList"
+                  relatieCode={relatie.relatieCode}
+                  dossierNummer={dossierNummer}
+                  debiteurNummer={debiteurNummer}
+                />
+              ) : (
+                ''
+              )}
             </OrderedList.Item>
           );
         })}

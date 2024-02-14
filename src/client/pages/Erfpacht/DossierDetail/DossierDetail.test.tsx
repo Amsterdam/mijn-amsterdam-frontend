@@ -14,6 +14,7 @@ import { AppState } from '../../../AppState';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 import ErfpachtDossierDetail from './ErfpachtDossierDetail';
+import { jsonCopy } from '../../../../universal/helpers';
 
 describe('<Erfpacht/DossierDetail />', () => {
   const routeEntry = generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {
@@ -41,6 +42,7 @@ describe('<Erfpacht/DossierDetail />', () => {
   test('Renders Dossier Detailpage no data', async () => {
     bffApi
       .get('/services/erfpachtv2/dossier/E.123.123')
+      .times(1)
       .reply(200, { content: null, status: 'OK' });
 
     const testState = {
@@ -70,7 +72,11 @@ describe('<Erfpacht/DossierDetail />', () => {
   test('Renders Dossier Detailpage with data', async () => {
     bffApi
       .get('/services/erfpachtv2/dossier/E.123.123')
-      .reply(200, { content: dossierDetailTransformed, status: 'OK' });
+      .times(1)
+      .reply(200, {
+        content: jsonCopy(dossierDetailTransformed),
+        status: 'OK',
+      });
 
     const testState = {
       ERFPACHTv2: {
@@ -98,7 +104,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('E123/456 - Dit en dat plein 22 H')
+        screen.getByText('E123/456: Dit en dat plein 22 H')
       ).toBeInTheDocument();
       expect(screen.getByText('12132/345345/456757/ff')).toBeInTheDocument();
       expect(screen.getByText('H.J de Gruyter')).toBeInTheDocument();
@@ -116,49 +122,42 @@ describe('<Erfpacht/DossierDetail />', () => {
         ).not.toBeInTheDocument();
       }
       expect(screen.queryAllByText('Toon').length).toBe(4);
-    });
 
-    // Facturen
-    act(() => {
       userEvent.click(screen.queryAllByText('Toon')[3]);
     });
 
+    // Facturen
     await waitFor(() => {
       expect(screen.queryByText('Verberg')).toBeInTheDocument();
       expect(screen.queryAllByText('Toon').length).toBe(3);
       expect(screen.getByText('DEBITEUR 186698')).toBeInTheDocument();
-      expect(screen.getByText('Betaler aanpassen')).toBeInTheDocument();
+      expect(screen.queryByText('Betaler aanpassen')).not.toBeInTheDocument();
       expect(screen.getByText('Toon meer')).toBeInTheDocument();
 
       for (const factuur of facturenPage1) {
         expect(screen.getByText(factuur.factuurNummer)).toBeInTheDocument();
       }
-    });
 
-    // Financieel
-    act(() => {
       userEvent.click(screen.queryAllByText('Toon')[2]);
     });
 
+    // Financieel
     await waitFor(() => {
       expect(screen.queryAllByText('Toon').length).toBe(2);
       expect(screen.queryAllByText('Verberg').length).toBe(2);
 
-      expect(
-        screen.getByText('Huidige periode 24 juni 2022 t/m 31 december 2046')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Huidige periode:')).toBeInTheDocument();
+      expect(screen.getByText('24-06-2022 t/m 31-12-2046')).toBeInTheDocument();
       expect(
         screen.getByText('€ 128,27 na indexering 2022')
       ).toBeInTheDocument();
       expect(screen.getByText('Afgekocht')).toBeInTheDocument();
       expect(screen.getByText('AB1994')).toBeInTheDocument();
-    });
 
-    // Bijzondere bepalingen
-    act(() => {
       userEvent.click(screen.queryAllByText('Toon')[1]);
     });
 
+    // Bijzondere bepalingen
     await waitFor(() => {
       expect(screen.queryAllByText('Toon').length).toBe(1);
       expect(screen.queryAllByText('Verberg').length).toBe(3);
@@ -169,10 +168,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(
         screen.getByText('Bruto vloeroppervlak: 35 m2')
       ).toBeInTheDocument();
-    });
 
-    // Juridisch
-    act(() => {
       userEvent.click(screen.queryAllByText('Toon')[0]);
     });
 
@@ -183,6 +179,35 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(screen.getByText('Eeuwigdurend')).toBeInTheDocument();
       expect(screen.getByText('AB2016')).toBeInTheDocument();
     });
+  });
+
+  test('Renders Dossier Detailpage with betaler aanpassen link', async () => {
+    bffApi
+      .get('/services/erfpachtv2/dossier/E.123.123')
+      .times(1)
+      .reply(200, {
+        content: jsonCopy(dossierDetailTransformed),
+        status: 'OK',
+      });
+
+    const testState = {
+      ERFPACHTv2: {
+        status: 'OK',
+        content: transformDossierResponse(ERFPACHTv2_DOSSIERS as any, '999999'),
+      },
+    } as AppState;
+
+    const screen = render(
+      <Component
+        initializeState={(snapshot) => {
+          snapshot.set(appStateAtom, testState);
+        }}
+      />
+    );
+
+    await waitFor(() =>
+      expect(screen.getByText('Betaler aanpassen')).toBeInTheDocument()
+    );
   });
 
   test('Renders Dossier Detailpage with error', async () => {

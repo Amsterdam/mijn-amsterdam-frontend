@@ -108,11 +108,12 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 7 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -376,11 +377,12 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 7 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -807,11 +809,12 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
           class="_Value_6f1df2"
         >
           Amstel 1 1011PN Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -1070,11 +1073,12 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 10 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -1352,11 +1356,12 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
           class="_Value_6f1df2"
         >
           Amstel 1 1017AB Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -2590,11 +2595,12 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
           class="_Value_6f1df2"
         >
           Oudezijds Voorburgwal 233
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -2878,11 +2884,12 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
           class="_Value_6f1df2"
         >
           Weesperstraat 113
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
     </div>
@@ -3086,11 +3093,12 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
           class="_Value_6f1df2"
         >
           J.J. Cremerplein 54-1 1054 TM Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -3355,11 +3363,12 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
           class="_Value_6f1df2"
         >
           J.J. Cremerplein 54-1 1054 TM Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -3643,11 +3652,12 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 10 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -3925,11 +3935,12 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 14 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
     </div>
@@ -4377,11 +4388,12 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 14 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
     </div>
@@ -4595,11 +4607,12 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 7 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
     </div>
@@ -5310,11 +5323,12 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 14 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
     </div>
@@ -5523,11 +5537,12 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 10 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div
@@ -5772,11 +5787,12 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
           class="_Value_6f1df2"
         >
           Gustav Mahlerlaan 10 1082 PP Amsterdam
-          <button
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _MapLink_28a267"
+          <br />
+          <a
+            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
-          </button>
+          </a>
         </p>
       </div>
       <div

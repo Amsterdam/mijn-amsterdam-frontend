@@ -73,7 +73,7 @@ export default function ErfpachtDossierDetail() {
           )}
           {(api.isError || noContent) && (
             <Grid.Cell span="all">
-              <Alert title="Foutmelding" icon severity="error">
+              <Alert title="Foutmelding" severity="error">
                 <Paragraph>
                   We kunnen op dit moment geen erfpacht dossier tonen.
                 </Paragraph>
@@ -84,7 +84,10 @@ export default function ErfpachtDossierDetail() {
           {!!dossier && (
             <>
               <Grid.Cell span="all">
-                <DatalistGeneral dossier={dossier} />
+                <DatalistGeneral
+                  dossier={dossier}
+                  relatieCode={ERFPACHTv2.content?.relatieCode}
+                />
               </Grid.Cell>
 
               <Grid.Cell span="all">

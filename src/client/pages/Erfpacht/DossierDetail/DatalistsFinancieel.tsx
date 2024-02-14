@@ -1,4 +1,4 @@
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Link } from '@amsterdam/design-system-react';
 import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
@@ -18,7 +18,14 @@ function DatalistFinancieelPeriode({
   const rows = [
     {
       label: periode.titelFinancieelAlgemeneBepaling,
-      content: periode.algemeneBepaling,
+      content: (
+        <Link
+          rel="noopener noreferrer"
+          href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/algemene-bepalingen/"
+        >
+          {periode.algemeneBepaling}
+        </Link>
+      ),
     },
     {
       label: periode.titelAfgekocht,
@@ -31,8 +38,11 @@ function DatalistFinancieelPeriode({
   ];
   return (
     <>
-      <Heading level={3} className={styles.Section_heading}>
-        {periode.titelFinancieelPeriodeVan} {periode.periodeSamengesteld}
+      <Heading level={3} size="level-4" className={styles.Section_heading}>
+        {periode.titelFinancieelPeriodeVan}:{' '}
+        <span className={styles.periodeSamengesteld}>
+          {periode.periodeSamengesteld}
+        </span>
       </Heading>
       <Datalist rows={rows} />
     </>
@@ -53,7 +63,14 @@ function DatalistToekomstigePeriode({
   const rows = [
     {
       label: periode.titelFinancieelToekomstigeAlgemeneBepaling,
-      content: periode.algemeneBepaling,
+      content: (
+        <Link
+          rel="noopener noreferrer"
+          href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/algemene-bepalingen/"
+        >
+          {periode.algemeneBepaling}
+        </Link>
+      ),
     },
     {
       label: periode.titelAfgekocht,
