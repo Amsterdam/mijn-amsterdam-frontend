@@ -591,8 +591,3 @@ export const securityHeaders: Record<string, string> = {
     require-trusted-types-for 'script'
   `.replace(/\n/g, ''),
 };
-
-// if (IS_DEVELOPMENT) {
-//   securityHeaders['Access-Control-Allow-Origin'] = '*';
-//   securityHeaders['Access-Control-Allow-Credentials'] = 'true';
-// }
