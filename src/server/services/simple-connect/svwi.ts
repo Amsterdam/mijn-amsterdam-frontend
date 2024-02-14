@@ -9,20 +9,24 @@ interface SVWISourceResponseData {
   berichten: any[];
 }
 
-function transformSVWIResponse(response: SVWISourceResponseData) {
+function transformSVWIResponse(response: SVWISourceResponseData | null) {
   return {
-    isKnown: !!response.gebruikerBekend,
+    isKnown: !!response?.gebruikerBekend,
   };
 }
-
 
 export function fetchSVWI(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(requestID, getApiConfig('SVWI', {
-    transformResponse: transformSVWIResponse,
-  }), false, authProfileAndToken);
+  return fetchService(
+    requestID,
+    getApiConfig('SVWI', {
+      transformResponse: transformSVWIResponse,
+    }),
+    false,
+    authProfileAndToken
+  );
 }
 
 export async function fetchSVWINotifications(
@@ -32,8 +36,8 @@ export async function fetchSVWINotifications(
   return await fetchTipsAndNotifications(
     requestID,
     getApiConfig('SVWI', {
-    transformResponse: transformSVWIResponse,
-  }),
+      transformResponse: transformSVWIResponse,
+    }),
     Chapters.SVWI,
     authProfileAndToken
   );
