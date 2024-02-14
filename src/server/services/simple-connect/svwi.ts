@@ -15,11 +15,6 @@ function transformSVWIResponse(response: SVWISourceResponseData) {
   };
 }
 
-function getConfigSVWI(token: string = ''): DataRequestConfig {
-  return getApiConfig('SVWI', {
-    transformResponse: transformSVWIResponse,
-  });
-}
 
 export function fetchSVWI(
   requestID: requestID,
