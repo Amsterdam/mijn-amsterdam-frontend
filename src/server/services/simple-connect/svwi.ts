@@ -20,7 +20,9 @@ export function fetchSVWI(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(requestID, getConfigSVWI(authProfileAndToken.token));
+  return fetchService(requestID, getApiConfig('SVWI', {
+    transformResponse: transformSVWIResponse,
+  }), false, authProfileAndToken);
 }
 
 export async function fetchSVWINotifications(
