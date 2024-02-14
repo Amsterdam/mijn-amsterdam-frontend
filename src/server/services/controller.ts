@@ -59,6 +59,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import { fetchSVWI } from './simple-connect/svwi';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -98,6 +99,7 @@ const WPI_TOZO = callService(fetchTozo);
 const WPI_TONK = callService(fetchTonk);
 const WPI_BBZ = callService(fetchBbz);
 const WPI_STADSPAS = callService(fetchStadspas);
+const SVWI = callService(fetchSVWI);
 
 const WMO = callService(fetchWmo);
 
@@ -185,6 +187,7 @@ const SERVICES_INDEX = {
   WPI_TONK,
   WPI_BBZ,
   WPI_STADSPAS,
+  SVWI,
   WMO,
   VERGUNNINGEN,
   MY_LOCATION,
@@ -265,6 +268,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_BBZ,
     WPI_TONK,
     WPI_STADSPAS,
+    SVWI,
     NOTIFICATIONS,
     MY_LOCATION,
     KVK,

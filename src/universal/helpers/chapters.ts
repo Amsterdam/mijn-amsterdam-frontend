@@ -11,6 +11,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     WPI_TOZO,
     WPI_TONK,
     WPI_BBZ,
+    SVWI,
     ERFPACHT,
     ERFPACHTv2,
     AFVAL,
@@ -61,8 +62,12 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
           hasUitkeringsspecificaties)
       );
 
-    case Chapters.INKOMEN_SVWI:
-      return isAmsterdam && FeatureToggle.svwiLinkActive;
+    case Chapters.SVWI:
+      return (
+        isAmsterdam &&
+        FeatureToggle.svwiLinkActive &&
+        SVWI?.content?.isKnown === true
+      );
 
     case Chapters.STADSPAS:
       const hasStadspas =

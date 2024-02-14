@@ -71,6 +71,8 @@ process.env.BFF_VERGUNNINGEN_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_WMO_API_BASE_URL = `${remoteApiHost}`;
 
+process.env.SVWI_API_BASE_URL = `${remoteApiHost}`;
+
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
 process.env.BFF_SIA_BASE_URL = `${remoteApiHost}/sia`;
 process.env.BFF_SIA_IAM_TOKEN_ENDPOINT = `${remoteApiHost}/sia-iam-token`;

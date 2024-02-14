@@ -45,6 +45,9 @@ export const PRISTINE_APPSTATE: AppState = {
   WPI_STADSPAS: apiPristineResult(null, {
     profileTypes: ['private'],
   }),
+  SVWI: apiPristineResult(null, {
+    profileTypes: ['private'],
+  }),
   WMO: apiPristineResult([], {
     profileTypes: ['private'],
   }),
