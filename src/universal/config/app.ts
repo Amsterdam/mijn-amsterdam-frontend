@@ -43,6 +43,7 @@ export const FeatureToggle = {
   stadspasRequestsActive: false,
   dbDisabled: false,
   passQueryParamsToStreamUrl: !IS_AP,
+  laadpalenActive: false,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.

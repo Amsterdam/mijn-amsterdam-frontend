@@ -62,26 +62,30 @@ const month = new Date().getMonth();
 if (month !== 11 && month !== 0) {
   excludeFractieOmschrijving.push('Kerstboom');
 }
-
+FeatureToggle.laadpalenActive;
 export const DATASETS: DatasetCategories = {
-  laadpalen: {
-    title: 'Laadpalen',
-    datasets: {
-      laadpalen: {
-        title: 'Laadpalen',
-        filters: {
-          connector_type: {
-            title: 'Connector type',
-            sort: 'asc',
-          },
-          charging_cap_max: {
-            title: 'Wattage',
-            sort: 'asc',
+  ...(FeatureToggle.laadpalenActive
+    ? {
+        laadpalen: {
+          title: 'Laadpalen',
+          datasets: {
+            laadpalen: {
+              title: 'Laadpalen',
+              filters: {
+                connector_type: {
+                  title: 'Connector type',
+                  sort: 'asc',
+                },
+                charging_cap_max: {
+                  title: 'Wattage',
+                  sort: 'asc',
+                },
+              },
+            },
           },
         },
-      },
-    },
-  },
+      }
+    : {}),
   afvalcontainers: {
     title: 'Afvalcontainers',
     datasets: {
