@@ -140,7 +140,7 @@
     "use-debounce": "^10.0.0",
     "vite": "^5.0.10",
     "vite-plugin-svgr": "^4.2.0",
-    "vitest": "^1.1.0",
+    "vitest": "^1.2.2",
     "xlsx": "file:vendor/xlsx-0.20.0.tgz"
   },
   "optionalDependencies": {
