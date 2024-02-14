@@ -24,6 +24,7 @@ import {
   refineFilterSelection,
   transformGenericApiListResponse,
 } from './helpers';
+import { remoteApiHost } from '../../../setupTests';
 
 const DSO_API_RESULT = {
   _links: {
@@ -723,6 +724,7 @@ describe('Buurt helpers', () => {
       featureType: 'Point',
       idKeyList: 'otherUniqueIdentifier',
       triesUntilConsiderdStale: 1,
+      listUrl: remoteApiHost,
     };
 
     const sourceResponse: any = {
