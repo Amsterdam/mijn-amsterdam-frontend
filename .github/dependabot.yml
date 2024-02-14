@@ -13,3 +13,12 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      production-dependencies:
+        dependency-type: 'production'
+        update-types:
+          - 'minor'
+          - 'patch'
