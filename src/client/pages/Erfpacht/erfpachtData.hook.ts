@@ -1,3 +1,4 @@
+import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useMediumScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -21,19 +22,20 @@ type DisplayPropsFacturen = Record<string, string> & {
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
   const isMediumScreen = useMediumScreen();
-  const dossiersBase = ERFPACHTv2.content?.dossiers;
+  const erfpachtData = ERFPACHTv2.content as ErfpachtV2DossiersResponse;
+  const dossiersBase = erfpachtData?.dossiers;
   const dossiers = addLinkElementToProperty(
     dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );
-  const openFacturenBase = ERFPACHTv2.content?.openstaandeFacturen;
+  const openFacturenBase = erfpachtData?.openstaandeFacturen;
   const openFacturen = openFacturenBase?.facturen ?? [];
 
   let displayPropsDossiers: DisplayPropsDossiers | null = null;
-  let titleDossiers = ERFPACHTv2.content?.titelDossiersKop;
+  let titleDossiers = erfpachtData?.titelDossiersKop;
   let displayPropsOpenFacturen: Partial<DisplayPropsFacturen> | null = null;
   let displayPropsAlleFacturen: DisplayPropsFacturen | null = null;
-  let titleOpenFacturen = ERFPACHTv2.content?.titelOpenFacturenKop;
+  let titleOpenFacturen = erfpachtData?.titelOpenFacturenKop;
 
   if (!!dossiersBase) {
     displayPropsDossiers = {

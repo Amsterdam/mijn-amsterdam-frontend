@@ -34,7 +34,7 @@ export function ListPagePaginated({
   chapter,
   displayProps,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
-  noItemsText = 'U heet geen gegevens op deze pagina.',
+  noItemsText = 'U heeft (nog) geen gegevens op deze pagina.',
   isError,
   isLoading,
   items,
@@ -78,7 +78,7 @@ export function ListPagePaginated({
           {!!body && <Grid.Cell span="all">{body}</Grid.Cell>}
           {isError && (
             <Grid.Cell span="all">
-              <Alert title="Foutmelding" icon severity="error">
+              <Alert title="Foutmelding" severity="error">
                 <Paragraph>{errorText}</Paragraph>
               </Alert>
             </Grid.Cell>

@@ -1,7 +1,11 @@
 import crypto from 'crypto';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
-import { defaultDateFormat } from '../../../universal/helpers';
+import {
+  defaultDateFormat,
+  jsonCopy,
+  sortAlpha,
+} from '../../../universal/helpers';
 import { LinkProps } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -359,9 +363,10 @@ function getDossierNummerUrlParam(dossierNummer: string) {
 
 export function transformErfpachtDossierProperties<
   T extends ErfpachtV2DossierSource | ErfpachtV2DossiersDetailSource,
->(dossier: T): T & ErfpachtDossierPropsFrontend {
+>(dossierSource: T): T & ErfpachtDossierPropsFrontend {
+  const dossier: T = jsonCopy(dossierSource);
   const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
-  const title = `${dossier.dossierNummer} - ${dossier.voorkeursadres}`;
+  const title = `${dossier.dossierNummer}: ${dossier.voorkeursadres}`;
 
   // Filter out relaties that we don't want to show in the frontend.
   if ('relaties' in dossier && !!dossier.relaties) {
@@ -390,21 +395,7 @@ export function transformErfpachtDossierProperties<
     });
   }
 
-  if (
-    'financieel' in dossier &&
-    !!dossier.financieel?.huidigePeriode.periodeSamengesteld
-  ) {
-    dossier.financieel.huidigePeriode.periodeSamengesteld = `${defaultDateFormat(
-      dossier.financieel.huidigePeriode.periodeVan
-    )} t/m ${
-      dossier.financieel.huidigePeriode.periodeTm
-        ? `${defaultDateFormat(dossier.financieel.huidigePeriode.periodeTm)}`
-        : '-'
-    }`;
-  }
-
-  return {
-    ...dossier,
+  return Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
     link: {
@@ -413,25 +404,24 @@ export function transformErfpachtDossierProperties<
       }),
       title,
     },
-  };
+  });
 }
 
 export function transformDossierResponse(
-  responseData: ErfpachtV2DossiersResponse,
+  responseDataSource: ErfpachtV2DossiersResponse,
   relatieCode: Erfpachtv2ErpachterResponseSource['relationCode']
 ) {
+  const responseData: ErfpachtV2DossiersResponse = responseDataSource
+    ? jsonCopy(responseDataSource)
+    : {};
   const hasDossiers = !!responseData?.dossiers?.dossiers?.length;
 
-  if (responseData === null) {
-    responseData = {} as ErfpachtV2DossiersResponse;
-  }
-
   if (hasDossiers) {
-    responseData.dossiers.dossiers = responseData.dossiers?.dossiers.map(
-      (dossier) => {
+    responseData.dossiers.dossiers = responseData.dossiers?.dossiers
+      .map((dossier) => {
         return transformErfpachtDossierProperties(dossier);
-      }
-    );
+      })
+      .sort(sortAlpha('voorkeursadres', 'asc'));
   }
 
   if (responseData?.openstaandeFacturen?.facturen?.length) {

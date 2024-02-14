@@ -7,7 +7,7 @@ interface Row {
   content: ReactNode;
 }
 
-function DatalistRow({ label, content }: Row) {
+export function DatalistRow({ label, content }: Row) {
   return (
     <>
       <dt className={styles.Datalist__title}>{label}</dt>
