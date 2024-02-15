@@ -82,12 +82,6 @@ export interface BezwarenSourceResponse<T> {
   results: T[];
 }
 
-export interface BezwaarDocument {
-  titel: string;
-  beschrijving: string;
-  registratiedatum: string;
-}
-
 export interface BezwaarSourceDocument {
   url: string;
   identificatie: string;
@@ -119,6 +113,10 @@ export interface BezwaarSourceDocument {
     | 'Online Procesdossier'
     | 'Online Besluitvorming'
     | 'Online Aangeleverd';
+}
+
+export interface BezwaarDocument extends GenericDocument {
+  dossiertype: BezwaarSourceDocument['dossiertype'];
 }
 
 export interface BezwaarResponse {

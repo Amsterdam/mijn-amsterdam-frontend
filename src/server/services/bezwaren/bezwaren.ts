@@ -8,15 +8,15 @@ import {
   apiSuccessResult,
   dateSort,
   defaultDateFormat,
-  getSettledResult,
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import { GenericDocument, MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   Bezwaar,
+  BezwaarDocument,
   BezwaarResponse,
   BezwaarSourceData,
   BezwaarSourceDocument,
@@ -26,8 +26,52 @@ import {
   Kenmerk,
   kenmerkKey,
 } from './types';
+import memoizee from 'memoizee';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
+
+async function getBezwarenApiHeaders_(
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const now = new Date();
+
+  const tokenData = {
+    unique_name: process.env.BFF_BEZWAREN_EMAIL,
+    actort: process.env.BFF_BEZWAREN_USER,
+    email: process.env.BFF_BEZWAREN_EMAIL,
+    userId: process.env.BFF_BEZWAREN_USER,
+    userLogin: process.env.BFF_BEZWAREN_EMAIL,
+    medewerkerId: parseInt(process.env.BFF_BEZWAREN_EMPLOYEE_ID ?? '-1', 10),
+    role: '',
+    nameIdentifier: '',
+    exp: Math.ceil(now.setMinutes(now.getMinutes() + 5) / 1000),
+  };
+
+  if (authProfileAndToken.profile.authMethod === 'digid') {
+    tokenData.role = 'natuurlijk_persoon';
+    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
+  }
+
+  if (authProfileAndToken.profile.authMethod === 'eherkenning') {
+    tokenData.role = 'niet_natuurlijk_persoon';
+    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
+  }
+
+  const secret = new TextEncoder().encode(process.env.BFF_BEZWAREN_TOKEN_KEY);
+  const jwt = await new jose.SignJWT(tokenData)
+    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+    .sign(secret);
+
+  const header = {
+    'Content-Type': 'application/json',
+    apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
+    Authorization: `Bearer ${jwt}`,
+  };
+
+  return header;
+}
+
+export const getBezwarenApiHeaders = memoizee(getBezwarenApiHeaders_);
 
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
@@ -41,7 +85,7 @@ function getZaakUrl(zaakId: string) {
 
 function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
-): GenericDocument[] {
+): BezwaarDocument[] {
   if (Array.isArray(response.results)) {
     try {
       return response.results.map(
@@ -55,7 +99,7 @@ function transformBezwarenDocumentsResults(
             title: bestandsnaam,
             datePublished: defaultDateFormat(verzenddatum),
             url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-              BffEndpoints.BEZWAREN_ATTACHMENTS,
+              BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
               { id: documentIdEncrypted }
             )}`,
             dossiertype,
@@ -69,6 +113,50 @@ function transformBezwarenDocumentsResults(
   return [];
 }
 
+function transformBezwaarStatus(
+  response: BezwarenSourceResponse<BezwaarSourceStatus>
+): BezwaarStatus[] {
+  const results = response.results;
+  if (Array.isArray(results)) {
+    return results.map((result) => {
+      const statusDatum = new Date(result.datumStatusGezet);
+      const now = new Date();
+
+      const status = {
+        uuid: result.uuid,
+        datum: statusDatum <= now ? result.datumStatusGezet : '',
+        statustoelichting: result.statustoelichting,
+      };
+
+      return status;
+    });
+  }
+
+  return [];
+}
+
+async function fetchBezwaarStatus(
+  zaakId: string,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const params = {
+    zaak: getZaakUrl(zaakId),
+  };
+
+  const requestConfig = getApiConfig('BEZWAREN_STATUS', {
+    params,
+    transformResponse: transformBezwaarStatus,
+    headers: await getBezwarenApiHeaders(authProfileAndToken),
+  });
+
+  const statusResponse = await requestData<BezwaarStatus[]>(
+    requestConfig,
+    zaakId
+  );
+
+  return statusResponse;
+}
+
 export async function fetchBezwarenDocuments(
   zaakId: string,
   authProfileAndToken: AuthProfileAndToken
@@ -77,7 +165,7 @@ export async function fetchBezwarenDocuments(
     identifier: zaakId,
   };
 
-  const bezwarenDocumentsResponse = requestData<GenericDocument[]>(
+  return requestData<BezwaarDocument[]>(
     getApiConfig('BEZWAREN_DOCUMENTS', {
       params,
       transformResponse: transformBezwarenDocumentsResults,
@@ -85,8 +173,6 @@ export async function fetchBezwarenDocuments(
     }),
     zaakId
   );
-
-  return bezwarenDocumentsResponse;
 }
 
 function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
@@ -148,7 +234,8 @@ function transformBezwarenResults(
 
           return bezwaar;
         })
-        .filter((bezwaar) => !!bezwaar.identificatie), // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
+        .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
+        .sort(dateSort('ontvangstdatum', 'desc')),
       count: response.count,
     };
   }
@@ -157,134 +244,6 @@ function transformBezwarenResults(
     bezwaren: [],
     count: 0,
   };
-}
-
-function transformBezwaarStatus(
-  response: BezwarenSourceResponse<BezwaarSourceStatus>
-): BezwaarStatus[] {
-  const results = response.results;
-  if (Array.isArray(results)) {
-    return results.map((result) => {
-      const statusDatum = new Date(result.datumStatusGezet);
-      const now = new Date();
-
-      const status = {
-        uuid: result.uuid,
-        datum: statusDatum <= now ? result.datumStatusGezet : '',
-        statustoelichting: result.statustoelichting,
-      };
-
-      return status;
-    });
-  }
-
-  return [];
-}
-
-async function fetchBezwaarStatus(
-  zaakId: string,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const params = {
-    zaak: getZaakUrl(zaakId),
-  };
-
-  const requestConfig = getApiConfig('BEZWAREN_STATUS', {
-    params,
-    transformResponse: transformBezwaarStatus,
-    headers: await getBezwarenApiHeaders(authProfileAndToken),
-  });
-
-  const bezwarenStatusResponse = await requestData<BezwaarStatus[]>(
-    requestConfig,
-    zaakId
-  );
-
-  return bezwarenStatusResponse;
-}
-
-export async function fetchBezwaarDocument(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  documentIdEncrypted: string,
-  isDownload: boolean = true
-) {
-  const documentId = decrypt(
-    documentIdEncrypted,
-    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  );
-
-  const url = generatePath(
-    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id${
-      isDownload ? '/download' : ''
-    }`,
-    { id: documentId }
-  );
-
-  return axios({
-    url,
-    headers: await getBezwarenApiHeaders(authProfileAndToken),
-    responseType: isDownload ? 'stream' : 'json',
-  });
-}
-
-async function enrichBezwaarResponse(
-  bezwaren: Bezwaar[],
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const rs = [];
-
-  // Go through the list of returned bezwaren and use the uuid property to call other api's
-  for (const bezwaar of bezwaren) {
-    // non-blocking fetch of statusses
-    const statussenPromise = fetchBezwaarStatus(
-      bezwaar.uuid,
-      authProfileAndToken
-    );
-
-    // non-blocking fetch of documents
-    const documentenPromise = fetchBezwarenDocuments(
-      bezwaar.uuid,
-      authProfileAndToken
-    );
-
-    // combine all the data into one promise per bezwaar
-    rs.push(
-      Promise.all([
-        Promise.resolve(bezwaar),
-        statussenPromise,
-        documentenPromise,
-      ]).then((results) => apiSuccessResult(results))
-    );
-  }
-
-  // Wait for all the promises to settle
-  const results = await Promise.allSettled(rs);
-  const enrichedBezwaren: Bezwaar[] = [];
-
-  for (const result of results) {
-    const settledResult = getSettledResult(result);
-
-    if (settledResult.status === 'OK') {
-      const [bezwaar, { content: statusses }, { content: documents }] =
-        settledResult.content;
-
-      // Combine the results
-      const enrichedBezwaar: Bezwaar = {
-        ...bezwaar,
-        statussen: statusses ?? [],
-        documenten: documents ?? [],
-      };
-
-      enrichedBezwaren.push(enrichedBezwaar);
-    }
-  }
-
-  // Always return success regardless of potential errors in the additional api calls. These errors will be captured and sent to Sentry, not bugging the customer.
-  // In this case at least the bezwaar is visible (possibly without status and/or documents)
-  return apiSuccessResult(
-    enrichedBezwaren.sort(dateSort('ontvangstdatum', 'desc'))
-  );
 }
 
 export async function fetchBezwaren(
@@ -307,7 +266,6 @@ export async function fetchBezwaren(
   });
 
   let result: Bezwaar[] = [];
-
   let bezwarenResponse = await requestData<BezwaarResponse>(
     requestConfig,
     requestID
@@ -316,7 +274,6 @@ export async function fetchBezwaren(
   if (bezwarenResponse.status === 'OK' && bezwarenResponse.content) {
     result = result.concat(bezwarenResponse.content.bezwaren);
 
-    // Need more data ?
     while (
       result.length < bezwarenResponse.content.count &&
       bezwarenResponse.content.bezwaren.length > 0 &&
@@ -334,34 +291,12 @@ export async function fetchBezwaren(
         return bezwarenResponse;
       }
     }
-  }
 
-  // If the main call to bezwaren is ok, proceed.
-  if (bezwarenResponse.status === 'OK') {
-    return enrichBezwaarResponse(result, authProfileAndToken);
+    return apiSuccessResult(result);
   }
 
   // Return the likely error response otherwise. This will make sure the front-end knows to show an error message to the user.
   return bezwarenResponse;
-}
-
-export async function fetchBezwarenNotifications(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
-
-  if (bezwaren.status === 'OK') {
-    const notifications: MyNotification[] = Array.isArray(bezwaren.content)
-      ? bezwaren.content.map(createBezwaarNotification)
-      : [];
-
-    return apiSuccessResult({
-      notifications,
-    });
-  }
-
-  return apiDependencyError({ bezwaren });
 }
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
@@ -397,41 +332,73 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
   return notification;
 }
 
-async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
-  const now = new Date();
+export async function fetchBezwarenNotifications(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
 
-  const tokenData = {
-    unique_name: process.env.BFF_BEZWAREN_EMAIL,
-    actort: process.env.BFF_BEZWAREN_USER,
-    email: process.env.BFF_BEZWAREN_EMAIL,
-    userId: process.env.BFF_BEZWAREN_USER,
-    userLogin: process.env.BFF_BEZWAREN_EMAIL,
-    medewerkerId: parseInt(process.env.BFF_BEZWAREN_EMPLOYEE_ID ?? '-1', 10),
-    role: '',
-    nameIdentifier: '',
-    exp: Math.ceil(now.setMinutes(now.getMinutes() + 5) / 1000),
-  };
+  if (bezwaren.status === 'OK') {
+    const notifications: MyNotification[] = Array.isArray(bezwaren.content)
+      ? bezwaren.content.map(createBezwaarNotification)
+      : [];
 
-  if (authProfileAndToken.profile.authMethod === 'digid') {
-    tokenData.role = 'natuurlijk_persoon';
-    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
+    return apiSuccessResult({
+      notifications,
+    });
   }
 
-  if (authProfileAndToken.profile.authMethod === 'eherkenning') {
-    tokenData.role = 'niet_natuurlijk_persoon';
-    tokenData.nameIdentifier = authProfileAndToken.profile.id ?? '';
-  }
+  return apiDependencyError({ bezwaren });
+}
 
-  const secret = new TextEncoder().encode(process.env.BFF_BEZWAREN_TOKEN_KEY);
-  const jwt = await new jose.SignJWT(tokenData)
-    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-    .sign(secret);
+export type BezwaarDetail = {
+  statussen: BezwaarStatus[] | null;
+  documents: BezwaarDocument[] | null;
+};
 
-  const header = {
-    'Content-Type': 'application/json',
-    apikey: process.env.BFF_BEZWAREN_APIKEY ?? '',
-    Authorization: `Bearer ${jwt}`,
-  };
+export async function fetchBezwaarDetail(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zaakId: string
+) {
+  const bezwaarStatusRequest = fetchBezwaarStatus(zaakId, authProfileAndToken);
+  const bezwaarDocumentsRequest = fetchBezwarenDocuments(
+    zaakId,
+    authProfileAndToken
+  );
 
-  return header;
+  const [bezwaarStatusResponse, bezwaarDocumentsResponse] = await Promise.all([
+    bezwaarStatusRequest,
+    bezwaarDocumentsRequest,
+  ]);
+
+  return apiSuccessResult({
+    statussen: bezwaarStatusResponse.content,
+    documents: bezwaarDocumentsResponse.content,
+  });
+}
+
+export async function fetchBezwaarDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentIdEncrypted: string,
+  isDownload: boolean = true
+) {
+  const documentId = decrypt(
+    documentIdEncrypted,
+    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+  );
+
+  const url = generatePath(
+    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id${
+      isDownload ? '/download' : ''
+    }`,
+    { id: documentId }
+  );
+
+  return axios({
+    url,
+    headers: await getBezwarenApiHeaders(authProfileAndToken),
+    responseType: isDownload ? 'stream' : 'json',
+  });
 }
