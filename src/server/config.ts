@@ -301,8 +301,29 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 export type ApiUrlEntries = ApiUrlEntry[];
 export const apiUrlEntries = Object.entries(ApiUrls) as ApiUrlEntries;
 
-export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
-  return Object.assign({}, ApiConfig[name] || {}, config || {});
+export function getApiConfig(
+  name: SourceApiKey,
+  config: DataRequestConfig = {}
+): DataRequestConfig {
+  let apiConfig = ApiConfig[name];
+
+  // Take of the agent because it cannot be jsonCopied.
+  const agent = apiConfig.httpsAgent;
+  delete apiConfig.httpsAgent;
+
+  // Copy the config to prevent assigning privacy/identity related information across requests
+  let apiConfigCopy = jsonCopy(apiConfig);
+
+  // copy the config and transfer the https agent instance.
+  if (agent) {
+    // re-assign the agent
+    apiConfig.httpsAgent = agent;
+
+    // also assign agent to copy
+    apiConfigCopy.httpsAgent = agent;
+  }
+
+  return Object.assign(apiConfigCopy, config);
 }
 
 export const RelayPathsAllowed = {
