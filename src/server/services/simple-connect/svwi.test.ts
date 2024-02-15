@@ -31,6 +31,7 @@ describe('simple-connect/svwi', () => {
     remoteApi
       .get('/mijnamsterdam/v1/autorisatie/tegel')
       .matchHeader('Authorization', `Bearer ${authProfileAndToken.token}`)
+      .matchHeader('Ocp-Apim-Subscription-Key', 'xxx')
       .reply(200, SVWI);
 
     const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
@@ -51,6 +52,7 @@ describe('simple-connect/svwi', () => {
     remoteApi
       .get('/mijnamsterdam/v1/autorisatie/tegel')
       .matchHeader('Authorization', `Bearer ${authProfileAndToken.token}`)
+      .matchHeader('Ocp-Apim-Subscription-Key', 'xxx')
       .reply(200, SVWIWithUnknown);
 
     const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);

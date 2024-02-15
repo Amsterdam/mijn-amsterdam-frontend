@@ -72,6 +72,7 @@ process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_WMO_API_BASE_URL = `${remoteApiHost}`;
 
 process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
+process.env.BFF_SVWI_API_KEY = 'xxx';
 
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
 process.env.BFF_SIA_BASE_URL = `${remoteApiHost}/sia`;
