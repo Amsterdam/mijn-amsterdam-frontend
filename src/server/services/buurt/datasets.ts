@@ -600,7 +600,7 @@ function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
       return watt >= wattRange.range[0] && watt < wattRange.range[1];
     })?.label;
     // Assign a misc range
-    feature.properties.wattage = wattRange ?? 'W5';
+    feature.properties.maxWattage = wattRange ?? 'W5';
 
     // Add the connector type as feature property so we can filter it
     for (const connectorType of connectorTypes) {

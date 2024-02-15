@@ -105,8 +105,8 @@ export const DATASETS: DatasetCategories = {
               False: { title: 'Nee' },
             },
           },
-          wattage: {
-            title: 'Maximun wattage',
+          maxWattage: {
+            title: 'Maximum wattage',
             valueConfig: {
               W1: { title: '0-5 watt' },
               W2: { title: '50-10 watt' },
