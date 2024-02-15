@@ -112,5 +112,6 @@ export function transformGenericApiListResponse(
       }
     }
   }
+
   return collection;
 }

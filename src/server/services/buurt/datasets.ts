@@ -13,7 +13,7 @@ import {
   DatasetPropertyValue,
   FeatureType,
 } from '../../../universal/config/myarea-datasets';
-import { capitalizeFirstLetter } from '../../../universal/helpers';
+import { capitalizeFirstLetter, uniqueArray } from '../../../universal/helpers';
 import { DataRequestConfig } from '../../config';
 import { axiosRequest, getNextUrlFromLinkHeader } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
@@ -392,7 +392,7 @@ export const datasetEndpoints: Record<
   laadpalen: {
     listUrl:
       'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:normaal_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    transformList: transformGenericApiListResponse,
+    // transformList: transformLaadpalenListReponse, // Transforming the data is done in fetchAndTransformLaadpalen
     transformDetail: transformLaadpalenDetailResponse,
     idKeyList: 'id',
     featureType: 'Point',
@@ -403,13 +403,19 @@ export const datasetEndpoints: Record<
       'connector_type',
       'charging_cap_max',
       'url',
+      'name',
+      'street',
+      'housenumber',
+      'housenumberext',
+      'postalcode',
+      'city',
+      'provider',
     ],
     requestConfig: {
-      headers: {},
-      request: fetchLaadpalen,
+      request: fetchAndTransformLaadpalen,
       cancelTimeout: 30000,
     },
-    disabled: IS_PRODUCTION,
+    disabled: !FeatureToggle.laadpalenActive,
   },
 };
 
@@ -522,21 +528,104 @@ function transformMeldingDetailResponse(
   return item.properties;
 }
 
-export async function fetchLaadpalen(requestConfig: DataRequestConfig) {
+export async function fetchAndTransformLaadpalen<T>(
+  requestConfig: DataRequestConfig
+): Promise<AxiosResponse<T>> {
   const urls = [
-    requestConfig.url,
+    requestConfig.url, // zie datasetEndpoints.laadpalen.listUrl
     'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
   ];
+
+  const datasetId = 'laadpalen';
+  const datasetConfig = datasetEndpoints.laadpalen;
+
   const requests = urls.map((url) => {
-    return axiosRequest.request<DatasetFeatures>({
+    return axiosRequest.request<{ features: DatasetFeatures }>({
       ...requestConfig,
       url,
     });
   });
 
-  const responses: AxiosResponse[] = await Promise.all(requests);
-  responses[0].data = responses.map((response) => response.data).flat();
-  return responses[0];
+  const responses: AxiosResponse<
+    { features: DatasetFeatures } | DatasetFeatures
+  >[] = await Promise.all(requests);
+
+  // Merge the features we got from the 2 responses.
+  const features = responses
+    .map((response, index) => {
+      if ('features' in response.data) {
+        return response.data.features.map((feature) => {
+          // The second (index==1) dataset contains chargers of type `snellader`. Here we add a property that distinguishes it from the features of the first dataset _before_ the responses are merged.
+          Object.assign(feature.properties, { snellader: index === 1 });
+          return feature;
+        });
+      }
+      return response.data;
+    })
+    .flat();
+
+  // Transform all the features at once and assign back the result to the first Axios response.
+  responses[0].data = transformGenericApiListResponse(
+    datasetId,
+    datasetConfig,
+    {
+      features: transformLaadpalenFeatures(features),
+    }
+  );
+
+  return <AxiosResponse<T>>responses[0];
+}
+
+function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
+  let features = featuresSource;
+
+  const wattRanges = [
+    { label: 'W1', range: [0, 50] },
+    { label: 'W2', range: [50, 100] },
+    { label: 'W3', range: [100, 300] },
+    { label: 'W4', range: [300, Infinity] },
+  ];
+
+  const connectorTypes = uniqueArray(
+    features
+      .map((feature) => feature.properties.connector_type.split(';'))
+      .flat()
+  );
+
+  features = features.map((feature) => {
+    console.log('sn', feature);
+    // Determine the maximum wattage
+    const watt = parseInt(feature.properties.charging_cap_max, 10);
+    const wattRange = wattRanges.find((wattRange) => {
+      return watt >= wattRange.range[0] && watt < wattRange.range[1];
+    })?.label;
+    // Assign a misc range
+    feature.properties.wattage = wattRange ?? 'W5';
+
+    // Add the connector type as feature property so we can filter it
+    for (const connectorType of connectorTypes) {
+      feature.properties[connectorType] =
+        feature.properties.connector_type.includes(connectorType);
+    }
+
+    // feature.properties.address = // Add the address
+    // Add other useful properties // see the dataset response
+
+    return feature;
+  });
+
+  return features;
+}
+
+function transformLaadpalenDetailResponse(
+  responseData: any,
+  { datasetId, config, id, datasetCache }: TransformDetailProps
+) {
+  const item = datasetCache
+    ?.getKey('features')
+    ?.find((item: any) => item.properties.id === id);
+
+  return item?.properties ?? null;
 }
 
 function createCustomFractieOmschrijving(featureProps: any) {
@@ -602,25 +691,6 @@ function transformAfvalcontainerDetailResponse(responseData: any) {
           fractieOmschrijving,
         },
       ],
-    },
-  };
-}
-
-function transformLaadpalenDetailResponse(
-  responseData: any,
-  { datasetId, config, id, datasetCache }: TransformDetailProps
-) {
-  const item = responseData.features?.find(
-    (item: any) => item.properties.id === id
-  );
-
-  if (!item) {
-    return null;
-  }
-
-  return {
-    _embedded: {
-      laadpaal: [{ ...item.properties, availability: responseData.name }],
     },
   };
 }
