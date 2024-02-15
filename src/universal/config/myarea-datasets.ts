@@ -305,7 +305,7 @@ export const DATASETS: DatasetCategories = {
       meldingenBuurt: {
         title: 'Meldingen',
         filters: {
-          categorie: {
+          category: {
             title: 'Categorie',
             valueConfig: {
               Afval: {

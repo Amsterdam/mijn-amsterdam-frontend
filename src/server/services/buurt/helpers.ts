@@ -30,12 +30,41 @@ import {
   MaPointFeature,
 } from './datasets';
 
-export function getApiEmbeddedResponse(id: string, responseData: any) {
+export function dsoApiListUrl(
+  dataset: string,
+  pageSize: number = 1000,
+  datasetId?: DatasetId
+) {
+  return (datasetConfig: DatasetConfig) => {
+    const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
+    const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,${
+      datasetConfig.geometryKey || 'geometry'
+    }`;
+    const pageSizeParam = `&_pageSize=${pageSize}`;
+
+    const propertyFilters = getPropertyFilters(datasetId || embeddedDatasetId);
+    const fieldNames = propertyFilters ? Object.keys(propertyFilters) : [];
+
+    if (datasetConfig.dsoApiAdditionalStaticFieldNames) {
+      fieldNames.push(...datasetConfig.dsoApiAdditionalStaticFieldNames);
+    }
+
+    const additionalFieldNames = fieldNames.length
+      ? ',' + fieldNames.join(',')
+      : '';
+
+    const dsoApiUrl = `${apiUrl}${additionalFieldNames}${pageSizeParam}&_format=json`;
+
+    return dsoApiUrl;
+  };
+}
+
+export function getDsoApiEmbeddedResponse(id: string, responseData: any) {
   const results = responseData?._embedded?.[id];
   return Array.isArray(results) ? results : null;
 }
 
-export function discoverSingleApiEmbeddedResponse(responseData: any) {
+export function discoverSingleDsoApiEmbeddedResponse(responseData: any) {
   // Use first key found in embedded response
   const embeddedKey = responseData?._embedded
     ? Object.keys(responseData._embedded)[0]
@@ -377,7 +406,7 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
     ? Object.keys(propertyFilters)
     : [];
   const staticPropertyNames = datasetEndpoints[datasetId]
-    ? datasetEndpoints[datasetId].additionalStaticFieldNames
+    ? datasetEndpoints[datasetId].dsoApiAdditionalStaticFieldNames
     : [];
 
   if (filterPropertyNames && featureSourceProperties) {
@@ -505,7 +534,8 @@ export function getFeaturePolylineColor(datasetId: DatasetId, feature: any) {
   }
 }
 
-export function transformDsoApiListResponse(
+// Can handle DSO api and WFS api responses
+export function transformGenericApiListResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any,
@@ -513,7 +543,7 @@ export function transformDsoApiListResponse(
 ) {
   const results = responseData?.features
     ? responseData?.features
-    : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
+    : getDsoApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
 
   const collection: DatasetFeatures = [];
   const geometryKey = config.geometryKey || 'geometry';

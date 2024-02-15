@@ -15,14 +15,14 @@ import {
   filterDatasetFeatures,
   filterPointFeaturesWithinBoundingBox,
   filterPolylineFeaturesWithinBoundingBox,
-  getApiEmbeddedResponse,
+  getDsoApiEmbeddedResponse,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
   getPropertyFilters,
   isCoordWithingBoundingBox,
   recursiveCoordinateSwap,
   refineFilterSelection,
-  transformDsoApiListResponse,
+  transformGenericApiListResponse,
 } from './helpers';
 
 const DSO_API_RESULT = {
@@ -245,12 +245,12 @@ describe('Buurt helpers', () => {
   it('Should extract correct api response', () => {
     const result = ['api-result'];
     expect(
-      getApiEmbeddedResponse('test', { _embedded: { test: result } })
+      getDsoApiEmbeddedResponse('test', { _embedded: { test: result } })
     ).toBe(result);
 
     const result2 = 'bliep';
     expect(
-      getApiEmbeddedResponse('test', { _embedded: { test: result2 } })
+      getDsoApiEmbeddedResponse('test', { _embedded: { test: result2 } })
     ).toBe(null);
   });
 
@@ -635,7 +635,7 @@ describe('Buurt helpers', () => {
     expect(datasetApiResult(apiResponses)).toStrictEqual(datasetResults);
   });
 
-  it('Should transformDsoApiListResponse, transform Point feature', () => {
+  it('Should transformGenericApiListResponse, transform Point feature', () => {
     const datasetResultTransformed: MaPointFeature[] = [
       {
         geometry: {
@@ -653,7 +653,7 @@ describe('Buurt helpers', () => {
       },
     ];
     expect(
-      transformDsoApiListResponse(
+      transformGenericApiListResponse(
         'openbaresportplek',
         mocks.DATASETS.sport.datasets.openbaresportplek as any,
         DSO_API_RESULT
@@ -676,7 +676,7 @@ describe('Buurt helpers', () => {
       },
     ];
     expect(
-      transformDsoApiListResponse(
+      transformGenericApiListResponse(
         'test',
         mocks.DATASETS.sport.datasets.test as any,
         DSO_API_RESULT,
@@ -685,7 +685,7 @@ describe('Buurt helpers', () => {
     ).toStrictEqual(datasetResultTransformed);
   });
 
-  it('Should transformDsoApiListResponse, transform Polyline feature', () => {
+  it('Should transformGenericApiListResponse, transform Polyline feature', () => {
     const datasetResultTransformed: MaPolylineFeature[] = [
       {
         geometry: {
@@ -710,7 +710,7 @@ describe('Buurt helpers', () => {
       },
     ];
     expect(
-      transformDsoApiListResponse(
+      transformGenericApiListResponse(
         'sportveld',
         mocks.DATASETS.sport.datasets.sportveld as any,
         DSO_API_RESULT2
@@ -748,7 +748,7 @@ describe('Buurt helpers', () => {
       },
     ];
 
-    const result = transformDsoApiListResponse(
+    const result = transformGenericApiListResponse(
       'test-id-key-transform',
       config,
       sourceResponse
