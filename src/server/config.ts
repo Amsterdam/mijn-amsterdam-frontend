@@ -150,6 +150,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_SVWI_API_BASE_URL}/mijnamsterdam/v1/autorisatie/tegel`,
     passthroughOIDCToken: true,
     postponeFetch: !FeatureToggle.svwiLinkActive,
+    headers: {
+      'Ocp-Apim-Subscription-Key': process.env.BFF_SVWI_API_KEY,
+    },
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
