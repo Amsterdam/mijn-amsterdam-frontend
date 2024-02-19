@@ -12,7 +12,7 @@ interface MyArePanelContentMeldingenBuurtProps {
 function displayCategoryTitle(category: string) {
   const displayCategory = capitalizeFirstLetter(category);
   const config =
-    DATASETS.meldingenBuurt.datasets.meldingenBuurt?.filters?.categorie
+    DATASETS.meldingenBuurt.datasets.meldingenBuurt?.filters?.category
       ?.valueConfig?.[displayCategory];
 
   return config?.title ?? displayCategory;
@@ -24,16 +24,16 @@ export default function MyArePanelContentMeldingenBuurt({
 }: MyArePanelContentMeldingenBuurtProps) {
   return (
     <GenericBase
-      title={displayCategoryTitle(panelItem.categorie)}
       supTitle="Meldingen"
+      title={displayCategoryTitle(panelItem.category)}
     >
-      {!!panelItem.subcategorie && (
-        <InfoDetail label="Subcategorie" value={panelItem.subcategorie} />
+      {!!panelItem.subcategory && (
+        <InfoDetail label="Subcategorie" value={panelItem.subcategory} />
       )}
-      {!!panelItem.datumCreatie && (
+      {!!panelItem.dateCreated && (
         <InfoDetail
           label="Datum en tijd melding"
-          value={dateTimeFormatYear(panelItem.datumCreatie)}
+          value={dateTimeFormatYear(panelItem.dateCreated)}
         />
       )}
     </GenericBase>

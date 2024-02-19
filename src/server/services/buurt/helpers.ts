@@ -5,13 +5,12 @@ import {
   LatLngTuple,
 } from 'leaflet';
 import {
+  DATASETS,
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyFilter,
   DatasetPropertyValueWithCount,
-  DATASETS,
   getDatasetCategoryId,
-  POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/myarea-datasets';
 import {
   ApiErrorResponse,
@@ -20,29 +19,14 @@ import {
 } from '../../../universal/helpers';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import {
+import type {
   DatasetConfig,
-  datasetEndpoints,
-  DatasetFeatureProperties,
   DatasetFeatures,
   DatasetResponse,
   MaFeature,
   MaPointFeature,
 } from './datasets';
-
-export function getApiEmbeddedResponse(id: string, responseData: any) {
-  const results = responseData?._embedded?.[id];
-  return Array.isArray(results) ? results : null;
-}
-
-export function discoverSingleApiEmbeddedResponse(responseData: any) {
-  // Use first key found in embedded response
-  const embeddedKey = responseData?._embedded
-    ? Object.keys(responseData._embedded)[0]
-    : undefined;
-  // Blindly assume there is an array with 1 result
-  return embeddedKey ? responseData._embedded[embeddedKey][0] : null;
-}
+import { datasetEndpoints } from './datasets';
 
 export function getDatasetEndpointConfig(
   endpointIDs?: string[],
@@ -377,7 +361,7 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
     ? Object.keys(propertyFilters)
     : [];
   const staticPropertyNames = datasetEndpoints[datasetId]
-    ? datasetEndpoints[datasetId].additionalStaticFieldNames
+    ? datasetEndpoints[datasetId].dsoApiAdditionalStaticFieldNames
     : [];
 
   if (filterPropertyNames && featureSourceProperties) {
@@ -503,66 +487,6 @@ export function getFeaturePolylineColor(datasetId: DatasetId, feature: any) {
     default:
       return 'black';
   }
-}
-
-export function transformDsoApiListResponse(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  responseData: any,
-  embeddedDatasetId?: string
-) {
-  const results = responseData?.features
-    ? responseData?.features
-    : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
-
-  const collection: DatasetFeatures = [];
-  const geometryKey = config.geometryKey || 'geometry';
-
-  if (results && results.length) {
-    for (const feature of results) {
-      if (feature[geometryKey]?.coordinates) {
-        const id = config.idKeyList
-          ? encodeURIComponent(
-              String(
-                feature?.properties
-                  ? feature?.properties[config.idKeyList]
-                  : feature[config.idKeyList]
-              )
-            )
-          : String(feature?.properties?.id || feature.id);
-
-        const properties: DatasetFeatureProperties = {
-          id,
-          datasetId,
-        };
-
-        const hasShapeGeometry = POLYLINE_GEOMETRY_TYPES.includes(
-          feature[geometryKey].type
-        );
-
-        if (hasShapeGeometry) {
-          properties.color = getFeaturePolylineColor(datasetId, feature);
-          if (config?.zIndex) {
-            properties.zIndex = config.zIndex;
-          }
-          // Swap the coordinates of the polyline datasets so leaflet can render them easily on the front-end.
-          feature[geometryKey].coordinates = recursiveCoordinateSwap(
-            feature[geometryKey].coordinates
-          );
-        }
-        collection.push({
-          type: 'Feature',
-          geometry: feature[geometryKey],
-          properties: createFeaturePropertiesFromPropertyFilterConfig(
-            datasetId,
-            properties,
-            feature
-          ),
-        });
-      }
-    }
-  }
-  return collection;
 }
 
 // solution from https://stackoverflow.com/a/54953800

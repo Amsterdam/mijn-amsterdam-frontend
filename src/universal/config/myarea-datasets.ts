@@ -70,13 +70,53 @@ export const DATASETS: DatasetCategories = {
       laadpalen: {
         title: 'Laadpalen',
         filters: {
-          connector_type: {
-            title: 'Connector type',
-            sort: 'asc',
+          snellader: {
+            title: 'Snellader',
+            valueConfig: {
+              True: { title: 'Ja' },
+              False: { title: 'Nee' },
+            },
           },
-          charging_cap_max: {
-            title: 'Wattage',
-            sort: 'asc',
+          CHADEMO: {
+            title: 'CHADEMO', // Add readable name?
+            valueConfig: {
+              True: { title: 'Ja' },
+              False: { title: 'Nee' },
+            },
+          },
+          IEC_62196_T2_COMBO: {
+            title: 'IEC_62196_T2_COMBO', // Add readable name?
+            valueConfig: {
+              True: { title: 'Ja' },
+              False: { title: 'Nee' },
+            },
+          },
+          IEC_62196_T2: {
+            title: 'IEC_62196_T2', // Add readable name?
+            valueConfig: {
+              True: { title: 'Ja' },
+              False: { title: 'Nee' },
+            },
+          },
+          Unknown: {
+            title: 'Onbekend',
+            valueConfig: {
+              True: { title: 'Ja' },
+              False: { title: 'Nee' },
+            },
+          },
+          maxWattage: {
+            title: 'Maximum wattage',
+            valueConfig: {
+              W1: { title: '0-5 watt' },
+              W2: { title: '50-10 watt' },
+              W3: { title: '100-30 watt' },
+              W4: { title: '300+ watt' },
+              W5: { title: 'Overige' },
+            },
+          },
+          provider: {
+            title: 'Provider',
           },
         },
       },
@@ -157,14 +197,18 @@ export const DATASETS: DatasetCategories = {
             title: 'Stadspasvergoeding jeugd',
             sort: 'asc',
             valueConfig: {
-              '': { title: 'Nee' },
+              '': { title: 'Onbekend' },
+              False: { title: 'Nee' },
+              True: { title: 'Ja' },
             },
           },
           indicatieAangepastSporten: {
             title: 'Aangepast sporten',
             sort: 'asc',
             valueConfig: {
-              '': { title: 'Nee' },
+              '': { title: 'Onbekend' },
+              False: { title: 'Nee' },
+              True: { title: 'Ja' },
             },
           },
           typeSport: {
@@ -305,7 +349,7 @@ export const DATASETS: DatasetCategories = {
       meldingenBuurt: {
         title: 'Meldingen',
         filters: {
-          categorie: {
+          category: {
             title: 'Categorie',
             valueConfig: {
               Afval: {

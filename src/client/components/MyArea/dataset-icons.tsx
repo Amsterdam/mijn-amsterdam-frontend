@@ -280,47 +280,47 @@ export const datasetIcons: Record<
         <IconMeldingen fill={Colors.white} />
       </DatasetIcon>
     ),
-    'afval en containers': (
+    afval: (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconAfvalMelding fill={Colors.white} />
       </DatasetIcon>
     ),
-    'bruggen, kades, sluizen en oevers': (
+    'civiele-constructies': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconCivieleConstructies fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast van dieren': (
+    'overlast-van-dieren': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconOverlastDieren fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast van boten': (
+    'overlast-op-het-water': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconOverlastWater fill={Colors.white} />
       </DatasetIcon>
     ),
-    'bomen, planten en water': (
+    'openbaar-groen-en-water': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconGroenWater fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast bedrijven en horeca': (
+    'overlast-bedrijven-en-horeca': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconOverlastBedrijven fill={Colors.white} />
       </DatasetIcon>
     ),
-    'overlast in de openbare ruimte': (
+    'overlast-in-de-openbare-ruimte': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconOverlastOpenbareRuimte fill={Colors.white} />
       </DatasetIcon>
     ),
-    'onderhoud straten, gladheid en graffiti': (
+    schoon: (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconSchoon fill={Colors.white} />
       </DatasetIcon>
     ),
-    'wegen, verkeer en straatmeubilair': (
+    'wegen-verkeer-straatmeubilair': (
       <DatasetIcon className={styles.DatasetIcon__bluePrimary}>
         <IconWegenVerkeerStraatmeubilair fill={Colors.white} />
       </DatasetIcon>
@@ -405,10 +405,7 @@ export function getIconHtml(feature: MaPointFeature) {
       );
       break;
     case 'meldingenBuurt':
-      childId = getIconChildIdFromValue(
-        datasetId,
-        feature.properties.categorie
-      );
+      childId = getIconChildIdFromValue(datasetId, feature.properties.category);
       break;
     default:
       childId = datasetId;
@@ -419,4 +416,3 @@ export function getIconHtml(feature: MaPointFeature) {
 
   return renderToStaticMarkup(icon || iconDefault);
 }
-export const POLYLINE_DATASET_OPTIONS: Record<string, PolylineOptions> = {};

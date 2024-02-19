@@ -3,7 +3,7 @@ import {
   DatasetControl,
   DatasetId,
 } from '../../../../universal/config/myarea-datasets';
-import { getIcon } from '../datasets';
+import { getIcon } from '../dataset-icons';
 import {
   useActiveDatasetFilters,
   useDatasetFilterSelection,
