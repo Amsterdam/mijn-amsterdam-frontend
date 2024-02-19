@@ -1,5 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { useAppStateGetter, usePhoneScreen } from '../../hooks';
+import {
+  useAppStateBagApi,
+  useAppStateGetter,
+  usePhoneScreen,
+} from '../../hooks';
 import {
   defaultDateFormat,
   isError,
@@ -11,10 +15,15 @@ import {
   ChapterIcon,
   DetailPage,
   InfoDetail,
+  LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import {
+  AppRoutes,
+  BagChapters,
+  ChapterTitles,
+} from '../../../universal/config';
 import {
   InfoDetailGroup,
   InfoDetailHeading,
@@ -23,6 +32,16 @@ import BezwarenStatusLines from './BezwarenStatusLines';
 import DocumentList from '../../components/DocumentList/DocumentList';
 import styles from './BezwarenDetail.module.scss';
 import { TextClamp } from '../../components/InfoDetail/TextClamp';
+import { BFFApiUrls } from '../../config/api';
+import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
+import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import { Heading } from '@amsterdam/design-system-react';
+
+const loadingContentBarConfig2: BarConfig = [
+  ['30rem', '4rem', '2rem'],
+  ['30rem', '4rem', '2rem'],
+  ['30rem', '4rem', '2rem'],
+];
 
 const BezwarenDetail = () => {
   const { BEZWAREN } = useAppStateGetter();
@@ -30,10 +49,17 @@ const BezwarenDetail = () => {
 
   const bezwaar = BEZWAREN.content?.find((b) => b.uuid === uuid) ?? null;
 
-  const noContent = !isLoading(BEZWAREN) && !bezwaar;
+  const [bezwaarDetail, api] = useAppStateBagApi<BezwaarDetail | null>({
+    url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuid}`,
+    bagChapter: BagChapters.BEZWAREN,
+    key: uuid,
+  });
 
+  const noContent = !isLoading(BEZWAREN) && !bezwaar;
+  const documents = bezwaarDetail?.documents ?? [];
+  const statussen = bezwaarDetail?.statussen ?? [];
   const documentCategories = uniqueArray(
-    !bezwaar ? [] : bezwaar.documenten.map((d) => d.dossiertype).filter(Boolean)
+    documents.map((d) => d.dossiertype).filter(Boolean)
   ).sort();
 
   const isSmallScreen = usePhoneScreen();
@@ -52,7 +78,7 @@ const BezwarenDetail = () => {
       </PageHeading>
 
       <PageContent>
-        {(isError(BEZWAREN) || noContent) && (
+        {(isError(BEZWAREN) || noContent || api.isError) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
@@ -90,7 +116,7 @@ const BezwarenDetail = () => {
             {documentCategories.length > 0 && (
               <>
                 {documentCategories.map((category) => {
-                  const docs = bezwaar.documenten.filter(
+                  const docs = documents.filter(
                     (d) => d.dossiertype === category
                   );
                   return (
@@ -100,7 +126,7 @@ const BezwarenDetail = () => {
                         <div className={styles.DocumentListHeader}>
                           <InfoDetailHeading
                             label={`Document${
-                              bezwaar.documenten.length > 1 ? 'en' : ''
+                              documents.length > 1 ? 'en' : ''
                             } ${category.toLowerCase()}`}
                           />
                           {!isSmallScreen && (
@@ -120,8 +146,16 @@ const BezwarenDetail = () => {
           </>
         )}
       </PageContent>
-      {!!bezwaar?.statussen && !!bezwaar?.uuid && (
-        <BezwarenStatusLines id={bezwaar.uuid} statussen={bezwaar.statussen} />
+      {api.isLoading && (
+        <PageContent>
+          <Heading level={4} size="level-4">
+            Status
+          </Heading>
+          <LoadingContent barConfig={loadingContentBarConfig2} />
+        </PageContent>
+      )}
+      {!!bezwaarDetail && !!bezwaar?.uuid && (
+        <BezwarenStatusLines id={bezwaar.uuid} statussen={statussen} />
       )}
     </DetailPage>
   );

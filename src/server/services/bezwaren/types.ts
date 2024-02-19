@@ -48,6 +48,7 @@ export type Bezwaar = {
   omschrijving: string | null;
   toelichting: string | null;
   status: string | null;
+  statusdatum: string | null;
   datumbesluit: string | null;
   datumIntrekking: string | null;
   einddatum: string | null;
@@ -81,12 +82,6 @@ export interface BezwarenSourceResponse<T> {
   results: T[];
 }
 
-export interface BezwaarDocument {
-  titel: string;
-  beschrijving: string;
-  registratiedatum: string;
-}
-
 export interface BezwaarSourceDocument {
   url: string;
   identificatie: string;
@@ -118,6 +113,10 @@ export interface BezwaarSourceDocument {
     | 'Online Procesdossier'
     | 'Online Besluitvorming'
     | 'Online Aangeleverd';
+}
+
+export interface BezwaarDocument extends GenericDocument {
+  dossiertype: BezwaarSourceDocument['dossiertype'];
 }
 
 export interface BezwaarResponse {

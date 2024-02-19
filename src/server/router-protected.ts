@@ -5,7 +5,10 @@ import { IS_AZ } from '../universal/config/env';
 import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
-import { fetchBezwaarDocument } from './services/bezwaren/bezwaren';
+import {
+  fetchBezwaarDetail,
+  fetchBezwaarDocument,
+} from './services/bezwaren/bezwaren';
 import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
 import {
   NOTIFICATIONS,
@@ -175,24 +178,7 @@ router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
 });
 
 router.get(
-  BffEndpoints.BEZWAREN_ATTACHMENTS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-
-    const documentResponse = await fetchBezwaarDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    const contentType = documentResponse.headers['content-type'];
-    res.setHeader('content-type', contentType);
-    documentResponse.data.pipe(res);
-  }
-);
-
-router.get(
-  BffEndpoints.LOODMETING_ATTACHMENTS,
+  BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
 
@@ -217,6 +203,37 @@ router.get(
     return res.send(
       Buffer.from(documentResponse.content.documentbody, 'base64')
     );
+  }
+);
+
+router.get(
+  BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchBezwaarDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
+  }
+);
+
+router.get(
+  BffEndpoints.BEZWAREN_DETAIL,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const response = await fetchBezwaarDetail(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    return res.send(response);
   }
 );
 

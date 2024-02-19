@@ -37,6 +37,10 @@
       "status": null,
       "kenmerken": [
         {
+          "kenmerk": "statusdatum",
+          "bron": "2021-05-01"
+        },
+        {
           "kenmerk": "resultaattekst",
           "bron": "Niet-ontvankelijk"
         },
@@ -92,6 +96,10 @@
       ],
       "status": null,
       "kenmerken": [
+        {
+          "kenmerk": "statusdatum",
+          "bron": "2021-05-01"
+        },
         {
           "kenmerk": "resultaattekst",
           "bron": "Gegrond"
@@ -153,6 +161,10 @@
       "status": null,
       "kenmerken": [
         {
+          "kenmerk": "statusdatum",
+          "bron": "2021-05-01"
+        },
+        {
           "kenmerk": "zaakkenmerk",
           "bron": "123.abc.def"
         }
@@ -207,6 +219,10 @@
         {
           "kenmerk": "statustekst",
           "bron": "Afgehandeld"
+        },
+        {
+          "kenmerk": "statusdatum",
+          "bron": "2023-08-23"
         }
       ],
       "archiefnominatie": null,
