@@ -80,7 +80,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
                   title: 'Rapport Lood in de bodem-check',
                   id: location.Workorderid,
                   url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-                    `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_ATTACHMENTS}`,
+                    `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD}`,
                     {
                       id: location.Workorderid,
                     }
@@ -101,7 +101,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
 
 export async function getLoodApiHeaders(requestID: requestID) {
   const url = `${process.env.BFF_LOOD_API_URL}`;
-  const requestConfig = getApiConfig('LOOD_365_OAUTH');
+  const requestConfig = { ...getApiConfig('LOOD_365_OAUTH') };
 
   const data = new FormData();
   data.append('client_id', `${process.env.BFF_LOOD_USERNAME}`);
