@@ -234,7 +234,6 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     if (IS_DEBUG) {
-      console.log('Response error for:', requestConfig.url);
       console.error(error);
     }
     // We're returning a result here so a failed request will not prevent other succeeded request needed for a response

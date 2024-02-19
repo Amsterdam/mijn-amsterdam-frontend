@@ -7,7 +7,7 @@ import {
   DatasetPropertyValueWithCount,
 } from '../../../../universal/config/myarea-datasets';
 import { sortAlpha } from '../../../../universal/helpers';
-import { getIcon, getIconChildIdFromValue } from '../datasets';
+import { getIcon, getIconChildIdFromValue } from '../dataset-icons';
 import {
   DatasetControlCheckbox,
   filterItemCheckboxState,

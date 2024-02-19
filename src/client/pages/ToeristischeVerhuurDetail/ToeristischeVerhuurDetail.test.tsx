@@ -2,18 +2,18 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
+import { describe, expect, it } from 'vitest';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
 import {
   toeristischeVerhuurVergunningTypes,
   transformVergunningenData,
 } from '../../../server/services/vergunningen/vergunningen';
+import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';
-import { describe, expect, it, test } from 'vitest';
-import { bffApi } from '../../../test-utils';
 
 const transformedVergunningen = transformVergunningenData(
   vergunningenData as any
@@ -51,7 +51,7 @@ describe('<ToeristischVerhuurDetail />, vergunning', () => {
   const routeEntry = generatePath(
     AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
     {
-      id: vergunning?.id,
+      id: vergunning?.id!,
     }
   );
   const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
