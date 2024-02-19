@@ -5,7 +5,7 @@ import {
   DatasetPropertyName,
   DatasetPropertyValue,
 } from '../../../../universal/config';
-import { getIcon } from '../datasets';
+import { getIcon } from '../dataset-icons';
 import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
 import {
   categoryCheckboxState,

@@ -3,25 +3,26 @@ import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
 import { Colors, FeatureToggle } from '../../../universal/config/app';
-import { IS_AP, IS_PRODUCTION, OTAP_ENV } from '../../../universal/config/env';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
+  DATASETS,
   DatasetCategoryId,
   DatasetId,
   DatasetPropertyFilter,
   DatasetPropertyName,
   DatasetPropertyValue,
-  DATASETS,
   FeatureType,
 } from '../../../universal/config/myarea-datasets';
-import { capitalizeFirstLetter } from '../../../universal/helpers';
+import { capitalizeFirstLetter, uniqueArray } from '../../../universal/helpers';
 import { DataRequestConfig } from '../../config';
 import { axiosRequest, getNextUrlFromLinkHeader } from '../../helpers';
+import FileCache from '../../helpers/file-cache';
 import {
-  discoverSingleApiEmbeddedResponse,
-  getApiEmbeddedResponse,
-  getPropertyFilters,
-  transformDsoApiListResponse,
-} from './helpers';
+  discoverSingleDsoApiEmbeddedResponse,
+  dsoApiListUrl,
+  getDsoApiEmbeddedResponse,
+  transformGenericApiListResponse,
+} from './dso-helpers';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -76,62 +77,50 @@ export const ACCEPT_CRS_4326 = {
 export const DEFAULT_API_REQUEST_TIMEOUT = 1000 * 60 * 3; // 3 mins
 export const DEFAULT_TRIES_UNTIL_CONSIDERED_STALE = 5;
 
+interface TransformDetailProps {
+  datasetId: DatasetId;
+  config: DatasetConfig;
+  id: string;
+  datasetCache: FileCache | null;
+}
+
 export interface DatasetConfig {
-  datasetIds?: DatasetId[];
-  listUrl?: string | ((config: DatasetConfig) => string);
+  // Url of the api for getting the Map features e.g https://data.amsterdam.nl/api/v1/dataset-name <- returns all features
+  listUrl: string | ((config: DatasetConfig) => string);
+  // An optional url for loading more feature data via a detail endpoint e.g https://data.amsterdam.nl/api/v1/dataset-name/$feature-id <- returns only feature referenced by $feature-id
   detailUrl?: string | ((config: DatasetConfig) => string);
+  // Response data transformer that is passed to axios transformData for the listUrl response
   transformList?: (
     datasetId: DatasetId,
     config: DatasetConfig,
     data: any
   ) => DatasetFeatures;
-  transformDetail?: (
-    datasetId: DatasetId,
-    config: DatasetConfig,
-    id: string,
-    data: any
-  ) => any;
+  // Response data transformer that is passed to axios transformData for the detailUrl response. If we haven't specified a detailUrl for a dataset.
+  // The cached transformed response of the listUrl will be passed via the options.
+  transformDetail?: (responseData: any, options: TransformDetailProps) => any;
+  // DataRequestConfig used in source-api-request.
   requestConfig?: DataRequestConfig;
+  // Wether the response should be cached to disk
   cache?: boolean;
+  // The time in minutes before the cache on disk expires
   cacheTimeMinutes?: number;
+  // The type of Feature an api returns. Used for filtering type of dataset configs.
   featureType: FeatureType;
+  // Used for polyline layer index so we can place smaller shapes above larger ones.
   zIndex?: zIndexPane;
-  additionalStaticFieldNames?: DatasetPropertyName[];
-  // NOTE: The ID key also has to be added to the `additionalStaticFieldNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `additionalStaticFieldNames` can be left empty.
+  // An array of property names we also want to add to the dataset. By default only id and geometry properties are retrieved form the DSO api's. Only used in combination with the dsoApiListUrl() function.
+  dsoApiAdditionalStaticFieldNames?: DatasetPropertyName[];
+  // NOTE: The ID key also has to be added to the `dsoApiAdditionalStaticFieldNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `dsoApiAdditionalStaticFieldNames` can be left empty.
+  // The property that functions as ID for the features if an `id` key is not present or if we want to utilize another value for `id`.
+  // Some api's have differing property names for features. In one response features can have keys like idNummer which corresponds to id_nummer in a detail response.
   idKeyList?: string;
   idKeyDetail?: string;
+  // Some api's have a different name for the geometry field for example `geometrie`.
   geometryKey?: string;
+  //
   triesUntilConsiderdStale: number;
+  // If disabled is true, the dataset will not be retrieved.
   disabled?: boolean;
-}
-
-function dsoApiListUrl(
-  dataset: string,
-  pageSize: number = 1000,
-  datasetId?: DatasetId
-) {
-  return (datasetConfig: DatasetConfig) => {
-    const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
-    const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,${
-      datasetConfig.geometryKey || 'geometry'
-    }`;
-    const pageSizeParam = `&_pageSize=${pageSize}`;
-
-    const propertyFilters = getPropertyFilters(datasetId || embeddedDatasetId);
-    const fieldNames = propertyFilters ? Object.keys(propertyFilters) : [];
-
-    if (datasetConfig.additionalStaticFieldNames) {
-      fieldNames.push(...datasetConfig.additionalStaticFieldNames);
-    }
-
-    const additionalFieldNames = fieldNames.length
-      ? ',' + fieldNames.join(',')
-      : '';
-
-    const dsoApiUrl = `${apiUrl}${additionalFieldNames}${pageSizeParam}&_format=json`;
-
-    return dsoApiUrl;
-  };
 }
 
 export const datasetEndpoints: Record<
@@ -158,7 +147,7 @@ export const datasetEndpoints: Record<
   evenementen: {
     listUrl: dsoApiListUrl('evenementen/evenementen'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -167,17 +156,14 @@ export const datasetEndpoints: Record<
         'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
       },
     },
-    // NOTE: Tried URL as unique ID but various events point to the same URL.
-    // additionalStaticFieldNames: ['url'],
-    // idKeyList: 'url',
-    // idKeyDetail: 'url',
+    disabled: !FeatureToggle.evenementenDatasetActive,
   },
   bekendmakingen: {
     listUrl: `https://api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
     detailUrl: `https://${
       !IS_PRODUCTION ? 'acc.' : ''
     }api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/`,
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'officielebekendmakingen_id',
@@ -189,7 +175,7 @@ export const datasetEndpoints: Record<
       },
     },
     // NOTE: Zie https://gemeente-amsterdam.atlassian.net/browse/MIJN-7467
-    disabled: true,
+    disabled: !FeatureToggle.bekendmakingenDatasetActive,
   },
   parkeerzones: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
@@ -197,7 +183,7 @@ export const datasetEndpoints: Record<
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES,
-    additionalStaticFieldNames: ['gebiedskleurcode', 'gebiedscode'],
+    dsoApiAdditionalStaticFieldNames: ['gebiedskleurcode', 'gebiedscode'],
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
@@ -216,7 +202,7 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
-    additionalStaticFieldNames: ['gebiedscode'],
+    dsoApiAdditionalStaticFieldNames: ['gebiedscode'],
     idKeyList: 'gebiedscode',
     idKeyDetail: 'gebiedscode',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -229,7 +215,7 @@ export const datasetEndpoints: Record<
   zwembad: {
     listUrl: dsoApiListUrl('sport/zwembad'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -242,7 +228,7 @@ export const datasetEndpoints: Record<
   sportpark: {
     listUrl: dsoApiListUrl('sport/sportpark'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -256,7 +242,7 @@ export const datasetEndpoints: Record<
   sportveld: {
     listUrl: dsoApiListUrl('sport/sportveld'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -272,7 +258,7 @@ export const datasetEndpoints: Record<
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
     transformList: transformGymzaalResponse,
     featureType: 'Point',
-    additionalStaticFieldNames: ['type'],
+    dsoApiAdditionalStaticFieldNames: ['type'],
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     requestConfig: {
@@ -297,7 +283,7 @@ export const datasetEndpoints: Record<
   sporthal: {
     listUrl: dsoApiListUrl('sport/sporthal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -310,7 +296,7 @@ export const datasetEndpoints: Record<
   sportaanbieder: {
     listUrl: dsoApiListUrl('sport/sportaanbieder', 2000),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -323,7 +309,7 @@ export const datasetEndpoints: Record<
   openbaresportplek: {
     listUrl: dsoApiListUrl('sport/openbaresportplek'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -353,11 +339,11 @@ export const datasetEndpoints: Record<
     ),
     detailUrl:
       'https://api.data.amsterdam.nl/v1/bedrijveninvesteringszones/bedrijveninvesteringszones/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGenericApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.BEDRIJVENINVESTERINGSZONES,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
-    additionalStaticFieldNames: ['naam'],
+    dsoApiAdditionalStaticFieldNames: ['naam'],
     idKeyList: 'naam',
     idKeyDetail: 'naam',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -390,17 +376,14 @@ export const datasetEndpoints: Record<
   },
   meldingenBuurt: {
     listUrl: () =>
-      `https://${
-        OTAP_ENV === 'production' ? '' : 'acc.'
-      }api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1`,
+      `https://api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1`,
     transformList: transformMeldingenBuurtResponse,
     transformDetail: transformMeldingDetailResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     geometryKey: 'geometry',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
-    idKeyList: 'ma_melding_id',
-    cache: false,
+    idKeyList: 'id',
     requestConfig: {
       request: fetchMeldingenBuurt,
       cancelTimeout: 30000,
@@ -409,23 +392,34 @@ export const datasetEndpoints: Record<
   laadpalen: {
     listUrl:
       'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:normaal_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    transformList: transformDsoApiListResponse,
+    // transformList: transformLaadpalenListReponse, // Transforming the data is done in fetchAndTransformLaadpalen
     transformDetail: transformLaadpalenDetailResponse,
     idKeyList: 'id',
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
     geometryKey: 'geometry',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
-    additionalStaticFieldNames: ['connector_type', 'charging_cap_max', 'url'],
+    dsoApiAdditionalStaticFieldNames: [
+      'connector_type',
+      'charging_cap_max',
+      'url',
+      'name',
+      'street',
+      'housenumber',
+      'housenumberext',
+      'postalcode',
+      'city',
+      'provider',
+    ],
     requestConfig: {
-      headers: {},
-      request: fetchLaadpalen,
+      request: fetchAndTransformLaadpalen,
       cancelTimeout: 30000,
     },
     disabled: !FeatureToggle.laadpalenActive,
   },
 };
 
+// This function retrieves a maximum of 5 `pages` with data from the meldingen api.
 export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
   const maxPages = 5;
 
@@ -476,50 +470,162 @@ export function transformMeldingenBuurtResponse(
   config: DatasetConfig,
   responseData: { features: DatasetFeatures }
 ): DatasetFeatures {
-  const features =
-    responseData?.features?.map((feature: any) => {
-      const categorie = feature.properties.category.parent.slug;
+  const collection = responseData?.features?.map((sourceFeature: MaFeature) => {
+    let id = '';
 
-      const dataSetConfig =
-        DATASETS.meldingenBuurt.datasets.meldingenBuurt?.filters?.categorie
-          ?.valueConfig;
+    // Assign a custom id because the response features do not include id's
+    if (config.idKeyList) {
+      id = slug(
+        `${
+          sourceFeature.properties.category.slug
+        }-${sourceFeature.properties.created_at.replaceAll(/[^0-9.]/g, '')}`
+      );
+    }
 
-      const displayCat = capitalizeFirstLetter(categorie);
+    const feature: MaFeature = {
+      type: 'Feature',
+      properties: {
+        id,
+        datasetId,
+        dateCreated: sourceFeature.properties.created_at,
+        category: sourceFeature.properties.category.parent.slug,
+        subcategory: sourceFeature.properties.category.name,
+      },
+      geometry: sourceFeature.geometry,
+    };
 
-      if (config.idKeyList) {
-        feature.properties[config.idKeyList] = slug(
-          feature.properties.category.slug +
-            '-' +
-            feature.properties.created_at.replaceAll('-', '')
-        );
-      }
+    const dataSetConfig =
+      DATASETS.meldingenBuurt.datasets.meldingenBuurt?.filters?.category
+        ?.valueConfig;
 
-      feature.properties.categorie = categorie;
-      if (dataSetConfig && !(displayCat in dataSetConfig)) {
-        feature.properties.categorie = 'overig';
-      }
+    const filterCategoryKey = capitalizeFirstLetter(
+      feature.properties.category
+    );
 
-      return feature;
-    }) || [];
+    // If the source api publishes a new category which is not covered in our valueConfig for this particular dataset, assign a misc. category.
+    if (dataSetConfig && !(filterCategoryKey in dataSetConfig)) {
+      feature.properties.category = 'overig';
+    }
 
-  return transformDsoApiListResponse(datasetId, config, { features });
+    return feature;
+  });
+
+  return collection ?? [];
 }
 
-export async function fetchLaadpalen(requestConfig: DataRequestConfig) {
+function transformMeldingDetailResponse(
+  responseData: null,
+  { datasetId, config, id, datasetCache }: TransformDetailProps
+) {
+  const item = datasetCache
+    ?.getKey('features')
+    ?.find((feature: MaFeature) => feature.properties.id === id);
+
+  if (!item) {
+    throw new Error(`Buurt item in the cache with id ${id} not found.`);
+  }
+
+  return item.properties;
+}
+
+export async function fetchAndTransformLaadpalen<T>(
+  requestConfig: DataRequestConfig
+): Promise<AxiosResponse<T>> {
   const urls = [
-    requestConfig.url,
+    requestConfig.url, // zie datasetEndpoints.laadpalen.listUrl
     'https://map.data.amsterdam.nl/maps/oplaadpunten?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=ms:snel_beschikbaar&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
   ];
+
+  const datasetId = 'laadpalen';
+  const datasetConfig = datasetEndpoints.laadpalen;
+
   const requests = urls.map((url) => {
-    return axiosRequest.request<DatasetFeatures>({
+    return axiosRequest.request<{ features: DatasetFeatures }>({
       ...requestConfig,
       url,
     });
   });
 
-  const responses: AxiosResponse[] = await Promise.all(requests);
-  responses[0].data = responses.map((response) => response.data).flat();
-  return responses[0];
+  const responses: AxiosResponse<
+    { features: DatasetFeatures } | DatasetFeatures
+  >[] = await Promise.all(requests);
+
+  // Merge the features we got from the 2 responses.
+  const features = responses
+    .map((response, index) => {
+      if ('features' in response.data) {
+        return response.data.features.map((feature) => {
+          // The second (index==1) dataset contains chargers of type `snellader`. Here we add a property that distinguishes it from the features of the first dataset _before_ the responses are merged.
+          Object.assign(feature.properties, { snellader: index === 1 });
+          return feature;
+        });
+      }
+      return response.data;
+    })
+    .flat();
+
+  // Transform all the features at once and assign back the result to the first Axios response.
+  responses[0].data = transformGenericApiListResponse(
+    datasetId,
+    datasetConfig,
+    {
+      features: transformLaadpalenFeatures(features),
+    }
+  );
+
+  return <AxiosResponse<T>>responses[0];
+}
+
+function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
+  let features = featuresSource;
+
+  const wattRanges = [
+    { label: 'W1', range: [0, 50] },
+    { label: 'W2', range: [50, 100] },
+    { label: 'W3', range: [100, 300] },
+    { label: 'W4', range: [300, Infinity] },
+  ];
+
+  const connectorTypes = uniqueArray(
+    features
+      .map((feature) => feature.properties.connector_type.split(';'))
+      .flat()
+  );
+
+  features = features.map((feature) => {
+    console.log('sn', feature);
+    // Determine the maximum wattage
+    const watt = parseInt(feature.properties.charging_cap_max, 10);
+    const wattRange = wattRanges.find((wattRange) => {
+      return watt >= wattRange.range[0] && watt < wattRange.range[1];
+    })?.label;
+    // Assign a misc range
+    feature.properties.maxWattage = wattRange ?? 'W5';
+
+    // Add the connector type as feature property so we can filter it
+    for (const connectorType of connectorTypes) {
+      feature.properties[connectorType] =
+        feature.properties.connector_type.includes(connectorType);
+    }
+
+    // feature.properties.address = // Add the address
+    // Add other useful properties // see the dataset response
+
+    return feature;
+  });
+
+  return features;
+}
+
+function transformLaadpalenDetailResponse(
+  responseData: any,
+  { datasetId, config, id, datasetCache }: TransformDetailProps
+) {
+  const item = datasetCache
+    ?.getKey('features')
+    ?.find((item: any) => item.properties.id === id);
+
+  return item?.properties ?? null;
 }
 
 function createCustomFractieOmschrijving(featureProps: any) {
@@ -542,12 +648,12 @@ function transformAfvalcontainersResponse(
 ) {
   const features = responseData?.features
     ? responseData?.features
-    : getApiEmbeddedResponse(datasetId, responseData);
-  return transformDsoApiListResponse(datasetId, config, {
+    : getDsoApiEmbeddedResponse(datasetId, responseData);
+  return transformGenericApiListResponse(datasetId, config, {
     features: features
       .filter(
         (feature: any) =>
-          feature.fractie_omschrijving?.toLowerCase() !== 'plastic'
+          feature.fractie_omschrijving?.toLowerCase() !== 'plastic' // Gemeente Amsterdam does not work with plastic containers anymore.
       )
       .map((feature: any) => {
         let fractie_omschrijving = feature.properties.fractie_omschrijving;
@@ -567,13 +673,8 @@ function transformAfvalcontainersResponse(
   });
 }
 
-function transformAfvalcontainerDetailResponse(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  id: string,
-  responseData: any
-) {
-  const feature = discoverSingleApiEmbeddedResponse(responseData);
+function transformAfvalcontainerDetailResponse(responseData: any) {
+  const feature = discoverSingleDsoApiEmbeddedResponse(responseData);
   let fractieOmschrijving = feature.fractieOmschrijving;
   if (!fractieOmschrijving || fractieOmschrijving === 'GFT') {
     fractieOmschrijving = createCustomFractieOmschrijving({
@@ -594,57 +695,16 @@ function transformAfvalcontainerDetailResponse(
   };
 }
 
-function transformMeldingDetailResponse(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  id: string,
-  responseData: {
-    features: any[];
-  }
-) {
-  const item = responseData?.features[parseInt(id, 10)];
-
-  if (!item) {
-    throw new Error(
-      `Buurt item with id ${id} not found. Got ${responseData?.features?.length} items to search.`
-    );
-  }
-
-  return {
-    id,
-    categorie: item?.properties?.category?.parent?.name,
-    subcategorie: item?.properties?.category?.name,
-    datumCreatie: item?.properties?.created_at,
-  };
-}
-
-function transformLaadpalenDetailResponse(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  id: string,
-  responseData: any
-) {
-  const item = responseData.features?.find(
-    (item: any) => item.properties.id === id
-  );
-
-  if (!item) {
-    return null;
-  }
-
-  return {
-    _embedded: {
-      laadpaal: [{ ...item.properties, availability: responseData.name }],
-    },
-  };
-}
-
 function transformParkeerzoneCoords(
   datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any
 ) {
-  const features = transformDsoApiListResponse(datasetId, config, responseData);
+  const features = transformGenericApiListResponse(
+    datasetId,
+    config,
+    responseData
+  );
 
   if (features && features.length) {
     for (const feature of features) {
@@ -678,7 +738,7 @@ function transformSportzaalResponse(
   config: DatasetConfig,
   responseData: any
 ) {
-  const features = transformDsoApiListResponse(
+  const features = transformGenericApiListResponse(
     datasetId,
     config,
     responseData,
@@ -697,7 +757,7 @@ function transformGymzaalResponse(
   config: DatasetConfig,
   responseData: any
 ) {
-  const features = transformDsoApiListResponse(
+  const features = transformGenericApiListResponse(
     datasetId,
     config,
     responseData,
@@ -716,7 +776,11 @@ export function transformHardlooproutesResponse(
   config: DatasetConfig,
   responseData: any
 ) {
-  const features = transformDsoApiListResponse(datasetId, config, responseData);
+  const features = transformGenericApiListResponse(
+    datasetId,
+    config,
+    responseData
+  );
 
   const groups = [
     { label: '0-5 km', range: [0, 6] },
@@ -741,13 +805,12 @@ export function transformWiorApiListResponse(
   config: DatasetConfig,
   responseData: any
 ) {
-  const features = getApiEmbeddedResponse(datasetId, responseData);
+  const features = getDsoApiEmbeddedResponse(datasetId, responseData);
 
   if (!features) {
     return [];
   }
 
-  // Starts within
   const dateRanges = [
     { label: 'Lopend', range: [-Infinity, 0] },
     { label: 'Binnenkort', range: [0.156, 0.5] },
@@ -784,5 +847,5 @@ export function transformWiorApiListResponse(
       feature.datumStartUitvoering = 'Onbekend';
     }
   }
-  return transformDsoApiListResponse(datasetId, config, { features });
+  return transformGenericApiListResponse(datasetId, config, { features });
 }

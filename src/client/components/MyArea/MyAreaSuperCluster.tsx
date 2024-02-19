@@ -10,7 +10,7 @@ import type {
   DatasetFeatureProperties,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
-import { getIconHtml } from './datasets';
+import { getIconHtml } from './dataset-icons';
 import { processFeatures } from './MyArea.helpers';
 import styles from './MyAreaDatasets.module.scss';
 

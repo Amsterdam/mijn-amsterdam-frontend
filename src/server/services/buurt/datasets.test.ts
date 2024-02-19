@@ -7,6 +7,7 @@ import {
   transformHardlooproutesResponse,
   transformMeldingenBuurtResponse,
 } from './datasets';
+import { remoteApiHost } from '../../../setupTests';
 
 describe('Custom dataset tranformations', () => {
   it('Should group distance of hardlooproute', () => {
@@ -79,6 +80,7 @@ describe('Custom dataset tranformations', () => {
     const config: DatasetConfig = {
       featureType: 'Point',
       triesUntilConsiderdStale: 5,
+      listUrl: remoteApiHost,
     };
 
     const result = transformHardlooproutesResponse(
@@ -92,7 +94,7 @@ describe('Custom dataset tranformations', () => {
 
   test('fetchMeldingenBuurt:success', async () => {
     const baseUrl =
-      'https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals';
+      'https://api.meldingen.amsterdam.nl/signals/v1/public/signals';
     const api = nock(baseUrl);
     const url = new URL(
       `${baseUrl}/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1`
@@ -161,19 +163,19 @@ describe('Custom dataset tranformations', () => {
 
     expect(response.data.length).toBe(3);
     expect(response.data[0].properties.id).toBe(
-      'feature-1-20230911t0733246954480000'
+      'feature-1-202309110733246954480000'
     );
     expect(response.data[1].properties.id).toBe(
-      'feature-2-20230912t0733246954480000'
+      'feature-2-202309120733246954480000'
     );
     expect(response.data[2].properties.id).toBe(
-      'feature-3-20230913t0733246954480000'
+      'feature-3-202309130733246954480000'
     );
   });
 
   test('fetchMeldingenBuurt:error', async () => {
     const baseUrl =
-      'https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals';
+      'https://api.meldingen.amsterdam.nl/signals/v1/public/signals';
     const api = nock(baseUrl);
     const url = new URL(
       `${baseUrl}/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1`

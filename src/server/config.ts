@@ -6,6 +6,7 @@ import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
 import { IS_AZ, IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { TokenData } from './helpers/app';
+import { jsonCopy } from '../universal/helpers/utils';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && process.env[envVarName];
@@ -68,7 +69,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 
   /**
    * If you want to combine the responseData of multiple requests into on you can use this function.
-   * It will fire a next request right after the response succeeded, you can merge the response data
+   * It will fire a next request right after the response succeeded, you can merge the response data.
    * Mind you, the cancelTimeout might have to be increased because you'll probably make multiple requests pretending as one.
    */
   request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
@@ -150,6 +151,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_SVWI_API_BASE_URL}/mijnamsterdam/v1/autorisatie/tegel`,
     passthroughOIDCToken: true,
     postponeFetch: !FeatureToggle.svwiLinkActive,
+    headers: {
+      'Ocp-Apim-Subscription-Key': process.env.BFF_SVWI_API_KEY,
+    },
   },
   BEZWAREN_LIST: {
     url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
@@ -297,8 +301,29 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 export type ApiUrlEntries = ApiUrlEntry[];
 export const apiUrlEntries = Object.entries(ApiUrls) as ApiUrlEntries;
 
-export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
-  return Object.assign({}, ApiConfig[name] || {}, config || {});
+export function getApiConfig(
+  name: SourceApiKey,
+  config: DataRequestConfig = {}
+): DataRequestConfig {
+  let apiConfig = ApiConfig[name];
+
+  // Take of the agent because it cannot be jsonCopied.
+  const agent = apiConfig.httpsAgent;
+  delete apiConfig.httpsAgent;
+
+  // Copy the config to prevent assigning privacy/identity related information across requests
+  let apiConfigCopy = jsonCopy(apiConfig);
+
+  // copy the config and transfer the https agent instance.
+  if (agent) {
+    // re-assign the agent
+    apiConfig.httpsAgent = agent;
+
+    // also assign agent to copy
+    apiConfigCopy.httpsAgent = agent;
+  }
+
+  return Object.assign(apiConfigCopy, config);
 }
 
 export const RelayPathsAllowed = {
@@ -338,6 +363,16 @@ export const BffEndpoints = {
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
+  CMS_CONTENT: '/services/cms',
+  FOOTER: '/services/footer',
+  CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
+  CACHE_OVERVIEW: '/status/cache',
+  LOGIN_STATS: '/status/logins/:authMethod?',
+  LOGIN_RAW: '/status/logins/table',
+  SESSION_BLACKLIST_RAW: '/status/session-blacklist/table',
+  STATUS_HEALTH: '/status/health',
+  STATUS_HEALTH2: '/bff/status/health',
+  TEST_ACCOUNTS_OVERVIEW: '/status/user-data-overview',
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
@@ -349,7 +384,8 @@ export const BffEndpoints = {
   SIA_LIST: '/services/signals/:status/:page',
 
   // Bezwaren
-  BEZWAREN_ATTACHMENTS: '/services/bezwaren/:id/attachments',
+  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document/:id',
+  BEZWAREN_DETAIL: '/services/bezwaren/:id',
 
   // ErfpachtV2
   ERFPACHTv2_DOSSIER_DETAILS:
@@ -394,18 +430,8 @@ export const BffEndpoints = {
   AUTH_TOKEN_DATA_YIVI: `${AUTH_BASE_YIVI}/token-data`,
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
-
-  CMS_CONTENT: '/services/cms',
-  FOOTER: '/services/footer',
-  CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
-  CACHE_OVERVIEW: '/admin/cache',
-  LOGIN_STATS: '/admin/visitors/:authMethod?',
-  LOGIN_RAW: '/admin/visitors/table',
-  SESSION_BLACKLIST_RAW: '/admin/session-blacklist/table',
-  STATUS_HEALTH: '/status/health',
-  STATUS_HEALTH2: '/bff/status/health',
-  TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
-  LOODMETING_ATTACHMENTS: '/services/lood/:id/attachments',
+  // Bodem / loodmetingen
+  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
@@ -413,7 +439,7 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH2,
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
-  BffEndpoints.CACHE_OVERVIEW,
+  BffEndpoints.FOOTER,
 ];
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
