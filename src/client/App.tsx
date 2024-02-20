@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { lazy, Suspense, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import {
   BrowserRouter,
   matchPath,
@@ -29,99 +29,59 @@ import { useUsabilla } from './hooks/useUsabilla';
 import { loginUrlByAuthMethod } from './config/api';
 import { default as LandingPage } from './pages/Landing/Landing';
 
-const Krefia = lazy(() => import('./pages/Krefia/Krefia'));
-const Parkeren = lazy(() => import('./pages/Parkeren/Parkeren'));
-const ProfileCommercial = lazy(
-  () => import('./pages/Profile/ProfileCommercial')
-);
-const Search = lazy(() => import('./pages/Search/Search'));
-const Stadspas = lazy(() => import('./pages/Stadspas/Stadspas'));
-const StadspasAanvraagDetail = lazy(
-  () => import('./pages/StadspasDetail/StadspasAanvraagDetail')
-);
-const StadspasDetail = lazy(
-  () => import('./pages/StadspasDetail/StadspasDetail')
-);
-const InkomenDetailBbz = lazy(
-  () => import('./pages/InkomenDetail/InkomenDetailBbz')
-);
-const InkomenDetailTonk = lazy(
-  () => import('./pages/InkomenDetail/InkomenDetailTonk')
-);
-const InkomenDetailTozo = lazy(
-  () => import('./pages/InkomenDetail/InkomenDetailTozo')
-);
-const InkomenDetailUitkering = lazy(
-  () => import('./pages/InkomenDetail/InkomenDetailUitkering')
-);
-const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
-const MyNotifications = lazy(
-  () => import('./pages/MyNotifications/MyNotifications')
-);
-const Accessibility = lazy(() => import('./pages/Accessibility/Accessibility'));
-const Burgerzaken = lazy(() => import('./pages//Burgerzaken/Burgerzaken'));
-const BurgerzakenIDKaart = lazy(
-  () => import('./pages/BurgerzakenDetail/BurgerzakenIDKaart')
-);
-const GarbageInformation = lazy(
-  () => import('./pages/GarbageInformation/GarbageInformation')
-);
-const GeneralInfo = lazy(() => import('./pages/GeneralInfo/GeneralInfo'));
-const Inkomen = lazy(() => import('./pages/Inkomen/Inkomen'));
-const InkomenSpecificaties = lazy(
-  () => import('./pages/InkomenSpecificaties/InkomenSpecificaties')
-);
-const Klachten = lazy(() => import('./pages/Klachten/Klachten'));
-const KlachtenDetail = lazy(
-  () => import('./pages/KlachtenDetail/KlachtenDetail')
-);
-const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
-const Profile = lazy(() => import('./pages/Profile/ProfilePrivate'));
-const Sia = lazy(() => import('./pages/Sia/Sia'));
-const SiaDetail = lazy(() => import('./pages/SiaDetail/SiaDetail'));
-const SiaListClosed = lazy(() => import('./pages/Sia/SiaListClosed'));
-const SiaListOpen = lazy(() => import('./pages/Sia/SiaListOpen'));
-const ToeristischeVerhuur = lazy(
-  () => import('./pages/ToeristischeVerhuur/ToeristischeVerhuur')
-);
-const ToeristischeVerhuurDetail = lazy(
-  () => import('./pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail')
-);
-const VergunningDetail = lazy(
-  () => import('./pages/VergunningDetail/VergunningDetail')
-);
-const Vergunningen = lazy(() => import('./pages/Vergunningen/Vergunningen'));
-const Zorg = lazy(() => import('./pages/Zorg/Zorg'));
-const ZorgDetail = lazy(() => import('./pages/ZorgDetail/ZorgDetail'));
+import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
+import Accessibility from './pages/Accessibility/Accessibility';
+import BurgerzakenIDKaart from './pages/BurgerzakenDetail/BurgerzakenIDKaart';
+import Dashboard from './pages/Dashboard/Dashboard';
+import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
+import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
+import Inkomen from './pages/Inkomen/Inkomen';
+import InkomenDetailBbz from './pages/InkomenDetail/InkomenDetailBbz';
+import InkomenDetailTonk from './pages/InkomenDetail/InkomenDetailTonk';
+import InkomenDetailTozo from './pages/InkomenDetail/InkomenDetailTozo';
+import InkomenDetailUitkering from './pages/InkomenDetail/InkomenDetailUitkering';
+import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificaties';
+import Klachten from './pages/Klachten/Klachten';
+import KlachtenDetail from './pages/KlachtenDetail/KlachtenDetail';
+import Krefia from './pages/Krefia/Krefia';
+import MyNotifications from './pages/MyNotifications/MyNotifications';
+import NotFound from './pages/NotFound/NotFound';
+import Parkeren from './pages/Parkeren/Parkeren';
+import ProfileCommercial from './pages/Profile/ProfileCommercial';
+import Profile from './pages/Profile/ProfilePrivate';
+import Search from './pages/Search/Search';
+import Sia from './pages/Sia/Sia';
+import SiaListClosed from './pages/Sia/SiaListClosed';
+import SiaListOpen from './pages/Sia/SiaListOpen';
+import SiaDetail from './pages/SiaDetail/SiaDetail';
+import Stadspas from './pages/Stadspas/Stadspas';
+import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
+import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
+import ToeristischeVerhuur from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
+import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail';
+import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
+import Vergunningen from './pages/Vergunningen/Vergunningen';
+import Zorg from './pages/Zorg/Zorg';
+import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 
-const Bezwaren = lazy(() => import('./pages/Bezwaren/Bezwaren'));
-const BezwarenDetail = lazy(
-  () => import('./pages/BezwarenDetail/BezwarenDetail')
-);
+import Bezwaren from './pages/Bezwaren/Bezwaren';
+import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
 
-const Horeca = lazy(() => import('./pages/Horeca/Horeca'));
-const HorecaDetail = lazy(() => import('./pages/HorecaDetail/HorecaDetail'));
+import Horeca from './pages/Horeca/Horeca';
+import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 
-const LandingPageYivi = lazy(() => import('./pages/Landing/LandingYivi'));
-const AVG = lazy(() => import('./pages/AVG/AVG'));
-const AVGDetail = lazy(() => import('./pages/AVGDetail/AVGDetail'));
-const BFF500Error = lazy(() => import('./pages/BffError/BffError'));
+import AVG from './pages/AVG/AVG';
+import AVGDetail from './pages/AVGDetail/AVGDetail';
+import BFF500Error from './pages/BffError/BffError';
+import LandingPageYivi from './pages/Landing/LandingYivi';
 
-const Bodem = lazy(() => import('./pages/Bodem/Bodem'));
-const LoodMeting = lazy(() => import('./pages/Bodem/LoodMeting'));
-const Erfpacht = lazy(() => import('./pages/Erfpacht/Erfpacht'));
-const ErfpachtDossierDetail = lazy(
-  () => import('./pages/Erfpacht/DossierDetail/ErfpachtDossierDetail')
-);
-const ErfpachtDossiers = lazy(
-  () => import('./pages/Erfpacht/ErfpachtDossiers')
-);
-const ErfpachtFacturen = lazy(
-  () => import('./pages/Erfpacht/ErfpachtFacturen')
-);
-const ErfpachtOpenFacturen = lazy(
-  () => import('./pages/Erfpacht/ErfpachtOpenFacturen')
-);
+import Bodem from './pages/Bodem/Bodem';
+import LoodMeting from './pages/Bodem/LoodMeting';
+import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
+import Erfpacht from './pages/Erfpacht/Erfpacht';
+import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
+import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
+import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -426,15 +386,7 @@ export default function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
-        <Suspense
-          fallback={
-            <div className={styles.PreLoader}>
-              De Mijn Amsterdam applicatie wordt geladen....
-            </div>
-          }
-        >
-          <AppLanding />
-        </Suspense>
+        <AppLanding />
       </BrowserRouter>
     </RecoilRoot>
   );
