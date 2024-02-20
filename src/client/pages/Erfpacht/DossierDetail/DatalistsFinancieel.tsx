@@ -27,12 +27,15 @@ function DatalistFinancieelPeriode({
     {
       label: titelAlgemeneBepaling,
       content: (
-        <Link
-          rel="noopener noreferrer"
-          href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/algemene-bepalingen/"
-        >
-          {periode.algemeneBepaling}
-        </Link>
+        <>
+          <Link
+            rel="noopener noreferrer"
+            href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/algemene-bepalingen/"
+          >
+            {periode.algemeneBepaling}
+          </Link>{' '}
+          - {periode.regime}
+        </>
       ),
     },
     {
