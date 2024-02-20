@@ -127,7 +127,7 @@ export default function Erfpacht() {
               )}
 
               {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-                <MaParagraph textAlign="right">
+                <MaParagraph>
                   <LinkToListPage
                     count={dossiers.length}
                     route={AppRoutes['ERFPACHTv2/DOSSIERS']}
@@ -165,7 +165,7 @@ export default function Erfpacht() {
                   {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
                 </MaParagraph>
               )}
-              <MaParagraph textAlign="right">
+              <MaParagraph>
                 <LinkToListPage
                   count={openFacturen.length}
                   route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
