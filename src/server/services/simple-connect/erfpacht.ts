@@ -375,6 +375,20 @@ export function transformErfpachtDossierProperties<
     );
   }
 
+  if (
+    'bijzondereBepalingen' in dossier &&
+    dossier.bijzondereBepalingen?.length
+  ) {
+    dossier.bijzondereBepalingen = dossier.bijzondereBepalingen.map(
+      (bepaling) => {
+        if (bepaling.samengesteldeOppervlakteEenheid === '0') {
+          bepaling.samengesteldeOppervlakteEenheid = '-';
+        }
+        return bepaling;
+      }
+    );
+  }
+
   if ('juridisch' in dossier && !!dossier?.juridisch?.ingangsdatum) {
     dossier.juridisch.ingangsdatum = defaultDateFormat(
       dossier.juridisch.ingangsdatum

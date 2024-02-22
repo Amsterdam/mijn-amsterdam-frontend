@@ -57,6 +57,15 @@
     {
       "titelErfpachter": "Erfpachter",
       "titelRelatieCode": "Relatiecode",
+      "relatieNaam": "(Geheim) H.J de Gruyter",
+      "relatieCode": "123-123",
+      "erfpachter": true,
+      "betaler": false,
+      "indicatieGeheim": true
+    },
+    {
+      "titelErfpachter": "Erfpachter",
+      "titelRelatieCode": "Relatiecode",
       "relatieNaam": "Persoon Wegan",
       "relatieCode": "Wegan",
       "erfpachter": true,
