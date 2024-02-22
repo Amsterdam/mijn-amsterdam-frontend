@@ -50,10 +50,10 @@ import Parkeren from './pages/Parkeren/Parkeren';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
-import Sia from './pages/Sia/Sia';
-import SiaListClosed from './pages/Sia/SiaListClosed';
-import SiaListOpen from './pages/Sia/SiaListOpen';
-import SiaDetail from './pages/SiaDetail/SiaDetail';
+// import Sia from './pages/Sia/Sia';
+// import SiaListClosed from './pages/Sia/SiaListClosed';
+// import SiaListOpen from './pages/Sia/SiaListOpen';
+// import SiaDetail from './pages/SiaDetail/SiaDetail';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
@@ -161,38 +161,39 @@ function AppAuthenticated() {
     }
   }, [redirectAfterLogin, history]);
 
-  if (profileType === 'private-attributes') {
-    return (
-      <>
-        <MainHeader isAuthenticated={true} isHeroVisible={true} />
-        <div className={styles.App} id="skip-to-id-AppContent">
-          <Switch>
-            {FeatureToggle.siaActive && (
-              <Route
-                path={[
-                  AppRoutes['SIA/DETAIL/CLOSED'],
-                  AppRoutes['SIA/DETAIL/OPEN'],
-                ]}
-                component={SiaDetail}
-              />
-            )}
-            {FeatureToggle.siaActive && (
-              <Route path={AppRoutes.SIA_OPEN} component={SiaListOpen} />
-            )}
-            {FeatureToggle.siaActive && (
-              <Route path={AppRoutes.SIA_CLOSED} component={SiaListClosed} />
-            )}
-            {FeatureToggle.siaActive && (
-              <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
-            )}
-            <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
-        <MainFooter isAuthenticated={true} />
-      </>
-    );
-  }
+  // NOTE: To be removed
+  // if (profileType === 'private-attributes') {
+  //   return (
+  //     <>
+  //       <MainHeader isAuthenticated={true} isHeroVisible={true} />
+  //       <div className={styles.App} id="skip-to-id-AppContent">
+  //         <Switch>
+  //           {FeatureToggle.siaActive && (
+  //             <Route
+  //               path={[
+  //                 AppRoutes['SIA/DETAIL/CLOSED'],
+  //                 AppRoutes['SIA/DETAIL/OPEN'],
+  //               ]}
+  //               component={SiaDetail}
+  //             />
+  //           )}
+  //           {FeatureToggle.siaActive && (
+  //             <Route path={AppRoutes.SIA_OPEN} component={SiaListOpen} />
+  //           )}
+  //           {FeatureToggle.siaActive && (
+  //             <Route path={AppRoutes.SIA_CLOSED} component={SiaListClosed} />
+  //           )}
+  //           {FeatureToggle.siaActive && (
+  //             <Route path={[AppRoutes.ROOT, AppRoutes.SIA]} component={Sia} />
+  //           )}
+  //           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
+  //           <Route component={NotFound} />
+  //         </Switch>
+  //       </div>
+  //       <MainFooter isAuthenticated={true} />
+  //     </>
+  //   );
+  // }
 
   const isHeroVisible = !matchPath(history.location.pathname, {
     path: AppRoutes.BUURT,
