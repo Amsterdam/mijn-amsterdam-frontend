@@ -64,7 +64,7 @@ export function ErfpachtersList({
                     : undefined
                 }
               >
-                {index}-{relatie.relatieNaam}{' '}
+                {relatie.relatieNaam}{' '}
                 {relatie.betaler && hasBetalerWijzigenLink ? (
                   <WijzigenLink
                     linkVariant="inList"
