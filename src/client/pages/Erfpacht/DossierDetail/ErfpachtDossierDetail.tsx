@@ -16,14 +16,13 @@ import { CollapsiblePanel } from '../../../components/CollapsiblePanel/Collapsib
 import { BarConfig } from '../../../components/LoadingContent/LoadingContent';
 import { BFFApiUrls } from '../../../config/api';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
+import { useErfpachtV2Data } from '../erfpachtData.hook';
+import { DataTableFacturen } from './DataTableFacturen';
 import { DataTableBijzondereBepalingen } from './DatalistBijzondereBepalingen';
 import { DatalistGeneral } from './DatalistGeneral';
 import { DatalistJuridisch } from './DatalistJuridisch';
 import { DatalistsFinancieel } from './DatalistsFinancieel';
-import { DataTableFacturen } from './DataTableFacturen';
 import styles from './ErfpachtDossierDetail.module.scss';
-import { useEffect } from 'react';
-import { useErfpachtV2Data } from '../erfpachtData.hook';
 
 const loadingContentBarConfig: BarConfig = [
   ['12rem', '2rem', '.5rem'],
