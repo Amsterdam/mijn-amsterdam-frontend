@@ -44,6 +44,7 @@ export const FeatureToggle = {
   dbDisabled: false,
   passQueryParamsToStreamUrl: !IS_AP,
   laadpalenActive: !IS_PRODUCTION,
+  oidcLogoutHintActive: true,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
@@ -56,15 +57,15 @@ export const DEFAULT_PROFILE_TYPE = 'private';
 
 export const ExternalUrls = {
   CHANGE_PERSONAL_DATA:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
+    'https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85',
   CHANGE_RESIDENT_COUNT:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7BE4C7C5B6-242B-46AF-8EF1-8D65D8EEF918%7D',
+    'https://www.amsterdam.nl/veelgevraagd/onjuiste-inschrijving-melden-ef918',
   CHANGE_KVK_DATA:
     'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
-    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx',
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx',
   SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''
   }.amsterdam.nl/saml/login/alias/mijnErfpachtBurger`,
@@ -98,7 +99,7 @@ export const ExternalUrls = {
   }mijnsubsidies.amsterdam.nl/dashboard`,
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
-    'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
+    'https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077',
   AMSTERDAM: 'https://www.amsterdam.nl',
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_BIJSTANDSUITKERING:
@@ -109,17 +110,17 @@ export const ExternalUrls = {
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
-    'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
+    'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
 
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofafval.aspx',
   AMSTERDAM_COMPLAINTS_FROM:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier',
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx',
   AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
   AFVAL_MELDING_FORMULIER:
     'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
   AFVAL_MELDING:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D',
+    'https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609',
   KREFIA: `https://krefia${!IS_PRODUCTION ? '-acceptatie' : ''}.amsterdam.nl`,
   STADSBANK_VAN_LENING: 'https://www.amsterdam.nl/sbl/',
   STADSPAS: 'https://www.amsterdam.nl/stadspas',

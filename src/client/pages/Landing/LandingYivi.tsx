@@ -103,7 +103,7 @@ export default function Landing() {
                 Kijk voor meer informatie over de proef en Yivi bij{' '}
                 <LinkdInline
                   external
-                  href="https://www.amsterdam.nl/veelgevraagd/?caseid=%7Bfbeab9ad-81e4-4fee-9dfc-3fd62eb92719%7D"
+                  href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-online-volgen-92719-kp"
                 >
                   Melding openbare ruimte volgen
                 </LinkdInline>

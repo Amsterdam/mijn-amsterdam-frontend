@@ -2,15 +2,15 @@ import { LinkdInline } from '../../../Button/Button';
 import GenericBase from './GenericBase';
 
 const afvalUrls: Record<string, string> = {
-  rest: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7BC5AC6694-CB65-4ED8-B5B3-6794BEA279FD%7D',
-  glas: 'https://www.amsterdam.nl/veelgevraagd/?productid=%7B881CBA8B-AB9F-43DF-910F-6B5DF7A91080%7D',
+  rest: 'https://www.amsterdam.nl/veelgevraagd/huisvuil-279fd',
+  glas: 'https://www.amsterdam.nl/veelgevraagd/glas-inleveren-in-de-glasbak-91080',
   papier:
     'https://www.amsterdam.nl/veelgevraagd/dit-mag-wel-en-niet-in-de-papiercontainer-944aa-kp',
   textiel:
-    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BD68460AA-EB08-4132-A69F-7763CD8431A2%7D',
-  gft: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B4FDB05A6-EA6F-4475-A359-C19AD3578CF5%7D',
+    'https://www.amsterdam.nl/veelgevraagd/textielcontainers-431a2-kp',
+  gft: 'https://www.amsterdam.nl/veelgevraagd/dit-mag-wel-en-niet-bij-het-groente-fruit-etensresten-en-tuinafval-gfe-t-78cf5-kp',
   brood:
-    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B901ECC99-7B1F-40E8-9C6C-5CD95AC256E1%7D',
+    'https://www.amsterdam.nl/veelgevraagd/wat-mag-er-in-de-broodcontainer-256e1-kp',
 };
 
 interface MyArePanelContentAfvalProps {
@@ -39,7 +39,7 @@ export default function MyArePanelContentAfval({
             <br />{' '}
             <LinkdInline
               external={true}
-              href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BA6316561-BBC0-42A0-810F-74A7CCFA188D%7D"
+              href="https://www.amsterdam.nl/veelgevraagd/ondergrondse-afvalcontainer-adopteren-a188d"
             >
               Lees hier hoe
             </LinkdInline>

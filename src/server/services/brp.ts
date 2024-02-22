@@ -20,8 +20,8 @@ const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
 
 // You need a id valid for 2 more month when returning to NL. So everyone with a expiring id before this date will probably want to renew their id before the summer holidays --> this creates a peak at the Stadsloket from march onwards.
-const ID_BEWIJS_PEAK_DATE_START = new Date('2024-03-01'); 
-const ID_BEWIJS_PEAK_DATE_END = new Date('2024-10-01'); 
+const ID_BEWIJS_PEAK_DATE_START = new Date('2024-03-01');
+const ID_BEWIJS_PEAK_DATE_END = new Date('2024-10-01');
 
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
@@ -30,15 +30,14 @@ const BrpDocumentTitles: Record<string, string> = {
   rijbewijs: 'rijbewijs',
 };
 
-const BrpDocumentCallToAction:  Record<string, string> = {
-    paspoort:
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
-    'europese identiteitskaart':
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    'nederlandse identiteitskaart':
-      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
-    rijbewijs: 'https://www.amsterdam.nl/burgerzaken/rijbewijs/rijbewijs-verlengen-categorie-toevoegen/',
-  };
+const BrpDocumentCallToAction: Record<string, string> = {
+  paspoort: 'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
+  'europese identiteitskaart':
+    'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
+  'nederlandse identiteitskaart':
+    'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
+  rijbewijs: 'https://www.amsterdam.nl/burgerzaken/rijbewijs/',
+};
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const adresInOnderzoek = data?.persoon?.adresInOnderzoek;
@@ -72,8 +71,10 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   const documentsExpiringDuringPeak = data.identiteitsbewijzen?.filter(
     (document) => {
-      const afloop = new Date(document.datumAfloop)
-      return afloop >= ID_BEWIJS_PEAK_DATE_START && afloop <= ID_BEWIJS_PEAK_DATE_END 
+      const afloop = new Date(document.datumAfloop);
+      return (
+        afloop >= ID_BEWIJS_PEAK_DATE_START && afloop <= ID_BEWIJS_PEAK_DATE_END
+      );
     }
   );
 
@@ -109,7 +110,9 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
         isAlert: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
         title: `Voorkom vertraging en verleng uw ${docTitle} op tijd`,
-        description: `Vanaf maart tot de zomervakantie wordt het erg druk op het Stadsloket. Uw huidige ${docTitle} verloopt op ${defaultDateFormat( document.datumAfloop)}, vraag uw nieuwe ${docTitle} daarom ruim van te voren aan. Tip: in de ochtend is het rustiger bij het Stadsloket.`,
+        description: `Vanaf maart tot de zomervakantie wordt het erg druk op het Stadsloket. Uw huidige ${docTitle} verloopt op ${defaultDateFormat(
+          document.datumAfloop
+        )}, vraag uw nieuwe ${docTitle} daarom ruim van te voren aan. Tip: in de ochtend is het rustiger bij het Stadsloket.`,
         link: {
           to: BrpDocumentCallToAction[document.documentType],
           title: `Vraag uw nieuwe ${docTitle} aan`,
