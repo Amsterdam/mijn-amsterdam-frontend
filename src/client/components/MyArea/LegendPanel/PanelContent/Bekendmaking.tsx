@@ -17,7 +17,7 @@ export default function MyArePanelContentBekendmaking({
   return (
     <GenericBase
       title={capitalizeFirstLetter(panelItem.onderwerp)}
-      supTitle="Vergunningen"
+      supTitle="Vergunningen en ontheffingen"
     >
       {!!panelItem.datePublished && <Date date={panelItem.datePublished} />}
       {!!panelItem.categorie && (

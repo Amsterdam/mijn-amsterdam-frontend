@@ -6,6 +6,14 @@ import type {
   KrefiaDeepLink,
   Vergunning,
 } from '../../../server/services';
+import { AVGRequest } from '../../../server/services/avg/types';
+import { Bezwaar } from '../../../server/services/bezwaren/types';
+import { LoodMeting } from '../../../server/services/bodem/types';
+import { SIAItem } from '../../../server/services/sia';
+import {
+  ErfpachtV2Dossier,
+  ErfpachtV2DossiersResponse,
+} from '../../../server/services/simple-connect/erfpacht';
 import type {
   ToeristischeVerhuurRegistratieDetail,
   ToeristischeVerhuurVergunning,
@@ -33,14 +41,6 @@ import {
 import { AppState } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
-import { Bezwaar } from '../../../server/services/bezwaren/types';
-import { LoodMeting } from '../../../server/services/bodem/types';
-import { SIAItem } from '../../../server/services/sia';
-import { AVGRequest } from '../../../server/services/avg/types';
-import {
-  ErfpachtV2Dossier,
-  ErfpachtV2DossiersResponse,
-} from '../../../server/services/simple-connect/erfpacht';
 
 export interface SearchEntry {
   url: string;
