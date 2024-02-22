@@ -19,5 +19,5 @@ export function DatalistCanons({ canons }: DatalistCanonsProps) {
       </OrderedList>
     );
   }
-  return null;
+  return '-';
 }
