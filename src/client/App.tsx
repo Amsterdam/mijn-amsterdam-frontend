@@ -1,11 +1,11 @@
 import classnames from 'classnames';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   BrowserRouter,
-  matchPath,
   Redirect,
   Route,
   Switch,
+  matchPath,
   useHistory,
   useLocation,
 } from 'react-router-dom';
