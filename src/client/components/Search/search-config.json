@@ -311,13 +311,13 @@
     },
     {
       "url": "/vergunningen",
-      "displayTitle": "Vergunningen",
+      "displayTitle": "Vergunningen en ontheffingen",
       "description": "Een overzicht van uw aanvragen voor vergunningen en ontheffingen bij gemeente Amsterdam.",
       "keywords": [
         "Vergunningen",
-        "Aanvragen",
-        "Vergunning"
-      ]
+        "Ontheffingen",
+        "Aanvragen"
+              ]
     },
     {
       "url": "/horeca",
@@ -326,7 +326,7 @@
       "keywords": [
         "Vergunningen",
         "Aanvragen",
-        "Vergunning",
+        "Ontheffingen",
         "Horeca"
       ]
     },
