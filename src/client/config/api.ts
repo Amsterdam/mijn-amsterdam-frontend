@@ -60,7 +60,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   MILIEUZONE: 'Milieuzone',
   OVERTREDINGEN: 'Overtredingen voertuigen',
   MY_LOCATION: 'Uw locatie op de kaart',
-  VERGUNNINGEN: 'Vergunningen',
+  VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   AFVALPUNTEN: 'Afvalpunten',
