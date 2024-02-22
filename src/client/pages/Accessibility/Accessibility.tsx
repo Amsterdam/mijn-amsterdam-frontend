@@ -20,7 +20,7 @@ export default function Accessibility() {
           het via ons{' '}
           <LinkdInline
             external={true}
-            href="https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx"
+            href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx"
           >
             contactformulier
           </LinkdInline>
