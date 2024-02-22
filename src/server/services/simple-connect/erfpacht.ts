@@ -381,7 +381,7 @@ export function transformErfpachtDossierProperties<
   ) {
     dossier.bijzondereBepalingen = dossier.bijzondereBepalingen.map(
       (bepaling) => {
-        if (bepaling.samengesteldeOppervlakteEenheid === '0') {
+        if (bepaling.samengesteldeOppervlakteEenheid.trim() === '0') {
           bepaling.samengesteldeOppervlakteEenheid = '-';
         }
         return bepaling;
