@@ -60,7 +60,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
       <li>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}"
+          href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
           rel="external noopener noreferrer"
         >
           <svg
@@ -278,7 +278,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
       <li>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}"
+          href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
           rel="external noopener noreferrer"
         >
           <svg

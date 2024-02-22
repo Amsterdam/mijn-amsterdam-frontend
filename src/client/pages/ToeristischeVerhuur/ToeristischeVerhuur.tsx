@@ -159,7 +159,7 @@ export default function ToeristischeVerhuur() {
 
           <Linkd
             external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BF5FE8785-9B65-443F-9AA7-FD814372C7C2%7D"
+            href="https://www.amsterdam.nl/veelgevraagd/toeristenbelasting-2c7c2"
           >
             Meer over toeristenbelasting
           </Linkd>

@@ -88,7 +88,7 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
           Voor dit adres geldt{' '}
           <LinkdInline
             external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B1833F1D4-05A2-4870-BDEE-20DC3A37ED1C%7D"
+            href="https://www.amsterdam.nl/veelgevraagd/geheimhouding-persoonsgegevens-7ed1c"
           >
             geheimhouding
           </LinkdInline>
