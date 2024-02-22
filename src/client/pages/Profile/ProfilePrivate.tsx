@@ -163,7 +163,7 @@ export default function Profile() {
               <LinkdInline
                 external={true}
                 aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
-                href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+                href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
               >
                 Meer informatie
               </LinkdInline>
@@ -180,7 +180,7 @@ export default function Profile() {
               {' '}
               <LinkdInline
                 external={true}
-                href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+                href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
               >
                 Kijk voor meer informatie over een adresonderzoek op
                 amsterdam.nl

@@ -143,7 +143,7 @@ export default function ApplicationError({ error }: FallbackProps) {
                 </p>
                 <ul>
                   <li>
-                    <a href="https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx">
+                    <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx">
                       Contactformulier
                     </a>
                   </li>
