@@ -309,8 +309,10 @@ function logout(postLogoutRedirectUrl: string) {
     res.oidc.logout({
       returnTo: postLogoutRedirectUrl,
       logoutParams: {
-        id_token_hint: IS_PRODUCTION ? auth.token : null,
-        logout_hint: !IS_PRODUCTION ? auth.profile.sid : null,
+        id_token_hint: !FeatureToggle.oidcLogoutHintActive ? auth.token : null,
+        logout_hint: FeatureToggle.oidcLogoutHintActive
+          ? auth.profile.sid
+          : null,
       },
     });
   };
