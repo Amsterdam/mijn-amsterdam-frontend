@@ -164,10 +164,10 @@ export const DATASETS: DatasetCategories = {
   },
   bekendmakingen: {
     isDisabled: !FeatureToggle.bekendmakingenDatasetActive,
-    title: 'Vergunningen',
+    title: 'Vergunningen en ontheffingen',
     datasets: {
       bekendmakingen: {
-        title: 'Vergunningen',
+        title: 'Vergunningen en ontheffingen',
         filters: {
           onderwerp: {
             title: 'Onderwerp',

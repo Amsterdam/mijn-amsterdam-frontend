@@ -169,7 +169,7 @@ export const tips: Tip[] = [
       'U ziet deze tip omdat u een Stadspas met groene stip hebt en geen geldige ID-kaart of paspoort',
     link: {
       title: 'Bekijk de voorwaarden',
-      to: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B0391171C-BA2E-40D2-8CBE-F013192D09A6%7D',
+      to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
     },
   },
   {
@@ -322,7 +322,7 @@ export const tips: Tip[] = [
       'U ziet deze tip omdat u een Stadspas met groene stip hebt en geen geldige ID-kaart of paspoort',
     link: {
       title: 'Bekijk de voorwaarden',
-      to: 'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B0391171C-BA2E-40D2-8CBE-F013192D09A6%7D',
+      to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
     },
   },
 ];
