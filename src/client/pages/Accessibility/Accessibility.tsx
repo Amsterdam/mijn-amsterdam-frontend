@@ -72,7 +72,7 @@ export default function Accessibility() {
           Mijn Amsterdam moeten zetten. Lees hier onze{' '}
           <LinkdInline
             external={true}
-            href="/toegankelijkheidsverklaring-mijn-amsterdam-20200520.html"
+            href="https://www.toegankelijkheidsverklaring.nl/register/9142#verklaring"
           >
             volledige toegankelijkheidsverklaring
           </LinkdInline>
