@@ -76,7 +76,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
       <p>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           rel="external noopener noreferrer"
         >
           <svg
@@ -263,7 +263,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
       <p>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           rel="external noopener noreferrer"
         >
           <svg
@@ -558,7 +558,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
       <p>
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           rel="external noopener noreferrer"
         >
           <svg
