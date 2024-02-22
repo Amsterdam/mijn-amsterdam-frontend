@@ -5,6 +5,8 @@ import { useMediumScreen } from '../../../hooks';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
 
+const MAX_ERFPACHTERS_VISIBLE_INITIALLY = 3;
+
 interface ErfpachtersListProps {
   erfpachters?: ErfpachtV2DossiersDetail['relaties'];
   debiteurNummer?: string;
@@ -22,7 +24,7 @@ export function ErfpachtersList({
   const colCount = isMediumScreen ? 3 : 2;
   const rowsPerCol = 8;
   const erfpachtersCount = erfpachters?.length ?? 0;
-  const shouldCollapse = erfpachtersCount > 3;
+  const shouldCollapse = erfpachtersCount > MAX_ERFPACHTERS_VISIBLE_INITIALLY;
   const [isCollapsed, setIsCollapsed] = useState(shouldCollapse);
 
   function cssStyle() {
@@ -42,7 +44,9 @@ export function ErfpachtersList({
   }
 
   const erfpachtersList =
-    shouldCollapse && isCollapsed ? erfpachters?.slice(0, 3) : erfpachters;
+    shouldCollapse && isCollapsed
+      ? erfpachters?.slice(0, MAX_ERFPACHTERS_VISIBLE_INITIALLY)
+      : erfpachters;
 
   if (erfpachtersList?.length) {
     return (
