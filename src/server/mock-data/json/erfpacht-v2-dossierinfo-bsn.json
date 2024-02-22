@@ -98,15 +98,6 @@
       "omschrijving": "Wonen/Koopwoning/Woning",
       "titelBestemmingOmschrijving": "Bestemming",
       "categorie": "Wonen",
-      "oppervlakte": "0",
-      "samengesteldeOppervlakteEenheid": "0",
-      "titelOppervlakte": "Oppervlakte",
-      "eenheid": "m² BVO"
-    },
-    {
-      "omschrijving": "Wonen/Koopwoning/Woning",
-      "titelBestemmingOmschrijving": "Bestemming",
-      "categorie": "Wonen",
       "oppervlakte": "35",
       "samengesteldeOppervlakteEenheid": "Bruto vloeroppervlak: 35 m2",
       "titelOppervlakte": "Oppervlakte",
@@ -127,7 +118,44 @@
       "regime": "5 jaarlijkse indexering",
       "titelFinancieelRegime": "Regime",
       "titelGeenCanon": "Geen canon",
-      "canons": [],
+      "canons": [
+        {
+          "samengesteld": "€ 108,90 na indexering 2001",
+          "canonBedrag": "108.90",
+          "formattedCanonBedrag": "€ 108,90",
+          "canonBeginJaar": "2001"
+        },
+        {
+          "samengesteld": "€ 117,17 na indexering 2006",
+          "canonBedrag": "117.17",
+          "formattedCanonBedrag": "€ 117,17",
+          "canonBeginJaar": "2006"
+        },
+        {
+          "samengesteld": "€ 120,57 na indexering 2011",
+          "canonBedrag": "120.57",
+          "formattedCanonBedrag": "€ 120,57",
+          "canonBeginJaar": "2011"
+        },
+        {
+          "samengesteld": "€ 125,63 na indexering 2016",
+          "canonBedrag": "125.63",
+          "formattedCanonBedrag": "€ 125,63",
+          "canonBeginJaar": "2016"
+        },
+        {
+          "samengesteld": "€ 128,27 na indexering 2021",
+          "canonBedrag": "128.27",
+          "formattedCanonBedrag": "€ 128,27",
+          "canonBeginJaar": "2021"
+        },
+        {
+          "samengesteld": "€ 128,27 na indexering 2022",
+          "canonBedrag": "128.27",
+          "formattedCanonBedrag": "€ 128,27",
+          "canonBeginJaar": "2022"
+        }
+      ],
       "titelFinancieelCanon": "Canon"
     }
   },
