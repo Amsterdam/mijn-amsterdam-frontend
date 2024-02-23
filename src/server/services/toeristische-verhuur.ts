@@ -208,10 +208,82 @@ export function transformVergunningenToVerhuur(
 
 interface BBResponseSource {}
 
+const savedReportQueries = {
+  persoonBSN: {
+    path: '/SearchRequest',
+    data: (bsn: string) => {
+      return {
+        query: {
+          tableName: 'PERSONEN',
+          fieldNames: ['ID', 'BURGERSERVICENUMMER'],
+          conditions: [
+            {
+              fieldName: 'BURGERSERVICENUMMER',
+              fieldValue: bsn,
+              operator: 0,
+              dataType: 0,
+            },
+          ],
+          limit: 1,
+        },
+        pageNumber: 0,
+      };
+    },
+  },
+  zakenPerPersoon: {
+    path: '/Link/PERSONEN/GFO_ZAKEN/Table',
+    data: (persoonID: string) => {
+      return [persoonID];
+    },
+  },
+  vergunningenPerBSN: {
+    path: '/Report/RunSavedReport',
+    data: (bsn: string) => {
+      return {
+        reportFileName:
+          'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamZaak.gov',
+        Parameters: [
+          {
+            Name: 'BSN',
+            Type: 'String',
+            Value: {
+              StringValue: bsn,
+            },
+            BeforeText: "'",
+            AfterText: "'",
+          },
+        ],
+      };
+    },
+  },
+  vergunningStatussen: {
+    path: '/Report/RunSavedReport',
+    data: (zaakId: string) => {
+      return {
+        reportFileName:
+          'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamStatus.gov',
+        Parameters: [
+          {
+            Name: 'GFO_ZAKEN_ID',
+            Type: 'String',
+            Value: {
+              StringValue: zaakId,
+            },
+          },
+        ],
+      };
+    },
+  },
+};
+
 function transformBBResponse(responseData: BBResponseSource) {
   console.log('responseData', responseData);
   return responseData;
 }
+
+// zaak detail: record/GFO_ZAKEN/$id
+// gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
+// links: /record/GFO_ZAKEN/-999742/Links
 
 async function fetchBBVergunning(
   requestID: requestID,
@@ -232,22 +304,20 @@ async function fetchBBVergunning(
     authProfileAndToken
   );
 
-  if (tokenResponse.status === 'OK' && tokenResponse.content) {
+  if (
+    tokenResponse.status === 'OK' &&
+    tokenResponse.content &&
+    authProfileAndToken.profile.id
+  ) {
+    const token = tokenResponse.content;
+    const { data, path } = savedReportQueries.vergunningenPerBSN;
     const response = await requestData(
       {
         ...dataRequestConfig,
-        url: `${dataRequestConfig.url}/Report/RunSavedReport`,
-        data: {
-          Name: 'BSN',
-          Type: 'String',
-          Value: {
-            StringValue: authProfileAndToken.profile.id,
-          },
-          BeforeText: "'",
-          AfterText: "'",
-        },
+        url: `${dataRequestConfig.url}${path}`,
+        data: data(authProfileAndToken.profile.id),
         headers: {
-          Authorization: `Bearer ${tokenResponse.content}`,
+          Authorization: `Bearer ${token}`,
         },
       },
       requestID,
