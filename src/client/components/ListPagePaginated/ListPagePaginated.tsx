@@ -4,7 +4,6 @@ import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { ChapterIcon, LoadingContent, OverviewPage, PageHeading } from '..';
 import { Chapter } from '../../../universal/config';
 import { PaginationV2 } from '../Pagination/PaginationV2';
-import { MaParagraph } from '../Paragraph/Paragraph';
 import { TableV2 } from '../Table/TableV2';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -97,7 +96,7 @@ export function ListPagePaginated({
               <>
                 {!itemsPaginated.length && !!noItemsText && (
                   <Grid.Cell span="all">
-                    <MaParagraph>{noItemsText}</MaParagraph>
+                    <Paragraph>{noItemsText}</Paragraph>
                   </Grid.Cell>
                 )}
                 {!isLoading && !!itemsPaginated.length && (

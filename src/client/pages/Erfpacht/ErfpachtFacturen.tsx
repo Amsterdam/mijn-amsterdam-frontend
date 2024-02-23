@@ -41,7 +41,6 @@ export default function ErfpachtFacturen() {
       appRouteBack={AppRoutes['ERFPACHTv2']}
       displayProps={displayPropsAlleFacturen}
       chapter={Chapters.ERFPACHTv2}
-      titleKey="dossieradres"
       isLoading={api.isLoading}
       isError={api.isError}
       tableGridColStyles={colStyles.facturenTable}
