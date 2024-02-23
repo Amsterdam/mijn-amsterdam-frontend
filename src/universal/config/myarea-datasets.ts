@@ -62,6 +62,14 @@ const month = new Date().getMonth();
 if (month !== 11 && month !== 0) {
   excludeFractieOmschrijving.push('Kerstboom');
 }
+
+export const laadpaalValueConfig = {
+  snellader: 'Snellader',
+  IEC_62196_T2_COMBO: 'CCS',
+  IEC_62196_T2: 'Type 2 (Mennekes)',
+  CHADEMO: 'Chademo',
+};
+
 export const DATASETS: DatasetCategories = {
   laadpalen: {
     isDisabled: !FeatureToggle.laadpalenActive,
@@ -71,28 +79,28 @@ export const DATASETS: DatasetCategories = {
         title: 'Laadpalen',
         filters: {
           snellader: {
-            title: 'Snellader',
+            title: laadpaalValueConfig.snellader,
             valueConfig: {
               True: { title: 'Ja' },
               False: { title: 'Nee' },
             },
           },
           CHADEMO: {
-            title: 'CHADEMO', // Add readable name?
+            title: laadpaalValueConfig.CHADEMO,
             valueConfig: {
               True: { title: 'Ja' },
               False: { title: 'Nee' },
             },
           },
           IEC_62196_T2_COMBO: {
-            title: 'IEC_62196_T2_COMBO', // Add readable name?
+            title: laadpaalValueConfig.IEC_62196_T2_COMBO,
             valueConfig: {
               True: { title: 'Ja' },
               False: { title: 'Nee' },
             },
           },
           IEC_62196_T2: {
-            title: 'IEC_62196_T2', // Add readable name?
+            title: laadpaalValueConfig.IEC_62196_T2,
             valueConfig: {
               True: { title: 'Ja' },
               False: { title: 'Nee' },
@@ -109,8 +117,8 @@ export const DATASETS: DatasetCategories = {
             title: 'Maximum wattage',
             valueConfig: {
               W1: { title: '0-5 watt' },
-              W2: { title: '50-10 watt' },
-              W3: { title: '100-30 watt' },
+              W2: { title: '50-100 watt' },
+              W3: { title: '100-300 watt' },
               W4: { title: '300+ watt' },
               W5: { title: 'Overige' },
             },

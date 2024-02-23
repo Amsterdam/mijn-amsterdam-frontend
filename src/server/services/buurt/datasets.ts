@@ -587,13 +587,10 @@ function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
   ];
 
   const connectorTypes = uniqueArray(
-    features
-      .map((feature) => feature.properties.connector_type.split(';'))
-      .flat()
+    features.flatMap((feature) => feature.properties.connector_type.split(';'))
   );
 
   features = features.map((feature) => {
-    console.log('sn', feature);
     // Determine the maximum wattage
     const watt = parseInt(feature.properties.charging_cap_max, 10);
     const wattRange = wattRanges.find((wattRange) => {
@@ -602,14 +599,11 @@ function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
     // Assign a misc range
     feature.properties.maxWattage = wattRange ?? 'W5';
 
-    // Add the connector type as feature property so we can filter it
+    // Add the connector type as feature property, so we can filter it
     for (const connectorType of connectorTypes) {
       feature.properties[connectorType] =
         feature.properties.connector_type.includes(connectorType);
     }
-
-    // feature.properties.address = // Add the address
-    // Add other useful properties // see the dataset response
 
     return feature;
   });

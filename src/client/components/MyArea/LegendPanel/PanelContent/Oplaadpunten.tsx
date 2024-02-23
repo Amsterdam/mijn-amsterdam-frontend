@@ -1,5 +1,6 @@
 import GenericBase from './GenericBase';
 import { InfoDetail } from '../../../index';
+import { laadpaalValueConfig } from '../../../../../universal/config';
 
 type Props = {
   panelItem: any;
@@ -10,21 +11,27 @@ export default function MyArePanelContentLaadpalen({
   datasetId,
   panelItem,
 }: Props) {
-  let title = '';
-  if (panelItem.availability === 'normaal_beschikbaar') {
-    title = 'Normaal beschikbaar';
-  } else if (panelItem.availability === 'snel_beschikbaar') {
-    title = 'Snel beschikbaar';
-  }
+  const connectorTypes = panelItem.connector_type.split(';');
 
   return (
     <GenericBase title={panelItem.name} supTitle="Laadpalen">
       {!!panelItem.connector_type && (
-        <InfoDetail label="Connector type" value={panelItem.connector_type} />
+        <InfoDetail
+          label={`Connector type${connectorTypes.length > 1 ? 's' : ''}`}
+          value={connectorTypes
+            .map(
+              (type: string) =>
+                laadpaalValueConfig[type as keyof typeof laadpaalValueConfig]
+            )
+            .join(', ')}
+        />
       )}
-      <InfoDetail label="Snelllader" value="--snelllader--" />
-      <InfoDetail label="Provider" value="--provider--" />
-      <InfoDetail label="Adres" value="--adres--" />
+      <InfoDetail
+        label="Adres"
+        value={`${panelItem.street} ${panelItem.housenumber}`}
+      />
+      <InfoDetail label="Provider" value={panelItem.provider} />
+      <InfoDetail label={'Snellader'} value={panelItem.snellader} />
       {!!panelItem.charging_cap_max && (
         <InfoDetail
           label="Maximum wattage"
