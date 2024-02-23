@@ -118,11 +118,11 @@ export default function MyArePanelContentSport({
           <InfoDetail label="Adres" value={panelItem.adres} />
           <InfoDetail
             label="Stadspasvergoeding jeugd"
-            value={panelItem.stadspasJeugd === 'True' || 'Nee'}
+            value={panelItem.indicatieStadspas || 'Nee'}
           />
           <InfoDetail
             label="Aangepast sporten"
-            value={panelItem.aangepastSporten === 'True' || 'Nee'}
+            value={panelItem.indicatieAangepastSporten || 'Nee'}
           />
           {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
