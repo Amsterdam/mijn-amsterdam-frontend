@@ -1,15 +1,14 @@
-import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Grid, Heading, Paragraph } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { generatePath, useParams } from 'react-router-dom';
 import { AppRoutes } from '../../../../universal/config';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage';
-import { MaParagraph } from '../../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
-import classNames from 'classnames';
 import { WijzigenLink } from './WijzigenLink';
 
 export function DataTableFacturen({
@@ -60,7 +59,7 @@ export function DataTableFacturen({
         <Heading level={4} size="level-4">
           Factuur naar nieuw adres
         </Heading>
-        <MaParagraph>
+        <Paragraph>
           Wilt u uw facturen voor erfpacht en canon op een nieuw adres
           ontvangen? Stuur een e-mail naar{' '}
           <WijzigenLink
@@ -74,11 +73,13 @@ export function DataTableFacturen({
           . Zet in het onderwerp 'Adreswijziging'. Vermeld in de mail uw
           debiteurennummer of het E-dossiernummer en uw nieuwe adresgegevens. U
           krijgt binnen 3 werkdagen een reactie.
-        </MaParagraph>
+        </Paragraph>
+      </Grid.Cell>
+      <Grid.Cell span="all">
         <Heading level={4} size="level-4">
           Factuur via e-mail
         </Heading>
-        <MaParagraph>
+        <Paragraph>
           U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw
           e-mailadres en debiteurennummer naar{' '}
           <WijzigenLink
@@ -90,7 +91,7 @@ export function DataTableFacturen({
             label="debiteurenadministratie@amsterdam.nl"
           />
           .
-        </MaParagraph>
+        </Paragraph>
       </Grid.Cell>
       <Grid.Cell span="all">
         <Datalist
@@ -110,14 +111,12 @@ export function DataTableFacturen({
         )}
         {!!dossier.facturen?.facturen?.length &&
           dossier.facturen.facturen.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-            <MaParagraph className={styles.LinkToListPage}>
-              <LinkToListPage
-                count={dossier.facturen.facturen.length}
-                route={generatePath(AppRoutes['ERFPACHTv2/ALLE_FACTUREN'], {
-                  dossierNummerUrlParam,
-                })}
-              />
-            </MaParagraph>
+            <LinkToListPage
+              count={dossier.facturen.facturen.length}
+              route={generatePath(AppRoutes['ERFPACHTv2/ALLE_FACTUREN'], {
+                dossierNummerUrlParam,
+              })}
+            />
           )}
         {!dossier.facturen?.facturen?.length && (
           <Paragraph>U heeft geen facturen.</Paragraph>

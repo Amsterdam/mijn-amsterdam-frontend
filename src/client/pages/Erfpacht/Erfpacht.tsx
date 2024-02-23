@@ -16,7 +16,6 @@ import {
   PageHeading,
 } from '../../components';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
-import { MaParagraph } from '../../components/Paragraph/Paragraph';
 import { TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import styles from './Erfpacht.module.scss';
@@ -50,9 +49,11 @@ export default function Erfpacht() {
       <Screen>
         <Grid>
           <Grid.Cell span="all">
-            <MaParagraph>
+            <Paragraph>
               Hieronder ziet u de gegevens van uw erfpachtrechten.
-            </MaParagraph>
+            </Paragraph>
+          </Grid.Cell>
+          <Grid.Cell span="all">
             <UnorderedList markers={false}>
               <UnorderedList.Item>
                 <Link
@@ -107,71 +108,72 @@ export default function Erfpacht() {
           )}
 
           {!isLoading(ERFPACHTv2) && !isError(ERFPACHTv2) && (
-            <Grid.Cell span="all">
-              <Heading level={3} size="level-2">
-                {titleDossiers ?? 'Erfpachtrechten'}
-              </Heading>
+            <>
+              <Grid.Cell span="all">
+                <Heading level={3} size="level-2">
+                  {titleDossiers ?? 'Erfpachtrechten'}
+                </Heading>
 
-              {!!dossiers.length ? (
-                <TableV2
-                  className={styles.DossiersTable}
-                  items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
-                  displayProps={displayPropsDossiers}
-                  gridColStyles={colStyles.dossiersTable}
-                />
-              ) : (
-                <MaParagraph>
-                  U heeft geen{' '}
-                  {titleDossiers?.toLowerCase() ?? 'erfpachtrechten'}.
-                </MaParagraph>
-              )}
+                {!!dossiers.length ? (
+                  <TableV2
+                    className={styles.DossiersTable}
+                    items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                    displayProps={displayPropsDossiers}
+                    gridColStyles={colStyles.dossiersTable}
+                  />
+                ) : (
+                  <Paragraph>
+                    U heeft geen{' '}
+                    {titleDossiers?.toLowerCase() ?? 'erfpachtrechten'}.
+                  </Paragraph>
+                )}
 
-              {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-                <MaParagraph>
+                {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
                   <LinkToListPage
                     count={dossiers.length}
                     route={AppRoutes['ERFPACHTv2/DOSSIERS']}
                   />
-                </MaParagraph>
-              )}
+                )}
+              </Grid.Cell>
+              <Grid.Cell span="all">
+                <Heading level={3} size="level-2">
+                  {titleOpenFacturen ?? 'Openstaande facturen'}
+                </Heading>
 
-              <Heading level={3} size="level-2">
-                {titleOpenFacturen ?? 'Openstaande facturen'}
-              </Heading>
-
-              {!!openFacturen.length ? (
-                isMediumScreen ? (
-                  <TableV2
-                    items={openFacturen.slice(
-                      0,
-                      MAX_TABLE_ROWS_ON_THEMA_PAGINA
-                    )}
-                    displayProps={displayPropsOpenFacturen}
-                    gridColStyles={colStyles.openFacturenTable}
-                  />
+                {!!openFacturen.length ? (
+                  isMediumScreen ? (
+                    <TableV2
+                      items={openFacturen.slice(
+                        0,
+                        MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                      )}
+                      displayProps={displayPropsOpenFacturen}
+                      gridColStyles={colStyles.openFacturenTable}
+                    />
+                  ) : (
+                    <OpenFacturenListGrouped
+                      facturen={openFacturen.slice(
+                        0,
+                        MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                      )}
+                      displayProps={displayPropsOpenFacturen}
+                      gridColStyles={colStyles.openFacturenTable}
+                    />
+                  )
                 ) : (
-                  <OpenFacturenListGrouped
-                    facturen={openFacturen.slice(
-                      0,
-                      MAX_TABLE_ROWS_ON_THEMA_PAGINA
-                    )}
-                    displayProps={displayPropsOpenFacturen}
-                    gridColStyles={colStyles.openFacturenTable}
-                  />
-                )
-              ) : (
-                <MaParagraph>
-                  U heeft geen{' '}
-                  {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
-                </MaParagraph>
-              )}
-              <MaParagraph>
+                  <Paragraph>
+                    U heeft geen{' '}
+                    {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}
+                    .
+                  </Paragraph>
+                )}
+
                 <LinkToListPage
                   count={openFacturen.length}
                   route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
                 />
-              </MaParagraph>
-            </Grid.Cell>
+              </Grid.Cell>
+            </>
           )}
         </Grid>
       </Screen>

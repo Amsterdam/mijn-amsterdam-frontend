@@ -21,7 +21,6 @@ export default function ErfpachtDossiers() {
       appRouteBack={AppRoutes['ERFPACHTv2']}
       displayProps={displayPropsDossiers}
       chapter={Chapters.ERFPACHTv2}
-      titleKey="voorkeursadres"
       isLoading={isLoading(ERFPACHTv2)}
       isError={isError(ERFPACHTv2)}
       tableGridColStyles={colStyles.dossiersTable}
