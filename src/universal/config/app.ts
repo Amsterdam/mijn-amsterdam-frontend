@@ -44,7 +44,7 @@ export const FeatureToggle = {
   dbDisabled: false,
   passQueryParamsToStreamUrl: !IS_AP,
   laadpalenActive: !IS_PRODUCTION,
-  oidcLogoutHintActive: true,
+  oidcLogoutHintActive: !IS_PRODUCTION,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
@@ -109,8 +109,7 @@ export const ExternalUrls = {
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
   AFVAL: 'https://www.amsterdam.nl/afval/',
-  AFVAL_COMMERCIAL:
-    'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
+  AFVAL_COMMERCIAL: 'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
 
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofafval.aspx',
