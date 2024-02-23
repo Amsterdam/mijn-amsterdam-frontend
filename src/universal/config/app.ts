@@ -31,7 +31,7 @@ export const FeatureToggle = {
   subsidieActive: true,
   wiorMeldingen: true,
   parkerenActive: true,
-  bekendmakingenDatasetActive: true,
+  bekendmakingenDatasetActive: false,
   evenementenDatasetActive: false,
   klachtenActive: true,
   bezwarenActive: !IS_PRODUCTION,
@@ -109,8 +109,7 @@ export const ExternalUrls = {
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
   AFVAL: 'https://www.amsterdam.nl/afval/',
-  AFVAL_COMMERCIAL:
-    'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
+  AFVAL_COMMERCIAL: 'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
 
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofafval.aspx',
