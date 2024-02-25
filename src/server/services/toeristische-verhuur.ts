@@ -208,76 +208,78 @@ export function transformVergunningenToVerhuur(
 
 interface BBResponseSource {}
 
-const savedReportQueries = {
-  persoonBSN: {
+const savedReportQueries: Record<
+  string,
+  (...params: any) => { data?: object; path: string }
+> = {
+  token: () => ({
+    path: '/token',
+    data: { apiKey: process.env.BFF_POWERBROWSER_API_KEY },
+  }),
+  persoonBSN: (bsn: string) => ({
     path: '/SearchRequest',
-    data: (bsn: string) => {
-      return {
-        query: {
-          tableName: 'PERSONEN',
-          fieldNames: ['ID', 'BURGERSERVICENUMMER'],
-          conditions: [
-            {
-              fieldName: 'BURGERSERVICENUMMER',
-              fieldValue: bsn,
-              operator: 0,
-              dataType: 0,
-            },
-          ],
-          limit: 1,
-        },
-        pageNumber: 0,
-      };
+    data: {
+      query: {
+        tableName: 'PERSONEN',
+        fieldNames: ['ID', 'BURGERSERVICENUMMER'],
+        conditions: [
+          {
+            fieldName: 'BURGERSERVICENUMMER',
+            fieldValue: bsn,
+            operator: 0,
+            dataType: 0,
+          },
+        ],
+        limit: 1,
+      },
+      pageNumber: 0,
     },
-  },
-  zakenPerPersoon: {
+  }),
+  zakenPerPersoon: (persoonID: string) => ({
     path: '/Link/PERSONEN/GFO_ZAKEN/Table',
-    data: (persoonID: string) => {
-      return [persoonID];
-    },
-  },
-  vergunningenPerBSN: {
+    data: [persoonID],
+  }),
+  zakenDetails: (ids: string) => ({
+    path: `/Record/GFO_ZAKEN/${ids}`,
+  }),
+  vergunningenPerBSN: (bsn: string) => ({
     path: '/Report/RunSavedReport',
-    data: (bsn: string) => {
-      return {
-        reportFileName:
-          'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamZaak.gov',
-        Parameters: [
-          {
-            Name: 'BSN',
-            Type: 'String',
-            Value: {
-              StringValue: bsn,
-            },
-            BeforeText: "'",
-            AfterText: "'",
+    data: {
+      reportFileName:
+        'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamZaak.gov',
+      Parameters: [
+        {
+          Name: 'BSN',
+          Type: 'String',
+          Value: {
+            StringValue: bsn,
           },
-        ],
-      };
+          BeforeText: "'",
+          AfterText: "'",
+        },
+      ],
     },
-  },
-  vergunningStatussen: {
+  }),
+  vergunningStatussen: (zaakId: string) => ({
     path: '/Report/RunSavedReport',
-    data: (zaakId: string) => {
-      return {
-        reportFileName:
-          'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamStatus.gov',
-        Parameters: [
-          {
-            Name: 'GFO_ZAKEN_ID',
-            Type: 'String',
-            Value: {
-              StringValue: zaakId,
-            },
+    data: {
+      reportFileName:
+        'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamStatus.gov',
+      Parameters: [
+        {
+          Name: 'GFO_ZAKEN_ID',
+          Type: 'String',
+          Value: {
+            StringValue: zaakId,
           },
-        ],
-      };
+        },
+      ],
     },
-  },
+  }),
 };
 
 function transformBBResponse(responseData: BBResponseSource) {
-  console.log('responseData', responseData);
+  // console.log('responseData', responseData);
   return responseData;
 }
 
@@ -294,39 +296,64 @@ async function fetchBBVergunning(
     transformResponse: transformBBResponse,
   });
 
-  const tokenResponse = await requestData(
-    {
-      ...dataRequestConfig,
-      url: `${dataRequestConfig.url}/token`,
-      data: { apiKey: process.env.BFF_POWERBROWSER_API_KEY },
-    },
-    requestID,
-    authProfileAndToken
-  );
-
-  if (
-    tokenResponse.status === 'OK' &&
-    tokenResponse.content &&
-    authProfileAndToken.profile.id
+  function fetchPowerBrowser<T>(
+    query: keyof typeof savedReportQueries,
+    dataParam?: string,
+    token?: string
   ) {
-    const token = tokenResponse.content;
-    const { data, path } = savedReportQueries.vergunningenPerBSN;
-    const response = await requestData(
+    const { data, path } = savedReportQueries[query](dataParam);
+    return requestData<T>(
       {
         ...dataRequestConfig,
+        method: !data ? 'GET' : dataRequestConfig.method,
         url: `${dataRequestConfig.url}${path}`,
-        data: data(authProfileAndToken.profile.id),
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        data,
+        headers: token
+          ? {
+              Authorization: `Bearer ${token}`,
+            }
+          : {},
       },
       requestID,
       authProfileAndToken
     );
-
-    return response;
   }
 
+  const tokenResponse = await fetchPowerBrowser<string>('token');
+  if (tokenResponse.status === 'OK' && authProfileAndToken.profile.id) {
+    const token = tokenResponse.content;
+    const persoonResponse = await fetchPowerBrowser<{ records: any[] }>(
+      'persoonBSN',
+      authProfileAndToken.profile.id,
+      token
+    );
+    console.log(persoonResponse);
+    if (persoonResponse.status === 'OK') {
+      const gekppeldeZakenResponse = await fetchPowerBrowser<{
+        records: Array<{
+          id: string;
+        }>;
+      }>('zakenPerPersoon', persoonResponse.content.records[0].id, token);
+      console.log(gekppeldeZakenResponse);
+      if (gekppeldeZakenResponse.status === 'OK') {
+        if (gekppeldeZakenResponse.content.records?.length) {
+          const zakenRequests = gekppeldeZakenResponse.content.records.map(
+            (record) =>
+              fetchPowerBrowser<any[]>('zakenDetails', record.id, token)
+          );
+          const zakenResponse = await Promise.all(zakenRequests);
+
+          const zaken = zakenResponse.map(
+            (response) => response.content?.[0].theZaak
+          );
+          console.log(authProfileAndToken.profile.id, zaken);
+          return apiSuccessResult(zaken);
+        }
+      }
+      return gekppeldeZakenResponse;
+    }
+    return persoonResponse;
+  }
   return tokenResponse;
 }
 
