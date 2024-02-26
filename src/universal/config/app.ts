@@ -75,7 +75,8 @@ export const ExternalUrls = {
   EH_SSO_ERFPACHT: `https://mijnerfpacht${
     !IS_PRODUCTION ? '.acc' : ''
   }.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk`,
-  BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
+  BERICHTENBOX_BURGERS: 'https://mijn.overheid.nl/berichtenbox/inbox/',
+  BERICHTENBOX_ONDERNEMERS: 'https://www.digitaleoverheid.nl/overzicht-van-alle-onderwerpen/berichtenbox-voor-bedrijven/',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:
     'https://www.amsterdam.nl/nieuwsbrieven/actueel/nieuwsbrief/nieuwsbrief/',
