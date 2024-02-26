@@ -55,3 +55,6 @@ export { default as IconSiaMeldingen } from './siameldingen.svg?react';
 export { default as ThumbsUp } from './thumbs_up.svg?react';
 export { default as ThumbsDown } from './thumbs_down.svg?react';
 export { default as IconBodem } from './icon_bodem.svg?react';
+export { default as IconConnectorTypeMennekes } from './map/connector-type-mennekes.svg?react';
+export { default as IconConnectorTypeChademo } from './map/connector-type-chademo.svg?react';
+export { default as IconConnectorTypeCCS } from './map/connector-type-ccs.svg?react';

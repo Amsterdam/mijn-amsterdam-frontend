@@ -222,7 +222,7 @@ export function createDynamicFilterConfig(
       if (!filters[propertyName]) {
         const values: DatasetPropertyValueWithCount = {};
 
-        // Pre-fill the filters with property names from the value config so we can maintain order in which the properties
+        // Pre-fill the filters with property names from the value config, so we can maintain order in which the properties
         // defined in the valueConfig are maintained.
         if (filterConfig[propertyName].valueConfig) {
           for (const [value, { title }] of Object.entries(

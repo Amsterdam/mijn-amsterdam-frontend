@@ -15,7 +15,7 @@ import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt';
 import MyAreaPanelContentParkeren from './Parkeren';
 import MyAreaPanelContentSport from './Sport';
 import MyAreaPanelContentWIOR from './Wior';
-import MyAreaPanelContentOplaadpunten from './Oplaadpunten';
+import MyAreaPanelContentLaadpalen from './Laadpalen';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;
@@ -85,7 +85,7 @@ function MyAreaPanelContentSwitch({
       );
     case 'laadpalen':
       return (
-        <MyAreaPanelContentOplaadpunten
+        <MyAreaPanelContentLaadpalen
           panelItem={feature}
           datasetId={feature?.datasetId}
         />
