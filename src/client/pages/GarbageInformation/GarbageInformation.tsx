@@ -40,6 +40,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
+import { Link } from '@amsterdam/design-system-react';
 
 function GarbageInfoDetail({ ...props }: InfoDetailProps) {
   return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;
@@ -267,10 +268,7 @@ export default function GarbageInformation() {
       <PageContent>
         {profileType === 'private' && (
           <>
-            <p>
-              Hieronder vindt u een overzicht van alle huis- en grofvuil
-              voorzieningen rond uw adres.
-            </p>
+            <p>Dit zijn de afvalregels voor uw adres.</p>
             {!!commercialLocation && !privateIsCommercial && (
               <Alert type="warning">
                 <p>
@@ -299,10 +297,25 @@ export default function GarbageInformation() {
         {profileType !== 'private' && (
           <>
             <p>
-              Deze afvalregels gelden als u per week maxi­maal 9
-              vuil­nis­zak­ken met res­taf­val hebt. Hebt u meer afval? Dan moet
-              u een contract afsluiten met een erkende afvalinzamelaar of de
-              gemeente.
+              De afvalregels hieronder gelden alleen als u maximaal 9
+              vuilniszakken afval per week heeft en reinigingsrecht betaalt. Of
+              als u ondernemer bent in de 9 straatjes of Sluisbuurt en
+              afvalstoffenheffing betaalt. Anders moet u een
+              bedrijfsafvalcontract afsluiten bij een{' '}
+              <Link
+                rel="noopener noreferrer"
+                href="https://www.afvalgids.nl/afval/inzamelaar/"
+              >
+                erkende afvalinzamelaar
+              </Link>{' '}
+              of met{' '}
+              <Link
+                rel="noopener noreferrer"
+                href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/bedrijfsafval-laten-ophalen/"
+              >
+                de gemeente
+              </Link>
+              .
             </p>
             <p>
               <Linkd href={ExternalUrls.AFVAL_COMMERCIAL} external={true}>

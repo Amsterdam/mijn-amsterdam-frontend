@@ -18,7 +18,6 @@ import {
 } from '../../components/Table/TableV2';
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
-import { MaParagraph } from '../../components/Paragraph/Paragraph';
 
 interface OpenFacturenListGroupedProps {
   facturen: ErfpachtDossierFactuur[];
@@ -109,10 +108,10 @@ export default function ErfpachtOpenFacturen() {
             ))}
           {!openFacturen.length && (
             <Grid.Cell span="all">
-              <MaParagraph>
+              <Paragraph>
                 U heeft geen{' '}
                 {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
-              </MaParagraph>
+              </Paragraph>
             </Grid.Cell>
           )}
         </Grid>

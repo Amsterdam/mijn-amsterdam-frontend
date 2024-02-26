@@ -20,7 +20,7 @@ export default function Accessibility() {
           het via ons{' '}
           <LinkdInline
             external={true}
-            href="https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx"
+            href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx"
           >
             contactformulier
           </LinkdInline>
@@ -72,7 +72,7 @@ export default function Accessibility() {
           Mijn Amsterdam moeten zetten. Lees hier onze{' '}
           <LinkdInline
             external={true}
-            href="/toegankelijkheidsverklaring-mijn-amsterdam-20200520.html"
+            href="https://www.toegankelijkheidsverklaring.nl/register/9142#verklaring"
           >
             volledige toegankelijkheidsverklaring
           </LinkdInline>

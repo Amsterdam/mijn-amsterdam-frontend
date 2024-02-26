@@ -12,15 +12,22 @@
 
 
 .ColumnList {
-  // @media screen and (min-width: $amsterdam-breakpoint-medium) {
+  --list-item-row-height: 2rem;
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: var(--amsterdam-grid-gap);
-  grid-template-rows: repeat(20, 1fr); // Will be replaced dynamically
-  // }
+  grid-template-rows: repeat(3, var(--list-item-row-height)); // Will be replaced dynamically
 
   @media screen and (min-width: $amsterdam-breakpoint-wide) {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.withBetalerWijzigenLink {
+  white-space: nowrap;
+
+  a {
+    vertical-align: middle;
   }
 }
 

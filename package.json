@@ -1,13 +1,13 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "4.93.1",
+  "version": "4.94.1",
   "repository": {
     "type": "git",
     "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
   },
   "license": "Mozilla Public License 2.0",
   "scripts": {
-    "analyze": "npx source-map-explorer 'build/static/js/*.js'",
+    "analyze": "source-map-explorer 'build/assets/*.js'",
     "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",

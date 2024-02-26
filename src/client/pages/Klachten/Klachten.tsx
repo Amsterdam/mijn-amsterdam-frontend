@@ -82,7 +82,7 @@ export default function Klachten() {
         <p>
           <Linkd
             external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B249D3A8E-ED07-4E4C-BFAD-49F174342FD5%7D#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           >
             Meer informatie over de afhandeling van uw klacht
           </Linkd>

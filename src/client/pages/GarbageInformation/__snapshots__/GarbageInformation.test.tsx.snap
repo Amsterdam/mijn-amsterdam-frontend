@@ -68,7 +68,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       class="_PageContent_47d7c0"
     >
       <p>
-        Hieronder vindt u een overzicht van alle huis- en grofvuil voorzieningen rond uw adres.
+        Dit zijn de afvalregels voor uw adres.
       </p>
       <p>
         <a
@@ -99,7 +99,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
         <br />
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
           rel="external noopener noreferrer"
         >
           <svg
@@ -741,7 +741,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       class="_PageContent_47d7c0"
     >
       <p>
-        Hieronder vindt u een overzicht van alle huis- en grofvuil voorzieningen rond uw adres.
+        Dit zijn de afvalregels voor uw adres.
       </p>
       <div
         class="_Alert_21b118 _warning_21b118"
@@ -779,7 +779,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
           Let op deze regels gaan over uw woonadres. Lees hier 
           <a
             class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}"
+            href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
             rel="external noopener noreferrer"
           >
             regels over bedrijfsafval in Amsterdam
@@ -816,7 +816,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
         <br />
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
           rel="external noopener noreferrer"
         >
           <svg
@@ -1442,7 +1442,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
       class="_PageContent_47d7c0"
     >
       <p>
-        Hieronder vindt u een overzicht van alle huis- en grofvuil voorzieningen rond uw adres.
+        Dit zijn de afvalregels voor uw adres.
       </p>
       <div
         class="_Alert_21b118 _warning_21b118"
@@ -1480,7 +1480,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
           Let op deze regels gaan over uw woonadres. Lees hier 
           <a
             class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}"
+            href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
             rel="external noopener noreferrer"
           >
             regels over bedrijfsafval in Amsterdam
@@ -1517,7 +1517,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
         <br />
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
           rel="external noopener noreferrer"
         >
           <svg
@@ -1659,7 +1659,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       class="_PageContent_47d7c0"
     >
       <p>
-        Hieronder vindt u een overzicht van alle huis- en grofvuil voorzieningen rond uw adres.
+        Dit zijn de afvalregels voor uw adres.
       </p>
       <div
         class="_Alert_21b118 _warning_21b118"
@@ -1697,7 +1697,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
           Let op deze regels gaan over uw woonadres. Lees hier 
           <a
             class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}"
+            href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
             rel="external noopener noreferrer"
           >
             regels over bedrijfsafval in Amsterdam
@@ -1734,7 +1734,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
         <br />
         <a
           class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BD5F9EF09-0F3A-4E59-8435-4873EB7CD609%7D#case_%7B33F0B504-EDEB-42EE-A8C5-7EF394F65D3A%7D"
+          href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
           rel="external noopener noreferrer"
         >
           <svg
