@@ -34,15 +34,15 @@ const GenericLinks: Record<string, DirectLink> = {
     isExternalLink: true,
     isActive: true,
   },
-  MIJN_OVERHEID_ONDERNEMERS: {
-    title: 'MijnOverheid voor ondernemers',
-    url: 'https://www.digitaleoverheid.nl/dossiers/movo-mijn-overheid-voor-ondernemers/',
+   MIJN_OVERHEID_BERICHTENBOX_BURGERS: {
+    title: 'MijnOverheid Berichtenbox',
+    url: ExternalUrls.BERICHTENBOX_BURGERS,
     isExternalLink: true,
     isActive: true,
   },
-  MIJN_OVERHEID_BERICHTEBOX: {
+  MIJN_OVERHEID_BERICHTENBOX_ONDERNEMERS: {
     title: 'MijnOverheid Berichtenbox',
-    url: ExternalUrls.BERICHTENBOX,
+    url: ExternalUrls.BERICHTENBOX_ONDERNEMERS,
     isExternalLink: true,
     isActive: true,
   },
@@ -64,7 +64,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
   private: {
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
-    MIJN_OVERHEID_BERICHTEBOX: GenericLinks.MIJN_OVERHEID_BERICHTEBOX,
+    MIJN_OVERHEID_BERICHTENBOX: GenericLinks.MIJN_OVERHEID_BERICHTENBOX_BURGERS,
     AMSTERDAM: GenericLinks.AMSTERDAM,
     TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
     VAREN: GenericLinks.VAARVIGNETTEN,
@@ -73,7 +73,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     UITLEG: GenericLinks.UITLEG,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
-    MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
+    MIJN_OVERHEID_BERICHTENBOX: GenericLinks.MIJN_OVERHEID_BERICHTENBOX_ONDERNEMERS,
     AMSTERDAM: GenericLinks.AMSTERDAM,
     TAXI_PORTAAL: GenericLinks.TAXI_PORTAAL,
     VAREN: GenericLinks.VAARVIGNETTEN,
