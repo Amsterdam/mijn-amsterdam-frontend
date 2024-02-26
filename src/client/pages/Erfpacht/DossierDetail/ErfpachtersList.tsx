@@ -49,6 +49,7 @@ export function ErfpachtersList({
       : erfpachters;
 
   if (erfpachtersList?.length) {
+    const noBetaler = !erfpachtersList.some((erfpachter) => erfpachter.betaler);
     return (
       <>
         <OrderedList
@@ -58,7 +59,8 @@ export function ErfpachtersList({
         >
           {erfpachtersList.map((relatie, index, all) => {
             const hasBetalerWijzigenLink =
-              relatie.betaler && relatie.relatieCode !== relatieCode;
+              (relatie.betaler && relatie.relatieCode !== relatieCode) ||
+              (!noBetaler && relatie.relatieCode === relatieCode);
             return (
               <OrderedList.Item
                 key={relatie.relatieNaam + index}
@@ -69,10 +71,10 @@ export function ErfpachtersList({
                 }
               >
                 {relatie.relatieNaam}{' '}
-                {relatie.betaler && hasBetalerWijzigenLink ? (
+                {hasBetalerWijzigenLink ? (
                   <WijzigenLink
                     linkVariant="inList"
-                    relatieCode={relatie.relatieCode}
+                    relatieCode={relatieCode}
                     dossierNummer={dossierNummer}
                     debiteurNummer={debiteurNummer}
                   />
