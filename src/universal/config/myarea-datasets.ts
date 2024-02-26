@@ -63,7 +63,7 @@ if (month !== 11 && month !== 0) {
   excludeFractieOmschrijving.push('Kerstboom');
 }
 
-export const laadpaalValueConfig = {
+export const laadpaalValueConfig: Record<string, string> = {
   snellader: 'Snellader',
   IEC_62196_T2_COMBO: 'CCS',
   IEC_62196_T2: 'Type 2 (Mennekes)',
@@ -101,13 +101,6 @@ export const DATASETS: DatasetCategories = {
           },
           IEC_62196_T2: {
             title: laadpaalValueConfig.IEC_62196_T2,
-            valueConfig: {
-              True: { title: 'Ja' },
-              False: { title: 'Nee' },
-            },
-          },
-          Unknown: {
-            title: 'Onbekend',
             valueConfig: {
               True: { title: 'Ja' },
               False: { title: 'Nee' },

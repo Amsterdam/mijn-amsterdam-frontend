@@ -1,4 +1,4 @@
-import { ReactNode, isValidElement } from 'react';
+import React, { ReactNode, isValidElement } from 'react';
 import styles from './InfoDetail.module.scss';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import classnames from 'classnames';
