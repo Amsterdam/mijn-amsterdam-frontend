@@ -92,22 +92,28 @@ export function DatasetPanel({
       ? CollapsedState.Expanded
       : CollapsedState.Collapsed;
 
-  const groupedFilters = Object.entries(dataset.filters!).reduce(
-    (acc, [propertyName, property]) => {
-      if (property.group) {
-        if (!acc[property.group]) {
-          acc[property.group] = {};
+  const groupedFilters =
+    hasFilters &&
+    Object.entries(dataset.filters!).reduce(
+      (acc, [propertyName, property]) => {
+        if (property.group) {
+          if (!acc[property.group]) {
+            acc[property.group] = {};
+          }
+          acc[property.group][propertyName] = property;
         }
-        acc[property.group][propertyName] = property;
-      }
-      return acc;
-    },
-    {} as Record<string, Record<string, any>>
-  );
+        return acc;
+      },
+      {} as Record<string, Record<string, any>>
+    );
 
-  const ungroupedFilters = Object.fromEntries(
-    Object.entries(dataset.filters!).filter(([_, property]) => !property.group)
-  );
+  const ungroupedFilters =
+    hasFilters &&
+    Object.fromEntries(
+      Object.entries(dataset.filters!).filter(
+        ([_, property]) => !property.group
+      )
+    );
 
   return (
     <>
@@ -117,7 +123,7 @@ export function DatasetPanel({
           title={datasetControl}
           initialState={initialState}
         >
-          {Object.entries(groupedFilters).map(([groupName, properties]) => {
+          {Object.entries(groupedFilters!).map(([groupName, properties]) => {
             return (
               <div className={styles.FilterGroup} key={groupName}>
                 <strong>{groupName}</strong>
