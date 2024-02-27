@@ -32,6 +32,7 @@ export interface DatasetProperty {
   valuesRefined?: DatasetPropertyValueWithCount;
   valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>; // The key of the valueConfig should always start with a cappital letter as the values are Capitalized on the BFF
   excludeValues?: string[];
+  group?: string;
   title?: string;
   sort?: 'asc' | 'desc';
 }
@@ -86,6 +87,7 @@ export const DATASETS: DatasetCategories = {
             },
           },
           CHADEMO: {
+            group: 'Connector type',
             title: laadpaalValueConfig.CHADEMO,
             valueConfig: {
               True: { title: 'Ja' },
@@ -93,6 +95,7 @@ export const DATASETS: DatasetCategories = {
             },
           },
           IEC_62196_T2_COMBO: {
+            group: 'Connector type',
             title: laadpaalValueConfig.IEC_62196_T2_COMBO,
             valueConfig: {
               True: { title: 'Ja' },
@@ -100,6 +103,7 @@ export const DATASETS: DatasetCategories = {
             },
           },
           IEC_62196_T2: {
+            group: 'Connector type',
             title: laadpaalValueConfig.IEC_62196_T2,
             valueConfig: {
               True: { title: 'Ja' },

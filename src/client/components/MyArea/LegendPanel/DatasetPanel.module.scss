@@ -1,0 +1,12 @@
+.FilterGroup {
+  margin-left: 3.6rem;
+
+  >strong{
+    display: block;
+    line-height: 3rem;
+  }
+
+  >div>strong {
+    font-weight: normal;
+  }
+}

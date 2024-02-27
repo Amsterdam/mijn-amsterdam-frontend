@@ -15,6 +15,7 @@ import {
 } from './DatasetControlCheckbox';
 import { DatasetControlPanelProps } from './DatasetControlPanel';
 import { DatasetPropertyFilterPanel } from './DatasetPropertyFilterPanel';
+import styles from './DatasetPanel.module.scss';
 
 interface DatasePanelProps {
   categoryId: DatasetCategoryId;
@@ -57,12 +58,57 @@ export function DatasetPanel({
     />
   );
 
+  const renderFilterPanel = (propertyName: string, property: any) => {
+    const filterSelectionValues =
+      filterSelection[datasetId] &&
+      filterSelection[datasetId][propertyName] &&
+      filterSelection[datasetId][propertyName].values;
+
+    const filterSelectionValuesRefined =
+      filterSelection[datasetId] &&
+      filterSelection[datasetId][propertyName] &&
+      filterSelection[datasetId][propertyName].valuesRefined;
+
+    const values = property.values || filterSelectionValues || {};
+
+    return (
+      <DatasetPropertyFilterPanel
+        key={datasetId + propertyName}
+        datasetId={datasetId}
+        propertyName={propertyName}
+        property={property}
+        values={values}
+        valuesRefined={filterSelectionValuesRefined}
+        activeFilters={activeFilters}
+        onFilterControlItemChange={onFilterControlItemChange}
+      />
+    );
+  };
+
   const hasFilters = !!(dataset.filters && Object.keys(dataset.filters).length);
 
   const initialState =
     datasetId in activeFilters
       ? CollapsedState.Expanded
       : CollapsedState.Collapsed;
+
+  const groupedFilters = Object.entries(dataset.filters!).reduce(
+    (acc, [propertyName, property]) => {
+      if (property.group) {
+        if (!acc[property.group]) {
+          acc[property.group] = {};
+        }
+        acc[property.group][propertyName] = property;
+      }
+      return acc;
+    },
+    {} as Record<string, Record<string, any>>
+  );
+
+  const ungroupedFilters = Object.fromEntries(
+    Object.entries(dataset.filters!).filter(([_, property]) => !property.group)
+  );
+
   return (
     <>
       {(!hasFilters || !isChecked) && datasetControl}
@@ -71,32 +117,19 @@ export function DatasetPanel({
           title={datasetControl}
           initialState={initialState}
         >
-          {Object.entries(dataset.filters!).map(([propertyName, property]) => {
-            const filterSelectionValues =
-              filterSelection[datasetId] &&
-              filterSelection[datasetId][propertyName] &&
-              filterSelection[datasetId][propertyName].values;
-
-            const filterSelectionValuesRefined =
-              filterSelection[datasetId] &&
-              filterSelection[datasetId][propertyName] &&
-              filterSelection[datasetId][propertyName].valuesRefined;
-
-            const values = property.values || filterSelectionValues || {};
-
+          {Object.entries(groupedFilters).map(([groupName, properties]) => {
             return (
-              <DatasetPropertyFilterPanel
-                key={datasetId + propertyName}
-                datasetId={datasetId}
-                propertyName={propertyName}
-                property={property}
-                values={values}
-                valuesRefined={filterSelectionValuesRefined}
-                activeFilters={activeFilters}
-                onFilterControlItemChange={onFilterControlItemChange}
-              />
+              <div className={styles.FilterGroup} key={groupName}>
+                <strong>{groupName}</strong>
+                {Object.entries(properties).map(([propertyName, property]) =>
+                  renderFilterPanel(propertyName, property)
+                )}
+              </div>
             );
           })}
+          {Object.entries(ungroupedFilters!).map(([propertyName, property]) =>
+            renderFilterPanel(propertyName, property)
+          )}
         </MyAreaCollapsiblePanel>
       )}
     </>
