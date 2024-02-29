@@ -143,21 +143,21 @@ export default function Erfpacht() {
                 {!!openFacturen.length ? (
                   isMediumScreen ? (
                     <TableV2
+                      className={styles.OpenFacturenTableThemaPagina}
                       items={openFacturen.slice(
                         0,
                         MAX_TABLE_ROWS_ON_THEMA_PAGINA
                       )}
                       displayProps={displayPropsOpenFacturen}
-                      gridColStyles={colStyles.openFacturenTable}
                     />
                   ) : (
                     <OpenFacturenListGrouped
+                      tableClassName={styles.OpenFacturenTableThemaPagina}
                       facturen={openFacturen.slice(
                         0,
                         MAX_TABLE_ROWS_ON_THEMA_PAGINA
                       )}
                       displayProps={displayPropsOpenFacturen}
-                      gridColStyles={colStyles.openFacturenTable}
                     />
                   )
                 ) : (

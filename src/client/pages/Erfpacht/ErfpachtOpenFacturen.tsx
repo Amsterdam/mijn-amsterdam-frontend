@@ -18,17 +18,20 @@ import {
 } from '../../components/Table/TableV2';
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
+import classnames from 'classnames';
 
 interface OpenFacturenListGroupedProps {
   facturen: ErfpachtDossierFactuur[];
   displayProps: DisplayProps<ErfpachtDossierFactuur> | null;
   gridColStyles?: TableV2Props<ErfpachtDossierFactuur>['gridColStyles'];
+  tableClassName?: string;
 }
 
 export function OpenFacturenListGrouped({
   facturen,
   displayProps,
   gridColStyles,
+  tableClassName,
 }: OpenFacturenListGroupedProps) {
   const facturenGrouped = facturen.reduce(
     (acc, factuur) => {
@@ -49,7 +52,10 @@ export function OpenFacturenListGrouped({
         <TableV2
           items={facturen}
           displayProps={displayProps}
-          className={styles.OpenFacturenTable__smallScreen}
+          className={classnames(
+            styles.OpenFacturenTable__smallScreen,
+            tableClassName
+          )}
           gridColStyles={gridColStyles}
         />
       </Grid.Cell>
