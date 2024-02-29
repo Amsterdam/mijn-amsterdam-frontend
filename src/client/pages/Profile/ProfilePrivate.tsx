@@ -267,8 +267,7 @@ export default function Profile() {
       {isMokum(BRP.content) && (
         <PageContent>
           <p className={styles.SuppressedParagraph}>
-            Gegevens van een levenloos geboren kindje ziet u niet in Mijn
-            Amsterdam. U kunt die gegevens alleen inzien via{' '}
+          Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in{' '}
             <LinkdInline href="https://mijn.overheid.nl" external={true}>
               MijnOverheid
             </LinkdInline>
