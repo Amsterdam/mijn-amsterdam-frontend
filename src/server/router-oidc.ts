@@ -296,25 +296,30 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
   return res.redirect(redirectUrl);
 });
 
-function logout(postLogoutRedirectUrl: string) {
+function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
   return async (req: Request, res: Response) => {
-    if (!req.oidc.isAuthenticated()) {
-      return res.redirect(postLogoutRedirectUrl);
+    if (req.oidc.isAuthenticated()) {
+      const auth = await getAuth(req);
+      if (auth.profile.sid) {
+        await addToBlackList(auth.profile.sid);
+      }
+      if (doIDPLogout) {
+        return res.oidc.logout({
+          returnTo: postLogoutRedirectUrl,
+          logoutParams: {
+            id_token_hint: !FeatureToggle.oidcLogoutHintActive
+              ? auth.token
+              : null,
+            logout_hint: FeatureToggle.oidcLogoutHintActive
+              ? auth.profile.sid
+              : null,
+          },
+        });
+      }
+      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
     }
 
-    const auth = await getAuth(req);
-    if (auth.profile.sid) {
-      await addToBlackList(auth.profile.sid);
-    }
-    res.oidc.logout({
-      returnTo: postLogoutRedirectUrl,
-      logoutParams: {
-        id_token_hint: !FeatureToggle.oidcLogoutHintActive ? auth.token : null,
-        logout_hint: FeatureToggle.oidcLogoutHintActive
-          ? auth.profile.sid
-          : null,
-      },
-    });
+    return res.redirect(postLogoutRedirectUrl);
   };
 }
 
@@ -326,6 +331,11 @@ router.get(
 router.get(
   BffEndpoints.AUTH_LOGOUT_EHERKENNING,
   logout(process.env.MA_FRONTEND_URL!)
+);
+
+router.get(
+  BffEndpoints.AUTH_LOGOUT_EHERKENNING_LOCAL,
+  logout(process.env.MA_FRONTEND_URL!, false)
 );
 
 router.get(
