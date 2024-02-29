@@ -64,7 +64,7 @@ describe('simple-connect/cleopatra', () => {
             datum: '2019-03-13',
             titel: 'Uw aanvraag ontheffing milieuzone Brom- en snorfietsen',
             omschrijving:
-              'Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen',
+              'U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen',
             url: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1',
             urlNaam: 'Betaal direct',
           },
@@ -74,7 +74,7 @@ describe('simple-connect/cleopatra', () => {
             datum: '2019-03-13',
             titel: 'Uw aanvraag ontheffing milieuzone Brom- en snorfietsen',
             omschrijving:
-              'Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen',
+              'U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen',
             url: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/2',
             urlNaam: 'Betaal direct',
           },
@@ -112,7 +112,7 @@ describe('simple-connect/cleopatra', () => {
             {
               "chapter": "MILIEUZONE",
               "datePublished": "2019-03-13",
-              "description": "Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
+              "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "MILIEUZONE-M1",
               "link": {
                 "title": "Betaal direct",
@@ -123,7 +123,7 @@ describe('simple-connect/cleopatra', () => {
             {
               "chapter": "MILIEUZONE",
               "datePublished": "2019-03-13",
-              "description": "Uw moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
+              "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "MILIEUZONE-M1",
               "link": {
                 "title": "Betaal direct",
