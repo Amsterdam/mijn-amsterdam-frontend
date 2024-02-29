@@ -96,8 +96,12 @@ function transformVakantieverhuurVergunningen(
       .replace(/\//g, '-')
       .toUpperCase();
 
-    const isVerleend = !!vergunning.decision?.includes('Verleend');
-    const isIngetrokken = vergunning.decision === 'Ingetrokken';
+    const isVerleend = !!vergunning.decision
+      ?.toLowerCase()
+      .includes('verleend');
+    const isIngetrokken = vergunning.decision
+      ?.toLowerCase()
+      .includes('ingetrokken');
     const isVerlopen =
       vergunning.status === 'Verlopen' ||
       (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());

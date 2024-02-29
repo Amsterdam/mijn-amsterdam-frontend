@@ -20,6 +20,7 @@ import {
   VakantieverhuurVergunning,
   fetchVakantieverhuurVergunningen,
 } from './vakantieverhuur-vergunning';
+import { dateSort } from '../../../universal/helpers';
 
 async function fetchAndTransformToeristischeVerhuur(
   requestID: requestID,
@@ -75,8 +76,12 @@ async function fetchAndTransformToeristischeVerhuur(
   return apiSuccessResult(
     {
       lvvRegistraties: lvvRegistraties.content ?? [],
-      vakantieverhuurVergunningen: vakantieverhuurVergunningen.content ?? [],
-      bbVergunningen: bbVergunningen.content ?? [],
+      vakantieverhuurVergunningen: (
+        vakantieverhuurVergunningen.content ?? []
+      ).sort(dateSort('datumAanvraag', 'desc')),
+      bbVergunningen: (bbVergunningen.content ?? []).sort(
+        dateSort('datumAanvraag', 'desc')
+      ),
     },
     failedDependencies
   );
