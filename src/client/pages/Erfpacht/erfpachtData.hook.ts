@@ -62,6 +62,7 @@ export function useErfpachtV2Data() {
       ...displayPropsOpenFacturen,
       factuurNummer: openFacturenBase.titelFacturenNummer,
       formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
+      status: openFacturenBase.titelFacturenStatus,
       vervalDatum: openFacturenBase.titelFacturenVervaldatum,
     };
   }

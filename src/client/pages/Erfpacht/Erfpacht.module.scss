@@ -99,3 +99,34 @@
     }
   }
 }
+
+.OpenFacturenTableThemaPagina {
+  tr {
+
+    th,
+    td {
+
+      // Fix for large cell content and horizontal white space between this and the next cell.
+      &:nth-child(3) {
+        width: 25%;
+        padding-right: 1rem;
+      }
+
+      @media screen and (min-width: $amsterdam-breakpoint-medium) {
+        &:nth-child(1) {
+          width: 20%;
+        }
+
+        &:nth-child(2) {
+          width: 20%;
+        }
+
+        &:nth-child(3) {
+          width: 15%;
+        }
+      }
+
+      vertical-align: top;
+    }
+  }
+}
