@@ -62,6 +62,7 @@ const GenericLinks: Record<string, DirectLink> = {
 
 export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
   private: {
+    UITLEG: GenericLinks.UITLEG,
     STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_BERICHTENBOX: GenericLinks.MIJN_OVERHEID_BERICHTENBOX_BURGERS,
