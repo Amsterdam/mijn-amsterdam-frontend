@@ -78,36 +78,37 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'WMO'
-  | 'WPI_E_AANVRAGEN'
-  | 'WPI_AANVRAGEN'
-  | 'WPI_SPECIFICATIES'
-  | 'WPI_STADSPAS'
-  | 'SVWI'
+  | 'AFVAL'
+  | 'BAG'
   | 'BELASTINGEN'
-  | 'BEZWAREN_LIST'
   | 'BEZWAREN_DOCUMENT'
   | 'BEZWAREN_DOCUMENTS'
+  | 'BEZWAREN_LIST'
   | 'BEZWAREN_STATUS'
-  | 'CLEOPATRA'
-  | 'VERGUNNINGEN'
-  | 'CMS_CONTENT_GENERAL_INFO'
-  | 'CMS_CONTENT_FOOTER'
-  | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'BRP'
+  | 'CLEOPATRA'
+  | 'CMS_CONTENT_FOOTER'
+  | 'CMS_CONTENT_GENERAL_INFO'
+  | 'CMS_MAINTENANCE_NOTIFICATIONS'
+  | 'ENABLEU_2_SMILE'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
-  | 'BAG'
-  | 'AFVAL'
-  | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
-  | 'KVK'
-  | 'SEARCH_CONFIG'
-  | 'SUBSIDIE'
   | 'KREFIA'
-  | 'SIA'
-  | 'ENABLEU_2_SMILE'
+  | 'KVK'
+  | 'LOOD_365_OAUTH'
   | 'LOOD_365'
-  | 'LOOD_365_OAUTH';
+  | 'POWERBROWSER'
+  | 'SEARCH_CONFIG'
+  | 'SIA'
+  | 'SUBSIDIE'
+  | 'SVWI'
+  | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
+  | 'VERGUNNINGEN'
+  | 'WMO'
+  | 'WPI_AANVRAGEN'
+  | 'WPI_E_AANVRAGEN'
+  | 'WPI_SPECIFICATIES'
+  | 'WPI_STADSPAS';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -178,6 +179,11 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
     passthroughOIDCToken: true,
+  },
+  POWERBROWSER: {
+    method: 'POST',
+    url: `${process.env.BFF_POWERBROWSER_API_URL}`,
+    postponeFetch: !FeatureToggle.powerbrowserActive,
   },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,

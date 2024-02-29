@@ -44,7 +44,8 @@ export const FeatureToggle = {
   dbDisabled: false,
   passQueryParamsToStreamUrl: !IS_AP,
   laadpalenActive: !IS_PRODUCTION,
-  oidcLogoutHintActive: !IS_PRODUCTION,
+  oidcLogoutHintActive: true,
+  powerbrowserActive: !IS_AP,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
