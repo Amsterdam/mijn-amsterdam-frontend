@@ -316,6 +316,7 @@ function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
           },
         });
       }
+      (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
       res.clearCookie(OIDC_SESSION_COOKIE_NAME);
     }
 
