@@ -91,11 +91,11 @@ function transformResultaat(resultaat: PowerBrowserZaak['resultaat']) {
 
 function transformStatus(status: PowerBrowserZaak['status']) {
   switch (status) {
-    default:
     case 'Afgehandeld':
     case 'Gereed':
     case 'Controle bezoek':
       return 'Afgehandeld';
+    default:
     case 'Ontvangen':
     case 'Intake':
       return 'Ontvangen';
