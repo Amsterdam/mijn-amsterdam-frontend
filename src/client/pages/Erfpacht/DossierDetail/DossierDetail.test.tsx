@@ -149,8 +149,15 @@ describe('<Erfpacht/DossierDetail />', () => {
       expect(screen.getByText('Huidige periode:')).toBeInTheDocument();
       expect(screen.getByText('24-06-2022 t/m 31-12-2046')).toBeInTheDocument();
       expect(
-        screen.getByText('€ 128,27 na indexering 2022')
+        screen.getByText('€ 108,90 na indexering 2001')
       ).toBeInTheDocument();
+      expect(
+        screen.getByText('€ 117,17 na indexering 2006')
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('€ 120,57 na indexering 2011')
+      ).not.toBeInTheDocument();
+
       expect(screen.getByText('Afgekocht')).toBeInTheDocument();
       expect(screen.getByText('AB1994')).toBeInTheDocument();
 
