@@ -1,22 +1,44 @@
-import { OrderedList } from '@amsterdam/design-system-react';
+import { Button, OrderedList } from '@amsterdam/design-system-react';
 import { ErfpachtCanon } from '../../../../server/services/simple-connect/erfpacht';
+import { useState } from 'react';
+
+const MAX_CANONS_VISIBLE_INITIALLY = 2;
 
 interface DatalistCanonsProps {
   canons?: ErfpachtCanon[];
 }
 
 export function DatalistCanons({ canons }: DatalistCanonsProps) {
-  if (!!canons?.length) {
+  const canonLength = canons?.length ?? 0;
+  const shouldCollapse = canonLength > MAX_CANONS_VISIBLE_INITIALLY;
+  const [isCollapsed, setIsCollapsed] = useState(shouldCollapse);
+  const displayCanons =
+    (shouldCollapse && isCollapsed
+      ? canons?.slice(0, MAX_CANONS_VISIBLE_INITIALLY)
+      : canons) ?? [];
+
+  if (!!displayCanons.length) {
     return (
-      <OrderedList markers={false}>
-        {canons?.map((canon) => {
-          return (
-            <OrderedList.Item key={canon.samengesteld}>
-              {canon.samengesteld}
-            </OrderedList.Item>
-          );
-        })}
-      </OrderedList>
+      <>
+        <OrderedList markers={false}>
+          {displayCanons.map((canon) => {
+            return (
+              <OrderedList.Item key={canon.samengesteld}>
+                {canon.samengesteld}
+              </OrderedList.Item>
+            );
+          })}
+        </OrderedList>
+        {shouldCollapse && (
+          <Button
+            variant="tertiary"
+            style={{ transform: 'translateX(-0.9rem)' }}
+            onClick={() => setIsCollapsed(!isCollapsed)}
+          >
+            {isCollapsed ? 'Toon meer' : 'Verberg'}
+          </Button>
+        )}
+      </>
     );
   }
   return '-';
