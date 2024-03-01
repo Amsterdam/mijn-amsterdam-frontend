@@ -102,7 +102,7 @@ function transformStatus(status: PowerBrowserZaak['status']) {
   }
 }
 
-function transformZakenResponse(zaken: PowerBrowserZakenResponse) {
+export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
   const bbVergunnigen: BBVergunning[] = [];
 
   for (const zaak of zaken) {
@@ -162,7 +162,7 @@ function fetchPowerBrowserZaken(
   bearerToken: string
 ) {
   const dataRequestConfig = getApiConfig('POWERBROWSER', {
-    transformResponse: transformZakenResponse,
+    transformResponse: transformBenBZakenResponse,
   });
 
   return requestData<BBVergunning[]>(
@@ -214,8 +214,6 @@ function transformPowerBrowserStatusResponse(
         ?.datum ?? '';
     return datum ? defaultDateFormat(datum) : '';
   }
-
-  console.log(statusResponse);
 
   // Nieuwe zaken hebben wel statussen
   let datumOntvangen = getStatusDate(['Intake', 'Ontvangen']);
@@ -286,6 +284,20 @@ async function fetchPowerBrowserZaakStatus(
   );
 }
 
+const documentNamenMA_PB = {
+  'Besluit toekenning': [
+    'Anoniem Besluit BB (brief)',
+    'Anoniem Besluit BB met overgangsrecht (brief)',
+    'Besluit B&B',
+    'Besluit B&B met overgangsrecht',
+    'Besluit BB vergunningvrij (brief)',
+    'Besluit verlening beslistermijn B&B (Brief)',
+  ],
+  'Besluit Buiten behandeling': ['Besluit aanvraag B&B niet in behandeling '],
+  'Besluit weigering': ['Besluit B&B weigering zonder overgangsrecht'],
+  'Besluit instrekking': ['Intrekken vergunning BB (brief)'],
+};
+
 interface PowerbrowserLink {
   mainTable: string | 'DOCLINK';
   mainId: number;
@@ -294,10 +306,7 @@ interface PowerbrowserLink {
   note: string | 'Bijlage';
 }
 
-function transformPowerbrowserLinksResponse(
-  zaakId: PowerBrowserZaak['id'],
-  responseData: PowerbrowserLink[]
-) {
+function transformPowerbrowserLinksResponse(responseData: PowerbrowserLink[]) {
   return (
     responseData
       ?.filter(
@@ -312,9 +321,18 @@ function transformPowerbrowserLinksResponse(
           process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
         );
 
+        const [docTitleTranslated] =
+          Object.entries(documentNamenMA_PB).find(
+            ([docTitleMa, docTitlesPB]) => {
+              return docTitlesPB.some((docTitlePb) =>
+                link.caption.includes(docTitlePb)
+              );
+            }
+          ) ?? [];
+
         return {
           id: docIdEncrypted,
-          title: link.caption,
+          title: docTitleTranslated ?? link.caption,
           url: `${process.env.BFF_API_BASE_URL}/api/v1${generatePath(
             BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
             { docIdEncrypted }
@@ -335,11 +353,10 @@ export async function fetchPowerBrowserDocuments(
 ) {
   const dataRequestConfig = getApiConfig('POWERBROWSER', { method: 'GET' });
 
-  return requestData<string>(
+  return requestData<GenericDocument[]>(
     {
       ...dataRequestConfig,
-      transformResponse: (docLinkResponse) =>
-        transformPowerbrowserLinksResponse(zaakId, docLinkResponse),
+      transformResponse: transformPowerbrowserLinksResponse,
       url: `${dataRequestConfig.url}/Link/GFO_ZAKEN/${zaakId}`,
       headers: {
         Authorization: `Bearer ${bearerToken}`,

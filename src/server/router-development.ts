@@ -41,7 +41,7 @@ export const RelayPathsAllowed = {
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
   BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
   BBVERGUNNING_DOCUMENTS:
-    '/services/toeristische-verhuur/bb/documents/:idEncrypted',
+    '/services/toeristische-verhuur/bb/document/:idEncrypted',
 };
 
 export const authRouterDevelopment = express.Router();
@@ -145,10 +145,11 @@ export const relayDevRouter = express.Router();
 
 relayDevRouter.get(
   [
-    RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
+    RelayPathsAllowed.BBVERGUNNING_DOCUMENTS,
     RelayPathsAllowed.BEZWAREN_DOCUMENT,
+    RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
+    RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+    RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
   ],
   (req, res, next) => {
     return res.sendFile(path.join(__dirname, 'mock-data/document.pdf'));
