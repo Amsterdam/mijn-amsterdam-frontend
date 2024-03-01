@@ -4,6 +4,7 @@ import type { NextFunction, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoize from 'memoizee';
+import { createSecretKey, hkdfSync } from 'node:crypto';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
@@ -24,9 +25,9 @@ import {
   oidcConfigEherkenning,
   oidcConfigYivi,
 } from '../config';
+import { isBlacklisted } from '../services/session-blacklist';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
-import { createSecretKey, hkdfSync } from 'node:crypto';
 
 // const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
@@ -336,6 +337,9 @@ export async function isRequestAuthenticated(
   try {
     if (req.oidc.isAuthenticated()) {
       const auth = await getAuth(req);
+      if (auth.profile.sid && (await isBlacklisted(auth.profile.sid))) {
+        return false;
+      }
       return (
         auth.profile.authMethod === authMethod &&
         (await verifyUserIdWithRemoteUserinfo(
@@ -394,7 +398,9 @@ export async function isAuthenticated(
       await getAuth(req);
       return next();
     } catch (error) {
-      Sentry.captureException(error);
+      Sentry.captureMessage('Not authenticated: Session cookie invalid', {
+        level: 'warning',
+      });
     }
   }
   return sendUnauthorized(res);
