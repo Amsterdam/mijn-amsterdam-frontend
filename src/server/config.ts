@@ -351,13 +351,12 @@ export const BffEndpoints = {
   CMS_CONTENT: '/services/cms',
   FOOTER: '/services/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
-  CACHE_OVERVIEW: '/status/cache',
-  LOGIN_STATS: '/status/logins/:authMethod?',
-  LOGIN_RAW: '/status/logins/table',
-  SESSION_BLACKLIST_RAW: '/status/session-blacklist/table',
+  CACHE_OVERVIEW: '/admin/cache',
+  LOGIN_STATS: '/admin/visitors/:authMethod?',
+  LOGIN_RAW: '/admin/visitors/table',
+  SESSION_BLACKLIST_RAW: '/admin/session-blacklist/table',
   STATUS_HEALTH: '/status/health',
-  STATUS_HEALTH2: '/bff/status/health',
-  TEST_ACCOUNTS_OVERVIEW: '/status/user-data-overview',
+  TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
@@ -423,7 +422,6 @@ export const BffEndpoints = {
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.STATUS_HEALTH,
-  BffEndpoints.STATUS_HEALTH2,
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.FOOTER,
