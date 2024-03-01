@@ -194,20 +194,20 @@ export const DATASETS: DatasetCategories = {
       sportaanbieder: {
         title: 'Sporten',
         filters: {
-          indicatieStadspas: {
+          stadspasJeugd: {
             title: 'Stadspasvergoeding jeugd',
             sort: 'asc',
             valueConfig: {
-              '': { title: 'Onbekend' },
+              Null: { title: 'Onbekend' },
               False: { title: 'Nee' },
               True: { title: 'Ja' },
             },
           },
-          indicatieAangepastSporten: {
+          aangepastSporten: {
             title: 'Aangepast sporten',
             sort: 'asc',
             valueConfig: {
-              '': { title: 'Onbekend' },
+              Null: { title: 'Onbekend' },
               False: { title: 'Nee' },
               True: { title: 'Ja' },
             },
