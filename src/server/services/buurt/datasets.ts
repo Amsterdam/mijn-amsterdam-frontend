@@ -640,9 +640,11 @@ function transformAfvalcontainersResponse(
   config: DatasetConfig,
   responseData: any
 ) {
-  const features = responseData?.features
-    ? responseData?.features
-    : getDsoApiEmbeddedResponse(datasetId, responseData);
+  const features: MaFeature[] =
+    (Array.isArray(responseData.features)
+      ? responseData.features
+      : getDsoApiEmbeddedResponse(datasetId, responseData)) ?? [];
+
   return transformGenericApiListResponse(datasetId, config, {
     features: features
       .filter(
