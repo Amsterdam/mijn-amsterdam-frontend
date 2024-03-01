@@ -1,15 +1,11 @@
 import fs from 'fs';
 import jose from 'node-jose';
 import { Chapters, FeatureToggle, IS_TAP } from '../../../universal/config';
+import { apiSuccessResult } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import {
-  ApiPatternResponseA,
-  fetchService,
-  fetchTipsAndNotifications,
-} from './api-service';
-import { apiSuccessResult } from '../../../universal/helpers';
+import { ApiPatternResponseA, fetchService } from './api-service';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -21,13 +17,10 @@ const DEV_KEY = {
 
 const keystore = jose.JWK.createKeyStore();
 let certContent = '';
-let path =
-  process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT ||
-  process.env.BFF_CLEOPATRA_PUB_KEY; // TODO: Leacy, remove after AZ migration
+let path = process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT;
 
 try {
   if (IS_TAP && path) {
-    // NOTE: TEMP Fix for wrong certificate location
     certContent = fs.readFileSync(path).toString();
   }
 } catch (error) {}

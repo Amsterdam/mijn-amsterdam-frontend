@@ -105,8 +105,7 @@ router.use(
     {
       memoizeHost: false,
       proxyReqPathResolver: function (req) {
-        // TODO: Remove AZ condition after migration
-        return !IS_AZ ? `/api${req.url}` : req.url;
+        return `/api${req.url}`;
       },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);

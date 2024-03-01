@@ -1,23 +1,11 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ConfigParams } from 'express-openid-connect';
-import fs from 'fs';
 import https from 'https';
 import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_AZ, IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
-import { TokenData } from './helpers/app';
+import { IS_OT, IS_TAP } from '../universal/config/env';
 import { jsonCopy } from '../universal/helpers/utils';
-
-export function getCertificateSync(envVarName: string | undefined) {
-  const path = envVarName && process.env[envVarName];
-  if (path) {
-    try {
-      return fs.readFileSync(path).toString();
-    } catch (error) {}
-  }
-
-  return undefined;
-}
+import { TokenData } from './helpers/app';
 
 function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
   const data = name && process.env[name];
@@ -28,10 +16,7 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
 }
 
 function getCert(envVarName: string | undefined) {
-  // TODO: Should be only decodeBase64EncodedCertificateFromEnv when we've migrated to AZ
-  return IS_AZ
-    ? decodeBase64EncodedCertificateFromEnv(envVarName)
-    : getCertificateSync(envVarName);
+  return decodeBase64EncodedCertificateFromEnv(envVarName);
 }
 
 export const IS_DEBUG = process.env.DEBUG === '1';

@@ -300,6 +300,7 @@ function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
   return async (req: Request, res: Response) => {
     if (req.oidc.isAuthenticated() && doIDPLogout) {
       const auth = await getAuth(req);
+      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
       if (auth.profile.sid) {
         await addToBlackList(auth.profile.sid);
       }
@@ -316,6 +317,7 @@ function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
       });
     }
 
+    // Destroy the session context
     (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
