@@ -495,13 +495,9 @@ describe('predicates', () => {
 
     describe('hasToeristicheVerhuurVergunningen', () => {
       it.each([
-        [true, CaseType.VakantieverhuurVergunningaanvraag],
-        [true, CaseType.VakantieverhuurVergunningaanvraag],
-        [
-          true,
-          CaseType.BBVergunning,
-          CaseType.VakantieverhuurVergunningaanvraag,
-        ],
+        [true, CaseType.VakantieverhuurVergunning],
+        [true, CaseType.VakantieverhuurVergunning],
+        [true, CaseType.BBVergunning, CaseType.VakantieverhuurVergunning],
         [false, CaseType.BBVergunning],
       ])(
         'should return %s for caseType %s and second caseType %s',

@@ -17,7 +17,7 @@ import {
 import type {
   ToeristischeVerhuurRegistratieDetail,
   ToeristischeVerhuurVergunning,
-} from '../../../server/services/toeristische-verhuur';
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur';
 import type { WmoItem } from '../../../server/services/wmo';
 import type {
   WpiRequestProcess,

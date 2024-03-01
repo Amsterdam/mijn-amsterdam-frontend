@@ -5,7 +5,7 @@ import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import {
   transformVergunningenToVerhuur,
   VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur';
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur';
 import {
   toeristischeVerhuurVergunningTypes,
   transformVergunningenData,

@@ -317,16 +317,6 @@ export function getApiConfig(
   return Object.assign(apiConfigCopy, config);
 }
 
-export const RelayPathsAllowed = {
-  VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
-  WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
-  WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
-  BRP_BEWONERS: '/brp/aantal_bewoners',
-  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
-  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
-};
-
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
@@ -381,6 +371,13 @@ export const BffEndpoints = {
   ERFPACHTv2_DOSSIER_DETAILS:
     '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 
+  // Bodem / loodmetingen
+  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
+
+  // Toeristische verhuur / Bed & Breakfast
+  TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
+    '/services/toeristische-verhuur/bb/document/:docIdEncrypted',
+
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,
@@ -422,8 +419,6 @@ export const BffEndpoints = {
   AUTH_TOKEN_DATA_YIVI: `${AUTH_BASE_YIVI}/token-data`,
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
-  // Bodem / loodmetingen
-  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [

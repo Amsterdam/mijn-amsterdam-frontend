@@ -1,11 +1,10 @@
-import { differenceInYears, differenceInCalendarDays } from 'date-fns';
-import { CaseType } from '../../../universal/types/vergunningen';
-import { isAmsterdamAddress } from '../buurt/helpers';
-import type { TipsPredicateFN } from './tip-types';
-import type { WpiRequestProcess, WpiStadspas } from '../wpi/wpi-types';
+import { differenceInCalendarDays, differenceInYears } from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
+import { isAmsterdamAddress } from '../buurt/helpers';
+import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
 import type { WmoItem } from '../wmo';
-import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
+import type { WpiRequestProcess, WpiStadspas } from '../wpi/wpi-types';
+import type { TipsPredicateFN } from './tip-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
@@ -164,30 +163,22 @@ export const isBetween17and18: TipsPredicateFN = (
 export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
   appState
 ) => {
-  return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: ToeristischeVerhuurVergunning) =>
-      v.caseType === CaseType.VakantieverhuurVergunningaanvraag
-  );
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.vakantieverhuurVergunningen
+    .length;
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {
-  return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: ToeristischeVerhuurVergunning) => v.caseType === CaseType.BBVergunning
-  );
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.bbVergunningen.length;
 };
 
 export const hasBnBTransitionRight: TipsPredicateFN = (appState) => {
-  return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: ToeristischeVerhuurVergunning) =>
-      v.caseType === CaseType.BBVergunning && v.hasTransitionAgreement
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.bbVergunningen.some(
+    (vergunning: BBVergunning) => vergunning.heeftOvergangsRecht
   );
 };
 
 export const hasVerhuurRegistrations: TipsPredicateFN = (appState) => {
-  return !!(
-    appState.TOERISTISCHE_VERHUUR?.content &&
-    appState.TOERISTISCHE_VERHUUR?.content?.registraties?.length >= 1
-  );
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.lvvRegistraties?.length;
 };
 
 export const isReceivingSubsidy: TipsPredicateFN = (
