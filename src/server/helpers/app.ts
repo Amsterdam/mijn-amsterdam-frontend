@@ -25,7 +25,6 @@ import {
   oidcConfigEherkenning,
   oidcConfigYivi,
 } from '../config';
-import { isBlacklisted } from '../services/session-blacklist';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
 
@@ -337,9 +336,6 @@ export async function isRequestAuthenticated(
   try {
     if (req.oidc.isAuthenticated()) {
       const auth = await getAuth(req);
-      if (auth.profile.sid && (await isBlacklisted(auth.profile.sid))) {
-        return false;
-      }
       return (
         auth.profile.authMethod === authMethod &&
         (await verifyUserIdWithRemoteUserinfo(

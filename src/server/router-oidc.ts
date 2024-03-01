@@ -298,27 +298,26 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
 
 function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
   return async (req: Request, res: Response) => {
-    if (req.oidc.isAuthenticated()) {
+    if (req.oidc.isAuthenticated() && doIDPLogout) {
       const auth = await getAuth(req);
       if (auth.profile.sid) {
         await addToBlackList(auth.profile.sid);
       }
-      if (doIDPLogout) {
-        return res.oidc.logout({
-          returnTo: postLogoutRedirectUrl,
-          logoutParams: {
-            id_token_hint: !FeatureToggle.oidcLogoutHintActive
-              ? auth.token
-              : null,
-            logout_hint: FeatureToggle.oidcLogoutHintActive
-              ? auth.profile.sid
-              : null,
-          },
-        });
-      }
-      (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
-      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+      return res.oidc.logout({
+        returnTo: postLogoutRedirectUrl,
+        logoutParams: {
+          id_token_hint: !FeatureToggle.oidcLogoutHintActive
+            ? auth.token
+            : null,
+          logout_hint: FeatureToggle.oidcLogoutHintActive
+            ? auth.profile.sid
+            : null,
+        },
+      });
     }
+
+    (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
     return res.redirect(postLogoutRedirectUrl);
   };
