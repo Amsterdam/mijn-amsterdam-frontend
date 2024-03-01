@@ -145,11 +145,6 @@ app.use(legacyRouter);
 
 app.use(BFF_BASE_PATH, publicRouter);
 
-// Legacy health check. TODO: Remove after migration to az is complete.
-app.get(BffEndpoints.STATUS_HEALTH2, (_req, res) => {
-  return res.redirect(`/api/v1${BffEndpoints.STATUS_HEALTH}`);
-});
-
 ////////////////////////////////////////////////////////////////////////
 ///// [DEVELOPMENT - TEST]
 ///// Development routing for mock data

@@ -296,25 +296,32 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
   return res.redirect(redirectUrl);
 });
 
-function logout(postLogoutRedirectUrl: string) {
+function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
   return async (req: Request, res: Response) => {
-    if (!req.oidc.isAuthenticated()) {
-      return res.redirect(postLogoutRedirectUrl);
+    if (req.oidc.isAuthenticated() && doIDPLogout) {
+      const auth = await getAuth(req);
+      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
+      if (auth.profile.sid) {
+        await addToBlackList(auth.profile.sid);
+      }
+      return res.oidc.logout({
+        returnTo: postLogoutRedirectUrl,
+        logoutParams: {
+          id_token_hint: !FeatureToggle.oidcLogoutHintActive
+            ? auth.token
+            : null,
+          logout_hint: FeatureToggle.oidcLogoutHintActive
+            ? auth.profile.sid
+            : null,
+        },
+      });
     }
 
-    const auth = await getAuth(req);
-    if (auth.profile.sid) {
-      await addToBlackList(auth.profile.sid);
-    }
-    res.oidc.logout({
-      returnTo: postLogoutRedirectUrl,
-      logoutParams: {
-        id_token_hint: !FeatureToggle.oidcLogoutHintActive ? auth.token : null,
-        logout_hint: FeatureToggle.oidcLogoutHintActive
-          ? auth.profile.sid
-          : null,
-      },
-    });
+    // Destroy the session context
+    (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+
+    return res.redirect(postLogoutRedirectUrl);
   };
 }
 
@@ -326,6 +333,11 @@ router.get(
 router.get(
   BffEndpoints.AUTH_LOGOUT_EHERKENNING,
   logout(process.env.MA_FRONTEND_URL!)
+);
+
+router.get(
+  BffEndpoints.AUTH_LOGOUT_EHERKENNING_LOCAL,
+  logout(process.env.MA_FRONTEND_URL!, false)
 );
 
 router.get(

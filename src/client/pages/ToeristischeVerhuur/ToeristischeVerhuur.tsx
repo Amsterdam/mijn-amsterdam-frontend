@@ -1,7 +1,11 @@
 import { useMemo } from 'react';
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
-import { defaultDateFormat, isError } from '../../../universal/helpers';
+import {
+  defaultDateFormat,
+  isError,
+  isLoading,
+} from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   Alert,
@@ -222,6 +226,7 @@ export default function ToeristischeVerhuur() {
         title="Huidige vergunningen"
         hasItems={!!actieveVergunningen.length}
         noItemsMessage={BB_VERGUNNING_DISCLAIMER}
+        isLoading={isLoading(TOERISTISCHE_VERHUUR)}
         startCollapsed={false}
       >
         {!hasVergunningBB && (
@@ -245,6 +250,7 @@ export default function ToeristischeVerhuur() {
         title="Eerdere vergunningen"
         hasItems={!!inactieveVergunningen.length}
         noItemsMessage={BB_VERGUNNING_DISCLAIMER}
+        isLoading={isLoading(TOERISTISCHE_VERHUUR)}
         startCollapsed={false}
       >
         {!hasVergunningBB && (
