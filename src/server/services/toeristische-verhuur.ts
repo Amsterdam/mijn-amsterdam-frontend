@@ -279,7 +279,7 @@ const savedReportQueries: Record<
 };
 
 function transformBBResponse(responseData: BBResponseSource) {
-  // console.log('responseData', responseData);
+  console.log('responseData', responseData);
   return responseData;
 }
 
@@ -287,7 +287,7 @@ function transformBBResponse(responseData: BBResponseSource) {
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
 // links: /record/GFO_ZAKEN/-999742/Links
 
-async function fetchBBVergunning(
+export async function fetchBBVergunning(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType = 'private'
