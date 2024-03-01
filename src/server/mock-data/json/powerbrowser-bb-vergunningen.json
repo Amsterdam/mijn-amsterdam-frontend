@@ -11,7 +11,7 @@
     "status": "Gereed",
     "resultaat": "Verleend met overgangsrecht",
     "initator": "Weerd",
-    "adres": "Lindenstraat 1A 1015KV Amsterdam"
+    "adres": "Amstel 3 Amsterdam"
   },
   {
     "id": "126085265",
@@ -25,7 +25,7 @@
     "status": "Intake",
     "resultaat": null,
     "initator": "Kumari",
-    "adres": "Zwanenplein 5 1021CG Amsterdam"
+    "adres": "Amstel 4 Amsterdam"
   },
   {
     "id": "126085711",
@@ -39,6 +39,6 @@
     "status": "Intake",
     "resultaat": null,
     "initator": "Kumari",
-    "adres": "Nieuwe Westerdokstraat 92 1013AG Amsterdam"
+    "adres": "Amstel 5 Amsterdam"
   }
 ]
