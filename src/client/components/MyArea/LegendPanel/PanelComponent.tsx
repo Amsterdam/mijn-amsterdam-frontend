@@ -11,7 +11,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { animated, AnimatedValue, useSpring } from 'react-spring';
+import { animated, AnimatedValue, useSpring } from '@react-spring/web';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 import { IconChevronRight } from '../../../assets/icons';

@@ -1,7 +1,7 @@
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { ReactNode, useRef, useState } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
