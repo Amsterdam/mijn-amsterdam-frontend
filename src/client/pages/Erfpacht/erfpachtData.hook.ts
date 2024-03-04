@@ -88,12 +88,6 @@ export function useErfpachtV2Data() {
     titleOpenFacturen,
     colStyles: isMediumScreen
       ? {
-          openFacturenTable: [
-            styles.OpenFacturenTable_col1,
-            styles.OpenFacturenTable_col2,
-            styles.OpenFacturenTable_col3,
-            styles.OpenFacturenTable_col4,
-          ],
           facturenTable: [
             styles.FacturenTable_col1,
             styles.FacturenTable_col2,
