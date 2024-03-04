@@ -52,10 +52,7 @@ export function OpenFacturenListGrouped({
         <TableV2
           items={facturen}
           displayProps={displayProps}
-          className={classnames(
-            styles.OpenFacturenTable__smallScreen,
-            tableClassName
-          )}
+          className={tableClassName}
           gridColStyles={gridColStyles}
         />
       </Grid.Cell>
@@ -103,7 +100,6 @@ export default function ErfpachtOpenFacturen() {
                 <TableV2
                   items={openFacturen}
                   displayProps={displayPropsOpenFacturen}
-                  gridColStyles={colStyles.openFacturenTable}
                 />
               </Grid.Cell>
             ) : (
