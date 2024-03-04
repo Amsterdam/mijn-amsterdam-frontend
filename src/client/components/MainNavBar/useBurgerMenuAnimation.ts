@@ -1,4 +1,4 @@
-import { useSpring } from 'react-spring';
+import { useSpring } from '@react-spring/web';
 
 export function useBurgerMenuAnimation(
   isBurgerMenuVisible: boolean | undefined
