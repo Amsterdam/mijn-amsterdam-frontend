@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { animated } from 'react-spring';
+import { animated } from '@react-spring/web';
 
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';

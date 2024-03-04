@@ -1,6 +1,6 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useRef, useState } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import { useDebouncedCallback } from 'use-debounce';
 import { InnerHtml } from '..';
 import { ChapterTitles } from '../../../universal/config';
