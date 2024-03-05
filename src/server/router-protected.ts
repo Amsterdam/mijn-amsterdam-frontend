@@ -105,7 +105,7 @@ router.use(
     {
       memoizeHost: false,
       proxyReqPathResolver: function (req) {
-        return `/api${req.url}`;
+        return req.url;
       },
       proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);
