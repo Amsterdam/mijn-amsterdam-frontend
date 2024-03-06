@@ -9,7 +9,7 @@ import { Chapters } from '../../../universal/config/chapter';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   OverviewPage,
   PageHeading,
@@ -86,9 +86,9 @@ export default function ErfpachtOpenFacturen() {
         <Grid>
           {isError(ERFPACHTv2) && (
             <Grid.Cell span="all">
-              <Alert>
+              <ErrorAlert>
                 We kunnen op dit moment geen openstaande facturen tonen.
-              </Alert>
+              </ErrorAlert>
             </Grid.Cell>
           )}
 

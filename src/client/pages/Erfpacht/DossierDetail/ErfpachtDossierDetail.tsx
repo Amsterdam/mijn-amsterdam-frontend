@@ -1,4 +1,4 @@
-import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
+import { Grid, Screen } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
 import {
@@ -7,7 +7,7 @@ import {
   ChapterTitles,
 } from '../../../../universal/config';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   LoadingContent,
@@ -73,9 +73,9 @@ export default function ErfpachtDossierDetail() {
           )}
           {(api.isError || noContent) && (
             <Grid.Cell span="all">
-              <Alert>
+              <ErrorAlert>
                 We kunnen op dit moment geen erfpacht dossier tonen.
-              </Alert>
+              </ErrorAlert>
             </Grid.Cell>
           )}
 
