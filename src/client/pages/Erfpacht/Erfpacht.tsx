@@ -1,8 +1,8 @@
 import {
-  Alert,
   Grid,
   Heading,
   Link,
+  LinkList,
   Paragraph,
   Screen,
   UnorderedList,
@@ -10,6 +10,7 @@ import {
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
+  Alert,
   ChapterIcon,
   LoadingContent,
   OverviewPage,
@@ -54,41 +55,22 @@ export default function Erfpacht() {
             </Paragraph>
           </Grid.Cell>
           <Grid.Cell span="all">
-            <UnorderedList markers={false}>
-              <UnorderedList.Item>
-                <Link
-                  variant="inList"
-                  href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/"
-                >
-                  Meer informatie over erfpacht in Amsterdam
-                </Link>
-              </UnorderedList.Item>
-              <UnorderedList.Item>
-                <Link
-                  variant="inList"
-                  href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Erfpacht.aspx"
-                >
-                  Meer over wijzigen van uw erfpacht
-                </Link>
-              </UnorderedList.Item>
-              <UnorderedList.Item>
-                <Link
-                  variant="inList"
-                  href="https://www.amsterdam.nl/veelgevraagd/overstappen-naar-eeuwigdurende-erfpacht-f92c5#"
-                >
-                  Overstappen erfpachtrecht
-                </Link>
-              </UnorderedList.Item>
-            </UnorderedList>
+            <LinkList>
+              <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/">
+                Meer informatie over erfpacht in Amsterdam
+              </LinkList.Link>
+              <LinkList.Link href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Erfpacht.aspx">
+                Meer over wijzigen van uw erfpacht
+              </LinkList.Link>
+              <LinkList.Link href="https://www.amsterdam.nl/veelgevraagd/overstappen-naar-eeuwigdurende-erfpacht-f92c5#">
+                Overstappen erfpachtrecht
+              </LinkList.Link>
+            </LinkList>
           </Grid.Cell>
 
           {isError(ERFPACHTv2) && (
             <Grid.Cell span="all">
-              <Alert title="Foutmelding" severity="error">
-                <Paragraph>
-                  We kunnen op dit moment geen erfpachtrechten tonen.
-                </Paragraph>
-              </Alert>
+              <Alert>We kunnen op dit moment geen erfpachtrechten tonen.</Alert>
             </Grid.Cell>
           )}
 

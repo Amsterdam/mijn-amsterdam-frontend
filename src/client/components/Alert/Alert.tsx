@@ -1,42 +1,18 @@
-import classnames from 'classnames';
-
+import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import { ComponentChildren } from '../../../universal/types';
-import { IconAlert, IconCheckmark, IconInfo } from '../../assets/icons';
-import styles from './Alert.module.scss';
-
-export type AlertType = 'warning' | 'info' | 'success';
 
 export interface ComponentProps {
   children?: ComponentChildren;
-  type?: AlertType;
-  className?: string;
-}
-
-function getIcon(alertType: AlertType) {
-  let Icon;
-  switch (alertType) {
-    case 'warning':
-      Icon = IconAlert;
-      break;
-    case 'info':
-      Icon = IconInfo;
-      break;
-    case 'success':
-    default:
-      Icon = IconCheckmark;
-      break;
-  }
-  return <Icon aria-hidden="true" className={styles.Icon} />;
+  severity?: 'error' | 'info'; // NOTE: For the moment we are not using warning and success variants.
 }
 
 export default function Alert({
   children,
-  type = 'success',
-  className,
+  severity = 'error',
 }: ComponentProps) {
   return (
-    <div className={classnames(styles.Alert, styles[type], className)}>
-      {getIcon(type)} {children}
-    </div>
+    <DSAlert title="Foutmelding" severity={severity}>
+      <Paragraph>{children}</Paragraph>
+    </DSAlert>
   );
 }
