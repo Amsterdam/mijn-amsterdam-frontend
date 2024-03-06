@@ -151,9 +151,7 @@ export default function Stadspas() {
         </p>
         <MaintenanceNotifications page="stadspas" />
         {isError(WPI_STADSPAS) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <Alert>We kunnen op dit moment niet alle gegevens tonen.</Alert>
         )}
       </PageContent>
 
