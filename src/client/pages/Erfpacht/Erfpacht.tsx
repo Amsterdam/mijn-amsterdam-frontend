@@ -10,7 +10,7 @@ import {
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   LoadingContent,
   OverviewPage,
@@ -70,7 +70,9 @@ export default function Erfpacht() {
 
           {isError(ERFPACHTv2) && (
             <Grid.Cell span="all">
-              <Alert>We kunnen op dit moment geen erfpachtrechten tonen.</Alert>
+              <ErrorAlert>
+                We kunnen op dit moment geen erfpachtrechten tonen.
+              </ErrorAlert>
             </Grid.Cell>
           )}
 
