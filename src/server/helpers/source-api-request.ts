@@ -98,7 +98,13 @@ function enableMockAdapter() {
               delay,
               await responseData(...args)
             );
+            // TODO: Remove when done with story.
             return [500, data, headers];
+            // return [
+            //   typeof status === 'function' ? status(...args) : status,
+            //   data,
+            //   headers,
+            // ];
           });
         }
       }
