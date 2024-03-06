@@ -4,14 +4,16 @@ import { ComponentChildren } from '../../../universal/types';
 export interface ComponentProps {
   children?: ComponentChildren;
   severity?: 'error' | 'info'; // NOTE: For the moment we are not using warning and success variants.
+  title?: string;
 }
 
 export default function Alert({
   children,
   severity = 'error',
+  title = 'Foutmelding',
 }: ComponentProps) {
   return (
-    <DSAlert title="Foutmelding" severity={severity}>
+    <DSAlert title={title} severity={severity}>
       <Paragraph>{children}</Paragraph>
     </DSAlert>
   );
