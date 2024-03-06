@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  Alert,
   Grid,
   Heading,
   Paragraph,
@@ -10,15 +8,18 @@ import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/
 import { Chapters } from '../../../universal/config/chapter';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ChapterIcon, OverviewPage, PageHeading } from '../../components';
+import {
+  Alert,
+  ChapterIcon,
+  OverviewPage,
+  PageHeading,
+} from '../../components';
 import {
   DisplayProps,
   TableV2,
   TableV2Props,
 } from '../../components/Table/TableV2';
-import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
-import classnames from 'classnames';
 
 interface OpenFacturenListGroupedProps {
   facturen: ErfpachtDossierFactuur[];
@@ -85,10 +86,8 @@ export default function ErfpachtOpenFacturen() {
         <Grid>
           {isError(ERFPACHTv2) && (
             <Grid.Cell span="all">
-              <Alert title="Foutmelding" severity="error">
-                <Paragraph>
-                  We kunnen op dit moment geen openstaande facturen tonen.
-                </Paragraph>
+              <Alert>
+                We kunnen op dit moment geen openstaande facturen tonen.
               </Alert>
             </Grid.Cell>
           )}
