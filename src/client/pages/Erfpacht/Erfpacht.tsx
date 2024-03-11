@@ -63,14 +63,7 @@ export default function Erfpacht() {
                   Meer informatie over erfpacht in Amsterdam
                 </Link>
               </UnorderedList.Item>
-              <UnorderedList.Item>
-                <Link
-                  variant="inList"
-                  href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Erfpacht.aspx"
-                >
-                  Meer over wijzigen van uw erfpacht
-                </Link>
-              </UnorderedList.Item>
+
               <UnorderedList.Item>
                 <Link
                   variant="inList"
