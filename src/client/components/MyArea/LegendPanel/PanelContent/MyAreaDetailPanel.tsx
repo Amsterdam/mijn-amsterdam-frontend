@@ -2,7 +2,7 @@ import {
   DatasetCategoryId,
   getDatasetCategoryId,
 } from '../../../../../universal/config/myarea-datasets';
-import Alert from '../../../Alert/Alert';
+import ErrorAlert from '../../../Alert/Alert';
 import LoadingContent from '../../../LoadingContent/LoadingContent';
 import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks';
 import styles from '../PanelComponent.module.scss';
@@ -113,11 +113,9 @@ export default function MyAreaDetailPanel() {
 
   if (loadingFeature?.isError) {
     return (
-      <Alert className={styles.PanelError} type="warning">
-        <p>
-          Er kan op dit moment geen informatie getoond worden over deze locatie.
-        </p>
-      </Alert>
+      <ErrorAlert>
+               Er kan op dit moment geen informatie getoond worden over deze locatie.
+      </ErrorAlert>
     );
   }
 

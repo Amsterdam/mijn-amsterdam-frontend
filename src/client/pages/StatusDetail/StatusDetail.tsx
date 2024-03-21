@@ -3,15 +3,18 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
+import { Alert as DSAlert, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
+
+
 import {
   GenericDocument,
   StatusLine,
 } from '../../../universal/types/App.types';
 import { AppState, AppStateKey } from '../../AppState';
 import {
-  Alert,
   ChapterIcon,
   DetailPage,
+  ErrorAlert,
   Linkd,
   LoadingContent,
   PageContent,
@@ -24,7 +27,6 @@ import { relayApiUrl } from '../../utils/utils';
 import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
-
 interface StatusDetailProps {
   chapter: Chapter;
   stateKey: AppStateKey;
@@ -120,33 +122,31 @@ export default function StatusDetail({
 
         {isError(STATE) ||
           (noContent && !statusItems.length && (
-            <Alert type="warning">
-              <p>
+            <ErrorAlert >
                 We kunnen op dit moment geen gegevens tonen.{' '}
                 <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>
                 .
-              </p>
-            </Alert>
+            </ErrorAlert>
           ))}
 
         {!isStateLoading && !statusItem && !!statusItems.length && (
-          <Alert type="warning">
-            <p>
+          <DSAlert>
+         <Paragraph>
               Deze pagina is mogelijk verplaatst. Kies hieronder een van de
               beschikbare aanvragen.
-            </p>
-            <ul className={styles.ItemAlternatives}>
+              </Paragraph>
+            <UnorderedList className={styles.ItemAlternatives}>
               {statusItems.map((statusItem, index) => {
                 return (
-                  <li key={statusItem.link?.to || index}>
+                  <UnorderedList.Item key={statusItem.link?.to || index}>
                     <Linkd href={statusItem.link?.to || appRoute}>
                       {statusItem.title}
                     </Linkd>
-                  </li>
+                  </UnorderedList.Item>
                 );
               })}
-            </ul>
-          </Alert>
+            </UnorderedList>
+          </DSAlert>
         )}
 
         {isStateLoading && <LoadingContent />}
