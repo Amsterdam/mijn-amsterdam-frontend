@@ -5,7 +5,7 @@ import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   Button,
   ChapterIcon,
   DateInput,
@@ -178,9 +178,9 @@ export default function InkomenSpecificaties() {
       </PageHeading>
       <PageContent>
         {isError(WPI_SPECIFICATIES) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment niet alle gegevens tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       <Section
