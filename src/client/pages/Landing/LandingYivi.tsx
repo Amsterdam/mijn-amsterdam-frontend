@@ -2,7 +2,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useRef, useState } from 'react';
 import {
-  Alert,
+  ErrorAlert,
   LinkdInline,
   MaintenanceNotifications,
   PageContent,
@@ -26,14 +26,14 @@ export default function Landing() {
       </PageHeading>
       <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
         {!FeatureToggle.yiviActive && (
-          <Alert type="info">
-            <p>
+          <ErrorAlert>
+
               Vanaf 22 mei kon u online uw meldingen openbare ruimte volgen via
               de app Yivi. Deze proef liep tot eind augustus. We danken iedereen
               voor deelname aan de proef.
-            </p>
 
-            <p>
+
+
               U kunt online uw melding nu via 'Mijn meldingen' volgen. Ga
               hiervoor naar{' '}
               <a
@@ -43,8 +43,8 @@ export default function Landing() {
                 uw meldingenoverzicht
               </a>
               .
-            </p>
-          </Alert>
+
+          </ErrorAlert>
         )}
         {FeatureToggle.yiviActive && (
           <>

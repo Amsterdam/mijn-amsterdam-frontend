@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { Chapter } from '../../../universal/config';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   OverviewPage,
@@ -103,9 +103,9 @@ export function PageTablePaginated({
       </PageHeading>
       <PageContent>
         {isError && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment niet alle gegevens tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       <Section title={listTitle} className={styles.TableSection}>

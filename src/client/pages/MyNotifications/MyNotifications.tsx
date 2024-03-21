@@ -3,7 +3,7 @@ import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   MyNotifications,
@@ -56,13 +56,14 @@ export default function MyNotificationsPage() {
         className={styles.MainHeader}
         icon={<ChapterIcon />}
       >
+
         Actueel
       </PageHeading>
       <PageContent>
         {isError(NOTIFICATIONS) && (
-          <Alert type="warning">
-            <p>Niet alle updates kunnen op dit moment worden getoond.</p>
-          </Alert>
+          <ErrorAlert>
+            Niet alle updates kunnen op dit moment worden getoond.
+          </ErrorAlert>
         )}
       </PageContent>
       {total > PAGE_SIZE && (
