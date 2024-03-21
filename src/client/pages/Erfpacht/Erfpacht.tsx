@@ -6,6 +6,7 @@ import {
   Paragraph,
   Screen,
   UnorderedList,
+
 } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -55,17 +56,25 @@ export default function Erfpacht() {
             </Paragraph>
           </Grid.Cell>
           <Grid.Cell span="all">
-            <LinkList>
-              <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/">
-                Meer informatie over erfpacht in Amsterdam
-              </LinkList.Link>
-              <LinkList.Link href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Erfpacht.aspx">
-                Meer over wijzigen van uw erfpacht
-              </LinkList.Link>
-              <LinkList.Link href="https://www.amsterdam.nl/veelgevraagd/overstappen-naar-eeuwigdurende-erfpacht-f92c5#">
-                Overstappen erfpachtrecht
-              </LinkList.Link>
-            </LinkList>
+            <UnorderedList markers={false}>
+              <UnorderedList.Item>
+                <Link
+                  variant="inList"
+                  href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/"
+                >
+                  Meer informatie over erfpacht in Amsterdam
+                </Link>
+              </UnorderedList.Item>
+
+              <UnorderedList.Item>
+                <Link
+                  variant="inList"
+                  href="https://www.amsterdam.nl/veelgevraagd/overstappen-naar-eeuwigdurende-erfpacht-f92c5#"
+                >
+                  Overstappen erfpachtrecht
+                </Link>
+              </UnorderedList.Item>
+            </UnorderedList>
           </Grid.Cell>
 
           {isError(ERFPACHTv2) && (
