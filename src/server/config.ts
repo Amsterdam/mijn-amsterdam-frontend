@@ -220,6 +220,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     method: 'POST',
     url: `${process.env.BFF_POWERBROWSER_API_URL}`,
     postponeFetch: !FeatureToggle.powerbrowserActive,
+    headers: {
+      apiKey: process.env.BFF_POWERBROWSER_API_KEY,
+    },
   },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
