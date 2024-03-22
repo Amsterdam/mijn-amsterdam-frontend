@@ -12,7 +12,12 @@ import {
   FeatureToggle,
   streamEndpointQueryParamKeys,
 } from '../../universal/config';
-import { AppState, PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
+import {
+  AppState,
+  AppStateKey,
+  PRISTINE_APPSTATE,
+  createAllErrorState,
+} from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { useDataApi } from './api/useDataApi';
@@ -186,7 +191,7 @@ export function isAppStateReady(
 
   const profileStates = Object.entries(appState).filter(
     ([appStateKey, state]) => {
-      const key = appStateKey as keyof AppState;
+      const key = appStateKey as AppStateKey;
       const stateConfig = pristineAppState[
         key
       ] as unknown as ApiPristineResponse<any>;

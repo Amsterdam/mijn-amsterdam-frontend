@@ -3,9 +3,24 @@ import { ConfigParams } from 'express-openid-connect';
 import https from 'https';
 import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TAP } from '../universal/config/env';
+import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { jsonCopy } from '../universal/helpers/utils';
 import { TokenData } from './helpers/app';
+import fs from 'fs';
+
+export function getCertificateSync(envVarName: string | undefined) {
+  const path = envVarName && process.env[envVarName];
+  if (path) {
+    try {
+      const fileContents = fs.readFileSync(path).toString();
+      return fileContents;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return undefined;
+}
 
 function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
   const data = name && process.env[name];
@@ -16,7 +31,9 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
 }
 
 function getCert(envVarName: string | undefined) {
-  return decodeBase64EncodedCertificateFromEnv(envVarName);
+  return IS_DEVELOPMENT
+    ? getCertificateSync(envVarName)
+    : decodeBase64EncodedCertificateFromEnv(envVarName);
 }
 
 export const IS_DEBUG = process.env.DEBUG === '1';
@@ -78,11 +95,11 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'WMO'
+  | 'ZORGNED'
+  | 'GPASS'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
-  | 'WPI_STADSPAS'
   | 'SVWI'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
@@ -112,9 +129,20 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  WMO: {
-    url: `${process.env.BFF_WMO_API_BASE_URL}/wmoned/voorzieningen`,
-    passthroughOIDCToken: true,
+  ZORGNED: {
+    method: 'post',
+    url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
+    headers: {
+      Token: process.env.BFF_ZORGNED_API_TOKEN,
+      'Content-type': 'application/json; charset=utf-8',
+    },
+    httpsAgent: new https.Agent({
+      cert: getCert('BFF_SERVER_CLIENT_CERT'),
+      key: getCert('BFF_SERVER_CLIENT_KEY'),
+    }),
+  },
+  GPASS: {
+    url: `${process.env.BFF_GPASS_API_BASE_URL}`,
   },
   WPI_E_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,
@@ -126,10 +154,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   WPI_SPECIFICATIES: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
-    passthroughOIDCToken: true,
-  },
-  WPI_STADSPAS: {
-    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
     passthroughOIDCToken: true,
   },
   SVWI: {
@@ -315,7 +339,8 @@ export const RelayPathsAllowed = {
   VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
   VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
   WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
-  WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
+  WMO_DOCUMENT_DOWNLOAD: '/wmoned/document/:id',
+  STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
   BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',

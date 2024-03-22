@@ -1,13 +1,13 @@
 import { ChapterMenuItem, Chapters, FeatureToggle } from '../config';
 import { isLoading, isMokum } from '.';
-import type { AppState } from '../../client/AppState';
+import type { AppState, AppStateKey } from '../../client/AppState';
 
 export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
   const {
     WMO,
     WPI_SPECIFICATIES,
     WPI_AANVRAGEN,
-    WPI_STADSPAS,
+    STADSPAS,
     WPI_TOZO,
     WPI_TONK,
     WPI_BBZ,
@@ -71,9 +71,9 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
 
     case Chapters.STADSPAS:
       const hasStadspas =
-        !!WPI_STADSPAS?.content?.stadspassen?.length ||
-        !!WPI_STADSPAS?.content?.aanvragen?.length;
-      const isLoadingStadspas = isLoading(WPI_STADSPAS);
+        !!STADSPAS?.content?.stadspassen?.length ||
+        !!STADSPAS?.content?.aanvragen?.length;
+      const isLoadingStadspas = isLoading(STADSPAS);
       return !isLoadingStadspas && hasStadspas;
 
     case Chapters.ZORG:
@@ -211,6 +211,6 @@ export function getChapterMenuItemsAppState(
       ({ isAlwaysVisible, hasAppStateValue }) =>
         isAlwaysVisible !== true && hasAppStateValue !== false
     )
-    .map(({ id }) => appState[id as keyof AppState])
+    .map(({ id }) => appState[id as AppStateKey])
     .filter((apiState) => !!apiState);
 }

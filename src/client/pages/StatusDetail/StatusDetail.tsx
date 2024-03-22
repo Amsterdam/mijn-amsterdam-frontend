@@ -7,7 +7,7 @@ import {
   GenericDocument,
   StatusLine,
 } from '../../../universal/types/App.types';
-import { AppState } from '../../AppState';
+import { AppState, AppStateKey } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -20,17 +20,15 @@ import {
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './StatusDetail.module.scss';
 import { relayApiUrl } from '../../utils/utils';
+import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
 
 interface StatusDetailProps {
   chapter: Chapter;
-  stateKey: keyof AppState;
-  getItems?: (
-    content: AppState[keyof AppState]['content']
-  ) => StatusSourceItem[];
+  stateKey: AppStateKey;
+  getItems?: (content: AppState[AppStateKey]['content']) => StatusSourceItem[];
   pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
   maxStepCount?: (hasDecision: boolean) => number | undefined;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
@@ -55,10 +53,15 @@ export default function StatusDetail({
   const appState = useAppStateGetter();
   const STATE = appState[stateKey];
   const isStateLoading = isLoading(STATE);
-  const statusItems: StatusSourceItem[] = useMemo(
-    () => (getItems ? getItems(STATE.content) : STATE.content || []),
+  const statusItems = useMemo(
+    () =>
+      getItems
+        ? getItems(STATE.content)
+        : Array.isArray(STATE.content)
+          ? STATE.content
+          : [],
     [STATE.content, getItems]
-  );
+  ) as StatusSourceItem[];
 
   const { id } = useParams<{ id: string }>();
   const statusItem = statusItems.find((item) => item.id === id);

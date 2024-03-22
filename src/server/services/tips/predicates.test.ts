@@ -1,7 +1,7 @@
 import { ApiResponse, ApiSuccessResponse } from '../../../universal/helpers';
 import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import BRP from '../../mock-data/json/brp.json';
-import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
+import STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
@@ -279,19 +279,19 @@ describe('predicates', () => {
     });
   });
 
-  describe('WPI_STADSPAS', () => {
+  describe('STADSPAS', () => {
     describe('hasStadspasGroeneStip', () => {
       const getMockAppState = (passType: string) => {
-        const WPI_STADSPASCopy = { ...WPI_STADSPAS };
+        const STADSPASCopy = { ...STADSPAS };
 
-        WPI_STADSPASCopy.content.stadspassen.forEach((s) => {
+        STADSPASCopy.content.stadspassen.forEach((s) => {
           s.passType = passType;
         });
 
         return {
-          WPI_STADSPAS: {
+          STADSPAS: {
             content: {
-              ...WPI_STADSPASCopy.content,
+              ...STADSPASCopy.content,
               aanvragen: [] as WpiRequestProcess[],
             },
             status: 'OK',
@@ -312,15 +312,15 @@ describe('predicates', () => {
 
     describe('hasValidStadspasRequest', () => {
       const getMockAppState = (decision: string, datePublished: string) => {
-        const WPI_STADSPASCopy = { ...WPI_STADSPAS };
+        const STADSPASCopy = { ...STADSPAS };
         const aanvraag = WPI_AANVRAGEN.content[3];
         aanvraag.decision = decision;
         aanvraag.datePublished = datePublished;
 
         return {
-          WPI_STADSPAS: {
+          STADSPAS: {
             content: {
-              ...WPI_STADSPASCopy.content,
+              ...STADSPASCopy.content,
               aanvragen: [aanvraag],
             },
             status: 'OK',

@@ -7,8 +7,12 @@ type Iv = Buffer;
 
 export function encrypt(
   plainText: string,
-  encryptionKey: string
+  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
+  if (!encryptionKey) {
+    throw new Error('Cannot encrypt, Encryption key not found.');
+  }
+
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, iv);
   const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
@@ -16,7 +20,14 @@ export function encrypt(
   return [Buffer.concat([iv, encrypted]).toString('base64url'), encrypted, iv];
 }
 
-export function decrypt(encryptedValue: string, encryptionKey: string) {
+export function decrypt(
+  encryptedValue: string,
+  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
+) {
+  if (!encryptionKey) {
+    throw new Error('Cannot decrypt, Encryption key not found.');
+  }
+
   const keyBuffer = Buffer.from(encryptionKey);
   const decodedBuffer = Buffer.from(encryptedValue, 'base64');
   const ivBuffer = decodedBuffer.slice(0, 16);

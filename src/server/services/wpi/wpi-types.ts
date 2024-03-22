@@ -1,4 +1,4 @@
-import { LinkProps } from '../../../universal/types';
+import { LinkProps, StatusLineItem } from '../../../universal/types';
 
 export interface WpiRequestStatusDocument {
   id: string;
@@ -7,7 +7,7 @@ export interface WpiRequestStatusDocument {
   datePublished: string;
 }
 
-export interface WpiRequestStatus {
+export interface WpiRequestStatus extends StatusLineItem {
   id: string;
   status: string;
   documents: WpiRequestStatusDocument[];
@@ -26,7 +26,6 @@ export interface WpiRequestProcess {
   title: string;
   about:
     | 'Bijstandsuitkering'
-    | 'Stadspas'
     | 'Tozo 1'
     | 'Tozo 2'
     | 'Tozo 3'
@@ -85,35 +84,4 @@ export interface WpiIncomeSpecificationResponseData {
 export interface WpiIncomeSpecificationResponseDataTransformed {
   jaaropgaven: WpiIncomeSpecificationTransformed[];
   uitkeringsspecificaties: WpiIncomeSpecificationTransformed[];
-}
-
-export interface WpiStadspasBudget {
-  description: string;
-  code: string;
-  budgetAssigned: number;
-  budgetBalance: number;
-  urlTransactions: string;
-  dateEnd: string;
-}
-
-export interface WpiStadspas {
-  id: string;
-  passNumber: string;
-  passType: 'kind' | 'ouder';
-  owner: string;
-  dateEnd: string;
-  budgets: WpiStadspasBudget[];
-  link?: LinkProps;
-}
-
-export interface WpiStadspasTransaction {
-  id: string;
-  title: string;
-  amount: number;
-  datePublished: string;
-}
-
-export interface WpiStadspasResponseData {
-  stadspassen: WpiStadspas[];
-  adminNumber: string;
 }

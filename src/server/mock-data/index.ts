@@ -34,8 +34,10 @@ import WMO from './json/wmo.json';
 import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
 import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
 import WPI_SPECIFICATIES from './json/wpi-specificaties.json';
-import WPI_STADSPAS from './json/wpi-stadspas.json';
 import SVWI from './json/svwi.json';
+import GPASS_PASHOUDERS from './json/gpass-pashouders.json';
+import GPASS_STADSPAS from './json/gpass-stadspas.json';
+import GPASS_TRANSACTIES from './json/gpass-transacties.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -125,7 +127,9 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(BEZWAREN_STATUS);
     },
   },
-  [String(ApiUrls.WMO)]: {
+  [`${ApiUrls.ZORGNED}`]: {
+    method: 'post',
+    pathReg: new RegExp('/remote/zorgned/*'),
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
@@ -153,15 +157,25 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(WPI_E_AANVRAGEN);
     },
   },
-  [String(ApiUrls.WPI_STADSPAS)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(WPI_STADSPAS);
-    },
-  },
+  // [String(ApiUrls.GPASS)]: {
+  //   pathReg: new RegExp('/remote/gpass/*'),
+  //   status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+  //   responseData: async (config: any) => {
+  //     if (isCommercialUser(config)) {
+  //       return 'no-content';
+  //     }
+  //     if (config.url.includes('sales/v1/pas')) {
+  //       return loadMockApiResponseJson(GPASS_STADSPAS);
+  //     }
+  //     if (config.url.includes('sales/v1/pashouder')) {
+  //       return loadMockApiResponseJson(GPASS_PASHOUDERS);
+  //     }
+  //     if (config.url.includes('transacties/v1/budget')) {
+  //       return loadMockApiResponseJson(GPASS_TRANSACTIES);
+  //     }
+  //     return null;
+  //   },
+  // },
   [String(ApiUrls.WPI_SPECIFICATIES)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {

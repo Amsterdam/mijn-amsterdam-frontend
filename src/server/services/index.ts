@@ -17,5 +17,5 @@ export * from './simple-connect';
 export * from './tips/tips-service';
 export * from './toeristische-verhuur';
 export * from './vergunningen/vergunningen';
-export * from './wmo';
+export * from './wmo/wmo';
 export * from './wpi';

@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
 
-export const AppRoutes = {
+export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',

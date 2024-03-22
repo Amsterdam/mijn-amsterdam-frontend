@@ -19,8 +19,7 @@ export const FeatureToggle = {
   siaActive: true,
   siaApiActive: true,
   yiviActive: !IS_PRODUCTION,
-  yiviLandingActive:
-    !isDateInPast(new Date('2023-12-31 23:59:00')) || !IS_PRODUCTION,
+  yiviLandingActive: !isDateInPast('2023-12-31 23:59:00') || !IS_PRODUCTION,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
@@ -45,6 +44,7 @@ export const FeatureToggle = {
   passQueryParamsToStreamUrl: !IS_AP,
   laadpalenActive: !IS_PRODUCTION,
   oidcLogoutHintActive: !IS_PRODUCTION,
+  zorgnedDocumentAttachmentsActive: !IS_PRODUCTION,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
@@ -76,7 +76,8 @@ export const ExternalUrls = {
     !IS_PRODUCTION ? '.acc' : ''
   }.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk`,
   BERICHTENBOX_BURGERS: 'https://mijn.overheid.nl/berichtenbox/inbox/',
-  BERICHTENBOX_ONDERNEMERS: 'https://www.digitaleoverheid.nl/overzicht-van-alle-onderwerpen/berichtenbox-voor-bedrijven/',
+  BERICHTENBOX_ONDERNEMERS:
+    'https://www.digitaleoverheid.nl/overzicht-van-alle-onderwerpen/berichtenbox-voor-bedrijven/',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:
     'https://www.amsterdam.nl/nieuwsbrieven/actueel/nieuwsbrief/nieuwsbrief/',
