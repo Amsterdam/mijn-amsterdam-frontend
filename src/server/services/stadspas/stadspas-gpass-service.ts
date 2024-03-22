@@ -92,11 +92,14 @@ export async function fetchStadspassen(
     authProfileAndToken
   );
 
-  if (administratienummerResponse.status === 'ERROR') {
+  if (
+    administratienummerResponse.status === 'ERROR' ||
+    administratienummerResponse.status === 'POSTPONE'
+  ) {
     return administratienummerResponse;
   }
 
-  const administratienummer = administratienummerResponse.content as string;
+  const administratienummer = administratienummerResponse.content;
 
   const headers = getHeaders(administratienummer);
 
