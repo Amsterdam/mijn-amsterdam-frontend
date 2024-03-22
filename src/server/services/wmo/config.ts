@@ -53,9 +53,9 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
     PGB: [],
   };
 
-interface Levering {
-  begindatum: string;
-  einddatum: string;
+export interface Levering {
+  begindatum: string | null;
+  einddatum: string | null;
 }
 
 interface Toewijzing {
@@ -69,15 +69,17 @@ interface Leverancier {
 
 export type BeschikkingsResultaat = 'toegewezen' | string;
 
+export interface ToegewezenProduct {
+  actueel: boolean;
+  datumEindeGeldigheid: string | null;
+  datumIngangGeldigheid: string | null;
+  toewijzingen: Toewijzing[];
+  leveringsvorm: LeveringsVorm;
+  leverancier: Leverancier;
+}
+
 export interface BeschiktProduct {
-  toegewezenProduct: {
-    actueel: boolean;
-    datumEindeGeldigheid: string;
-    datumIngangGeldigheid: string;
-    toewijzingen: Toewijzing[];
-    leveringsvorm: LeveringsVorm;
-    leverancier: Leverancier;
-  };
+  toegewezenProduct: ToegewezenProduct;
   product: {
     productsoortCode: ProductSoortCode;
     omschrijving: string;
@@ -86,7 +88,7 @@ export interface BeschiktProduct {
 }
 
 interface Beschikking {
-  beschikkingNummer: string;
+  beschikkingNummer: number;
   datumAfgifte: string;
   beschikteProducten: BeschiktProduct[];
 }
@@ -95,7 +97,7 @@ export interface ZorgnedDocument {
   documentidentificatie: string;
   omschrijving: string;
   datumDefinitief: string;
-  zaakidentificatie: string;
+  zaakidentificatie: string | null;
 }
 
 export interface ZorgnedDocumentData {
@@ -111,20 +113,24 @@ export interface WMOAanvraag {
   documenten: ZorgnedDocument[];
 }
 
+export interface WMOSourceResponseData {
+  _embedded: { aanvraag: WMOAanvraag[] };
+}
+
 export interface WMOVoorziening {
   id: string;
   datumBesluit: string;
-  datumEindeGeldigheid: string;
-  datumIngangGeldigheid: string;
+  datumEindeGeldigheid: string | null;
+  datumIngangGeldigheid: string | null;
   documenten: GenericDocument[];
   isActueel: boolean;
   leverancier: string;
-  datumEindeLevering: string;
-  datumBeginLevering: string;
+  datumEindeLevering: string | null;
+  datumBeginLevering: string | null;
   leveringsVorm: LeveringsVorm;
   productsoortCode: ProductSoortCode;
   titel: string;
-  datumOpdrachtLevering: string;
+  datumOpdrachtLevering: string | null;
 }
 
 export type TextPartContent = string;
@@ -154,6 +160,6 @@ export interface WMOVoorzieningFrontend {
   steps: StatusLineItem[];
   itemTypeCode: ProductSoortCode;
   dateDescision: string;
-  dateStart: string;
-  dateEnd: string;
+  dateStart: string | null;
+  dateEnd: string | null;
 }

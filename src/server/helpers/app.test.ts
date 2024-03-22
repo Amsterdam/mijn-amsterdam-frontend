@@ -457,7 +457,7 @@ describe('server/helpers/app', () => {
         cookies: {
           [OIDC_SESSION_COOKIE_NAME]: 'test',
         },
-      } as Request;
+      } as unknown as Request;
 
       expect(hasSessionCookie(req)).toBe(true);
     }
@@ -475,7 +475,7 @@ describe('server/helpers/app', () => {
         cookies: {
           blap: 'test',
         },
-      } as Request;
+      } as unknown as Request;
 
       expect(hasSessionCookie(req)).toBe(false);
     }
@@ -543,7 +543,7 @@ describe('server/helpers/app', () => {
       cookies: {
         blap: 'test',
       },
-    } as Request;
+    } as unknown as Request;
 
     const res = {
       send: vi.fn().mockImplementation((responseContent: any) => {
@@ -579,7 +579,7 @@ describe('server/helpers/app', () => {
       cookies: {
         [OIDC_SESSION_COOKIE_NAME]: jweCookieString,
       },
-    } as Request;
+    } as unknown as Request;
 
     const res = {
       send: vi.fn().mockImplementation((responseContent: any) => {

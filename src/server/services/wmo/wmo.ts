@@ -4,7 +4,6 @@ import {
   apiSuccessResult,
   capitalizeFirstLetter,
   dateSort,
-  isDateInPast,
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { WMOVoorziening, WMOVoorzieningFrontend } from './config';

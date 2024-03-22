@@ -9,11 +9,15 @@ import {
   BESCHIKTPRODUCT_RESULTAAT,
   BeschiktProduct,
   DATE_END_NOT_OLDER_THAN,
+  Levering,
   LeveringsVorm,
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
   PRODUCTS_WITH_DELIVERY,
+  ProductSoortCode,
   REGELING_IDENTIFICATIE,
+  ToegewezenProduct,
   WMOAanvraag,
+  WMOSourceResponseData,
   WMOVoorziening,
   ZORGNED_GEMEENTE_CODE,
   ZorgnedDocument,
@@ -27,12 +31,8 @@ function isProductWithDelivery(
   const productsoortCode = wmoProduct.productsoortCode;
 
   // This check matches the products that should / can / will receive a delivery of goods / service / product(eventually).
-  if (
-    productsoortCode &&
-    leveringsVorm &&
-    leveringsVorm in PRODUCTS_WITH_DELIVERY
-  ) {
-    return productsoortCode in PRODUCTS_WITH_DELIVERY[leveringsVorm];
+  if (leveringsVorm in PRODUCTS_WITH_DELIVERY) {
+    return PRODUCTS_WITH_DELIVERY[leveringsVorm].includes(productsoortCode);
   }
 
   return false;
@@ -58,28 +58,21 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
   return documents;
 }
 
-function transformAanvraagToVoorziening(
-  id: string,
-  datumBesluit: string,
-  beschiktProduct: BeschiktProduct,
-  documenten: ZorgnedDocument[]
-) {
-  const toegewezenProduct = beschiktProduct.toegewezenProduct;
-  const toewijzingen = toegewezenProduct.toewijzingen ?? [];
-  const toewijzing = toewijzingen.pop();
-  const leveringen = toewijzing?.leveringen ?? [];
-  const levering = leveringen.pop();
-  const leveringsVorm =
-    (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';
-  const datumEindeGeldigheid = toegewezenProduct.datumEindeGeldigheid;
+function isActual({
+  toegewezenProduct,
+  levering,
+  productsoortCode,
+  leveringsVorm,
+}: {
+  toegewezenProduct?: ToegewezenProduct;
+  levering?: Levering;
+  productsoortCode: ProductSoortCode;
+  leveringsVorm: LeveringsVorm;
+}) {
+  const datumEindeGeldigheid = toegewezenProduct?.datumEindeGeldigheid;
   const isEOG = !!datumEindeGeldigheid && isDateInPast(datumEindeGeldigheid); // is Einde Of Geldighed
 
-  let isActueel = toegewezenProduct.actueel;
-  let productsoortCode = beschiktProduct.product.productsoortCode;
-  if (productsoortCode) {
-    productsoortCode = productsoortCode.toUpperCase();
-  }
-
+  let isActueel = !!toegewezenProduct?.actueel;
   // Override actueel indien er nog geen levering heeft plaatsgevonden en de geldigheid nog niet is afgelopen
   if (
     !isActueel &&
@@ -98,6 +91,28 @@ function transformAanvraagToVoorziening(
     isActueel = false;
   }
 
+  return isActueel;
+}
+
+function transformAanvraagToVoorziening(
+  id: string,
+  datumBesluit: string,
+  beschiktProduct: BeschiktProduct,
+  documenten: ZorgnedDocument[]
+) {
+  const toegewezenProduct = beschiktProduct.toegewezenProduct;
+  const toewijzingen = toegewezenProduct.toewijzingen ?? [];
+  const toewijzing = toewijzingen.pop();
+  const leveringen = toewijzing?.leveringen ?? [];
+  const levering = leveringen.pop();
+  const leveringsVorm =
+    (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';
+
+  let productsoortCode = beschiktProduct.product.productsoortCode;
+  if (productsoortCode) {
+    productsoortCode = productsoortCode.toUpperCase();
+  }
+
   const voorziening: WMOVoorziening = {
     id,
     datumBeginLevering: levering?.begindatum ?? '',
@@ -107,7 +122,12 @@ function transformAanvraagToVoorziening(
     datumIngangGeldigheid: toegewezenProduct.datumIngangGeldigheid,
     datumOpdrachtLevering: toewijzing?.datumOpdracht ?? '',
     documenten: transformDocumenten(documenten),
-    isActueel: isActueel,
+    isActueel: isActual({
+      toegewezenProduct,
+      levering,
+      productsoortCode,
+      leveringsVorm,
+    }),
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
     productsoortCode: productsoortCode,
@@ -117,9 +137,9 @@ function transformAanvraagToVoorziening(
   return voorziening;
 }
 
-function transformAanvragenToVoorzieningen(responseData: {
-  _embedded: { aanvraag: WMOAanvraag[] };
-}) {
+function transformAanvragenToVoorzieningen(
+  responseData: WMOSourceResponseData
+) {
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
   const voorzieningen: WMOVoorziening[] = [];
@@ -139,10 +159,6 @@ function transformAanvragenToVoorzieningen(responseData: {
 
     if (shouldShowDocuments) {
       documenten = aanvraagSource.documenten ?? [];
-      console.log(
-        'has doc',
-        aanvraagSource.beschikking.beschikteProducten[0].product.omschrijving
-      );
     }
 
     for (const [index, beschiktProduct] of beschikteProducten.entries()) {
@@ -237,3 +253,10 @@ export async function fetchDocument(
     authProfileAndToken
   );
 }
+
+export const forTesting = {
+  isProductWithDelivery,
+  transformDocumenten,
+  isActual,
+  transformAanvragenToVoorzieningen,
+};

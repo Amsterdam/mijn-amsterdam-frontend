@@ -69,7 +69,12 @@ process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_KREFIA_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_VERGUNNINGEN_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
-process.env.BFF_WMO_API_BASE_URL = `${remoteApiHost}`;
+
+process.env.BFF_ZORGNED_API_BASE_URL = `${remoteApiHost}/zorgned/ojzd`;
+process.env.BFF_ZORGNED_API_TOKEN = 'xxxx22xxxx';
+
+process.env.BFF_GPASS_API_BASE_URL = `${remoteApiHost}/stadspas`;
+process.env.BFF_GPASS_API_TOKEN = '22222xx22222';
 
 process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
