@@ -21,6 +21,7 @@ import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 
+import cors from 'cors';
 import express, {
   ErrorRequestHandler,
   NextFunction,
@@ -30,7 +31,6 @@ import express, {
 } from 'express';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
-import cors from 'cors';
 import {
   BFF_BASE_PATH,
   BFF_PORT,
@@ -153,7 +153,7 @@ if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
 }
 ///// [DEVELOPENT ONLY] /////
-if (IS_OT) {
+if (IS_DEVELOPMENT) {
   app.use(`${BFF_BASE_PATH + BffEndpoints.API_RELAY}`, relayDevRouter);
 }
 
