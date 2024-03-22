@@ -242,9 +242,10 @@ export async function requestData<T>(
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
     const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
+    const errorMessageBasic = error.toString();
     const errorMessage = error?.response?.data
-      ? JSON.stringify(error.response.data)
-      : error.toString();
+      ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
+      : errorMessageBasic;
 
     const capturedId = shouldCaptureMessage
       ? Sentry.captureMessage(
