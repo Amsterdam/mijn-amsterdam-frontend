@@ -36,7 +36,7 @@ export async function fetchClientNummer(
     burgerservicenummer: authProfileAndToken.profile.id,
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
-  const clientNummerResponse = requestData<string | null>(
+  const clientNummerResponse = requestData<string>(
     {
       ...dataRequestConfig,
       data: postData,

@@ -96,16 +96,6 @@ export async function fetchStadspassen(
     return administratienummerResponse;
   }
 
-  if (
-    administratienummerResponse.status === 'OK' &&
-    typeof administratienummerResponse.content !== 'string'
-  ) {
-    return apiSuccessResult({
-      stadspassen: [],
-      administratienummer: null,
-    });
-  }
-
   const administratienummer = administratienummerResponse.content as string;
 
   const headers = getHeaders(administratienummer);
@@ -123,6 +113,12 @@ export async function fetchStadspassen(
   );
 
   if (stadspasHoudersResponse.status === 'ERROR') {
+    if (stadspasHoudersResponse.code === '401') {
+      return apiSuccessResult({
+        stadspassen: [],
+        administratienummer: null,
+      });
+    }
     return stadspasHoudersResponse;
   }
 

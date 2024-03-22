@@ -242,7 +242,9 @@ export async function requestData<T>(
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
     const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
-    const errorMessage = error?.response?.data?.message || error.toString();
+    const errorMessage = error?.response?.data
+      ? JSON.stringify(error.response.data)
+      : error.toString();
 
     const capturedId = shouldCaptureMessage
       ? Sentry.captureMessage(
@@ -270,7 +272,12 @@ export async function requestData<T>(
         });
 
     const sentryId = !IS_TAP ? null : capturedId;
-    const responseData = apiErrorResult(errorMessage, null, sentryId);
+    const responseData = apiErrorResult(
+      errorMessage,
+      null,
+      sentryId,
+      error.code ?? error?.response?.code
+    );
 
     if (cache.get(cacheKey)) {
       // Resolve with error
@@ -289,8 +296,8 @@ export function findApiByRequestUrl(
 ) {
   const api = apiUrlEntries.find(([_apiName, url]) => {
     if (typeof url === 'object') {
-      return Object.entries(url as object).some(
-        ([_profileType, url]) => requestUrl?.startsWith(url)
+      return Object.entries(url as object).some(([_profileType, url]) =>
+        requestUrl?.startsWith(url)
       );
     }
     return requestUrl?.startsWith(url);
