@@ -133,104 +133,104 @@ describe('wpi/app-service', () => {
     expect(step3.description).toBe(`Uw aanvraag is toekenning`);
   });
 
-  // test('fetchRequestProcess-with-error', async () => {
-  //   remoteApi
-  //     .get('/wpi/uitkering-en-stadspas/aanvragen')
-  //     .reply(500, { content: null });
+  test('fetchRequestProcess-with-error', async () => {
+    remoteApi
+      .get('/wpi/uitkering-en-stadspas/aanvragen')
+      .reply(500, { content: null });
 
-  //   const fetchConfig: FetchConfig = {
-  //     apiConfigName: 'WPI_AANVRAGEN',
-  //     filterResponse: vi.fn((response) => response.content),
-  //     requestCacheKey: 'test-fetch-request-process',
-  //   };
+    const fetchConfig: FetchConfig = {
+      apiConfigName: 'WPI_AANVRAGEN',
+      filterResponse: vi.fn((response) => response.content),
+      requestCacheKey: 'test-fetch-request-process',
+    };
 
-  //   const getLabelsMock = vi.fn(
-  //     (requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
-  //   );
+    const getLabelsMock = vi.fn(
+      (requestProcess: WpiRequestProcess) => FakeRequestProcessLabels
+    );
 
-  //   const response = await fetchRequestProcess(
-  //     requestID,
-  //     authProfileAndToken,
-  //     getLabelsMock,
-  //     fetchConfig
-  //   );
+    const response = await fetchRequestProcess(
+      requestID,
+      authProfileAndToken,
+      getLabelsMock,
+      fetchConfig
+    );
 
-  //   expect(response.status).toBe('ERROR');
-  //   expect((response as ApiErrorResponse<any>).message).toBe(
-  //     'Error: Request failed with status code 500'
-  //   );
-  // });
+    expect(response.status).toBe('ERROR');
+    expect((response as ApiErrorResponse<any>).message).toBe(
+      'AxiosError: Request failed with status code 500'
+    );
+  });
 
-  // test('fetchBijstandsuitkering', async () => {
-  //   const contentBijstandsuitkering = jsonCopy(content[0]);
+  test('fetchBijstandsuitkering', async () => {
+    const contentBijstandsuitkering = jsonCopy(content[0]);
 
-  //   contentBijstandsuitkering.about = 'Bijstandsuitkering';
-  //   contentBijstandsuitkering.statusId = 'herstelTermijn';
-  //   contentBijstandsuitkering.decision = null;
+    contentBijstandsuitkering.about = 'Bijstandsuitkering';
+    contentBijstandsuitkering.statusId = 'herstelTermijn';
+    contentBijstandsuitkering.decision = null;
 
-  //   delete contentBijstandsuitkering.steps[2].decision;
+    delete contentBijstandsuitkering.steps[2].decision;
 
-  //   contentBijstandsuitkering.steps[0].id = 'aanvraag';
-  //   contentBijstandsuitkering.steps[0].status = 'Aanvraag';
+    contentBijstandsuitkering.steps[0].id = 'aanvraag';
+    contentBijstandsuitkering.steps[0].status = 'Aanvraag';
 
-  //   contentBijstandsuitkering.steps[1].id = 'inBehandeling';
-  //   contentBijstandsuitkering.steps[1].status = 'In behandeling';
+    contentBijstandsuitkering.steps[1].id = 'inBehandeling';
+    contentBijstandsuitkering.steps[1].status = 'In behandeling';
 
-  //   contentBijstandsuitkering.steps[2].id = 'herstelTermijn';
-  //   contentBijstandsuitkering.steps[2].status = 'Meer informatie';
-  //   contentBijstandsuitkering.steps[2].dateDecisionExpected =
-  //     '2022-05-15T15:05:52+02:00';
-  //   contentBijstandsuitkering.steps[2].dateUserFeedbackExpected =
-  //     '2022-04-27T15:05:52+02:00';
+    contentBijstandsuitkering.steps[2].id = 'herstelTermijn';
+    contentBijstandsuitkering.steps[2].status = 'Meer informatie';
+    contentBijstandsuitkering.steps[2].dateDecisionExpected =
+      '2022-05-15T15:05:52+02:00';
+    contentBijstandsuitkering.steps[2].dateUserFeedbackExpected =
+      '2022-04-27T15:05:52+02:00';
 
-  //   remoteApi.get('/wpi/uitkering-en-stadspas/aanvragen').reply(200, {
-  //     status: 'OK',
-  //     content: [contentBijstandsuitkering, { about: 'Stadspas' }, null],
-  //   });
+    remoteApi.get('/wpi/uitkering-en-stadspas/aanvragen').reply(200, {
+      status: 'OK',
+      content: [contentBijstandsuitkering, { about: 'Stadspas' }, null],
+    });
 
-  //   const response = await fetchBijstandsuitkering(requestID, {
-  //     profile: { authMethod: 'digid', profileType: 'private' },
-  //     token: 'xxxxx',
-  //   });
+    const response = await fetchBijstandsuitkering(requestID, {
+      profile: { authMethod: 'digid', profileType: 'private' },
+      token: 'xxxxx',
+    });
 
-  //   expect(response.status).toBe('OK');
-  //   expect(response.content?.length).toBe(1);
+    expect(response.status).toBe('OK');
+    expect(response.content?.length).toBe(1);
 
-  //   const [statusLine] = response.content || [];
-  //   expect(statusLine.statusId).toBe('herstelTermijn');
-  //   expect(statusLine.link).toMatchInlineSnapshot(`
-  //     Object {
-  //       "title": "Bekijk uw aanvraag",
-  //       "to": "/inkomen/bijstandsuitkering/xxxxxxxfxaxkxex1xx",
-  //     }
-  //   `);
+    const [statusLine] = response.content || [];
+    expect(statusLine.statusId).toBe('herstelTermijn');
+    expect(statusLine.link).toMatchInlineSnapshot(`
+      {
+        "title": "Bekijk uw aanvraag",
+        "to": "/inkomen/bijstandsuitkering/xxxxxxxfxaxkxex1xx",
+      }
+    `);
 
-  //   const [step1, step2, step3] = statusLine.steps;
-  //   expect(step1.status).toBe('Aanvraag');
-  //   expect(step1.isChecked).toBe(true);
-  //   expect(step1.isActive).toBe(false);
+    const [step1, step2, step3] = statusLine.steps;
+    expect(step1.status).toBe('Aanvraag');
+    expect(step1.isChecked).toBe(true);
+    expect(step1.isActive).toBe(false);
 
-  //   expect(step2.status).toBe('In behandeling');
-  //   expect(step2.isChecked).toBe(true);
-  //   expect(step2.isActive).toBe(false);
+    expect(step2.status).toBe('In behandeling');
+    expect(step2.isChecked).toBe(true);
+    expect(step2.isActive).toBe(false);
 
-  //   expect(step3.status).toBe('Meer informatie');
-  //   expect(step3.isChecked).toBe(true);
-  //   expect(step3.isActive).toBe(true);
-  //   expect(step3.description).toMatchInlineSnapshot(`
-  //     "
-  //               <p>
-  //                 Wij hebben meer informatie en tijd nodig om uw aanvraag te
-  //                 verwerken. Bekijk de brief voor meer details. U moet de extra
-  //                 informatie vóór 27 april 2022 opsturen. Dan ontvangt u
-  //                 vóór 15 mei 2022 ons besluit.
-  //               </p>
-  //               <p>
-  //                 Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
-  //                 in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
-  //                 wij verder kunnen met de behandeling van uw aanvraag.
-  //               </p>
-  //             "
-  //   `);
-  // });
+    expect(step3.status).toBe('Meer informatie');
+    expect(step3.isChecked).toBe(true);
+    expect(step3.isActive).toBe(true);
+    expect(step3.description).toMatchInlineSnapshot(`
+      "
+                <p>
+                  Wij hebben meer informatie en tijd nodig om uw aanvraag te
+                  verwerken. Bekijk de brief voor meer details. U moet de extra
+                  informatie vóór 27 april 2022 opsturen. Dan ontvangt u
+                  vóór 15 mei 2022 ons besluit.
+                </p>
+                <p>
+                  Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
+                  in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
+                  wij verder kunnen met de behandeling van uw aanvraag.
+                </p>
+              "
+    `);
+  });
 });

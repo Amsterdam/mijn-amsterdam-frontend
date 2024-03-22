@@ -45,9 +45,7 @@ export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
   const stadspassen = appState.STADSPAS?.content?.stadspassen ?? [];
-  return stadspassen.some(
-    (stadspas: Stadspas) => stadspas.passType === 'ouder'
-  );
+  return !!stadspassen.length;
 };
 
 export const hasValidStadspasRequest: TipsPredicateFN = (

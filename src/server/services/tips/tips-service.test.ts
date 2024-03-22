@@ -3,7 +3,6 @@ import { CaseType } from '../../../universal/types/vergunningen';
 import BRP from '../../mock-data/json/brp.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
-import STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import {
   createTipsFromServiceResults,
   prefixTipNotification,
@@ -103,7 +102,7 @@ describe('createTipsFromServiceResults', () => {
         STADSPAS: {
           content: {
             aanvragen: [],
-            ...STADSPAS.content,
+            stadspassen: [{ foo: 'bar' }],
           },
           status: 'OK',
         },
