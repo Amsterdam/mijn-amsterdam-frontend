@@ -20,10 +20,6 @@ import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
   title: '',
-  dateStart: 'Begin',
-  dateEnd: 'Einde',
-  historic: 'hist',
-  isActual: 'actueel',
 };
 
 export default function Zorg() {

@@ -40,9 +40,6 @@ export function transformVoorzieningenForFrontend(
         dateDescision: voorziening.datumBesluit,
         dateStart: voorziening.datumIngangGeldigheid,
         dateEnd: voorziening.datumEindeGeldigheid,
-        historic: isDateInPast(voorziening.datumEindeGeldigheid, today)
-          ? 'ja'
-          : 'nee',
       };
 
       voorzieningenFrontend.push(voorzieninFrontend);

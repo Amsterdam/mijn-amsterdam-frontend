@@ -156,5 +156,4 @@ export interface WMOVoorzieningFrontend {
   dateDescision: string;
   dateStart: string;
   dateEnd: string;
-  historic: string;
 }

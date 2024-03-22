@@ -213,8 +213,6 @@ export async function fetchDocument(
     documentidentificatie: documentId,
   };
 
-  console.log(documentIdEncrpted, documentId, postBody);
-
   const dataRequestConfig = getApiConfig('ZORGNED');
   const url = `${dataRequestConfig.url}/document`;
 
@@ -224,7 +222,6 @@ export async function fetchDocument(
       url,
       data: postBody,
       transformResponse: (documentResponseData) => {
-        console.log('documentResponseData', documentResponseData);
         if (documentResponseData) {
           const data = Buffer.from(documentResponseData.inhoud, 'base64');
           return {
