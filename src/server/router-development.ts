@@ -138,7 +138,7 @@ relayDevRouter.get(
     RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
     RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
     RelayPathsAllowed.BEZWAREN_DOCUMENT,
-    // RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
+    RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
   ],
   (req, res, next) => {
     return res.sendFile(path.join(__dirname, 'mock-data/document.pdf'));
