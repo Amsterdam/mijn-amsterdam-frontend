@@ -197,7 +197,7 @@ export function getStatusLineItems(voorziening: WMOVoorziening, today: Date) {
             : [],
       };
 
-      if (index === 0 && stepData.documenten?.length === 0) {
+      if (index === 0 && !stepData.documenten?.length) {
         stepData.altDocumentContent = `<p>
             <strong>
               ${
