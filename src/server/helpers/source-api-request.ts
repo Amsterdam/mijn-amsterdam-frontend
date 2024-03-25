@@ -273,11 +273,12 @@ export async function requestData<T>(
         });
 
     const sentryId = !IS_TAP ? null : capturedId;
+    const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(
       errorMessage,
       null,
       sentryId,
-      error.code ?? error?.response?.code
+      statusCode ? `${statusCode}` : undefined
     );
 
     if (cache.get(cacheKey)) {

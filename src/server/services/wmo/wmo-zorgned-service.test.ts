@@ -8,7 +8,7 @@ import WMO from '../../mock-data/json/wmo.json';
 import {
   WMOSourceResponseData,
   ZORGNED_GEMEENTE_CODE,
-} from './config-and-types';
+} from './wmo-config-and-types';
 import {
   fetchDocument,
   fetchVoorzieningen,
@@ -157,7 +157,7 @@ describe('wmo-zorgned-service', () => {
   });
 
   it('should fetch voorzieningen', async () => {
-    remoteApi.post('/zorgned/ojzd/aanvragen').reply(200, []);
+    remoteApi.post('/zorgned/aanvragen').reply(200, []);
 
     const result = await fetchVoorzieningen(
       mocks.mockRequestID,
@@ -166,7 +166,7 @@ describe('wmo-zorgned-service', () => {
 
     expect(requestData).toHaveBeenCalledWith(
       {
-        url: `${remoteApiHost}/zorgned/ojzd/aanvragen`,
+        url: `${remoteApiHost}/zorgned/aanvragen`,
         data: {
           burgerservicenummer: mocks.mockAuthProfileAndToken.profile.id,
           gemeentecode: ZORGNED_GEMEENTE_CODE,
@@ -194,7 +194,7 @@ describe('wmo-zorgned-service', () => {
   });
 
   it('should fetch document successfully', async () => {
-    remoteApi.post('/zorgned/ojzd/document').reply(200, {
+    remoteApi.post('/zorgned/document').reply(200, {
       inhoud: 'Zm9vLWJhcg==',
       omschrijving: 'Naam documentje',
       mimetype: 'foo/bar',
@@ -208,7 +208,7 @@ describe('wmo-zorgned-service', () => {
 
     expect(requestData).toHaveBeenCalledWith(
       {
-        url: `${remoteApiHost}/zorgned/ojzd/document`,
+        url: `${remoteApiHost}/zorgned/document`,
         data: {
           burgerservicenummer: mocks.mockAuthProfileAndToken.profile.id,
           gemeentecode: ZORGNED_GEMEENTE_CODE,

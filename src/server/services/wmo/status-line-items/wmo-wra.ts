@@ -1,10 +1,10 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WMOStatusLineItemFormatterConfig } from '../config-and-types';
+import { WMOStatusLineItemFormatterConfig } from '../wmo-config-and-types';
 import {
   hasHistoricDate,
   isServiceDeliveryStarted,
   isServiceDeliveryActive,
-} from './helpers';
+} from './wmo-helpers';
 
 export const WRA: WMOStatusLineItemFormatterConfig[] = [
   {

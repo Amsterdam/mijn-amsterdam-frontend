@@ -6,8 +6,8 @@ import {
   ProductSoortCode,
   WMOStatusLineItemFormatterConfig,
   WMOVoorziening,
-} from '../config-and-types';
-import { parseLabelContent } from './helpers';
+} from '../wmo-config-and-types';
+import { parseLabelContent } from './wmo-helpers';
 import { AOV } from './wmo-aov';
 import { diensten } from './wmo-diensten';
 import { hulpmiddelen } from './wmo-hulpmiddelen';

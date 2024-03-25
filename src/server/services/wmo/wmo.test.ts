@@ -21,7 +21,7 @@ describe('Transform api items', () => {
   });
 
   test('fetchWmo', async () => {
-    remoteApi.post('/zorgned/ojzd/aanvragen').reply(200, WMO);
+    remoteApi.post('/zorgned/aanvragen').reply(200, WMO);
 
     expect(
       await fetchWmo('xxxx', {

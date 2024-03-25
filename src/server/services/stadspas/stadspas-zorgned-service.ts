@@ -1,7 +1,7 @@
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { ZORGNED_GEMEENTE_CODE } from '../wmo/config-and-types';
+import { ZORGNED_GEMEENTE_CODE } from '../wmo/wmo-config-and-types';
 
 function volledigClientnummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -18,7 +18,7 @@ interface ZorgnedPersoonsgegevensNAWResponse {
 function transformZorgnedClientNummerResponse(
   zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
 ) {
-  if (zorgnedResponseData?.persoon?.clientidentificatie !== null) {
+  if (zorgnedResponseData?.persoon?.clientidentificatie) {
     return volledigClientnummer(
       zorgnedResponseData.persoon.clientidentificatie
     );

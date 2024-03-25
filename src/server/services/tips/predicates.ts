@@ -4,7 +4,7 @@ import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { Stadspas } from '../stadspas/stadspas-types';
 import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
-import { WMOVoorzieningFrontend } from '../wmo/config-and-types';
+import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 import type { TipsPredicateFN } from './tip-types';
 

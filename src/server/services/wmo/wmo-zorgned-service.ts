@@ -21,7 +21,7 @@ import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedDocument,
   ZorgnedDocumentData,
-} from './config-and-types';
+} from './wmo-config-and-types';
 
 function isProductWithDelivery(
   wmoProduct: Pick<WMOVoorziening, 'productsoortCode' | 'leveringsVorm'>

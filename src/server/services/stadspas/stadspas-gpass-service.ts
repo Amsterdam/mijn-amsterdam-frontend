@@ -1,6 +1,10 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
-import { apiErrorResult, apiSuccessResult } from '../../../universal/helpers';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { LinkProps } from '../../../universal/types/App.types';
 import { BffEndpoints, getApiConfig } from '../../config';
@@ -15,6 +19,7 @@ import {
   StadspasTransactiesResponse,
   StadspasTransactie,
   StadspasTransaction,
+  StadspasHouderPasSource,
 } from './stadspas-types';
 import { fetchClientNummer } from './stadspas-zorgned-service';
 import {
@@ -41,12 +46,12 @@ function formatBudget(
   administratienummer: string,
   pasnummer: string
 ) {
-  const [transactionKeyEncrypted] = encrypt(
+  const [transactionsKey] = encrypt(
     `${budget.code}:${administratienummer}:${pasnummer}`
   );
 
   const urlTransactions = generatePath(BffEndpoints.STADSPAS_TRANSACTIONS, {
-    key: transactionKeyEncrypted,
+    transactionsKey,
   });
 
   return {
@@ -89,8 +94,8 @@ export async function fetchStadspassen(
 ) {
   const dataRequestConfig = getApiConfig('GPASS');
 
-  const GPASS_ENDPOINT_PAS = `${dataRequestConfig.url}/rest/sales/v1/pas/`;
   const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v1/pashouder`;
+  const GPASS_ENDPOINT_PAS = `${dataRequestConfig.url}/rest/sales/v1/pas`;
 
   const administratienummerResponse = await fetchClientNummer(
     requestID,
@@ -108,9 +113,7 @@ export async function fetchStadspassen(
 
   const headers = getHeaders(administratienummer);
 
-  const stadspasHoudersResponse = await requestData<
-    StadspasPasHouderResponse[]
-  >(
+  const stadspasHoudersResponse = await requestData<StadspasPasHouderResponse>(
     {
       ...dataRequestConfig,
       url: GPASS_ENDPOINT_PASHOUDER,
@@ -130,43 +133,43 @@ export async function fetchStadspassen(
     return stadspasHoudersResponse;
   }
 
-  const pashouders: StadspasHouderSource[] =
-    stadspasHoudersResponse.content?.flatMap((pashouder) => {
-      return [pashouder, ...(pashouder.sub_pashouders ?? [])];
-    }) ?? [];
+  const pashouder = stadspasHoudersResponse.content;
+  const pashouders = [
+    pashouder,
+    ...(stadspasHoudersResponse.content?.sub_pashouders?.filter(Boolean) ?? []),
+  ].filter(
+    (p: StadspasHouderSource | null): p is StadspasHouderSource => p !== null
+  );
 
-  try {
-    const stadspasResponses = await Promise.all(
-      pashouders.map((pashouder) => {
-        return requestData<Stadspas[]>(
-          {
-            ...dataRequestConfig,
-            url: GPASS_ENDPOINT_PAS,
-            transformResponse: (stadspas) =>
-              transformStadspasResponse(
-                stadspas,
-                pashouder,
-                administratienummer
-              ),
-            headers,
-          },
-          requestID,
-          authProfileAndToken
-        );
-      })
+  const pasRequests = [];
+
+  for (const pashouder of pashouders) {
+    for (const pas of pashouder.passen.filter((pas) => pas.actief)) {
+      const url = `${GPASS_ENDPOINT_PAS}/${pas.pasnummer}`;
+      const request = requestData<Stadspas[]>(
+        {
+          ...dataRequestConfig,
+          url,
+          transformResponse: (stadspas) =>
+            transformStadspasResponse(stadspas, pashouder, administratienummer),
+          headers,
+        },
+        requestID,
+        authProfileAndToken
+      );
+      pasRequests.push(request);
+    }
+  }
+
+  const stadspasResponses = await Promise.allSettled(pasRequests);
+  const stadspassen = stadspasResponses
+    .map((stadspasResponse) => getSettledResult(stadspasResponse).content)
+    .flat()
+    .filter(
+      (stadspas: Stadspas | null): stadspas is Stadspas => stadspas !== null
     );
 
-    const stadspassen = stadspasResponses
-      .map((stadspasResponse) => stadspasResponse.content)
-      .flat()
-      .filter(
-        (stadspas: Stadspas | null): stadspas is Stadspas => stadspas !== null
-      );
-
-    return apiSuccessResult({ stadspassen, administratienummer });
-  } catch (error: unknown) {
-    return apiErrorResult((error as Error).message, null);
-  }
+  return apiSuccessResult({ stadspassen, administratienummer });
 }
 
 function transformGpassTransactionsResponse(
