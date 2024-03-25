@@ -4,6 +4,9 @@ import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { Stadspas } from './stadspas-types';
 
+export const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
+export const GPASS_BUDGET_ONLY_FOR_CHILDREN = true;
+
 const BUDGET_NOTIFICATION_DATE_START = `${new Date().getFullYear()}-05-01`;
 const BUDGET_NOTIFICATION_DATE_END = `${new Date().getFullYear()}-07-31`;
 const BUDGET_NOTIFICATION_BALANCE_THRESHOLD = 10;

@@ -57,10 +57,7 @@ export default function CStadspas() {
             Bekijk saldo
           </LinkdInline>
         ),
-        owner:
-          stadspas.passType === 'kind'
-            ? `${stadspas.owner} &nbsp;&nbsp;(${stadspas.passType})`
-            : stadspas.owner,
+        owner: stadspas.owner,
       };
     });
   }, [STADSPAS.content]);

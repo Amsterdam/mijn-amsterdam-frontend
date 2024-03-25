@@ -1,7 +1,9 @@
+import { generatePath } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config';
 import { apiErrorResult, apiSuccessResult } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { LinkProps } from '../../../universal/types/App.types';
-import { getApiConfig } from '../../config';
+import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -15,10 +17,10 @@ import {
   StadspasTransaction,
 } from './stadspas-types';
 import { fetchClientNummer } from './stadspas-zorgned-service';
-
-const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
-const STADSPAS_TRANSACTIONS_PATH = 'your_transactions_path';
-const GPASS_BUDGET_ONLY_FOR_CHILDREN = true;
+import {
+  GPASS_API_TOKEN,
+  GPASS_BUDGET_ONLY_FOR_CHILDREN,
+} from './stadspas-config-and-content';
 
 function getHeaders(administratienummer: string) {
   return {
@@ -39,10 +41,13 @@ function formatBudget(
   administratienummer: string,
   pasnummer: string
 ) {
-  const transactionKeyEncrypted = encrypt(
+  const [transactionKeyEncrypted] = encrypt(
     `${budget.code}:${administratienummer}:${pasnummer}`
   );
-  const urlTransactions = STADSPAS_TRANSACTIONS_PATH + transactionKeyEncrypted;
+
+  const urlTransactions = generatePath(BffEndpoints.STADSPAS_TRANSACTIONS, {
+    key: transactionKeyEncrypted,
+  });
 
   return {
     description: budget.omschrijving,

@@ -15,7 +15,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Gebr Koenen B.V.",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
-    "titel": "woonruimteaanpassing",
+    "titel": "woonruimteaanpassing met doc 1",
   },
   {
     "datumBeginLevering": "",
@@ -45,7 +45,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Gebr Koenen B.V.",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
-    "titel": "woonruimteaanpassing",
+    "titel": "woonruimteaanpassing met doc 2",
   },
   {
     "datumBeginLevering": "2017-06-01",
@@ -75,7 +75,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Gebr Koenen B.V.",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
-    "titel": "woonruimteaanpassing",
+    "titel": "woonruimteaanpassing 3",
   },
   {
     "datumBeginLevering": "2017-06-01",
@@ -180,7 +180,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Welzorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
-    "titel": "woonruimteaanpassing",
+    "titel": "woonruimteaanpassing met doc 4",
   },
   {
     "datumBeginLevering": "2018-11-28",
@@ -523,7 +523,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-03-14T16:12:12",
         "id": "mock-encrypted-document-id",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -545,7 +545,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-03-14T16:11:29",
         "id": "mock-encrypted-document-id",
-        "title": "Opstellen beschikking wijkzorg Hbh",
+        "title": "Besluit",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -567,7 +567,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-04-19T13:16:44",
         "id": "mock-encrypted-document-id",
-        "title": "Opstellen beschikking grote WRA",
+        "title": "Besluit",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -604,7 +604,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-10-19T14:27:42.643",
         "id": "mock-encrypted-document-id",
-        "title": "AOV Beschikking positief",
+        "title": "Besluit",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -626,7 +626,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2023-03-02T11:17:08.293",
         "id": "mock-encrypted-document-id",
-        "title": "New Toekenning hulpmiddel zonder keuze",
+        "title": "Besluit",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -663,7 +663,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2023-03-16T15:56:11.41",
         "id": "mock-encrypted-document-id",
-        "title": "Opstellen beschikking wijkzorg Hbh",
+        "title": "Besluit",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],

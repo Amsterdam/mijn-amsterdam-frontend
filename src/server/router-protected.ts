@@ -23,6 +23,7 @@ import {
 } from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchDocument } from './services/wmo/wmo-zorgned-service';
+import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 
 export const router = express.Router();
 
@@ -84,7 +85,7 @@ router.get(
 
 // NOTE: Fix for legacy relayApi. WMONED api is archived and is not used anymore for downloads.
 router.get(
-  `${BffEndpoints.API_RELAY}/wmoned/document/:id`,
+  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response, next: NextFunction) => {
     const authProfileAndToken = await getAuth(req);
     const documentResponse = await fetchDocument(
@@ -269,6 +270,24 @@ router.get(
       res.locals.requestID,
       authProfileAndToken,
       req.params.dossierNummerUrlParam
+    );
+
+    if (response.status === 'ERROR') {
+      res.status(500);
+    }
+
+    return res.send(response);
+  }
+);
+
+router.get(
+  BffEndpoints.STADSPAS_TRANSACTIONS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const response = await fetchTransacties(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.transactionsKey
     );
 
     if (response.status === 'ERROR') {

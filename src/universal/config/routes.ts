@@ -10,7 +10,7 @@ export const AppRoutes: Record<string, string> = {
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
   'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
-  'STADSPAS/SALDO': '/stadspas/saldo/:id',
+  'STADSPAS/SALDO': '/stadspas/saldo-en-transacties/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',

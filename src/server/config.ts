@@ -383,6 +383,12 @@ export const BffEndpoints = {
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
+  // Stadspas
+  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+
+  // WMO / Zorgned
+  WMO_DOCUMENT_DOWNLOAD: `/relay/wmoned/document/:id`,
+
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',

@@ -1,32 +1,30 @@
 import classnames from 'classnames';
-
-import styles from './Inkomen.module.scss';
-import { PageHeading, Alert, Table } from '@amsterdam/design-system-react';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import {
-  defaultDateFormat,
-  dateSort,
-  isLoading,
-  isError,
-} from '../../../universal/helpers';
+import { dateSort, isError, isLoading } from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
-  OverviewPage,
+  Alert,
   ChapterIcon,
-  PageContent,
   Linkd,
   MaintenanceNotifications,
+  OverviewPage,
+  PageContent,
+  PageHeading,
   SectionCollapsible,
+  Table,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import {
-  specificationsTableDisplayProps,
   annualStatementsTableDisplayProps,
-} from '../InkomenSpecificaties/InkomenSpecificaties';
+  specificationsTableDisplayProps,
+} from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
+import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
+import styles from './Inkomen.module.scss';
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',

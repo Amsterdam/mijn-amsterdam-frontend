@@ -93,11 +93,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2023-03-16",
           "description": "
               <p>
@@ -254,11 +249,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2023-03-01",
           "description": "
             <p>
@@ -336,11 +326,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2022-10-20",
           "description": "
             <p>
@@ -447,11 +432,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2022-04-15",
           "description": "
             <p>
@@ -531,11 +511,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2022-03-14",
           "description": "
               <p>
@@ -614,11 +589,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2022-03-14",
           "description": "
               <p>
@@ -2370,7 +2340,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2018-12-27",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing per 24 oktober 2018.
+              U hebt recht op een woonruimteaanpassing met doc 4 per 24 oktober 2018.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2424,7 +2394,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Welzorg",
-      "title": "Woonruimteaanpassing",
+      "title": "Woonruimteaanpassing met doc 4",
     },
     {
       "dateDescision": "2018-04-25",
@@ -2902,7 +2872,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2014-09-11",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing per 08 september 2014.
+              U hebt recht op een woonruimteaanpassing 3 per 08 september 2014.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2956,7 +2926,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Gebr Koenen B.V.",
-      "title": "Woonruimteaanpassing",
+      "title": "Woonruimteaanpassing 3",
     },
     {
       "dateDescision": "2013-12-09",
@@ -2979,7 +2949,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2013-12-09",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing per 05 december 2013.
+              U hebt recht op een woonruimteaanpassing met doc 2 per 05 december 2013.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -3033,7 +3003,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Gebr Koenen B.V.",
-      "title": "Woonruimteaanpassing",
+      "title": "Woonruimteaanpassing met doc 2",
     },
     {
       "dateDescision": "2013-05-17",
@@ -3056,7 +3026,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2013-05-17",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing per 06 mei 2013.
+              U hebt recht op een woonruimteaanpassing met doc 1 per 06 mei 2013.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -3110,7 +3080,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Gebr Koenen B.V.",
-      "title": "Woonruimteaanpassing",
+      "title": "Woonruimteaanpassing met doc 1",
     },
     {
       "dateDescision": "2012-10-05",

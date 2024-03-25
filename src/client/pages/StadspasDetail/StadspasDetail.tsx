@@ -139,7 +139,7 @@ function CStadspasBudget({
 
   const [api] = useDataApi<ApiResponse<StadspasTransaction[]>>(
     {
-      url: relayApiUrl(`${urlTransactions}`),
+      url: urlTransactions,
     },
     apiPristineResult([])
   );

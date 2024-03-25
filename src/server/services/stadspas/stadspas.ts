@@ -8,7 +8,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { getBudgetNotifications } from './stadspas-content';
+import { getBudgetNotifications } from './stadspas-config-and-content';
 import { fetchStadspassen } from './stadspas-gpass-service';
 import { Stadspas, StadspasResponseData } from './stadspas-types';
 

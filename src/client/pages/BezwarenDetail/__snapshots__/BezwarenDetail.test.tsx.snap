@@ -554,6 +554,16 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 29 maart 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -587,6 +597,16 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 30 maart 2023
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -615,6 +635,16 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
