@@ -1,7 +1,7 @@
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { ZORGNED_GEMEENTE_CODE } from '../wmo/config';
+import { ZORGNED_GEMEENTE_CODE } from '../wmo/config-and-types';
 
 function volledigClientnummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');

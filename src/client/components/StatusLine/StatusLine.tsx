@@ -308,7 +308,7 @@ export default function StatusLine({
                 status={item.status}
               />
 
-              <StatusLinePanelDescription content={item.description} />
+              <StatusLinePanelDescription content={item.description ?? ''} />
 
               <StatusLinePanelDocuments
                 documents={item.documents}

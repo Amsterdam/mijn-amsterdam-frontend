@@ -1,5 +1,5 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WMOStatusLineItemFormatterConfig } from '../config';
+import { WMOStatusLineItemFormatterConfig } from '../config-and-types';
 import {
   hasFutureDate,
   hasHistoricDate,

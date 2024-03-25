@@ -5,7 +5,10 @@ import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import * as request from '../../helpers/source-api-request';
 import WMO from '../../mock-data/json/wmo.json';
-import { WMOSourceResponseData, ZORGNED_GEMEENTE_CODE } from './config';
+import {
+  WMOSourceResponseData,
+  ZORGNED_GEMEENTE_CODE,
+} from './config-and-types';
 import {
   fetchDocument,
   fetchVoorzieningen,

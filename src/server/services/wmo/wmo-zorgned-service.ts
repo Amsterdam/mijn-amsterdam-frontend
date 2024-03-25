@@ -1,5 +1,5 @@
 import { FeatureToggle } from '../../../universal/config';
-import { dateSort, hash, isDateInPast } from '../../../universal/helpers';
+import { hash, isDateInPast } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument } from '../../../universal/types';
 import { getApiConfig } from '../../config';
@@ -16,13 +16,12 @@ import {
   ProductSoortCode,
   REGELING_IDENTIFICATIE,
   ToegewezenProduct,
-  WMOAanvraag,
   WMOSourceResponseData,
   WMOVoorziening,
   ZORGNED_GEMEENTE_CODE,
   ZorgnedDocument,
   ZorgnedDocumentData,
-} from './config';
+} from './config-and-types';
 
 function isProductWithDelivery(
   wmoProduct: Pick<WMOVoorziening, 'productsoortCode' | 'leveringsVorm'>
@@ -40,15 +39,19 @@ function isProductWithDelivery(
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
-
-  for (const document of documenten) {
+  const definitieveDocumenten = documenten.filter(
+    (document) => !!document.datumDefinitief
+  );
+  for (const document of definitieveDocumenten) {
     const [idEncrypted] = encrypt(
       document.documentidentificatie,
       process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
     );
+    // TODO: Change if we get proper document names from Zorgned api
+    const docTitle = 'Besluit'; //document.omschrijving;
     const doc = {
       id: idEncrypted,
-      title: document.omschrijving,
+      title: docTitle,
       url: `/wmoned/document/${idEncrypted}`, // NOTE: Works with legacy relayApiUrl added in front-end. TODO: Remove relayApiUrl() concept.
       datePublished: document.datumDefinitief,
     };

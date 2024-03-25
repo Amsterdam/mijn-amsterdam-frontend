@@ -1,30 +1,32 @@
 import classnames from 'classnames';
+
+import styles from './Inkomen.module.scss';
+import { PageHeading, Alert, Table } from '@amsterdam/design-system-react';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { dateSort, isError, isLoading } from '../../../universal/helpers';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  defaultDateFormat,
+  dateSort,
+  isLoading,
+  isError,
+} from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
-  Alert,
+  OverviewPage,
   ChapterIcon,
+  PageContent,
   Linkd,
   MaintenanceNotifications,
-  OverviewPage,
-  PageContent,
-  PageHeading,
   SectionCollapsible,
-  Table,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks';
 import {
-  annualStatementsTableDisplayProps,
   specificationsTableDisplayProps,
-} from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
-import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
+  annualStatementsTableDisplayProps,
+} from '../InkomenSpecificaties/InkomenSpecificaties';
 import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
-import styles from './Inkomen.module.scss';
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',
@@ -97,8 +99,8 @@ export default function Inkomen() {
           status: isBbzHistoric
             ? '-'
             : isBbz
-            ? 'In behandeling'
-            : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
+              ? 'In behandeling'
+              : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
         });
       })
       .sort(dateSort('datePublished', 'desc'));

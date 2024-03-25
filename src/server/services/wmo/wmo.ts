@@ -6,7 +6,7 @@ import {
   dateSort,
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { WMOVoorziening, WMOVoorzieningFrontend } from './config';
+import { WMOVoorziening, WMOVoorzieningFrontend } from './config-and-types';
 import { getStatusLineItems } from './status-line-items/wmo-status-line-items';
 import { fetchVoorzieningen } from './wmo-zorgned-service';
 

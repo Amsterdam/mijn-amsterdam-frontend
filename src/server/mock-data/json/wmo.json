@@ -28,7 +28,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing"
+                "omschrijving": "woonruimteaanpassing met doc 1"
               },
               "productCategorie": {
                 "code": "13",
@@ -190,7 +190,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing"
+                "omschrijving": "woonruimteaanpassing met doc 2"
               },
               "productCategorie": {
                 "code": "13",
@@ -413,7 +413,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing"
+                "omschrijving": "woonruimteaanpassing 3"
               },
               "productCategorie": {
                 "code": "13",
@@ -1095,7 +1095,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing"
+                "omschrijving": "woonruimteaanpassing met doc 4"
               },
               "productCategorie": {
                 "code": "13",

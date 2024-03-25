@@ -71,8 +71,8 @@ export type BeschikkingsResultaat = 'toegewezen' | string;
 
 export interface ToegewezenProduct {
   actueel: boolean;
-  datumEindeGeldigheid: string | null;
-  datumIngangGeldigheid: string | null;
+  datumEindeGeldigheid: string;
+  datumIngangGeldigheid: string;
   toewijzingen: Toewijzing[];
   leveringsvorm: LeveringsVorm;
   leverancier: Leverancier;
@@ -120,8 +120,8 @@ export interface WMOSourceResponseData {
 export interface WMOVoorziening {
   id: string;
   datumBesluit: string;
-  datumEindeGeldigheid: string | null;
-  datumIngangGeldigheid: string | null;
+  datumEindeGeldigheid: string;
+  datumIngangGeldigheid: string;
   documenten: GenericDocument[];
   isActueel: boolean;
   leverancier: string;

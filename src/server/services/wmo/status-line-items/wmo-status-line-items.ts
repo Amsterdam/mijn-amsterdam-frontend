@@ -1,3 +1,4 @@
+import { FeatureToggle } from '../../../../universal/config/app';
 import { StatusLineItem } from '../../../../universal/types';
 import {
   LeveringsVorm,
@@ -5,7 +6,7 @@ import {
   ProductSoortCode,
   WMOStatusLineItemFormatterConfig,
   WMOVoorziening,
-} from '../config';
+} from '../config-and-types';
 import { parseLabelContent } from './helpers';
 import { AOV } from './wmo-aov';
 import { diensten } from './wmo-diensten';
@@ -186,18 +187,14 @@ export function getStatusLineItems(voorziening: WMOVoorziening, today: Date) {
           ? statusItem.isVisible(index, voorziening, today)
           : true,
         documents:
-          statusItem.status === 'Besluit'
-            ? voorziening.documenten?.length === 1
-              ? voorziening.documenten?.map((doc) =>
-                  Object.assign(doc, {
-                    title: 'Besluit',
-                  })
-                )
-              : []
+          FeatureToggle.zorgnedDocumentAttachmentsActive &&
+          statusItem.status === 'Besluit' &&
+          voorziening.documenten?.length === 1
+            ? voorziening.documenten
             : [],
       };
 
-      if (index === 0 && !stepData.documenten?.length) {
+      if (index === 0 && stepData.documents?.length !== 1) {
         stepData.altDocumentContent = `<p>
             <strong>
               ${

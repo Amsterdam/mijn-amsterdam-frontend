@@ -40,7 +40,7 @@ import { StadspasResponseData } from '../../../server/services/stadspas/stadspas
 import {
   WMOVoorziening,
   WMOVoorzieningFrontend,
-} from '../../../server/services/wmo/config';
+} from '../../../server/services/wmo/config-and-types';
 
 export interface SearchEntry {
   url: string;

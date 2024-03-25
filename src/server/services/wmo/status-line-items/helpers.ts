@@ -1,5 +1,5 @@
 import { isDateInPast } from '../../../../universal/helpers';
-import { TextPartContents, WMOVoorziening } from '../config';
+import { TextPartContents, WMOVoorziening } from '../config-and-types';
 
 export function parseLabelContent(
   text: TextPartContents,
