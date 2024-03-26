@@ -20,7 +20,7 @@ import {
   IconAfvalTextiel,
 } from '../../assets/icons/map';
 import {
-  Alert,
+  ErrorAlert,
   Button,
   ChapterIcon,
   DetailPage,
@@ -270,8 +270,7 @@ export default function GarbageInformation() {
           <>
             <p>Dit zijn de afvalregels voor uw adres.</p>
             {!!commercialLocation && !privateIsCommercial && (
-              <Alert type="warning">
-                <p>
+              <ErrorAlert>
                   Let op deze regels gaan over uw woonadres. Lees hier{' '}
                   <LinkdInline
                     href={ExternalUrls.AFVAL_COMMERCIAL}
@@ -280,8 +279,8 @@ export default function GarbageInformation() {
                     regels over bedrijfsafval in Amsterdam
                   </LinkdInline>
                   .
-                </p>
-              </Alert>
+
+              </ErrorAlert>
             )}
             <p>
               <Linkd href={ExternalUrls.AFVAL} external={true}>
@@ -330,9 +329,9 @@ export default function GarbageInformation() {
         )}
         <MaintenanceNotifications page="afval" />
         {isError(AFVAL) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert >
+          We kunnen op dit moment niet alle gegevens tonen
+          </ErrorAlert>
         )}
 
         <GarbageInfoDetail

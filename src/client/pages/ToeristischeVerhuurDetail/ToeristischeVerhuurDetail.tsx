@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { hasFailedDependency, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   LoadingContent,
@@ -39,9 +39,9 @@ export default function ToeristischVerhuurDetail() {
       {(isLoadingApi || hasWarning) && (
         <PageContent className={styles.DetailPageContent}>
           {hasWarning && (
-            <Alert type="warning">
-              <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-            </Alert>
+            <ErrorAlert>
+              We kunnen op dit moment niet alle gegevens tonen.
+            </ErrorAlert>
           )}
           {isLoadingApi && (
             <LoadingContent className={styles.LoadingContentInfo} />

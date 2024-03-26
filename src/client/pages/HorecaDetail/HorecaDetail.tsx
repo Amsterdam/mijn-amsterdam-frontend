@@ -3,7 +3,7 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
-  Alert,
+ ErrorAlert,
   ChapterIcon,
   DetailPage,
   LoadingContent,
@@ -39,9 +39,9 @@ export default function HorecaDetail() {
 
       <PageContent className="">
         {(isError(HORECA) || noContent) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen gegevens tonen.
+          </ErrorAlert>
         )}
         {isLoadingContent && <LoadingContent className="" />}
         {!isLoadingContent && Vergunning && (

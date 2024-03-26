@@ -9,7 +9,7 @@ import {
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   MaintenanceNotifications,
@@ -151,9 +151,9 @@ export default function Stadspas() {
         </p>
         <MaintenanceNotifications page="stadspas" />
         {isError(WPI_STADSPAS) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment niet alle gegevens tonen.
+          </ErrorAlert>
         )}
       </PageContent>
 

@@ -1,3 +1,4 @@
+export { ErrorAlert } from './Alert/Alert';
 export { default as Alert } from './Alert/Alert';
 export { default as AlphaComponent } from './AlphaComponent/AlphaComponent';
 export { default as ApplicationError } from '../pages/ApplicationError/ApplicationError';

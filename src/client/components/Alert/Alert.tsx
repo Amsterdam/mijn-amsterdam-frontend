@@ -1,42 +1,31 @@
-import classnames from 'classnames';
-
+import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import { ComponentChildren } from '../../../universal/types';
-import { IconAlert, IconCheckmark, IconInfo } from '../../assets/icons';
-import styles from './Alert.module.scss';
-
-export type AlertType = 'warning' | 'info' | 'success';
 
 export interface ComponentProps {
   children?: ComponentChildren;
-  type?: AlertType;
-  className?: string;
+  title?: string;
 }
 
-function getIcon(alertType: AlertType) {
-  let Icon;
-  switch (alertType) {
-    case 'warning':
-      Icon = IconAlert;
-      break;
-    case 'info':
-      Icon = IconInfo;
-      break;
-    case 'success':
-    default:
-      Icon = IconCheckmark;
-      break;
-  }
-  return <Icon aria-hidden="true" className={styles.Icon} />;
+export function ErrorAlert({
+  children,
+  title = 'Foutmelding',
+}: ComponentProps) {
+  return (
+    <DSAlert title={title} severity="error">
+      <Paragraph>{children}</Paragraph>
+    </DSAlert>
+  );
 }
 
-export default function Alert({
+export default function OUDE_ALERT_WEGHALEN({
   children,
   type = 'success',
   className,
-}: ComponentProps) {
+}: any) {
   return (
-    <div className={classnames(styles.Alert, styles[type], className)}>
-      {getIcon(type)} {children}
+    <div style={{ border: '5px solid red' }}>
+      <strong>WEGHALEN!!!?</strong>
+      {children}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import {
 } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   InfoDetail,
   Linkd,
@@ -178,14 +178,14 @@ export default function ToeristischeVerhuur() {
           <MaintenanceNotifications page="toeristische-verhuur" />
         </p>
         {isError(TOERISTISCHE_VERHUUR) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment niet alle gegevens tonen.
+          </ErrorAlert>
         )}
         <div className={styles.Detail}>
           {hasBothVerleend && (
-            <Alert type="warning">
-              <p>
+            <ErrorAlert>
+
                 U hebt een vergunning voor vakantieverhuur én bed &amp;
                 breakfast. Het is niet toegestaan om op hetzelfde adres zowel
                 aan vakantieverhuur als bed &amp; breakfast te doen. U moet
@@ -197,12 +197,12 @@ export default function ToeristischeVerhuur() {
                   Meer informatie over voorwaarden vakantieverhuur
                 </LinkdInline>
                 .
-              </p>
-            </Alert>
+
+            </ErrorAlert>
           )}
           {!hasRegistrations && hasPermits && (
-            <Alert type="warning">
-              <p>
+            <ErrorAlert>
+
                 U hebt een vergunning voor vakantieverhuur of bed &amp;
                 breakfast. U moet daarom ook een landelijk registratienummer
                 voor toeristische verhuur aanvragen.
@@ -214,8 +214,8 @@ export default function ToeristischeVerhuur() {
                   toeristische verhuur
                 </LinkdInline>
                 .
-              </p>
-            </Alert>
+
+            </ErrorAlert>
           )}
         </div>
       </PageContent>

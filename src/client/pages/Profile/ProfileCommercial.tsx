@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
 import { AppState } from '../../AppState';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoPanel,
@@ -108,9 +108,9 @@ export default function ProfileCommercial() {
         )}
         <MaintenanceNotifications page="gegevens-handelsregister" />
         {isError(KVK) && (
-          <Alert type="warning">
+          <ErrorAlert>
             <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          </ErrorAlert>
         )}
       </PageContent>
 

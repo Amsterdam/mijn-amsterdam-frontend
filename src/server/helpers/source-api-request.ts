@@ -98,11 +98,13 @@ function enableMockAdapter() {
               delay,
               await responseData(...args)
             );
-            return [
-              typeof status === 'function' ? status(...args) : status,
-              data,
-              headers,
-            ];
+            // TODO: Remove when done with story.
+            return [500, data, headers];
+            // return [
+            //   typeof status === 'function' ? status(...args) : status,
+            //   data,
+            //   headers,
+            // ];
           });
         }
       }
@@ -289,8 +291,8 @@ export function findApiByRequestUrl(
 ) {
   const api = apiUrlEntries.find(([_apiName, url]) => {
     if (typeof url === 'object') {
-      return Object.entries(url as object).some(
-        ([_profileType, url]) => requestUrl?.startsWith(url)
+      return Object.entries(url as object).some(([_profileType, url]) =>
+        requestUrl?.startsWith(url)
       );
     }
     return requestUrl?.startsWith(url);

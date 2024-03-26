@@ -6,7 +6,7 @@ import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   MaintenanceNotifications,
@@ -162,9 +162,9 @@ export default function Inkomen() {
           isError(WPI_SPECIFICATIES) ||
           isError(WPI_TOZO) ||
           isError(WPI_TONK)) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment niet alle gegevens tonen.
+          </ErrorAlert>
         )}
       </PageContent>
 

@@ -6,7 +6,7 @@ import {
 } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   OverviewPage,
   PageContent,
@@ -65,9 +65,9 @@ export default function Horeca() {
           bij gemeente Amsterdam.
         </p>
         {isError(HORECA) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen vergunningen tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen vergunningen tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

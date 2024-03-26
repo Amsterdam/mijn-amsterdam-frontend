@@ -1,15 +1,17 @@
 import {
-  Alert,
   Grid,
   Heading,
   Link,
+  LinkList,
   Paragraph,
   Screen,
   UnorderedList,
+
 } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
+  ErrorAlert,
   ChapterIcon,
   LoadingContent,
   OverviewPage,
@@ -77,11 +79,9 @@ export default function Erfpacht() {
 
           {isError(ERFPACHTv2) && (
             <Grid.Cell span="all">
-              <Alert title="Foutmelding" severity="error">
-                <Paragraph>
-                  We kunnen op dit moment geen erfpachtrechten tonen.
-                </Paragraph>
-              </Alert>
+              <ErrorAlert>
+                We kunnen op dit moment geen erfpachtrechten tonen.
+              </ErrorAlert>
             </Grid.Cell>
           )}
 
