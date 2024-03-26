@@ -41,6 +41,7 @@ export const remoteApiHost = 'http://remote-api-host';
 
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
+process.env.BFF_API_BASE_URL = bffApiHost;
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
 process.env.BFF_REQUEST_CACHE_ENABLED = 'false';
