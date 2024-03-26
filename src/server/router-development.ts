@@ -18,7 +18,6 @@ import {
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
-import STADSPAS_TRANSACTIES from './mock-data/json/gpass-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
@@ -147,10 +146,6 @@ relayDevRouter.get(
 
 relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
   return res.send(apiSuccessResult({ residentCount: 3 }));
-});
-
-relayDevRouter.get(RelayPathsAllowed.STADSPAS_TRANSACTIES, (req, res) => {
-  return res.send(apiSuccessResult(STADSPAS_TRANSACTIES));
 });
 
 relayDevRouter.get(

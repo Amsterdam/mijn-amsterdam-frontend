@@ -340,7 +340,6 @@ export const RelayPathsAllowed = {
   VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
   WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
   WMO_DOCUMENT_DOWNLOAD: '/wmoned/document/:id',
-  STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
   BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',

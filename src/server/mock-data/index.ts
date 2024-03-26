@@ -161,7 +161,6 @@ export const mockDataConfig: MockDataConfig = {
     pathReg: new RegExp('/remote/gpass/*'),
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
-      console.log(config.url);
       if (isCommercialUser(config)) {
         return 'no-content';
       }
