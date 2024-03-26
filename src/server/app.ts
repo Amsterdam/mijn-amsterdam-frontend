@@ -28,7 +28,6 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import cors from 'cors';
 import {
@@ -75,17 +74,6 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
-
-// set up rate limiter: maximum of five requests per minute
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: false, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
-// apply rate limiter to all requests
-app.use(limiter);
 
 // Request logging
 morgan.token('build', function (req, res) {
