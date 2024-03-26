@@ -21,6 +21,7 @@ import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 
+import cors from 'cors';
 import express, {
   ErrorRequestHandler,
   NextFunction,
@@ -29,13 +30,11 @@ import express, {
   Response,
 } from 'express';
 import morgan from 'morgan';
-import cors from 'cors';
 import {
   BFF_BASE_PATH,
   BFF_PORT,
   BffEndpoints,
   RELEASE_VERSION,
-  securityHeaders,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
@@ -106,11 +105,6 @@ app.use(compression());
 
 // Generate request id
 app.use(requestID);
-
-app.use((req, res, next) => {
-  res.set(securityHeaders);
-  next();
-});
 
 // Destroy the session as soon as the api requests are all processed
 app.use(function (req, res, next) {
