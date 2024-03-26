@@ -109,7 +109,7 @@ export async function fetchStadspassen(
 
   const headers = getHeaders(administratienummer);
 
-  const stadspasHoudersResponse = await requestData<StadspasPasHouderResponse>(
+  const stadspasHouderResponse = await requestData<StadspasPasHouderResponse>(
     {
       ...dataRequestConfig,
       url: GPASS_ENDPOINT_PASHOUDER,
@@ -119,20 +119,20 @@ export async function fetchStadspassen(
     authProfileAndToken
   );
 
-  if (stadspasHoudersResponse.status === 'ERROR') {
-    if (stadspasHoudersResponse.code === '401') {
+  if (stadspasHouderResponse.status === 'ERROR') {
+    if (stadspasHouderResponse.code === '401') {
       return apiSuccessResult({
         stadspassen: [],
         administratienummer: null,
       });
     }
-    return stadspasHoudersResponse;
+    return stadspasHouderResponse;
   }
 
-  const pashouder = stadspasHoudersResponse.content;
+  const pashouder = stadspasHouderResponse.content;
   const pashouders = [
     pashouder,
-    ...(stadspasHoudersResponse.content?.sub_pashouders?.filter(Boolean) ?? []),
+    ...(stadspasHouderResponse.content?.sub_pashouders?.filter(Boolean) ?? []),
   ].filter(
     (p: StadspasHouderSource | null): p is StadspasHouderSource => p !== null
   );
