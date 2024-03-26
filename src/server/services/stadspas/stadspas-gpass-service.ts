@@ -1,31 +1,24 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  getSettledResult,
-} from '../../../universal/helpers';
+import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import { LinkProps } from '../../../universal/types/App.types';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
-  StadspasHouderSource,
-  StadspasDetailBudgetSource,
-  StadspasDetailSource,
-  StadspasPasHouderResponse,
-  Stadspas,
-  StadspasTransactiesResponse,
-  StadspasTransactie,
-  StadspasTransaction,
-  StadspasHouderPasSource,
-} from './stadspas-types';
-import { fetchClientNummer } from './stadspas-zorgned-service';
-import {
   GPASS_API_TOKEN,
   GPASS_BUDGET_ONLY_FOR_CHILDREN,
 } from './stadspas-config-and-content';
+import {
+  Stadspas,
+  StadspasDetailBudgetSource,
+  StadspasDetailSource,
+  StadspasHouderSource,
+  StadspasPasHouderResponse,
+  StadspasTransactie,
+  StadspasTransactiesResponse,
+  StadspasTransaction,
+} from './stadspas-types';
+import { fetchClientNummer } from './stadspas-zorgned-service';
 
 function getHeaders(administratienummer: string) {
   return {
