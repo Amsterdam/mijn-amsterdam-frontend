@@ -44,6 +44,7 @@ export default function CStadspas() {
     if (!STADSPAS.content?.stadspassen) {
       return [];
     }
+    console.log(STADSPAS.content.stadspassen);
     return STADSPAS.content.stadspassen.map((stadspas) => {
       return {
         ...stadspas,

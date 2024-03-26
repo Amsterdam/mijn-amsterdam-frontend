@@ -1,1 +1,44 @@
-[]
+{
+  "initialen": "A",
+  "achternaam": "Achternaam",
+  "passen": [
+    {
+      "actief": false,
+      "pasnummer": 444444444444
+    },
+    {
+      "actief": true,
+      "pasnummer": 333333333333
+    }
+  ],
+  "sub_pashouders": [
+    {
+      "initialen": "B",
+      "achternaam": "Achternaam",
+      "passen": [
+        {
+          "actief": true,
+          "pasnummer": 666666666666
+        },
+        {
+          "actief": false,
+          "pasnummer": 555555555555
+        }
+      ]
+    },
+    {
+      "initialen": "C",
+      "achternaam": "Achternaam",
+      "passen": [
+        {
+          "actief": true,
+          "pasnummer": 777777777777
+        },
+        {
+          "actief": false,
+          "pasnummer": 888888888888
+        }
+      ]
+    }
+  ]
+}

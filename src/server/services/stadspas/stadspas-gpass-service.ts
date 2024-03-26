@@ -7,7 +7,7 @@ import {
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { LinkProps } from '../../../universal/types/App.types';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -50,9 +50,12 @@ function formatBudget(
     `${budget.code}:${administratienummer}:${pasnummer}`
   );
 
-  const urlTransactions = generatePath(BffEndpoints.STADSPAS_TRANSACTIONS, {
-    transactionsKey,
-  });
+  const urlTransactions = `${process.env.BFF_API_BASE_URL}${BFF_BASE_PATH}${generatePath(
+    BffEndpoints.STADSPAS_TRANSACTIONS,
+    {
+      transactionsKey,
+    }
+  )}`;
 
   return {
     description: budget.omschrijving,

@@ -157,25 +157,26 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(WPI_E_AANVRAGEN);
     },
   },
-  // [String(ApiUrls.GPASS)]: {
-  //   pathReg: new RegExp('/remote/gpass/*'),
-  //   status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-  //   responseData: async (config: any) => {
-  //     if (isCommercialUser(config)) {
-  //       return 'no-content';
-  //     }
-  //     if (config.url.includes('sales/v1/pas')) {
-  //       return loadMockApiResponseJson(GPASS_STADSPAS);
-  //     }
-  //     if (config.url.includes('sales/v1/pashouder')) {
-  //       return loadMockApiResponseJson(GPASS_PASHOUDERS);
-  //     }
-  //     if (config.url.includes('transacties/v1/budget')) {
-  //       return loadMockApiResponseJson(GPASS_TRANSACTIES);
-  //     }
-  //     return null;
-  //   },
-  // },
+  [String(ApiUrls.GPASS)]: {
+    pathReg: new RegExp('/remote/gpass/*'),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      console.log(config.url);
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      if (config.url.includes('sales/v1/pashouder')) {
+        return loadMockApiResponseJson(GPASS_PASHOUDERS);
+      }
+      if (config.url.includes('sales/v1/pas')) {
+        return loadMockApiResponseJson(GPASS_STADSPAS);
+      }
+      if (config.url.includes('transacties/v1/budget')) {
+        return loadMockApiResponseJson(GPASS_TRANSACTIES);
+      }
+      return null;
+    },
+  },
   [String(ApiUrls.WPI_SPECIFICATIES)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
