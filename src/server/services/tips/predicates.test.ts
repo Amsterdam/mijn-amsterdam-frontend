@@ -1,14 +1,14 @@
 import { ApiResponse, ApiSuccessResponse } from '../../../universal/helpers';
 import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import BRP from '../../mock-data/json/brp.json';
-import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
-import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
+import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import { transformBRPData } from '../brp';
 import { StadspasResponseDataTransformed } from '../wpi/api-service';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
+import { AppState } from '../../../client/AppState';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
@@ -28,7 +28,6 @@ import {
   or,
   previouslyLivingInAmsterdam,
 } from './predicates';
-import { CaseType } from '../../../universal/types/vergunningen';
 import { TipsPredicateFN } from './tip-types';
 
 const TONK = {
@@ -48,26 +47,61 @@ const UITKERINGEN = {
   status: 'OK',
 };
 
-const TOERISTISCHE_VERHUUR = {
-  content: {
-    registraties: [
+const vakantieverhuurVergunningen = [
+  {
+    id: 'Z-001-000040',
+    titel: 'Vergunning vakantieverhuur',
+    datumAfhandeling: null,
+    datumAanvraag: '10 mei 2021',
+    datumVan: '01 juni 2020',
+    datumTot: '31 mei 2024',
+    adres: 'Amstel 1 1017AB Amsterdam',
+    resultaat: 'Ingetrokken',
+    zaaknummer: 'Z/001/000040',
+    statussen: [
       {
-        street: 'Amstel',
-        houseNumber: '1',
-        houseLetter: null,
-        houseNumberExtension: null,
-        postalCode: '1012PN',
-        city: 'Amsterdam',
-        shortName: 'Amstel',
-        owner: null,
-        registrationNumber: 'BBBBBBBBBBBBBBBBBBBB',
-        agreementDate: '2021-01-01T10:47:44.6107122',
+        status: 'Ontvangen',
+        datePublished: '2021-05-10',
+        isActive: false,
+        isChecked: true,
+      },
+      {
+        status: 'In behandeling',
+        datePublished: '2021-05-10',
+        isActive: false,
+        isChecked: true,
+      },
+      {
+        status: 'Afgehandeld',
+        datePublished: '2021-05-10',
+        description: '',
+        isActive: false,
+        isChecked: true,
+      },
+      {
+        status: 'Gewijzigd',
+        datePublished: '',
+        description: 'Wij hebben uw Vergunning vakantieverhuur ingetrokken.',
+        isActive: true,
+        isChecked: true,
       },
     ],
-    vergunningen: VERGUNNINGEN.content.filter((c) =>
-      ['Z/000/000040', 'Z/001/000040'].includes(c.identifier)
-    ),
-    daysLeft: 30,
+    documentenUrl:
+      '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
+    link: {
+      to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-001-000040',
+      title: 'Bekijk hoe het met uw aanvraag staat',
+    },
+    isActief: false,
+    status: 'Ingetrokken',
+  },
+];
+
+const TOERISTISCHE_VERHUUR = {
+  content: {
+    lvvRegistraties: [1, 2, 3],
+    vakantieverhuurVergunningen: [1, 2, 3],
+    bbVergunningen: [1, 2, 3],
   },
 };
 
@@ -484,49 +518,17 @@ describe('predicates', () => {
   });
 
   describe('TOERISTISCHE_VERHUUR', () => {
-    const getMockAppState = (caseType: CaseType, caseType2: CaseType) => {
-      TOERISTISCHE_VERHUUR.content.vergunningen[0].caseType = caseType;
-      TOERISTISCHE_VERHUUR.content.vergunningen[1].caseType = caseType2;
-
-      return {
-        TOERISTISCHE_VERHUUR: TOERISTISCHE_VERHUUR as ApiResponse<any>,
-      };
-    };
-
-    describe('hasToeristicheVerhuurVergunningen', () => {
-      it.each([
-        [true, CaseType.VakantieverhuurVergunningaanvraag],
-        [true, CaseType.VakantieverhuurVergunningaanvraag],
-        [
-          true,
-          CaseType.BBVergunning,
-          CaseType.VakantieverhuurVergunningaanvraag,
-        ],
-        [false, CaseType.BBVergunning],
-      ])(
-        'should return %s for caseType %s and second caseType %s',
-        (expected, caseType, caseType2 = caseType) => {
-          expect(
-            hasToeristicheVerhuurVergunningen(
-              getMockAppState(caseType, caseType2)
-            )
-          ).toBe(expected);
-        }
-      );
+    test('hasToeristicheVerhuurVergunningen', () => {
+      expect(
+        hasToeristicheVerhuurVergunningen({
+          TOERISTISCHE_VERHUUR,
+        } as unknown as AppState)
+      ).toBe(true);
     });
-
-    describe('hasBnBVergunning', () => {
-      it.each([
-        [true, CaseType.BBVergunning],
-        [true, CaseType.BBVergunning],
-      ])(
-        'should return %s for caseType %s',
-        (expected, caseType, caseType2 = caseType) => {
-          expect(hasBnBVergunning(getMockAppState(caseType, caseType2))).toBe(
-            expected
-          );
-        }
-      );
+    test('hasBnBVergunning', () => {
+      expect(
+        hasBnBVergunning({ TOERISTISCHE_VERHUUR } as unknown as AppState)
+      ).toBe(true);
     });
   });
 

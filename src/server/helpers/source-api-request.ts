@@ -128,7 +128,7 @@ export function clearSessionCache(requestID: requestID) {
   }
 }
 
-function getRequestConfigCacheKey(
+export function getRequestConfigCacheKey(
   requestID: string,
   requestConfig: DataRequestConfig
 ) {
@@ -194,7 +194,7 @@ export async function requestData<T>(
 
   // Set the cache Deferred
   if (
-    (isGetRequest || (!isGetRequest && cacheKey)) &&
+    cacheKey &&
     !!requestConfig.cacheTimeout &&
     requestConfig.cacheTimeout > 0
   ) {

@@ -22,6 +22,7 @@ import {
   fetchSignalsListByStatus,
 } from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
+import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
 
 export const router = express.Router();
 
@@ -214,6 +215,38 @@ router.get(
       res.locals.requestID,
       authProfileAndToken,
       req.params.id
+    );
+
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
+  }
+);
+
+router.get(
+  BffEndpoints.BEZWAREN_DETAIL,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const response = await fetchBezwaarDetail(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    return res.send(response);
+  }
+);
+
+// Toeristische verhuur
+router.get(
+  BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchBBDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.docIdEncrypted
     );
 
     const contentType = documentResponse.headers['content-type'];

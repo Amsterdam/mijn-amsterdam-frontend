@@ -5,12 +5,12 @@ import express, {
   Response,
 } from 'express';
 import path from 'path';
+import UID from 'uid-safe';
 import { testAccounts } from '../universal/config/auth.development';
-import { apiSuccessResult, getSettledResult } from '../universal/helpers';
+import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-  RelayPathsAllowed,
 } from './config';
 import {
   AuthProfile,
@@ -18,12 +18,11 @@ import {
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
+import { generateDevSessionCookieValue } from './helpers/app.development';
 import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
-import { countLoggedInVisit } from './services/visitors';
-import { generateDevSessionCookieValue } from './helpers/app.development';
 import { addToBlackList } from './services/session-blacklist';
-import UID from 'uid-safe';
+import { countLoggedInVisit } from './services/visitors';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
@@ -32,6 +31,18 @@ const DevelopmentRoutes = {
 };
 
 const PREDEFINED_REDIRECT_URLS = ['noredirect', '/api/v1/services/all'];
+
+export const RelayPathsAllowed = {
+  VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
+  VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
+  WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
+  WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
+  BRP_BEWONERS: '/brp/aantal_bewoners',
+  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
+  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
+  BBVERGUNNING_DOCUMENTS:
+    '/services/toeristische-verhuur/bb/document/:idEncrypted',
+};
 
 export const authRouterDevelopment = express.Router();
 
@@ -134,10 +145,11 @@ export const relayDevRouter = express.Router();
 
 relayDevRouter.get(
   [
-    RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
+    RelayPathsAllowed.BBVERGUNNING_DOCUMENTS,
     RelayPathsAllowed.BEZWAREN_DOCUMENT,
+    RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
+    RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+    RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
   ],
   (req, res, next) => {
     return res.sendFile(path.join(__dirname, 'mock-data/document.pdf'));

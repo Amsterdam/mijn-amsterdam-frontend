@@ -78,36 +78,37 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'WMO'
-  | 'WPI_E_AANVRAGEN'
-  | 'WPI_AANVRAGEN'
-  | 'WPI_SPECIFICATIES'
-  | 'WPI_STADSPAS'
-  | 'SVWI'
+  | 'AFVAL'
+  | 'BAG'
   | 'BELASTINGEN'
-  | 'BEZWAREN_LIST'
   | 'BEZWAREN_DOCUMENT'
   | 'BEZWAREN_DOCUMENTS'
+  | 'BEZWAREN_LIST'
   | 'BEZWAREN_STATUS'
-  | 'CLEOPATRA'
-  | 'VERGUNNINGEN'
-  | 'CMS_CONTENT_GENERAL_INFO'
-  | 'CMS_CONTENT_FOOTER'
-  | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'BRP'
+  | 'CLEOPATRA'
+  | 'CMS_CONTENT_FOOTER'
+  | 'CMS_CONTENT_GENERAL_INFO'
+  | 'CMS_MAINTENANCE_NOTIFICATIONS'
+  | 'ENABLEU_2_SMILE'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
-  | 'BAG'
-  | 'AFVAL'
-  | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
-  | 'KVK'
-  | 'SEARCH_CONFIG'
-  | 'SUBSIDIE'
   | 'KREFIA'
-  | 'SIA'
-  | 'ENABLEU_2_SMILE'
+  | 'KVK'
+  | 'LOOD_365_OAUTH'
   | 'LOOD_365'
-  | 'LOOD_365_OAUTH';
+  | 'POWERBROWSER'
+  | 'SEARCH_CONFIG'
+  | 'SIA'
+  | 'SUBSIDIE'
+  | 'SVWI'
+  | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
+  | 'VERGUNNINGEN'
+  | 'WMO'
+  | 'WPI_AANVRAGEN'
+  | 'WPI_E_AANVRAGEN'
+  | 'WPI_SPECIFICATIES'
+  | 'WPI_STADSPAS';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -178,6 +179,11 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
     passthroughOIDCToken: true,
+  },
+  POWERBROWSER: {
+    method: 'POST',
+    url: `${process.env.BFF_POWERBROWSER_API_URL}`,
+    postponeFetch: !FeatureToggle.powerbrowserActive,
   },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
@@ -311,16 +317,6 @@ export function getApiConfig(
   return Object.assign(apiConfigCopy, config);
 }
 
-export const RelayPathsAllowed = {
-  VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
-  WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
-  WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
-  BRP_BEWONERS: '/brp/aantal_bewoners',
-  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
-  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
-};
-
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
@@ -375,6 +371,13 @@ export const BffEndpoints = {
   ERFPACHTv2_DOSSIER_DETAILS:
     '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 
+  // Bodem / loodmetingen
+  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
+
+  // Toeristische verhuur / Bed & Breakfast
+  TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
+    '/services/toeristische-verhuur/bb/document/:docIdEncrypted',
+
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,
@@ -416,8 +419,6 @@ export const BffEndpoints = {
   AUTH_TOKEN_DATA_YIVI: `${AUTH_BASE_YIVI}/token-data`,
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
-  // Bodem / loodmetingen
-  LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
