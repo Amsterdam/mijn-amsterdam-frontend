@@ -274,7 +274,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
-      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a well known actor (GH), no sensitive data is involved and no JS code is evaluated.
+      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a trusted source (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
   ENABLEU_2_SMILE: {
