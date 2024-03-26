@@ -143,6 +143,9 @@ if (IS_AP && !IS_OT) {
 
 app.use(legacyRouter);
 
+/**
+ * The public router has routes that can be accessed by anyone without any authentication.
+ */
 app.use(BFF_BASE_PATH, publicRouter);
 
 ////////////////////////////////////////////////////////////////////////
