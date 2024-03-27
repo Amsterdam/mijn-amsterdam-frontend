@@ -95,8 +95,8 @@ export async function fetchStadspassen(
 
   const dataRequestConfig = getApiConfig('GPASS');
 
-  const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v2/pashouder`;
-  const GPASS_ENDPOINT_PAS = `${dataRequestConfig.url}/rest/sales/v2/pas`;
+  const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v1/pashouder`;
+  const GPASS_ENDPOINT_PAS = `${dataRequestConfig.url}/rest/sales/v1/pas`;
 
   const administratienummerResponse = await fetchClientNummer(
     requestID,
@@ -203,7 +203,7 @@ export async function fetchTransacties(
   ).split(':');
 
   const dataRequestConfig = getApiConfig('GPASS');
-  const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v2/budget`;
+  const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
 
   return requestData<StadspasTransaction[]>(
     {
