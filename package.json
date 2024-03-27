@@ -98,7 +98,7 @@
     "http-proxy-middleware": "^2.0.6",
     "include-media": "^2.0.0",
     "install": "^0.13.0",
-    "jose": "^5.2.2",
+    "jose": "^5.2.3",
     "js-cookie": "^3.0.5",
     "jsdom": "^23.2.0",
     "jsonpath": "^1.1.1",
