@@ -294,7 +294,7 @@ export const datasetEndpoints: Record<
     },
   },
   sportaanbieder: {
-    listUrl: dsoApiListUrl('sport/aanbieder', 2000),
+    listUrl: dsoApiListUrl('sport/aanbieder', 2000, 'sportaanbieder'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/aanbieder/',
     transformList: transformSportaanbiederResponse,
     featureType: 'Point',
