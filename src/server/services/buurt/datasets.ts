@@ -243,6 +243,7 @@ export const datasetEndpoints: Record<
     listUrl: dsoApiListUrl('sport/veld'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/veld/',
     transformList: transformSportveldResponse,
+    dsoApiAdditionalStaticFieldNames: ['soortOndergrond', 'sportfunctie'],
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
