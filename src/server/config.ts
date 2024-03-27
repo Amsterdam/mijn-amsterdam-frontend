@@ -586,25 +586,3 @@ export const DEV_JWK_PRIVATE: any = {
 
 export const DEV_JWT =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-
-export const securityHeaders: Record<string, string> = {
-  'Permissions-Policy':
-    'geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()',
-  'Referrer-Policy': 'same-origin',
-  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
-  'X-Frame-Options': 'Deny',
-  'X-Content-Type-Options': 'nosniff',
-  'Content-Security-Policy': `
-    default-src 'none';
-    connect-src 'none';
-    script-src 'none';
-    img-src 'none';
-    frame-src 'none';
-    style-src 'none';
-    font-src 'none';
-    manifest-src 'none';
-    object-src 'none';
-    frame-ancestors 'none';
-    require-trusted-types-for 'script'
-  `.replace(/\n/g, ''),
-};
