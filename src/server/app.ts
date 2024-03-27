@@ -125,6 +125,9 @@ if (IS_AP && !IS_OT) {
 
 app.use(legacyRouter);
 
+/**
+ * The public router has routes that can be accessed by anyone without any authentication.
+ */
 app.use(BFF_BASE_PATH, publicRouter);
 
 ////////////////////////////////////////////////////////////////////////
@@ -135,7 +138,7 @@ if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
 }
 ///// [DEVELOPENT ONLY] /////
-if (IS_OT) {
+if (IS_DEVELOPMENT) {
   app.use(`${BFF_BASE_PATH + BffEndpoints.API_RELAY}`, relayDevRouter);
 }
 

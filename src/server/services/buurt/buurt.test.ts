@@ -132,6 +132,7 @@ vi.mock('../../../universal/config/env', () => {
     IS_AP: true,
     IS_OT: false,
     IS_PRODUCTION: false,
+    IS_DEVELOPMENT: false,
     IS_ACCEPTANCE: true,
     IS_TAP: true,
     IS_TEST: true,

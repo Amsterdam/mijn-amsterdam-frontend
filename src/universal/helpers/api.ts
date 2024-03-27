@@ -4,6 +4,7 @@ export interface ApiErrorResponse<T> {
   status: 'ERROR';
   sentry?: string;
   id?: string;
+  code?: string;
 }
 
 export type FailedDependencies = Record<string, ApiErrorResponse<any>>;
@@ -90,7 +91,8 @@ export function hasFailedDependency(
 export function apiErrorResult<T>(
   error: string,
   content: T,
-  sentryId?: string | null
+  sentryId?: string | null,
+  statusCode?: string | null
 ): ApiErrorResponse<T> {
   const errorResponse: ApiErrorResponse<T> = {
     content,
@@ -100,6 +102,10 @@ export function apiErrorResult<T>(
 
   if (sentryId) {
     errorResponse.sentry = sentryId;
+  }
+
+  if (statusCode) {
+    errorResponse.code = statusCode;
   }
 
   return errorResponse;

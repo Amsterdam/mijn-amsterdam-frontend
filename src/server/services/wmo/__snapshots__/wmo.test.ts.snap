@@ -1,0 +1,3215 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Transform api items > fetchWmo 1`] = `
+{
+  "content": [
+    {
+      "dateDescision": "2023-06-08",
+      "dateEnd": null,
+      "dateStart": "2023-06-08",
+      "id": "1947071120",
+      "isActual": true,
+      "itemTypeCode": "WRA2",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1947071120",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2023-06-08",
+          "description": "
+            <p>
+              U hebt recht op een reparatie-/verwijderopdracht toegang per 08 juni 2023.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Van der Leij Bouwbedrijven B.V heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Van der Leij Bouwbedrijven B.V",
+      "title": "Reparatie-/verwijderopdracht toegang",
+    },
+    {
+      "dateDescision": "2023-03-16",
+      "dateEnd": "2024-03-11",
+      "dateStart": "2023-03-12",
+      "id": "1986585525",
+      "isActual": true,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1986585525",
+      },
+      "steps": [
+        {
+          "datePublished": "2023-03-16",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 12 maart 2023.
+              </p>
+              <p>
+                
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
+                  
+              </p>
+            ",
+          "documents": [
+            {
+              "datePublished": "2023-03-16T15:56:11.41",
+              "id": "123-123-123-123",
+              "title": "Besluit",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Niet van toepassing.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2022-12-22",
+      "dateEnd": null,
+      "dateStart": "2022-12-22",
+      "id": "3042411901",
+      "isActual": true,
+      "itemTypeCode": "WRA5",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3042411901",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2022-12-22",
+          "description": "
+            <p>
+              U hebt recht op een Adviesconsult per 22 december 2022.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Welzorg",
+      "title": "Adviesconsult",
+    },
+    {
+      "dateDescision": "2023-03-01",
+      "dateEnd": null,
+      "dateStart": "2022-12-21",
+      "id": "890306301",
+      "isActual": true,
+      "itemTypeCode": "ROL",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/890306301",
+      },
+      "steps": [
+        {
+          "datePublished": "2023-03-01",
+          "description": "
+            <p>
+              U hebt recht op een elektrische rolstoel voor binnen en buiten per 21 december 2022.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [
+            {
+              "datePublished": "2023-03-02T11:17:08.293",
+              "id": "123-123-123-123",
+              "title": "Besluit",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Medipoint om een elektrische rolstoel voor binnen en buiten aan u te leveren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Medipoint heeft aan ons doorgegeven dat een elektrische rolstoel voor binnen en buiten bij u is afgeleverd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Product geleverd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Medipoint",
+      "title": "Elektrische rolstoel voor binnen en buiten",
+    },
+    {
+      "dateDescision": "2022-10-20",
+      "dateEnd": null,
+      "dateStart": "2022-10-19",
+      "id": "2941866748",
+      "isActual": true,
+      "itemTypeCode": "AOV",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2941866748",
+      },
+      "steps": [
+        {
+          "datePublished": "2022-10-20",
+          "description": "
+            <p>
+              U hebt recht op een kamer tot kamer vervoer per 19 oktober 2022. De vervoerspas ontvangt u per
+              post.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [
+            {
+              "datePublished": "2022-10-19T14:27:42.643",
+              "id": "123-123-123-123",
+              "title": "Besluit",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
+          "id": "status-step-0",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "RMC Amsterdam",
+      "title": "Kamer tot kamer vervoer",
+    },
+    {
+      "dateDescision": "2022-08-01",
+      "dateEnd": "2022-10-18",
+      "dateStart": "2022-08-01",
+      "id": "1293703646",
+      "isActual": false,
+      "itemTypeCode": "AOV",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1293703646",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2022-08-01",
+          "description": "
+            <p>
+              U hebt recht op een kamer tot kamer vervoer per 01 augustus 2022. De vervoerspas ontvangt u per
+              post.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "2022-10-18",
+          "description": "<p>
+            Uw recht op kamer tot kamer vervoer is beëindigd per 18 oktober 2022
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": true,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "RMC Amsterdam",
+      "title": "Kamer tot kamer vervoer",
+    },
+    {
+      "dateDescision": "2022-04-15",
+      "dateEnd": null,
+      "dateStart": "2022-03-24",
+      "id": "3476086687",
+      "isActual": true,
+      "itemTypeCode": "WRA3",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3476086687",
+      },
+      "steps": [
+        {
+          "datePublished": "2022-04-15",
+          "description": "
+            <p>
+              U hebt recht op een niet standaard opdracht natte cel en toilet per 24 maart 2022.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [
+            {
+              "datePublished": "2022-04-19T13:16:44",
+              "id": "123-123-123-123",
+              "title": "Besluit",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Welzorg",
+      "title": "Niet standaard opdracht natte cel en toilet",
+    },
+    {
+      "dateDescision": "2022-03-14",
+      "dateEnd": "2023-03-11",
+      "dateStart": "2022-03-11",
+      "id": "955409908",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/955409908",
+      },
+      "steps": [
+        {
+          "datePublished": "2022-03-14",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 11 maart 2022.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [
+            {
+              "datePublished": "2022-03-14T16:12:12",
+              "id": "123-123-123-123",
+              "title": "Besluit",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2023-03-11",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 11 maart 2023
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2022-03-14",
+      "dateEnd": "2023-03-11",
+      "dateStart": "2022-03-11",
+      "id": "1811284656",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1811284656",
+      },
+      "steps": [
+        {
+          "datePublished": "2022-03-14",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 11 maart 2022.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [
+            {
+              "datePublished": "2022-03-14T16:11:29",
+              "id": "123-123-123-123",
+              "title": "Besluit",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2023-03-11",
+          "description": "<p>
+            Uw recht op hulp bij het huishouden is beëindigd per 11 maart 2023
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2021-12-08",
+      "dateEnd": null,
+      "dateStart": "2021-12-20",
+      "id": "1035945789",
+      "isActual": true,
+      "itemTypeCode": "WRA2",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1035945789",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2021-12-08",
+          "description": "
+            <p>
+              U hebt recht op een handzender(s) voor deurautomaat per 20 december 2021.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Van der Leij Bouwbedrijven B.V heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Van der Leij Bouwbedrijven B.V",
+      "title": "Handzender(s) voor deurautomaat",
+    },
+    {
+      "dateDescision": "2021-12-08",
+      "dateEnd": null,
+      "dateStart": "2021-12-08",
+      "id": "1035945788",
+      "isActual": true,
+      "itemTypeCode": "WRA2",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1035945788",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2021-12-08",
+          "description": "
+            <p>
+              U hebt recht op een reparatie-/verwijderopdracht toegang per 08 december 2021.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Van der Leij Bouwbedrijven B.V heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Van der Leij Bouwbedrijven B.V",
+      "title": "Reparatie-/verwijderopdracht toegang",
+    },
+    {
+      "dateDescision": "2021-12-06",
+      "dateEnd": "2022-02-06",
+      "dateStart": "2021-12-06",
+      "id": "2248022546",
+      "isActual": false,
+      "itemTypeCode": "WRA2",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2248022546",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2021-12-06",
+          "description": "
+            <p>
+              U hebt recht op een reparatie-/verwijderopdracht toegang per 06 december 2021.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Van der Leij Bouwbedrijven B.V heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "2022-02-06",
+          "description": "<p>
+            Uw recht op reparatie-/verwijderopdracht toegang is beëindigd per 06 februari 2022
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Van der Leij Bouwbedrijven B.V",
+      "title": "Reparatie-/verwijderopdracht toegang",
+    },
+    {
+      "dateDescision": "2021-10-22",
+      "dateEnd": null,
+      "dateStart": "2021-10-13",
+      "id": "3645917971",
+      "isActual": true,
+      "itemTypeCode": "WRA3",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3645917971",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2021-10-22",
+          "description": "
+            <p>
+              U hebt recht op een niet standaard opdracht natte cel en toilet per 13 oktober 2021.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Welzorg",
+      "title": "Niet standaard opdracht natte cel en toilet",
+    },
+    {
+      "dateDescision": "2021-03-11",
+      "dateEnd": "2022-03-10",
+      "dateStart": "2021-03-10",
+      "id": "3608314454",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3608314454",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2021-03-11",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 10 maart 2021.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2022-03-10",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 10 maart 2022
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2021-03-11",
+      "dateEnd": "2022-03-10",
+      "dateStart": "2021-03-10",
+      "id": "2624361688",
+      "isActual": false,
+      "itemTypeCode": "AWBG",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2624361688",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2021-03-11",
+          "description": "
+              <p>
+                U hebt recht op aanvullende individuele ondersteuning per 10 maart 2021.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2022-03-10",
+          "description": "<p>
+            Uw recht op aanvullende individuele ondersteuning is beëindigd per 10 maart 2022
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Aanvullende individuele ondersteuning",
+    },
+    {
+      "dateDescision": "2021-03-11",
+      "dateEnd": "2022-03-10",
+      "dateStart": "2021-03-10",
+      "id": "2758572638",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2758572638",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2021-03-11",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 10 maart 2021.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2022-03-10",
+          "description": "<p>
+            Uw recht op hulp bij het huishouden is beëindigd per 10 maart 2022
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2021-01-09",
+      "dateEnd": "2021-03-09",
+      "dateStart": "2021-01-01",
+      "id": "226616664",
+      "isActual": false,
+      "itemTypeCode": "AWBG",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/226616664",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2021-01-09",
+          "description": "
+              <p>
+                U hebt recht op aanvullende individuele ondersteuning per 01 januari 2021.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2021-03-09",
+          "description": "<p>
+            Uw recht op aanvullende individuele ondersteuning is beëindigd per 09 maart 2021
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Aanvullende individuele ondersteuning",
+    },
+    {
+      "dateDescision": "2021-01-09",
+      "dateEnd": "2021-03-09",
+      "dateStart": "2021-01-01",
+      "id": "1855927508",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1855927508",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2021-01-09",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 01 januari 2021.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2021-03-09",
+          "description": "<p>
+            Uw recht op hulp bij het huishouden is beëindigd per 09 maart 2021
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2021-01-09",
+      "dateEnd": "2021-03-09",
+      "dateStart": "2021-01-01",
+      "id": "1499176916",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1499176916",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2021-01-09",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 01 januari 2021.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2021-03-09",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 09 maart 2021
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2020-12-04",
+      "dateEnd": null,
+      "dateStart": "2020-11-13",
+      "id": "4005950334",
+      "isActual": true,
+      "itemTypeCode": "WRA3",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/4005950334",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2020-12-04",
+          "description": "
+            <p>
+              U hebt recht op een antislipvloer/behandeling badkamer per 13 november 2020.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Meyra Wooncare B.V. om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Meyra Wooncare B.V. heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Meyra Wooncare B.V.",
+      "title": "Antislipvloer/behandeling badkamer",
+    },
+    {
+      "dateDescision": "2020-06-16",
+      "dateEnd": "2020-12-31",
+      "dateStart": "2020-06-15",
+      "id": "3303327448",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3303327448",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2020-06-16",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 15 juni 2020.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-12-31",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 31 december 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2020-06-18",
+      "dateEnd": null,
+      "dateStart": "2020-06-10",
+      "id": "134062321",
+      "isActual": true,
+      "itemTypeCode": "RWD",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/134062321",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2020-06-18",
+          "description": "
+            <p>
+              U hebt recht op een douche-/toiletstoel zelfrijder per 10 juni 2020.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Medipoint om een douche-/toiletstoel zelfrijder aan u te leveren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Medipoint heeft aan ons doorgegeven dat een douche-/toiletstoel zelfrijder bij u is afgeleverd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Product geleverd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Medipoint",
+      "title": "Douche-/toiletstoel zelfrijder",
+    },
+    {
+      "dateDescision": "2020-06-05",
+      "dateEnd": "2020-08-05",
+      "dateStart": "2020-06-05",
+      "id": "1809360062",
+      "isActual": false,
+      "itemTypeCode": "WRA3",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1809360062",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2020-06-05",
+          "description": "
+            <p>
+              U hebt recht op een reparatie-/verwijderopdracht natte cel en toilet per 05 juni 2020.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "2020-08-05",
+          "description": "<p>
+            Uw recht op reparatie-/verwijderopdracht natte cel en toilet is beëindigd per 05 augustus 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Welzorg",
+      "title": "Reparatie-/verwijderopdracht natte cel en toilet",
+    },
+    {
+      "dateDescision": "2020-03-12",
+      "dateEnd": "2020-06-14",
+      "dateStart": "2020-03-09",
+      "id": "3441632088",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3441632088",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2020-03-12",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 09 maart 2020.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-06-14",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 14 juni 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2020-03-12",
+      "dateEnd": "2020-12-31",
+      "dateStart": "2020-03-09",
+      "id": "636127578",
+      "isActual": false,
+      "itemTypeCode": "AWBG",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/636127578",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2020-03-12",
+          "description": "
+              <p>
+                U hebt recht op aanvullende individuele ondersteuning per 09 maart 2020.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-12-31",
+          "description": "<p>
+            Uw recht op aanvullende individuele ondersteuning is beëindigd per 31 december 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Aanvullende individuele ondersteuning",
+    },
+    {
+      "dateDescision": "2020-03-12",
+      "dateEnd": "2020-12-31",
+      "dateStart": "2020-03-09",
+      "id": "1926069212",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1926069212",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2020-03-12",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 09 maart 2020.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-12-31",
+          "description": "<p>
+            Uw recht op hulp bij het huishouden is beëindigd per 31 december 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2019-10-09",
+      "dateEnd": "2019-12-09",
+      "dateStart": "2019-10-09",
+      "id": "954761814",
+      "isActual": false,
+      "itemTypeCode": "WRA3",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/954761814",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2019-10-09",
+          "description": "
+            <p>
+              U hebt recht op een reparatie-/verwijderopdracht natte cel en toilet per 09 oktober 2019.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "2019-12-09",
+          "description": "<p>
+            Uw recht op reparatie-/verwijderopdracht natte cel en toilet is beëindigd per 09 december 2019
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Welzorg",
+      "title": "Reparatie-/verwijderopdracht natte cel en toilet",
+    },
+    {
+      "dateDescision": "2019-04-15",
+      "dateEnd": "2020-03-08",
+      "dateStart": "2019-04-14",
+      "id": "446200219",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/446200219",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2019-04-15",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 14 april 2019.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-03-08",
+          "description": "<p>
+            Uw recht op hulp bij het huishouden is beëindigd per 08 maart 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2019-03-11",
+      "dateEnd": "2020-03-08",
+      "dateStart": "2019-03-09",
+      "id": "938485502",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/938485502",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2019-03-11",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 09 maart 2019.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-03-08",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 08 maart 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2019-03-11",
+      "dateEnd": "2020-03-08",
+      "dateStart": "2019-03-09",
+      "id": "1175100182",
+      "isActual": false,
+      "itemTypeCode": "AWBG",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1175100182",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2019-03-11",
+          "description": "
+              <p>
+                U hebt recht op aanvullende individuele ondersteuning per 09 maart 2019.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-03-08",
+          "description": "<p>
+            Uw recht op aanvullende individuele ondersteuning is beëindigd per 08 maart 2020
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Aanvullende individuele ondersteuning",
+    },
+    {
+      "dateDescision": "2018-11-29",
+      "dateEnd": "2019-03-08",
+      "dateStart": "2018-11-28",
+      "id": "300203506",
+      "isActual": false,
+      "itemTypeCode": "AWBG",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/300203506",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2018-11-29",
+          "description": "
+              <p>
+                U hebt recht op aanvullende individuele ondersteuning per 28 november 2018.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2019-03-08",
+          "description": "<p>
+            Uw recht op aanvullende individuele ondersteuning is beëindigd per 08 maart 2019
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Aanvullende individuele ondersteuning",
+    },
+    {
+      "dateDescision": "2018-12-27",
+      "dateEnd": null,
+      "dateStart": "2018-10-24",
+      "id": "2889701237",
+      "isActual": true,
+      "itemTypeCode": "WRA",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2889701237",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2018-12-27",
+          "description": "
+            <p>
+              U hebt recht op een woonruimteaanpassing met doc 4 per 24 oktober 2018.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Welzorg heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Welzorg",
+      "title": "Woonruimteaanpassing met doc 4",
+    },
+    {
+      "dateDescision": "2018-04-25",
+      "dateEnd": "2019-04-13",
+      "dateStart": "2018-04-14",
+      "id": "4058168346",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/4058168346",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2018-04-25",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 14 april 2018.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2019-04-13",
+          "description": "<p>
+            Uw recht op hulp bij het huishouden is beëindigd per 13 april 2019
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2018-04-19",
+      "dateEnd": "2019-03-08",
+      "dateStart": "2018-03-09",
+      "id": "2707273693",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2707273693",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2018-04-19",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 09 maart 2018.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2019-03-08",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 08 maart 2019
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2017-11-24",
+      "dateEnd": "2018-11-23",
+      "dateStart": "2017-11-24",
+      "id": "3209335922",
+      "isActual": false,
+      "itemTypeCode": "AWBG",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3209335922",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2017-11-24",
+          "description": "
+              <p>
+                U hebt recht op aanvullende individuele ondersteuning per 24 november 2017.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2018-11-23",
+          "description": "<p>
+            Uw recht op aanvullende individuele ondersteuning is beëindigd per 23 november 2018
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Aanvullende individuele ondersteuning",
+    },
+    {
+      "dateDescision": "2017-06-01",
+      "dateEnd": "2018-04-13",
+      "dateStart": "2017-06-01",
+      "id": "3783046999",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/3783046999",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2017-06-01",
+          "description": "
+              <p>
+                U hebt recht op hulp bij het huishouden per 01 juni 2017.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2018-04-13",
+          "description": "<p>
+            Uw recht op hulp bij het huishouden is beëindigd per 13 april 2018
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden",
+    },
+    {
+      "dateDescision": "2017-06-01",
+      "dateEnd": "2018-03-08",
+      "dateStart": "2017-06-01",
+      "id": "477515900",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/477515900",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2017-06-01",
+          "description": "
+              <p>
+                U hebt recht op dagbesteding per 01 juni 2017.
+              </p>
+              <p>
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+              </p>
+            ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring is gestart met het leveren van dagbesteding.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            meer krijgt.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2018-03-08",
+          "description": "<p>
+            Uw recht op dagbesteding is beëindigd per 08 maart 2018
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Dagbesteding",
+    },
+    {
+      "dateDescision": "2014-09-09",
+      "dateEnd": "2022-12-20",
+      "dateStart": "2014-09-08",
+      "id": "2067143485",
+      "isActual": false,
+      "itemTypeCode": "OVE",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2067143485",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2014-09-09",
+          "description": "
+            <p>
+              U hebt recht op een elektrische hulpaandrijving voor rolstoel per 08 september 2014.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Harting-Bank om een elektrische hulpaandrijving voor rolstoel aan u te leveren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Harting-Bank heeft aan ons doorgegeven dat een elektrische hulpaandrijving voor rolstoel bij u is afgeleverd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Product geleverd",
+        },
+        {
+          "datePublished": "2022-12-20",
+          "description": "<p>
+            Uw recht op elektrische hulpaandrijving voor rolstoel is beëindigd per 20 december 2022.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Harting-Bank",
+      "title": "Elektrische hulpaandrijving voor rolstoel",
+    },
+    {
+      "dateDescision": "2014-09-11",
+      "dateEnd": null,
+      "dateStart": "2014-09-08",
+      "id": "4216491004",
+      "isActual": true,
+      "itemTypeCode": "WRA",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/4216491004",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2014-09-11",
+          "description": "
+            <p>
+              U hebt recht op een woonruimteaanpassing 3 per 08 september 2014.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Gebr Koenen B.V. heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Gebr Koenen B.V.",
+      "title": "Woonruimteaanpassing 3",
+    },
+    {
+      "dateDescision": "2013-12-09",
+      "dateEnd": null,
+      "dateStart": "2013-12-05",
+      "id": "2730893522",
+      "isActual": true,
+      "itemTypeCode": "WRA",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/2730893522",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2013-12-09",
+          "description": "
+            <p>
+              U hebt recht op een woonruimteaanpassing met doc 2 per 05 december 2013.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Gebr Koenen B.V. heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Gebr Koenen B.V.",
+      "title": "Woonruimteaanpassing met doc 2",
+    },
+    {
+      "dateDescision": "2013-05-17",
+      "dateEnd": null,
+      "dateStart": "2013-05-06",
+      "id": "1672363416",
+      "isActual": true,
+      "itemTypeCode": "WRA",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1672363416",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U krijgt dit besluit per post.
+            </strong>
+          </p>",
+          "datePublished": "2013-05-17",
+          "description": "
+            <p>
+              U hebt recht op een woonruimteaanpassing met doc 1 per 06 mei 2013.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
+            te voeren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Gebr Koenen B.V. heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Gebr Koenen B.V.",
+      "title": "Woonruimteaanpassing met doc 1",
+    },
+    {
+      "dateDescision": "2012-10-05",
+      "dateEnd": "2020-06-09",
+      "dateStart": "2012-10-05",
+      "id": "1703298224",
+      "isActual": false,
+      "itemTypeCode": "RWD",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/1703298224",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2012-10-05",
+          "description": "
+            <p>
+              U hebt recht op een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) per 05 oktober 2012.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            De gemeente heeft opdracht gegeven aan Harting-Bank om een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) aan u te leveren.
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            Harting-Bank heeft aan ons doorgegeven dat een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) bij u is afgeleverd.
+          </p>",
+          "documents": [],
+          "id": "status-step-2",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Product geleverd",
+        },
+        {
+          "datePublished": "2020-06-09",
+          "description": "<p>
+            Uw recht op douche-/toiletstoel (verrijdb/kantelb/ind aangep.) is beëindigd per 09 juni 2020.
+          </p>",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Harting-Bank",
+      "title": "Douche-/toiletstoel (verrijdb/kantelb/ind aangep.)",
+    },
+    {
+      "dateDescision": "2012-08-07",
+      "dateEnd": "2022-07-31",
+      "dateStart": "2012-08-07",
+      "id": "4046397887",
+      "isActual": false,
+      "itemTypeCode": "AOV",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorzieningen/4046397887",
+      },
+      "steps": [
+        {
+          "altDocumentContent": "<p>
+            <strong>
+              U hebt dit besluit per post ontvangen.
+            </strong>
+          </p>",
+          "datePublished": "2012-08-07",
+          "description": "
+            <p>
+              U hebt recht op een kamer tot kamer vervoer per 07 augustus 2012. De vervoerspas ontvangt u per
+              post.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          ",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit",
+        },
+        {
+          "datePublished": "2022-07-31",
+          "description": "<p>
+            Uw recht op kamer tot kamer vervoer is beëindigd per 31 juli 2022
+          </p>",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": true,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Transvision",
+      "title": "Kamer tot kamer vervoer",
+    },
+  ],
+  "status": "OK",
+}
+`;

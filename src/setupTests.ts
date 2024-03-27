@@ -41,6 +41,7 @@ export const remoteApiHost = 'http://remote-api-host';
 
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
+process.env.BFF_API_BASE_URL = bffApiHost;
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
 process.env.BFF_REQUEST_CACHE_ENABLED = 'false';
@@ -69,7 +70,12 @@ process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_KREFIA_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_VERGUNNINGEN_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_WPI_API_BASE_URL = `${remoteApiHost}`;
-process.env.BFF_WMO_API_BASE_URL = `${remoteApiHost}`;
+
+process.env.BFF_ZORGNED_API_BASE_URL = `${remoteApiHost}/zorgned`;
+process.env.BFF_ZORGNED_API_TOKEN = 'xxxx22xxxx';
+
+process.env.BFF_GPASS_API_BASE_URL = `${remoteApiHost}/stadspas`;
+process.env.BFF_GPASS_API_TOKEN = '22222xx22222';
 
 process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';

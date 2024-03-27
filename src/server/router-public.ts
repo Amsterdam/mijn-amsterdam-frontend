@@ -5,6 +5,7 @@ import { BffEndpoints, RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import {
+  QueryParamsCMSFooter,
   fetchCMSCONTENT,
   fetchCmsFooter,
   fetchDataset,
@@ -14,38 +15,49 @@ import {
   loadPolylineFeatures,
 } from './services';
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
-import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
+import {
+  QueryParamsMaintenanceNotifications,
+  fetchMaintenanceNotificationsActual,
+} from './services/cms-maintenance-notifications';
 
 export const router = express.Router();
 
-router.get(
-  BffEndpoints.CACHE_OVERVIEW,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const overview = await cacheOverview();
-    return res.json(overview);
-  }
-);
-
+/**
+ * Endpoint that serves CMS related content like Footer link/test content and Page data.
+ */
 router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
   const requestID = res.locals.requestID;
   try {
-    const response = await fetchCMSCONTENT(requestID, queryParams(req));
+    const response = await fetchCMSCONTENT(
+      requestID,
+      queryParams<QueryParamsCMSFooter>(req)
+    );
     return res.json(response);
   } catch (error) {
     next(error);
   }
 });
-
+/**
+ * This endpoint serves the Footer content, transformed to AST, only.
+ * A query parameters
+ * - forceRenew=true Forces the underlying service cache to be renewed
+ */
 router.get(BffEndpoints.FOOTER, async (req, res, next) => {
   const requestID = res.locals.requestID;
   try {
-    const response = await fetchCmsFooter(requestID, queryParams(req));
+    const response = await fetchCmsFooter(
+      requestID,
+      queryParams<QueryParamsCMSFooter>(req)
+    );
     return res.json(response);
   } catch (error) {
     next(error);
   }
 });
 
+/**
+ * Serves the maintenance and outage notifications.
+ */
 router.get(
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   async (req, res, next) => {
@@ -53,7 +65,7 @@ router.get(
     try {
       const response = await fetchMaintenanceNotificationsActual(
         requestID,
-        queryParams(req)
+        queryParams<QueryParamsMaintenanceNotifications>(req)
       );
       return res.json(response);
     } catch (error) {

@@ -259,7 +259,7 @@ async function getFooter(requestID: requestID, forceRenew: boolean = false) {
     });
 }
 
-function modifyFooterContent(content: CMSFooterContent) {
+function transformContentToAST(content: CMSFooterContent) {
   let blocks = content.blocks.map((block) => {
     return {
       ...block,
@@ -272,8 +272,8 @@ function modifyFooterContent(content: CMSFooterContent) {
 
 async function fetchCmsBase(
   requestID: requestID,
-  query?: Record<string, string>,
-  shouldMofidyFooterContent: boolean = false
+  query?: QueryParamsCMSFooter,
+  doTransformToAST: boolean = false
 ) {
   const forceRenew = !!(query?.forceRenew === 'true');
 
@@ -294,8 +294,8 @@ async function fetchCmsBase(
   let generalInfoContent = getSettledResult(generalInfo).content;
   let footerContent = getSettledResult(footer).content as CMSFooterContent;
 
-  if (shouldMofidyFooterContent) {
-    footerContent = modifyFooterContent(footerContent);
+  if (doTransformToAST) {
+    footerContent = transformContentToAST(footerContent);
   }
 
   return {
@@ -304,9 +304,14 @@ async function fetchCmsBase(
   };
 }
 
+export interface QueryParamsCMSFooter extends Record<string, string> {
+  forceRenew: 'true';
+  profileType: ProfileType;
+}
+
 export async function fetchCmsFooter(
   requestID: requestID,
-  query?: Record<string, string>
+  query?: QueryParamsCMSFooter
 ) {
   const response = await fetchCmsBase(requestID, query, true);
   return apiSuccessResult(response.footer);
@@ -314,14 +319,10 @@ export async function fetchCmsFooter(
 
 export async function fetchCMSCONTENT(
   requestID: requestID,
-  query?: Record<string, string>,
-  shouldMofidyFooterContent: boolean = false
+  query?: QueryParamsCMSFooter,
+  doTransformToAST: boolean = false
 ) {
-  const response = await fetchCmsBase(
-    requestID,
-    query,
-    shouldMofidyFooterContent
-  );
+  const response = await fetchCmsBase(requestID, query, doTransformToAST);
 
   return apiSuccessResult(response);
 }

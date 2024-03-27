@@ -249,7 +249,7 @@ components:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         WPI_BBZ:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        WPI_STADSPAS:
+        STADSPAS:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         WMO:
           $ref: '#/components/schemas/ApiSearchConfigResult'
@@ -317,7 +317,7 @@ components:
           type: object
         WPI_BBZ:
           type: object
-        WPI_STADSPAS:
+        STADSPAS:
           type: object
         NOTIFICATIONS:
           type: object

@@ -181,9 +181,15 @@ async function fetchCMSMaintenanceNotifications(
   return eventItemsResponse;
 }
 
+export interface QueryParamsMaintenanceNotifications
+  extends Record<string, string | undefined> {
+  cache?: 'false' | string;
+  page?: string;
+}
+
 export async function fetchMaintenanceNotificationsActual(
   requestID: requestID,
-  queryParams?: Record<string, string>
+  queryParams?: QueryParamsMaintenanceNotifications
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
     requestID,

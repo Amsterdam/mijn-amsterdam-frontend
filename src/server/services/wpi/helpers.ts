@@ -84,7 +84,7 @@ export function createProcessNotification(
   };
 }
 
-// This applies to Tozo/Tonk items, stadspasaanvraag, bijstandsaanvraag
+// This applies to Tozo/Tonk items and bijstandsaanvraag
 export function isRequestProcessActual(
   datePublished: string,
   compareDate: Date
@@ -146,14 +146,6 @@ export function addLink(requestProcess: WpiRequestProcess) {
     case 'Bijstandsuitkering':
       link = {
         to: generatePath(AppRoutes['INKOMEN/BIJSTANDSUITKERING'], {
-          id,
-        }),
-        title,
-      };
-      break;
-    case 'Stadspas':
-      link = {
-        to: generatePath(AppRoutes['STADSPAS/AANVRAAG'], {
           id,
         }),
         title,

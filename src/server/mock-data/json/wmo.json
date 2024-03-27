@@ -1,743 +1,4063 @@
 {
-  "status": "OK",
-  "content": [
-    {
-      "dateDecision": "2022-02-13",
-      "dateEnd": null,
-      "dateStart": "2022-02-11",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "FIE",
-      "serviceDateEnd": null,
-      "serviceDateStart": null,
-      "serviceOrderDate": "2022-02-13",
-      "supplier": "Medipoint",
-      "title": "rolstoelfiets met hulpmotor",
-      "documents": [
-        {
-          "id": "B744593",
-          "title": "WRV rapport",
-          "datePublished": "2021-03-31T15:28:05",
-          "url": "#"
+  "_links": null,
+  "_embedded": {
+    "aanvraag": [
+      {
+        "_links": null,
+        "identificatie": "1269156",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
         },
-        {
-          "id": "B740440",
-          "title": "E-mail memo",
-          "datePublished": "2021-03-15T16:20:44",
-          "url": "#"
-        }
-      ]
-    },
-    {
-      "title": "hulp bij het huishouden (nog niet geleverd)",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Emile Thuiszorg",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2022-01-15",
-      "dateStart": "2022-01-15",
-      "dateEnd": null,
-      "serviceOrderDate": null,
-      "serviceDateStart": null,
-      "serviceDateEnd": null
-    },
-    {
-      "title": "hulp bij het huishouden (geleverd)",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Emile Thuiszorg",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2022-01-15",
-      "dateStart": "2021-12-15",
-      "dateEnd": null,
-      "serviceOrderDate": null,
-      "serviceDateStart": "2022-01-12",
-      "serviceDateEnd": null,
-      "documents": [
-        {
-          "id": "B744594",
-          "title": "WRV rapport",
-          "datePublished": "2021-03-31T15:28:05",
-          "url": "#"
-        }
-      ]
-    },
-    {
-      "title": "hulp bij het huishouden (tijdelijk gestopt)",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Emile Thuiszorg",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2022-01-15",
-      "dateStart": "2021-12-15",
-      "dateEnd": null,
-      "serviceOrderDate": null,
-      "serviceDateStart": "2022-01-12",
-      "serviceDateEnd": "2022-02-05"
-    },
-    {
-      "title": "hulp bij het huishouden (gestopt)",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Emile Thuiszorg",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2022-01-15",
-      "dateStart": "2021-12-15",
-      "dateEnd": "2022-01-22",
-      "serviceOrderDate": null,
-      "serviceDateStart": "2022-01-12",
-      "serviceDateEnd": "2022-01-19"
-    },
-    {
-      "dateDecision": "2018-04-25",
-      "dateEnd": null,
-      "dateStart": "2018-04-06",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "WRA",
-      "serviceDateEnd": null,
-      "serviceDateStart": null,
-      "serviceOrderDate": null,
-      "supplier": "Welzorg",
-      "title": "woonruimteaanpassing (besluit / nog niet geleverd)"
-    },
-    {
-      "dateDecision": "2018-04-25",
-      "dateEnd": null,
-      "dateStart": "2018-04-06",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "WRA",
-      "serviceDateEnd": null,
-      "serviceDateStart": null,
-      "serviceOrderDate": "2018-04-26",
-      "supplier": "Welzorg",
-      "title": "woonruimteaanpassing (opdracht gegeven)"
-    },
-    {
-      "dateDecision": "2018-04-25",
-      "dateEnd": null,
-      "dateStart": "2018-04-06",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "WRA",
-      "serviceDateEnd": null,
-      "serviceDateStart": "2018-05-09",
-      "serviceOrderDate": "2018-04-26",
-      "supplier": "Welzorg",
-      "title": "woonruimteaanpassing (geleverd)"
-    },
-    {
-      "dateDecision": "2018-04-25",
-      "dateEnd": "2018-10-26",
-      "dateStart": "2018-04-06",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "WRA",
-      "serviceDateEnd": "2018-10-26",
-      "serviceDateStart": "2018-05-09",
-      "serviceOrderDate": "2018-04-26",
-      "supplier": "Welzorg",
-      "title": "woonruimteaanpassing (afgelopen)"
-    },
-    {
-      "dateDecision": "2021-08-26",
-      "dateEnd": null,
-      "dateStart": "2021-08-24",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "FIE",
-      "serviceDateEnd": null,
-      "serviceDateStart": "2021-08-30",
-      "serviceOrderDate": "2021-08-30",
-      "supplier": "Fietsenwinkel",
-      "title": "ouder/kind tandem (geleverd)"
-    },
-    {
-      "dateDecision": "2021-08-26",
-      "dateEnd": null,
-      "dateStart": "2021-08-24",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "FIE",
-      "serviceDateEnd": null,
-      "serviceDateStart": null,
-      "serviceOrderDate": "2021-08-30",
-      "supplier": "Fietsenwinkel",
-      "title": "ouder/kind tandem (nog niet geleverd)"
-    },
-    {
-      "dateDecision": "2021-08-26",
-      "dateEnd": "2021-12-24",
-      "dateStart": "2021-08-24",
-      "deliveryType": "ZIN",
-      "isActual": false,
-      "itemTypeCode": "FIE",
-      "serviceDateEnd": "2021-09-09",
-      "serviceDateStart": "2021-08-30",
-      "serviceOrderDate": "2021-08-30",
-      "supplier": "Fietsenwinkel",
-      "title": "ouder/kind tandem (geleverd / einde recht)"
-    },
-    {
-      "dateDecision": "2016-06-10",
-      "dateEnd": null,
-      "dateStart": "2016-04-28",
-      "deliveryType": "",
-      "isActual": true,
-      "itemTypeCode": "MVV",
-      "serviceDateEnd": null,
-      "serviceDateStart": null,
-      "serviceOrderDate": null,
-      "supplier": null,
-      "title": "financiële tegemoetkoming gebruik gesloten buitenwagen in bruikleen"
-    },
-    {
-      "dateDecision": "2012-11-30",
-      "dateEnd": null,
-      "dateStart": "2012-11-30",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "OVE",
-      "serviceDateEnd": null,
-      "serviceDateStart": "2017-06-01",
-      "serviceOrderDate": "2017-06-01",
-      "supplier": "Welzorg",
-      "title": "autozitje"
-    },
-    {
-      "dateDecision": "2013-06-17",
-      "dateEnd": null,
-      "dateStart": "2013-02-07",
-      "deliveryType": "ZIN",
-      "isActual": false,
-      "itemTypeCode": "OVE",
-      "serviceDateEnd": "2021-09-27",
-      "serviceDateStart": "2017-06-01",
-      "serviceOrderDate": "2017-06-01",
-      "supplier": "Welzorg",
-      "title": "buggy"
-    },
-    {
-      "dateDecision": "2015-02-16",
-      "dateEnd": null,
-      "dateStart": "2015-02-16",
-      "deliveryType": "ZIN",
-      "isActual": false,
-      "itemTypeCode": "FIE",
-      "serviceDateEnd": "2021-09-27",
-      "serviceDateStart": "2017-06-01",
-      "serviceOrderDate": "2017-06-01",
-      "supplier": "Welzorg",
-      "title": "driewielfiets 5-9 jr"
-    },
-    {
-      "dateDecision": "2021-08-26",
-      "dateEnd": null,
-      "dateStart": "2021-08-24",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "ROL",
-      "serviceDateEnd": null,
-      "serviceDateStart": null,
-      "serviceOrderDate": "2021-08-30",
-      "supplier": "Welzorg",
-      "title": "handbewogen kinderrolstoel"
-    },
-    {
-      "dateDecision": "2018-04-25",
-      "dateEnd": null,
-      "dateStart": "2018-04-06",
-      "deliveryType": "ZIN",
-      "isActual": true,
-      "itemTypeCode": "WRA",
-      "serviceDateEnd": null,
-      "serviceDateStart": "2018-05-09",
-      "serviceOrderDate": "2018-04-26",
-      "supplier": "Welzorg",
-      "title": "woonruimteaanpassing"
-    },
-    {
-      "title": "handbewogen rolstoel",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Medipoint B.V.",
-      "itemTypeCode": "ROL",
-      "dateDecision": "2012-10-05",
-      "dateStart": "2012-10-05",
-      "dateEnd": null,
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Gebr Koenen B.V.",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2013-05-17",
-      "dateStart": "2013-05-06",
-      "dateEnd": null,
-      "serviceOrderDate": "2013-05-17",
-      "serviceDateStart": "2013-06-17",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Gebr Koenen B.V.",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2013-12-09",
-      "dateStart": "2013-12-05",
-      "dateEnd": null,
-      "serviceOrderDate": "2013-12-09",
-      "serviceDateStart": "2014-01-28",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "elektrische hulpaandrijving voor rolstoel",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Medipoint B.V.",
-      "itemTypeCode": "OVE",
-      "dateDecision": "2014-09-09",
-      "dateStart": "2014-09-08",
-      "dateEnd": null,
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Gebr Koenen B.V.",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2014-09-11",
-      "dateStart": "2014-09-08",
-      "dateEnd": null,
-      "serviceOrderDate": "2014-09-11",
-      "serviceDateStart": "2014-11-07",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Medipoint B.V.",
-      "itemTypeCode": "RWD",
-      "dateDecision": "2012-10-05",
-      "dateStart": "2012-10-05",
-      "dateEnd": null,
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "dagbesteding",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Amstelring",
-      "itemTypeCode": "DBS",
-      "dateDecision": "2017-06-01",
-      "dateStart": "2017-06-01",
-      "dateEnd": "2018-03-08",
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": "2018-03-08"
-    },
-    {
-      "title": "hulp bij het huishouden",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Emile Thuiszorg",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2017-06-01",
-      "dateStart": "2017-06-01",
-      "dateEnd": "2018-04-13",
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": "2018-04-13"
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Amstelring",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2017-11-24",
-      "dateStart": "2017-11-24",
-      "dateEnd": "2018-11-23",
-      "serviceOrderDate": "2017-11-24",
-      "serviceDateStart": "2017-11-24",
-      "serviceDateEnd": "2018-11-23"
-    },
-    {
-      "title": "PGB item 1",
-      "isActual": false,
-      "deliveryType": "PGB",
-      "supplier": "PGB Ring",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2017-11-24",
-      "dateStart": "2017-11-24",
-      "dateEnd": "2018-11-23",
-      "serviceOrderDate": "2017-11-24",
-      "serviceDateStart": "2017-11-24",
-      "serviceDateEnd": "2018-11-23"
-    },
-    {
-      "title": "dagbesteding 2019!",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Amstelring",
-      "itemTypeCode": "DBS",
-      "dateDecision": "2018-04-19",
-      "dateStart": "2018-03-09",
-      "dateEnd": "2019-03-08",
-      "serviceOrderDate": "2018-04-19",
-      "serviceDateStart": "2018-03-09",
-      "serviceDateEnd": "2019-03-08"
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Welzorg",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2018-12-27",
-      "dateStart": "2018-10-24",
-      "dateEnd": null,
-      "serviceOrderDate": "2019-02-15T13:45:36",
-      "serviceDateStart": "2019-03-25",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Amstelring",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2018-11-29",
-      "dateStart": "2018-11-28",
-      "dateEnd": "2019-03-08",
-      "serviceOrderDate": "2018-11-29",
-      "serviceDateStart": "2018-11-28",
-      "serviceDateEnd": "2019-03-08"
-    },
-    {
-      "title": "hulp bij het huishouden",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Emile Thuiszorg",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2018-04-25",
-      "dateStart": "2018-04-14",
-      "dateEnd": "2019-04-13",
-      "serviceOrderDate": "2018-04-25",
-      "serviceDateStart": "2018-04-14",
-      "serviceDateEnd": "2019-04-13"
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Amstelring",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2019-03-11",
-      "dateStart": "2019-03-09",
-      "dateEnd": "2020-03-08",
-      "serviceOrderDate": "2019-03-11",
-      "serviceDateStart": "2019-03-09",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "dagbesteding 2019! 2",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Amstelring",
-      "itemTypeCode": "DBS",
-      "dateDecision": "2019-03-11",
-      "dateStart": "2019-03-09",
-      "dateEnd": "2020-03-08",
-      "serviceOrderDate": "2019-03-11",
-      "serviceDateStart": "2019-03-11",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "hulp bij het huishouden",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Emile Thuiszorg",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2019-04-15",
-      "dateStart": "2019-04-14",
-      "dateEnd": "2022-03-08",
-      "serviceOrderDate": "2019-04-15",
-      "serviceDateStart": "2019-04-14",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "kinderspeelvoertuig",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Welzorg",
-      "itemTypeCode": "OVE",
-      "dateDecision": "2013-05-13",
-      "dateStart": "2013-03-14",
-      "dateEnd": null,
-      "serviceOrderDate": "2017-06-22",
-      "serviceDateStart": "2017-06-02",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Leger des Heils 2",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2018-11-22",
-      "dateStart": "2018-11-20",
-      "dateEnd": "2019-11-20",
-      "serviceOrderDate": "2018-11-22",
-      "serviceDateStart": "2018-11-20",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Stichting Forsa Amsterdam",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2018-08-13",
-      "dateStart": "2018-01-01",
-      "dateEnd": "2018-12-30",
-      "serviceOrderDate": "2018-08-13",
-      "serviceDateStart": "2018-01-01",
-      "serviceDateEnd": "2018-12-30"
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Familysupporters/Forsa",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2019-01-31",
-      "dateStart": "2018-12-31",
-      "dateEnd": "2018-12-31",
-      "serviceOrderDate": "2019-01-31",
-      "serviceDateStart": "2018-12-31",
-      "serviceDateEnd": "2018-12-31"
-    },
-    {
-      "title": "ambulante ondersteuning 3",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Familysupporters/Forsa",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2019-01-31",
-      "dateStart": "2019-01-01",
-      "dateEnd": "2019-12-31",
-      "serviceOrderDate": "2019-01-31",
-      "serviceDateStart": "2019-01-01",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "scootmobiel voor buitengebruik",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Medipoint B.V.",
-      "itemTypeCode": "SCO",
-      "dateDecision": "2005-03-21",
-      "dateStart": "2014-12-29",
-      "dateEnd": null,
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Ergomedi Bouw B.V.",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2015-06-23",
-      "dateStart": "2015-02-19",
-      "dateEnd": null,
-      "serviceOrderDate": "2015-06-23",
-      "serviceDateStart": "2015-09-08",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "dagbesteding",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Cordaan",
-      "itemTypeCode": "DBS",
-      "dateDecision": "2017-06-01",
-      "dateStart": "2017-06-01",
-      "dateEnd": "2018-05-01",
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": "2018-05-01"
-    },
-    {
-      "title": "handbewogen rolstoel voor semi-permanent gebruik",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Medipoint B.V.",
-      "itemTypeCode": "ROL",
-      "dateDecision": "2018-09-17",
-      "dateStart": "2018-09-07",
-      "dateEnd": null,
-      "serviceOrderDate": "2019-06-24T07:25:14",
-      "serviceDateStart": "2019-05-23",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "handbewogen rolstoel voor semi-permanent gebruik",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Medipoint B.V.",
-      "itemTypeCode": "ROL",
-      "dateDecision": "2018-09-17",
-      "dateStart": "2018-09-07",
-      "dateEnd": null,
-      "serviceOrderDate": "2019-06-24T07:25:14",
-      "serviceDateStart": "2019-05-23",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "dagbesteding",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Vivium Zorggroep",
-      "itemTypeCode": "DBS",
-      "dateDecision": "2018-08-20",
-      "dateStart": "2018-07-06",
-      "dateEnd": "2019-01-01",
-      "serviceOrderDate": "2018-08-20",
-      "serviceDateStart": "2018-07-06",
-      "serviceDateEnd": "2019-01-01"
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Welzorg",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2018-05-09",
-      "dateStart": "2018-04-20",
-      "dateEnd": null,
-      "serviceOrderDate": "2018-07-12T10:33:59",
-      "serviceDateStart": "2018-08-20",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Welzorg",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2018-07-20",
-      "dateStart": "2018-07-17",
-      "dateEnd": null,
-      "serviceOrderDate": "2018-07-23T13:31:36",
-      "serviceDateStart": "2018-10-08",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "dagbesteding",
-      "isActual": true,
-      "deliveryType": "ZIN",
-      "supplier": "Amstelring",
-      "itemTypeCode": "DBS",
-      "dateDecision": "2019-03-14",
-      "dateStart": "2019-03-13",
-      "dateEnd": "2020-03-12",
-      "serviceOrderDate": "2019-03-14",
-      "serviceDateStart": "2019-03-13",
-      "serviceDateEnd": null
-    },
-    {
-      "title": "Specialistische jeugdhulp",
-      "Wet": 2,
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "itemTypeCode": "JG01",
-      "dateDecision": "2017-01-31",
-      "dateStart": "2017-01-03",
-      "dateEnd": "2018-01-02",
-      "serviceOrderDate": "2017-02-09",
-      "serviceDateStart": "2017-01-19",
-      "serviceDateEnd": "2018-01-02"
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "2Learn B.V.",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2018-03-22",
-      "dateStart": "2018-02-21",
-      "dateEnd": "2019-02-21",
-      "serviceOrderDate": "2018-03-22",
-      "serviceDateStart": "2018-02-21",
-      "serviceDateEnd": "2019-02-21"
-    },
-    {
-      "title": "hulp bij het huishouden",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Cordaan",
-      "itemTypeCode": "WMH",
-      "dateDecision": "2017-06-01",
-      "dateStart": "2017-06-01",
-      "dateEnd": "2018-02-16",
-      "serviceOrderDate": "2017-06-01",
-      "serviceDateStart": "2017-06-01",
-      "serviceDateEnd": "2018-02-16"
-    },
-    {
-      "title": "ambulante ondersteuning",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Cordaan",
-      "itemTypeCode": "AO5",
-      "dateDecision": "2018-01-01",
-      "dateStart": "2018-01-01",
-      "dateEnd": "2018-02-16",
-      "serviceOrderDate": "2018-01-01",
-      "serviceDateStart": "2018-01-01",
-      "serviceDateEnd": "2018-02-16"
-    },
-    {
-      "title": "woonruimteaanpassing",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "JTWD - Zorg",
-      "itemTypeCode": "WRA",
-      "dateDecision": "2022-01-03",
-      "dateStart": "2022-01-03",
-      "dateEnd": "2022-03-10",
-      "serviceOrderDate": "2022-01-23T13:31:36",
-      "serviceDateStart": null,
-      "serviceDateEnd": null
-    },
-    {
-      "dateDecision": "2023-07-04",
-      "title": "dagbesteding meedoen",
-      "itemTypeCode": "DBS",
-      "dateStart": "2023-07-01",
-      "dateEnd": "2024-07-01",
-      "isActual": false,
-      "deliveryType": "ZIN",
-      "supplier": "Madeliefje Thuiszorg",
-      "serviceOrderDate": null,
-      "serviceDateStart": null,
-      "serviceDateEnd": null,
-      "documents": null
-    }
-  ]
+        "hulpvraag": {
+          "datumRegistratie": "2013-04-25",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2013-04-25",
+        "datumAanvraag": "2013-04-25",
+        "beschikking": {
+          "beschikkingNummer": 300111429,
+          "datumAfgifte": "2013-05-17",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "116841",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "WRA",
+                "productCode": null,
+                "productsoortCode": "WRA",
+                "omschrijving": "woonruimteaanpassing met doc 1"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2013-05-06",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0994",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Gebr Koenen B.V."
+                },
+                "toelichting": "quam erat posuere vel tristique nec lorem aliquam adipiscing ex sodales odio lacus est ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "62214",
+                    "toewijzingsDatumTijd": "2013-05-17T00:00:00",
+                    "ingangsdatum": "2013-05-06",
+                    "einddatum": null,
+                    "datumOpdracht": "2013-05-17T00:00:00",
+                    "leverancier": {
+                      "identificatie": "LA0994",
+                      "agbcode": null,
+                      "kvk": null,
+                      "omschrijving": "Gebr Koenen B.V."
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2013-06-17",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B73199",
+            "omschrijving": "WRA beschikking Definitief",
+            "datumDefinitief": "2013-05-17T00:00:00",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1294388",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2012-08-07",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2012-08-07",
+        "datumAanvraag": "2012-08-07",
+        "beschikking": {
+          "beschikkingNummer": 300136650,
+          "datumAfgifte": "2012-08-07",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "176682",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "740",
+                "productCode": null,
+                "productsoortCode": "AOV",
+                "omschrijving": "kamer tot kamer vervoer"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2012-08-07",
+                "datumEindeGeldigheid": "2022-07-31",
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": null,
+                "leverancier": {
+                  "identificatie": "AOV002",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Transvision"
+                },
+                "toelichting": null,
+                "toewijzingen": []
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1329814",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2013-11-12",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2013-11-12",
+        "datumAanvraag": "2013-11-12",
+        "beschikking": {
+          "beschikkingNummer": 300172074,
+          "datumAfgifte": "2013-12-09",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "183109",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "WRA",
+                "productCode": null,
+                "productsoortCode": "WRA",
+                "omschrijving": "woonruimteaanpassing met doc 2"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2013-12-05",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0994",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Gebr Koenen B.V."
+                },
+                "toelichting": "non potenti turpis ultrices nam eget volutpat purus eleifend consectetur arcu ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "58005",
+                    "toewijzingsDatumTijd": "2013-12-09T00:00:00",
+                    "ingangsdatum": "2013-12-05",
+                    "einddatum": null,
+                    "datumOpdracht": "2013-12-09T00:00:00",
+                    "leverancier": {
+                      "identificatie": "LA0994",
+                      "agbcode": null,
+                      "kvk": null,
+                      "omschrijving": "Gebr Koenen B.V."
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2014-01-28",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B137364",
+            "omschrijving": "WRA beschikking Definitief",
+            "datumDefinitief": "2013-12-09T00:00:00",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1352278",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2014-07-25",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2014-07-25",
+        "datumAanvraag": "2014-07-25",
+        "beschikking": {
+          "beschikkingNummer": 300194454,
+          "datumAfgifte": "2014-09-09",
+          "toelichting": "geanonimiseerd",
+          "beschikteProducten": [
+            {
+              "identificatie": "208517",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "12545",
+                "productCode": "12545",
+                "productsoortCode": "OVE",
+                "omschrijving": "elektrische hulpaandrijving voor rolstoel"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2014-09-08",
+                "datumEindeGeldigheid": "2022-12-20",
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LH0003",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Harting-Bank"
+                },
+                "toelichting": "condimentum erat euismod ex eget nec est aliquam porta dapibus metus quis ac integer sagittis at ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1010009_OUD",
+                    "toewijzingsDatumTijd": "2014-09-17T00:00:00",
+                    "ingangsdatum": "2014-09-08",
+                    "einddatum": "2017-05-31",
+                    "datumOpdracht": "2014-09-17T00:00:00",
+                    "leverancier": {
+                      "identificatie": "LH0003",
+                      "agbcode": null,
+                      "kvk": null,
+                      "omschrijving": "Harting-Bank"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "01",
+                      "omschrijving": "Administratieve correctie (01)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2015-01-30",
+                        "einddatum": "2017-05-31",
+                        "redenBeeindiging": {
+                          "code": "04",
+                          "omschrijving": "Overplaatsing"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "toewijzingNummer": "1010009",
+                    "toewijzingsDatumTijd": "2017-06-01T00:00:00",
+                    "ingangsdatum": "2014-09-08",
+                    "einddatum": "2023-03-16",
+                    "datumOpdracht": "2017-06-01T00:00:00",
+                    "leverancier": {
+                      "identificatie": "76087055",
+                      "agbcode": "76087055",
+                      "kvk": null,
+                      "omschrijving": "Medipoint"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2017-06-01",
+                        "einddatum": "2023-03-30",
+                        "redenBeeindiging": {
+                          "code": "17",
+                          "omschrijving": "Einde hulp overleg beide"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B195848",
+            "omschrijving": "New Toekenning hulpmiddel zonder keuze",
+            "datumDefinitief": "2014-09-10T00:00:00",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1352277",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2014-07-25",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2014-07-25",
+        "datumAanvraag": "2014-07-25",
+        "beschikking": {
+          "beschikkingNummer": 300194453,
+          "datumAfgifte": "2014-09-11",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "208518",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "WRA",
+                "productCode": null,
+                "productsoortCode": "WRA",
+                "omschrijving": "woonruimteaanpassing 3"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2014-09-08",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0994",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Gebr Koenen B.V."
+                },
+                "toelichting": "amet eget ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1009656",
+                    "toewijzingsDatumTijd": "2014-09-11T00:00:00",
+                    "ingangsdatum": "2014-09-08",
+                    "einddatum": null,
+                    "datumOpdracht": "2014-09-11T00:00:00",
+                    "leverancier": {
+                      "identificatie": "LA0994",
+                      "agbcode": null,
+                      "kvk": null,
+                      "omschrijving": "Gebr Koenen B.V."
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2014-11-07",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B196206",
+            "omschrijving": "WRA beschikking Definitief",
+            "datumDefinitief": "2014-09-11T00:00:00",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1416711",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2012-08-08",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2012-08-08",
+        "datumAanvraag": "2012-08-08",
+        "beschikking": {
+          "beschikkingNummer": 300258703,
+          "datumAfgifte": "2012-10-05",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "287866",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13929",
+                "productCode": "13929",
+                "productsoortCode": "RWD",
+                "omschrijving": "douche-/toiletstoel (verrijdb/kantelb/ind aangep.)"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2012-10-05",
+                "datumEindeGeldigheid": "2020-06-09",
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LH0003",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Harting-Bank"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1087453_OUD",
+                    "toewijzingsDatumTijd": "2015-11-30T00:00:00",
+                    "ingangsdatum": "2012-10-05",
+                    "einddatum": "2017-05-31",
+                    "datumOpdracht": "2015-11-30T00:00:00",
+                    "leverancier": {
+                      "identificatie": "LH0003",
+                      "agbcode": null,
+                      "kvk": null,
+                      "omschrijving": "Harting-Bank"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "01",
+                      "omschrijving": "Administratieve correctie (01)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2015-10-31",
+                        "einddatum": "2017-05-31",
+                        "redenBeeindiging": {
+                          "code": "04",
+                          "omschrijving": "Overplaatsing"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "toewijzingNummer": "1087453",
+                    "toewijzingsDatumTijd": "2017-06-01T00:00:00",
+                    "ingangsdatum": "2012-10-05",
+                    "einddatum": "2020-09-09",
+                    "datumOpdracht": "2017-06-01T00:00:00",
+                    "leverancier": {
+                      "identificatie": "76087055",
+                      "agbcode": "76087055",
+                      "kvk": null,
+                      "omschrijving": "Medipoint"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "05",
+                      "omschrijving": "Herbeoordeling: verkorting toewijzing (05)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2017-06-01",
+                        "einddatum": "2020-09-09",
+                        "redenBeeindiging": {
+                          "code": "16",
+                          "omschrijving": "Einde hulp beëindigd door aanbieder"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1537938",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2017-06-01",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2017-06-01",
+        "datumAanvraag": "2017-06-01",
+        "beschikking": {
+          "beschikkingNummer": 300379514,
+          "datumAfgifte": "2017-06-01",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "411133",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2017-06-01",
+                "datumEindeGeldigheid": "2018-04-13",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1503619",
+                    "toewijzingsDatumTijd": "2017-06-01T00:00:00",
+                    "ingangsdatum": "2017-06-01",
+                    "einddatum": "2018-04-13",
+                    "datumOpdracht": "2017-06-01T00:00:00",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "05",
+                      "omschrijving": "Herbeoordeling: verkorting toewijzing (05)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2017-06-01",
+                        "einddatum": "2018-04-13",
+                        "redenBeeindiging": {
+                          "code": "16",
+                          "omschrijving": "Einde hulp beëindigd door aanbieder"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1525195",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2017-06-01",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2017-06-01",
+        "datumAanvraag": "2017-06-01",
+        "beschikking": {
+          "beschikkingNummer": 300366854,
+          "datumAfgifte": "2017-06-01",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "389456",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2017-06-01",
+                "datumEindeGeldigheid": "2018-03-08",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1520620",
+                    "toewijzingsDatumTijd": "2017-06-01T00:00:00",
+                    "ingangsdatum": "2017-06-01",
+                    "einddatum": "2018-03-08",
+                    "datumOpdracht": "2017-06-01T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2017-06-01",
+                        "einddatum": "2018-03-08",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1572272",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2017-11-24",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2017-11-24",
+        "datumAanvraag": "2017-11-24",
+        "beschikking": {
+          "beschikkingNummer": 300413803,
+          "datumAfgifte": "2017-11-24",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "448395",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2017-11-24",
+                "datumEindeGeldigheid": "2018-11-23",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1553243",
+                    "toewijzingsDatumTijd": "2017-11-24T00:00:00",
+                    "ingangsdatum": "2017-11-24",
+                    "einddatum": "2018-11-23",
+                    "datumOpdracht": "2017-11-24T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2017-11-24",
+                        "einddatum": "2018-11-23",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1574339",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2018-03-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2018-03-09",
+        "datumAanvraag": "2018-03-09",
+        "beschikking": {
+          "beschikkingNummer": 300441529,
+          "datumAfgifte": "2018-04-19",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "465296",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2018-03-09",
+                "datumEindeGeldigheid": "2019-03-08",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1576503",
+                    "toewijzingsDatumTijd": "2018-04-19T00:00:00",
+                    "ingangsdatum": "2018-03-09",
+                    "einddatum": "2019-03-08",
+                    "datumOpdracht": "2018-04-19T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2018-03-09",
+                        "einddatum": "2019-03-08",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1581614",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2018-04-14",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2018-04-14",
+        "datumAanvraag": "2018-04-14",
+        "beschikking": {
+          "beschikkingNummer": 300442603,
+          "datumAfgifte": "2018-04-25",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "498814",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2018-04-14",
+                "datumEindeGeldigheid": "2019-04-13",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1577158",
+                    "toewijzingsDatumTijd": "2018-04-25T00:00:00",
+                    "ingangsdatum": "2018-04-14",
+                    "einddatum": "2019-04-13",
+                    "datumOpdracht": "2018-04-25T00:00:00",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2018-04-14",
+                        "einddatum": "2019-04-13",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1640238",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2018-10-10",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2018-10-10",
+        "datumAanvraag": "2018-10-10",
+        "beschikking": {
+          "beschikkingNummer": 300479232,
+          "datumAfgifte": "2018-12-27",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "485822",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "WRA",
+                "productCode": null,
+                "productsoortCode": "WRA",
+                "omschrijving": "woonruimteaanpassing met doc 4"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2018-10-24",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0992",
+                  "agbcode": "11122233",
+                  "kvk": null,
+                  "omschrijving": "Welzorg"
+                },
+                "toelichting": "ac nam vel nibh eget mauris vel praesent porta ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1623752",
+                    "toewijzingsDatumTijd": "2019-02-15T13:45:36",
+                    "ingangsdatum": "2018-10-24",
+                    "einddatum": null,
+                    "datumOpdracht": "2019-02-15T13:45:36",
+                    "leverancier": {
+                      "identificatie": "LA0992",
+                      "agbcode": "11122233",
+                      "kvk": null,
+                      "omschrijving": "Welzorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2019-03-25",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B538689",
+            "omschrijving": "WRA beschikking Definitief",
+            "datumDefinitief": "2018-12-27T00:00:00",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1647103",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2018-11-28",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2018-11-28",
+        "datumAanvraag": "2018-11-28",
+        "beschikking": {
+          "beschikkingNummer": 300486041,
+          "datumAfgifte": "2018-11-29",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "495961",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2018-11-28",
+                "datumEindeGeldigheid": "2019-03-08",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1609879",
+                    "toewijzingsDatumTijd": "2018-11-29T00:00:00",
+                    "ingangsdatum": "2018-11-28",
+                    "einddatum": "2019-03-08",
+                    "datumOpdracht": "2018-11-29T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2018-11-28",
+                        "einddatum": "2019-03-08",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1662459",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-03-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2019-03-09",
+        "datumAanvraag": "2019-03-09",
+        "beschikking": {
+          "beschikkingNummer": 300508974,
+          "datumAfgifte": "2019-03-11",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "542597",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-03-09",
+                "datumEindeGeldigheid": "2020-03-08",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1627361",
+                    "toewijzingsDatumTijd": "2019-03-11T00:00:00",
+                    "ingangsdatum": "2019-03-09",
+                    "einddatum": "2020-03-08",
+                    "datumOpdracht": "2019-03-11T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2019-03-09",
+                        "einddatum": "2020-03-08",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1655959",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-03-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2019-03-09",
+        "datumAanvraag": "2019-03-09",
+        "beschikking": {
+          "beschikkingNummer": 300508975,
+          "datumAfgifte": "2019-03-11",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "529541",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-03-09",
+                "datumEindeGeldigheid": "2020-03-08",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1627362",
+                    "toewijzingsDatumTijd": "2019-03-11T00:00:00",
+                    "ingangsdatum": "2019-03-09",
+                    "einddatum": "2020-03-08",
+                    "datumOpdracht": "2019-03-11T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2019-03-09",
+                        "einddatum": "2020-03-08",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1667359",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-04-14",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2019-04-14",
+        "datumAanvraag": "2019-04-14",
+        "beschikking": {
+          "beschikkingNummer": 300516616,
+          "datumAfgifte": "2019-04-15",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "564848",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-04-14",
+                "datumEindeGeldigheid": "2020-03-08",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1632964",
+                    "toewijzingsDatumTijd": "2019-04-15T00:00:00",
+                    "ingangsdatum": "2019-04-14",
+                    "einddatum": "2020-03-08",
+                    "datumOpdracht": "2019-04-15T00:00:00",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2019-04-14",
+                        "einddatum": "2020-03-08",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1707651",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-10-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2019-10-09",
+        "datumAanvraag": "2019-10-09",
+        "beschikking": {
+          "beschikkingNummer": 300549949,
+          "datumAfgifte": "2019-10-09",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "574524",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W82",
+                "productCode": "13W82",
+                "productsoortCode": "WRA3",
+                "omschrijving": "reparatie-/verwijderopdracht natte cel en toilet"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-10-09",
+                "datumEindeGeldigheid": "2019-12-09",
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0992",
+                  "agbcode": "11122233",
+                  "kvk": null,
+                  "omschrijving": "Welzorg"
+                },
+                "toelichting": "sed quis odio sed quis diam auctor proin vel quisque sed mauris ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1655972",
+                    "toewijzingsDatumTijd": "2019-10-09T11:19:30",
+                    "ingangsdatum": "2019-10-09",
+                    "einddatum": "2019-12-09",
+                    "datumOpdracht": "2019-10-09T11:19:30",
+                    "leverancier": {
+                      "identificatie": "LA0992",
+                      "agbcode": "11122233",
+                      "kvk": null,
+                      "omschrijving": "Welzorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "05",
+                      "omschrijving": "Herbeoordeling: verkorting toewijzing (05)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2019-10-17",
+                        "einddatum": "2019-12-09",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1759072",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-03-12",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2020-03-12",
+        "datumAanvraag": "2020-03-12",
+        "beschikking": {
+          "beschikkingNummer": 300584005,
+          "datumAfgifte": "2020-03-12",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "610428",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-03-09",
+                "datumEindeGeldigheid": "2020-06-14",
+                "datumCheck": "2022-12-24",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1681967",
+                    "toewijzingsDatumTijd": "2020-03-12T00:00:00",
+                    "ingangsdatum": "2020-03-09",
+                    "einddatum": "2020-06-14",
+                    "datumOpdracht": "2020-03-12T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "05",
+                      "omschrijving": "Herbeoordeling: verkorting toewijzing (05)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2020-03-09",
+                        "einddatum": "2020-06-14",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B628498",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2020-03-12T16:12:23",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1759073",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-03-12",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2020-03-12",
+        "datumAanvraag": "2020-03-12",
+        "beschikking": {
+          "beschikkingNummer": 300584006,
+          "datumAfgifte": "2020-03-12",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "610429",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-03-09",
+                "datumEindeGeldigheid": "2020-12-31",
+                "datumCheck": "2021-01-04",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1681968",
+                    "toewijzingsDatumTijd": "2020-03-12T00:00:00",
+                    "ingangsdatum": "2020-03-09",
+                    "einddatum": "2020-12-31",
+                    "datumOpdracht": "2020-03-12T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "01",
+                      "omschrijving": "Administratieve correctie (01)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2020-03-09",
+                        "einddatum": "2020-12-31",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B628499",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2020-03-12T16:17:07",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1759074",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-03-12",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2020-03-12",
+        "datumAanvraag": "2020-03-12",
+        "beschikking": {
+          "beschikkingNummer": 300584007,
+          "datumAfgifte": "2020-03-12",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "610430",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-03-09",
+                "datumEindeGeldigheid": "2020-12-31",
+                "datumCheck": "2021-01-04",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1681969",
+                    "toewijzingsDatumTijd": "2020-03-12T00:00:00",
+                    "ingangsdatum": "2020-03-09",
+                    "einddatum": "2020-12-31",
+                    "datumOpdracht": "2020-03-12T00:00:00",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "01",
+                      "omschrijving": "Administratieve correctie (01)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2020-03-09",
+                        "einddatum": "2020-12-31",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B628500",
+            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "datumDefinitief": "2020-03-12T16:16:35",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1781600",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-06-05",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2020-06-05",
+        "datumAanvraag": "2020-06-05",
+        "beschikking": {
+          "beschikkingNummer": 300599486,
+          "datumAfgifte": "2020-06-05",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "626188",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W82",
+                "productCode": "13W82",
+                "productsoortCode": "WRA3",
+                "omschrijving": "reparatie-/verwijderopdracht natte cel en toilet"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-06-05",
+                "datumEindeGeldigheid": "2020-08-05",
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0992",
+                  "agbcode": "11122233",
+                  "kvk": null,
+                  "omschrijving": "Welzorg"
+                },
+                "toelichting": "auctor enim tortor ullamcorper nibh suspendisse ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1694943",
+                    "toewijzingsDatumTijd": "2020-06-05T09:22:46",
+                    "ingangsdatum": "2020-06-05",
+                    "einddatum": "2020-06-05",
+                    "datumOpdracht": "2020-06-05T09:22:46",
+                    "leverancier": {
+                      "identificatie": "LA0992",
+                      "agbcode": "11122233",
+                      "kvk": null,
+                      "omschrijving": "Welzorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "05",
+                      "omschrijving": "Herbeoordeling: verkorting toewijzing (05)"
+                    },
+                    "leveringen": []
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1783818",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-06-12",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2020-06-12",
+        "datumAanvraag": "2020-05-13",
+        "beschikking": {
+          "beschikkingNummer": 300601970,
+          "datumAfgifte": "2020-06-18",
+          "toelichting": "geanonimiseerd",
+          "beschikteProducten": [
+            {
+              "identificatie": "627689",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13928",
+                "productCode": "13928",
+                "productsoortCode": "RWD",
+                "omschrijving": "douche-/toiletstoel zelfrijder"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-06-10",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "76087055",
+                  "agbcode": "76087055",
+                  "kvk": null,
+                  "omschrijving": "Medipoint"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1699834",
+                    "toewijzingsDatumTijd": "2020-06-18T14:21:01",
+                    "ingangsdatum": "2020-06-10",
+                    "einddatum": null,
+                    "datumOpdracht": "2020-06-18T14:21:01",
+                    "leverancier": {
+                      "identificatie": "76087055",
+                      "agbcode": "76087055",
+                      "kvk": null,
+                      "omschrijving": "Medipoint"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2020-09-10",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B650917",
+            "omschrijving": "New Toekenning hulpmiddel zonder keuze",
+            "datumDefinitief": "2020-06-18T14:20:12",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1784679",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-06-16",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2020-06-16",
+        "datumAanvraag": "2020-06-16",
+        "beschikking": {
+          "beschikkingNummer": 300601337,
+          "datumAfgifte": "2020-06-16",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "628226",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-06-15",
+                "datumEindeGeldigheid": "2020-12-31",
+                "datumCheck": "2021-01-04",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "3",
+                    "omschrijving": "Per vier weken"
+                  },
+                  "omschrijving": "1 stuks (output) per vier weken"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "65656526",
+                  "agbcode": "65656526",
+                  "kvk": null,
+                  "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1699323",
+                    "toewijzingsDatumTijd": "2020-06-16T00:00:00",
+                    "ingangsdatum": "2020-06-15",
+                    "einddatum": "2020-12-31",
+                    "datumOpdracht": "2020-06-16T00:00:00",
+                    "leverancier": {
+                      "identificatie": "65656526",
+                      "agbcode": "65656526",
+                      "kvk": null,
+                      "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": {
+                      "code": "01",
+                      "omschrijving": "Administratieve correctie (01)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2020-06-15",
+                        "einddatum": "2020-12-31",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B648401",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2020-06-16T15:20:47",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1835874",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-11-27",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2020-11-27",
+        "datumAanvraag": "2020-08-10",
+        "beschikking": {
+          "beschikkingNummer": 300635655,
+          "datumAfgifte": "2020-12-04",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "662702",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W71",
+                "productCode": "13W71",
+                "productsoortCode": "WRA3",
+                "omschrijving": "antislipvloer/behandeling badkamer"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-11-13",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0993",
+                  "agbcode": "11122255",
+                  "kvk": null,
+                  "omschrijving": "Meyra Wooncare B.V."
+                },
+                "toelichting": "ex finibus ac id finibus blandit varius porta est nullam nunc id luctus justo at ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1728813",
+                    "toewijzingsDatumTijd": "2020-12-07T07:01:20",
+                    "ingangsdatum": "2020-11-13",
+                    "einddatum": null,
+                    "datumOpdracht": "2020-12-07T07:01:20",
+                    "leverancier": {
+                      "identificatie": "LA0993",
+                      "agbcode": "11122255",
+                      "kvk": null,
+                      "omschrijving": "Meyra Wooncare B.V."
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-01-13",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B691905",
+            "omschrijving": "Opstellen beschikking grote WRA",
+            "datumDefinitief": "2020-12-07T07:01:05",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1850515",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-01-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-01-09",
+        "datumAanvraag": "2021-01-09",
+        "beschikking": {
+          "beschikkingNummer": 300644177,
+          "datumAfgifte": "2021-01-09",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "673048",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-01-01",
+                "datumEindeGeldigheid": "2021-03-09",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1736319",
+                    "toewijzingsDatumTijd": "2021-01-09T00:00:00",
+                    "ingangsdatum": "2021-01-01",
+                    "einddatum": "2021-03-09",
+                    "datumOpdracht": "2021-01-09T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-01-01",
+                        "einddatum": "2021-03-09",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B700835",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2021-01-09T17:26:23",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1850516",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-01-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-01-09",
+        "datumAanvraag": "2021-01-09",
+        "beschikking": {
+          "beschikkingNummer": 300644178,
+          "datumAfgifte": "2021-01-09",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "673049",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-01-01",
+                "datumEindeGeldigheid": "2021-03-09",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1736320",
+                    "toewijzingsDatumTijd": "2021-01-09T00:00:00",
+                    "ingangsdatum": "2021-01-01",
+                    "einddatum": "2021-03-09",
+                    "datumOpdracht": "2021-01-09T00:00:00",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-01-01",
+                        "einddatum": "2021-03-09",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B700836",
+            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "datumDefinitief": "2021-01-10T01:50:21",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1850517",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-01-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-01-09",
+        "datumAanvraag": "2021-01-09",
+        "beschikking": {
+          "beschikkingNummer": 300644179,
+          "datumAfgifte": "2021-01-09",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "673050",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-01-01",
+                "datumEindeGeldigheid": "2021-03-09",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "65656526",
+                  "agbcode": "65656526",
+                  "kvk": null,
+                  "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1736321",
+                    "toewijzingsDatumTijd": "2021-01-09T00:00:00",
+                    "ingangsdatum": "2021-01-01",
+                    "einddatum": "2021-03-09",
+                    "datumOpdracht": "2021-01-09T00:00:00",
+                    "leverancier": {
+                      "identificatie": "65656526",
+                      "agbcode": "65656526",
+                      "kvk": null,
+                      "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-01-01",
+                        "einddatum": "2021-03-09",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B700837",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2021-01-09T23:06:12",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1896877",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-03-11",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-03-11",
+        "datumAanvraag": "2021-03-11",
+        "beschikking": {
+          "beschikkingNummer": 300682872,
+          "datumAfgifte": "2021-03-11",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "712912",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-03-10",
+                "datumEindeGeldigheid": "2022-03-10",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "65656526",
+                  "agbcode": "65656526",
+                  "kvk": null,
+                  "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1772890",
+                    "toewijzingsDatumTijd": "2021-03-11T00:00:00",
+                    "ingangsdatum": "2021-03-10",
+                    "einddatum": "2022-03-10",
+                    "datumOpdracht": "2021-03-11T00:00:00",
+                    "leverancier": {
+                      "identificatie": "65656526",
+                      "agbcode": "65656526",
+                      "kvk": null,
+                      "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-03-10",
+                        "einddatum": "2022-03-10",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B739256",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2021-03-11T15:26:28",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1896878",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-03-11",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-03-11",
+        "datumAanvraag": "2021-03-11",
+        "beschikking": {
+          "beschikkingNummer": 300682873,
+          "datumAfgifte": "2021-03-11",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "712913",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "02A02",
+                "productCode": "02A02",
+                "productsoortCode": "AWBG",
+                "omschrijving": "aanvullende individuele ondersteuning"
+              },
+              "productCategorie": {
+                "code": "02",
+                "omschrijving": "Begeleiding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-03-10",
+                "datumEindeGeldigheid": "2022-03-10",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "42420739",
+                  "agbcode": "42420739",
+                  "kvk": null,
+                  "omschrijving": "Amstelring"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1772891",
+                    "toewijzingsDatumTijd": "2021-03-11T00:00:00",
+                    "ingangsdatum": "2021-03-10",
+                    "einddatum": "2022-03-10",
+                    "datumOpdracht": "2021-03-11T00:00:00",
+                    "leverancier": {
+                      "identificatie": "42420739",
+                      "agbcode": "42420739",
+                      "kvk": null,
+                      "omschrijving": "Amstelring"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-03-10",
+                        "einddatum": "2021-04-01",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B739257",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2021-03-11T15:29:20",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1896879",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-03-11",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-03-11",
+        "datumAanvraag": "2021-03-11",
+        "beschikking": {
+          "beschikkingNummer": 300682874,
+          "datumAfgifte": "2021-03-11",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "712914",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-03-10",
+                "datumEindeGeldigheid": "2022-03-10",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1772892",
+                    "toewijzingsDatumTijd": "2021-03-11T00:00:00",
+                    "ingangsdatum": "2021-03-10",
+                    "einddatum": "2022-03-10",
+                    "datumOpdracht": "2021-03-11T00:00:00",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-03-10",
+                        "einddatum": "2022-03-10",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B739258",
+            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "datumDefinitief": "2021-03-11T15:24:06",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1962016",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-10-13",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-10-13",
+        "datumAanvraag": "2021-10-13",
+        "beschikking": {
+          "beschikkingNummer": 300727364,
+          "datumAfgifte": "2021-10-22",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "757369",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W84",
+                "productCode": "13W84",
+                "productsoortCode": "WRA3",
+                "omschrijving": "niet standaard opdracht natte cel en toilet"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-10-13",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1034396,
+                  "eenheid": {
+                    "code": "83",
+                    "omschrijving": "Euro's (uitgedrukt in eurocenten)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "10343,96 euro per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0992",
+                  "agbcode": "11122233",
+                  "kvk": null,
+                  "omschrijving": "Welzorg"
+                },
+                "toelichting": "imperdiet sed at sollicitudin suspendisse ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1810093",
+                    "toewijzingsDatumTijd": "2021-10-22T16:51:15",
+                    "ingangsdatum": "2021-10-13",
+                    "einddatum": null,
+                    "datumOpdracht": "2021-10-22T16:51:15",
+                    "leverancier": {
+                      "identificatie": "LA0992",
+                      "agbcode": "11122233",
+                      "kvk": null,
+                      "omschrijving": "Welzorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-10-13",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B792435",
+            "omschrijving": "Opstellen beschikking grote WRA",
+            "datumDefinitief": "2021-10-22T16:50:57",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "1979128",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-12-06",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-12-06",
+        "datumAanvraag": "2021-12-06",
+        "beschikking": {
+          "beschikkingNummer": 300736233,
+          "datumAfgifte": "2021-12-06",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "768886",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W32",
+                "productCode": "13W32",
+                "productsoortCode": "WRA2",
+                "omschrijving": "reparatie-/verwijderopdracht toegang"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-12-06",
+                "datumEindeGeldigheid": "2022-02-06",
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "11122244",
+                  "agbcode": "11122244",
+                  "kvk": null,
+                  "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                },
+                "toelichting": "sagittis quis commodo a pharetra at porttitor vel at elementum libero turpis est ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1817152",
+                    "toewijzingsDatumTijd": "2021-12-06T16:01:09",
+                    "ingangsdatum": "2021-12-06",
+                    "einddatum": "2022-02-06",
+                    "datumOpdracht": "2021-12-06T16:01:09",
+                    "leverancier": {
+                      "identificatie": "11122244",
+                      "agbcode": "11122244",
+                      "kvk": null,
+                      "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-12-17",
+                        "einddatum": "2022-02-06",
+                        "redenBeeindiging": {
+                          "code": "03",
+                          "omschrijving": "Overig"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "1979827",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-12-08",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-12-08",
+        "datumAanvraag": "2021-12-08",
+        "beschikking": {
+          "beschikkingNummer": 300736746,
+          "datumAfgifte": "2021-12-08",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "774497",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W20",
+                "productCode": "13W20",
+                "productsoortCode": "WRA2",
+                "omschrijving": "handzender(s) voor deurautomaat"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-12-20",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "11122244",
+                  "agbcode": "11122244",
+                  "kvk": null,
+                  "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                },
+                "toelichting": "nec quam quisque sed nisi pharetra eleifend integer ullamcorper finibus ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1819470",
+                    "toewijzingsDatumTijd": "2021-12-20T14:05:02",
+                    "ingangsdatum": "2021-12-20",
+                    "einddatum": null,
+                    "datumOpdracht": "2021-12-20T14:05:02",
+                    "leverancier": {
+                      "identificatie": "11122244",
+                      "agbcode": "11122244",
+                      "kvk": null,
+                      "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2021-12-20",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "identificatie": "769419",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W32",
+                "productCode": "13W32",
+                "productsoortCode": "WRA2",
+                "omschrijving": "reparatie-/verwijderopdracht toegang"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2021-12-08",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "11122244",
+                  "agbcode": "11122244",
+                  "kvk": null,
+                  "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                },
+                "toelichting": "malesuada ac nullam urna porttitor quis lorem euismod fusce tempus sem ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1817622",
+                    "toewijzingsDatumTijd": "2021-12-08T10:54:18",
+                    "ingangsdatum": "2021-12-08",
+                    "einddatum": "2021-12-08",
+                    "datumOpdracht": "2021-12-08T10:54:18",
+                    "leverancier": {
+                      "identificatie": "11122244",
+                      "agbcode": "11122244",
+                      "kvk": null,
+                      "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": []
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B809511",
+            "omschrijving": "Opstellen brief handzender",
+            "datumDefinitief": "2021-12-20T14:08:20",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "2210011",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-03-14",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2022-03-14",
+        "datumAanvraag": "2022-03-14",
+        "beschikking": {
+          "beschikkingNummer": 300758213,
+          "datumAfgifte": "2022-03-14",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "821928",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "07A02",
+                "productCode": "07A02",
+                "productsoortCode": "DBS",
+                "omschrijving": "dagbesteding"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-03-11",
+                "datumEindeGeldigheid": "2023-03-11",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "65656526",
+                  "agbcode": "65656526",
+                  "kvk": null,
+                  "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1835626",
+                    "toewijzingsDatumTijd": "2022-03-14T15:42:25",
+                    "ingangsdatum": "2022-03-11",
+                    "einddatum": "2023-03-11",
+                    "datumOpdracht": "2022-03-14T15:42:25",
+                    "leverancier": {
+                      "identificatie": "65656526",
+                      "agbcode": "65656526",
+                      "kvk": null,
+                      "omschrijving": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2022-03-11",
+                        "einddatum": "2023-03-11",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2258816",
+            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "datumDefinitief": "2022-03-14T16:12:12",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "2210012",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-03-14",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2022-03-14",
+        "datumAanvraag": "2022-03-14",
+        "beschikking": {
+          "beschikkingNummer": 300758214,
+          "datumAfgifte": "2022-03-14",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "821929",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-03-11",
+                "datumEindeGeldigheid": "2023-03-11",
+                "datumCheck": "2024-01-29",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1835627",
+                    "toewijzingsDatumTijd": "2022-03-14T15:42:25",
+                    "ingangsdatum": "2022-03-11",
+                    "einddatum": "2023-03-11",
+                    "datumOpdracht": "2022-03-14T15:42:25",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2022-03-11",
+                        "einddatum": "2023-03-11",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde zorg"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2258817",
+            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "datumDefinitief": "2022-03-14T16:11:29",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "2214689",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-03-25",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2022-03-25",
+        "datumAanvraag": "2022-02-16",
+        "beschikking": {
+          "beschikkingNummer": 300766704,
+          "datumAfgifte": "2022-04-15",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "824482",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W84",
+                "productCode": "13W84",
+                "productsoortCode": "WRA3",
+                "omschrijving": "niet standaard opdracht natte cel en toilet"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-03-24",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 93624,
+                  "eenheid": {
+                    "code": "83",
+                    "omschrijving": "Euro's (uitgedrukt in eurocenten)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "936,24 euro per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0992",
+                  "agbcode": "11122233",
+                  "kvk": null,
+                  "omschrijving": "Welzorg"
+                },
+                "toelichting": "ac adipiscing id ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1841610",
+                    "toewijzingsDatumTijd": "2022-04-19T13:16:57",
+                    "ingangsdatum": "2022-03-24",
+                    "einddatum": null,
+                    "datumOpdracht": "2022-04-19T13:16:57",
+                    "leverancier": {
+                      "identificatie": "LA0992",
+                      "agbcode": "11122233",
+                      "kvk": null,
+                      "omschrijving": "Welzorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2022-06-07",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2268406",
+            "omschrijving": "Opstellen beschikking grote WRA",
+            "datumDefinitief": "2022-04-19T13:16:44",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "2280949",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-07-09",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2022-07-09",
+        "datumAanvraag": "2022-07-09",
+        "beschikking": {
+          "beschikkingNummer": 357,
+          "datumAfgifte": "2022-08-01",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "883696",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "740",
+                "productCode": null,
+                "productsoortCode": "AOV",
+                "omschrijving": "kamer tot kamer vervoer"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-08-01",
+                "datumEindeGeldigheid": "2022-10-18",
+                "datumCheck": null,
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "AOV001",
+                  "agbcode": "11122288",
+                  "kvk": null,
+                  "omschrijving": "RMC Amsterdam"
+                },
+                "toelichting": null,
+                "toewijzingen": []
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "2341917",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-10-19",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2022-10-19",
+        "datumAanvraag": "2022-09-07",
+        "beschikking": {
+          "beschikkingNummer": 300808379,
+          "datumAfgifte": "2022-10-20",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "932112",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "740",
+                "productCode": null,
+                "productsoortCode": "AOV",
+                "omschrijving": "kamer tot kamer vervoer"
+              },
+              "productCategorie": {
+                "code": "12",
+                "omschrijving": "Vervoervoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-10-19",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": null,
+                "leverancier": {
+                  "identificatie": "AOV001",
+                  "agbcode": "11122288",
+                  "kvk": null,
+                  "omschrijving": "RMC Amsterdam"
+                },
+                "toelichting": null,
+                "toewijzingen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2391009",
+            "omschrijving": "AOV Beschikking positief",
+            "datumDefinitief": "2022-10-19T14:27:42.643",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "2369496",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-12-21",
+          "aanmeldwijze": {
+            "identificatie": null,
+            "omschrijving": "Reade"
+          },
+          "verwijzer": null
+        },
+        "datumAanmelding": "2022-12-21",
+        "datumAanvraag": "2022-12-21",
+        "beschikking": {
+          "beschikkingNummer": 300842369,
+          "datumAfgifte": "2023-03-01",
+          "toelichting": "geanonimiseerd",
+          "beschikteProducten": [
+            {
+              "identificatie": "951567",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "11436",
+                "productCode": "11436",
+                "productsoortCode": "ROL",
+                "omschrijving": "elektrische rolstoel voor binnen en buiten"
+              },
+              "productCategorie": {
+                "code": "11",
+                "omschrijving": "Rolstoelen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-12-21",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "76087055",
+                  "agbcode": "76087055",
+                  "kvk": null,
+                  "omschrijving": "Medipoint"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1897235",
+                    "toewijzingsDatumTijd": "2023-03-02T11:17:35.4",
+                    "ingangsdatum": "2022-12-21",
+                    "einddatum": null,
+                    "datumOpdracht": "2023-03-02T11:17:35.4",
+                    "leverancier": {
+                      "identificatie": "76087055",
+                      "agbcode": "76087055",
+                      "kvk": null,
+                      "omschrijving": "Medipoint"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2023-05-15",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2510020",
+            "omschrijving": "New Toekenning hulpmiddel zonder keuze",
+            "datumDefinitief": "2023-03-02T11:17:08.293",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "2370581",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-03-25",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2022-03-25",
+        "datumAanvraag": "2022-12-22",
+        "beschikking": {
+          "beschikkingNummer": 300824650,
+          "datumAfgifte": "2022-12-22",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "952191",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W98",
+                "productCode": "13W98",
+                "productsoortCode": "WRA5",
+                "omschrijving": "Adviesconsult"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-12-22",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0992",
+                  "agbcode": "11122233",
+                  "kvk": null,
+                  "omschrijving": "Welzorg"
+                },
+                "toelichting": "auctor orci ex pulvinar id luctus finibus placerat id sed tristique pulvinar pretium ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1884958",
+                    "toewijzingsDatumTijd": "2022-12-22T14:41:00.9833333",
+                    "ingangsdatum": "2022-12-22",
+                    "einddatum": null,
+                    "datumOpdracht": "2022-12-22T14:41:00.9833333",
+                    "leverancier": {
+                      "identificatie": "LA0992",
+                      "agbcode": "11122233",
+                      "kvk": null,
+                      "omschrijving": "Welzorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2023-01-06",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      },
+      {
+        "_links": null,
+        "identificatie": "2431658",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2023-03-16",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2023-03-16",
+        "datumAanvraag": "2023-03-16",
+        "beschikking": {
+          "beschikkingNummer": 300846628,
+          "datumAfgifte": "2023-03-16",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "1001511",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "01A01",
+                "productCode": "01A01",
+                "productsoortCode": "WMH",
+                "omschrijving": "hulp bij het huishouden"
+              },
+              "productCategorie": {
+                "code": "01",
+                "omschrijving": "Hulp bij het huishouden"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-03-12",
+                "datumEindeGeldigheid": "2024-03-11",
+                "datumCheck": "2024-01-29",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "98100012",
+                  "agbcode": "98100012",
+                  "kvk": null,
+                  "omschrijving": "Emile Thuiszorg"
+                },
+                "toelichting": null,
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1899731",
+                    "toewijzingsDatumTijd": "2023-03-16T15:50:50.4233333",
+                    "ingangsdatum": "2023-03-12",
+                    "einddatum": "2024-03-11",
+                    "datumOpdracht": "2023-03-16T15:50:50.4233333",
+                    "leverancier": {
+                      "identificatie": "98100012",
+                      "agbcode": "98100012",
+                      "kvk": null,
+                      "omschrijving": "Emile Thuiszorg"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2023-03-12",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2516440",
+            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "datumDefinitief": "2023-03-16T15:56:11.41",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
+        "identificatie": "2557128",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2021-12-08",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2021-12-08",
+        "datumAanvraag": "2023-06-08",
+        "beschikking": {
+          "beschikkingNummer": 300870430,
+          "datumAfgifte": "2023-06-08",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "1115322",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "13W32",
+                "productCode": "13W32",
+                "productsoortCode": "WRA2",
+                "omschrijving": "reparatie-/verwijderopdracht toegang"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-06-08",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "11122244",
+                  "agbcode": "11122244",
+                  "kvk": null,
+                  "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                },
+                "toelichting": "venenatis lorem fusce pretium nec posuere ac ex ",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1916319",
+                    "toewijzingsDatumTijd": "2023-06-08T15:10:49.42",
+                    "ingangsdatum": "2023-06-08",
+                    "einddatum": null,
+                    "datumOpdracht": "2023-06-08T15:10:49.42",
+                    "leverancier": {
+                      "identificatie": "11122244",
+                      "agbcode": "11122244",
+                      "kvk": null,
+                      "omschrijving": "Van der Leij Bouwbedrijven B.V"
+                    },
+                    "referentieAanbieder": null,
+                    "redenWijziging": null,
+                    "leveringen": [
+                      {
+                        "begindatum": "2023-06-14",
+                        "einddatum": null,
+                        "redenBeeindiging": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": null
+      }
+    ]
+  }
 }

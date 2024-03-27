@@ -1,11 +1,12 @@
-import { differenceInYears, differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, differenceInYears } from 'date-fns';
+import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import type { TipsPredicateFN } from './tip-types';
-import type { WpiRequestProcess, WpiStadspas } from '../wpi/wpi-types';
-import type { Identiteitsbewijs, Kind } from '../../../universal/types';
-import type { WmoItem } from '../wmo';
+import { Stadspas } from '../stadspas/stadspas-types';
 import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
+import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
+import type { WpiRequestProcess } from '../wpi/wpi-types';
+import type { TipsPredicateFN } from './tip-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
@@ -43,10 +44,8 @@ export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
 
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
-  const stadspassen = appState.WPI_STADSPAS?.content?.stadspassen ?? [];
-  return stadspassen.some(
-    (stadspas: WpiStadspas) => stadspas.passType === 'ouder'
-  );
+  const stadspassen = appState.STADSPAS?.content?.stadspassen ?? [];
+  return !!stadspassen.length;
 };
 
 export const hasValidStadspasRequest: TipsPredicateFN = (
@@ -54,7 +53,7 @@ export const hasValidStadspasRequest: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   return (
-    appState.WPI_STADSPAS?.content?.aanvragen.some(
+    appState.STADSPAS?.content?.aanvragen.some(
       (aanvraag: WpiRequestProcess) =>
         aanvraag.decision === 'toekenning' &&
         differenceInYears(today, new Date(aanvraag.datePublished)) <= 1
@@ -105,7 +104,7 @@ export const hasBijstandsuitkering: TipsPredicateFN = (
 
 export const hasAOV: TipsPredicateFN = (appState) => {
   return !!appState.WMO?.content?.some(
-    (wmo: WmoItem) => wmo.isActual && wmo.itemTypeCode === 'AOV'
+    (wmo: WMOVoorzieningFrontend) => wmo.isActual && wmo.itemTypeCode === 'AOV'
   );
 };
 

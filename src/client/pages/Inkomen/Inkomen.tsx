@@ -97,8 +97,8 @@ export default function Inkomen() {
           status: isBbzHistoric
             ? '-'
             : isBbz
-            ? 'In behandeling'
-            : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
+              ? 'In behandeling'
+              : activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
         });
       })
       .sort(dateSort('datePublished', 'desc'));

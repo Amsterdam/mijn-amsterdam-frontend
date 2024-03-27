@@ -1,12 +1,8 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import type { WpiStadspas } from '../../../server/services/wpi/wpi-types';
-import {
-  AppRoutes,
-  ChapterTitles,
-  FeatureToggle,
-} from '../../../universal/config';
-import { dateSort, isError, isLoading } from '../../../universal/helpers';
+import { Stadspas } from '../../../server/services/stadspas/stadspas-types';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   Alert,
@@ -18,12 +14,10 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
-  addTitleLinkComponent,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { REQUEST_PROCESS_COMPLETED_STATUS_IDS } from '../Inkomen/Inkomen';
 import styles from './Stadspas.module.scss';
 
 const stadspasDisplayProps = {
@@ -33,17 +27,7 @@ const stadspasDisplayProps = {
   detailPageUrl: 'Tegoed',
 };
 
-const requestsDisplayProps = {
-  displayDateStart: 'Datum aanvraag',
-  status: 'Status',
-};
-
-const decisionsDisplayProps = {
-  displayDateStart: 'Datum aanvraag',
-  displayDateEnd: 'Datum besluit',
-};
-
-function multipleOwners(stadspassen: WpiStadspas[] | undefined) {
+function hasMultipleOwners(stadspassen: Stadspas[] | undefined) {
   if (stadspassen === undefined) {
     return false;
   }
@@ -51,48 +35,16 @@ function multipleOwners(stadspassen: WpiStadspas[] | undefined) {
   return stadspassen.some((pas) => pas.owner !== stadspassen[0].owner);
 }
 
-export default function Stadspas() {
-  const { WPI_STADSPAS } = useAppStateGetter();
-  const aanvragen = WPI_STADSPAS.content?.aanvragen;
-
-  const items = useMemo(() => {
-    if (!aanvragen) {
-      return [];
-    }
-    return addTitleLinkComponent(
-      aanvragen
-        .map((item) => {
-          const activeStatusStep = item.steps.find(
-            (step) => step.id === item.statusId
-          );
-          return Object.assign({}, item, {
-            displayDateEnd: defaultDateFormat(
-              item.dateEnd || item.datePublished
-            ),
-            displayDateStart: defaultDateFormat(item.dateStart),
-            status: activeStatusStep?.status.replace(/-\s/g, '') || '', // Compensate for pre-broken words like Terugvorderings- besluit.
-          });
-        })
-        .sort(dateSort('datePublished', 'desc'))
-    );
-  }, [aanvragen]);
-
-  const itemsRequested = items.filter(
-    (item) => !REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
-  );
-  const itemsCompleted = items.filter((item) =>
-    REQUEST_PROCESS_COMPLETED_STATUS_IDS.includes(item.statusId)
-  );
-
-  const hasActiveRequests = !!itemsRequested.length;
-  const hasActiveDescisions = !!itemsCompleted.length;
-  const hasStadspas = !!WPI_STADSPAS?.content?.stadspassen?.length;
+export default function CStadspas() {
+  const { STADSPAS } = useAppStateGetter();
+  const aanvragen = STADSPAS.content?.aanvragen;
+  const hasStadspas = !!STADSPAS?.content?.stadspassen?.length;
 
   const stadspasItems = useMemo(() => {
-    if (!WPI_STADSPAS.content?.stadspassen) {
+    if (!STADSPAS.content?.stadspassen) {
       return [];
     }
-    return WPI_STADSPAS.content.stadspassen.map((stadspas) => {
+    return STADSPAS.content.stadspassen.map((stadspas) => {
       return {
         ...stadspas,
         displayDateEnd: defaultDateFormat(stadspas.dateEnd),
@@ -105,15 +57,12 @@ export default function Stadspas() {
             Bekijk saldo
           </LinkdInline>
         ),
-        owner:
-          stadspas.passType === 'kind'
-            ? `${stadspas.owner} &nbsp;&nbsp;(${stadspas.passType})`
-            : stadspas.owner,
+        owner: stadspas.owner,
       };
     });
-  }, [WPI_STADSPAS.content]);
+  }, [STADSPAS.content]);
 
-  const isLoadingStadspas = isLoading(WPI_STADSPAS);
+  const isLoadingStadspas = isLoading(STADSPAS);
 
   return (
     <OverviewPage className={styles.Stadspas}>
@@ -138,7 +87,7 @@ export default function Stadspas() {
           aan te vragen.
         </p>
         {!isLoadingStadspas &&
-          multipleOwners(WPI_STADSPAS.content?.stadspassen) && (
+          hasMultipleOwners(STADSPAS.content?.stadspassen) && (
             <p>
               Hebt u kinderen of een partner met een Stadspas? Dan ziet u
               hieronder ook hun Stadspassen.
@@ -150,7 +99,7 @@ export default function Stadspas() {
           </Linkd>
         </p>
         <MaintenanceNotifications page="stadspas" />
-        {isError(WPI_STADSPAS) && (
+        {isError(STADSPAS) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -172,41 +121,6 @@ export default function Stadspas() {
             className={styles.Table}
           />
         </SectionCollapsible>
-      )}
-
-      {FeatureToggle.stadspasRequestsActive && (
-        <>
-          <SectionCollapsible
-            id="SectionCollapsible-stadspas-request-process"
-            title="Lopende aanvragen"
-            startCollapsed={hasStadspas}
-            isLoading={isLoadingStadspas}
-            hasItems={hasActiveRequests}
-            noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-            className={styles.SectionCollapsible}
-          >
-            <Table
-              items={itemsRequested}
-              displayProps={requestsDisplayProps}
-              className={styles.Table}
-            />
-          </SectionCollapsible>
-
-          <SectionCollapsible
-            id="SectionCollapsible-stadspas-request-process-decisions"
-            startCollapsed={true}
-            isLoading={isLoadingStadspas}
-            hasItems={hasActiveDescisions}
-            title="Eerdere aanvragen"
-            noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
-          >
-            <Table
-              items={itemsCompleted}
-              displayProps={decisionsDisplayProps}
-              className={styles.Table}
-            />
-          </SectionCollapsible>
-        </>
       )}
     </OverviewPage>
   );

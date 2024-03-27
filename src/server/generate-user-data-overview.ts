@@ -101,8 +101,8 @@ function relatedUser(persoon: Persoon) {
     persoon.overlijdensdatum
       ? 'overleden'
       : persoon.geboortedatum
-      ? differenceInYears(new Date(), parseISO(persoon.geboortedatum))
-      : '??'
+        ? differenceInYears(new Date(), parseISO(persoon.geboortedatum))
+        : '??'
   }`;
   const nom = naam(persoon);
   const user = persoon?.bsn
@@ -222,8 +222,8 @@ const paths: PathObj[] = [
             ''
           } met ${relatedUser(verbintenis.persoon as Persoon)}`
         : Object.keys(verbintenis).length
-        ? JSON.stringify(verbintenis)
-        : '';
+          ? JSON.stringify(verbintenis)
+          : '';
     },
     hpx: 30,
   },
@@ -254,8 +254,8 @@ const paths: PathObj[] = [
                 verbintenis.soortVerbintenisOmschrijving ?? ''
               } met ${relatedUser(verbintenis.persoon as Persoon)}`
             : Object.keys(verbintenis).length
-            ? JSON.stringify(verbintenis)
-            : '';
+              ? JSON.stringify(verbintenis)
+              : '';
         })
         .join(', ');
     },
@@ -502,10 +502,10 @@ function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
     Tonk: count('WPI_TONK'),
     BBZ: count('WPI_BBZ'),
     'Stadspassen (Gpass)': (serviceResults: ServiceResults) => {
-      return serviceResults.WPI_STADSPAS.content?.stadspassen.length || '';
+      return serviceResults.STADSPAS.content?.stadspassen.length || '';
     },
     Stadspasaanvragen: (serviceResults: ServiceResults) => {
-      return serviceResults.WPI_STADSPAS.content?.aanvragen.length || '';
+      return serviceResults.STADSPAS.content?.aanvragen.length || '';
     },
     'Zorg en ondersteuning': count('WMO'),
     Vergunningen: count('VERGUNNINGEN'),
