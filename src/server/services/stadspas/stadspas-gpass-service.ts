@@ -126,6 +126,9 @@ export async function fetchStadspassen(
       ...dataRequestConfig,
       url: GPASS_ENDPOINT_PASHOUDER,
       headers,
+      params: {
+        addsubs: true,
+      },
     },
     requestID,
     authProfileAndToken
@@ -159,6 +162,9 @@ export async function fetchStadspassen(
           transformResponse: (stadspas) =>
             transformStadspasResponse(stadspas, pashouder, administratienummer),
           headers,
+          params: {
+            include_balance: true,
+          },
         },
         requestID,
         authProfileAndToken
