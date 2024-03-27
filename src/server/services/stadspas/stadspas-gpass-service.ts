@@ -43,7 +43,7 @@ function formatBudget(
     `${budget.code}:${administratienummer}:${pasnummer}`
   );
 
-  const urlTransactions = `${process.env.BFF_API_BASE_URL}${BFF_BASE_PATH}${generatePath(
+  const urlTransactions = `${process.env.BFF_OIDC_BASE_URL}${BFF_BASE_PATH}${generatePath(
     BffEndpoints.STADSPAS_TRANSACTIONS,
     {
       transactionsKey,
