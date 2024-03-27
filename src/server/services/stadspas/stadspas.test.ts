@@ -202,11 +202,11 @@ describe('stadspas services', () => {
       },
     });
     remoteApi
-      .get('/stadspas/rest/sales/v1/pashouder')
+      .get('/stadspas/rest/sales/v2/pashouder')
       .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
       .reply(200, pashouderResponse);
     remoteApi
-      .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
+      .get(/\/stadspas\/rest\/sales\/v2\/pas\//)
       .times(3)
       .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
       .reply(200, pasResponse);
