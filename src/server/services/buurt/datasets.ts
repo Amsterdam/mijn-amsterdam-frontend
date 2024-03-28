@@ -787,6 +787,24 @@ function transformSportveldResponse(
     'veld'
   );
 
+  // simplify soortOndergrond for types
+  const types = ['Kunstgras', 'Kunstrubber', 'Kushion Court', 'Top Clay'];
+
+  for (const feature of features) {
+    for (const type of types) {
+      if (feature.properties.soortOndergrond?.startsWith(type)) {
+        feature.properties.soortOndergrond = type;
+        break;
+      }
+    }
+  }
+
+  features.forEach((feature) => {
+    if (!feature.properties.soortOndergrond) {
+      feature.properties.soortOndergrond = 'Onbekend';
+    }
+  });
+
   return features;
 }
 
