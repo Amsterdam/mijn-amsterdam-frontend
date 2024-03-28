@@ -7,7 +7,7 @@ import MockApp from '../MockApp';
 import StadspasDetail from './StadspasDetail';
 
 const testState: any = {
-  WPI_STADSPAS: {
+  STADSPAS: {
     content: {
       adminNumber: '123123123',
       stadspassen: [
@@ -62,24 +62,7 @@ const testState: any = {
           pasType: 'kind',
         },
       ],
-      aanvragen: [
-        {
-          id: 'aanvraag-1',
-          title: 'Aanvraag stadspas',
-          datePublished: '2020-07-24',
-          dateStart: '2020-07-14',
-          status: 'besluit',
-          steps: [],
-        },
-        {
-          id: 'aanvraag-2',
-          title: 'Aanvraag stadspas 2',
-          datePublished: '2020-07-24',
-          dateStart: '2020-07-14',
-          status: 'herstelTermijn',
-          steps: [],
-        },
-      ],
+      aanvragen: [],
     },
     status: 'OK',
   },
@@ -91,7 +74,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<StadspasDetail />', () => {
   const routeEntry = generatePath(AppRoutes['STADSPAS/SALDO'], {
-    id: testState.WPI_STADSPAS.content.stadspassen[0].id,
+    id: testState.STADSPAS.content.stadspassen[0].id,
   });
   const routePath = AppRoutes['STADSPAS/SALDO'];
 
