@@ -797,13 +797,10 @@ function transformSportveldResponse(
         break;
       }
     }
-  }
-
-  features.forEach((feature) => {
     if (!feature.properties.soortOndergrond) {
       feature.properties.soortOndergrond = 'Onbekend';
     }
-  });
+  }
 
   return features;
 }
