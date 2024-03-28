@@ -135,7 +135,7 @@ describe('stadspas services', () => {
         clientidentificatie: '123-123',
       },
     });
-    remoteApi.get('/stadspas/rest/sales/v1/pashouder').reply(401);
+    remoteApi.get('/stadspas/rest/sales/v1/pashouder?addsubs=true').reply(401);
 
     const response = await fetchStadspassen('xyz123', authProfileAndToken);
 
@@ -157,11 +157,11 @@ describe('stadspas services', () => {
       },
     });
     remoteApi
-      .get('/stadspas/rest/sales/v1/pashouder')
+      .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
       .reply(200, pashouderResponse);
     // Only mocking 1 pas response
     remoteApi
-      .get('/stadspas/rest/sales/v1/pas/333333333333')
+      .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
       .reply(200, pasResponse);
 
     const response = await fetchStadspassen('xyz123', authProfileAndToken);
@@ -202,7 +202,7 @@ describe('stadspas services', () => {
       },
     });
     remoteApi
-      .get('/stadspas/rest/sales/v1/pashouder')
+      .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
       .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
       .reply(200, pashouderResponse);
     remoteApi

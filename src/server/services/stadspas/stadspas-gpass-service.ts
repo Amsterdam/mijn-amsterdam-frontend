@@ -43,7 +43,7 @@ function formatBudget(
     `${budget.code}:${administratienummer}:${pasnummer}`
   );
 
-  const urlTransactions = `${process.env.BFF_API_BASE_URL}${BFF_BASE_PATH}${generatePath(
+  const urlTransactions = `${process.env.BFF_OIDC_BASE_URL}${BFF_BASE_PATH}${generatePath(
     BffEndpoints.STADSPAS_TRANSACTIONS,
     {
       transactionsKey,
@@ -88,6 +88,11 @@ export async function fetchStadspassen(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const noContentResponse = apiSuccessResult({
+    stadspassen: [],
+    administratienummer: null,
+  });
+
   const dataRequestConfig = getApiConfig('GPASS');
 
   const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v1/pashouder`;
@@ -97,6 +102,13 @@ export async function fetchStadspassen(
     requestID,
     authProfileAndToken
   );
+
+  if (
+    administratienummerResponse.status === 'ERROR' &&
+    administratienummerResponse.code === '404' // 404 means there is no record available in the ZORGNED api for the requested BSN
+  ) {
+    return noContentResponse;
+  }
 
   if (
     administratienummerResponse.status === 'ERROR' ||
@@ -114,6 +126,9 @@ export async function fetchStadspassen(
       ...dataRequestConfig,
       url: GPASS_ENDPOINT_PASHOUDER,
       headers,
+      params: {
+        addsubs: true,
+      },
     },
     requestID,
     authProfileAndToken
@@ -121,10 +136,8 @@ export async function fetchStadspassen(
 
   if (stadspasHouderResponse.status === 'ERROR') {
     if (stadspasHouderResponse.code === '401') {
-      return apiSuccessResult({
-        stadspassen: [],
-        administratienummer: null,
-      });
+      // 401 means there is no record available in the GPASS api for the requested administratienummer
+      return noContentResponse;
     }
     return stadspasHouderResponse;
   }
@@ -149,6 +162,9 @@ export async function fetchStadspassen(
           transformResponse: (stadspas) =>
             transformStadspasResponse(stadspas, pashouder, administratienummer),
           headers,
+          params: {
+            include_balance: true,
+          },
         },
         requestID,
         authProfileAndToken

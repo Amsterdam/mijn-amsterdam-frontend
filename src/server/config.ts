@@ -149,7 +149,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
-    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
+    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
