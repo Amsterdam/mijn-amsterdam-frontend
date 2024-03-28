@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, InnerHtml } from '../../components';
+import { ErrorAlert, InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 import { Button } from '../Button/Button';
 import styles from './MaintenanceNotifications.module.scss';
@@ -28,7 +28,7 @@ export default function MaintenanceNotifications({
     <>
       {maintenanceNotifications.map((notification, index) => {
         return (
-          <Alert type="warning" key={notification.title + index}>
+          <ErrorAlert key={notification.title + index} severityInput={"warning"} title='Onderhoudsmelding'>
             <InnerHtml className={styles.Description}>
               {notification.description}
             </InnerHtml>
@@ -55,7 +55,7 @@ export default function MaintenanceNotifications({
                 </Linkd>
               </p>
             )}
-          </Alert>
+          </ErrorAlert>
         );
       })}
     </>
