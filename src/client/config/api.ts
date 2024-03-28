@@ -50,7 +50,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WPI_TONK: 'Aanvraag TONK',
   WPI_BBZ: 'Aanvraag Bbz',
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
-  WPI_STADSPAS_stadspas: 'Informatie over uw stadspassen',
+  STADSPAS_stadspas: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
   ERFPACHTv2: 'Erfpacht',
   SUBSIDIE: 'Subsidies',
@@ -81,7 +81,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 };
 
 if (FeatureToggle.stadspasRequestsActive) {
-  ErrorNames['WPI_STADSPAS_aanvragen'] = 'Stadspasaanvragen';
+  ErrorNames['STADSPAS_aanvragen'] = 'Stadspasaanvragen';
 }
 
 export function createErrorDisplayData(

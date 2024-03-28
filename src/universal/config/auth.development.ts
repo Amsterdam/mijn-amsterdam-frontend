@@ -7,10 +7,13 @@ export const DEV_USER_ID_DEFAULT =
 const accounts =
   (typeof MA_TEST_ACCOUNTS !== 'undefined'
     ? MA_TEST_ACCOUNTS
-    : process.env.MA_TEST_ACCOUNTS) ?? `dev=${DEV_USER_ID_DEFAULT}`;
+    : process.env.MA_TEST_ACCOUNTS) || `dev=${DEV_USER_ID_DEFAULT}`;
 
-export const testAccounts = accounts.split(',').reduce((acc, value) => {
-  const [userName, userId] = value.trim().split('=');
-  acc[userName] = userId;
-  return acc;
-}, {} as Record<string, string>);
+export const testAccounts = accounts.split(',').reduce(
+  (acc, value) => {
+    const [userName, userId] = value.trim().split('=');
+    acc[userName] = userId;
+    return acc;
+  },
+  {} as Record<string, string>
+);

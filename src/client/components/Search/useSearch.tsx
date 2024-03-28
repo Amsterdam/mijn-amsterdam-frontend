@@ -17,7 +17,7 @@ import {
 import { AppRoutes } from '../../../universal/config';
 import { pick, uniqueArray } from '../../../universal/helpers';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
-import { AppState } from '../../AppState';
+import { AppState, AppStateKey } from '../../AppState';
 import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
@@ -66,8 +66,10 @@ export function generateSearchIndexPageEntry(
     }
 
     if (prop === 'keywords' || prop === 'generateKeywords') {
+      // @ts-expect-error
       searchEntry.keywords = [...(searchEntry.keywords || []), ...value];
     } else if (prop === 'keywordsGeneratedFromProps') {
+      // @ts-expect-error
       const generatedKeywordValues = Object.values(pick(item, value));
       searchEntry.keywords = [
         ...(searchEntry.keywords || []),
@@ -75,6 +77,7 @@ export function generateSearchIndexPageEntry(
       ];
     } else {
       const key: keyof SearchEntry = prop;
+      // @ts-expect-error
       searchEntry[key] = value;
     }
   }
@@ -89,7 +92,7 @@ export function generateSearchIndexPageEntry(
 export function combineApiSearchConfigs(
   localConfigs: Array<ApiSearchConfig>,
   remoteConfigs: Record<
-    keyof AppState,
+    AppStateKey,
     Partial<Omit<ApiSearchConfig, 'getApiBaseItems' | 'generateKeywords'>>
   >
 ) {

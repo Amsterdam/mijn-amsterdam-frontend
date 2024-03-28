@@ -207,6 +207,9 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
                 </p>
               </div>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -420,6 +423,9 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
                 </p>
               </div>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -548,6 +554,9 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
                 </p>
               </div>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li

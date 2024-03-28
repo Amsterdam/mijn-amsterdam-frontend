@@ -12,6 +12,8 @@ export type AppState = {
   [key in BagChapter]?: Record<string, any>;
 };
 
+export type AppStateKey = Exclude<keyof AppState, BagChapter>;
+
 export const PRISTINE_APPSTATE: AppState = {
   // Generated
   NOTIFICATIONS: apiPristineResult([]),
@@ -42,7 +44,7 @@ export const PRISTINE_APPSTATE: AppState = {
   WPI_BBZ: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  WPI_STADSPAS: apiPristineResult(null, {
+  STADSPAS: apiPristineResult(null, {
     profileTypes: ['private'],
   }),
   SVWI: apiPristineResult(null, {

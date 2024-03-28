@@ -7,7 +7,7 @@ import MockApp from '../MockApp';
 import Stadspas from './Stadspas';
 
 const testState: any = {
-  WPI_STADSPAS: {
+  STADSPAS: {
     content: {
       adminNumber: '123123123',
       stadspassen: [

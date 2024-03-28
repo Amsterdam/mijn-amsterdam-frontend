@@ -3,7 +3,6 @@ import { CaseType } from '../../../universal/types/vergunningen';
 import BRP from '../../mock-data/json/brp.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
-import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import {
   createTipsFromServiceResults,
   prefixTipNotification,
@@ -100,10 +99,10 @@ describe('createTipsFromServiceResults', () => {
     const tips = await createTipsFromServiceResults('private', {
       serviceResults: {
         BRP: BRPCopy as ApiSuccessResponse<any>,
-        WPI_STADSPAS: {
+        STADSPAS: {
           content: {
             aanvragen: [],
-            ...WPI_STADSPAS.content,
+            stadspassen: [{ foo: 'bar' }],
           },
           status: 'OK',
         },

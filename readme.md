@@ -66,11 +66,10 @@ It's basically an additional development server integrated in the BFF api.
 - `typescript`
 - `vite`
 
-#### IDE plugins
+#### Required IDE plugins
 
 - `prettier`
 - `.editorconfig`
-- `eslint`
 
 #### Testing and development
 
