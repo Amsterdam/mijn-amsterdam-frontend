@@ -101,22 +101,20 @@ exports[`<StadspasDetail /> > Matches the Full Page snapshot 1`] = `
           Meer informatie over het Kindtegoed
         </a>
       </p>
-      <span
-        class="_LoadingContent_16e37c"
+    </div>
+    <div
+      class="_PageContent_47d7c0 _PageContentStadspasInfo_f22d47"
+    >
+      <h3
+        class="amsterdam-heading amsterdam-heading--2"
       >
-        <span
-          style="width: 70%; height: 2rem; margin-bottom: .7rem;"
-        />
-        <span
-          style="width: 90%; height: 2rem; margin-bottom: .7rem;"
-        />
-        <span
-          style="width: 90%; height: 2rem; margin-bottom: .7rem;"
-        />
-        <span
-          style="width: 40%; height: 2rem; margin-bottom: 0px;"
-        />
-      </span>
+        G Braber
+      </h3>
+      <p
+        class="_StadspasNummer_f22d47"
+      >
+        Stadspasnummer: 6011012604273
+      </p>
     </div>
   </main>
 </DocumentFragment>
