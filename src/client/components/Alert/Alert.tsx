@@ -7,7 +7,7 @@ export interface ComponentProps {
   severityInput?: any
 }
 
-export function ErrorAlert({
+export default function ErrorAlert({
   children,
   title = 'Foutmelding',
   severityInput="error"
