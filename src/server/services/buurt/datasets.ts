@@ -226,9 +226,9 @@ export const datasetEndpoints: Record<
     },
   },
   sportpark: {
-    listUrl: dsoApiListUrl('sport/sportpark'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
-    transformList: transformGenericApiListResponse,
+    listUrl: dsoApiListUrl('sport/park'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/park/',
+    transformList: transformSportparkResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -240,9 +240,10 @@ export const datasetEndpoints: Record<
     },
   },
   sportveld: {
-    listUrl: dsoApiListUrl('sport/sportveld'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
-    transformList: transformGenericApiListResponse,
+    listUrl: dsoApiListUrl('sport/veld'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/veld/',
+    transformList: transformSportveldResponse,
+    dsoApiAdditionalStaticFieldNames: ['soortOndergrond', 'sportfunctie'],
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -254,8 +255,8 @@ export const datasetEndpoints: Record<
     },
   },
   gymzaal: {
-    listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'gymzaal'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
+    listUrl: dsoApiListUrl('sport/gymzaal', undefined, 'gymzaal'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymzaal/',
     transformList: transformGymzaalResponse,
     featureType: 'Point',
     dsoApiAdditionalStaticFieldNames: ['type'],
@@ -268,8 +269,8 @@ export const datasetEndpoints: Record<
     },
   },
   sportzaal: {
-    listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'sportzaal'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
+    listUrl: dsoApiListUrl('sport/gymzaal', undefined, 'gymzaal'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymzaal/',
     transformList: transformSportzaalResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -281,9 +282,9 @@ export const datasetEndpoints: Record<
     },
   },
   sporthal: {
-    listUrl: dsoApiListUrl('sport/sporthal'),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
-    transformList: transformGenericApiListResponse,
+    listUrl: dsoApiListUrl('sport/hal'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hal/',
+    transformList: transformSporthalResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -294,9 +295,9 @@ export const datasetEndpoints: Record<
     },
   },
   sportaanbieder: {
-    listUrl: dsoApiListUrl('sport/sportaanbieder', 2000),
-    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
-    transformList: transformGenericApiListResponse,
+    listUrl: dsoApiListUrl('sport/aanbieder', 2000, 'sportaanbieder'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/aanbieder/',
+    transformList: transformSportaanbiederResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
@@ -729,6 +730,81 @@ function transformParkeerzoneCoords(
   return features;
 }
 
+function transformSportparkResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformGenericApiListResponse(
+    datasetId,
+    config,
+    responseData,
+    'park'
+  );
+
+  return features;
+}
+
+function transformSportaanbiederResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformGenericApiListResponse(
+    datasetId,
+    config,
+    responseData,
+    'aanbieder'
+  );
+
+  return features;
+}
+
+function transformSporthalResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformGenericApiListResponse(
+    datasetId,
+    config,
+    responseData,
+    'hal'
+  );
+
+  return features;
+}
+
+function transformSportveldResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformGenericApiListResponse(
+    datasetId,
+    config,
+    responseData,
+    'veld'
+  );
+
+  // simplify soortOndergrond for types
+  const types = ['Kunstgras', 'Kunstrubber', 'Kushion Court', 'Top Clay'];
+
+  for (const feature of features) {
+    for (const type of types) {
+      if (feature.properties.soortOndergrond?.startsWith(type)) {
+        feature.properties.soortOndergrond = type;
+        break;
+      }
+    }
+    if (!feature.properties.soortOndergrond) {
+      feature.properties.soortOndergrond = 'Onbekend';
+    }
+  }
+
+  return features;
+}
+
 function transformSportzaalResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
@@ -738,7 +814,7 @@ function transformSportzaalResponse(
     datasetId,
     config,
     responseData,
-    'gymsportzaal'
+    'gymzaal'
   );
 
   return features.filter(
@@ -757,7 +833,7 @@ function transformGymzaalResponse(
     datasetId,
     config,
     responseData,
-    'gymsportzaal'
+    'gymzaal'
   );
 
   return features.filter(
