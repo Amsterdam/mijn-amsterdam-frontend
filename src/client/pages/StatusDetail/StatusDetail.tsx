@@ -102,7 +102,7 @@ export default function StatusDetail({
   statusItemSteps =
     statusItemSteps.map((step) => {
       return Object.assign({}, step, {
-        documents: step.documents.map((document) => {
+        documents: step.documents?.map((document) => {
           return Object.assign({}, document, {
             url: relayApiUrl(document.url),
           });

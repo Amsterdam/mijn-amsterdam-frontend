@@ -79,7 +79,7 @@ export function StatusLinePanelDocuments({
       ) : (
         altDocumentContent
       )}
-      {!!documents.length && (
+      {!!documents?.length && (
         <DocumentList documents={documents} trackPath={trackPath} />
       )}
     </StatusLinePanel>
