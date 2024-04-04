@@ -137,6 +137,23 @@ export const hasKidsBetweenAges4And11: TipsPredicateFN = (
   return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 4, 11, today);
 };
 
+export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
+  console.log(
+    '=>(predicates.ts:142) appState.BRP?.content',
+    appState.BRP?.content
+  );
+  const oldestKid = appState.BRP?.content?.kinderen?.sort(
+    (a, b) =>
+      new Date(Number(a.geboortedatum)).getTime() -
+      new Date(Number(b.geboortedatum)).getTime()
+  )[0];
+
+  return (
+    !!oldestKid &&
+    new Date(Number(oldestKid.geboortedatum)).getFullYear() >= 2016
+  );
+};
+
 // Rule 13
 export const hasDutchNationality: TipsPredicateFN = (appState) => {
   return !!appState.BRP?.content?.persoon?.nationaliteiten.some(
@@ -166,6 +183,12 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
   return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
     (v: ToeristischeVerhuurVergunning) =>
       v.caseType === CaseType.VakantieverhuurVergunningaanvraag
+  );
+};
+
+export const isMarriedOrLivingTogether: TipsPredicateFN = (appState) => {
+  return ['H', 'G']?.includes(
+    appState.BRP?.content?.verbintenis?.soortVerbintenis ?? ''
   );
 };
 

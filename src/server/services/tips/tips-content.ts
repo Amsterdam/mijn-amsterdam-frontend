@@ -6,6 +6,7 @@ import {
   hasDutchNationality,
   hasKidsBetweenAges2And18,
   hasKidsBetweenAges4And11,
+  hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
@@ -16,6 +17,7 @@ import {
   is18OrOlder,
   isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
+  isMarriedOrLivingTogether,
   isMokum,
   isReceivingSubsidy,
   not,
@@ -323,6 +325,26 @@ export const tips: Tip[] = [
     link: {
       title: 'Bekijk de voorwaarden',
       to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
+    },
+  },
+  {
+    id: 'mijn-44',
+    owner: '',
+    dateActiveStart: '2024-01-01',
+    dateActiveEnd: '2024-12-31',
+    active: true,
+    priority: 1,
+    datePublished: '2024-04-04',
+    title: 'Achternaam van kind kiezen',
+    chapter: Chapters.BRP,
+    profileTypes: ['private'],
+    description:
+      'Vanaf 1 januari 2024 gaat een nieuwe wet in: Introductie gecombineerde geslachtsnaam. Dit betekent dat u als ouders uw kind niet alleen 1 achternaam kunnen geven. U kunt uw kind ook een combinatie van allebei uw achternamen geven.',
+    predicates: [hasOldestKidBornFrom2016, isMarriedOrLivingTogether],
+    reason: 'U ziet deze tip omdat u kinderen heeft geboren na 2016',
+    link: {
+      title: 'Achternaam van kind kiezen - Gemeente Amsterdam',
+      to: 'https://www.amsterdam.nl/veelgevraagd/achternaam-van-kind-kiezen-2f07e',
     },
   },
 ];
