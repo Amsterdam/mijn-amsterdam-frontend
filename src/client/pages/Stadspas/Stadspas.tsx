@@ -100,9 +100,7 @@ export default function CStadspas() {
         </p>
         <MaintenanceNotifications page="stadspas" />
         {isError(STADSPAS) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
-          </Alert>
+          <Alert>We kunnen op dit moment niet alle gegevens tonen.</Alert>
         )}
       </PageContent>
 
