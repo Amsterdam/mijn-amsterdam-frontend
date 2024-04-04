@@ -76,6 +76,18 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
     "notifications": [
       {
         "chapter": "VERGUNNINGEN",
+        "datePublished": "2024-03-14",
+        "description": "Uw aanvraag voor Werkzaamheden en vervoer op straat is ontvangen.",
+        "id": "vergunning-2053183102-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/werk-en-vervoer-op-straat/2053183102",
+        },
+        "subject": "2053183102",
+        "title": "Aanvraag werkzaamheden en vervoer op straat ontvangen",
+      },
+      {
+        "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
         "description": "Wij hebben uw aanvraag voor een kentekenwijziging
         RVV ontheffing Laan van Vlaanderen
@@ -646,6 +658,18 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
 {
   "content": {
     "notifications": [
+      {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2024-03-14",
+        "description": "Uw aanvraag voor Werkzaamheden en vervoer op straat is ontvangen.",
+        "id": "vergunning-2053183102-notification",
+        "link": {
+          "title": "Bekijk details",
+          "to": "/vergunningen/werk-en-vervoer-op-straat/2053183102",
+        },
+        "subject": "2053183102",
+        "title": "Aanvraag werkzaamheden en vervoer op straat ontvangen",
+      },
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
@@ -1266,6 +1290,34 @@ exports[`Vergunningen service > should format data correctly 1`] = `
     "processed": true,
     "status": "Afgehandeld",
     "title": "Vergunning vakantieverhuur",
+  },
+  {
+    "bicycleRack": false,
+    "block": false,
+    "caseType": "Werk en vervoer op straat",
+    "dateDecision": null,
+    "dateEnd": "2024-03-21",
+    "dateRequest": "2024-03-14",
+    "dateStart": "2024-03-21",
+    "dateWorkflowActive": null,
+    "decision": "Verleend",
+    "description": "RVV,     , 20240321",
+    "documentsUrl": "/decosjoin/listdocuments/gAAAAABmDpaK6c955b7bbch5nTs5fAenYZv4NAIN0N3Gfx41d1tky_UyeIL0lJjXnQJG641nYBpakPZKNSVDk106YJOPgq9II7KYY-uOpTsHG0M28ybMyriqXU72Nic5FohBy8v4TXm1",
+    "eParkingspace": false,
+    "eRvv": false,
+    "filming": false,
+    "id": "2053183102",
+    "identifier": "Z/24/2232820",
+    "licensePlates": null,
+    "location": null,
+    "night": false,
+    "object": false,
+    "parkingspace": false,
+    "processed": false,
+    "rvv": false,
+    "status": "Afgehandeld",
+    "title": "Werkzaamheden en vervoer op straat",
+    "vezip": false,
   },
   {
     "area": "Laan van Vlaanderen",

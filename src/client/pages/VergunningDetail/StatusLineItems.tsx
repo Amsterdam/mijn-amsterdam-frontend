@@ -23,7 +23,7 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
         return getRVVSloterwegLineItems(vergunning);
     }
 
-    const isDone = vergunning.processed;
+    const isDone = vergunning.processed || vergunning.status === 'Afgehandeld';
     const hasDateWorkflowActive = !!vergunning.dateWorkflowActive;
     const inProgressActive = hasWorkflow(vergunning.caseType)
       ? hasDateWorkflowActive && !isDone
