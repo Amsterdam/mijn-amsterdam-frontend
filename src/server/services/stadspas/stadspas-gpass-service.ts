@@ -37,7 +37,7 @@ function getOwnerName(pashouder: StadspasHouderSource) {
 function formatBudget(
   budget: StadspasDetailBudgetSource,
   administratienummer: string,
-  pasnummer: string
+  pasnummer: number
 ) {
   const [transactionsKey] = encrypt(
     `${budget.code}:${administratienummer}:${pasnummer}`
@@ -69,7 +69,7 @@ function transformStadspasResponse(
     formatBudget(
       budget,
       administratienummer,
-      gpassStadspasResonseData.pasnummer_volledig
+      gpassStadspasResonseData.pasnummer
     )
   );
 
