@@ -38,9 +38,9 @@ import SVWI from './json/svwi.json';
 import GPASS_PASHOUDERS from './json/gpass-pashouders.json';
 import GPASS_STADSPAS from './json/gpass-stadspas.json';
 import GPASS_TRANSACTIES from './json/gpass-transacties.json';
-import MAINTENANCE_NOTIFICATIONS_ALLE from './json/maintenance-notifications-alle.json'
-import MAINTENANCE_NOTIFICATIONS_DASHBOARD from './json/maintenance-notifications-dashboard.json'
-import MAINTENANCE_NOTIFICATIONS_LANDINGSPAGE from './json/maintenance-notifications-landingspagina.json'
+import MAINTENANCE_NOTIFICATIONS_ALLE from './json/maintenance-notifications-alle.json';
+import MAINTENANCE_NOTIFICATIONS_DASHBOARD from './json/maintenance-notifications-dashboard.json';
+import MAINTENANCE_NOTIFICATIONS_LANDINGSPAGE from './json/maintenance-notifications-landingspagina.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -437,19 +437,20 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_ALLE);
     },
   },
-  ['https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/?Appidt=app-pagetype&reload=true']: {
-    status: () => 200,
-    method: 'get',
-    responseData: async (config: any) => {
-
-      return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_DASHBOARD);
+  ['https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/?Appidt=app-pagetype&reload=true']:
+    {
+      status: () => 200,
+      method: 'get',
+      responseData: async (config: any) => {
+        return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_DASHBOARD);
+      },
     },
-  },
-  ['https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina/?Appidt=app-pagetype&reload=true']: {
-    status: () => 200,
-    method: 'get',
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_LANDINGSPAGE);
+  ['https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina/?Appidt=app-pagetype&reload=true']:
+    {
+      status: () => 200,
+      method: 'get',
+      responseData: async (config: any) => {
+        return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_LANDINGSPAGE);
+      },
     },
-  }
 };

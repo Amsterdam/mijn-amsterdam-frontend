@@ -5,8 +5,8 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  Alert,
   ChapterIcon,
+  ErrorAlert,
   Linkd,
   MaintenanceNotifications,
   OverviewPage,
@@ -100,7 +100,9 @@ export default function CStadspas() {
         </p>
         <MaintenanceNotifications page="stadspas" />
         {isError(STADSPAS) && (
-          <Alert>We kunnen op dit moment niet alle gegevens tonen.</Alert>
+          <ErrorAlert>
+            We kunnen op dit moment niet alle gegevens tonen.
+          </ErrorAlert>
         )}
       </PageContent>
 

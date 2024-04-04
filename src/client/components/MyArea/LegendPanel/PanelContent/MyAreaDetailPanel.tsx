@@ -114,7 +114,7 @@ export default function MyAreaDetailPanel() {
   if (loadingFeature?.isError) {
     return (
       <ErrorAlert>
-               Er kan op dit moment geen informatie getoond worden over deze locatie.
+        Er kan op dit moment geen informatie getoond worden over deze locatie.
       </ErrorAlert>
     );
   }

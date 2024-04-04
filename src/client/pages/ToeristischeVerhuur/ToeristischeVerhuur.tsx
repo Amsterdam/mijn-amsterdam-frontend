@@ -185,36 +185,32 @@ export default function ToeristischeVerhuur() {
         <div className={styles.Detail}>
           {hasBothVerleend && (
             <ErrorAlert>
-
-                U hebt een vergunning voor vakantieverhuur én bed &amp;
-                breakfast. Het is niet toegestaan om op hetzelfde adres zowel
-                aan vakantieverhuur als bed &amp; breakfast te doen. U moet
-                daarom 1 van deze vergunningen opzeggen.
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
-                >
-                  Meer informatie over voorwaarden vakantieverhuur
-                </LinkdInline>
-                .
-
+              U hebt een vergunning voor vakantieverhuur én bed &amp; breakfast.
+              Het is niet toegestaan om op hetzelfde adres zowel aan
+              vakantieverhuur als bed &amp; breakfast te doen. U moet daarom 1
+              van deze vergunningen opzeggen.
+              <LinkdInline
+                external={true}
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
+              >
+                Meer informatie over voorwaarden vakantieverhuur
+              </LinkdInline>
+              .
             </ErrorAlert>
           )}
           {!hasRegistrations && hasPermits && (
             <ErrorAlert>
-
-                U hebt een vergunning voor vakantieverhuur of bed &amp;
-                breakfast. U moet daarom ook een landelijk registratienummer
-                voor toeristische verhuur aanvragen.
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
-                >
-                  Meer informatie over het landelijk registratienummer
-                  toeristische verhuur
-                </LinkdInline>
-                .
-
+              U hebt een vergunning voor vakantieverhuur of bed &amp; breakfast.
+              U moet daarom ook een landelijk registratienummer voor
+              toeristische verhuur aanvragen.
+              <LinkdInline
+                external={true}
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+              >
+                Meer informatie over het landelijk registratienummer
+                toeristische verhuur
+              </LinkdInline>
+              .
             </ErrorAlert>
           )}
         </div>

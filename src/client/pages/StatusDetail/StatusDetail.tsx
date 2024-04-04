@@ -1,10 +1,14 @@
+import {
+  Alert as DSAlert,
+  LinkList,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
 import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { Alert as DSAlert, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
-
 
 import {
   GenericDocument,
@@ -120,32 +124,30 @@ export default function StatusDetail({
       <PageContent className={styles.DetailPageContent}>
         {!!statusItem && pageContent && pageContent(isStateLoading, statusItem)}
 
-        {isError(STATE) ||
-          (noContent && !statusItems.length && (
-            <ErrorAlert >
-                We kunnen op dit moment geen gegevens tonen.{' '}
-                <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>
-                .
-            </ErrorAlert>
-          ))}
+        {(isError(STATE) || (noContent && !statusItems.length)) && (
+          <ErrorAlert>
+            We kunnen op dit moment geen gegevens tonen.{' '}
+            <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>.
+          </ErrorAlert>
+        )}
 
         {!isStateLoading && !statusItem && !!statusItems.length && (
-          <DSAlert>
-         <Paragraph>
-              Deze pagina is mogelijk verplaatst. Kies hieronder een van de
-              beschikbare aanvragen.
-              </Paragraph>
-            <UnorderedList className={styles.ItemAlternatives}>
+          <DSAlert title="Deze pagina is mogelijk verplaatst">
+            <Paragraph className={styles.MarginBottom}>
+              Kies hieronder een van de beschikbare aanvragen.
+            </Paragraph>
+            <LinkList>
               {statusItems.map((statusItem, index) => {
                 return (
-                  <UnorderedList.Item key={statusItem.link?.to || index}>
-                    <Linkd href={statusItem.link?.to || appRoute}>
-                      {statusItem.title}
-                    </Linkd>
-                  </UnorderedList.Item>
+                  <LinkList.Link
+                    key={statusItem.link?.to || index}
+                    href={statusItem.link?.to || appRoute}
+                  >
+                    {statusItem.title}
+                  </LinkList.Link>
                 );
               })}
-            </UnorderedList>
+            </LinkList>
           </DSAlert>
         )}
 
