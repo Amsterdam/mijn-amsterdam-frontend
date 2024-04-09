@@ -10,7 +10,7 @@ export interface ComponentProps {
 export default function ErrorAlert({
   children,
   title = 'Foutmelding',
-  severityInput="error"
+  severity="error"
 
 }: ComponentProps) {
   return (
