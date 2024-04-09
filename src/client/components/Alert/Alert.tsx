@@ -4,7 +4,7 @@ import { ComponentChildren } from '../../../universal/types';
 export interface ComponentProps {
   children?: ComponentChildren;
   title?: string;
-  severityInput?: any
+  severity?: 'error' | 'warning' | 'info' | 'success'
 }
 
 export default function ErrorAlert({
