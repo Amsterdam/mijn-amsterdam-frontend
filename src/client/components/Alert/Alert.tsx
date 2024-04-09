@@ -14,7 +14,7 @@ export default function ErrorAlert({
 
 }: ComponentProps) {
   return (
-    <DSAlert title={title} severity={severityInput}>
+    <DSAlert title={title} severity={severity}>
       <Paragraph>{children}</Paragraph>
     </DSAlert>
   );
