@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { useEffect, useMemo } from 'react';
 import { AppRoutes } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
+import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import {
   apiPristineResult,
   ApiResponse,
@@ -172,7 +173,8 @@ export default function Profile() {
         )}
 
         {BRP.content?.persoon?.adresInOnderzoek && (
-          <ErrorAlert>
+          <DSAlert>
+            <Paragraph>
 
               {BRP.content?.persoon?.adresInOnderzoek === '080000' ? <>Op dit moment onderzoeken wij of u nog steeds woont op het adres
                 waar u ingeschreven staat.</> : <>
@@ -186,7 +188,8 @@ export default function Profile() {
                 amsterdam.nl
               </LinkdInline>
               .
-            <br/>
+              </Paragraph>
+              <Paragraph>
               Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail
               naar{' '}
               <a
@@ -196,8 +199,8 @@ export default function Profile() {
                 adresonderzoek.basisinformatie@amsterdam.nl
               </a>
               .
-
-          </ErrorAlert>
+              </Paragraph>
+          </DSAlert>
         )}
       </PageContent>
 

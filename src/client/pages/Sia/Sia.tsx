@@ -13,7 +13,6 @@ import {
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
-  Alert,
   ChapterIcon,
   ErrorAlert,
   MaintenanceNotifications,
@@ -113,7 +112,9 @@ export default function Sia() {
         </p>
         <MaintenanceNotifications page="sia-meldingen" />
         {isError(SIA) && (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
+          <ErrorAlert>
+            We kunnen op dit moment geen gegevens tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

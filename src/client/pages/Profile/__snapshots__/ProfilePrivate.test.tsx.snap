@@ -122,14 +122,14 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           </p>
         </div>
       </section>
-      <section
-        class="amsterdam-alert amsterdam-alert--error"
+      <div
+        class="amsterdam-alert amsterdam-alert--warning"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="amsterdam-icon amsterdam-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -149,11 +149,6 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         <div
           class="amsterdam-alert__content"
         >
-          <h2
-            class="amsterdam-heading amsterdam-heading--4"
-          >
-            Foutmelding
-          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -166,7 +161,10 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
             .
-            <br />
+          </p>
+          <p
+            class="amsterdam-paragraph"
+          >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
@@ -177,7 +175,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -1826,14 +1824,14 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           </p>
         </div>
       </section>
-      <section
-        class="amsterdam-alert amsterdam-alert--error"
+      <div
+        class="amsterdam-alert amsterdam-alert--warning"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="amsterdam-icon amsterdam-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -1853,11 +1851,6 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         <div
           class="amsterdam-alert__content"
         >
-          <h2
-            class="amsterdam-heading amsterdam-heading--4"
-          >
-            Foutmelding
-          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -1870,7 +1863,10 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
             .
-            <br />
+          </p>
+          <p
+            class="amsterdam-paragraph"
+          >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
@@ -1881,7 +1877,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -3530,14 +3526,14 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           </p>
         </div>
       </section>
-      <section
-        class="amsterdam-alert amsterdam-alert--error"
+      <div
+        class="amsterdam-alert amsterdam-alert--warning"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="amsterdam-icon amsterdam-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -3557,11 +3553,6 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         <div
           class="amsterdam-alert__content"
         >
-          <h2
-            class="amsterdam-heading amsterdam-heading--4"
-          >
-            Foutmelding
-          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -3574,7 +3565,10 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
             .
-            <br />
+          </p>
+          <p
+            class="amsterdam-paragraph"
+          >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
@@ -3585,7 +3579,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -5128,14 +5122,14 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           </p>
         </div>
       </section>
-      <section
-        class="amsterdam-alert amsterdam-alert--error"
+      <div
+        class="amsterdam-alert amsterdam-alert--warning"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="amsterdam-icon amsterdam-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -5155,11 +5149,6 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         <div
           class="amsterdam-alert__content"
         >
-          <h2
-            class="amsterdam-heading amsterdam-heading--4"
-          >
-            Foutmelding
-          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -5172,7 +5161,10 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
             .
-            <br />
+          </p>
+          <p
+            class="amsterdam-paragraph"
+          >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
@@ -5183,7 +5175,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -5567,14 +5559,14 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           </p>
         </div>
       </section>
-      <section
-        class="amsterdam-alert amsterdam-alert--error"
+      <div
+        class="amsterdam-alert amsterdam-alert--warning"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="amsterdam-icon amsterdam-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -5594,11 +5586,6 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         <div
           class="amsterdam-alert__content"
         >
-          <h2
-            class="amsterdam-heading amsterdam-heading--4"
-          >
-            Foutmelding
-          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -5611,7 +5598,10 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
             .
-            <br />
+          </p>
+          <p
+            class="amsterdam-paragraph"
+          >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
@@ -5622,7 +5612,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -7271,14 +7261,14 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           </p>
         </div>
       </section>
-      <section
-        class="amsterdam-alert amsterdam-alert--error"
+      <div
+        class="amsterdam-alert amsterdam-alert--warning"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="amsterdam-icon amsterdam-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -7298,11 +7288,6 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         <div
           class="amsterdam-alert__content"
         >
-          <h2
-            class="amsterdam-heading amsterdam-heading--4"
-          >
-            Foutmelding
-          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -7315,7 +7300,10 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
             .
-            <br />
+          </p>
+          <p
+            class="amsterdam-paragraph"
+          >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
@@ -7326,7 +7314,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
