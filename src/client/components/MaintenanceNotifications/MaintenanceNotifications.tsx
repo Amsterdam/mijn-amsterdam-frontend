@@ -28,7 +28,7 @@ export default function MaintenanceNotifications({
     <>
       {maintenanceNotifications.map((notification, index) => {
         return (
-          <ErrorAlert key={notification.title + index} severityInput={"warning"} title='Onderhoudsmelding'>
+          <ErrorAlert key={notification.title + index} severityInput="warning" title="Onderhoudsmelding">
             <InnerHtml className={styles.Description}>
               {notification.description}
             </InnerHtml>
