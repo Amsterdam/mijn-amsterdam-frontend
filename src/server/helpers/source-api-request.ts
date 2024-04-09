@@ -244,7 +244,10 @@ export async function requestData<T>(
       error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
     const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
-    const errorMessage = error?.response?.data?.message || error.toString();
+    const errorMessageBasic = error.toString();
+    const errorMessage = error?.response?.data
+      ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
+      : errorMessageBasic;
 
     const capturedId = shouldCaptureMessage
       ? Sentry.captureMessage(
@@ -272,7 +275,13 @@ export async function requestData<T>(
         });
 
     const sentryId = !IS_TAP ? null : capturedId;
-    const responseData = apiErrorResult(errorMessage, null, sentryId);
+    const statusCode = error.statusCode ?? error?.response?.status;
+    const responseData = apiErrorResult(
+      errorMessage,
+      null,
+      sentryId,
+      statusCode ? `${statusCode}` : undefined
+    );
 
     if (cache.get(cacheKey)) {
       // Resolve with error

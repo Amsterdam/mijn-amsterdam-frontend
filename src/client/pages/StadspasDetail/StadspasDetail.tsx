@@ -2,10 +2,10 @@ import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type {
-  WpiStadspasBudget,
-  WpiStadspasTransaction,
-} from '../../../server/services/wpi/wpi-types';
+import {
+  StadspasBudget,
+  StadspasTransaction,
+} from '../../../server/services/stadspas/stadspas-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   ApiResponse,
@@ -58,7 +58,7 @@ function Transaction({ value, title, date }: TransactionProps) {
 }
 
 interface TransactionOverviewProps {
-  transactions?: WpiStadspasTransaction[] | null;
+  transactions?: StadspasTransaction[] | null;
 }
 
 function TransactionOverview({ transactions }: TransactionOverviewProps) {
@@ -83,7 +83,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
 }
 
 interface BudgetBalanceProps {
-  budget: WpiStadspasBudget;
+  budget: StadspasBudget;
 }
 
 function BudgetBalance({ budget }: BudgetBalanceProps) {
@@ -124,12 +124,12 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
 
 interface StadspasBudgetProps {
   urlTransactions: string;
-  budget: WpiStadspasBudget;
+  budget: StadspasBudget;
   isTransactionOverviewActive: boolean;
   toggleTransactionOverview: () => void;
 }
 
-function StadspasBudget({
+function CStadspasBudget({
   urlTransactions,
   budget,
   isTransactionOverviewActive,
@@ -137,9 +137,9 @@ function StadspasBudget({
 }: StadspasBudgetProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [api] = useDataApi<ApiResponse<WpiStadspasTransaction[]>>(
+  const [api] = useDataApi<ApiResponse<StadspasTransaction[]>>(
     {
-      url: relayApiUrl(`${urlTransactions}`),
+      url: urlTransactions,
     },
     apiPristineResult([])
   );
@@ -229,16 +229,16 @@ function StadspasBudget({
 }
 
 export default function StadspasDetail() {
-  const { WPI_STADSPAS } = useAppStateGetter();
+  const { STADSPAS } = useAppStateGetter();
   const [openTransactionOverview, setOpenTransactionOverview] = useState<
     number | null
   >(null);
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
-    ? WPI_STADSPAS?.content?.stadspassen?.find((pass) => pass.id === id)
+    ? STADSPAS?.content?.stadspassen?.find((pass) => pass.id === id)
     : null;
-  const isErrorStadspas = isError(WPI_STADSPAS);
-  const isLoadingStadspas = isLoading(WPI_STADSPAS);
+  const isErrorStadspas = isError(STADSPAS);
+  const isLoadingStadspas = isLoading(STADSPAS);
   const noContent = !stadspasItem;
 
   return (
@@ -257,8 +257,8 @@ export default function StadspasDetail() {
             Meer informatie over het Kindtegoed
           </Linkd>
         </p>
-        {(isErrorStadspas || (!isLoading(WPI_STADSPAS) && noContent)) && (
-          <ErrorAlert>
+        {(isErrorStadspas || (!isLoading(STADSPAS) && noContent)) && (
+           <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.{' '}
               <LinkdInline href={AppRoutes.STADSPAS}>
                 Naar het overzicht
@@ -278,7 +278,7 @@ export default function StadspasDetail() {
         </PageContent>
       )}
       {stadspasItem?.budgets.map((budget, index) => (
-        <StadspasBudget
+        <CStadspasBudget
           urlTransactions={budget.urlTransactions}
           key={budget.code}
           budget={budget}

@@ -3,9 +3,24 @@ import { ConfigParams } from 'express-openid-connect';
 import https from 'https';
 import * as jose from 'jose';
 import { FeatureToggle } from '../universal/config';
-import { IS_OT, IS_TAP } from '../universal/config/env';
+import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { jsonCopy } from '../universal/helpers/utils';
 import { TokenData } from './helpers/app';
+import fs from 'fs';
+
+export function getCertificateSync(envVarName: string | undefined) {
+  const path = envVarName && process.env[envVarName];
+  if (path) {
+    try {
+      const fileContents = fs.readFileSync(path).toString();
+      return fileContents;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return undefined;
+}
 
 function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
   const data = name && process.env[name];
@@ -16,7 +31,9 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
 }
 
 function getCert(envVarName: string | undefined) {
-  return decodeBase64EncodedCertificateFromEnv(envVarName);
+  return IS_DEVELOPMENT
+    ? getCertificateSync(envVarName)
+    : decodeBase64EncodedCertificateFromEnv(envVarName);
 }
 
 export const IS_DEBUG = process.env.DEBUG === '1';
@@ -78,11 +95,11 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'WMO'
+  | 'ZORGNED'
+  | 'GPASS'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
-  | 'WPI_STADSPAS'
   | 'SVWI'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
@@ -112,24 +129,31 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  WMO: {
-    url: `${process.env.BFF_WMO_API_BASE_URL}/wmoned/voorzieningen`,
-    passthroughOIDCToken: true,
+  ZORGNED: {
+    method: 'post',
+    url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
+    headers: {
+      Token: process.env.BFF_ZORGNED_API_TOKEN,
+      'Content-type': 'application/json; charset=utf-8',
+    },
+    httpsAgent: new https.Agent({
+      cert: getCert('BFF_SERVER_CLIENT_CERT'),
+      key: getCert('BFF_SERVER_CLIENT_KEY'),
+    }),
+  },
+  GPASS: {
+    url: `${process.env.BFF_GPASS_API_BASE_URL}`,
   },
   WPI_E_AANVRAGEN: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
-    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering-en-stadspas/aanvragen`,
+    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
     url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
-    passthroughOIDCToken: true,
-  },
-  WPI_STADSPAS: {
-    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/stadspas`,
     passthroughOIDCToken: true,
   },
   SVWI: {
@@ -250,7 +274,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   SEARCH_CONFIG: {
     url: 'https://raw.githubusercontent.com/Amsterdam/mijn-amsterdam-frontend/main/src/client/components/Search/search-config.json',
     httpsAgent: new https.Agent({
-      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a well known actor (GH), no sensitive data is involved and no JS code is evaluated.
+      rejectUnauthorized: false, // NOTE: Risk is assessed and tolerable for now because this concerns a request to a trusted source (GH), no sensitive data is involved and no JS code is evaluated.
     }),
   },
   ENABLEU_2_SMILE: {
@@ -315,7 +339,7 @@ export const RelayPathsAllowed = {
   VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
   VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
   WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
-  WPI_STADSPAS_TRANSACTIES: '/wpi/stadspas/transacties/:id',
+  WMO_DOCUMENT_DOWNLOAD: '/wmoned/document/:id',
   BRP_BEWONERS: '/brp/aantal_bewoners',
   LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
   BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
@@ -357,6 +381,12 @@ export const BffEndpoints = {
   SESSION_BLACKLIST_RAW: '/admin/session-blacklist/table',
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
+
+  // Stadspas
+  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+
+  // WMO / Zorgned
+  WMO_DOCUMENT_DOWNLOAD: `/relay/wmoned/document/:id`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
@@ -586,25 +616,3 @@ export const DEV_JWK_PRIVATE: any = {
 
 export const DEV_JWT =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-
-export const securityHeaders: Record<string, string> = {
-  'Permissions-Policy':
-    'geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()',
-  'Referrer-Policy': 'same-origin',
-  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
-  'X-Frame-Options': 'Deny',
-  'X-Content-Type-Options': 'nosniff',
-  'Content-Security-Policy': `
-    default-src 'none';
-    connect-src 'none';
-    script-src 'none';
-    img-src 'none';
-    frame-src 'none';
-    style-src 'none';
-    font-src 'none';
-    manifest-src 'none';
-    object-src 'none';
-    frame-ancestors 'none';
-    require-trusted-types-for 'script'
-  `.replace(/\n/g, ''),
-};

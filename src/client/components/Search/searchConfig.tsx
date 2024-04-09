@@ -18,11 +18,6 @@ import type {
   ToeristischeVerhuurRegistratieDetail,
   ToeristischeVerhuurVergunning,
 } from '../../../server/services/toeristische-verhuur';
-import type { WmoItem } from '../../../server/services/wmo';
-import type {
-  WpiRequestProcess,
-  WpiStadspasResponseData,
-} from '../../../server/services/wpi/wpi-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -38,9 +33,14 @@ import {
   LinkProps,
   StatusLine,
 } from '../../../universal/types';
-import { AppState } from '../../AppState';
+import { AppState, AppStateKey } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
+import { StadspasResponseData } from '../../../server/services/stadspas/stadspas-types';
+import {
+  WMOVoorziening,
+  WMOVoorzieningFrontend,
+} from '../../../server/services/wmo/wmo-config-and-types';
 
 export interface SearchEntry {
   url: string;
@@ -53,7 +53,7 @@ export interface SearchEntry {
 }
 
 export interface ApiSearchConfig {
-  stateKey: keyof AppState;
+  stateKey: AppStateKey;
   // Extract searchable items from the api response
   getApiBaseItems: (
     apiContent: ApiSuccessResponse<any>['content']
@@ -161,7 +161,7 @@ export function displayPath(
 }
 
 const getWpiConfig = (
-  stateKey: keyof AppState
+  stateKey: AppStateKey
 ): Pick<
   ApiSearchConfig,
   'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
@@ -188,7 +188,7 @@ const getWpiConfig = (
 });
 
 export type ApiSearchConfigRemote = Record<
-  keyof AppState,
+  AppStateKey,
   Pick<
     ApiSearchConfig,
     'keywords' | 'keywordsGeneratedFromProps' | 'description'
@@ -209,13 +209,13 @@ interface ToeristischRegistratieItem {
 
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
-    stateKey: 'VERGUNNINGEN' as keyof AppState,
+    stateKey: 'VERGUNNINGEN' as AppStateKey,
     displayTitle: (vergunning: Vergunning) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
   },
   {
-    stateKey: 'ERFPACHTv2' as keyof AppState,
+    stateKey: 'ERFPACHTv2' as AppStateKey,
     getApiBaseItems: (
       erfpachtV2DossiersResponse: ErfpachtV2DossiersResponse
     ): ErfpachtV2Dossier[] => {
@@ -226,7 +226,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'TOERISTISCHE_VERHUUR' as keyof AppState,
+    stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
     getApiBaseItems: (apiContent: {
       registraties: ToeristischeVerhuurRegistratieDetail[];
       vergunningen: ToeristischeVerhuurVergunning[];
@@ -280,10 +280,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'WMO' as keyof AppState,
-    generateKeywords: (wmoItem: WmoItem): string[] =>
+    stateKey: 'WMO' as AppStateKey,
+    generateKeywords: (wmoItem: WMOVoorzieningFrontend): string[] =>
       uniqueArray(wmoItem.steps.flatMap((step) => [step.title, step.status])),
-    displayTitle: (wmoItem: WmoItem) => {
+    displayTitle: (wmoItem: WMOVoorzieningFrontend) => {
       return (term: string) => {
         const segments = [wmoItem.title];
         if (wmoItem.supplier) {
@@ -294,12 +294,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'WPI_STADSPAS' as keyof AppState,
-    getApiBaseItems: (
-      apiContent: WpiStadspasResponseData & {
-        aanvragen?: WpiRequestProcess[];
-      }
-    ) => {
+    stateKey: 'STADSPAS' as AppStateKey,
+    getApiBaseItems: (apiContent: StadspasResponseData) => {
       const stadspassen =
         apiContent?.stadspassen?.map((stadspas) => {
           return {
@@ -330,7 +326,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   getWpiConfig('WPI_BBZ'),
   getWpiConfig('WPI_AANVRAGEN'),
   {
-    stateKey: 'BRP' as keyof AppState,
+    stateKey: 'BRP' as AppStateKey,
     getApiBaseItems: (apiContent: BRPData) => {
       const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
       const address = getFullAddress(apiContent.adres, true);
@@ -360,7 +356,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: FeatureToggle.krefiaActive,
-    stateKey: 'KREFIA' as keyof AppState,
+    stateKey: 'KREFIA' as AppStateKey,
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
@@ -384,7 +380,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: FeatureToggle.bezwarenActive,
-    stateKey: 'BEZWAREN' as keyof AppState,
+    stateKey: 'BEZWAREN' as AppStateKey,
     displayTitle(item: Bezwaar) {
       return (term: string) =>
         displayPath(term, [`Bezwaar ${item.zaakkenmerk}`]);
@@ -392,14 +388,14 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: true,
-    stateKey: 'SVWI' as keyof AppState,
+    stateKey: 'SVWI' as AppStateKey,
     displayTitle(item: any) {
       return (term: string) => displayPath(term, [item.title]);
     },
   },
   {
     isEnabled: FeatureToggle.bodemActive,
-    stateKey: 'BODEM' as keyof AppState,
+    stateKey: 'BODEM' as AppStateKey,
     displayTitle(item: LoodMeting) {
       return (term: string) =>
         displayPath(term, [`Loodmeting ${item.aanvraagNummer}`]);
@@ -407,14 +403,14 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: FeatureToggle.avgActive,
-    stateKey: 'AVG' as keyof AppState,
+    stateKey: 'AVG' as AppStateKey,
     displayTitle(item: AVGRequest) {
       return (term: string) => displayPath(term, [`AVG verzoek ${item.id}`]);
     },
   },
   {
     isEnabled: FeatureToggle.horecaActive,
-    stateKey: 'HORECA' as keyof AppState,
+    stateKey: 'HORECA' as AppStateKey,
     displayTitle(item: HorecaVergunningen) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
@@ -422,7 +418,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: FeatureToggle.siaActive,
-    stateKey: 'SIA' as keyof AppState,
+    stateKey: 'SIA' as AppStateKey,
     displayTitle(item: SIAItem) {
       return (term: string) =>
         displayPath(term, [`Melding ${item.identifier}`]);

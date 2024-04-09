@@ -1,31 +1,23 @@
 import * as Sentry from '@sentry/react';
-import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters, FeatureToggle } from '../../../universal/config';
+import { Chapters } from '../../../universal/config';
 import {
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   dateSort,
-  getFailedDependencies,
-  getSettledResult,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
-import { getApiConfig, SourceApiKey } from '../../config';
+import { SourceApiKey, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
-  getNotifications as getBijstandsuitkeringNotifications,
   requestProcess as bijstandsuitkeringRequestProcessLabels,
+  getNotifications as getBijstandsuitkeringNotifications,
 } from './content/bijstandsuitkering';
 import {
   getNotifications as getSpecificatieNotifications,
   transformIncomeSpecificationItem,
 } from './content/specificaties';
-import {
-  getAanvraagNotifications as getStadspasAanvraagNotifications,
-  getBudgetNotifications as getStadspasBudgetNotifications,
-  requestProcess as stadspasRequestProcessLabels,
-} from './content/stadspas';
 import {
   addLink,
   createProcessNotification,
@@ -38,7 +30,6 @@ import {
   WpiIncomeSpecificationResponseDataTransformed,
   WpiRequestProcess,
   WpiRequestProcessLabels,
-  WpiStadspasResponseData,
 } from './wpi-types';
 
 type FilterResponse = (
@@ -97,9 +88,6 @@ export async function fetchRequestProcess(
   );
 
   if (response.status === 'OK') {
-    // Filter the response at the end, this way we can use the requestData caching. For example Stadspas and Bijstandsuitkering aanvragen are combined in one api response.
-    // In the BFF we want to organize this data into 2 streams (stadspas/aanvraag and bijstand/aanvraag) belonging to 2 separate themes in the front-end.
-    // Filtering at this point we don't have to call the api 2 separate times because the local memory cache is utilized.
     const responseFiltered = fetchConfig.filterResponse(response);
     const responseTransformed = statusLineTransformer(
       responseFiltered,
@@ -135,87 +123,6 @@ export async function fetchBijstandsuitkering(
   );
 
   return response;
-}
-
-export type StadspasResponseDataTransformed =
-  Partial<WpiStadspasResponseData> & {
-    aanvragen: WpiRequestProcess[];
-  };
-
-export async function fetchStadspas(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
-): Promise<ApiSuccessResponse<StadspasResponseDataTransformed>> {
-  const filterResponse: FilterResponse = (response) => {
-    return response?.content
-      ?.filter((requestProcess) => requestProcess?.about === 'Stadspas')
-      .map((requestProcess) => addLink(requestProcess));
-  };
-
-  let aanvragenRequest:
-    | Promise<ApiResponse<WpiRequestProcess[] | null>>
-    | Promise<ApiSuccessResponse<never[]>> = Promise.resolve(
-    apiSuccessResult([])
-  );
-
-  // Only request aanvragen when toggle is active
-  if (FeatureToggle.stadspasRequestsActive) {
-    aanvragenRequest = fetchRequestProcess(
-      requestID,
-      authProfileAndToken,
-      () => stadspasRequestProcessLabels,
-      {
-        apiConfigName: 'WPI_AANVRAGEN',
-        filterResponse,
-        requestCacheKey: 'fetch-aanvragen-' + requestID,
-      }
-    );
-  }
-
-  const stadspasRequest = requestData<WpiStadspasResponseData>(
-    getApiConfig('WPI_STADSPAS', {
-      transformResponse: (
-        response: ApiSuccessResponse<WpiStadspasResponseData>
-      ) => {
-        return response.content;
-      },
-    }),
-    requestID,
-    authProfileAndToken
-  );
-
-  const [aanvragenResponse, stadspasResponse] = await Promise.allSettled([
-    aanvragenRequest,
-    stadspasRequest,
-  ]);
-
-  const stadspasResult = getSettledResult(stadspasResponse);
-  const aanvragenResult = getSettledResult(aanvragenResponse);
-
-  const aanvragen = aanvragenResult.content || [];
-  const stadspassen = (stadspasResult.content?.stadspassen || []).map(
-    (stadspas) => {
-      return {
-        ...stadspas,
-        link: {
-          to: generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspas.id }),
-          title: `Stadspas van ${stadspas.owner}`,
-        },
-      };
-    }
-  );
-
-  return apiSuccessResult(
-    {
-      aanvragen,
-      stadspassen,
-      adminNumber: stadspasResult.content?.adminNumber,
-    },
-    getFailedDependencies({
-      aanvragen: aanvragenResult,
-      stadspas: stadspasResult,
-    })
-  );
 }
 
 export async function fetchEAanvragen(
@@ -315,34 +222,6 @@ export async function fetchWpiNotifications(
   const today = new Date();
 
   let notifications: MyNotification[] = [];
-
-  // Stadspas
-  {
-    const { status, content } = await fetchStadspas(
-      requestID,
-      authProfileAndToken
-    );
-
-    if (status === 'OK' && !!content) {
-      if (content.aanvragen?.length) {
-        const aanvraagNotifications = getStadspasAanvraagNotifications(
-          content.aanvragen
-        );
-        if (aanvraagNotifications) {
-          notifications.push(...aanvraagNotifications);
-        }
-      }
-      if (content.stadspassen?.length) {
-        const budgetNotifications = getStadspasBudgetNotifications(
-          content.stadspassen
-        );
-
-        if (budgetNotifications) {
-          notifications.push(...budgetNotifications);
-        }
-      }
-    }
-  }
 
   // Bijstandsuitkeringen
   {

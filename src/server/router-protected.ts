@@ -22,6 +22,8 @@ import {
   fetchSignalsListByStatus,
 } from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
+import { fetchDocument } from './services/wmo/wmo-zorgned-service';
+import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 
 export const router = express.Router();
 
@@ -81,6 +83,33 @@ router.get(
   }
 );
 
+// NOTE: Fix for legacy relayApi. WMONED api is archived and is not used anymore for downloads.
+router.get(
+  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const authProfileAndToken = await getAuth(req);
+    const documentResponse = await fetchDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+    if (
+      documentResponse.status === 'ERROR' ||
+      !documentResponse.content?.data
+    ) {
+      res.status(500);
+      return res.send(documentResponse);
+    }
+
+    res.type(documentResponse.content.mimetype ?? 'application/pdf');
+    res.header(
+      'Content-Disposition',
+      `attachment; filename="${documentResponse.content.title}.pdf"`
+    );
+    return res.send(documentResponse.content.data);
+  }
+);
+
 router.use(
   BffEndpoints.API_RELAY,
   proxy(
@@ -95,9 +124,6 @@ router.use(
           break;
         case req.path.startsWith('/brp/'):
           url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/wmoned/'):
-          url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
           break;
       }
       return url;
@@ -191,7 +217,7 @@ router.get(
       documentResponse.status === 'ERROR' ||
       !documentResponse.content?.documentbody
     ) {
-      return res.status(500);
+      return res.status(500).end();
     }
 
     res.type('application/pdf');
@@ -244,6 +270,24 @@ router.get(
       res.locals.requestID,
       authProfileAndToken,
       req.params.dossierNummerUrlParam
+    );
+
+    if (response.status === 'ERROR') {
+      res.status(500);
+    }
+
+    return res.send(response);
+  }
+);
+
+router.get(
+  BffEndpoints.STADSPAS_TRANSACTIONS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const response = await fetchTransacties(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.transactionsKey
     );
 
     if (response.status === 'ERROR') {

@@ -74,7 +74,7 @@ export default function ErfpachtDossierDetail() {
           {(api.isError || noContent) && (
             <Grid.Cell span="all">
               <ErrorAlert>
-                We kunnen op dit moment geen erfpacht dossier tonen.
+                We kunnen op dit moment geen erfpachtdossier tonen.
               </ErrorAlert>
             </Grid.Cell>
           )}

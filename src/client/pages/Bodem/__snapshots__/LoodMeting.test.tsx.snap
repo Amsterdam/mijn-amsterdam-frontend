@@ -186,6 +186,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 28 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -219,6 +229,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 28 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -252,6 +272,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 28 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -402,6 +432,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 29 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -435,6 +475,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 29 november 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -468,6 +518,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 15 december 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>
@@ -618,6 +678,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 01 december 2022
               </time>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -646,6 +716,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 In behandeling
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
         <li
@@ -674,6 +754,16 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
                 Afgehandeld
               </strong>
             </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
           </div>
         </li>
       </ul>

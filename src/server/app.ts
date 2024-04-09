@@ -21,6 +21,7 @@ import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 
+import cors from 'cors';
 import express, {
   ErrorRequestHandler,
   NextFunction,
@@ -28,15 +29,12 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
-import cors from 'cors';
 import {
   BFF_BASE_PATH,
   BFF_PORT,
   BffEndpoints,
   RELEASE_VERSION,
-  securityHeaders,
 } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
@@ -76,17 +74,6 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
-// set up rate limiter: maximum of five requests per minute
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: false, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
-// apply rate limiter to all requests
-app.use(limiter);
-
 // Request logging
 morgan.token('build', function (req, res) {
   return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
@@ -119,11 +106,6 @@ app.use(compression());
 // Generate request id
 app.use(requestID);
 
-app.use((req, res, next) => {
-  res.set(securityHeaders);
-  next();
-});
-
 // Destroy the session as soon as the api requests are all processed
 app.use(function (req, res, next) {
   res.on('finish', function () {
@@ -143,6 +125,9 @@ if (IS_AP && !IS_OT) {
 
 app.use(legacyRouter);
 
+/**
+ * The public router has routes that can be accessed by anyone without any authentication.
+ */
 app.use(BFF_BASE_PATH, publicRouter);
 
 ////////////////////////////////////////////////////////////////////////
@@ -153,7 +138,7 @@ if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
 }
 ///// [DEVELOPENT ONLY] /////
-if (IS_OT) {
+if (IS_DEVELOPMENT) {
   app.use(`${BFF_BASE_PATH + BffEndpoints.API_RELAY}`, relayDevRouter);
 }
 

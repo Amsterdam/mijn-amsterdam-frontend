@@ -6,7 +6,7 @@ import express, {
 } from 'express';
 import path from 'path';
 import { testAccounts } from '../universal/config/auth.development';
-import { apiSuccessResult, getSettledResult } from '../universal/helpers';
+import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -18,7 +18,6 @@ import {
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
-import STADSPAS_TRANSACTIES from './mock-data/json/stadspas-transacties.json';
 import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
@@ -138,6 +137,7 @@ relayDevRouter.get(
     RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
     RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
     RelayPathsAllowed.BEZWAREN_DOCUMENT,
+    RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
   ],
   (req, res, next) => {
     return res.sendFile(path.join(__dirname, 'mock-data/document.pdf'));
@@ -146,10 +146,6 @@ relayDevRouter.get(
 
 relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
   return res.send(apiSuccessResult({ residentCount: 3 }));
-});
-
-relayDevRouter.get(RelayPathsAllowed.WPI_STADSPAS_TRANSACTIES, (req, res) => {
-  return res.send(apiSuccessResult(STADSPAS_TRANSACTIES));
 });
 
 relayDevRouter.get(

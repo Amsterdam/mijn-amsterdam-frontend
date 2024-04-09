@@ -150,9 +150,7 @@ describe('<StatusDetail />', () => {
     render(<Component />);
     expect(screen.getByText('Detailpagina')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        'Deze pagina is mogelijk verplaatst. Kies hieronder een van de beschikbare aanvragen.'
-      )
+      screen.getByText('Kies hieronder een van de beschikbare aanvragen.')
     ).toBeInTheDocument();
     expect(screen.getByText('Aanvraag Test item')).toBeInTheDocument();
   });

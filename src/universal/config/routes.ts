@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
 
-export const AppRoutes = {
+export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',
@@ -10,7 +10,7 @@ export const AppRoutes = {
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
   'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
-  'STADSPAS/SALDO': '/stadspas/saldo/:id',
+  'STADSPAS/SALDO': '/stadspas/saldo-en-transacties/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',

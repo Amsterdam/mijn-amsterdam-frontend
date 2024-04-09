@@ -169,8 +169,8 @@ export function addServiceResultHandler(
   });
 }
 
-export function queryParams(req: Request) {
-  return req.query as Record<string, string>;
+export function queryParams<T extends Record<string, any>>(req: Request) {
+  return req.query as T;
 }
 
 export async function getProfileType(req: Request): Promise<ProfileType> {

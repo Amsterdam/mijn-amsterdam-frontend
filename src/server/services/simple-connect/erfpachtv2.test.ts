@@ -4,7 +4,7 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import ERFPACHTv2_DOSSIERINFO_DETAILS from '../../mock-data/json/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHTv2_DOSSIERS from '../../mock-data/json/erfpacht-v2-dossiers.json';
 import ERFPACHTv2_ERFPACHTER from '../../mock-data/json/erfpacht-v2-erfpachter.json';
-import { fetchErfpachtV2 } from './erfpacht';
+import { fetchErfpachtV2, fetchErfpachtV2DossiersDetail } from './erfpacht';
 
 // const mocks = vi.hoisted(() => {
 //   return {
@@ -75,15 +75,13 @@ describe('simple-connect/erfpacht', () => {
 
   test('fetchErfpachtV2: dossier detail', async () => {
     remoteApi
-      .get('/erfpachtv2/vernise/api/erfpachter')
-      .reply(200, { erfpachter: true, relationCode: '123-abc' } as any);
-    remoteApi
       .get('/erfpachtv2/vernise/api/dossierinfo/E.477.46')
       .reply(200, ERFPACHTv2_DOSSIERINFO_DETAILS);
 
-    const responseContent = await fetchErfpachtV2(
+    const responseContent = await fetchErfpachtV2DossiersDetail(
       REQUEST_ID,
-      authProfileAndToken
+      authProfileAndToken,
+      'E.477.46'
     );
     expect(responseContent).toMatchSnapshot();
   });

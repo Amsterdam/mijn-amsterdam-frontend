@@ -22,3 +22,6 @@ build-bff
 .eslintcache
 .vscode
 /src/server/cache/dev.visitors.flat-cache.json
+/mams_bff_system.db
+/mams_bff_system.db-shm
+/mams_bff_system.db-wal

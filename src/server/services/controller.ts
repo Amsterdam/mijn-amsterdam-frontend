@@ -50,16 +50,16 @@ import {
 } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
-import { fetchWmo } from './wmo';
+import { fetchWmo } from './wmo/wmo';
 import {
   fetchBbz,
   fetchBijstandsuitkering,
   fetchSpecificaties,
-  fetchStadspas,
   fetchTonk,
   fetchTozo,
 } from './wpi';
 import { fetchSVWI } from './simple-connect/svwi';
+import { fetchStadspas } from './stadspas/stadspas';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -98,7 +98,7 @@ const WPI_SPECIFICATIES = callService(fetchSpecificaties);
 const WPI_TOZO = callService(fetchTozo);
 const WPI_TONK = callService(fetchTonk);
 const WPI_BBZ = callService(fetchBbz);
-const WPI_STADSPAS = callService(fetchStadspas);
+const STADSPAS = callService(fetchStadspas);
 const SVWI = callService(fetchSVWI);
 
 const WMO = callService(fetchWmo);
@@ -186,7 +186,7 @@ const SERVICES_INDEX = {
   WPI_TOZO,
   WPI_TONK,
   WPI_BBZ,
-  WPI_STADSPAS,
+  STADSPAS,
   SVWI,
   WMO,
   VERGUNNINGEN,
@@ -267,7 +267,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_TOZO,
     WPI_BBZ,
     WPI_TONK,
-    WPI_STADSPAS,
+    STADSPAS,
     SVWI,
     NOTIFICATIONS,
     MY_LOCATION,

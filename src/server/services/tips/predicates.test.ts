@@ -1,12 +1,10 @@
 import { ApiResponse, ApiSuccessResponse } from '../../../universal/helpers';
 import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import BRP from '../../mock-data/json/brp.json';
-import WPI_STADSPAS from '../../mock-data/json/wpi-stadspas.json';
 import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
 import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
 import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
 import { transformBRPData } from '../brp';
-import { StadspasResponseDataTransformed } from '../wpi/api-service';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
 import {
@@ -30,6 +28,8 @@ import {
 } from './predicates';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { TipsPredicateFN } from './tip-types';
+import { StadspasResponseData } from '../stadspas/stadspas-types';
+import { AppState } from '../../../client/AppState';
 
 const TONK = {
   content: WPI_E.content.filter((c) => c.about === 'TONK'),
@@ -279,52 +279,28 @@ describe('predicates', () => {
     });
   });
 
-  describe('WPI_STADSPAS', () => {
-    describe('hasStadspasGroeneStip', () => {
-      const getMockAppState = (passType: string) => {
-        const WPI_STADSPASCopy = { ...WPI_STADSPAS };
-
-        WPI_STADSPASCopy.content.stadspassen.forEach((s) => {
-          s.passType = passType;
-        });
-
-        return {
-          WPI_STADSPAS: {
-            content: {
-              ...WPI_STADSPASCopy.content,
-              aanvragen: [] as WpiRequestProcess[],
-            },
-            status: 'OK',
-          } as ApiResponse<StadspasResponseDataTransformed>,
-        };
-      };
-
-      it.each([
-        [true, 'ouder'],
-        [false, 'kind'],
-        [false, 'iets anders'],
-      ])('should return %s for passType %s', (expexted, passType) => {
-        expect(hasStadspasGroeneStip(getMockAppState(passType))).toEqual(
-          expexted
-        );
-      });
+  describe('STADSPAS', () => {
+    test('hasStadspasGroeneStip', () => {
+      const appState = {
+        STADSPAS: { content: { stadspassen: [{ passType: 'kind' }] } },
+      } as AppState;
+      expect(hasStadspasGroeneStip(appState)).toEqual(true);
     });
 
     describe('hasValidStadspasRequest', () => {
       const getMockAppState = (decision: string, datePublished: string) => {
-        const WPI_STADSPASCopy = { ...WPI_STADSPAS };
         const aanvraag = WPI_AANVRAGEN.content[3];
         aanvraag.decision = decision;
         aanvraag.datePublished = datePublished;
 
         return {
-          WPI_STADSPAS: {
+          STADSPAS: {
             content: {
-              ...WPI_STADSPASCopy.content,
+              stadspassen: [],
               aanvragen: [aanvraag],
             },
             status: 'OK',
-          } as ApiResponse<StadspasResponseDataTransformed>,
+          },
         };
       };
 
@@ -339,9 +315,11 @@ describe('predicates', () => {
       ])(
         'should return %s for decision %s with datePublished %s',
         (expected, decision, date) => {
-          expect(hasValidStadspasRequest(getMockAppState(decision, date))).toBe(
-            expected
-          );
+          expect(
+            hasValidStadspasRequest(
+              getMockAppState(decision, date) as unknown as AppState
+            )
+          ).toBe(expected);
         }
       );
     });
@@ -364,7 +342,7 @@ describe('predicates', () => {
         UITKERINGEN.content[0].datePublished = wpiDateAndDecision[1];
 
         return {
-          WPI_TOZO: TOZO as ApiResponse<WpiRequestProcess[] | null>,
+          WPI_TOZO: TOZO as AppState['WPI_TOZO'],
           WPI_TONK: TONK as ApiResponse<WpiRequestProcess[] | null>,
           WPI_AANVRAGEN: UITKERINGEN as ApiResponse<WpiRequestProcess[] | null>,
         };
