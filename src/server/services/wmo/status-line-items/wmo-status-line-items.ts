@@ -187,7 +187,7 @@ export function getStatusLineItems(voorziening: WMOVoorziening, today: Date) {
           ? statusItem.isVisible(index, voorziening, today)
           : true,
         documents:
-          // NOTE: We only show a single document for now. If docment management and processing policy is implemented in Zorgned/WMO we'll show more documents.
+          // NOTE: We only show a single document for now. If document management and processing policy is implemented in Zorgned/WMO we'll show more documents.
           FeatureToggle.zorgnedDocumentAttachmentsActive &&
           statusItem.status === 'Besluit' &&
           voorziening.documenten?.length === 1
