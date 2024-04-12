@@ -523,7 +523,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-03-14T16:12:12",
         "id": "mock-encrypted-document-id",
-        "title": "Besluit",
+        "title": "Brief",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -545,7 +545,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-03-14T16:11:29",
         "id": "mock-encrypted-document-id",
-        "title": "Besluit",
+        "title": "Brief",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -567,7 +567,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-04-19T13:16:44",
         "id": "mock-encrypted-document-id",
-        "title": "Besluit",
+        "title": "Brief",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -604,7 +604,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-10-19T14:27:42.643",
         "id": "mock-encrypted-document-id",
-        "title": "Besluit",
+        "title": "Brief",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -626,7 +626,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2023-03-02T11:17:08.293",
         "id": "mock-encrypted-document-id",
-        "title": "Besluit",
+        "title": "Brief",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],
@@ -663,7 +663,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2023-03-16T15:56:11.41",
         "id": "mock-encrypted-document-id",
-        "title": "Besluit",
+        "title": "Brief",
         "url": "/wmoned/document/mock-encrypted-document-id",
       },
     ],

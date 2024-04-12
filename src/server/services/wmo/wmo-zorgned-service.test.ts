@@ -89,7 +89,7 @@ describe('wmo-zorgned-service', () => {
         {
           "datePublished": "2013-05-17T00:00:00",
           "id": "mock-encrypted-document-id",
-          "title": "Besluit",
+          "title": "Brief",
           "url": "/wmoned/document/mock-encrypted-document-id",
         },
       ]
