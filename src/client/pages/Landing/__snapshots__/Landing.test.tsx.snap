@@ -23,7 +23,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
       id="skip-to-id-AppContent"
     >
       <p>
-        Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente Amsterdam.
+        Uw Amsterdamse zaken op 1 plek.
       </p>
       <div
         class="_LoginOption_39d0ac"
