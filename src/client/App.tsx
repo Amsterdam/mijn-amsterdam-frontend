@@ -32,6 +32,8 @@ import { default as LandingPage } from './pages/Landing/Landing';
 import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
 import Accessibility from './pages/Accessibility/Accessibility';
 import BurgerzakenIDKaart from './pages/BurgerzakenDetail/BurgerzakenIDKaart';
+import Wonen from './pages/Wonen/Wonen';
+
 import Dashboard from './pages/Dashboard/Dashboard';
 import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
 import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
@@ -211,6 +213,9 @@ function AppAuthenticated() {
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
+          {/* {FeatureToggle.mijnWoningActive && ( */}
+          <Route path={AppRoutes.WONEN} component={Wonen} />
+          {/* )} */}
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           {FeatureToggle.stadspasRequestsActive && (
             <Route

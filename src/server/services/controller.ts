@@ -60,9 +60,11 @@ import {
 } from './wpi';
 import { fetchSVWI } from './simple-connect/svwi';
 import { fetchStadspas } from './stadspas/stadspas';
+import { fetchWonen } from './wonen/wonen';
 
 // Default service call just passing requestID and request headers as arguments
-function callService<T>(fetchService: (...args: any) => Promise<T>) {
+function
+callService<T>(fetchService: (...args: any) => Promise<T>) {
   return async (requestID: requestID, req: Request) =>
     fetchService(requestID, await getAuth(req), queryParams(req));
 }
@@ -143,6 +145,7 @@ const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
 const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
+const WONEN = callService(fetchWonen);
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
@@ -208,6 +211,7 @@ const SERVICES_INDEX = {
   SIA,
   AVG,
   BODEM,
+  WONEN,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -244,6 +248,7 @@ type CommercialServices = Pick<
   | 'HORECA'
   | 'BODEM'
   | 'BEZWAREN'
+  | 'WONEN'
 >;
 
 type ServicesByProfileType = {
@@ -284,6 +289,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HORECA,
     AVG,
     BODEM,
+    WONEN,
   },
   'private-attributes': {
     CMS_CONTENT,
@@ -309,6 +315,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     VERGUNNINGEN,
     HORECA,
     BODEM,
+    WONEN,
     BEZWAREN,
   },
 };

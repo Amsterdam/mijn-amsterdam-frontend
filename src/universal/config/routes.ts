@@ -24,7 +24,7 @@ export const AppRoutes: Record<string, string> = {
   SIA_CLOSED: '/alle-afgesloten-meldingen/:page?',
   'SIA/DETAIL/OPEN': '/detail-open-melding/:id',
   'SIA/DETAIL/CLOSED': '/detail-afgesloten-melding/:id',
-
+  WONEN: '/wonen',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
