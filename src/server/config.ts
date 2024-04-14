@@ -236,7 +236,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   WONEN: {
     method: 'GET',
-    url: 'https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel/energielabel/?bagVerblijfsobject.identificatie=0363010000898840',
+    url: 'https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel/energielabel/',
   },
   ERFPACHTv2: {
     url: process.env.BFF_ERFPACHT_API_URL,
