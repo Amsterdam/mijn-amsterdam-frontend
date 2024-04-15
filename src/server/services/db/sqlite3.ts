@@ -2,6 +2,7 @@ import Database from 'better-sqlite3';
 import { IS_VERBOSE } from './config';
 import fs from 'fs';
 import path from 'path';
+import * as Sentry from '@sentry/node';
 
 export const tableNameLoginCount =
   process.env.BFF_LOGIN_COUNT_TABLE || 'login_count';
@@ -36,26 +37,40 @@ export async function queryGET(
   query: string,
   values?: any[]
 ): Promise<unknown> {
-  const statement = db.prepare(query);
-  if (Array.isArray(values)) {
-    return statement.get(...values);
+  try {
+    const statement = db.prepare(query);
+    if (Array.isArray(values)) {
+      return statement.get(...values);
+    }
+    return statement.get();
+  } catch (error) {
+    Sentry.captureException(error);
   }
-  return statement.get();
+  return null;
 }
 
 export async function queryALL(
   query: string,
   values?: any[]
 ): Promise<unknown> {
-  const statement = db.prepare(query);
-  if (Array.isArray(values)) {
-    return statement.all(...values);
+  try {
+    const statement = db.prepare(query);
+    if (Array.isArray(values)) {
+      return statement.all(...values);
+    }
+    return statement.all();
+  } catch (error) {
+    Sentry.captureException(error);
   }
-  return statement.all();
+  return null;
 }
 
 export function execDB(query: string) {
-  return db.exec(query);
+  try {
+    return db.exec(query);
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 }
 
 export const id = 'sqlite3';

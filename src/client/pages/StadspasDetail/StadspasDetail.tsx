@@ -17,10 +17,10 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { IconChevronRight } from '../../assets/icons';
 import {
-  Alert,
   Button,
   ChapterIcon,
   DetailPage,
+  ErrorAlert,
   Linkd,
   LinkdInline,
   LoadingContent,
@@ -200,9 +200,9 @@ function CStadspasBudget({
           </>
         )}
         {isError && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen transacties tonen</p>
-          </Alert>
+          <ErrorAlert >
+            We kunnen op dit moment geen transacties tonen
+          </ErrorAlert>
         )}
         {!!transactions?.length ? (
           <Button
@@ -258,14 +258,12 @@ export default function StadspasDetail() {
           </Linkd>
         </p>
         {(isErrorStadspas || (!isLoading(STADSPAS) && noContent)) && (
-          <Alert type="warning">
-            <p>
+           <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.{' '}
               <LinkdInline href={AppRoutes.STADSPAS}>
                 Naar het overzicht
               </LinkdInline>
-            </p>
-          </Alert>
+          </ErrorAlert>
         )}
         {isLoadingStadspas && <LoadingContent />}
       </PageContent>

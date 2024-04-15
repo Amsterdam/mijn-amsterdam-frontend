@@ -95,6 +95,45 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
           Loket persoonsgegevens gemeente Amsterdam
         </a>
       </p>
+      <section
+        class="amsterdam-alert amsterdam-alert--error"
+      >
+        <div
+          class="amsterdam-alert__icon"
+        >
+          <span
+            class="amsterdam-icon amsterdam-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="amsterdam-alert__content"
+        >
+          <h2
+            class="amsterdam-heading amsterdam-heading--4"
+          >
+            Foutmelding
+          </h2>
+          <p
+            class="amsterdam-paragraph"
+          >
+            We kunnen op dit moment geen AVG verzoeken tonen.
+          </p>
+        </div>
+      </section>
     </div>
     <section
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_7ac078"

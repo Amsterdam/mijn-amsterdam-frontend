@@ -1,8 +1,9 @@
 import { ReactNode, useMemo } from 'react';
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isLoading } from '../../../universal/helpers/api';
+import { isLoading, isError } from '../../../universal/helpers/api';
 import {
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   LinkdInline,
@@ -121,6 +122,11 @@ export default function Krefia() {
             </Linkd>
           )}
         </p>
+        {isError(KREFIA) && (
+          <ErrorAlert>
+            We kunnen op dit moment geen geldzaken tonen.
+          </ErrorAlert>
+        )}
       </PageContent>
       {deepLinks?.schuldhulp && (
         <SectionCollapsible

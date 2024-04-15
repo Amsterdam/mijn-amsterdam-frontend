@@ -98,6 +98,8 @@ function enableMockAdapter() {
               delay,
               await responseData(...args)
             );
+            // Returns response type and content off all (mock) backendsystems APIs.
+            // Change this to trigger same response type for all APIs e.g. [500, data, headers];.
             return [
               typeof status === 'function' ? status(...args) : status,
               data,
