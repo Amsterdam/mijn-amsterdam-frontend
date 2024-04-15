@@ -1,13 +1,12 @@
 @import '../../styles/_global.scss';
 
 .Verbintenis {
-  [class*='InfoPanel_InfoPanelTable']+[class*='InfoPanel_InfoPanelTable'] {
+  [class*='InfoPanel_InfoPanelTable'] + [class*='InfoPanel_InfoPanelTable'] {
     margin-top: 10rem;
   }
 
   @include mq-desktop() {
     [class*='InfoPanelTableRow__voornamen'] {
-
       th,
       th span,
       td {
@@ -26,7 +25,7 @@
 }
 
 .LoadingContent {
-  >* {
+  > * {
     margin-bottom: 6rem;
   }
 }
@@ -46,14 +45,14 @@
   @include select(SectionCollapsible_SectionCollapsible) {
     margin-top: 3rem;
 
-    +[class*='InfoPanel_InfoPanel'] {
+    + [class*='InfoPanel_InfoPanel'] {
       border-top: 0;
       padding-top: 0;
     }
   }
 
   @include select(SectionCollapsible_SectionCollapsible) {
-    +[class*='SectionCollapsible_SectionCollapsible'] {
+    + [class*='SectionCollapsible_SectionCollapsible'] {
       margin-top: 0;
       padding-top: 0;
     }
@@ -76,6 +75,6 @@
   }
 }
 
-.AlertVertrokkenOnbekendWaarheen+.AlertAdresInOnderzoek {
+.AlertVertrokkenOnbekendWaarheen + .AlertAdresInOnderzoek {
   margin-top: 2rem;
 }
