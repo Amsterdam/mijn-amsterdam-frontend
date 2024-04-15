@@ -4,7 +4,7 @@ import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   MaintenanceNotifications,
@@ -58,9 +58,9 @@ export default function Burgerzaken() {
         </p>
         <MaintenanceNotifications page="burgerzaken" />
         {isError(BRP) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen ID-kaarten tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen ID-kaarten tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

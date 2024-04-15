@@ -2,7 +2,7 @@ import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   addTitleLinkComponent,
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   OverviewPage,
@@ -88,9 +88,9 @@ export default function Klachten() {
           </Linkd>
         </p>
         {isError(KLACHTEN) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen klachten tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen klachten tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible
