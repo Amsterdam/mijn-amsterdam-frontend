@@ -271,15 +271,14 @@ export default function GarbageInformation() {
             <p>Dit zijn de afvalregels voor uw adres.</p>
             {!!commercialLocation && !privateIsCommercial && (
               <ErrorAlert>
-                  Let op deze regels gaan over uw woonadres. Lees hier{' '}
-                  <LinkdInline
-                    href={ExternalUrls.AFVAL_COMMERCIAL}
-                    external={true}
-                  >
-                    regels over bedrijfsafval in Amsterdam
-                  </LinkdInline>
-                  .
-
+                Let op deze regels gaan over uw woonadres. Lees hier{' '}
+                <LinkdInline
+                  href={ExternalUrls.AFVAL_COMMERCIAL}
+                  external={true}
+                >
+                  regels over bedrijfsafval in Amsterdam
+                </LinkdInline>
+                .
               </ErrorAlert>
             )}
             <p>
@@ -329,8 +328,8 @@ export default function GarbageInformation() {
         )}
         <MaintenanceNotifications page="afval" />
         {isError(AFVAL) && (
-          <ErrorAlert >
-          We kunnen op dit moment niet alle gegevens tonen
+          <ErrorAlert>
+            We kunnen op dit moment niet alle gegevens tonen
           </ErrorAlert>
         )}
 

@@ -8,11 +8,8 @@ is a portal for official communication with the municipality of Amsterdam. The a
 - React application
 - Node Express back-end-for-frontend (BFF)
 
-To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the following content inside the file AND ask one of the developers for more environment settings:
+To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.template` inside the file AND ask one of the developers for values.
 
-```
-BROWSER=none
-```
 
 Put the following commands in your terminal:
 
@@ -68,7 +65,7 @@ It's basically an additional development server integrated in the BFF api.
 
 #### Required IDE plugins
 
-- `prettier`
+- `prettier` with "format on save" option on.
 - `.editorconfig`
 
 #### Testing and development
@@ -86,6 +83,4 @@ It's basically an additional development server integrated in the BFF api.
 We currently work with a trunk based development approach. [see also](https://trunkbaseddevelopment.com) This means we have relatively short lived branches and only 1 main branch (main)
 The main branch should always be production worthy in terms of functionality, stability and code quality.
 Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you are about create a release, use the `npm run release` or `npm run release:(major|bug)` (for more specific versions) command. This command
-creates a [semver](https://semver.org/) version of the release tag and pushes it to origin. The CI/CD pipeline will automatically detect the tag and starts building a production image.
-
-The building and testing is done via Jenkins which uses `Docker` and `docker-compose` to control server stack requirements and pipeline set-up/running.
+creates a [semver](https://semver.org/) version of the release tag and pushes it to origin in a separte production branch. The CI/CD pipeline will automatically detect the branch and starts building a release.

@@ -12,8 +12,12 @@ import {
 import styles from './Bezwaren.module.scss';
 
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { defaultDateFormat, isLoading , isError} from '../../../universal/helpers';
-import { AppRoutes} from '../../../universal/config';
+import {
+  defaultDateFormat,
+  isLoading,
+  isError,
+} from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config';
 
 const DISPLAY_PROPS_BEZWAREN = {
   identificatie: 'Zaaknummer',
@@ -60,9 +64,7 @@ export default function BEZWAREN() {
           </Linkd>
         </p>
         {isError(BEZWAREN) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen bezwaren tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen bezwaren tonen.</ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

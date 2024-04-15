@@ -9,7 +9,7 @@ import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
- ErrorAlert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   MaintenanceNotifications,
@@ -104,9 +104,7 @@ export default function Vergunningen() {
         </p>
         <MaintenanceNotifications page="vergunningen" />
         {isError(VERGUNNINGEN) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

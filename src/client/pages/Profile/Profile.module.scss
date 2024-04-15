@@ -35,18 +35,22 @@
   margin-bottom: 1.6rem;
   border-top: 0.1rem solid $color-neutral-grey2;
 }
+
 .AddressPanel {
   border-top: 0.1rem solid $color-neutral-grey2;
   padding-top: 2rem;
 }
+
 .ProfileCommercial {
   @include select(SectionCollapsible_SectionCollapsible) {
     margin-top: 3rem;
+
     + [class*='InfoPanel_InfoPanel'] {
       border-top: 0;
       padding-top: 0;
     }
   }
+
   @include select(SectionCollapsible_SectionCollapsible) {
     + [class*='SectionCollapsible_SectionCollapsible'] {
       margin-top: 0;
@@ -69,4 +73,8 @@
     bottom: 0.3rem;
     white-space: nowrap;
   }
+}
+
+.AlertVertrokkenOnbekendWaarheen + .AlertAdresInOnderzoek {
+  margin-top: 2rem;
 }

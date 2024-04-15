@@ -1,185 +1,170 @@
 {
-    "_links": {
-        "self": {
-            "href": "https://api.data.amsterdam.nl/atlas/search/adres/?q=Burgemeester%20R%C3%B6ellstr%201&page=1"
-        },
-        "next": {
-            "href": null
-        },
-        "prev": {
-            "href": null
-        }
+  "_links": {
+    "self": {
+      "href": "https://api.data.amsterdam.nl/atlas/search/adres/?q=Burgemeester%20R%C3%B6ellstr%201&page=1"
     },
-    "count_hits": 38,
-    "count": 38,
-    "results": [
-        {
-            "_links": {
-                "self": {
-                    "href": "https://api.data.amsterdam.nl/bag/verblijfsobject/0363010000599756/"
-                }
-            },
-            "type": "verblijfsobject",
-            "dataset": "nummeraanduiding",
-            "adres": "Burgemeester Röellstraat 1",
-            "postcode": "1064BH",
-            "straatnaam": "Burgemeester Röellstraat",
-            "huisnummer": 1,
-            "toevoeging": "1",
-            "bag_huisletter": "",
-            "bag_toevoeging": "",
-            "woonplaats": "Amsterdam",
-            "hoofdadres": true,
-            "status": [
-                {
-                    "code": "16",
-                    "omschrijving": "Naamgeving uitgegeven"
-                }
-            ],
-            "landelijk_id": "0363200000062087",
-            "vbo_status": [
-                {
-                    "code": "21",
-                    "omschrijving": "Verblijfsobject in gebruik"
-                }
-            ],
-            "adresseerbaar_object_id": "0363010000599756",
-            "subtype": "verblijfsobject",
-            "centroid": [
-                4.834586581980725,
-                52.372950494299445
-            ],
-            "subtype_id": "03630000599756",
-            "_display": "Burgemeester Röellstraat 1"
-        },
-        {
-            "_links": {
-                "self": {
-                    "href": "https://api.data.amsterdam.nl/bag/verblijfsobject/0363010000599785/"
-                }
-            },
-            "type": "verblijfsobject",
-            "dataset": "nummeraanduiding",
-            "adres": "Burgemeester Röellstraat 10",
-            "postcode": "1064BM",
-            "straatnaam": "Burgemeester Röellstraat",
-            "huisnummer": 10,
-            "toevoeging": "10",
-            "bag_huisletter": "",
-            "bag_toevoeging": "",
-            "woonplaats": "Amsterdam",
-            "hoofdadres": true,
-            "status": [
-                {
-                    "code": "16",
-                    "omschrijving": "Naamgeving uitgegeven"
-                }
-            ],
-            "landelijk_id": "0363200000062116",
-            "vbo_status": [
-                {
-                    "code": "21",
-                    "omschrijving": "Verblijfsobject in gebruik"
-                }
-            ],
-            "adresseerbaar_object_id": "0363010000599785",
-            "subtype": "verblijfsobject",
-            "centroid": [
-                4.834578743747967,
-                52.3735795998216
-            ],
-            "subtype_id": "03630000599785",
-            "_display": "Burgemeester Röellstraat 10"
-        },
-        {
-            "_links": {
-                "self": {
-                    "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010000664346/"
-                }
-            },
-            "type": "verblijfsobject",
-            "dataset": "v11_nummeraanduiding",
-            "adres": "Herengracht 23-1",
-            "postcode": "1015BA",
-            "straatnaam": "Herengracht",
-            "straatnaam_no_ws": "Herengracht",
-            "huisnummer": 23,
-            "toevoeging": "23 1",
-            "bag_huisletter": "",
-            "bag_toevoeging": "1",
-            "woonplaats": "Amsterdam",
-            "type_adres": "Hoofdadres",
-            "status": "Naamgeving uitgegeven",
-            "landelijk_id": "0363200000126446",
-            "vbo_status": "Verblijfsobject in gebruik",
-            "adresseerbaar_object_id": "0363010000664346",
-            "subtype": "verblijfsobject",
-            "centroid": [
-                4.891968036478453,
-                52.37873183842775
-            ],
-            "subtype_id": "0363010000664346",
-            "_display": "Herengracht 23-1"
-        },
-        {
-            "_links": {
-                "self": {
-                    "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0457010000002241/"
-                }
-            },
-            "type": "verblijfsobject",
-            "dataset": "v11_nummeraanduiding",
-            "adres": "Herengracht 23",
-            "postcode": "1382AG",
-            "straatnaam": "Herengracht",
-            "straatnaam_no_ws": "Herengracht",
-            "huisnummer": 23,
-            "toevoeging": "23",
-            "bag_huisletter": "",
-            "bag_toevoeging": "",
-            "woonplaats": "Weesp",
-            "type_adres": "Hoofdadres",
-            "status": "Naamgeving uitgegeven",
-            "landelijk_id": "0457200000201571",
-            "vbo_status": "Verblijfsobject in gebruik",
-            "adresseerbaar_object_id": "0457010000002241",
-            "subtype": "verblijfsobject",
-            "centroid": [
-                5.039817231849981,
-                52.30885683238395
-            ],
-            "subtype_id": "0457010000002241",
-            "_display": "Herengracht 23 (Weesp)"
-        },
-        {
-            "_links": {
-                "self": {
-                    "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010000755560/"
-                }
-            },
-            "type": "verblijfsobject",
-            "dataset": "v11_nummeraanduiding",
-            "adres": "Nieuwe Herengracht 23-1",
-            "postcode": "1011RL",
-            "straatnaam": "Nieuwe Herengracht",
-            "straatnaam_no_ws": "Nieuwe Herengracht",
-            "huisnummer": 23,
-            "toevoeging": "23 1",
-            "bag_huisletter": "",
-            "bag_toevoeging": "1",
-            "woonplaats": "Amsterdam",
-            "type_adres": "Hoofdadres",
-            "status": "Naamgeving uitgegeven",
-            "landelijk_id": "0363200000215998",
-            "vbo_status": "Verblijfsobject in gebruik",
-            "adresseerbaar_object_id": "0363010000755560",
-            "subtype": "verblijfsobject",
-            "centroid": [
-                4.902795334609859,
-                52.36631966746123
-            ],
-            "subtype_id": "0363010000755560",
-            "_display": "Nieuwe Herengracht 23-1"
+    "next": {
+      "href": null
+    },
+    "prev": {
+      "href": null
+    }
+  },
+  "count_hits": 38,
+  "count": 38,
+  "results": [
+    {
+      "_links": {
+        "self": {
+          "href": "https://api.data.amsterdam.nl/bag/verblijfsobject/0363010000599756/"
         }
-    ]
+      },
+      "type": "verblijfsobject",
+      "dataset": "nummeraanduiding",
+      "adres": "Burgemeester Röellstraat 1",
+      "postcode": "1064BH",
+      "straatnaam": "Burgemeester Röellstraat",
+      "huisnummer": 1,
+      "toevoeging": "1",
+      "bag_huisletter": "",
+      "bag_toevoeging": "",
+      "woonplaats": "Amsterdam",
+      "hoofdadres": true,
+      "status": [
+        {
+          "code": "16",
+          "omschrijving": "Naamgeving uitgegeven"
+        }
+      ],
+      "landelijk_id": "0363200000062087",
+      "vbo_status": [
+        {
+          "code": "21",
+          "omschrijving": "Verblijfsobject in gebruik"
+        }
+      ],
+      "adresseerbaar_object_id": "0363010000599756",
+      "subtype": "verblijfsobject",
+      "centroid": [4.834586581980725, 52.372950494299445],
+      "subtype_id": "03630000599756",
+      "_display": "Burgemeester Röellstraat 1"
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "https://api.data.amsterdam.nl/bag/verblijfsobject/0363010000599785/"
+        }
+      },
+      "type": "verblijfsobject",
+      "dataset": "nummeraanduiding",
+      "adres": "Burgemeester Röellstraat 10",
+      "postcode": "1064BM",
+      "straatnaam": "Burgemeester Röellstraat",
+      "huisnummer": 10,
+      "toevoeging": "10",
+      "bag_huisletter": "",
+      "bag_toevoeging": "",
+      "woonplaats": "Amsterdam",
+      "hoofdadres": true,
+      "status": [
+        {
+          "code": "16",
+          "omschrijving": "Naamgeving uitgegeven"
+        }
+      ],
+      "landelijk_id": "0363200000062116",
+      "vbo_status": [
+        {
+          "code": "21",
+          "omschrijving": "Verblijfsobject in gebruik"
+        }
+      ],
+      "adresseerbaar_object_id": "0363010000599785",
+      "subtype": "verblijfsobject",
+      "centroid": [4.834578743747967, 52.3735795998216],
+      "subtype_id": "03630000599785",
+      "_display": "Burgemeester Röellstraat 10"
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010000664346/"
+        }
+      },
+      "type": "verblijfsobject",
+      "dataset": "v11_nummeraanduiding",
+      "adres": "Herengracht 23-1",
+      "postcode": "1015BA",
+      "straatnaam": "Herengracht",
+      "straatnaam_no_ws": "Herengracht",
+      "huisnummer": 23,
+      "toevoeging": "23 1",
+      "bag_huisletter": "",
+      "bag_toevoeging": "1",
+      "woonplaats": "Amsterdam",
+      "type_adres": "Hoofdadres",
+      "status": "Naamgeving uitgegeven",
+      "landelijk_id": "0363200000126446",
+      "vbo_status": "Verblijfsobject in gebruik",
+      "adresseerbaar_object_id": "0363010000664346",
+      "subtype": "verblijfsobject",
+      "centroid": [4.891968036478453, 52.37873183842775],
+      "subtype_id": "0363010000664346",
+      "_display": "Herengracht 23-1"
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0457010000002241/"
+        }
+      },
+      "type": "verblijfsobject",
+      "dataset": "v11_nummeraanduiding",
+      "adres": "Herengracht 23",
+      "postcode": "1382AG",
+      "straatnaam": "Herengracht",
+      "straatnaam_no_ws": "Herengracht",
+      "huisnummer": 23,
+      "toevoeging": "23",
+      "bag_huisletter": "",
+      "bag_toevoeging": "",
+      "woonplaats": "Weesp",
+      "type_adres": "Hoofdadres",
+      "status": "Naamgeving uitgegeven",
+      "landelijk_id": "0457200000201571",
+      "vbo_status": "Verblijfsobject in gebruik",
+      "adresseerbaar_object_id": "0457010000002241",
+      "subtype": "verblijfsobject",
+      "centroid": [5.039817231849981, 52.30885683238395],
+      "subtype_id": "0457010000002241",
+      "_display": "Herengracht 23 (Weesp)"
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010000755560/"
+        }
+      },
+      "type": "verblijfsobject",
+      "dataset": "v11_nummeraanduiding",
+      "adres": "Nieuwe Herengracht 23-1",
+      "postcode": "1011RL",
+      "straatnaam": "Nieuwe Herengracht",
+      "straatnaam_no_ws": "Nieuwe Herengracht",
+      "huisnummer": 23,
+      "toevoeging": "23 1",
+      "bag_huisletter": "",
+      "bag_toevoeging": "1",
+      "woonplaats": "Amsterdam",
+      "type_adres": "Hoofdadres",
+      "status": "Naamgeving uitgegeven",
+      "landelijk_id": "0363200000215998",
+      "vbo_status": "Verblijfsobject in gebruik",
+      "adresseerbaar_object_id": "0363010000755560",
+      "subtype": "verblijfsobject",
+      "centroid": [4.902795334609859, 52.36631966746123],
+      "subtype_id": "0363010000755560",
+      "_display": "Nieuwe Herengracht 23-1"
+    }
+  ]
 }

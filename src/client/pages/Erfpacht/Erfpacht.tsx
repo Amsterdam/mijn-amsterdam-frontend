@@ -6,7 +6,6 @@ import {
   Paragraph,
   Screen,
   UnorderedList,
-
 } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';

@@ -11,4 +11,4 @@ describe('fake-db', () => {
     const queryALLResult = await queryALL('SELECT * FROM table');
     expect(queryALLResult).toHaveLength(0);
   });
-})
+});

@@ -25,7 +25,7 @@ type ProfileLabelValueFormatter =
   | string
   | [
       string | ((key: string, item: any, brpData?: BRPData) => string),
-      (value: any, item: any, brpData?: BRPData) => Value
+      (value: any, item: any, brpData?: BRPData) => Value,
     ];
 
 type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };

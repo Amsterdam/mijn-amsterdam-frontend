@@ -172,9 +172,7 @@ export default function SiaDetail() {
 
       <PageContent className={styles.DetailPageContent}>
         {isError(SIA) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {!isLoading(SIA) && !SiaItem && (
           <ErrorAlert severityInput="info">
@@ -331,9 +329,7 @@ export default function SiaDetail() {
         )}
         {history.status === 'ERROR' && (
           <ErrorAlert>
-
-              We kunnen op dit moment niet alle status informatie laten zien.
-
+            We kunnen op dit moment niet alle status informatie laten zien.
           </ErrorAlert>
         )}
       </PageContent>

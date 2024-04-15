@@ -8,7 +8,7 @@
 .DetailPageContent {
   margin-bottom: 5rem;
 
-  +.PageContentStadspasInfo {
+  + .PageContentStadspasInfo {
     border-top: 0.1rem solid $color-neutral-grey2;
   }
 }
@@ -53,7 +53,7 @@
     height: 6.5rem;
   }
 
-  >li {
+  > li {
     padding-top: 3.5rem;
 
     @include mq-tablet {
