@@ -335,15 +335,16 @@ export const tips: Tip[] = [
     active: true,
     priority: 1,
     datePublished: '2024-04-04',
-    title: 'Achternaam van kind kiezen',
+    title: 'Overgangsregeling: achternaam van kind kiezen',
     chapter: Chapters.BRP,
     profileTypes: ['private'],
     description:
-      'Vanaf 1 januari 2024 gaat een nieuwe wet in: Introductie gecombineerde geslachtsnaam. Dit betekent dat u als ouders uw kind niet alleen 1 achternaam kunnen geven. U kunt uw kind ook een combinatie van allebei uw achternamen geven.',
+      'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
     predicates: [hasOldestKidBornFrom2016, isMarriedOrLivingTogether],
-    reason: 'U ziet deze tip omdat u kinderen heeft geboren na 2016',
+    reason:
+      'U ziet deze tip omdat uw oudste kind geboren is tussen 1 januari 2016 - 31 december 2023 en u gehuwd bent of een geregisterd partnerschap hebt.',
     link: {
-      title: 'Achternaam van kind kiezen - Gemeente Amsterdam',
+      title: 'Hoe vraagt u het aan?',
       to: 'https://www.amsterdam.nl/veelgevraagd/achternaam-van-kind-kiezen-2f07e',
     },
   },

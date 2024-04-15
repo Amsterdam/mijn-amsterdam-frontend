@@ -2,7 +2,6 @@ import { differenceInCalendarDays, differenceInYears } from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { Stadspas } from '../stadspas/stadspas-types';
 import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
@@ -138,19 +137,17 @@ export const hasKidsBetweenAges4And11: TipsPredicateFN = (
 };
 
 export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
-  console.log(
-    '=>(predicates.ts:142) appState.BRP?.content',
-    appState.BRP?.content
-  );
   const oldestKid = appState.BRP?.content?.kinderen?.sort(
     (a, b) =>
-      new Date(Number(a.geboortedatum)).getTime() -
-      new Date(Number(b.geboortedatum)).getTime()
+      new Date(a.geboortedatum as string).getTime() -
+      new Date(b.geboortedatum as string).getTime()
   )[0];
 
   return (
     !!oldestKid &&
-    new Date(Number(oldestKid.geboortedatum)).getFullYear() >= 2016
+    !!oldestKid.geboortedatum &&
+    new Date(oldestKid.geboortedatum).getFullYear() >= 2016 &&
+    new Date(oldestKid.geboortedatum).getFullYear() < 2024
   );
 };
 
@@ -187,9 +184,7 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
 };
 
 export const isMarriedOrLivingTogether: TipsPredicateFN = (appState) => {
-  return ['H', 'G']?.includes(
-    appState.BRP?.content?.verbintenis?.soortVerbintenis ?? ''
-  );
+  return !!appState.BRP?.content?.verbintenis?.soortVerbintenis;
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {
