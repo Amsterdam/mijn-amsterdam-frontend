@@ -21,6 +21,7 @@ import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedDocument,
   ZorgnedDocumentData,
+  SINGLE_DOC_TITLE_BESLUIT,
 } from './wmo-config-and-types';
 
 function isProductWithDelivery(
@@ -47,11 +48,10 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
       document.documentidentificatie,
       process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
     );
-    // TODO: Change if we get proper document names from Zorgned api
-    const docTitle = 'Besluit'; //document.omschrijving;
+
     const doc = {
       id: idEncrypted,
-      title: docTitle,
+      title: SINGLE_DOC_TITLE_BESLUIT, // TODO: Change if we get proper document names from Zorgned api
       url: `/wmoned/document/${idEncrypted}`, // NOTE: Works with legacy relayApiUrl added in front-end. TODO: Remove relayApiUrl() concept.
       datePublished: document.datumDefinitief,
     };
