@@ -74,7 +74,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
           class="amsterdam-alert__icon"
@@ -103,7 +103,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           <h2
             class="amsterdam-heading amsterdam-heading--4"
           >
-            Foutmelding
+            Vertrokken Onbekend Waarheen
           </h2>
           <p
             class="amsterdam-paragraph"
@@ -122,14 +122,14 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           </p>
         </div>
       </section>
-      <div
-        class="amsterdam-alert amsterdam-alert--warning"
+      <section
+        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-5"
+            class="amsterdam-icon amsterdam-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -149,6 +149,11 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         <div
           class="amsterdam-alert__content"
         >
+          <h2
+            class="amsterdam-heading amsterdam-heading--4"
+          >
+            Adres in onderzoek
+          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -175,7 +180,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
             .
           </p>
         </div>
-      </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -1776,7 +1781,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
           class="amsterdam-alert__icon"
@@ -1805,7 +1810,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           <h2
             class="amsterdam-heading amsterdam-heading--4"
           >
-            Foutmelding
+            Vertrokken Onbekend Waarheen
           </h2>
           <p
             class="amsterdam-paragraph"
@@ -1824,14 +1829,14 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           </p>
         </div>
       </section>
-      <div
-        class="amsterdam-alert amsterdam-alert--warning"
+      <section
+        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-5"
+            class="amsterdam-icon amsterdam-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -1851,6 +1856,11 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         <div
           class="amsterdam-alert__content"
         >
+          <h2
+            class="amsterdam-heading amsterdam-heading--4"
+          >
+            Adres in onderzoek
+          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -1877,7 +1887,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
             .
           </p>
         </div>
-      </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -3478,7 +3488,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
           class="amsterdam-alert__icon"
@@ -3507,7 +3517,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           <h2
             class="amsterdam-heading amsterdam-heading--4"
           >
-            Foutmelding
+            Vertrokken Onbekend Waarheen
           </h2>
           <p
             class="amsterdam-paragraph"
@@ -3526,14 +3536,14 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           </p>
         </div>
       </section>
-      <div
-        class="amsterdam-alert amsterdam-alert--warning"
+      <section
+        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-5"
+            class="amsterdam-icon amsterdam-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -3553,6 +3563,11 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         <div
           class="amsterdam-alert__content"
         >
+          <h2
+            class="amsterdam-heading amsterdam-heading--4"
+          >
+            Adres in onderzoek
+          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -3579,7 +3594,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
             .
           </p>
         </div>
-      </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -5074,7 +5089,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
           class="amsterdam-alert__icon"
@@ -5103,7 +5118,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           <h2
             class="amsterdam-heading amsterdam-heading--4"
           >
-            Foutmelding
+            Vertrokken Onbekend Waarheen
           </h2>
           <p
             class="amsterdam-paragraph"
@@ -5122,14 +5137,14 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           </p>
         </div>
       </section>
-      <div
-        class="amsterdam-alert amsterdam-alert--warning"
+      <section
+        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-5"
+            class="amsterdam-icon amsterdam-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -5149,6 +5164,11 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         <div
           class="amsterdam-alert__content"
         >
+          <h2
+            class="amsterdam-heading amsterdam-heading--4"
+          >
+            Adres in onderzoek
+          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -5175,7 +5195,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
             .
           </p>
         </div>
-      </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -5511,7 +5531,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
           class="amsterdam-alert__icon"
@@ -5540,7 +5560,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           <h2
             class="amsterdam-heading amsterdam-heading--4"
           >
-            Foutmelding
+            Vertrokken Onbekend Waarheen
           </h2>
           <p
             class="amsterdam-paragraph"
@@ -5559,14 +5579,14 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           </p>
         </div>
       </section>
-      <div
-        class="amsterdam-alert amsterdam-alert--warning"
+      <section
+        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-5"
+            class="amsterdam-icon amsterdam-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -5586,6 +5606,11 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         <div
           class="amsterdam-alert__content"
         >
+          <h2
+            class="amsterdam-heading amsterdam-heading--4"
+          >
+            Adres in onderzoek
+          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -5612,7 +5637,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
             .
           </p>
         </div>
-      </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
@@ -7213,7 +7238,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
           class="amsterdam-alert__icon"
@@ -7242,7 +7267,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           <h2
             class="amsterdam-heading amsterdam-heading--4"
           >
-            Foutmelding
+            Vertrokken Onbekend Waarheen
           </h2>
           <p
             class="amsterdam-paragraph"
@@ -7261,14 +7286,14 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           </p>
         </div>
       </section>
-      <div
-        class="amsterdam-alert amsterdam-alert--warning"
+      <section
+        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
           class="amsterdam-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-5"
+            class="amsterdam-icon amsterdam-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -7288,6 +7313,11 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         <div
           class="amsterdam-alert__content"
         >
+          <h2
+            class="amsterdam-heading amsterdam-heading--4"
+          >
+            Adres in onderzoek
+          </h2>
           <p
             class="amsterdam-paragraph"
           >
@@ -7314,7 +7344,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
             .
           </p>
         </div>
-      </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
