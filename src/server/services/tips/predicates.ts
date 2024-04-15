@@ -143,12 +143,12 @@ export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
       new Date(b.geboortedatum as string).getTime()
   )[0];
 
-  return (
-    !!oldestKid &&
-    !!oldestKid.geboortedatum &&
-    new Date(oldestKid.geboortedatum).getFullYear() >= 2016 &&
-    new Date(oldestKid.geboortedatum).getFullYear() < 2024
-  );
+  if (!oldestKid?.geboortedatum) {
+    return false;
+  }
+
+  const birthYear = new Date(oldestKid?.geboortedatum).getFullYear();
+  return birthYear >= 2016 && birthYear < 2024;
 };
 
 // Rule 13
