@@ -1,6 +1,6 @@
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   InnerHtml,
   LoadingContent,
   PageContent,
@@ -21,9 +21,9 @@ export default function GeneralInfo() {
       <PageContent>
         {isError(CMS_CONTENT) ||
           (generalInfo === null && (
-            <Alert type="warning">
-              <p>We kunnen de inhoud van deze pagina nu niet weergeven.</p>
-            </Alert>
+            <ErrorAlert>
+              We kunnen de inhoud van deze pagina nu niet weergeven.
+            </ErrorAlert>
           ))}
         {isLoading(CMS_CONTENT) && <LoadingContent />}
         {generalInfo?.content && <InnerHtml>{generalInfo?.content}</InnerHtml>}

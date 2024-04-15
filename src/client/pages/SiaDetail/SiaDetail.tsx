@@ -16,7 +16,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   DocumentList,
@@ -172,14 +172,14 @@ export default function SiaDetail() {
 
       <PageContent className={styles.DetailPageContent}>
         {isError(SIA) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen gegevens tonen.
+          </ErrorAlert>
         )}
         {!isLoading(SIA) && !SiaItem && (
-          <Alert type="info">
-            <p>We kunnen dit item niet vinden.</p>
-          </Alert>
+          <ErrorAlert severityInput="info">
+            We kunnen dit item niet vinden.
+          </ErrorAlert>
         )}
         {isLoading(SIA) && (
           <LoadingContent className={styles.LoadingContentInfo} />
@@ -323,18 +323,18 @@ export default function SiaDetail() {
               />
             )}
             {attachments.status === 'ERROR' && (
-              <Alert type="warning">
-                <p>We kunnen op dit moment geen bijlages laten zien.</p>
-              </Alert>
+              <ErrorAlert>
+                We kunnen op dit moment geen bijlages laten zien.
+              </ErrorAlert>
             )}
           </>
         )}
         {history.status === 'ERROR' && (
-          <Alert type="warning">
-            <p>
+          <ErrorAlert>
+
               We kunnen op dit moment niet alle status informatie laten zien.
-            </p>
-          </Alert>
+
+          </ErrorAlert>
         )}
       </PageContent>
 

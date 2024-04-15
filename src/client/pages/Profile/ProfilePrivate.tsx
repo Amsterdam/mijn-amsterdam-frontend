@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { useEffect, useMemo } from 'react';
 import { AppRoutes } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
+import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import {
   apiPristineResult,
   ApiResponse,
@@ -15,7 +16,7 @@ import {
 } from '../../../universal/helpers/brp';
 import { AppState } from '../../AppState';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoPanel,
@@ -136,14 +137,14 @@ export default function Profile() {
         )}
         <MaintenanceNotifications page="persoonlijke-gegevens" />
         {isError(BRP) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen gegevens tonen.
+          </ErrorAlert>
         )}
 
         {BRP.content?.persoon.vertrokkenOnbekendWaarheen && (
-          <Alert type="warning" className="vertrokkenOnbekendWaarheen">
-            <p>
+          <ErrorAlert>
+
               U staat sinds{' '}
               {BRP.content?.persoon.datumVertrekUitNederland
                 ? defaultDateFormat(
@@ -152,8 +153,8 @@ export default function Profile() {
                 : 'enige tijd'}{' '}
               in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken
               Onbekend Waarheen (VOW)’.
-            </p>
-            <p>
+              <br/>
+
               Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen
               (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u
               dan niet langer als inwoner van Nederland en u kunt geen gebruik
@@ -167,13 +168,14 @@ export default function Profile() {
               >
                 Meer informatie
               </LinkdInline>
-            </p>
-          </Alert>
+
+          </ErrorAlert>
         )}
 
         {BRP.content?.persoon?.adresInOnderzoek && (
-          <Alert type="warning" className="inOnderzoek">
-            <p>
+          <DSAlert>
+            <Paragraph>
+
               {BRP.content?.persoon?.adresInOnderzoek === '080000' ? <>Op dit moment onderzoeken wij of u nog steeds woont op het adres
                 waar u ingeschreven staat.</> : <>
               U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont.</>}
@@ -186,8 +188,8 @@ export default function Profile() {
                 amsterdam.nl
               </LinkdInline>
               .
-            </p>
-            <p>
+              </Paragraph>
+              <Paragraph>
               Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail
               naar{' '}
               <a
@@ -197,8 +199,8 @@ export default function Profile() {
                 adresonderzoek.basisinformatie@amsterdam.nl
               </a>
               .
-            </p>
-          </Alert>
+              </Paragraph>
+          </DSAlert>
         )}
       </PageContent>
 
