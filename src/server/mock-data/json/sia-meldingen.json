@@ -54,10 +54,7 @@
         "address_text": "Eerste Tuindwarsstraat 1-2V 1015RT Amsterdam",
         "geometrie": {
           "type": "Point",
-          "coordinates": [
-            4.883837264102948,
-            52.37778548459913
-          ]
+          "coordinates": [4.883837264102948, 52.37778548459913]
         },
         "extra_properties": {
           "original_address": {

@@ -35,10 +35,9 @@
   // --amsterdam-grid-medium-column-count: 12;
 }
 
-
 // Remove padding from nested grids
 .amsterdam-grid .amsterdam-grid {
-  --amsterdam-grid-padding-inline: 0
+  --amsterdam-grid-padding-inline: 0;
 }
 
 *,
@@ -55,7 +54,9 @@ body {
 // Global styling and reset
 html {
   box-sizing: border-box;
-  font-size: var(--mams-font-size-rem-adjust); // translates to 10px which makes 1rem = 10px in all other elements contained within body
+  font-size: var(
+    --mams-font-size-rem-adjust
+  ); // translates to 10px which makes 1rem = 10px in all other elements contained within body
   line-height: var(--mams-line-height);
   height: 100%;
   background-color: var(--mams-bg-color);
@@ -72,7 +73,7 @@ body {
     position: fixed;
     width: 100vw;
 
-    >*:not(#modal-root) {
+    > *:not(#modal-root) {
       pointer-events: none;
     }
   }

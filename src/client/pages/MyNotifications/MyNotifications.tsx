@@ -56,7 +56,6 @@ export default function MyNotificationsPage() {
         className={styles.MainHeader}
         icon={<ChapterIcon />}
       >
-
         Actueel
       </PageHeading>
       <PageContent>

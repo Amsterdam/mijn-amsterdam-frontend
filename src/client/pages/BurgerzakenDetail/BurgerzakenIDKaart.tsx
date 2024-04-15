@@ -42,9 +42,7 @@ export default function BurgerzakenIDKaart() {
 
       <PageContent className={styles.DetailPageContent}>
         {(isError(BRP) || noContent) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {isLoading(BRP) && (
           <LoadingContent className={styles.LoadingContentInfo} />

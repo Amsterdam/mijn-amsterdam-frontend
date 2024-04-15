@@ -200,7 +200,7 @@ function CStadspasBudget({
           </>
         )}
         {isError && (
-          <ErrorAlert >
+          <ErrorAlert>
             We kunnen op dit moment geen transacties tonen
           </ErrorAlert>
         )}
@@ -258,11 +258,11 @@ export default function StadspasDetail() {
           </Linkd>
         </p>
         {(isErrorStadspas || (!isLoading(STADSPAS) && noContent)) && (
-           <ErrorAlert>
-              We kunnen op dit moment geen gegevens tonen.{' '}
-              <LinkdInline href={AppRoutes.STADSPAS}>
-                Naar het overzicht
-              </LinkdInline>
+          <ErrorAlert>
+            We kunnen op dit moment geen gegevens tonen.{' '}
+            <LinkdInline href={AppRoutes.STADSPAS}>
+              Naar het overzicht
+            </LinkdInline>
           </ErrorAlert>
         )}
         {isLoadingStadspas && <LoadingContent />}

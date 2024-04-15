@@ -1,5 +1,9 @@
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { defaultDateFormat, isLoading, isError} from '../../../universal/helpers';
+import {
+  defaultDateFormat,
+  isLoading,
+  isError,
+} from '../../../universal/helpers';
 import {
   ErrorAlert,
   addTitleLinkComponent,

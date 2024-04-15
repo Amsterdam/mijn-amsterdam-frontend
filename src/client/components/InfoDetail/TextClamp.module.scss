@@ -16,7 +16,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
 }
 
 .ReadMoreButton {
@@ -35,7 +34,9 @@
     background-image: url('../../assets/icons/Chevron-Down.svg');
     background-repeat: no-repeat, repeat;
     background-position: center center;
-    background-size: 0.85em auto, 100%;
+    background-size:
+      0.85em auto,
+      100%;
     text-indent: -10000px;
     transform: rotate(180deg);
     border: 1px solid transparent;
@@ -52,7 +53,11 @@
   &.isClamped {
     &::before {
       content: '';
-      background: linear-gradient(to top, var(--clampedGradientBgColor, $color-white), rgba(255, 255, 255, 0));
+      background: linear-gradient(
+        to top,
+        var(--clampedGradientBgColor, $color-white),
+        rgba(255, 255, 255, 0)
+      );
       display: block;
       height: 3rem;
       margin-top: -3rem;

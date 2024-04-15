@@ -1,4 +1,4 @@
-import * as jose from 'jose'
+import * as jose from 'jose';
 import { URL, URLSearchParams } from 'url';
 import { Chapters } from '../../../universal/config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -11,9 +11,11 @@ import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);
   const jwt = await new jose.SignJWT({
-      iss: process.env.BFF_SISA_CLIENT_ID,
-      iat: Date.now(),
-    }).setProtectedHeader({ alg: 'HS256' }).sign(secret)
+    iss: process.env.BFF_SISA_CLIENT_ID,
+    iat: Date.now(),
+  })
+    .setProtectedHeader({ alg: 'HS256' })
+    .sign(secret);
   return jwt;
 }
 

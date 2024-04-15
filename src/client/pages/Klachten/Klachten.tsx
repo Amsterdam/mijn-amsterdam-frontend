@@ -88,9 +88,7 @@ export default function Klachten() {
           </Linkd>
         </p>
         {isError(KLACHTEN) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen klachten tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen klachten tonen.</ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

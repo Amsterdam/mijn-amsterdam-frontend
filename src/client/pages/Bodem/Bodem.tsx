@@ -5,7 +5,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import {
- ErrorAlert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   OverviewPage,

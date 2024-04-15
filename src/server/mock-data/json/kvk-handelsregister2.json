@@ -6,14 +6,9 @@
     "onderneming": {
       "datumAanvang": "1977-09-01",
       "datumEinde": "2020-07-01",
-      "handelsnamen": [
-        "Ballonenverkoop B.V.",
-        "Feestwinkel"
-      ],
+      "handelsnamen": ["Ballonenverkoop B.V.", "Feestwinkel"],
       "hoofdactiviteit": "Detailhandel via internet in kleding en mode-artikelen",
-      "overigeActiviteiten": [
-        "Elektrotechnische bouwinstallatie"
-      ],
+      "overigeActiviteiten": ["Elektrotechnische bouwinstallatie"],
       "rechtsvorm": "BeslotenVennootschap"
     },
     "rechtspersonen": [
@@ -43,9 +38,7 @@
         "datumEinde": null,
         "emailadres": "info@electrotechniek.amsterdam.nl",
         "faxnummer": "+310204107999",
-        "handelsnamen": [
-          "Ballonenverkoop B.V."
-        ],
+        "handelsnamen": ["Ballonenverkoop B.V."],
         "postadres": {
           "huisletter": null,
           "huisnummer": "66",
@@ -57,14 +50,10 @@
         "telefoonnummer": "+310209991362",
         "typeringVestiging": "Hoofdvestiging",
         "vestigingsNummer": "990000996064",
-        "websites": [
-          "www.electrotechniek.amsterdam.nl"
-        ]
+        "websites": ["www.electrotechniek.amsterdam.nl"]
       },
       {
-        "activiteiten": [
-          "Winkels in boeken"
-        ],
+        "activiteiten": ["Winkels in boeken"],
         "bezoekadres": {
           "huisletter": null,
           "huisnummer": "1",
@@ -77,10 +66,7 @@
         "datumEinde": null,
         "emailadres": "info@feestwinkel.nl",
         "faxnummer": "+310204107765",
-        "handelsnamen": [
-          "Ballonenverkoop B.V.",
-          "Feestwinkel"
-        ],
+        "handelsnamen": ["Ballonenverkoop B.V.", "Feestwinkel"],
         "postadres": {
           "huisletter": null,
           "huisnummer": "1",
@@ -92,9 +78,7 @@
         "telefoonnummer": "+310208451362",
         "typeringVestiging": "Nevenvestiging",
         "vestigingsNummer": "990000996080",
-        "websites": [
-          "www.feestwinkel.nl"
-        ]
+        "websites": ["www.feestwinkel.nl"]
       },
       {
         "activiteiten": [
@@ -112,9 +96,7 @@
         "datumEinde": null,
         "emailadres": null,
         "faxnummer": null,
-        "handelsnamen": [
-          "Ballonenverkoop B.V."
-        ],
+        "handelsnamen": ["Ballonenverkoop B.V."],
         "postadres": {
           "huisletter": null,
           "huisnummer": "250",

@@ -6,8 +6,7 @@ const afvalUrls: Record<string, string> = {
   glas: 'https://www.amsterdam.nl/veelgevraagd/glas-inleveren-in-de-glasbak-91080',
   papier:
     'https://www.amsterdam.nl/veelgevraagd/dit-mag-wel-en-niet-in-de-papiercontainer-944aa-kp',
-  textiel:
-    'https://www.amsterdam.nl/veelgevraagd/textielcontainers-431a2-kp',
+  textiel: 'https://www.amsterdam.nl/veelgevraagd/textielcontainers-431a2-kp',
   gft: 'https://www.amsterdam.nl/veelgevraagd/dit-mag-wel-en-niet-bij-het-groente-fruit-etensresten-en-tuinafval-gfe-t-78cf5-kp',
   brood:
     'https://www.amsterdam.nl/veelgevraagd/wat-mag-er-in-de-broodcontainer-256e1-kp',

@@ -24,8 +24,8 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
                   `${vergunning.dateStart}T${vergunning.timeStart}`
                 )
               : vergunning.dateStart && isVerleend
-              ? defaultDateFormat(vergunning.dateStart)
-              : '-'
+                ? defaultDateFormat(vergunning.dateStart)
+                : '-'
           }
         />
         <InfoDetail
@@ -36,8 +36,8 @@ export function ERVV({ vergunning }: { vergunning: ERVVType }) {
                   `${vergunning.dateEnd}T${vergunning.timeEnd}`
                 )
               : vergunning.dateEnd && isVerleend
-              ? defaultDateFormat(vergunning.dateEnd)
-              : '-'
+                ? defaultDateFormat(vergunning.dateEnd)
+                : '-'
           }
         />
       </InfoDetailGroup>

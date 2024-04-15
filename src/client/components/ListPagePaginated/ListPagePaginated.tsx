@@ -1,7 +1,13 @@
 import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import { ReactNode, useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { ChapterIcon, ErrorAlert, LoadingContent, OverviewPage, PageHeading } from '..';
+import {
+  ChapterIcon,
+  ErrorAlert,
+  LoadingContent,
+  OverviewPage,
+  PageHeading,
+} from '..';
 import { Chapter } from '../../../universal/config';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { TableV2 } from '../Table/TableV2';

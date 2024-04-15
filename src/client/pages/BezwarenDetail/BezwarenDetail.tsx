@@ -79,9 +79,7 @@ const BezwarenDetail = () => {
 
       <PageContent>
         {(isError(BEZWAREN) || noContent || api.isError) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {!!bezwaar && (
           <>
