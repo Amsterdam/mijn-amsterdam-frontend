@@ -49,8 +49,7 @@ export default function Landing() {
       </PageHeading>
       <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
         <p>
-          Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
-          Amsterdam.
+        Uw Amsterdamse zaken op 1 plek.
         </p>
         <MaintenanceNotifications
           fromApiDirectly={true}
