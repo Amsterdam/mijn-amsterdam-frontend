@@ -141,7 +141,11 @@ export default function Profile() {
         )}
 
         {BRP.content?.persoon.vertrokkenOnbekendWaarheen && (
-          <ErrorAlert>
+          <ErrorAlert
+            severity="warning"
+            title="Vertrokken Onbekend Waarheen"
+            className={styles.AlertVertrokkenOnbekendWaarheen}
+          >
             U staat sinds{' '}
             {BRP.content?.persoon.datumVertrekUitNederland
               ? defaultDateFormat(BRP.content?.persoon.datumVertrekUitNederland)
@@ -166,7 +170,11 @@ export default function Profile() {
         )}
 
         {BRP.content?.persoon?.adresInOnderzoek && (
-          <DSAlert>
+          <DSAlert
+            severity="warning"
+            title="Adres in onderzoek"
+            className={styles.AlertAdresInOnderzoek}
+          >
             <Paragraph>
               {BRP.content?.persoon?.adresInOnderzoek === '080000' ? (
                 <>
