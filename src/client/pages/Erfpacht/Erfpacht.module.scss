@@ -3,7 +3,6 @@
 @include DesignSystemStyleAdjust();
 
 .DossiersTable {
-
   @media screen and (min-width: $amsterdam-breakpoint-medium) {
     &_col1 {
       grid-column-start: 1;
@@ -101,10 +100,8 @@
 
 .OpenFacturenTableThemaPagina {
   tr {
-
     th,
     td {
-
       // Fix for large cell content and horizontal white space between this and the next cell.
       &:nth-child(3) {
         width: 25%;

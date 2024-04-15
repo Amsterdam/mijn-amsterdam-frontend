@@ -37,9 +37,7 @@ const AVGDetail = () => {
 
       <PageContent>
         {isError(AVG) || noContent ? (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         ) : (
           <>
             <InfoDetail label="Nummer" value={verzoek?.id || '-'} />

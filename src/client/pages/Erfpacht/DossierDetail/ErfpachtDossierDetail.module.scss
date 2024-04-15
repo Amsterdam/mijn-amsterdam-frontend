@@ -10,13 +10,15 @@
   margin-bottom: 1rem;
 }
 
-
 .ColumnList {
   --list-item-row-height: 2rem;
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: var(--amsterdam-grid-gap);
-  grid-template-rows: repeat(3, var(--list-item-row-height)); // Will be replaced dynamically
+  grid-template-rows: repeat(
+    3,
+    var(--list-item-row-height)
+  ); // Will be replaced dynamically
 
   @media screen and (min-width: $amsterdam-breakpoint-wide) {
     grid-template-columns: repeat(3, 1fr);
@@ -32,7 +34,7 @@
 }
 
 .DossierDetailFacturenTable {
-  >thead>tr {
+  > thead > tr {
     margin-top: 0;
   }
 }

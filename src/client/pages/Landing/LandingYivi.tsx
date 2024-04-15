@@ -27,23 +27,17 @@ export default function Landing() {
       <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
         {!FeatureToggle.yiviActive && (
           <ErrorAlert>
-
-              Vanaf 22 mei kon u online uw meldingen openbare ruimte volgen via
-              de app Yivi. Deze proef liep tot eind augustus. We danken iedereen
-              voor deelname aan de proef.
-
-
-
-              U kunt online uw melding nu via 'Mijn meldingen' volgen. Ga
-              hiervoor naar{' '}
-              <a
-                href="http://meldingen.amsterdam.nl/mijn-meldingen"
-                rel="noopener noreferrer"
-              >
-                uw meldingenoverzicht
-              </a>
-              .
-
+            Vanaf 22 mei kon u online uw meldingen openbare ruimte volgen via de
+            app Yivi. Deze proef liep tot eind augustus. We danken iedereen voor
+            deelname aan de proef. U kunt online uw melding nu via 'Mijn
+            meldingen' volgen. Ga hiervoor naar{' '}
+            <a
+              href="http://meldingen.amsterdam.nl/mijn-meldingen"
+              rel="noopener noreferrer"
+            >
+              uw meldingenoverzicht
+            </a>
+            .
           </ErrorAlert>
         )}
         {FeatureToggle.yiviActive && (

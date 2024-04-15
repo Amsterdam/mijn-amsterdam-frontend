@@ -49,9 +49,7 @@ export default function KlachtenDetail() {
 
       <PageContent>
         {isError(KLACHTEN) || noContent ? (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         ) : (
           <>
             <InfoDetail
