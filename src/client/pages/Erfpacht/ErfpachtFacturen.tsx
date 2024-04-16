@@ -9,7 +9,7 @@ import { useAppStateBagApi } from '../../hooks/useAppState';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 
 export default function ErfpachtFacturen() {
-  const { displayPropsAlleFacturen, colStyles } = useErfpachtV2Data();
+  const { displayPropsAlleFacturen } = useErfpachtV2Data();
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
@@ -43,7 +43,6 @@ export default function ErfpachtFacturen() {
       chapter={Chapters.ERFPACHTv2}
       isLoading={api.isLoading}
       isError={api.isError}
-      tableGridColStyles={colStyles.facturenTable}
     />
   );
 }

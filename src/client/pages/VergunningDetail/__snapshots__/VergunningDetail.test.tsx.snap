@@ -59,7 +59,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Aanbieden van diensten
         </h2>
@@ -72,7 +72,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -86,7 +86,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -100,7 +100,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -110,7 +110,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Gustav Mahlerlaan 7 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -126,7 +126,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -140,7 +140,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -157,7 +157,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -358,7 +358,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Aanbieden van diensten
         </h2>
@@ -371,7 +371,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -385,7 +385,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -399,7 +399,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -409,7 +409,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Gustav Mahlerlaan 7 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -419,7 +419,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Op
         </h3>
@@ -434,7 +434,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -635,7 +635,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Aanbieden van diensten
         </h2>
@@ -648,7 +648,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -663,7 +663,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -864,7 +864,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Evenement melding
         </h2>
@@ -877,7 +877,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -891,7 +891,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -901,7 +901,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
           Amstel 1 1011PN Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -917,7 +917,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Op
             </h3>
@@ -931,7 +931,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -945,7 +945,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot
             </h3>
@@ -962,7 +962,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1158,7 +1158,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Verspreiden reclamemateriaal (sampling)
         </h2>
@@ -1171,7 +1171,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -1185,7 +1185,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -1195,7 +1195,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
           Gustav Mahlerlaan 10 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -1211,7 +1211,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -1225,7 +1225,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -1239,7 +1239,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tussen
             </h3>
@@ -1255,7 +1255,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -1270,7 +1270,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1471,7 +1471,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Vaste parkeerplaats voor gehandicapten (GPP)
         </h2>
@@ -1484,7 +1484,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -1498,7 +1498,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -1508,7 +1508,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
           Amstel 1 1017AB Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -1518,7 +1518,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenteken
         </h3>
@@ -1532,7 +1532,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -1547,7 +1547,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1743,7 +1743,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Parkeerontheffingen Blauwe zone bedrijven
         </h2>
@@ -1756,7 +1756,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -1770,7 +1770,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Naam bedrijf
         </h3>
@@ -1784,7 +1784,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Aantal aangevraagde ontheffingen
         </h3>
@@ -1804,7 +1804,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -1818,7 +1818,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -1834,7 +1834,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -1849,7 +1849,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2050,7 +2050,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Parkeerontheffingen Blauwe zone bedrijven
         </h2>
@@ -2063,7 +2063,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2077,7 +2077,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Naam bedrijf
         </h3>
@@ -2091,7 +2091,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Aantal aangevraagde ontheffingen
         </h3>
@@ -2106,7 +2106,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2302,7 +2302,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Parkeerontheffingen Blauwe zone particulieren
         </h2>
@@ -2315,7 +2315,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2329,7 +2329,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenteken
         </h3>
@@ -2344,7 +2344,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2540,7 +2540,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Parkeerontheffingen Blauwe zone particulieren
         </h2>
@@ -2553,7 +2553,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2567,7 +2567,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenteken
         </h3>
@@ -2587,7 +2587,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -2601,7 +2601,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -2617,7 +2617,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -2645,7 +2645,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -2846,7 +2846,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Eigen parkeerplaats
         </h2>
@@ -2859,7 +2859,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -2873,7 +2873,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Verzoek
         </h3>
@@ -2887,7 +2887,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Adres
         </h3>
@@ -2897,7 +2897,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
           Oudezijds Voorburgwal 233
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -2907,7 +2907,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Soortplek
         </h3>
@@ -2921,7 +2921,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Parkeervak
         </h3>
@@ -2959,7 +2959,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -2974,7 +2974,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -3165,7 +3165,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Eigen parkeerplaats opheffen
         </h2>
@@ -3178,7 +3178,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -3192,7 +3192,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Verzoek
         </h3>
@@ -3206,7 +3206,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Adres
         </h3>
@@ -3216,7 +3216,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
           Weesperstraat 113
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -3227,7 +3227,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -3418,7 +3418,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Ligplaatsvergunning
         </h2>
@@ -3431,7 +3431,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -3445,7 +3445,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -3455,7 +3455,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
           J.J. Cremerplein 54-1 1054 TM Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -3465,7 +3465,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Soort vaartuig
         </h3>
@@ -3479,7 +3479,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Naam vaartuig
         </h3>
@@ -3493,7 +3493,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Soort aanvraag
         </h3>
@@ -3507,7 +3507,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Reden
         </h3>
@@ -3522,7 +3522,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -3718,7 +3718,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Ligplaatsvergunning
         </h2>
@@ -3731,7 +3731,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -3745,7 +3745,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -3755,7 +3755,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
           J.J. Cremerplein 54-1 1054 TM Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -3765,7 +3765,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Soort vaartuig
         </h3>
@@ -3779,7 +3779,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Naam vaartuig
         </h3>
@@ -3793,7 +3793,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Soort aanvraag
         </h3>
@@ -3807,7 +3807,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Reden
         </h3>
@@ -3821,7 +3821,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -3836,7 +3836,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -4037,7 +4037,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)
         </h2>
@@ -4050,7 +4050,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -4064,7 +4064,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -4074,7 +4074,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
           Gustav Mahlerlaan 10 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -4090,7 +4090,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -4104,7 +4104,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -4118,7 +4118,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tussen
             </h3>
@@ -4134,7 +4134,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -4149,7 +4149,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -4350,7 +4350,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Onttrekkingsvergunning voor sloop
         </h2>
@@ -4363,7 +4363,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -4377,7 +4377,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -4387,7 +4387,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
           Gustav Mahlerlaan 14 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -4398,7 +4398,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -4589,7 +4589,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           RVV-verkeersontheffing
         </h2>
@@ -4602,7 +4602,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -4616,7 +4616,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -4636,7 +4636,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Van
             </h3>
@@ -4650,7 +4650,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -4667,7 +4667,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -4863,7 +4863,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Samenvoegingsvergunning
         </h2>
@@ -4876,7 +4876,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -4890,7 +4890,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -4900,7 +4900,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
           Gustav Mahlerlaan 14 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -4911,7 +4911,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -5112,7 +5112,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Splitsingsvergunning
         </h2>
@@ -5125,7 +5125,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -5139,7 +5139,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -5149,7 +5149,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
           Gustav Mahlerlaan 7 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -5160,7 +5160,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -5356,7 +5356,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Touringcar dagontheffing
         </h2>
@@ -5369,7 +5369,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -5383,7 +5383,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenteken
         </h3>
@@ -5397,7 +5397,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Bestemming
         </h3>
@@ -5411,7 +5411,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Resultaat
         </h3>
@@ -5426,7 +5426,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -5627,7 +5627,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Touringcar jaarontheffing
         </h2>
@@ -5640,7 +5640,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -5654,7 +5654,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenteken(s)
         </h3>
@@ -5707,7 +5707,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Bestemming
         </h3>
@@ -5722,7 +5722,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -5918,7 +5918,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Vormen van Woonruimte
         </h2>
@@ -5931,7 +5931,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -5945,7 +5945,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -5955,7 +5955,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
           Gustav Mahlerlaan 14 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -5966,7 +5966,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -6162,7 +6162,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Werkzaamheden en vervoer op straat
         </h2>
@@ -6175,7 +6175,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -6189,7 +6189,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -6199,7 +6199,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
           Gustav Mahlerlaan 10 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -6209,7 +6209,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Werkzaamheden
         </h3>
@@ -6246,7 +6246,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -6442,7 +6442,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Werkzaamheden en vervoer op straat
         </h2>
@@ -6455,7 +6455,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -6469,7 +6469,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -6479,7 +6479,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
           Gustav Mahlerlaan 10 1082 PP Amsterdam
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -6489,7 +6489,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Werkzaamheden
         </h3>
@@ -6517,7 +6517,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -6718,7 +6718,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
           Vergunningen en ontheffingen
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Ontheffing zwaar verkeer
         </h2>
@@ -6731,7 +6731,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -6745,7 +6745,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Soort ontheffing
         </h3>
@@ -6759,7 +6759,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kentekens
         </h3>
@@ -6779,7 +6779,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Vanaf
             </h3>
@@ -6793,7 +6793,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--4 _Label_6f1df2"
             >
               Tot en met
             </h3>
@@ -6810,7 +6810,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>

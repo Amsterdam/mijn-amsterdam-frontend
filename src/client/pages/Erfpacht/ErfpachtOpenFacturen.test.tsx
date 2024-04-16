@@ -119,11 +119,8 @@ describe('<ErfpachtOpenFacturen />', () => {
     ).not.toBeInTheDocument();
 
     expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
-    expect(screen.getByTestId('Bijkehuim 44 H')).toBeInTheDocument();
     expect(screen.getByText('Dit en Dat plein 66')).toBeInTheDocument();
-    expect(screen.getByTestId('Dit en Dat plein 66')).toBeInTheDocument();
     expect(screen.getByText('Kweikade 33 H')).toBeInTheDocument();
-    expect(screen.getByTestId('Kweikade 33 H')).toBeInTheDocument();
 
     expect(screen.getByText('A.123123123')).toBeInTheDocument();
     expect(screen.getByText('B.123123123')).toBeInTheDocument();

@@ -28,7 +28,6 @@ interface ListPagePaginatedProps {
   errorText?: string;
   noItemsText?: string;
   pageSize?: number;
-  tableGridColStyles?: string[];
 }
 
 export function ListPagePaginated({
@@ -44,7 +43,6 @@ export function ListPagePaginated({
   isLoading,
   items,
   pageSize = DEFAULT_PAGE_SIZE,
-  tableGridColStyles,
   title,
 }: ListPagePaginatedProps) {
   const history = useHistory();
@@ -104,11 +102,7 @@ export function ListPagePaginated({
                   </Grid.Cell>
                 )}
                 {!isLoading && !!itemsPaginated.length && (
-                  <TableV2
-                    items={itemsPaginated}
-                    displayProps={displayProps}
-                    gridColStyles={tableGridColStyles}
-                  />
+                  <TableV2 items={itemsPaginated} displayProps={displayProps} />
                 )}
                 {items.length > pageSize && (
                   <PaginationV2
