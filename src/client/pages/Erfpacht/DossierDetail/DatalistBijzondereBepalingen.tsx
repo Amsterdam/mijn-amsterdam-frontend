@@ -14,10 +14,6 @@ export function DataTableBijzondereBepalingen({
     return (
       <TableV2
         className={styles.BijzondereBepalingen}
-        gridColStyles={[
-          styles.BijzondereBepalingen_Col1,
-          styles.BijzondereBepalingen_Col2,
-        ]}
         items={dossier.bijzondereBepalingen}
         displayProps={displayPropsBijzondereBepalingen}
       />

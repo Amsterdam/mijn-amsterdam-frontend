@@ -2,113 +2,23 @@
 
 @include DesignSystemStyleAdjust();
 
-.DossiersTable {
-  @media screen and (min-width: $amsterdam-breakpoint-medium) {
-    &_col1 {
-      grid-column-start: 1;
-      grid-column-end: span 3;
-    }
-
-    &_col2 {
-      grid-column-start: 4;
-      grid-column-end: span 2;
-    }
-
-    &_col3 {
-      grid-column-start: 6;
-      grid-column-end: span 2;
-    }
-
-    &_col4 {
-      grid-column-start: 8;
-      grid-column-end: span 1;
-    }
-  }
-
-  @media screen and (min-width: $amsterdam-breakpoint-wide) {
-    &_col1 {
-      grid-column-start: 1;
-      grid-column-end: span 4;
-    }
-
-    &_col2 {
-      grid-column-start: 5;
-      grid-column-end: span 3;
-    }
-
-    &_col3 {
-      grid-column-start: 8;
-      grid-column-end: span 3;
-    }
-
-    &_col4 {
-      grid-column-start: 11;
-      grid-column-end: span 2;
-    }
-  }
-}
-
-.FacturenTable {
-  &__smallScreen {
-    margin-bottom: 3rem;
-  }
-
-  @media screen and (min-width: $amsterdam-breakpoint-medium) {
-    &_col1 {
-      grid-column-start: 1;
-      grid-column-end: span 3;
-    }
-
-    &_col2 {
-      grid-column-start: 4;
-      grid-column-end: span 2;
-    }
-
-    &_col3 {
-      grid-column-start: 6;
-      grid-column-end: span 2;
-    }
-
-    &_col4 {
-      grid-column-start: 8;
-      grid-column-end: span 4;
-    }
-  }
-
-  @media screen and (min-width: $amsterdam-breakpoint-wide) {
-    &_col1 {
-      grid-column-start: 1;
-      grid-column-end: span 3;
-    }
-
-    &_col2 {
-      grid-column-start: 4;
-      grid-column-end: span 3;
-    }
-
-    &_col3 {
-      grid-column-start: 7;
-      grid-column-end: span 3;
-    }
-
-    &_col4 {
-      grid-column-start: 10;
-      grid-column-end: span 3;
-    }
-  }
-}
-
 .OpenFacturenTableThemaPagina {
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    :global {
+      caption.ams-table__caption {
+        font-size: var(--ams-text-level-3-font-size);
+      }
+    }
+  }
   tr {
     th,
     td {
       // Fix for large cell content and horizontal white space between this and the next cell.
       &:nth-child(3) {
         width: 25%;
-        padding-right: 1rem;
       }
 
-      @media screen and (min-width: $amsterdam-breakpoint-medium) {
+      @media screen and (min-width: $ams-breakpoint-medium) {
         &:nth-child(1) {
           width: 20%;
         }

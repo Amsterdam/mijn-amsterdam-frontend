@@ -5,13 +5,8 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 import { useErfpachtV2Data } from './erfpachtData.hook';
 
 export default function ErfpachtDossiers() {
-  const {
-    ERFPACHTv2,
-    dossiers,
-    displayPropsDossiers,
-    titleDossiers,
-    colStyles,
-  } = useErfpachtV2Data();
+  const { ERFPACHTv2, dossiers, displayPropsDossiers, titleDossiers } =
+    useErfpachtV2Data();
 
   return (
     <ListPagePaginated
@@ -23,7 +18,6 @@ export default function ErfpachtDossiers() {
       chapter={Chapters.ERFPACHTv2}
       isLoading={isLoading(ERFPACHTv2)}
       isError={isError(ERFPACHTv2)}
-      tableGridColStyles={colStyles.dossiersTable}
     />
   );
 }

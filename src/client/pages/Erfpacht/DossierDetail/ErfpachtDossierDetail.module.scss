@@ -14,13 +14,13 @@
   --list-item-row-height: 2rem;
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: var(--amsterdam-grid-gap);
+  grid-column-gap: var(--ams-grid-column-gap);
   grid-template-rows: repeat(
     3,
     var(--list-item-row-height)
   ); // Will be replaced dynamically
 
-  @media screen and (min-width: $amsterdam-breakpoint-wide) {
+  @media screen and (min-width: $ams-breakpoint-wide) {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -42,7 +42,7 @@
 .FacturenBetalerDebiteur {
   padding: 0;
 
-  @media screen and (max-width: $amsterdam-breakpoint-medium) {
+  @media screen and (max-width: $ams-breakpoint-medium) {
     dd {
       margin: 0;
     }
@@ -63,7 +63,7 @@
     grid-column-end: span 2;
   }
 
-  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+  @media screen and (min-width: $ams-breakpoint-medium) {
     &_Col1 {
       grid-column-start: 1;
       grid-column-end: span 3;
@@ -84,10 +84,6 @@
 .BijzondereBepalingen {
   padding: 0;
 
-  tr {
-    --amsterdam-grid-gap: 0;
-  }
-
   &_Col1 {
     grid-column-start: 1;
     grid-column-end: span 2;
@@ -98,7 +94,7 @@
     grid-column-end: span 2;
   }
 
-  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+  @media screen and (min-width: $ams-breakpoint-medium) {
     &_Col1 {
       grid-column-start: 1;
       grid-column-end: span 4;
@@ -114,7 +110,7 @@
 .periodeSamengesteld {
   display: block;
 
-  @media screen and (min-width: $amsterdam-breakpoint-medium) {
+  @media screen and (min-width: $ams-breakpoint-medium) {
     display: inline;
   }
 }
