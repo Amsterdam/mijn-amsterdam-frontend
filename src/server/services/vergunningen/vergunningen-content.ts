@@ -438,15 +438,18 @@ export const notificationContent: NotificationContent = {
   [CaseType.WVOS]: {
     requested: {
       ...requested,
+      title: (item) => `Aanvraag ${item.title} ontvangen`,
       description: (item) => `Uw aanvraag voor ${item.title} is ontvangen.`,
     },
     inProgress: {
       ...inProgress,
+      title: (item) => `Aanvraag ${item.title} in behandeling`,
       description: (item) =>
         `Uw aanvraag voor ${item.title} is in behandeling genomen.`,
     },
     done: {
       ...done,
+      title: (item) => `Aanvraag ${item.title} afgehandeld`,
       description: (item) => `Uw aanvraag voor ${item.title} is afgehandeld.`,
     },
   },
