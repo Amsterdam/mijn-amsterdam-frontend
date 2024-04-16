@@ -438,6 +438,7 @@ export const notificationContent: NotificationContent = {
   [CaseType.WVOS]: {
     requested: {
       ...requested,
+      title: (item) => `Aanvraag ${item.title} ontvangen`,
       description: (item) => `Uw aanvraag voor ${item.title} is ontvangen.`,
     },
     inProgress: {
@@ -448,6 +449,7 @@ export const notificationContent: NotificationContent = {
     },
     done: {
       ...done,
+      title: (item) => `Aanvraag ${item.title} afgehandeld`,
       description: (item) => `Uw aanvraag voor ${item.title} is afgehandeld.`,
     },
   },
