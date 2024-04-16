@@ -442,6 +442,7 @@ export const notificationContent: NotificationContent = {
     },
     inProgress: {
       ...inProgress,
+      title: (item) => `Aanvraag ${item.title} in behandeling`,
       description: (item) =>
         `Uw aanvraag voor ${item.title} is in behandeling genomen.`,
     },
