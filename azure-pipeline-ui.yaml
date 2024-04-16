@@ -62,6 +62,8 @@ variables:
         value: true
       - name: btdDeploy
         value: false
+      - name: dtapName
+        value: t
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
