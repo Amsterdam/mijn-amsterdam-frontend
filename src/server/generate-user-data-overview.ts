@@ -26,7 +26,7 @@ import {
 
 import { differenceInYears, parseISO } from 'date-fns';
 
-import type { AppState } from '../client/AppState';
+import { PRISTINE_APPSTATE, type AppState } from '../client/AppState';
 import { isChapterActive } from '../universal/helpers/chapters';
 import { ServiceResults } from './services/tips/tip-types';
 import { Chapter, myChaptersMenuItems } from '../universal/config';
@@ -370,6 +370,24 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
   return rows;
 }
 
+function getServiceErrors(resultsByUser: Record<string, ServiceResults>) {
+  return getRows(
+    Object.keys(PRISTINE_APPSTATE),
+    Object.entries(resultsByUser).map(([user, results]) => {
+      return Object.fromEntries(
+        Object.entries(results).map(([appStateKey, response]) => {
+          return [
+            appStateKey,
+            response.status +
+              (response.status === 'ERROR' ? ` - ${response.message}` : ''),
+          ];
+        })
+      );
+    }),
+    true
+  );
+}
+
 function getRows(
   labels: string[],
   results: Array<Record<string, string | number>>,
@@ -481,6 +499,21 @@ function sheetChapters(resultsByUser: Record<string, ServiceResults>) {
     title: 'Themas',
     rows: getChapterRows(resultsByUser),
     columnHeaders: Object.keys(testAccounts),
+    colInfo: [
+      { wch: WCH_DEFAULT },
+      ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
+    ],
+    rowInfo,
+  };
+}
+
+function sheetServiceErrors(resultsByUser: Record<string, ServiceResults>) {
+  const rowInfo = Object.keys(testAccounts).map(() => ({ hpx: HPX_DEFAULT }));
+
+  return {
+    title: 'Service Errors',
+    rows: getServiceErrors(resultsByUser),
+    columnHeaders: ['', ...Object.keys(testAccounts)],
     colInfo: [
       { wch: WCH_DEFAULT },
       ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
@@ -607,6 +640,7 @@ export async function generateOverview(
 
     addSheets(workbook, [
       sheetBrpBase(resultsByUser),
+      sheetServiceErrors(resultsByUser),
       sheetChapters(resultsByUser),
       sheetNotifications(resultsByUser),
       sheetChapterContent(resultsByUser),
