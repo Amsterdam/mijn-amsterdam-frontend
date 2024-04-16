@@ -56,7 +56,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Lood in bodem-check
         </h2>
@@ -69,7 +69,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -83,7 +83,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -93,7 +93,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Schipluidenlaan 16A
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -103,7 +103,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Document
         </h3>
@@ -148,7 +148,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -346,7 +346,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Lood in bodem-check
         </h2>
@@ -359,7 +359,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -373,7 +373,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -383,7 +383,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Schipluidenlaan 16A
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -394,7 +394,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -592,7 +592,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Lood in bodem-check
         </h2>
@@ -605,7 +605,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -619,7 +619,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -629,7 +629,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Schipluidenlaan 12A
           <br />
           <a
-            class="amsterdam-link amsterdam-link--inline _LocationModalLink_ae27d7"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
             Bekijk op de kaart
           </a>
@@ -640,7 +640,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -828,7 +828,7 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
           Bodem
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Lood in bodem-check
         </h2>
@@ -838,13 +838,13 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
       class="_PageContent_47d7c0"
     >
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="ams-alert ams-alert--error"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -862,15 +862,15 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Foutmelding
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             We kunnen op dit moment geen gegevens tonen.
           </p>

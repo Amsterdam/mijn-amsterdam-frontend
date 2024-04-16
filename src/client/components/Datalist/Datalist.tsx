@@ -40,7 +40,7 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
   return (
     <div
       className={classNames(
-        'amsterdam-grid',
+        'ams-grid',
         styles['Datalist__row-wrapper'],
         className
       )}

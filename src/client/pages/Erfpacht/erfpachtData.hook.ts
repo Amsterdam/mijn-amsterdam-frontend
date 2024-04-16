@@ -1,4 +1,5 @@
 import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
+import { isLoading } from '../../../universal/helpers';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useMediumScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -86,21 +87,6 @@ export function useErfpachtV2Data() {
     displayPropsAlleFacturen,
     titleDossiers,
     titleOpenFacturen,
-    colStyles: isMediumScreen
-      ? {
-          facturenTable: [
-            styles.FacturenTable_col1,
-            styles.FacturenTable_col2,
-            styles.FacturenTable_col3,
-            styles.FacturenTable_col4,
-          ],
-          dossiersTable: [
-            styles.DossiersTable_col1,
-            styles.DossiersTable_col2,
-            styles.DossiersTable_col3,
-            styles.DossiersTable_col4,
-          ],
-        }
-      : {},
+    isLoading: isLoading(ERFPACHTv2),
   };
 }

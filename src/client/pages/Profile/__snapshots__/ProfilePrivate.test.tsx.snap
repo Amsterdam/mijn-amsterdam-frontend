@@ -58,7 +58,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -74,13 +74,13 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -98,15 +98,15 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
             <br />
@@ -123,13 +123,13 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         </div>
       </section>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -147,15 +147,15 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Adres in onderzoek
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont. 
             <a
@@ -168,7 +168,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
             .
           </p>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
@@ -186,7 +186,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -370,7 +370,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -470,7 +470,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -677,7 +677,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1020,7 +1020,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1251,7 +1251,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1496,7 +1496,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1765,7 +1765,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -1781,13 +1781,13 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -1805,15 +1805,15 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
             <br />
@@ -1830,13 +1830,13 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         </div>
       </section>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -1854,15 +1854,15 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Adres in onderzoek
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
@@ -1875,7 +1875,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
             .
           </p>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
@@ -1893,7 +1893,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -2077,7 +2077,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -2177,7 +2177,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2384,7 +2384,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2727,7 +2727,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2958,7 +2958,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -3203,7 +3203,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -3472,7 +3472,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -3488,13 +3488,13 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -3512,15 +3512,15 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
             <br />
@@ -3537,13 +3537,13 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         </div>
       </section>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -3561,15 +3561,15 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Adres in onderzoek
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
@@ -3582,7 +3582,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
             .
           </p>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
@@ -3600,7 +3600,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -3798,7 +3798,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -3898,7 +3898,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4269,7 +4269,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4528,7 +4528,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4801,7 +4801,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -5070,7 +5070,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -5089,13 +5089,13 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -5113,15 +5113,15 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
             <br />
@@ -5138,13 +5138,13 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         </div>
       </section>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -5162,15 +5162,15 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Adres in onderzoek
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
@@ -5183,7 +5183,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
             .
           </p>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
@@ -5201,7 +5201,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -5357,7 +5357,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -5515,7 +5515,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -5531,13 +5531,13 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -5555,15 +5555,15 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
             <br />
@@ -5580,13 +5580,13 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         </div>
       </section>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -5604,15 +5604,15 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Adres in onderzoek
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
@@ -5625,7 +5625,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
             .
           </p>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
@@ -5643,7 +5643,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -5827,7 +5827,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -5927,7 +5927,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6134,7 +6134,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6477,7 +6477,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6708,7 +6708,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6953,7 +6953,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -7222,7 +7222,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -7238,13 +7238,13 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -7262,15 +7262,15 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
             <br />
@@ -7287,13 +7287,13 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         </div>
       </section>
       <section
-        class="amsterdam-alert amsterdam-alert--warning _AlertAdresInOnderzoek_a22688"
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -7311,15 +7311,15 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Adres in onderzoek
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
@@ -7332,7 +7332,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
             .
           </p>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
@@ -7350,7 +7350,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -7534,7 +7534,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -7604,7 +7604,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -7811,7 +7811,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8154,7 +8154,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8385,7 +8385,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8630,7 +8630,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"

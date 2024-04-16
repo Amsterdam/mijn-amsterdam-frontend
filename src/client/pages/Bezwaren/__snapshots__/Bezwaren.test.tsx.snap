@@ -75,7 +75,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Bezwaren
         </h2>
@@ -115,13 +115,13 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         </a>
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="ams-alert ams-alert--error"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -139,15 +139,15 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Foutmelding
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             We kunnen op dit moment geen bezwaren tonen.
           </p>
@@ -158,7 +158,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -204,7 +204,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -325,7 +325,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Bezwaren
         </h2>
@@ -369,7 +369,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -415,7 +415,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -536,7 +536,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Bezwaren
         </h2>
@@ -580,7 +580,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -707,7 +707,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
