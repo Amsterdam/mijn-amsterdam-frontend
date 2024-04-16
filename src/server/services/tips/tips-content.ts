@@ -6,6 +6,7 @@ import {
   hasDutchNationality,
   hasKidsBetweenAges2And18,
   hasKidsBetweenAges4And11,
+  hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
@@ -16,6 +17,7 @@ import {
   is18OrOlder,
   isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
+  isMarriedOrLivingTogether,
   isMokum,
   isReceivingSubsidy,
   not,
@@ -323,6 +325,27 @@ export const tips: Tip[] = [
     link: {
       title: 'Bekijk de voorwaarden',
       to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
+    },
+  },
+  {
+    id: 'mijn-44',
+    owner: '',
+    dateActiveStart: '2024-01-01',
+    dateActiveEnd: '2024-12-31',
+    active: true,
+    priority: 1,
+    datePublished: '2024-04-04',
+    title: 'Overgangsregeling: achternaam van kind kiezen',
+    chapter: Chapters.BRP,
+    profileTypes: ['private'],
+    description:
+      'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
+    predicates: [hasOldestKidBornFrom2016, isMarriedOrLivingTogether],
+    reason:
+      'U ziet deze tip omdat uw oudste kind geboren is tussen 1 januari 2016 - 31 december 2023 en u gehuwd bent of een geregisterd partnerschap hebt.',
+    link: {
+      title: 'Hoe vraagt u het aan?',
+      to: 'https://www.amsterdam.nl/veelgevraagd/achternaam-van-kind-kiezen-2f07e',
     },
   },
 ];
