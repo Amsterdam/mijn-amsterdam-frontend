@@ -51,7 +51,7 @@ export const sessionAtom = atom<SessionState>({
 });
 
 const requestOptions: ApiRequestOptions = {
-  sentryEnabled: false, // Disable Sentry for auth check responses
+  monitoringEnabled: false, // Disable Monitoring for auth check responses
   url: AUTH_API_URL,
 };
 

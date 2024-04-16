@@ -495,8 +495,6 @@ components:
             type: string
           id:
             type: string
-          sentry:
-            type: string
           content:
             type: object
     StreamItem:

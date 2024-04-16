@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import { apiPristineResult, apiSuccessResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';
@@ -24,6 +23,7 @@ import {
   vi,
 } from 'vitest';
 import { FeatureToggle } from '../../universal/config/app';
+import * as Monitoring from '../utils/monitoring';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
@@ -180,7 +180,7 @@ describe('useAppState', () => {
     });
 
     it('Should be false if we have statekey mismatch', async () => {
-      const spy = vi.spyOn(Sentry, 'captureMessage');
+      const spy = vi.spyOn(Monitoring, 'captureMessage');
       const isReady = isAppStateReady(
         { BLAP: apiSuccessResult('blap') } as any,
         pristineState,

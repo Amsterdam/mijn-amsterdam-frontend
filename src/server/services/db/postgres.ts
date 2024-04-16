@@ -1,6 +1,5 @@
-import * as Sentry from '@sentry/node';
 import { ClientConfig, Pool } from 'pg';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+import { captureException } from '../monitoring';
 
 export const pgDbConfig: ClientConfig = {
   host: process.env.DB_HOST,
@@ -27,7 +26,7 @@ export async function query(queryString: string, values?: any[]) {
     }
     result = await pool.query(queryString, values);
   } catch (error) {
-    Sentry.captureException(error);
+    captureException(error);
   }
   return result;
 }

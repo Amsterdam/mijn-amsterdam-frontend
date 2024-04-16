@@ -1,5 +1,5 @@
-import * as Sentry from '@sentry/react';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
+import { captureMessage } from '../utils/monitoring';
 
 export function transformSourceData(data: Partial<AppState> | null) {
   // Copy the pristine content to the error content so we keep our
@@ -28,23 +28,20 @@ export function transformSourceData(data: Partial<AppState> | null) {
     }
 
     if (unexpectedStateKeys.length) {
-      Sentry.captureMessage(
-        '[transformSourceData] Unknown stateKey encountered',
-        {
-          extra: {
-            unexpectedStateKeys,
-          },
-        }
-      );
+      captureMessage('[transformSourceData] Unknown stateKey encountered', {
+        properties: {
+          unexpectedStateKeys,
+        },
+      });
     }
 
     return data;
   }
 
-  Sentry.captureMessage(
+  captureMessage(
     '[transformSourceData] Data returned from server is not an object',
     {
-      extra: {
+      properties: {
         data,
         identity: document.cookie,
       },

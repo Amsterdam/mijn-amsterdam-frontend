@@ -1,15 +1,13 @@
-import {
-  Alert as DSAlert,
-  LinkList,
-  Paragraph,
-  UnorderedList,
-} from '@amsterdam/design-system-react';
-import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 
+import {
+  Alert as DSAlert,
+  LinkList,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import {
   GenericDocument,
   StatusLine,
@@ -19,7 +17,6 @@ import {
   ChapterIcon,
   DetailPage,
   ErrorAlert,
-  Linkd,
   LoadingContent,
   PageContent,
   PageHeading,
@@ -27,6 +24,7 @@ import {
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { captureMessage } from '../../utils/monitoring';
 import { relayApiUrl } from '../../utils/utils';
 import styles from './StatusDetail.module.scss';
 
@@ -79,8 +77,8 @@ export default function StatusDetail({
 
   useEffect(() => {
     if (!isStateLoading && !statusItem) {
-      Sentry.captureMessage(`${stateKey} Item not found`, {
-        extra: {
+      captureMessage(`${stateKey} Item not found`, {
+        properties: {
           requestedId: id,
           availableIds: statusItems.map((item) => item.id),
         },

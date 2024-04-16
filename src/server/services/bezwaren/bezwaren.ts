@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import axios from 'axios';
 import * as jose from 'jose';
 import { generatePath } from 'react-router-dom';
@@ -27,6 +26,7 @@ import {
   kenmerkKey,
 } from './types';
 import memoizee from 'memoizee';
+import { captureException } from '../monitoring';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
@@ -107,7 +107,7 @@ function transformBezwarenDocumentsResults(
         }
       );
     } catch (error) {
-      Sentry.captureException(error);
+      captureException(error);
     }
   }
   return [];

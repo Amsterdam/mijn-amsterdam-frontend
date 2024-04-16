@@ -1,9 +1,4 @@
-import * as Sentry from '@sentry/node';
-import axios, {
-  AxiosPromise,
-  AxiosResponse,
-  AxiosResponseHeaders,
-} from 'axios';
+import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import memoryCache from 'memory-cache';
 import { IS_TAP } from '../../universal/config/env';
 import {
@@ -26,6 +21,7 @@ import {
   apiUrlEntries,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
+import { captureException, captureMessage } from '../services/monitoring';
 import { AuthProfileAndToken } from './app';
 import { Deferred } from './deferred';
 
@@ -249,14 +245,14 @@ export async function requestData<T>(
       ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
       : errorMessageBasic;
 
-    const capturedId = shouldCaptureMessage
-      ? Sentry.captureMessage(
+    shouldCaptureMessage
+      ? captureMessage(
           `${apiName}: ${error?.message ? error.message : error}`,
           {
             tags: {
               url: requestConfig.url!,
             },
-            extra: {
+            properties: {
               module: 'request',
               status: error?.response?.status,
               apiName,
@@ -264,22 +260,20 @@ export async function requestData<T>(
             },
           }
         )
-      : Sentry.captureException(error, {
+      : captureException(error, {
           tags: {
             url: requestConfig.url!,
           },
-          extra: {
+          properties: {
             apiName,
             errorMessage,
           },
         });
 
-    const sentryId = !IS_TAP ? null : capturedId;
     const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(
       errorMessage,
       null,
-      sentryId,
       statusCode ? `${statusCode}` : undefined
     );
 

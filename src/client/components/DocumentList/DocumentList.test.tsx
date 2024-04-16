@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/react';
+import * as Monitoring from '../../utils/monitoring';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
@@ -121,7 +121,7 @@ describe('DocumentList', () => {
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
     const track = ((analytics as any).trackDownload = vi.fn());
-    const captureException = ((Sentry as any).captureException = vi.fn());
+    const captureException = vi.spyOn(Monitoring, 'captureException');
 
     render(
       <RecoilRoot>
@@ -143,7 +143,7 @@ describe('DocumentList', () => {
       expect(captureException).toHaveBeenCalledWith(
         new Error(`Failed to download document. Error: not found, Code: 404`),
         {
-          extra: {
+          properties: {
             title: ITEMS[0].title,
             url: ITEMS[0].url,
           },

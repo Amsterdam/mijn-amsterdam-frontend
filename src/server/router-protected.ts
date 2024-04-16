@@ -1,7 +1,5 @@
-import * as Sentry from '@sentry/react';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { IS_AZ } from '../universal/config/env';
 import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
@@ -15,6 +13,7 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
+import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import {
   fetchSignalAttachments,
@@ -141,7 +140,7 @@ router.use(
         return proxyReqOpts;
       },
       proxyErrorHandler: (err, res, next) => {
-        Sentry.captureException(err);
+        captureException(err);
         next();
       },
     }

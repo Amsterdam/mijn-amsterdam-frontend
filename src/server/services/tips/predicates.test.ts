@@ -334,7 +334,10 @@ describe('predicates', () => {
   describe('STADSPAS', () => {
     test('hasStadspasGroeneStip', () => {
       const appState = {
-        STADSPAS: { content: { stadspassen: [{ passType: 'kind' }] } },
+        STADSPAS: {
+          status: 'OK',
+          content: { stadspassen: [{ passType: 'kind' }] },
+        },
       } as AppState;
       expect(hasStadspasGroeneStip(appState)).toEqual(true);
     });

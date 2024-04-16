@@ -2,7 +2,6 @@ export interface ApiErrorResponse<T> {
   message: string;
   content: T;
   status: 'ERROR';
-  sentry?: string;
   id?: string;
   code?: string;
 }
@@ -40,7 +39,6 @@ export type ApiDependencyErrorResponse = {
   content: null;
   message: string;
   status: 'DEPENDENCY_ERROR';
-  sentry?: string;
 };
 
 export type ResponseStatus =
@@ -91,7 +89,6 @@ export function hasFailedDependency(
 export function apiErrorResult<T>(
   error: string,
   content: T,
-  sentryId?: string | null,
   statusCode?: string | null
 ): ApiErrorResponse<T> {
   const errorResponse: ApiErrorResponse<T> = {
@@ -99,10 +96,6 @@ export function apiErrorResult<T>(
     message: error,
     status: 'ERROR',
   };
-
-  if (sentryId) {
-    errorResponse.sentry = sentryId;
-  }
 
   if (statusCode) {
     errorResponse.code = statusCode;
@@ -171,8 +164,7 @@ export function apiDependencyError(
         response.status === 'ERROR' ||
         response.status === 'DEPENDENCY_ERROR'
       ) {
-        const error = response.sentry ? `\nsentry: ${response.sentry}` : '';
-        acc += `[${key}] ${response.message} ${error} `;
+        acc += `[${key}] ${response.message}`;
       }
       return acc;
     }, ''),
