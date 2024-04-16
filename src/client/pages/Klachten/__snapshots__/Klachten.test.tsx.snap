@@ -61,7 +61,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Klachten
         </h2>
@@ -101,13 +101,13 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
         </a>
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="ams-alert ams-alert--error"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -125,15 +125,15 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Foutmelding
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             We kunnen op dit moment geen klachten tonen.
           </p>
@@ -144,7 +144,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_352a1c"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -251,7 +251,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Klachten
         </h2>
@@ -295,7 +295,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_352a1c"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -546,7 +546,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Klachten
         </h2>
@@ -590,7 +590,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_352a1c"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"

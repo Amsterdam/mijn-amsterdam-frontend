@@ -56,7 +56,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           AVG persoonsgegevens
         </h2>
@@ -96,13 +96,13 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
         </a>
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="ams-alert ams-alert--error"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -120,15 +120,15 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Foutmelding
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             We kunnen op dit moment geen AVG verzoeken tonen.
           </p>
@@ -139,7 +139,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_7ac078"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -185,7 +185,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
       class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -287,7 +287,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           AVG persoonsgegevens
         </h2>
@@ -331,7 +331,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_7ac078"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -377,7 +377,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
       class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -479,7 +479,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           AVG persoonsgegevens
         </h2>
@@ -523,7 +523,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_7ac078"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -652,7 +652,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
       class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
