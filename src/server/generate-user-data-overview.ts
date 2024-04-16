@@ -177,11 +177,7 @@ const paths: PathObj[] = [
       const { geboortedatum, geboortelandnaam } = persoon;
       return `${
         geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'onbekend'
-      } (${
-        geboortelandnaam !== 'Nederland'
-          ? `(${geboortelandnaam})` ?? 'onbekend'
-          : ''
-      })`;
+      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'onbekend'})` : ''}`;
     },
   },
   {
