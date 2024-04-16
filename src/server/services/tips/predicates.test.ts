@@ -12,6 +12,7 @@ import {
   hasBnBVergunning,
   hasDutchNationality,
   hasKidsBetweenAges2And18,
+  hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
   hasTozo,
@@ -21,6 +22,7 @@ import {
   is18OrOlder,
   isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
+  isMarriedOrLivingTogether,
   isReceivingSubsidy,
   not,
   or,
@@ -232,6 +234,56 @@ describe('predicates', () => {
         (expected, birthdate1, birthdate2) => {
           expect(
             hasKidsBetweenAges2And18(getMockAppState(birthdate1, birthdate2))
+          ).toBe(expected);
+        }
+      );
+    });
+
+    describe('hasOldestKidBornFrom2016', () => {
+      const getMockAppState = (
+        geboortedatumKind1: string,
+        geboortedatumKind2: string
+      ) => {
+        const BRPCopy = { ...BRP };
+
+        BRP.content.kinderen[0].geboortedatum = geboortedatumKind1;
+        BRP.content.kinderen[1].geboortedatum = geboortedatumKind2;
+
+        return getBRPAppState(BRPCopy);
+      };
+
+      it.each([
+        [false, '2019-01-04', '2015-05-05'],
+        [true, '2016-01-01', '2021-12-25'],
+        [false, '1990-03-20', '2000-10-29'],
+        [false, '2024-07-26', '2024-07-24'],
+      ])(
+        'should return %s for kids with birthdays at %s and %s',
+        (expected, birthdate1, birthdate2) => {
+          expect(
+            hasOldestKidBornFrom2016(getMockAppState(birthdate1, birthdate2))
+          ).toBe(expected);
+        }
+      );
+    });
+
+    describe('isMarriedOrLivingTogether', () => {
+      const getMockAppState = (burgerlijkeStaat: string) => {
+        const BRPCopy = { ...BRP };
+
+        BRPCopy.content.verbintenis.soortVerbintenis = burgerlijkeStaat;
+
+        return getBRPAppState(BRPCopy);
+      };
+
+      it.each([
+        [true, 'h'],
+        [false, ''],
+      ])(
+        'should return %s for burgerlijkeStaat %s',
+        (expected, burgerlijkeStaat) => {
+          expect(
+            isMarriedOrLivingTogether(getMockAppState(burgerlijkeStaat))
           ).toBe(expected);
         }
       );
