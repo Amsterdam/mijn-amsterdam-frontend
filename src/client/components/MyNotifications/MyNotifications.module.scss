@@ -1,6 +1,6 @@
 @import '../../styles/_global.scss';
 
-.MyNotifications>ul {
+.MyNotifications > ul {
   @include reset-list-style;
 }
 
@@ -168,9 +168,9 @@
   }
 
   svg {
-    transform: translateY(.3rem);
+    transform: translateY(0.3rem);
     width: 1.6rem;
     height: 1.6rem;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 }

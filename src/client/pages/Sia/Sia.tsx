@@ -112,9 +112,7 @@ export default function Sia() {
         </p>
         <MaintenanceNotifications page="sia-meldingen" />
         {isError(SIA) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

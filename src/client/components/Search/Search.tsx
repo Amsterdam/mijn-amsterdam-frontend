@@ -103,8 +103,8 @@ export function ResultSet({
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
                   : typeof result.displayTitle === 'string'
-                  ? displayPath(term, [result.displayTitle])
-                  : result.displayTitle}
+                    ? displayPath(term, [result.displayTitle])
+                    : result.displayTitle}
                 {result.trailingIcon}
                 {extendedResults && (
                   <p className={styles.ResultDescription}>

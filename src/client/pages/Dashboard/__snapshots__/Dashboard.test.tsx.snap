@@ -12,7 +12,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           <a
             class="_MyNotificationsHeadingLink_ae30fe"
@@ -41,7 +41,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
+                  class="ams-heading ams-heading--4 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -151,7 +151,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
+                  class="ams-heading ams-heading--4 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -261,7 +261,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
+                  class="ams-heading ams-heading--4 _NotificationHeader_63df5c"
                 >
                   Notification
                 </h4>
@@ -382,7 +382,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="_TitleToggle_63df5c"
               >
                 <h4
-                  class="amsterdam-heading amsterdam-heading--4 _NotificationHeader_63df5c"
+                  class="ams-heading ams-heading--4 _NotificationHeader_63df5c"
                 >
                   Welkom op Mijn Amsterdam!
                 </h4>
@@ -484,7 +484,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           class="_Header_7d9f25"
         >
           <h3
-            class="amsterdam-heading amsterdam-heading--1 _Title_7d9f25"
+            class="ams-heading ams-heading--1 _Title_7d9f25"
           >
             Mijn thema's
           </h3>
@@ -692,7 +692,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           class="_NavLinkContentWrap_f20b21"
         >
           <h3
-            class="amsterdam-heading amsterdam-heading--2"
+            class="ams-heading ams-heading--2"
           >
             Mijn buurt
           </h3>
@@ -707,7 +707,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
       id="DirectLinks"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--2"
+        class="ams-heading ams-heading--2"
         id="DirectLinksHeader"
       >
         Bezoek ook

@@ -14,31 +14,19 @@
 @import '@amsterdam/design-system-css/src/components/screen/screen.scss';
 @import '@amsterdam/design-system-css/src/components/link/link.scss';
 @import '@amsterdam/design-system-css/src/components/icon/icon.scss';
+@import '@amsterdam/design-system-css/src/components/table/table.scss';
+@import '@amsterdam/design-system-css/src/components/button/button.scss';
 @import '@amsterdam/design-system-css/src/components/ordered-list/ordered-list.scss';
 @import '@amsterdam/design-system-css/src/components/unordered-list/unordered-list.scss';
 @import '@amsterdam/design-system-css/src/components/pagination/pagination.scss';
 @import '@amsterdam/design-system-css/src/components/link-list/link-list.scss';
 
-// TODO: Use Design-system button when they allow import of scss files for button
-@import './components/design-system-button.scss';
-
 :root {
   --map-container-height: 100%;
-
-  // TODO: Temporary override to confirm with current styling.
-  --amsterdam-heading-font-weight: 600;
+  --ams-grid-row-gap: var(--ams-grid-row-gap-lg);
   --mams-font-size-rem-adjust: 62.5%;
   --mams-font-size-body: 1.6rem;
   --mams-line-height: 1.375;
-
-  // --amsterdam-grid-narrow-column-count: 8;
-  // --amsterdam-grid-medium-column-count: 12;
-}
-
-
-// Remove padding from nested grids
-.amsterdam-grid .amsterdam-grid {
-  --amsterdam-grid-padding-inline: 0
 }
 
 *,
@@ -55,15 +43,17 @@ body {
 // Global styling and reset
 html {
   box-sizing: border-box;
-  font-size: var(--mams-font-size-rem-adjust); // translates to 10px which makes 1rem = 10px in all other elements contained within body
+  font-size: var(
+    --mams-font-size-rem-adjust
+  ); // translates to 10px which makes 1rem = 10px in all other elements contained within body
   line-height: var(--mams-line-height);
   height: 100%;
   background-color: var(--mams-bg-color);
 }
 
 body {
-  font-family: var(--amsterdam-typography-font-family);
-  color: var(--amsterdam-color-primary-black);
+  font-family: var(--ams-text-font-family);
+  color: var(--ams-color-primary-black);
   font-size: var(--mams-font-size-body);
   min-width: $main-min-width;
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
@@ -72,7 +62,7 @@ body {
     position: fixed;
     width: 100vw;
 
-    >*:not(#modal-root) {
+    > *:not(#modal-root) {
       pointer-events: none;
     }
   }

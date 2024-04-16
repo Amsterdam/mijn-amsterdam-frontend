@@ -6,12 +6,12 @@ import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import type {
   MaPointFeature,
-  MaPolylineFeature
+  MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
 import { AppRoutes } from '../../../universal/config';
 import {
   DatasetFilterSelection,
-  DatasetId
+  DatasetId,
 } from '../../../universal/config/myarea-datasets';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import { toBoundLiteral } from './MyArea.helpers';
@@ -23,7 +23,7 @@ import {
   useFetchFeatures,
   useLoadingFeature,
   useOnMarkerClick,
-  useSelectedFeatureCSS
+  useSelectedFeatureCSS,
 } from './MyArea.hooks';
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
@@ -74,8 +74,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const datasetIds = queryConfig?.s
       ? activeDatasetIds
       : Array.isArray(queryConfig?.datasetIds)
-      ? queryConfig?.datasetIds
-      : activeDatasetIds;
+        ? queryConfig?.datasetIds
+        : activeDatasetIds;
 
     const filters = queryConfig?.s ? activeFilters : queryConfig?.filters || {};
 

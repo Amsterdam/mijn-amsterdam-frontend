@@ -40,9 +40,7 @@ export default function LoodMeting() {
 
       <PageContent>
         {(isError(BODEM) || noContent) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {isLoading(BODEM) && <LoadingContent />}
         {!!meting && (

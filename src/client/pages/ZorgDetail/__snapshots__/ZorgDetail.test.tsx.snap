@@ -64,7 +64,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Zorg en ondersteuning
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Hulp bij het huishouden (geleverd)
         </h2>
@@ -77,7 +77,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
@@ -92,7 +92,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="_StatusLine_a12ff2"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -384,7 +384,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Zorg en ondersteuning
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Hulp bij het huishouden (gestopt)
         </h2>
@@ -397,7 +397,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
@@ -412,7 +412,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="_StatusLine_a12ff2"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -704,7 +704,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Zorg en ondersteuning
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Hulp bij het huishouden (nog niet geleverd)
         </h2>
@@ -717,7 +717,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
@@ -732,7 +732,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="_StatusLine_a12ff2"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1024,7 +1024,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Zorg en ondersteuning
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Hulp bij het huishouden (tijdelijk gestopt)
         </h2>
@@ -1037,7 +1037,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
@@ -1052,7 +1052,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="_StatusLine_a12ff2"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -1344,7 +1344,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
           Zorg en ondersteuning
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Wmo item 1
         </h2>
@@ -1357,7 +1357,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Aanbieder
         </h3>
@@ -1372,7 +1372,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
       class="_StatusLine_a12ff2"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>

@@ -61,7 +61,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
           Klachten
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Klacht
         </h2>
@@ -74,7 +74,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Nummer van uw klacht
         </h3>
@@ -88,7 +88,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Ontvangen op
         </h3>
@@ -102,7 +102,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Wat is de klacht?
         </h3>
@@ -178,7 +178,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
           Klachten
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Boosterprik
         </h2>
@@ -191,7 +191,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Nummer van uw klacht
         </h3>
@@ -205,7 +205,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Ontvangen op
         </h3>
@@ -219,7 +219,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Wat is de klacht?
         </h3>
@@ -233,7 +233,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Wat is de locatie waar de klacht is ontstaan?
         </h3>
@@ -247,7 +247,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Wat wilt u dat de gemeente gaat doen naar aanleiding van uw klacht?
         </h3>
@@ -323,7 +323,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
           Klachten
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Test voor decentrale toewijzing
         </h2>
@@ -336,7 +336,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Nummer van uw klacht
         </h3>
@@ -350,7 +350,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Ontvangen op
         </h3>
@@ -364,7 +364,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Wat is de klacht?
         </h3>

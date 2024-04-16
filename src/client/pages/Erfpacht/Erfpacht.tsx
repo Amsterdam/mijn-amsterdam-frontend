@@ -6,7 +6,6 @@ import {
   Paragraph,
   Screen,
   UnorderedList,
-
 } from '@amsterdam/design-system-react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -33,7 +32,6 @@ export default function Erfpacht() {
     displayPropsOpenFacturen,
     titleDossiers,
     titleOpenFacturen,
-    colStyles,
     isMediumScreen,
   } = useErfpachtV2Data();
 
@@ -95,18 +93,14 @@ export default function Erfpacht() {
           {!isLoading(ERFPACHTv2) && !isError(ERFPACHTv2) && (
             <>
               <Grid.Cell span="all">
-                <Heading level={3} size="level-2">
-                  {titleDossiers ?? 'Erfpachtrechten'}
-                </Heading>
+                <TableV2
+                  caption={titleDossiers ?? 'Erfpachtrechten'}
+                  className={styles.DossiersTable}
+                  items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                  displayProps={displayPropsDossiers}
+                />
 
-                {!!dossiers.length ? (
-                  <TableV2
-                    className={styles.DossiersTable}
-                    items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
-                    displayProps={displayPropsDossiers}
-                    gridColStyles={colStyles.dossiersTable}
-                  />
-                ) : (
+                {!dossiers.length && (
                   <Paragraph>
                     U heeft geen{' '}
                     {titleDossiers?.toLowerCase() ?? 'erfpachtrechten'}.
@@ -121,21 +115,21 @@ export default function Erfpacht() {
                 )}
               </Grid.Cell>
               <Grid.Cell span="all">
-                <Heading level={3} size="level-2">
-                  {titleOpenFacturen ?? 'Openstaande facturen'}
-                </Heading>
-
-                {!!openFacturen.length ? (
-                  isMediumScreen ? (
-                    <TableV2
-                      className={styles.OpenFacturenTableThemaPagina}
-                      items={openFacturen.slice(
-                        0,
-                        MAX_TABLE_ROWS_ON_THEMA_PAGINA
-                      )}
-                      displayProps={displayPropsOpenFacturen}
-                    />
-                  ) : (
+                {isMediumScreen ? (
+                  <TableV2
+                    caption={titleOpenFacturen ?? 'Openstaande facturen'}
+                    className={styles.OpenFacturenTableThemaPagina}
+                    items={openFacturen.slice(
+                      0,
+                      MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                    )}
+                    displayProps={displayPropsOpenFacturen}
+                  />
+                ) : (
+                  <>
+                    <Heading level={3} size="level-2">
+                      {titleOpenFacturen ?? 'Openstaande facturen'}
+                    </Heading>
                     <OpenFacturenListGrouped
                       tableClassName={styles.OpenFacturenTableThemaPagina}
                       facturen={openFacturen.slice(
@@ -144,8 +138,10 @@ export default function Erfpacht() {
                       )}
                       displayProps={displayPropsOpenFacturen}
                     />
-                  )
-                ) : (
+                  </>
+                )}
+
+                {!openFacturen.length && (
                   <Paragraph>
                     U heeft geen{' '}
                     {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}

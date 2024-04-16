@@ -16,11 +16,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2023-06-08",
           "description": "
             <p>
@@ -109,7 +104,7 @@ exports[`Transform api items > fetchWmo 1`] = `
             {
               "datePublished": "2023-03-16T15:56:11.41",
               "id": "123-123-123-123",
-              "title": "Besluit",
+              "title": "Brief",
               "url": "/wmoned/document/123-123-123-123",
             },
           ],
@@ -172,11 +167,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2022-12-22",
           "description": "
             <p>
@@ -263,7 +253,7 @@ exports[`Transform api items > fetchWmo 1`] = `
             {
               "datePublished": "2023-03-02T11:17:08.293",
               "id": "123-123-123-123",
-              "title": "Besluit",
+              "title": "Brief",
               "url": "/wmoned/document/123-123-123-123",
             },
           ],
@@ -341,7 +331,7 @@ exports[`Transform api items > fetchWmo 1`] = `
             {
               "datePublished": "2022-10-19T14:27:42.643",
               "id": "123-123-123-123",
-              "title": "Besluit",
+              "title": "Brief",
               "url": "/wmoned/document/123-123-123-123",
             },
           ],
@@ -380,11 +370,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2022-08-01",
           "description": "
             <p>
@@ -446,7 +431,7 @@ exports[`Transform api items > fetchWmo 1`] = `
             {
               "datePublished": "2022-04-19T13:16:44",
               "id": "123-123-123-123",
-              "title": "Besluit",
+              "title": "Brief",
               "url": "/wmoned/document/123-123-123-123",
             },
           ],
@@ -525,7 +510,7 @@ exports[`Transform api items > fetchWmo 1`] = `
             {
               "datePublished": "2022-03-14T16:12:12",
               "id": "123-123-123-123",
-              "title": "Besluit",
+              "title": "Brief",
               "url": "/wmoned/document/123-123-123-123",
             },
           ],
@@ -603,7 +588,7 @@ exports[`Transform api items > fetchWmo 1`] = `
             {
               "datePublished": "2022-03-14T16:11:29",
               "id": "123-123-123-123",
-              "title": "Besluit",
+              "title": "Brief",
               "url": "/wmoned/document/123-123-123-123",
             },
           ],
@@ -667,11 +652,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2021-12-08",
           "description": "
             <p>
@@ -744,11 +724,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2021-12-08",
           "description": "
             <p>
@@ -821,11 +796,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2021-12-06",
           "description": "
             <p>
@@ -898,11 +868,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2021-10-22",
           "description": "
             <p>
@@ -975,11 +940,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -1051,11 +1011,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -1127,11 +1082,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -1203,11 +1153,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1279,11 +1224,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1355,11 +1295,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1431,11 +1366,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2020-12-04",
           "description": "
             <p>
@@ -1508,11 +1438,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2020-06-16",
           "description": "
               <p>
@@ -1584,11 +1509,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2020-06-18",
           "description": "
             <p>
@@ -1659,11 +1579,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2020-06-05",
           "description": "
             <p>
@@ -1723,11 +1638,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1799,11 +1709,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1875,11 +1780,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1951,11 +1851,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2019-10-09",
           "description": "
             <p>
@@ -2028,11 +1923,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2019-04-15",
           "description": "
               <p>
@@ -2104,11 +1994,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2019-03-11",
           "description": "
               <p>
@@ -2180,11 +2065,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2019-03-11",
           "description": "
               <p>
@@ -2256,11 +2136,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2018-11-29",
           "description": "
               <p>
@@ -2332,11 +2207,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2018-12-27",
           "description": "
             <p>
@@ -2409,11 +2279,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2018-04-25",
           "description": "
               <p>
@@ -2485,11 +2350,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2018-04-19",
           "description": "
               <p>
@@ -2561,11 +2421,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2017-11-24",
           "description": "
               <p>
@@ -2637,11 +2492,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2017-06-01",
           "description": "
               <p>
@@ -2713,11 +2563,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2017-06-01",
           "description": "
               <p>
@@ -2789,11 +2634,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2014-09-09",
           "description": "
             <p>
@@ -2864,11 +2704,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2014-09-11",
           "description": "
             <p>
@@ -2941,11 +2776,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2013-12-09",
           "description": "
             <p>
@@ -3018,11 +2848,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U krijgt dit besluit per post.
-            </strong>
-          </p>",
           "datePublished": "2013-05-17",
           "description": "
             <p>
@@ -3095,11 +2920,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2012-10-05",
           "description": "
             <p>
@@ -3170,11 +2990,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
-          "altDocumentContent": "<p>
-            <strong>
-              U hebt dit besluit per post ontvangen.
-            </strong>
-          </p>",
           "datePublished": "2012-08-07",
           "description": "
             <p>

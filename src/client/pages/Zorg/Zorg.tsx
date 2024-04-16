@@ -67,9 +67,7 @@ export default function Zorg() {
         </p>
         <MaintenanceNotifications page="zorg" />
         {isError(WMO) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

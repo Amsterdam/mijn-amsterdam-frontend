@@ -58,7 +58,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Afval
         </h2>
@@ -127,7 +127,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
         class="_InfoDetail_6f1df2 _GarbageInfoDetail_3a64c8"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Uw adres
         </h3>
@@ -731,7 +731,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Afval
         </h2>
@@ -744,13 +744,13 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
         Dit zijn de afvalregels voor uw adres.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="ams-alert ams-alert--error"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -768,15 +768,15 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Foutmelding
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Let op deze regels gaan over uw woonadres. Lees hier 
             <a
@@ -847,7 +847,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
         class="_InfoDetail_6f1df2 _GarbageInfoDetail_3a64c8"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Uw adres
         </h3>
@@ -1435,7 +1435,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Afval
         </h2>
@@ -1448,13 +1448,13 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
         Dit zijn de afvalregels voor uw adres.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="ams-alert ams-alert--error"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -1472,15 +1472,15 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Foutmelding
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Let op deze regels gaan over uw woonadres. Lees hier 
             <a
@@ -1551,7 +1551,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
         class="_InfoDetail_6f1df2 _GarbageInfoDetail_3a64c8"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Uw adres
         </h3>
@@ -1655,7 +1655,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Afval
         </h2>
@@ -1668,13 +1668,13 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
         Dit zijn de afvalregels voor uw adres.
       </p>
       <section
-        class="amsterdam-alert amsterdam-alert--error"
+        class="ams-alert ams-alert--error"
       >
         <div
-          class="amsterdam-alert__icon"
+          class="ams-alert__icon"
         >
           <span
-            class="amsterdam-icon amsterdam-icon--size-4"
+            class="ams-icon ams-icon--size-4"
           >
             <svg
               aria-hidden="true"
@@ -1692,15 +1692,15 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
           </span>
         </div>
         <div
-          class="amsterdam-alert__content"
+          class="ams-alert__content"
         >
           <h2
-            class="amsterdam-heading amsterdam-heading--4"
+            class="ams-heading ams-heading--4"
           >
             Foutmelding
           </h2>
           <p
-            class="amsterdam-paragraph"
+            class="ams-paragraph"
           >
             Let op deze regels gaan over uw woonadres. Lees hier 
             <a
@@ -1771,7 +1771,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2 _GarbageInfoDetail_3a64c8"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Uw adres
         </h3>

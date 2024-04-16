@@ -31,7 +31,9 @@
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 300ms ease-out 100ms, opacity 200ms ease-in-out 100ms;
+  transition:
+    max-height 300ms ease-out 100ms,
+    opacity 200ms ease-in-out 100ms;
   position: absolute;
   top: $main-header-topbar-height + $main-header-navbar-height;
   background-color: $color-neutral-grey1;

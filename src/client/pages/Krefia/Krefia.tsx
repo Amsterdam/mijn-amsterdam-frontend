@@ -123,9 +123,7 @@ export default function Krefia() {
           )}
         </p>
         {isError(KREFIA) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen geldzaken tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen geldzaken tonen.</ErrorAlert>
         )}
       </PageContent>
       {deepLinks?.schuldhulp && (

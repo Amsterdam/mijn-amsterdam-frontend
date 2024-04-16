@@ -1,9 +1,9 @@
-import { Link } from '@amsterdam/design-system-react';
-import classnames from 'classnames';
+import { Link, Table } from '@amsterdam/design-system-react';
 import { ReactNode } from 'react';
 import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
 import { LinkProps, Unshaped } from '../../../universal/types';
 import styles from './TableV2.module.scss';
+import classNames from 'classnames';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -44,72 +44,45 @@ export interface TableV2Props<T> {
   displayProps: DisplayProps<T> | null;
   items: T[];
   className?: string;
-  gridColStyles?: string[];
   showTHead?: boolean;
+  caption?: string;
 }
 
 export function TableV2<T extends ObjectWithOptionalId>({
+  caption,
   items,
   displayProps,
   className,
-  gridColStyles,
   showTHead = true,
 }: TableV2Props<T>) {
   const displayPropEntries = displayProps !== null ? entries(displayProps) : [];
 
   return (
-    <table
-      className={classnames(
-        styles.Table,
-        !!gridColStyles?.length && styles.Table__grid,
-        className
-      )}
-    >
+    <Table className={classNames(styles.TableV2, className)}>
+      {!!caption && <Table.Caption>{caption}</Table.Caption>}
       {showTHead && (
-        <thead>
-          <tr
-            className={classnames(
-              styles.TableRow,
-              !!gridColStyles?.length && [
-                'amsterdam-grid',
-                styles.TableRow__Grid,
-              ]
-            )}
-          >
+        <Table.Header>
+          <Table.Row>
             {displayPropEntries.map(([key, label], index) => {
-              const HeadingCellElement = !!label ? 'th' : 'td';
-              return (
-                <HeadingCellElement
-                  key={`th-${key}`}
-                  className={gridColStyles?.[index]}
-                >
-                  {label}
-                </HeadingCellElement>
-              );
+              if (!!label) {
+                return (
+                  <Table.HeaderCell key={`th-${key}`}>{label}</Table.HeaderCell>
+                );
+              }
+              return <Table.Cell key={`th-${key}`}>{label}</Table.Cell>;
             })}
-          </tr>
-        </thead>
+          </Table.Row>
+        </Table.Header>
       )}
-      <tbody>
+      <Table.Body>
         {items.map((item, index) => (
-          <tr
-            key={item.id ?? `tr-${index}`}
-            className={classnames(
-              styles.TableRow,
-              !!gridColStyles?.length && [
-                'amsterdam-grid',
-                styles.TableRow__Grid,
-              ]
-            )}
-          >
+          <tr key={item.id ?? `tr-${index}`}>
             {displayPropEntries.map(([key, label], index) => (
-              <td key={`td-${key}`} className={gridColStyles?.[index]}>
-                {item[key]}
-              </td>
+              <Table.Cell key={`td-${key}`}>{item[key]}</Table.Cell>
             ))}
           </tr>
         ))}
-      </tbody>
-    </table>
+      </Table.Body>
+    </Table>
   );
 }

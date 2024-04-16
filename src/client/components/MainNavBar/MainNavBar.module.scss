@@ -12,7 +12,6 @@
 }
 
 @media print {
-
   .MainNavBarSimple,
   .MainNavBar {
     display: none;
@@ -185,12 +184,12 @@
     }
   }
 
-  >* {
+  > * {
     font-weight: 500;
     color: $color-black;
     font-size: 1.8rem;
 
-    +* {
+    + * {
       margin-left: 2rem;
     }
   }
@@ -209,7 +208,7 @@
 }
 
 .secondaryLinks {
-  *[class*='FontEnlarger_FontEnlarger__']+[class*='LogoutLink'] {
+  *[class*='FontEnlarger_FontEnlarger__'] + [class*='LogoutLink'] {
     margin-left: 3rem;
   }
 }
@@ -292,7 +291,7 @@
 
   border-bottom: 0.1rem solid $color-neutral-grey2;
 
-  >button {
+  > button {
     background-position: right;
     margin-left: 0px;
     margin-top: -12px;

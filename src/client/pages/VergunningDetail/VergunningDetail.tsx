@@ -62,9 +62,7 @@ export default function VergunningDetail() {
 
       <PageContent className={styles.DetailPageContent}>
         {(isError(VERGUNNINGEN) || noContent) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.
-          </ErrorAlert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {isLoading(VERGUNNINGEN) && (
           <LoadingContent className={styles.LoadingContentInfo} />
