@@ -1,5 +1,9 @@
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { useScript } from '../hooks/useScript';
+// import { useScript } from '../hooks/useScript';
+// import React from 'react';
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
+import { createBrowserHistory } from 'history';
 
 export type Severity =
   | 'verbose'
@@ -27,30 +31,45 @@ interface AppInsights {
   trackPageView(): void;
 }
 
-let appInsights: AppInsights;
+const browserHistory = createBrowserHistory({ basename: '' });
+
+export const reactPlugin = new ReactPlugin();
+
+const appInsights = new ApplicationInsights({
+  config: {
+    connectionString: import.meta.env.REACT_APP_MONITORING_CONNECTION_STRING,
+    extensions: [reactPlugin],
+    enableAutoRouteTracking: true,
+    extensionConfig: {
+      [reactPlugin.identifier]: { history: browserHistory },
+    },
+  },
+});
 
 export function useMonitoring() {
-  const [isAppInsightsLoaded] = useScript({
-    src: '/js/app-insights-2024-03-07.js',
-    defer: false,
-    async: true,
-    isEnabled: true,
-    onLoadCallback: initAppInsights,
-  });
+  // const [isAppInsightsLoaded] = useScript({
+  //   src: '/js/app-insights-2024-03-07.js',
+  //   defer: false,
+  //   async: true,
+  //   isEnabled: true,
+  //   onLoadCallback: initAppInsights,
+  // });
 
-  function initAppInsights() {
-    const snippet = {
-      config: {
-        connectionString: import.meta.env
-          .REACT_APP_MONITORING_CONNECTION_STRING,
-      },
-    };
-    const init = new (
-      window as any
-    ).Microsoft.ApplicationInsights.ApplicationInsights(snippet);
+  // function initAppInsights() {
+  //   const snippet = {
+  //     config: {
+  //       connectionString: import.meta.env
+  //         .REACT_APP_MONITORING_CONNECTION_STRING,
+  //     },
+  //   };
+  //   const init = new (
+  //     window as any
+  //   ).Microsoft.ApplicationInsights.ApplicationInsights(snippet);
 
-    appInsights = init?.loadAppInsights();
-  }
+  //   appInsights = init?.loadAppInsights();
+  // }
+
+  appInsights.loadAppInsights();
 }
 
 export function captureException(error: unknown, properties?: Properties) {
