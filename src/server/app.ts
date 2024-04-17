@@ -145,7 +145,7 @@ app.use(function onError(
 
 app.use((req: Request, res: Response) => {
   if (!res.headersSent) {
-    captureMessage('404 not found', { properties: { url: req.url } });
+    captureException('404 not found', { properties: { url: req.url } });
     return send404(res);
   }
   return res.end();

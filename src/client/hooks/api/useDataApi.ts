@@ -175,20 +175,12 @@ export function useDataApi<T>(
           });
 
           if (requestOptions.monitoringEnabled) {
-            if (!(error instanceof Error)) {
-              captureMessage(errorMessage, {
-                properties: {
-                  url: requestOptions.url?.split('?')[0],
-                },
-              });
-            } else {
-              captureException(error, {
-                properties: {
-                  errorMessage,
-                  url: requestOptions.url?.split('?')[0],
-                },
-              });
-            }
+            captureException(error, {
+              properties: {
+                errorMessage,
+                url: requestOptions.url,
+              },
+            });
           }
         }
       }
