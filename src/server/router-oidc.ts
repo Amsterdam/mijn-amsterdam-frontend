@@ -81,7 +81,7 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   } catch (error) {
     captureException(error, {
       properties: {
-        message: 'at Digid landing',
+        message: 'At Digid landing',
       },
     });
   }
