@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import { IS_TAP } from '../../../universal/config/env';
 import {
   DatasetFilterSelection,
@@ -27,6 +26,7 @@ import {
   getDynamicDatasetFilters,
 } from './helpers';
 import { discoverSingleDsoApiEmbeddedResponse } from './dso-helpers';
+import { captureMessage } from '../monitoring';
 
 const fileCaches: Record<string, FileCache> = {};
 
@@ -142,20 +142,17 @@ export async function fetchDataset(
       dataCache.save();
     }
 
-    // If cache is stale we throw an error to sentry.
+    // If cache is stale we throw an error to monitoring.
     if (dataCache && dataCache.isStale()) {
-      Sentry.captureMessage(
-        `MyArea dataset ${datasetId} is returning stale data`,
-        {
-          tags: {
-            url: requestConfig.url,
-          },
-          extra: {
-            datasetId,
-            url,
-          },
-        }
-      );
+      captureMessage(`MyArea dataset ${datasetId} is returning stale data`, {
+        tags: {
+          url: requestConfig.url ?? '',
+        },
+        properties: {
+          datasetId,
+          url,
+        },
+      });
     }
 
     const apiResponse: DatasetResponse = { features: response.content };

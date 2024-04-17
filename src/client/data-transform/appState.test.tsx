@@ -1,6 +1,6 @@
 import { PRISTINE_APPSTATE, AppState, createAllErrorState } from '../AppState';
 import { transformSourceData } from './appState';
-import * as Sentry from '@sentry/react';
+import * as Monitoring from '../utils/monitoring';
 
 describe('transformSourceData', () => {
   test('transformSourceData', () => {
@@ -68,12 +68,12 @@ describe('transformSourceData', () => {
 
   test('Unexpected state key', () => {
     const data = { STATE_KEY: '<html>dingen</html>' };
-    const sentrySpy = vi.spyOn(Sentry, 'captureMessage');
+    const monitoringSpy = vi.spyOn(Monitoring, 'captureMessage');
     const result = transformSourceData(data as Partial<AppState>);
-    expect(sentrySpy).toHaveBeenCalledWith(
+    expect(monitoringSpy).toHaveBeenCalledWith(
       '[transformSourceData] Unknown stateKey encountered',
       {
-        extra: {
+        properties: {
           unexpectedStateKeys: ['STATE_KEY'],
         },
       }
@@ -83,15 +83,15 @@ describe('transformSourceData', () => {
 
   test('Unexpected data', () => {
     const data = '<html>dingen</html>';
-    const sentrySpy = vi.spyOn(Sentry, 'captureMessage');
-    const result = transformSourceData(data as Partial<AppState>);
+    const monitoringSpy = vi.spyOn(Monitoring, 'captureMessage');
+    const result = transformSourceData(data as unknown as Partial<AppState>);
     expect(result).toEqual(
       createAllErrorState(PRISTINE_APPSTATE, 'Received invalid appState')
     );
-    expect(sentrySpy).toHaveBeenCalledWith(
+    expect(monitoringSpy).toHaveBeenCalledWith(
       '[transformSourceData] Data returned from server is not an object',
       {
-        extra: {
+        properties: {
           data,
           identity: '',
         },

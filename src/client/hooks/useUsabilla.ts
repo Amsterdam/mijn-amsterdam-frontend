@@ -1,8 +1,8 @@
-import { IS_AP } from '../../universal/config';
-import { useScript } from './useScript';
-import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
+import { IS_AP } from '../../universal/config';
+import { captureException } from '../utils/monitoring';
 import { usePhoneScreen } from './media.hook';
+import { useScript } from './useScript';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 const USABILLA_ID_MOBILE = '9fd5da44aa5b';
@@ -62,8 +62,8 @@ export function useUsabilla(profileType?: ProfileType) {
           });
         })
         .catch((error) => {
-          Sentry.captureException(error, {
-            extra: {
+          captureException(error, {
+            properties: {
               waitForTimeout: true,
             },
           });

@@ -1,6 +1,6 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
-import { LatLngBoundsLiteral, LeafletEvent, LatLngLiteral } from 'leaflet';
+import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
@@ -11,6 +11,7 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
+import { BAGData } from '../../../server/services';
 import type {
   MaPointFeature,
   MaPolylineFeature,
@@ -28,10 +29,9 @@ import { getFullAddress } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter, useAppStateReady } from '../../hooks';
+import { captureMessage } from '../../utils/monitoring';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 import styles from './MyAreaDatasets.module.scss';
-import * as Sentry from '@sentry/react';
-import { BAGData } from '../../../server/services';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -462,8 +462,8 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
         try {
           value = v ? JSON.parse(v) : undefined;
         } catch (error) {
-          Sentry.captureMessage('Could not parse Queryparams', {
-            extra: {
+          captureMessage('Could not parse Queryparams', {
+            properties: {
               key: k,
               value: v,
             },

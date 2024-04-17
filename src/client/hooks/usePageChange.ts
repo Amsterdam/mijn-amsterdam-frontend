@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
@@ -11,6 +10,7 @@ import {
   TrackingConfig,
 } from '../../universal/config';
 import { ExcludePageViewTrackingUrls } from '../config/api';
+import { captureMessage } from '../utils/monitoring';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
 import { useTermReplacement } from './useTermReplacement';
@@ -87,16 +87,18 @@ export function usePageChange(isAuthenticated: boolean) {
         : `[undefined] ${location.pathname}`;
 
       if (trackingTitle.startsWith('[undefined]')) {
-        Sentry.captureMessage(
+        captureMessage(
           `Unknown page title encountered for path ${location.pathname}`
         );
       }
 
       if (documentTitle !== NOT_FOUND_TITLE) {
+        const url =
+          getCustomTrackingUrl(location.pathname, tackingConfig) +
+          (location.search ?? '');
         trackPageViewWithCustomDimension(
           termReplace(trackingTitle),
-          getCustomTrackingUrl(location.pathname, tackingConfig) +
-            (location.search ?? ''),
+          url,
           profileType,
           userCity
         );

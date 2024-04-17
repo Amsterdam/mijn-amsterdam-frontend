@@ -43,21 +43,25 @@ export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
 
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
-  const stadspassen = appState.STADSPAS?.content?.stadspassen ?? [];
-  return !!stadspassen.length;
+  if (appState.STADSPAS?.status === 'OK') {
+    const stadspassen = appState.STADSPAS?.content?.stadspassen ?? [];
+    return !!stadspassen.length;
+  }
+  return false;
 };
 
 export const hasValidStadspasRequest: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  return (
-    appState.STADSPAS?.content?.aanvragen.some(
+  if (appState.STADSPAS?.status === 'OK') {
+    return appState.STADSPAS?.content?.aanvragen.some(
       (aanvraag: WpiRequestProcess) =>
         aanvraag.decision === 'toekenning' &&
         differenceInYears(today, new Date(aanvraag.datePublished)) <= 1
-    ) || false
-  );
+    );
+  }
+  return false;
 };
 
 export const previouslyLivingInAmsterdam: TipsPredicateFN = (appState) => {

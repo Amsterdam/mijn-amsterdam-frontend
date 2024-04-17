@@ -12,6 +12,10 @@ resources:
       ref: refs/heads/main
 
 parameters:
+  - name: updateAppSettings
+    displayName: ONLY Update AppSettings (env variables)
+    type: boolean
+    default: false
   - name: btdBuild
     type: boolean
     default: true
@@ -35,10 +39,6 @@ parameters:
   - name: btdAppUI
     type: boolean
     default: true
-
-  - name: updateAppSettings
-    type: boolean
-    default: false
 
 variables:
   - name: dtapName

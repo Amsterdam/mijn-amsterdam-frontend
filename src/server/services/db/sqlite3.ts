@@ -2,7 +2,7 @@ import Database from 'better-sqlite3';
 import { IS_VERBOSE } from './config';
 import fs from 'fs';
 import path from 'path';
-import * as Sentry from '@sentry/node';
+import { captureException } from '../monitoring';
 
 export const tableNameLoginCount =
   process.env.BFF_LOGIN_COUNT_TABLE || 'login_count';
@@ -44,7 +44,7 @@ export async function queryGET(
     }
     return statement.get();
   } catch (error) {
-    Sentry.captureException(error);
+    captureException(error);
   }
   return null;
 }
@@ -60,7 +60,7 @@ export async function queryALL(
     }
     return statement.all();
   } catch (error) {
-    Sentry.captureException(error);
+    captureException(error);
   }
   return null;
 }
@@ -69,7 +69,7 @@ export function execDB(query: string) {
   try {
     return db.exec(query);
   } catch (error) {
-    Sentry.captureException(error);
+    captureException(error);
   }
 }
 

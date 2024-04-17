@@ -1,14 +1,14 @@
-import * as Sentry from '@sentry/react';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { PageContent, PageHeading, TextPage } from '../../components';
+import { captureMessage } from '../../utils/monitoring';
 
 export default function NotFound() {
   const location = useLocation();
 
   useEffect(() => {
-    Sentry.captureMessage('404  Not Found', {
-      extra: {
+    captureMessage('404  Not Found', {
+      properties: {
         url: location.pathname,
       },
     });

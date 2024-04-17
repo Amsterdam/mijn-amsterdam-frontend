@@ -7,7 +7,6 @@ import {
   parseISO,
 } from 'date-fns';
 import NL_LOCALE from 'date-fns/locale/nl';
-import * as Sentry from '@sentry/react';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -20,11 +19,7 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
     const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
     return format(d, fmt, { locale: NL_LOCALE });
   } catch (error) {
-    Sentry.captureException(error, {
-      extra: {
-        date: datestr,
-      },
-    });
+    console.error(`Could not parse date ${datestr}`);
   }
 
   return String(datestr);

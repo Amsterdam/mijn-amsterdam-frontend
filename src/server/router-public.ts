@@ -3,7 +3,6 @@ import { DATASETS, OTAP_ENV, getDatasetCategoryId } from '../universal/config';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers';
 import { BffEndpoints, RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
-import { cacheOverview } from './helpers/file-cache';
 import {
   QueryParamsCMSFooter,
   fetchCMSCONTENT,

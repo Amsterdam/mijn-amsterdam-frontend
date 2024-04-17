@@ -82,6 +82,7 @@ import Erfpacht from './pages/Erfpacht/Erfpacht';
 import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
 import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
 import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
+import { useMonitoring } from './utils/monitoring';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -383,6 +384,7 @@ export default function App() {
    * Visitor analytics and support
    */
   useAnalytics(!!import.meta.env.REACT_APP_ANALYTICS_ID);
+  useMonitoring();
 
   return (
     <RecoilRoot>

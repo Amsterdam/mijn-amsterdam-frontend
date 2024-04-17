@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react';
 import { Chapters } from '../../../universal/config';
 import {
   ApiResponse,
@@ -10,6 +9,7 @@ import { MyNotification } from '../../../universal/types';
 import { SourceApiKey, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { captureMessage } from '../monitoring';
 import {
   requestProcess as bijstandsuitkeringRequestProcessLabels,
   getNotifications as getBijstandsuitkeringNotifications,
@@ -53,8 +53,8 @@ function statusLineTransformer(
     if (labels) {
       return [transformToStatusLine(requestProcess, labels)];
     } else {
-      Sentry.captureMessage('Unknown request process labels', {
-        extra: {
+      captureMessage('Unknown request process labels', {
+        properties: {
           about: requestProcess.about,
           title: requestProcess.title,
           status: requestProcess.statusId,

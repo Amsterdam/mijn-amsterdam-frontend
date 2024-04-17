@@ -115,7 +115,7 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.registraties).toStrictEqual({
       status: 'DEPENDENCY_ERROR',
       content: null,
-      message: `[registrationNumbers] Error: Not Available  `,
+      message: `[registrationNumbers] Error: Not Available`,
     });
   });
 

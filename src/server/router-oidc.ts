@@ -1,7 +1,6 @@
-import * as Sentry from '@sentry/node';
 import express, { Request, Response } from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
-import { FeatureToggle, IS_PRODUCTION } from '../universal/config';
+import { FeatureToggle } from '../universal/config';
 import { apiSuccessResult } from '../universal/helpers';
 import {
   AUTH_CALLBACK,
@@ -20,8 +19,9 @@ import {
   sendUnauthorized,
   verifyAuthenticated,
 } from './helpers/app';
-import { countLoggedInVisit } from './services/visitors';
 import { addToBlackList } from './services/session-blacklist';
+import { countLoggedInVisit } from './services/visitors';
+import { captureException } from './services/monitoring';
 
 export const router = express.Router();
 
@@ -79,9 +79,9 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
       countLoggedInVisit(auth.profile.id);
     }
   } catch (error) {
-    Sentry.captureException(error, {
-      extra: {
-        at: 'Digid landing',
+    captureException(error, {
+      properties: {
+        message: 'At Digid landing',
       },
     });
   }
@@ -179,9 +179,9 @@ if (FeatureToggle.yiviActive) {
         });
       }
     } catch (error) {
-      Sentry.captureException(error, {
-        extra: {
-          at: 'Eherkenning landing',
+      captureException(error, {
+        properties: {
+          message: 'At Eherkenning landing',
         },
       });
     }
@@ -195,9 +195,9 @@ if (FeatureToggle.yiviActive) {
         countLoggedInVisit(auth.profile.id, 'yivi');
       }
     } catch (error) {
-      Sentry.captureException(error, {
-        extra: {
-          at: 'Yivi landing',
+      captureException(error, {
+        properties: {
+          message: 'At Yivi landing',
         },
       });
     }
@@ -245,7 +245,7 @@ router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
 
       return res.redirect(redirectUrl);
     } catch (error) {
-      Sentry.captureException(error);
+      captureException(error);
     }
   }
 
@@ -265,7 +265,7 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
         })
       );
     } catch (error) {
-      Sentry.captureException(error);
+      captureException(error);
     }
   }
 

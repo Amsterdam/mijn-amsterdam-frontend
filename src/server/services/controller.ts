@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
 import {
   FeatureToggle,
@@ -30,6 +29,7 @@ import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
+import { captureException } from './monitoring';
 import { fetchProfile } from './profile';
 import { fetchSignals } from './sia';
 import {
@@ -39,6 +39,8 @@ import {
   fetchSubsidie,
 } from './simple-connect';
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
+import { fetchSVWI } from './simple-connect/svwi';
+import { fetchStadspas } from './stadspas/stadspas';
 import {
   fetchTipsAndNotifications,
   sortNotifications,
@@ -58,8 +60,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchSVWI } from './simple-connect/svwi';
-import { fetchStadspas } from './stadspas/stadspas';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -342,7 +342,7 @@ export function loadServices(
         [serviceID]: result,
       }))
       .catch((error: Error) => {
-        Sentry.captureException(error);
+        captureException(error);
         return {
           [serviceID]: apiErrorResult(
             `Could not load ${serviceID}, error: ${error.message}`,

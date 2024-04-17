@@ -7,6 +7,7 @@ trigger:
       - main
   paths:
     include:
+      - azure-pipeline-ui.yaml
       - src/client
       - src/universal
       - src/index.tsx
@@ -37,52 +38,41 @@ resources:
       name: MijnAmsterdam/mijn-amsterdam-infra
       ref: refs/heads/main
 
-parameters:
-  - name: btdBuild
-    type: boolean
-    default: true
-  - name: btdTest
-    type: boolean
-    default: true
-  - name: btdDeploy
-    type: boolean
-    default: true
-  - name: dtapName
-    type: string
-    default: none
-    values:
-      - none
-      - t
-      - a
-
-  - name: updateAppSettings
-    type: boolean
-    default: false
-
 variables:
+  - name: system.debug
+    value: true
+  - name: btdBuild
+    value: true
   - name: btdDeploy
-    value: ${{ parameters.btdDeploy }}
-  - ${{ if or(eq(variables['Build.SourceBranchName'], 'testen'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+    value: true
+  - name: btdTest
+    value: true
+  - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
+      - name: btdTest
+        value: false
       - name: dtapName
         value: t
   - ${{ if or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main')) }}:
       - name: dtapName
         value: a
+      - name: btdTest
+        value: true
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: btdTest
+        value: true
       - name: btdDeploy
         value: false
-  - ${{ if ne(parameters.dtapName, 'none') }}:
       - name: dtapName
-        value: ${{ parameters.dtapName }}
+        value: t
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
       dtapName: ${{ variables.dtapName }}
-      btdBuild: ${{ parameters.btdBuild }}
-      btdTest: ${{ parameters.btdTest }}
+      btdBuild: ${{ variables.btdBuild }}
+      btdTest: ${{ variables.btdTest }}
       btdDeploy: ${{ variables.btdDeploy }}
       btdAppBFF: false
       btdAppUI: true
-      updateAppSettings: ${{ parameters.updateAppSettings }}
+      updateAppSettings: false
       aquaScan: ${{ eq(variables['Build.Reason'], 'PullRequest') }}
