@@ -26,7 +26,7 @@ import {
 
 import { differenceInYears, parseISO } from 'date-fns';
 
-import type { AppState } from '../client/AppState';
+import { PRISTINE_APPSTATE, type AppState } from '../client/AppState';
 import { isChapterActive } from '../universal/helpers/chapters';
 import { ServiceResults } from './services/tips/tip-types';
 import { Chapter, myChaptersMenuItems } from '../universal/config';
@@ -74,12 +74,19 @@ async function getServiceResults(
 }
 
 function naam(persoon: Persoon) {
-  return persoon.voornamen
+  const voornamen = persoon.voornamen
     ?.split(' ')
     .map((naam, index) => {
       return index === 0 ? naam : naam.charAt(0) + '.';
     })
     .join(' ');
+  const adellijkeTitel = persoon.omschrijvingAdellijkeTitel
+    ? ` (${persoon.omschrijvingAdellijkeTitel})`
+    : '';
+  const voorvoegsel = persoon.voorvoegselGeslachtsnaam
+    ? `${persoon.voorvoegselGeslachtsnaam} `
+    : '';
+  return `${voornamen} ${voorvoegsel}${persoon.geslachtsnaam}${adellijkeTitel}`;
 }
 
 function oudersOfKinderen(
@@ -144,6 +151,9 @@ const paths: PathObj[] = [
     label: 'Achternaam (Titel)',
     path: '$.BRP.content.persoon',
     transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
       return (
         `${
           persoon?.voorvoegselGeslachtsnaam
@@ -158,10 +168,16 @@ const paths: PathObj[] = [
     wch: 40,
   },
   {
-    label: 'Geboortedatum',
-    path: '$.BRP.content.persoon.geboortedatum',
-    transform: (value: string | null) => {
-      return value !== null ? defaultDateFormat(value) : 'onbekend';
+    label: 'Geboortedatum (Geboorteland)',
+    path: '$.BRP.content.persoon',
+    transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
+      const { geboortedatum, geboortelandnaam } = persoon;
+      return `${
+        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'onbekend'
+      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'onbekend'})` : ''}`;
     },
   },
   {
@@ -173,6 +189,23 @@ const paths: PathObj[] = [
           ? differenceInYears(new Date(), parseISO(value)) + ''
           : 'onbekend';
       return age;
+    },
+  },
+  {
+    label: 'Geslacht (Nationaliteit)',
+    path: '$.BRP.content.persoon',
+    transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
+      const nationaleiten = persoon.nationaliteiten
+        ?.map(({ omschrijving }) => omschrijving)
+        .join(', ');
+      return `${persoon.omschrijvingGeslachtsaanduiding} ${
+        nationaleiten !== 'Nederlandse' && nationaleiten
+          ? `(${nationaleiten})`
+          : ''
+      }`;
     },
   },
   {
@@ -193,7 +226,9 @@ const paths: PathObj[] = [
             : ''
         }` +
         `${
-          serviceResults.BRP.content?.persoon?.indicateGeheim ? ' (Geheim)' : ''
+          serviceResults.BRP.content?.persoon?.indicatieGeheim
+            ? ' (Geheim)'
+            : ''
         }`
       );
     },
@@ -208,7 +243,7 @@ const paths: PathObj[] = [
     },
   },
   {
-    label: 'Verbintenis',
+    label: 'Verbintenis (Partner)',
     path: '$.BRP.content.verbintenis',
     wch: 50,
     transform: (verbintenis: Verbintenis) => {
@@ -275,17 +310,6 @@ const paths: PathObj[] = [
     },
     wch: 80,
   },
-  {
-    label: 'Geboorteland',
-    path: '$.BRP.content.persoon.geboortelandnaam',
-  },
-  {
-    label: 'Nationaliteiten',
-    path: '$.BRP.content.persoon.nationaliteiten',
-    transform: (value: Array<{ omschrijving: string }>) => {
-      return value?.map(({ omschrijving }) => omschrijving).join(', ');
-    },
-  },
 ].map((p) => {
   if (!p.hpx) {
     p.hpx = HPX_DEFAULT;
@@ -340,6 +364,24 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
     }
   );
   return rows;
+}
+
+function getServiceErrors(resultsByUser: Record<string, ServiceResults>) {
+  return getRows(
+    Object.keys(PRISTINE_APPSTATE),
+    Object.entries(resultsByUser).map(([user, results]) => {
+      return Object.fromEntries(
+        Object.entries(results).map(([appStateKey, response]) => {
+          return [
+            appStateKey,
+            response.status +
+              (response.status === 'ERROR' ? ` - ${response.message}` : ''),
+          ];
+        })
+      );
+    }),
+    true
+  );
 }
 
 function getRows(
@@ -453,6 +495,21 @@ function sheetChapters(resultsByUser: Record<string, ServiceResults>) {
     title: 'Themas',
     rows: getChapterRows(resultsByUser),
     columnHeaders: Object.keys(testAccounts),
+    colInfo: [
+      { wch: WCH_DEFAULT },
+      ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
+    ],
+    rowInfo,
+  };
+}
+
+function sheetServiceErrors(resultsByUser: Record<string, ServiceResults>) {
+  const rowInfo = Object.keys(testAccounts).map(() => ({ hpx: HPX_DEFAULT }));
+
+  return {
+    title: 'Service Errors',
+    rows: getServiceErrors(resultsByUser),
+    columnHeaders: ['', ...Object.keys(testAccounts)],
     colInfo: [
       { wch: WCH_DEFAULT },
       ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
@@ -579,6 +636,7 @@ export async function generateOverview(
 
     addSheets(workbook, [
       sheetBrpBase(resultsByUser),
+      sheetServiceErrors(resultsByUser),
       sheetChapters(resultsByUser),
       sheetNotifications(resultsByUser),
       sheetChapterContent(resultsByUser),
