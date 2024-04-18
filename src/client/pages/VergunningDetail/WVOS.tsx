@@ -7,9 +7,9 @@ export function WVOS({
 }: {
   vergunning: WerkzaamhedenEnVervoerOpStraat;
 }) {
-  const isGranted = vergunning.decision === 'Verleend';
-
-  const revoked = vergunning.decision === 'Ingetrokken';
+  const showDecision = ['Ingetrokken', 'Verleend', 'Niet verleend'].includes(
+    vergunning.decision || ''
+  );
 
   return (
     <>
@@ -43,7 +43,7 @@ export function WVOS({
         }
       />
 
-      {(isGranted || revoked) && (
+      {showDecision && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
