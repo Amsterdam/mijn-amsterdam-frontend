@@ -73,5 +73,4 @@ jobs:
 
       btdAppBFF: true
       btdAppUI: false
-      updateAppSettings: false
       aquaScan: ${{ eq(variables['Build.Reason'], 'PullRequest') }}
