@@ -55,6 +55,7 @@ export function useAppStateFallbackService({
         properties: {
           message,
         },
+        severity: 'critical',
       });
       setAppState((appState) => createAllErrorState(appState, message));
     },

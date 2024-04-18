@@ -234,41 +234,17 @@ export async function requestData<T>(
     if (IS_DEBUG) {
       console.error(error);
     }
-    // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
-    // to the client to pass through.
-    const shouldCaptureMessage =
-      error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
-    const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
     const errorMessageBasic = error.toString();
     const errorMessage = error?.response?.data
       ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
       : errorMessageBasic;
 
-    shouldCaptureMessage
-      ? captureMessage(
-          `${apiName}: ${error?.message ? error.message : error}`,
-          {
-            tags: {
-              url: requestConfig.url!,
-            },
-            properties: {
-              module: 'request',
-              status: error?.response?.status,
-              apiName,
-              errorMessage,
-            },
-          }
-        )
-      : captureException(error, {
-          tags: {
-            url: requestConfig.url!,
-          },
-          properties: {
-            apiName,
-            errorMessage,
-          },
-        });
+    captureException(error, {
+      properties: {
+        message: errorMessage,
+      },
+    });
 
     const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(

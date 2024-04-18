@@ -1,10 +1,10 @@
+import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { ErrorInfo } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';
-import { captureMessage } from './client/utils/monitoring';
+import { captureMessage, reactPlugin } from './client/utils/monitoring';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -34,10 +34,10 @@ const sendToMonitoring = (error: Error, info: ErrorInfo) => {
 const root = createRoot(document.getElementById('root')!);
 
 root.render(
-  <ErrorBoundary
-    onError={sendToMonitoring}
-    FallbackComponent={ApplicationError}
+  <AppInsightsErrorBoundary
+    onError={ApplicationError}
+    appInsights={reactPlugin}
   >
     <App />
-  </ErrorBoundary>
+  </AppInsightsErrorBoundary>
 );
