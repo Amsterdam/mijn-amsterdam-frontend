@@ -9,6 +9,8 @@ export function WVOS({
 }) {
   const isGranted = vergunning.decision === 'Verleend';
 
+  const revoked = vergunning.decision === 'Ingetrokken';
+
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
@@ -41,7 +43,7 @@ export function WVOS({
         }
       />
 
-      {isGranted && (
+      {(isGranted || revoked) && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
