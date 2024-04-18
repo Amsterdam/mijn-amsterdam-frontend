@@ -12,10 +12,6 @@ resources:
       ref: refs/heads/main
 
 parameters:
-  - name: updateAppSettings
-    displayName: ONLY Update AppSettings (env variables)
-    type: boolean
-    default: false
   - name: btdBuild
     type: boolean
     default: true
@@ -79,4 +75,3 @@ jobs:
       btdDeploy: ${{ variables.btdDeploy }}
       btdAppBFF: ${{ variables.btdAppBFF }}
       btdAppUI: ${{ variables.btdAppUI }}
-      updateAppSettings: ${{ parameters.updateAppSettings }}
