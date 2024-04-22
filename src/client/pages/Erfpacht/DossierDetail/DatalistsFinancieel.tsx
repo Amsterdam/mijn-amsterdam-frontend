@@ -7,6 +7,7 @@ import { Datalist, Row } from '../../../components/Datalist/Datalist';
 import { DatalistCanons } from './DatalistCanons';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
+import { defaultDateFormat } from '../../../../universal/helpers';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;
@@ -47,10 +48,10 @@ function DatalistFinancieelPeriode({
       label: periode.titelAfgekocht,
       content: periode.afgekocht,
     });
-  } else if ('titelBetalenVanaf' in periode) {
+  } else if ('titelBetalenVanaf' in periode && periode.betalenVanaf) {
     rows.push({
       label: periode.titelBetalenVanaf,
-      content: periode.betalenVanaf,
+      content: defaultDateFormat(periode.betalenVanaf),
     });
   }
 
