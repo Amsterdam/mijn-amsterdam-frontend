@@ -3,7 +3,7 @@ import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
 } from '../../../../server/services/simple-connect/erfpacht';
-import { Datalist } from '../../../components/Datalist/Datalist';
+import { Datalist, Row } from '../../../components/Datalist/Datalist';
 import { DatalistCanons } from './DatalistCanons';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
@@ -13,6 +13,7 @@ interface DatalistFinancieelPeriodeProps<T> {
   titelAlgemeneBepaling: string;
   titelPeriodeVan: string;
   titelCanon: string;
+  isHuidigePeriode: boolean;
 }
 
 function DatalistFinancieelPeriode({
@@ -20,10 +21,11 @@ function DatalistFinancieelPeriode({
   titelAlgemeneBepaling,
   titelPeriodeVan,
   titelCanon,
+  isHuidigePeriode,
 }: DatalistFinancieelPeriodeProps<
   ErfpachtDossierDetailHuidigePeriode | ErfpachtDossierDetailToekomstigePeriode
 >) {
-  const rows = [
+  const rows: Row[] = [
     {
       label: titelAlgemeneBepaling,
       content: (
@@ -38,15 +40,25 @@ function DatalistFinancieelPeriode({
         </>
       ),
     },
-    {
+  ];
+
+  if (isHuidigePeriode) {
+    rows.push({
       label: periode.titelAfgekocht,
       content: periode.afgekocht,
-    },
-    {
-      label: titelCanon,
-      content: <DatalistCanons canons={periode.canons} />,
-    },
-  ];
+    });
+  } else if ('titelBetalenVanaf' in periode) {
+    rows.push({
+      label: periode.titelBetalenVanaf,
+      content: periode.betalenVanaf,
+    });
+  }
+
+  rows.push({
+    label: titelCanon,
+    content: <DatalistCanons canons={periode.canons} />,
+  });
+
   return (
     <div className={styles.DataListFinancieelPeriode}>
       <Heading level={3} size="level-4" className={styles.Section_heading}>
@@ -72,6 +84,7 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
         }
         titelCanon={dossier.financieel.huidigePeriode.titelFinancieelCanon}
         periode={dossier.financieel.huidigePeriode}
+        isHuidigePeriode
       />
     );
   }
@@ -85,6 +98,7 @@ function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
       titelPeriodeVan={periode.titelFinancieelToekomstigePeriodeVan}
       titelCanon={periode.titelFinancieelToekomstigeCanon}
       periode={periode}
+      isHuidigePeriode={false}
     />
   ));
 }
