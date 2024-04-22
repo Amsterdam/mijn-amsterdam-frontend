@@ -7,7 +7,7 @@ export function WVOS({
 }: {
   vergunning: WerkzaamhedenEnVervoerOpStraat;
 }) {
-  const isGranted = vergunning.decision === 'Verleend';
+  const isAfgehandeld = vergunning.processed;
 
   return (
     <>
@@ -41,7 +41,7 @@ export function WVOS({
         }
       />
 
-      {isGranted && (
+      {isAfgehandeld && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}
     </>
