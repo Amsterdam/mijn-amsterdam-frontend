@@ -21,13 +21,11 @@ export function transformVoorzieningenForFrontend(
 ): WMOVoorzieningFrontend[] {
   const voorzieningenFrontend: WMOVoorzieningFrontend[] = [];
   const voorzieningenVisible = voorzieningen.filter((voorziening) => {
-    return (
-      (!!voorziening.documenten?.length &&
-        voorziening.datumAanvraag &&
-        parseISO(voorziening.datumAanvraag) >
-          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS) ||
-      parseISO(voorziening.datumAanvraag) < MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-    );
+    return parseISO(voorziening.datumAanvraag) >
+      MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+      ? !!voorziening.documenten?.length
+      : parseISO(voorziening.datumAanvraag) <
+          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
   });
 
   for (const voorziening of voorzieningenVisible) {

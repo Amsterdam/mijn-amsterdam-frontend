@@ -1,4 +1,3 @@
-import { FeatureToggle } from '../../../universal/config';
 import { hash, isDateInPast } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument } from '../../../universal/types';
@@ -15,14 +14,15 @@ import {
   PRODUCTS_WITH_DELIVERY,
   ProductSoortCode,
   REGELING_IDENTIFICATIE,
+  SINGLE_DOC_TITLE_BESLUIT,
   ToegewezenProduct,
   WMOSourceResponseData,
   WMOVoorziening,
   ZORGNED_GEMEENTE_CODE,
   ZorgnedDocument,
   ZorgnedDocumentData,
-  SINGLE_DOC_TITLE_BESLUIT,
 } from './wmo-config-and-types';
+import { parseISO } from 'date-fns';
 
 function isProductWithDelivery(
   wmoProduct: Pick<WMOVoorziening, 'productsoortCode' | 'leveringsVorm'>
@@ -127,7 +127,10 @@ function transformAanvraagToVoorziening(
     datumEindeLevering: levering?.einddatum ?? '',
     datumIngangGeldigheid: toegewezenProduct.datumIngangGeldigheid,
     datumOpdrachtLevering: toewijzing?.datumOpdracht ?? '',
-    documenten: transformDocumenten(documenten),
+    documenten:
+      parseISO(datumAanvraag) < MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+        ? []
+        : transformDocumenten(documenten),
     isActueel: isActual({
       toegewezenProduct,
       levering,

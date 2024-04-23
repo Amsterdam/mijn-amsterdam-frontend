@@ -461,6 +461,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-12-08",
           "description": "
             <p>
@@ -471,14 +476,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2021-12-20T14:08:20",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -540,6 +538,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-12-08",
           "description": "
             <p>
@@ -550,14 +553,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2021-12-20T14:08:20",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -619,6 +615,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-12-06",
           "description": "
             <p>
@@ -691,6 +692,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-10-22",
           "description": "
             <p>
@@ -701,14 +707,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2021-10-22T16:50:57",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -770,6 +769,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -780,14 +784,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2021-03-11T15:26:28",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -848,6 +845,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -858,14 +860,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2021-03-11T15:29:20",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -926,6 +921,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -936,14 +936,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2021-03-11T15:24:06",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1004,6 +997,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1014,14 +1012,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2021-01-09T17:26:23",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1082,6 +1073,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1092,14 +1088,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2021-01-10T01:50:21",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1160,6 +1149,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1170,14 +1164,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2021-01-09T23:06:12",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1238,6 +1225,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2020-12-04",
           "description": "
             <p>
@@ -1248,14 +1240,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2020-12-07T07:01:05",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1317,6 +1302,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2020-06-16",
           "description": "
               <p>
@@ -1327,14 +1317,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2020-06-16T15:20:47",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1395,6 +1378,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2020-06-18",
           "description": "
             <p>
@@ -1405,14 +1393,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2020-06-18T14:20:12",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1472,6 +1453,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2020-06-05",
           "description": "
             <p>
@@ -1531,6 +1517,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1541,14 +1532,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2020-03-12T16:12:23",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1609,6 +1593,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1619,14 +1608,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2020-03-12T16:17:07",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1687,6 +1669,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1697,14 +1684,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2020-03-12T16:16:35",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1765,6 +1745,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2019-10-09",
           "description": "
             <p>
@@ -1837,6 +1822,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2019-04-15",
           "description": "
               <p>
@@ -1908,6 +1898,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2019-03-11",
           "description": "
               <p>
@@ -1979,6 +1974,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2019-03-11",
           "description": "
               <p>
@@ -2050,6 +2050,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2018-11-29",
           "description": "
               <p>
@@ -2121,6 +2126,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2018-12-27",
           "description": "
             <p>
@@ -2131,14 +2141,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2018-12-27T00:00:00",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2200,6 +2203,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2018-04-25",
           "description": "
               <p>
@@ -2271,6 +2279,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2018-04-19",
           "description": "
               <p>
@@ -2342,6 +2355,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2017-11-24",
           "description": "
               <p>
@@ -2413,6 +2431,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2017-06-01",
           "description": "
               <p>
@@ -2484,6 +2507,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2017-06-01",
           "description": "
               <p>
@@ -2555,6 +2583,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2014-09-09",
           "description": "
             <p>
@@ -2565,14 +2598,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2014-09-10T00:00:00",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2632,6 +2658,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2014-09-11",
           "description": "
             <p>
@@ -2642,14 +2673,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2014-09-11T00:00:00",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2711,6 +2735,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2013-12-09",
           "description": "
             <p>
@@ -2721,14 +2750,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2013-12-09T00:00:00",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2790,6 +2812,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2013-05-17",
           "description": "
             <p>
@@ -2800,14 +2827,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2013-05-17T00:00:00",
-              "id": "123-123-123-123",
-              "title": "Brief",
-              "url": "/wmoned/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2869,6 +2889,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2012-10-05",
           "description": "
             <p>
@@ -2939,6 +2964,11 @@ exports[`Transform api items > fetchWmo 1`] = `
       },
       "steps": [
         {
+          "altDocumentContent": "<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>",
           "datePublished": "2012-08-07",
           "description": "
             <p>
