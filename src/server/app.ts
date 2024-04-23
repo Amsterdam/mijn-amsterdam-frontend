@@ -145,9 +145,6 @@ app.use(function onError(
 
 app.use((req: Request, res: Response) => {
   if (!res.headersSent) {
-    captureException(new Error('404 not found'), {
-      properties: { url: req.url },
-    });
     return send404(res);
   }
   return res.end();

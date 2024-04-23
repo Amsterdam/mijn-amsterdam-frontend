@@ -319,7 +319,10 @@ export async function verifyUserIdWithRemoteUserinfo(
 
   try {
     const response = await axios(requestOptions);
-    let decoded: Record<TokenIdAttribute, string> = decodeToken(
+    if (!response.data) {
+      return false;
+    }
+    const decoded: Record<TokenIdAttribute, string> = decodeToken(
       response.data.toString()
     );
     return decoded[TOKEN_ID_ATTRIBUTE[authMethod]] === userID;

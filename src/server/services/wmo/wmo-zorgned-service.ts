@@ -149,10 +149,19 @@ function transformAanvragenToVoorzieningen(
 
   for (const aanvraagSource of aanvragenSource) {
     const beschikking = aanvraagSource.beschikking;
+
+    if (!beschikking) {
+      continue;
+    }
+
     const dateRequest = aanvraagSource.datumAanvraag;
 
     const datumBesluit = beschikking.datumAfgifte;
     const beschikteProducten = beschikking.beschikteProducten;
+
+    if (!beschikteProducten) {
+      continue;
+    }
 
     const shouldShowDocuments =
       new Date(dateRequest) >= MINIMUM_REQUEST_DATE_FOR_DOCUMENTS &&
