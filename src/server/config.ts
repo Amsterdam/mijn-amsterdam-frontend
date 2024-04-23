@@ -382,6 +382,8 @@ export const BffEndpoints = {
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
+  TELEMETRY_PROXY: '/services/telemetry/v2/track',
+
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
 
@@ -455,6 +457,7 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.FOOTER,
+  BffEndpoints.TELEMETRY_PROXY,
 ];
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes

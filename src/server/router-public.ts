@@ -18,6 +18,7 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from './services/cms-maintenance-notifications';
+import proxy from 'express-http-proxy';
 
 export const router = express.Router();
 
@@ -168,6 +169,16 @@ router.get(
       buildId: process.env.MA_BUILD_ID ?? '-1',
     });
   }
+);
+
+router.all(
+  BffEndpoints.TELEMETRY_PROXY,
+  proxy('https://westeurope-5.in.applicationinsights.azure.com', {
+    memoizeHost: true,
+    proxyReqPathResolver: function (req) {
+      return '/v2/track';
+    },
+  })
 );
 
 export const legacyRouter = express.Router();
