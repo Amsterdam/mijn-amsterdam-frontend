@@ -173,7 +173,12 @@ router.get(
 
 router.all(
   BffEndpoints.TELEMETRY_PROXY,
-  proxy('https://westeurope-5.in.applicationinsights.azure.com/v2/track')
+  proxy('https://westeurope-5.in.applicationinsights.azure.com', {
+    memoizeHost: true,
+    proxyReqPathResolver: function (req) {
+      return '/v2/track';
+    },
+  })
 );
 
 export const legacyRouter = express.Router();
