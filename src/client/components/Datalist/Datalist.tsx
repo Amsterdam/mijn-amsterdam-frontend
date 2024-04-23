@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import styles from './Datalist.module.scss';
 import classNames from 'classnames';
 
-interface Row {
+export interface Row {
   label: ReactNode;
   content: ReactNode;
 }
