@@ -196,7 +196,7 @@ export function getStatusLineItems(voorziening: WMOVoorziening, today: Date) {
 
       if (
         statusItem.status === 'Besluit' &&
-        voorziening.documenten.length > 1
+        voorziening.documenten.length !== 1
       ) {
         stepData.altDocumentContent = `<p>
               <strong>
