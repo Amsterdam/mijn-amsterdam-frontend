@@ -382,7 +382,7 @@ export const BffEndpoints = {
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
-  TELEMETRY_PROXY: '/services/telemetry',
+  TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
