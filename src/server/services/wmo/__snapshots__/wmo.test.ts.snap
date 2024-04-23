@@ -4,78 +4,6 @@ exports[`Transform api items > fetchWmo 1`] = `
 {
   "content": [
     {
-      "dateDescision": "2023-06-08",
-      "dateEnd": null,
-      "dateStart": "2023-06-08",
-      "id": "1947071120",
-      "isActual": true,
-      "itemTypeCode": "WRA2",
-      "link": {
-        "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1947071120",
-      },
-      "steps": [
-        {
-          "datePublished": "2023-06-08",
-          "description": "
-            <p>
-              U hebt recht op een reparatie-/verwijderopdracht toegang per 08 juni 2023.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-          "documents": [],
-          "id": "status-step-0",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit",
-        },
-        {
-          "datePublished": "",
-          "description": "<p>
-            De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-          "documents": [],
-          "id": "status-step-1",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Opdracht gegeven",
-        },
-        {
-          "datePublished": "",
-          "description": "<p>
-            Van der Leij Bouwbedrijven B.V heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-          "documents": [],
-          "id": "status-step-2",
-          "isActive": true,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Aanpassing uitgevoerd",
-        },
-        {
-          "datePublished": "",
-          "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-          "documents": [],
-          "id": "status-step-3",
-          "isActive": false,
-          "isChecked": false,
-          "isVisible": true,
-          "status": "Einde recht",
-        },
-      ],
-      "supplier": "Van der Leij Bouwbedrijven B.V",
-      "title": "Reparatie-/verwijderopdracht toegang",
-    },
-    {
       "dateDescision": "2023-03-16",
       "dateEnd": "2024-03-11",
       "dateStart": "2023-03-12",
@@ -153,78 +81,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       ],
       "supplier": "Emile Thuiszorg",
       "title": "Hulp bij het huishouden",
-    },
-    {
-      "dateDescision": "2022-12-22",
-      "dateEnd": null,
-      "dateStart": "2022-12-22",
-      "id": "3042411901",
-      "isActual": true,
-      "itemTypeCode": "WRA5",
-      "link": {
-        "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3042411901",
-      },
-      "steps": [
-        {
-          "datePublished": "2022-12-22",
-          "description": "
-            <p>
-              U hebt recht op een Adviesconsult per 22 december 2022.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-          "documents": [],
-          "id": "status-step-0",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit",
-        },
-        {
-          "datePublished": "",
-          "description": "<p>
-            De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>",
-          "documents": [],
-          "id": "status-step-1",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Opdracht gegeven",
-        },
-        {
-          "datePublished": "",
-          "description": "<p>
-            Welzorg heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>",
-          "documents": [],
-          "id": "status-step-2",
-          "isActive": true,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Aanpassing uitgevoerd",
-        },
-        {
-          "datePublished": "",
-          "description": "<p>
-            Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-          </p>",
-          "documents": [],
-          "id": "status-step-3",
-          "isActive": false,
-          "isChecked": false,
-          "isVisible": true,
-          "status": "Einde recht",
-        },
-      ],
-      "supplier": "Welzorg",
-      "title": "Adviesconsult",
     },
     {
       "dateDescision": "2023-03-01",
@@ -349,53 +205,6 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
-          "isChecked": false,
-          "isVisible": true,
-          "status": "Einde recht",
-        },
-      ],
-      "supplier": "RMC Amsterdam",
-      "title": "Kamer tot kamer vervoer",
-    },
-    {
-      "dateDescision": "2022-08-01",
-      "dateEnd": "2022-10-18",
-      "dateStart": "2022-08-01",
-      "id": "1293703646",
-      "isActual": false,
-      "itemTypeCode": "AOV",
-      "link": {
-        "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1293703646",
-      },
-      "steps": [
-        {
-          "datePublished": "2022-08-01",
-          "description": "
-            <p>
-              U hebt recht op een kamer tot kamer vervoer per 01 augustus 2022. De vervoerspas ontvangt u per
-              post.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          ",
-          "documents": [],
-          "id": "status-step-0",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit",
-        },
-        {
-          "datePublished": "2022-10-18",
-          "description": "<p>
-            Uw recht op kamer tot kamer vervoer is beëindigd per 18 oktober 2022
-          </p>",
-          "documents": [],
-          "id": "status-step-1",
-          "isActive": true,
           "isChecked": false,
           "isVisible": true,
           "status": "Einde recht",
@@ -662,7 +471,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-12-20T14:08:20",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -734,7 +550,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-12-20T14:08:20",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -878,7 +701,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-10-22T16:50:57",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -950,7 +780,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-03-11T15:26:28",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1021,7 +858,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-03-11T15:29:20",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1092,7 +936,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-03-11T15:24:06",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1163,7 +1014,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-01-09T17:26:23",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1234,7 +1092,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-01-10T01:50:21",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1305,7 +1170,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2021-01-09T23:06:12",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1376,7 +1248,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2020-12-07T07:01:05",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1448,7 +1327,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2020-06-16T15:20:47",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1519,7 +1405,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2020-06-18T14:20:12",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1648,7 +1541,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2020-03-12T16:12:23",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1719,7 +1619,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2020-03-12T16:17:07",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -1790,7 +1697,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2020-03-12T16:16:35",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2217,7 +2131,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2018-12-27T00:00:00",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2644,7 +2565,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2014-09-10T00:00:00",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2714,7 +2642,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2014-09-11T00:00:00",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2786,7 +2721,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2013-12-09T00:00:00",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -2858,7 +2800,14 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [],
+          "documents": [
+            {
+              "datePublished": "2013-05-17T00:00:00",
+              "id": "123-123-123-123",
+              "title": "Brief",
+              "url": "/wmoned/document/123-123-123-123",
+            },
+          ],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,

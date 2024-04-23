@@ -99,6 +99,7 @@ function isActual({
 
 function transformAanvraagToVoorziening(
   id: string,
+  datumAanvraag: string,
   datumBesluit: string,
   beschiktProduct: BeschiktProduct,
   documenten: ZorgnedDocument[]
@@ -108,6 +109,7 @@ function transformAanvraagToVoorziening(
   const toewijzing = toewijzingen.pop();
   const leveringen = toewijzing?.leveringen ?? [];
   const levering = leveringen.pop();
+
   const leveringsVorm =
     (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';
 
@@ -118,6 +120,7 @@ function transformAanvraagToVoorziening(
 
   const voorziening: WMOVoorziening = {
     id,
+    datumAanvraag: datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? '',
     datumBesluit: datumBesluit,
     datumEindeGeldigheid: toegewezenProduct.datumEindeGeldigheid,
@@ -154,24 +157,15 @@ function transformAanvragenToVoorzieningen(
       continue;
     }
 
-    const dateRequest = aanvraagSource.datumAanvraag;
-
     const datumBesluit = beschikking.datumAfgifte;
+    const datumAanvraag = aanvraagSource.datumAanvraag;
     const beschikteProducten = beschikking.beschikteProducten;
 
     if (!beschikteProducten) {
       continue;
     }
 
-    const shouldShowDocuments =
-      new Date(dateRequest) >= MINIMUM_REQUEST_DATE_FOR_DOCUMENTS &&
-      FeatureToggle.zorgnedDocumentAttachmentsActive;
-
-    let documenten: ZorgnedDocument[] = [];
-
-    if (shouldShowDocuments) {
-      documenten = aanvraagSource.documenten ?? [];
-    }
+    const documenten: ZorgnedDocument[] = aanvraagSource.documenten ?? [];
 
     for (const [index, beschiktProduct] of beschikteProducten.entries()) {
       if (
@@ -185,11 +179,11 @@ function transformAanvragenToVoorzieningen(
         );
         const voorziening = transformAanvraagToVoorziening(
           idGenerated,
+          datumAanvraag,
           datumBesluit,
           beschiktProduct,
           documenten
         );
-
         if (voorziening) {
           voorzieningen.push(voorziening);
         }
