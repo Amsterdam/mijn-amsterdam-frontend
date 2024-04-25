@@ -5,7 +5,7 @@ import { fetchBelasting, fetchBelastingNotifications } from './belasting';
 
 const REQUEST_ID = 'test-x-999';
 const authProfileAndToken: AuthProfileAndToken = {
-  profile: { authMethod: 'digid', profileType: 'private' },
+  profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
   token: 'xxxxxx',
 };
 

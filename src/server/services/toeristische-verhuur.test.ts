@@ -35,7 +35,12 @@ describe('Toeristische verhuur service', () => {
   };
 
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: 'DIGID-BSN' },
+    profile: {
+      authMethod: 'digid',
+      profileType: 'private',
+      id: 'DIGID-BSN',
+      sid: '',
+    },
     token: 'xxxxxx',
   };
 

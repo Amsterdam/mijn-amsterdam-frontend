@@ -23,6 +23,7 @@ describe('simple-connect/svwi', () => {
       authMethod: 'digid',
       profileType: 'private',
       id: 'TEST-DIGID-BSN',
+      sid: '',
     },
     token: 'xxxxxx',
   };

@@ -32,6 +32,7 @@ describe('simple-connect/erfpacht', () => {
       authMethod: 'digid',
       profileType: 'private',
       id: 'TEST-DIGID-BSN',
+      sid: '',
     },
     token: 'xxxxxx',
   };

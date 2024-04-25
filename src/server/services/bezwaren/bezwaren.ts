@@ -357,8 +357,14 @@ export type BezwaarDetail = {
 export async function fetchBezwaarDetail(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: string
+  zaakIdEncrypted: string
 ) {
+  const [sessionID, zaakId] = decrypt(zaakIdEncrypted).split(':');
+
+  if (sessionID !== authProfileAndToken.profile.sid) {
+    return apiErrorResult('Not authorized', null, 401);
+  }
+
   const bezwaarStatusRequest = fetchBezwaarStatus(zaakId, authProfileAndToken);
   const bezwaarDocumentsRequest = fetchBezwarenDocuments(
     zaakId,

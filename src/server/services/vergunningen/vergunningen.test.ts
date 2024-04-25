@@ -21,7 +21,7 @@ describe('Vergunningen service', () => {
   const DUMMY_RESPONSE = jsonCopy(vergunningenData);
 
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private' },
+    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxxx',
   };
 
@@ -89,7 +89,12 @@ describe('Vergunningen service', () => {
     const response = await fetchVergunningenNotifications(
       'x4',
       {
-        profile: { authMethod: 'eherkenning', profileType: 'commercial' },
+        profile: {
+          authMethod: 'eherkenning',
+          profileType: 'commercial',
+          id: '',
+          sid: '',
+        },
         token: 'xxxxxx',
       },
       new Date('2020-06-23')

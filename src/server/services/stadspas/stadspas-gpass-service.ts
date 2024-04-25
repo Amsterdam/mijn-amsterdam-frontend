@@ -220,8 +220,6 @@ export async function fetchTransacties(
     transactionsKeyEncrypted
   ).split(':');
 
-  console.log(sessionID, budgetcode, administratienummer, pasnummer);
-
   if (sessionID !== authProfileAndToken.profile.sid) {
     return apiErrorResult('Not authorized', null, 403);
   }
@@ -239,7 +237,7 @@ export async function fetchTransacties(
       sub_transactions: true,
     },
   };
-  console.log(cfg);
+
   return requestData<StadspasTransaction[]>(
     cfg,
     requestID,
