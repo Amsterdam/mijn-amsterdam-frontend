@@ -3,7 +3,7 @@ export interface ApiErrorResponse<T> {
   content: T;
   status: 'ERROR';
   id?: string;
-  code?: string;
+  code?: string | number;
 }
 
 export type FailedDependencies = Record<string, ApiErrorResponse<any>>;
@@ -89,7 +89,7 @@ export function hasFailedDependency(
 export function apiErrorResult<T>(
   error: string,
   content: T,
-  statusCode?: string | null
+  statusCode?: ApiErrorResponse<T>['code']
 ): ApiErrorResponse<T> {
   const errorResponse: ApiErrorResponse<T> = {
     content,

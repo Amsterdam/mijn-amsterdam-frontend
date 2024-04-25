@@ -290,7 +290,7 @@ router.get(
     );
 
     if (response.status === 'ERROR') {
-      res.status(500);
+      res.status(typeof response.code === 'number' ? response.code : 500);
     }
 
     return res.send(response);

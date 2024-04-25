@@ -1,5 +1,9 @@
 import { generatePath } from 'react-router-dom';
-import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -35,12 +39,13 @@ function getOwnerName(pashouder: StadspasHouderSource) {
 }
 
 function formatBudget(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   budget: StadspasDetailBudgetSource,
   administratienummer: string,
   pasnummer: number
 ) {
   const [transactionsKey] = encrypt(
-    `${budget.code}:${administratienummer}:${pasnummer}`
+    `${sessionID}:${budget.code}:${administratienummer}:${pasnummer}`
   );
 
   const urlTransactions = `${process.env.BFF_OIDC_BASE_URL}${BFF_BASE_PATH}${generatePath(
@@ -61,12 +66,14 @@ function formatBudget(
 }
 
 function transformStadspasResponse(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource,
   administratienummer: string
 ) {
   const budgets = gpassStadspasResonseData.budgetten.map((budget) =>
     formatBudget(
+      sessionID,
       budget,
       administratienummer,
       gpassStadspasResonseData.pasnummer
@@ -160,7 +167,12 @@ export async function fetchStadspassen(
           ...dataRequestConfig,
           url,
           transformResponse: (stadspas) =>
-            transformStadspasResponse(stadspas, pashouder, administratienummer),
+            transformStadspasResponse(
+              authProfileAndToken.profile.sid,
+              stadspas,
+              pashouder,
+              administratienummer
+            ),
           headers,
           params: {
             include_balance: true,
@@ -204,25 +216,32 @@ export async function fetchTransacties(
   authProfileAndToken: AuthProfileAndToken,
   transactionsKeyEncrypted: string
 ) {
-  const [budgetcode, administratienummer, pasnummer] = decrypt(
+  const [sessionID, budgetcode, administratienummer, pasnummer] = decrypt(
     transactionsKeyEncrypted
   ).split(':');
 
+  console.log(sessionID, budgetcode, administratienummer, pasnummer);
+
+  if (sessionID !== authProfileAndToken.profile.sid) {
+    return apiErrorResult('Not authorized', null, 403);
+  }
+
   const dataRequestConfig = getApiConfig('GPASS');
   const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
-
-  return requestData<StadspasTransaction[]>(
-    {
-      ...dataRequestConfig,
-      url: GPASS_ENDPOINT_TRANSACTIONS,
-      transformResponse: transformGpassTransactionsResponse,
-      headers: getHeaders(administratienummer),
-      params: {
-        pasnummer,
-        budgetcode,
-        sub_transactions: true,
-      },
+  const cfg = {
+    ...dataRequestConfig,
+    url: GPASS_ENDPOINT_TRANSACTIONS,
+    transformResponse: transformGpassTransactionsResponse,
+    headers: getHeaders(administratienummer),
+    params: {
+      pasnummer,
+      budgetcode,
+      sub_transactions: true,
     },
+  };
+  console.log(cfg);
+  return requestData<StadspasTransaction[]>(
+    cfg,
     requestID,
     authProfileAndToken
   );

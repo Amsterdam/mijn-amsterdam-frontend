@@ -1,8 +1,9 @@
 import { remoteApi } from '../../../test-utils';
 import { fetchClientNummer } from './stadspas-zorgned-service';
 import * as request from '../../helpers/source-api-request';
-import { fetchStadspassen } from './stadspas-gpass-service';
+import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';
 import { AuthProfileAndToken } from '../../helpers/app';
+import * as encryptDecrypt from '../../../universal/helpers/encrypt-decrypt';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -85,14 +86,15 @@ const authProfileAndToken: AuthProfileAndToken = {
     authMethod: 'digid',
     profileType: 'private',
     id: '8899776655',
+    sid: 'my-unique-session-id',
   },
   token: '',
 };
 
-vi.mock('../../../universal/helpers/encrypt-decrypt', () => ({
-  decrypt: vi.fn().mockReturnValue('123-unencrypted-456'),
-  encrypt: vi.fn().mockReturnValue(['1x2x3x-##########-4x5x6x', 'xx']),
-}));
+// vi.mock('../../../universal/helpers/encrypt-decrypt', () => ({
+//   decrypt: vi.fn().mockReturnValue('123-unencrypted-456'),
+//   encrypt: vi.fn().mockReturnValue(['1x2x3x-##########-4x5x6x', 'xx']),
+// }));
 
 describe('stadspas services', () => {
   const requestData = vi.spyOn(request, 'requestData');
@@ -114,7 +116,7 @@ describe('stadspas services', () => {
     `);
   });
 
-  test('stadspas-gpass-service fail 1', async () => {
+  test('stadspas-gpass-service fail administratienummer endpoint', async () => {
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
     const response = await fetchStadspassen('xyz123', authProfileAndToken);
@@ -129,7 +131,7 @@ describe('stadspas services', () => {
     `);
   });
 
-  test('stadspas-gpass-service fail 2', async () => {
+  test('stadspas-gpass-service fail user unknown', async () => {
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
       persoon: {
         clientidentificatie: '123-123',
@@ -150,7 +152,19 @@ describe('stadspas services', () => {
     `);
   });
 
-  test('stadspas-gpass-service fail 3', async () => {
+  test('stadspas-gpass-service fail only returns 1st pass', async () => {
+    const encryptSpy = vi
+      .spyOn(encryptDecrypt, 'encrypt')
+      .mockReturnValueOnce([
+        '1x2x3x-##########-4x5x6x',
+        Buffer.from('xx'),
+        Buffer.from('yy'),
+      ]);
+
+    const decryptSpy = vi
+      .spyOn(encryptDecrypt, 'decrypt')
+      .mockReturnValueOnce('123-unencrypted-456');
+
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
       persoon: {
         clientidentificatie: '123-123',
@@ -193,9 +207,24 @@ describe('stadspas services', () => {
         "status": "OK",
       }
     `);
+
+    encryptSpy.mockRestore();
+    decryptSpy.mockRestore();
   });
 
-  test('stadspas-gpass-service Happy!', async () => {
+  test('stadspas-gpass-service Happy! All passes returned', async () => {
+    const encryptSpy = vi
+      .spyOn(encryptDecrypt, 'encrypt')
+      .mockReturnValue([
+        '1x2x3x-##########-4x5x6x',
+        Buffer.from('xx'),
+        Buffer.from('yy'),
+      ]);
+
+    const decryptSpy = vi
+      .spyOn(encryptDecrypt, 'decrypt')
+      .mockReturnValue('123-unencrypted-456');
+
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
       persoon: {
         clientidentificatie: '123-123',
@@ -272,6 +301,88 @@ describe('stadspas services', () => {
           ],
         },
         "status": "OK",
+      }
+    `);
+
+    encryptSpy.mockRestore();
+    decryptSpy.mockRestore();
+  });
+
+  test('stadspas transacties Happy!', async () => {
+    remoteApi
+      .get(
+        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&budgetcode=yyyy&sub_transactions=true'
+      )
+      .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
+      .reply(200, {
+        transacties: [
+          {
+            id: 'transactie-id',
+            budget: { aanbieder: { naam: 'transactie naam' } },
+            bedrag: 34.5,
+            transactiedatum: '2024-04-25',
+          },
+        ],
+      });
+
+    const [transactionsKey] = encryptDecrypt.encrypt(
+      `my-unique-session-id:yyyy:0363000123-123:xxx567`
+    );
+
+    const response = await fetchTransacties(
+      'abc123',
+      authProfileAndToken,
+      transactionsKey
+    );
+
+    expect(response).toMatchInlineSnapshot(`
+      {
+        "content": [
+          {
+            "amount": 34.5,
+            "datePublished": "2024-04-25",
+            "id": "transactie-id",
+            "title": "transactie naam",
+          },
+        ],
+        "status": "OK",
+      }
+    `);
+  });
+
+  test('stadspas transacties unmatched session id', async () => {
+    remoteApi
+      .get(
+        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&budgetcode=yyyy&sub_transactions=true'
+      )
+      .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
+      .reply(200, {
+        transacties: [
+          {
+            id: 'transactie-id',
+            budget: { aanbieder: { naam: 'transactie naam' } },
+            bedrag: 34.5,
+            transactiedatum: '2024-04-25',
+          },
+        ],
+      });
+
+    const [transactionsKey] = encryptDecrypt.encrypt(
+      `another-session-id:yyyy:0363000123-123:xxx567`
+    );
+
+    const response = await fetchTransacties(
+      'abc123',
+      authProfileAndToken,
+      transactionsKey
+    );
+
+    expect(response).toMatchInlineSnapshot(`
+      {
+        "code": 403,
+        "content": null,
+        "message": "Not authorized",
+        "status": "ERROR",
       }
     `);
   });
