@@ -11,7 +11,7 @@ import { remoteApi } from '../../../test-utils';
 
 const REQUEST_ID = 'test-x-123';
 const authProfileAndToken: AuthProfileAndToken = {
-  profile: { authMethod: 'digid', profileType: 'private' },
+  profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
   token: 'xxxxxx',
 };
 
@@ -22,6 +22,7 @@ describe('simple-connect/cleopatra', () => {
         id: 'test-digid',
         profileType: 'private',
         authMethod: 'digid',
+        sid: '',
       })
     ).toMatchInlineSnapshot(`"{"bsn":"test-digid"}"`);
 
@@ -30,6 +31,7 @@ describe('simple-connect/cleopatra', () => {
         id: 'test-eherk',
         profileType: 'commercial',
         authMethod: 'eherkenning',
+        sid: '',
       })
     ).toMatchInlineSnapshot(`"{"kvk":"test-eherk"}"`);
   });

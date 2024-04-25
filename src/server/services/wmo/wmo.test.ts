@@ -25,7 +25,12 @@ describe('Transform api items', () => {
 
     expect(
       await fetchWmo('xxxx', {
-        profile: { id: '123123', authMethod: 'digid', profileType: 'private' },
+        profile: {
+          id: '123123',
+          authMethod: 'digid',
+          profileType: 'private',
+          sid: '',
+        },
         token: '',
       })
     ).toMatchSnapshot();

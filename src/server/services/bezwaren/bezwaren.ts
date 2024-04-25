@@ -1,18 +1,22 @@
 import axios from 'axios';
 import * as jose from 'jose';
+import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   apiDependencyError,
+  apiErrorResult,
   apiSuccessResult,
   dateSort,
-  defaultDateFormat,
+  getFailedDependencies,
+  getSettledResult,
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { MyNotification } from '../../../universal/types';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { captureException } from '../monitoring';
 import {
   Bezwaar,
   BezwaarDocument,
@@ -25,8 +29,6 @@ import {
   Kenmerk,
   kenmerkKey,
 } from './types';
-import memoizee from 'memoizee';
-import { captureException } from '../monitoring';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
@@ -87,28 +89,24 @@ function transformBezwarenDocumentsResults(
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): BezwaarDocument[] {
   if (Array.isArray(response.results)) {
-    try {
-      return response.results.map(
-        ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
-          const [documentIdEncrypted] = encrypt(
-            identificatie,
-            process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-          );
-          return {
-            id: documentIdEncrypted,
-            title: bestandsnaam,
-            datePublished: defaultDateFormat(verzenddatum),
-            url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-              BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-              { id: documentIdEncrypted }
-            )}`,
-            dossiertype,
-          };
-        }
-      );
-    } catch (error) {
-      captureException(error);
-    }
+    return response.results.map(
+      ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
+        const [documentIdEncrypted] = encrypt(
+          identificatie,
+          process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
+        );
+        return {
+          id: documentIdEncrypted,
+          title: bestandsnaam,
+          datePublished: verzenddatum,
+          url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
+            BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
+            { id: documentIdEncrypted }
+          )}`,
+          dossiertype,
+        };
+      }
+    );
   }
   return [];
 }
@@ -359,23 +357,40 @@ export type BezwaarDetail = {
 export async function fetchBezwaarDetail(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: string
+  zaakIdEncrypted: string
 ) {
+  const [sessionID, zaakId] = decrypt(zaakIdEncrypted).split(':');
+
+  if (sessionID !== authProfileAndToken.profile.sid) {
+    return apiErrorResult('Not authorized', null, 401);
+  }
+
   const bezwaarStatusRequest = fetchBezwaarStatus(zaakId, authProfileAndToken);
   const bezwaarDocumentsRequest = fetchBezwarenDocuments(
     zaakId,
     authProfileAndToken
   );
 
-  const [bezwaarStatusResponse, bezwaarDocumentsResponse] = await Promise.all([
+  const [statussenResponse, documentsResponse] = await Promise.allSettled([
     bezwaarStatusRequest,
     bezwaarDocumentsRequest,
   ]);
 
-  return apiSuccessResult({
-    statussen: bezwaarStatusResponse.content,
-    documents: bezwaarDocumentsResponse.content,
+  const statussen = getSettledResult(statussenResponse);
+  const documents = getSettledResult(documentsResponse);
+
+  const failedDependencies = getFailedDependencies({
+    statussen,
+    documents,
   });
+
+  return apiSuccessResult(
+    {
+      statussen: statussen.content,
+      documents: documents.content,
+    },
+    failedDependencies
+  );
 }
 
 export async function fetchBezwaarDocument(
@@ -384,10 +399,14 @@ export async function fetchBezwaarDocument(
   documentIdEncrypted: string,
   isDownload: boolean = true
 ) {
-  const documentId = decrypt(
+  const [sessionID, documentId] = decrypt(
     documentIdEncrypted,
     process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  );
+  ).split(':');
+
+  if (sessionID !== authProfileAndToken.profile.sid) {
+    return apiErrorResult('Not authorized', null, 401);
+  }
 
   const url = generatePath(
     `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id${

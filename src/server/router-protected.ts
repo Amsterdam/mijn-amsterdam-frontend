@@ -232,7 +232,7 @@ router.get(
 
 router.get(
   BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response) => {
+  async (req: Request<{ id: string }>, res: Response) => {
     const authProfileAndToken = await getAuth(req);
 
     const documentResponse = await fetchBezwaarDocument(
@@ -240,6 +240,16 @@ router.get(
       authProfileAndToken,
       req.params.id
     );
+
+    if (documentResponse.status === 'ERROR') {
+      return res
+        .status(
+          typeof documentResponse.code === 'number'
+            ? documentResponse.code
+            : 500
+        )
+        .end();
+    }
 
     const contentType = documentResponse.headers['content-type'];
     res.setHeader('content-type', contentType);
@@ -272,7 +282,9 @@ router.get(
     );
 
     if (response.status === 'ERROR') {
-      res.status(500);
+      return res
+        .status(typeof response.code === 'number' ? response.code : 500)
+        .end();
     }
 
     return res.send(response);
@@ -281,7 +293,7 @@ router.get(
 
 router.get(
   BffEndpoints.STADSPAS_TRANSACTIONS,
-  async (req: Request, res: Response) => {
+  async (req: Request<{ transactionsKey: string }>, res: Response) => {
     const authProfileAndToken = await getAuth(req);
     const response = await fetchTransacties(
       res.locals.requestID,
@@ -290,7 +302,9 @@ router.get(
     );
 
     if (response.status === 'ERROR') {
-      res.status(500);
+      return res
+        .status(typeof response.code === 'number' ? response.code : 500)
+        .end();
     }
 
     return res.send(response);

@@ -549,6 +549,7 @@ describe('sia service', () => {
           id: 'hm',
           authMethod: 'yivi',
           profileType: 'private-attributes',
+          sid: '',
         },
       },
       SIGNAL_ID_ENCRYPTED

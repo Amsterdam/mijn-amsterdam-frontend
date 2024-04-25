@@ -97,6 +97,7 @@ describe('controller', () => {
         id: '123456789',
         profileType: 'private',
         authMethod: 'digid',
+        sid: '',
       },
       token: 'xxx==',
     });
@@ -124,6 +125,7 @@ describe('controller', () => {
         id: '90006178',
         profileType: 'commercial',
         authMethod: 'eherkenning',
+        sid: '',
       },
       token: 'xxx==',
     });
@@ -163,6 +165,7 @@ describe('controller', () => {
         id: '123456789',
         profileType: 'private',
         authMethod: 'digid',
+        sid: '',
       },
       token: 'xxx==',
     });
@@ -178,6 +181,7 @@ describe('controller', () => {
         id: '90006178',
         profileType: 'commercial',
         authMethod: 'eherkenning',
+        sid: '',
       },
       token: 'xxx==',
     });

@@ -33,8 +33,8 @@ import { captureException, captureMessage } from '../services/monitoring';
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid' | 'yivi';
   profileType: ProfileType;
-  id?: string;
-  sid?: string; // TMA Session ID
+  id: string; // User id (bsn/kvknr)
+  sid: string; // TMA Session ID
 }
 
 export function getAuthProfile(tokenData: TokenData): AuthProfile {

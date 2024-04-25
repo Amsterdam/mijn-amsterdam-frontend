@@ -23,7 +23,12 @@ describe('BAG service', () => {
       'x',
       {
         token: 'xxxx',
-        profile: { authMethod: 'digid', profileType: 'private' },
+        profile: {
+          authMethod: 'digid',
+          profileType: 'private',
+          sid: '',
+          id: '',
+        },
       },
       address
     );
@@ -38,7 +43,7 @@ describe('BAG service', () => {
     });
   });
 
-  it('Bag api should fail correct;y', async () => {
+  it('Bag api should fail correctly', async () => {
     nock('http://api.data.amsterdam.nl')
       .get('/bag', { params: { q: 'undefined' } })
       .reply(500);
@@ -47,7 +52,12 @@ describe('BAG service', () => {
       'x',
       {
         token: 'xxxx',
-        profile: { authMethod: 'digid', profileType: 'private' },
+        profile: {
+          authMethod: 'digid',
+          profileType: 'private',
+          id: '',
+          sid: '',
+        },
       },
       {} as any
     );

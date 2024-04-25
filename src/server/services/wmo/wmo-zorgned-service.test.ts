@@ -23,6 +23,7 @@ const mocks = vi.hoisted(() => {
         id: 'mock-burgerservicenummer',
         profileType: 'private',
         authMethod: 'digid',
+        sid: '',
       },
       token: 'mock-auth-token',
     },
