@@ -197,11 +197,13 @@ function transformBezwarenResults(
             'besluitdatum'
           );
 
+          const [idEncrypted] = encrypt(bezwaarBron.uuid);
+
           const bezwaar: Bezwaar = {
             identificatie: bezwaarBron.identificatie,
             zaakkenmerk:
               getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
-            uuid: bezwaarBron.uuid,
+            uuid: idEncrypted,
             startdatum: bezwaarBron.startdatum,
             ontvangstdatum: bezwaarBron.registratiedatum,
             omschrijving: bezwaarBron.omschrijving,
@@ -225,7 +227,7 @@ function transformBezwarenResults(
             link: {
               title: 'Bekijk details',
               to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
-                uuid: bezwaarBron.uuid,
+                uuid: idEncrypted,
               }),
             },
           };
