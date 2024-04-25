@@ -180,7 +180,7 @@ describe('requestData.ts', () => {
 
     const error = new Error('Network Error');
 
-    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, null));
+    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null));
   });
 
   test('Find corresponding api', () => {

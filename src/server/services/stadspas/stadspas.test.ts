@@ -91,11 +91,6 @@ const authProfileAndToken: AuthProfileAndToken = {
   token: '',
 };
 
-// vi.mock('../../../universal/helpers/encrypt-decrypt', () => ({
-//   decrypt: vi.fn().mockReturnValue('123-unencrypted-456'),
-//   encrypt: vi.fn().mockReturnValue(['1x2x3x-##########-4x5x6x', 'xx']),
-// }));
-
 describe('stadspas services', () => {
   const requestData = vi.spyOn(request, 'requestData');
 
