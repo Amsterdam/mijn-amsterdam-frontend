@@ -121,6 +121,7 @@ export interface WMOSourceResponseData {
 
 export interface WMOVoorziening {
   id: string;
+  datumAanvraag: string;
   datumBesluit: string;
   datumEindeGeldigheid: string;
   datumIngangGeldigheid: string;

@@ -2,14 +2,13 @@ import { FeatureToggle } from '../../../../universal/config/app';
 import { StatusLineItem } from '../../../../universal/types';
 import {
   LeveringsVorm,
-  LeveringsVormConfig,
   ProductSoortCode,
   WMOStatusLineItemFormatterConfig,
   WMOVoorziening,
 } from '../wmo-config-and-types';
-import { parseLabelContent } from './wmo-helpers';
 import { AOV } from './wmo-aov';
 import { diensten } from './wmo-diensten';
+import { parseLabelContent } from './wmo-helpers';
 import { hulpmiddelen } from './wmo-hulpmiddelen';
 import { PGB } from './wmo-pgb';
 import { vergoeding } from './wmo-vergoeding';
@@ -197,7 +196,7 @@ export function getStatusLineItems(voorziening: WMOVoorziening, today: Date) {
 
       if (
         statusItem.status === 'Besluit' &&
-        voorziening.documenten.length > 1
+        voorziening.documenten.length !== 1
       ) {
         stepData.altDocumentContent = `<p>
               <strong>

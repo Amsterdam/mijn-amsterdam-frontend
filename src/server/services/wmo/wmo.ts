@@ -6,17 +6,29 @@ import {
   dateSort,
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { WMOVoorziening, WMOVoorzieningFrontend } from './wmo-config-and-types';
+import {
+  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
+  WMOVoorziening,
+  WMOVoorzieningFrontend,
+} from './wmo-config-and-types';
 import { getStatusLineItems } from './status-line-items/wmo-status-line-items';
 import { fetchVoorzieningen } from './wmo-zorgned-service';
+import { parseISO } from 'date-fns';
 
 export function transformVoorzieningenForFrontend(
   voorzieningen: WMOVoorziening[],
   today: Date
 ): WMOVoorzieningFrontend[] {
   const voorzieningenFrontend: WMOVoorzieningFrontend[] = [];
+  const voorzieningenVisible = voorzieningen.filter((voorziening) => {
+    return parseISO(voorziening.datumAanvraag) >
+      MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+      ? !!voorziening.documenten?.length
+      : parseISO(voorziening.datumAanvraag) <
+          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
+  });
 
-  for (const voorziening of voorzieningen) {
+  for (const voorziening of voorzieningenVisible) {
     const id = voorziening.id;
     const statusLineItems = getStatusLineItems(voorziening, today);
     const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {

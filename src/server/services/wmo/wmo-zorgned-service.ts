@@ -1,4 +1,3 @@
-import { FeatureToggle } from '../../../universal/config';
 import { hash, isDateInPast } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument } from '../../../universal/types';
@@ -15,14 +14,15 @@ import {
   PRODUCTS_WITH_DELIVERY,
   ProductSoortCode,
   REGELING_IDENTIFICATIE,
+  SINGLE_DOC_TITLE_BESLUIT,
   ToegewezenProduct,
   WMOSourceResponseData,
   WMOVoorziening,
   ZORGNED_GEMEENTE_CODE,
   ZorgnedDocument,
   ZorgnedDocumentData,
-  SINGLE_DOC_TITLE_BESLUIT,
 } from './wmo-config-and-types';
+import { parseISO } from 'date-fns';
 
 function isProductWithDelivery(
   wmoProduct: Pick<WMOVoorziening, 'productsoortCode' | 'leveringsVorm'>
@@ -99,6 +99,7 @@ function isActual({
 
 function transformAanvraagToVoorziening(
   id: string,
+  datumAanvraag: string,
   datumBesluit: string,
   beschiktProduct: BeschiktProduct,
   documenten: ZorgnedDocument[]
@@ -108,6 +109,7 @@ function transformAanvraagToVoorziening(
   const toewijzing = toewijzingen.pop();
   const leveringen = toewijzing?.leveringen ?? [];
   const levering = leveringen.pop();
+
   const leveringsVorm =
     (toegewezenProduct?.leveringsvorm?.toUpperCase() as LeveringsVorm) ?? '';
 
@@ -118,13 +120,17 @@ function transformAanvraagToVoorziening(
 
   const voorziening: WMOVoorziening = {
     id,
+    datumAanvraag: datumAanvraag,
     datumBeginLevering: levering?.begindatum ?? '',
     datumBesluit: datumBesluit,
     datumEindeGeldigheid: toegewezenProduct.datumEindeGeldigheid,
     datumEindeLevering: levering?.einddatum ?? '',
     datumIngangGeldigheid: toegewezenProduct.datumIngangGeldigheid,
     datumOpdrachtLevering: toewijzing?.datumOpdracht ?? '',
-    documenten: transformDocumenten(documenten),
+    documenten:
+      parseISO(datumAanvraag) < MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+        ? []
+        : transformDocumenten(documenten),
     isActueel: isActual({
       toegewezenProduct,
       levering,
@@ -154,24 +160,15 @@ function transformAanvragenToVoorzieningen(
       continue;
     }
 
-    const dateRequest = aanvraagSource.datumAanvraag;
-
     const datumBesluit = beschikking.datumAfgifte;
+    const datumAanvraag = aanvraagSource.datumAanvraag;
     const beschikteProducten = beschikking.beschikteProducten;
 
     if (!beschikteProducten) {
       continue;
     }
 
-    const shouldShowDocuments =
-      new Date(dateRequest) >= MINIMUM_REQUEST_DATE_FOR_DOCUMENTS &&
-      FeatureToggle.zorgnedDocumentAttachmentsActive;
-
-    let documenten: ZorgnedDocument[] = [];
-
-    if (shouldShowDocuments) {
-      documenten = aanvraagSource.documenten ?? [];
-    }
+    const documenten: ZorgnedDocument[] = aanvraagSource.documenten ?? [];
 
     for (const [index, beschiktProduct] of beschikteProducten.entries()) {
       if (
@@ -185,11 +182,11 @@ function transformAanvragenToVoorzieningen(
         );
         const voorziening = transformAanvraagToVoorziening(
           idGenerated,
+          datumAanvraag,
           datumBesluit,
           beschiktProduct,
           documenten
         );
-
         if (voorziening) {
           voorzieningen.push(voorziening);
         }

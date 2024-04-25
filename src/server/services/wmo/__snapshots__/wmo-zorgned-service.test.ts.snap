@@ -3,6 +3,7 @@
 exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
 [
   {
+    "datumAanvraag": "2013-04-25",
     "datumBeginLevering": "2013-06-17",
     "datumBesluit": "2013-05-17",
     "datumEindeGeldigheid": null,
@@ -18,6 +19,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "woonruimteaanpassing met doc 1",
   },
   {
+    "datumAanvraag": "2012-08-07",
     "datumBeginLevering": "",
     "datumBesluit": "2012-08-07",
     "datumEindeGeldigheid": "2022-07-31",
@@ -33,6 +35,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "kamer tot kamer vervoer",
   },
   {
+    "datumAanvraag": "2013-11-12",
     "datumBeginLevering": "2014-01-28",
     "datumBesluit": "2013-12-09",
     "datumEindeGeldigheid": null,
@@ -48,6 +51,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "woonruimteaanpassing met doc 2",
   },
   {
+    "datumAanvraag": "2014-07-25",
     "datumBeginLevering": "2017-06-01",
     "datumBesluit": "2014-09-09",
     "datumEindeGeldigheid": "2022-12-20",
@@ -63,6 +67,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "elektrische hulpaandrijving voor rolstoel",
   },
   {
+    "datumAanvraag": "2014-07-25",
     "datumBeginLevering": "2014-11-07",
     "datumBesluit": "2014-09-11",
     "datumEindeGeldigheid": null,
@@ -78,6 +83,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "woonruimteaanpassing 3",
   },
   {
+    "datumAanvraag": "2012-08-08",
     "datumBeginLevering": "2017-06-01",
     "datumBesluit": "2012-10-05",
     "datumEindeGeldigheid": "2020-06-09",
@@ -93,6 +99,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "douche-/toiletstoel (verrijdb/kantelb/ind aangep.)",
   },
   {
+    "datumAanvraag": "2017-06-01",
     "datumBeginLevering": "2017-06-01",
     "datumBesluit": "2017-06-01",
     "datumEindeGeldigheid": "2018-04-13",
@@ -108,6 +115,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2017-06-01",
     "datumBeginLevering": "2017-06-01",
     "datumBesluit": "2017-06-01",
     "datumEindeGeldigheid": "2018-03-08",
@@ -123,6 +131,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2017-11-24",
     "datumBeginLevering": "2017-11-24",
     "datumBesluit": "2017-11-24",
     "datumEindeGeldigheid": "2018-11-23",
@@ -138,6 +147,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "aanvullende individuele ondersteuning",
   },
   {
+    "datumAanvraag": "2018-03-09",
     "datumBeginLevering": "2018-03-09",
     "datumBesluit": "2018-04-19",
     "datumEindeGeldigheid": "2019-03-08",
@@ -153,6 +163,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2018-04-14",
     "datumBeginLevering": "2018-04-14",
     "datumBesluit": "2018-04-25",
     "datumEindeGeldigheid": "2019-04-13",
@@ -168,6 +179,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2018-10-10",
     "datumBeginLevering": "2019-03-25",
     "datumBesluit": "2018-12-27",
     "datumEindeGeldigheid": null,
@@ -183,6 +195,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "woonruimteaanpassing met doc 4",
   },
   {
+    "datumAanvraag": "2018-11-28",
     "datumBeginLevering": "2018-11-28",
     "datumBesluit": "2018-11-29",
     "datumEindeGeldigheid": "2019-03-08",
@@ -198,6 +211,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "aanvullende individuele ondersteuning",
   },
   {
+    "datumAanvraag": "2019-03-09",
     "datumBeginLevering": "2019-03-09",
     "datumBesluit": "2019-03-11",
     "datumEindeGeldigheid": "2020-03-08",
@@ -213,6 +227,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2019-03-09",
     "datumBeginLevering": "2019-03-09",
     "datumBesluit": "2019-03-11",
     "datumEindeGeldigheid": "2020-03-08",
@@ -228,6 +243,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "aanvullende individuele ondersteuning",
   },
   {
+    "datumAanvraag": "2019-04-14",
     "datumBeginLevering": "2019-04-14",
     "datumBesluit": "2019-04-15",
     "datumEindeGeldigheid": "2020-03-08",
@@ -243,6 +259,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2019-10-09",
     "datumBeginLevering": "2019-10-17",
     "datumBesluit": "2019-10-09",
     "datumEindeGeldigheid": "2019-12-09",
@@ -258,6 +275,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "reparatie-/verwijderopdracht natte cel en toilet",
   },
   {
+    "datumAanvraag": "2020-03-12",
     "datumBeginLevering": "2020-03-09",
     "datumBesluit": "2020-03-12",
     "datumEindeGeldigheid": "2020-06-14",
@@ -273,6 +291,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2020-03-12",
     "datumBeginLevering": "2020-03-09",
     "datumBesluit": "2020-03-12",
     "datumEindeGeldigheid": "2020-12-31",
@@ -288,6 +307,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "aanvullende individuele ondersteuning",
   },
   {
+    "datumAanvraag": "2020-03-12",
     "datumBeginLevering": "2020-03-09",
     "datumBesluit": "2020-03-12",
     "datumEindeGeldigheid": "2020-12-31",
@@ -303,6 +323,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2020-06-05",
     "datumBeginLevering": "",
     "datumBesluit": "2020-06-05",
     "datumEindeGeldigheid": "2020-08-05",
@@ -318,6 +339,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "reparatie-/verwijderopdracht natte cel en toilet",
   },
   {
+    "datumAanvraag": "2020-05-13",
     "datumBeginLevering": "2020-09-10",
     "datumBesluit": "2020-06-18",
     "datumEindeGeldigheid": null,
@@ -333,6 +355,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "douche-/toiletstoel zelfrijder",
   },
   {
+    "datumAanvraag": "2020-06-16",
     "datumBeginLevering": "2020-06-15",
     "datumBesluit": "2020-06-16",
     "datumEindeGeldigheid": "2020-12-31",
@@ -348,6 +371,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2020-08-10",
     "datumBeginLevering": "2021-01-13",
     "datumBesluit": "2020-12-04",
     "datumEindeGeldigheid": null,
@@ -363,6 +387,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "antislipvloer/behandeling badkamer",
   },
   {
+    "datumAanvraag": "2021-01-09",
     "datumBeginLevering": "2021-01-01",
     "datumBesluit": "2021-01-09",
     "datumEindeGeldigheid": "2021-03-09",
@@ -378,6 +403,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "aanvullende individuele ondersteuning",
   },
   {
+    "datumAanvraag": "2021-01-09",
     "datumBeginLevering": "2021-01-01",
     "datumBesluit": "2021-01-09",
     "datumEindeGeldigheid": "2021-03-09",
@@ -393,6 +419,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2021-01-09",
     "datumBeginLevering": "2021-01-01",
     "datumBesluit": "2021-01-09",
     "datumEindeGeldigheid": "2021-03-09",
@@ -408,6 +435,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2021-03-11",
     "datumBeginLevering": "2021-03-10",
     "datumBesluit": "2021-03-11",
     "datumEindeGeldigheid": "2022-03-10",
@@ -423,6 +451,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2021-03-11",
     "datumBeginLevering": "2021-03-10",
     "datumBesluit": "2021-03-11",
     "datumEindeGeldigheid": "2022-03-10",
@@ -438,6 +467,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "aanvullende individuele ondersteuning",
   },
   {
+    "datumAanvraag": "2021-03-11",
     "datumBeginLevering": "2021-03-10",
     "datumBesluit": "2021-03-11",
     "datumEindeGeldigheid": "2022-03-10",
@@ -453,6 +483,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2021-10-13",
     "datumBeginLevering": "2021-10-13",
     "datumBesluit": "2021-10-22",
     "datumEindeGeldigheid": null,
@@ -468,6 +499,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "niet standaard opdracht natte cel en toilet",
   },
   {
+    "datumAanvraag": "2021-12-06",
     "datumBeginLevering": "2021-12-17",
     "datumBesluit": "2021-12-06",
     "datumEindeGeldigheid": "2022-02-06",
@@ -483,6 +515,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "reparatie-/verwijderopdracht toegang",
   },
   {
+    "datumAanvraag": "2021-12-08",
     "datumBeginLevering": "2021-12-20",
     "datumBesluit": "2021-12-08",
     "datumEindeGeldigheid": null,
@@ -498,6 +531,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "handzender(s) voor deurautomaat",
   },
   {
+    "datumAanvraag": "2021-12-08",
     "datumBeginLevering": "",
     "datumBesluit": "2021-12-08",
     "datumEindeGeldigheid": null,
@@ -513,6 +547,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "reparatie-/verwijderopdracht toegang",
   },
   {
+    "datumAanvraag": "2022-03-14",
     "datumBeginLevering": "2022-03-11",
     "datumBesluit": "2022-03-14",
     "datumEindeGeldigheid": "2023-03-11",
@@ -535,6 +570,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "dagbesteding",
   },
   {
+    "datumAanvraag": "2022-03-14",
     "datumBeginLevering": "2022-03-11",
     "datumBesluit": "2022-03-14",
     "datumEindeGeldigheid": "2023-03-11",
@@ -557,6 +593,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2022-02-16",
     "datumBeginLevering": "2022-06-07",
     "datumBesluit": "2022-04-15",
     "datumEindeGeldigheid": null,
@@ -579,6 +616,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "niet standaard opdracht natte cel en toilet",
   },
   {
+    "datumAanvraag": "2022-07-09",
     "datumBeginLevering": "",
     "datumBesluit": "2022-08-01",
     "datumEindeGeldigheid": "2022-10-18",
@@ -594,6 +632,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "kamer tot kamer vervoer",
   },
   {
+    "datumAanvraag": "2022-09-07",
     "datumBeginLevering": "",
     "datumBesluit": "2022-10-20",
     "datumEindeGeldigheid": null,
@@ -616,6 +655,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "kamer tot kamer vervoer",
   },
   {
+    "datumAanvraag": "2022-12-21",
     "datumBeginLevering": "2023-05-15",
     "datumBesluit": "2023-03-01",
     "datumEindeGeldigheid": null,
@@ -638,6 +678,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "elektrische rolstoel voor binnen en buiten",
   },
   {
+    "datumAanvraag": "2022-12-22",
     "datumBeginLevering": "2023-01-06",
     "datumBesluit": "2022-12-22",
     "datumEindeGeldigheid": null,
@@ -653,6 +694,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "Adviesconsult",
   },
   {
+    "datumAanvraag": "2023-03-16",
     "datumBeginLevering": "2023-03-12",
     "datumBesluit": "2023-03-16",
     "datumEindeGeldigheid": "2024-03-11",
@@ -675,6 +717,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "titel": "hulp bij het huishouden",
   },
   {
+    "datumAanvraag": "2023-06-08",
     "datumBeginLevering": "2023-06-14",
     "datumBesluit": "2023-06-08",
     "datumEindeGeldigheid": null,
