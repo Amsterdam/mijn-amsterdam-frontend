@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/node';
-import FormData from 'form-data';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
@@ -28,7 +27,7 @@ function transformDSOAPIResponse(response: any) {
 
   try {
     const sourceData: Woning[] = response._embedded.energielabel;
-
+    // Todo check on list lenght != 1 --> do something
     woningen = [
       {
         id: sourceData[0].id,
@@ -82,8 +81,22 @@ function transformDSOAPIResponse(response: any) {
   } catch (e) {
     Sentry.captureException(e);
   }
-
   return { woningen };
+}
+interface TokenResponse {
+  access_token: string;
+}
+async function getAccessToken(requestID: requestID) {
+  const data = `grant_type=client_credentials&client_id=${process.env.BFF_SIA_IAM_CLIENT_ID}&client_secret=${process.env.BFF_SIA_IAM_CLIENT_SECRET}`;
+
+  return requestData<TokenResponse>(
+    {
+      method: 'post',
+      url: `${process.env.BFF_SIA_IAM_TOKEN_ENDPOINT}`,
+      data,
+    },
+    requestID
+  );
 }
 
 export async function fetchWonen(
@@ -91,10 +104,19 @@ export async function fetchWonen(
   authProfileAndToken: AuthProfileAndToken
 ) {
   // const data = getDataForWonen(authProfileAndToken); // bsn
+
   const wonenRequestConfig = getApiConfig('WONEN', {
     transformResponse: transformDSOAPIResponse,
   });
 
+  // const accessToken = getAccessToken(requestID);
+  // console.log(accessToken);
+  // const wonenKwaliteitsMonitorRequestConfig = getApiConfig('WONEN_KWALITEITSMONITOR', {
+  //   transformResponse: transformDSOAPIResponse,
+  //   headers: {
+  //     Authorization: `Bearer ${accessToken}`,
+  //   },
+  // });
   const BRPrequestConfig = getApiConfig('BRP', {
     transformResponse: transformDSOAPIResponse,
   });
