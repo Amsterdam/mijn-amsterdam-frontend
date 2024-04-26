@@ -15,7 +15,9 @@ export default defineConfig({
   define: {
     MA_OTAP_ENV: JSON.stringify(process.env.MA_OTAP_ENV || 'development'),
     MA_APP_MODE: JSON.stringify(process.env.MA_APP_MODE || 'production'),
-    MA_APP_VERSION: JSON.stringify(process.env.npm_package_version || '-1'),
+    MA_APP_VERSION: JSON.stringify(
+      process.env.MA_RELEASE_VERSION_TAG || 'notset'
+    ),
     MA_BUILD_ID: JSON.stringify(process.env.MA_BUILD_ID || '-1'),
     MA_GIT_SHA: JSON.stringify(process.env.MA_GIT_SHA || '-1'),
     MA_TEST_ACCOUNTS: JSON.stringify(process.env.MA_TEST_ACCOUNTS || ''),
