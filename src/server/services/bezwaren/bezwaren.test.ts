@@ -18,7 +18,7 @@ vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
-      return ['session-id', 'test-encrypted-id'];
+      return ['test-encrypted-id'];
     },
     decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
   };
@@ -193,6 +193,26 @@ describe('Bezwaren', () => {
       expect(res.status).toEqual('OK');
       expect(res.content?.statussen?.length).toBeGreaterThan(0);
       expect(res.content?.documents?.length).toBeGreaterThan(0);
+    });
+
+    it('should fail to fetch more results', async () => {
+      const res = await fetchBezwaarDetail(
+        requestId,
+        {
+          ...profileAndToken,
+          profile: { ...profileAndToken.profile, sid: 'nope' },
+        },
+        'xxx'
+      );
+
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "code": 401,
+          "content": null,
+          "message": "Not authorized",
+          "status": "ERROR",
+        }
+      `);
     });
   });
 });
