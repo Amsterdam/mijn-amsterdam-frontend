@@ -11,7 +11,7 @@
   max-width: 20rem;
   position: relative;
 
-  +.ProfileLink {
+  + .ProfileLink {
     margin-left: 3.3rem;
 
     @include mq-tablet() {
@@ -64,7 +64,6 @@
   @include mq-tablet() {
     display: block;
   }
-
 }
 
 .ProfileLinkLoader {

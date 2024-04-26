@@ -5,7 +5,7 @@
   color: $color-neutral-grey4;
   font-weight: normal;
   display: inline-block;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 
 .NoMargin {
@@ -68,7 +68,6 @@
   }
 
   @include mq-phone() {
-
     &:first-child,
     &:last-child {
       margin: 0;
@@ -80,7 +79,7 @@
 .GarbageFractionPanel {
   background-color: $color-neutral-grey1;
   margin-bottom: 1.6rem;
-  padding: .8rem 1.6rem;
+  padding: 0.8rem 1.6rem;
 
   dl {
     display: flex;
@@ -99,7 +98,7 @@
     p {
       margin: 0;
 
-      +p {
+      + p {
         margin-top: 1rem;
       }
     }
@@ -109,7 +108,7 @@
 .GarbageFractionPanelTitle {
   font-size: 1.8rem;
   margin: 0;
-  border-bottom: .1rem solid $color-neutral-grey4;
+  border-bottom: 0.1rem solid $color-neutral-grey4;
   display: flex;
 }
 
@@ -134,7 +133,7 @@
 
 .GarbageFractionPanelHighlight {
   background-color: $color-support-focus;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .UnstyledList {

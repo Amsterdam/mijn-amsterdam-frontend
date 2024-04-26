@@ -8,7 +8,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Horeca service', () => {
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private' },
+    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxxx',
   };
 

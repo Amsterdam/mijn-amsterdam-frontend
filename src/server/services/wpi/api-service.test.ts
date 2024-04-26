@@ -40,7 +40,7 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 describe('wpi/app-service', () => {
   let requestID = '';
   let authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private' },
+    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxx',
   };
 
@@ -187,7 +187,7 @@ describe('wpi/app-service', () => {
     });
 
     const response = await fetchBijstandsuitkering(requestID, {
-      profile: { authMethod: 'digid', profileType: 'private' },
+      profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
       token: 'xxxxx',
     });
 

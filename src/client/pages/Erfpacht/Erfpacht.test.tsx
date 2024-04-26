@@ -128,7 +128,7 @@ describe('<Erfpacht />', () => {
     expect(screen.queryByText('E123/456')).not.toBeInTheDocument();
     expect(screen.queryByText('E6470/243')).not.toBeInTheDocument();
 
-    expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
+    expect(screen.queryByText('Bijkehuim 44 H')).toBeInTheDocument();
     expect(screen.getByText('Dit en Dat plein 66')).toBeInTheDocument();
     expect(screen.getByText('Kweikade 33 H')).toBeInTheDocument();
   });

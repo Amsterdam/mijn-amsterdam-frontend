@@ -1,6 +1,11 @@
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { defaultDateFormat, isLoading } from '../../../universal/helpers';
 import {
+  defaultDateFormat,
+  isLoading,
+  isError,
+} from '../../../universal/helpers';
+import {
+  ErrorAlert,
   addTitleLinkComponent,
   ChapterIcon,
   Linkd,
@@ -62,6 +67,11 @@ const AVG = () => {
             Loket persoonsgegevens gemeente Amsterdam
           </Linkd>
         </p>
+        {isError(AVG) && (
+          <ErrorAlert>
+            We kunnen op dit moment geen AVG verzoeken tonen.
+          </ErrorAlert>
+        )}
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-complaints"

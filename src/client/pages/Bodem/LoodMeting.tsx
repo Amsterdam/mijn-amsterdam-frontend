@@ -2,7 +2,7 @@ import { generatePath, useParams } from 'react-router-dom';
 import { useAppStateGetter } from '../../hooks';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoDetail,
@@ -40,9 +40,7 @@ export default function LoodMeting() {
 
       <PageContent>
         {(isError(BODEM) || noContent) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {isLoading(BODEM) && <LoadingContent />}
         {!!meting && (

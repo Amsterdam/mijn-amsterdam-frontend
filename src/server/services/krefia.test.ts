@@ -9,7 +9,7 @@ import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
 describe('Kredietbank & FIBU service', () => {
   const KREFIA_DUMMY_RESPONSE = jsonCopy(KrefiaData);
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private' },
+    profile: { authMethod: 'digid', profileType: 'private', sid: '', id: '' },
     token: 'xxxxxx',
   };
 

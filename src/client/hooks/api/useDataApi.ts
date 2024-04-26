@@ -1,12 +1,12 @@
-import * as Sentry from '@sentry/react';
 import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
+import { captureException, captureMessage } from '../../utils/monitoring';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
-  sentryEnabled?: boolean;
+  monitoringEnabled?: boolean;
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
@@ -67,7 +67,7 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   postpone: false,
   responseType: 'json',
   method: 'get',
-  sentryEnabled: true,
+  monitoringEnabled: true,
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {
@@ -174,21 +174,13 @@ export function useDataApi<T>(
             payload,
           });
 
-          if (requestOptions.sentryEnabled) {
-            if (!(error instanceof Error)) {
-              Sentry.captureMessage(errorMessage, {
-                extra: {
-                  url: requestOptions.url?.split('?')[0],
-                },
-              });
-            } else {
-              Sentry.captureException(error, {
-                extra: {
-                  errorMessage,
-                  url: requestOptions.url?.split('?')[0],
-                },
-              });
-            }
+          if (requestOptions.monitoringEnabled) {
+            captureException(error, {
+              properties: {
+                errorMessage,
+                url: requestOptions.url,
+              },
+            });
           }
         }
       }

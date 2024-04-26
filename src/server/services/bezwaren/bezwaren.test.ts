@@ -18,9 +18,9 @@ vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
-      return ['test-encrypted-id'];
+      return ['session-id', 'test-encrypted-id'];
     },
-    decrypt: () => 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+    decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
   };
 });
 
@@ -34,6 +34,7 @@ describe('Bezwaren', () => {
       id: '123',
       authMethod: 'digid',
       profileType: 'private',
+      sid: 'session-id',
     },
     token: 'abc123',
   };

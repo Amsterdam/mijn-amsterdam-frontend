@@ -7,6 +7,8 @@ import {
 export type LeveringsVorm = 'ZIN' | 'PGB' | '';
 export type ProductSoortCode = string;
 
+export const SINGLE_DOC_TITLE_BESLUIT = 'Brief';
+
 export const ZORGNED_GEMEENTE_CODE = '0363';
 export const REGELING_IDENTIFICATIE = 'wmo';
 export const BESCHIKTPRODUCT_RESULTAAT = ['toegewezen'];
@@ -119,6 +121,7 @@ export interface WMOSourceResponseData {
 
 export interface WMOVoorziening {
   id: string;
+  datumAanvraag: string;
   datumBesluit: string;
   datumEindeGeldigheid: string;
   datumIngangGeldigheid: string;

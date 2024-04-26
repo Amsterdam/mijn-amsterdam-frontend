@@ -58,7 +58,7 @@ exports[`<Krefia /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Kredietbank & FIBU
         </h2>
@@ -128,7 +128,7 @@ exports[`<Krefia /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _SectionBorderTop_2f2815"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -216,7 +216,7 @@ exports[`<Krefia /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -304,7 +304,7 @@ exports[`<Krefia /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"

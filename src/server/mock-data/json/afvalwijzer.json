@@ -40,10 +40,7 @@
         "afvalwijzerBasisroutetypeCode": null,
         "afvalwijzerGeometrie": {
           "type": "Point",
-          "coordinates": [
-            121828.874,
-            486751.728
-          ]
+          "coordinates": [121828.874, 486751.728]
         },
         "afvalwijzerInstructie2": "In de container voor glas",
         "afvalwijzerOphaaldagen2": null,
@@ -96,10 +93,7 @@
         "afvalwijzerBasisroutetypeCode": "BIJREST",
         "afvalwijzerGeometrie": {
           "type": "Point",
-          "coordinates": [
-            121828.874,
-            486751.728
-          ]
+          "coordinates": [121828.874, 486751.728]
         },
         "afvalwijzerInstructie2": "Bij het restafval",
         "afvalwijzerOphaaldagen2": null,
@@ -152,10 +146,7 @@
         "afvalwijzerBasisroutetypeCode": "GROFAFSPR",
         "afvalwijzerGeometrie": {
           "type": "Point",
-          "coordinates": [
-            121828.874,
-            486751.728
-          ]
+          "coordinates": [121828.874, 486751.728]
         },
         "afvalwijzerInstructie2": "Laat uw grof afval ophalen door een erkend bedrijf",
         "afvalwijzerOphaaldagen2": null,
@@ -208,10 +199,7 @@
         "afvalwijzerBasisroutetypeCode": null,
         "afvalwijzerGeometrie": {
           "type": "Point",
-          "coordinates": [
-            121828.874,
-            486751.728
-          ]
+          "coordinates": [121828.874, 486751.728]
         },
         "afvalwijzerInstructie2": "In de container voor papier",
         "afvalwijzerOphaaldagen2": null,
@@ -264,10 +252,7 @@
         "afvalwijzerBasisroutetypeCode": null,
         "afvalwijzerGeometrie": {
           "type": "Point",
-          "coordinates": [
-            121828.874,
-            486751.728
-          ]
+          "coordinates": [121828.874, 486751.728]
         },
         "afvalwijzerInstructie2": "Bij het restafval",
         "afvalwijzerOphaaldagen2": null,
@@ -320,10 +305,7 @@
         "afvalwijzerBasisroutetypeCode": "ZAKKENRT",
         "afvalwijzerGeometrie": {
           "type": "Point",
-          "coordinates": [
-            121828.874,
-            486751.728
-          ]
+          "coordinates": [121828.874, 486751.728]
         },
         "afvalwijzerInstructie2": "In vuilniszak",
         "afvalwijzerOphaaldagen2": "maandag, donderdag",
@@ -376,10 +358,7 @@
         "afvalwijzerBasisroutetypeCode": null,
         "afvalwijzerGeometrie": {
           "type": "Point",
-          "coordinates": [
-            121828.874,
-            486751.728
-          ]
+          "coordinates": [121828.874, 486751.728]
         },
         "afvalwijzerInstructie2": "In de container voor textiel",
         "afvalwijzerOphaaldagen2": null,

@@ -1,8 +1,6 @@
 @import '../../styles/_global.scss';
 
-
 .Pagination {
-
 }
 
 .PageList {
@@ -22,7 +20,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin: 0 .2rem;
+  margin: 0 0.2rem;
 
   &:first-child {
     margin-left: 0;
@@ -53,7 +51,7 @@
   &.PagePrevButton,
   &.PageNextButton {
     width: auto;
-    padding: 0 .3rem;
+    padding: 0 0.3rem;
     font-weight: bold;
 
     &:hover {

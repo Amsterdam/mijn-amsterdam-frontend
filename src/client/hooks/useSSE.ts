@@ -94,8 +94,8 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
     es.addEventListener('open', handleOpen);
     es.addEventListener(eventName, onMessageEvent);
 
-    // This listener is here because Sentry reports back errors of interrupted connections whilst the page is being refreshed.
-    // If we close the event source before the unload Sentry stays calm.
+    // This listener is here because Monitoring reports back errors of interrupted connections whilst the page is being refreshed.
+    // If we close the event source before the unload Monitoring stays calm.
     window.addEventListener('beforeunload', closeEventSource);
 
     return () => {

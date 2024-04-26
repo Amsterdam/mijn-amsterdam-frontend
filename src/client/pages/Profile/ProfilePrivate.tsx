@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { useEffect, useMemo } from 'react';
 import { AppRoutes } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
+import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import {
   apiPristineResult,
   ApiResponse,
@@ -15,7 +16,7 @@ import {
 } from '../../../universal/helpers/brp';
 import { AppState } from '../../AppState';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoPanel,
@@ -136,48 +137,56 @@ export default function Profile() {
         )}
         <MaintenanceNotifications page="persoonlijke-gegevens" />
         {isError(BRP) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
 
         {BRP.content?.persoon.vertrokkenOnbekendWaarheen && (
-          <Alert type="warning" className="vertrokkenOnbekendWaarheen">
-            <p>
-              U staat sinds{' '}
-              {BRP.content?.persoon.datumVertrekUitNederland
-                ? defaultDateFormat(
-                    BRP.content?.persoon.datumVertrekUitNederland
-                  )
-                : 'enige tijd'}{' '}
-              in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken
-              Onbekend Waarheen (VOW)’.
-            </p>
-            <p>
-              Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen
-              (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u
-              dan niet langer als inwoner van Nederland en u kunt geen gebruik
-              meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen
-              paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres
-              zo snel mogelijk door aan de gemeente.{' '}
-              <LinkdInline
-                external={true}
-                aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
-                href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              >
-                Meer informatie
-              </LinkdInline>
-            </p>
-          </Alert>
+          <ErrorAlert
+            severity="warning"
+            title="Vertrokken Onbekend Waarheen"
+            className={styles.AlertVertrokkenOnbekendWaarheen}
+          >
+            U staat sinds{' '}
+            {BRP.content?.persoon.datumVertrekUitNederland
+              ? defaultDateFormat(BRP.content?.persoon.datumVertrekUitNederland)
+              : 'enige tijd'}{' '}
+            in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken
+            Onbekend Waarheen (VOW)’.
+            <br />
+            Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen
+            (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u
+            dan niet langer als inwoner van Nederland en u kunt geen gebruik
+            meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen
+            paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres
+            zo snel mogelijk door aan de gemeente.{' '}
+            <LinkdInline
+              external={true}
+              aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+            >
+              Meer informatie
+            </LinkdInline>
+          </ErrorAlert>
         )}
 
         {BRP.content?.persoon?.adresInOnderzoek && (
-          <Alert type="warning" className="inOnderzoek">
-            <p>
-              {BRP.content?.persoon?.adresInOnderzoek === '080000' ? <>Op dit moment onderzoeken wij of u nog steeds woont op het adres
-                waar u ingeschreven staat.</> : <>
-              U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont.</>}
-              {' '}
+          <DSAlert
+            severity="warning"
+            title="Adres in onderzoek"
+            className={styles.AlertAdresInOnderzoek}
+          >
+            <Paragraph>
+              {BRP.content?.persoon?.adresInOnderzoek === '080000' ? (
+                <>
+                  Op dit moment onderzoeken wij of u nog steeds woont op het
+                  adres waar u ingeschreven staat.
+                </>
+              ) : (
+                <>
+                  U woont niet meer op het adres waarop u staat ingeschreven. Op
+                  dit moment onderzoeken wij op welk adres u nu woont.
+                </>
+              )}{' '}
               <LinkdInline
                 external={true}
                 href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
@@ -186,8 +195,8 @@ export default function Profile() {
                 amsterdam.nl
               </LinkdInline>
               .
-            </p>
-            <p>
+            </Paragraph>
+            <Paragraph>
               Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail
               naar{' '}
               <a
@@ -197,8 +206,8 @@ export default function Profile() {
                 adresonderzoek.basisinformatie@amsterdam.nl
               </a>
               .
-            </p>
-          </Alert>
+            </Paragraph>
+          </DSAlert>
         )}
       </PageContent>
 
@@ -267,7 +276,9 @@ export default function Profile() {
       {isMokum(BRP.content) && (
         <PageContent>
           <p className={styles.SuppressedParagraph}>
-          Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in{' '}
+            Het is helaas niet mogelijk om de gegevens van een levenloos geboren
+            kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
+            in{' '}
             <LinkdInline href="https://mijn.overheid.nl" external={true}>
               MijnOverheid
             </LinkdInline>

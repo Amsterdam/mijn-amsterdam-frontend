@@ -70,44 +70,39 @@
 }
 
 @mixin select($names...) {
-  $selectors: (
-  );
+  $selectors: ();
 
-@each $name in $names {
-  $selectors: append($selectors, ('[class*="#{$name}"]'), comma);
-}
+  @each $name in $names {
+    $selectors: append($selectors, ('[class*="#{$name}"]'), comma);
+  }
 
-#{$selectors} {
-  @content;
-}
+  #{$selectors} {
+    @content;
+  }
 }
 
 @mixin select-id($names...) {
-  $selectors: (
-  );
+  $selectors: ();
 
-@each $name in $names {
-  $selectors: append($selectors, ('[id="#{$name}"]'), comma);
-}
+  @each $name in $names {
+    $selectors: append($selectors, ('[id="#{$name}"]'), comma);
+  }
 
-#{$selectors} {
-  @content;
-}
+  #{$selectors} {
+    @content;
+  }
 }
 
 @mixin hoverCapable {
-
   @media all and (-ms-high-contrast: none),
-  (-ms-high-contrast: active),
-  (hover: hover) {
+    (-ms-high-contrast: active),
+    (hover: hover) {
     @content;
   }
 }
 
 @mixin IE11() {
-
-  @media all and (-ms-high-contrast: none),
-  (-ms-high-contrast: active) {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     @content;
   }
 }
@@ -171,8 +166,12 @@
   background-color: $color-white;
   background-image: url('../../assets/icons/Chevron-Down.svg');
   background-repeat: no-repeat, repeat;
-  background-position: right 0.7em top 50%, 0 0;
-  background-size: 0.85em auto, 100%;
+  background-position:
+    right 0.7em top 50%,
+    0 0;
+  background-size:
+    0.85em auto,
+    100%;
 
   &::-ms-expand {
     display: none;
@@ -187,38 +186,23 @@
   $i: str-index($string, $separator);
 
   @if $i !=null {
-    @return append(str-slice($string, 1, $i - 1),
-      str-split(str-slice($string, $i + str-length($separator)), $separator));
+    @return append(
+      str-slice($string, 1, $i - 1),
+      str-split(str-slice($string, $i + str-length($separator)), $separator)
+    );
   }
 
   @return $string;
 }
 
 @mixin DesignSystemStyleAdjust {
-  :root {
-    // --mams-font-size-rem-adjust: initial;
-    // --mams-font-size-body: initial;
-    // --mams-line-height: initial;
-  }
+  :global {
+    .ams-grid .ams-grid {
+      --ams-grid-padding-inline: 0;
+    }
 
-  .amsterdam-grid .amsterdam-grid {
-    --amsterdam-grid-padding-inline: 0
-  }
-
-  .amsterdam-screen.amsterdam-screen--wide {
-    font-family: var(--amsterdam-heading-font-family);
-  }
-
-  td,
-  dd {
-    font-size: var(--amsterdam-paragraph-spacious-medium-font-size);
-    line-height: var(--amsterdam-paragraph-spacious-medium-line-height);
-  }
-
-  th,
-  dt {
-    font-size: var(--amsterdam-paragraph-spacious-medium-font-size);
-    line-height: var(--amsterdam-paragraph-spacious-medium-line-height);
-    font-weight: var(--amsterdam-heading-font-weight);
+    .ams-screen.ams-screen--wide {
+      font-family: var(--ams-heading-font-family);
+    }
   }
 }

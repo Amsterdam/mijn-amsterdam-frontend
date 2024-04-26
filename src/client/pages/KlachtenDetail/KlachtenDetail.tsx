@@ -7,7 +7,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoDetail,
@@ -49,9 +49,7 @@ export default function KlachtenDetail() {
 
       <PageContent>
         {isError(KLACHTEN) || noContent ? (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         ) : (
           <>
             <InfoDetail

@@ -15,6 +15,7 @@ describe('simple-connect/erfpacht', () => {
       authMethod: 'digid',
       profileType: 'private',
       id: 'TEST-DIGID-BSN',
+      sid: '',
     },
     token: 'xxxxxx',
   };
@@ -151,6 +152,7 @@ describe('simple-connect/erfpacht', () => {
         authMethod: 'digid',
         profileType: 'private',
         id: 'DIGID-BSN',
+        sid: '',
       },
       token: '123abc',
     };

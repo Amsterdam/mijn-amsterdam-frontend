@@ -1,9 +1,8 @@
 import {
   APP_MODE,
-  IS_AP,
+  FeatureToggle,
   IS_OT,
   IS_PRODUCTION,
-  FeatureToggle,
 } from '../../../universal/config';
 
 export const IS_PG = process.env.BFF_DB_PG_ENABLED === 'true';

@@ -8,6 +8,7 @@ interface UseScriptProps {
   defer: boolean;
   async: boolean;
   isEnabled: boolean;
+  onLoadCallback?: () => void;
 }
 
 export function useScript({
@@ -15,6 +16,7 @@ export function useScript({
   defer = false,
   async = true,
   isEnabled = false,
+  onLoadCallback,
 }: UseScriptProps) {
   // Keeping track of script loaded and error state
   const [state, setState] = useState({
@@ -38,6 +40,7 @@ export function useScript({
 
       // Create script
       let script = document.createElement('script');
+
       script.src = src;
       script.async = async;
       script.defer = defer;
@@ -48,6 +51,7 @@ export function useScript({
           loaded: true,
           error: false,
         });
+        onLoadCallback && onLoadCallback();
       };
 
       const onScriptError = () => {

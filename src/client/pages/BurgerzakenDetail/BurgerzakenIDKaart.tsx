@@ -7,7 +7,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoDetail,
@@ -42,9 +42,7 @@ export default function BurgerzakenIDKaart() {
 
       <PageContent className={styles.DetailPageContent}>
         {(isError(BRP) || noContent) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {isLoading(BRP) && (
           <LoadingContent className={styles.LoadingContentInfo} />

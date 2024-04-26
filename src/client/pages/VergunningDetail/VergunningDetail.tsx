@@ -7,7 +7,7 @@ import {
 } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   LinkdInline,
@@ -62,9 +62,7 @@ export default function VergunningDetail() {
 
       <PageContent className={styles.DetailPageContent}>
         {(isError(VERGUNNINGEN) || noContent) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {isLoading(VERGUNNINGEN) && (
           <LoadingContent className={styles.LoadingContentInfo} />

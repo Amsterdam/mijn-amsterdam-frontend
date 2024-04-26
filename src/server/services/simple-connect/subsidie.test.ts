@@ -14,7 +14,7 @@ import { remoteApi } from '../../../test-utils';
 
 describe('Subsidie', () => {
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private' },
+    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxxx',
   };
 

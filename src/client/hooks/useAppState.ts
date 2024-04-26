@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -20,6 +19,7 @@ import {
 } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
+import { captureMessage } from '../utils/monitoring';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
@@ -51,10 +51,11 @@ export function useAppStateFallbackService({
 
   const appStateError = useCallback(
     (message: string) => {
-      Sentry.captureMessage('Could not load any data sources.', {
-        extra: {
+      captureMessage('Could not load any data sources.', {
+        properties: {
           message,
         },
+        severity: 'critical',
       });
       setAppState((appState) => createAllErrorState(appState, message));
     },
@@ -123,7 +124,7 @@ const streamEndpoint = addParamsToStreamEndpoint(BFFApiUrls.SERVICES_SSE);
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
  * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
- * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
+ * If that fails we just can't connect to the server for whatever reason. Monitoring error handling might have information about this scenario.
  */
 export function useAppStateRemote() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
@@ -202,7 +203,7 @@ export function isAppStateReady(
 
       // NOTE: The appState keys ending with _BAG are not considered a fixed/known portion of the appstate.
       if (!stateConfig && !key.endsWith('_BAG')) {
-        Sentry.captureMessage(`unknown stateConfig key: ${appStateKey}`);
+        captureMessage(`unknown stateConfig key: ${appStateKey}`);
       }
 
       // If we encounter an unknown stateConfig we treat the state to be ready so we don't block the isReady completely.

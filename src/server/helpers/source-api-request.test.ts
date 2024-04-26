@@ -37,7 +37,12 @@ describe('requestData.ts', () => {
   const SESS_ID_2 = 'y2';
   const TOKEN = 'xxxxx';
   const AUTH_PROFILE_AND_TOKEN: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: 'bsnxxxx' },
+    profile: {
+      authMethod: 'digid',
+      profileType: 'private',
+      id: 'bsnxxxx',
+      sid: '',
+    },
     token: TOKEN,
   };
 
@@ -175,12 +180,12 @@ describe('requestData.ts', () => {
 
     const error = new Error('Network Error');
 
-    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, null));
+    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null));
   });
 
   test('Find corresponding api', () => {
     const entries: ApiUrlEntries = [
-      ['WMO', 'http://get/foo'],
+      ['WPI_AANVRAGEN', 'http://get/foo'],
       [
         'BRP',
         { private: 'http://get/bar', commercial: 'https://get/bar/commercial' },
@@ -194,7 +199,9 @@ describe('requestData.ts', () => {
       ],
     ];
 
-    expect(findApiByRequestUrl(entries, 'http://get/foo')).toBe('WMO');
+    expect(findApiByRequestUrl(entries, 'http://get/foo')).toBe(
+      'WPI_AANVRAGEN'
+    );
     expect(findApiByRequestUrl(entries, 'http://get/bar')).toBe('BRP');
     expect(findApiByRequestUrl(entries, 'http://get/bar/commercial')).toBe(
       'BRP'

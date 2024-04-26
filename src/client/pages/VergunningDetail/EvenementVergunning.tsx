@@ -58,8 +58,8 @@ export function EvenementVergunning({
                   `${vergunning.dateStart}T${vergunning.timeStart}`
                 )
               : vergunning.dateStart
-              ? defaultDateFormat(vergunning.dateStart)
-              : '-'
+                ? defaultDateFormat(vergunning.dateStart)
+                : '-'
           }
         />
         <InfoDetail
@@ -70,8 +70,8 @@ export function EvenementVergunning({
                   `${vergunning.dateEnd}T${vergunning.timeEnd}`
                 )
               : vergunning.dateEnd
-              ? defaultDateFormat(vergunning.dateEnd)
-              : '-'
+                ? defaultDateFormat(vergunning.dateEnd)
+                : '-'
           }
         />
       </InfoDetailGroup>

@@ -35,7 +35,12 @@ describe('Toeristische verhuur service', () => {
   };
 
   const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: 'DIGID-BSN' },
+    profile: {
+      authMethod: 'digid',
+      profileType: 'private',
+      id: 'DIGID-BSN',
+      sid: '',
+    },
     token: 'xxxxxx',
   };
 
@@ -115,7 +120,7 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.registraties).toStrictEqual({
       status: 'DEPENDENCY_ERROR',
       content: null,
-      message: `[registrationNumbers] Error: Not Available  `,
+      message: `[registrationNumbers] Error: Not Available`,
     });
   });
 

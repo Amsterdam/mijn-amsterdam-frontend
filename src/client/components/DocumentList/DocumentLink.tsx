@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react';
 import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types';
@@ -9,6 +8,7 @@ import { useUserCity } from '../../hooks/useUserCity';
 import Linkd from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './DocumentLink.module.scss';
+import { captureException } from '../../utils/monitoring';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -111,8 +111,8 @@ export function DocumentLink({
         })
         .catch((error) => {
           setLoading(false);
-          Sentry.captureException(error, {
-            extra: {
+          captureException(error, {
+            properties: {
               title: document.title,
               url: document.url,
             },

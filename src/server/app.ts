@@ -3,11 +3,9 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import {
   IS_AP,
-  IS_AZ,
   IS_DEVELOPMENT,
   IS_OT,
   IS_PRODUCTION,
-  OTAP_ENV,
 } from '../universal/config/env';
 
 if (IS_DEVELOPMENT) {
@@ -17,25 +15,12 @@ if (IS_DEVELOPMENT) {
   dotenvExpand.expand(envConfig);
 }
 
-import * as Sentry from '@sentry/node';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
-
 import cors from 'cors';
-import express, {
-  ErrorRequestHandler,
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response,
-} from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import {
-  BFF_BASE_PATH,
-  BFF_PORT,
-  BffEndpoints,
-  RELEASE_VERSION,
-} from './config';
+import { BFF_BASE_PATH, BFF_PORT, BffEndpoints } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
 import { authRouterDevelopment, relayDevRouter } from './router-development';
@@ -43,23 +28,7 @@ import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
-
-const sentryOptions: Sentry.NodeOptions = {
-  dsn: process.env.BFF_SENTRY_DSN,
-  environment: `${IS_AZ ? 'az-' : ''}${OTAP_ENV}`,
-  debug: IS_DEVELOPMENT,
-  autoSessionTracking: false,
-  beforeSend(event, hint) {
-    if (IS_DEVELOPMENT) {
-      console.log(hint);
-      return null;
-    }
-    return event;
-  },
-  release: RELEASE_VERSION,
-};
-
-Sentry.init(sentryOptions);
+import { captureException, captureMessage } from './services/monitoring';
 
 const app = express();
 
@@ -96,9 +65,6 @@ if (IS_DEVELOPMENT) {
 
 // Json body parsing
 app.use(express.json());
-
-// Error handler
-app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cookieParser());
 app.use(compression());
@@ -152,8 +118,6 @@ app.get(BffEndpoints.ROOT, (req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
 });
 
-app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
-
 // Optional fallthrough error handler
 app.use(function onError(
   err: Error,
@@ -161,7 +125,12 @@ app.use(function onError(
   res: Response,
   _next: NextFunction
 ) {
-  Sentry.captureException(err);
+  captureException(err, {
+    properties: {
+      message: 'Express onError handler',
+    },
+  });
+
   if (!IS_PRODUCTION) {
     return res.redirect(
       `${process.env.MA_FRONTEND_URL}/server-error-500?stack=${JSON.stringify(
@@ -176,7 +145,6 @@ app.use(function onError(
 
 app.use((req: Request, res: Response) => {
   if (!res.headersSent) {
-    Sentry.captureMessage('404 not found', { extra: { url: req.url } });
     return send404(res);
   }
   return res.end();
@@ -186,6 +154,14 @@ const server = app.listen(BFF_PORT, () => {
   console.info(
     `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
   );
+});
+
+server.on('error', (error) => {
+  captureException(error, {
+    properties: {
+      message: 'Server onError handler',
+    },
+  });
 });
 
 // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/

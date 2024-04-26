@@ -33,7 +33,7 @@
   p {
     margin: 0;
 
-    +h3 {
+    + h3 {
       margin-top: 2rem;
       margin-bottom: 0;
     }
@@ -50,10 +50,9 @@
     margin: 0;
 
     li {
-      margin-bottom: .8rem;
+      margin-bottom: 0.8rem;
 
       @include select(Button__plain) {
-
         &,
         &:visited {
           color: $color-white;
@@ -83,11 +82,10 @@
 
     @include select(Link) {
       margin-right: 3rem;
-      font-size: .9em;
+      font-size: 0.9em;
       font-weight: bold;
     }
   }
-
 }
 
 .Panel {
@@ -96,7 +94,7 @@
       display: none;
     }
 
-    >h3 {
+    > h3 {
       padding-left: 2.8rem;
       margin-top: 1.4rem;
       width: fit-content;
@@ -129,7 +127,7 @@
         }
       }
 
-      +.Panel {
+      + .Panel {
         margin-top: 4rem;
       }
     }
@@ -147,7 +145,7 @@
     li {
       margin: 0;
       position: relative;
-      margin-bottom: .6rem;
+      margin-bottom: 0.6rem;
       padding-left: 1.8rem;
 
       &:before {

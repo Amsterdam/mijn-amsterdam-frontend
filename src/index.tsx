@@ -1,11 +1,10 @@
-import * as Sentry from '@sentry/react';
+import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
+import { ErrorInfo } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ErrorBoundary } from 'react-error-boundary';
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';
-import { IS_AZ, IS_DEVELOPMENT, OTAP_ENV } from './universal/config/env';
-import { ErrorInfo } from 'react';
+import { captureMessage, reactPlugin } from './client/utils/monitoring';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -23,33 +22,10 @@ console.info(
   MA_BUILD_ID ?? '-1'
 );
 
-Sentry.init({
-  dsn: import.meta.env.REACT_APP_SENTRY_DSN,
-  environment: `${IS_AZ ? 'az-' : ''}${OTAP_ENV}`,
-  debug: IS_DEVELOPMENT,
-  ignoreErrors: [
-    'a[b].target.className.indexOf is not a function',
-    "Failed to execute 'removeChild' on 'Node'",
-  ], // Chrome => google translate extension bug
-  release,
-  tracesSampleRate: 0.5,
-  autoSessionTracking: false,
-  beforeSend(event, hint) {
-    if (IS_DEVELOPMENT) {
-      console.log(hint);
-    }
-    if (!import.meta.env.REACT_APP_SENTRY_DSN) {
-      return null;
-    }
-
-    return event;
-  },
-});
-
-const sendToSentry = (error: Error, info: ErrorInfo) => {
-  Sentry.captureMessage(`Kritieke applicatie fout: ${error.message}`, {
-    level: 'fatal',
-    extra: {
+const sendToMonitoring = (error: Error, info: ErrorInfo) => {
+  captureMessage(`Kritieke applicatie fout: ${error.message}`, {
+    severity: 'critical',
+    properties: {
       componentStack: info.componentStack,
     },
   });
@@ -58,7 +34,10 @@ const sendToSentry = (error: Error, info: ErrorInfo) => {
 const root = createRoot(document.getElementById('root')!);
 
 root.render(
-  <ErrorBoundary onError={sendToSentry} FallbackComponent={ApplicationError}>
+  <AppInsightsErrorBoundary
+    onError={ApplicationError}
+    appInsights={reactPlugin}
+  >
     <App />
-  </ErrorBoundary>
+  </AppInsightsErrorBoundary>
 );

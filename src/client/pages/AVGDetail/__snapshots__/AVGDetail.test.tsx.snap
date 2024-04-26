@@ -56,7 +56,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
           AVG persoonsgegevens
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           AVG verzoek
         </h2>
@@ -65,42 +65,45 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
     <div
       class="_PageContent_47d7c0"
     >
-      <div
-        class="_Alert_21b118 _warning_21b118"
+      <section
+        class="ams-alert ams-alert--error"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          We kunnen op dit moment geen gegevens tonen.
-        </p>
-      </div>
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
+          >
+            Foutmelding
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            We kunnen op dit moment geen gegevens tonen.
+          </p>
+        </div>
+      </section>
     </div>
   </main>
 </DocumentFragment>
@@ -162,7 +165,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
           AVG persoonsgegevens
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           AVG verzoek
         </h2>
@@ -175,7 +178,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Nummer
         </h3>
@@ -189,7 +192,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Type verzoek
         </h3>
@@ -203,7 +206,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Onderwerp(en)
         </h3>
@@ -217,7 +220,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Toelichting
         </h3>
@@ -232,7 +235,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
       class="_StatusLine_a12ff2 _AvgStatusLines_b31fb8"
     >
       <h4
-        class="amsterdam-heading amsterdam-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
       >
         Status
       </h4>

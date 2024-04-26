@@ -2,7 +2,7 @@ import { generatePath, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoDetail,
@@ -37,9 +37,7 @@ const AVGDetail = () => {
 
       <PageContent>
         {isError(AVG) || noContent ? (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         ) : (
           <>
             <InfoDetail label="Nummer" value={verzoek?.id || '-'} />

@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
 import { differenceInMonths } from 'date-fns';
 import FormData from 'form-data';
@@ -21,6 +20,7 @@ import {
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
+import { captureException } from '../monitoring';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {
@@ -92,7 +92,7 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
       });
     });
   } catch (e) {
-    Sentry.captureException(e);
+    captureException(e);
   }
   metingen.sort(sortAlpha('adres', 'asc', 'lower'));
 

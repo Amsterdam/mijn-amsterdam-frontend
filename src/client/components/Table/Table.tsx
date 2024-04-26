@@ -7,11 +7,9 @@ import {
 } from '../../../universal/helpers';
 import { LinkProps, Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
-import styles from './Table.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
-import { Link } from '@amsterdam/design-system-react';
-import { useHistory } from 'react-router-dom';
 import { MARouterLink } from '../MaRouterLink/MaRouterLink';
+import styles from './Table.module.scss';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;

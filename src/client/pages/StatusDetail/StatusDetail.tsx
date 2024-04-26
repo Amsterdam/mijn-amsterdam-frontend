@@ -1,18 +1,22 @@
-import * as Sentry from '@sentry/react';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
+
+import {
+  Alert as DSAlert,
+  LinkList,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import {
   GenericDocument,
   StatusLine,
 } from '../../../universal/types/App.types';
 import { AppState, AppStateKey } from '../../AppState';
 import {
-  Alert,
   ChapterIcon,
   DetailPage,
-  Linkd,
+  ErrorAlert,
   LoadingContent,
   PageContent,
   PageHeading,
@@ -20,11 +24,11 @@ import {
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { captureMessage } from '../../utils/monitoring';
 import { relayApiUrl } from '../../utils/utils';
 import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
-
 interface StatusDetailProps {
   chapter: Chapter;
   stateKey: AppStateKey;
@@ -73,8 +77,8 @@ export default function StatusDetail({
 
   useEffect(() => {
     if (!isStateLoading && !statusItem) {
-      Sentry.captureMessage(`${stateKey} Item not found`, {
-        extra: {
+      captureMessage(`${stateKey} Item not found`, {
+        properties: {
           requestedId: id,
           availableIds: statusItems.map((item) => item.id),
         },
@@ -118,35 +122,31 @@ export default function StatusDetail({
       <PageContent className={styles.DetailPageContent}>
         {!!statusItem && pageContent && pageContent(isStateLoading, statusItem)}
 
-        {isError(STATE) ||
-          (noContent && !statusItems.length && (
-            <Alert type="warning">
-              <p>
-                We kunnen op dit moment geen gegevens tonen.{' '}
-                <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>
-                .
-              </p>
-            </Alert>
-          ))}
+        {(isError(STATE) || (noContent && !statusItems.length)) && (
+          <ErrorAlert>
+            We kunnen op dit moment geen gegevens tonen.{' '}
+            <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>.
+          </ErrorAlert>
+        )}
 
         {!isStateLoading && !statusItem && !!statusItems.length && (
-          <Alert type="warning">
-            <p>
-              Deze pagina is mogelijk verplaatst. Kies hieronder een van de
-              beschikbare aanvragen.
-            </p>
-            <ul className={styles.ItemAlternatives}>
+          <DSAlert title="Deze pagina is mogelijk verplaatst">
+            <Paragraph className={styles.MarginBottom}>
+              Kies hieronder een van de beschikbare aanvragen.
+            </Paragraph>
+            <LinkList>
               {statusItems.map((statusItem, index) => {
                 return (
-                  <li key={statusItem.link?.to || index}>
-                    <Linkd href={statusItem.link?.to || appRoute}>
-                      {statusItem.title}
-                    </Linkd>
-                  </li>
+                  <LinkList.Link
+                    key={statusItem.link?.to || index}
+                    href={statusItem.link?.to || appRoute}
+                  >
+                    {statusItem.title}
+                  </LinkList.Link>
                 );
               })}
-            </ul>
-          </Alert>
+            </LinkList>
+          </DSAlert>
         )}
 
         {isStateLoading && <LoadingContent />}

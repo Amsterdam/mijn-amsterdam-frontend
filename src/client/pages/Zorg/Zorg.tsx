@@ -3,7 +3,7 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   LinkdInline,
@@ -67,9 +67,7 @@ export default function Zorg() {
         </p>
         <MaintenanceNotifications page="zorg" />
         {isError(WMO) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

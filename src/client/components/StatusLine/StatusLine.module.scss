@@ -69,57 +69,71 @@
   }
 
   &--start {
-    background: linear-gradient(to bottom,
-        transparent 0%,
-        transparent 3rem,
-        $color-neutral-grey3 3rem,
-        $color-neutral-grey3 100%);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey3 100%
+    );
   }
 
   &--start-checked {
-    background: linear-gradient(to bottom,
-        transparent 0%,
-        transparent 3rem,
-        $color-primary-darkblue 3rem,
-        $color-primary-darkblue 100%);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 3rem,
+      $color-primary-darkblue 3rem,
+      $color-primary-darkblue 100%
+    );
   }
 
   &--start-faded {
-    background: linear-gradient(to bottom,
-        $color-neutral-grey1 0%,
-        $color-neutral-grey1 3rem,
-        $color-neutral-grey3 3rem,
-        $color-neutral-grey1 100%);
+    background: linear-gradient(
+      to bottom,
+      $color-neutral-grey1 0%,
+      $color-neutral-grey1 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey1 100%
+    );
   }
 
   &--middle-faded {
-    background: linear-gradient(to bottom,
-        $color-primary-darkblue 0%,
-        $color-neutral-grey3 75%,
-        $color-neutral-grey1 100%);
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-neutral-grey3 75%,
+      $color-neutral-grey1 100%
+    );
   }
 
   &--middle-checked-next {
-    background: linear-gradient(to bottom,
-        $color-primary-darkblue 0%,
-        $color-primary-darkblue 3rem,
-        $color-neutral-grey3 3rem,
-        $color-neutral-grey3 100%);
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-primary-darkblue 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey3 100%
+    );
   }
 
   &--end {
-    background: linear-gradient(to bottom,
-        $color-neutral-grey3 0%,
-        $color-neutral-grey3 3rem,
-        transparent 0%);
+    background: linear-gradient(
+      to bottom,
+      $color-neutral-grey3 0%,
+      $color-neutral-grey3 3rem,
+      transparent 0%
+    );
   }
 
   &--end-active,
   &--end-checked {
-    background: linear-gradient(to bottom,
-        $color-primary-darkblue 0%,
-        $color-primary-darkblue 3rem,
-        transparent 0%);
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-primary-darkblue 3rem,
+      transparent 0%
+    );
   }
 }
 
@@ -162,7 +176,7 @@
     background-color: $color-neutral-grey1;
 
     &,
-    +.ListItem {
+    + .ListItem {
       @include select(StatusLine_ListItemInner) {
         border-top: 0;
       }
@@ -200,7 +214,6 @@
     }
 
     @include mq-tablet() {
-
       &,
       &--status {
         padding: 1.8rem 1rem 1rem 3rem;
@@ -220,7 +233,7 @@
   }
 
   .PanelContent {
-    >p {
+    > p {
       margin: 0 0 2rem;
 
       a {
@@ -262,7 +275,7 @@
 .altDocumentContent {
   display: block;
 
-  >* {
+  > * {
     margin-top: 0;
   }
 }

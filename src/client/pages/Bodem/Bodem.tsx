@@ -5,7 +5,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   Linkd,
   OverviewPage,
@@ -64,9 +64,9 @@ export default function Bodem() {
           </Linkd>
         </p>
         {isError(BODEM) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen loodmetingen tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen loodmetingen tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       <SectionCollapsible

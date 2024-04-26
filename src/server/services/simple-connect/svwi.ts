@@ -1,7 +1,7 @@
-import { DataRequestConfig, getApiConfig } from '../../config';
+import { Chapters } from '../../../universal/config';
+import { getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { Chapters } from '../../../universal/config';
 
 interface SVWISourceResponseData {
   id: string;

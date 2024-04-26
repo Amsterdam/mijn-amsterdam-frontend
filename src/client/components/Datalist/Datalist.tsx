@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import styles from './Datalist.module.scss';
 import classNames from 'classnames';
 
-interface Row {
+export interface Row {
   label: ReactNode;
   content: ReactNode;
 }
@@ -40,7 +40,7 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
   return (
     <div
       className={classNames(
-        'amsterdam-grid',
+        'ams-grid',
         styles['Datalist__row-wrapper'],
         className
       )}

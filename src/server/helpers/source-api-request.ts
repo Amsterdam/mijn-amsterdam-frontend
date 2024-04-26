@@ -1,9 +1,4 @@
-import * as Sentry from '@sentry/node';
-import axios, {
-  AxiosPromise,
-  AxiosResponse,
-  AxiosResponseHeaders,
-} from 'axios';
+import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import memoryCache from 'memory-cache';
 import { IS_TAP } from '../../universal/config/env';
 import {
@@ -26,6 +21,7 @@ import {
   apiUrlEntries,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
+import { captureException, captureMessage } from '../services/monitoring';
 import { AuthProfileAndToken } from './app';
 import { Deferred } from './deferred';
 
@@ -98,6 +94,8 @@ function enableMockAdapter() {
               delay,
               await responseData(...args)
             );
+            // Returns response type and content off all (mock) backendsystems APIs.
+            // Change this to trigger same response type for all APIs e.g. [500, data, headers];.
             return [
               typeof status === 'function' ? status(...args) : status,
               data,
@@ -236,48 +234,22 @@ export async function requestData<T>(
     if (IS_DEBUG) {
       console.error(error);
     }
-    // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
-    // to the client to pass through.
-    const shouldCaptureMessage =
-      error.isAxiosError || (!(error instanceof Error) && !!error?.message);
 
-    const apiName = findApiByRequestUrl(apiUrlEntries, requestConfig.url);
     const errorMessageBasic = error.toString();
     const errorMessage = error?.response?.data
       ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
       : errorMessageBasic;
 
-    const capturedId = shouldCaptureMessage
-      ? Sentry.captureMessage(
-          `${apiName}: ${error?.message ? error.message : error}`,
-          {
-            tags: {
-              url: requestConfig.url!,
-            },
-            extra: {
-              module: 'request',
-              status: error?.response?.status,
-              apiName,
-              errorMessage,
-            },
-          }
-        )
-      : Sentry.captureException(error, {
-          tags: {
-            url: requestConfig.url!,
-          },
-          extra: {
-            apiName,
-            errorMessage,
-          },
-        });
+    captureException(error, {
+      properties: {
+        message: errorMessage,
+      },
+    });
 
-    const sentryId = !IS_TAP ? null : capturedId;
     const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(
       errorMessage,
       null,
-      sentryId,
       statusCode ? `${statusCode}` : undefined
     );
 

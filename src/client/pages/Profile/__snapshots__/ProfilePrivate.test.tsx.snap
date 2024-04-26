@@ -58,7 +58,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -73,113 +73,120 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       <p>
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
-      <div
-        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
+      <section
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
-        </p>
-        <p>
-          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
-          <a
-            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Meer informatie
-          </a>
-        </p>
-      </div>
-      <div
-        class="_Alert_21b118 _warning_21b118 inOnderzoek"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
+          >
+            Vertrokken Onbekend Waarheen
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
+            <br />
+            Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
+            <a
+              aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Meer informatie
+            </a>
+          </p>
+        </div>
+      </section>
+      <section
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont. 
-          <a
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
-          </a>
-          .
-        </p>
-        <p>
-          Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
-          <a
-            href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-            rel="external noopener noreferrer"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
           >
-            adresonderzoek.basisinformatie@amsterdam.nl
-          </a>
-          .
-        </p>
-      </div>
+            Adres in onderzoek
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont. 
+            <a
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
+            </a>
+            .
+          </p>
+          <p
+            class="ams-paragraph"
+          >
+            Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
+            <a
+              href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+              rel="external noopener noreferrer"
+            >
+              adresonderzoek.basisinformatie@amsterdam.nl
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -363,7 +370,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -463,7 +470,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -670,7 +677,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1013,7 +1020,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1244,7 +1251,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1489,7 +1496,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1758,7 +1765,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -1773,113 +1780,120 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       <p>
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
-      <div
-        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
+      <section
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
-        </p>
-        <p>
-          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
-          <a
-            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Meer informatie
-          </a>
-        </p>
-      </div>
-      <div
-        class="_Alert_21b118 _warning_21b118 inOnderzoek"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
+          >
+            Vertrokken Onbekend Waarheen
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
+            <br />
+            Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
+            <a
+              aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Meer informatie
+            </a>
+          </p>
+        </div>
+      </section>
+      <section
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
-          <a
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
-          </a>
-          .
-        </p>
-        <p>
-          Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
-          <a
-            href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-            rel="external noopener noreferrer"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
           >
-            adresonderzoek.basisinformatie@amsterdam.nl
-          </a>
-          .
-        </p>
-      </div>
+            Adres in onderzoek
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
+            <a
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
+            </a>
+            .
+          </p>
+          <p
+            class="ams-paragraph"
+          >
+            Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
+            <a
+              href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+              rel="external noopener noreferrer"
+            >
+              adresonderzoek.basisinformatie@amsterdam.nl
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -2063,7 +2077,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -2163,7 +2177,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2370,7 +2384,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2713,7 +2727,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2944,7 +2958,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -3189,7 +3203,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -3458,7 +3472,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -3473,113 +3487,120 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       <p>
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
-      <div
-        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
+      <section
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
-        </p>
-        <p>
-          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
-          <a
-            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Meer informatie
-          </a>
-        </p>
-      </div>
-      <div
-        class="_Alert_21b118 _warning_21b118 inOnderzoek"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
+          >
+            Vertrokken Onbekend Waarheen
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
+            <br />
+            Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
+            <a
+              aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Meer informatie
+            </a>
+          </p>
+        </div>
+      </section>
+      <section
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
-          <a
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
-          </a>
-          .
-        </p>
-        <p>
-          Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
-          <a
-            href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-            rel="external noopener noreferrer"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
           >
-            adresonderzoek.basisinformatie@amsterdam.nl
-          </a>
-          .
-        </p>
-      </div>
+            Adres in onderzoek
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
+            <a
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
+            </a>
+            .
+          </p>
+          <p
+            class="ams-paragraph"
+          >
+            Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
+            <a
+              href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+              rel="external noopener noreferrer"
+            >
+              adresonderzoek.basisinformatie@amsterdam.nl
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -3777,7 +3798,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -3877,7 +3898,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4248,7 +4269,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4507,7 +4528,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4780,7 +4801,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -5049,7 +5070,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -5067,113 +5088,120 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
       <p>
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
-      <div
-        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
+      <section
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
-        </p>
-        <p>
-          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
-          <a
-            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Meer informatie
-          </a>
-        </p>
-      </div>
-      <div
-        class="_Alert_21b118 _warning_21b118 inOnderzoek"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
+          >
+            Vertrokken Onbekend Waarheen
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
+            <br />
+            Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
+            <a
+              aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Meer informatie
+            </a>
+          </p>
+        </div>
+      </section>
+      <section
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
-          <a
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
-          </a>
-          .
-        </p>
-        <p>
-          Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
-          <a
-            href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-            rel="external noopener noreferrer"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
           >
-            adresonderzoek.basisinformatie@amsterdam.nl
-          </a>
-          .
-        </p>
-      </div>
+            Adres in onderzoek
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
+            <a
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
+            </a>
+            .
+          </p>
+          <p
+            class="ams-paragraph"
+          >
+            Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
+            <a
+              href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+              rel="external noopener noreferrer"
+            >
+              adresonderzoek.basisinformatie@amsterdam.nl
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -5329,7 +5357,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -5487,7 +5515,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -5502,113 +5530,120 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       <p>
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
-      <div
-        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
+      <section
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
-        </p>
-        <p>
-          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
-          <a
-            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Meer informatie
-          </a>
-        </p>
-      </div>
-      <div
-        class="_Alert_21b118 _warning_21b118 inOnderzoek"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
+          >
+            Vertrokken Onbekend Waarheen
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
+            <br />
+            Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
+            <a
+              aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Meer informatie
+            </a>
+          </p>
+        </div>
+      </section>
+      <section
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
-          <a
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
-          </a>
-          .
-        </p>
-        <p>
-          Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
-          <a
-            href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-            rel="external noopener noreferrer"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
           >
-            adresonderzoek.basisinformatie@amsterdam.nl
-          </a>
-          .
-        </p>
-      </div>
+            Adres in onderzoek
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
+            <a
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
+            </a>
+            .
+          </p>
+          <p
+            class="ams-paragraph"
+          >
+            Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
+            <a
+              href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+              rel="external noopener noreferrer"
+            >
+              adresonderzoek.basisinformatie@amsterdam.nl
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -5792,7 +5827,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -5892,7 +5927,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6099,7 +6134,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6442,7 +6477,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6673,7 +6708,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6918,7 +6953,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -7187,7 +7222,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Mijn gegevens
         </h2>
@@ -7202,113 +7237,120 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       <p>
         Als u een andere nationaliteit hebt of hebt gehad naast de Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit moment geen Nederlandse nationaliteit hebt.
       </p>
-      <div
-        class="_Alert_21b118 _warning_21b118 vertrokkenOnbekendWaarheen"
+      <section
+        class="ams-alert ams-alert--warning _AlertVertrokkenOnbekendWaarheen_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
-        </p>
-        <p>
-          Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
-          <a
-            aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Meer informatie
-          </a>
-        </p>
-      </div>
-      <div
-        class="_Alert_21b118 _warning_21b118 inOnderzoek"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
+          >
+            Vertrokken Onbekend Waarheen
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) met de melding ‘Vertrokken Onbekend Waarheen (VOW)’.
+            <br />
+            Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
+            <a
+              aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Meer informatie
+            </a>
+          </p>
+        </div>
+      </section>
+      <section
+        class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
       >
-        <svg
-          aria-hidden="true"
-          class="_Icon_21b118"
-          focusable="false"
-          height="36"
-          viewBox="0 0 36 36"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="ams-alert__icon"
         >
-          <title>
-            waarschuwing-icoon
-          </title>
-          <path
-            d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-          />
-          <rect
-            height="4.95"
-            width="2"
-            x="17"
-            y="16.99"
-          />
-          <rect
-            height="1.95"
-            width="2"
-            x="17"
-            y="22.94"
-          />
-        </svg>
-         
-        <p>
-          Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
-          <a
-            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-            rel="external noopener noreferrer"
+          <span
+            class="ams-icon ams-icon--size-4"
           >
-            Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
-          </a>
-          .
-        </p>
-        <p>
-          Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
-          <a
-            href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-            rel="external noopener noreferrer"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--4"
           >
-            adresonderzoek.basisinformatie@amsterdam.nl
-          </a>
-          .
-        </p>
-      </div>
+            Adres in onderzoek
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
+            <a
+              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
+              rel="external noopener noreferrer"
+            >
+              Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
+            </a>
+            .
+          </p>
+          <p
+            class="ams-paragraph"
+          >
+            Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
+            <a
+              href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+              rel="external noopener noreferrer"
+            >
+              adresonderzoek.basisinformatie@amsterdam.nl
+            </a>
+            .
+          </p>
+        </div>
+      </section>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -7492,7 +7534,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--3 _Title_37c468"
       >
         Adres
       </h3>
@@ -7562,7 +7604,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -7769,7 +7811,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8112,7 +8154,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8343,7 +8385,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8588,7 +8630,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"

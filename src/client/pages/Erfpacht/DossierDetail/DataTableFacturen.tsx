@@ -15,7 +15,7 @@ export function DataTableFacturen({
   dossier,
   relatieCode,
 }: ErfpachtDatalistProps) {
-  const { displayPropsAlleFacturen, colStyles } = useErfpachtV2Data();
+  const { displayPropsAlleFacturen, isLoading } = useErfpachtV2Data();
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
@@ -100,7 +100,6 @@ export function DataTableFacturen({
         />
         {!!dossier.facturen?.facturen?.length && (
           <TableV2
-            gridColStyles={colStyles.facturenTable}
             items={dossier.facturen.facturen.slice(0, 3)}
             className={classNames(
               styles.FacturenTable,
@@ -118,7 +117,7 @@ export function DataTableFacturen({
               })}
             />
           )}
-        {!dossier.facturen?.facturen?.length && (
+        {!isLoading && !dossier.facturen?.facturen?.length && (
           <Paragraph>U heeft geen facturen.</Paragraph>
         )}
       </Grid.Cell>

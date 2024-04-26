@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import axios, { AxiosRequestConfig } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
@@ -27,14 +26,15 @@ import {
 } from '../config';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
+import { captureException, captureMessage } from '../services/monitoring';
 
 // const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid' | 'yivi';
   profileType: ProfileType;
-  id?: string;
-  sid?: string; // TMA Session ID
+  id: string; // User id (bsn/kvknr)
+  sid: string; // TMA Session ID
 }
 
 export function getAuthProfile(tokenData: TokenData): AuthProfile {
@@ -319,12 +319,15 @@ export async function verifyUserIdWithRemoteUserinfo(
 
   try {
     const response = await axios(requestOptions);
-    let decoded: Record<TokenIdAttribute, string> = decodeToken(
+    if (!response.data) {
+      return false;
+    }
+    const decoded: Record<TokenIdAttribute, string> = decodeToken(
       response.data.toString()
     );
     return decoded[TOKEN_ID_ATTRIBUTE[authMethod]] === userID;
   } catch (error) {
-    Sentry.captureException(error);
+    captureException(error);
   }
   return false;
 }
@@ -347,7 +350,7 @@ export async function isRequestAuthenticated(
     }
   } catch (error) {
     console.error(error);
-    Sentry.captureException(error);
+    captureException(error);
   }
   return false;
 }
@@ -394,8 +397,8 @@ export async function isAuthenticated(
       await getAuth(req);
       return next();
     } catch (error) {
-      Sentry.captureMessage('Not authenticated: Session cookie invalid', {
-        level: 'warning',
+      captureMessage('Not authenticated: Session cookie invalid', {
+        severity: 'warning',
       });
     }
   }

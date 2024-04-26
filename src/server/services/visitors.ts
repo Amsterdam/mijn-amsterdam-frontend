@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import crypto from 'crypto';
 import {
   add,
@@ -12,11 +11,12 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_PRODUCTION, IS_TAP } from '../../universal/config';
+import { IS_TAP } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { IS_PG, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
 import { execDB } from './db/sqlite3';
+import { captureException } from './monitoring';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -213,13 +213,12 @@ export async function loginStats(req: Request, res: Response) {
           : parseISO(dateMaxResult.date_max);
     }
   } catch (error) {
-    Sentry.captureException(error),
-      {
-        extra: {
-          dateMaxResult,
-          dateMinResult,
-        },
-      };
+    captureException(error, {
+      properties: {
+        dateMaxResult,
+        dateMinResult,
+      },
+    });
   }
 
   let dateStart: string = dateMin

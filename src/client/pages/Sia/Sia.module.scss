@@ -40,24 +40,22 @@
 }
 
 .SurveyThumbs {
-
   display: inline-flex;
   text-decoration: none;
   font-weight: bold;
 
-  +.SurveyThumbs {
+  + .SurveyThumbs {
     margin-left: 2rem;
   }
 
   // height: 2rem;
   svg {
     height: 2rem;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 }
 
 .SurveyThumbsUp {
-
   &:hover,
   &:visited,
   & {
@@ -71,7 +69,6 @@
 }
 
 .SurveyThumbsDown {
-
   &:hover,
   &:visited,
   & {

@@ -18,6 +18,7 @@ describe('Loodmeting', () => {
       id: '123',
       authMethod: 'digid',
       profileType: 'private',
+      sid: '',
     },
     token: 'abc123',
   };

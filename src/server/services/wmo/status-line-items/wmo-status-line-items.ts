@@ -2,14 +2,13 @@ import { FeatureToggle } from '../../../../universal/config/app';
 import { StatusLineItem } from '../../../../universal/types';
 import {
   LeveringsVorm,
-  LeveringsVormConfig,
   ProductSoortCode,
   WMOStatusLineItemFormatterConfig,
   WMOVoorziening,
 } from '../wmo-config-and-types';
-import { parseLabelContent } from './wmo-helpers';
 import { AOV } from './wmo-aov';
 import { diensten } from './wmo-diensten';
+import { parseLabelContent } from './wmo-helpers';
 import { hulpmiddelen } from './wmo-hulpmiddelen';
 import { PGB } from './wmo-pgb';
 import { vergoeding } from './wmo-vergoeding';
@@ -187,6 +186,7 @@ export function getStatusLineItems(voorziening: WMOVoorziening, today: Date) {
           ? statusItem.isVisible(index, voorziening, today)
           : true,
         documents:
+          // NOTE: We only show a single document for now. If document management and processing policy is implemented in Zorgned/WMO we'll show more documents.
           FeatureToggle.zorgnedDocumentAttachmentsActive &&
           statusItem.status === 'Besluit' &&
           voorziening.documenten?.length === 1
@@ -194,16 +194,15 @@ export function getStatusLineItems(voorziening: WMOVoorziening, today: Date) {
             : [],
       };
 
-      if (index === 0 && stepData.documents?.length !== 1) {
+      if (
+        statusItem.status === 'Besluit' &&
+        voorziening.documenten.length !== 1
+      ) {
         stepData.altDocumentContent = `<p>
-            <strong>
-              ${
-                voorziening.isActueel
-                  ? 'U krijgt dit besluit per post.'
-                  : 'U hebt dit besluit per post ontvangen.'
-              }
-            </strong>
-          </p>`;
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>`;
       }
 
       return stepData.isVisible ? stepData : null;

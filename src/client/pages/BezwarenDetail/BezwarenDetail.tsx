@@ -11,7 +11,7 @@ import {
   uniqueArray,
 } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   DetailPage,
   InfoDetail,
@@ -79,9 +79,7 @@ const BezwarenDetail = () => {
 
       <PageContent>
         {(isError(BEZWAREN) || noContent || api.isError) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {!!bezwaar && (
           <>

@@ -2,7 +2,6 @@ import { differenceInCalendarDays, differenceInYears } from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { Stadspas } from '../stadspas/stadspas-types';
 import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
@@ -44,21 +43,25 @@ export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
 
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
-  const stadspassen = appState.STADSPAS?.content?.stadspassen ?? [];
-  return !!stadspassen.length;
+  if (appState.STADSPAS?.status === 'OK') {
+    const stadspassen = appState.STADSPAS?.content?.stadspassen ?? [];
+    return !!stadspassen.length;
+  }
+  return false;
 };
 
 export const hasValidStadspasRequest: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  return (
-    appState.STADSPAS?.content?.aanvragen.some(
+  if (appState.STADSPAS?.status === 'OK') {
+    return appState.STADSPAS?.content?.aanvragen.some(
       (aanvraag: WpiRequestProcess) =>
         aanvraag.decision === 'toekenning' &&
         differenceInYears(today, new Date(aanvraag.datePublished)) <= 1
-    ) || false
-  );
+    );
+  }
+  return false;
 };
 
 export const previouslyLivingInAmsterdam: TipsPredicateFN = (appState) => {
@@ -137,6 +140,21 @@ export const hasKidsBetweenAges4And11: TipsPredicateFN = (
   return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 4, 11, today);
 };
 
+export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
+  const oldestKid = appState.BRP?.content?.kinderen?.sort(
+    (a, b) =>
+      new Date(a.geboortedatum as string).getTime() -
+      new Date(b.geboortedatum as string).getTime()
+  )[0];
+
+  if (!oldestKid?.geboortedatum) {
+    return false;
+  }
+
+  const birthYear = new Date(oldestKid?.geboortedatum).getFullYear();
+  return birthYear >= 2016 && birthYear < 2024;
+};
+
 // Rule 13
 export const hasDutchNationality: TipsPredicateFN = (appState) => {
   return !!appState.BRP?.content?.persoon?.nationaliteiten.some(
@@ -167,6 +185,10 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
     (v: ToeristischeVerhuurVergunning) =>
       v.caseType === CaseType.VakantieverhuurVergunningaanvraag
   );
+};
+
+export const isMarriedOrLivingTogether: TipsPredicateFN = (appState) => {
+  return !!appState.BRP?.content?.verbintenis?.soortVerbintenis;
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {

@@ -36,10 +36,6 @@ parameters:
     type: boolean
     default: true
 
-  - name: updateAppSettings
-    type: boolean
-    default: false
-
 variables:
   - name: dtapName
     value: ${{ parameters.dtapName }}
@@ -79,4 +75,3 @@ jobs:
       btdDeploy: ${{ variables.btdDeploy }}
       btdAppBFF: ${{ variables.btdAppBFF }}
       btdAppUI: ${{ variables.btdAppUI }}
-      updateAppSettings: ${{ parameters.updateAppSettings }}

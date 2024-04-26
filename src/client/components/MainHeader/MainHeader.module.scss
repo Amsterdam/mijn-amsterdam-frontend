@@ -5,7 +5,7 @@
   height: $main-header-topbar-height;
   display: flex;
 
-  @include select(amsterdam-heading) {
+  @include select(ams-heading) {
     margin: 0.4em 0 0;
   }
 
@@ -13,7 +13,7 @@
     max-width: none;
     height: $main-header-topbar-height--tablet;
 
-    @include select(amsterdam-heading) {
+    @include select(ams-heading) {
       margin: 1rem 0 0 2rem;
     }
   }
@@ -112,7 +112,7 @@
     top: 1rem;
   }
 
-  >a {
+  > a {
     position: absolute;
     margin: 0 auto;
     z-index: 1;

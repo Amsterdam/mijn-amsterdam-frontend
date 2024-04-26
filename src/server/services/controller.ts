@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import { Request, Response } from 'express';
 import {
   FeatureToggle,
@@ -30,6 +29,7 @@ import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
+import { captureException } from './monitoring';
 import { fetchProfile } from './profile';
 import { fetchSignals } from './sia';
 import {
@@ -39,6 +39,8 @@ import {
   fetchSubsidie,
 } from './simple-connect';
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
+import { fetchSVWI } from './simple-connect/svwi';
+import { fetchStadspas } from './stadspas/stadspas';
 import {
   fetchTipsAndNotifications,
   sortNotifications,
@@ -58,13 +60,10 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchSVWI } from './simple-connect/svwi';
-import { fetchStadspas } from './stadspas/stadspas';
 import { fetchWonen } from './wonen/wonen';
 
 // Default service call just passing requestID and request headers as arguments
-function
-callService<T>(fetchService: (...args: any) => Promise<T>) {
+function callService<T>(fetchService: (...args: any) => Promise<T>) {
   return async (requestID: requestID, req: Request) =>
     fetchService(requestID, await getAuth(req), queryParams(req));
 }
@@ -102,6 +101,7 @@ const WPI_TONK = callService(fetchTonk);
 const WPI_BBZ = callService(fetchBbz);
 const STADSPAS = callService(fetchStadspas);
 const SVWI = callService(fetchSVWI);
+const WONEN = callService(fetchWonen);
 
 const WMO = callService(fetchWmo);
 
@@ -145,7 +145,6 @@ const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
 const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
-const WONEN = callService(fetchWonen);
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
@@ -349,7 +348,7 @@ export function loadServices(
         [serviceID]: result,
       }))
       .catch((error: Error) => {
-        Sentry.captureException(error);
+        captureException(error);
         return {
           [serviceID]: apiErrorResult(
             `Could not load ${serviceID}, error: ${error.message}`,
