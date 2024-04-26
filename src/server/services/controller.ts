@@ -60,6 +60,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import { fetchWonen } from './wonen/wonen';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -100,6 +101,7 @@ const WPI_TONK = callService(fetchTonk);
 const WPI_BBZ = callService(fetchBbz);
 const STADSPAS = callService(fetchStadspas);
 const SVWI = callService(fetchSVWI);
+const WONEN = callService(fetchWonen);
 
 const WMO = callService(fetchWmo);
 
@@ -208,6 +210,7 @@ const SERVICES_INDEX = {
   SIA,
   AVG,
   BODEM,
+  WONEN,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -244,6 +247,7 @@ type CommercialServices = Pick<
   | 'HORECA'
   | 'BODEM'
   | 'BEZWAREN'
+  | 'WONEN'
 >;
 
 type ServicesByProfileType = {
@@ -284,6 +288,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HORECA,
     AVG,
     BODEM,
+    WONEN,
   },
   'private-attributes': {
     CMS_CONTENT,
@@ -309,6 +314,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     VERGUNNINGEN,
     HORECA,
     BODEM,
+    WONEN,
     BEZWAREN,
   },
 };

@@ -45,6 +45,7 @@ export const FeatureToggle = {
   laadpalenActive: !IS_PRODUCTION,
   oidcLogoutHintActive: !IS_PRODUCTION,
   zorgnedDocumentAttachmentsActive: !IS_PRODUCTION,
+  mijnWoningActive: !IS_PRODUCTION,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.

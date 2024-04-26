@@ -137,6 +137,7 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
 
   BODEM: apiPristineResult(null, { isActive: FeatureToggle.bodemActive }),
+  WONEN: apiPristineResult(null, { isActive: FeatureToggle.mijnWoningActive }),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';
