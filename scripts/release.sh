@@ -49,10 +49,10 @@ echo "Creating branch $RELEASE_BRANCH" && \
 git branch -m "$RELEASE_BRANCH" && \
 
 echo "New tag $NEW_TAG" && \
-# git tag -a "$NEW_TAG" -m "Production ${NEW_TAG}" && \
+git tag -a "$NEW_TAG" -m "Production ${NEW_TAG}" && \
 
 echo "Pushing branch $RELEASE_BRANCH" && \
-# git push origin --follow-tags "$RELEASE_BRANCH" && \
+git push origin --follow-tags "$RELEASE_BRANCH" && \
 
 echo "Don't forget to merge to main and Approve the deploy to the production environment!"
 
