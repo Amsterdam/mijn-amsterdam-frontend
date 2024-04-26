@@ -5,6 +5,7 @@ import {
   isInteralUrl,
   sortAlpha,
   range,
+  isRecentNotification,
 } from './utils';
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
@@ -68,5 +69,10 @@ describe('Utils.ts', () => {
 
   it('range: Should generate a range', () => {
     expect(range(1, 5)).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  test('isRecentNotification', () => {
+    expect(isRecentNotification('2022-12-06')).toBe(true);
+    expect(isRecentNotification('2023-01-07')).toBe(false);
   });
 });

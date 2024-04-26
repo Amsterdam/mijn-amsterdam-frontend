@@ -2,7 +2,6 @@ import { CaseType } from '../types/vergunningen';
 import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
-  isActualNotification,
   isExpired,
   isNearEndDate,
   showDocuments,
@@ -11,11 +10,6 @@ import {
 describe('helpers/Vergunningen', () => {
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2022-10-06'));
-
-  test('isActualNotification', () => {
-    expect(isActualNotification('2022-12-06')).toBe(true);
-    expect(isActualNotification('2023-01-07')).toBe(false);
-  });
 
   test('isNearEndDate', () => {
     {
