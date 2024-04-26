@@ -166,7 +166,7 @@ export async function fetchBezwarenDocuments(
       params,
       transformResponse: (responseData) =>
         transformBezwarenDocumentsResults(
-          authProfileAndToken.profile.id,
+          authProfileAndToken.profile.sid,
           responseData
         ),
       headers: await getBezwarenApiHeaders(authProfileAndToken),
