@@ -28,6 +28,7 @@ import {
   IconVergunningen,
   IconWior,
   IconZorg,
+  IconWonen,
 } from '../assets/icons';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
@@ -41,7 +42,6 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.SVWI]: IconInkomenSVWI,
   [Chapters.STADSPAS]: IconStadspas,
   [Chapters.BRP]: IconMijnGegevens,
-  [Chapters.WONEN]: IconMijnGegevens, // Todo change to final icon
   [Chapters.MILIEUZONE]: IconMilieuzone,
   [Chapters.OVERTREDINGEN]: IconOvertredingen,
   [Chapters.SIA]: IconSiaMeldingen,
@@ -61,4 +61,5 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.KLACHTEN]: IconKlachten,
   [Chapters.HORECA]: IconHoreca,
   [Chapters.BODEM]: IconBodem,
+  [Chapters.WONEN]: IconWonen,
 };
