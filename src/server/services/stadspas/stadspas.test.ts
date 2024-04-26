@@ -374,7 +374,7 @@ describe('stadspas services', () => {
 
     expect(response).toMatchInlineSnapshot(`
       {
-        "code": 403,
+        "code": 401,
         "content": null,
         "message": "Not authorized",
         "status": "ERROR",

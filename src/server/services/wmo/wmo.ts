@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import {
@@ -5,17 +6,41 @@ import {
   capitalizeFirstLetter,
   dateSort,
 } from '../../../universal/helpers';
+import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { getStatusLineItems } from './status-line-items/wmo-status-line-items';
 import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
   WMOVoorziening,
   WMOVoorzieningFrontend,
 } from './wmo-config-and-types';
-import { getStatusLineItems } from './status-line-items/wmo-status-line-items';
 import { fetchVoorzieningen } from './wmo-zorgned-service';
-import { parseISO } from 'date-fns';
+
+function encryptDocumentIds(
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  statusLineItems: StatusLineItem[]
+) {
+  return statusLineItems.map((lineItem) => {
+    if (lineItem.documents) {
+      return {
+        ...lineItem,
+        documents: lineItem.documents.map((document) => {
+          const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
+          return {
+            ...document,
+            url: `/wmoned/document/${idEncrypted}`, // NOTE: Works with legacy relayApiUrl added in front-end. TODO: Remove relayApiUrl() concept.
+            id: idEncrypted,
+          };
+        }),
+      };
+    }
+    return lineItem;
+  });
+}
 
 export function transformVoorzieningenForFrontend(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   voorzieningen: WMOVoorziening[],
   today: Date
 ): WMOVoorzieningFrontend[] {
@@ -30,13 +55,16 @@ export function transformVoorzieningenForFrontend(
 
   for (const voorziening of voorzieningenVisible) {
     const id = voorziening.id;
-    const statusLineItems = getStatusLineItems(voorziening, today);
+    const lineItems = getStatusLineItems(voorziening, today);
+    const statusLineItems = Array.isArray(lineItems)
+      ? encryptDocumentIds(sessionID, lineItems)
+      : [];
     const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
       id,
     });
 
     if (statusLineItems) {
-      const voorzieninFrontend: WMOVoorzieningFrontend = {
+      const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
         title: capitalizeFirstLetter(voorziening.titel),
         supplier: voorziening.leverancier,
@@ -53,7 +81,7 @@ export function transformVoorzieningenForFrontend(
         dateEnd: voorziening.datumEindeGeldigheid,
       };
 
-      voorzieningenFrontend.push(voorzieninFrontend);
+      voorzieningenFrontend.push(voorzieningFrontend);
     }
   }
 
@@ -73,6 +101,7 @@ export async function fetchWmo(
 
   if (voorzieningenResponse.status === 'OK') {
     const voorzieningenFrontend = transformVoorzieningenForFrontend(
+      authProfileAndToken.profile.sid,
       voorzieningenResponse.content,
       new Date()
     );

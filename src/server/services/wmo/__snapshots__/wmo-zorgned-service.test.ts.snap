@@ -557,9 +557,9 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "documenten": [
       {
         "datePublished": "2022-03-14T16:12:12",
-        "id": "mock-encrypted-document-id",
+        "id": "B2258816",
         "title": "Brief",
-        "url": "/wmoned/document/mock-encrypted-document-id",
+        "url": "",
       },
     ],
     "id": "955409908",
@@ -580,9 +580,9 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "documenten": [
       {
         "datePublished": "2022-03-14T16:11:29",
-        "id": "mock-encrypted-document-id",
+        "id": "B2258817",
         "title": "Brief",
-        "url": "/wmoned/document/mock-encrypted-document-id",
+        "url": "",
       },
     ],
     "id": "1811284656",
@@ -603,9 +603,9 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "documenten": [
       {
         "datePublished": "2022-04-19T13:16:44",
-        "id": "mock-encrypted-document-id",
+        "id": "B2268406",
         "title": "Brief",
-        "url": "/wmoned/document/mock-encrypted-document-id",
+        "url": "",
       },
     ],
     "id": "3476086687",
@@ -642,9 +642,9 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "documenten": [
       {
         "datePublished": "2022-10-19T14:27:42.643",
-        "id": "mock-encrypted-document-id",
+        "id": "B2391009",
         "title": "Brief",
-        "url": "/wmoned/document/mock-encrypted-document-id",
+        "url": "",
       },
     ],
     "id": "2941866748",
@@ -665,9 +665,9 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "documenten": [
       {
         "datePublished": "2023-03-02T11:17:08.293",
-        "id": "mock-encrypted-document-id",
+        "id": "B2510020",
         "title": "Brief",
-        "url": "/wmoned/document/mock-encrypted-document-id",
+        "url": "",
       },
     ],
     "id": "890306301",
@@ -704,9 +704,9 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "documenten": [
       {
         "datePublished": "2023-03-16T15:56:11.41",
-        "id": "mock-encrypted-document-id",
+        "id": "B2516440",
         "title": "Brief",
-        "url": "/wmoned/document/mock-encrypted-document-id",
+        "url": "",
       },
     ],
     "id": "1986585525",

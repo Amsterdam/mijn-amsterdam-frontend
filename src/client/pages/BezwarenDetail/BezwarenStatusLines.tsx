@@ -30,7 +30,6 @@ const BezwarenStatusLines = ({
 
   return (
     <StatusLine
-      className=""
       trackCategory="Bezwaar detail / status"
       items={statusLineItems}
       id={`bezwaar-detail-${id}`}

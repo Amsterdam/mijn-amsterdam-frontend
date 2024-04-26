@@ -1,9 +1,10 @@
-import { hash, isDateInPast } from '../../../universal/helpers';
+import { apiErrorResult, hash, isDateInPast } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { captureException } from '../monitoring';
 import {
   BESCHIKTPRODUCT_RESULTAAT,
   BeschiktProduct,
@@ -44,15 +45,10 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
     (document) => !!document.datumDefinitief
   );
   for (const document of definitieveDocumenten) {
-    const [idEncrypted] = encrypt(
-      document.documentidentificatie,
-      process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-    );
-
     const doc = {
-      id: idEncrypted,
+      id: document.documentidentificatie,
       title: SINGLE_DOC_TITLE_BESLUIT, // TODO: Change if we get proper document names from Zorgned api
-      url: `/wmoned/document/${idEncrypted}`, // NOTE: Works with legacy relayApiUrl added in front-end. TODO: Remove relayApiUrl() concept.
+      url: '', // NOTE: URL added later (wmo.ts > encryptDocumentIds) because we need an ecrypted id with specific session id.
       datePublished: document.datumDefinitief,
     };
     documents.push(doc);
@@ -231,7 +227,18 @@ export async function fetchDocument(
   authProfileAndToken: AuthProfileAndToken,
   documentIdEncrpted: ZorgnedDocument['documentidentificatie']
 ) {
-  const documentId = decrypt(documentIdEncrpted);
+  let documentId: string = '';
+  let sessionID: string = '';
+  try {
+    [sessionID, documentId] = decrypt(documentIdEncrpted).split(':');
+  } catch (error) {
+    captureException(error);
+  }
+
+  if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
+    return apiErrorResult('Not authorized', null, 401);
+  }
+
   const postBody = {
     burgerservicenummer: authProfileAndToken.profile.id,
     gemeentecode: ZORGNED_GEMEENTE_CODE,

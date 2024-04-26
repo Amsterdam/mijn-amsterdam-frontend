@@ -92,12 +92,12 @@ router.get(
       authProfileAndToken,
       req.params.id
     );
+
     if (
       documentResponse.status === 'ERROR' ||
       !documentResponse.content?.data
     ) {
-      res.status(500);
-      return res.send(documentResponse);
+      return res.status(500).send(documentResponse);
     }
 
     res.type(documentResponse.content.mimetype ?? 'application/pdf');

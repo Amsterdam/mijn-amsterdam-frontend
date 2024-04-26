@@ -23,7 +23,7 @@ const mocks = vi.hoisted(() => {
         id: 'mock-burgerservicenummer',
         profileType: 'private',
         authMethod: 'digid',
-        sid: '',
+        sid: 'session-id',
       },
       token: 'mock-auth-token',
     },
@@ -33,7 +33,7 @@ const mocks = vi.hoisted(() => {
 });
 
 vi.mock('../../../universal/helpers/encrypt-decrypt', () => ({
-  decrypt: vi.fn().mockReturnValue(mocks.mockDocumentId),
+  decrypt: vi.fn().mockReturnValue(`session-id:${mocks.mockDocumentId}`),
   encrypt: vi.fn().mockReturnValue([mocks.mockDocumentIdEncrypted, 'xx']),
 }));
 
@@ -89,9 +89,9 @@ describe('wmo-zorgned-service', () => {
       [
         {
           "datePublished": "2013-05-17T00:00:00",
-          "id": "mock-encrypted-document-id",
+          "id": "B73199",
           "title": "Brief",
-          "url": "/wmoned/document/mock-encrypted-document-id",
+          "url": "",
         },
       ]
     `);
@@ -190,6 +190,26 @@ describe('wmo-zorgned-service', () => {
       {
         "content": [],
         "status": "OK",
+      }
+    `);
+  });
+
+  it('should fetch document error (non matching session id)', async () => {
+    const result = await fetchDocument(
+      mocks.mockRequestID,
+      {
+        ...mocks.mockAuthProfileAndToken,
+        profile: { sid: 'nope' },
+      } as AuthProfileAndToken,
+      mocks.mockDocumentIdEncrypted
+    );
+
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "code": 401,
+        "content": null,
+        "message": "Not authorized",
+        "status": "ERROR",
       }
     `);
   });
