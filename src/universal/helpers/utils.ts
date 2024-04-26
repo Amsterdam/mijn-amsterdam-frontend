@@ -1,6 +1,7 @@
 import { KeyboardEvent, MouseEvent } from 'react';
 import { matchPath } from 'react-router-dom';
 import { PrivateRoutes } from '../config';
+import { differenceInMonths } from 'date-fns';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
@@ -164,4 +165,14 @@ export function recLookup(obj: any, path: string): any {
 
 export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
+}
+
+const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
+
+export function isRecentNotification(
+  datePublished: string,
+  dateNow: Date = new Date()
+): boolean {
+  const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
+  return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
 }

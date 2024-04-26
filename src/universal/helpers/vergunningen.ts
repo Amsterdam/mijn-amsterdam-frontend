@@ -15,7 +15,6 @@ import {
 import { CaseType } from '../types/vergunningen';
 import { isDateInPast, monthsFromNow } from './date';
 
-export const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
@@ -74,14 +73,6 @@ export function isWoonvergunning(
   return woonVergunningTypes.includes(
     (vergunning as WoningVergunning).caseType
   );
-}
-
-export function isActualNotification(
-  datePublished: string,
-  dateNow: Date = new Date()
-): boolean {
-  const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
-  return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
 }
 
 export function isNearEndDate(

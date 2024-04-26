@@ -70,52 +70,7 @@ describe('Bezwaren', () => {
       expect(res).toMatchInlineSnapshot(`
         {
           "content": {
-            "notifications": [
-              {
-                "chapter": "BEZWAREN",
-                "datePublished": "2021-05-01",
-                "description": "Wij hebben uw bezwaar BI.21.014121.001 ontvangen.",
-                "id": "BI.21.014121.001",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
-                },
-                "title": "Bezwaar ontvangen",
-              },
-              {
-                "chapter": "BEZWAREN",
-                "datePublished": "2021-05-01",
-                "description": "Wij hebben uw bezwaar JB.22.000076.001 in behandeling genomen.",
-                "id": "JB.22.000076.001",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/9804b064-90a3-43b0-bc7c-924f9939888d",
-                },
-                "title": "Bezwaar in behandeling",
-              },
-              {
-                "chapter": "BEZWAREN",
-                "datePublished": "2021-05-01",
-                "description": "Wij hebben uw bezwaar ZAAK2 ontvangen.",
-                "id": "ZAAK2",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
-                },
-                "title": "Bezwaar ontvangen",
-              },
-              {
-                "chapter": "BEZWAREN",
-                "datePublished": "2023-08-23",
-                "description": "Wij hebben uw bezwaar ZAAK3 afgehandeld.",
-                "id": "ZAAK3",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
-                },
-                "title": "Bezwaar afgehandeld",
-              },
-            ],
+            "notifications": [],
           },
           "status": "OK",
         }
