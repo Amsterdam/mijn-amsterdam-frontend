@@ -126,7 +126,7 @@ export async function fetchWonen(
 
   // No energielabel known for Stopera, comment the request url to use the default response
   const postcode = BRPResponse.content?.adres.postcode?.replace(/\s+/g, '');
-  wonenRequestConfig.url = `${wonenRequestConfig.url}?postcode=${postcode}&huisn>ummer=${BRPResponse.content?.adres.huisnummer}`;
+  wonenRequestConfig.url = `${wonenRequestConfig.url}?postcode=${postcode}&huisnummer=${BRPResponse.content?.adres.huisnummer}`;
 
   const result = await requestData<Woningen>(wonenRequestConfig, requestID);
   return result;
