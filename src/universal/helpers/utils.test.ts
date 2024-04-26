@@ -72,7 +72,10 @@ describe('Utils.ts', () => {
   });
 
   test('isRecentNotification', () => {
-    expect(isRecentNotification('2022-12-06')).toBe(false);
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2022-10-06'));
+
+    expect(isRecentNotification('2022-12-06')).toBe(true);
     expect(isRecentNotification('2023-01-07')).toBe(false);
   });
 });
