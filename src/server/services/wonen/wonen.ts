@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
@@ -79,7 +78,9 @@ function transformDSOAPIResponse(response: any) {
       },
     ];
   } catch (e) {
-    Sentry.captureException(e);
+    // TODO: App insights
+    console.log('ERROR', e);
+    // Sentry.captureException(e);
   }
   return { woningen };
 }

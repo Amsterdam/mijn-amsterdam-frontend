@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  Alert,
+  ErrorAlert,
   ChapterIcon,
   InfoPanel,
   MaintenanceNotifications,
@@ -42,9 +42,9 @@ export default function Wonen() {
 
         <MaintenanceNotifications page="wonen" />
         {isError(BRP) && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen ID-kaarten tonen.</p>
-          </Alert>
+          <ErrorAlert>
+            We kunnen op dit moment geen ID-kaarten tonen.
+          </ErrorAlert>
         )}
       </PageContent>
       {!!filledStatusInfo && (
