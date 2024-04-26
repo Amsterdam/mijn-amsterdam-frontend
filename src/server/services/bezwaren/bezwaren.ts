@@ -10,6 +10,7 @@ import {
   dateSort,
   getFailedDependencies,
   getSettledResult,
+  isRecentNotification,
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { MyNotification } from '../../../universal/types';
@@ -345,7 +346,9 @@ export async function fetchBezwarenNotifications(
 
   if (bezwaren.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(bezwaren.content)
-      ? bezwaren.content.map(createBezwaarNotification)
+      ? bezwaren.content
+          .map(createBezwaarNotification)
+          .filter((bezwaar) => isRecentNotification(bezwaar.datePublished))
       : [];
 
     return apiSuccessResult({

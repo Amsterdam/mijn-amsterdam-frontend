@@ -8,10 +8,10 @@ import { hash, sortAlpha } from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
-  isActualNotification,
   isExpired,
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
+import { isRecentNotification } from '../../../universal/helpers';
 import {
   GenericDocument,
   LinkProps,
@@ -553,7 +553,7 @@ export function getVergunningNotifications(
       const isActual =
         !vergunning.processed ||
         (!!notification &&
-          isActualNotification(notification.datePublished, compareDate));
+          isRecentNotification(notification.datePublished, compareDate));
 
       return isActual;
     })
