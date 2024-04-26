@@ -139,6 +139,21 @@ export default function VergunningDetail() {
               !!Vergunning.documentsUrl && (
                 <DocumentDetails vergunning={Vergunning} />
               )}
+            {Vergunning.caseType === CaseType.WVOS &&
+              [
+                Vergunning.vezip || Vergunning.rvv || Vergunning.eRvv,
+                Vergunning.object,
+                Vergunning.parkingspace || Vergunning.eParkingspace,
+                Vergunning.block,
+                Vergunning.night,
+                Vergunning.bicycleRack,
+                Vergunning.filming,
+              ].filter(Boolean).length >= 2 && (
+                <p className={styles.Disclaimer}>
+                  Dit is een disclaimer tekst die getoond wordt bij meerdere
+                  WVOS vergunningen. Graag aanpassen wanneer de tekst binnen is.
+                </p>
+              )}
 
             {Vergunning.caseType === CaseType.BZP &&
               Vergunning.decision === 'Verleend' &&

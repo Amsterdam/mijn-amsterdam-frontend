@@ -6241,6 +6241,11 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
           </ul>
         </div>
       </div>
+      <p
+        class="_Disclaimer_28a267"
+      >
+        Dit is een disclaimer tekst die getoond wordt bij meerdere WVOS vergunningen. Graag aanpassen wanneer de tekst binnen is.
+      </p>
     </div>
     <div
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
@@ -6526,6 +6531,11 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
           Niet verleend
         </p>
       </div>
+      <p
+        class="_Disclaimer_28a267"
+      >
+        Dit is een disclaimer tekst die getoond wordt bij meerdere WVOS vergunningen. Graag aanpassen wanneer de tekst binnen is.
+      </p>
     </div>
     <div
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
