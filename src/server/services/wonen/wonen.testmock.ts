@@ -1,12 +1,13 @@
-const mockData = [
+[
   {
     _links: {
-      schema: 'https://schemas.data.amsterdam.nl/datasets/duurzaamheid/energielabel/dataset#energielabel',
+      schema:
+        'https://schemas.data.amsterdam.nl/datasets/duurzaamheid/energielabel/dataset#energielabel',
       self: [Object],
       bagVerblijfsobject: [Object],
       bagLigplaats: null,
       bagStandplaats: null,
-      bagPand: [Object]
+      bagPand: [Object],
     },
     id: '20210304~1103LZ~813~~',
     opnamedatum: '2021-03-04',
@@ -46,6 +47,6 @@ const mockData = [
     temperatuuroverschrijding: '1.56',
     eisTemperatuuroverschrijding: null,
     warmtebehoefte: '147.82',
-    energieindexMetEmgForfaitair: null
-  }
-]
+    energieindexMetEmgForfaitair: null,
+  },
+];
