@@ -41,6 +41,9 @@ describe('Bezwaren', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-08-24'));
   });
 
   describe('fetch bezwaren', () => {
@@ -64,13 +67,25 @@ describe('Bezwaren', () => {
       expect(res).toMatchSnapshot();
     });
 
-    it('should return the right notifications', async () => {
+    it('should return the right recent notifications', async () => {
       const res = await fetchBezwarenNotifications(requestId, profileAndToken);
 
       expect(res).toMatchInlineSnapshot(`
         {
           "content": {
-            "notifications": [],
+            "notifications": [
+              {
+                "chapter": "BEZWAREN",
+                "datePublished": "2023-08-23",
+                "description": "Wij hebben uw bezwaar ZAAK3 afgehandeld.",
+                "id": "ZAAK3",
+                "link": {
+                  "title": "Bekijk uw bezwaar",
+                  "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
+                },
+                "title": "Bezwaar afgehandeld",
+              },
+            ],
           },
           "status": "OK",
         }
