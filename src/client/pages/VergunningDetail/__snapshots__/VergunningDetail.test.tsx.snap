@@ -6241,11 +6241,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
           </ul>
         </div>
       </div>
-      <p
-        class="_Disclaimer_28a267"
-      >
-        Zie besluit om te weten welk van de aanvragen zijn verleend.
-      </p>
     </div>
     <div
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
@@ -6516,20 +6511,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
             </li>
           </ul>
         </div>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
-        >
-          Resultaat
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Niet verleend
-        </p>
       </div>
       <p
         class="_Disclaimer_28a267"
