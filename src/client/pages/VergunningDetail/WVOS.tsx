@@ -55,7 +55,7 @@ export function WVOS({
 
       {(hasMultiplePermits && isAfgehandeld && (
         <p className={styles.Disclaimer}>
-          Zie besluit om te weten welk van de aanvragen zijn verleend.
+          Zie besluitdocument welk van de producten wel of niet verleend zijn
         </p>
       )) ||
         (isAfgehandeld && (
