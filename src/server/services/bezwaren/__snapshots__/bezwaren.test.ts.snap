@@ -24,6 +24,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "statussen": [],
       "toelichting": "Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.",
       "uuid": "68cdd171-b4fd-44cc-a4d3-06b77341f20a",
+      "uuidEncrypted": "test-encrypted-id",
       "zaakkenmerk": "ghi.abc.def",
     },
     {
@@ -47,6 +48,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "statussen": [],
       "toelichting": "",
       "uuid": "9804b064-90a3-43b0-bc7c-924f9939888d",
+      "uuidEncrypted": "test-encrypted-id",
       "zaakkenmerk": "abc.def",
     },
     {
@@ -70,6 +72,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "statussen": [],
       "toelichting": "Met toelichting",
       "uuid": "cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
+      "uuidEncrypted": "test-encrypted-id",
       "zaakkenmerk": "123.abc.def",
     },
     {
@@ -93,6 +96,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "statussen": [],
       "toelichting": "Met toelichting",
       "uuid": "956541b6-7a25-4132-9592-0a509bc7ace0",
+      "uuidEncrypted": "test-encrypted-id",
       "zaakkenmerk": "321.abc.def",
     },
   ],

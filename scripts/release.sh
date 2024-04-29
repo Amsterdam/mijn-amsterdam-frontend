@@ -1,42 +1,57 @@
 #!/bin/bash
 
+set -e
+
+BRANCH="production-release"
+
 git fetch origin && \
 git fetch origin -t && \
-git checkout -b release-branch origin/main && \
+git checkout -b "$BRANCH" origin/main && \
 
 echo "Fetched origin, created release-branch."
+
+NEW_TAG_D="-1"
+NEW_TAG=$NEW_TAG_D
+
+if [ $# -eq 0 ]; then
+    echo "No arguments provided"
+    exit 1
+fi
 
 for cmd in "$@"
 do
 	case $cmd in
 		"--major")
-			echo "Incrementing Major Version#"
-      npm --no-git-tag-version --allow-same-version version major
+			echo "Incrementing Major Version"
+      NEW_TAG=$(sh ./semver.sh -v major)
 			;;
 		"--minor")
-			echo "Incrementing Minor Version#"
-      npm --no-git-tag-version --allow-same-version version minor
+			echo "Incrementing Minor Version"
+      NEW_TAG=$(sh ./semver.sh -v minor)
 			;;
-		"--bug")
-			echo "Incrementing Bug Version#"
-      npm --no-git-tag-version --allow-same-version version patch
+		"--patch")
+			echo "Incrementing Patch Version"
+      NEW_TAG=$(sh ./semver.sh -v patch)
 			;;
+        *)
+            echo "No version specified"
+            ;;
 	esac
 done
 
-NEWVERSION=$(grep '"version"' package.json | cut -d '"' -f 4)
+if [ $NEW_TAG == $NEW_TAG_D ]; then
+exit 1
+fi
 
-NEWTAG="release-v$NEWVERSION"
-BRANCH="production-${NEWTAG}"
+RELEASE_BRANCH="${BRANCH}-v${NEW_TAG}" && \
 
-echo "Adding Tag: $NEWTAG";
+echo "Creating branch $RELEASE_BRANCH" && \
+git branch -m "$RELEASE_BRANCH" && \
 
-git branch -m "$BRANCH" && \
+echo "New tag $NEW_TAG" && \
+git tag -a "$NEW_TAG" -m "Production ${NEW_TAG}" && \
 
-git add package.json package-lock.json && \
-git commit -m "Bump! $NEWTAG" && \
-git tag -a "$NEWTAG" -m "Production ${NEWTAG}" && \
-git push origin --follow-tags "$BRANCH" && \
+echo "Pushing branch $RELEASE_BRANCH" && \
+git push origin --follow-tags "$RELEASE_BRANCH" && \
 
-echo "Don't forget to merge to main and Approve the deploy to the production environment!"
-
+exit 0

@@ -12,6 +12,7 @@ const testState = {
       {
         identificatie: 'BI.21.014121.001',
         uuid: '68cdd171-b4fd-44cc-a4d3-06b77341f20a',
+        uuidEncrypted: 'asdasd98asd098asdjalmsndas-d9aps9dapsdja.sdasd',
         startdatum: '2023-04-25',
         bezwaarnummer: 'BI.21.014121.001',
         zaakkenmerk: 'ghi.abc.def',
@@ -38,7 +39,7 @@ const testState = {
   },
   BEZWAREN_BAG: {
     abc: null,
-    '68cdd171-b4fd-44cc-a4d3-06b77341f20a': {
+    'asdasd98asd098asdjalmsndas-d9aps9dapsdja.sdasd': {
       statussen: [
         {
           uuid: 'b62fdaa9-f7ec-45d1-b23c-7f36fa00b393',

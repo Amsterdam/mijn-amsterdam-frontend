@@ -10,6 +10,7 @@ import {
   dateSort,
   getFailedDependencies,
   getSettledResult,
+  isRecentNotification,
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { MyNotification } from '../../../universal/types';
@@ -86,15 +87,13 @@ function getZaakUrl(zaakId: string) {
 }
 
 function transformBezwarenDocumentsResults(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): BezwaarDocument[] {
   if (Array.isArray(response.results)) {
     return response.results.map(
       ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
-        const [documentIdEncrypted] = encrypt(
-          identificatie,
-          process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-        );
+        const [documentIdEncrypted] = encrypt(`${sessionID}:${identificatie}`);
         return {
           id: documentIdEncrypted,
           title: bestandsnaam,
@@ -166,7 +165,11 @@ export async function fetchBezwarenDocuments(
   return requestData<BezwaarDocument[]>(
     getApiConfig('BEZWAREN_DOCUMENTS', {
       params,
-      transformResponse: transformBezwarenDocumentsResults,
+      transformResponse: (responseData) =>
+        transformBezwarenDocumentsResults(
+          authProfileAndToken.profile.sid,
+          responseData
+        ),
       headers: await getBezwarenApiHeaders(authProfileAndToken),
     }),
     zaakId
@@ -184,6 +187,7 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
 }
 
 function transformBezwarenResults(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   response: BezwarenSourceResponse<BezwaarSourceData>
 ): BezwaarResponse {
   const results = response.results;
@@ -197,11 +201,14 @@ function transformBezwarenResults(
             'besluitdatum'
           );
 
+          const [idEncrypted] = encrypt(`${sessionID}:${bezwaarBron.uuid}`);
+
           const bezwaar: Bezwaar = {
             identificatie: bezwaarBron.identificatie,
             zaakkenmerk:
               getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
             uuid: bezwaarBron.uuid,
+            uuidEncrypted: idEncrypted,
             startdatum: bezwaarBron.startdatum,
             ontvangstdatum: bezwaarBron.registratiedatum,
             omschrijving: bezwaarBron.omschrijving,
@@ -259,7 +266,8 @@ export async function fetchBezwaren(
   const requestConfig = getApiConfig('BEZWAREN_LIST', {
     data: requestBody,
     params,
-    transformResponse: transformBezwarenResults,
+    transformResponse: (responseData) =>
+      transformBezwarenResults(authProfileAndToken.profile.sid, responseData),
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
@@ -338,7 +346,9 @@ export async function fetchBezwarenNotifications(
 
   if (bezwaren.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(bezwaren.content)
-      ? bezwaren.content.map(createBezwaarNotification)
+      ? bezwaren.content
+          .map(createBezwaarNotification)
+          .filter((bezwaar) => isRecentNotification(bezwaar.datePublished))
       : [];
 
     return apiSuccessResult({
@@ -359,9 +369,15 @@ export async function fetchBezwaarDetail(
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
-  const [sessionID, zaakId] = decrypt(zaakIdEncrypted).split(':');
+  let sessionID;
+  let zaakId;
+  try {
+    [sessionID, zaakId] = decrypt(zaakIdEncrypted).split(':');
+  } catch (error) {
+    captureException(error);
+  }
 
-  if (sessionID !== authProfileAndToken.profile.sid) {
+  if (!zaakId || sessionID !== authProfileAndToken.profile.sid) {
     return apiErrorResult('Not authorized', null, 401);
   }
 
@@ -399,12 +415,16 @@ export async function fetchBezwaarDocument(
   documentIdEncrypted: string,
   isDownload: boolean = true
 ) {
-  const [sessionID, documentId] = decrypt(
-    documentIdEncrypted,
-    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  ).split(':');
+  let sessionID: string = '';
+  let documentId: string = '';
 
-  if (sessionID !== authProfileAndToken.profile.sid) {
+  try {
+    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
+  } catch (error) {
+    captureException(error);
+  }
+
+  if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
     return apiErrorResult('Not authorized', null, 401);
   }
 

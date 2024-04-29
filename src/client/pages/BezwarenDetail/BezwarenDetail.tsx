@@ -43,26 +43,79 @@ const loadingContentBarConfig2: BarConfig = [
   ['30rem', '4rem', '2rem'],
 ];
 
-const BezwarenDetail = () => {
-  const { BEZWAREN } = useAppStateGetter();
-  const { uuid } = useParams<{ uuid: string }>();
+interface BezwarenDetailPartialProps {
+  uuidEncrypted: string;
+}
 
-  const bezwaar = BEZWAREN.content?.find((b) => b.uuid === uuid) ?? null;
-
+function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
   const [bezwaarDetail, api] = useAppStateBagApi<BezwaarDetail | null>({
-    url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuid}`,
+    url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuidEncrypted}`,
     bagChapter: BagChapters.BEZWAREN,
-    key: uuid,
+    key: uuidEncrypted,
   });
 
-  const noContent = !isLoading(BEZWAREN) && !bezwaar;
   const documents = bezwaarDetail?.documents ?? [];
   const statussen = bezwaarDetail?.statussen ?? [];
+
   const documentCategories = uniqueArray(
     documents.map((d) => d.dossiertype).filter(Boolean)
   ).sort();
 
   const isSmallScreen = usePhoneScreen();
+
+  return (
+    <>
+      <PageContent>
+        {documentCategories.length > 0 && (
+          <>
+            {documentCategories.map((category) => {
+              const docs = documents.filter((d) => d.dossiertype === category);
+              return (
+                <InfoDetailGroup
+                  key={category}
+                  label={
+                    <div className={styles.DocumentListHeader}>
+                      <InfoDetailHeading
+                        label={`Document${
+                          documents.length > 1 ? 'en' : ''
+                        } ${category.toLowerCase()}`}
+                      />
+                      {!isSmallScreen && (
+                        <span className={styles.DocumentListHeader_Date}>
+                          Datum
+                        </span>
+                      )}
+                    </div>
+                  }
+                >
+                  <DocumentList documents={docs} showDatePublished />
+                </InfoDetailGroup>
+              );
+            })}
+          </>
+        )}
+        {api.isLoading && (
+          <>
+            <Heading level={4} size="level-4">
+              Status
+            </Heading>
+            <LoadingContent barConfig={loadingContentBarConfig2} />
+          </>
+        )}
+      </PageContent>
+      {!!bezwaarDetail && (
+        <BezwarenStatusLines id={uuidEncrypted} statussen={statussen} />
+      )}
+    </>
+  );
+}
+
+function BezwarenDetail() {
+  const { BEZWAREN } = useAppStateGetter();
+  const { uuid } = useParams<{ uuid: string }>();
+
+  const bezwaar = BEZWAREN.content?.find((b) => b.uuid === uuid) ?? null;
+  const noContent = !isLoading(BEZWAREN) && !bezwaar;
 
   return (
     <DetailPage>
@@ -78,7 +131,7 @@ const BezwarenDetail = () => {
       </PageHeading>
 
       <PageContent>
-        {(isError(BEZWAREN) || noContent || api.isError) && (
+        {(isError(BEZWAREN) || noContent) && (
           <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
         )}
         {!!bezwaar && (
@@ -111,52 +164,14 @@ const BezwarenDetail = () => {
             {bezwaar.einddatum && bezwaar.resultaat && (
               <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
             )}
-            {documentCategories.length > 0 && (
-              <>
-                {documentCategories.map((category) => {
-                  const docs = documents.filter(
-                    (d) => d.dossiertype === category
-                  );
-                  return (
-                    <InfoDetailGroup
-                      key={category}
-                      label={
-                        <div className={styles.DocumentListHeader}>
-                          <InfoDetailHeading
-                            label={`Document${
-                              documents.length > 1 ? 'en' : ''
-                            } ${category.toLowerCase()}`}
-                          />
-                          {!isSmallScreen && (
-                            <span className={styles.DocumentListHeader_Date}>
-                              Datum
-                            </span>
-                          )}
-                        </div>
-                      }
-                    >
-                      <DocumentList documents={docs} showDatePublished />
-                    </InfoDetailGroup>
-                  );
-                })}
-              </>
-            )}
           </>
         )}
       </PageContent>
-      {api.isLoading && (
-        <PageContent>
-          <Heading level={4} size="level-4">
-            Status
-          </Heading>
-          <LoadingContent barConfig={loadingContentBarConfig2} />
-        </PageContent>
-      )}
-      {!!bezwaarDetail && !!bezwaar?.uuid && (
-        <BezwarenStatusLines id={bezwaar.uuid} statussen={statussen} />
+      {!!bezwaar?.uuidEncrypted && (
+        <BezwarenDetailPartial uuidEncrypted={bezwaar.uuidEncrypted} />
       )}
     </DetailPage>
   );
-};
+}
 
 export default BezwarenDetail;

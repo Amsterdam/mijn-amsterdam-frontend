@@ -19,10 +19,10 @@ import {
 import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   hasOtherActualVergunningOfSameType,
-  isActualNotification,
   isExpired,
   isNearEndDate,
 } from '../../universal/helpers/vergunningen';
+import { isRecentNotification } from '../../universal/helpers';
 import { MyNotification } from '../../universal/types';
 import { CaseType } from '../../universal/types/vergunningen';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
@@ -430,7 +430,7 @@ export async function fetchToeristischeVerhuurNotifications(
     const actualNotifications = notifications.filter(
       (notification) =>
         !!notification.datePublished &&
-        isActualNotification(notification.datePublished, compareToDate)
+        isRecentNotification(notification.datePublished, compareToDate)
     );
 
     return apiSuccessResult({

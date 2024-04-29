@@ -18,7 +18,7 @@ vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
-      return ['session-id', 'test-encrypted-id'];
+      return ['test-encrypted-id'];
     },
     decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
   };
@@ -41,6 +41,9 @@ describe('Bezwaren', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-08-24'));
   });
 
   describe('fetch bezwaren', () => {
@@ -64,46 +67,13 @@ describe('Bezwaren', () => {
       expect(res).toMatchSnapshot();
     });
 
-    it('should return the right notifications', async () => {
+    it('should return the right recent notifications', async () => {
       const res = await fetchBezwarenNotifications(requestId, profileAndToken);
 
       expect(res).toMatchInlineSnapshot(`
         {
           "content": {
             "notifications": [
-              {
-                "chapter": "BEZWAREN",
-                "datePublished": "2021-05-01",
-                "description": "Wij hebben uw bezwaar BI.21.014121.001 ontvangen.",
-                "id": "BI.21.014121.001",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
-                },
-                "title": "Bezwaar ontvangen",
-              },
-              {
-                "chapter": "BEZWAREN",
-                "datePublished": "2021-05-01",
-                "description": "Wij hebben uw bezwaar JB.22.000076.001 in behandeling genomen.",
-                "id": "JB.22.000076.001",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/9804b064-90a3-43b0-bc7c-924f9939888d",
-                },
-                "title": "Bezwaar in behandeling",
-              },
-              {
-                "chapter": "BEZWAREN",
-                "datePublished": "2021-05-01",
-                "description": "Wij hebben uw bezwaar ZAAK2 ontvangen.",
-                "id": "ZAAK2",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
-                },
-                "title": "Bezwaar ontvangen",
-              },
               {
                 "chapter": "BEZWAREN",
                 "datePublished": "2023-08-23",
@@ -193,6 +163,26 @@ describe('Bezwaren', () => {
       expect(res.status).toEqual('OK');
       expect(res.content?.statussen?.length).toBeGreaterThan(0);
       expect(res.content?.documents?.length).toBeGreaterThan(0);
+    });
+
+    it('should fail to fetch more results', async () => {
+      const res = await fetchBezwaarDetail(
+        requestId,
+        {
+          ...profileAndToken,
+          profile: { ...profileAndToken.profile, sid: 'nope' },
+        },
+        'xxx'
+      );
+
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "code": 401,
+          "content": null,
+          "message": "Not authorized",
+          "status": "ERROR",
+        }
+      `);
     });
   });
 });

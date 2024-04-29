@@ -23,6 +23,7 @@ import {
   StadspasTransaction,
 } from './stadspas-types';
 import { fetchClientNummer } from './stadspas-zorgned-service';
+import { captureException } from '../monitoring';
 
 function getHeaders(administratienummer: string) {
   return {
@@ -216,12 +217,26 @@ export async function fetchTransacties(
   authProfileAndToken: AuthProfileAndToken,
   transactionsKeyEncrypted: string
 ) {
-  const [sessionID, budgetcode, administratienummer, pasnummer] = decrypt(
-    transactionsKeyEncrypted
-  ).split(':');
+  let sessionID: string = '';
+  let budgetcode: string = '';
+  let administratienummer: string = '';
+  let pasnummer: string = '';
 
-  if (sessionID !== authProfileAndToken.profile.sid) {
-    return apiErrorResult('Not authorized', null, 403);
+  try {
+    [sessionID, budgetcode, administratienummer, pasnummer] = decrypt(
+      transactionsKeyEncrypted
+    ).split(':');
+  } catch (error) {
+    captureException(error);
+  }
+
+  if (
+    !budgetcode ||
+    !administratienummer ||
+    !pasnummer ||
+    sessionID !== authProfileAndToken.profile.sid
+  ) {
+    return apiErrorResult('Not authorized', null, 401);
   }
 
   const dataRequestConfig = getApiConfig('GPASS');
