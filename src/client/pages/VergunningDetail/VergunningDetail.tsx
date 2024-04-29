@@ -150,8 +150,7 @@ export default function VergunningDetail() {
                 Vergunning.filming,
               ].filter(Boolean).length >= 2 && (
                 <p className={styles.Disclaimer}>
-                  Dit is een disclaimer tekst die getoond wordt bij meerdere
-                  WVOS vergunningen. Graag aanpassen wanneer de tekst binnen is.
+                  Zie besluit om te weten welk van de aanvragen zijn verleend.
                 </p>
               )}
 
