@@ -1,6 +1,7 @@
 import { WerkzaamhedenEnVervoerOpStraat } from '../../../server/services';
 import { InfoDetail } from '../../components';
 import { Location } from './Location';
+import styles from './VergunningDetail.module.scss';
 
 export function WVOS({
   vergunning,
@@ -8,6 +9,17 @@ export function WVOS({
   vergunning: WerkzaamhedenEnVervoerOpStraat;
 }) {
   const isAfgehandeld = vergunning.processed;
+
+  const hasMultiplePermits =
+    [
+      vergunning.vezip || vergunning.rvv || vergunning.eRvv,
+      vergunning.object,
+      vergunning.parkingspace || vergunning.eParkingspace,
+      vergunning.block,
+      vergunning.night,
+      vergunning.bicycleRack,
+      vergunning.filming,
+    ].filter(Boolean).length >= 2;
 
   return (
     <>
@@ -41,9 +53,14 @@ export function WVOS({
         }
       />
 
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
+      {(hasMultiplePermits && isAfgehandeld && (
+        <p className={styles.Disclaimer}>
+          Zie besluitdocument welk van de producten wel of niet verleend zijn
+        </p>
+      )) ||
+        (isAfgehandeld && (
+          <InfoDetail label="Resultaat" value={vergunning.decision} />
+        ))}
     </>
   );
 }
