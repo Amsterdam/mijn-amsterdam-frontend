@@ -140,6 +140,8 @@ export default function VergunningDetail() {
                 <DocumentDetails vergunning={Vergunning} />
               )}
 
+            {console.log(Vergunning)}
+
             {Vergunning.caseType === CaseType.BZP &&
               Vergunning.decision === 'Verleend' &&
               Vergunning.status === 'Afgehandeld' && (
