@@ -5,7 +5,7 @@ Hi and welcome to the **Mijn-Amsterdam** front-end + bff repository!
 This repo is the main codebase for the web application found at [mijn.amsterdam.nl](https://mijn.amsterdam.nl) which
 is a portal for official communication with the municipality of Amsterdam. The application consists of 2 main parts:
 
-- React application
+- React applicationn
 - Node Express back-end-for-frontend (BFF)
 
 To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.template` inside the file AND ask one of the developers for values.
