@@ -53,14 +53,15 @@ export function WVOS({
         }
       />
 
-      {(hasMultiplePermits && isAfgehandeld && (
+      {isAfgehandeld && (
+        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      )}
+
+      {hasMultiplePermits && isAfgehandeld && (
         <p className={styles.Disclaimer}>
           Zie besluitdocument welk van de producten wel of niet verleend zijn
         </p>
-      )) ||
-        (isAfgehandeld && (
-          <InfoDetail label="Resultaat" value={vergunning.decision} />
-        ))}
+      )}
     </>
   );
 }
