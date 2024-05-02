@@ -76,7 +76,7 @@ export default function Vergunningen() {
         ) {
           return {
             ...vergunning,
-            decision: 'Zie besluitdocument',
+            decision: 'Zie besluit',
           };
         }
         return vergunning;
