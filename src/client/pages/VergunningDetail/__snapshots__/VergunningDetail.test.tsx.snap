@@ -6523,14 +6523,9 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
         <p
           class="_Value_6f1df2"
         >
-          Niet verleend
+          Zie besluitdocument welk van de producten wel of niet verleend zijn
         </p>
       </div>
-      <p
-        class="_Disclaimer_28a267"
-      >
-        Zie besluitdocument welk van de producten wel of niet verleend zijn
-      </p>
     </div>
     <div
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
