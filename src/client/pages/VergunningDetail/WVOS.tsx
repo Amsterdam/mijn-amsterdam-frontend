@@ -49,7 +49,7 @@ export function WVOS({
           label="Resultaat"
           value={
             multiplePermits
-              ? 'Zie besluitdocument welk van de producten wel of niet verleend zijn'
+              ? 'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.'
               : vergunning.decision
           }
         />
