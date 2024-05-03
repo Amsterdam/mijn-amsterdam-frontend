@@ -145,19 +145,19 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-13",
-        "description": "Wij hebben uw opzegging eigen parkeerplaats ontvangen.",
+        "description": "Wij hebben uw opzegging Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1679261105-notification",
         "link": {
           "title": "Bekijk details",
           "to": "/vergunningen/eigen-parkeerplaats-opheffen/1679261105",
         },
         "subject": "1679261105",
-        "title": "Opzegging eigen parkeerplaats ontvangen",
+        "title": "Opzegging Eigen parkeerplaats ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-10",
-        "description": "Wij hebben uw aanvraag eigen parkeerplaats ontvangen.",
+        "description": "Wij hebben uw aanvraag Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1817502388-notification",
         "link": {
           "title": "Bekijk details",
@@ -717,19 +717,19 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-13",
-        "description": "Wij hebben uw opzegging eigen parkeerplaats ontvangen.",
+        "description": "Wij hebben uw opzegging Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1679261105-notification",
         "link": {
           "title": "Bekijk details",
           "to": "/vergunningen/eigen-parkeerplaats-opheffen/1679261105",
         },
         "subject": "1679261105",
-        "title": "Opzegging eigen parkeerplaats ontvangen",
+        "title": "Opzegging Eigen parkeerplaats ontvangen",
       },
       {
         "chapter": "VERGUNNINGEN",
         "datePublished": "2023-10-10",
-        "description": "Wij hebben uw aanvraag eigen parkeerplaats ontvangen.",
+        "description": "Wij hebben uw aanvraag Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1817502388-notification",
         "link": {
           "title": "Bekijk details",
