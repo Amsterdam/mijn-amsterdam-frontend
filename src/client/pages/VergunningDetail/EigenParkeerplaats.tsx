@@ -37,7 +37,7 @@ export function EigenParkeerplaats({
               <Link
                 className={styles.LocationModalLink}
                 variant="inline"
-                onClick={() => location1.url}
+                href="location1.url"
               >
                 Bekijk parkeervak
               </Link>
@@ -52,8 +52,19 @@ export function EigenParkeerplaats({
             label="Adres"
             location={`${location2.street} ${location2.houseNumber}`}
           />
-          <InfoDetail label="Soortplek" value={location2.type} />
-          <InfoDetail label="Parkeervak" value={location2.url} />
+          <InfoDetail label="Soort plek" value={location2.type} />
+          <InfoDetail
+            label="Parkeervak"
+            value={
+              <Link
+                className={styles.LocationModalLink}
+                variant="inline"
+                href="location2.url"
+              >
+                Bekijk parkeervak
+              </Link>
+            }
+          />
         </>
       )}
 
