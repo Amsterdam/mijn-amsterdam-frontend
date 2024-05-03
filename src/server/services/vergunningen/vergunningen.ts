@@ -278,6 +278,7 @@ export interface EigenParkeerplaatsOpheffen
   extends Parkeerplaats,
     VergunningBase {
   caseType: CaseType.EigenParkeerplaatsOpheffen;
+  licensePlates: string | null;
   isCarsharingpermit: string | null;
   location: Parkeerplaats;
   dateEnd: string | null;
