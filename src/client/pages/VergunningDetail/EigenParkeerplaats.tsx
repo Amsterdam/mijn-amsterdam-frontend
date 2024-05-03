@@ -30,7 +30,7 @@ export function EigenParkeerplaats({
             label="Adres"
             location={`${location1.street} ${location1.houseNumber}`}
           />
-          <InfoDetail label="Soortplek" value={location1.type} />
+          <InfoDetail label="Soort plek" value={location1.type} />
           <InfoDetail
             label="Parkeervak"
             value={
