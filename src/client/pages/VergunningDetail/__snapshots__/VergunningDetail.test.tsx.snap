@@ -3086,6 +3086,259 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
 </DocumentFragment>
 `;
 
+exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the full page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="_Page_47d7c0 _DetailPage_47d7c0"
+  >
+    <header
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+    >
+      <span
+        aria-hidden="true"
+        class="_Icon_3b337d"
+      >
+        <svg
+          aria-label="Vergunningen en ontheffingen"
+          class="_ChapterIcon_3ea2dd"
+          fill="black"
+          focusable="false"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <title>
+            Vergunningen en ontheffingen
+          </title>
+          <path
+            d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
+          />
+        </svg>
+      </span>
+      <div
+        class="_HeadingInner_3b337d"
+      >
+        <a
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          href="/vergunningen"
+        >
+          <svg
+            aria-hidden="true"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
+            fill="#000"
+            focusable="false"
+            height="14px"
+            viewBox="0 0 32 32"
+            width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
+          </svg>
+          Vergunningen en ontheffingen
+        </a>
+        <h2
+          class="ams-heading ams-heading--1"
+        >
+          Eigen parkeerplaats opheffen
+        </h2>
+      </div>
+    </header>
+    <div
+      class="_PageContent_47d7c0 _DetailPageContent_28a267"
+    >
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="ams-heading ams-heading--4 _Label_6f1df2"
+        >
+          Kenmerk
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Z/23/2230376
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="ams-heading ams-heading--4 _Label_6f1df2"
+        >
+          Verzoek
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Opheffing 
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
+      >
+        <h3
+          class="ams-heading ams-heading--4 _Label_6f1df2"
+        >
+          Adres
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          Weesperstraat 113
+          <br />
+          <a
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+          >
+            Bekijk op de kaart
+          </a>
+        </p>
+      </div>
+    </div>
+    <div
+      class="_StatusLine_a12ff2 _VergunningStatus_28a267"
+    >
+      <h4
+        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+      >
+        Status
+      </h4>
+      <ul
+        class="_List_a12ff2"
+      >
+        <li
+          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                Ontvangen
+              </strong>
+              <time
+                class="_StatusDate_a12ff2"
+              >
+                13 oktober 2023
+              </time>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                In behandeling
+              </strong>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+        <li
+          class="_ListItem_a12ff2"
+        >
+          <div
+            class="_ListItemInner_a12ff2"
+          >
+            <div
+              aria-label="Vinkje, processtap gereed"
+              class="_StatusConnection_a12ff2"
+            >
+              <span
+                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+              />
+              <span
+                class="_Checkmark_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--status_a12ff2"
+            >
+              <strong
+                class="_StatusTitle_a12ff2"
+              >
+                Afgehandeld
+              </strong>
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            >
+              <div
+                class="_PanelContent_a12ff2"
+              />
+            </div>
+            <div
+              class="_Panel_a12ff2 _Panel--documents_a12ff2"
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
 exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > should match the full page snapshot 1`] = `
 <DocumentFragment>
   <main

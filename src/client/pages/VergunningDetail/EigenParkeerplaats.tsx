@@ -61,7 +61,7 @@ export function EigenParkeerplaats({
 
       {vergunning.requestType === 'Kentekenwijziging' && (
         <InfoDetail
-          label="Oude kenteken(s)"
+          label="Oude kenteken"
           value={vergunning.previousLicensePlates}
         />
       )}
