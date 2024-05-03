@@ -2929,28 +2929,8 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
           class="_Value_6f1df2"
         >
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
-            rel="external noopener noreferrer"
+            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
           >
-            <svg
-              aria-hidden="true"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <title>
-                chevron-rechts-icoon
-              </title>
-              <polygon
-                points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-              />
-            </svg>
             Bekijk parkeervak
           </a>
         </p>

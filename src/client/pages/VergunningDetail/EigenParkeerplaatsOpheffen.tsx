@@ -1,7 +1,8 @@
 import type { EigenParkeerplaatsOpheffen as EigenParkeerplaatsOpheffenType } from '../../../server/services';
-import { Linkd } from '../../components';
+import { Link } from '@amsterdam/design-system-react';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
+import styles from '../../components/LocationModal/LocationModal.module.scss';
 
 export function EigenParkeerplaatsOpheffen({
   vergunning,
@@ -29,9 +30,13 @@ export function EigenParkeerplaatsOpheffen({
         <InfoDetail
           label="Parkeervak"
           value={
-            <Linkd href={url} external={true}>
+            <Link
+              className={styles.LocationModalLink}
+              variant="inline"
+              onClick={() => url}
+            >
               Bekijk parkeervak
-            </Linkd>
+            </Link>
           }
         />
       )}
