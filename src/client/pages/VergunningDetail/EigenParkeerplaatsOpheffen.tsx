@@ -24,7 +24,7 @@ export function EigenParkeerplaatsOpheffen({
 
       <Location label="Adres" location={`${street} ${houseNumber}`} />
 
-      {type && <InfoDetail label="Soortplek" value={type} />}
+      {type.length > 0 && <InfoDetail label="Soort plek" value={type} />}
 
       {url && (
         <InfoDetail
