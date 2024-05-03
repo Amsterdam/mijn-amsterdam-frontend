@@ -3,6 +3,7 @@ import { differenceInMonths } from 'date-fns';
 import FormData from 'form-data';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   Lood365Response,
@@ -19,7 +20,7 @@ import {
   sortAlpha,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
-import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/helpers/vergunningen';
+
 import { captureException } from '../monitoring';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
@@ -202,14 +203,6 @@ export async function fetchLoodMetingNotifications(
   }
 
   return apiDependencyError({ metingenResponse });
-}
-
-function isRecentNotification(
-  datePublished: string,
-  dateNow: Date = new Date()
-): boolean {
-  const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
-  return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
 }
 
 function createLoodNotification(meting: LoodMeting) {

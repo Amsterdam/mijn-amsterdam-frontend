@@ -7,6 +7,8 @@ import type {
   Splitsingsvergunning,
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
+  EigenParkeerplaatsOpheffen,
+  EigenParkeerplaats,
 } from '../../server/services/vergunningen/vergunningen';
 import {
   Vergunning,
@@ -15,7 +17,6 @@ import {
 import { CaseType } from '../types/vergunningen';
 import { isDateInPast, monthsFromNow } from './date';
 
-export const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 const EXCLUDED_CASETYPES_FOR_DOCUMENTS_DISPLAY = [
@@ -76,14 +77,6 @@ export function isWoonvergunning(
   );
 }
 
-export function isActualNotification(
-  datePublished: string,
-  dateNow: Date = new Date()
-): boolean {
-  const diff = Math.abs(differenceInMonths(new Date(datePublished), dateNow));
-  return diff < MONTHS_TO_KEEP_NOTIFICATIONS;
-}
-
 export function isNearEndDate(
   vergunning: VergunningExpirable,
   dateNow: Date = new Date()
@@ -135,7 +128,11 @@ export function showDocuments(caseType: CaseType) {
 }
 
 export function getCustomTitleForVergunningWithLicensePlates(
-  vergunning: TouringcarDagontheffing | TouringcarJaarontheffing
+  vergunning:
+    | TouringcarDagontheffing
+    | TouringcarJaarontheffing
+    | EigenParkeerplaatsOpheffen
+    | EigenParkeerplaats
 ) {
   if (vergunning.caseType === CaseType.TouringcarDagontheffing) {
     return `${vergunning.title} (${vergunning.licensePlate})`;
