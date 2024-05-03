@@ -59,7 +59,7 @@ export function EigenParkeerplaats({
               <Link
                 className={styles.LocationModalLink}
                 variant="inline"
-                href="location2.url"
+                href={location2.url}
               >
                 Bekijk parkeervak
               </Link>
