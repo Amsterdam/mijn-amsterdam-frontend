@@ -2879,9 +2879,16 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         </h3>
         <p
           class="_Value_6f1df2"
-        >
-          Nieuwe aanvraag
-        </p>
+        />
+        <ul>
+          <li>
+            Kentekenwijziging
+          </li>
+          <li>
+            Nieuwe aanvraag
+          </li>
+        </ul>
+        <p />
       </div>
       <div
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
@@ -2930,6 +2937,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         >
           <a
             class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+            href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
           >
             Bekijk parkeervak
           </a>
@@ -2948,6 +2956,18 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         >
           PR067L
         </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="ams-heading ams-heading--4 _Label_6f1df2"
+        >
+          Oude kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        />
       </div>
     </div>
     <div
