@@ -20,9 +20,10 @@ fi
 # echo "Current Version: $CURRENT_VERSION"
 
 
-
+#replace release-v text from tag
+CURRENT_VERSION_NUMS=(${CURRENT_VERSION//release-v/})
 #replace . with space so can split into an array
-CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
+CURRENT_VERSION_PARTS=(${CURRENT_VERSION_NUMS//./ })
 
 #get number parts
 VNUM1=${CURRENT_VERSION_PARTS[0]}

@@ -48,8 +48,8 @@ RELEASE_BRANCH="${BRANCH}-v${NEW_TAG}" && \
 echo "Creating branch $RELEASE_BRANCH" && \
 git branch -m "$RELEASE_BRANCH" && \
 
-echo "New tag $NEW_TAG" && \
-git tag -a "$NEW_TAG" -m "Production ${NEW_TAG}" && \
+echo "New tag: release-v${NEW_TAG}" && \
+git tag -a "release-v${NEW_TAG}" -m "Production ${NEW_TAG}" && \
 
 echo "Pushing branch $RELEASE_BRANCH" && \
 git push origin --follow-tags "$RELEASE_BRANCH" && \
