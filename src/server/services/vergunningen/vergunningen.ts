@@ -266,13 +266,15 @@ export interface EigenParkeerplaats extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
   locations: Parkeerplaats[] | null;
-  requestType:
-    | 'Nieuwe aanvraag'
-    | 'Autodeelbedrijf'
-    | 'Kentekenwijziging'
-    | 'Verhuizing'
-    | 'Verlenging';
+  requestTypes: requestType[] | [];
 }
+
+type requestType =
+  | 'Nieuwe aanvraag'
+  | 'Autodeelbedrijf'
+  | 'Kentekenwijziging'
+  | 'Verhuizing'
+  | 'Verlenging';
 
 export interface EigenParkeerplaatsOpheffen
   extends Parkeerplaats,
