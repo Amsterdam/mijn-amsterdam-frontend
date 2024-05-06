@@ -1,18 +1,27 @@
-import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { AppRoutes, OTAP_ENV } from '../../../universal/config';
-import AmsterdamLogoLarge from '../../assets/images/logo-amsterdam-large.svg?react';
-import AmsterdamLogo from '../../assets/images/logo-amsterdam.svg?react';
-import { getApiErrors } from '../../config/api';
-import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { AppRoutes, ChapterTitles, OTAP_ENV } from '../../../universal/config';
+import { getApiErrors, LOGOUT_URL } from '../../config/api';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import Linkd from '../Button/Button';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
-import MainNavBar from '../MainNavBar/MainNavBar';
 import styles from './MainHeader.module.scss';
+import { PageMenu, Header } from '@amsterdam/design-system-react';
+import { animated } from '@react-spring/web';
+import { Search } from '../Search/Search';
+import MegaMenu from '../MegaMenu/MegaMenu';
+import { useProfileTypeValue, useTermReplacement } from '../../hooks';
+import { useChapters } from '../../hooks/useChapters';
+import { useSearchOnPage } from '../Search/useSearch';
+import { SearchEntry } from '../Search/searchConfig';
+import { isUiElementVisible } from '../../config/app';
+import {
+  isMenuItemVisible,
+  mainMenuItems,
+} from '../MainNavBar/MainNavBar.constants';
+import { isError } from '../../../universal/helpers';
+import { ProfileName } from '../MainNavBar/ProfileName';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -32,56 +41,244 @@ function OtapLabel() {
   ) : null;
 }
 
+const LinkContainerId = 'MainMenu';
+const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
+
+function isTargetWithinMenu(target: any) {
+  const LinkContainer = document.getElementById(LinkContainerId);
+  const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
+  return (
+    (LinkContainer && LinkContainer.contains(target)) ||
+    (BurgerMenuToggleButton && BurgerMenuToggleButton.contains(target))
+  );
+}
+
+type Props = {
+  isAuthenticated: boolean;
+};
+
+export function SecondaryLinks() {
+  const { BRP, KVK, PROFILE } = useAppStateGetter();
+
+  const profileType = useProfileTypeValue();
+
+  return (
+    <>
+      <PageMenu.Link href={LOGOUT_URL}>Uitloggen</PageMenu.Link>
+      {!isError(BRP) && !isError(KVK) && (
+        <ProfileName
+          person={BRP.content?.persoon}
+          company={KVK?.content}
+          profileType={profileType}
+          profileAttribute={PROFILE.content?.profile?.id}
+        />
+      )}
+    </>
+  );
+}
+
 export default function MainHeader({
   isAuthenticated = false,
   isHeroVisible = true,
 }: MainHeaderProps) {
   const appState = useAppStateGetter();
   const errors = useMemo(() => getApiErrors(appState), [appState]);
-  const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
   const hasErrors = !!errors.length;
+  const termReplace = useTermReplacement();
+  const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
+    undefined
+  );
+  const { items: myChapterItems } = useChapters();
   const location = useLocation();
-  const isPhonescreen = usePhoneScreen();
+  const profileType = useProfileTypeValue();
+  const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
+    useSearchOnPage();
+
+  // Bind click outside and tab navigation interaction
+  useEffect(() => {
+    const onTab = (event?: any) => {
+      const isMenuTarget = isTargetWithinMenu(event.target);
+      if (event.key === 'Tab') {
+        if (isBurgerMenuVisible === true && !isMenuTarget) {
+          toggleBurgerMenu(false);
+        } else if (isBurgerMenuVisible === false && isMenuTarget) {
+          toggleBurgerMenu(true);
+        }
+      }
+    };
+
+    const onClickOutsideBurgermenu = (event?: any) => {
+      if (isBurgerMenuVisible === true && !isTargetWithinMenu(event.target)) {
+        toggleBurgerMenu(false);
+      }
+    };
+
+    document.addEventListener('keyup', onTab);
+    document.addEventListener('click', onClickOutsideBurgermenu);
+    return () => {
+      document.removeEventListener('keyup', onTab);
+      document.removeEventListener('click', onClickOutsideBurgermenu);
+    };
+  }, [isBurgerMenuVisible]);
+
+  // Hides small screen menu on route change
+  useEffect(() => {
+    toggleBurgerMenu(false);
+  }, [location.pathname]);
+
+  const replaceResultUrl = useCallback((result: SearchEntry) => {
+    return result.url.startsWith(AppRoutes.BUURT);
+  }, []);
+
+  const isSimpleNavBarEnabled = isUiElementVisible(
+    profileType,
+    'MainNavBarSimple'
+  );
+
+  const menuItems = useMemo(() => {
+    if (isSimpleNavBarEnabled) {
+      return [];
+    }
+    return mainMenuItems
+      .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
+      .map((item) => {
+        let menuItem = item;
+        if (
+          menuItem.title === ChapterTitles.BUURT &&
+          profileType !== 'private'
+        ) {
+          menuItem = {
+            ...menuItem,
+            title: termReplace(menuItem.title),
+          };
+        }
+
+        return menuItem;
+      });
+  }, [myChapterItems, profileType, termReplace, isSimpleNavBarEnabled]);
+
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const adjustOverlay = () => {
+      if (!menuRef.current) {
+        return;
+      }
+
+      let menuHeight = menuRef.current?.offsetHeight;
+      const scrollTop = window.scrollY;
+
+      if (scrollTop > menuHeight) {
+        menuHeight = 0;
+      }
+      if (backdropRef.current && isBurgerMenuVisible) {
+        backdropRef.current.style.top = `${menuHeight}px`;
+        backdropRef.current.style.height = `calc(100vh - ${menuHeight}px)`;
+      }
+    };
+
+    adjustOverlay();
+    window.addEventListener('resize', adjustOverlay);
+    window.addEventListener('scroll', adjustOverlay);
+    window.addEventListener('touchmove', adjustOverlay);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener('resize', adjustOverlay);
+      window.removeEventListener('scroll', adjustOverlay);
+      window.removeEventListener('touchmove', adjustOverlay);
+    };
+  }, [isBurgerMenuVisible]);
 
   return (
-    <header className={styles.header}>
-      {!isPhonescreen && (
-        <nav className={styles.DirectSkipLinks}>
-          <Linkd external={true} tabIndex={0} href="#skip-to-id-AppContent">
-            Direct naar: <b>Pagina inhoud</b>
-          </Linkd>
-          <Linkd external={true} tabIndex={0} href="#skip-to-id-MainFooter">
-            Direct naar: <b>Footer</b>
-          </Linkd>
-        </nav>
-      )}
-      <div className={styles.topBar}>
-        <span className={styles.logoLink}>
-          <a href="https://www.amsterdam.nl" rel="external noreferrer noopener">
-            <Logo
-              role="img"
-              aria-label="Gemeente Amsterdam logo"
-              className={styles.logo}
-            />
-          </a>
-          {location.pathname !== AppRoutes.ROOT ? (
-            <Heading level={2} size="level-1" key="heading-back">
-              <Link to={AppRoutes.ROOT} title="Terug naar home">
-                Mijn Amsterdam <OtapLabel />
-              </Link>
-            </Heading>
-          ) : (
-            <Heading level={2} size="level-1" key="heading-home">
-              Mijn Amsterdam <OtapLabel />
-            </Heading>
+    <div>
+      <div className={styles.headerContainer}>
+        <div>
+          <Header
+            ref={menuRef}
+            className={styles.header}
+            title="Mijn Amsterdam"
+            links={
+              isAuthenticated && (
+                <>
+                  <PageMenu alignEnd>
+                    <SecondaryLinks />
+                    <PageMenu.Link href="#">
+                      <button
+                        aria-label={'Search'}
+                        onClick={() => setSearchActive(!isSearchActive)}
+                        className={styles.menuLinkSearch}
+                      >
+                        Zoeken
+                      </button>
+                    </PageMenu.Link>
+                  </PageMenu>
+                </>
+              )
+            }
+            menu={
+              isAuthenticated && (
+                <>
+                  {!isBurgerMenuVisible ? (
+                    <button
+                      aria-label={'Open menu'}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleBurgerMenu(true);
+                      }}
+                      className="ams-header__menu-button"
+                    >
+                      Menu
+                    </button>
+                  ) : (
+                    isBurgerMenuVisible && (
+                      <button
+                        aria-label={'Close menu'}
+                        onClick={() => toggleBurgerMenu(false)}
+                        className={styles.menuLinkClose}
+                      >
+                        Menu
+                      </button>
+                    )
+                  )}
+                </>
+              )
+            }
+          />
+
+          {!isSimpleNavBarEnabled && isDisplayLiveSearch && isSearchActive && (
+            <div className={styles.Search}>
+              <div className={styles.SearchBar}>
+                <div className={styles.SearchBarInner}>
+                  <Search
+                    onFinish={() => {
+                      setSearchActive(false);
+                    }}
+                    replaceResultUrl={replaceResultUrl}
+                  />
+                </div>
+              </div>
+            </div>
           )}
-        </span>
+
+          {isBurgerMenuVisible && (
+            <MegaMenu chapters={myChapterItems} menuItems={menuItems} />
+          )}
+        </div>
+        {isAuthenticated && hasErrors && (
+          <ErrorMessages errors={errors} className={styles.ErrorMessages} />
+        )}
       </div>
-      {isAuthenticated && <MainNavBar isAuthenticated={isAuthenticated} />}
-      {isAuthenticated && hasErrors && (
-        <ErrorMessages errors={errors} className={styles.ErrorMessages} />
-      )}
       {isHeroVisible && <MainHeaderHero />}
-    </header>
+
+      {isBurgerMenuVisible && (
+        <animated.div
+          ref={backdropRef}
+          key="BurgerMenuBackDrop"
+          className={styles.Backdrop}
+        />
+      )}
+    </div>
   );
 }

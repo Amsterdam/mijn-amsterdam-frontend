@@ -24,7 +24,6 @@ import MainNavSubmenu, {
 import { Search } from '../Search/Search';
 import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
-import LogoutLink from './LogoutLink';
 import {
   MenuItem,
   isMenuItemVisible,
@@ -33,7 +32,6 @@ import {
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
-import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -62,7 +60,6 @@ export function SecondaryLinks() {
             profileAttribute={PROFILE.content?.profile?.id}
           />
         )}
-        <LogoutLink>Uitloggen</LogoutLink>
         {!isDesktopScreen && <div className={styles.HR} />}
       </span>
     </div>
@@ -190,9 +187,6 @@ export default function MainNavBar({
     return result.url.startsWith(AppRoutes.BUURT);
   }, []);
 
-  const { linkContainerAnimationProps, backdropAnimationProps, leftProps } =
-    useBurgerMenuAnimation(isBurgerMenuVisible);
-
   const isSimpleNavBarEnabled = isUiElementVisible(
     profileType,
     'MainNavBarSimple'
@@ -235,21 +229,10 @@ export default function MainNavBar({
 
       {isAuthenticated && (
         <>
-          {hasBurgerMenu && (
-            <animated.div
-              key="BurgerMenuBackDrop"
-              style={{
-                ...leftProps,
-                ...backdropAnimationProps,
-              }}
-              className={styles.Backdrop}
-            />
-          )}
           <animated.div
             key="LinkContainer"
             id={LinkContainerId}
             className={styles.LinkContainer}
-            style={linkContainerAnimationProps}
           >
             {hasBurgerMenu && (
               <div className={styles.LogoAndButtonWrapper}>

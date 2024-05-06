@@ -1,6 +1,7 @@
 // Global z-index control
 $z-index: (
   header-error-messages: 9,
+  burger-menu-backdrop: 10,
   font-enlarger-popup: 100,
   map-tile-layer: 200,
   my-area-dashboard-content: 401,
@@ -8,7 +9,7 @@ $z-index: (
   my-area-feature-loader: 401,
   my-area-address-loader: 401,
   my-area-error-messages: 402,
-  burger-menu-backdrop: 402,
+  mega-menu: 403,
   submenu-panel: 410,
   main-nav-bar-inner--tablet: 411,
   modal: 500,
