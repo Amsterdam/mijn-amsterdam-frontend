@@ -23,7 +23,7 @@ import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal/helpers/vergunningen';
-import { hasMultiplePermits } from '../../utils/utils';
+import { hasMultiplePermits } from '../VergunningDetail/WVOS';
 
 export const DISPLAY_PROPS = {
   identifier: 'Kenmerk',

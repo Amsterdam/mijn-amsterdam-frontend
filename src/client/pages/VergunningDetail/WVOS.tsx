@@ -1,7 +1,20 @@
 import { WerkzaamhedenEnVervoerOpStraat } from '../../../server/services';
 import { InfoDetail } from '../../components';
 import { Location } from './Location';
-import { hasMultiplePermits } from '../../utils/utils';
+
+export function hasMultiplePermits(vergunning: WerkzaamhedenEnVervoerOpStraat) {
+  return (
+    [
+      vergunning.vezip || vergunning.rvv || vergunning.eRvv,
+      vergunning.object,
+      vergunning.parkingspace || vergunning.eParkingspace,
+      vergunning.block,
+      vergunning.night,
+      vergunning.bicycleRack,
+      vergunning.filming,
+    ].filter(Boolean).length >= 2
+  );
+}
 
 export function WVOS({
   vergunning,
