@@ -22,7 +22,16 @@ export function EigenParkeerplaats({
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
-      <InfoDetail label="Verzoek" value={vergunning.requestType} />
+      <InfoDetail
+        label="Verzoek"
+        value={
+          <ul>
+            {vergunning.requestTypes.map((d, i) => (
+              <li>{d}</li>
+            ))}
+          </ul>
+        }
+      />
 
       {!!location1 && (
         <>
@@ -70,7 +79,7 @@ export function EigenParkeerplaats({
 
       <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
 
-      {vergunning.requestType === 'Kentekenwijziging' && (
+      {vergunning.requestTypes.some((type) => type === 'Kentekenwijziging') && (
         <InfoDetail
           label="Oude kenteken"
           value={vergunning.previousLicensePlates}
