@@ -1,16 +1,9 @@
 import { WerkzaamhedenEnVervoerOpStraat } from '../../../server/services';
 import { InfoDetail } from '../../components';
 import { Location } from './Location';
-import styles from './VergunningDetail.module.scss';
 
-export function WVOS({
-  vergunning,
-}: {
-  vergunning: WerkzaamhedenEnVervoerOpStraat;
-}) {
-  const isAfgehandeld = vergunning.processed;
-
-  const hasMultiplePermits =
+export function hasMultiplePermits(vergunning: WerkzaamhedenEnVervoerOpStraat) {
+  return (
     [
       vergunning.vezip || vergunning.rvv || vergunning.eRvv,
       vergunning.object,
@@ -19,7 +12,18 @@ export function WVOS({
       vergunning.night,
       vergunning.bicycleRack,
       vergunning.filming,
-    ].filter(Boolean).length >= 2;
+    ].filter(Boolean).length >= 2
+  );
+}
+
+export function WVOS({
+  vergunning,
+}: {
+  vergunning: WerkzaamhedenEnVervoerOpStraat;
+}) {
+  const isAfgehandeld = vergunning.processed;
+
+  const multiplePermits = hasMultiplePermits(vergunning);
 
   return (
     <>
@@ -53,14 +57,16 @@ export function WVOS({
         }
       />
 
-      {(hasMultiplePermits && isAfgehandeld && (
-        <p className={styles.Disclaimer}>
-          Zie besluitdocument welk van de producten wel of niet verleend zijn
-        </p>
-      )) ||
-        (isAfgehandeld && (
-          <InfoDetail label="Resultaat" value={vergunning.decision} />
-        ))}
+      {isAfgehandeld && (
+        <InfoDetail
+          label="Resultaat"
+          value={
+            multiplePermits
+              ? 'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.'
+              : vergunning.decision
+          }
+        />
+      )}
     </>
   );
 }

@@ -23,6 +23,7 @@ import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal/helpers/vergunningen';
+import { hasMultiplePermits } from '../VergunningDetail/WVOS';
 
 export const DISPLAY_PROPS = {
   identifier: 'Kenmerk',
@@ -66,7 +67,20 @@ export default function Vergunningen() {
   }, [VERGUNNINGEN.content]);
 
   const vergunningenPrevious = useMemo(() => {
-    return vergunningen.filter((vergunning) => vergunning.processed);
+    return vergunningen
+      .filter((vergunning) => vergunning.processed)
+      .map((vergunning) => {
+        if (
+          vergunning.caseType === CaseType.WVOS &&
+          hasMultiplePermits(vergunning)
+        ) {
+          return {
+            ...vergunning,
+            decision: 'Zie besluit',
+          };
+        }
+        return vergunning;
+      });
   }, [vergunningen]);
 
   const vergunningenActual = useMemo(() => {
