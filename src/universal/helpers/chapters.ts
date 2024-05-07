@@ -31,7 +31,6 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
     HORECA,
     AVG,
     BODEM,
-    WONEN,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -197,12 +196,6 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
         !isLoading(BODEM) &&
         !!BODEM?.content?.metingen?.length &&
         FeatureToggle.bodemActive
-      );
-    case Chapters.WONEN:
-      return (
-        !isLoading(WONEN) &&
-        !!WONEN?.content?.woningen?.length &&
-        FeatureToggle.mijnWoningActive
       );
   }
 

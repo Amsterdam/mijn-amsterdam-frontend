@@ -124,9 +124,7 @@ export type SourceApiKey =
   | 'SIA'
   | 'ENABLEU_2_SMILE'
   | 'LOOD_365'
-  | 'LOOD_365_OAUTH'
-  | 'WONEN'
-  | 'WONEN_KWALITEITSMONITOR';
+  | 'LOOD_365_OAUTH';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -235,16 +233,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   BAG: {
     url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
   },
-  WONEN: {
-    method: 'GET',
-    url: 'https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel/energielabel/',
-    headers: { 'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY },
-  },
-  WONEN_KWALITEITSMONITOR: {
-    method: 'GET',
-    url: 'https://api.data.amsterdam.nl/v1/kwaliteitsmonitor/wonen/',
-    // headers: { 'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY },
-  },
+
   ERFPACHTv2: {
     url: process.env.BFF_ERFPACHT_API_URL,
     passthroughOIDCToken: true,

@@ -33,7 +33,6 @@ export type Chapter =
   | 'KREFIA'
   | 'AVG'
   | 'BODEM'
-  | 'WONEN'
   | string;
 
 export type BagChapter = `${Chapter}_BAG`;
@@ -67,7 +66,6 @@ export const Chapters: Record<Chapter, Chapter> = {
   HORECA: 'HORECA',
   AVG: 'AVG',
   BODEM: 'BODEM',
-  WONEN: 'WONEN',
 };
 
 export const BagChapters: Record<Chapter, BagChapter> = Object.fromEntries(
@@ -86,7 +84,6 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   INKOMEN: 'Inkomen',
   STADSPAS: 'Stadspas',
   BRP: 'Mijn gegevens',
-  WONEN: 'Mijn Woning',
   MILIEUZONE: 'Milieuzone',
   OVERTREDINGEN: 'Overtredingen voertuigen',
   NOTIFICATIONS: 'Actueel',
@@ -159,7 +156,6 @@ export const DocumentTitles: {
     `Vergunning | ${ChapterTitles.VERGUNNINGEN}`,
   [AppRoutes.KVK]: `Mijn onderneming`,
   [AppRoutes.BUURT]: `Mijn buurt`,
-  [AppRoutes.WONEN]:  `Mijn woning`,
   [AppRoutes.BEZWAREN]: `${ChapterTitles.BEZWAREN} | overzicht`,
   [AppRoutes['BEZWAREN/DETAIL']]: `${ChapterTitles.BEZWAREN} | bezwaar`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
@@ -212,12 +208,6 @@ export const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.BRP,
     to: AppRoutes.BRP,
     profileTypes: ['private'],
-  },
-  {
-    title: ChapterTitles.WONEN,
-    id: Chapters.WONEN,
-    to: AppRoutes.WONEN,
-    profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.KVK,
