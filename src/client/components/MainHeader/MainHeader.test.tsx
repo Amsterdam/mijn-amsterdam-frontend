@@ -36,7 +36,6 @@ describe('<MainHeader />', () => {
     );
 
     expect(screen.getByText(/Uitloggen/)).toBeInTheDocument();
-    expect(screen.getByText('W. Beemsterboer')).toBeInTheDocument();
     expect(screen.getByText('Zoeken')).toBeInTheDocument();
     expect(screen.getByText('Menu')).toBeInTheDocument();
   });

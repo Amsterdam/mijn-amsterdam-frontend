@@ -93,7 +93,7 @@ export default function MainHeader({
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
-    const onTab = (event?: any) => {
+    const onTab = (event: KeyboardEvent) => {
       const isMenuTarget = isTargetWithinMenu(event.target);
       if (event.key === 'Tab') {
         if (isBurgerMenuVisible === true && !isMenuTarget) {
@@ -104,8 +104,8 @@ export default function MainHeader({
       }
     };
 
-    const onClickOutsideBurgermenu = (event?: any) => {
-      if (isBurgerMenuVisible === true && !isTargetWithinMenu(event.target)) {
+    const onClickOutsideBurgermenu = (event?: MouseEvent) => {
+      if (isBurgerMenuVisible === true && !isTargetWithinMenu(event?.target)) {
         toggleBurgerMenu(false);
       }
     };
