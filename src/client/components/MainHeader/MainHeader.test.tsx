@@ -18,10 +18,7 @@ describe('<MainHeader />', () => {
     );
 
     expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
-    expect(screen.getAllByText(/Direct naar:/).length).toBe(2);
-    expect(
-      screen.getByLabelText('Gemeente Amsterdam logo')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Ga naar de homepage')).toBeInTheDocument();
   });
 
   it('Renders authenticated header', () => {
@@ -38,9 +35,9 @@ describe('<MainHeader />', () => {
       '/header/1600x400-algemeen.jpg'
     );
 
-    expect(screen.getByText(/Mijn buurt/)).toBeInTheDocument();
-    expect(screen.getByText(/Home/)).toBeInTheDocument();
-    expect(screen.getByText(/Mijn thema's/)).toBeInTheDocument();
-    expect(screen.getByText(/Actueel/)).toBeInTheDocument();
+    expect(screen.getByText(/Uitloggen/)).toBeInTheDocument();
+    expect(screen.getByText('W. Beemsterboer')).toBeInTheDocument();
+    expect(screen.getByText('Zoeken')).toBeInTheDocument();
+    expect(screen.getByText('Menu')).toBeInTheDocument();
   });
 });

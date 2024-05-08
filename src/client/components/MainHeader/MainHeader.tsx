@@ -16,12 +16,9 @@ import { useChapters } from '../../hooks/useChapters';
 import { useSearchOnPage } from '../Search/useSearch';
 import { SearchEntry } from '../Search/searchConfig';
 import { isUiElementVisible } from '../../config/app';
-import {
-  isMenuItemVisible,
-  mainMenuItems,
-} from '../MainNavBar/MainNavBar.constants';
+import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
 import { isError } from '../../../universal/helpers';
-import { ProfileName } from '../MainNavBar/ProfileName';
+import { ProfileName } from './ProfileName';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -166,10 +163,11 @@ export default function MainHeader({
         return;
       }
 
-      let menuHeight = menuRef.current?.offsetHeight;
+      // Add 10 pixels to the height to make sure the overlay is not visible when the menu is changing is size
+      let menuHeight = menuRef.current?.offsetHeight + 10;
       const scrollTop = window.scrollY;
 
-      if (scrollTop > menuHeight) {
+      if (scrollTop >= menuHeight) {
         menuHeight = 0;
       }
       if (backdropRef.current && isBurgerMenuVisible) {
@@ -192,84 +190,82 @@ export default function MainHeader({
   }, [isBurgerMenuVisible]);
 
   return (
-    <div>
+    <>
       <div className={styles.headerContainer}>
-        <div>
-          <Header
-            ref={menuRef}
-            className={styles.header}
-            title="Mijn Amsterdam"
-            links={
-              isAuthenticated && (
-                <>
-                  <PageMenu alignEnd>
-                    <SecondaryLinks />
-                    <PageMenu.Link href="#">
-                      <button
-                        aria-label={'Search'}
-                        onClick={() => setSearchActive(!isSearchActive)}
-                        className={styles.menuLinkSearch}
-                      >
-                        Zoeken
-                      </button>
-                    </PageMenu.Link>
-                  </PageMenu>
-                </>
-              )
-            }
-            menu={
-              isAuthenticated && (
-                <>
-                  {!isBurgerMenuVisible ? (
+        <Header
+          ref={menuRef}
+          className={styles.header}
+          title="Mijn Amsterdam"
+          links={
+            isAuthenticated && (
+              <>
+                <PageMenu alignEnd>
+                  <SecondaryLinks />
+                  <PageMenu.Link href="#">
                     <button
-                      aria-label={'Open menu'}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleBurgerMenu(true);
-                      }}
-                      className="ams-header__menu-button"
+                      aria-label={'Search'}
+                      onClick={() => setSearchActive(!isSearchActive)}
+                      className={styles.menuLinkSearch}
+                    >
+                      Zoeken
+                    </button>
+                  </PageMenu.Link>
+                </PageMenu>
+              </>
+            )
+          }
+          menu={
+            isAuthenticated && (
+              <>
+                {!isBurgerMenuVisible ? (
+                  <button
+                    aria-label={'Open menu'}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleBurgerMenu(true);
+                    }}
+                    className="ams-header__menu-button"
+                  >
+                    Menu
+                  </button>
+                ) : (
+                  isBurgerMenuVisible && (
+                    <button
+                      aria-label={'Close menu'}
+                      onClick={() => toggleBurgerMenu(false)}
+                      className={styles.menuLinkClose}
                     >
                       Menu
                     </button>
-                  ) : (
-                    isBurgerMenuVisible && (
-                      <button
-                        aria-label={'Close menu'}
-                        onClick={() => toggleBurgerMenu(false)}
-                        className={styles.menuLinkClose}
-                      >
-                        Menu
-                      </button>
-                    )
-                  )}
-                </>
-              )
-            }
-          />
+                  )
+                )}
+              </>
+            )
+          }
+        />
 
-          {!isSimpleNavBarEnabled && isDisplayLiveSearch && isSearchActive && (
-            <div className={styles.Search}>
-              <div className={styles.SearchBar}>
-                <div className={styles.SearchBarInner}>
-                  <Search
-                    onFinish={() => {
-                      setSearchActive(false);
-                    }}
-                    replaceResultUrl={replaceResultUrl}
-                  />
-                </div>
+        {!isSimpleNavBarEnabled && isDisplayLiveSearch && isSearchActive && (
+          <div className={styles.Search}>
+            <div className={styles.SearchBar}>
+              <div className={styles.SearchBarInner}>
+                <Search
+                  onFinish={() => {
+                    setSearchActive(false);
+                  }}
+                  replaceResultUrl={replaceResultUrl}
+                />
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {isBurgerMenuVisible && (
-            <MegaMenu chapters={myChapterItems} menuItems={menuItems} />
-          )}
-        </div>
-        {isAuthenticated && hasErrors && (
-          <ErrorMessages errors={errors} className={styles.ErrorMessages} />
+        {isBurgerMenuVisible && (
+          <MegaMenu chapters={myChapterItems} menuItems={menuItems} />
         )}
       </div>
+      {isAuthenticated && hasErrors && (
+        <ErrorMessages errors={errors} className={styles.ErrorMessages} />
+      )}
       {isHeroVisible && <MainHeaderHero />}
 
       {isBurgerMenuVisible && (
@@ -279,6 +275,6 @@ export default function MainHeader({
           className={styles.Backdrop}
         />
       )}
-    </div>
+    </>
   );
 }

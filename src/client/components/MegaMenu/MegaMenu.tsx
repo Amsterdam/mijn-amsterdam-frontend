@@ -1,7 +1,7 @@
 import { Heading, LinkList, MegaMenu } from '@amsterdam/design-system-react';
 import { ChapterMenuItem } from '../../../universal/config';
 import styles from './MegaMenu.module.scss';
-import { MenuItem } from '../MainNavBar/MainNavBar.constants';
+import { MenuItem } from '../MainHeader/MainNavBar.constants';
 
 type Props = {
   menuItems: MenuItem[];
