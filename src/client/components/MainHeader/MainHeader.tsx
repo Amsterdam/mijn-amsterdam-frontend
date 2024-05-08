@@ -38,11 +38,12 @@ function OtapLabel() {
   ) : null;
 }
 
-const LinkContainerId = 'MainMenu';
+const AmsMegaMenuClassname = 'ams-mega-menu';
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 
 function isTargetWithinMenu(target: any) {
-  const LinkContainer = document.getElementById(LinkContainerId);
+  const LinkContainer =
+    document.getElementsByClassName(AmsMegaMenuClassname)[0];
   const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
   return (
     (LinkContainer && LinkContainer.contains(target)) ||
@@ -97,6 +98,7 @@ export default function MainHeader({
       const isMenuTarget = isTargetWithinMenu(event.target);
       if (event.key === 'Tab') {
         if (isBurgerMenuVisible === true && !isMenuTarget) {
+          console.log('uitzetten');
           toggleBurgerMenu(false);
         } else if (isBurgerMenuVisible === false && isMenuTarget) {
           toggleBurgerMenu(true);
