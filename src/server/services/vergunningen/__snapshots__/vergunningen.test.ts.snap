@@ -1567,6 +1567,13 @@ exports[`Vergunningen service > should format data correctly 1`] = `
         "type": "Consul/Huisarts/Verloskundige woonadres",
         "url": "https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/",
       },
+      {
+        "fiscalNumber": "121455487006",
+        "houseNumber": 235,
+        "street": "Oudezijds Voorburgwal",
+        "type": "Consul/Huisarts/Verloskundige woonadres",
+        "url": "https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/",
+      },
     ],
     "previousLicensePlates": null,
     "processed": false,

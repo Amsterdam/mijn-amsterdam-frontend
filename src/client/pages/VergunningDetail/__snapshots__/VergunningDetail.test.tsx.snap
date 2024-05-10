@@ -2877,71 +2877,148 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         >
           Verzoek
         </h3>
-        <p
+        <div
           class="_Value_6f1df2"
-        />
-        <ul>
-          <li>
-            Kentekenwijziging
-          </li>
-          <li>
-            Nieuwe aanvraag
-          </li>
-        </ul>
-        <p />
+        >
+          <ul>
+            <li>
+              Kentekenwijziging
+            </li>
+            <li>
+              Nieuwe aanvraag
+            </li>
+          </ul>
+        </div>
       </div>
       <div
-        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
+        class="_InfoDetailGroup_6f1df2"
       >
-        <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
         >
-          Adres
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Oudezijds Voorburgwal 233
-          <br />
-          <a
-            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+          <div
+            class="_InfoDetail_6f1df2 _LocationInfo_28a267"
           >
-            Bekijk op de kaart
-          </a>
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
-        >
-          Soort plek
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Consul/Huisarts/Verloskundige woonadres
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
-        >
-          Parkeervak
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          <a
-            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
-            href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Adres 1
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              Oudezijds Voorburgwal 233
+              <br />
+              <a
+                class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+              >
+                Bekijk op de kaart
+              </a>
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2 _LocationInfo_28a267"
           >
-            Bekijk parkeervak
-          </a>
-        </p>
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Adres 2
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              Oudezijds Voorburgwal 235
+              <br />
+              <a
+                class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+              >
+                Bekijk op de kaart
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="_InfoDetailGroup_6f1df2"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Soort plek
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              Consul/Huisarts/Verloskundige woonadres
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Soort plek
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              Consul/Huisarts/Verloskundige woonadres
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="_InfoDetailGroup_6f1df2"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Parkeervak
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              <a
+                class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+                href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
+              >
+                Bekijk parkeervak
+              </a>
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Parkeervak
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              <a
+                class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+                href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
+              >
+                Bekijk parkeervak
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
       <div
         class="_InfoDetail_6f1df2"
