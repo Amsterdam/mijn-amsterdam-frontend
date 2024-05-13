@@ -1,0 +1,27 @@
+{
+  "content": {
+    "isKnown": true,
+    "notifications": [
+      {
+        "title": "Wijziging contactpersoon Subsidie is gereed",
+        "description": "Uw aanvraag voor het worden van een contactpersoon voor Subsidierecht EW7/341 is goedgekeurd",
+        "datePublished": "2021-10-27",
+        "chapter": "SUBSIDIE",
+        "link": {
+          "title": "Bekijk hier uw Subsidie",
+          "to": "https://mijnSubsidie.acc.amsterdam.nl/saml/login/alias/mijnSubsidieBurger/target/5cGv/JO0bYFwcogNaliQj3783Lag1VbCps15b5sdk6c="
+        }
+      },
+      {
+        "title": "Wijziging contactpersoon Subsidie is gereed",
+        "description": "Uw aanvraag voor het worden van een contactpersoon voor Subsidierecht EW972/24 is goedgekeurd",
+        "datePublished": "2021-11-27",
+        "link": {
+          "title": "Bekijk hier uw Subsidie",
+          "to": "https://mijnSubsidie.acc.amsterdam.nl/saml/login/alias/mijnSubsidieBurger/target/5cGv/JO0bYFwcogNaliQj3783Lag1VbCps15b5sdk6c="
+        }
+      }
+    ]
+  },
+  "status": "OK"
+}

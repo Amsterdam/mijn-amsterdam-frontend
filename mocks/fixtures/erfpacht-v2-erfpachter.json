@@ -1,0 +1,11 @@
+{
+  "erfpachter": true,
+  "relationID": "string",
+  "relationCode": "123-abc",
+  "name": "string",
+  "email": "string",
+  "phoneNumber": "string",
+  "aantalRechten": 0,
+  "laatsteMutatieDatum": "string",
+  "businessType": "Notariskantoor"
+}

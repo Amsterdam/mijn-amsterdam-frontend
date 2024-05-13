@@ -1,0 +1,53 @@
+{
+  "status": "BSN known",
+  "data": [
+    {
+      "thema": "Belastingen",
+      "categorie": "F2",
+      "nummer": 1,
+      "prioriteit": 0,
+      "datum": "2022-05-30T09:00:34Z",
+      "titel": "Belastingen",
+      "omschrijving": "Burger bekend.",
+      "url": "https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php",
+      "url_naam": "Belastingen",
+      "informatie": "."
+    },
+    {
+      "thema": "Belastingen",
+      "categorie": "M1",
+      "nummer": 2,
+      "prioriteit": 50,
+      "datum": "2022-05-30T09:00:34Z",
+      "titel": "Uw aangifte toeristenbelasting",
+      "omschrijving": "Er is nog geen aangifte gedaan. Zorg dat u dit tijdig doet.",
+      "url": "https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php",
+      "url_naam": "Doe direct aangifte",
+      "informatie": "."
+    },
+    {
+      "thema": "Belastingen",
+      "categorie": "M1",
+      "nummer": 4,
+      "prioriteit": 1,
+      "datum": "2022-05-30T09:00:34Z",
+      "titel": "Betaal uw aanslagen",
+      "omschrijving": "Er staan nog aanslagen open waarvoor u een dwangbevel hebt ontvangen. Deze aanslagen zijn nog niet (geheel) voldaan. Voorkom een bezoek van de deurwaarder aan u. Betaal direct.",
+      "url": "https://belastingbalie-acc.amsterdam.nl/aanslagen.php",
+      "url_naam": "Betaal direct",
+      "informatie": "."
+    },
+    {
+      "thema": "Belastingen",
+      "categorie": "M2",
+      "nummer": 5,
+      "prioriteit": 10,
+      "datum": "2023-11-30T09:00:34Z",
+      "titel": "Automatische incasso",
+      "omschrijving": "foobarclowns",
+      "url": "https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php",
+      "url_naam": "Vraag direct aan",
+      "informatie": "U krijgt deze tip omdat u nog niet via automatische incasso betaalt"
+    }
+  ]
+}

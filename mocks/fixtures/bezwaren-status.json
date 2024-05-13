@@ -1,0 +1,31 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "url": "https://amsterdam-test.octopus.nl/api/zgw/v1/statussen/b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
+      "uuid": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
+      "zaak": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaken/bbc45d6e-3728-4ce5-8575-bc2b921878ae",
+      "statustype": "https://amsterdam-test.octopus.nl/api/zgw/v1/statustypen/2dfd301f-b2be-47a9-8f5d-7f35dff0aa6c",
+      "datumStatusGezet": "2023-09-15T10:00:00+02:00",
+      "statustoelichting": "Ontvangen"
+    },
+    {
+      "url": "https://amsterdam-test.octopus.nl/api/zgw/v1/statussen/50dcd25b-a826-422b-b51c-9049dda9600c",
+      "uuid": "50dcd25b-a826-422b-b51c-9049dda9600c",
+      "zaak": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaken/bbc45d6e-3728-4ce5-8575-bc2b921878ae",
+      "statustype": "https://amsterdam-test.octopus.nl/api/zgw/v1/statustypen/ad4d9b40-dcb4-45f7-84c3-fe562dc7cab4",
+      "datumStatusGezet": "2023-09-15T02:53:00+02:00",
+      "statustoelichting": "In behandeling"
+    },
+    {
+      "url": "https://amsterdam-test.octopus.nl/api/zgw/v1/statussen/00000000-0000-0000-0000-000000000000",
+      "uuid": "00000000-0000-0000-0000-000000000000",
+      "zaak": "https://amsterdam-test.octopus.nl/api/zgw/v1/zaken/00000000-0000-0000-0000-000000000000",
+      "statustype": "https://amsterdam-test.octopus.nl/api/zgw/v1/statustypen/00000000-0000-0000-0000-000000000000",
+      "datumStatusGezet": "9999-12-31T11:59:59+00:00",
+      "statustoelichting": "Afgehandeld"
+    }
+  ]
+}

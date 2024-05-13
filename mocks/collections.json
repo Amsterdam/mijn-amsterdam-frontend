@@ -1,0 +1,6 @@
+[
+  {
+    "id": "base",
+    "routes": ["get-belastingen:success"]
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "registrationNumber": "AAAA AAAA AAAA AAAA AAAA",
+  "requester": {
+    "personType": "NaturalPerson",
+    "email": "persoon@example.org",
+    "kvK": null,
+    "companyName": null,
+    "personalDetails": {
+      "firstName": "Voornaam",
+      "lastNamePrefix": null,
+      "lastName": "Achternaam",
+      "phoneNumber": "06-12345678"
+    }
+  },
+  "rentalHouse": {
+    "street": "Amstel",
+    "houseNumber": "1",
+    "houseLetter": null,
+    "houseNumberExtension": null,
+    "postalCode": "1012PN",
+    "city": "Amsterdam",
+    "shortName": "Amstel",
+    "owner": null
+  },
+  "requestForOther": false,
+  "createdAt": "2021-01-01T10:47:44.6107122",
+  "agreementDate": "2021-01-01T10:47:44.6107122"
+}
