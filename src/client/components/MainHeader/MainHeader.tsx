@@ -42,18 +42,12 @@ const AmsMegaMenuClassname = 'ams-mega-menu';
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 
 function isTargetWithinMenu(target: any) {
-  const LinkContainer =
-    document.getElementsByClassName(AmsMegaMenuClassname)[0];
+  const LinkContainer = document.querySelector(`.${AmsMegaMenuClassname}`);
   const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
   return (
-    (LinkContainer && LinkContainer.contains(target)) ||
-    (BurgerMenuToggleButton && BurgerMenuToggleButton.contains(target))
+    LinkContainer?.contains(target) || BurgerMenuToggleButton?.contains(target)
   );
 }
-
-type Props = {
-  isAuthenticated: boolean;
-};
 
 export function SecondaryLinks() {
   const { BRP, KVK, PROFILE } = useAppStateGetter();
@@ -63,14 +57,15 @@ export function SecondaryLinks() {
   return (
     <>
       <PageMenu.Link href={LOGOUT_URL}>Uitloggen</PageMenu.Link>
-      {!isError(BRP) && !isError(KVK) && (
-        <ProfileName
-          person={BRP.content?.persoon}
-          company={KVK?.content}
-          profileType={profileType}
-          profileAttribute={PROFILE.content?.profile?.id}
-        />
-      )}
+      {!isError(BRP) ||
+        (!isError(KVK) && (
+          <ProfileName
+            person={BRP.content?.persoon}
+            company={KVK?.content}
+            profileType={profileType}
+            profileAttribute={PROFILE.content?.profile?.id}
+          />
+        ))}
     </>
   );
 }
@@ -98,7 +93,6 @@ export default function MainHeader({
       const isMenuTarget = isTargetWithinMenu(event.target);
       if (event.key === 'Tab') {
         if (isBurgerMenuVisible === true && !isMenuTarget) {
-          console.log('uitzetten');
           toggleBurgerMenu(false);
         } else if (isBurgerMenuVisible === false && isMenuTarget) {
           toggleBurgerMenu(true);
