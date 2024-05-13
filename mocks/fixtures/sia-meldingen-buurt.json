@@ -1,0 +1,59 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.70881306808498, 52.2612733394801]
+      },
+      "properties": {
+        "category": {
+          "name": "Zwerfvuil",
+          "slug": "veegzwerfvuil",
+          "parent": {
+            "name": "Schoon",
+            "slug": "schoon"
+          }
+        },
+        "created_at": "2023-09-18T07:33:24.695448+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.7377902, 52.40611881]
+      },
+      "properties": {
+        "category": {
+          "name": "Parkeeroverlast",
+          "slug": "parkeeroverlast",
+          "parent": {
+            "name": "Overlast in de openbare ruimte",
+            "slug": "overlast-in-de-openbare-ruimte"
+          }
+        },
+        "created_at": "2023-02-10T05:54:38.670822+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.74412132576032, 52.3886317876806]
+      },
+      "properties": {
+        "category": {
+          "name": "Zwerfvuil",
+          "slug": "veegzwerfvuil",
+          "parent": {
+            "name": "Schoon",
+            "slug": "schoon"
+          }
+        },
+        "created_at": "2023-06-15T16:51:46.447652+00:00"
+      }
+    }
+  ]
+}

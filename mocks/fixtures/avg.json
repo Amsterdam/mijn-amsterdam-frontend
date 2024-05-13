@@ -1,0 +1,87 @@
+{
+  "rowcount": 6,
+  "List": [
+    {
+      "avgverzoek_id": { "value": "1" },
+      "avgverzoek_statusavgverzoek_alias": { "value": "Open" },
+      "avgverzoek_datumbinnenkomst": { "value": "06-03-2023 14:37" },
+      "avgverzoek_typeverzoek": { "value": "Inzage" },
+      "avgverzoek_typeafhandelingvaststellen_resultaat": { "value": "" },
+      "avgverzoek_insertedon": { "value": "06-03-2023 14:37" },
+      "avgverzoek_opschortengestartop": { "value": "16-03-2023 14:37" },
+      "avgverzoek_datuminbehandeling": { "value": "" },
+      "avgverzoek_werkelijkeeinddatum": { "value": "" },
+      "avgverzoek_omschrijvingvanonderwerp": { "value": "Iets met parkeren" }
+    },
+    {
+      "avgverzoek_id": { "value": "2" },
+      "avgverzoek_statusavgverzoek_alias": { "value": "Open" },
+      "avgverzoek_datumbinnenkomst": { "value": "08-03-2023 14:37" },
+      "avgverzoek_typeverzoek": { "value": "Verwijderen gegevens" },
+      "avgverzoek_typeafhandelingvaststellen_resultaat": { "value": "" },
+      "avgverzoek_insertedon": { "value": "08-03-2023 13:37" },
+      "avgverzoek_opschortengestartop": { "value": "" },
+      "avgverzoek_datuminbehandeling": { "value": "30-03-2023 14:37" },
+      "avgverzoek_werkelijkeeinddatum": { "value": "" },
+      "avgverzoek_omschrijvingvanonderwerp": {
+        "value": "Iets over vergunningen"
+      }
+    },
+    {
+      "avgverzoek_id": { "value": "223" },
+      "avgverzoek_statusavgverzoek_alias": { "value": "Afgehandeld" },
+      "avgverzoek_datumbinnenkomst": { "value": "09-03-2022 14:37" },
+      "avgverzoek_typeverzoek": { "value": "Verwijderen gegevens" },
+      "avgverzoek_typeafhandelingvaststellen_resultaat": { "value": "" },
+      "avgverzoek_insertedon": { "value": "09-03-2023 13:37" },
+      "avgverzoek_opschortengestartop": { "value": "" },
+      "avgverzoek_datuminbehandeling": { "value": "16-03-2023 14:37" },
+      "avgverzoek_werkelijkeeinddatum": { "value": "19-03-2023 10:30" },
+      "avgverzoek_omschrijvingvanonderwerp": {
+        "value": "Iets over vergunningen"
+      }
+    },
+    {
+      "avgverzoek_id": { "value": "425" },
+      "avgverzoek_statusavgverzoek_alias": { "value": "Afgehandeld" },
+      "avgverzoek_datumbinnenkomst": { "value": "10-03-2022 14:37" },
+      "avgverzoek_typeverzoek": { "value": "Verwijderen gegevens" },
+      "avgverzoek_typeafhandelingvaststellen_resultaat": { "value": "" },
+      "avgverzoek_insertedon": { "value": "10-03-2023 13:37" },
+      "avgverzoek_opschortengestartop": { "value": "12-03-2022 12:00" },
+      "avgverzoek_datuminbehandeling": { "value": "20-03-2023 14:37" },
+      "avgverzoek_werkelijkeeinddatum": { "value": "25-03-2023 10:30" },
+      "avgverzoek_omschrijvingvanonderwerp": {
+        "value": "Iets over vergunningen"
+      }
+    },
+    {
+      "avgverzoek_id": { "value": "561" },
+      "avgverzoek_statusavgverzoek_alias": { "value": "Open" },
+      "avgverzoek_datumbinnenkomst": { "value": "18-03-2023 14:37" },
+      "avgverzoek_typeverzoek": { "value": "Aanpassen gegevens" },
+      "avgverzoek_typeafhandelingvaststellen_resultaat": { "value": "" },
+      "avgverzoek_insertedon": { "value": "19-05-2023 13:37" },
+      "avgverzoek_opschortengestartop": { "value": "03-06-2023 10:00" },
+      "avgverzoek_datuminbehandeling": { "value": "30-05-2023 14:37" },
+      "avgverzoek_werkelijkeeinddatum": { "value": "" },
+      "avgverzoek_omschrijvingvanonderwerp": {
+        "value": "Iets over mileu"
+      }
+    },
+    {
+      "avgverzoek_id": { "value": "156" },
+      "avgverzoek_statusavgverzoek_alias": { "value": "Open" },
+      "avgverzoek_datumbinnenkomst": { "value": "18-03-2023 14:37" },
+      "avgverzoek_typeverzoek": { "value": "Aanpassen gegevens" },
+      "avgverzoek_typeafhandelingvaststellen_resultaat": { "value": "" },
+      "avgverzoek_insertedon": { "value": "19-03-2023 13:37" },
+      "avgverzoek_opschortengestartop": { "value": "" },
+      "avgverzoek_datuminbehandeling": { "value": "" },
+      "avgverzoek_werkelijkeeinddatum": { "value": "" },
+      "avgverzoek_omschrijvingvanonderwerp": {
+        "value": "Iets over mileu"
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "_links": {
+    "self": {
+      "href": "string"
+    },
+    "next": {
+      "href": "string"
+    },
+    "previous": {
+      "href": null
+    }
+  },
+  "count": 1,
+  "results": [
+    {
+      "_display": "Attachment object (1)",
+      "_links": {
+        "self": {
+          "href": "string"
+        }
+      },
+      "location": "/signals/media/images/2020/01/01/happy-new-year.jpg",
+      "is_image": true,
+      "created_at": "2020-01-01T00:00:00+00:00",
+      "created_by": "someuser@example.com"
+    }
+  ]
+}

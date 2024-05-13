@@ -1,0 +1,124 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://localhost/signals/v1/private/signals/?contact_details=email&reporter_email=hela.hola%40amsterdam.nl"
+    },
+    "next": {
+      "href": null
+    },
+    "previous": {
+      "href": null
+    }
+  },
+  "count": 3,
+  "results": [
+    {
+      "_links": {
+        "self": {
+          "href": "https://localhost/signals/v1/private/signals/12419"
+        }
+      },
+      "_display": "12419 - m - None - 2023-03-30T14:04:43.764584+02:00",
+      "id": 12419,
+      "id_display": "SIG-12419",
+      "signal_id": "cd11e70c-c90d-4a8d-b345-7a9a69fc0f76",
+      "source": "Interne melding",
+      "text": "Grab the snapshot and use set to mutate state immediately, and call getLoadable with the query and parameter to fire the request. The order between set and getLoadable does not matter because whaleInfoQuery already calls the query with the necessary parameter. The set guarantees a mutation to the whale id when the component re-renders.\n\nTo prove this pre-fetch works, set a breakpoint in whaleInfoQuery right as fetch gets called. Examine the call stack and look for CurrentWhaleTypes at the bottom of the stack — this executes the onClick event. If it happens to be CurrentWhalePick, the request fired at re-render and not in the click event.\n\nSwapping the query between pre-fetch and re-render is possible via useSetRecoilState and changeWhale. The repo on GitHub has the exchangeable code commented out. I recommend playing with this: swap to re-render and take a look at the call stack. Changing back to pre-fetch calls the query from the click event.",
+      "text_extra": "",
+      "status": {
+        "text": "",
+        "user": null,
+        "state": "m",
+        "state_display": "Gemeld",
+        "target_api": null,
+        "extra_properties": null,
+        "send_email": false,
+        "created_at": "2023-03-30T14:04:43.829825+02:00",
+        "email_override": null
+      },
+      "location": {
+        "id": 13394,
+        "stadsdeel": "A",
+        "buurt_code": null,
+        "area_type_code": null,
+        "area_code": null,
+        "area_name": null,
+        "address": {
+          "postcode": "1015RT",
+          "huisletter": "",
+          "huisnummer": 1,
+          "woonplaats": "Amsterdam",
+          "openbare_ruimte": "Eerste Tuindwarsstraat",
+          "huisnummer_toevoeging": "2V"
+        },
+        "address_text": "Eerste Tuindwarsstraat 1-2V 1015RT Amsterdam",
+        "geometrie": {
+          "type": "Point",
+          "coordinates": [4.883837264102948, 52.37778548459913]
+        },
+        "extra_properties": {
+          "original_address": {
+            "postcode": "1015RT",
+            "huisnummer": "1-2V",
+            "woonplaats": "Amsterdam",
+            "openbare_ruimte": "Eerste Tuindwarsstraat"
+          }
+        },
+        "created_by": null,
+        "bag_validated": true
+      },
+      "category": {
+        "sub": "Overig",
+        "sub_slug": "overig",
+        "main": "Overig",
+        "main_slug": "overig",
+        "category_url": "https://localhost/signals/v1/public/terms/categories/overig/sub_categories/overig",
+        "departments": "ASC",
+        "created_by": null,
+        "text": null,
+        "deadline": "2023-04-06T14:04:43.764584+02:00",
+        "deadline_factor_3": "2023-04-20T14:04:43.764584+02:00"
+      },
+      "reporter": {
+        "email": "hela.hola@amsterdam.nl",
+        "phone": "065656565656",
+        "sharing_allowed": false,
+        "allows_contact": true
+      },
+      "priority": {
+        "priority": "normal",
+        "created_by": null
+      },
+      "type": {
+        "code": "SIG",
+        "created_at": "2023-03-30T14:04:43.860793+02:00",
+        "created_by": null
+      },
+      "created_at": "2023-03-30T14:04:43.764584+02:00",
+      "updated_at": "2023-03-30T14:04:44.660889+02:00",
+      "incident_date_start": "2023-03-30T14:04:43+02:00",
+      "incident_date_end": null,
+      "operational_date": null,
+      "has_attachments": true,
+      "extra_properties": null,
+      "notes": [
+        {
+          "text": "Bijlage toegevoegd door melder: 68c2c8889fbc89c6b7ea6e03c669610e.jpg",
+          "created_by": null
+        },
+        {
+          "text": "Bijlage toegevoegd door melder: 6a305345cdcc0e1186d7dcb7803e386a.jpg",
+          "created_by": null
+        },
+        {
+          "text": "Automatische e-mail bij registratie van de melding is verzonden aan de melder.",
+          "created_by": null
+        }
+      ],
+      "routing_departments": null,
+      "has_parent": false,
+      "has_children": false,
+      "assigned_user_email": null
+    }
+  ]
+}
