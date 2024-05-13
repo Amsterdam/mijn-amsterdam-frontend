@@ -6512,11 +6512,20 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
           </ul>
         </div>
       </div>
-      <p
-        class="_Disclaimer_28a267"
+      <div
+        class="_InfoDetail_6f1df2"
       >
-        Zie besluitdocument welk van de producten wel of niet verleend zijn
-      </p>
+        <h3
+          class="ams-heading ams-heading--4 _Label_6f1df2"
+        >
+          Resultaat
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.
+        </p>
+      </div>
     </div>
     <div
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"

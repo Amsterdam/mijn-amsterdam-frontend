@@ -56,6 +56,11 @@ export function transformVoorzieningenForFrontend(
   for (const voorziening of voorzieningenVisible) {
     const id = voorziening.id;
     const lineItems = getStatusLineItems(voorziening, today);
+
+    if (!Array.isArray(lineItems) || !lineItems.length) {
+      continue;
+    }
+
     const statusLineItems = Array.isArray(lineItems)
       ? encryptDocumentIds(sessionID, lineItems)
       : [];
