@@ -8,7 +8,7 @@ import { ErrorMessages } from '../../components';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import styles from './MainHeader.module.scss';
 import { PageMenu, Header } from '@amsterdam/design-system-react';
-import { animated } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
 import { Search } from '../Search/Search';
 import MegaMenu from '../MegaMenu/MegaMenu';
 import { useProfileTypeValue, useTermReplacement } from '../../hooks';
@@ -57,15 +57,14 @@ export function SecondaryLinks() {
   return (
     <>
       <PageMenu.Link href={LOGOUT_URL}>Uitloggen</PageMenu.Link>
-      {!isError(BRP) ||
-        (!isError(KVK) && (
-          <ProfileName
-            person={BRP.content?.persoon}
-            company={KVK?.content}
-            profileType={profileType}
-            profileAttribute={PROFILE.content?.profile?.id}
-          />
-        ))}
+      {!isError(BRP) && !isError(KVK) && (
+        <ProfileName
+          person={BRP.content?.persoon}
+          company={KVK.content}
+          profileType={profileType}
+          profileAttribute={PROFILE.content?.profile.id}
+        />
+      )}
     </>
   );
 }
@@ -86,6 +85,15 @@ export default function MainHeader({
   const profileType = useProfileTypeValue();
   const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
     useSearchOnPage();
+
+  const fadeStyles = useSpring({
+    config: { duration: 100 },
+    from: { opacity: 0, display: 'none' },
+    to: {
+      opacity: isBurgerMenuVisible ? 1 : 0,
+      display: isBurgerMenuVisible ? 'block' : 'none',
+    },
+  });
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -264,13 +272,12 @@ export default function MainHeader({
       )}
       {isHeroVisible && <MainHeaderHero />}
 
-      {isBurgerMenuVisible && (
-        <animated.div
-          ref={backdropRef}
-          key="BurgerMenuBackDrop"
-          className={styles.Backdrop}
-        />
-      )}
+      <animated.div
+        ref={backdropRef}
+        key="BurgerMenuBackDrop"
+        className={styles.Backdrop}
+        style={fadeStyles}
+      />
     </>
   );
 }

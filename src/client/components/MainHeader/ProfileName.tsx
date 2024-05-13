@@ -10,6 +10,7 @@ import { useAppStateReady } from '../../hooks';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './ProfileName.module.scss';
 import { PageMenu } from '@amsterdam/design-system-react';
+import { MARouterLink } from '../MaRouterLink/MaRouterLink';
 
 interface CommercialProfileNameProps {
   company?: KVKData;
@@ -32,7 +33,7 @@ function PrivateProfileName({ person, href }: PrivateProfileNameProps) {
     : person?.voornamen
       ? getFullName(person)
       : 'Mijn gegevens';
-  return <PageMenu.Link href={href}>{label}</PageMenu.Link>;
+  return <MARouterLink href={href}>{label}</MARouterLink>;
 }
 
 interface ProfileNameProps {
