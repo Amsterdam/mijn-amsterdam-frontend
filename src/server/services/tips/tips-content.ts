@@ -15,6 +15,7 @@ import {
   hasValidStadspasRequest,
   hasVerhuurRegistrations,
   is18OrOlder,
+  isBetween4and12,
   isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
@@ -346,6 +347,48 @@ export const tips: Tip[] = [
     link: {
       title: 'Hoe vraagt u het aan?',
       to: 'https://www.amsterdam.nl/veelgevraagd/achternaam-van-kind-kiezen-2f07e',
+    },
+  },
+  {
+    id: 'mijn-48',
+    owner: '',
+    dateActiveStart: '2024-07-01',
+    dateActiveEnd: '2025-01-04',
+    active: true,
+    priority: 1,
+    datePublished: '2024-07-01',
+    title: 'Gratis openbaar vervoer voor kinderen',
+    chapter: Chapters.INKOMEN,
+    profileTypes: ['private'],
+    description:
+      'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
+    predicates: [hasKidsBetweenAges4And11, isMokum],
+    reason:
+      'U ziet deze tip omdat u kinderen heeft in de leeftijd van 4 tot en met 11 en in Amsterdam woont.',
+    link: {
+      title: 'Hoe vraagt u het aan?',
+      to: 'https://www.amsterdam.nl/verkeer-vervoer/kinderen-gratis-openbaar-vervoer/#h24924a59-2782-410a-b9fd-d56aedabbdf2',
+    },
+  },
+  {
+    id: 'mijn-58',
+    owner: '',
+    dateActiveStart: '2024-07-01',
+    dateActiveEnd: '2025-01-04',
+    active: true,
+    priority: 1,
+    datePublished: '2024-07-01',
+    title: 'Gratis openbaar vervoer voor kinderen',
+    chapter: Chapters.INKOMEN,
+    profileTypes: ['private'],
+    description:
+      'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',
+    predicates: [isBetween4and12, isMokum],
+    reason:
+      'Je ziet deze tip omdat je de leeftijd heb tussen de 4 en 12 jaar en woonachtig bent in Amsterdam',
+    link: {
+      title: 'Hoe vraag je het aan?',
+      to: 'https://www.amsterdam.nl/verkeer-vervoer/kinderen-gratis-openbaar-vervoer/#h24924a59-2782-410a-b9fd-d56aedabbdf2',
     },
   },
 ];

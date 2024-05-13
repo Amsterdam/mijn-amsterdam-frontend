@@ -178,6 +178,22 @@ export const isBetween17and18: TipsPredicateFN = (
   );
 };
 
+export const isBetween4and12: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
+
+  if (!geboortedatum) {
+    return false;
+  }
+
+  return (
+    differenceInYears(today, new Date(geboortedatum)) >= 4 &&
+    differenceInYears(today, new Date(geboortedatum)) <= 12
+  );
+};
+
 export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
   appState
 ) => {
