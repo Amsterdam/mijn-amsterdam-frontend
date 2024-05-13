@@ -6,7 +6,8 @@ import InfoDetail, {
 } from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
 import styles from '../../components/LocationModal/LocationModal.module.scss';
-import { JSX } from 'react/jsx-runtime';
+import { default as styles2 } from './VergunningDetail.module.scss';
+import { ReactNode } from 'react';
 
 export function EigenParkeerplaats({
   vergunning,
@@ -15,21 +16,30 @@ export function EigenParkeerplaats({
 }) {
   const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
   const isAfgehandeld = vergunning.processed;
-
-  let locationHTMLs: JSX.Element[] = [];
+  const locations: ReactNode[][] = [[], []];
 
   if (Array.isArray(vergunning.locations)) {
     vergunning.locations.forEach((location, i) => {
       let name = 'Adres';
+
       // If two addresses: indicate the difference by adding 1 or 2.
-      if (vergunning.locations!.length > 1) name = `Adres ${i + 1}`;
-      locationHTMLs.push(
+      if (vergunning.locations!.length > 1) {
+        name = `Adres ${i + 1}`;
+      }
+
+      locations[i].push(
         <Location
+          key={location.houseNumber}
           label={name}
           location={`${location.street} ${location.houseNumber}`}
         />,
-        <InfoDetail label="Soort plek" value={location.type} />,
         <InfoDetail
+          key={location.type}
+          label="Soort plek"
+          value={location.type}
+        />,
+        <InfoDetail
+          key={location.url}
           label="Parkeervak"
           value={
             <Link
@@ -60,14 +70,10 @@ export function EigenParkeerplaats({
         }
       />
 
-      {/* Bc above exactly 3 different InfoDetails are defined we can loop over
-      them and put them together in a a row/InfoDetailGroup. */}
-      {[0, 1, 2].map((i) => (
-        <InfoDetailGroup key={i}>
-          {locationHTMLs[i]}
-          {locationHTMLs[i + 3]}
-        </InfoDetailGroup>
-      ))}
+      <InfoDetailGroup>
+        <div>{locations[0]}</div>
+        <div className={styles2.InfoGroupDivider}>{locations[1]}</div>
+      </InfoDetailGroup>
 
       <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
       {vergunning.requestTypes.some((type) => type === 'Kentekenwijziging') && (
