@@ -23,6 +23,6 @@ Roughly follow the following steps to integrate a new thema into the application
 - open `universal/config/routes.ts` add $Thema -> /$thema
 - open App.tsx add <Route path={AppRoutes.$CHAPTER} component={$Thema} />
 - open src/client/config/menuItems.ts and add a Menu Item entry
-- open `src/client/hooks/useThemas.ts` add your loading conditions in the `isChapterActive()` function.
+- open `src/client/hooks/useThemas.ts` add your loading conditions in the `isThemaActive()` function.
 - open src/client/config/themaIcons.tsx and add a an Icon (after adding the svg icon to the src/client/assets/icons/index.tsx file)
 - open src/client/config/api.ts and add $CHAPTER to the ErrorNames export
