@@ -3,7 +3,8 @@
     "id": "base",
     "routes": [
       "get-belastingen:standard",
-      "get-brp:standard"
+      "get-brp:standard",
+      "get-bezwaren-list:standard"
     ]
   }
 ]
