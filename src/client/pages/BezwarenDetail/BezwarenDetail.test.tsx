@@ -15,7 +15,6 @@ const testState = {
         uuidEncrypted: 'asdasd98asd098asdjalmsndas-d9aps9dapsdja.sdasd',
         startdatum: '2023-04-25',
         bezwaarnummer: 'BI.21.014121.001',
-        zaakkenmerk: 'ghi.abc.def',
         omschrijving: 'Korte omschrijving van het bezwaar',
         toelichting:
           'Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.',
