@@ -6,12 +6,12 @@
     {
       "url": "https://localhost/api/zgw/v1/zaken/68cdd171-b4fd-44cc-a4d3-06b77341f20a",
       "uuid": "68cdd171-b4fd-44cc-a4d3-06b77341f20a",
-      "identificatie": "BI.21.014121.001",
+      "identificatie": "BI.24.000093.001",
       "bronorganisatie": null,
       "omschrijving": "Korte omschrijving van het bezwaar",
       "toelichting": "Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.",
       "zaaktype": "https://localhost/api/zgw/v1/zaaktypen/2e44c57d-fe4b-4af9-944c-6cafce808a66",
-      "registratiedatum": "2023-03-31",
+      "registratiedatum": "2024-03-31",
       "verantwoordelijkeOrganisatie": null,
       "startdatum": "2023-04-25",
       "einddatum": null,
@@ -66,7 +66,7 @@
     {
       "url": "https://localhost/api/zgw/v1/zaken/9804b064-90a3-43b0-bc7c-924f9939888d",
       "uuid": "9804b064-90a3-43b0-bc7c-924f9939888d",
-      "identificatie": "JB.22.000076.001",
+      "identificatie": "DJ.23.000268.001",
       "bronorganisatie": null,
       "omschrijving": null,
       "toelichting": "",
@@ -130,7 +130,7 @@
     {
       "url": "https://localhost/api/zgw/v1/zaken/cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
       "uuid": "cc117d91-1b00-4bae-bbdd-9ea3a6d6d185",
-      "identificatie": "ZAAK2",
+      "identificatie": "OJ.24.000115.001",
       "bronorganisatie": null,
       "omschrijving": "Online bezwaar",
       "toelichting": "Met toelichting",
@@ -178,7 +178,7 @@
     {
       "url": "https://localhost/api/zgw/v1/zaken/956541b6-7a25-4132-9592-0a509bc7ace0",
       "uuid": "956541b6-7a25-4132-9592-0a509bc7ace0",
-      "identificatie": "ZAAK3",
+      "identificatie": "JB.22.000443.002",
       "bronorganisatie": null,
       "omschrijving": "Online bezwaar",
       "toelichting": "Met toelichting",

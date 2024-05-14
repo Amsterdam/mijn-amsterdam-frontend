@@ -193,65 +193,53 @@ function transformBezwarenResults(
   const results = response.results;
 
   if (Array.isArray(results)) {
-    return {
-      bezwaren: results
-        .map((bezwaarBron) => {
-          const besluitdatum = getKenmerkValue(
+    const bezwaren = results
+      .map((bezwaarBron) => {
+        const besluitdatum = getKenmerkValue(
+          bezwaarBron.kenmerken,
+          'besluitdatum'
+        );
+
+        const [idEncrypted] = encrypt(`${sessionID}:${bezwaarBron.uuid}`);
+
+        const bezwaar: Bezwaar = {
+          identificatie: bezwaarBron.identificatie,
+          uuid: bezwaarBron.uuid,
+          uuidEncrypted: idEncrypted,
+          startdatum: bezwaarBron.startdatum,
+          ontvangstdatum: bezwaarBron.registratiedatum,
+          omschrijving: bezwaarBron.omschrijving,
+          toelichting: bezwaarBron.toelichting,
+          status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
+          statusdatum: getKenmerkValue(bezwaarBron.kenmerken, 'statusdatum'),
+          statussen: [],
+          datumbesluit: besluitdatum,
+          datumIntrekking: getKenmerkValue(
+            bezwaarBron.kenmerken,
+            'datumintrekking'
+          ),
+          einddatum: bezwaarBron.einddatum,
+          primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
+          primairbesluitdatum: getKenmerkValue(
             bezwaarBron.kenmerken,
             'besluitdatum'
-          );
+          ),
+          resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
+          documenten: [],
+          link: {
+            title: 'Bekijk details',
+            to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
+              uuid: bezwaarBron.uuid,
+            }),
+          },
+        };
 
-          const [idEncrypted] = encrypt(`${sessionID}:${bezwaarBron.uuid}`);
+        return bezwaar;
+      })
+      .filter((bezwaar) => !!bezwaar.identificatie); // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
 
-          const bezwaar: Bezwaar = {
-            identificatie: bezwaarBron.identificatie,
-            zaakkenmerk:
-              getKenmerkValue(bezwaarBron.kenmerken, 'zaakkenmerk') ?? '',
-            uuid: bezwaarBron.uuid,
-            uuidEncrypted: idEncrypted,
-            startdatum: bezwaarBron.startdatum,
-            ontvangstdatum: bezwaarBron.registratiedatum,
-            omschrijving: bezwaarBron.omschrijving,
-            toelichting: bezwaarBron.toelichting,
-            status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
-            statusdatum: getKenmerkValue(bezwaarBron.kenmerken, 'statusdatum'),
-            statussen: [],
-            datumbesluit: besluitdatum,
-            datumIntrekking: getKenmerkValue(
-              bezwaarBron.kenmerken,
-              'datumintrekking'
-            ),
-            einddatum: bezwaarBron.einddatum,
-            primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
-            primairbesluitdatum: getKenmerkValue(
-              bezwaarBron.kenmerken,
-              'besluitdatum'
-            ),
-            resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
-            documenten: [],
-            link: {
-              title: 'Bekijk details',
-              to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
-                uuid: bezwaarBron.uuid,
-              }),
-            },
-          };
-
-          return bezwaar;
-        })
-        .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
-        .sort((item1, item2) => {
-          // strip all non-numeric characters from the string and parse as integer so we can do a proper number sort
-          const identificatie1 = parseInt(
-            item1.identificatie.replace(/\D/g, ''),
-            10
-          );
-          const identificatie2 = parseInt(
-            item2.identificatie.replace(/\D/g, ''),
-            10
-          );
-          return identificatie2 - identificatie1;
-        }),
+    return {
+      bezwaren,
       count: response.count,
     };
   }
@@ -282,17 +270,17 @@ export async function fetchBezwaren(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  let result: Bezwaar[] = [];
+  let bezwaren: Bezwaar[] = [];
   let bezwarenResponse = await requestData<BezwaarResponse>(
     requestConfig,
     requestID
   );
 
   if (bezwarenResponse.status === 'OK' && bezwarenResponse.content) {
-    result = result.concat(bezwarenResponse.content.bezwaren);
+    bezwaren = bezwaren.concat(bezwarenResponse.content.bezwaren);
 
     while (
-      result.length < bezwarenResponse.content.count &&
+      bezwaren.length < bezwarenResponse.content.count &&
       bezwarenResponse.content.bezwaren.length > 0 &&
       requestConfig.params.page < MAX_PAGE_COUNT
     ) {
@@ -303,13 +291,26 @@ export async function fetchBezwaren(
       );
 
       if (bezwarenResponse.status === 'OK') {
-        result = result.concat(bezwarenResponse.content.bezwaren);
+        bezwaren = bezwaren.concat(bezwarenResponse.content.bezwaren);
       } else {
         return bezwarenResponse;
       }
     }
 
-    return apiSuccessResult(result);
+    return apiSuccessResult(
+      bezwaren.sort((item1, item2) => {
+        // strip all non-numeric characters from the string and parse as integer so we can do a proper number sort
+        const identificatie1 = parseInt(
+          item1.identificatie.replace(/\D/g, ''),
+          10
+        );
+        const identificatie2 = parseInt(
+          item2.identificatie.replace(/\D/g, ''),
+          10
+        );
+        return identificatie2 - identificatie1;
+      })
+    );
   }
 
   // Return the likely error response otherwise. This will make sure the front-end knows to show an error message to the user.
