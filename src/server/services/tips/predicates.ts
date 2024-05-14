@@ -197,10 +197,8 @@ export const isBetween4and12: TipsPredicateFN = (
 export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
   appState
 ) => {
-  return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: ToeristischeVerhuurVergunning) =>
-      v.caseType === CaseType.VakantieverhuurVergunningaanvraag
-  );
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.vakantieverhuurVergunningen
+    .length;
 };
 
 export const isMarriedOrLivingTogether: TipsPredicateFN = (appState) => {
@@ -214,17 +212,13 @@ export const hasBnBVergunning: TipsPredicateFN = (appState) => {
 };
 
 export const hasBnBTransitionRight: TipsPredicateFN = (appState) => {
-  return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: ToeristischeVerhuurVergunning) =>
-      v.caseType === CaseType.BBVergunning && v.hasTransitionAgreement
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.bbVergunningen.some(
+    (vergunning: BBVergunning) => vergunning.heeftOvergangsRecht
   );
 };
 
 export const hasVerhuurRegistrations: TipsPredicateFN = (appState) => {
-  return !!(
-    appState.TOERISTISCHE_VERHUUR?.content &&
-    appState.TOERISTISCHE_VERHUUR?.content?.registraties?.length >= 1
-  );
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.lvvRegistraties?.length;
 };
 
 export const isReceivingSubsidy: TipsPredicateFN = (

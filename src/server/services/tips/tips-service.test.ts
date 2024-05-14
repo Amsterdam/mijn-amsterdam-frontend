@@ -27,7 +27,7 @@ const TOERISTISCHE_VERHUUR = {
   content: {
     registraties: [],
     vergunningen: VERGUNNINGEN.content.filter(
-      (c) => c.caseType === CaseType.VakantieverhuurVergunningaanvraag
+      (c) => c.caseType === CaseType.VakantieverhuurVergunning
     ),
   },
 };

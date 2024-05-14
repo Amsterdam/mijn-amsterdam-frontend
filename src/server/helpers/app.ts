@@ -17,7 +17,6 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
-  RelayPathsAllowed,
   TOKEN_ID_ATTRIBUTE,
   TokenIdAttribute,
   oidcConfigDigid,
@@ -276,16 +275,6 @@ export async function decodeOIDCToken(token: string): Promise<TokenData> {
   const verified = await jose.jwtVerify(token, jwksKey, verificationOptions);
 
   return verified.payload as unknown as TokenData;
-}
-
-export function isRelayAllowed(pathRequested: string) {
-  return Object.values(RelayPathsAllowed).some((pathAllowed) => {
-    return matchPath(pathRequested, {
-      path: pathAllowed,
-      exact: true,
-      strict: false,
-    });
-  });
 }
 
 export function isProtectedRoute(pathRequested: string) {

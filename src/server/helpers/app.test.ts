@@ -15,7 +15,6 @@ import {
   getProfileType,
   hasSessionCookie,
   isAuthenticated,
-  isRelayAllowed,
   isSessionCookieName,
   queryParams,
   requestID,
@@ -422,14 +421,6 @@ describe('server/helpers/app', () => {
         "urn:etoegang:core:LegalSubjectID": "eh2",
       }
     `);
-  });
-
-  test('isRelayAllowed', () => {
-    expect(isRelayAllowed('/services/all')).toBe(false);
-    expect(isRelayAllowed('/brp/brp')).toBe(false);
-    expect(isRelayAllowed('')).toBe(false);
-    expect(isRelayAllowed('/')).toBe(false);
-    expect(isRelayAllowed('/brp/aantal_bewoners')).toBe(true);
   });
 
   test('combineCookieChunks', () => {
