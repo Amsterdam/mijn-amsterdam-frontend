@@ -1,7 +1,7 @@
 import { differenceInCalendarDays, differenceInYears } from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
-import { CaseType } from '../../../universal/types/vergunningen';
 import { isAmsterdamAddress } from '../buurt/helpers';
+import { Stadspas } from '../stadspas/stadspas-types';
 import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
@@ -206,9 +206,7 @@ export const isMarriedOrLivingTogether: TipsPredicateFN = (appState) => {
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {
-  return !!appState.TOERISTISCHE_VERHUUR?.content?.vergunningen.some(
-    (v: ToeristischeVerhuurVergunning) => v.caseType === CaseType.BBVergunning
-  );
+  return !!appState.TOERISTISCHE_VERHUUR?.content?.bbVergunningen.length;
 };
 
 export const hasBnBTransitionRight: TipsPredicateFN = (appState) => {

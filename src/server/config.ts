@@ -101,6 +101,7 @@ export type SourceApiKey =
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
+  | 'POWERBROWSER'
   | 'SVWI'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
