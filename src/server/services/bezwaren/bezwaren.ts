@@ -241,6 +241,7 @@ function transformBezwarenResults(
         })
         .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
         .sort((item1, item2) => {
+          // strip all non-numeric characters from the string and parse as integer so we can do a proper number sort
           const identificatie1 = parseInt(
             item1.identificatie.replace(/\D/g, ''),
             10
