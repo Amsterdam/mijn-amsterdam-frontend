@@ -7,6 +7,8 @@ import type {
   Splitsingsvergunning,
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
+  EigenParkeerplaatsOpheffen,
+  EigenParkeerplaats,
 } from '../../server/services/vergunningen/vergunningen';
 import {
   Vergunning,
@@ -126,7 +128,11 @@ export function showDocuments(caseType: CaseType) {
 }
 
 export function getCustomTitleForVergunningWithLicensePlates(
-  vergunning: TouringcarDagontheffing | TouringcarJaarontheffing
+  vergunning:
+    | TouringcarDagontheffing
+    | TouringcarJaarontheffing
+    | EigenParkeerplaatsOpheffen
+    | EigenParkeerplaats
 ) {
   if (vergunning.caseType === CaseType.TouringcarDagontheffing) {
     return `${vergunning.title} (${vergunning.licensePlate})`;

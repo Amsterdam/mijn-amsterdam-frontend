@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 
-import type {
-  TouringcarJaarontheffing,
-  Vergunning,
-} from '../../../server/services/vergunningen/vergunningen';
+import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -41,6 +38,9 @@ const titleTransformMap: Record<string, any> = {
   [CaseType.TouringcarJaarontheffing]:
     getCustomTitleForVergunningWithLicensePlates,
   [CaseType.TouringcarDagontheffing]:
+    getCustomTitleForVergunningWithLicensePlates,
+  [CaseType.EigenParkeerplaats]: getCustomTitleForVergunningWithLicensePlates,
+  [CaseType.EigenParkeerplaatsOpheffen]:
     getCustomTitleForVergunningWithLicensePlates,
 };
 
