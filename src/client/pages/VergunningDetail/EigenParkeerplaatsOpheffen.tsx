@@ -24,13 +24,14 @@ export function EigenParkeerplaatsOpheffen({
 
       <Location label="Adres" location={`${street} ${houseNumber}`} />
 
-      {type !== null && <InfoDetail label="Soort plek" value={type} />}
+      {type && <InfoDetail label="Soort plek" value={type} />}
 
       {url && (
         <InfoDetail
           label="Parkeervak"
           value={
             <Link
+              rel="noreferrer"
               className={styles.LocationModalLink}
               variant="inline"
               href={url}

@@ -7,7 +7,6 @@ import InfoDetail, {
 import { Location } from './Location';
 import styles from '../../components/LocationModal/LocationModal.module.scss';
 import { default as styles2 } from './VergunningDetail.module.scss';
-import { ReactNode } from 'react';
 
 export function EigenParkeerplaats({
   vergunning,
@@ -26,49 +25,46 @@ export function EigenParkeerplaats({
         value={
           <ul>
             {vergunning.requestTypes.map((d, i) => (
-              <li key={i}>{d}</li>
+              <li key={d}>{d}</li>
             ))}
           </ul>
         }
       />
 
       <InfoDetailGroup>
-        {Array.isArray(vergunning.locations) &&
-          vergunning.locations.map((location, i) => {
-            return (
-              <div className={i > 0 ? styles2.InfoGroupDivider : ''}>
-                <Location
-                  key={location.houseNumber}
-                  label={`Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`}
-                  location={`${location.street} ${location.houseNumber}`}
-                />
-                <InfoDetail
-                  key={location.type}
-                  label="Soort plek"
-                  value={location.type}
-                />
-                <InfoDetail
-                  key={location.url}
-                  label="Parkeervak"
-                  value={
-                    <Link
-                      className={styles.LocationModalLink}
-                      variant="inline"
-                      href={location.url}
-                    >
-                      Bekijk parkeervak
-                    </Link>
-                  }
-                />
-              </div>
-            );
-          })}
+        {vergunning.locations?.map((location, i) => {
+          return (
+            <div
+              className={i > 0 ? styles2.InfoGroupDivider : ''}
+              key={JSON.stringify(location)}
+            >
+              <Location
+                label={`Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`}
+                location={`${location.street} ${location.houseNumber}`}
+              />
+              <InfoDetail label="Soort plek" value={location.type} />
+              <InfoDetail
+                label="Parkeervak"
+                value={
+                  <Link
+                    rel="noreferrer"
+                    className={styles.LocationModalLink}
+                    variant="inline"
+                    href={location.url}
+                  >
+                    Bekijk parkeervak
+                  </Link>
+                }
+              />
+            </div>
+          );
+        })}
       </InfoDetailGroup>
 
       <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
       {vergunning.requestTypes.some((type) => type === 'Kentekenwijziging') && (
         <InfoDetail
-          label="Oude kenteken"
+          label="Oud kenteken"
           value={vergunning.previousLicensePlates}
         />
       )}
