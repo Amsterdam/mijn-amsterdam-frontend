@@ -14,10 +14,10 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import type {
-  ToeristischeVerhuurRegistratieDetail,
-  ToeristischeVerhuurVergunning,
-} from '../../../server/services/toeristische-verhuur';
+import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
+import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
+
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -226,33 +226,51 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
+    stateKey: 'TOERISTISCHE_VERHUUR' as keyof AppState,
     getApiBaseItems: (apiContent: {
-      registraties: ToeristischeVerhuurRegistratieDetail[];
-      vergunningen: ToeristischeVerhuurVergunning[];
-    }): ToeristischRegistratieItem[] => {
-      const registratienummers = apiContent.registraties?.map((registratie) => {
-        return {
-          title: 'Landelijk registratienummer',
-          identifier: registratie.registrationNumber,
-          link: {
-            to: AppRoutes.TOERISTISCHE_VERHUUR,
+      lvvRegistraties: ToeristischeVerhuurRegistratieDetail[];
+      vakantieverhuurVergunningen: VakantieverhuurVergunning[];
+      bbVergunningen: BBVergunning[];
+    }): ToeristischVerhuurItem[] => {
+      const registratienummers = apiContent.lvvRegistraties?.map(
+        (registratie) => {
+          return {
             title: 'Landelijk registratienummer',
-          },
-        };
-      });
-      const zaken = apiContent.vergunningen?.map(
-        (vergunning: ToeristischeVerhuurVergunning) => {
-          const title = vergunning.title;
+            identifier: registratie.registrationNumber,
+            link: {
+              to: AppRoutes.TOERISTISCHE_VERHUUR,
+              title: 'Landelijk registratienummer',
+            },
+          };
+        }
+      );
+      const zaken = apiContent.vakantieverhuurVergunningen?.map(
+        (vergunning: VakantieverhuurVergunning) => {
+          const title = vergunning.titel;
           return {
             ...vergunning,
             title,
-            identifier: vergunning.identifier,
+            identifier: vergunning.zaaknummer,
             link: vergunning.link,
           };
         }
       );
-      return [...(zaken || []), ...(registratienummers || [])];
+      const zaken2 = apiContent.bbVergunningen?.map(
+        (vergunning: BBVergunning) => {
+          const title = vergunning.titel;
+          return {
+            ...vergunning,
+            title,
+            identifier: vergunning.zaaknummer,
+            link: vergunning.link,
+          };
+        }
+      );
+      return [
+        ...(zaken || []),
+        ...(zaken2 || []),
+        ...(registratienummers || []),
+      ];
     },
     displayTitle: (toeristischVerhuurItem: ToeristischRegistratieItem) => {
       if (

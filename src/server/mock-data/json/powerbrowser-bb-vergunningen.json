@@ -1,0 +1,44 @@
+[
+  {
+    "id": "-999741",
+    "zaaktype": "Vergunningaanvraag behandelen",
+    "product": "Bed & Breakfast",
+    "zaaK_IDENTIFICATIE": "Z/23/2130506",
+    "startdatum": "2023-02-12T23:00:00.0000000Z",
+    "einddatum": "2023-03-21T23:00:00.0000000Z",
+    "datumingang": "2023-03-21T23:00:00.0000000Z",
+    "besluitdatumvervallen": "2028-06-30T22:00:00.0000000Z",
+    "status": "Gereed",
+    "resultaat": "Verleend met overgangsrecht",
+    "initator": "Weerd",
+    "adres": "Lindenstraat 1A 1015KV Amsterdam"
+  },
+  {
+    "id": "126085265",
+    "zaaktype": "Vergunningaanvraag behandelen",
+    "product": "Bed & Breakfast",
+    "zaaK_IDENTIFICATIE": "Z2023-WK000236",
+    "startdatum": "2023-10-24T22:00:00.0000000Z",
+    "einddatum": null,
+    "datumingang": null,
+    "besluitdatumvervallen": null,
+    "status": "Intake",
+    "resultaat": null,
+    "initator": "Kumari",
+    "adres": "Zwanenplein 5 1021CG Amsterdam"
+  },
+  {
+    "id": "126085711",
+    "zaaktype": "Vergunningaanvraag behandelen",
+    "product": "Bed & Breakfast",
+    "zaaK_IDENTIFICATIE": "Z2023-WK000284",
+    "startdatum": "2023-11-19T23:00:00.0000000Z",
+    "einddatum": null,
+    "datumingang": null,
+    "besluitdatumvervallen": null,
+    "status": "Intake",
+    "resultaat": null,
+    "initator": "Kumari",
+    "adres": "Nieuwe Westerdokstraat 92 1013AG Amsterdam"
+  }
+]

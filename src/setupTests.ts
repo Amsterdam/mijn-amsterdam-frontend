@@ -64,6 +64,7 @@ process.env.BFF_SISA_ENCRYPTION_KEY = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_CLIENT_SECRET = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_API_ENDPOINT = `${remoteApiHost}/subsidies/`;
 process.env.BFF_CLEOPATRA_API_ENDPOINT = `${remoteApiHost}/cleopatra`;
+process.env.BFF_POWERBROWSER_API_URL = `${remoteApiHost}/powerbrowser`;
 
 // Koppel api base urls
 process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
