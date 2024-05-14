@@ -7,7 +7,7 @@ import {
 import {
   ErrorAlert,
   addTitleLinkComponent,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -56,7 +56,7 @@ const AVG = () => {
           title: 'Home',
         }}
         isLoading={isLoading(AVG)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.AVG}
       </PageHeading>

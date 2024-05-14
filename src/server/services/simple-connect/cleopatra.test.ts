@@ -112,7 +112,7 @@ describe('simple-connect/cleopatra', () => {
         "content": {
           "notifications": [
             {
-              "chapter": "MILIEUZONE",
+              "thema": "MILIEUZONE",
               "datePublished": "2019-03-13",
               "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "MILIEUZONE-M1",
@@ -123,7 +123,7 @@ describe('simple-connect/cleopatra', () => {
               "title": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
             },
             {
-              "chapter": "MILIEUZONE",
+              "thema": "MILIEUZONE",
               "datePublished": "2019-03-13",
               "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "MILIEUZONE-M1",
@@ -187,7 +187,7 @@ describe('simple-connect/cleopatra', () => {
         "content": {
           "notifications": [
             {
-              "chapter": "OVERTREDINGEN",
+              "thema": "OVERTREDINGEN",
               "datePublished": "2019-03-13",
               "description": "Uw moet uw overtreding nog betalen",
               "id": "OVERTREDINGEN-M1",

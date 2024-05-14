@@ -47,7 +47,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </h4>
                 <svg
                   aria-label="Home"
-                  class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                  class="_ThemaIcon_2fc54d _Icon_63df5c"
                   fill="#EC0000"
                   height="32px"
                   viewBox="0 0 32 32"
@@ -157,7 +157,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </h4>
                 <svg
                   aria-label="Home"
-                  class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                  class="_ThemaIcon_2fc54d _Icon_63df5c"
                   fill="#EC0000"
                   height="32px"
                   viewBox="0 0 32 32"
@@ -267,7 +267,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </h4>
                 <svg
                   aria-label="ALERT"
-                  class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                  class="_ThemaIcon_2fc54d _Icon_63df5c"
                   fill="#EC0000"
                   focusable="false"
                   height="36"
@@ -388,7 +388,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </h4>
                 <svg
                   aria-label="Actueel"
-                  class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                  class="_ThemaIcon_2fc54d _Icon_63df5c"
                   fill="#EC0000"
                   focusable="false"
                   height="31px"
@@ -478,19 +478,19 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         </ul>
       </div>
       <div
-        class="_Panel_090d4d _MyChaptersPanel_7d9f25"
+        class="_Panel_090d4d _MyThemasPanel_db9f57"
       >
         <div
-          class="_Header_7d9f25"
+          class="_Header_db9f57"
         >
           <h3
-            class="ams-heading ams-heading--1 _Title_7d9f25"
+            class="ams-heading ams-heading--1 _Title_db9f57"
           >
             Mijn thema's
           </h3>
           <a
             aria-label="Dit ziet u in Mijn Amsterdam"
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _GeneralInfoLink_7d9f25"
+            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _GeneralInfoLink_db9f57"
             href="/uitleg"
           >
             <svg
@@ -523,11 +523,11 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </a>
         </div>
         <div
-          class="_Links_7d9f25"
+          class="_Links_db9f57"
         >
           <a
             class="_MainNavSubmenuLink_c3c96e"
-            data-chapter-id="BELASTINGEN"
+            data-thema-id="BELASTINGEN"
             href="https://belastingbalie.amsterdam.nl/digid.saml.php?start"
             rel="external"
           >
@@ -567,7 +567,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </a>
           <a
             class="_MainNavSubmenuLink_c3c96e"
-            data-chapter-id="INKOMEN"
+            data-thema-id="INKOMEN"
             href="/inkomen"
           >
             <span
@@ -606,7 +606,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </a>
           <a
             class="_MainNavSubmenuLink_c3c96e"
-            data-chapter-id="MILIEUZONE"
+            data-thema-id="MILIEUZONE"
             href="https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen"
             rel="external"
           >
@@ -639,7 +639,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </a>
           <a
             class="_MainNavSubmenuLink_c3c96e"
-            data-chapter-id="PARKEREN"
+            data-thema-id="PARKEREN"
             href="/parkeren"
           >
             <span

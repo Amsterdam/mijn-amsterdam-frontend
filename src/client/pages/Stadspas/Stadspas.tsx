@@ -5,7 +5,7 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  ChapterIcon,
+  ThemaIcon,
   ErrorAlert,
   Linkd,
   MaintenanceNotifications,
@@ -72,7 +72,7 @@ export default function CStadspas() {
           title: 'Home',
         }}
         isLoading={false}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.STADSPAS}
       </PageHeading>

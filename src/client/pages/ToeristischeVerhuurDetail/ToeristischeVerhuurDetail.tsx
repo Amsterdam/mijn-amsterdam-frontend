@@ -3,7 +3,7 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { hasFailedDependency, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   LoadingContent,
   PageContent,
@@ -27,7 +27,7 @@ export default function ToeristischVerhuurDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.TOERISTISCHE_VERHUUR,
           title: ChapterTitles.TOERISTISCHE_VERHUUR,

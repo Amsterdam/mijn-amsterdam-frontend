@@ -3,7 +3,7 @@ import { useAppStateGetter } from '../../hooks';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   LoadingContent,
@@ -28,7 +28,7 @@ export default function LoodMeting() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: generatePath(AppRoutes.BODEM),
           title: ChapterTitles.BODEM,

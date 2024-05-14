@@ -3,7 +3,7 @@ import { isError, isLoading } from '../../../universal/helpers';
 import { AppState } from '../../AppState';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoPanel,
   InfoPanelCollapsible,
@@ -79,7 +79,7 @@ export default function ProfileCommercial() {
   }, [KVK]);
   return (
     <DetailPage className={styles.ProfileCommercial}>
-      <PageHeading icon={<ChapterIcon />} isLoading={false}>
+      <PageHeading icon={<ThemaIcon />} isLoading={false}>
         Mijn onderneming
       </PageHeading>
       <PageContent className={styles.Intro}>

@@ -14,7 +14,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
       >
         <svg
           aria-label="Actueel"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="31px"
@@ -90,7 +90,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </h4>
               <svg
                 aria-label="Home"
-                class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                class="_ThemaIcon_2fc54d _Icon_63df5c"
                 fill="#EC0000"
                 height="32px"
                 viewBox="0 0 32 32"
@@ -184,7 +184,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </h4>
               <svg
                 aria-label="Mijn gegevens"
-                class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                class="_ThemaIcon_2fc54d _Icon_63df5c"
                 fill="#EC0000"
                 height="30px"
                 viewBox="0 0 30 30"
@@ -277,7 +277,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </h4>
               <svg
                 aria-label="ALERT"
-                class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                class="_ThemaIcon_2fc54d _Icon_63df5c"
                 fill="#EC0000"
                 focusable="false"
                 height="36"
@@ -382,7 +382,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </h4>
               <svg
                 aria-label="Actueel"
-                class="_ChapterIcon_3ea2dd _Icon_63df5c"
+                class="_ThemaIcon_2fc54d _Icon_63df5c"
                 fill="#EC0000"
                 focusable="false"
                 height="31px"

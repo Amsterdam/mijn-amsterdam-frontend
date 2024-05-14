@@ -1,5 +1,5 @@
 import { Heading } from '@amsterdam/design-system-react';
-import { ChapterTitles } from '../../../universal/config/chapter';
+import { ChapterTitles } from '../../../universal/config/thema';
 import {
   LinkdInline,
   PageContent,

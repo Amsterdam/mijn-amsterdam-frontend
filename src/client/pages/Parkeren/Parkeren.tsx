@@ -1,6 +1,6 @@
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -15,7 +15,7 @@ export default function Parkeren() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.PARKEREN}
       </PageHeading>

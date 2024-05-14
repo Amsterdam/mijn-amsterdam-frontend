@@ -12,18 +12,14 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
-import {
-  AppRoutes,
-  BagChapters,
-  ChapterTitles,
-} from '../../../universal/config';
+import { AppRoutes, BagThemas, ChapterTitles } from '../../../universal/config';
 import {
   InfoDetailGroup,
   InfoDetailHeading,
@@ -50,7 +46,7 @@ interface BezwarenDetailPartialProps {
 function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
   const [bezwaarDetail, api] = useAppStateBagApi<BezwaarDetail | null>({
     url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuidEncrypted}`,
-    bagChapter: BagChapters.BEZWAREN,
+    bagChapter: BagThemas.BEZWAREN,
     key: uuidEncrypted,
   });
 
@@ -120,7 +116,7 @@ function BezwarenDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.BEZWAREN,
           title: ChapterTitles.BEZWAREN,

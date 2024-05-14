@@ -5,7 +5,7 @@ export default function ZorgDetail() {
   return (
     <StatusDetail
       stateKey="WMO"
-      chapter="ZORG"
+      thema="ZORG"
       pageContent={(isLoading, statusItem) => {
         return (
           statusItem?.supplier && (

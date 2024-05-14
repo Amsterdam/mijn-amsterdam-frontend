@@ -1,6 +1,6 @@
 import fs from 'fs';
 import jose from 'node-jose';
-import { Chapters, FeatureToggle, IS_TAP } from '../../../universal/config';
+import { Themas, FeatureToggle, IS_TAP } from '../../../universal/config';
 import { apiSuccessResult } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
@@ -101,18 +101,18 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
         // Melding / Notification
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
-            let chapter = Chapters.MILIEUZONE;
+            let thema = Themas.MILIEUZONE;
 
             if (
               FeatureToggle.overtredingenActive &&
               message.thema === 'Overtredingen'
             ) {
-              chapter = Chapters.OVERTREDINGEN;
+              thema = Themas.OVERTREDINGEN;
             }
 
             notifications.push({
-              id: `${chapter}-${message.categorie}`,
-              chapter,
+              id: `${thema}-${message.categorie}`,
+              thema,
               title: message.titel,
               datePublished: message.datum,
               description: message.omschrijving,
@@ -201,7 +201,7 @@ export async function fetchMilieuzoneNotifications(
     return apiSuccessResult({
       notifications:
         response.content?.notifications?.filter(
-          (notifiction) => notifiction.chapter === Chapters.MILIEUZONE
+          (notifiction) => notifiction.thema === Themas.MILIEUZONE
         ) ?? [],
     });
   }
@@ -219,7 +219,7 @@ export async function fetchOvertredingenNotifications(
     return apiSuccessResult({
       notifications:
         response.content?.notifications?.filter(
-          (notifiction) => notifiction.chapter === Chapters.OVERTREDINGEN
+          (notifiction) => notifiction.thema === Themas.OVERTREDINGEN
         ) ?? [],
     });
   }

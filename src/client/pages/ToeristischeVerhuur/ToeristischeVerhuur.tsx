@@ -9,7 +9,7 @@ import {
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   InfoDetail,
   Linkd,
   LinkdInline,
@@ -126,7 +126,7 @@ export default function ToeristischeVerhuur() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.TOERISTISCHE_VERHUUR}
       </PageHeading>
@@ -184,8 +184,7 @@ export default function ToeristischeVerhuur() {
         )}
         <div className={styles.Detail}>
           {hasBothVerleend && (
-            <ErrorAlert severity="warning"
-            title="Let op!">
+            <ErrorAlert severity="warning" title="Let op!">
               U hebt een vergunning voor vakantieverhuur én bed &amp; breakfast.
               Het is niet toegestaan om op hetzelfde adres zowel aan
               vakantieverhuur als bed &amp; breakfast te doen. U moet daarom 1
@@ -200,10 +199,7 @@ export default function ToeristischeVerhuur() {
             </ErrorAlert>
           )}
           {!hasRegistrations && hasPermits && (
-            <ErrorAlert
-              severity="info"
-            title="Let op!"
-            >
+            <ErrorAlert severity="info" title="Let op!">
               U hebt een vergunning voor vakantieverhuur of bed &amp; breakfast.
               U moet daarom ook een landelijk registratienummer voor
               toeristische verhuur aanvragen.

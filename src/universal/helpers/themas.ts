@@ -1,4 +1,4 @@
-import { ChapterMenuItem, Chapters, FeatureToggle } from '../config';
+import { ChapterMenuItem, Themas, FeatureToggle } from '../config';
 import { isLoading, isMokum } from '.';
 import type { AppState, AppStateKey } from '../../client/AppState';
 
@@ -36,7 +36,7 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
   switch (item.id) {
-    case Chapters.INKOMEN:
+    case Themas.INKOMEN:
       const { jaaropgaven, uitkeringsspecificaties } =
         WPI_SPECIFICATIES?.content ?? {};
       const hasAanvragen = WPI_AANVRAGEN?.content?.length;
@@ -62,24 +62,24 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
           hasUitkeringsspecificaties)
       );
 
-    case Chapters.SVWI:
+    case Themas.SVWI:
       return (
         isAmsterdam &&
         FeatureToggle.svwiLinkActive &&
         SVWI?.content?.isKnown === true
       );
 
-    case Chapters.STADSPAS:
+    case Themas.STADSPAS:
       const hasStadspas =
         !!STADSPAS?.content?.stadspassen?.length ||
         !!STADSPAS?.content?.aanvragen?.length;
       const isLoadingStadspas = isLoading(STADSPAS);
       return !isLoadingStadspas && hasStadspas;
 
-    case Chapters.ZORG:
+    case Themas.ZORG:
       return !isLoading(WMO) && !!WMO.content?.length;
 
-    case Chapters.BELASTINGEN:
+    case Themas.BELASTINGEN:
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =
         FeatureToggle.belastingApiActive && BELASTINGEN?.status === 'OK'
@@ -87,13 +87,13 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
           : true;
       return !isLoading(BELASTINGEN) && belastingenActive;
 
-    case Chapters.MILIEUZONE:
+    case Themas.MILIEUZONE:
       return (
         !isLoading(MILIEUZONE) &&
         (FeatureToggle.cleopatraApiActive ? MILIEUZONE.content?.isKnown : false)
       );
 
-    case Chapters.OVERTREDINGEN:
+    case Themas.OVERTREDINGEN:
       return (
         !isLoading(OVERTREDINGEN) &&
         (FeatureToggle.cleopatraApiActive && FeatureToggle.overtredingenActive
@@ -101,13 +101,13 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
           : false)
       );
 
-    case Chapters.SIA:
+    case Themas.SIA:
       const hasSiaItems =
         !!SIA?.content?.open?.items.length ||
         !!SIA?.content?.afgesloten?.items.length;
       return (FeatureToggle.siaActive ? hasSiaItems : false) && !isLoading(SIA);
 
-    case Chapters.AFVAL:
+    case Themas.AFVAL:
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
@@ -115,10 +115,10 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
         isAmsterdam
       );
 
-    case Chapters.ERFPACHT:
+    case Themas.ERFPACHT:
       return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
 
-    case Chapters.ERFPACHTv2:
+    case Themas.ERFPACHTv2:
       return (
         FeatureToggle.erfpachtV2Active &&
         !isLoading(ERFPACHTv2) &&
@@ -128,10 +128,10 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
           !!ERFPACHTv2.content?.isKnown)
       );
 
-    case Chapters.SUBSIDIE:
+    case Themas.SUBSIDIE:
       return !isLoading(SUBSIDIE) && SUBSIDIE.content?.isKnown === true;
 
-    case Chapters.BURGERZAKEN:
+    case Themas.BURGERZAKEN:
       const hasIdentiteitsbewijs = !!BRP?.content?.identiteitsbewijzen?.length;
       return (
         FeatureToggle.identiteitsbewijzenActive &&
@@ -139,16 +139,16 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
         hasIdentiteitsbewijs
       );
 
-    case Chapters.BRP:
+    case Themas.BRP:
       return !isLoading(BRP) && !!BRP.content?.persoon;
 
-    case Chapters.VERGUNNINGEN:
+    case Themas.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 
-    case Chapters.KVK:
+    case Themas.KVK:
       return !isLoading(KVK) && !!KVK.content;
 
-    case Chapters.TOERISTISCHE_VERHUUR:
+    case Themas.TOERISTISCHE_VERHUUR:
       const { registraties, vergunningen } =
         TOERISTISCHE_VERHUUR?.content ?? {};
       const hasRegistraties = !!registraties?.length;
@@ -157,41 +157,41 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );
 
-    case Chapters.KREFIA:
+    case Themas.KREFIA:
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
-    case Chapters.PARKEREN:
+    case Themas.PARKEREN:
       return isAmsterdam && FeatureToggle.parkerenActive;
 
-    case Chapters.KLACHTEN:
+    case Themas.KLACHTEN:
       return (
         !isLoading(KLACHTEN) &&
         !!KLACHTEN?.content?.klachten.length &&
         FeatureToggle.klachtenActive
       );
 
-    case Chapters.BEZWAREN:
+    case Themas.BEZWAREN:
       return (
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
       );
 
-    case Chapters.HORECA:
+    case Themas.HORECA:
       return (
         !isLoading(HORECA) &&
         !!HORECA?.content?.length &&
         FeatureToggle.horecaActive
       );
 
-    case Chapters.AVG:
+    case Themas.AVG:
       return (
         !isLoading(AVG) &&
         !!AVG?.content?.verzoeken?.length &&
         FeatureToggle.avgActive
       );
 
-    case Chapters.BODEM:
+    case Themas.BODEM:
       return (
         !isLoading(BODEM) &&
         !!BODEM?.content?.metingen?.length &&

@@ -7,7 +7,7 @@ import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
   Button,
-  ChapterIcon,
+  ThemaIcon,
   DateInput,
   OverviewPage,
   PageContent,
@@ -170,7 +170,7 @@ export default function InkomenSpecificaties() {
       )}
     >
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
         isLoading={isLoading(WPI_SPECIFICATIES)}
       >

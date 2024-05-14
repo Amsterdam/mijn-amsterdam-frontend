@@ -17,7 +17,7 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   DocumentList,
   LoadingContent,
@@ -160,7 +160,7 @@ export default function SiaDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.ROOT,
           title: ChapterTitles.SIA,

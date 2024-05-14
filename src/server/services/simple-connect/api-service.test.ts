@@ -107,7 +107,7 @@ describe('simple-connect/api-service', () => {
         "content": {
           "notifications": [
             {
-              "chapter": "TEST_CHAPTER",
+              "thema": "TEST_CHAPTER",
               "datePublished": "2022-04-22",
               "description": "Bekijk deze mooie site eens!",
               "link": {

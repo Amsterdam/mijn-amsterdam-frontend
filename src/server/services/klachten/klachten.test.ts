@@ -76,7 +76,7 @@ describe('Klachten', () => {
         "content": {
           "notifications": [
             {
-              "chapter": "KLACHTEN",
+              "thema": "KLACHTEN",
               "datePublished": "2022-04-05T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-230541-notification",
@@ -87,7 +87,7 @@ describe('Klachten', () => {
               "title": "Klacht ontvangen",
             },
             {
-              "chapter": "KLACHTEN",
+              "thema": "KLACHTEN",
               "datePublished": "2022-05-05T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-2505661-notification",
@@ -98,7 +98,7 @@ describe('Klachten', () => {
               "title": "Klacht ontvangen",
             },
             {
-              "chapter": "KLACHTEN",
+              "thema": "KLACHTEN",
               "datePublished": "2022-06-13T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-280321-notification",
@@ -109,7 +109,7 @@ describe('Klachten', () => {
               "title": "Klacht ontvangen",
             },
             {
-              "chapter": "KLACHTEN",
+              "thema": "KLACHTEN",
               "datePublished": "2022-02-13T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-237821-notification",
@@ -120,7 +120,7 @@ describe('Klachten', () => {
               "title": "Klacht ontvangen",
             },
             {
-              "chapter": "KLACHTEN",
+              "thema": "KLACHTEN",
               "datePublished": "2022-01-12T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-438001-notification",

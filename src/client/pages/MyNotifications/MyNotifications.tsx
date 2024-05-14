@@ -4,7 +4,7 @@ import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   MyNotifications,
   PageContent,
@@ -54,7 +54,7 @@ export default function MyNotificationsPage() {
           title: 'Home',
         }}
         className={styles.MainHeader}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         Actueel
       </PageHeading>

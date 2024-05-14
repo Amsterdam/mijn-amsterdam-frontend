@@ -4,7 +4,7 @@ import { isError, isLoading } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   LoadingContent,
   PageContent,
@@ -27,7 +27,7 @@ export default function HorecaDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: generatePath(AppRoutes.HORECA),
           title: ChapterTitles.HORECA,

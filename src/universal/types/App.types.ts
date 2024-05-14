@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
-import { Chapter } from '../config';
+import { Thema } from '../config';
 
 // Generic object interface
 export interface Unshaped {
@@ -27,7 +27,7 @@ export type SVGComponent = FunctionComponent<
 export type ComponentChildren = ReactNode;
 
 export interface MyNotification {
-  chapter: Chapter;
+  thema: Thema;
   datePublished: string;
   description: string;
   hideDatePublished?: boolean;
@@ -48,7 +48,7 @@ export interface MyNotification {
 }
 
 export interface MyTip {
-  chapter?: Chapter | null;
+  thema?: Thema | null;
   datePublished: string;
   description: string;
   id: string;

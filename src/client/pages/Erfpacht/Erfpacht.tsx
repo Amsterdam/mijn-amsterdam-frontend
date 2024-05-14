@@ -11,7 +11,7 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   LoadingContent,
   OverviewPage,
   PageHeading,
@@ -42,7 +42,7 @@ export default function Erfpacht() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.ERFPACHTv2}
       </PageHeading>

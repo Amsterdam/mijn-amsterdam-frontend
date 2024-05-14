@@ -93,7 +93,7 @@ describe('simple-connect/belasting', () => {
           "content": {
             "notifications": [
               {
-                "chapter": "BELASTINGEN",
+                "thema": "BELASTINGEN",
                 "datePublished": "2022-05-30T09:00:34Z",
                 "description": "Er staan nog aanslagen open waarvoor u een dwangbevel hebt ontvangen. Deze aanslagen zijn nog niet (geheel) voldaan. Voorkom een bezoek van de deurwaarder aan u. Betaal direct.",
                 "id": "belasting-4",
@@ -106,7 +106,7 @@ describe('simple-connect/belasting', () => {
             ],
             "tips": [
               {
-                "chapter": "BELASTINGEN",
+                "thema": "BELASTINGEN",
                 "datePublished": "2022-05-30T09:00:34Z",
                 "description": "Betaal gemakkelijk de gecombineerde belastingaanslag. Regel vandaag nog uw automatische incasso, dan hebt u er straks geen omkijken meer naar.",
                 "id": "belasting-5",

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { Chapter } from '../../../universal/config';
+import { Thema } from '../../../universal/config';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -44,7 +44,7 @@ export function PageTableCutoffLink({
 interface PageTablePaginatedProps {
   items: object[];
   pageSize?: number;
-  chapter?: Chapter;
+  thema?: Thema;
   appRoute: string;
   appRouteBack: string;
   listTitle: string;
@@ -59,7 +59,7 @@ interface PageTablePaginatedProps {
 
 export function PageTablePaginated({
   items,
-  chapter,
+  thema,
   listTitle,
   title,
   appRoute,
@@ -95,7 +95,7 @@ export function PageTablePaginated({
   return (
     <OverviewPage>
       <PageHeading
-        icon={<ChapterIcon chapter={chapter} />}
+        icon={<ThemaIcon thema={thema} />}
         backLink={{ to: appRouteBack, title: 'Overzicht' }}
         isLoading={isLoading}
       >

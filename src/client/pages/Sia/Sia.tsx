@@ -8,12 +8,12 @@ import { SIAItem } from '../../../server/services/sia';
 import {
   AppRoutes,
   ChapterTitles,
-  Chapters,
+  Themas,
 } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
-  ChapterIcon,
+  ThemaIcon,
   ErrorAlert,
   MaintenanceNotifications,
   PageContent,
@@ -77,10 +77,7 @@ export default function Sia() {
 
   return (
     <OverviewPage className={styles.Sia}>
-      <PageHeading
-        isLoading={false}
-        icon={<ChapterIcon chapter={Chapters.SIA} />}
-      >
+      <PageHeading isLoading={false} icon={<ThemaIcon thema={Themas.SIA} />}>
         {ChapterTitles.SIA}
       </PageHeading>
       <PageContent>

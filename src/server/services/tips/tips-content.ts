@@ -1,4 +1,4 @@
-import { Chapters } from '../../../universal/config';
+import { Themas } from '../../../universal/config';
 import {
   hasBijstandsuitkering,
   hasBnBTransitionRight,
@@ -37,7 +37,7 @@ export const tips: Tip[] = [
     datePublished: '2019-08-18',
     title: 'Tip: Bekijk de afvalpunten in de buurt',
     profileTypes: ['private'],
-    chapter: Chapters.AFVAL,
+    thema: Themas.AFVAL,
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
     predicates: [isLivingInAmsterdamLessThanNumberOfDays(3)],
     reason: 'U ziet deze tip omdat u net bent verhuisd',
@@ -55,7 +55,7 @@ export const tips: Tip[] = [
     datePublished: '2019-10-22',
     title: 'Tip: Op stap met uw Stadspas',
     profileTypes: ['private'],
-    chapter: Chapters.STADSPAS,
+    thema: Themas.STADSPAS,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een stadspas hebt aangevraagd.',
     predicates: [hasValidStadspasRequest],
@@ -73,7 +73,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2020-07-03',
     title: 'Tip: Welkom in Amsterdam',
-    chapter: Chapters.BRP,
+    thema: Themas.BRP,
     profileTypes: ['private'],
     description:
       'U bent net in Amsterdam komen wonen, welkom! Blijf op de hoogte van het nieuws in uw stadsdeel.',
@@ -96,7 +96,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-11-25',
     title: 'Tip: Download de 020werkt-app',
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     profileTypes: ['private', 'commercial'],
     description:
       'Via de 020werkt-app krijgt u informatie  over werk, inkomen en meedoen in de wijk. De app is gratis, anoniem en makkelijk in gebruik.',
@@ -116,7 +116,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
-    chapter: Chapters.STADSPAS,
+    thema: Themas.STADSPAS,
     profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
@@ -138,7 +138,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-12-20',
     title: 'Tip: Hulp bij geldproblemen',
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     profileTypes: ['private', 'commercial'],
     description:
       'Is uw inkomen te laag om alle rekeningen te betalen of hebt u schulden? Meld u aan voor gratis hulp',
@@ -158,7 +158,7 @@ export const tips: Tip[] = [
     priority: 80,
     datePublished: '2023-10-16',
     title: 'Tip: Gratis ID-kaart om te stemmen',
-    chapter: Chapters.BRP,
+    thema: Themas.BRP,
     profileTypes: ['private'],
     description:
       'U hebt een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
@@ -184,7 +184,7 @@ export const tips: Tip[] = [
     priority: 70,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     profileTypes: ['private'],
     description:
       'Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.',
@@ -205,7 +205,7 @@ export const tips: Tip[] = [
     priority: 10,
     datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
-    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    thema: Themas.TOERISTISCHE_VERHUUR,
     profileTypes: ['private'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
@@ -228,7 +228,7 @@ export const tips: Tip[] = [
     priority: 11,
     datePublished: '2021-06-15',
     title: 'Tip: Overgangsrecht bij Bed and breakfast',
-    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    thema: Themas.TOERISTISCHE_VERHUUR,
     profileTypes: ['private'],
     description:
       'Hebt u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
@@ -249,7 +249,7 @@ export const tips: Tip[] = [
     priority: 11,
     datePublished: '2021-06-15',
     title: 'Tip: Bed & breakfast',
-    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    thema: Themas.TOERISTISCHE_VERHUUR,
     profileTypes: ['private'],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
@@ -269,7 +269,7 @@ export const tips: Tip[] = [
     priority: 11,
     datePublished: '2021-08-01',
     title: 'Tip: Sportvergoeding voor kinderen',
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     profileTypes: ['private'],
     description:
       'Hebt u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
@@ -292,7 +292,7 @@ export const tips: Tip[] = [
     predicates: [hasKidsBetweenAges4And11, isMokum],
     profileTypes: ['private'],
     isNotification: true,
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     description:
       'Kinderen van 4 tot en met 11 jaar kunnen van 22 juli tot en met 30 november gratis reizen met het openbaar vervoer in Amsterdam. Elk kind heeft een ov-chipkaart nodig.',
     reason:
@@ -311,7 +311,7 @@ export const tips: Tip[] = [
     priority: 82,
     datePublished: '2023-11-23',
     title: 'Vraag een gratis ID-kaart aan',
-    chapter: Chapters.BRP,
+    thema: Themas.BRP,
     profileTypes: ['private'],
     description:
       'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de stadspas groene stip krijgt u gratis een nieuwe ID-kaart.',
@@ -337,7 +337,7 @@ export const tips: Tip[] = [
     priority: 1,
     datePublished: '2024-04-04',
     title: 'Overgangsregeling: achternaam van kind kiezen',
-    chapter: Chapters.BRP,
+    thema: Themas.BRP,
     profileTypes: ['private'],
     description:
       'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
@@ -358,7 +358,7 @@ export const tips: Tip[] = [
     priority: 1,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     profileTypes: ['private'],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
@@ -379,7 +379,7 @@ export const tips: Tip[] = [
     priority: 1,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     profileTypes: ['private'],
     description:
       'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',

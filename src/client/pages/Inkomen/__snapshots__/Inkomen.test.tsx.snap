@@ -14,7 +14,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
       >
         <svg
           aria-label="Inkomen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="28px"
           viewBox="0 0 32 28"
@@ -784,7 +784,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
       >
         <svg
           aria-label="Inkomen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="28px"
           viewBox="0 0 32 28"

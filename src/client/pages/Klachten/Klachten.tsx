@@ -3,7 +3,7 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -70,7 +70,7 @@ export default function Klachten() {
           title: 'Home',
         }}
         isLoading={isLoading(KLACHTEN)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.KLACHTEN}
       </PageHeading>

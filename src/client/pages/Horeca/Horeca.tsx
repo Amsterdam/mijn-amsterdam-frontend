@@ -7,7 +7,7 @@ import {
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -55,7 +55,7 @@ export default function Horeca() {
           title: 'Home',
         }}
         isLoading={isLoading(HORECA)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.HORECA}
       </PageHeading>

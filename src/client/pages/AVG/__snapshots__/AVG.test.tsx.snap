@@ -14,7 +14,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
       >
         <svg
           aria-label="AVG persoonsgegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32"
           viewBox="0 0 32 32"
@@ -245,7 +245,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
       >
         <svg
           aria-label="AVG persoonsgegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32"
           viewBox="0 0 32 32"
@@ -437,7 +437,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
       >
         <svg
           aria-label="AVG persoonsgegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32"
           viewBox="0 0 32 32"

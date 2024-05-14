@@ -1,9 +1,9 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, Thema, ChapterTitles } from '../../../universal/config';
 import { LinkProps } from '../../../universal/types';
 import { ChapterMenuItem } from '../../config/menuItems';
 
-type MainMenuId = Chapter | 'MIJN_THEMAS';
+type MainMenuId = Thema | 'MIJN_THEMAS';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;

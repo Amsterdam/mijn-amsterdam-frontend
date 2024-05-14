@@ -63,7 +63,7 @@
     }
   }
 
-  @include select(MyChaptersPanel_MyChaptersPanel) {
+  @include select(MyThemasPanel_MyThemasPanel) {
     // Adjust some margins to match the design on mobile
     @include mq-gt-phone() {
       flex: 0 0 calc(40% + 2rem);

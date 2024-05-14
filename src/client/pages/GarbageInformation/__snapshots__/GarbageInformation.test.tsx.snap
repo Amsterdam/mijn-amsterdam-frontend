@@ -14,7 +14,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       >
         <svg
           aria-label="Afval"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
           viewBox="0 0 32 32"
@@ -687,7 +687,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       >
         <svg
           aria-label="Afval"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
           viewBox="0 0 32 32"
@@ -1391,7 +1391,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
       >
         <svg
           aria-label="Afval"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
           viewBox="0 0 32 32"
@@ -1611,7 +1611,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       >
         <svg
           aria-label="Afval"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
           viewBox="0 0 32 32"

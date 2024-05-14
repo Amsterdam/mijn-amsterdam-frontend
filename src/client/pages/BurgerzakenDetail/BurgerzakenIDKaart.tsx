@@ -8,7 +8,7 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   LoadingContent,
@@ -30,7 +30,7 @@ export default function BurgerzakenIDKaart() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.BURGERZAKEN,
           title: ChapterTitles.BURGERZAKEN,

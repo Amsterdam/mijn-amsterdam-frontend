@@ -6,7 +6,7 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -49,7 +49,7 @@ export default function Bodem() {
           title: 'Home',
         }}
         isLoading={isLoading(BODEM)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.BODEM}
       </PageHeading>

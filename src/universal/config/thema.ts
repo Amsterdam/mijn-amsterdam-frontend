@@ -4,7 +4,7 @@ import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 
 // Within the team we call these Themes / Thema's
-export type Chapter =
+export type Thema =
   | 'AFVAL'
   | 'BELASTINGEN'
   | 'BURGERZAKEN'
@@ -35,9 +35,9 @@ export type Chapter =
   | 'BODEM'
   | string;
 
-export type BagChapter = `${Chapter}_BAG`;
+export type BagChapter = `${Thema}_BAG`;
 
-export const Chapters: Record<Chapter, Chapter> = {
+export const Themas: Record<Thema, Thema> = {
   AFVAL: 'AFVAL',
   BELASTINGEN: 'BELASTINGEN',
   BURGERZAKEN: 'BURGERZAKEN',
@@ -68,14 +68,14 @@ export const Chapters: Record<Chapter, Chapter> = {
   BODEM: 'BODEM',
 };
 
-export const BagChapters: Record<Chapter, BagChapter> = Object.fromEntries(
-  Object.entries(Chapters).map(([key, key2]) => {
+export const BagThemas: Record<Thema, BagChapter> = Object.fromEntries(
+  Object.entries(Themas).map(([key, key2]) => {
     return [key, `${key2}_BAG`];
   })
 );
 
 // These are used for PageHeadings and link title props for example.
-export const ChapterTitles: { [chapter in Chapter]: string } = {
+export const ChapterTitles: { [thema in Thema]: string } = {
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
@@ -196,7 +196,7 @@ export const DocumentTitles: {
 };
 
 export interface ChapterMenuItem extends LinkProps {
-  id: Chapter;
+  id: Thema;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
@@ -205,32 +205,32 @@ export interface ChapterMenuItem extends LinkProps {
 export const myChaptersMenuItems: ChapterMenuItem[] = [
   {
     title: ChapterTitles.BRP,
-    id: Chapters.BRP,
+    id: Themas.BRP,
     to: AppRoutes.BRP,
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.KVK,
-    id: Chapters.KVK,
+    id: Themas.KVK,
     to: AppRoutes.KVK,
     profileTypes: ['commercial', 'private'],
   },
   {
     title: ChapterTitles.BELASTINGEN,
-    id: Chapters.BELASTINGEN,
+    id: Themas.BELASTINGEN,
     to: ExternalUrls.SSO_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.BEZWAREN,
-    id: Chapters.BEZWAREN,
+    id: Themas.BEZWAREN,
     to: AppRoutes.BEZWAREN,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.BELASTINGEN,
-    id: Chapters.BELASTINGEN,
+    id: Themas.BELASTINGEN,
     to: ExternalUrls.EH_SSO_BELASTINGEN,
     rel: 'external',
     profileTypes: ['commercial'],
@@ -238,148 +238,148 @@ export const myChaptersMenuItems: ChapterMenuItem[] = [
   },
   {
     title: ChapterTitles.BURGERZAKEN,
-    id: Chapters.BURGERZAKEN,
+    id: Themas.BURGERZAKEN,
     to: AppRoutes.BURGERZAKEN,
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.ERFPACHT,
-    id: Chapters.ERFPACHT,
+    id: Themas.ERFPACHT,
     to: ExternalUrls.SSO_ERFPACHT || '',
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.ERFPACHTv2,
-    id: Chapters.ERFPACHTv2,
+    id: Themas.ERFPACHTv2,
     to: AppRoutes.ERFPACHTv2,
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.ERFPACHTv2,
-    id: Chapters.ERFPACHTv2,
+    id: Themas.ERFPACHTv2,
     to: ExternalUrls.ERFPACHTv2_ZAKELIJK,
     profileTypes: ['commercial'],
     rel: 'external',
   },
   {
     title: ChapterTitles.ERFPACHT,
-    id: Chapters.ERFPACHT,
+    id: Themas.ERFPACHT,
     to: ExternalUrls.EH_SSO_ERFPACHT || '',
     rel: 'external',
     profileTypes: ['commercial'],
   },
   {
     title: ChapterTitles.SUBSIDIE,
-    id: Chapters.SUBSIDIE,
+    id: Themas.SUBSIDIE,
     to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.SUBSIDIE,
-    id: Chapters.SUBSIDIE,
+    id: Themas.SUBSIDIE,
     to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
     rel: 'external',
     profileTypes: ['commercial'],
   },
   {
     title: ChapterTitles.ZORG,
-    id: Chapters.ZORG,
+    id: Themas.ZORG,
     to: AppRoutes.ZORG,
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.INKOMEN,
-    id: Chapters.INKOMEN,
+    id: Themas.INKOMEN,
     to: AppRoutes.INKOMEN,
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.SVWI,
-    id: Chapters.SVWI,
+    id: Themas.SVWI,
     to: ExternalUrls.SVWI,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.STADSPAS,
-    id: Chapters.STADSPAS,
+    id: Themas.STADSPAS,
     to: AppRoutes.STADSPAS,
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.AFVAL,
-    id: Chapters.AFVAL,
+    id: Themas.AFVAL,
     to: AppRoutes.AFVAL,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.VERGUNNINGEN,
-    id: Chapters.VERGUNNINGEN,
+    id: Themas.VERGUNNINGEN,
     to: AppRoutes.VERGUNNINGEN,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.MILIEUZONE,
-    id: Chapters.MILIEUZONE,
+    id: Themas.MILIEUZONE,
     to: ExternalUrls.SSO_MILIEUZONE || '',
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.OVERTREDINGEN,
-    id: Chapters.OVERTREDINGEN,
+    id: Themas.OVERTREDINGEN,
     to: ExternalUrls.SSO_MILIEUZONE || '', // TODO: In de toekomst wordt dit een andere link
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.SIA,
-    id: Chapters.SIA,
+    id: Themas.SIA,
     to: AppRoutes.SIA,
     profileTypes: ['private-attributes'],
   },
   {
     title: ChapterTitles.TOERISTISCHE_VERHUUR,
-    id: Chapters.TOERISTISCHE_VERHUUR,
+    id: Themas.TOERISTISCHE_VERHUUR,
     to: AppRoutes.TOERISTISCHE_VERHUUR,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.KREFIA,
-    id: Chapters.KREFIA,
+    id: Themas.KREFIA,
     to: AppRoutes.KREFIA,
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.PARKEREN,
-    id: Chapters.PARKEREN,
+    id: Themas.PARKEREN,
     to: AppRoutes.PARKEREN,
     profileTypes: ['private', 'commercial'],
     hasAppStateValue: false,
   },
   {
     title: ChapterTitles.KLACHTEN,
-    id: Chapters.KLACHTEN,
+    id: Themas.KLACHTEN,
     to: generatePath(AppRoutes.KLACHTEN, { page: 1 }),
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.HORECA,
-    id: Chapters.HORECA,
+    id: Themas.HORECA,
     to: AppRoutes.HORECA,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ChapterTitles.AVG,
-    id: Chapters.AVG,
+    id: Themas.AVG,
     to: generatePath(AppRoutes.AVG, { page: 1 }),
     profileTypes: ['private'],
   },
   {
     title: ChapterTitles.BODEM,
-    id: Chapters.BODEM,
+    id: Themas.BODEM,
     to: AppRoutes.BODEM,
     profileTypes: ['private', 'commercial'],
   },

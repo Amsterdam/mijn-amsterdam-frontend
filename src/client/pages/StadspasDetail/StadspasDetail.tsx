@@ -18,7 +18,7 @@ import displayAmount from '../../../universal/helpers/text';
 import { IconChevronRight } from '../../assets/icons';
 import {
   Button,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   ErrorAlert,
   Linkd,
@@ -244,7 +244,7 @@ export default function StadspasDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{ to: AppRoutes.STADSPAS, title: ChapterTitles.STADSPAS }}
         isLoading={false}
       >

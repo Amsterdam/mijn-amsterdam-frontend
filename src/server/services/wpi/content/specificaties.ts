@@ -1,5 +1,5 @@
 import { differenceInMonths } from 'date-fns';
-import { Chapters, IS_PRODUCTION } from '../../../../universal/config';
+import { Themas, IS_PRODUCTION } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
 import { ServiceResults } from '../../tips/tip-types';
@@ -34,7 +34,7 @@ function transformIncomeSpecificationNotification(
     return {
       id: 'nieuwe-jaaropgave',
       datePublished: item.datePublished,
-      chapter: Chapters.INKOMEN,
+      thema: Themas.INKOMEN,
       title: 'Nieuwe jaaropgave',
       description: `Uw ${item.title} staat voor u klaar.`,
       link: {
@@ -47,7 +47,7 @@ function transformIncomeSpecificationNotification(
   return {
     id: 'nieuwe-uitkeringsspecificatie',
     datePublished: item.datePublished,
-    chapter: Chapters.INKOMEN,
+    thema: Themas.INKOMEN,
     title: 'Nieuwe uitkeringsspecificatie',
     description: `Uw uitkeringsspecificatie van ${dateFormat(
       item.datePublished,

@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { ChapterMenuItem } from '../../config/menuItems';
-import MyChaptersPanel from './MyChaptersPanel';
+import { ThemaMenuItem } from '../../config/menuItems';
+import MyThemasPanel from './MyThemasPanel';
 
 const PANEL_TITLE = 'whoa!';
-const items: ChapterMenuItem[] = [
+const items: ThemaMenuItem[] = [
   {
     title: 'Belastingen',
     id: 'BELASTINGEN',
@@ -22,12 +22,12 @@ const items: ChapterMenuItem[] = [
   },
 ];
 
-describe('Chapter panel display', () => {
-  it('Renders chapter items', () => {
+describe('Thema panel display', () => {
+  it('Renders thema items', () => {
     render(
       <RecoilRoot>
         <BrowserRouter>
-          <MyChaptersPanel
+          <MyThemasPanel
             title={PANEL_TITLE}
             items={items}
             isLoading={false}
@@ -45,7 +45,7 @@ describe('Chapter panel display', () => {
     const { container } = render(
       <RecoilRoot>
         <BrowserRouter>
-          <MyChaptersPanel
+          <MyThemasPanel
             title={PANEL_TITLE}
             items={items}
             isLoading={true}

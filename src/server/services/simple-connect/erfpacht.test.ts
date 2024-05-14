@@ -128,7 +128,7 @@ describe('simple-connect/erfpacht', () => {
         "content": {
           "notifications": [
             {
-              "chapter": "ERFPACHT",
+              "thema": "ERFPACHT",
               "datePublished": "2022-04-22",
               "description": "Uw aanvraag voor automatische incasso voor erfpacht is goedgekeurd en verwerkt. Uw eerstvolgende betaling van erfpacht zal middels automatische incasso plaatsvinden",
               "id": 0,

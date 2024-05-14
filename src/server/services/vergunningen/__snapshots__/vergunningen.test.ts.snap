@@ -5,7 +5,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
   "content": {
     "notifications": [
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
         "description": "Wij hebben uw aanvraag voor een parkeerontheffingen blauwe zone particulieren in behandeling genomen.",
         "id": "vergunning-2295682720-notification",
@@ -17,7 +17,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
         "title": "Aanvraag parkeerontheffingen blauwe zone particulieren in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
         "description": "Wij hebben uw aanvraag voor een parkeerontheffingen blauwe zone bedrijven in behandeling genomen.",
         "id": "vergunning-2191426354-notification",
@@ -29,7 +29,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
         "title": "Aanvraag parkeerontheffingen blauwe zone bedrijven in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-06-30",
         "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
         "id": "vergunning-302573541-notification",
@@ -41,7 +41,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-06-30",
         "description": "Uw ontheffing blauwe zone bedrijven (Z/22/1979538) loopt op 30 september 2022 af.",
         "id": "vergunning-162761969-notification",
@@ -53,7 +53,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications BZP/BZB 1`] = `
         "title": "Uw ontheffing blauwe zone verloopt binnenkort",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-07-02",
         "description": "Uw ontheffing blauwe zone bedrijven (Z/21/1600000) is op 02 juli 2022 verlopen.",
         "id": "vergunning-3577730497-notification",
@@ -75,11 +75,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
   "content": {
     "notifications": [
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
         "description": "Wij hebben uw aanvraag voor een kentekenwijziging
         RVV ontheffing Laan van Vlaanderen
-        van (PR067L) naar 
+        van (PR067L) naar
         (AAYYAA) in behandeling genomen.",
         "id": "vergunning-1132545854-notification",
         "link": {
@@ -90,11 +90,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) (Verleend) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-07-23T11:21:33",
         "description": "Wij hebben uw aanvraag voor een
         RVV ontheffing Vaan van Laanderen
-        
+
         (YY-123-A, ZZ-122-A) ontvangen.",
         "id": "vergunning-3368771494-notification",
         "link": {
@@ -105,10 +105,10 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw/Verleend) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
         "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
-        
+
         (9998877) ingetrokken.",
         "id": "vergunning-3970992213-notification",
         "link": {
@@ -119,7 +119,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken) ingetrokken",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-12-18",
         "description": "Uw aanvraag voor Werkzaamheden en vervoer op straat is in behandeling genomen.",
         "id": "vergunning-871318354-notification",
@@ -131,7 +131,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag Werkzaamheden en vervoer op straat in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-11-14",
         "description": "Wij hebben uw aanvraag Touringcar jaarontheffing in behandeling genomen.",
         "id": "vergunning-852482654-notification",
@@ -143,7 +143,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag Touringcar jaarontheffing (EE-123-C... +11) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-13",
         "description": "Wij hebben uw opzegging Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1679261105-notification",
@@ -155,7 +155,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Opzegging Eigen parkeerplaats ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-10",
         "description": "Wij hebben uw aanvraag Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1817502388-notification",
@@ -167,11 +167,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag eigen parkeerplaats ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
         "description": "Wij hebben uw aanvraag voor een kentekenwijziging
         RVV ontheffing Laan van Vlaanderen
-        van (PR067L) naar 
+        van (PR067L) naar
         (TT148N) in behandeling genomen.",
         "id": "vergunning-3593173882-notification",
         "link": {
@@ -182,11 +182,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg (Verleend) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
         "description": "Wij hebben uw aanvraag voor een kentekenwijziging
         RVV ontheffing Sloterweg West
-        van (PR067L) naar 
+        van (PR067L) naar
         (TT148N) ontvangen.",
         "id": "vergunning-1623553971-notification",
         "link": {
@@ -197,11 +197,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg West (Wijziging / ontvangen) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
         "description": "Wij hebben uw aanvraag voor een
         RVV ontheffing Sloterweg
-        
+
         (37BHK4) ontvangen.",
         "id": "vergunning-1097314015-notification",
         "link": {
@@ -212,11 +212,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw / In behandeling) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-08-17",
         "description": "Wij hebben uw aanvraag voor een
         RVV ontheffing Sloterweg West
-        
+
         (37BHK4) ontvangen.",
         "id": "vergunning-4069415615-notification",
         "link": {
@@ -227,7 +227,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag RVV ontheffing Sloterweg West (Nieuw in behandeling) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-04-25T00:00:00",
         "description": "Uw aanvraag voor een RVV-verkeersontheffing is in behandeling genomen.",
         "id": "vergunning-1656544835-notification",
@@ -239,7 +239,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag RVV-verkeersontheffing in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-03-09T00:00:00",
         "description": "Wij hebben uw aanvraag voor een ligplaatsvergunning ontvangen.",
         "id": "vergunning-3229752453-notification",
@@ -251,7 +251,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag ligplaatsvergunning ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-01-03T00:00:00",
         "description": "Wij hebben uw aanvraag voor een ligplaatsvergunning in behandeling genomen.",
         "id": "vergunning-513492494-notification",
@@ -263,10 +263,10 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag ligplaatsvergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
         "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
-        
+
         (1234356) ingetrokken.",
         "id": "vergunning-2720598005-notification",
         "link": {
@@ -277,7 +277,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging ingetrokken) ingetrokken",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
         "description": "Wij hebben uw aanvraag voor een parkeerontheffingen blauwe zone particulieren in behandeling genomen.",
         "id": "vergunning-2295682720-notification",
@@ -289,7 +289,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag parkeerontheffingen blauwe zone particulieren in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
         "description": "Wij hebben uw aanvraag voor een parkeerontheffingen blauwe zone bedrijven in behandeling genomen.",
         "id": "vergunning-2191426354-notification",
@@ -301,7 +301,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag parkeerontheffingen blauwe zone bedrijven in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Wij hebben uw aanvraag voor een samenvoegingsvergunning in behandeling genomen.",
         "id": "vergunning-3588461895-notification",
@@ -313,7 +313,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag samenvoegingsvergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Wij hebben uw aanvraag voor een onttrekkingsvergunning voor sloop ontvangen.",
         "id": "vergunning-2377704102-notification",
@@ -325,7 +325,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag onttrekkingsvergunning voor sloop ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Uw vergunningsaanvraag vormen van woonruimte is in behandeling genomen.",
         "id": "vergunning-4289555340-notification",
@@ -337,7 +337,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag vormen van woonruimte in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Wij hebben uw aanvraag voor een splitsingsvergunning in behandeling genomen.",
         "id": "vergunning-4220998766-notification",
@@ -349,7 +349,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag splitsingsvergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-10-21",
         "description": "Wij hebben uw aanvraag voor een ontheffing zwaar verkeer in behandeling genomen.",
         "id": "vergunning-2318111872-notification",
@@ -361,7 +361,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag ontheffing zwaar verkeer in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-10-16T00:00:00",
         "description": "Wij hebben uw aanvraag voor een ontheffing zwaar verkeer ontvangen.",
         "id": "vergunning-1863159343-notification",
@@ -373,7 +373,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag ontheffing zwaar verkeer ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-16T00:00:00",
         "description": "Wij hebben uw aanvraag voor een geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) in behandeling genomen.",
         "id": "vergunning-504231399-notification",
@@ -385,7 +385,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-01-17T00:00:00",
         "description": "Uw vergunningsaanvraag aanbieden van diensten is in behandeling genomen.",
         "id": "vergunning-3407608046-notification",
@@ -397,7 +397,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag aanbieden van diensten in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-07-02",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3607535691-notification",
@@ -409,7 +409,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3276988108-notification",
@@ -421,7 +421,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-07-01",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-2804017741-notification",
@@ -433,7 +433,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-07-02",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-1324498924-notification",
@@ -445,7 +445,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3452781026-notification",
@@ -457,7 +457,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2872491299-notification",
@@ -469,7 +469,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3490212832-notification",
@@ -481,7 +481,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2909923105-notification",
@@ -493,7 +493,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3706696166-notification",
@@ -505,7 +505,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-25",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-976898368-notification",
@@ -517,7 +517,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-08T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2594256166-notification",
@@ -529,7 +529,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-05-03T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3468041544-notification",
@@ -541,7 +541,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-01",
         "description": "Wij hebben uw aanvraag voor een evenement vergunning in behandeling genomen.",
         "id": "vergunning-4081922197-notification",
@@ -553,7 +553,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag evenement vergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-01",
         "description": "Wij hebben uw aanvraag voor een evenement vergunning in behandeling genomen.",
         "id": "vergunning-3073404626-notification",
@@ -565,7 +565,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag evenement vergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-04-07",
         "description": "Uw vergunningsaanvraag vaste parkeerplaats voor gehandicapten (gpp) is in behandeling genomen.",
         "id": "vergunning-260384730-notification",
@@ -577,7 +577,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag vaste parkeerplaats voor gehandicapten (gpp) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-17",
         "description": "Wij hebben uw aanvraag voor een evenement melding in behandeling genomen.",
         "id": "vergunning-4187042164-notification",
@@ -589,7 +589,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag evenement melding in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-09-03",
         "description": "Uw vergunningsaanvraag e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling genomen.",
         "id": "vergunning-3105266233-notification",
@@ -601,7 +601,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-09-28",
         "description": "Wij hebben uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) ontvangen.",
         "id": "vergunning-913567999-notification",
@@ -613,7 +613,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-08",
         "description": "Wij hebben uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling genomen.",
         "id": "vergunning-2331715774-notification",
@@ -625,7 +625,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-03-28",
         "description": "Wij hebben uw aanvraag voor een (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) ontvangen.",
         "id": "vergunning-333728632-notification",
@@ -647,11 +647,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
   "content": {
     "notifications": [
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
         "description": "Wij hebben uw aanvraag voor een kentekenwijziging
         RVV ontheffing Laan van Vlaanderen
-        van (PR067L) naar 
+        van (PR067L) naar
         (AAYYAA) in behandeling genomen.",
         "id": "vergunning-1132545854-notification",
         "link": {
@@ -662,11 +662,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag kentekenwijziging RVV ontheffing Laan van Vlaanderen (AAYYAA) (Verleend) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-07-23T11:21:33",
         "description": "Wij hebben uw aanvraag voor een
         RVV ontheffing Vaan van Laanderen
-        
+
         (YY-123-A, ZZ-122-A) ontvangen.",
         "id": "vergunning-3368771494-notification",
         "link": {
@@ -677,10 +677,10 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw/Verleend) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
         "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
-        
+
         (9998877) ingetrokken.",
         "id": "vergunning-3970992213-notification",
         "link": {
@@ -691,7 +691,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging Verleend + ingetrokken) ingetrokken",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-12-18",
         "description": "Uw aanvraag voor Werkzaamheden en vervoer op straat is in behandeling genomen.",
         "id": "vergunning-871318354-notification",
@@ -703,7 +703,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag Werkzaamheden en vervoer op straat in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-11-14",
         "description": "Wij hebben uw aanvraag Touringcar jaarontheffing in behandeling genomen.",
         "id": "vergunning-852482654-notification",
@@ -715,7 +715,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag Touringcar jaarontheffing (EE-123-C... +11) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-13",
         "description": "Wij hebben uw opzegging Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1679261105-notification",
@@ -727,7 +727,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Opzegging Eigen parkeerplaats ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-10",
         "description": "Wij hebben uw aanvraag Eigen parkeerplaats ontvangen.",
         "id": "vergunning-1817502388-notification",
@@ -739,11 +739,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag eigen parkeerplaats ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-10-27",
         "description": "Wij hebben uw aanvraag voor een kentekenwijziging
         RVV ontheffing Laan van Vlaanderen
-        van (PR067L) naar 
+        van (PR067L) naar
         (TT148N) in behandeling genomen.",
         "id": "vergunning-3593173882-notification",
         "link": {
@@ -754,11 +754,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg (Verleend) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
         "description": "Wij hebben uw aanvraag voor een kentekenwijziging
         RVV ontheffing Sloterweg West
-        van (PR067L) naar 
+        van (PR067L) naar
         (TT148N) ontvangen.",
         "id": "vergunning-1623553971-notification",
         "link": {
@@ -769,11 +769,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag kentekenwijziging RVV ontheffing Sloterweg West (Wijziging / ontvangen) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-08-29",
         "description": "Wij hebben uw aanvraag voor een
         RVV ontheffing Sloterweg
-        
+
         (37BHK4) ontvangen.",
         "id": "vergunning-1097314015-notification",
         "link": {
@@ -784,11 +784,11 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag RVV ontheffing Sloterweg (Nieuw / In behandeling) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-08-17",
         "description": "Wij hebben uw aanvraag voor een
         RVV ontheffing Sloterweg West
-        
+
         (37BHK4) ontvangen.",
         "id": "vergunning-4069415615-notification",
         "link": {
@@ -799,7 +799,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag RVV ontheffing Sloterweg West (Nieuw in behandeling) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-04-25T00:00:00",
         "description": "Uw aanvraag voor een RVV-verkeersontheffing is in behandeling genomen.",
         "id": "vergunning-1656544835-notification",
@@ -811,7 +811,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag RVV-verkeersontheffing in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-03-09T00:00:00",
         "description": "Wij hebben uw aanvraag voor een ligplaatsvergunning ontvangen.",
         "id": "vergunning-3229752453-notification",
@@ -823,7 +823,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag ligplaatsvergunning ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-01-03T00:00:00",
         "description": "Wij hebben uw aanvraag voor een ligplaatsvergunning in behandeling genomen.",
         "id": "vergunning-513492494-notification",
@@ -835,10 +835,10 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag ligplaatsvergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2023-11-17",
         "description": "Wij hebben uw aanvraag voor een RVV ontheffing Sloterweg West
-        
+
         (1234356) ingetrokken.",
         "id": "vergunning-2720598005-notification",
         "link": {
@@ -849,7 +849,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag RVV ontheffing Sloterweg West (Wijziging ingetrokken) ingetrokken",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
         "description": "Wij hebben uw aanvraag voor een parkeerontheffingen blauwe zone particulieren in behandeling genomen.",
         "id": "vergunning-2295682720-notification",
@@ -861,7 +861,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag parkeerontheffingen blauwe zone particulieren in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-01",
         "description": "Wij hebben uw aanvraag voor een parkeerontheffingen blauwe zone bedrijven in behandeling genomen.",
         "id": "vergunning-2191426354-notification",
@@ -873,7 +873,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag parkeerontheffingen blauwe zone bedrijven in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Wij hebben uw aanvraag voor een samenvoegingsvergunning in behandeling genomen.",
         "id": "vergunning-3588461895-notification",
@@ -885,7 +885,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag samenvoegingsvergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Wij hebben uw aanvraag voor een onttrekkingsvergunning voor sloop ontvangen.",
         "id": "vergunning-2377704102-notification",
@@ -897,7 +897,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag onttrekkingsvergunning voor sloop ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Uw vergunningsaanvraag vormen van woonruimte is in behandeling genomen.",
         "id": "vergunning-4289555340-notification",
@@ -909,7 +909,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag vormen van woonruimte in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-11-01T00:00:00",
         "description": "Wij hebben uw aanvraag voor een splitsingsvergunning in behandeling genomen.",
         "id": "vergunning-4220998766-notification",
@@ -921,7 +921,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag splitsingsvergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-10-21",
         "description": "Wij hebben uw aanvraag voor een ontheffing zwaar verkeer in behandeling genomen.",
         "id": "vergunning-2318111872-notification",
@@ -933,7 +933,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag ontheffing zwaar verkeer in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-10-16T00:00:00",
         "description": "Wij hebben uw aanvraag voor een ontheffing zwaar verkeer ontvangen.",
         "id": "vergunning-1863159343-notification",
@@ -945,7 +945,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag ontheffing zwaar verkeer ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-09-16T00:00:00",
         "description": "Wij hebben uw aanvraag voor een geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) in behandeling genomen.",
         "id": "vergunning-504231399-notification",
@@ -957,7 +957,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2022-01-17T00:00:00",
         "description": "Uw vergunningsaanvraag aanbieden van diensten is in behandeling genomen.",
         "id": "vergunning-3407608046-notification",
@@ -969,7 +969,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag aanbieden van diensten in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-07-02",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3607535691-notification",
@@ -981,7 +981,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-3276988108-notification",
@@ -993,7 +993,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-07-01",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-2804017741-notification",
@@ -1005,7 +1005,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-07-02",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-1324498924-notification",
@@ -1017,7 +1017,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3452781026-notification",
@@ -1029,7 +1029,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2872491299-notification",
@@ -1041,7 +1041,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3490212832-notification",
@@ -1053,7 +1053,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2909923105-notification",
@@ -1065,7 +1065,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-24T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3706696166-notification",
@@ -1077,7 +1077,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-25",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is afgehandeld.",
         "id": "vergunning-976898368-notification",
@@ -1089,7 +1089,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel afgehandeld",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-06-08T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-2594256166-notification",
@@ -1101,7 +1101,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2020-05-03T00:00:00",
         "description": "Uw vergunningsaanvraag tijdelijke verkeersmaatregel is in behandeling genomen.",
         "id": "vergunning-3468041544-notification",
@@ -1113,7 +1113,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag tijdelijke verkeersmaatregel in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-01",
         "description": "Wij hebben uw aanvraag voor een evenement vergunning in behandeling genomen.",
         "id": "vergunning-4081922197-notification",
@@ -1125,7 +1125,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag evenement vergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-01",
         "description": "Wij hebben uw aanvraag voor een evenement vergunning in behandeling genomen.",
         "id": "vergunning-3073404626-notification",
@@ -1137,7 +1137,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag evenement vergunning in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-04-07",
         "description": "Uw vergunningsaanvraag vaste parkeerplaats voor gehandicapten (gpp) is in behandeling genomen.",
         "id": "vergunning-260384730-notification",
@@ -1149,7 +1149,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag vaste parkeerplaats voor gehandicapten (gpp) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-17",
         "description": "Wij hebben uw aanvraag voor een evenement melding in behandeling genomen.",
         "id": "vergunning-4187042164-notification",
@@ -1161,7 +1161,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag evenement melding in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-09-03",
         "description": "Uw vergunningsaanvraag e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) is in behandeling genomen.",
         "id": "vergunning-3105266233-notification",
@@ -1173,7 +1173,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag e-rvv (gratis verkeersontheffing voor elektrisch goederenvervoer) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-09-28",
         "description": "Wij hebben uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) ontvangen.",
         "id": "vergunning-913567999-notification",
@@ -1185,7 +1185,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) ontvangen",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-10-08",
         "description": "Wij hebben uw aanvraag voor een vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling genomen.",
         "id": "vergunning-2331715774-notification",
@@ -1197,7 +1197,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         "title": "Aanvraag vergunning voor kamerverhuur (omzettingsvergunning) (röel) in behandeling",
       },
       {
-        "chapter": "VERGUNNINGEN",
+        "thema": "VERGUNNINGEN",
         "datePublished": "2021-03-28",
         "description": "Wij hebben uw aanvraag voor een (weesp!!!) vergunning voor kamerverhuur (omzettingsvergunning) ontvangen.",
         "id": "vergunning-333728632-notification",

@@ -4,7 +4,7 @@ import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   LinkdInline,
   LoadingContent,
@@ -75,7 +75,7 @@ export default function Krefia() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.KREFIA}
       </PageHeading>

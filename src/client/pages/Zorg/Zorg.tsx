@@ -4,7 +4,7 @@ import { isError, isLoading } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   LinkdInline,
   OverviewPage,
@@ -46,7 +46,7 @@ export default function Zorg() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.ZORG}
       </PageHeading>

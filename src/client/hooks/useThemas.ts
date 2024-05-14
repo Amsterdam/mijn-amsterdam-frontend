@@ -7,7 +7,7 @@ import { useProfileTypeValue } from './useProfileType';
 import {
   getChapterMenuItemsAppState,
   isChapterActive,
-} from '../../universal/helpers/chapters';
+} from '../../universal/helpers/themas';
 
 export interface ChaptersState {
   items: ChapterMenuItem[];
@@ -19,12 +19,12 @@ export function useChapterMenuItems() {
   return chaptersByProfileType[profileType] || [];
 }
 
-export function useChapters(): ChaptersState {
+export function useThemas(): ChaptersState {
   const appState = useAppStateGetter();
   const chapterItems = useChapterMenuItems();
 
   const items = chapterItems.filter((item) => {
-    // Check to see if Chapter has been loaded or if it is directly available
+    // Check to see if Thema has been loaded or if it is directly available
     return item.isAlwaysVisible || isChapterActive(item, appState);
   });
 

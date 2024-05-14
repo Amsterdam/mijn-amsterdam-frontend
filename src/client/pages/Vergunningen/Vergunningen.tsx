@@ -7,7 +7,7 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   PageContent,
@@ -99,7 +99,7 @@ export default function Vergunningen() {
           title: 'Home',
         }}
         isLoading={isLoading(VERGUNNINGEN)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.VERGUNNINGEN}
       </PageHeading>

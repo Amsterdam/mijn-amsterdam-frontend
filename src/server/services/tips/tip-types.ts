@@ -1,5 +1,5 @@
 import type { AppState } from '../../../client/AppState';
-import { Chapter } from '../../../universal/config';
+import { Thema } from '../../../universal/config';
 import { ApiResponse } from '../../../universal/helpers';
 import { LinkProps } from '../../../universal/types';
 
@@ -22,7 +22,7 @@ export type Tip = {
   imgUrl?: string;
   alwaysVisible?: boolean;
   isNotification?: boolean;
-  chapter?: Chapter;
+  thema?: Thema;
 };
 
 export type TipsPredicateFN = (

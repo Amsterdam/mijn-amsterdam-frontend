@@ -17,7 +17,7 @@ import {
   useProfileTypeValue,
 } from '../../hooks';
 import Linkd from '../Button/Button';
-import ChapterIcon from '../ChapterIcon/ChapterIcon';
+import ThemaIcon from '../ThemaIcon/ThemaIcon';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import styles from './MyNotifications.module.scss';
 
@@ -79,17 +79,17 @@ const Notification = ({
             {notification.title}
           </Heading>
           {!notification.Icon ? (
-            <ChapterIcon
+            <ThemaIcon
               fill={Colors.primaryRed}
               className={styles.Icon}
-              chapter={notification.isAlert ? 'ALERT' : notification.chapter}
+              thema={notification.isAlert ? 'ALERT' : notification.thema}
             />
           ) : (
             <notification.Icon className={styles.Icon} />
           )}
           <div className={styles.MetaInfoSecondary}>
             <em className={styles.ChapterIndication}>
-              {ChapterTitles[notification.chapter]}
+              {ChapterTitles[notification.thema]}
             </em>
 
             {!notification.hideDatePublished && (

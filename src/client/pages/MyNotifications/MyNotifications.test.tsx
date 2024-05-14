@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import MyNotifications from './MyNotifications';
-import { Chapters } from '../../../universal/config/chapter';
+import { Themas } from '../../../universal/config/thema';
 
 const testState: any = {
   NOTIFICATIONS: {
@@ -17,7 +17,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        chapter: Chapters.ROOT,
+        thema: Themas.ROOT,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -28,7 +28,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        chapter: Chapters.BRP,
+        thema: Themas.BRP,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -39,7 +39,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        chapter: Chapters.INKOMEN,
+        thema: Themas.INKOMEN,
         isAlert: true,
         link: {
           to: '/item-3',

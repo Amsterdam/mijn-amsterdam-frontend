@@ -148,7 +148,7 @@ describe('Vergunningen service', () => {
         .toMatchInlineSnapshot(`
         [
           {
-            "chapter": "VERGUNNINGEN",
+            "thema": "VERGUNNINGEN",
             "datePublished": "2022-06-30",
             "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
             "id": "vergunning-162761969-notification",
@@ -165,7 +165,7 @@ describe('Vergunningen service', () => {
         .toMatchInlineSnapshot(`
         [
           {
-            "chapter": "VERGUNNINGEN",
+            "thema": "VERGUNNINGEN",
             "datePublished": "2022-09-30",
             "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) is op 30 september 2022 verlopen.",
             "id": "vergunning-162761969-notification",

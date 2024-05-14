@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Themas } from '../../../universal/config';
 import {
   defaultDateFormat,
   jsonCopy,
@@ -100,7 +100,7 @@ export async function fetchErfpachtNotifications(
   const response = await fetchTipsAndNotifications(
     requestID,
     getConfigNotifications(authProfileAndToken, requestID),
-    Chapters.ERFPACHT
+    Themas.ERFPACHT
   );
 
   return response;

@@ -27,9 +27,9 @@ import {
 import { differenceInYears, parseISO } from 'date-fns';
 
 import { PRISTINE_APPSTATE, type AppState } from '../client/AppState';
-import { isChapterActive } from '../universal/helpers/chapters';
+import { isChapterActive } from '../universal/helpers/themas';
 import { ServiceResults } from './services/tips/tip-types';
-import { Chapter, myChaptersMenuItems } from '../universal/config';
+import { Thema, myChaptersMenuItems } from '../universal/config';
 import { testAccounts } from '../universal/config/auth.development';
 
 XLSX.set_fs(fs);
@@ -326,7 +326,7 @@ const chaptersAvailable = chapterMenuItems.map((menuItem) => menuItem.id);
 function getUserChapters(serviceResults: ServiceResults) {
   const chapterItems = chapterMenuItems;
   const items = chapterItems.filter((item) => {
-    // Check to see if Chapter has been loaded or if it is directly available
+    // Check to see if Thema has been loaded or if it is directly available
     return (
       item.isAlwaysVisible ||
       isChapterActive(item, serviceResults as unknown as AppState)
@@ -355,7 +355,7 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
         (notification: MyNotification) => {
           return {
             Username: Username,
-            thema: notification.chapter,
+            thema: notification.thema,
             titel: notification.title,
             datum: defaultDateFormat(notification.datePublished),
           };
@@ -533,9 +533,9 @@ function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
 }
 
 function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
-  function count(chapter: Chapter) {
+  function count(thema: Thema) {
     return (serviceResults: ServiceResults) =>
-      serviceResults[chapter]?.content?.length || '';
+      serviceResults[thema]?.content?.length || '';
   }
   const chapterContents: Record<
     string,
@@ -597,8 +597,8 @@ function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
       const base: Record<string, string | number> = {
         Username,
       };
-      return Object.keys(chapterContents).reduce((acc, chapter) => {
-        acc[chapter] = chapterContents[chapter](serviceResults);
+      return Object.keys(chapterContents).reduce((acc, thema) => {
+        acc[thema] = chapterContents[thema](serviceResults);
         return acc;
       }, base);
     }

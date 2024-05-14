@@ -5,7 +5,7 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   OverviewPage,
@@ -45,7 +45,7 @@ export default function Burgerzaken() {
           title: 'Home',
         }}
         isLoading={isLoading(BRP)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.BURGERZAKEN}
       </PageHeading>

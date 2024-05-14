@@ -38,7 +38,7 @@ function useHeroSrc() {
   let imageName: string;
   let dir = '';
 
-  // TODO: Make more dynamic. Maybe with image names based on profileType and Chapter
+  // TODO: Make more dynamic. Maybe with image names based on profileType and Thema
   switch (true) {
     case isCommercialHeader:
       dir = '/zakelijk';

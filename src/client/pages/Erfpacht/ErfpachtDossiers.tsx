@@ -1,4 +1,4 @@
-import { Chapters } from '../../../universal/config/chapter';
+import { Themas } from '../../../universal/config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
@@ -15,7 +15,7 @@ export default function ErfpachtDossiers() {
       appRoute={AppRoutes['ERFPACHTv2/DOSSIERS']}
       appRouteBack={AppRoutes['ERFPACHTv2']}
       displayProps={displayPropsDossiers}
-      chapter={Chapters.ERFPACHTv2}
+      thema={Themas.ERFPACHTv2}
       isLoading={isLoading(ERFPACHTv2)}
       isError={isError(ERFPACHTv2)}
     />

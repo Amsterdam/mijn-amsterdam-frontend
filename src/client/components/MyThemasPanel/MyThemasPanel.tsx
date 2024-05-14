@@ -1,14 +1,14 @@
 import { AppRoutes, ChapterMenuItem } from '../../../universal/config';
-import { ChapterIcons } from '../../config/chapterIcons';
+import { ThemaIcons } from '../../config/themaIcons';
 import { Heading } from '@amsterdam/design-system-react';
 import { IconInfo } from '../../assets/icons';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
-import styles from './MyChaptersPanel.module.scss';
+import styles from './MyThemasPanel.module.scss';
 
-export interface MyChaptersPanelProps {
+export interface MyThemasPanelProps {
   title: string;
   items: ChapterMenuItem[];
   isLoading: boolean;
@@ -16,13 +16,13 @@ export interface MyChaptersPanelProps {
   className?: string;
 }
 
-export default function MyChaptersPanel({
+export default function MyThemasPanel({
   title,
   items = [],
   isLoading = true,
-}: MyChaptersPanelProps) {
+}: MyThemasPanelProps) {
   return (
-    <Panel className={styles.MyChaptersPanel}>
+    <Panel className={styles.MyThemasPanel}>
       <div className={styles.Header}>
         <Heading size="level-1" level={3} className={styles.Title}>
           {title}
@@ -40,12 +40,12 @@ export default function MyChaptersPanel({
         {items.map(({ id, to, title, rel }) => {
           return (
             <MainNavSubmenuLink
-              data-chapter-id={id}
+              data-thema-id={id}
               key={id}
               to={to}
               rel={rel}
               title={title}
-              Icon={ChapterIcons[id]}
+              Icon={ThemaIcons[id]}
             />
           );
         })}

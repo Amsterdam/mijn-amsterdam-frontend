@@ -2,9 +2,9 @@ import { ChapterMenuItem } from '../config/menuItems';
 import {
   getChapterMenuItemsAppState,
   isChapterActive,
-} from '../../universal/helpers/chapters';
+} from '../../universal/helpers/themas';
 
-describe('useChapters', () => {
+describe('useThemas', () => {
   test('isChapterActive (No AppState Value)', () => {
     const item: ChapterMenuItem = {
       id: 'PARKEREN',

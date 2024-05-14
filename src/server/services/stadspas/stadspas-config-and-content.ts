@@ -1,5 +1,5 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Themas } from '../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { Stadspas } from './stadspas-types';
@@ -28,7 +28,7 @@ export function getBudgetNotifications(stadspassen: Stadspas[]) {
   ) => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
-    chapter: Chapters.STADSPAS,
+    thema: Themas.STADSPAS,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
     )}!`,

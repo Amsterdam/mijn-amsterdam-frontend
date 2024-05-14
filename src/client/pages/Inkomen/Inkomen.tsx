@@ -7,7 +7,7 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   OverviewPage,
@@ -139,7 +139,7 @@ export default function Inkomen() {
           title: 'Home',
         }}
         isLoading={false}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         {ChapterTitles.INKOMEN}
       </PageHeading>

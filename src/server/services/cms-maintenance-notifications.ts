@@ -1,6 +1,6 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 import { marked } from 'marked';
-import { Chapters, IS_TAP } from '../../universal/config';
+import { Themas, IS_TAP } from '../../universal/config';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
@@ -75,7 +75,7 @@ function transformCMSEventResponse(
       'storingsmeldingen/alle-meldingen-mijn-amsterdam',
       ''
     ),
-    chapter: Chapters.NOTIFICATIONS,
+    thema: Themas.NOTIFICATIONS,
     isAlert: true,
     datePublished: new Date().toISOString(),
   } as CMSMaintenanceNotification;
@@ -233,7 +233,7 @@ export async function fetchMaintenanceNotificationsDashboard(
 
   const item: MyNotification = {
     id: `maintenance-${notification.title}`,
-    chapter: Chapters.NOTIFICATIONS,
+    thema: Themas.NOTIFICATIONS,
     isAlert: true,
     datePublished: notification.datePublished,
     hideDatePublished: true,

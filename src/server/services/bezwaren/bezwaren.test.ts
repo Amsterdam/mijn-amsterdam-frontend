@@ -75,7 +75,7 @@ describe('Bezwaren', () => {
           "content": {
             "notifications": [
               {
-                "chapter": "BEZWAREN",
+                "thema": "BEZWAREN",
                 "datePublished": "2023-08-23",
                 "description": "Wij hebben uw bezwaar JB.22.000443.002 afgehandeld.",
                 "id": "JB.22.000443.002",
