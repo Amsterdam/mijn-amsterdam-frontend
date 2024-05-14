@@ -9,9 +9,6 @@ import {
 } from '../../../universal/helpers/api';
 import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  isActualNotification,
-  isExpired,
-  isNearEndDate,
   isNearEndDate2,
 } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
