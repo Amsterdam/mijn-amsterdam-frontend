@@ -77,8 +77,8 @@ describe('Bezwaren', () => {
               {
                 "chapter": "BEZWAREN",
                 "datePublished": "2023-08-23",
-                "description": "Wij hebben uw bezwaar ZAAK3 afgehandeld.",
-                "id": "ZAAK3",
+                "description": "Wij hebben uw bezwaar JB.22.000443.002 afgehandeld.",
+                "id": "JB.22.000443.002",
                 "link": {
                   "title": "Bekijk uw bezwaar",
                   "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
