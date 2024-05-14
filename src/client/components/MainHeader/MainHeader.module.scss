@@ -37,7 +37,7 @@
 
 .ErrorMessages {
   position: absolute;
-  top: 16rem;
+  bottom: -1rem;
   left: 50%;
   transform: translateX(-50%);
   max-width: $main-boxed-width;
@@ -46,11 +46,9 @@
 
   @include mq-tablet() {
     width: calc(100% - 4rem);
-    top: 14rem;
   }
 
   @include mq-phone() {
-    position: static;
     transform: none;
     left: auto;
     width: 100%;
@@ -83,10 +81,6 @@
       position: static;
     }
   }
-}
-
-//todo verplaatsen?
-.Search {
 }
 
 .SearchBar {

@@ -10,30 +10,17 @@
     display: none;
   }
 
-  & > :nth-child(3) :global(.ams-link-list__link) {
-    font-weight: 800;
-  }
+  :nth-child(1) :global(.ams-link-list) :global(.ams-link) {
+        font-weight: 800;
+    }
 
   @include mq-phone() {
     grid-template-columns: 1fr;
+    padding: 2rem 0 4rem;
 
-    & > :nth-child(2) {
-      order: 3;
+    & > div {
+      padding-top: 2rem;
     }
-
-    & > :nth-child(4) {
-      order: 4;
-    }
-  }
-
-  & > div {
-    padding-left: unset;
-    padding-right: unset;
-  }
-
-  .ams-mega-menu > div {
-    margin-left: unset;
-    margin-right: unset;
   }
 }
 

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AppRoutes, ChapterTitles, OTAP_ENV } from '../../../universal/config';
-import { getApiErrors, LOGOUT_URL } from '../../config/api';
+import { getApiErrors } from '../../config/api';
 import { useAppStateGetter } from '../../hooks';
 import { ErrorMessages } from '../../components';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
@@ -15,10 +15,11 @@ import { useProfileTypeValue, useTermReplacement } from '../../hooks';
 import { useChapters } from '../../hooks/useChapters';
 import { useSearchOnPage } from '../Search/useSearch';
 import { SearchEntry } from '../Search/searchConfig';
-import { isUiElementVisible } from '../../config/app';
 import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
 import { isError } from '../../../universal/helpers';
 import { ProfileName } from './ProfileName';
+import { MaLink } from '../MaLink/MaLink';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -51,12 +52,23 @@ function isTargetWithinMenu(target: any) {
 
 export function SecondaryLinks() {
   const { BRP, KVK, PROFILE } = useAppStateGetter();
+  const session = useSessionValue();
 
   const profileType = useProfileTypeValue();
 
   return (
     <>
-      <PageMenu.Link href={LOGOUT_URL}>Uitloggen</PageMenu.Link>
+      <MaLink
+        maVariant="noDefaultUnderline"
+        href={''}
+        onClick={(event) => {
+          event.preventDefault();
+          session.logout();
+          return false;
+        }}
+      >
+        Uitloggen
+      </MaLink>
       {!isError(BRP) && !isError(KVK) && (
         <ProfileName
           person={BRP.content?.persoon}
@@ -122,6 +134,24 @@ export default function MainHeader({
     };
   }, [isBurgerMenuVisible]);
 
+  // Close menu on click escape key
+  useEffect(() => {
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        const activeElement = document.activeElement as HTMLElement;
+        toggleBurgerMenu(false);
+        activeElement?.blur();
+        return;
+      }
+    };
+    if (!isBurgerMenuVisible) return;
+
+    document.addEventListener('keydown', onEscape);
+    return () => {
+      document.removeEventListener('keydown', onEscape);
+    };
+  }, [isBurgerMenuVisible]);
+
   // Hides small screen menu on route change
   useEffect(() => {
     toggleBurgerMenu(false);
@@ -131,15 +161,7 @@ export default function MainHeader({
     return result.url.startsWith(AppRoutes.BUURT);
   }, []);
 
-  const isSimpleNavBarEnabled = isUiElementVisible(
-    profileType,
-    'MainNavBarSimple'
-  );
-
   const menuItems = useMemo(() => {
-    if (isSimpleNavBarEnabled) {
-      return [];
-    }
     return mainMenuItems
       .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
       .map((item) => {
@@ -156,7 +178,7 @@ export default function MainHeader({
 
         return menuItem;
       });
-  }, [myChapterItems, profileType, termReplace, isSimpleNavBarEnabled]);
+  }, [myChapterItems, profileType, termReplace]);
 
   const backdropRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -202,20 +224,22 @@ export default function MainHeader({
           title="Mijn Amsterdam"
           links={
             isAuthenticated && (
-              <>
-                <PageMenu alignEnd>
-                  <SecondaryLinks />
-                  <PageMenu.Link href="#">
-                    <button
-                      aria-label={'Search'}
-                      onClick={() => setSearchActive(!isSearchActive)}
-                      className={styles.menuLinkSearch}
-                    >
-                      Zoeken
-                    </button>
-                  </PageMenu.Link>
-                </PageMenu>
-              </>
+              <PageMenu alignEnd>
+                <SecondaryLinks />
+                {isDisplayLiveSearch && (
+                  <MaLink
+                    maVariant="noDefaultUnderline"
+                    href={''}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setSearchActive(!isSearchActive);
+                    }}
+                    className={styles.menuLinkSearch}
+                  >
+                    Zoeken
+                  </MaLink>
+                )}
+              </PageMenu>
             )
           }
           menu={
@@ -247,8 +271,7 @@ export default function MainHeader({
             )
           }
         />
-
-        {!isSimpleNavBarEnabled && isDisplayLiveSearch && isSearchActive && (
+        {isDisplayLiveSearch && isSearchActive && (
           <div className={styles.Search}>
             <div className={styles.SearchBar}>
               <div className={styles.SearchBarInner}>
@@ -266,10 +289,11 @@ export default function MainHeader({
         {isBurgerMenuVisible && (
           <MegaMenu chapters={myChapterItems} menuItems={menuItems} />
         )}
+
+        {isAuthenticated && hasErrors && (
+          <ErrorMessages errors={errors} className={styles.ErrorMessages} />
+        )}
       </div>
-      {isAuthenticated && hasErrors && (
-        <ErrorMessages errors={errors} className={styles.ErrorMessages} />
-      )}
       {isHeroVisible && <MainHeaderHero />}
 
       <animated.div
