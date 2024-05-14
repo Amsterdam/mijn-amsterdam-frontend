@@ -5,7 +5,7 @@ Roughly follow the following steps to integrate a new thema into the application
 ## In the src/universal folder
 
 - determine name of $CHAPTER
-- open src/universal/config/thema.ts add $CHAPTER and $chapterTitle
+- open src/universal/config/thema.ts add $CHAPTER and $themaTitle
 
 # In the src/server folder
 

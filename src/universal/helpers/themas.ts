@@ -204,9 +204,9 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
 
 export function getChapterMenuItemsAppState(
   appState: AppState,
-  chapterItems: ChapterMenuItem[]
+  themaItems: ChapterMenuItem[]
 ) {
-  return chapterItems
+  return themaItems
     .filter(
       ({ isAlwaysVisible, hasAppStateValue }) =>
         isAlwaysVisible !== true && hasAppStateValue !== false

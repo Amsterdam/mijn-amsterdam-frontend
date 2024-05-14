@@ -317,15 +317,15 @@ const paths: PathObj[] = [
   return p;
 });
 
-const chapterMenuItems = myChaptersMenuItems.filter((item) =>
+const themaMenuItems = myChaptersMenuItems.filter((item) =>
   item.profileTypes.includes('private')
 );
 
-const chaptersAvailable = chapterMenuItems.map((menuItem) => menuItem.id);
+const themasAvailable = themaMenuItems.map((menuItem) => menuItem.id);
 
 function getUserChapters(serviceResults: ServiceResults) {
-  const chapterItems = chapterMenuItems;
-  const items = chapterItems.filter((item) => {
+  const themaItems = themaMenuItems;
+  const items = themaItems.filter((item) => {
     // Check to see if Thema has been loaded or if it is directly available
     return (
       item.isAlwaysVisible ||
@@ -345,7 +345,7 @@ function getChapterRows(resultsByUser: Record<string, ServiceResults>) {
       return userChapters;
     })
     .filter((userChapters) => !!Object.keys(userChapters).length);
-  return getRows(chaptersAvailable, rows, false);
+  return getRows(themasAvailable, rows, false);
 }
 
 function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
@@ -537,7 +537,7 @@ function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
     return (serviceResults: ServiceResults) =>
       serviceResults[thema]?.content?.length || '';
   }
-  const chapterContents: Record<
+  const themaContents: Record<
     string,
     (serviceResults: ServiceResults) => string | number
   > = {
@@ -597,8 +597,8 @@ function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
       const base: Record<string, string | number> = {
         Username,
       };
-      return Object.keys(chapterContents).reduce((acc, thema) => {
-        acc[thema] = chapterContents[thema](serviceResults);
+      return Object.keys(themaContents).reduce((acc, thema) => {
+        acc[thema] = themaContents[thema](serviceResults);
         return acc;
       }, base);
     }

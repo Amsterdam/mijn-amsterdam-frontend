@@ -5,7 +5,7 @@ import {
 } from '../../universal/config';
 import { termReplace } from '../hooks/useTermReplacement';
 
-export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
+export const themasByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
   private: myChaptersMenuItems
     .filter((item) => item.profileTypes.includes('private'))
     .map((item) => {

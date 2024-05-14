@@ -29,13 +29,13 @@ export default function ThemaIcon({
   let matchChapter: ChapterType = thema || Themas.ROOT;
   let label = thema;
   if (!thema) {
-    const route = entries(AppRoutes).find(([chapterId, path]) => {
+    const route = entries(AppRoutes).find(([themaId, path]) => {
       const match = matchPath(location.pathname, {
         path,
         exact: true,
         strict: false,
       });
-      return !!(match && chapterId);
+      return !!(match && themaId);
     });
     if (route) {
       matchChapter = route[0].split('/')[0] as ChapterType;
