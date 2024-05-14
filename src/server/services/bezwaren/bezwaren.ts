@@ -240,7 +240,17 @@ function transformBezwarenResults(
           return bezwaar;
         })
         .filter((bezwaar) => !!bezwaar.identificatie) // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
-        .sort(dateSort('ontvangstdatum', 'desc')),
+        .sort((item1, item2) => {
+          const identificatie1 = parseInt(
+            item1.identificatie.replace(/\D/g, ''),
+            10
+          );
+          const identificatie2 = parseInt(
+            item2.identificatie.replace(/\D/g, ''),
+            10
+          );
+          return identificatie2 - identificatie1;
+        }),
       count: response.count,
     };
   }
