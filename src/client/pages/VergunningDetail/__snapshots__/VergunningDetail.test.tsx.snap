@@ -2896,7 +2896,9 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         <div
           class="_InfoDetailGroupContent_6f1df2"
         >
-          <div>
+          <div
+            class=""
+          >
             <div
               class="_InfoDetail_6f1df2 _LocationInfo_28a267"
             >

@@ -16,44 +16,6 @@ export function EigenParkeerplaats({
 }) {
   const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
   const isAfgehandeld = vergunning.processed;
-  const locations: ReactNode[][] = [[], []];
-
-  if (Array.isArray(vergunning.locations)) {
-    vergunning.locations.forEach((location, i) => {
-      let name = 'Adres';
-
-      // If two addresses: indicate the difference by adding 1 or 2.
-      if (vergunning.locations!.length > 1) {
-        name = `Adres ${i + 1}`;
-      }
-
-      locations[i].push(
-        <Location
-          key={location.houseNumber}
-          label={name}
-          location={`${location.street} ${location.houseNumber}`}
-        />,
-        <InfoDetail
-          key={location.type}
-          label="Soort plek"
-          value={location.type}
-        />,
-        <InfoDetail
-          key={location.url}
-          label="Parkeervak"
-          value={
-            <Link
-              className={styles.LocationModalLink}
-              variant="inline"
-              href={location.url}
-            >
-              Bekijk parkeervak
-            </Link>
-          }
-        />
-      );
-    });
-  }
 
   return (
     <>
@@ -71,8 +33,36 @@ export function EigenParkeerplaats({
       />
 
       <InfoDetailGroup>
-        <div>{locations[0]}</div>
-        <div className={styles2.InfoGroupDivider}>{locations[1]}</div>
+        {Array.isArray(vergunning.locations) &&
+          vergunning.locations.map((location, i) => {
+            return (
+              <div className={i > 0 ? styles2.InfoGroupDivider : ''}>
+                <Location
+                  key={location.houseNumber}
+                  label={`Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`}
+                  location={`${location.street} ${location.houseNumber}`}
+                />
+                <InfoDetail
+                  key={location.type}
+                  label="Soort plek"
+                  value={location.type}
+                />
+                <InfoDetail
+                  key={location.url}
+                  label="Parkeervak"
+                  value={
+                    <Link
+                      className={styles.LocationModalLink}
+                      variant="inline"
+                      href={location.url}
+                    >
+                      Bekijk parkeervak
+                    </Link>
+                  }
+                />
+              </div>
+            );
+          })}
       </InfoDetailGroup>
 
       <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
