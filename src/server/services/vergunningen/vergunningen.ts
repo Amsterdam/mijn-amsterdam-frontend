@@ -266,7 +266,7 @@ export interface EigenParkeerplaats extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
   locations: Parkeerplaats[] | null;
-  requestTypes: requestType[] | [];
+  requestTypes: requestType[];
 }
 
 type requestType =
