@@ -1,11 +1,10 @@
 import { differenceInCalendarDays, differenceInYears } from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { Stadspas } from '../stadspas/stadspas-types';
-import type { ToeristischeVerhuurVergunning } from '../toeristische-verhuur';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 import type { TipsPredicateFN } from './tip-types';
+import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
