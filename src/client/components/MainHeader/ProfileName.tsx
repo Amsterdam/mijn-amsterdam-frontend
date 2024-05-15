@@ -10,7 +10,7 @@ import { useAppStateReady } from '../../hooks';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './ProfileName.module.scss';
 import { PageMenu } from '@amsterdam/design-system-react';
-import { MaLink } from '../MaLink/MaLink';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 interface CommercialProfileNameProps {
   company?: KVKData;
@@ -20,9 +20,9 @@ interface CommercialProfileNameProps {
 function CommercialProfileName({ company, href }: CommercialProfileNameProps) {
   const label = company?.onderneming.handelsnaam || 'Mijn onderneming';
   return (
-    <MaLink maVariant="noDefaultUnderline" href={href}>
+    <MaRouterLink maVariant="noDefaultUnderline" href={href}>
       {label}
-    </MaLink>
+    </MaRouterLink>
   );
 }
 
@@ -38,9 +38,9 @@ function PrivateProfileName({ person, href }: PrivateProfileNameProps) {
       ? getFullName(person)
       : 'Mijn gegevens';
   return (
-    <MaLink maVariant="noDefaultUnderline" href={href}>
+    <MaRouterLink maVariant="noDefaultUnderline" href={href}>
       {label}
-    </MaLink>
+    </MaRouterLink>
   );
 }
 

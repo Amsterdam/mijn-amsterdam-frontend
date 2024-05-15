@@ -59,7 +59,7 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [propertyName]: (
-        <MaRouterLink maVariant={'fatNoUnderline'} href={item.link.to}>
+        <MaRouterLink maVariant="fatNoUnderline" href={item.link.to}>
           {capitalizeFirstLetter(label)}
         </MaRouterLink>
       ),
