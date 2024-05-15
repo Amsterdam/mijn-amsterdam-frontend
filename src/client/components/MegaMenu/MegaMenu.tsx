@@ -1,15 +1,15 @@
 import { Heading, LinkList, MegaMenu } from '@amsterdam/design-system-react';
-import { ChapterMenuItem } from '../../../universal/config';
+import { ThemaMenuItem } from '../../../universal/config';
 import styles from './MegaMenu.module.scss';
 import { MenuItem } from '../MainHeader/MainHeader.constants';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 type Props = {
   menuItems: MenuItem[];
-  chapters: ChapterMenuItem[];
+  themas: ThemaMenuItem[];
 };
 
-export default function Menu({ menuItems, chapters }: Props) {
+export default function Menu({ menuItems, themas }: Props) {
   return (
     <MegaMenu>
       <div className={styles.menu}>
@@ -19,13 +19,13 @@ export default function Menu({ menuItems, chapters }: Props) {
           </Heading>
           <MegaMenu.ListCategory>
             <LinkList>
-              {chapters.map((chapter) => (
+              {themas.map((thema) => (
                 <MaLink
-                  key={chapter.id}
-                  href={chapter.to}
+                  key={thema.id}
+                  href={thema.to}
                   maVariant="noDefaultUnderline"
                 >
-                  {chapter.title}
+                  {thema.title}
                 </MaLink>
               ))}
             </LinkList>

@@ -1,7 +1,12 @@
 import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { AppRoutes, ChapterTitles, OTAP_ENV } from '../../../universal/config';
+import {
+  AppRoutes,
+  ThemaTitles,
+  OTAP_ENV,
+  myThemasMenuItems,
+} from '../../../universal/config';
 import { getApiErrors } from '../../config/api';
 import { useAppStateGetter } from '../../hooks';
 import { ErrorMessages } from '../../components';
@@ -12,7 +17,7 @@ import { animated, useSpring } from '@react-spring/web';
 import { Search } from '../Search/Search';
 import MegaMenu from '../MegaMenu/MegaMenu';
 import { useProfileTypeValue, useTermReplacement } from '../../hooks';
-import { useChapters } from '../../hooks/useChapters';
+import { useThemas } from '../../hooks/useThemas';
 import { useSearchOnPage } from '../Search/useSearch';
 import { SearchEntry } from '../Search/searchConfig';
 import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
@@ -92,7 +97,7 @@ export default function MainHeader({
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myChapterItems } = useChapters();
+  const { items: myThemasMenuItems } = useThemas();
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
@@ -166,10 +171,7 @@ export default function MainHeader({
       .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
       .map((item) => {
         let menuItem = item;
-        if (
-          menuItem.title === ChapterTitles.BUURT &&
-          profileType !== 'private'
-        ) {
+        if (menuItem.title === ThemaTitles.BUURT && profileType !== 'private') {
           menuItem = {
             ...menuItem,
             title: termReplace(menuItem.title),
@@ -178,7 +180,7 @@ export default function MainHeader({
 
         return menuItem;
       });
-  }, [myChapterItems, profileType, termReplace]);
+  }, [myThemasMenuItems, profileType, termReplace]);
 
   const backdropRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -288,7 +290,7 @@ export default function MainHeader({
         )}
 
         {isBurgerMenuVisible && (
-          <MegaMenu chapters={myChapterItems} menuItems={menuItems} />
+          <MegaMenu themas={myThemasMenuItems} menuItems={menuItems} />
         )}
 
         {isAuthenticated && hasErrors && (
