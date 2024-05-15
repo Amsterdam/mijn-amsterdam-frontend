@@ -107,13 +107,13 @@ describe('simple-connect/api-service', () => {
         "content": {
           "notifications": [
             {
-              "thema": "TEST_THEMA",
               "datePublished": "2022-04-22",
               "description": "Bekijk deze mooie site eens!",
               "link": {
                 "title": "Bekijk hier",
                 "to": "https://mijn.amsterdam.nl",
               },
+              "thema": "TEST_THEMA",
               "title": "Dingen en zo",
             },
           ],

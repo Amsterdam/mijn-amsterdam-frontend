@@ -146,38 +146,38 @@ describe('Vergunningen service', () => {
     it('Returns notification', () => {
       expect(getVergunningNotifications([vergunning], new Date('2022-08-14')))
         .toMatchInlineSnapshot(`
-        [
-          {
-            "thema": "VERGUNNINGEN",
-            "datePublished": "2022-06-30",
-            "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
-            "id": "vergunning-162761969-notification",
-            "link": {
-              "title": "Vraag op tijd een nieuwe ontheffing aan",
-              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+          [
+            {
+              "datePublished": "2022-06-30",
+              "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) loopt op 30 september 2022 af.",
+              "id": "vergunning-162761969-notification",
+              "link": {
+                "title": "Vraag op tijd een nieuwe ontheffing aan",
+                "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+              },
+              "subject": "162761969",
+              "thema": "VERGUNNINGEN",
+              "title": "Uw ontheffing blauwe zone verloopt binnenkort",
             },
-            "subject": "162761969",
-            "title": "Uw ontheffing blauwe zone verloopt binnenkort",
-          },
-        ]
-      `);
+          ]
+        `);
       expect(getVergunningNotifications([vergunning], new Date('2022-10-14')))
         .toMatchInlineSnapshot(`
-        [
-          {
-            "thema": "VERGUNNINGEN",
-            "datePublished": "2022-09-30",
-            "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) is op 30 september 2022 verlopen.",
-            "id": "vergunning-162761969-notification",
-            "link": {
-              "title": "Vraag een nieuwe ontheffing aan",
-              "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+          [
+            {
+              "datePublished": "2022-09-30",
+              "description": "Uw ontheffing blauwe zone (GE-12-XD | XY-666-Z) is op 30 september 2022 verlopen.",
+              "id": "vergunning-162761969-notification",
+              "link": {
+                "title": "Vraag een nieuwe ontheffing aan",
+                "to": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx",
+              },
+              "subject": "162761969",
+              "thema": "VERGUNNINGEN",
+              "title": "Uw ontheffing blauwe zone is verlopen",
             },
-            "subject": "162761969",
-            "title": "Uw ontheffing blauwe zone is verlopen",
-          },
-        ]
-      `);
+          ]
+        `);
     });
 
     it('Exludes Expired notification', () => {

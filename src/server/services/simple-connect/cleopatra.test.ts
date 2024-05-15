@@ -112,7 +112,6 @@ describe('simple-connect/cleopatra', () => {
         "content": {
           "notifications": [
             {
-              "thema": "MILIEUZONE",
               "datePublished": "2019-03-13",
               "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "MILIEUZONE-M1",
@@ -120,10 +119,10 @@ describe('simple-connect/cleopatra', () => {
                 "title": "Betaal direct",
                 "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1",
               },
+              "thema": "MILIEUZONE",
               "title": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
             },
             {
-              "thema": "MILIEUZONE",
               "datePublished": "2019-03-13",
               "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
               "id": "MILIEUZONE-M1",
@@ -131,6 +130,7 @@ describe('simple-connect/cleopatra', () => {
                 "title": "Betaal direct",
                 "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/2",
               },
+              "thema": "MILIEUZONE",
               "title": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
             },
           ],
@@ -187,7 +187,6 @@ describe('simple-connect/cleopatra', () => {
         "content": {
           "notifications": [
             {
-              "thema": "OVERTREDINGEN",
               "datePublished": "2019-03-13",
               "description": "Uw moet uw overtreding nog betalen",
               "id": "OVERTREDINGEN-M1",
@@ -195,6 +194,7 @@ describe('simple-connect/cleopatra', () => {
                 "title": "Betaal direct",
                 "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1",
               },
+              "thema": "OVERTREDINGEN",
               "title": "Overtreding betalen",
             },
           ],

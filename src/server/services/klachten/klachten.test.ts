@@ -76,7 +76,6 @@ describe('Klachten', () => {
         "content": {
           "notifications": [
             {
-              "thema": "KLACHTEN",
               "datePublished": "2022-04-05T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-230541-notification",
@@ -84,10 +83,10 @@ describe('Klachten', () => {
                 "title": "Bekijk details",
                 "to": "/klachten/klacht/230541",
               },
+              "thema": "KLACHTEN",
               "title": "Klacht ontvangen",
             },
             {
-              "thema": "KLACHTEN",
               "datePublished": "2022-05-05T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-2505661-notification",
@@ -95,10 +94,10 @@ describe('Klachten', () => {
                 "title": "Bekijk details",
                 "to": "/klachten/klacht/2505661",
               },
+              "thema": "KLACHTEN",
               "title": "Klacht ontvangen",
             },
             {
-              "thema": "KLACHTEN",
               "datePublished": "2022-06-13T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-280321-notification",
@@ -106,10 +105,10 @@ describe('Klachten', () => {
                 "title": "Bekijk details",
                 "to": "/klachten/klacht/280321",
               },
+              "thema": "KLACHTEN",
               "title": "Klacht ontvangen",
             },
             {
-              "thema": "KLACHTEN",
               "datePublished": "2022-02-13T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-237821-notification",
@@ -117,10 +116,10 @@ describe('Klachten', () => {
                 "title": "Bekijk details",
                 "to": "/klachten/klacht/237821",
               },
+              "thema": "KLACHTEN",
               "title": "Klacht ontvangen",
             },
             {
-              "thema": "KLACHTEN",
               "datePublished": "2022-01-12T00:00:00.000Z",
               "description": "Uw klacht is ontvangen.",
               "id": "klacht-438001-notification",
@@ -128,6 +127,7 @@ describe('Klachten', () => {
                 "title": "Bekijk details",
                 "to": "/klachten/klacht/438001",
               },
+              "thema": "KLACHTEN",
               "title": "Klacht ontvangen",
             },
           ],
