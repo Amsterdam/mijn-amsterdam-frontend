@@ -7,7 +7,7 @@ import {
   SiaAttachment,
   SiaSignalStatusHistory,
 } from '../../../server/services/sia';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ApiResponse,
   apiPristineResult,
@@ -163,7 +163,7 @@ export default function SiaDetail() {
         icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.ROOT,
-          title: ChapterTitles.SIA,
+          title: ThemaTitles.SIA,
         }}
         isLoading={isLoading(SIA)}
       >

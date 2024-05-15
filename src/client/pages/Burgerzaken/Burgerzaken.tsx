@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -47,7 +47,7 @@ export default function Burgerzaken() {
         isLoading={isLoading(BRP)}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.BURGERZAKEN}
+        {ThemaTitles.BURGERZAKEN}
       </PageHeading>
       <PageContent>
         <p>Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.</p>

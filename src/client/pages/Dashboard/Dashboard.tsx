@@ -32,7 +32,7 @@ export default function Dashboard() {
   const isPhoneScreen = usePhoneScreen();
   const NOTIFICATIONSTotal = notifications.length;
 
-  const { items: myChapterItems, isLoading: isMyChaptersLoading } = useThemas();
+  const { items: myThemaItems, isLoading: isMyThemasLoading } = useThemas();
 
   const profileType = useProfileTypeValue();
 
@@ -63,8 +63,8 @@ export default function Dashboard() {
             isEmbedded={true}
           />
           <MyThemasPanel
-            isLoading={isMyChaptersLoading}
-            items={myChapterItems}
+            isLoading={isMyThemasLoading}
+            items={myThemaItems}
             title="Mijn thema's"
             trackCategory="Dashboard / Mijn Thema's"
           />

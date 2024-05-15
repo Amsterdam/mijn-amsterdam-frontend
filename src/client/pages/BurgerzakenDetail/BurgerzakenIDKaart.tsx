@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   capitalizeFirstLetter,
   defaultDateFormat,
@@ -33,7 +33,7 @@ export default function BurgerzakenIDKaart() {
         icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.BURGERZAKEN,
-          title: ChapterTitles.BURGERZAKEN,
+          title: ThemaTitles.BURGERZAKEN,
         }}
         isLoading={isLoading(BRP)}
       >

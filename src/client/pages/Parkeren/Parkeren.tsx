@@ -1,4 +1,4 @@
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ThemaIcon,
   Linkd,
@@ -17,7 +17,7 @@ export default function Parkeren() {
         }}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.PARKEREN}
+        {ThemaTitles.PARKEREN}
       </PageHeading>
       <PageContent>
         <p>

@@ -3,7 +3,7 @@ import ThemaIcon from './ThemaIcon';
 import { Themas } from '../../../universal/config';
 
 import { render, screen } from '@testing-library/react';
-import { ChapterTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../../universal/config/thema';
 
 describe('<ThemaIcon/>', () => {
   it('Renders icon with label', () => {
@@ -14,7 +14,7 @@ describe('<ThemaIcon/>', () => {
     );
 
     expect(
-      screen.getByLabelText(ChapterTitles[Themas.INKOMEN])
+      screen.getByLabelText(ThemaTitles[Themas.INKOMEN])
     ).toBeInTheDocument();
   });
 });

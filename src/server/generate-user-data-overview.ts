@@ -27,9 +27,9 @@ import {
 import { differenceInYears, parseISO } from 'date-fns';
 
 import { PRISTINE_APPSTATE, type AppState } from '../client/AppState';
-import { isChapterActive } from '../universal/helpers/themas';
+import { isThemaActive } from '../universal/helpers/themas';
 import { ServiceResults } from './services/tips/tip-types';
-import { Thema, myChaptersMenuItems } from '../universal/config';
+import { Thema, myThemasMenuItems } from '../universal/config';
 import { testAccounts } from '../universal/config/auth.development';
 
 XLSX.set_fs(fs);
@@ -317,19 +317,19 @@ const paths: PathObj[] = [
   return p;
 });
 
-const themaMenuItems = myChaptersMenuItems.filter((item) =>
+const themaMenuItems = myThemasMenuItems.filter((item) =>
   item.profileTypes.includes('private')
 );
 
 const themasAvailable = themaMenuItems.map((menuItem) => menuItem.id);
 
-function getUserChapters(serviceResults: ServiceResults) {
+function getUserThemas(serviceResults: ServiceResults) {
   const themaItems = themaMenuItems;
   const items = themaItems.filter((item) => {
     // Check to see if Thema has been loaded or if it is directly available
     return (
       item.isAlwaysVisible ||
-      isChapterActive(item, serviceResults as unknown as AppState)
+      isThemaActive(item, serviceResults as unknown as AppState)
     );
   });
 
@@ -338,13 +338,13 @@ function getUserChapters(serviceResults: ServiceResults) {
   );
 }
 
-function getChapterRows(resultsByUser: Record<string, ServiceResults>) {
+function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
   const rows = Object.entries(resultsByUser)
     .map(([Username, serviceResults]) => {
-      const userChapters = getUserChapters(serviceResults);
-      return userChapters;
+      const userThemas = getUserThemas(serviceResults);
+      return userThemas;
     })
-    .filter((userChapters) => !!Object.keys(userChapters).length);
+    .filter((userThemas) => !!Object.keys(userThemas).length);
   return getRows(themasAvailable, rows, false);
 }
 
@@ -489,11 +489,11 @@ function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
   };
 }
 
-function sheetChapters(resultsByUser: Record<string, ServiceResults>) {
+function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
   const rowInfo = Object.keys(testAccounts).map(() => ({ hpx: HPX_DEFAULT }));
   return {
     title: 'Themas',
-    rows: getChapterRows(resultsByUser),
+    rows: getThemaRows(resultsByUser),
     columnHeaders: Object.keys(testAccounts),
     colInfo: [
       { wch: WCH_DEFAULT },
@@ -532,7 +532,7 @@ function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
   };
 }
 
-function sheetChapterContent(resultsByUser: Record<string, ServiceResults>) {
+function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
   function count(thema: Thema) {
     return (serviceResults: ServiceResults) =>
       serviceResults[thema]?.content?.length || '';
@@ -637,9 +637,9 @@ export async function generateOverview(
     addSheets(workbook, [
       sheetBrpBase(resultsByUser),
       sheetServiceErrors(resultsByUser),
-      sheetChapters(resultsByUser),
+      sheetThemas(resultsByUser),
       sheetNotifications(resultsByUser),
-      sheetChapterContent(resultsByUser),
+      sheetThemaContent(resultsByUser),
     ]);
 
     XLSX.writeFile(workbook, fileName, { compression: true });

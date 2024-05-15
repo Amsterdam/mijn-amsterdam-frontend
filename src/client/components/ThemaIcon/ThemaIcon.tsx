@@ -3,18 +3,18 @@ import classnames from 'classnames';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
   AppRoutes,
-  Thema as ChapterType,
+  Thema as ThemaType,
   Themas,
 } from '../../../universal/config';
-import { ChapterTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../../universal/config/thema';
 import { entries } from '../../../universal/helpers';
 import { IconBurgerZaken } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { ThemaIcons } from '../../config/themaIcons';
 import styles from './ThemaIcon.module.scss';
 
-export interface ChapterIconProps {
-  thema?: ChapterType;
+export interface ThemaIconProps {
+  thema?: ThemaType;
   fill?: string;
   className?: string;
 }
@@ -23,10 +23,10 @@ export default function ThemaIcon({
   thema,
   fill = Colors.black,
   className,
-}: ChapterIconProps) {
+}: ThemaIconProps) {
   const location = useLocation();
 
-  let matchChapter: ChapterType = thema || Themas.ROOT;
+  let matchThema: ThemaType = thema || Themas.ROOT;
   let label = thema;
   if (!thema) {
     const route = entries(AppRoutes).find(([themaId, path]) => {
@@ -38,16 +38,16 @@ export default function ThemaIcon({
       return !!(match && themaId);
     });
     if (route) {
-      matchChapter = route[0].split('/')[0] as ChapterType;
-      label = ChapterTitles[matchChapter];
+      matchThema = route[0].split('/')[0] as ThemaType;
+      label = ThemaTitles[matchThema];
     }
   }
 
-  const Icon = ThemaIcons[matchChapter] || IconBurgerZaken;
+  const Icon = ThemaIcons[matchThema] || IconBurgerZaken;
 
   return (
     <Icon
-      aria-label={thema && ChapterTitles[thema] ? ChapterTitles[thema] : label}
+      aria-label={thema && ThemaTitles[thema] ? ThemaTitles[thema] : label}
       fill={fill}
       className={classnames(styles.ThemaIcon, className)}
     />

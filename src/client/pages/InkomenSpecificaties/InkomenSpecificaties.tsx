@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
@@ -171,7 +171,7 @@ export default function InkomenSpecificaties() {
     >
       <PageHeading
         icon={<ThemaIcon />}
-        backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
+        backLink={{ to: AppRoutes.INKOMEN, title: ThemaTitles.INKOMEN }}
         isLoading={isLoading(WPI_SPECIFICATIES)}
       >
         Bijstandsuitkering

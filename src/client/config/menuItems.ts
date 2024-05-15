@@ -1,33 +1,33 @@
 import {
-  ChapterMenuItem,
-  ChapterTitles,
-  myChaptersMenuItems,
+  ThemaMenuItem,
+  ThemaTitles,
+  myThemasMenuItems,
 } from '../../universal/config';
 import { termReplace } from '../hooks/useTermReplacement';
 
-export const themasByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
-  private: myChaptersMenuItems
+export const themasByProfileType: Record<ProfileType, ThemaMenuItem[]> = {
+  private: myThemasMenuItems
     .filter((item) => item.profileTypes.includes('private'))
     .map((item) => {
       return {
         ...item,
-        title: termReplace('private', ChapterTitles[item.id]),
+        title: termReplace('private', ThemaTitles[item.id]),
       };
     }),
-  'private-attributes': myChaptersMenuItems
+  'private-attributes': myThemasMenuItems
     .filter((item) => item.profileTypes.includes('private-attributes'))
     .map((item) => {
       return {
         ...item,
-        title: termReplace('private-attributes', ChapterTitles[item.id]),
+        title: termReplace('private-attributes', ThemaTitles[item.id]),
       };
     }),
-  commercial: myChaptersMenuItems
+  commercial: myThemasMenuItems
     .filter((item) => item.profileTypes.includes('commercial'))
     .map((item) => {
       return {
         ...item,
-        title: termReplace('commercial', ChapterTitles[item.id]),
+        title: termReplace('commercial', ThemaTitles[item.id]),
       };
     }),
 };

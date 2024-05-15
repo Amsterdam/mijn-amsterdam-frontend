@@ -1,4 +1,4 @@
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ThemaIcon,
   Page,
@@ -24,7 +24,7 @@ export default function Search() {
         icon={<ThemaIcon />}
         className={styles.SearchPageHeading}
       >
-        {ChapterTitles.SEARCH}
+        {ThemaTitles.SEARCH}
       </PageHeading>
       <PageContent>
         {isReady ? (

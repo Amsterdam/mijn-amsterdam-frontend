@@ -7,7 +7,7 @@ import {
   Screen,
   UnorderedList,
 } from '@amsterdam/design-system-react';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
@@ -44,7 +44,7 @@ export default function Erfpacht() {
         }}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.ERFPACHTv2}
+        {ThemaTitles.ERFPACHTv2}
       </PageHeading>
       <Screen>
         <Grid>

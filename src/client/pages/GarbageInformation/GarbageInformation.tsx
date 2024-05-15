@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { AppRoutes } from '../../../universal/config';
-import { ChapterTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../../universal/config/thema';
 import {
   getFullAddress,
   isError,
@@ -263,7 +263,7 @@ export default function GarbageInformation() {
         isLoading={false}
         icon={<ThemaIcon />}
       >
-        {termReplace(ChapterTitles.AFVAL)}
+        {termReplace(ThemaTitles.AFVAL)}
       </PageHeading>
       <PageContent>
         {profileType === 'private' && (

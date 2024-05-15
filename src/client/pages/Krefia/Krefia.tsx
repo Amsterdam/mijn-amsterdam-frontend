@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react';
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
@@ -77,7 +77,7 @@ export default function Krefia() {
         }}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.KREFIA}
+        {ThemaTitles.KREFIA}
       </PageHeading>
       <PageContent>
         {isLoading(KREFIA) && <LoadingContent />}

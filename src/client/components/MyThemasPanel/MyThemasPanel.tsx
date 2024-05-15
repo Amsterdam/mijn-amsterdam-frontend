@@ -1,4 +1,4 @@
-import { AppRoutes, ChapterMenuItem } from '../../../universal/config';
+import { AppRoutes, ThemaMenuItem } from '../../../universal/config';
 import { ThemaIcons } from '../../config/themaIcons';
 import { Heading } from '@amsterdam/design-system-react';
 import { IconInfo } from '../../assets/icons';
@@ -10,7 +10,7 @@ import styles from './MyThemasPanel.module.scss';
 
 export interface MyThemasPanelProps {
   title: string;
-  items: ChapterMenuItem[];
+  items: ThemaMenuItem[];
   isLoading: boolean;
   trackCategory: string;
   className?: string;

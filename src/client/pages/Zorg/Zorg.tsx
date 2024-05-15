@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
@@ -48,7 +48,7 @@ export default function Zorg() {
         }}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.ZORG}
+        {ThemaTitles.ZORG}
       </PageHeading>
       <PageContent>
         <p>

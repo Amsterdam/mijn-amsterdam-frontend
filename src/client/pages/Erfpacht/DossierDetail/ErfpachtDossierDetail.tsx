@@ -4,7 +4,7 @@ import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simpl
 import {
   AppRoutes,
   BagThemas,
-  ChapterTitles,
+  ThemaTitles,
 } from '../../../../universal/config';
 import {
   ErrorAlert,
@@ -50,7 +50,7 @@ export default function ErfpachtDossierDetail() {
   const { ERFPACHTv2 } = useErfpachtV2Data();
   const [dossier, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
     url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagChapter: BagThemas.ERFPACHTv2,
+    bagThema: BagThemas.ERFPACHTv2,
     key: dossierNummerUrlParam,
   });
   const noContent = !api.isLoading && !dossier;
@@ -60,11 +60,11 @@ export default function ErfpachtDossierDetail() {
       <PageHeading
         backLink={{
           to: AppRoutes.ERFPACHTv2,
-          title: ChapterTitles.ERFPACHTv2,
+          title: ThemaTitles.ERFPACHTv2,
         }}
         icon={<ThemaIcon />}
       >
-        {dossier?.title ?? `${ChapterTitles.ERFPACHTv2}dossier`}
+        {dossier?.title ?? `${ThemaTitles.ERFPACHTv2}dossier`}
       </PageHeading>
       <Screen>
         <Grid className={styles.Grid}>

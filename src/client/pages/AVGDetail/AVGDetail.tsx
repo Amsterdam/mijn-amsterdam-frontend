@@ -1,5 +1,5 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
@@ -28,7 +28,7 @@ const AVGDetail = () => {
           to: generatePath(AppRoutes.AVG, {
             page: 1,
           }),
-          title: ChapterTitles.AVG,
+          title: ThemaTitles.AVG,
         }}
         isLoading={isLoading(AVG)}
       >

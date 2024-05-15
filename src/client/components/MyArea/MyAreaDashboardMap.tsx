@@ -1,6 +1,6 @@
 import { LatLngLiteral } from 'leaflet';
 import { BAGData } from '../../../server/services';
-import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
+import { ThemaTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -27,7 +27,7 @@ export default function MyAreaDashboard() {
     <Map
       className={styles.DashboardMap}
       fullScreen={true}
-      aria-label={`Kaart van ${termReplace(ChapterTitles.BUURT).toLowerCase()}`}
+      aria-label={`Kaart van ${termReplace(ThemaTitles.BUURT).toLowerCase()}`}
       options={{
         ...DEFAULT_MAP_OPTIONS,
         zoom: HOOD_ZOOM,

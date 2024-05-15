@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { AppRoutes, Thema, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 
 import {
@@ -114,7 +114,7 @@ export default function StatusDetail({
     <DetailPage className={styles.StatusDetail}>
       <PageHeading
         icon={<ThemaIcon />}
-        backLink={{ to: appRoute, title: ChapterTitles[thema] }}
+        backLink={{ to: appRoute, title: ThemaTitles[thema] }}
         isLoading={isStateLoading}
       >
         {title}

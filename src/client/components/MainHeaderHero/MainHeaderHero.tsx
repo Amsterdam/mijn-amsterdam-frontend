@@ -28,7 +28,7 @@ function useHeroSrc() {
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const isCommercialHeader = profileType.includes('commercial');
-  const isChapterPath = (path: string) =>
+  const isThemaPath = (path: string) =>
     !!matchPath(location.pathname, {
       path,
       exact: false,
@@ -44,34 +44,34 @@ function useHeroSrc() {
       dir = '/zakelijk';
       imageName = 'algemeen';
       switch (true) {
-        case isChapterPath(AppRoutes.INKOMEN):
+        case isThemaPath(AppRoutes.INKOMEN):
           imageName = 'inkomen';
           break;
-        case isChapterPath(AppRoutes.VERGUNNINGEN):
+        case isThemaPath(AppRoutes.VERGUNNINGEN):
           imageName = 'vergunningen';
           break;
       }
       break;
-    case isChapterPath(AppRoutes.BRP):
+    case isThemaPath(AppRoutes.BRP):
       imageName = 'burgerzaken';
       break;
-    case isChapterPath(AppRoutes.INKOMEN):
+    case isThemaPath(AppRoutes.INKOMEN):
       imageName = 'werk';
       break;
-    case isChapterPath(AppRoutes.ZORG):
+    case isThemaPath(AppRoutes.ZORG):
       imageName = 'zorg';
       break;
-    case isChapterPath(AppRoutes.AFVAL):
+    case isThemaPath(AppRoutes.AFVAL):
       imageName = 'afval';
       break;
-    case isChapterPath(AppRoutes.TOERISTISCHE_VERHUUR):
+    case isThemaPath(AppRoutes.TOERISTISCHE_VERHUUR):
       imageName = 'toerisme';
       break;
-    case isChapterPath(AppRoutes.KREFIA):
+    case isThemaPath(AppRoutes.KREFIA):
       imageName = 'krefia';
       break;
 
-    case isChapterPath(AppRoutes.SEARCH):
+    case isThemaPath(AppRoutes.SEARCH):
       imageName = '';
       break;
 

@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { useDebouncedCallback } from 'use-debounce';
 import { InnerHtml } from '..';
-import { ChapterTitles } from '../../../universal/config';
+import { ThemaTitles } from '../../../universal/config';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   MyNotification as MyNotificationBase,
@@ -88,8 +88,8 @@ const Notification = ({
             <notification.Icon className={styles.Icon} />
           )}
           <div className={styles.MetaInfoSecondary}>
-            <em className={styles.ChapterIndication}>
-              {ChapterTitles[notification.thema]}
+            <em className={styles.ThemaIndication}>
+              {ThemaTitles[notification.thema]}
             </em>
 
             {!notification.hideDatePublished && (

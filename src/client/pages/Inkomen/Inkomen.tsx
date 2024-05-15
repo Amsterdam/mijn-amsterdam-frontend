@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -141,7 +141,7 @@ export default function Inkomen() {
         isLoading={false}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.INKOMEN}
+        {ThemaTitles.INKOMEN}
       </PageHeading>
       <PageContent>
         <p>

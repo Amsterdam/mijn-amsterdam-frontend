@@ -1,34 +1,34 @@
 import { useMemo } from 'react';
-import { ChapterMenuItem } from '../../universal/config';
+import { ThemaMenuItem } from '../../universal/config';
 import { ApiResponse, isError, isLoading } from '../../universal/helpers';
 import { themasByProfileType } from '../config/menuItems';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import {
-  getChapterMenuItemsAppState,
-  isChapterActive,
+  getThemaMenuItemsAppState,
+  isThemaActive,
 } from '../../universal/helpers/themas';
 
-export interface ChaptersState {
-  items: ChapterMenuItem[];
+export interface ThemasState {
+  items: ThemaMenuItem[];
   isLoading: boolean;
 }
 
-export function useChapterMenuItems() {
+export function useThemaMenuItems() {
   const profileType = useProfileTypeValue();
   return themasByProfileType[profileType] || [];
 }
 
-export function useThemas(): ChaptersState {
+export function useThemas(): ThemasState {
   const appState = useAppStateGetter();
-  const themaItems = useChapterMenuItems();
+  const themaItems = useThemaMenuItems();
 
   const items = themaItems.filter((item) => {
     // Check to see if Thema has been loaded or if it is directly available
-    return item.isAlwaysVisible || isChapterActive(item, appState);
+    return item.isAlwaysVisible || isThemaActive(item, appState);
   });
 
-  const themaItemsWithAppState = getChapterMenuItemsAppState(
+  const themaItemsWithAppState = getThemaMenuItemsAppState(
     appState,
     themaItems
   );

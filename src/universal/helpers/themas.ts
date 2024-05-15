@@ -1,8 +1,8 @@
-import { ChapterMenuItem, Themas, FeatureToggle } from '../config';
+import { ThemaMenuItem, Themas, FeatureToggle } from '../config';
 import { isLoading, isMokum } from '.';
 import type { AppState, AppStateKey } from '../../client/AppState';
 
-export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
+export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     WMO,
     WPI_SPECIFICATIES,
@@ -202,9 +202,9 @@ export function isChapterActive(item: ChapterMenuItem, appState: AppState) {
   return false;
 }
 
-export function getChapterMenuItemsAppState(
+export function getThemaMenuItemsAppState(
   appState: AppState,
-  themaItems: ChapterMenuItem[]
+  themaItems: ThemaMenuItem[]
 ) {
   return themaItems
     .filter(

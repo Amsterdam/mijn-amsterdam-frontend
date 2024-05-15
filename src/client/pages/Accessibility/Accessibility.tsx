@@ -1,5 +1,5 @@
 import { Heading } from '@amsterdam/design-system-react';
-import { ChapterTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../../universal/config/thema';
 import {
   LinkdInline,
   PageContent,
@@ -51,7 +51,7 @@ export default function Accessibility() {
         <ul>
           <li>Pdf-bestanden zijn nog niet altijd toegankelijk.</li>
           <li>
-            De persoonlijke plattegrond ‘{termReplace(ChapterTitles.BUURT)}’ is
+            De persoonlijke plattegrond ‘{termReplace(ThemaTitles.BUURT)}’ is
             nog niet helemaal toegankelijk. We werken eraan om de plattegrond zo
             volledig toegankelijk te maken.
           </li>

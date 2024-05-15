@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   isWoonvergunning,
@@ -53,7 +53,7 @@ export default function VergunningDetail() {
         icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.VERGUNNINGEN,
-          title: ChapterTitles.VERGUNNINGEN,
+          title: ThemaTitles.VERGUNNINGEN,
         }}
         isLoading={isLoading(VERGUNNINGEN)}
       >

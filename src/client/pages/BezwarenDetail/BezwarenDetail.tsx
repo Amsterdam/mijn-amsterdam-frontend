@@ -19,7 +19,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { AppRoutes, BagThemas, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, BagThemas, ThemaTitles } from '../../../universal/config';
 import {
   InfoDetailGroup,
   InfoDetailHeading,
@@ -46,7 +46,7 @@ interface BezwarenDetailPartialProps {
 function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
   const [bezwaarDetail, api] = useAppStateBagApi<BezwaarDetail | null>({
     url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuidEncrypted}`,
-    bagChapter: BagThemas.BEZWAREN,
+    bagThema: BagThemas.BEZWAREN,
     key: uuidEncrypted,
   });
 
@@ -119,7 +119,7 @@ function BezwarenDetail() {
         icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.BEZWAREN,
-          title: ChapterTitles.BEZWAREN,
+          title: ThemaTitles.BEZWAREN,
         }}
         isLoading={isLoading(BEZWAREN)}
       >

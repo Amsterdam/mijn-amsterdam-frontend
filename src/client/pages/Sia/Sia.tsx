@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
 import {
   AppRoutes,
-  ChapterTitles,
+  ThemaTitles,
   Themas,
 } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -78,7 +78,7 @@ export default function Sia() {
   return (
     <OverviewPage className={styles.Sia}>
       <PageHeading isLoading={false} icon={<ThemaIcon thema={Themas.SIA} />}>
-        {ChapterTitles.SIA}
+        {ThemaTitles.SIA}
       </PageHeading>
       <PageContent>
         <p>

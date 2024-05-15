@@ -4,7 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from '@react-spring/web';
 
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
-import { ChapterTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../../universal/config/thema';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
@@ -145,7 +145,7 @@ export default function MainNavBar({
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myChapterItems } = useThemas();
+  const { items: myThemaItems } = useThemas();
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
@@ -209,9 +209,9 @@ export default function MainNavBar({
 
         // Add dynamic thema submenu items to the menu
         if (item.id === mainMenuItemId.CHAPTERS) {
-          menuItem = { ...item, submenuItems: myChapterItems };
+          menuItem = { ...item, submenuItems: myThemaItems };
         } else if (
-          menuItem.title === ChapterTitles.BUURT &&
+          menuItem.title === ThemaTitles.BUURT &&
           profileType !== 'private'
         ) {
           menuItem = {
@@ -222,7 +222,7 @@ export default function MainNavBar({
 
         return getMenuItem(menuItem);
       });
-  }, [myChapterItems, profileType, termReplace, isSimpleNavBarEnabled]);
+  }, [myThemaItems, profileType, termReplace, isSimpleNavBarEnabled]);
 
   return (
     <nav className={styles.MainNavBar}>

@@ -1,13 +1,13 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Thema, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
 import { LinkProps } from '../../../universal/types';
-import { ChapterMenuItem } from '../../config/menuItems';
+import { ThemaMenuItem } from '../../config/menuItems';
 
 type MainMenuId = Thema | 'MIJN_THEMAS';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
-  submenuItems?: ChapterMenuItem[];
+  submenuItems?: ThemaMenuItem[];
   profileTypes?: ProfileType[];
 }
 
@@ -19,10 +19,10 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
 };
 
 export const MenuItemTitles = {
-  HOME: ChapterTitles.ROOT,
+  HOME: ThemaTitles.ROOT,
   CHAPTERS: "Mijn thema's",
-  BUURT: ChapterTitles.BUURT,
-  NOTIFICATIONS: ChapterTitles.NOTIFICATIONS,
+  BUURT: ThemaTitles.BUURT,
+  NOTIFICATIONS: ThemaTitles.NOTIFICATIONS,
 };
 
 export const mainMenuItems: MenuItem[] = [

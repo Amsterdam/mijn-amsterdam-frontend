@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur';
-import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
+import { AppRoutes, ThemaTitles } from '../../../universal/config/index';
 import {
   defaultDateFormat,
   isError,
@@ -128,7 +128,7 @@ export default function ToeristischeVerhuur() {
         }}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.TOERISTISCHE_VERHUUR}
+        {ThemaTitles.TOERISTISCHE_VERHUUR}
       </PageHeading>
       <PageContent>
         <p>

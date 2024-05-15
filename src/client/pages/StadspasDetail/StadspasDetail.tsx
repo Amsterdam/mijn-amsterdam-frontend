@@ -6,7 +6,7 @@ import {
   StadspasBudget,
   StadspasTransaction,
 } from '../../../server/services/stadspas/stadspas-types';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ApiResponse,
   apiPristineResult,
@@ -245,7 +245,7 @@ export default function StadspasDetail() {
     <DetailPage>
       <PageHeading
         icon={<ThemaIcon />}
-        backLink={{ to: AppRoutes.STADSPAS, title: ChapterTitles.STADSPAS }}
+        backLink={{ to: AppRoutes.STADSPAS, title: ThemaTitles.STADSPAS }}
         isLoading={false}
       >
         Saldo Stadspas

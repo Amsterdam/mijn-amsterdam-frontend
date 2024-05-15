@@ -1,4 +1,4 @@
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
   isLoading,
@@ -58,7 +58,7 @@ const AVG = () => {
         isLoading={isLoading(AVG)}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.AVG}
+        {ThemaTitles.AVG}
       </PageHeading>
       <PageContent>
         <p>Hier ziet u een overzicht van uw ingediende AVG verzoeken.</p>

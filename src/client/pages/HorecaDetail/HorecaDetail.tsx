@@ -1,5 +1,5 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
@@ -30,7 +30,7 @@ export default function HorecaDetail() {
         icon={<ThemaIcon />}
         backLink={{
           to: generatePath(AppRoutes.HORECA),
-          title: ChapterTitles.HORECA,
+          title: ThemaTitles.HORECA,
         }}
         isLoading={isLoadingContent}
       >

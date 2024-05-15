@@ -1,5 +1,5 @@
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   addTitleLinkComponent,
   ErrorAlert,
@@ -72,7 +72,7 @@ export default function Klachten() {
         isLoading={isLoading(KLACHTEN)}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.KLACHTEN}
+        {ThemaTitles.KLACHTEN}
       </PageHeading>
       <PageContent>
         <p>

@@ -1,4 +1,4 @@
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
   isError,
@@ -57,7 +57,7 @@ export default function Horeca() {
         isLoading={isLoading(HORECA)}
         icon={<ThemaIcon />}
       >
-        {ChapterTitles.HORECA}
+        {ThemaTitles.HORECA}
       </PageHeading>
       <PageContent>
         <p>
