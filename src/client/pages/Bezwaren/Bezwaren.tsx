@@ -1,6 +1,6 @@
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -49,7 +49,7 @@ export default function BEZWAREN() {
           title: 'Home',
         }}
         isLoading={isLoading(BEZWAREN)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
         Bezwaren
       </PageHeading>

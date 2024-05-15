@@ -1,4 +1,4 @@
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
   isError,
@@ -6,7 +6,7 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -49,9 +49,9 @@ export default function Bodem() {
           title: 'Home',
         }}
         isLoading={isLoading(BODEM)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
-        {ChapterTitles.BODEM}
+        {ThemaTitles.BODEM}
       </PageHeading>
       <PageContent>
         <p>Op deze pagina vindt u informatie over uw lood in de bodem-check.</p>

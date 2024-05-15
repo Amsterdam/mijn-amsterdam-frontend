@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { Chapters } from '../../../universal/config/index';
+import { Themas } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -266,18 +266,21 @@ export interface EigenParkeerplaats extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
   locations: Parkeerplaats[] | null;
-  requestType:
-    | 'Nieuwe aanvraag'
-    | 'Autodeelbedrijf'
-    | 'Kentekenwijziging'
-    | 'Verhuizing'
-    | 'Verlenging';
+  requestTypes: requestType[];
 }
+
+type requestType =
+  | 'Nieuwe aanvraag'
+  | 'Autodeelbedrijf'
+  | 'Kentekenwijziging'
+  | 'Verhuizing'
+  | 'Verlenging';
 
 export interface EigenParkeerplaatsOpheffen
   extends Parkeerplaats,
     VergunningBase {
   caseType: CaseType.EigenParkeerplaatsOpheffen;
+  licensePlates: string | null;
   isCarsharingpermit: string | null;
   location: Parkeerplaats;
   dateEnd: string | null;
@@ -505,7 +508,7 @@ export function createVergunningNotification(
   dateNow?: Date
 ): MyNotification | null {
   const notification: MyNotification = {
-    chapter: Chapters.VERGUNNINGEN,
+    thema: Themas.VERGUNNINGEN,
     id: `vergunning-${item.id}-notification`,
     title: 'Vergunningsaanvraag',
     description: 'Er is een update in uw vergunningsaanvraag.',

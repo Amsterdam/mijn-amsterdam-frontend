@@ -17,7 +17,7 @@ import {
 import { AppState } from '../../AppState';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoPanel,
   InfoPanelCollapsible,
@@ -99,7 +99,7 @@ export default function Profile() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         isLoading={false}
       >
         Mijn gegevens

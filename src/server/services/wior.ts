@@ -1,5 +1,5 @@
 import { LatLngBoundsLiteral } from 'leaflet';
-import { Chapters, FeatureToggle } from '../../universal/config';
+import { Themas, FeatureToggle } from '../../universal/config';
 import { apiDependencyError, apiSuccessResult } from '../../universal/helpers';
 import { AuthProfileAndToken } from '../helpers/app';
 import { fetchDataset } from './buurt/buurt';
@@ -17,7 +17,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
     datePublished: new Date().toISOString(),
-    chapter: Chapters.BUURT,
+    thema: Themas.BUURT,
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
     link: {

@@ -1,4 +1,4 @@
-import { Chapters } from '../../../../universal/config';
+import { Themas } from '../../../../universal/config';
 import { defaultDateFormat } from '../../../../universal/helpers';
 import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
@@ -166,7 +166,7 @@ export function getNotifications(
           aanvraag,
           step,
           requestProcess,
-          Chapters.INKOMEN
+          Themas.INKOMEN
         )
       )
     );

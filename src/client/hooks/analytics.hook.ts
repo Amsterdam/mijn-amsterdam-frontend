@@ -7,7 +7,7 @@ import {
   TrackSiteSearchResultClick,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
-import { ChapterTitles } from '../../universal/config';
+import { ThemaTitles } from '../../universal/config';
 
 let PiwikInstance: PiwikTracker;
 
@@ -49,7 +49,7 @@ export function getDerivedThemaNaamFromDocumentTitle() {
   let title = typeof document !== undefined ? document.title : '';
 
   return (
-    Object.values(ChapterTitles).find((t) => {
+    Object.values(ThemaTitles).find((t) => {
       return title.includes(t);
     }) ?? DEFAULT_THEMA_VALUE
   );

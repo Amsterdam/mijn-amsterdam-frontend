@@ -1,6 +1,6 @@
 import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../universal/config';
+import { AppRoutes, Themas } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import {
   ApiSuccessResponse,
@@ -83,7 +83,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        chapter: Chapters.BURGERZAKEN,
+        thema: Themas.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         hideDatePublished: true,
         isAlert: true,
@@ -105,7 +105,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        chapter: Chapters.BURGERZAKEN,
+        thema: Themas.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
@@ -126,7 +126,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        chapter: Chapters.BURGERZAKEN,
+        thema: Themas.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         hideDatePublished: true,
@@ -145,7 +145,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (adresInOnderzoek) {
     notifications.push({
-      chapter: Chapters.BRP,
+      thema: Themas.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
@@ -163,7 +163,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      chapter: Chapters.BRP,
+      thema: Themas.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',

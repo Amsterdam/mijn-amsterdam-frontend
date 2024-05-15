@@ -1,12 +1,12 @@
-import { ChapterMenuItem } from '../config/menuItems';
+import { ThemaMenuItem } from '../config/menuItems';
 import {
-  getChapterMenuItemsAppState,
-  isChapterActive,
-} from '../../universal/helpers/chapters';
+  getThemaMenuItemsAppState,
+  isThemaActive,
+} from '../../universal/helpers/themas';
 
-describe('useChapters', () => {
-  test('isChapterActive (No AppState Value)', () => {
-    const item: ChapterMenuItem = {
+describe('useThemas', () => {
+  test('isThemaActive (No AppState Value)', () => {
+    const item: ThemaMenuItem = {
       id: 'PARKEREN',
       hasAppStateValue: false,
       profileTypes: ['private'],
@@ -14,7 +14,7 @@ describe('useChapters', () => {
       title: 'Testje!',
     };
 
-    const isActive = isChapterActive(item, {
+    const isActive = isThemaActive(item, {
       TEST: { content: 'foo', status: 'OK' },
       BRP: { content: { persoon: { mokum: true } } },
     } as any);
@@ -22,8 +22,8 @@ describe('useChapters', () => {
     expect(isActive).toBe(true);
   });
 
-  test('isChapterActive', () => {
-    const item: ChapterMenuItem = {
+  test('isThemaActive', () => {
+    const item: ThemaMenuItem = {
       id: 'BRP',
       profileTypes: ['private'],
       to: 'http://test',
@@ -31,7 +31,7 @@ describe('useChapters', () => {
     };
 
     {
-      const isActive = isChapterActive(item, {
+      const isActive = isThemaActive(item, {
         BRP: { content: { persoon: null } },
       } as any);
 
@@ -39,7 +39,7 @@ describe('useChapters', () => {
     }
 
     {
-      const isActive = isChapterActive(item, {
+      const isActive = isThemaActive(item, {
         BRP: { content: { persoon: { naam: 'testje' } } },
       } as any);
 
@@ -47,13 +47,13 @@ describe('useChapters', () => {
     }
   });
 
-  test('getChapterMenuItemsAppState', () => {
+  test('getThemaMenuItemsAppState', () => {
     const appState = {
       TEST: { content: 'foo', status: 'OK' },
       BRP: { content: { persoon: { mokum: true } }, status: 'OK' },
     } as any;
 
-    const items: ChapterMenuItem[] = [
+    const items: ThemaMenuItem[] = [
       {
         id: 'BRP',
         profileTypes: ['private'],
@@ -69,7 +69,7 @@ describe('useChapters', () => {
       },
     ];
 
-    expect(getChapterMenuItemsAppState(appState, items)).toStrictEqual([
+    expect(getThemaMenuItemsAppState(appState, items)).toStrictEqual([
       appState.BRP,
     ]);
   });

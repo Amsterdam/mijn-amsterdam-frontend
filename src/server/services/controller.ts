@@ -153,14 +153,14 @@ export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
     return apiSuccessResult([]);
   }
 
-  const [tipNotifications, chapterAndTipNotifications] = await Promise.all([
+  const [tipNotifications, themaAndTipNotifications] = await Promise.all([
     getTipNotifications(requestID, req),
     fetchTipsAndNotifications(requestID, await getAuth(req)),
   ]);
 
   const notifications: Array<MyNotification> = [
     ...tipNotifications,
-    ...chapterAndTipNotifications,
+    ...themaAndTipNotifications,
   ].map((notification) => {
     if (notification.isTip) {
       notification.hideDatePublished = true;

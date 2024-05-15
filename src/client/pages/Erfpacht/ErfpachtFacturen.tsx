@@ -1,7 +1,7 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
-import { BagChapters, Chapters } from '../../../universal/config/chapter';
+import { BagThemas, Themas } from '../../../universal/config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { BFFApiUrls } from '../../config/api';
@@ -17,7 +17,7 @@ export default function ErfpachtFacturen() {
 
   const [dossier, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
     url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagChapter: BagChapters.ERFPACHTv2,
+    bagThema: BagThemas.ERFPACHTv2,
     key: dossierNummerUrlParam,
   });
 
@@ -40,7 +40,7 @@ export default function ErfpachtFacturen() {
       appRouteParams={{ dossierNummerUrlParam }}
       appRouteBack={AppRoutes['ERFPACHTv2']}
       displayProps={displayPropsAlleFacturen}
-      chapter={Chapters.ERFPACHTv2}
+      thema={Themas.ERFPACHTv2}
       isLoading={api.isLoading}
       isError={api.isError}
     />

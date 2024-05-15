@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { useDebouncedCallback } from 'use-debounce';
 import { InnerHtml } from '..';
-import { ChapterTitles } from '../../../universal/config';
+import { ThemaTitles } from '../../../universal/config';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   MyNotification as MyNotificationBase,
@@ -17,7 +17,7 @@ import {
   useProfileTypeValue,
 } from '../../hooks';
 import Linkd from '../Button/Button';
-import ChapterIcon from '../ChapterIcon/ChapterIcon';
+import ThemaIcon from '../ThemaIcon/ThemaIcon';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import styles from './MyNotifications.module.scss';
 
@@ -79,17 +79,17 @@ const Notification = ({
             {notification.title}
           </Heading>
           {!notification.Icon ? (
-            <ChapterIcon
+            <ThemaIcon
               fill={Colors.primaryRed}
               className={styles.Icon}
-              chapter={notification.isAlert ? 'ALERT' : notification.chapter}
+              thema={notification.isAlert ? 'ALERT' : notification.thema}
             />
           ) : (
             <notification.Icon className={styles.Icon} />
           )}
           <div className={styles.MetaInfoSecondary}>
-            <em className={styles.ChapterIndication}>
-              {ChapterTitles[notification.chapter]}
+            <em className={styles.ThemaIndication}>
+              {ThemaTitles[notification.thema]}
             </em>
 
             {!notification.hideDatePublished && (

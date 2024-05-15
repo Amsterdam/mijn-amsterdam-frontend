@@ -1,6 +1,6 @@
 import { LatLngLiteral } from 'leaflet';
 import { generatePath } from 'react-router-dom';
-import { Chapters } from '../../universal/config';
+import { Themas } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
 import {
   dateSort,
@@ -587,7 +587,7 @@ function createSIANotification(item: SIAItem) {
   return {
     id: `sia-${item.identifier}-notification`,
     datePublished: item.dateModified,
-    chapter: Chapters.SIA,
+    thema: Themas.SIA,
     title,
     description,
     link: {

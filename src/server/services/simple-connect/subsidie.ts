@@ -1,6 +1,6 @@
 import * as jose from 'jose';
 import { URL, URLSearchParams } from 'url';
-import { Chapters } from '../../../universal/config';
+import { Themas } from '../../../universal/config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
@@ -87,7 +87,7 @@ export async function fetchSubsidieNotifications(
   const response = await fetchTipsAndNotifications(
     requestID,
     await getConfig(authProfileAndToken, requestID),
-    Chapters.SUBSIDIE
+    Themas.SUBSIDIE
   );
 
   if (response.status === 'OK' && response.content?.notifications) {

@@ -54,7 +54,7 @@ describe('Kredietbank & FIBU service', () => {
             id: 'krefia-fibu-notification',
             datePublished: '2021-07-14T12:34:17',
             title: 'Bericht Budgetbeheer (FIBU)',
-            chapter: 'KREFIA',
+            thema: 'KREFIA',
             description:
               'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)',
             link: {

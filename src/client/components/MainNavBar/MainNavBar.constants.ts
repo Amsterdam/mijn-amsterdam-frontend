@@ -1,28 +1,28 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
 import { LinkProps } from '../../../universal/types';
-import { ChapterMenuItem } from '../../config/menuItems';
+import { ThemaMenuItem } from '../../config/menuItems';
 
-type MainMenuId = Chapter | 'MIJN_THEMAS';
+type MainMenuId = Thema | 'MIJN_THEMAS';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
-  submenuItems?: ChapterMenuItem[];
+  submenuItems?: ThemaMenuItem[];
   profileTypes?: ProfileType[];
 }
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
-  CHAPTERS: 'MIJN_THEMAS',
+  THEMAS: 'MIJN_THEMAS',
   BUURT: 'BUURT',
   NOTIFICATIONS: 'NOTIFICATIONS',
 };
 
 export const MenuItemTitles = {
-  HOME: ChapterTitles.ROOT,
-  CHAPTERS: "Mijn thema's",
-  BUURT: ChapterTitles.BUURT,
-  NOTIFICATIONS: ChapterTitles.NOTIFICATIONS,
+  HOME: ThemaTitles.ROOT,
+  THEMAS: "Mijn thema's",
+  BUURT: ThemaTitles.BUURT,
+  NOTIFICATIONS: ThemaTitles.NOTIFICATIONS,
 };
 
 export const mainMenuItems: MenuItem[] = [
@@ -32,8 +32,8 @@ export const mainMenuItems: MenuItem[] = [
     to: AppRoutes.ROOT,
   },
   {
-    title: MenuItemTitles.CHAPTERS,
-    id: mainMenuItemId.CHAPTERS,
+    title: MenuItemTitles.THEMAS,
+    id: mainMenuItemId.THEMAS,
     to: '',
   },
   {

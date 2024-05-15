@@ -1,8 +1,12 @@
+import { Link } from '@amsterdam/design-system-react';
 import type { EigenParkeerplaats as EigenParkeerplaatsType } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers';
-import { Linkd } from '../../components';
-import InfoDetail from '../../components/InfoDetail/InfoDetail';
+import InfoDetail, {
+  InfoDetailGroup,
+} from '../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
+import styles from '../../components/LocationModal/LocationModal.module.scss';
+import { default as styles2 } from './VergunningDetail.module.scss';
 
 export function EigenParkeerplaats({
   vergunning,
@@ -11,70 +15,71 @@ export function EigenParkeerplaats({
 }) {
   const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
   const isAfgehandeld = vergunning.processed;
-  let location1 = null;
-  let location2 = null;
-
-  if (Array.isArray(vergunning.locations)) {
-    [location1, location2] = vergunning.locations;
-  }
 
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
-      <InfoDetail label="Verzoek" value={vergunning.requestType} />
+      <InfoDetail
+        label="Verzoek"
+        valueWrapperElement="div"
+        value={
+          <ul>
+            {vergunning.requestTypes.map((d, i) => (
+              <li key={d}>{d}</li>
+            ))}
+          </ul>
+        }
+      />
 
-      {!!location1 && (
-        <>
-          <Location
-            label="Adres"
-            location={`${location1.street} ${location1.houseNumber}`}
-          />
-          <InfoDetail label="Soortplek" value={location1.type} />
-          <InfoDetail
-            label="Parkeervak"
-            value={
-              <Linkd href={location1.url} external={true}>
-                Bekijk parkeervak
-              </Linkd>
-            }
-          />
-        </>
-      )}
-
-      {!!location2 && (
-        <>
-          <Location
-            label="Adres"
-            location={`${location2.street} ${location2.houseNumber}`}
-          />
-          <InfoDetail label="Soortplek" value={location2.type} />
-          <InfoDetail label="Parkeervak" value={location2.url} />
-        </>
-      )}
+      <InfoDetailGroup>
+        {vergunning.locations?.map((location, i) => {
+          return (
+            <div
+              className={i > 0 ? styles2.InfoGroupDivider : ''}
+              key={JSON.stringify(location)}
+            >
+              <Location
+                label={`Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`}
+                location={`${location.street} ${location.houseNumber}`}
+              />
+              <InfoDetail label="Soort plek" value={location.type} />
+              <InfoDetail
+                label="Parkeervak"
+                value={
+                  <Link
+                    rel="noreferrer"
+                    className={styles.LocationModalLink}
+                    variant="inline"
+                    href={location.url}
+                  >
+                    Bekijk parkeervak
+                  </Link>
+                }
+              />
+            </div>
+          );
+        })}
+      </InfoDetailGroup>
 
       <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates} />
-
-      {vergunning.requestType === 'Kentekenwijziging' && (
+      {vergunning.requestTypes.some((type) => type === 'Kentekenwijziging') && (
         <InfoDetail
-          label="Oude kenteken(s)"
+          label="Oud kenteken"
           value={vergunning.previousLicensePlates}
         />
       )}
-
       {isVerleend && vergunning.dateStart && (
         <InfoDetail
           label="Startdatum"
           value={defaultDateFormat(vergunning.dateStart)}
         />
       )}
-
       {isVerleend && vergunning.dateEnd && (
         <InfoDetail
           label="Vervaldatum"
           value={defaultDateFormat(vergunning.dateEnd)}
         />
       )}
-
       {isAfgehandeld && (
         <InfoDetail label="Resultaat" value={vergunning.decision} />
       )}

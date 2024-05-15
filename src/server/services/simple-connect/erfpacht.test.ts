@@ -128,7 +128,6 @@ describe('simple-connect/erfpacht', () => {
         "content": {
           "notifications": [
             {
-              "chapter": "ERFPACHT",
               "datePublished": "2022-04-22",
               "description": "Uw aanvraag voor automatische incasso voor erfpacht is goedgekeurd en verwerkt. Uw eerstvolgende betaling van erfpacht zal middels automatische incasso plaatsvinden",
               "id": 0,
@@ -137,6 +136,7 @@ describe('simple-connect/erfpacht', () => {
                 "to": "https: //mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger/target/5cGv/JO0bYFwcogNaliQj3783Lag1VbCps15b5sdk6c=",
               },
               "read": "False",
+              "thema": "ERFPACHT",
               "title": "Automatische incasso erfpacht goedgekeurd",
             },
           ],

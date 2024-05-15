@@ -1,6 +1,6 @@
 import { differenceInMonths, format } from 'date-fns';
 import { generatePath, LinkProps } from 'react-router-dom';
-import { AppRoutes, Chapter } from '../../../universal/config';
+import { AppRoutes, Thema } from '../../../universal/config';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
@@ -55,7 +55,7 @@ export function createProcessNotification(
   requestProcess: WpiRequestProcess,
   statusStep: WpiRequestStatus,
   labels: WpiRequestProcessLabels,
-  chapter: Chapter
+  thema: Thema
 ): MyNotification {
   const notificationLabels = labels[statusStep.id].notification;
   const titleTransform = notificationLabels.title;
@@ -65,7 +65,7 @@ export function createProcessNotification(
   return {
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
-    chapter,
+    thema,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,

@@ -6,8 +6,7 @@ export type kenmerkKey =
   | 'resultaattekst'
   | 'besluitnr'
   | 'besluitdatum'
-  | 'datumintrekking'
-  | 'zaakkenmerk';
+  | 'datumintrekking';
 
 export type Kenmerk = { kenmerk: kenmerkKey; bron: string };
 
@@ -41,7 +40,6 @@ export interface BezwaarSourceData {
 
 export type Bezwaar = {
   identificatie: string;
-  zaakkenmerk: string;
   uuid: string;
   uuidEncrypted: string;
   startdatum: string;

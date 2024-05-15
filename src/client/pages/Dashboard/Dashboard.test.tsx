@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
-import { Chapters } from '../../../universal/config/chapter';
+import { Themas } from '../../../universal/config/thema';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
@@ -26,7 +26,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        chapter: Chapters.ROOT,
+        thema: Themas.ROOT,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -37,7 +37,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        chapter: Chapters.ROOT,
+        thema: Themas.ROOT,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -48,7 +48,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        chapter: Chapters.ROOT,
+        thema: Themas.ROOT,
         isAlert: true,
         link: {
           to: '/item-3',
@@ -58,7 +58,7 @@ const testState: any = {
     ],
   },
 
-  // Some chapters
+  // Some themas
   BELASTINGEN: {
     content: {
       isKnown: true,

@@ -3,7 +3,7 @@ export { default as AlphaComponent } from './AlphaComponent/AlphaComponent';
 export { default as ApplicationError } from '../pages/ApplicationError/ApplicationError';
 export { default as AutoLogoutDialog } from './AutoLogoutDialog/AutoLogoutDialog';
 export { Button, default as Linkd, LinkdInline } from './Button/Button';
-export { default as ChapterIcon } from './ChapterIcon/ChapterIcon';
+export { default as ThemaIcon } from './ThemaIcon/ThemaIcon';
 export { default as DateInput } from './DateInput/DateInput';
 export { default as DirectLinks } from './DirectLinks/DirectLinks';
 export { default as DocumentList } from './DocumentList/DocumentList';
@@ -21,7 +21,7 @@ export { default as MainHeaderHero } from './MainHeaderHero/MainHeaderHero';
 export { default as MainNavBar } from './MainNavBar/MainNavBar';
 export { default as MainNavSubmenu } from './MainNavSubmenu/MainNavSubmenu';
 export { default as Modal } from './Modal/Modal';
-export { default as MyChaptersPanel } from './MyChaptersPanel/MyChaptersPanel';
+export { default as MyThemasPanel } from './MyThemasPanel/MyThemasPanel';
 export { default as MyNotifications } from './MyNotifications/MyNotifications';
 export {
   default as Page,

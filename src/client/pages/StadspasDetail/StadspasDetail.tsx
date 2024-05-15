@@ -6,7 +6,7 @@ import {
   StadspasBudget,
   StadspasTransaction,
 } from '../../../server/services/stadspas/stadspas-types';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ApiResponse,
   apiPristineResult,
@@ -18,7 +18,7 @@ import displayAmount from '../../../universal/helpers/text';
 import { IconChevronRight } from '../../assets/icons';
 import {
   Button,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   ErrorAlert,
   Linkd,
@@ -244,8 +244,8 @@ export default function StadspasDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
-        backLink={{ to: AppRoutes.STADSPAS, title: ChapterTitles.STADSPAS }}
+        icon={<ThemaIcon />}
+        backLink={{ to: AppRoutes.STADSPAS, title: ThemaTitles.STADSPAS }}
         isLoading={false}
       >
         Saldo Stadspas
