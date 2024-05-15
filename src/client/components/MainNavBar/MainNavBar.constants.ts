@@ -13,14 +13,14 @@ export interface MenuItem extends LinkProps {
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
-  CHAPTERS: 'MIJN_THEMAS',
+  THEMAS: 'MIJN_THEMAS',
   BUURT: 'BUURT',
   NOTIFICATIONS: 'NOTIFICATIONS',
 };
 
 export const MenuItemTitles = {
   HOME: ThemaTitles.ROOT,
-  CHAPTERS: "Mijn thema's",
+  THEMAS: "Mijn thema's",
   BUURT: ThemaTitles.BUURT,
   NOTIFICATIONS: ThemaTitles.NOTIFICATIONS,
 };
@@ -32,8 +32,8 @@ export const mainMenuItems: MenuItem[] = [
     to: AppRoutes.ROOT,
   },
   {
-    title: MenuItemTitles.CHAPTERS,
-    id: mainMenuItemId.CHAPTERS,
+    title: MenuItemTitles.THEMAS,
+    id: mainMenuItemId.THEMAS,
     to: '',
   },
   {

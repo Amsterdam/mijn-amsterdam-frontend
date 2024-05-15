@@ -13,7 +13,7 @@ describe('<MyNotifications />', () => {
   const NOTIFICATIONS: MyNotification[] = [
     {
       id: 'test-notification',
-      thema: 'TEST_CHAPTER',
+      thema: 'TEST_THEMA',
       datePublished: '2020-10-10',
       title: 'Test notification',
       description: 'A text related to this notification',
@@ -26,7 +26,7 @@ describe('<MyNotifications />', () => {
     },
     {
       id: 'test-notification2',
-      thema: 'TEST_CHAPTER',
+      thema: 'TEST_THEMA',
       datePublished: '2021-01-01',
       title: 'Second Test notification',
       description: 'A second text related to this notification',

@@ -110,7 +110,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="_MetaInfoSecondary_63df5c"
               >
                 <em
-                  class="_ChapterIndication_63df5c"
+                  class="_ThemaIndication_63df5c"
                 >
                   Home
                 </em>
@@ -203,7 +203,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="_MetaInfoSecondary_63df5c"
               >
                 <em
-                  class="_ChapterIndication_63df5c"
+                  class="_ThemaIndication_63df5c"
                 >
                   Mijn gegevens
                 </em>
@@ -308,7 +308,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="_MetaInfoSecondary_63df5c"
               >
                 <em
-                  class="_ChapterIndication_63df5c"
+                  class="_ThemaIndication_63df5c"
                 >
                   Inkomen
                 </em>
@@ -402,7 +402,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="_MetaInfoSecondary_63df5c"
               >
                 <em
-                  class="_ChapterIndication_63df5c"
+                  class="_ThemaIndication_63df5c"
                 >
                   Actueel
                 </em>

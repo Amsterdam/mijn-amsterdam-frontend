@@ -208,7 +208,7 @@ export default function MainNavBar({
         let menuItem = item;
 
         // Add dynamic thema submenu items to the menu
-        if (item.id === mainMenuItemId.CHAPTERS) {
+        if (item.id === mainMenuItemId.THEMAS) {
           menuItem = { ...item, submenuItems: myThemaItems };
         } else if (
           menuItem.title === ThemaTitles.BUURT &&
