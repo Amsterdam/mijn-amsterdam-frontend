@@ -271,6 +271,7 @@ export default function MainHeader({
             )
           }
         />
+        <OtapLabel />
         {isDisplayLiveSearch && isSearchActive && (
           <div className={styles.Search}>
             <div className={styles.SearchBar}>
