@@ -7,13 +7,13 @@ import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
 import {
   AppRoutes,
-  ChapterTitles,
-  Chapters,
+  ThemaTitles,
+  Themas,
 } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
-  ChapterIcon,
+  ThemaIcon,
   ErrorAlert,
   MaintenanceNotifications,
   PageContent,
@@ -77,11 +77,8 @@ export default function Sia() {
 
   return (
     <OverviewPage className={styles.Sia}>
-      <PageHeading
-        isLoading={false}
-        icon={<ChapterIcon chapter={Chapters.SIA} />}
-      >
-        {ChapterTitles.SIA}
+      <PageHeading isLoading={false} icon={<ThemaIcon thema={Themas.SIA} />}>
+        {ThemaTitles.SIA}
       </PageHeading>
       <PageContent>
         <p>

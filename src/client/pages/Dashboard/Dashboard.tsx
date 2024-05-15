@@ -4,7 +4,7 @@ import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
 import {
   DirectLinks,
-  MyChaptersPanel,
+  MyThemasPanel,
   MyNotifications,
   Page,
   PageHeading,
@@ -12,7 +12,7 @@ import {
 import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useChapters } from '../../hooks/useChapters';
+import { useThemas } from '../../hooks/useThemas';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
@@ -32,8 +32,7 @@ export default function Dashboard() {
   const isPhoneScreen = usePhoneScreen();
   const NOTIFICATIONSTotal = notifications.length;
 
-  const { items: myChapterItems, isLoading: isMyChaptersLoading } =
-    useChapters();
+  const { items: myThemaItems, isLoading: isMyThemasLoading } = useThemas();
 
   const profileType = useProfileTypeValue();
 
@@ -63,9 +62,9 @@ export default function Dashboard() {
             trackCategory="Dashboard / Actueel"
             isEmbedded={true}
           />
-          <MyChaptersPanel
-            isLoading={isMyChaptersLoading}
-            items={myChapterItems}
+          <MyThemasPanel
+            isLoading={isMyThemasLoading}
+            items={myThemaItems}
             title="Mijn thema's"
             trackCategory="Dashboard / Mijn Thema's"
           />

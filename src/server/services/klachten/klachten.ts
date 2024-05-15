@@ -11,7 +11,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
-import { Chapters } from '../../../universal/config';
+import { Themas } from '../../../universal/config';
 import { smileDateParser } from '../smile/smile-helpers';
 
 const DEFAULT_PAGE_SIZE = 250;
@@ -103,7 +103,7 @@ export function transformKlachtenResponse(
 
 function createKlachtNotification(klacht: Klacht): MyNotification {
   const notification: MyNotification = {
-    chapter: Chapters.KLACHTEN,
+    thema: Themas.KLACHTEN,
     id: `klacht-${klacht.id}-notification`,
     title: 'Klacht ontvangen',
     description: 'Uw klacht is ontvangen.',

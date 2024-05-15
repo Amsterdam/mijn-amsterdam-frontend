@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 
 import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
+import { AppRoutes, ThemaTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   PageContent,
@@ -99,9 +99,9 @@ export default function Vergunningen() {
           title: 'Home',
         }}
         isLoading={isLoading(VERGUNNINGEN)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
-        {ChapterTitles.VERGUNNINGEN}
+        {ThemaTitles.VERGUNNINGEN}
       </PageHeading>
       <PageContent>
         <p>

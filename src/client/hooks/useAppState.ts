@@ -7,7 +7,7 @@ import {
 } from '../../universal/helpers';
 
 import {
-  BagChapter,
+  BagThema,
   FeatureToggle,
   streamEndpointQueryParamKeys,
 } from '../../universal/config';
@@ -231,7 +231,7 @@ export function useAppStateReady() {
 
 export interface AppStateBagApiParams {
   url: string;
-  bagChapter: BagChapter;
+  bagThema: BagThema;
   key: string;
 }
 
@@ -239,15 +239,15 @@ export interface AppStateBagApiParams {
 // that requires fetching data that wasn't retrieved initially.
 export function useAppStateBagApi<T extends unknown>({
   url,
-  bagChapter,
+  bagThema,
   key,
 }: AppStateBagApiParams) {
   const [appState, setAppState] = useRecoilState(appStateAtom);
   const isApiDataCached =
-    typeof appState[bagChapter] !== null &&
-    typeof appState[bagChapter] === 'object' &&
-    typeof appState[bagChapter] !== 'undefined' &&
-    key in appState[bagChapter]!;
+    typeof appState[bagThema] !== null &&
+    typeof appState[bagThema] === 'object' &&
+    typeof appState[bagThema] !== 'undefined' &&
+    key in appState[bagThema]!;
 
   const [api] = useDataApi<ApiResponse<T | null>>(
     {
@@ -259,7 +259,7 @@ export function useAppStateBagApi<T extends unknown>({
   useEffect(() => {
     if (!isApiDataCached && !!api.data.content) {
       setAppState((state) => {
-        let localState = state[bagChapter];
+        let localState = state[bagThema];
         if (!localState) {
           localState = {};
         }
@@ -269,24 +269,24 @@ export function useAppStateBagApi<T extends unknown>({
         };
         return {
           ...state,
-          [bagChapter]: localState,
+          [bagThema]: localState,
         };
       });
     }
   }, [isApiDataCached, api, key]);
 
-  return [appState?.[bagChapter]?.[key] as T, api] as const;
+  return [appState?.[bagThema]?.[key] as T, api] as const;
 }
 
 export function useRemoveAppStateBagData() {
   const [appState, setAppState] = useRecoilState(appStateAtom);
   return useCallback(
-    ({ bagChapter, key: keyExpected }: Omit<AppStateBagApiParams, 'url'>) => {
-      const local = appState[bagChapter];
+    ({ bagThema, key: keyExpected }: Omit<AppStateBagApiParams, 'url'>) => {
+      const local = appState[bagThema];
       if (!!local) {
         setAppState(
           Object.assign({}, appState, {
-            [bagChapter]: Object.fromEntries(
+            [bagThema]: Object.fromEntries(
               Object.entries(local).filter(([key]) => {
                 return keyExpected !== key;
               })

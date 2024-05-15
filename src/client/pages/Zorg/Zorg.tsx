@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   LinkdInline,
   OverviewPage,
@@ -46,9 +46,9 @@ export default function Zorg() {
           to: AppRoutes.HOME,
           title: 'Home',
         }}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
-        {ChapterTitles.ZORG}
+        {ThemaTitles.ZORG}
       </PageHeading>
       <PageContent>
         <p>

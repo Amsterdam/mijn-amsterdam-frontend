@@ -14,7 +14,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       >
         <svg
           aria-label="Bodem"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="24"
           viewBox="0 0 24 24"
@@ -304,7 +304,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       >
         <svg
           aria-label="Bodem"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="24"
           viewBox="0 0 24 24"
@@ -550,7 +550,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       >
         <svg
           aria-label="Bodem"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="24"
           viewBox="0 0 24 24"
@@ -786,7 +786,7 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
       >
         <svg
           aria-label="Bodem"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="24"
           viewBox="0 0 24 24"

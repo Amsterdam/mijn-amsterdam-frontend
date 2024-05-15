@@ -1,4 +1,4 @@
-import { Chapters } from '../../../universal/config';
+import { Themas } from '../../../universal/config';
 import {
   ApiResponse,
   ApiSuccessResponse,
@@ -263,7 +263,7 @@ export async function fetchWpiNotifications(
                   requestProcess,
                   step,
                   labels,
-                  Chapters.INKOMEN
+                  Themas.INKOMEN
                 )
               );
               return notifications;

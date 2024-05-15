@@ -7,7 +7,7 @@ import {
   SiaAttachment,
   SiaSignalStatusHistory,
 } from '../../../server/services/sia';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ApiResponse,
   apiPristineResult,
@@ -17,7 +17,7 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   DocumentList,
   LoadingContent,
@@ -160,10 +160,10 @@ export default function SiaDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.ROOT,
-          title: ChapterTitles.SIA,
+          title: ThemaTitles.SIA,
         }}
         isLoading={isLoading(SIA)}
       >

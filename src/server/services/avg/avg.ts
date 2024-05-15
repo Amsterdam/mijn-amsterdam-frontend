@@ -1,6 +1,6 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters, FeatureToggle } from '../../../universal/config';
+import { AppRoutes, Themas, FeatureToggle } from '../../../universal/config';
 import {
   ApiSuccessResponse,
   apiDependencyError,
@@ -248,7 +248,7 @@ function createAVGNotification(verzoek: AVGRequest) {
   const inProgressActive = !!verzoek.datumInBehandeling;
 
   const notification: MyNotification = {
-    chapter: Chapters.AVG,
+    thema: Themas.AVG,
     id: `avg-${verzoek.id}-notification`,
     title: 'AVG verzoek ontvangen',
     description: 'Uw AVG verzoek is ontvangen.',

@@ -1,4 +1,4 @@
-import { Chapters } from '../../../universal/config';
+import { Themas } from '../../../universal/config';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
@@ -46,7 +46,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
         case 'M1':
           notifications.push({
             id: `belasting-${message.nummer}`,
-            chapter: Chapters.BELASTINGEN,
+            thema: Themas.BELASTINGEN,
             title: message.titel,
             datePublished: message.datum,
             description: message.omschrijving,
@@ -65,7 +65,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             title: message.titel,
             description: message.omschrijving,
             reason: message.informatie,
-            chapter: Chapters.BELASTINGEN,
+            thema: Themas.BELASTINGEN,
             link: {
               title: message.url_naam,
               to: message.url,
@@ -107,6 +107,6 @@ export async function fetchBelastingNotifications(
   return fetchTipsAndNotifications(
     requestID,
     getConfig(authProfileAndToken.profile.id),
-    Chapters.BELASTINGEN
+    Themas.BELASTINGEN
   );
 }

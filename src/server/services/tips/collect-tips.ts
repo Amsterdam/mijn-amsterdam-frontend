@@ -61,7 +61,7 @@ export function collectTips(
     description: t.description,
     link: t.link,
     profileTypes: t.profileTypes,
-    chapter: t.chapter ?? null,
+    thema: t.thema ?? null,
     priority: t.priority,
     reason: t.reason,
   })) as MyTip[];

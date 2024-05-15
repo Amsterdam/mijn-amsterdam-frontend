@@ -1,4 +1,4 @@
-import { Chapters } from '../../../universal/config';
+import { Themas } from '../../../universal/config';
 import { getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
@@ -38,7 +38,7 @@ export async function fetchSVWINotifications(
     getApiConfig('SVWI', {
       transformResponse: transformSVWIResponse,
     }),
-    Chapters.SVWI,
+    Themas.SVWI,
     authProfileAndToken
   );
 }

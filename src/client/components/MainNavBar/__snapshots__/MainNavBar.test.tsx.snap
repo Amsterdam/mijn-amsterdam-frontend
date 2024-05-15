@@ -99,7 +99,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
           >
             <a
               class="_MainNavSubmenuLink_c3c96e _MainNavSubmenuLink_e3ba3b"
-              data-chapter-id="BRP"
+              data-thema-id="BRP"
               href="/persoonlijke-gegevens"
             >
               <span
@@ -130,7 +130,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
             </a>
             <a
               class="_MainNavSubmenuLink_c3c96e _MainNavSubmenuLink_e3ba3b"
-              data-chapter-id="VERGUNNINGEN"
+              data-thema-id="VERGUNNINGEN"
               href="/vergunningen"
             >
               <span
@@ -162,7 +162,7 @@ exports[`<MainNavBar /> > Renders without crashing 1`] = `
             </a>
             <a
               class="_MainNavSubmenuLink_c3c96e _MainNavSubmenuLink_e3ba3b"
-              data-chapter-id="PARKEREN"
+              data-thema-id="PARKEREN"
               href="/parkeren"
             >
               <span

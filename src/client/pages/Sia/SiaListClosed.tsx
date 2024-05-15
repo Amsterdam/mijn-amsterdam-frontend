@@ -1,4 +1,4 @@
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Themas } from '../../../universal/config';
 import {
   defaultDateTimeFormat,
   isError,
@@ -32,7 +32,7 @@ export default function SiaListClosed() {
       appRoute={AppRoutes.SIA_CLOSED}
       appRouteBack={AppRoutes.ROOT}
       displayProps={DISPLAY_PROPS_HISTORY}
-      chapter={Chapters.SIA}
+      thema={Themas.SIA}
       titleKey="identifier"
       isLoading={isLoading(SIA)}
       isError={isError(SIA)}

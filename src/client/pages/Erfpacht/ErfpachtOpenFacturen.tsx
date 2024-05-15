@@ -5,12 +5,12 @@ import {
   Screen,
 } from '@amsterdam/design-system-react';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
-import { Chapters } from '../../../universal/config/chapter';
+import { Themas } from '../../../universal/config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   OverviewPage,
   PageHeading,
 } from '../../components';
@@ -68,7 +68,7 @@ export default function ErfpachtOpenFacturen() {
   return (
     <OverviewPage>
       <PageHeading
-        icon={<ChapterIcon chapter={Chapters.ERFPACHTv2} />}
+        icon={<ThemaIcon thema={Themas.ERFPACHTv2} />}
         backLink={{ to: AppRoutes.ERFPACHTv2, title: 'Overzicht' }}
         isLoading={isLoading(ERFPACHTv2)}
       >

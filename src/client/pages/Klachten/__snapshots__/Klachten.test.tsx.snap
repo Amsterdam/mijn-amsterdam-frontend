@@ -14,7 +14,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
       >
         <svg
           aria-label="Klachten"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
           viewBox="0 0 32 32"
@@ -204,7 +204,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
       >
         <svg
           aria-label="Klachten"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
           viewBox="0 0 32 32"
@@ -499,7 +499,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
       >
         <svg
           aria-label="Klachten"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
           viewBox="0 0 32 32"

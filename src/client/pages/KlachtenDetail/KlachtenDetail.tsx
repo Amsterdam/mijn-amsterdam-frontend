@@ -1,6 +1,6 @@
 import { generatePath, useParams } from 'react-router-dom';
 import type { Klacht } from '../../../server/services/klachten/types';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
   isError,
@@ -8,7 +8,7 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   PageContent,
@@ -32,7 +32,7 @@ export default function KlachtenDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: generatePath(AppRoutes.KLACHTEN, {
             page:
@@ -40,7 +40,7 @@ export default function KlachtenDetail() {
                 ? Math.ceil((klachtIndex + 1) / KLACHTEN_PAGE_SIZE)
                 : 1,
           }),
-          title: ChapterTitles.KLACHTEN,
+          title: ThemaTitles.KLACHTEN,
         }}
         isLoading={isLoading(KLACHTEN)}
       >

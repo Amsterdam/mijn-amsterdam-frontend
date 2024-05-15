@@ -1,5 +1,5 @@
 import memoize from 'memoizee';
-import { Chapters } from '../../universal/config';
+import { Themas } from '../../universal/config';
 import { omit } from '../../universal/helpers';
 import {
   apiDependencyError,
@@ -51,7 +51,7 @@ function createNotification(
     title: isFibu
       ? 'Bericht Budgetbeheer (FIBU)'
       : `Bericht Kredietbank Amsterdam`,
-    chapter: Chapters.KREFIA,
+    thema: Themas.KREFIA,
     description: isFibu
       ? 'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)'
       : 'Er staan ongelezen berichten voor u klaar van Kredietbank Amsterdam',

@@ -28,7 +28,7 @@ export default function InkomenDetailUitkering() {
 
   return (
     <StatusDetail
-      chapter="INKOMEN"
+      thema="INKOMEN"
       stateKey="WPI_AANVRAGEN"
       pageContent={pageContent}
       maxStepCount={(hasDecision) =>

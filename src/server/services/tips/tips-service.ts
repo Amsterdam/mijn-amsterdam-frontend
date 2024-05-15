@@ -21,7 +21,7 @@ function prioritySort(a: MyTip, b: MyTip) {
 export function convertTipToNotication(tip: MyTip): MyNotification {
   return {
     ...pick(tip, [
-      'chapter',
+      'thema',
       'datePublished',
       'description',
       'id',

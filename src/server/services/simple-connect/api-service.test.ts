@@ -99,7 +99,7 @@ describe('simple-connect/api-service', () => {
         {
           url: apiUrlTest,
         },
-        'TEST_CHAPTER'
+        'TEST_THEMA'
       );
 
     expect(responseContentTipsAndNotifications).toMatchInlineSnapshot(`
@@ -107,13 +107,13 @@ describe('simple-connect/api-service', () => {
         "content": {
           "notifications": [
             {
-              "chapter": "TEST_CHAPTER",
               "datePublished": "2022-04-22",
               "description": "Bekijk deze mooie site eens!",
               "link": {
                 "title": "Bekijk hier",
                 "to": "https://mijn.amsterdam.nl",
               },
+              "thema": "TEST_THEMA",
               "title": "Dingen en zo",
             },
           ],

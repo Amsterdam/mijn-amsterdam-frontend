@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { Chapters } from '../../../universal/config/index';
+import { Themas } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiDependencyError } from '../../../universal/helpers';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -508,7 +508,7 @@ export function createVergunningNotification(
   dateNow?: Date
 ): MyNotification | null {
   const notification: MyNotification = {
-    chapter: Chapters.VERGUNNINGEN,
+    thema: Themas.VERGUNNINGEN,
     id: `vergunning-${item.id}-notification`,
     title: 'Vergunningsaanvraag',
     description: 'Er is een update in uw vergunningsaanvraag.',

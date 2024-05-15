@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Themas } from '../../../universal/config';
 import {
   apiDependencyError,
   apiErrorResult,
@@ -319,7 +319,7 @@ export async function fetchBezwaren(
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
   const notification: MyNotification = {
-    chapter: Chapters.BEZWAREN,
+    thema: Themas.BEZWAREN,
     id: bezwaar.identificatie,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,

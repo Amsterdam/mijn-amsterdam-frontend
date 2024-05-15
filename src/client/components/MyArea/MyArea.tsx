@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
+import { ThemaTitles, HOOD_ZOOM } from '../../../universal/config';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { getElementSize, useTermReplacement, useWidescreen } from '../../hooks';
 import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
@@ -137,9 +137,7 @@ export default function MyArea({
     return;
   }, [isWideScreen, showPanels, detailState, filterState]);
 
-  const ariaLabel = `Kaart van ${termReplace(
-    ChapterTitles.BUURT
-  ).toLowerCase()}`;
+  const ariaLabel = `Kaart van ${termReplace(ThemaTitles.BUURT).toLowerCase()}`;
 
   useEffect(() => {
     window.addEventListener('resize', updateViewportHeight);

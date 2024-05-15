@@ -76,7 +76,7 @@ describe('<StatusDetail />', () => {
     function DetailComponent() {
       return (
         <StatusDetail
-          chapter="INKOMEN"
+          thema="INKOMEN"
           stateKey="WPI_TOZO"
           pageContent={pageContent}
           maxStepCount={() => -1}
@@ -105,7 +105,7 @@ describe('<StatusDetail />', () => {
     function DetailComponent() {
       return (
         <StatusDetail
-          chapter="INKOMEN"
+          thema="INKOMEN"
           stateKey="WPI_TOZO"
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
@@ -130,7 +130,7 @@ describe('<StatusDetail />', () => {
     function DetailComponent() {
       return (
         <StatusDetail
-          chapter="INKOMEN"
+          thema="INKOMEN"
           stateKey="WPI_TOZO"
           maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
@@ -159,7 +159,7 @@ describe('<StatusDetail />', () => {
     function DetailComponent() {
       return (
         <StatusDetail
-          chapter="INKOMEN"
+          thema="INKOMEN"
           stateKey="WPI_TOZO"
           reverseSteps={true}
           maxStepCount={() => 3}

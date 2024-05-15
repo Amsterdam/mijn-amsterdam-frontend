@@ -4,16 +4,16 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from '@react-spring/web';
 
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
-import { ChapterTitles } from '../../../universal/config/chapter';
+import { ThemaTitles } from '../../../universal/config/thema';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconClose, IconSearch } from '../../assets/icons';
 import AmsterdamLogo from '../../assets/images/logo-amsterdam.svg?react';
 import { isUiElementVisible } from '../../config/app';
-import { ChapterIcons } from '../../config/chapterIcons';
+import { ThemaIcons } from '../../config/themaIcons';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useChapters } from '../../hooks/useChapters';
+import { useThemas } from '../../hooks/useThemas';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { IconButton } from '../Button/Button';
@@ -89,8 +89,8 @@ function getMenuItem(item: MenuItem) {
               title={title}
               to={to}
               rel={rel}
-              Icon={ChapterIcons[id]}
-              data-chapter-id={id}
+              Icon={ThemaIcons[id]}
+              data-thema-id={id}
             />
           );
         })}
@@ -145,7 +145,7 @@ export default function MainNavBar({
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myChapterItems } = useChapters();
+  const { items: myThemaItems } = useThemas();
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
@@ -207,11 +207,11 @@ export default function MainNavBar({
       .map((item) => {
         let menuItem = item;
 
-        // Add dynamic chapter submenu items to the menu
-        if (item.id === mainMenuItemId.CHAPTERS) {
-          menuItem = { ...item, submenuItems: myChapterItems };
+        // Add dynamic thema submenu items to the menu
+        if (item.id === mainMenuItemId.THEMAS) {
+          menuItem = { ...item, submenuItems: myThemaItems };
         } else if (
-          menuItem.title === ChapterTitles.BUURT &&
+          menuItem.title === ThemaTitles.BUURT &&
           profileType !== 'private'
         ) {
           menuItem = {
@@ -222,7 +222,7 @@ export default function MainNavBar({
 
         return getMenuItem(menuItem);
       });
-  }, [myChapterItems, profileType, termReplace, isSimpleNavBarEnabled]);
+  }, [myThemaItems, profileType, termReplace, isSimpleNavBarEnabled]);
 
   return (
     <nav className={styles.MainNavBar}>

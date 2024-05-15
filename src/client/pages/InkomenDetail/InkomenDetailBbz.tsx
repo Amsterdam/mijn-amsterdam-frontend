@@ -41,7 +41,7 @@ export default function InkomenDetailBbz() {
 
   return (
     <StatusDetail
-      chapter="INKOMEN"
+      thema="INKOMEN"
       stateKey="WPI_BBZ"
       pageContent={pageContent}
       maxStepCount={() => -1}

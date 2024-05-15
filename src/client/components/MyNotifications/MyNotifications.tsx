@@ -44,7 +44,7 @@ export default function MyNotifications({
           items.map((item, index) => {
             return (
               <li
-                key={`${item.chapter}-${item.id}-${index}`}
+                key={`${item.thema}-${item.id}-${index}`}
                 className={styles.MyNotificationItem}
               >
                 <Notification

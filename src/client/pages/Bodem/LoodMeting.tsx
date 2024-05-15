@@ -3,14 +3,14 @@ import { useAppStateGetter } from '../../hooks';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import LoodStatusLines from './LoodStatusLines';
 import { Location } from '../VergunningDetail/Location';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
@@ -28,10 +28,10 @@ export default function LoodMeting() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: generatePath(AppRoutes.BODEM),
-          title: ChapterTitles.BODEM,
+          title: ThemaTitles.BODEM,
         }}
         isLoading={isLoading(BODEM)}
       >
