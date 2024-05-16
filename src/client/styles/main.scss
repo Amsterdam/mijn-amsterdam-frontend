@@ -8,7 +8,10 @@
 @import '@amsterdam/design-system-tokens/dist/index.css';
 @import '@amsterdam/design-system-assets/font/index.css';
 @import '@amsterdam/design-system-css/src/components/heading/heading.scss';
+@import '@amsterdam/design-system-css/src/components/page-menu/page-menu.scss';
+@import '@amsterdam/design-system-css/src/components/header/header.scss';
 @import '@amsterdam/design-system-css/src/components/paragraph/paragraph.scss';
+@import '@amsterdam/design-system-css/src/components/mega-menu/mega-menu.scss';
 @import '@amsterdam/design-system-css/src/components/alert/alert.scss';
 @import '@amsterdam/design-system-css/src/components/grid/grid.scss';
 @import '@amsterdam/design-system-css/src/components/screen/screen.scss';
@@ -20,6 +23,8 @@
 @import '@amsterdam/design-system-css/src/components/unordered-list/unordered-list.scss';
 @import '@amsterdam/design-system-css/src/components/pagination/pagination.scss';
 @import '@amsterdam/design-system-css/src/components/link-list/link-list.scss';
+@import '@amsterdam/design-system-css/src/components/logo/logo.scss';
+@import '@amsterdam/design-system-css/src/components/visually-hidden/visually-hidden.scss';
 
 :root {
   --map-container-height: 100%;

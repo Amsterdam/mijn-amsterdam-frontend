@@ -8,7 +8,7 @@ import {
 import { LinkProps, Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import InnerHtml from '../InnerHtml/InnerHtml';
-import { MARouterLink } from '../MaRouterLink/MaRouterLink';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import styles from './Table.module.scss';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
@@ -59,9 +59,9 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [propertyName]: (
-        <MARouterLink fatNoUnderline href={item.link.to}>
+        <MaRouterLink maVariant="fatNoUnderline" href={item.link.to}>
           {capitalizeFirstLetter(label)}
-        </MARouterLink>
+        </MaRouterLink>
       ),
     };
   });

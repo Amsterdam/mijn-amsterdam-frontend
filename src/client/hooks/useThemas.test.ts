@@ -1,4 +1,4 @@
-import { ThemaMenuItem } from '../config/menuItems';
+import { ThemaMenuItem } from '../../universal/config';
 import {
   getThemaMenuItemsAppState,
   isThemaActive,
