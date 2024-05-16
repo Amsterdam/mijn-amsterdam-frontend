@@ -1,14 +1,12 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://www.mocks-server.org/docs/configuration/how-to-change-settings
 // https://www.mocks-server.org/docs/configuration/options
-const CommercialHandler = require('./mocks/handlers/commercial-handler.js');
-require('dotenv').config();
+const ProfileTypeHandler = require('./mocks/handlers/ProfileTypeHandler.js');
 
 module.exports = {
   // Log level. Can be one of silly, debug, verbose, info, warn or error
   //log: "info",
   config: {
-    // Allow unknown arguments
     //allowUnknownArguments: false,
   },
   plugins: {
@@ -100,6 +98,6 @@ module.exports = {
     },
   },
   variantHandlers: {
-    register: [CommercialHandler],
+    register: [ProfileTypeHandler],
   },
 };

@@ -1,9 +1,9 @@
-const BRP_RESPONSE = require('../fixtures/brp.json');
+const BEZWAREN_DOCUMENTEN_RESPONSE = require('../fixtures/bezwaren-documents.json');
 
 module.exports = [
   {
-    id: 'get-brp',
-    url: '/api/brp/brp',
+    id: 'get-bezwaren-documenten',
+    url: '/zgw/v1/enkelvoudiginformatieobjecten',
     method: 'GET',
     delay: 2500,
     variants: [
@@ -12,7 +12,7 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           code: 200,
-          body: BRP_RESPONSE,
+          body: BEZWAREN_DOCUMENTEN_RESPONSE,
         },
       },
     ],

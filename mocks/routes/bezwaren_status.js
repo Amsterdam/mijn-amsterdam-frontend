@@ -1,10 +1,10 @@
-const BEZWAREN_LIST_RESPONSE = require('../fixtures/bezwaren.json');
+const BEZWAREN_STATUS_RESPONSE = require('../fixtures/bezwaren-status.json');
 
 // TODO: Hulp hierbij krijgen. URL in evn is HTTPS en error heeft met SSL te maken
 module.exports = [
   {
-    id: 'get-bezwaren-list',
-    url: '/zgw/v1/zaken/_zoek',
+    id: 'get-bezwaren-status',
+    url: '/zgw/v1/statussen',
     method: 'POST',
     delay: 2500,
     variants: [
@@ -13,11 +13,9 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           code: 200,
-          body: BEZWAREN_LIST_RESPONSE,
+          body: BEZWAREN_STATUS_RESPONSE,
         },
       },
     ],
   },
 ];
-
-//
