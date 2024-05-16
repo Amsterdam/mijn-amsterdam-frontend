@@ -1,18 +1,17 @@
-const BRP_RESPONSE = require('../fixtures/brp.json');
+const WMO_RESPONSE = require('../fixtures/wmo.json');
 
 module.exports = [
   {
-    id: 'get-brp',
-    url: '/api/brp/brp',
-    method: 'GET',
-    delay: 2500,
+    id: 'get-wmo',
+    url: '/remote/zorgned/', //TODO: Wildcard na url?
+    method: 'POST',
     variants: [
       {
         id: 'standard',
         type: 'profile-type-handler',
         options: {
           code: 200,
-          body: BRP_RESPONSE,
+          body: WMO_RESPONSE,
         },
       },
     ],

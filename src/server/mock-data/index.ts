@@ -83,6 +83,7 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
+  // RP TODO: HTTPS kan HTTP worden
   [String(ApiUrls.BEZWAREN_LIST)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -94,6 +95,7 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(BEZWAREN);
     },
   },
+  // RP TODO: zie hierboven todo
   [String(ApiUrls.BEZWAREN_DOCUMENTS)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -104,6 +106,7 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
     },
   },
+  // TODO: zie hierboven todo
   [String(ApiUrls.BEZWAREN_STATUS)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -112,56 +115,6 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return loadMockApiResponseJson(BEZWAREN_STATUS);
-    },
-  },
-  [`${ApiUrls.ZORGNED_AV}/persoonsgegevensNAW`]: {
-    method: 'post',
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson({
-        persoon: {
-          bsn: '123456789',
-          clientidentificatie: 111111,
-          geslachtsaanduiding: { code: 'M', omschrijving: 'Man' },
-          voorletters: 'E',
-          voorvoegsel: null,
-          geboortenaam: 'Alex',
-          voornamen: 'Flex',
-          roepnaam: 'Flexie',
-          geboortedatum: '2010-06-12',
-          burgerlijkestaat: {
-            code: '1',
-            omschrijving: 'Ongehuwd en nooit gehuwd geweest',
-          },
-          aanduidingNaamgebruik: { code: 'E', omschrijving: 'Geboortenaam' },
-          partnernaam: null,
-          partnervoorvoegsel: null,
-          persoontype: 'P',
-        },
-        inschrijfadres: {
-          huisnummer: 77,
-          huisletter: null,
-          huisnummerToevoeging: null,
-          postcode: '1011 AA',
-          straatnaam: 'Dam 1',
-          plaats: 'Amsterdam',
-          adrestype: 'R',
-        },
-      });
-    },
-  },
-  [`${ApiUrls.ZORGNED_JZD}`]: {
-    method: 'post',
-    pathReg: new RegExp('/remote/zorgned/*'),
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(WMO);
     },
   },
   [String(ApiUrls.WPI_AANVRAGEN)]: {
@@ -453,13 +406,16 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson({ access_token: 'foo-bar' });
     },
   },
+  //
   [`${ApiUrls.CMS_MAINTENANCE_NOTIFICATIONS}`]: {
     status: () => 200,
     method: 'get',
     responseData: async (config: any) => {
+      // RP TODO: URLS in MAINTENANCE_NOTIFICATIONS_ALLE in localhost veranderen. Dat heeft geen invloed op productie
       return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_ALLE);
     },
   },
+  // RP TODO: Deze en die hieronder vervangen met een env variable (.env.local)
   ['https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/?Appidt=app-pagetype&reload=true']:
   {
     status: () => 200,

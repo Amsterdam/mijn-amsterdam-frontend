@@ -4,7 +4,9 @@
     "routes": [
       "get-belastingen:standard",
       "get-brp:standard",
-      "get-bezwaren-list:standard"
+      "get-bezwaren-list:standard",
+      "get-bezwaren-documenten:standard",
+      "get-wmo:standard"
     ]
   }
 ]

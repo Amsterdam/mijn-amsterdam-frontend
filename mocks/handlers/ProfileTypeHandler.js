@@ -1,10 +1,33 @@
 const jose = require('jose');
 
-class CommercialHandler {
+// options: {
+//   private: {
+//     code: 200,
+//     data: BRP_DATA
+//   },
+//   commercial: {
+//     code: 500,
+//     data: 'no-content'
+//   }
+// }
+//
+// options: {
+//   private: {
+//     code: 200,
+//     data: KVK_DATA_PRIVATE
+//   },
+//   commercial: {
+//     code: 200,
+//     data: KVK_DATA_COMMERCIAL
+//   }
+// }
+
+class ProfileTypeHandler {
   static get id() {
-    return 'commercial-user-check';
+    return 'profile-type-handler';
   }
 
+  // Validate the options that are passed to the constructor
   static get validationSchema() {
     return {
       type: 'object',
@@ -29,12 +52,13 @@ class CommercialHandler {
 
   middleware(req, res, next) {
     if (isCommercialUser(req)) {
-      this._core.logger.info('Commercial user');
-      res.status(500);
+      this._core.logger.debug('Request from a commercial user');
+      // TODO: status is ook 200 ook voor commercial user
+      res.status(this._code);
       res.send('no-content');
     } else {
-      this._core.logger.info('Non-commercial user');
-      res.status(200);
+      this._core.logger.debug('Request from a non-commercial user');
+      res.status(this._code);
       res.send(this._body);
     }
   }
@@ -55,4 +79,4 @@ function isCommercialUser(req) {
   return jwtDecoded.aud === 'amsterdam1';
 }
 
-module.exports = CommercialHandler;
+module.exports = ProfileTypeHandler;
