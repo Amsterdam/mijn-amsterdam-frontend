@@ -6309,6 +6309,9 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
             <li>
               Filmen
             </li>
+            <li>
+              Verhuizing tussen twee locaties binnen Amsterdam
+            </li>
           </ul>
         </div>
       </div>

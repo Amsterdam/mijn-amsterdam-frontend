@@ -8,10 +8,11 @@ export function hasMultiplePermits(vergunning: WerkzaamhedenEnVervoerOpStraat) {
       vergunning.vezip || vergunning.rvv || vergunning.eRvv,
       vergunning.object,
       vergunning.parkingspace || vergunning.eParkingspace,
-      vergunning.block,
+      vergunning.block || vergunning.eblock,
       vergunning.night,
       vergunning.bicycleRack,
       vergunning.filming,
+      vergunning.movingLocations,
     ].filter(Boolean).length >= 2
   );
 }
@@ -45,7 +46,10 @@ export function WVOS({
             {(vergunning.parkingspace || vergunning.eParkingspace) && (
               <li>Parkeervakken reserveren</li>
             )}
-            {vergunning.block && <li>Een straat afzetten</li>}
+            {(vergunning.block || vergunning.eblock) && (
+              <li>Een straat afzetten</li>
+            )}
+            {/*e-tvm -> straat afzetten */}
             {vergunning.night && <li>Werkzaamheden verrichten in de nacht</li>}
             {vergunning.bicycleRack && (
               <li>
@@ -53,6 +57,9 @@ export function WVOS({
               </li>
             )}
             {vergunning.filming && <li>Filmen</li>}
+            {vergunning.movingLocations && (
+              <li>Verhuizing tussen twee locaties binnen Amsterdam</li>
+            )}
           </ul>
         }
       />
