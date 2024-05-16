@@ -23,11 +23,15 @@ export function EigenParkeerplaats({
         label="Verzoek"
         valueWrapperElement="div"
         value={
-          <ul>
-            {vergunning.requestTypes.map((d, i) => (
-              <li key={d}>{d}</li>
-            ))}
-          </ul>
+          vergunning.requestTypes.length > 1 ? (
+            <ul>
+              {vergunning.requestTypes.map((d) => (
+                <li key={d}>{d}</li>
+              ))}
+            </ul>
+          ) : (
+            vergunning.requestTypes[0]
+          )
         }
       />
 
