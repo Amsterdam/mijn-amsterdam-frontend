@@ -3,7 +3,7 @@ const WMO_RESPONSE = require('../fixtures/wmo.json');
 module.exports = [
   {
     id: 'get-wmo',
-    url: '/remote/zorgned/', //TODO: Wildcard na url?
+    url: '/remote/zorgned/*',
     method: 'POST',
     variants: [
       {
