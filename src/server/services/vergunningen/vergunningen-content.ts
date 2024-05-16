@@ -284,16 +284,19 @@ export const notificationContent: NotificationContent = {
   [CaseType.EigenParkeerplaats]: {
     requested: {
       ...requestedShort,
+      title: () => 'Aanvraag Eigen parkeerplaats ontvangen',
       description: () =>
         'Wij hebben uw aanvraag Eigen parkeerplaats ontvangen.',
     },
     inProgress: {
       ...inProgressShort,
+      title: () => 'Aanvraag Eigen parkeerplaats in behandeling',
       description: () =>
         'Wij hebben uw aanvraag Eigen parkeerplaats in behandeling genomen.',
     },
     done: {
       ...doneShort,
+      title: () => 'Aanvraag Eigen parkeerplaats in afgehandeld',
       description: () =>
         'Wij hebben uw aanvraag Eigen parkeerplaats afgehandeld.',
     },
