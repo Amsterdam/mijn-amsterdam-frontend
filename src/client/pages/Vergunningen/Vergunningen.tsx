@@ -1,16 +1,13 @@
 import { useMemo } from 'react';
 
-import type {
-  TouringcarJaarontheffing,
-  Vergunning,
-} from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
+import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
+import { AppRoutes, ThemaTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   PageContent,
@@ -41,6 +38,9 @@ const titleTransformMap: Record<string, any> = {
   [CaseType.TouringcarJaarontheffing]:
     getCustomTitleForVergunningWithLicensePlates,
   [CaseType.TouringcarDagontheffing]:
+    getCustomTitleForVergunningWithLicensePlates,
+  [CaseType.EigenParkeerplaats]: getCustomTitleForVergunningWithLicensePlates,
+  [CaseType.EigenParkeerplaatsOpheffen]:
     getCustomTitleForVergunningWithLicensePlates,
 };
 
@@ -99,9 +99,9 @@ export default function Vergunningen() {
           title: 'Home',
         }}
         isLoading={isLoading(VERGUNNINGEN)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
-        {ChapterTitles.VERGUNNINGEN}
+        {ThemaTitles.VERGUNNINGEN}
       </PageHeading>
       <PageContent>
         <p>

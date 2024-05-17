@@ -27,7 +27,7 @@ export default function InkomenDetailTonk() {
 
   return (
     <StatusDetail
-      chapter="INKOMEN"
+      thema="INKOMEN"
       stateKey="WPI_TONK"
       pageContent={pageContent}
       maxStepCount={() => -1}

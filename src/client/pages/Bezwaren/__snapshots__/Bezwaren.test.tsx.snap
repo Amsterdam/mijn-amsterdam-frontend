@@ -14,7 +14,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       >
         <svg
           aria-label="Bezwaren"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32"
           viewBox="0 0 32 32"
@@ -264,7 +264,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       >
         <svg
           aria-label="Bezwaren"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32"
           viewBox="0 0 32 32"
@@ -475,7 +475,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       >
         <svg
           aria-label="Bezwaren"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="32"
           viewBox="0 0 32 32"

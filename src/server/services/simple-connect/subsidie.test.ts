@@ -7,7 +7,7 @@ import {
   test,
   vi,
 } from 'vitest';
-import { Chapters } from '../../../universal/config';
+import { Themas } from '../../../universal/config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchSubsidieNotifications } from './subsidie';
 import { remoteApi } from '../../../test-utils';
@@ -46,7 +46,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          chapter: Chapters.SUBSIDIE,
+          thema: Themas.SUBSIDIE,
           link: {
             to: 'http://localhost/to/subsidies?authMethod=digid',
             title: 'More about this',
@@ -71,7 +71,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          chapter: Chapters.SUBSIDIE,
+          thema: Themas.SUBSIDIE,
           link: {
             to: 'http://localhost/to/subsidies?authMethod=eherkenning',
             title: 'More about this',

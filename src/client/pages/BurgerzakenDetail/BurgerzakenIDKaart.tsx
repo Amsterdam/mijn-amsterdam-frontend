@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   capitalizeFirstLetter,
   defaultDateFormat,
@@ -8,7 +8,7 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   LoadingContent,
@@ -30,10 +30,10 @@ export default function BurgerzakenIDKaart() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.BURGERZAKEN,
-          title: ChapterTitles.BURGERZAKEN,
+          title: ThemaTitles.BURGERZAKEN,
         }}
         isLoading={isLoading(BRP)}
       >

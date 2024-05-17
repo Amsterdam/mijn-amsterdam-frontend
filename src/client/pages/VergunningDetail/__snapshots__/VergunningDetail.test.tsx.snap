@@ -14,7 +14,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -313,7 +313,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -590,7 +590,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -819,7 +819,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -1113,7 +1113,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -1426,7 +1426,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -1698,7 +1698,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -2005,7 +2005,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -2257,7 +2257,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -2495,7 +2495,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -2801,7 +2801,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -2877,83 +2877,142 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         >
           Verzoek
         </h3>
-        <p
+        <div
           class="_Value_6f1df2"
         >
-          Nieuwe aanvraag
-        </p>
+          <ul>
+            <li>
+              Kentekenwijziging
+            </li>
+            <li>
+              Nieuwe aanvraag
+            </li>
+          </ul>
+        </div>
       </div>
       <div
-        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
+        class="_InfoDetailGroup_6f1df2"
       >
-        <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
         >
-          Adres
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Oudezijds Voorburgwal 233
-          <br />
-          <a
-            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+          <div
+            class=""
           >
-            Bekijk op de kaart
-          </a>
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
-        >
-          Soortplek
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Consul/Huisarts/Verloskundige woonadres
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
-        >
-          Parkeervak
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <div
+              class="_InfoDetail_6f1df2 _LocationInfo_28a267"
             >
-              <title>
-                chevron-rechts-icoon
-              </title>
-              <polygon
-                points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-              />
-            </svg>
-            Bekijk parkeervak
-          </a>
-        </p>
+              <h3
+                class="ams-heading ams-heading--4 _Label_6f1df2"
+              >
+                Adres 1
+              </h3>
+              <p
+                class="_Value_6f1df2"
+              >
+                Oudezijds Voorburgwal 233
+                <br />
+                <a
+                  class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+                >
+                  Bekijk op de kaart
+                </a>
+              </p>
+            </div>
+            <div
+              class="_InfoDetail_6f1df2"
+            >
+              <h3
+                class="ams-heading ams-heading--4 _Label_6f1df2"
+              >
+                Soort plek
+              </h3>
+              <p
+                class="_Value_6f1df2"
+              >
+                Consul/Huisarts/Verloskundige woonadres
+              </p>
+            </div>
+            <div
+              class="_InfoDetail_6f1df2"
+            >
+              <h3
+                class="ams-heading ams-heading--4 _Label_6f1df2"
+              >
+                Parkeervak
+              </h3>
+              <p
+                class="_Value_6f1df2"
+              >
+                <a
+                  class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+                  href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
+                  rel="noreferrer"
+                >
+                  Bekijk parkeervak
+                </a>
+              </p>
+            </div>
+          </div>
+          <div
+            class="_InfoGroupDivider_28a267"
+          >
+            <div
+              class="_InfoDetail_6f1df2 _LocationInfo_28a267"
+            >
+              <h3
+                class="ams-heading ams-heading--4 _Label_6f1df2"
+              >
+                Adres 2
+              </h3>
+              <p
+                class="_Value_6f1df2"
+              >
+                Oudezijds Voorburgwal 235
+                <br />
+                <a
+                  class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+                >
+                  Bekijk op de kaart
+                </a>
+              </p>
+            </div>
+            <div
+              class="_InfoDetail_6f1df2"
+            >
+              <h3
+                class="ams-heading ams-heading--4 _Label_6f1df2"
+              >
+                Soort plek
+              </h3>
+              <p
+                class="_Value_6f1df2"
+              >
+                Consul/Huisarts/Verloskundige woonadres
+              </p>
+            </div>
+            <div
+              class="_InfoDetail_6f1df2"
+            >
+              <h3
+                class="ams-heading ams-heading--4 _Label_6f1df2"
+              >
+                Parkeervak
+              </h3>
+              <p
+                class="_Value_6f1df2"
+              >
+                <a
+                  class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+                  href="https://data.amsterdam.nl/data/parkeervakken/parkeervakken/121455487005/"
+                  rel="noreferrer"
+                >
+                  Bekijk parkeervak
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="_InfoDetail_6f1df2"
@@ -2968,6 +3027,18 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         >
           PR067L
         </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="ams-heading ams-heading--4 _Label_6f1df2"
+        >
+          Oud kenteken
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        />
       </div>
     </div>
     <div
@@ -3120,7 +3191,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -3373,7 +3444,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -3673,7 +3744,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -3992,7 +4063,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -4305,7 +4376,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -4544,7 +4615,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -4818,7 +4889,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -5067,7 +5138,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -5311,7 +5382,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -5582,7 +5653,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -5873,7 +5944,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -6117,7 +6188,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -6397,7 +6468,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"
@@ -6687,7 +6758,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
       >
         <svg
           aria-label="Vergunningen en ontheffingen"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           focusable="false"
           height="32px"

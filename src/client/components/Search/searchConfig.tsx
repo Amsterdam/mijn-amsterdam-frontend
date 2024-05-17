@@ -383,7 +383,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'BEZWAREN' as AppStateKey,
     displayTitle(item: Bezwaar) {
       return (term: string) =>
-        displayPath(term, [`Bezwaar ${item.zaakkenmerk}`]);
+        displayPath(term, [`Bezwaar ${item.identificatie}`]);
     },
   },
   {

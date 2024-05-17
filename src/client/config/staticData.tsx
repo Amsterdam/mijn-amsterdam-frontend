@@ -1,10 +1,10 @@
-import { Chapters } from '../../universal/config/chapter';
+import { Themas } from '../../universal/config/thema';
 import { MyNotification } from '../../universal/types';
 import { ExternalUrls } from './app';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
-  chapter: Chapters.NOTIFICATIONS,
+  thema: Themas.NOTIFICATIONS,
   datePublished: new Date(2019, 10, 11).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: true,
@@ -25,7 +25,7 @@ export const WelcomeNotification: MyNotification = {
 
 export const WelcomeNotification2: MyNotification = {
   id: 'welcome02',
-  chapter: Chapters.NOTIFICATIONS,
+  thema: Themas.NOTIFICATIONS,
   datePublished: new Date(2022, 0, 20).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: false,
@@ -63,7 +63,7 @@ export const WelcomeNotification2: MyNotification = {
 
 export const WelcomeNotification2Commercial: MyNotification = {
   id: 'welcome02-commercial',
-  chapter: Chapters.NOTIFICATIONS,
+  thema: Themas.NOTIFICATIONS,
   datePublished: new Date(2022, 0, 20).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: false,

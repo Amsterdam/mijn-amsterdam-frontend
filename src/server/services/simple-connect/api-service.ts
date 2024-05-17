@@ -1,5 +1,5 @@
 import { AxiosResponseTransformer } from 'axios';
-import { Chapter } from '../../../universal/config';
+import { Thema } from '../../../universal/config';
 import {
   ApiResponse,
   apiSuccessResult,
@@ -66,12 +66,12 @@ export async function fetchService<T extends ApiPatternResponseA>(
 
 export function transformNotificationsDefault(
   notifications: MyNotification[],
-  chapter: Chapter
+  thema: Thema
 ) {
   const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map((notification) => ({
         ...notification,
-        chapter,
+        thema,
         link: {
           title:
             notification.link?.title || 'Meer informatie over deze melding',
@@ -86,7 +86,7 @@ export function transformNotificationsDefault(
 export async function fetchTipsAndNotifications(
   requestID: requestID,
   apiConfig: DataRequestConfig = {},
-  chapter: Chapter,
+  thema: Thema,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<
   ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
@@ -105,7 +105,7 @@ export async function fetchTipsAndNotifications(
     if (response.content?.notifications) {
       responseData.notifications = transformNotificationsDefault(
         response.content.notifications,
-        chapter
+        thema
       );
     }
 

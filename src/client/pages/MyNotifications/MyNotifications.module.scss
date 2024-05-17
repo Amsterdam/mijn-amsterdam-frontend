@@ -36,7 +36,7 @@
       width: auto;
     }
 
-    @include select(MyNotifications_ChapterIndication) {
+    @include select(MyNotifications_ThemaIndication) {
       display: block;
 
       @include mq-tablet() {

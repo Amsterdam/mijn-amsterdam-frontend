@@ -118,7 +118,7 @@ describe('createTipsFromServiceResults', () => {
       id: 'test',
       title: 'test',
       description: 'test',
-      chapter: 'test',
+      thema: 'test',
       datePublished: 'test',
       isTip: true,
       isAlert: false,

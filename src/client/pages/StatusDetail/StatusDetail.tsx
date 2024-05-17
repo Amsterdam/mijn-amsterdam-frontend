@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 
 import {
@@ -14,7 +14,7 @@ import {
 } from '../../../universal/types/App.types';
 import { AppState, AppStateKey } from '../../AppState';
 import {
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   ErrorAlert,
   LoadingContent,
@@ -30,7 +30,7 @@ import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
 interface StatusDetailProps {
-  chapter: Chapter;
+  thema: Thema;
   stateKey: AppStateKey;
   getItems?: (content: AppState[AppStateKey]['content']) => StatusSourceItem[];
   pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
@@ -47,7 +47,7 @@ export default function StatusDetail({
   getItems,
   pageContent,
   maxStepCount,
-  chapter,
+  thema,
   statusLabel = 'Status',
   showStatusLineConnection = true,
   reverseSteps = false,
@@ -70,7 +70,7 @@ export default function StatusDetail({
   const { id } = useParams<{ id: string }>();
   const statusItem = statusItems.find((item) => item.id === id);
   const noContent = !isStateLoading && !statusItem;
-  const appRoute = AppRoutes[chapter];
+  const appRoute = AppRoutes[thema];
   const hasDecision =
     !!statusItem?.decision ||
     !!statusItem?.steps.some((step) => !!step.decision);
@@ -113,8 +113,8 @@ export default function StatusDetail({
   return (
     <DetailPage className={styles.StatusDetail}>
       <PageHeading
-        icon={<ChapterIcon />}
-        backLink={{ to: appRoute, title: ChapterTitles[chapter] }}
+        icon={<ThemaIcon />}
+        backLink={{ to: appRoute, title: ThemaTitles[thema] }}
         isLoading={isStateLoading}
       >
         {title}
@@ -153,7 +153,7 @@ export default function StatusDetail({
       </PageContent>
       {!!(statusItem?.steps && statusItemSteps.length) && (
         <StatusLineComponent
-          trackCategory={`${chapter} / ${statusItem?.about} status`}
+          trackCategory={`${thema} / ${statusItem?.about} status`}
           statusLabel={
             typeof statusLabel === 'function'
               ? statusLabel(statusItem)
@@ -163,7 +163,7 @@ export default function StatusDetail({
           items={statusItemSteps}
           maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
           highlightKey={highlightKey}
-          id={`${chapter}-${stateKey}-status`}
+          id={`${thema}-${stateKey}-status`}
           documentPathForTracking={documentPathForTracking}
         />
       )}

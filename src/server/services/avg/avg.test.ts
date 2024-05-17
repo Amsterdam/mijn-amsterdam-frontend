@@ -194,7 +194,6 @@ describe('AVG', () => {
           "content": {
             "notifications": [
               {
-                "chapter": "AVG",
                 "datePublished": "2023-03-16T00:00:00.000Z",
                 "description": "Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.",
                 "id": "avg-1-notification",
@@ -202,10 +201,10 @@ describe('AVG', () => {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/1",
                 },
+                "thema": "AVG",
                 "title": "AVG verzoek meer informatie nodig",
               },
               {
-                "chapter": "AVG",
                 "datePublished": "2023-03-30T00:00:00.000Z",
                 "description": "Uw AVG verzoek is in behandeling genomen.",
                 "id": "avg-2-notification",
@@ -213,10 +212,10 @@ describe('AVG', () => {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/2",
                 },
+                "thema": "AVG",
                 "title": "AVG verzoek in behandeling",
               },
               {
-                "chapter": "AVG",
                 "datePublished": "2023-03-19T00:00:00.000Z",
                 "description": "Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.",
                 "id": "avg-223-notification",
@@ -224,10 +223,10 @@ describe('AVG', () => {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/223",
                 },
+                "thema": "AVG",
                 "title": "AVG verzoek afgehandeld",
               },
               {
-                "chapter": "AVG",
                 "datePublished": "2023-03-25T00:00:00.000Z",
                 "description": "Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.",
                 "id": "avg-425-notification",
@@ -235,10 +234,10 @@ describe('AVG', () => {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/425",
                 },
+                "thema": "AVG",
                 "title": "AVG verzoek afgehandeld",
               },
               {
-                "chapter": "AVG",
                 "datePublished": "2023-06-03T00:00:00.000Z",
                 "description": "Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief of e-mail waarin staat welke informatie wij nodig hebben.",
                 "id": "avg-561-notification",
@@ -246,10 +245,10 @@ describe('AVG', () => {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/561",
                 },
+                "thema": "AVG",
                 "title": "AVG verzoek meer informatie nodig",
               },
               {
-                "chapter": "AVG",
                 "datePublished": "2023-03-18T00:00:00.000Z",
                 "description": "Uw AVG verzoek is ontvangen.",
                 "id": "avg-156-notification",
@@ -257,6 +256,7 @@ describe('AVG', () => {
                   "title": "Bekijk details",
                   "to": "/avg/verzoek/156",
                 },
+                "thema": "AVG",
                 "title": "AVG verzoek ontvangen",
               },
             ],

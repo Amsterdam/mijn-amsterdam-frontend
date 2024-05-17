@@ -6,7 +6,7 @@ describe('tips-and-notifications', () => {
     const notifications = [
       {
         title: 'tip 0',
-        chapter: 'chapter',
+        thema: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-09-07',
@@ -14,7 +14,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 4',
-        chapter: 'chapter',
+        thema: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-08-07',
@@ -22,7 +22,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 1',
-        chapter: 'chapter',
+        thema: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-07-07',
@@ -30,7 +30,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 2',
-        chapter: 'chapter',
+        thema: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-06-07',
@@ -38,7 +38,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'tip 1',
-        chapter: 'chapter',
+        thema: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-05-07',
@@ -46,7 +46,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 3',
-        chapter: 'chapter',
+        thema: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-04-07',
@@ -54,7 +54,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'tip 2',
-        chapter: 'chapter',
+        thema: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-03-07',

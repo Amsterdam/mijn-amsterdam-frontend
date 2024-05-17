@@ -285,36 +285,36 @@ export const notificationContent: NotificationContent = {
     requested: {
       ...requestedShort,
       description: () =>
-        'Wij hebben uw aanvraag eigen parkeerplaats ontvangen.',
+        'Wij hebben uw aanvraag Eigen parkeerplaats ontvangen.',
     },
     inProgress: {
       ...inProgressShort,
       description: () =>
-        'Wij hebben uw aanvraag eigen parkeerplaats in behandeling genomen.',
+        'Wij hebben uw aanvraag Eigen parkeerplaats in behandeling genomen.',
     },
     done: {
       ...doneShort,
       description: () =>
-        'Wij hebben uw aanvraag eigen parkeerplaats afgehandeld.',
+        'Wij hebben uw aanvraag Eigen parkeerplaats afgehandeld.',
     },
   },
   [CaseType.EigenParkeerplaatsOpheffen]: {
     requested: {
       ...requestedShort,
-      title: () => 'Opzegging eigen parkeerplaats ontvangen',
+      title: () => 'Opzegging Eigen parkeerplaats ontvangen',
       description: () =>
-        'Wij hebben uw opzegging eigen parkeerplaats ontvangen.',
+        'Wij hebben uw opzegging Eigen parkeerplaats ontvangen.',
     },
     inProgress: {
       ...inProgressShort,
-      title: () => 'Opzegging eigen parkeerplaats in behandeling',
+      title: () => 'Opzegging Eigen parkeerplaats in behandeling',
       description: () =>
-        'Wij hebben uw opzegging eigen parkeerplaats in behandeling genomen.',
+        'Wij hebben uw opzegging Eigen parkeerplaats in behandeling genomen.',
     },
     done: {
       ...doneShort,
-      title: () => 'Opzegging eigen parkeerplaats afgehandeld',
-      description: () => 'Uw eigen parkeerplaats is opgezegd.',
+      title: () => 'Opzegging Eigen parkeerplaats afgehandeld',
+      description: () => 'Uw Eigen parkeerplaats is opgezegd.',
     },
   },
   [CaseType.RVVHeleStad]: {

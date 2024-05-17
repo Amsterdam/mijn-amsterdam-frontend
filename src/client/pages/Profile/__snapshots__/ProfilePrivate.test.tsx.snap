@@ -14,7 +14,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       >
         <svg
           aria-label="Mijn gegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="30px"
           viewBox="0 0 30 30"
@@ -1721,7 +1721,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       >
         <svg
           aria-label="Mijn gegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="30px"
           viewBox="0 0 30 30"
@@ -3428,7 +3428,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       >
         <svg
           aria-label="Mijn gegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="30px"
           viewBox="0 0 30 30"
@@ -5026,7 +5026,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
       >
         <svg
           aria-label="Mijn gegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="30px"
           viewBox="0 0 30 30"
@@ -5471,7 +5471,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       >
         <svg
           aria-label="Mijn gegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="30px"
           viewBox="0 0 30 30"
@@ -7178,7 +7178,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       >
         <svg
           aria-label="Mijn gegevens"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="30px"
           viewBox="0 0 30 30"

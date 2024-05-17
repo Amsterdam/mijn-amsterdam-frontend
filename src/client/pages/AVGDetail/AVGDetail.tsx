@@ -1,9 +1,9 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   PageContent,
@@ -23,12 +23,12 @@ const AVGDetail = () => {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: generatePath(AppRoutes.AVG, {
             page: 1,
           }),
-          title: ChapterTitles.AVG,
+          title: ThemaTitles.AVG,
         }}
         isLoading={isLoading(AVG)}
       >

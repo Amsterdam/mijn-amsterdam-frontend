@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
 import { Stadspas } from '../../../server/services/stadspas/stadspas-types';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  ChapterIcon,
+  ThemaIcon,
   ErrorAlert,
   Linkd,
   MaintenanceNotifications,
@@ -72,9 +72,9 @@ export default function CStadspas() {
           title: 'Home',
         }}
         isLoading={false}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
-        {ChapterTitles.STADSPAS}
+        {ThemaTitles.STADSPAS}
       </PageHeading>
       <PageContent>
         <h4>Hoe weet ik of ik een geldige Stadspas heb?</h4>

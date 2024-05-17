@@ -1,4 +1,4 @@
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
   isError,
@@ -7,7 +7,7 @@ import {
 import {
   addTitleLinkComponent,
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -55,9 +55,9 @@ export default function Horeca() {
           title: 'Home',
         }}
         isLoading={isLoading(HORECA)}
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
       >
-        {ChapterTitles.HORECA}
+        {ThemaTitles.HORECA}
       </PageHeading>
       <PageContent>
         <p>

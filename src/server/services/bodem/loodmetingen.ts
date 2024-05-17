@@ -12,7 +12,7 @@ import {
   LoodMetingRequestsSource,
   LoodMetingen,
 } from './types';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Themas } from '../../../universal/config';
 import {
   apiDependencyError,
   apiErrorResult,
@@ -212,7 +212,7 @@ function createLoodNotification(meting: LoodMeting) {
   const isDenied = status === 'afgewezen';
 
   const notification: MyNotification = {
-    chapter: Chapters.BODEM,
+    thema: Themas.BODEM,
     id: meting.kenmerk,
     title: 'Aanvraag lood in de bodem-check ontvangen',
     description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is ontvangen.`,

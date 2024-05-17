@@ -14,7 +14,7 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
       >
         <svg
           aria-label="Bodem"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="24"
           viewBox="0 0 24 24"
@@ -433,7 +433,7 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
       >
         <svg
           aria-label="Bodem"
-          class="_ChapterIcon_3ea2dd"
+          class="_ThemaIcon_2fc54d"
           fill="black"
           height="24"
           viewBox="0 0 24 24"

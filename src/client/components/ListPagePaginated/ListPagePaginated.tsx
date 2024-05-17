@@ -2,13 +2,13 @@ import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import { ReactNode, useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import {
-  ChapterIcon,
+  ThemaIcon,
   ErrorAlert,
   LoadingContent,
   OverviewPage,
   PageHeading,
 } from '..';
-import { Chapter } from '../../../universal/config';
+import { Thema } from '../../../universal/config';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { TableV2 } from '../Table/TableV2';
 
@@ -24,7 +24,7 @@ interface ListPagePaginatedProps {
   items: object[];
   title: string;
   body?: ReactNode;
-  chapter?: Chapter;
+  thema?: Thema;
   errorText?: string;
   noItemsText?: string;
   pageSize?: number;
@@ -35,7 +35,7 @@ export function ListPagePaginated({
   appRouteBack,
   appRouteParams = null,
   body,
-  chapter,
+  thema,
   displayProps,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
   noItemsText = 'U heeft (nog) geen gegevens op deze pagina.',
@@ -70,7 +70,7 @@ export function ListPagePaginated({
   return (
     <OverviewPage>
       <PageHeading
-        icon={<ChapterIcon chapter={chapter} />}
+        icon={<ThemaIcon thema={thema} />}
         backLink={{ to: appRouteBack, title: 'Overzicht' }}
         isLoading={isLoading}
       >

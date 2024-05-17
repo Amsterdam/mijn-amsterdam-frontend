@@ -12,18 +12,14 @@ import {
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  ChapterIcon,
+  ThemaIcon,
   DetailPage,
   InfoDetail,
   LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
-import {
-  AppRoutes,
-  BagChapters,
-  ChapterTitles,
-} from '../../../universal/config';
+import { AppRoutes, BagThemas, ThemaTitles } from '../../../universal/config';
 import {
   InfoDetailGroup,
   InfoDetailHeading,
@@ -50,7 +46,7 @@ interface BezwarenDetailPartialProps {
 function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
   const [bezwaarDetail, api] = useAppStateBagApi<BezwaarDetail | null>({
     url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuidEncrypted}`,
-    bagChapter: BagChapters.BEZWAREN,
+    bagThema: BagThemas.BEZWAREN,
     key: uuidEncrypted,
   });
 
@@ -120,10 +116,10 @@ function BezwarenDetail() {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon />}
+        icon={<ThemaIcon />}
         backLink={{
           to: AppRoutes.BEZWAREN,
-          title: ChapterTitles.BEZWAREN,
+          title: ThemaTitles.BEZWAREN,
         }}
         isLoading={isLoading(BEZWAREN)}
       >
@@ -162,7 +158,18 @@ function BezwarenDetail() {
               </InfoDetailGroup>
             )}
             {bezwaar.einddatum && bezwaar.resultaat && (
-              <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
+              <InfoDetailGroup>
+                <InfoDetail
+                  label="Resultaat bezwaar"
+                  value={bezwaar.resultaat}
+                />
+                {!!bezwaar.datumbesluit && (
+                  <InfoDetail
+                    label="Datum"
+                    value={defaultDateFormat(bezwaar.datumbesluit)}
+                  />
+                )}
+              </InfoDetailGroup>
             )}
           </>
         )}

@@ -30,7 +30,7 @@ export default function InkomenDetailTozo() {
 
   return (
     <StatusDetail
-      chapter="INKOMEN"
+      thema="INKOMEN"
       stateKey="WPI_TOZO"
       pageContent={pageContent}
       maxStepCount={() => -1}
