@@ -1,0 +1,26 @@
+@import '../../styles/_global.scss';
+
+.menu {
+  @include centered-block;
+  padding: 4rem 0 6rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+
+  :global(.ams-icon){
+    display: none;
+  }
+
+  :nth-child(1) :global(.ams-link-list) :global(.ams-link) {
+    font-weight: 800;
+  }
+
+  @include mq-phone() {
+    grid-template-columns: 1fr;
+    padding: 2rem 0 4rem;
+
+    & > div {
+      padding-top: 2rem;
+    }
+  }
+}
+
