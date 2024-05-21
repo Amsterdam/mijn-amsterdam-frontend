@@ -4,8 +4,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
 {
   "content": [
     {
-      "datumIntrekking": null,
-      "datumbesluit": null,
+      "datumResultaat": null,
       "documenten": [],
       "einddatum": null,
       "identificatie": "OJ.24.000115.001",
@@ -27,8 +26,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "uuidEncrypted": "test-encrypted-id",
     },
     {
-      "datumIntrekking": null,
-      "datumbesluit": "2021-05-01",
+      "datumResultaat": "2023-09-08",
       "documenten": [],
       "einddatum": null,
       "identificatie": "BI.24.000093.001",
@@ -50,8 +48,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "uuidEncrypted": "test-encrypted-id",
     },
     {
-      "datumIntrekking": null,
-      "datumbesluit": "2021-03-03",
+      "datumResultaat": null,
       "documenten": [],
       "einddatum": null,
       "identificatie": "DJ.23.000268.001",
@@ -73,8 +70,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "uuidEncrypted": "test-encrypted-id",
     },
     {
-      "datumIntrekking": null,
-      "datumbesluit": "2023-01-03",
+      "datumResultaat": null,
       "documenten": [],
       "einddatum": "2023-01-04",
       "identificatie": "JB.22.000443.002",

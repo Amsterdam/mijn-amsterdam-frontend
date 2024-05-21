@@ -22,11 +22,11 @@ const testState = {
         statusdatum: '01-05-2021',
         statussen: [],
         datumbesluit: '01-05-2021',
-        datumIntrekking: null,
-        einddatum: null,
+        einddatum: '2023-05-10',
         primairbesluit: 'F2021.0008',
         primairbesluitdatum: '01-05-2021',
         resultaat: 'Niet-ontvankelijk',
+        datumResultaat: '2023-05-10',
         documenten: [],
         link: {
           title: 'Bekijk details',
