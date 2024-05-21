@@ -86,69 +86,7 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [`${ApiUrls.SIA}`]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      if (config.params.status.includes('ingepland')) {
-        return loadMockApiResponseJson(SIA);
-      }
-      return loadMockApiResponseJson([]);
-    },
-  },
-  [`${ApiUrls.SIA}:id/attachments`]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson(SIA_ATTACHMENTS);
-    },
-  },
-  [`${ApiUrls.SIA}:id/history`]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson(SIA_HISTORY);
-    },
-  },
-  ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1']:
-  {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson({
-        features: [SIA_MELDINGEN_BUURT.features[0]],
-      });
-    },
-    headers: {
-      link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=2>; rel="next"',
-    },
-  },
-  ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=2']:
-  {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson({
-        features: [SIA_MELDINGEN_BUURT.features[1]],
-      });
-    },
-    headers: {
-      link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3>; rel="next"',
-    },
-  },
-  ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3']:
-  {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson({
-        features: [SIA_MELDINGEN_BUURT.features[2]],
-      });
-    },
-  },
-  [String(process.env.BFF_SIA_IAM_TOKEN_ENDPOINT)]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    method: 'post',
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson({
-        access_token: 'xxxx',
-      });
-    },
-  },
+  // RP TODO: Verwijder (deze was al uitgecomment)
   // [String(ApiUrls.AFVAL)]: {
   //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
   //   responseData: async (config: any) => {
