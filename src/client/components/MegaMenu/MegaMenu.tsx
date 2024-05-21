@@ -13,7 +13,7 @@ export default function Menu({ menuItems, themas }: Props) {
   return (
     <MegaMenu>
       <div className={styles.menu}>
-        <div>
+        <nav>
           <Heading level={3} size="level-3">
             Thema’s
           </Heading>
@@ -41,25 +41,24 @@ export default function Menu({ menuItems, themas }: Props) {
               );
             })}
           </MegaMenu.ListCategory>
-        </div>
-        <div>
+        </nav>
+        <nav>
           <Heading level={3} size="level-3">
             Categorieën
           </Heading>
           <MegaMenu.ListCategory>
-            <LinkList>
-              {menuItems.map((item) => (
-                <MaRouterLink
-                  key={item.id}
-                  href={item.to}
-                  maVariant="noDefaultUnderline"
-                >
-                  {item.title}
-                </MaRouterLink>
-              ))}
-            </LinkList>
+            {menuItems.map((item) => (
+              <MaRouterLink
+                key={item.id}
+                href={item.to}
+                maVariant="noDefaultUnderline"
+                className={styles.menuItem}
+              >
+                {item.title}
+              </MaRouterLink>
+            ))}
           </MegaMenu.ListCategory>
-        </div>
+        </nav>
       </div>
     </MegaMenu>
   );
