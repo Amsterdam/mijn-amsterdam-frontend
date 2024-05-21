@@ -83,19 +83,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [String(ApiUrls.ERFPACHTv2)]: {
-    pathReg: new RegExp('/remote/erfpachtv2/*'),
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      if (config.url.includes('dossierinfo/')) {
-        return loadMockApiResponseJson(ERFPACHTv2_DOSSIERINFO_DETAILS);
-      }
-      if (config.url.includes('dossierinfo')) {
-        return loadMockApiResponseJson(ERFPACHTv2_DOSSIERS);
-      }
-      return loadMockApiResponseJson(ERFPACHTv2_ERFPACHTER);
-    },
-  },
   [String(ApiUrls.SUBSIDIE)]: {
     pathReg: new RegExp('/remote/subsidies/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
