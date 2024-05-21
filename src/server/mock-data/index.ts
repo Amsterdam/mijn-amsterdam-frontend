@@ -86,34 +86,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [String(ApiUrls.WPI_AANVRAGEN)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 3400,
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(WPI_AANVRAGEN);
-    },
-  },
-  [String(ApiUrls.WPI_E_AANVRAGEN)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(WPI_E_AANVRAGEN);
-    },
-  },
-  [String(ApiUrls.WPI_SPECIFICATIES)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(WPI_SPECIFICATIES);
-    },
-  },
   [String(ApiUrls.SVWI)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
