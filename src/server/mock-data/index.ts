@@ -86,13 +86,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [String(ApiUrls.SUBSIDIE)]: {
-    pathReg: new RegExp('/remote/subsidies/*'),
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson(SUBSIDIE);
-    },
-  },
   [`${ApiUrls.SIA}`]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
