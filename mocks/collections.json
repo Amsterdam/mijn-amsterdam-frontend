@@ -13,7 +13,8 @@
       "get-gpass-transacties:standard",
       "get-wpi-aanvragen:standard",
       "get-wpi-e-aanvragen:standard",
-      "get-wpi-specificaties:standard"
+      "get-wpi-specificaties:standard",
+      "get-svwi-tegel:standard"
     ]
   }
 ]
