@@ -25,6 +25,7 @@ export default function Menu({ menuItems, themas }: Props) {
                     key={thema.id}
                     href={thema.to}
                     maVariant="noDefaultUnderline"
+                    rel="norefferer"
                   >
                     {thema.title}
                   </MaLink>
