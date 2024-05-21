@@ -10,8 +10,8 @@ type Props = {
 };
 
 export default function Menu({ menuItems, themas }: Props) {
-  // on safari the themas list is not displayed correctly when the count is uneven due to a render problem
   const isThemasCountUneven = themas.length % 2 !== 0;
+
   return (
     <MegaMenu>
       <div className={styles.menu}>
@@ -21,13 +21,16 @@ export default function Menu({ menuItems, themas }: Props) {
           </Heading>
           <MegaMenu.ListCategory>
             <LinkList>
-              {themas.slice(0, -1).map((thema) =>
-                thema.rel === 'external' ? (
+              {themas.map((thema, index) => {
+                const addNbsp =
+                  index === themas.length - 1 && isThemasCountUneven;
+                return thema.rel === 'external' ? (
                   <MaLink
                     key={thema.id}
                     href={thema.to}
                     maVariant="noDefaultUnderline"
                     rel="noreferrer"
+                    className={addNbsp ? styles.addAfter : ''}
                   >
                     {thema.title}
                   </MaLink>
@@ -36,12 +39,12 @@ export default function Menu({ menuItems, themas }: Props) {
                     key={thema.id}
                     href={thema.to}
                     maVariant="noDefaultUnderline"
+                    className={addNbsp ? styles.addAfter : ''}
                   >
                     {thema.title}
                   </MaRouterLink>
-                )
-              )}
-              {!isThemasCountUneven && <span>&nbsp;</span>}
+                );
+              })}
             </LinkList>
           </MegaMenu.ListCategory>
         </div>

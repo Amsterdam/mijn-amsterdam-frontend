@@ -24,3 +24,10 @@
   }
 }
 
+.addNbsp {
+ &:after {
+    content: '\00a0';
+    display: block;
+  }
+}
+
