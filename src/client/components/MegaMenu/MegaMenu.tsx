@@ -26,24 +26,26 @@ export default function Menu({ menuItems, themas: t }: Props) {
                 const addNbsp =
                   index === themas.length - 1 && !isThemasCountUneven;
                 return thema.rel === 'external' ? (
-                  <MaLink
-                    key={thema.id}
-                    href={thema.to}
-                    maVariant="noDefaultUnderline"
-                    rel="noreferrer"
-                    className={addNbsp ? styles.addNbsp : ''}
-                  >
-                    {thema.title}
-                  </MaLink>
+                  <li className={addNbsp ? styles.addNbsp : ''}>
+                    <MaLink
+                      key={thema.id}
+                      href={thema.to}
+                      maVariant="noDefaultUnderline"
+                      rel="noreferrer"
+                    >
+                      {thema.title}
+                    </MaLink>
+                  </li>
                 ) : (
-                  <MaRouterLink
-                    key={thema.id}
-                    href={thema.to}
-                    maVariant="noDefaultUnderline"
-                    className={addNbsp ? styles.addNbsp : ''}
-                  >
-                    {thema.title}
-                  </MaRouterLink>
+                  <li className={addNbsp ? styles.addNbsp : ''}>
+                    <MaRouterLink
+                      key={thema.id}
+                      href={thema.to}
+                      maVariant="noDefaultUnderline"
+                    >
+                      {thema.title}
+                    </MaRouterLink>
+                  </li>
                 );
               })}
             </LinkList>
