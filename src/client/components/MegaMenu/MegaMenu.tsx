@@ -9,10 +9,7 @@ type Props = {
   themas: ThemaMenuItem[];
 };
 
-export default function Menu({ menuItems, themas: t }: Props) {
-  const themas = t;
-  const isThemasCountUneven = themas.length % 2 !== 0;
-
+export default function Menu({ menuItems, themas }: Props) {
   return (
     <MegaMenu>
       <div className={styles.menu}>
@@ -21,34 +18,28 @@ export default function Menu({ menuItems, themas: t }: Props) {
             Thema’s
           </Heading>
           <MegaMenu.ListCategory>
-            <LinkList>
-              {themas.map((thema, index) => {
-                const addNbsp =
-                  index === themas.length - 1 && isThemasCountUneven;
-                return thema.rel === 'external' ? (
-                  <li className={addNbsp ? styles.addNbsp : ''} key={thema.id}>
-                    <MaLink
-                      key={thema.id}
-                      href={thema.to}
-                      maVariant="noDefaultUnderline"
-                      rel="noreferrer"
-                    >
-                      {thema.title}
-                    </MaLink>
-                  </li>
-                ) : (
-                  <li className={addNbsp ? styles.addNbsp : ''} key={thema.id}>
-                    <MaRouterLink
-                      key={thema.id}
-                      href={thema.to}
-                      maVariant="noDefaultUnderline"
-                    >
-                      {thema.title}
-                    </MaRouterLink>
-                  </li>
-                );
-              })}
-            </LinkList>
+            {themas.map((thema, index) => {
+              return thema.rel === 'external' ? (
+                <MaLink
+                  key={thema.id}
+                  href={thema.to}
+                  maVariant="noDefaultUnderline"
+                  rel="noreferrer"
+                  className={styles.menuItem}
+                >
+                  {thema.title}
+                </MaLink>
+              ) : (
+                <MaRouterLink
+                  key={thema.id}
+                  href={thema.to}
+                  maVariant="noDefaultUnderline"
+                  className={styles.menuItem}
+                >
+                  {thema.title}
+                </MaRouterLink>
+              );
+            })}
           </MegaMenu.ListCategory>
         </div>
         <div>

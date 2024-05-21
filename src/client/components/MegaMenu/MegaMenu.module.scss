@@ -2,16 +2,14 @@
 
 .menu {
   @include centered-block;
-  padding: 4rem 0 6rem;
+  padding: 4rem 0 calc(6rem - var(--ams-link-list-gap)) 0;
   display: grid;
   grid-template-columns: 2fr 1fr;
 
-  :global(.ams-icon){
-    display: none;
-  }
-
-  :nth-child(1) :global(.ams-link-list) :global(.ams-link) {
+  .menuItem {
+    display: block;
     font-weight: 800;
+    margin-bottom: var(--ams-link-list-gap);
   }
 
   @include mq-phone() {
@@ -24,10 +22,4 @@
   }
 }
 
-.addNbsp {
- &:after {
-    content: '\00a0';
-    display: block;
-  }
-}
 
