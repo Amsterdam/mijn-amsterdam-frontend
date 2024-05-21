@@ -1,6 +1,5 @@
 const BEZWAREN_LIST_RESPONSE = require('../fixtures/bezwaren.json');
 
-// TODO: Hulp hierbij krijgen. URL in evn is HTTPS en error heeft met SSL te maken
 module.exports = [
   {
     id: 'get-bezwaren-list',
@@ -12,12 +11,16 @@ module.exports = [
         id: 'standard',
         type: 'profile-type-handler',
         options: {
-          code: 200,
-          body: BEZWAREN_LIST_RESPONSE,
+          privateUser: {
+            statusCode: 200,
+            body: BEZWAREN_LIST_RESPONSE,
+          },
+          commercialUser: {
+            statusCode: 200,
+            body: 'no-content',
+          },
         },
       },
     ],
   },
 ];
-
-//

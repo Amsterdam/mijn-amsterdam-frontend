@@ -1,27 +1,5 @@
 const jose = require('jose');
 
-// options: {
-//   private: {
-//     code: 200,
-//     data: BRP_DATA
-//   },
-//   commercial: {
-//     code: 500,
-//     data: 'no-content'
-//   }
-// }
-//
-// options: {
-//   private: {
-//     code: 200,
-//     data: KVK_DATA_PRIVATE
-//   },
-//   commercial: {
-//     code: 200,
-//     data: KVK_DATA_COMMERCIAL
-//   }
-// }
-
 class ProfileTypeHandler {
   static get id() {
     return 'profile-type-handler';
@@ -32,51 +10,82 @@ class ProfileTypeHandler {
     return {
       type: 'object',
       properties: {
-        code: {
-          type: 'number',
-        },
-        body: {
+        privateUser: {
           type: 'object',
+          properties: {
+            statusCode: {
+              type: 'number',
+            },
+            body: {
+              type: ['object', 'string'],
+            },
+          },
+        },
+        commercialUser: {
+          type: 'object',
+          properties: {
+            statusCode: {
+              type: 'number',
+            },
+            body: {
+              type: ['object', 'string'],
+            },
+          },
         },
       },
-      required: ['code', 'body'],
+      required: ['privateUser', 'commercialUser'],
       additionalProperties: false,
     };
   }
 
   constructor(options, core) {
-    this._code = options.code;
     this._core = core;
-    this._body = options.body;
+
+    this._privateUser = options.privateUser;
+    this._commercialUser = options.commercialUser;
   }
 
   middleware(req, res, next) {
+    let resStatus = undefined;
+    let resBody = undefined;
+
     if (isCommercialUser(req)) {
       this._core.logger.debug('Request from a commercial user');
-      // TODO: status is ook 200 ook voor commercial user
-      res.status(this._code);
-      res.send('no-content');
+      resStatus = this._commercialUser.statusCode;
+      resBody = this._commercialUser.body;
     } else {
       this._core.logger.debug('Request from a non-commercial user');
-      res.status(this._code);
-      res.send(this._body);
+      resStatus = this._privateUser.statusCode;
+      resBody = this._privateUser.body;
     }
+
+    res.status(resStatus);
+    res.send(resBody);
   }
 
   get preview() {
-    return this._body;
+    return null;
   }
 }
 
 function isCommercialUser(req) {
-  if (req.headers.authorization === undefined) {
+  const auth = req.headers?.authorization;
+
+  if (auth === undefined || auth === null || !auth.startsWith('Bearer ')) {
     return false;
   }
-  const jwtDecoded = jose.decodeJwt(req.headers.authorization.split(' ')[1]);
-  if (jwtDecoded === undefined || jwtDecoded.aud === undefined) {
+
+  const jwtDecoded = jose.decodeJwt(auth.split(' ')[1]);
+
+  if (jwtDecoded === undefined) {
     return false;
   }
-  return jwtDecoded.aud === 'amsterdam1';
+
+  // Different requests can have different identities of being a commercial user.
+  return (
+    jwtDecoded.aud === 'amsterdam1' ||
+    jwtDecoded.role === 'niet_natuurlijk_persoon'
+  );
 }
 
 module.exports = ProfileTypeHandler;
