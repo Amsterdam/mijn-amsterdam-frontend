@@ -83,15 +83,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [String(ApiUrls.SVWI)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(SVWI);
-    },
-  },
   [String(ApiUrls.ERFPACHTv2)]: {
     pathReg: new RegExp('/remote/erfpachtv2/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
