@@ -21,7 +21,7 @@ export default function Menu({ menuItems, themas }: Props) {
           </Heading>
           <MegaMenu.ListCategory>
             <LinkList>
-              {themas.map((thema) =>
+              {themas.slice(0, -1).map((thema) =>
                 thema.rel === 'external' ? (
                   <MaLink
                     key={thema.id}
@@ -41,7 +41,7 @@ export default function Menu({ menuItems, themas }: Props) {
                   </MaRouterLink>
                 )
               )}
-              {isThemasCountUneven && <br />}
+              {!isThemasCountUneven && <span>&nbsp;</span>}
             </LinkList>
           </MegaMenu.ListCategory>
         </div>
