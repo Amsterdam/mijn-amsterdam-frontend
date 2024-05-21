@@ -11,8 +11,14 @@ module.exports = [
         id: 'standard',
         type: 'profile-type-handler',
         options: {
-          code: 200,
-          body: BEZWAREN_DOCUMENTEN_RESPONSE,
+          privateUser: {
+            statusCode: 200,
+            body: BEZWAREN_DOCUMENTEN_RESPONSE,
+          },
+          commercialUser: {
+            statusCode: 200,
+            body: 'no-content',
+          },
         },
       },
     ],

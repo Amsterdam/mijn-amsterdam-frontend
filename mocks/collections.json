@@ -6,7 +6,11 @@
       "get-brp:standard",
       "get-bezwaren-list:standard",
       "get-bezwaren-documenten:standard",
-      "get-wmo:standard"
+      "get-bezwaren-status:standard",
+      "get-zorgned:standard",
+      "get-gpass-pashouders:standard",
+      "get-gpass-stadspas:standard",
+      "get-gpass-transacties:standard"
     ]
   }
 ]

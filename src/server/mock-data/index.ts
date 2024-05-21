@@ -86,30 +86,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  // RP TODO: HTTPS kan HTTP worden
-  [String(ApiUrls.BEZWAREN_LIST)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 2500,
-    method: 'post',
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(BEZWAREN);
-    },
-  },
-  // RP TODO: zie hierboven todo
-  [String(ApiUrls.BEZWAREN_DOCUMENTS)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 2500,
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(BEZWAREN_DOCUMENTS);
-    },
-  },
-  // TODO: zie hierboven todo
   [String(ApiUrls.BEZWAREN_STATUS)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -137,25 +113,6 @@ export const mockDataConfig: MockDataConfig = {
         return 'no-content';
       }
       return loadMockApiResponseJson(WPI_E_AANVRAGEN);
-    },
-  },
-  [String(ApiUrls.GPASS)]: {
-    pathReg: new RegExp('/remote/gpass/*'),
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      if (config.url.includes('sales/v1/pashouder')) {
-        return loadMockApiResponseJson(GPASS_PASHOUDERS);
-      }
-      if (config.url.includes('sales/v1/pas')) {
-        return loadMockApiResponseJson(GPASS_STADSPAS);
-      }
-      if (config.url.includes('transacties/v1/budget')) {
-        return loadMockApiResponseJson(GPASS_TRANSACTIES);
-      }
-      return null;
     },
   },
   [String(ApiUrls.WPI_SPECIFICATIES)]: {
