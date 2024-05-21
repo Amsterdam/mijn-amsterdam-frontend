@@ -24,7 +24,7 @@ export default function Menu({ menuItems, themas: t }: Props) {
             <LinkList>
               {themas.map((thema, index) => {
                 const addNbsp =
-                  index === themas.length - 1 && !isThemasCountUneven;
+                  index === themas.length - 1 && isThemasCountUneven;
                 return thema.rel === 'external' ? (
                   <li className={addNbsp ? styles.addNbsp : ''}>
                     <MaLink
