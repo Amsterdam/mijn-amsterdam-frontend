@@ -26,7 +26,7 @@ export default function Menu({ menuItems, themas: t }: Props) {
                 const addNbsp =
                   index === themas.length - 1 && isThemasCountUneven;
                 return thema.rel === 'external' ? (
-                  <li className={addNbsp ? styles.addNbsp : ''}>
+                  <li className={addNbsp ? styles.addNbsp : ''} key={thema.id}>
                     <MaLink
                       key={thema.id}
                       href={thema.to}
@@ -37,7 +37,7 @@ export default function Menu({ menuItems, themas: t }: Props) {
                     </MaLink>
                   </li>
                 ) : (
-                  <li className={addNbsp ? styles.addNbsp : ''}>
+                  <li className={addNbsp ? styles.addNbsp : ''} key={thema.id}>
                     <MaRouterLink
                       key={thema.id}
                       href={thema.to}
