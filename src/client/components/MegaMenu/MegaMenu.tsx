@@ -9,7 +9,8 @@ type Props = {
   themas: ThemaMenuItem[];
 };
 
-export default function Menu({ menuItems, themas }: Props) {
+export default function Menu({ menuItems, themas: t }: Props) {
+  const themas = t;
   const isThemasCountUneven = themas.length % 2 !== 0;
 
   return (
@@ -23,14 +24,14 @@ export default function Menu({ menuItems, themas }: Props) {
             <LinkList>
               {themas.map((thema, index) => {
                 const addNbsp =
-                  index === themas.length - 1 && isThemasCountUneven;
+                  index === themas.length - 1 && !isThemasCountUneven;
                 return thema.rel === 'external' ? (
                   <MaLink
                     key={thema.id}
                     href={thema.to}
                     maVariant="noDefaultUnderline"
                     rel="noreferrer"
-                    className={addNbsp ? styles.addAfter : ''}
+                    className={addNbsp ? styles.addNbsp : ''}
                   >
                     {thema.title}
                   </MaLink>
@@ -39,7 +40,7 @@ export default function Menu({ menuItems, themas }: Props) {
                     key={thema.id}
                     href={thema.to}
                     maVariant="noDefaultUnderline"
-                    className={addNbsp ? styles.addAfter : ''}
+                    className={addNbsp ? styles.addNbsp : ''}
                   >
                     {thema.title}
                   </MaRouterLink>
