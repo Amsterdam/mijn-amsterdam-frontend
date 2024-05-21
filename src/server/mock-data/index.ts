@@ -99,16 +99,6 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(ERFPACHTv2_ERFPACHTER);
     },
   },
-  [String(ApiUrls.ERFPACHT)]: {
-    pathReg: new RegExp('/remote/erfpacht/*'),
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      if (config.url.includes('/notifications/')) {
-        return loadMockApiResponseJson(ERFPACHT_NOTIFICATIONS);
-      }
-      return loadMockApiResponseJson(ERFPACHT);
-    },
-  },
   [String(ApiUrls.SUBSIDIE)]: {
     pathReg: new RegExp('/remote/subsidies/*'),
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),

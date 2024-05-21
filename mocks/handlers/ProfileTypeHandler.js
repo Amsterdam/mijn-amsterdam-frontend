@@ -17,7 +17,7 @@ class ProfileTypeHandler {
               type: 'number',
             },
             body: {
-              type: ['object', 'string'],
+              type: ['object', 'array', 'string'],
             },
           },
         },
@@ -28,7 +28,7 @@ class ProfileTypeHandler {
               type: 'number',
             },
             body: {
-              type: ['object', 'string'],
+              type: ['object', 'array', 'string'],
             },
           },
         },

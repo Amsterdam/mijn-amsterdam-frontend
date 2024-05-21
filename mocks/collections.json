@@ -14,7 +14,9 @@
       "get-wpi-aanvragen:standard",
       "get-wpi-e-aanvragen:standard",
       "get-wpi-specificaties:standard",
-      "get-svwi-tegel:standard"
+      "get-svwi-tegel:standard",
+      "get-erfpacht:standard",
+      "get-erfpacht-notifications:standard"
     ]
   }
 ]
