@@ -10,6 +10,8 @@ type Props = {
 };
 
 export default function Menu({ menuItems, themas }: Props) {
+  // on safari the themas list is not displayed correctly when the count is uneven due to a render problem
+  const isThemasCountUneven = themas.length % 2 !== 0;
   return (
     <MegaMenu>
       <div className={styles.menu}>
@@ -39,6 +41,7 @@ export default function Menu({ menuItems, themas }: Props) {
                   </MaRouterLink>
                 )
               )}
+              {isThemasCountUneven && <br />}
             </LinkList>
           </MegaMenu.ListCategory>
         </div>
