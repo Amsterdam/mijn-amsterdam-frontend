@@ -2,7 +2,7 @@ import { Heading, LinkList, MegaMenu } from '@amsterdam/design-system-react';
 import { ThemaMenuItem } from '../../../universal/config';
 import styles from './MegaMenu.module.scss';
 import { MenuItem } from '../MainHeader/MainHeader.constants';
-import { MaRouterLink } from '../MaLink/MaLink';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 type Props = {
   menuItems: MenuItem[];
@@ -19,15 +19,26 @@ export default function Menu({ menuItems, themas }: Props) {
           </Heading>
           <MegaMenu.ListCategory>
             <LinkList>
-              {themas.map((thema) => (
-                <MaRouterLink
-                  key={thema.id}
-                  href={thema.to}
-                  maVariant="noDefaultUnderline"
-                >
-                  {thema.title}
-                </MaRouterLink>
-              ))}
+              {themas.map((thema) =>
+                thema.rel === 'external' ? (
+                  <MaLink
+                    key={thema.id}
+                    href={thema.to}
+                    maVariant="noDefaultUnderline"
+                    rel="noreferrer"
+                  >
+                    {thema.title}
+                  </MaLink>
+                ) : (
+                  <MaRouterLink
+                    key={thema.id}
+                    href={thema.to}
+                    maVariant="noDefaultUnderline"
+                  >
+                    {thema.title}
+                  </MaRouterLink>
+                )
+              )}
             </LinkList>
           </MegaMenu.ListCategory>
         </div>
