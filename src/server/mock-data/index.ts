@@ -86,16 +86,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [String(ApiUrls.BEZWAREN_STATUS)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 2500,
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(BEZWAREN_STATUS);
-    },
-  },
   [String(ApiUrls.WPI_AANVRAGEN)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 3400,
