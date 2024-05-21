@@ -158,7 +158,18 @@ function BezwarenDetail() {
               </InfoDetailGroup>
             )}
             {bezwaar.einddatum && bezwaar.resultaat && (
-              <InfoDetail label="Resultaat bezwaar" value={bezwaar.resultaat} />
+              <InfoDetailGroup>
+                <InfoDetail
+                  label="Resultaat bezwaar"
+                  value={bezwaar.resultaat}
+                />
+                {!!bezwaar.datumResultaat && (
+                  <InfoDetail
+                    label="Datum"
+                    value={defaultDateFormat(bezwaar.datumResultaat)}
+                  />
+                )}
+              </InfoDetailGroup>
             )}
           </>
         )}

@@ -5,73 +5,42 @@ import type { KVKData } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
-import { IconHomeCommercial, IconProfile } from '../../assets/icons';
+import { IconProfile } from '../../assets/icons';
 import { useAppStateReady } from '../../hooks';
-import { Button } from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './ProfileName.module.scss';
+import { PageMenu } from '@amsterdam/design-system-react';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 interface CommercialProfileNameProps {
   company?: KVKData;
-  onClick?: (event: any) => void;
-  isActive: boolean;
+  href: string;
 }
 
-function CommercialProfileName({
-  company,
-  onClick,
-  isActive,
-}: CommercialProfileNameProps) {
+function CommercialProfileName({ company, href }: CommercialProfileNameProps) {
   const label = company?.onderneming.handelsnaam || 'Mijn onderneming';
   return (
-    <Button
-      onClick={onClick}
-      icon={IconHomeCommercial}
-      variant="plain"
-      lean={true}
-      iconSize="24"
-      className={classnames(
-        styles.ProfileLink,
-        styles['ProfileLink--commercial'],
-        isActive && styles['ProfileLink--active']
-      )}
-    >
+    <MaRouterLink maVariant="noDefaultUnderline" href={href}>
       {label}
-    </Button>
+    </MaRouterLink>
   );
 }
 
 interface PrivateProfileNameProps {
+  href: string;
   person?: BRPData['persoon'];
-  onClick?: (event: any) => void;
-  isActive: boolean;
 }
 
-function PrivateProfileName({
-  person,
-  onClick,
-  isActive,
-}: PrivateProfileNameProps) {
+function PrivateProfileName({ person, href }: PrivateProfileNameProps) {
   const label = person?.opgemaakteNaam
     ? person.opgemaakteNaam
     : person?.voornamen
       ? getFullName(person)
       : 'Mijn gegevens';
   return (
-    <Button
-      onClick={onClick}
-      icon={IconProfile}
-      variant="plain"
-      lean={true}
-      iconSize="24"
-      className={classnames(
-        styles.ProfileLink,
-        styles['ProfileLink--private'],
-        isActive && styles['ProfileLink--active']
-      )}
-    >
+    <MaRouterLink maVariant="noDefaultUnderline" href={href}>
       {label}
-    </Button>
+    </MaRouterLink>
   );
 }
 
@@ -101,26 +70,18 @@ export function ProfileName({
     }
   }, [isAppStateReady]);
 
-  const nameContent = useMemo(() => {
+  const content = useMemo(() => {
     let nameContent: undefined | string | ReactNode;
 
     switch (true) {
       case profileType === 'private':
         nameContent = (
-          <PrivateProfileName
-            person={person!}
-            isActive={false}
-            onClick={() => history.push(AppRoutes.BRP)}
-          />
+          <PrivateProfileName person={person!} href={AppRoutes.BRP} />
         );
         break;
       case FeatureToggle.kvkActive && profileType === 'commercial':
         nameContent = (
-          <CommercialProfileName
-            company={company!}
-            isActive={false}
-            onClick={() => history.push(AppRoutes.KVK)}
-          />
+          <CommercialProfileName company={company!} href={AppRoutes.KVK} />
         );
         break;
       case !!profileAttribute:
@@ -144,7 +105,7 @@ export function ProfileName({
   return (
     <>
       {appStateFirstLoad === true ? (
-        <>{nameContent}</>
+        <>{content}</>
       ) : (
         <LoadingContent
           barConfig={[['15rem', '1rem', '0']]}
