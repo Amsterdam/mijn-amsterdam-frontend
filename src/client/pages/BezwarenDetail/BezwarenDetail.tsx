@@ -163,10 +163,10 @@ function BezwarenDetail() {
                   label="Resultaat bezwaar"
                   value={bezwaar.resultaat}
                 />
-                {!!bezwaar.datumbesluit && (
+                {!!bezwaar.datumResultaat && (
                   <InfoDetail
                     label="Datum"
-                    value={defaultDateFormat(bezwaar.datumbesluit)}
+                    value={defaultDateFormat(bezwaar.datumResultaat)}
                   />
                 )}
               </InfoDetailGroup>

@@ -166,7 +166,7 @@ const Notification = ({
                       showTipReason((isTipReasonShown) => !isTipReasonShown)
                     }
                   >
-                    Waarom ziet u deze tip?
+                    Waarom zie ik deze tip?
                   </a>
                   {isTipReasonShown && <span>{notification.tipReason}</span>}
                 </p>
