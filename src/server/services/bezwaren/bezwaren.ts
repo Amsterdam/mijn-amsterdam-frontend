@@ -227,7 +227,11 @@ function transformBezwarenResults(
           ),
 
           // Het resultaat van het bezwaar
-          datumResultaat: bezwaarBron.publicatiedatum,
+          datumResultaat:
+            bezwaarBron.publicatiedatum &&
+            !bezwaarBron.publicatiedatum.includes('01-01-1753') // Empty date in Octopus is a date! :D
+              ? bezwaarBron.publicatiedatum
+              : null,
           resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
 
           documenten: [],

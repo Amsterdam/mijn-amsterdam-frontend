@@ -292,6 +292,7 @@ export interface WerkzaamhedenEnVervoerOpStraat extends VergunningWithLocation {
   dateEnd: string | null;
   licensePlates: string | null;
   block: boolean;
+  eblock: boolean;
   bicycleRack: boolean;
   eParkingspace: boolean;
   filming: boolean;
@@ -301,6 +302,7 @@ export interface WerkzaamhedenEnVervoerOpStraat extends VergunningWithLocation {
   eRvv: boolean;
   rvv: boolean;
   vezip: boolean;
+  movingLocations: boolean;
 }
 
 export type Vergunning =
