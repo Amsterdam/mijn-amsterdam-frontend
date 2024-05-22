@@ -13,53 +13,52 @@ export default function Menu({ menuItems, themas }: Props) {
   return (
     <MegaMenu>
       <div className={styles.menu}>
-        <div>
+        <nav>
           <Heading level={3} size="level-3">
             Thema’s
           </Heading>
           <MegaMenu.ListCategory>
-            <LinkList>
-              {themas.map((thema) =>
-                thema.rel === 'external' ? (
-                  <MaLink
-                    key={thema.id}
-                    href={thema.to}
-                    maVariant="noDefaultUnderline"
-                    rel="noreferrer"
-                  >
-                    {thema.title}
-                  </MaLink>
-                ) : (
-                  <MaRouterLink
-                    key={thema.id}
-                    href={thema.to}
-                    maVariant="noDefaultUnderline"
-                  >
-                    {thema.title}
-                  </MaRouterLink>
-                )
-              )}
-            </LinkList>
+            {themas.map((thema, index) => {
+              return thema.rel === 'external' ? (
+                <MaLink
+                  key={thema.id}
+                  href={thema.to}
+                  maVariant="noDefaultUnderline"
+                  rel="noreferrer"
+                  className={styles.menuItem}
+                >
+                  {thema.title}
+                </MaLink>
+              ) : (
+                <MaRouterLink
+                  key={thema.id}
+                  href={thema.to}
+                  maVariant="noDefaultUnderline"
+                  className={styles.menuItem}
+                >
+                  {thema.title}
+                </MaRouterLink>
+              );
+            })}
           </MegaMenu.ListCategory>
-        </div>
-        <div>
+        </nav>
+        <nav>
           <Heading level={3} size="level-3">
             Categorieën
           </Heading>
           <MegaMenu.ListCategory>
-            <LinkList>
-              {menuItems.map((item) => (
-                <MaRouterLink
-                  key={item.id}
-                  href={item.to}
-                  maVariant="noDefaultUnderline"
-                >
-                  {item.title}
-                </MaRouterLink>
-              ))}
-            </LinkList>
+            {menuItems.map((item) => (
+              <MaRouterLink
+                key={item.id}
+                href={item.to}
+                maVariant="noDefaultUnderline"
+                className={styles.menuItem}
+              >
+                {item.title}
+              </MaRouterLink>
+            ))}
           </MegaMenu.ListCategory>
-        </div>
+        </nav>
       </div>
     </MegaMenu>
   );
