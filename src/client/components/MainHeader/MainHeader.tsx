@@ -217,6 +217,19 @@ export default function MainHeader({
     };
   }, [isBurgerMenuVisible]);
 
+  useEffect(() => {
+    const h1Element = document.querySelector('h1');
+    const goToHomepage = () => {
+      window.location.href = '/';
+    };
+    if (h1Element?.textContent === 'Mijn Amsterdam') {
+      h1Element.addEventListener('click', goToHomepage);
+    }
+    return () => {
+      h1Element?.removeEventListener('click', goToHomepage);
+    };
+  }, []);
+
   return (
     <>
       <div className={styles.headerContainer}>

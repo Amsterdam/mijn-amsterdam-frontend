@@ -26,6 +26,10 @@
      @include centered-block;
   }
 
+  :global(.ams-header__title-heading){
+    cursor: pointer;
+  }
+
  :global(.ams-mega-menu) {
     position: absolute;
     width: 100%;
