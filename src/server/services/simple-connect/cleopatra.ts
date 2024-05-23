@@ -19,8 +19,8 @@ const keystore = jose.JWK.createKeyStore();
 let certContent;
 
 try {
-  if (IS_TAP && certContent) {
-    certContent = getCert(process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT);
+  if (IS_TAP) {
+    certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
   }
 } catch (error) {}
 

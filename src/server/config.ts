@@ -30,7 +30,7 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
   return undefined;
 }
 
-export function getCert(envVarName: string | undefined) {
+export function getCert(envVarName: string) {
   return IS_DEVELOPMENT
     ? getCertificateSync(envVarName)
     : decodeBase64EncodedCertificateFromEnv(envVarName);
@@ -237,7 +237,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: process.env.BFF_ERFPACHT_API_URL,
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCert(process.env.BFF_SERVER_CLIENT_CERT) : [],
+      ca: IS_TAP ? getCert('BFF_SERVER_CLIENT_CERT') : [],
     }),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
