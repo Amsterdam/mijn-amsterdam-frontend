@@ -114,6 +114,7 @@ function transformZakenResponse(zaken: PowerBrowserZakenResponse) {
     const isIngetrokken = !!zaak.resultaat
       ?.toLowerCase()
       .includes('ingetrokken');
+    const isGeweigerd = !!zaak.resultaat?.toLowerCase().includes('geweigerd');
     const isVerlopen = false;
     const isVerleend = !!zaak.resultaat?.toLowerCase().includes('verleend');
 
@@ -144,7 +145,8 @@ function transformZakenResponse(zaken: PowerBrowserZakenResponse) {
       statussen: [],
       status: transformStatus(zaak.status),
       isActief:
-        (!isIngetrokken && isVerleend && !isVerlopen) || !zaak.resultaat,
+        (!isIngetrokken && !isGeweigerd && isVerleend && !isVerlopen) ||
+        !zaak.resultaat,
       documents: [],
     };
 
