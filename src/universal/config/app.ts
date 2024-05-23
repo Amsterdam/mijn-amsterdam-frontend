@@ -44,7 +44,7 @@ export const FeatureToggle = {
   passQueryParamsToStreamUrl: !IS_AP,
   laadpalenActive: !IS_PRODUCTION,
   oidcLogoutHintActive: !IS_PRODUCTION,
-  zorgnedDocumentAttachmentsActive: !IS_PRODUCTION,
+  zorgnedDocumentAttachmentsActive: true,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
