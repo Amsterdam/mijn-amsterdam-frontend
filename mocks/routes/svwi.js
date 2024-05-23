@@ -12,11 +12,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: svwi_response,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },

@@ -86,37 +86,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  // RP TODO: Verwijder (deze was al uitgecomment)
-  // [String(ApiUrls.AFVAL)]: {
-  //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-  //   responseData: async (config: any) => {
-  //     // if (isCommercialUser(config)) {
-  //     //   return 'no-content';
-  //     // }
-  //     return loadMockApiResponseJson(AFVAL);
-  //   },
-  // },
-  //
-  [String(ApiUrls.VERGUNNINGEN)]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        const vergunningenCommercial = VERGUNNINGEN.content.filter(
-          (vergunning) => {
-            // NOTE: Never a commercial permit.
-            return ![
-              'Vakantieverhuur vergunningsaanvraag',
-              'Parkeerontheffingen Blauwe zone particulieren',
-            ].includes(vergunning.caseType);
-          }
-        );
-        return loadMockApiResponseJson(
-          apiSuccessResult(vergunningenCommercial)
-        );
-      }
-      return loadMockApiResponseJson(VERGUNNINGEN);
-    },
-  },
   [String(ApiUrls.POWERBROWSER)]: [
     {
       method: 'get',

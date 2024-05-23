@@ -13,7 +13,7 @@ class ProfileTypeHandler {
         privateUser: {
           type: 'object',
           properties: {
-            statusCode: {
+            status: {
               type: 'number',
             },
             body: {
@@ -24,7 +24,7 @@ class ProfileTypeHandler {
         commercialUser: {
           type: 'object',
           properties: {
-            statusCode: {
+            status: {
               type: 'number',
             },
             body: {
@@ -51,11 +51,11 @@ class ProfileTypeHandler {
 
     if (isCommercialUser(req)) {
       this._core.logger.debug('Request from a commercial user');
-      resStatus = this._commercialUser.statusCode;
+      resStatus = this._commercialUser.status;
       resBody = this._commercialUser.body;
     } else {
       this._core.logger.debug('Request from a non-commercial user');
-      resStatus = this._privateUser.statusCode;
+      resStatus = this._privateUser.status;
       resBody = this._privateUser.body;
     }
 
@@ -81,9 +81,9 @@ function isCommercialUser(req) {
     return false;
   }
 
-  // Different requests can have different identities of being a commercial user.
+  // Different requests can have different identifiers of being a commercial user.
   return (
-    jwtDecoded.aud === 'amsterdam1' ||
+    jwtDecoded.aud === 'mijnamsterdam1' ||
     jwtDecoded.role === 'niet_natuurlijk_persoon'
   );
 }
