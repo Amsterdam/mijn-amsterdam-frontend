@@ -12,11 +12,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: BRP_RESPONSE,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },

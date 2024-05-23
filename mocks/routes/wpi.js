@@ -16,11 +16,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: RESPONSES.AANVRAGEN,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },
@@ -37,11 +37,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: RESPONSES.E_AANVRAGEN,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },
@@ -58,11 +58,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: RESPONSES.SPECIFICATIES,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },

@@ -15,11 +15,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: RESPONSES.PASHOUDER,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },
@@ -36,11 +36,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: RESPONSES.STADSPAS,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },
@@ -57,11 +57,11 @@ module.exports = [
         type: 'profile-type-handler',
         options: {
           privateUser: {
-            statusCode: 200,
+            status: 200,
             body: RESPONSES.TRANSACTIES,
           },
           commercialUser: {
-            statusCode: 200,
+            status: 200,
             body: 'no-content',
           },
         },
