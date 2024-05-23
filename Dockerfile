@@ -186,4 +186,3 @@ RUN apt-get install -y --no-install-recommends openssh-server \
 
 # SSH config
 COPY conf/sshd_config /etc/ssh/
-COPY files /app/files

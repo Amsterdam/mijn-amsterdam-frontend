@@ -3,7 +3,7 @@ import jose from 'node-jose';
 import { Themas, FeatureToggle, IS_TAP } from '../../../universal/config';
 import { apiSuccessResult } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
-import { DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig, getApiConfig, getCert } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ApiPatternResponseA, fetchService } from './api-service';
 
@@ -16,12 +16,11 @@ const DEV_KEY = {
 };
 
 const keystore = jose.JWK.createKeyStore();
-let certContent = '';
-let path = process.env.BFF_CLEOPATRA_PUBLIC_KEY_CERT;
+let certContent;
 
 try {
-  if (IS_TAP && path) {
-    certContent = fs.readFileSync(path).toString();
+  if (IS_TAP) {
+    certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
   }
 } catch (error) {}
 
