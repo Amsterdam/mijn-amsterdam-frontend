@@ -23,7 +23,10 @@
       "get-subsidie:standard",
       "get-cleopatra:standard",
       "get-verguninngen:standard",
-      "get-kvk:standard"
+      "get-kvk:standard",
+      "get-toeristische-verhuur-with-bsn:standard",
+      "get-toeristische-verhuur-with-a-number:standard",
+      "get-toeristische-verhuur-with-b-number:standard"
     ]
   }
 ]

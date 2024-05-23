@@ -45,8 +45,8 @@ if (IS_DEBUG) {
     console.log(
       'Source-api-request::Response:',
       response.request.res?.responseUrl ??
-        response.request?.responseURL ??
-        'onbekende.url'
+      response.request?.responseURL ??
+      'onbekende.url'
     );
     return response;
   });
