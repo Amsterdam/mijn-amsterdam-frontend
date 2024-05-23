@@ -164,7 +164,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications commercial 1`] = 
         },
         "subject": "1817502388",
         "thema": "VERGUNNINGEN",
-        "title": "Aanvraag eigen parkeerplaats ontvangen",
+        "title": "Aanvraag Eigen parkeerplaats ontvangen",
       },
       {
         "datePublished": "2023-10-27",
@@ -736,7 +736,7 @@ exports[`Vergunningen service > fetchVergunningenNotifications private 1`] = `
         },
         "subject": "1817502388",
         "thema": "VERGUNNINGEN",
-        "title": "Aanvraag eigen parkeerplaats ontvangen",
+        "title": "Aanvraag Eigen parkeerplaats ontvangen",
       },
       {
         "datePublished": "2023-10-27",

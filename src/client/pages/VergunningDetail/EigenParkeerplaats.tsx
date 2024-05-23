@@ -23,11 +23,15 @@ export function EigenParkeerplaats({
         label="Verzoek"
         valueWrapperElement="div"
         value={
-          <ul>
-            {vergunning.requestTypes.map((d, i) => (
-              <li key={d}>{d}</li>
-            ))}
-          </ul>
+          vergunning.requestTypes.length > 1 ? (
+            <ul>
+              {vergunning.requestTypes.map((d) => (
+                <li key={d}>{d}</li>
+              ))}
+            </ul>
+          ) : (
+            vergunning.requestTypes[0]
+          )
         }
       />
 
@@ -42,20 +46,24 @@ export function EigenParkeerplaats({
                 label={`Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`}
                 location={`${location.street} ${location.houseNumber}`}
               />
-              <InfoDetail label="Soort plek" value={location.type} />
-              <InfoDetail
-                label="Parkeervak"
-                value={
-                  <Link
-                    rel="noreferrer"
-                    className={styles.LocationModalLink}
-                    variant="inline"
-                    href={location.url}
-                  >
-                    Bekijk parkeervak
-                  </Link>
-                }
-              />
+              {!!location.type && (
+                <InfoDetail label="Soort plek" value={location.type} />
+              )}
+              {!!location.url && (
+                <InfoDetail
+                  label="Parkeervak"
+                  value={
+                    <Link
+                      rel="noreferrer"
+                      className={styles.LocationModalLink}
+                      variant="inline"
+                      href={location.url}
+                    >
+                      Bekijk parkeervak
+                    </Link>
+                  }
+                />
+              )}
             </div>
           );
         })}
