@@ -117,16 +117,6 @@ export const mockDataConfig: MockDataConfig = {
       },
     },
   ],
-  [String(ApiUrls.KVK)]: {
-    // delay: 12000,
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return loadMockApiResponseJson(KVK2);
-      }
-      return loadMockApiResponseJson(KVK1);
-    },
-  },
   [String(ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/bsn')]: {
     method: 'post',
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
