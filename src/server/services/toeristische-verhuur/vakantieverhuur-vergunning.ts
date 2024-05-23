@@ -36,7 +36,6 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   const isAfgehandeld =
     vergunning.status === 'Afgehandeld' || !!vergunning.decision;
   const isIngetrokken = vergunning.decision === 'Ingetrokken';
-  const isVerleend = vergunning.decision === 'Verleend';
   const isVerlopen =
     vergunning.status === 'Verlopen' ||
     (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());
@@ -85,7 +84,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   return statussen;
 }
 
-function transformVakantieverhuurVergunningen(
+export function transformVakantieverhuurVergunningen(
   vakantieverhuurVergunningen: VergunningenData
 ): VakantieverhuurVergunning[] {
   const vergunningenTransformed: VakantieverhuurVergunning[] = [];

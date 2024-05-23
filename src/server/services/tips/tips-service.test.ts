@@ -25,10 +25,9 @@ const TOZO = {
 
 const TOERISTISCHE_VERHUUR = {
   content: {
-    registraties: [],
-    vergunningen: VERGUNNINGEN.content.filter(
-      (c) => c.caseType === CaseType.VakantieverhuurVergunning
-    ),
+    lvvRegistraties: [],
+    vakantieverhuurVergunningen: [1],
+    bbVergunningen: [1],
   },
 };
 
@@ -71,9 +70,6 @@ describe('createTipsFromServiceResults', () => {
 
     TOZO_copy.content[0].decision = 'toekenning';
     TOZO_copy.content[0].datePublished = '2021-07-24';
-
-    VERHUUR_copy.content.registraties = [];
-    VERHUUR_copy.content.vergunningen[0].caseType = CaseType.BBVergunning;
 
     const tips = await createTipsFromServiceResults('private', {
       serviceResults: {
