@@ -22,7 +22,8 @@
       "get-erfpacht-v2-dossier-info-details:standard",
       "get-subsidie:standard",
       "get-cleopatra:standard",
-      "get-verguninngen:standard"
+      "get-verguninngen:standard",
+      "get-kvk:standard"
     ]
   }
 ]
