@@ -28,15 +28,10 @@ export function useSetDeeplinkEntry(excludeQueryParams: string[] = []) {
 }
 
 export function useDeeplinkRedirect() {
-  const [routeEntry, setRouteEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
+  const [routeEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
   const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
 
-  useEffect(() => {
-    if (routeEntry) {
-      setRouteEntry('');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  clearDeeplinkEntry();
 
   return redirectAfterLogin;
 }

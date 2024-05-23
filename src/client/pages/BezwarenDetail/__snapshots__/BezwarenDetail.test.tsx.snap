@@ -276,6 +276,42 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="_InfoDetailGroup_6f1df2"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Resultaat bezwaar
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              Niet-ontvankelijk
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Datum
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              10 mei 2023
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <div
       class="_PageContent_47d7c0"

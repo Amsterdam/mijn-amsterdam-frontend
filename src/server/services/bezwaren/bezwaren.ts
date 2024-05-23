@@ -195,36 +195,45 @@ function transformBezwarenResults(
   if (Array.isArray(results)) {
     const bezwaren = results
       .map((bezwaarBron) => {
-        const besluitdatum = getKenmerkValue(
-          bezwaarBron.kenmerken,
-          'besluitdatum'
-        );
-
         const [idEncrypted] = encrypt(`${sessionID}:${bezwaarBron.uuid}`);
 
         const bezwaar: Bezwaar = {
           identificatie: bezwaarBron.identificatie,
           uuid: bezwaarBron.uuid,
           uuidEncrypted: idEncrypted,
-          startdatum: bezwaarBron.startdatum,
+
+          // Wanneer het bezwaar is ontvangen
           ontvangstdatum: bezwaarBron.registratiedatum,
+          // Wanneer het bezwaar in behandeling is genomen
+          startdatum: bezwaarBron.startdatum,
+          // Wanneer het bezwaar is afgehandeld
+          einddatum: bezwaarBron.einddatum,
+
           omschrijving: bezwaarBron.omschrijving,
           toelichting: bezwaarBron.toelichting,
+
+          // Laatste status van het bezwaar
           status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
           statusdatum: getKenmerkValue(bezwaarBron.kenmerken, 'statusdatum'),
+
+          // Placeholder voor alle (historische) statussen van het bezwaar
           statussen: [],
-          datumbesluit: besluitdatum,
-          datumIntrekking: getKenmerkValue(
-            bezwaarBron.kenmerken,
-            'datumintrekking'
-          ),
-          einddatum: bezwaarBron.einddatum,
+
+          // Gerelateerd aan het besluit waarop het bezwaar is ingediend.
           primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
           primairbesluitdatum: getKenmerkValue(
             bezwaarBron.kenmerken,
             'besluitdatum'
           ),
+
+          // Het resultaat van het bezwaar
+          datumResultaat:
+            bezwaarBron.publicatiedatum &&
+            !bezwaarBron.publicatiedatum.includes('01-01-1753') // Empty date in Octopus is a date! :D
+              ? bezwaarBron.publicatiedatum
+              : null,
           resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
+
           documenten: [],
           link: {
             title: 'Bekijk details',
