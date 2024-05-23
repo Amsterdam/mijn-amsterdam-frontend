@@ -149,10 +149,11 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KVK) && !!KVK.content;
 
     case Themas.TOERISTISCHE_VERHUUR:
-      const { registraties, vergunningen } =
+      const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
         TOERISTISCHE_VERHUUR?.content ?? {};
-      const hasRegistraties = !!registraties?.length;
-      const hasVergunningen = !!vergunningen?.length;
+      const hasRegistraties = !!lvvRegistraties?.length;
+      const hasVergunningen =
+        !!vakantieverhuurVergunningen?.length || !!bbVergunningen?.length;
       return (
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );

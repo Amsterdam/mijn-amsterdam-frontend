@@ -425,6 +425,10 @@ export const BffEndpoints = {
   ERFPACHTv2_DOSSIER_DETAILS:
     '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 
+  // Toeristische verhuur / Bed & Breakfast
+  TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
+    '/services/toeristische-verhuur/bb/document/:docIdEncrypted',
+
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,

@@ -33,6 +33,6 @@ describe('<StatusLine />', () => {
     );
     expect(screen.getByText(items[0].description)).toBeInTheDocument();
     expect(screen.getByText(items[0].status)).toBeInTheDocument();
-    expect(screen.getByText(items[0].documents[0].title)).toBeInTheDocument();
+    expect(screen.getByText(items[0]?.documents[0]?.title)).toBeInTheDocument();
   });
 });

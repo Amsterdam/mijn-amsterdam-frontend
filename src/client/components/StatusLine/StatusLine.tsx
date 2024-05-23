@@ -257,8 +257,10 @@ function StatusLineConnection({
 
 interface StatusLineProps {
   items: StatusLineItem[];
-  trackCategory: string;
+  // @Deprecated
+  trackCategory?: string;
   altDocumentContent?: AltDocumentContent;
+  // @Deprecated
   id?: string;
   statusLabel?: string;
   showStatusLineConnection?: boolean;

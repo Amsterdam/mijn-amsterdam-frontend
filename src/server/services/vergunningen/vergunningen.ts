@@ -28,7 +28,7 @@ import {
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
-> = [CaseType.VakantieverhuurVergunningaanvraag];
+> = [CaseType.VakantieverhuurVergunning];
 
 export const horecaVergunningTypes: Array<VergunningBase['caseType']> = [
   CaseType.ExploitatieHorecabedrijf,
@@ -105,25 +105,12 @@ export interface ERVV extends VergunningWithLocation {
   timeEnd: string | null;
 }
 
-export interface VakantieverhuurVergunningaanvraag
-  extends VergunningWithLocation {
-  caseType: CaseType.VakantieverhuurVergunningaanvraag;
+export interface VakantieverhuurVergunning extends VergunningWithLocation {
+  caseType: CaseType.VakantieverhuurVergunning;
   title: 'Vergunning vakantieverhuur';
   dateStart: string | null;
   dateEnd: string | null;
   decision: 'Verleend' | 'Ingetrokken';
-}
-
-export interface BBVergunning extends VergunningWithLocation {
-  caseType: CaseType.BBVergunning;
-  title: 'Vergunning bed & breakfast';
-  decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
-  dateStart: string | null;
-  dateEnd: string | null;
-  requester: string | null;
-  owner: string | null;
-  hasTransitionAgreement: boolean;
-  dateWorkflowActive: string | null;
 }
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
@@ -315,8 +302,7 @@ export type Vergunning =
   | ERVV
   | BZB
   | BZP
-  | BBVergunning
-  | VakantieverhuurVergunningaanvraag
+  | VakantieverhuurVergunning
   | Flyeren
   | AanbiedenDiensten
   | Nachtwerkontheffing
@@ -393,7 +379,7 @@ const vergunningOptionsDefault: VergunningOptions = {
   appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: (
     vergunning: Vergunning
-  ): vergunning is VakantieverhuurVergunningaanvraag | HorecaVergunningen =>
+  ): vergunning is VakantieverhuurVergunning | HorecaVergunningen =>
     ![...toeristischeVerhuurVergunningTypes, ...horecaVergunningTypes].includes(
       vergunning.caseType
     ),
@@ -421,7 +407,7 @@ export function addLinks(
   });
 }
 
-export async function fetchVergunningen(
+export async function fetchVergunningen<T>(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   options: VergunningOptions = vergunningOptionsDefault
@@ -430,11 +416,12 @@ export async function fetchVergunningen(
 
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
-    vergunningen = addLinks(vergunningen, options.appRoute);
 
     if (options?.filter) {
       vergunningen = vergunningen.filter(options.filter);
     }
+
+    vergunningen = addLinks(vergunningen, options.appRoute);
 
     return apiSuccessResult(vergunningen);
   }

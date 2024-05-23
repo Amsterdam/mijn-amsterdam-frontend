@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 
 import { describe, expect, it } from 'vitest';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
-import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
+import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur/toeristische-verhuur';
 import {
   toeristischeVerhuurVergunningTypes,
   transformVergunningenData,
