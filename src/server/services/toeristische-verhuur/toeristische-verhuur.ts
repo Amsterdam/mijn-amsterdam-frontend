@@ -1,6 +1,14 @@
+import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
+import { generatePath } from 'react-router-dom';
 import { Chapters, FeatureToggle } from '../../../universal/config';
 import { AppRoutes } from '../../../universal/config/routes';
+import {
+  dateFormat,
+  dateSort,
+  isDateInPast,
+  isRecentNotification,
+} from '../../../universal/helpers';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -23,9 +31,6 @@ import {
   VakantieverhuurVergunning,
   fetchVakantieverhuurVergunningen,
 } from './vakantieverhuur-vergunning';
-import { dateFormat, dateSort, isDateInPast } from '../../../universal/helpers';
-import { subMonths } from 'date-fns';
-import { generatePath } from 'react-router-dom';
 
 export function hasOtherActualVergunningOfSameType(
   items: Array<VakantieverhuurVergunning | BBVergunning>,
@@ -282,7 +287,7 @@ export async function fetchToeristischeVerhuurNotifications(
     const actualNotifications = notifications.filter(
       (notification) =>
         !!notification.datePublished &&
-        isActualNotification(notification.datePublished, compareToDate)
+        isRecentNotification(notification.datePublished, compareToDate)
     );
 
     return apiSuccessResult({
