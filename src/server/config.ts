@@ -30,7 +30,7 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
   return undefined;
 }
 
-function getCert(envVarName: string | undefined) {
+export function getCert(envVarName: string | undefined) {
   return IS_DEVELOPMENT
     ? getCertificateSync(envVarName)
     : decodeBase64EncodedCertificateFromEnv(envVarName);

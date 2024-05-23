@@ -45,23 +45,17 @@ variables:
     value: true
   - name: btdTest
     value: true
+  - name: dtapName
+    value: t
   - ${{ if eq(variables['Build.SourceBranchName'], 'testen') }}:
       - name: btdTest
         value: false
-      - name: dtapName
-        value: t
   - ${{ if or(eq(variables['Build.SourceBranchName'], 'az-acceptance'), eq(variables['Build.SourceBranchName'], 'main')) }}:
       - name: dtapName
         value: a
-      - name: btdTest
-        value: true
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-      - name: btdTest
-        value: true
       - name: btdDeploy
         value: false
-      - name: dtapName
-        value: t
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
