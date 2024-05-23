@@ -1,6 +1,5 @@
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
-import { AppRoutes, ThemaTitles } from '../../../universal/config/index';
-import { defaultDateFormat, isError } from '../../../universal/helpers';
+import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import {
   defaultDateFormat,
   isError,
