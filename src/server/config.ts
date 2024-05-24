@@ -216,6 +216,11 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.vergunningenActive,
     passthroughOIDCToken: true,
   },
+  POWERBROWSER: {
+    method: 'POST',
+    url: `${process.env.BFF_POWERBROWSER_API_URL}`,
+    postponeFetch: !FeatureToggle.powerbrowserActive,
+  },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
     urls: {

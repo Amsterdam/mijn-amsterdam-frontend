@@ -28,7 +28,7 @@ import {
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
-> = [CaseType.VakantieverhuurVergunningaanvraag, CaseType.BBVergunning];
+> = [CaseType.VakantieverhuurVergunningaanvraag];
 
 export const horecaVergunningTypes: Array<VergunningBase['caseType']> = [
   CaseType.ExploitatieHorecabedrijf,

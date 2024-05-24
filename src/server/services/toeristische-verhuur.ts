@@ -206,6 +206,60 @@ export function transformVergunningenToVerhuur(
   return [...overige.sort(dateSort('dateStart', 'desc'))];
 }
 
+interface BBResponseSource {}
+
+function transformBBResponse(responseData: BBResponseSource) {
+  console.log('responseData', responseData);
+  return responseData;
+}
+
+async function fetchBBVergunning(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  profileType: ProfileType = 'private'
+) {
+  const dataRequestConfig = getApiConfig('POWERBROWSER', {
+    transformResponse: transformBBResponse,
+  });
+
+  const tokenResponse = await requestData(
+    {
+      ...dataRequestConfig,
+      url: `${dataRequestConfig.url}/token`,
+      data: { apiKey: process.env.BFF_POWERBROWSER_API_KEY },
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  if (tokenResponse.status === 'OK' && tokenResponse.content) {
+    const response = await requestData(
+      {
+        ...dataRequestConfig,
+        url: `${dataRequestConfig.url}/Report/RunSavedReport`,
+        data: {
+          Name: 'BSN',
+          Type: 'String',
+          Value: {
+            StringValue: authProfileAndToken.profile.id,
+          },
+          BeforeText: "'",
+          AfterText: "'",
+        },
+        headers: {
+          Authorization: `Bearer ${tokenResponse.content}`,
+        },
+      },
+      requestID,
+      authProfileAndToken
+    );
+
+    return response;
+  }
+
+  return tokenResponse;
+}
+
 async function fetchAndTransformToeristischeVerhuur(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -228,8 +282,6 @@ async function fetchAndTransformToeristischeVerhuur(
     {
       appRoute: (vergunning: Vergunning) => {
         switch (vergunning.caseType) {
-          case CaseType.BBVergunning:
-            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'];
           case CaseType.VakantieverhuurVergunningaanvraag:
             return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
           default:
@@ -241,12 +293,22 @@ async function fetchAndTransformToeristischeVerhuur(
     }
   );
 
-  const [registratiesResponse, vergunningenResponse] = await Promise.allSettled(
-    [registratiesRequest, vergunningenRequest]
+  const bbRequest = fetchBBVergunning(
+    requestID,
+    authProfileAndToken,
+    profileType
   );
+
+  const [registratiesResponse, vergunningenResponse, bbResponse] =
+    await Promise.allSettled([
+      registratiesRequest,
+      vergunningenRequest,
+      bbRequest,
+    ]);
 
   const registraties = getSettledResult(registratiesResponse);
   const vergunningen = getSettledResult(vergunningenResponse);
+  const bbVergunning = getSettledResult(bbResponse);
 
   const toeristischeVerhuurVergunningen = transformVergunningenToVerhuur(
     vergunningen.content as VakantieverhuurVergunning[]
@@ -255,12 +317,14 @@ async function fetchAndTransformToeristischeVerhuur(
   const failedDependencies = getFailedDependencies({
     registraties,
     vergunningen,
+    bbVergunning,
   });
 
   return apiSuccessResult(
     {
       registraties: registraties.status === 'OK' ? registraties.content : [],
       vergunningen: toeristischeVerhuurVergunningen,
+      bbVergunning: bbVergunning,
     },
     failedDependencies
   );
