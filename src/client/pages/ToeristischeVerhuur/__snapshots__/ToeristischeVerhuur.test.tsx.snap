@@ -58,7 +58,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="amsterdam-heading amsterdam-heading--1"
+          class="ams-heading ams-heading--1"
         >
           Toeristische verhuur
         </h2>
@@ -125,57 +125,60 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
       <div
         class="_Detail_702859"
       >
-        <div
-          class="_Alert_21b118 _warning_21b118"
+        <section
+          class="ams-alert ams-alert--warning"
         >
-          <svg
-            aria-hidden="true"
-            class="_Icon_21b118"
-            focusable="false"
-            height="36"
-            viewBox="0 0 36 36"
-            width="36"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="ams-alert__icon"
           >
-            <title>
-              waarschuwing-icoon
-            </title>
-            <path
-              d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-            />
-            <rect
-              height="4.95"
-              width="2"
-              x="17"
-              y="16.99"
-            />
-            <rect
-              height="1.95"
-              width="2"
-              x="17"
-              y="22.94"
-            />
-          </svg>
-           
-          <p>
-            U hebt een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen.
-            <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
-              href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
-              rel="external noopener noreferrer"
+            <span
+              class="ams-icon ams-icon--size-4"
             >
-              Meer informatie over voorwaarden vakantieverhuur
-            </a>
-            .
-          </p>
-        </div>
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                />
+                <path
+                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="ams-alert__content"
+          >
+            <h2
+              class="ams-heading ams-heading--4"
+            >
+              Let op!
+            </h2>
+            <p
+              class="ams-paragraph"
+            >
+              U hebt een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen.
+              <a
+                class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
+                rel="external noopener noreferrer"
+              >
+                Meer informatie over voorwaarden vakantieverhuur
+              </a>
+              .
+            </p>
+          </div>
+        </section>
       </div>
     </div>
     <section
       class="_SectionCollapsible_b93dc7 _SectionNoBorderBottom_702859"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -532,7 +535,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _SectionNoBorderBottom_702859"
     >
       <h3
-        class="amsterdam-heading amsterdam-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -900,7 +903,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="amsterdam-heading amsterdam-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--4 _Label_6f1df2"
         >
           Registratienummer toeristische verhuur
         </h3>

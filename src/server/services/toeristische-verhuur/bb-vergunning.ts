@@ -138,8 +138,6 @@ function transformStatus(status: PowerBrowserZaak['status']) {
 export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
   const bbVergunnigen: BBVergunning[] = [];
 
-  console.log('zaken', zaken);
-
   for (const zaak of zaken) {
     // From Z/AB/123 to z-ab-123
     const idTransformed = zaak.zaaK_IDENTIFICATIE

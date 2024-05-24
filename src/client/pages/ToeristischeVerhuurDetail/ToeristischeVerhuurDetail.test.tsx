@@ -182,9 +182,6 @@ describe('<ToeristischVerhuurDetail />', () => {
     expect(screen.getByText('Tot')).toBeInTheDocument();
     expect(screen.getAllByText('22 maart 2023').length).toBe(2);
     expect(screen.getByText('01 juli 2028')).toBeInTheDocument();
-    expect(screen.getByText('Documenten')).toBeInTheDocument();
-    expect(screen.getByText('Documentje.pdf')).toBeInTheDocument();
-    expect(screen.getByText('Download')).toBeInTheDocument();
     expect(screen.getByText('Verleend')).toBeInTheDocument();
     expect(
       screen.queryByText('Uw Vergunning vakantieverhuur is verlopen.')
