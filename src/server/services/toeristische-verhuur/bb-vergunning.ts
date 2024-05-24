@@ -27,7 +27,7 @@ function fetchPowerBrowserToken(
       ...dataRequestConfig,
       url: `${dataRequestConfig.url}/Token`,
       data: {
-        apiKey: process.env.BFF_POWERBROWSER_API_KEY,
+        apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
       },
     },
     requestID,
