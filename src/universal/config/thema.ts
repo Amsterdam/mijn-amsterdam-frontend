@@ -2,6 +2,13 @@ import { generatePath } from 'react-router-dom';
 import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
+// import { AppState } from '../../client/AppState';
+// import { SVGComponent } from '../types';
+// import { IconAVG, IconBezwaren } from '../../client/assets/icons';
+
+//nieuw toegevoegd
+//import { SVGComponent } from '../../universal/types';
+//import { IconAVG, IconBezwaren } from '../../client/assets/icons';
 
 // Within the team we call these Themes / Thema's
 export type Thema =
@@ -34,6 +41,68 @@ export type Thema =
   | 'AVG'
   | 'BODEM'
   | string;
+
+export type ThemaIDs = 'BEZWAREN' | 'AVG';
+export type inlogType = 'private' | 'commercial';
+
+// export enum nums {
+//   BEZWAREN = 'BEZWAREN',
+//   AVG = 'AVG',
+// }
+type ThemaConfig = {
+  title: string;
+  browserTabName: string; //dit zie je in je browser wanneer je op thema pagina komt
+  browserTabNameDetail: string; //dit zie je in je browser wanneer je op detail pagina komt
+  appRoute: string; //dit is wat je ziet in de url ziet nadat je op thema klikt (klopt)
+  appRouteDetail: string; //dit is wat je ziet in de url ziet wanneer je op een detailpagina bent
+  profileTypes: inlogType[]; //dit zijn de inlogtypes (DIGID/EHERK of BEIDE)
+  // icon: SVGComponent; // Add the themaIcon in '../../client/assets/icons' and import it.
+  //isThemaActive: (state: AppState) => { return: true };
+};
+
+export const themas2: Record<ThemaIDs, ThemaConfig> = {
+  BEZWAREN: {
+    title: 'Bezwaren3',
+    browserTabName: '| overzicht',
+    browserTabNameDetail: '| bezwaar',
+    appRoute: '/bezwaren',
+    appRouteDetail: '/bezwaren/:uuid',
+    profileTypes: ['private', 'commercial'],
+    // icon: IconBezwaren,
+    //isThemaActive: (state: AppState) => { return: true }
+  },
+  AVG: {
+    title: 'AVG persoonsgegevens',
+    browserTabName: '| verzoeken',
+    browserTabNameDetail: '| verzoek',
+    appRoute: generatePath(AppRoutes.AVG, { page: 1 }),
+    appRouteDetail: '/avg/verzoek/:id',
+    profileTypes: ['private'],
+    // icon: IconAVG,
+    //isThemaActive: (state: AppState) => { return: true },
+  },
+};
+
+console.log('HALLLOOO ', themas2);
+
+let browserTabNames = {};
+// https://sentry.io/answers/how-can-i-add-a-key-value-pair-to-a-javascript-object/
+
+//omdat je object niet mag itereren > maak je er
+Object.values(themas2).forEach((value, index) => {
+  // consol¿e.log(value);
+  Object.assign(browserTabNames, {
+    [value.appRoute]: `${value.title}  ${[value.browserTabName]}`,
+  });
+  Object.assign(browserTabNames, {
+    [value.appRouteDetail]: `${value.title}  ${[value.browserTabNameDetail]}`,
+  });
+});
+console.log('browserTabNames', browserTabNames);
+
+// for (const key in themas2) {
+//   console.log('HALLLOOO ', themas2.);
+// }
 
 export type BagThema = `${Thema}_BAG`;
 
@@ -155,8 +224,6 @@ export const DocumentTitles: {
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes.KVK]: `Mijn onderneming`,
   [AppRoutes.BUURT]: `Mijn buurt`,
-  [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
-  [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
   [AppRoutes.SIA]: `${ThemaTitles.SIA} overzicht`,
@@ -179,8 +246,6 @@ export const DocumentTitles: {
   [AppRoutes.HORECA]: 'Horeca | overzicht',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
   [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
-  [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
-  [AppRoutes['AVG/DETAIL']]: `${ThemaTitles.AVG} | verzoek`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
   [AppRoutes.BODEM]: 'Bodem | overzicht',
   [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
@@ -192,6 +257,11 @@ export const DocumentTitles: {
   [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  ...browserTabNames,
+  // [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
+  // [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
+  // [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
+  // [AppRoutes['AVG/DETAIL']]: `${ThemaTitles.AVG} | verzoek`,
 };
 
 export interface ThemaMenuItem extends LinkProps {
@@ -199,6 +269,18 @@ export interface ThemaMenuItem extends LinkProps {
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
+}
+
+let themaMenuItems = [];
+
+for (const [key, value] of Object.entries(themas2)) {
+  // consol¿e.log(value);
+  themaMenuItems.push({
+    title: value.title,
+    id: key,
+    to: value.appRoute,
+    profileTypes: value.profileTypes,
+  });
 }
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
@@ -221,12 +303,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     rel: 'external',
     profileTypes: ['private'],
   },
-  {
-    title: ThemaTitles.BEZWAREN,
-    id: Themas.BEZWAREN,
-    to: AppRoutes.BEZWAREN,
-    profileTypes: ['private', 'commercial'],
-  },
+
   {
     title: ThemaTitles.BELASTINGEN,
     id: Themas.BELASTINGEN,
@@ -371,15 +448,28 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private', 'commercial'],
   },
   {
-    title: ThemaTitles.AVG,
-    id: Themas.AVG,
-    to: generatePath(AppRoutes.AVG, { page: 1 }),
-    profileTypes: ['private'],
-  },
-  {
     title: ThemaTitles.BODEM,
     id: Themas.BODEM,
     to: AppRoutes.BODEM,
     profileTypes: ['private', 'commercial'],
   },
+  ...themaMenuItems,
+  // {
+  //   title: ThemaTitles.AVG,
+  //   id: Themas.AVG,
+  //   to: generatePath(AppRoutes.AVG, { page: 1 }),
+  //   profileTypes: ['private'],
+  // },
+  // {
+  //   title: themas2.BEZWAREN.title,
+  //   id: nums.BEZWAREN,
+  //   to: themas2.BEZWAREN.appRoute,
+  //   profileTypes: ['private', 'commercial'],
+  // },
+  // {
+  //   title: ThemaTitles.BEZWAREN,
+  //   id: Themas.BEZWAREN,
+  //   to: AppRoutes.BEZWAREN,
+  //   profileTypes: ['private', 'commercial'],
+  // },
 ];
