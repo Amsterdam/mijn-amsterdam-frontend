@@ -1,7 +1,7 @@
 import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
-import { Chapters, FeatureToggle } from '../../../universal/config';
+import { FeatureToggle, Themas } from '../../../universal/config';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   dateFormat,
@@ -212,7 +212,7 @@ export function createToeristischeVerhuurNotification(
   return {
     id: `vergunning-${item.id}-notification`,
     datePublished,
-    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    thema: Themas.TOERISTISCHE_VERHUUR,
     title,
     description: description,
     link: {
@@ -234,7 +234,7 @@ function createRegistratieNotification(
   return {
     id: `toeristiche-verhuur-registratie-${item.registrationNumber}-notification`,
     datePublished,
-    chapter: Chapters.TOERISTISCHE_VERHUUR,
+    thema: Themas.TOERISTISCHE_VERHUUR,
     title,
     description,
     link: {

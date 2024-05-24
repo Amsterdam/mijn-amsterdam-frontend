@@ -48,15 +48,21 @@ interface PowerBrowserZaak {
     | string
     | 'Gereed'
     | 'Intake'
+    | 'In behandeling'
     | 'Geaccepteerd'
     | 'Afgehandeld'
-    | 'Controle bezoek'; // TODO: welke statussen zijn van toepassing?
+    | 'Toetsen volledigheid'
+    | 'Controle bezoek';
   resultaat:
     | null
-    | string
+    | 'Niet van toepassing'
+    | 'Buiten behandeling'
+    | 'Geweigerd'
+    | 'Geweigerd op basis van Quotum'
     | 'Verleend met overgangsrecht'
+    | 'Verleend zonder overgangsrecht'
     | 'Verleend'
-    | 'Ingetrokken'; // TODO: Welke resultaten zijn er/
+    | 'Ingetrokken';
   initator: string;
   adres: string;
 }
@@ -85,8 +91,22 @@ export interface BBVergunning {
 }
 
 function transformResultaat(resultaat: PowerBrowserZaak['resultaat']) {
-  const resultaatTranformed: BBVergunning['resultaat'] = null;
-  return resultaatTranformed;
+  if (resultaat === null) {
+    return null;
+  }
+
+  switch (true) {
+    case [
+      'Verleend met overgangsrecht',
+      'Verleend zonder overgangsrecht',
+      'Verleend',
+    ].includes(resultaat):
+      return 'Verleend';
+    case ['Geweigerd op basis van Quotum', 'Geweigerd'].includes(resultaat):
+      return 'Niet verleend';
+  }
+
+  return resultaat;
 }
 
 function transformStatus(status: PowerBrowserZaak['status']) {
@@ -104,6 +124,8 @@ function transformStatus(status: PowerBrowserZaak['status']) {
 
 export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
   const bbVergunnigen: BBVergunning[] = [];
+
+  console.log('zaken', zaken);
 
   for (const zaak of zaken) {
     // From Z/AB/123 to z-ab-123
