@@ -46,6 +46,7 @@ export const FeatureToggle = {
   oidcLogoutHintActive: !IS_PRODUCTION,
   zorgnedDocumentAttachmentsActive: true,
   powerbrowserActive: !IS_AP,
+  bbDocumentDownloadsActive: false,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.

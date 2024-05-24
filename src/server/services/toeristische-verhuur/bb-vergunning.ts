@@ -55,8 +55,8 @@ interface PowerBrowserZaak {
     | 'Controle bezoek';
   resultaat:
     | null
-    | 'Niet van toepassing'
-    | 'Buiten behandeling'
+    // | 'Niet van toepassing'
+    // | 'Buiten behandeling'
     | 'Geweigerd'
     | 'Geweigerd op basis van Quotum'
     | 'Verleend met overgangsrecht'
@@ -74,7 +74,7 @@ export interface BBVergunning {
   datumAanvraag: string;
   datumVan: string;
   datumTot: string;
-  resultaat: 'Verleend' | 'Geweigerd' | 'Ingetrokken' | null;
+  resultaat: 'Verleend' | 'Niet verleend' | 'Ingetrokken' | null;
   heeftOvergangsRecht: boolean;
   id: string;
   zaakId: string;
@@ -95,18 +95,31 @@ function transformResultaat(resultaat: PowerBrowserZaak['resultaat']) {
     return null;
   }
 
-  switch (true) {
-    case [
-      'Verleend met overgangsrecht',
-      'Verleend zonder overgangsrecht',
-      'Verleend',
-    ].includes(resultaat):
-      return 'Verleend';
-    case ['Geweigerd op basis van Quotum', 'Geweigerd'].includes(resultaat):
-      return 'Niet verleend';
+  let resultaatTransformed: BBVergunning['resultaat'] = null;
+
+  const resultatenVerleend = [
+    'Verleend met overgangsrecht',
+    'Verleend zonder overgangsrecht',
+    'Verleend',
+  ];
+
+  if (resultatenVerleend.includes(resultaat)) {
+    resultaatTransformed = 'Verleend';
   }
 
-  return resultaat;
+  const resultatenNietVerleend = ['Geweigerd op basis van Quotum', 'Geweigerd'];
+
+  if (resultatenNietVerleend.includes(resultaat)) {
+    resultaatTransformed = 'Niet verleend';
+  }
+
+  const resultatenOverig = ['Ingetrokken'];
+
+  if (resultatenOverig.includes(resultaat)) {
+    resultaatTransformed = 'Ingetrokken';
+  }
+
+  return resultaatTransformed;
 }
 
 function transformStatus(status: PowerBrowserZaak['status']) {

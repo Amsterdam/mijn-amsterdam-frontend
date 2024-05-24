@@ -1,6 +1,7 @@
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 import { VakantieverhuurVergunning as VakantieverhuurVergunningDecos } from '../../../server/services/vergunningen/vergunningen';
+import { FeatureToggle } from '../../../universal/config';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { DocumentList, LinkdInline, PageContent } from '../../components';
 import InfoDetail, {
@@ -79,7 +80,8 @@ export default function VergunningVerhuur({
           />
         )}
         {vergunning.titel === 'Vergunning bed & breakfast' &&
-          !!vergunning.documents?.length && (
+          !!vergunning.documents?.length &&
+          FeatureToggle.bbDocumentDownloadsActive && (
             <InfoDetailGroup label="Documenten">
               <DocumentList documents={vergunning.documents} isExpandedView />
             </InfoDetailGroup>
