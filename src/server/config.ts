@@ -505,7 +505,7 @@ const oidcConfigBase: ConfigParams = {
       client: db,
       expired: {
         clear: true,
-        intervalMs: 900000,
+        intervalMs: OIDC_SESSION_MAX_AGE_SECONDS * 1000,
       },
     }),
   },
