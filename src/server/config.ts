@@ -7,6 +7,8 @@ import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { jsonCopy } from '../universal/helpers/utils';
 import { TokenData } from './helpers/app';
 import fs from 'fs';
+import sqlite from 'better-sqlite3';
+import session from 'express-session';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && process.env[envVarName];
@@ -479,6 +481,9 @@ export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_GENERAL_ENCRYPTION_
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
+const SqliteStore = require('better-sqlite3-session-store')(session);
+const db = new sqlite('sessions.db', { verbose: console.log });
+
 const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
@@ -496,6 +501,13 @@ const oidcConfigBase: ConfigParams = {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
+    store: new SqliteStore({
+      client: db,
+      expired: {
+        clear: true,
+        intervalMs: 900000,
+      },
+    }),
   },
   routes: {
     login: false,
