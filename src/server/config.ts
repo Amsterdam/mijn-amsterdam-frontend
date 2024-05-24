@@ -9,8 +9,6 @@ import { TokenData } from './helpers/app';
 import fs from 'fs';
 import session from 'express-session';
 import { db } from './services/db/sqlite3';
-// ts support not available in better-sqlite3-session-store
-// @ts-ignore
 import SqliteStoreModule from 'better-sqlite3-session-store';
 
 export function getCertificateSync(envVarName: string | undefined) {

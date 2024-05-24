@@ -31,6 +31,11 @@ declare module '*.scss' {
   export = content;
 }
 
+declare module 'better-sqlite3-session-store' {
+  const SqliteStoreInstance: any;
+  export default SqliteStoreInstance;
+}
+
 interface ImportMeta {
   env: {
     [key: string]: string;
