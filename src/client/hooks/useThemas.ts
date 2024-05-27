@@ -14,14 +14,10 @@ export interface ThemasState {
   isLoading: boolean;
 }
 
-export function useThemaMenuItems() {
+export function useThemas(): ThemasState {
   const profileType = useProfileTypeValue();
-  return themasByProfileType[profileType] || [];
-}
-
-export function useThemaMenuItems(): ThemasState {
   const appState = useAppStateGetter();
-  const themaItems = useThemaMenuItems();
+  const themaItems = themasByProfileType[profileType] || [];
 
   const items = themaItems.filter((item) => {
     // Check to see if Thema has been loaded or if it is directly available
