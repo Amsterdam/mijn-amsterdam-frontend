@@ -313,7 +313,7 @@ export default function StatusLine({
               <StatusLinePanelDescription content={item.description ?? ''} />
 
               <StatusLinePanelDocuments
-                documents={item.documents}
+                documents={item.documents ?? []}
                 altDocumentContent={item.altDocumentContent}
                 trackPath={documentPathForTracking}
               />
