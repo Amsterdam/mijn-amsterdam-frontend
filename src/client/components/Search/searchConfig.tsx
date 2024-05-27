@@ -248,7 +248,6 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             ...vergunning,
             title,
             identifier: vergunning.zaaknummer,
-            link: vergunning.link,
           };
         }
       );
@@ -259,7 +258,6 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             ...vergunning,
             title,
             identifier: vergunning.zaaknummer,
-            link: vergunning.link,
           };
         }
       );
