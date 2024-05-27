@@ -61,9 +61,11 @@ export default function Menu({ menuItems, themas, isPhoneScreen }: Props) {
             ))}
           </MegaMenu.ListCategory>
         </nav>
-        <nav>
-          <SecondaryLinks />
-        </nav>
+        {isPhoneScreen && (
+          <nav>
+            <SecondaryLinks showIcons />
+          </nav>
+        )}
       </div>
     </MegaMenu>
   );
