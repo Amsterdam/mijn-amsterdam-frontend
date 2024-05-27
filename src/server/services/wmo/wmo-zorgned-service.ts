@@ -204,7 +204,7 @@ export async function fetchVoorzieningen(
     regeling: REGELING_IDENTIFICATIE,
   };
 
-  const dataRequestConfig = getApiConfig('ZORGNED');
+  const dataRequestConfig = getApiConfig('ZORGNED_JZD');
 
   const url = `${dataRequestConfig.url}/aanvragen`;
 
@@ -245,7 +245,7 @@ export async function fetchDocument(
     documentidentificatie: documentId,
   };
 
-  const dataRequestConfig = getApiConfig('ZORGNED');
+  const dataRequestConfig = getApiConfig('ZORGNED_JZD');
   const url = `${dataRequestConfig.url}/document`;
 
   return requestData<ZorgnedDocumentData>(

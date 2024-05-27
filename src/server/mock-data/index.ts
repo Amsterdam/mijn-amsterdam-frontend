@@ -130,7 +130,46 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(BEZWAREN_STATUS);
     },
   },
-  [`${ApiUrls.ZORGNED}`]: {
+  [`${ApiUrls.ZORGNED_AV}/persoonsgegevensNAW`]: {
+    method: 'post',
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return loadMockApiResponseJson({
+        persoon: {
+          bsn: '123456789',
+          clientidentificatie: 111111,
+          geslachtsaanduiding: { code: 'M', omschrijving: 'Man' },
+          voorletters: 'E',
+          voorvoegsel: null,
+          geboortenaam: 'Alex',
+          voornamen: 'Flex',
+          roepnaam: 'Flexie',
+          geboortedatum: '2010-06-12',
+          burgerlijkestaat: {
+            code: '1',
+            omschrijving: 'Ongehuwd en nooit gehuwd geweest',
+          },
+          aanduidingNaamgebruik: { code: 'E', omschrijving: 'Geboortenaam' },
+          partnernaam: null,
+          partnervoorvoegsel: null,
+          persoontype: 'P',
+        },
+        inschrijfadres: {
+          huisnummer: 77,
+          huisletter: null,
+          huisnummerToevoeging: null,
+          postcode: '1011 AA',
+          straatnaam: 'Dam 1',
+          plaats: 'Amsterdam',
+          adrestype: 'R',
+        },
+      });
+    },
+  },
+  [`${ApiUrls.ZORGNED_JZD}`]: {
     method: 'post',
     pathReg: new RegExp('/remote/zorgned/*'),
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),

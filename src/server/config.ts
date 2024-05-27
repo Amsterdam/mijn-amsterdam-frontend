@@ -95,7 +95,8 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'ZORGNED'
+  | 'ZORGNED_JZD'
+  | 'ZORGNED_AV'
   | 'GPASS'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
@@ -129,7 +130,7 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  ZORGNED: {
+  ZORGNED_JZD: {
     method: 'post',
     url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
     headers: {
@@ -139,6 +140,18 @@ export const ApiConfig: ApiDataRequestConfig = {
     httpsAgent: new https.Agent({
       cert: getCert('BFF_SERVER_CLIENT_CERT'),
       key: getCert('BFF_SERVER_CLIENT_KEY'),
+    }),
+  },
+  ZORGNED_AV: {
+    method: 'post',
+    url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
+    headers: {
+      Token: process.env.BFF_ZORGNED_API_TOKEN,
+      'Content-type': 'application/json; charset=utf-8',
+    },
+    httpsAgent: new https.Agent({
+      cert: getCert('BFF_ZORGNED_AV_CERT'),
+      key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
   },
   GPASS: {
