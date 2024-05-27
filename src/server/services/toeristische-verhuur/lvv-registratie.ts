@@ -12,15 +12,17 @@ export interface ToeristischeVerhuurRegistratieNumberSource {
   registrationNumber: string;
 }
 
+export interface ToeristischeVerhuurRegistratieHouse {
+  city: string;
+  houseLetter: string | null;
+  houseNumber: string | null;
+  houseNumberExtension: string | null;
+  postalCode: string | null;
+  street: string | null;
+}
+
 export interface ToeristischeVerhuurRegistratieDetailSource {
-  rentalHouse: {
-    city: string;
-    houseLetter: string | null;
-    houseNumber: string | null;
-    houseNumberExtension: string | null;
-    postalCode: string | null;
-    street: string | null;
-  };
+  rentalHouse: ToeristischeVerhuurRegistratieHouse;
   registrationNumber: string;
   agreementDate: string | null;
 }
