@@ -1,18 +1,16 @@
 import { Header, PageMenu } from '@amsterdam/design-system-react';
 import { animated, useSpring } from '@react-spring/web';
-import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { AppRoutes, OTAP_ENV, ThemaTitles } from '../../../universal/config';
-import { isError } from '../../../universal/helpers';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { ErrorMessages } from '../../components';
-import { LOGOUT_URL, getApiErrors } from '../../config/api';
+import { getApiErrors } from '../../config/api';
 import {
   useAppStateGetter,
+  usePhoneScreen,
   useProfileTypeValue,
   useTermReplacement,
 } from '../../hooks';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MaLink } from '../MaLink/MaLink';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
@@ -22,24 +20,12 @@ import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
 import styles from './MainHeader.module.scss';
-import { ProfileName } from './ProfileName';
+import { SecondaryLinks } from './SecondaryLinks';
+import { OtapLabel } from './OtapLabel';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
   isHeroVisible?: boolean;
-}
-
-function OtapLabel() {
-  return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (
-    <small
-      className={classnames(
-        styles['otap-env'],
-        styles[`otap-env--${OTAP_ENV}`]
-      )}
-    >
-      {OTAP_ENV}
-    </small>
-  ) : null;
 }
 
 const AmsMegaMenuClassname = 'ams-mega-menu';
@@ -50,37 +36,6 @@ function isTargetWithinMenu(target: any) {
   const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
   return (
     LinkContainer?.contains(target) || BurgerMenuToggleButton?.contains(target)
-  );
-}
-
-export function SecondaryLinks() {
-  const { BRP, KVK, PROFILE } = useAppStateGetter();
-  const session = useSessionValue();
-
-  const profileType = useProfileTypeValue();
-
-  return (
-    <>
-      <MaLink
-        maVariant="noDefaultUnderline"
-        href={LOGOUT_URL}
-        onClick={(event) => {
-          event.preventDefault();
-          session.logout();
-          return false;
-        }}
-      >
-        Uitloggen
-      </MaLink>
-      {!isError(BRP) && !isError(KVK) && (
-        <ProfileName
-          person={BRP.content?.persoon}
-          company={KVK.content}
-          profileType={profileType}
-          profileAttribute={PROFILE.content?.profile.id}
-        />
-      )}
-    </>
   );
 }
 
@@ -109,6 +64,7 @@ export default function MainHeader({
       display: isBurgerMenuVisible ? 'block' : 'none',
     },
   });
+  const isPhoneScreen = usePhoneScreen();
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -301,7 +257,11 @@ export default function MainHeader({
         )}
 
         {isBurgerMenuVisible && (
-          <MegaMenu themas={myThemasMenuItems} menuItems={menuItems} />
+          <MegaMenu
+            isPhoneScreen={isPhoneScreen}
+            themas={myThemasMenuItems}
+            menuItems={menuItems}
+          />
         )}
 
         {isAuthenticated && hasErrors && (

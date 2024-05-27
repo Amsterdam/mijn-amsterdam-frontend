@@ -3,13 +3,15 @@ import { ThemaMenuItem } from '../../../universal/config';
 import styles from './MegaMenu.module.scss';
 import { MenuItem } from '../MainHeader/MainHeader.constants';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { SecondaryLinks } from '../MainHeader/SecondaryLinks';
 
 type Props = {
   menuItems: MenuItem[];
   themas: ThemaMenuItem[];
+  isPhoneScreen: boolean;
 };
 
-export default function Menu({ menuItems, themas }: Props) {
+export default function Menu({ menuItems, themas, isPhoneScreen }: Props) {
   return (
     <MegaMenu>
       <div className={styles.menu}>
@@ -58,6 +60,9 @@ export default function Menu({ menuItems, themas }: Props) {
               </MaRouterLink>
             ))}
           </MegaMenu.ListCategory>
+        </nav>
+        <nav>
+          <SecondaryLinks />
         </nav>
       </div>
     </MegaMenu>
