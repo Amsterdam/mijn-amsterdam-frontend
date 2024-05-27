@@ -13,7 +13,7 @@ import {
   useTermReplacement,
 } from '../../hooks';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
-import { useThemas } from '../../hooks/useThemas';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MaLink } from '../MaLink/MaLink';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MegaMenu from '../MegaMenu/MegaMenu';
@@ -95,7 +95,7 @@ export default function MainHeader({
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myThemasMenuItems } = useThemas();
+  const { items: myThemasMenuItems } = useThemaMenuItems();
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const { isSearchActive, setSearchActive, isDisplayLiveSearch } =

@@ -19,7 +19,7 @@ export function useThemaMenuItems() {
   return themasByProfileType[profileType] || [];
 }
 
-export function useThemas(): ThemasState {
+export function useThemaMenuItems(): ThemasState {
   const appState = useAppStateGetter();
   const themaItems = useThemaMenuItems();
 
