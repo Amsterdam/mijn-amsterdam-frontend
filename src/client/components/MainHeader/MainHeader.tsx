@@ -244,7 +244,7 @@ export default function MainHeader({
                 {isDisplayLiveSearch && (
                   <MaLink
                     maVariant="noDefaultUnderline"
-                    href={''}
+                    href={AppRoutes.SEARCH}
                     onClick={(event) => {
                       event.preventDefault();
                       setSearchActive(!isSearchActive);
@@ -262,7 +262,7 @@ export default function MainHeader({
               <>
                 {!isBurgerMenuVisible ? (
                   <button
-                    aria-label={'Open menu'}
+                    aria-label="Open menu"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleBurgerMenu(true);
@@ -274,7 +274,7 @@ export default function MainHeader({
                 ) : (
                   isBurgerMenuVisible && (
                     <button
-                      aria-label={'Close menu'}
+                      aria-label="Sluit menu"
                       onClick={() => toggleBurgerMenu(false)}
                       className={styles.menuLinkClose}
                     >
