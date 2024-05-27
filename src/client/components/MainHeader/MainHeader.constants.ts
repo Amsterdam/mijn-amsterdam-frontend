@@ -1,7 +1,11 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
+import {
+  AppRoutes,
+  Thema,
+  ThemaMenuItem,
+  ThemaTitles,
+} from '../../../universal/config';
 import { LinkProps } from '../../../universal/types';
-import { ThemaMenuItem } from '../../config/menuItems';
 
 type MainMenuId = Thema | 'MIJN_THEMAS';
 
