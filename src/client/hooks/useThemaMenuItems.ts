@@ -14,7 +14,7 @@ export interface ThemasState {
   isLoading: boolean;
 }
 
-export function useThemas(): ThemasState {
+export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
   const themaItems = themasByProfileType[profileType] || [];
