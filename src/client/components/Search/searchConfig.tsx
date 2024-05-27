@@ -14,10 +14,12 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
 import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
+import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 
+import { StadspasResponseData } from '../../../server/services/stadspas/stadspas-types';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -36,11 +38,6 @@ import {
 import { AppState, AppStateKey } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
-import { StadspasResponseData } from '../../../server/services/stadspas/stadspas-types';
-import {
-  WMOVoorziening,
-  WMOVoorzieningFrontend,
-} from '../../../server/services/wmo/wmo-config-and-types';
 
 export interface SearchEntry {
   url: string;
@@ -226,12 +223,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'TOERISTISCHE_VERHUUR' as keyof AppState,
+    stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
     getApiBaseItems: (apiContent: {
       lvvRegistraties: ToeristischeVerhuurRegistratieDetail[];
       vakantieverhuurVergunningen: VakantieverhuurVergunning[];
       bbVergunningen: BBVergunning[];
-    }): ToeristischVerhuurItem[] => {
+    }) => {
       const registratienummers = apiContent.lvvRegistraties?.map(
         (registratie) => {
           return {
