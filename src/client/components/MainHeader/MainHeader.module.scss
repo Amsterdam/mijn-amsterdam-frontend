@@ -15,27 +15,25 @@
   h1 {
     font-size: var(--ams-text-level-1-font-size);
   }
-
 }
 
 .headerContainer {
   position: relative;
   z-index: z-index(mega-menu);
 
-  :global(.ams-header){
-     @include centered-block;
+  :global(.ams-header) {
+    @include centered-block;
   }
 
-  :global(.ams-header__title-heading){
+  :global(.ams-header__title-heading) {
     cursor: pointer;
   }
 
- :global(.ams-mega-menu) {
+  :global(.ams-mega-menu) {
     position: absolute;
     width: 100%;
     z-index: z-index(mega-menu);
     background: #ffffff;
-
   }
 }
 
@@ -115,7 +113,7 @@
   position: absolute;
   white-space: nowrap;
   top: 5px;
-  right: calc(50% + 15px);
+  left: calc(50% - 90px);
 }
 
 .Backdrop {
