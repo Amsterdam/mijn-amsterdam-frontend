@@ -146,6 +146,7 @@
     "@rollup/rollup-linux-x64-gnu": "4.14.3"
   },
   "devDependencies": {
-    "@mocks-server/main": "^4.1.0"
+    "@mocks-server/main": "^4.1.0",
+    "formidable": "^3.5.1"
   }
 }

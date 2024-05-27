@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: {
     // Plugins to be registered
-    //register: [],
+    // register: [],
     proxyRoutesHandler: {},
     adminApi: {
       // Port number for the admin API server to be listening at
@@ -63,16 +63,16 @@ module.exports = {
       //options: {"preflightContinue":false},
     },
     jsonBodyParser: {
-      // Use json body-parser middleware or not
-      //enabled: true,
-      // Options for the json body-parser middleware. Further information at https://github.com/expressjs/body-parser
-      //options: {},
+      enabled: true,
+      options: {
+        strict: false,
+      },
     },
     urlEncodedBodyParser: {
       // Use urlencoded body-parser middleware or not
-      //enabled: true,
+      // enabled: true,
       // Options for the urlencoded body-parser middleware. Further information at https://github.com/expressjs/body-parser
-      //options: {"extended":true},
+      // options: { extended: true },
     },
     https: {
       // Use https protocol or not

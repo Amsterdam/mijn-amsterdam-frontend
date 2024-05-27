@@ -26,7 +26,9 @@
       "get-kvk:standard",
       "get-toeristische-verhuur-with-bsn:standard",
       "get-toeristische-verhuur-with-a-number:standard",
-      "get-toeristische-verhuur-with-b-number:standard"
+      "get-toeristische-verhuur-with-b-number:standard",
+      "get-krefia:standard",
+      "get-enableu2smile-klachten:standard"
     ]
   }
 ]
