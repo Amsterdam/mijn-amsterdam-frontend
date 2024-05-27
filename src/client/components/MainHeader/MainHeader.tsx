@@ -1,30 +1,28 @@
+import { Header, PageMenu } from '@amsterdam/design-system-react';
+import { animated, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  AppRoutes,
-  ThemaTitles,
-  OTAP_ENV,
-  myThemasMenuItems,
-} from '../../../universal/config';
-import { getApiErrors } from '../../config/api';
-import { useAppStateGetter } from '../../hooks';
-import { ErrorMessages } from '../../components';
-import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
-import styles from './MainHeader.module.scss';
-import { PageMenu, Header } from '@amsterdam/design-system-react';
-import { animated, useSpring } from '@react-spring/web';
-import { Search } from '../Search/Search';
-import MegaMenu from '../MegaMenu/MegaMenu';
-import { useProfileTypeValue, useTermReplacement } from '../../hooks';
-import { useThemas } from '../../hooks/useThemas';
-import { useSearchOnPage } from '../Search/useSearch';
-import { SearchEntry } from '../Search/searchConfig';
-import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
+import { AppRoutes, OTAP_ENV, ThemaTitles } from '../../../universal/config';
 import { isError } from '../../../universal/helpers';
-import { ProfileName } from './ProfileName';
-import { MaLink } from '../MaLink/MaLink';
+import { ErrorMessages } from '../../components';
+import { LOGOUT_URL, getApiErrors } from '../../config/api';
+import {
+  useAppStateGetter,
+  useProfileTypeValue,
+  useTermReplacement,
+} from '../../hooks';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
+import { useThemas } from '../../hooks/useThemas';
+import { MaLink } from '../MaLink/MaLink';
+import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
+import MegaMenu from '../MegaMenu/MegaMenu';
+import { Search } from '../Search/Search';
+import { SearchEntry } from '../Search/searchConfig';
+import { useSearchOnPage } from '../Search/useSearch';
+import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
+import styles from './MainHeader.module.scss';
+import { ProfileName } from './ProfileName';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -65,7 +63,7 @@ export function SecondaryLinks() {
     <>
       <MaLink
         maVariant="noDefaultUnderline"
-        href={''}
+        href={LOGOUT_URL}
         onClick={(event) => {
           event.preventDefault();
           session.logout();
