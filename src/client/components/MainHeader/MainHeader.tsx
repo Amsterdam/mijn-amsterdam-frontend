@@ -1,47 +1,31 @@
-import classnames from 'classnames';
+import { Header, PageMenu } from '@amsterdam/design-system-react';
+import { animated, useSpring } from '@react-spring/web';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {
-  AppRoutes,
-  ThemaTitles,
-  OTAP_ENV,
-  myThemasMenuItems,
-} from '../../../universal/config';
-import { getApiErrors } from '../../config/api';
-import { useAppStateGetter } from '../../hooks';
+import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { ErrorMessages } from '../../components';
-import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
-import styles from './MainHeader.module.scss';
-import { PageMenu, Header } from '@amsterdam/design-system-react';
-import { animated, useSpring } from '@react-spring/web';
-import { Search } from '../Search/Search';
-import MegaMenu from '../MegaMenu/MegaMenu';
-import { useProfileTypeValue, useTermReplacement } from '../../hooks';
-import { useThemas } from '../../hooks/useThemas';
-import { useSearchOnPage } from '../Search/useSearch';
-import { SearchEntry } from '../Search/searchConfig';
-import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
-import { isError } from '../../../universal/helpers';
-import { ProfileName } from './ProfileName';
+import { getApiErrors } from '../../config/api';
+import {
+  useAppStateGetter,
+  usePhoneScreen,
+  useProfileTypeValue,
+  useTermReplacement,
+} from '../../hooks';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MaLink } from '../MaLink/MaLink';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
+import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
+import MegaMenu from '../MegaMenu/MegaMenu';
+import { Search } from '../Search/Search';
+import { SearchEntry } from '../Search/searchConfig';
+import { useSearchOnPage } from '../Search/useSearch';
+import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
+import styles from './MainHeader.module.scss';
+import { SecondaryLinks } from './SecondaryLinks';
+import { OtapLabel } from './OtapLabel';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
   isHeroVisible?: boolean;
-}
-
-function OtapLabel() {
-  return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (
-    <small
-      className={classnames(
-        styles['otap-env'],
-        styles[`otap-env--${OTAP_ENV}`]
-      )}
-    >
-      {OTAP_ENV}
-    </small>
-  ) : null;
 }
 
 const AmsMegaMenuClassname = 'ams-mega-menu';
@@ -52,37 +36,6 @@ function isTargetWithinMenu(target: any) {
   const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
   return (
     LinkContainer?.contains(target) || BurgerMenuToggleButton?.contains(target)
-  );
-}
-
-export function SecondaryLinks() {
-  const { BRP, KVK, PROFILE } = useAppStateGetter();
-  const session = useSessionValue();
-
-  const profileType = useProfileTypeValue();
-
-  return (
-    <>
-      <MaLink
-        maVariant="noDefaultUnderline"
-        href={''}
-        onClick={(event) => {
-          event.preventDefault();
-          session.logout();
-          return false;
-        }}
-      >
-        Uitloggen
-      </MaLink>
-      {!isError(BRP) && !isError(KVK) && (
-        <ProfileName
-          person={BRP.content?.persoon}
-          company={KVK.content}
-          profileType={profileType}
-          profileAttribute={PROFILE.content?.profile.id}
-        />
-      )}
-    </>
   );
 }
 
@@ -97,7 +50,7 @@ export default function MainHeader({
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myThemasMenuItems } = useThemas();
+  const { items: myThemasMenuItems } = useThemaMenuItems();
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
@@ -111,6 +64,7 @@ export default function MainHeader({
       display: isBurgerMenuVisible ? 'block' : 'none',
     },
   });
+  const isPhoneScreen = usePhoneScreen();
 
   // Bind click outside and tab navigation interaction
   useEffect(() => {
@@ -244,7 +198,7 @@ export default function MainHeader({
                 {isDisplayLiveSearch && (
                   <MaLink
                     maVariant="noDefaultUnderline"
-                    href={''}
+                    href={AppRoutes.SEARCH}
                     onClick={(event) => {
                       event.preventDefault();
                       setSearchActive(!isSearchActive);
@@ -262,7 +216,7 @@ export default function MainHeader({
               <>
                 {!isBurgerMenuVisible ? (
                   <button
-                    aria-label={'Open menu'}
+                    aria-label="Open menu"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleBurgerMenu(true);
@@ -274,7 +228,7 @@ export default function MainHeader({
                 ) : (
                   isBurgerMenuVisible && (
                     <button
-                      aria-label={'Close menu'}
+                      aria-label="Sluit menu"
                       onClick={() => toggleBurgerMenu(false)}
                       className={styles.menuLinkClose}
                     >
@@ -303,7 +257,11 @@ export default function MainHeader({
         )}
 
         {isBurgerMenuVisible && (
-          <MegaMenu themas={myThemasMenuItems} menuItems={menuItems} />
+          <MegaMenu
+            isPhoneScreen={isPhoneScreen}
+            themas={myThemasMenuItems}
+            menuItems={menuItems}
+          />
         )}
 
         {isAuthenticated && hasErrors && (
