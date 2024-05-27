@@ -127,18 +127,6 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES_BSN);
     },
   },
-  [String(ApiUrls.TOERISTISCHE_VERHUUR_REGISTRATIES + '/:number')]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return loadMockApiResponseJson(TOERISTISCHE_VERHUUR_REGISTRATIES);
-      // }
-      return loadMockApiResponseJson({
-        ...TOERISTISCHE_VERHUUR_REGISTRATIE,
-        registrationNumber: config.url.split('/').pop(),
-      });
-    },
-  },
   [String(ApiUrls.KREFIA)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {

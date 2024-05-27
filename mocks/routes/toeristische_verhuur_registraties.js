@@ -4,7 +4,7 @@ const NORMAL_RESPONSE = require('../fixtures/registraties-toeristische-verhuur.j
 const A_NUMBER = 'AAAAAAAAAAAAAAAAAAAA';
 const B_NUMBER = 'BBBBBBBBBBBBBBBBBBBB';
 
-// RP TODO: Continue on first route (use hit_endpoints.sh) to test
+// RP TODO: Block reports error of invalid json (json: "999991619")
 module.exports = [
   {
     id: 'get-toeristische-verhuur-with-bsn',
@@ -13,19 +13,15 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'middleware',
+        type: 'json',
         options: {
-          middleware: (req, res, next, core) => {
-            core.logger.error(req.body);
-            res.status(200);
-            res.body(BSN_RESPONSE);
-          },
-          // status: 200,
-          // body: BSN_RESPONSE,
+          status: 200,
+          body: BSN_RESPONSE,
         },
       },
     ],
   },
+  // End block
   {
     id: 'get-toeristische-verhuur-with-a-number',
     url: `/remote/vakantieverhuur/${A_NUMBER}`,
