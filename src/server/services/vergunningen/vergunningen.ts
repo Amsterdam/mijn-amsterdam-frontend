@@ -442,7 +442,7 @@ export function getNotificationLabels(
   switch (true) {
     // NOTE: For permits you can only have one of.
     // prettier-ignore
-    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item.dateEnd, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
@@ -454,9 +454,9 @@ export function getNotificationLabels(
     case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item, compareToDate):
       return notificationContent[item.caseType]?.isExpired;
 
-    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) &&
+    case (CaseType.BZB === item.caseType || CaseType.BZP === item.caseType) &&
       item.decision === 'Verleend' &&
-      isNearEndDate(item, compareToDate):
+      isNearEndDate(item.dateEnd, compareToDate):
       return notificationContent[item.caseType]?.almostExpired;
 
     case item.caseType === CaseType.RVVSloterweg &&

@@ -17,7 +17,7 @@ import {
 } from '../../../universal/helpers/api';
 import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  isNearEndDate2,
+  isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config';
@@ -153,7 +153,7 @@ export function createToeristischeVerhuurNotification(
     switch (true) {
       // B&B + Vakantieverhuurvergunning
       case item.resultaat === 'Verleend' &&
-        isNearEndDate2(item.datumTot) &&
+        isNearEndDate(item.datumTot) &&
         !hasOtherActualVergunningOfSameType(items, item):
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.zaaknummer} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
@@ -187,16 +187,6 @@ export function createToeristischeVerhuurNotification(
         linkTo = ctaLinkToDetail;
         datePublished = item.datumAanvraag;
         break;
-      // case item.status === 'In behandeling':
-      //   title = `Aanvraag ${vergunningTitleLower} in behandeling`;
-      //   description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.zaaknummer} in behandeling genomen.`;
-      //   cta = 'Bekijk uw aanvraag';
-      //   linkTo = ctaLinkToDetail;
-      //   datePublished = item.datumAanvraag;
-      //   if (item.titel === 'Vergunning bed & breakfast') {
-      //     datePublished = item.dateWorkflowActive || item.datumAanvraag;
-      //   }
-      //   break;
       // B&B + Vakantieverhuurvergunning
       case !!item.resultaat:
         const resultaat = item.resultaat?.toLowerCase() || 'afgehandeld';

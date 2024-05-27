@@ -78,13 +78,6 @@ export function isWoonvergunning(
 }
 
 export function isNearEndDate(
-  vergunning: VergunningExpirable,
-  dateNow: Date = new Date()
-) {
-  return isNearEndDate2(vergunning.dateEnd, dateNow);
-}
-
-export function isNearEndDate2(
   dateEnd?: string | null,
   dateNow: Date = new Date()
 ) {
