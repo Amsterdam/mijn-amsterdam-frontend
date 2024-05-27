@@ -22,32 +22,20 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
   NOTIFICATIONS: 'NOTIFICATIONS',
 };
 
-export const MenuItemTitles = {
-  HOME: ThemaTitles.ROOT,
-  THEMAS: "Mijn thema's",
-  BUURT: ThemaTitles.BUURT,
-  NOTIFICATIONS: ThemaTitles.NOTIFICATIONS,
-};
-
 export const mainMenuItems: MenuItem[] = [
   {
-    title: MenuItemTitles.HOME,
+    title: ThemaTitles.ROOT,
     id: mainMenuItemId.HOME,
     to: AppRoutes.ROOT,
   },
   {
-    title: MenuItemTitles.THEMAS,
-    id: mainMenuItemId.THEMAS,
-    to: '',
-  },
-  {
-    title: MenuItemTitles.BUURT,
+    title: ThemaTitles.BUURT,
     id: mainMenuItemId.BUURT,
     to: generatePath(AppRoutes.BUURT),
     profileTypes: ['private', 'commercial'],
   },
   {
-    title: MenuItemTitles.NOTIFICATIONS,
+    title: ThemaTitles.NOTIFICATIONS,
     id: mainMenuItemId.NOTIFICATIONS,
     to: generatePath(AppRoutes.NOTIFICATIONS),
   },
