@@ -257,10 +257,10 @@ function StatusLineConnection({
 
 interface StatusLineProps {
   items: StatusLineItem[];
-  // @Deprecated
+  // Deprecated
   trackCategory?: string;
   altDocumentContent?: AltDocumentContent;
-  // @Deprecated
+  // Deprecated
   id?: string;
   statusLabel?: string;
   showStatusLineConnection?: boolean;
@@ -272,10 +272,8 @@ interface StatusLineProps {
 
 export default function StatusLine({
   items,
-  trackCategory,
   statusLabel = 'Status',
   className,
-  id,
   maxStepCount,
   highlightKey = 'isActive',
   showStatusLineConnection = true,
