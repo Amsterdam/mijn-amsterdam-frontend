@@ -1,5 +1,3 @@
-const formidable = require('formidable');
-
 const KLACHTEN_RESPONSE = require('../fixtures/klachten.json');
 const AVG_RESPONSE = require('../fixtures/avg.json');
 const AVG_THEMAS_RESPONSE = require('../fixtures/avg-themas.json');
