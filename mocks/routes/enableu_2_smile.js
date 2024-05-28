@@ -13,45 +13,19 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'middleware',
+        type: 'intermediate-api-handler',
         options: {
-          middleware: (req, res, _next, core) => {
-            const form = new formidable.IncomingForm();
-
-            form.parse(req, async (err, fields, _files) => {
-              if (err) {
-                core.logger.error(err);
-              }
-
-              let identifier;
-              try {
-                identifier = fields.function[0];
-              } catch (e) {
-                res.status(404);
-                core.logger.error(
-                  "Not found: No identifier found in 'fields.function[0]'"
-                );
-                return;
-              }
-
-              if (identifier === 'readKlacht') {
-                res.status(200);
-                res.send(KLACHTEN_RESPONSE);
-              } else if (identifier === 'readAVGverzoek') {
-                res.status(200);
-                res.send(AVG_RESPONSE);
-              } else if (identifier === 'readthemaperavgverzoek') {
-                res.status(200);
-                res.send(AVG_THEMAS_RESPONSE);
-              } else {
-                res.status(404);
-                core.logger.error(
-                  `unknown identifier '${identifier}' type response`
-                );
-              }
-
-              core.logger.debug(`identifier: '${identifier}'`);
-            });
+          klachten: {
+            identifier: 'readKlacht',
+            body: KLACHTEN_RESPONSE,
+          },
+          avg: {
+            identifier: 'readAVGverzoek',
+            body: AVG_RESPONSE,
+          },
+          avgThemas: {
+            identifier: 'readthemaperavgverzoek',
+            body: AVG_THEMAS_RESPONSE,
           },
         },
       },
