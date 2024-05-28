@@ -4,7 +4,7 @@ const KLACHTEN_RESPONSE = require('../fixtures/klachten.json');
 const AVG_RESPONSE = require('../fixtures/avg.json');
 const AVG_THEMAS_RESPONSE = require('../fixtures/avg-themas.json');
 
-// RP TODO: AVG duurt lang om te laden?
+// RP TODO: AVG duurt lang om te laden? lijkt geblokt te worden door get-kvk
 module.exports = [
   {
     id: 'get-enableu2smile-klachten',
@@ -15,25 +15,42 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, core) => {
+          middleware: (req, res, _next, core) => {
             const form = new formidable.IncomingForm();
-            form.parse(req, function (err, fields) {
+
+            form.parse(req, async (err, fields, _files) => {
               if (err) {
                 core.logger.error(err);
-              } else if (fields.function.length !== 1) {
+              }
+
+              let identifier;
+              try {
+                identifier = fields.function[0];
+              } catch (e) {
+                res.status(404);
                 core.logger.error(
-                  `Unexpected length of ${fields.function.length} from 'fields.function.length.\nIs 'readKlacht' or 'readAVGverzoeken present as data?\nfields.function: ${fields.function.toString()}`
+                  "Not found: No identifier found in 'fields.function[0]'"
                 );
-              } else if (fields.function[0] === 'readKlacht') {
+                return;
+              }
+
+              if (identifier === 'readKlacht') {
                 res.status(200);
                 res.send(KLACHTEN_RESPONSE);
-              } else if (fields.function[0] === 'readAVGverzoek') {
+              } else if (identifier === 'readAVGverzoek') {
                 res.status(200);
                 res.send(AVG_RESPONSE);
-              } else if (fields.function[0] === 'readthemaperavgverzoek') {
+              } else if (identifier === 'readthemaperavgverzoek') {
                 res.status(200);
                 res.send(AVG_THEMAS_RESPONSE);
+              } else {
+                res.status(404);
+                core.logger.error(
+                  `unknown identifier '${identifier}' type response`
+                );
               }
+
+              core.logger.debug(`identifier: '${identifier}'`);
             });
           },
         },
