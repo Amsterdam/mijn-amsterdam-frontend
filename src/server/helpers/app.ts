@@ -7,7 +7,10 @@ import { createSecretKey, hkdfSync } from 'node:crypto';
 import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
-import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
+import {
+  DEFAULT_PROFILE_TYPE,
+  FeatureToggle,
+} from '../../universal/config/app';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
   IS_DEBUG,
@@ -24,9 +27,9 @@ import {
   oidcConfigEherkenning,
   oidcConfigYivi,
 } from '../config';
+import { captureException, captureMessage } from '../services/monitoring';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
-import { captureException, captureMessage } from '../services/monitoring';
 
 // const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
@@ -72,7 +75,20 @@ export interface AuthProfileAndToken {
   profile: AuthProfile;
 }
 
-async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
+async function getAuthSessionStore(req: Request): Promise<AuthProfileAndToken> {
+  const tokenData = req.oidc.user as TokenData;
+  const oidcToken = req.oidc.idToken ?? '';
+  const profile = getAuthProfile(tokenData);
+
+  console.log('getAuthSessionStore', tokenData, oidcToken, profile);
+
+  return {
+    token: oidcToken,
+    profile,
+  };
+}
+
+async function getAuthCookie(req: Request): Promise<AuthProfileAndToken> {
   const combinedCookies = combineCookieChunks(req.cookies);
   const oidcToken = await getOIDCToken(combinedCookies);
   const tokenData = await decodeOIDCToken(oidcToken);
@@ -84,7 +100,9 @@ async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
   };
 }
 
-export const getAuth = memoize(getAuth_);
+export const getAuth = FeatureToggle.authRouterDevelopmentActive
+  ? getAuthCookie
+  : getAuthSessionStore;
 
 export function combineCookieChunks(cookies: Record<string, string>) {
   let unchunked = '';
@@ -336,8 +354,10 @@ export async function isRequestAuthenticated(
   req: Request,
   authMethod: AuthMethod
 ) {
+  console.log('isRequestAuthenticated!');
   try {
     if (req.oidc.isAuthenticated()) {
+      console.log('OIDC says yes');
       const auth = await getAuth(req);
       return (
         auth.profile.authMethod === authMethod &&
@@ -348,6 +368,7 @@ export async function isRequestAuthenticated(
         ))
       );
     }
+    console.log('OIDC says NOPE');
   } catch (error) {
     console.error(error);
     captureException(error);
@@ -369,6 +390,7 @@ export function verifyAuthenticated(
         })
       );
     }
+    console.log('Clearing oidc cookie');
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
     return sendUnauthorized(res);
   };

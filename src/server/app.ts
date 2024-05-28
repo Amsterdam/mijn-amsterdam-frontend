@@ -29,6 +29,7 @@ import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { captureException, captureMessage } from './services/monitoring';
+import { FeatureToggle } from '../universal/config';
 
 const app = express();
 
@@ -100,7 +101,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 ///// [DEVELOPMENT - TEST]
 ///// Development routing for mock data
 ////////////////////////////////////////////////////////////////////////
-if (IS_OT && !IS_AP) {
+if (FeatureToggle.authRouterDevelopmentActive) {
   app.use(authRouterDevelopment);
 }
 ///// [DEVELOPENT ONLY] /////

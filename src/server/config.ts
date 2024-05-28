@@ -7,9 +7,8 @@ import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { jsonCopy } from '../universal/helpers/utils';
 import { TokenData } from './helpers/app';
 import fs from 'fs';
-import session from 'express-session';
 import { db } from './services/db/sqlite3';
-import SqliteStoreModule from 'better-sqlite3-session-store';
+import { auth as openIdAuth } from 'express-openid-connect';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && process.env[envVarName];
@@ -366,10 +365,6 @@ export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
 export const AUTH_BASE_YIVI = `${AUTH_BASE}/yivi`;
 
-export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
-export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
-export const AUTH_BASE_SSO_EHERKENNING = `${AUTH_BASE}/eherkenning/sso`;
-
 export const AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
 export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
@@ -426,9 +421,6 @@ export const BffEndpoints = {
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,
-  AUTH_BASE_SSO,
-  AUTH_BASE_SSO_DIGID,
-  AUTH_BASE_SSO_EHERKENNING,
   AUTH_BASE_YIVI,
 
   // Digid
@@ -482,16 +474,27 @@ export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_GENERAL_ENCRYPTION_
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
-const SqliteStore = SqliteStoreModule(session);
+const SqliteStore = require('better-sqlite3-session-store')(openIdAuth);
+const sessionStore = new SqliteStore({
+  client: db,
+  expired: {
+    clear: true,
+    intervalMs: OIDC_SESSION_MAX_AGE_SECONDS * 1000,
+  },
+});
 
-const oidcConfigBase: ConfigParams = {
+export const auth = openIdAuth;
+
+export const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
+  // Tries to logout at the IDP's end_session endpoint.
   idpLogout: true,
   // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
   clientSecret: process.env.BFF_OIDC_SECRET,
+  clientID: 'x',
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
@@ -501,13 +504,7 @@ const oidcConfigBase: ConfigParams = {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
-    store: new SqliteStore({
-      client: db,
-      expired: {
-        clear: true,
-        intervalMs: OIDC_SESSION_MAX_AGE_SECONDS * 1000,
-      },
-    }),
+    store: sessionStore,
   },
   routes: {
     login: false,

@@ -1,5 +1,5 @@
 import { isDateInPast } from '../helpers/date';
-import { IS_AP, IS_PRODUCTION } from './env';
+import { IS_AP, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   garbageInformationPage: true,
@@ -45,6 +45,7 @@ export const FeatureToggle = {
   laadpalenActive: !IS_PRODUCTION,
   oidcLogoutHintActive: !IS_PRODUCTION,
   zorgnedDocumentAttachmentsActive: true,
+  authRouterDevelopmentActive: IS_OT && !IS_AP,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.

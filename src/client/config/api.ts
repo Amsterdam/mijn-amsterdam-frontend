@@ -27,8 +27,6 @@ export const LOGOUT_URL = `${BFF_API_BASE_URL}/auth/logout`;
 export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
 export const AUTH_API_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/check`;
 export const AUTH_API_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/check`;
-export const AUTH_API_URL_EHERKENNING_SSO_CHECK = `${BFF_API_BASE_URL}/auth/eherkenning/sso?checkAuthenticated=1`;
-export const AUTH_API_URL_DIGID_SSO_CHECK = `${BFF_API_BASE_URL}/auth/digid/sso?checkAuthenticated=1`;
 
 export const loginUrlByAuthMethod: Record<string, string> = {
   eherkenning: LOGIN_URL_EHERKENNING,
