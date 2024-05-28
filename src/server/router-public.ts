@@ -175,7 +175,7 @@ router.all(
   BffEndpoints.TELEMETRY_PROXY,
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
-    proxyReqPathResolver: function (req) {
+    proxyReqPathResolver: function(req) {
       return '/v2/track';
     },
   })

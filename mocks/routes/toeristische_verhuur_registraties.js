@@ -4,7 +4,6 @@ const NORMAL_RESPONSE = require('../fixtures/registraties-toeristische-verhuur.j
 const A_NUMBER = 'AAAAAAAAAAAAAAAAAAAA';
 const B_NUMBER = 'BBBBBBBBBBBBBBBBBBBB';
 
-// RP TODO: Block reports error of invalid json (json: "999991619")
 module.exports = [
   {
     id: 'get-toeristische-verhuur-with-bsn',

@@ -31,7 +31,8 @@
       "get-enableu2smile-klachten:standard",
       "get-loodmetingen-details:standard",
       "get-loodmetingen-rapport:standard",
-      "get-loodmetingen-auth:standard"
+      "get-loodmetingen-auth:standard",
+      "get-cms-maintainance-notifications-alle:standard"
     ]
   }
 ]
