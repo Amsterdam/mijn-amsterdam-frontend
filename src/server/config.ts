@@ -9,6 +9,7 @@ import { TokenData } from './helpers/app';
 import fs from 'fs';
 import { db } from './services/db/sqlite3';
 import { auth as openIdAuth } from 'express-openid-connect';
+import SqliteStoreModule from 'better-sqlite3-session-store';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && process.env[envVarName];
@@ -474,7 +475,7 @@ export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_GENERAL_ENCRYPTION_
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
-const SqliteStore = require('better-sqlite3-session-store')(openIdAuth);
+const SqliteStore = SqliteStoreModule(openIdAuth);
 const sessionStore = new SqliteStore({
   client: db,
   expired: {
