@@ -7,14 +7,15 @@ type Iv = Buffer;
 
 export function encrypt(
   plainText: string,
-  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
+  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY,
+  algo: 'aes-128-cbc' | 'aes-256-cbc' = 'aes-128-cbc'
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
   if (!encryptionKey) {
     throw new Error('Cannot encrypt, Encryption key not found.');
   }
 
   const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, iv);
+  const cipher = crypto.createCipheriv(algo, encryptionKey, iv);
   const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
 
   return [Buffer.concat([iv, encrypted]).toString('base64url'), encrypted, iv];
@@ -22,7 +23,8 @@ export function encrypt(
 
 export function decrypt(
   encryptedValue: string,
-  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
+  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY,
+  algo: 'aes-128-cbc' | 'aes-256-cbc' = 'aes-128-cbc'
 ) {
   if (!encryptionKey) {
     throw new Error('Cannot decrypt, Encryption key not found.');
@@ -33,10 +35,6 @@ export function decrypt(
   const ivBuffer = decodedBuffer.slice(0, 16);
   const dataBuffer = decodedBuffer.slice(16);
 
-  const decipheriv = crypto.createDecipheriv(
-    'aes-128-cbc',
-    keyBuffer,
-    ivBuffer
-  );
+  const decipheriv = crypto.createDecipheriv(algo, keyBuffer, ivBuffer);
   return decipheriv.update(dataBuffer).toString() + decipheriv.final('utf-8');
 }
