@@ -28,7 +28,10 @@
       "get-toeristische-verhuur-with-a-number:standard",
       "get-toeristische-verhuur-with-b-number:standard",
       "get-krefia:standard",
-      "get-enableu2smile-klachten:standard"
+      "get-enableu2smile-klachten:standard",
+      "get-loodmetingen-details:standard",
+      "get-loodmetingen-rapport:standard",
+      "get-loodmetingen-auth:standard"
     ]
   }
 ]
