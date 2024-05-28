@@ -45,7 +45,7 @@ class ProfileTypeHandler {
     this._commercialUser = options.commercialUser;
   }
 
-  middleware(req, res, next) {
+  middleware(req, res, _next) {
     let resStatus = undefined;
     let resBody = undefined;
 
