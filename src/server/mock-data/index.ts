@@ -1,4 +1,3 @@
-import { apiSuccessResult } from '../../universal/helpers';
 import { ApiUrls, oidcConfigEherkenning } from '../config';
 import { decodeToken } from '../helpers/app';
 // Import JSON files because they get included in the bundle this way.
@@ -41,6 +40,7 @@ import SVWI from './json/svwi.json';
 import GPASS_PASHOUDERS from './json/gpass-pashouders.json';
 import GPASS_STADSPAS from './json/gpass-stadspas.json';
 import GPASS_TRANSACTIES from './json/gpass-transacties.json';
+
 import MAINTENANCE_NOTIFICATIONS_ALLE from './json/maintenance-notifications-alle.json';
 import MAINTENANCE_NOTIFICATIONS_DASHBOARD from './json/maintenance-notifications-dashboard.json';
 import MAINTENANCE_NOTIFICATIONS_LANDINGSPAGE from './json/maintenance-notifications-landingspagina.json';
