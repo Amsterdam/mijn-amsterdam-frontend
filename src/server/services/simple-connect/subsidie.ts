@@ -54,7 +54,8 @@ async function getConfig(
 
   const [ivAndPayload] = encrypt(
     authProfileAndToken.profile.id + '',
-    process.env.BFF_SISA_ENCRYPTION_KEY + ''
+    process.env.BFF_SISA_ENCRYPTION_KEY + '',
+    'aes-256-cbc'
   );
 
   const url = apiEndpointUrl + ivAndPayload;
