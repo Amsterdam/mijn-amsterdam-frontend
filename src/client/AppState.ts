@@ -77,8 +77,9 @@ export const PRISTINE_APPSTATE: AppState = {
     { isActive: FeatureToggle.overtredingenActive }
   ),
   TOERISTISCHE_VERHUUR: apiPristineResult({
-    vergunningen: [],
-    registraties: [],
+    vakantieverhuurVergunningen: [],
+    lvvRegistraties: [],
+    bbVergunningen: [],
   }),
   VERGUNNINGEN: apiPristineResult([]),
 

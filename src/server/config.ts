@@ -101,6 +101,7 @@ export type SourceApiKey =
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
+  | 'POWERBROWSER'
   | 'SVWI'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
@@ -215,6 +216,14 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
     passthroughOIDCToken: true,
+  },
+  POWERBROWSER: {
+    method: 'POST',
+    url: `${process.env.BFF_POWERBROWSER_API_URL}`,
+    postponeFetch: !FeatureToggle.powerbrowserActive,
+    headers: {
+      apiKey: process.env.BFF_POWERBROWSER_API_KEY,
+    },
   },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
@@ -419,6 +428,10 @@ export const BffEndpoints = {
   // ErfpachtV2
   ERFPACHTv2_DOSSIER_DETAILS:
     '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
+
+  // Toeristische verhuur / Bed & Breakfast
+  TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
+    '/services/toeristische-verhuur/bb/document/:docIdEncrypted',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

@@ -246,11 +246,16 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007B"
                   >
                     <svg
                       aria-hidden="true"
@@ -282,7 +287,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Status:
                   </span>
                   <span>
-                    Verleend
+                    Afgehandeld
                   </span>
                 </td>
                 <td
@@ -314,11 +319,16 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506"
                   >
                     <svg
                       aria-hidden="true"
@@ -350,7 +360,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Status:
                   </span>
                   <span>
-                    Verleend
+                    Afgehandeld
                   </span>
                 </td>
                 <td
@@ -362,7 +372,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Vanaf:
                   </span>
                   <span>
-                    02 augustus 2022
+                    22 maart 2023
                   </span>
                 </td>
                 <td
@@ -374,7 +384,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Tot:
                   </span>
                   <span>
-                    23 augustus 2024
+                    01 juli 2028
                   </span>
                 </td>
               </tr>
@@ -382,11 +392,16 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/bed-and-breakfast/Z2023-WK000236"
                   >
                     <svg
                       aria-hidden="true"
@@ -406,7 +421,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Vergunning vakantieverhuur
+                    Vergunning bed & breakfast
                   </a>
                 </td>
                 <td
@@ -418,7 +433,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Status:
                   </span>
                   <span>
-                    Verleend
+                    Ontvangen
                   </span>
                 </td>
                 <td
@@ -429,9 +444,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     Vanaf:
                   </span>
-                  <span>
-                    01 augustus 2022
-                  </span>
+                  <span />
                 </td>
                 <td
                   class="_DisplayProp_a66dcc"
@@ -441,20 +454,23 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     Tot:
                   </span>
-                  <span>
-                    22 augustus 2023
-                  </span>
+                  <span />
                 </td>
               </tr>
               <tr
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/bed-and-breakfast/Z2023-WK000284"
                   >
                     <svg
                       aria-hidden="true"
@@ -474,7 +490,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Vergunning vakantieverhuur
+                    Vergunning bed & breakfast
                   </a>
                 </td>
                 <td
@@ -486,7 +502,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Status:
                   </span>
                   <span>
-                    Verleend
+                    Ontvangen
                   </span>
                 </td>
                 <td
@@ -497,9 +513,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     Vanaf:
                   </span>
-                  <span>
-                    01 augustus 2020
-                  </span>
+                  <span />
                 </td>
                 <td
                   class="_DisplayProp_a66dcc"
@@ -509,9 +523,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     Tot:
                   </span>
-                  <span>
-                    30 september 2021
-                  </span>
+                  <span />
                 </td>
               </tr>
             </tbody>
@@ -591,11 +603,16 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C"
                   >
                     <svg
                       aria-hidden="true"
@@ -615,7 +632,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Vergunning bed & breakfast
+                    Vergunning vakantieverhuur
                   </a>
                 </td>
                 <td
@@ -627,7 +644,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Status:
                   </span>
                   <span>
-                    Verleend
+                    Afgehandeld
                   </span>
                 </td>
                 <td
@@ -639,7 +656,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Vanaf:
                   </span>
                   <span>
-                    22 oktober 2020
+                    01 augustus 2022
                   </span>
                 </td>
                 <td
@@ -651,7 +668,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Tot:
                   </span>
                   <span>
-                    21 oktober 2021
+                    22 augustus 2023
                   </span>
                 </td>
               </tr>
@@ -659,11 +676,16 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007"
                   >
                     <svg
                       aria-hidden="true"
@@ -683,7 +705,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
                     </svg>
-                    Vergunning bed & breakfast
+                    Vergunning vakantieverhuur
                   </a>
                 </td>
                 <td
@@ -695,7 +717,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Status:
                   </span>
                   <span>
-                    In behandeling
+                    Afgehandeld
                   </span>
                 </td>
                 <td
@@ -707,7 +729,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Vanaf:
                   </span>
                   <span>
-                    22 oktober 2020
+                    01 augustus 2020
                   </span>
                 </td>
                 <td
@@ -719,7 +741,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Tot:
                   </span>
                   <span>
-                    21 oktober 2021
+                    30 september 2021
                   </span>
                 </td>
               </tr>
@@ -727,11 +749,16 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-001-000040"
                   >
                     <svg
                       aria-hidden="true"
@@ -787,7 +814,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Tot:
                   </span>
                   <span>
-                    31 mei 2021
+                    31 mei 2024
                   </span>
                 </td>
               </tr>
@@ -795,11 +822,16 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                 class="_TableRow_a66dcc"
               >
                 <td
-                  class="_DisplayPropTitle_a66dcc"
+                  class="_DisplayProp_a66dcc"
                 >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Soort vergunning:
+                  </span>
                   <a
                     class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/toeristische-verhuur"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-000-000040"
                   >
                     <svg
                       aria-hidden="true"
@@ -831,7 +863,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                     Status:
                   </span>
                   <span>
-                    Verlopen
+                    Afgehandeld
                   </span>
                 </td>
                 <td
@@ -882,19 +914,19 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
             class="_RegistrationNumber_702859"
           >
             <span>
-              0363 E7B8 B042 8A92 37E5
+              E7B8 B042 8A92 37E5 0363
             </span>
             <br />
-            Schakelstraat 16  1014AW Amsterdam
+            Amstel 1  1012PN Amsterdam
           </article>
           <article
             class="_RegistrationNumber_702859"
           >
             <span>
-              E7B8 B042 8A92 37E5 0363
+              BBBBBBBBBBBBBBBBBBBB
             </span>
             <br />
-            Amstel 1  1017AB Amsterdam
+            Amstel 1  1012PN Amsterdam
           </article>
         </div>
       </div>

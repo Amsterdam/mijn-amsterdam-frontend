@@ -68,10 +68,11 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   KVK: 'Mijn onderneming',
   SIA: 'Mijn meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
-  TOERISTISCHE_VERHUUR_vergunningen:
-    'Toeristische verhuur: Vergunningen + meldingen',
-  TOERISTISCHE_VERHUUR_registraties:
+  TOERISTISCHE_VERHUUR_lvvRegistraties:
     'Toeristische verhuur: Registratienummers + meldingen',
+  TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',
+  TOERISTISCHE_VERHUUR_vakantieverhuurVergunningen:
+    'Uw vergunning vakantieverhuur',
   KREFIA: 'Kredietbank & FIBU',
   KLACHTEN: 'Ingediende klachten',
   BEZWAREN: 'Ingediende bezwaren',

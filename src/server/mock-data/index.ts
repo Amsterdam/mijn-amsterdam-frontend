@@ -30,6 +30,9 @@ import SIA from './json/sia-meldingen.json';
 import SIA_MELDINGEN_BUURT from './json/sia-meldingen-buurt.json';
 import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
+import POWERBROWSER_BB_VERGUNNINGEN from './json/powerbrowser-bb-vergunningen.json';
+import POWERBROWSER_BB_VERGUNNING_STATUS from './json/powerbrowser-bb-vergunning-status.json';
+import POWERBROWSER_BB_VERGUNNING_ATTACHMENTS from './json/powerbrowser-bb-attachments.json';
 import WMO from './json/wmo.json';
 import WPI_AANVRAGEN from './json/wpi-aanvragen.json';
 import WPI_E_AANVRAGEN from './json/wpi-e-aanvragen.json';
@@ -365,7 +368,37 @@ export const mockDataConfig: MockDataConfig = {
       return loadMockApiResponseJson(VERGUNNINGEN);
     },
   },
-
+  [String(ApiUrls.POWERBROWSER)]: [
+    {
+      method: 'get',
+      pathReg: new RegExp('/remote/powerbrowser/*'),
+      status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+      responseData: async (config: any) => {
+        switch (true) {
+          case config.url.includes('/Link/GFO_ZAKEN'):
+            return loadMockApiResponseJson(
+              POWERBROWSER_BB_VERGUNNING_ATTACHMENTS
+            );
+          case config.url.includes('/Dms/'):
+            return loadMockApiResponseJson(
+              POWERBROWSER_BB_VERGUNNING_ATTACHMENTS
+            );
+        }
+        return loadMockApiResponseJson(null);
+      },
+    },
+    {
+      method: 'post',
+      pathReg: new RegExp('/remote/powerbrowser/*'),
+      status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+      responseData: async (config: any) => {
+        if (config.url.includes('/Token')) {
+          return loadMockApiResponseJson('xxxx-909090-yyyy');
+        }
+        return loadMockApiResponseJson(POWERBROWSER_BB_VERGUNNINGEN);
+      },
+    },
+  ],
   [String(ApiUrls.KVK)]: {
     // delay: 12000,
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
