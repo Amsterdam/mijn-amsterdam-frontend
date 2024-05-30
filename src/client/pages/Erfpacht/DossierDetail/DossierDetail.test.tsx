@@ -2,8 +2,8 @@ import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import ERFPACHTv2_DOSSIER_DETAIL from 'mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHTv2_DOSSIERS from 'mocks/fixtures/erfpacht-v2-dossiers.json';
+import ERFPACHTv2_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
+import ERFPACHTv2_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,

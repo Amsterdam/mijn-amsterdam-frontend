@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import vergunningenData from 'mocks/fixtures/vergunningen.json';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
   addLinks,
   horecaVergunningTypes,
