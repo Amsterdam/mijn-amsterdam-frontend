@@ -20,7 +20,6 @@ module.exports = [
       },
     ],
   },
-  // End block
   {
     id: 'get-toeristische-verhuur-with-a-number',
     url: `/remote/vakantieverhuur/${A_NUMBER}`,

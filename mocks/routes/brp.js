@@ -17,6 +17,7 @@ module.exports = [
           },
           commercialUser: {
             status: 200,
+            // RP TODO: alle no content vervangen met de normale response body
             body: 'no-content',
           },
         },

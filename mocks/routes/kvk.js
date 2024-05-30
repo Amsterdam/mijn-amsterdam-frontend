@@ -6,7 +6,6 @@ module.exports = [
     id: 'get-kvk',
     url: '/api/brp/hr',
     method: 'GET',
-    delay: 12000,
     variants: [
       {
         id: 'standard',
