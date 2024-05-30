@@ -1,9 +1,10 @@
-const ZORGNED_RESPONSE = require('../fixtures/zorgned.json');
+const ZORGNED_JZD_RESPONSE = require('../fixtures/zorgned-jzd.json');
+const ZORGNED_AV_RESPONSE = require('../fixtures/zorgned-av.json');
 
 module.exports = [
   {
-    id: 'get-zorgned',
-    url: '/api/remote/zorgned/*',
+    id: 'get-zorgned-jzd',
+    url: '/api/remote/zorgned/aanvragen',
     method: 'POST',
     variants: [
       {
@@ -12,7 +13,28 @@ module.exports = [
         options: {
           privateUser: {
             status: 200,
-            body: ZORGNED_RESPONSE,
+            body: ZORGNED_JZD_RESPONSE,
+          },
+          commercialUser: {
+            status: 200,
+            body: 'no-content',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-zorgned-av',
+    url: '/api/remote/zorgned/persoonsgegevensNAW',
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'profile-type-handler',
+        options: {
+          privateUser: {
+            status: 200,
+            body: ZORGNED_AV_RESPONSE,
           },
           commercialUser: {
             status: 200,
