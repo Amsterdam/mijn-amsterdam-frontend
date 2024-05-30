@@ -4,6 +4,7 @@ import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 import { AppState } from '../../client/AppState';
 import { Match } from '../../universal/types';
+
 //import { ExternalUrls } from '../../universal/config/app';
 
 //nieuw toegevoegd
@@ -18,7 +19,7 @@ export type Thema =
   //| 'BURGERZAKEN'
   | 'BUURT'
   //  | 'BEZWAREN'
-  // | 'INKOMEN'
+  | 'INKOMEN'
   | 'STADSPAS'
   // | 'BRP'
   // | 'MILIEUZONE'
@@ -46,7 +47,7 @@ export type Thema =
 export type ThemaIDs =
   | 'AVG'
   | 'AFVAL'
-  | 'BELASTINGEN'
+  // | 'BELASTINGEN'
   | 'BEZWAREN'
   | 'BODEM'
   | 'BRP'
@@ -64,17 +65,16 @@ export type ThemaIDs =
 
 export type inlogType = 'private' | 'commercial';
 
-// export enum nums {
-//   BEZWAREN = 'BEZWAREN',
-//   AVG = 'AVG',
-// }
+export type AppRouteInfo = {
+  url: string;
+  tabName: string;
+  // [key in AppRoute]: string | ((config: TrackingConfig) => string);
+};
+
 type ThemaConfig = {
   title: string;
-  browserTabName: string; //dit zie je in je browser wanneer je op thema pagina komt
-  browserTabNameDetail: string; //dit zie je in je browser wanneer je op detail pagina komt
-  appRoute: string; //dit is wat je ziet in de url ziet nadat je op thema klikt (klopt)
-  appRouteDetail: string; //dit is wat je ziet in de url ziet wanneer je op een detailpagina bent
-  rel: string; //gaat de pagina wel of niet naar een andere (externe) site
+  appRoutes: AppRouteInfo[];
+  isExternal: boolean; //gaat de pagina wel of niet naar een andere (externe) site
   profileTypes: inlogType[]; //dit zijn de inlogtypes (DIGID/EHERK of BEIDE)
   //icon: SVGComponent; // Add the themaIcon in '../../client/assets/icons' and import it.
   //isThemaActive: (state: AppState) => { return: true }; > zie app.ts
@@ -83,229 +83,243 @@ type ThemaConfig = {
 export const themas2: Record<ThemaIDs, ThemaConfig> = {
   BRP: {
     title: 'Mijn gegevens',
-    browserTabName: '',
-    browserTabNameDetail: 'none',
-    appRoute: '/persoonlijke-gegevens',
-    appRouteDetail: 'none',
-    rel: 'none',
+    appRoutes: [{ url: '/persoonlijke-gegevens', tabName: `Mijn gegevens` }],
+    isExternal: false,
     profileTypes: ['private'],
-    //icon: IconMijnGegevens,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconMijnGegevens,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
 
   AFVAL: {
     title: 'Afval',
-    browserTabName: '| rond uw adres',
-    browserTabNameDetail: 'none',
-    appRoute: '/afval',
-    appRouteDetail: 'none',
-    rel: 'none',
+    appRoutes: [{ url: '/afval', tabName: 'Afval rond uw adres' }],
+    isExternal: false,
     profileTypes: ['private', 'commercial'],
-    //icon: IconAVG,
-    //isThemaActive: (state: AppState) => { return: true },
+    //   //icon: IconAVG,
+    //   //isThemaActive: (state: AppState) => { return: true },
   },
 
   AVG: {
     title: 'AVG persoonsgegevens',
-    browserTabName: '| verzoeken',
-    browserTabNameDetail: '| verzoek',
-    appRoute: generatePath(AppRoutes.AVG, { page: 1 }), //waarom niet gewoon '/avg'? (zie routes) en zie ook klachten?
-    appRouteDetail: '/avg/verzoek/:id',
-    rel: 'none',
+    appRoutes: [
+      {
+        url: generatePath(AppRoutes.AVG, { page: 1 }),
+        tabName: ' AVG persoonsgegevens | verzoeken',
+      },
+      { url: '/avg/verzoek/:id', tabName: ' AVG persoonsgegevens | verzoek' },
+    ],
     profileTypes: ['private', 'commercial'],
+    isExternal: false,
     //icon: IconAVG,
     //isThemaActive: (state: AppState) => { return: true },
   },
-  BELASTINGEN: {
-    //nog een voor Eherk
-    title: 'Belastingen',
-    browserTabName: 'none',
-    browserTabNameDetail: 'none',
-    appRoute: ExternalUrls.SSO_BELASTINGEN,
-    appRouteDetail: 'none',
-    rel: 'extern', //wanneer extern opnemen url opnemen in app.ts > doet het niet plakt het erachter..
-    profileTypes: ['private'],
-    //icon: IconBelastingen,
-    //isThemaActive: (state: AppState) => { return: true }
-  },
-
-  // BELASTINGEN: {
-  //     title: 'Belastingen',
-  //   browserTabName: 'none',
-  //   browserTabNameDetail: 'none',
-  //   appRoute: ExternalUrls.EH_SSO_BELASTINGEN,
-  //   appRouteDetail: 'none',
-  //   rel: 'extern', //wanneer extern opnemen url opnemen in app.ts > doet het niet plakt het erachter..
-  //   profileTypes: ['commercial'],
-  //   //icon: IconBelastingen,
-  //   //isThemaActive: (state: AppState) => { return: true }
-  //   //isAlwaysVisible: true,  ????
-  // },
-
   BEZWAREN: {
     title: 'Bezwaren',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| bezwaar',
-    appRoute: '/bezwaren',
-    appRouteDetail: '/bezwaren/:uuid',
-    rel: 'none',
+    appRoutes: [
+      { url: '/bezwaren', tabName: ' Bezwaren | overzicht' },
+      { url: '/bezwaren:uuid', tabName: ' Bezwaren | bezwaar' },
+    ],
+    isExternal: false,
     profileTypes: ['private', 'commercial'],
     //icon: IconBezwaren,
     //isThemaActive: (state: AppState) => { return: true }
   },
+
+  // BELASTINGEN: {
+  //   //nog een voor Eherk
+  //   title: 'Belastingen',
+  //   browserTabName: 'none',
+  //   browserTabNameDetail: 'none',
+  //   appRoute: ExternalUrls.SSO_BELASTINGEN,
+  //   appRouteDetail: 'none',
+  //   isExternal: 'extern', //wanneer extern opnemen url opnemen in app.ts > doet het niet plakt het erachter..
+  //   profileTypes: ['private'],
+  //   //icon: IconBelastingen,
+  //   //isThemaActive: (state: AppState) => { return: true }
+  // },
+
+  // // BELASTINGEN: {
+  // //     title: 'Belastingen',
+  // //   browserTabName: 'none',
+  // //   browserTabNameDetail: 'none',
+  // //   appRoute: ExternalUrls.EH_SSO_BELASTINGEN,
+  // //   appRouteDetail: 'none',
+  // //   isExternal: 'extern', //wanneer extern opnemen url opnemen in app.ts > doet het niet plakt het erachter..
+  // //   profileTypes: ['commercial'],
+  // //   //icon: IconBelastingen,
+  // //   //isThemaActive: (state: AppState) => { return: true }
+  // //   //isAlwaysVisible: true,  ????
+  // // },
+
   BODEM: {
     title: 'Bodem',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| lood in de bodem-check',
-    appRoute: '/bodem',
-    appRouteDetail: '/lood-meting/:id',
-    rel: 'none',
+    appRoutes: [
+      { url: '/bodem', tabName: 'Bodem | overzicht' },
+      { url: '/lood-meting/:id', tabName: 'Bodem | lood in de bodem-check' },
+    ],
+    isExternal: false,
     profileTypes: ['private', 'commercial'],
-    //icon: IconBodem,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconBodem,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
 
   BURGERZAKEN: {
     title: 'Burgerzaken',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| ID-kaart',
-    appRoute: '/burgerzaken',
-    appRouteDetail: '/burgerzaken/id-kaart/:id',
-    rel: 'none',
+    appRoutes: [
+      { url: '/burgerzaken', tabName: 'Burgerzaken | overzicht' },
+      { url: '/burgerzaken/id-kaart/:id', tabName: 'Burgerzaken | ID - kaart' },
+    ],
+
+    isExternal: false,
     profileTypes: ['private'],
-    //icon: IconBurgerzaken,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconBurgerzaken,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
+
   HORECA: {
     title: 'Horeca',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| Vergunning',
-    appRoute: '/horeca/',
-    appRouteDetail: '/horeca/:title/:id',
-    rel: 'none',
+    appRoutes: [
+      { url: '/horeca/', tabName: 'Horeca | ovrezicht' },
+      { url: '/horeca/:title/:id', tabName: 'Vergunning | Horeca' },
+    ],
+    isExternal: false,
     profileTypes: ['private', 'commercial'],
-    //icon: IconHoreca,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconHoreca,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
   INKOMEN: {
     title: 'Inkomen',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| Bijstandsuitkering', //Bijstandsuitkering | Tozo | Bbz | TONK
-    appRoute: '/inkomen',
-    appRouteDetail: '/inkomen/bijstandsuitkering/:id', // 'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-    // 'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
-    // 'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
-    // 'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
-    // 'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
-    rel: 'none',
+    appRoutes: [
+      { url: '/inkomen', tabName: 'Inkomen | overzicht' },
+      {
+        url: '/inkomen/bijstandsuitkering/:id',
+        tabName: 'Bijstandsuitkering | Inkomen',
+      },
+      { url: '/inkomen/tozo/:version/:id', tabName: 'Tozo | Inkomen' },
+      { url: '/inkomen/tonk/:version/:id', tabName: 'TONK | Inkomen' },
+      { url: '/inkomen/bbz/:version/:id', tabName: 'Bbz |Inkomen' },
+      {
+        url: '/inkomen/specificaties/:variant/:page?',
+        tabName: 'Uitkeringsspecificaties | Inkomen',
+        //LET OP deze moet nog zie routes.ts AppRoutesRediect
+      },
+    ],
+
+    isExternal: false,
     profileTypes: ['private'],
-    //icon: IconWior,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconWior,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
   KLACHTEN: {
     title: 'Klachten',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| klacht',
-    appRoute: '/klachten/:page?',
-    appRouteDetail: '/klachten/klacht/:id',
-    rel: 'none',
+    appRoutes: [
+      { url: '/klachten/:page?', tabName: 'Klachten | overzicht' },
+      { url: '/klachten/klacht/:id', tabName: 'Klachten | klacht' },
+    ],
+    isExternal: false,
     profileTypes: ['private'],
-    //icon: IconKlachten,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconKlachten,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
+
   KVK: {
     title: 'Mijn onderneming',
-    browserTabName: '',
-    browserTabNameDetail: 'none',
-    appRoute: '/gegevens-handelsregister',
-    appRouteDetail: 'none',
-    rel: 'none',
+    appRoutes: [
+      { url: '/gegevens-handelsregister', tabName: `Mijn onderneming` },
+    ],
+    isExternal: false,
     profileTypes: ['private', 'commercial'],
-    //icon: IconHomeCommercial,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconHomeCommercial,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
 
   KREFIA: {
     title: 'Kredietbank & FIBU',
-    browserTabName: 'Kredietbank & FIBU',
-    browserTabNameDetail: 'none',
-    appRoute: '/kredietbank-fibu',
-    appRouteDetail: 'none',
-    rel: 'none',
+    appRoutes: [{ url: '/kredietbank-fibu', tabName: 'Kredietbank & FIBU' }],
+    isExternal: false,
     profileTypes: ['private'],
-    //icon: IconKrefia,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconKrefia,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
   MILIEUZONE: {
-    //volgens mij hetzelfde als overtredingen > niet in prod maar geen Featuretoggle..
+    //   //volgens mij hetzelfde als overtredingen > niet in prod maar geen Featuretoggle..
     title: 'Milieuzone',
-    browserTabName: 'none',
-    browserTabNameDetail: 'none',
-    appRoute: ExternalUrls.SSO_MILIEUZONE || '',
-    appRouteDetail: 'none',
-    rel: 'external',
+    appRoutes: [{ url: 'ExternalUrls.SSO_MILIEUZONE || ', tabName: '' }],
+    isExternal: true,
     profileTypes: ['private', 'commercial'],
-    //icon: IconMilieuzone,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconMilieuzone,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
   OVERTREDINGEN: {
-    //is deze nog op prod > zelfde als miliee ,maar deze heeft wel een Feautiretoggle
+    //   //is deze nog op prod > zelfde als miliee ,maar deze heeft wel een Feautiretoggle
     title: 'Overtredingen voertuigen',
-    browserTabName: 'none',
-    browserTabNameDetail: 'none',
-    appRoute: ExternalUrls.SSO_MILIEUZONE || '',
-    appRouteDetail: 'none',
-    rel: 'external',
+    appRoutes: [{ url: 'ExternalUrls.SSO_MILIEUZONE || ', tabName: '' }],
+    isExternal: true,
     profileTypes: ['private', 'commercial'],
-    //icon: IconOvertredingen,
-    //isThemaActive: (state: AppState) => { return: true }
+
+    //   //icon: IconOvertredingen,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
 
   PARKEREN: {
     title: 'Parkeren',
-    browserTabName: '',
-    browserTabNameDetail: 'none',
-    appRoute: '/parkeren',
-    appRouteDetail: 'none',
-    rel: 'external',
+    appRoutes: [{ url: '/parkeren', tabName: 'Parkeren' }],
+    //   appRoutes: [{ url: '/parkeren', tabName: '' }],
+    //   //   browserTabName: '',
+    //   //   browserTabNameDetail: 'none',
+    //   //   appRoute: '/parkeren',
+    //   //   appRouteDetail: 'none',
+    isExternal: false,
     profileTypes: ['private', 'commercial'],
     //icon: IconParkeren,
     //isThemaActive: (state: AppState) => { return: true },
     //hasAppStateValue: false, ??
   },
-
   TOERISTISCHE_VERHUUR: {
-    title: 'Klachten',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| Vergunning', //maar je hebt ook Vergunning vakantieverhuur en Vergunning Bed & Breakfast
-    appRoute: '/toeristische-verhuur',
-    appRouteDetail: '/toeristische-verhuur/vergunning/:id',
-    //maar je hebt ook nog
-    // 'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
-    //   '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
-    // 'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
-    //   '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
-    rel: 'none',
+    title: 'Toeristische verhuur',
+    //browserTabName: '| overzicht',
+    appRoutes: [
+      {
+        url: '/toeristische-verhuur',
+        tabName: 'Toeristische verhuur | overzicht',
+      },
+      {
+        url: '/toeristische-verhuur/vergunning/:id',
+        tabName: `Vergunning | Toeristische verhuur`,
+      },
+      {
+        url: '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
+        tabName: 'Vergunning Bed & Breakfast | Toeristische verhuur',
+      },
+      {
+        url: '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
+        tabName: 'Vergunning vakantieverhuur | Toeristische verhuur',
+      },
+    ],
+    isExternal: false,
     profileTypes: ['private', 'commercial'],
     //icon: IconToeristischeVerhuur,
     //isThemaActive: (state: AppState) => { return: true }
   },
 
   ZORG: {
-    //zie ik niet terug > testen of je deze wel op de main bij Anouk ziet..
     title: 'Zorg en ondersteuning',
-    browserTabName: '| overzicht',
-    browserTabNameDetail: '| Voorziening',
-    appRoute: '/zorg-en-ondersteuning',
-    appRouteDetail: '/zorg-en-ondersteuning/voorzieningen/:id',
-    rel: 'none',
+    appRoutes: [
+      {
+        url: '/zorg-en-ondersteuning',
+        tabName: 'Zorg en ondersteuning | overzicht',
+      },
+      {
+        url: '/zorg-en-ondersteuning/voorzieningen/:id',
+        tabName: 'Voorziening | Zorg en ondersteuning',
+      },
+    ],
+    isExternal: false,
     profileTypes: ['private'],
-    //icon: IconZorg,
-    //isThemaActive: (state: AppState) => { return: true }
+    //   //icon: IconZorg,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
 };
-
-console.log('HALLLOOO ', themas2);
 
 export let browserTabNames = {};
 // https://sentry.io/answers/how-can-i-add-a-key-value-pair-to-a-javascript-object/
@@ -313,18 +327,12 @@ export let browserTabNames = {};
 //omdat je object niet mag itereren > maak je er
 Object.values(themas2).forEach((value, index) => {
   // consol¿e.log(value);
-  Object.assign(browserTabNames, {
-    [value.appRoute]: `${value.title}  ${[value.browserTabName]}`,
-  });
-  Object.assign(browserTabNames, {
-    [value.appRouteDetail]: `${value.title}  ${[value.browserTabNameDetail]}`,
+  value.appRoutes.map((appRoute) => {
+    Object.assign(browserTabNames, {
+      [appRoute.url]: appRoute.tabName,
+    });
   });
 });
-console.log('browserTabNames', browserTabNames);
-
-// for (const key in themas2) {
-//   console.log('HALLLOOO ', themas2.);
-// }
 
 export type BagThema = `${Thema}_BAG`;
 
@@ -422,32 +430,20 @@ export const DocumentTitles: {
         return 'Inloggen | Mijn Amsterdam';
     }
   },
-  // [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
-  // [AppRoutes['BURGERZAKEN/ID-KAART']]: `ID-Kaart | ${ThemaTitles.BURGERZAKEN}`,
-  // [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
-  // [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ThemaTitles.ZORG}`,
-  //inkomen moet nog verwerkt worden
-  [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
-  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
-    `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/BBZ']]: `Bbz | ${ThemaTitles.INKOMEN}`,
+
   //einde inkomen moet verwerkt worden
   [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
   [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
 
-  [AppRoutes['INKOMEN/SPECIFICATIES']]:
-    `Uitkeringsspecificaties | ${ThemaTitles.INKOMEN}`,
   [`${AppRoutes['INKOMEN/SPECIFICATIES']}/jaaropgaven`]: `Jaaropgaven | ${ThemaTitles.INKOMEN}`,
-  //[AppRoutes.BRP]: `Mijn gegevens`,
+
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
   [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-  // [AppRoutes.KVK]: `Mijn onderneming`,
+
   [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
 
@@ -456,24 +452,11 @@ export const DocumentTitles: {
   [AppRoutes['SIA/DETAIL/CLOSED']]: `Melding afgesloten | ${ThemaTitles.SIA}`,
   [AppRoutes.SIA_OPEN]: `Meldingen | Alle openstaande meldingen`,
   [AppRoutes.SIA_CLOSED]: `Meldingen | Alle afgesloten meldingen`,
-  // [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
-  // [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]:
-  //   `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  // [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]:
-  //   `Vergunning Bed & Breakfast | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  // [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV']]:
-  //   `Vergunning vakantieverhuur | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  // [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
-  //[AppRoutes.PARKEREN]: 'Parkeren',
-  // [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
-  // [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
-  // [AppRoutes.HORECA]: 'Horeca | overzicht',
-  // [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
+
   [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
-  //[AppRoutes.BODEM]: 'Bodem | overzicht',
-  //[AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
+
   [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
   [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
   [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
@@ -483,11 +466,6 @@ export const DocumentTitles: {
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
   ...browserTabNames,
-  // [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`
-  // [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
-  // [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
-  // [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
-  // [AppRoutes['AVG/DETAIL']]: `${ThemaTitles.AVG} | verzoek`,
 };
 
 export interface ThemaMenuItem extends LinkProps {
@@ -501,13 +479,24 @@ export interface ThemaMenuItem extends LinkProps {
 
 let themaMenuItems = [];
 for (const [key, value] of Object.entries(themas2)) {
+  let url = value.appRoutes[0].url;
   // consol¿e.log(value);
   themaMenuItems.push({
     title: value.title,
     id: key,
-    to: value.appRoute,
+    to: url, // the first in this list is always the thema url
     profileTypes: value.profileTypes,
   });
+
+  let externalCommercialUrl = value.isExternal ? value.appRoutes[1].url : null;
+  if (externalCommercialUrl) {
+    themaMenuItems.push({
+      title: value.title,
+      id: key,
+      to: externalCommercialUrl, // the first in this list is always the thema url
+      profileTypes: value.profileTypes,
+    });
+  }
 }
 //einde nieuw
 export const myThemasMenuItems: ThemaMenuItem[] = [
