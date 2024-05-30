@@ -6,7 +6,7 @@ const IntermediateAPIHandler = require('./mocks/handlers/IntermediateAPIHandler.
 
 module.exports = {
   // Log level. Can be one of silly, debug, verbose, info, warn or error
-  log: 'debug', // RP TODO: turn back on info when done
+  log: 'info',
   config: {
     //allowUnknownArguments: false,
   },

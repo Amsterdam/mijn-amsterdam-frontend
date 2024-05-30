@@ -32,7 +32,9 @@
       "get-loodmetingen-details:standard",
       "get-loodmetingen-rapport:standard",
       "get-loodmetingen-auth:standard",
-      "get-cms-maintainance-notifications-alle:standard"
+      "get-cms-maintainance-notifications-alle:standard",
+      "get-cms-maintainance-dashboard:standard",
+      "get-cms-maintainance-landingspagina:standard"
     ]
   }
 ]

@@ -53,26 +53,6 @@ export function resolveWithDelay(delayMS: number = 0, data: any) {
   });
 }
 
-async function loadMockApiResponseJson(data: any) {
-  return JSON.stringify(data);
-}
-
-function isCommercialUser(config: any) {
-  const authHeader = config?.headers.Authorization;
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    try {
-      const tokenData = decodeToken(authHeader.split('Bearer ').pop()) as {
-        aud: string;
-      };
-      return tokenData?.aud === oidcConfigEherkenning.clientID;
-    } catch (error) {
-      // Don't do anything here. For Dev purposes we just try-and-decode and see if we recognize the content of the token. Nothing fancy.
-    }
-  }
-
-  return false;
-}
-
 interface DataConfigObject {
   method?: 'post' | 'get';
   status: (args?: any) => number;
