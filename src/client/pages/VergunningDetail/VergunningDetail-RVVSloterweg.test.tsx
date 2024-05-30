@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
 import { describe, expect, it, test } from 'vitest';
-import vergunningenData from 'mocks/fixtures/vergunningen.json';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
   RVVSloterweg,
   transformVergunningenData,
