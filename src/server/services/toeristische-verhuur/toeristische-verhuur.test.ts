@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import vergunningenData from '../../mock-data/json/vergunningen.json';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
   createToeristischeVerhuurNotification,
   fetchToeristischeVerhuur,
@@ -284,8 +284,7 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag ${vakantieverhuurVergunning.titel.toLowerCase()} verleend`
     );
     expect(notification3.description).toBe(
-      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.titel.toLowerCase()} met gemeentelijk zaaknummer ${
-        vakantieverhuurVergunning.zaaknummer
+      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.titel.toLowerCase()} met gemeentelijk zaaknummer ${vakantieverhuurVergunning.zaaknummer
       } verleend.`
     );
     expect(notification3.link?.title).toBe('Bekijk uw aanvraag');

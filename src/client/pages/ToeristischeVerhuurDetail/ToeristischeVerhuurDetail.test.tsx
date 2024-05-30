@@ -3,6 +3,12 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
 import { describe, expect, it } from 'vitest';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
+import { transformVergunningenToVerhuur } from '../../../server/services/toeristische-verhuur';
+import {
+  toeristischeVerhuurVergunningTypes,
+  transformVergunningenData,
+} from '../../../server/services/vergunningen/vergunningen';
 import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';

@@ -18,7 +18,7 @@ import {
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
-import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
+import VERGUNNINGEN_LIST_DOCUMENTS from '../../mocks/fixtures/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
 import { addToBlackList } from './services/session-blacklist';
@@ -109,7 +109,7 @@ authRouterDevelopment.get(
             authMethod: auth.profile.authMethod,
           })
         );
-      } catch (error) {}
+      } catch (error) { }
     }
 
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);

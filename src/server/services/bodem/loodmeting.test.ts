@@ -1,8 +1,8 @@
 import nock from 'nock';
 import MockDate from 'mockdate';
 import { AuthProfileAndToken } from '../../helpers/app';
-import metingen from '../../mock-data/json/loodmetingen.json';
-import document from '../../mock-data/json/loodmeting_rapport.json';
+import metingen from 'mocks/fixtures/loodmetingen.json';
+import document from 'mocks/fixtures/loodmeting_rapport.json';
 import {
   fetchLoodMetingDocument,
   fetchLoodMetingNotifications,

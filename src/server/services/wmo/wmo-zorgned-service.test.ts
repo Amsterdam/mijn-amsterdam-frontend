@@ -4,7 +4,7 @@ import { remoteApi } from '../../../test-utils';
 import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import * as request from '../../helpers/source-api-request';
-import WMO from '../../mock-data/json/wmo.json';
+import WMO from 'mocks/fixtures/zorgned-jzd.json';
 import {
   WMOSourceResponseData,
   ZORGNED_GEMEENTE_CODE,

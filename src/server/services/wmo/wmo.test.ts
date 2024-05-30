@@ -1,6 +1,6 @@
 import Mockdate from 'mockdate';
 import { remoteApi } from '../../../test-utils';
-import WMO from '../../mock-data/json/wmo.json';
+import WMO from 'mocks/fixtures/zorgned-jzd.json';
 import { fetchWmo } from './wmo';
 
 vi.mock('../../../universal/helpers/encrypt-decrypt', () => ({

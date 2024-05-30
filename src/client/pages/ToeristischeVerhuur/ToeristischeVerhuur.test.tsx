@@ -3,6 +3,7 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { AppRoutes } from '../../../universal/config';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { AppState } from '../../AppState';
