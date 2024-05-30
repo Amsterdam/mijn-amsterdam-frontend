@@ -7,7 +7,7 @@
   "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
-    "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\" \"mocks-server\"",
+    "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
     "mock-server": "mocks-server",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
