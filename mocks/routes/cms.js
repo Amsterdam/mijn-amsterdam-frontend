@@ -2,6 +2,7 @@ const ALLE_RESPONSE = require('../fixtures/maintenance-notifications-alle.json')
 const DASHBOARD_RESPONSE = require('../fixtures/maintenance-notifications-dashboard.json');
 const LANDINGSPAGE_RESPONSE = require('../fixtures/maintenance-notifications-landingspagina.json');
 
+// The BFF Caches the responses to these requests in root/src/server/cache/
 module.exports = [
   {
     id: 'get-cms-maintainance-notifications-alle',
@@ -18,9 +19,7 @@ module.exports = [
       },
     ],
   },
-  // RP TODO: Check bottom two endpoints, they are not being found.
-  // BFF reads json of top request to then query the endpoints inside
-  // Also don't forget to delete the cms caches
+  // The first URL will get the endpoint of this one by reading maintenance-notifications-dashboard.json, the property 'feedid' will contain the URL.
   {
     id: 'get-cms-maintainance-dashboard',
     url: '/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard',
@@ -36,6 +35,7 @@ module.exports = [
       },
     ],
   },
+  // Same comment as above
   {
     id: 'get-cms-maintainance-landingspagina',
     url: '/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina',

@@ -1,4 +1,4 @@
-const BEZWAREN_STATUS_RESPONSE = require('../fixtures/bezwaren-status.json');
+const BEZWAREN_STATUS_RESPONSE = require('../../fixtures/bezwaren-status.json');
 
 module.exports = [
   {

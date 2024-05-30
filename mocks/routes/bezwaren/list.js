@@ -1,10 +1,10 @@
-const BEZWAREN_DOCUMENTEN_RESPONSE = require('../fixtures/bezwaren-documents.json');
+const BEZWAREN_LIST_RESPONSE = require('../../fixtures/bezwaren.json');
 
 module.exports = [
   {
-    id: 'get-bezwaren-documenten',
-    url: '/zgw/v1/enkelvoudiginformatieobjecten',
-    method: 'GET',
+    id: 'get-bezwaren-list',
+    url: '/zgw/v1/zaken/_zoek',
+    method: 'POST',
     delay: 2500,
     variants: [
       {
@@ -13,7 +13,7 @@ module.exports = [
         options: {
           privateUser: {
             status: 200,
-            body: BEZWAREN_DOCUMENTEN_RESPONSE,
+            body: BEZWAREN_LIST_RESPONSE,
           },
           commercialUser: {
             status: 200,
