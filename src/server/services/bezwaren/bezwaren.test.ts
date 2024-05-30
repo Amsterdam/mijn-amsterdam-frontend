@@ -2,9 +2,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { remoteApi } from '../../../test-utils';
 import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
-import bezwarenDocumenten from '../../mock-data/json/bezwaren-documents.json';
-import bezwarenStatus from '../../mock-data/json/bezwaren-status.json';
-import bezwarenApiResponse from '../../mock-data/json/bezwaren.json';
+import bezwarenDocumenten from 'mocks/fixtures/bezwaren-documents.json';
+import bezwarenStatus from 'mocks/fixtures/bezwaren-status.json';
+import bezwarenApiResponse from 'mocks/fixtures/bezwaren.json';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,

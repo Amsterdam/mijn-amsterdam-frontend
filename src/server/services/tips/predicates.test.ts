@@ -1,8 +1,9 @@
 import { ApiResponse, ApiSuccessResponse } from '../../../universal/helpers';
 import { BRPData, BRPDataFromSource } from '../../../universal/types';
-import BRP from '../../mock-data/json/brp.json';
-import WPI_AANVRAGEN from '../../mock-data/json/wpi-aanvragen.json';
-import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
+import BRP from '../../../../mocks/fixtures/brp.json';
+import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
+import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
+import VERGUNNINGEN from '../../../../mocks/fixtures/vergunningen.json';
 import { transformBRPData } from '../brp';
 import { StadspasResponseDataTransformed } from '../wpi/api-service';
 import { WpiRequestProcess } from '../wpi/wpi-types';

@@ -3,7 +3,7 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
-import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
+import vergunningenData from 'mocks/fixtures/vergunningen.json';
 import {
   transformVergunningenData,
   VergunningenSourceData,

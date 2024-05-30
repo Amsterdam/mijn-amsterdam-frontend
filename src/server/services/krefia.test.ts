@@ -3,7 +3,7 @@ import { remoteApi } from '../../test-utils';
 import { jsonCopy, omit } from '../../universal/helpers';
 import { axiosRequest } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
-import KrefiaData from '../mock-data/json/krefia.json';
+import KrefiaData from 'mocks/fixtures/krefia.json';
 import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
 
 describe('Kredietbank & FIBU service', () => {

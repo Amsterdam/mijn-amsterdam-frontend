@@ -1,8 +1,8 @@
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
-import BRP from '../../mock-data/json/brp.json';
-import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
-import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
+import BRP from 'mocks/fixtures/brp.json';
+import WPI_E from 'mocks/fixtures/wpi-e-aanvragen.json';
+import VERGUNNINGEN from 'mocks/fixtures/vergunningen.json';
 import {
   createTipsFromServiceResults,
   prefixTipNotification,

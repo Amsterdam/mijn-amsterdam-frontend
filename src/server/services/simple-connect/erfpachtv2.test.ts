@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../helpers/app';
-import ERFPACHTv2_DOSSIERINFO_DETAILS from '../../mock-data/json/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHTv2_DOSSIERS from '../../mock-data/json/erfpacht-v2-dossiers.json';
-import ERFPACHTv2_ERFPACHTER from '../../mock-data/json/erfpacht-v2-erfpachter.json';
+import ERFPACHTv2_DOSSIERINFO_DETAILS from 'mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
+import ERFPACHTv2_DOSSIERS from 'mocks/fixtures/erfpacht-v2-dossiers.json';
+import ERFPACHTv2_ERFPACHTER from 'mocks/fixtures/erfpacht-v2-erfpachter.json';
 import { fetchErfpachtV2, fetchErfpachtV2DossiersDetail } from './erfpacht';
 
 // const mocks = vi.hoisted(() => {
