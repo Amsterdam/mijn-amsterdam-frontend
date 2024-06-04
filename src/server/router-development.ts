@@ -128,7 +128,7 @@ relayDevRouter.get(
     RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
   ],
   (req, res, next) => {
-    return res.sendFile(path.join(__dirname, 'mock-data/document.pdf'));
+    return res.sendFile(path.join(__dirname, '../../mocks/fixtures/documents/document.pdf'));
   }
 );
 
