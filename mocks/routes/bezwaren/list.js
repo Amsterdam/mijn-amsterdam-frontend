@@ -5,7 +5,6 @@ module.exports = [
     id: 'get-bezwaren-list',
     url: '/zgw/v1/zaken/_zoek',
     method: 'POST',
-    delay: 2500,
     variants: [
       {
         id: 'standard',

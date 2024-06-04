@@ -5,7 +5,6 @@ module.exports = [
     id: 'get-brp',
     url: '/api/brp/brp',
     method: 'GET',
-    delay: 2500,
     variants: [
       {
         id: 'standard',
