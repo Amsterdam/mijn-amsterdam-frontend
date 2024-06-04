@@ -9,7 +9,6 @@ module.exports = [
     id: 'get-wpi-aanvragen',
     url: '/api/wpi/uitkering/aanvragen',
     method: 'GET',
-    delay: 3400,
     variants: [
       {
         id: 'standard',

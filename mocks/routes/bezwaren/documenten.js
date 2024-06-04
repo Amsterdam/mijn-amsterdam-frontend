@@ -5,7 +5,6 @@ module.exports = [
     id: 'get-bezwaren-documenten',
     url: '/zgw/v1/enkelvoudiginformatieobjecten',
     method: 'GET',
-    delay: 2500,
     variants: [
       {
         id: 'standard',
