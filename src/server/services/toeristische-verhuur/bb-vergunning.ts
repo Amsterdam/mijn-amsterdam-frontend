@@ -4,7 +4,7 @@ import {
   apiSuccessResult,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { ApiUrls, BffEndpoints, getApiConfig } from '../../config';
+import { BffEndpoints, getApiConfig } from '../../config';
 import { getRequestConfigCacheKey, requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
@@ -45,24 +45,24 @@ interface PowerBrowserZaak {
   datumingang: string; // dateStart
   besluitdatumvervallen: string; // verval datum
   status:
-    | string
-    | 'Gereed'
-    | 'Intake'
-    | 'In behandeling'
-    | 'Geaccepteerd'
-    | 'Afgehandeld'
-    | 'Toetsen volledigheid'
-    | 'Controle bezoek';
+  | string
+  | 'Gereed'
+  | 'Intake'
+  | 'In behandeling'
+  | 'Geaccepteerd'
+  | 'Afgehandeld'
+  | 'Toetsen volledigheid'
+  | 'Controle bezoek';
   resultaat:
-    | null
-    // | 'Niet van toepassing'
-    // | 'Buiten behandeling'
-    | 'Geweigerd'
-    | 'Geweigerd op basis van Quotum'
-    | 'Verleend met overgangsrecht'
-    | 'Verleend zonder overgangsrecht'
-    | 'Verleend'
-    | 'Ingetrokken';
+  | null
+  // | 'Niet van toepassing'
+  // | 'Buiten behandeling'
+  | 'Geweigerd'
+  | 'Geweigerd op basis van Quotum'
+  | 'Verleend met overgangsrecht'
+  | 'Verleend zonder overgangsrecht'
+  | 'Verleend'
+  | 'Ingetrokken';
   initator: string;
   adres: string;
 }

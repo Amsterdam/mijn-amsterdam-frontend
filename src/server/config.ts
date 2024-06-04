@@ -314,18 +314,7 @@ export const ApiConfig: ApiDataRequestConfig = {
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
 
-export const ApiUrls = Object.entries(ApiConfig).reduce(
-  (acc, [apiName, { url, urls }]) => {
-    if (urls) {
-      return Object.assign(acc, { [apiName]: urls });
-    }
-    return Object.assign(acc, { [apiName]: url || '' });
-  },
-  {} as Record<SourceApiKey, ApiUrlObject>
-);
-
 export type ApiUrlEntries = ApiUrlEntry[];
-export const apiUrlEntries = Object.entries(ApiUrls) as ApiUrlEntries;
 
 export function getApiConfig(
   name: SourceApiKey,
