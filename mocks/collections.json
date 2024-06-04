@@ -35,7 +35,11 @@
       "get-loodmetingen-auth:standard",
       "get-cms-maintainance-notifications-alle:standard",
       "get-cms-maintainance-dashboard:standard",
-      "get-cms-maintainance-landingspagina:standard"
+      "get-cms-maintainance-landingspagina:standard",
+      "post-powerbrowser-vergunningen:standard",
+      "post-powerbrowser-token:standard",
+      "get-powerbrowser-bb-vergunning-attachments:standard",
+      "post-powerbrowser-bb-vergunning-attachments:standard"
     ]
   }
 ]
