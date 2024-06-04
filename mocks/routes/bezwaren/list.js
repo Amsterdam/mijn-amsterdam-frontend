@@ -8,16 +8,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: BEZWAREN_LIST_RESPONSE,
-          },
-          commercialUser: {
-            status: 200,
-            body: 'no-content',
-          },
+          status: 200,
+          body: BEZWAREN_LIST_RESPONSE,
         },
       },
     ],

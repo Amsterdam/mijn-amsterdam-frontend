@@ -1,4 +1,4 @@
-const svwi_response = require('../fixtures/svwi.json');
+const SVWI_RESPONSE = require('../fixtures/svwi.json');
 
 // https://gemeente-amsterdam.atlassian.net/wiki/spaces/ma/pages/780927155/svwi+werk+en+inkomen (nog niet geimplementeerd?)
 module.exports = [
@@ -9,16 +9,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: svwi_response,
-          },
-          commercialUser: {
-            status: 200,
-            body: 'no-content',
-          },
+          status: 200,
+          body: SVWI_RESPONSE,
         },
       },
     ],

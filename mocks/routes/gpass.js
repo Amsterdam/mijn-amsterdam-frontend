@@ -12,16 +12,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: RESPONSES.PASHOUDER,
-          },
-          commercialUser: {
-            status: 200,
-            body: 'no-content',
-          },
+          status: 200,
+          body: RESPONSES.PASHOUDER,
         },
       },
     ],
@@ -33,16 +27,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: RESPONSES.STADSPAS,
-          },
-          commercialUser: {
-            status: 200,
-            body: 'no-content',
-          },
+          status: 200,
+          body: RESPONSES.STADSPAS,
         },
       },
     ],
@@ -54,16 +42,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: RESPONSES.TRANSACTIES,
-          },
-          commercialUser: {
-            status: 200,
-            body: 'no-content',
-          },
+          status: 200,
+          body: RESPONSES.TRANSACTIES,
         },
       },
     ],
