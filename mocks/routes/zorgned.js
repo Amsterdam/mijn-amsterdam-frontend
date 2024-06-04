@@ -9,16 +9,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: ZORGNED_JZD_RESPONSE,
-          },
-          commercialUser: {
-            status: 200,
-            body: 'no-content',
-          },
+          status: 200,
+          body: ZORGNED_JZD_RESPONSE,
         },
       },
     ],
@@ -30,16 +24,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: ZORGNED_AV_RESPONSE,
-          },
-          commercialUser: {
-            status: 200,
-            body: 'no-content',
-          },
+          status: 200,
+          body: ZORGNED_AV_RESPONSE,
         },
       },
     ],

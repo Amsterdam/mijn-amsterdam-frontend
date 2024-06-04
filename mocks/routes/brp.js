@@ -8,17 +8,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'profile-type-handler',
+        type: 'json',
         options: {
-          privateUser: {
-            status: 200,
-            body: BRP_RESPONSE,
-          },
-          commercialUser: {
-            status: 200,
-            // RP TODO: alle no content vervangen met de normale response body
-            body: 'no-content',
-          },
+          status: 200,
+          body: BRP_RESPONSE,
         },
       },
     ],
