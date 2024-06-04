@@ -22,7 +22,7 @@ import {
   StadspasTransactiesResponse,
   StadspasTransaction,
 } from './stadspas-types';
-import { fetchClientNummer } from './stadspas-zorgned-service';
+import { fetchClientNummer } from './hli-zorgned-service';
 import { captureException } from '../monitoring';
 
 function getHeaders(administratienummer: string) {

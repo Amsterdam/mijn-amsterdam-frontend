@@ -1,5 +1,5 @@
 import { remoteApi } from '../../../test-utils';
-import { fetchClientNummer } from './stadspas-zorgned-service';
+import { fetchClientNummer } from './hli-zorgned-service';
 import * as request from '../../helpers/source-api-request';
 import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';
 import { AuthProfileAndToken } from '../../helpers/app';
