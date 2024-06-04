@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import { Dialog } from './Modal';
+import userEvent from '@testing-library/user-event';
 
 describe('Modal test', () => {
   it('Renders without crashing', () => {
@@ -43,18 +43,24 @@ describe('Modal test', () => {
   });
 
   it('Opens and Closes the modal via close callback', async () => {
-    const user = userEvent.setup();
+    const title = 'Overlay sluiten';
 
     const close = vi.fn(() => {
       rerender(
-        <Dialog isOpen={false} onClose={close}>
+        <Dialog
+          isOpen={false}
+          onClose={close}
+          actions={<button onClick={close}>Overlay sluiten</button>}
+        >
           Testje
         </Dialog>
       );
     });
 
+    const actions = <button onClick={close}>Overlay sluiten</button>;
+
     const { rerender } = render(
-      <Dialog isOpen={false} onClose={close}>
+      <Dialog isOpen={false} onClose={close} title={title} actions={actions}>
         Testje
       </Dialog>
     );
@@ -62,13 +68,17 @@ describe('Modal test', () => {
     expect(screen.queryByText('Testje')).toBeNull();
 
     rerender(
-      <Dialog isOpen={true} onClose={close}>
+      <Dialog isOpen={true} onClose={close} title={title} actions={actions}>
         Testje
       </Dialog>
     );
     expect(screen.getByText('Testje')).toBeInTheDocument();
 
-    await user.click(screen.getByTitle('Overlay sluiten'));
+    await userEvent.click(
+      screen.getByText('Overlay sluiten', {
+        selector: 'button',
+      })
+    );
 
     expect(close).toHaveBeenCalled();
     expect(screen.queryByText('Testje')).toBeNull();

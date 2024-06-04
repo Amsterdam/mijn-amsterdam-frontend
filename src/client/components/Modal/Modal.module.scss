@@ -31,8 +31,8 @@
 }
 
 .Dialog {
-  background-color: $color-white;
-  position: fixed;
+  // unset default margin for dialog
+  margin: unset;
   z-index: z-index(dialog);
 
   &.Boxed {
@@ -71,16 +71,8 @@
   &.VerticallyBottom {
     bottom: 0;
   }
-}
 
-.Header {
-  display: flex;
-  border-bottom: 1px solid $color-neutral-grey4;
-  padding: 1rem 1.5rem;
-  padding-bottom: 0.8rem;
-  align-items: center;
-}
-
-.Content {
-  padding: 1.5rem;
+  :global(.ams-dialog__footer) {
+    justify-content: start;
+  }
 }

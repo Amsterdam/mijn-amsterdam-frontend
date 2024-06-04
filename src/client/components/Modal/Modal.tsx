@@ -1,16 +1,16 @@
 import { CSSProperties, useEffect, useRef } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Dialog as DialogComp } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import FocusTrap from 'focus-trap-react';
 import ReactDOM from 'react-dom';
 import { ComponentChildren } from '../../../universal/types';
 import { useModalRoot } from '../../hooks';
-import { CloseButton } from '../Button/Button';
 import styles from './Modal.module.scss';
 
 interface ModalProps {
   children: ComponentChildren;
+  actions?: JSX.Element;
   className?: string;
   isOpen: boolean | undefined;
   onClose?: () => void;
@@ -35,6 +35,7 @@ export default function Modal({
 
 export function Dialog({
   children,
+  actions,
   className,
   isOpen = undefined,
   title,
@@ -99,11 +100,7 @@ export function Dialog({
               onClick={() => typeof onClose === 'function' && onClose()}
             />
 
-            <div
-              role="dialog"
-              aria-labelledby="dialog-title"
-              aria-describedby="dialog-desc"
-              aria-modal="true"
+            <DialogComp
               className={classnames(
                 styles.Dialog,
                 contentWidth === 'boxed' && styles.Boxed,
@@ -113,37 +110,19 @@ export function Dialog({
                   styles.HorizontallyCentered,
                 contentVerticalPosition === 'top' && styles.VerticallyTop,
                 contentHorizontalPosition === 'left' && styles.HorizontallyLeft,
-                contentVerticalPosition === 'bottom' && styles.VerticallyBottom,
+                styles.VerticallyBottom,
                 contentHorizontalPosition === 'right' &&
                   styles.HorizontallyRight
               )}
               ref={dialogEl}
               style={inlineStyles}
+              actions={<>{actions}</>}
+              onClose={() => typeof onClose === 'function' && onClose()}
+              open
+              title={title}
             >
-              <header
-                className={styles.Header}
-                style={{
-                  justifyContent: !!title ? 'space-between' : 'flex-end',
-                }}
-              >
-                {!!title && (
-                  <Heading size="level-3" level={3} id="dialog-title">
-                    {title}
-                  </Heading>
-                )}
-                {showCloseButton && (
-                  <CloseButton
-                    title="Overlay sluiten"
-                    iconSize="100%"
-                    className={classnames(styles.CloseButton, 'ButtonClose')}
-                    onClick={() => typeof onClose === 'function' && onClose()}
-                  />
-                )}
-              </header>
-              <div className={styles.Content} id="dialog-desc">
-                {children}
-              </div>
-            </div>
+              {children}
+            </DialogComp>
           </div>
         </FocusTrap>,
         appendToElement
