@@ -50,4 +50,19 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'get-wpi-document-download',
+    url: '/api/wpi/document',
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'file',
+        options: {
+          status: 200,
+          path: '../fixtures/documents/document.pdf',
+        },
+      },
+    ],
+  },
 ];
