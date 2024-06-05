@@ -1,7 +1,7 @@
 import { Header, PageMenu } from '@amsterdam/design-system-react';
 import { animated, useSpring } from '@react-spring/web';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { ErrorMessages } from '../../components';
 import { getApiErrors } from '../../config/api';
@@ -171,10 +171,12 @@ export default function MainHeader({
     };
   }, [isBurgerMenuVisible]);
 
+  const history = useHistory();
+
   useEffect(() => {
     const h1Element = document.querySelector('h1');
     const goToHomepage = () => {
-      window.location.href = '/';
+      history.push(AppRoutes.HOME);
     };
     if (h1Element?.textContent === 'Mijn Amsterdam') {
       h1Element.addEventListener('click', goToHomepage);
