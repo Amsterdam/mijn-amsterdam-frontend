@@ -70,3 +70,12 @@ export function captureMessage(message: string, properties?: Properties) {
     ? MA_APP_MODE !== 'unittest' && console.log('Capture message', payload)
     : appInsights.trackTrace(payload);
 }
+
+export function trackEvent(name: string, properties: Record<string, any>) {
+  return IS_DEVELOPMENT
+    ? MA_APP_MODE !== 'unittest'
+    : appInsights.trackEvent({
+        name,
+        properties,
+      });
+}
