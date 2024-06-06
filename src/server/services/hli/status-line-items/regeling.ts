@@ -1,7 +1,7 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 
-export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
+export const REGELING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
     datePublished: (data) => data.datumBesluit,
@@ -11,24 +11,6 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `
         <p>
           U hebt recht op een ${data.titel} per ${defaultDateFormat(
-            data.datumIngangGeldigheid
-          )}.
-        </p>
-        <p>
-          In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-          indienen.
-        </p>
-      `,
-  },
-  {
-    status: 'Voorwaarde vooldaan',
-    datePublished: (data) => data.datumBesluit,
-    isChecked: (stepIndex, data) => true,
-    isActive: (stepIndex, data) => data.isActueel === true,
-    description: (data) =>
-      `
-        <p>
-          Uw heeft voldaan aan de voorwaarde voor het recht op ${data.titel} per ${defaultDateFormat(
             data.datumIngangGeldigheid
           )}.
         </p>
