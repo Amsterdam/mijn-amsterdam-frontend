@@ -73,7 +73,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
 export function trackEvent(name: string, properties: Record<string, any>) {
   return IS_DEVELOPMENT
-    ? MA_APP_MODE !== 'unittest'
+    ? MA_APP_MODE !== 'unittest' && console.log('Track event', name, properties)
     : appInsights.trackEvent({
         name,
         properties,
