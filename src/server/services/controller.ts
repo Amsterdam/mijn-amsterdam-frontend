@@ -50,7 +50,7 @@ import {
   createTipsFromServiceResults,
   prefixTipNotification,
 } from './tips/tips-service';
-import { fetchToeristischeVerhuur } from './toeristische-verhuur';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {

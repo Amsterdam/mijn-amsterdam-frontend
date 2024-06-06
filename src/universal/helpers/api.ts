@@ -179,7 +179,7 @@ export function getSettledResult<T extends any>(
   if (result.status === 'fulfilled') {
     return result.value;
   }
-  let errorMessage = result.reason.toString();
+  let errorMessage: string;
   try {
     errorMessage = result.reason.message || result.reason.toString();
   } catch (error) {
