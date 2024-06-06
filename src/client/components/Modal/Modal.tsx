@@ -112,7 +112,8 @@ export function Dialog({
                 contentHorizontalPosition === 'left' && styles.HorizontallyLeft,
                 styles.VerticallyBottom,
                 contentHorizontalPosition === 'right' &&
-                  styles.HorizontallyRight
+                  styles.HorizontallyRight,
+                !showCloseButton && styles.HideCloseButton
               )}
               ref={dialogEl}
               style={inlineStyles}

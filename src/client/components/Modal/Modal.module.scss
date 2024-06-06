@@ -72,6 +72,12 @@
     bottom: 0;
   }
 
+  &.HideCloseButton {
+    :global(.ams-icon-button) {
+      display: none;
+    }
+  }
+
   :global(.ams-dialog__footer) {
     justify-content: start;
   }

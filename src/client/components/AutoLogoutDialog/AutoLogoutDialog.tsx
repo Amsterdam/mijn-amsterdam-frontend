@@ -168,7 +168,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
         </>
       }
     >
-      <div className={styles.AutoLogoutDialog}>
+      <div className={styles.AutoLogoutDialogChildren}>
         <p>
           U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
           geweest op Mijn Amsterdam.
