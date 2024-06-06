@@ -137,22 +137,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       isOpen={isOpen}
       contentWidth={450}
       showCloseButton={false}
-    >
-      <div className={styles.AutoLogoutDialog}>
-        <p>
-          U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
-          geweest op Mijn Amsterdam.
-        </p>
-        <p className={styles.TimerText}>
-          <CountDownTimer
-            maxCount={nSettings.secondsBeforeAutoLogout}
-            onMaxCount={showLoginScreen}
-            onTick={onTick}
-          />
-          Als u niets doet wordt u automatisch uitgelogd.
-        </p>
-        <p>Wilt u doorgaan of uitloggen?</p>
-        <p className={ButtonStyles.ButtonGroup}>
+      actions={
+        <>
           {continueButtonIsVisible && (
             <Button
               tabIndex={1}
@@ -179,7 +165,23 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
               ? 'Nu uitloggen'
               : 'Bezig met controleren van uw sessie..'}
           </Linkd>
+        </>
+      }
+    >
+      <div className={styles.AutoLogoutDialogChildren}>
+        <p>
+          U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
+          geweest op Mijn Amsterdam.
         </p>
+        <p className={styles.TimerText}>
+          <CountDownTimer
+            maxCount={nSettings.secondsBeforeAutoLogout}
+            onMaxCount={showLoginScreen}
+            onTick={onTick}
+          />
+          Als u niets doet wordt u automatisch uitgelogd.
+        </p>
+        <p>Wilt u doorgaan of uitloggen?</p>
       </div>
     </Modal>
   );

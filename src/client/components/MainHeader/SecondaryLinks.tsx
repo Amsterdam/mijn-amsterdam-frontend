@@ -9,7 +9,7 @@ import { ProfileName } from './ProfileName';
 import styles from './SecondaryLinks.module.scss';
 
 type SecondaryLinksProps = {
-  showIcons: boolean;
+  showIcons?: boolean;
 };
 
 export function SecondaryLinks({ showIcons = false }: SecondaryLinksProps) {
