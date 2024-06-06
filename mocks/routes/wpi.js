@@ -1,3 +1,5 @@
+const path = require('node:path');
+
 const RESPONSES = {
   AANVRAGEN: require('../fixtures/wpi-aanvragen.json'),
   E_AANVRAGEN: require('../fixtures/wpi-e-aanvragen.json'),
@@ -52,7 +54,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-document-download',
-    url: '/api/wpi/document',
+    url: '/relay/wpi/document',
     method: 'GET',
     variants: [
       {
@@ -60,7 +62,7 @@ module.exports = [
         type: 'file',
         options: {
           status: 200,
-          path: '../fixtures/documents/document.pdf',
+          path: path.resolve('/mocks/fixtures/documents/document.pdf'),
         },
       },
     ],
