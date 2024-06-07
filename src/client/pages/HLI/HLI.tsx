@@ -16,15 +16,14 @@ import {
   OverviewPage,
   PageHeading,
   ThemaIcon,
-  addTitleLinkComponent,
 } from '../../components';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { addLinkElementToProperty } from '../../components/Table/Table';
 import { TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './HLI.module.scss';
-import { addLinkElementToProperty } from '../../components/Table/Table';
 
 const displayPropsHuidigeRegelingen = {
   title: 'Naam regeling',
