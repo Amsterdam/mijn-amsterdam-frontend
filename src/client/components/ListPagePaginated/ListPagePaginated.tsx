@@ -72,7 +72,6 @@ export function ListPagePaginated({
       <PageHeading
         icon={<ThemaIcon thema={thema} />}
         backLink={{ to: appRouteBack, title: 'Overzicht' }}
-        isLoading={isLoading}
       >
         {title}
       </PageHeading>
@@ -96,7 +95,7 @@ export function ListPagePaginated({
             )}
             {!isError && (
               <>
-                {!itemsPaginated.length && !!noItemsText && (
+                {!isLoading && !itemsPaginated.length && !!noItemsText && (
                   <Grid.Cell span="all">
                     <Paragraph>{noItemsText}</Paragraph>
                   </Grid.Cell>

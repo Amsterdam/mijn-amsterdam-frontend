@@ -29,22 +29,17 @@ import { useAppStateGetter } from '../../hooks';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './HLIStadspas.module.scss';
 
-const loadingContentBarConfig: BarConfig = [
-  ['12rem', '2rem', '.5rem'],
-  ['8rem', '2rem', '4rem'],
-  ['5rem', '2rem', '.5rem'],
-  ['16rem', '2rem', '4rem'],
-  ['20rem', '2rem', '.5rem'],
-  ['16rem', '2rem', '4rem'],
-  ['20rem', '2rem', '.5rem'],
-  ['16rem', '2rem', '4rem'],
+const loadingContentBarConfigDetails: BarConfig = [
+  ['10rem', '2rem', '.5rem'],
+  ['16rem', '2rem', '3rem'],
+  ['10rem', '2rem', '.5rem'],
+  ['25rem', '2rem', '3rem'],
   ['8rem', '2rem', '.5rem'],
-  ['20rem', '2rem', '.5rem'],
-  ['20rem', '2rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
+  ['5rem', '2rem', '3rem'],
+];
+const loadingContentBarConfigList: BarConfig = [
+  ['60rem', '2rem', '.5rem'],
+  ['60rem', '2rem', '4rem'],
 ];
 
 const displayPropsTransacties = {
@@ -61,9 +56,6 @@ const displayPropsBudgets = {
 
 export default function HLIStadspas() {
   const { HLI } = useAppStateGetter();
-  const [openTransactionOverview, setOpenTransactionOverview] = useState<
-    number | null
-  >(null);
   const { id } = useParams<{ id: string }>();
   const stadspas = id
     ? HLI?.content?.stadspas?.stadspassen?.find((pass) => pass.id === id)
@@ -102,6 +94,8 @@ export default function HLIStadspas() {
     ApiResponse<StadspasTransaction[]>
   >(requestOptions, apiPristineResult([]));
 
+  const isLoadingTransacties = transactionsApi.isLoading;
+
   useEffect(() => {
     if (stadspas?.urlTransactions) {
       fetchTransactions({ ...requestOptions, postpone: false });
@@ -114,7 +108,6 @@ export default function HLIStadspas() {
         title: budget.description,
         amountFormatted: budget.budgetAssignedFormatted,
         dateEndFormatted: budget.dateEndFormatted,
-        // balanceFormatted: budget.budgetBalanceFormatted,
       };
     }) ?? [];
 
@@ -132,13 +125,15 @@ export default function HLIStadspas() {
         }}
         icon={<ThemaIcon />}
       >
-        Overzicht stadspas van {stadspas?.owner}
+        Overzicht stadspas {stadspas?.owner && ` van ${stadspas?.owner}`}
       </PageHeading>
       <Screen>
         <Grid>
           {!stadspas && (
             <Grid.Cell span="all">
-              {isLoadingStadspas && <LoadingContent />}
+              {isLoadingStadspas && (
+                <LoadingContent barConfig={loadingContentBarConfigDetails} />
+              )}
               {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
                 <ErrorAlert>
                   We kunnen op dit moment geen gegevens tonen.{' '}
@@ -155,33 +150,56 @@ export default function HLIStadspas() {
             </Grid.Cell>
           )}
 
-          {!!transactionsApi.data.content?.length && (
-            <>
-              <Grid.Cell span="all">
-                <Heading>Gekregen tegoed</Heading>
-              </Grid.Cell>
-              <Grid.Cell span="all">
+          <>
+            <Grid.Cell span="all">
+              <Heading>Gekregen tegoed</Heading>
+            </Grid.Cell>
+            <Grid.Cell span="all">
+              {isLoadingStadspas && (
+                <LoadingContent barConfig={loadingContentBarConfigList} />
+              )}
+              {!isLoadingStadspas && budgetsFormatted.length && (
                 <TableV2
                   className={styles.Table_budgets}
                   items={budgetsFormatted}
                   displayProps={displayPropsBudgets}
                 />
-              </Grid.Cell>
-              <Grid.Cell span="all">
-                <Heading>Uw uitgaven</Heading>
-              </Grid.Cell>
-              <Grid.Cell span="all">
+              )}
+              {!isLoadingStadspas && !budgetsFormatted.length && (
+                <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
+              )}
+            </Grid.Cell>
+            <Grid.Cell span="all">
+              <Heading>Uw uitgaven</Heading>
+            </Grid.Cell>
+            <Grid.Cell span="all">
+              {(isLoadingTransacties || isLoadingStadspas) && (
+                <LoadingContent barConfig={loadingContentBarConfigList} />
+              )}
+              {!isLoadingStadspas && !isLoadingTransacties && (
                 <Paragraph>Deze informatie kan een dag achter lopen.</Paragraph>
-              </Grid.Cell>
-              <Grid.Cell span="all">
-                <TableV2
-                  className={styles.Table_transactions}
-                  items={transactions}
-                  displayProps={displayPropsTransacties}
-                />
-              </Grid.Cell>
-            </>
-          )}
+              )}
+            </Grid.Cell>
+            {!isLoadingTransacties &&
+              !!transactionsApi.data.content?.length && (
+                <>
+                  <Grid.Cell span="all">
+                    <TableV2
+                      className={styles.Table_transactions}
+                      items={transactions}
+                      displayProps={displayPropsTransacties}
+                    />
+                  </Grid.Cell>
+                </>
+              )}
+            {!isLoadingStadspas &&
+              !isLoadingTransacties &&
+              !transactionsApi.data.content?.length && (
+                <Grid.Cell span="all">
+                  <Paragraph>U heeft (nog) geen uitgaven.</Paragraph>
+                </Grid.Cell>
+              )}
+          </>
         </Grid>
       </Screen>
     </DetailPage>
