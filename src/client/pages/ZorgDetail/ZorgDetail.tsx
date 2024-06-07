@@ -1,4 +1,6 @@
+import { Grid } from '@amsterdam/design-system-react';
 import { InfoDetail } from '../../components';
+import { Datalist } from '../../components/Datalist/Datalist';
 import StatusDetail from '../StatusDetail/StatusDetail';
 
 export default function ZorgDetail() {
@@ -9,7 +11,11 @@ export default function ZorgDetail() {
       pageContent={(isLoading, statusItem) => {
         return (
           statusItem?.supplier && (
-            <InfoDetail label="Aanbieder" value={statusItem.supplier} />
+            <Grid.Cell span="all">
+              <Datalist
+                rows={[{ content: statusItem.supplier, label: 'Aanbieder' }]}
+              />
+            </Grid.Cell>
           )
         );
       }}

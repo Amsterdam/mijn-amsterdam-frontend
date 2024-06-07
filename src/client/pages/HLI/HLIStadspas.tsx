@@ -1,12 +1,12 @@
 import {
   Grid,
-  Screen,
-  Link,
-  Paragraph,
   Heading,
+  Paragraph,
+  Screen,
 } from '@amsterdam/design-system-react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { StadspasTransaction } from '../../../server/services/hli/stadspas-types';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ApiResponse,
@@ -16,19 +16,17 @@ import {
 } from '../../../universal/helpers';
 import {
   DetailPage,
-  ThemaIcon,
-  LoadingContent,
   ErrorAlert,
+  LoadingContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
-import { useAppStateGetter } from '../../hooks';
-import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { Datalist } from '../../components/Datalist/Datalist';
-import displayAmount from '../../../universal/helpers/text';
-import { StadspasTransaction } from '../../../server/services/hli/stadspas-types';
-import { useDataApi } from '../../hooks/api/useDataApi';
+import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { TableV2 } from '../../components/Table/TableV2';
+import { useAppStateGetter } from '../../hooks';
+import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './HLIStadspas.module.scss';
 
 const loadingContentBarConfig: BarConfig = [

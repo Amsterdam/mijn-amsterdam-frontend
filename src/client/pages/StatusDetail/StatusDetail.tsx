@@ -5,8 +5,10 @@ import { isError, isLoading } from '../../../universal/helpers';
 
 import {
   Alert as DSAlert,
+  Grid,
   LinkList,
   Paragraph,
+  Screen,
 } from '@amsterdam/design-system-react';
 import {
   GenericDocument,
@@ -107,54 +109,73 @@ export default function StatusDetail({
       >
         {title}
       </PageHeading>
-      <PageContent className={styles.DetailPageContent}>
-        {!!statusItem && pageContent && pageContent(isStateLoading, statusItem)}
+      <Screen className={styles.DetailPageContent}>
+        <Grid>
+          {!!statusItem &&
+            pageContent &&
+            pageContent(isStateLoading, statusItem)}
 
-        {(isError(STATE) || (noContent && !statusItems.length)) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen gegevens tonen.{' '}
-            <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>.
-          </ErrorAlert>
+          {(isError(STATE) || (noContent && !statusItems.length)) && (
+            <Grid.Cell span="all">
+              <ErrorAlert>
+                We kunnen op dit moment geen gegevens tonen.{' '}
+                <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>
+                .
+              </ErrorAlert>
+            </Grid.Cell>
+          )}
+
+          {!isStateLoading && !statusItem && !!statusItems.length && (
+            <Grid.Cell span="all">
+              <DSAlert title="Deze pagina is mogelijk verplaatst">
+                <Paragraph className={styles.MarginBottom}>
+                  Kies hieronder een van de beschikbare aanvragen.
+                </Paragraph>
+                <LinkList>
+                  {statusItems.map((statusItem, index) => {
+                    return (
+                      <LinkList.Link
+                        key={statusItem.link?.to || index}
+                        href={statusItem.link?.to || appRoute}
+                      >
+                        {statusItem.title}
+                      </LinkList.Link>
+                    );
+                  })}
+                </LinkList>
+              </DSAlert>
+            </Grid.Cell>
+          )}
+
+          {isStateLoading && (
+            <Grid.Cell span="all">
+              <LoadingContent />
+            </Grid.Cell>
+          )}
+        </Grid>
+      </Screen>
+      <Grid>
+        {!!(statusItem?.steps && statusItemSteps.length) && (
+          <Grid.Cell span="all">
+            <StatusLineComponent
+              trackCategory={`${thema} / ${statusItem?.about} status`}
+              statusLabel={
+                typeof statusLabel === 'function'
+                  ? statusLabel(statusItem)
+                  : statusLabel
+              }
+              showStatusLineConnection={showStatusLineConnection}
+              items={statusItemSteps}
+              maxStepCount={
+                maxStepCount ? maxStepCount(hasDecision) : undefined
+              }
+              highlightKey={highlightKey}
+              id={`${thema}-${stateKey}-status`}
+              documentPathForTracking={documentPathForTracking}
+            />
+          </Grid.Cell>
         )}
-
-        {!isStateLoading && !statusItem && !!statusItems.length && (
-          <DSAlert title="Deze pagina is mogelijk verplaatst">
-            <Paragraph className={styles.MarginBottom}>
-              Kies hieronder een van de beschikbare aanvragen.
-            </Paragraph>
-            <LinkList>
-              {statusItems.map((statusItem, index) => {
-                return (
-                  <LinkList.Link
-                    key={statusItem.link?.to || index}
-                    href={statusItem.link?.to || appRoute}
-                  >
-                    {statusItem.title}
-                  </LinkList.Link>
-                );
-              })}
-            </LinkList>
-          </DSAlert>
-        )}
-
-        {isStateLoading && <LoadingContent />}
-      </PageContent>
-      {!!(statusItem?.steps && statusItemSteps.length) && (
-        <StatusLineComponent
-          trackCategory={`${thema} / ${statusItem?.about} status`}
-          statusLabel={
-            typeof statusLabel === 'function'
-              ? statusLabel(statusItem)
-              : statusLabel
-          }
-          showStatusLineConnection={showStatusLineConnection}
-          items={statusItemSteps}
-          maxStepCount={maxStepCount ? maxStepCount(hasDecision) : undefined}
-          highlightKey={highlightKey}
-          id={`${thema}-${stateKey}-status`}
-          documentPathForTracking={documentPathForTracking}
-        />
-      )}
+      </Grid>
     </DetailPage>
   );
 }
