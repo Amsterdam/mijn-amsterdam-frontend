@@ -388,7 +388,7 @@ function getServiceErrors(resultsByUser: Record<string, ServiceResults>) {
 
 function getRows(
   labels: string[],
-  results: Array<Record<string, string | number>>,
+  results: Array<Record<string, string | number | Function>>,
   addRowLabel: boolean = true
 ) {
   const rowsMap: any = {};
