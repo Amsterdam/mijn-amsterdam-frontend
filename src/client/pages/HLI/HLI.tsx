@@ -24,6 +24,7 @@ import { TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './HLI.module.scss';
+import { getThemaTitle } from './helpers';
 
 const displayPropsHuidigeRegelingen = {
   title: 'Naam regeling',
@@ -49,18 +50,6 @@ function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
       </MaRouterLink>
     </UnorderedList.Item>
   );
-}
-
-export function getThemaTitle(hasStadspas: boolean, hasRegelingen: boolean) {
-  switch (true) {
-    default:
-    case hasStadspas && hasRegelingen:
-      return ThemaTitles.HLI;
-    case hasStadspas:
-      return 'Stadspas';
-    case hasRegelingen:
-      return 'Regelingen bij laag inkomen';
-  }
 }
 
 export default function ThemaPaginaHLI() {
