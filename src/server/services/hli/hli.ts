@@ -1,5 +1,5 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, IS_OT, IS_TEST } from '../../../universal/config';
 import {
   apiSuccessResult,
   capitalizeFirstLetter,
@@ -192,7 +192,7 @@ export function transformRegelingenForFrontend(
 
   regelingenFrontend.sort(dateSort('dateStart', 'desc'));
 
-  return getFakeResponse(regelingenFrontend);
+  return IS_OT ? getFakeResponse(regelingenFrontend) : regelingenFrontend;
 }
 
 async function fetchRegelingen(

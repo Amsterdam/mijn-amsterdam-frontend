@@ -15,6 +15,7 @@ import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException } from '../monitoring';
+import { FeatureToggle } from '../../../universal/config';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -135,7 +136,14 @@ export async function fetchAanvragen(
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
 
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
+  const dataRequestConfig = getApiConfig(
+    zorgnedApiConfigKey,
+    zorgnedApiConfigKey === 'ZORGNED_AV'
+      ? {
+          postponeFetch: FeatureToggle.hliThemaActive,
+        }
+      : {}
+  );
 
   const url = `${dataRequestConfig.url}/aanvragen`;
 

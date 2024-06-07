@@ -62,6 +62,5 @@ export async function fetchZorgnedAanvragenHLI(
   );
 
   // TODO: Filter response
-
   return aanvragenResponse;
 }

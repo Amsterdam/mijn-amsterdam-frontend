@@ -144,6 +144,7 @@ export default function ThemaPaginaHLI() {
               )}
               <Grid.Cell span="all">
                 <TableV2
+                  showTHead={!!huidigeRegelingen.length}
                   caption="Huidige regelingen"
                   items={huidigeRegelingen}
                   displayProps={displayPropsHuidigeRegelingen}
@@ -155,6 +156,7 @@ export default function ThemaPaginaHLI() {
               </Grid.Cell>
               <Grid.Cell span="all">
                 <TableV2
+                  showTHead={!!eerdereRegelingen.length}
                   caption="Eerdere en afgewezen regelingen"
                   items={eerdereRegelingen.slice(
                     0,
