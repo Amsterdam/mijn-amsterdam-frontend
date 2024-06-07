@@ -225,7 +225,7 @@ function transformGpassTransactionsResponse(
         id: String(transactie.id),
         title: transactie.budget.aanbieder.naam,
         amount: transactie.bedrag,
-        amountFormatted: `- € ${displayAmount(transactie.bedrag)}`,
+        amountFormatted: `- € ${displayAmount(Math.abs(transactie.bedrag))}`,
         datePublished: transactie.transactiedatum,
         datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
       };
