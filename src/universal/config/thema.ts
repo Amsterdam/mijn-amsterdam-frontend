@@ -1,9 +1,9 @@
 import { generatePath } from 'react-router-dom';
+import { AppState } from '../../client/AppState';
+import { getThemaTitle } from '../../client/pages/HLI/helpers';
 import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
-import { AppState } from '../../client/AppState';
-import { getThemaTitle } from '../../client/pages/HLI/HLI';
 
 // Within the team we call these Themes / Thema's
 export type Thema =
