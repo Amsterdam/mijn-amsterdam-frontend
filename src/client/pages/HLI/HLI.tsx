@@ -27,20 +27,12 @@ import styles from './HLI.module.scss';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 
 const displayPropsHuidigeRegelingen = {
-  title: '',
+  title: 'Naam regeling',
 };
 
 const displayPropsEerdereRegelingen = {
-  title: '',
+  title: 'Naam regeling',
 };
-
-function hasMultipleOwners(stadspassen: Stadspas[] | undefined) {
-  if (stadspassen === undefined) {
-    return false;
-  }
-
-  return stadspassen.some((pas) => pas.owner !== stadspassen[0].owner);
-}
 
 function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
   return (
