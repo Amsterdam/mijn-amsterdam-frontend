@@ -308,7 +308,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   },
   {
     title: (appState: AppState) => {
-      const hasStadspas = !!appState.HLI.content?.stadspas;
+      const hasStadspas = !!appState.HLI.content?.stadspas?.stadspassen.length;
       const hasRegelingen = !!appState.HLI.content?.regelingen.length;
       return getThemaTitle(hasStadspas, hasRegelingen);
     },
