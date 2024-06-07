@@ -51,6 +51,18 @@ function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
   );
 }
 
+export function getThemaTitle(hasStadspas: boolean, hasRegelingen: boolean) {
+  switch (true) {
+    default:
+    case hasStadspas && hasRegelingen:
+      return ThemaTitles.HLI;
+    case hasStadspas:
+      return 'Stadspas';
+    case hasRegelingen:
+      return 'Regelingen bij laag inkomen';
+  }
+}
+
 export default function ThemaPaginaHLI() {
   const { HLI } = useAppStateGetter();
   const hasStadspas = !!HLI.content?.stadspas?.stadspassen?.length;
@@ -59,7 +71,8 @@ export default function ThemaPaginaHLI() {
     HLI.content?.regelingen ?? [],
     'title'
   );
-
+  const hasRegelingen = !!regelingen.length;
+  const title = getThemaTitle(hasStadspas, hasRegelingen);
   const huidigeRegelingen: HLIRegeling[] = regelingen.filter(
     (regeling) => regeling.isActual
   );
@@ -76,7 +89,7 @@ export default function ThemaPaginaHLI() {
         }}
         icon={<ThemaIcon />}
       >
-        {ThemaTitles.HLI}
+        {title}
       </PageHeading>
       <Screen>
         <Grid>

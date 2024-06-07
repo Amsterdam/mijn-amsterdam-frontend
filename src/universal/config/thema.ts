@@ -2,6 +2,8 @@ import { generatePath } from 'react-router-dom';
 import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
+import { AppState } from '../../client/AppState';
+import { getThemaTitle } from '../../client/pages/HLI/HLI';
 
 // Within the team we call these Themes / Thema's
 export type Thema =
@@ -83,7 +85,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
   STADSPAS: 'Stadspas',
-  HLI: 'Stadspas en andere regelingen',
+  HLI: 'Stadspas en andere regelingen bij laag inkomen',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
   OVERTREDINGEN: 'Overtredingen voertuigen',
@@ -190,11 +192,12 @@ export const DocumentTitles: {
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
 };
 
-export interface ThemaMenuItem extends LinkProps {
+export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
   id: Thema;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
+  title: LinkProps['title'] | ((appState: AppState) => string);
 }
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
@@ -304,7 +307,11 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private'],
   },
   {
-    title: ThemaTitles.HLI,
+    title: (appState: AppState) => {
+      const hasStadspas = !!appState.HLI.content?.stadspas;
+      const hasRegelingen = !!appState.HLI.content?.regelingen.length;
+      return getThemaTitle(hasStadspas, hasRegelingen);
+    },
     id: Themas.HLI,
     to: AppRoutes.HLI,
     profileTypes: ['private'],
