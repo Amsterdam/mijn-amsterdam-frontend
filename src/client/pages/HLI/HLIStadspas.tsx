@@ -28,6 +28,7 @@ import { TableV2 } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './HLIStadspas.module.scss';
+import { getThemaTitleWithAppState } from './helpers';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -55,7 +56,8 @@ const displayPropsBudgets = {
 };
 
 export default function HLIStadspas() {
-  const { HLI } = useAppStateGetter();
+  const appState = useAppStateGetter();
+  const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
   const stadspas = id
     ? HLI?.content?.stadspas?.stadspassen?.find((pass) => pass.id === id)
@@ -125,7 +127,7 @@ export default function HLIStadspas() {
       <PageHeading
         backLink={{
           to: AppRoutes.HLI,
-          title: ThemaTitles.HLI,
+          title: getThemaTitleWithAppState(appState),
         }}
         icon={<ThemaIcon />}
       >

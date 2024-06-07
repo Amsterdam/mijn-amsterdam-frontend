@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { useAppStateGetter } from '../../hooks';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
+import { getThemaTitleWithAppState } from './helpers';
 
 export default function HLIRegeling() {
-  const { HLI } = useAppStateGetter();
+  const appState = useAppStateGetter();
+  const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
   const statusItem = HLI.content?.regelingen?.find((item) => item.id === id);
   const soortRegeling = statusItem?.about;
@@ -35,6 +37,7 @@ export default function HLIRegeling() {
     <StatusDetail
       thema="HLI"
       stateKey="HLI"
+      backLinkTitle={getThemaTitleWithAppState(appState)}
       maxStepCount={(hasDescision, regeling) => {
         const decisionStep = regeling?.steps.find(
           (step) => step.status === 'Besluit'

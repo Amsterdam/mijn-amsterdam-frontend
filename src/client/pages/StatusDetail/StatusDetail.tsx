@@ -31,32 +31,34 @@ import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
 interface StatusDetailProps {
-  thema: Thema;
-  stateKey: AppStateKey;
+  backLinkTitle?: string;
+  documentPathForTracking?: (document: GenericDocument) => string;
   getItems?: (content: AppState[AppStateKey]['content']) => StatusSourceItem[];
-  pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
+  highlightKey?: string | false;
   maxStepCount?: (
     hasDecision: boolean,
     statusItem?: StatusSourceItem
   ) => number | undefined;
-  statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
-  showStatusLineConnection?: boolean;
+  pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
   reverseSteps?: boolean;
-  highlightKey?: string | false;
-  documentPathForTracking?: (document: GenericDocument) => string;
+  showStatusLineConnection?: boolean;
+  stateKey: AppStateKey;
+  statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
+  thema: Thema;
 }
 
 export default function StatusDetail({
-  stateKey,
-  getItems,
-  pageContent,
-  maxStepCount,
-  thema,
-  statusLabel = 'Status',
-  showStatusLineConnection = true,
-  reverseSteps = false,
-  highlightKey,
+  backLinkTitle,
   documentPathForTracking,
+  getItems,
+  highlightKey,
+  maxStepCount,
+  pageContent,
+  reverseSteps = false,
+  showStatusLineConnection = true,
+  stateKey,
+  statusLabel = 'Status',
+  thema,
 }: StatusDetailProps) {
   const appState = useAppStateGetter();
   const STATE = appState[stateKey];
@@ -107,7 +109,7 @@ export default function StatusDetail({
     <DetailPage className={styles.StatusDetail}>
       <PageHeading
         icon={<ThemaIcon />}
-        backLink={{ to: appRoute, title: ThemaTitles[thema] }}
+        backLink={{ to: appRoute, title: backLinkTitle ?? ThemaTitles[thema] }}
         isLoading={isStateLoading}
       >
         {title}

@@ -1,6 +1,9 @@
 import { generatePath } from 'react-router-dom';
 import { AppState } from '../../client/AppState';
-import { getThemaTitle } from '../../client/pages/HLI/helpers';
+import {
+  getThemaTitle,
+  getThemaTitleWithAppState,
+} from '../../client/pages/HLI/helpers';
 import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
@@ -308,9 +311,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   },
   {
     title: (appState: AppState) => {
-      const hasStadspas = !!appState.HLI.content?.stadspas?.stadspassen.length;
-      const hasRegelingen = !!appState.HLI.content?.regelingen.length;
-      return getThemaTitle(hasStadspas, hasRegelingen);
+      return getThemaTitleWithAppState(appState);
     },
     id: Themas.HLI,
     to: AppRoutes.HLI,

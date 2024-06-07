@@ -5,9 +5,11 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 import { HLIRegeling } from '../../../server/services/hli/regelingen-types';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks';
+import { getThemaTitleWithAppState } from './helpers';
 
 export default function HLIRegelingen() {
-  const { HLI } = useAppStateGetter();
+  const appState = useAppStateGetter();
+  const { HLI } = appState;
   const eerdereRegelingen: HLIRegeling[] =
     HLI.content?.regelingen.filter((regeling) => !regeling.isActual) ?? [];
   const regelingen = addLinkElementToProperty<HLIRegeling>(
@@ -17,6 +19,7 @@ export default function HLIRegelingen() {
   return (
     <ListPagePaginated
       items={regelingen}
+      backLinkTitle={getThemaTitleWithAppState(appState)}
       title="Eerdere en afgewezen regelingen"
       appRoute={AppRoutes['HLI/REGELINGEN_LIJST']}
       appRouteBack={AppRoutes['HLI']}
