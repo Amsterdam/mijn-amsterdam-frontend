@@ -16,6 +16,10 @@ import { HLIRegeling } from './regelingen-types';
 import { fetchStadspas } from './stadspas';
 
 function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
+  const route = generatePath(AppRoutes['HLI/REGELING'], {
+    id: '123123123',
+    regeling: 'hli-regeling',
+  });
   const regelingen: HLIRegeling[] = [
     'Collectieve Ziektekosten Voorziening',
     'Gratis openbaar vervoer voor ouderen',
@@ -27,18 +31,32 @@ function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
     'Tegemoetkoming Aanvullend Openbaar Vervoer voor ouderen',
     'Gratis laptop of tablet basisschool',
   ].map((omschrijving) => {
-    return {
-      id: `${Math.random() * 899}`,
+    const aanvraag: HLIRegeling = {
+      id: `123123123`,
       title: omschrijving, // Omschrijving
       supplier: 'Leverancier B.V', // Leverancier
       about: omschrijving, // TODO: implement
       isActual: true, // Indicates if this item is designated Current or Previous
-      link: { title: omschrijving, to: '/' },
-      steps: [],
+      link: { title: omschrijving, to: route },
+      steps: [
+        {
+          status: 'Besluit',
+          isActive: true,
+          isChecked: true,
+          datePublished: '2024-05-31',
+        },
+        {
+          status: 'Einde recht',
+          isActive: false,
+          isChecked: false,
+          datePublished: '',
+        },
+      ],
       dateDescision: '2024-05-31',
       dateStart: '2024-05-31',
       dateEnd: '',
     };
+    return aanvraag;
   });
 
   return regelingen;
@@ -123,7 +141,7 @@ export async function fetchHLI(
   ]);
 
   const HLIResponseData = {
-    regelingen: getSettledResult(regelingenResult).content,
+    regelingen: getSettledResult(regelingenResult).content ?? [],
     stadspas: getSettledResult(stadspasResult).content,
   };
 
