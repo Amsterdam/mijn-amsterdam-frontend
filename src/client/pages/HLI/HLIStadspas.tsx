@@ -64,12 +64,16 @@ export default function HLIStadspas() {
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
 
-  const rows = stadspas
+  const rowsNaam = stadspas
     ? [
         {
           label: 'Naam',
           content: stadspas.owner,
         },
+      ]
+    : [];
+  const rowsNummerSaldo = stadspas
+    ? [
         {
           label: 'Stadspasnummer',
           content: stadspas.passNumber,
@@ -146,7 +150,12 @@ export default function HLIStadspas() {
           )}
           {!!stadspas && (
             <Grid.Cell span="all">
-              <Datalist rows={rows} />
+              <Datalist rows={rowsNaam} />
+              <Paragraph className={styles.StadspasNummerInfo}>
+                Hieronder staat het Stadspasnummer van uw actieve pas.
+                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
+              </Paragraph>
+              <Datalist rows={rowsNummerSaldo} />
             </Grid.Cell>
           )}
 
@@ -172,12 +181,16 @@ export default function HLIStadspas() {
             <Grid.Cell span="all">
               <Heading>Uw uitgaven</Heading>
             </Grid.Cell>
-            <Grid.Cell span="all">
+            <Grid.Cell span={8}>
               {(isLoadingTransacties || isLoadingStadspas) && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}
               {!isLoadingStadspas && !isLoadingTransacties && (
-                <Paragraph>Deze informatie kan een dag achter lopen.</Paragraph>
+                <Paragraph>
+                  Hieronder ziet u bij welke winkels u het tegoed hebt
+                  uitgegeven. Deze informatie kan een dag achterlopen. Maar het
+                  bedrag dat u nog over heeft klopt altijd.
+                </Paragraph>
               )}
             </Grid.Cell>
             {!isLoadingTransacties &&
