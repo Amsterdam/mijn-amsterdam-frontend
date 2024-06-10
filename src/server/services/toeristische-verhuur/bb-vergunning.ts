@@ -12,6 +12,7 @@ import { AppRoutes } from '../../../universal/config';
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import axios from 'axios';
+import { parseISO } from 'date-fns';
 
 // zaak detail: record/GFO_ZAKEN/$id
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
@@ -148,17 +149,19 @@ export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
       ?.toLowerCase()
       .includes('ingetrokken');
 
+    const datumTot = zaak.besluitdatumvervallen
+      ? defaultDateFormat(zaak.besluitdatumvervallen)
+      : '';
     const isGeweigerd = !!zaak.resultaat?.toLowerCase().includes('geweigerd');
-    const isVerlopen = false;
+    const isVerlopen =
+      datumTot && parseISO(datumTot) < new Date() ? true : false;
     const isVerleend = !!zaak.resultaat?.toLowerCase().includes('verleend');
 
     const bbVergunnig: BBVergunning = {
       datumAfhandeling: defaultDateFormat(zaak.einddatum),
       datumAanvraag: defaultDateFormat(zaak.startdatum),
       datumVan: zaak.datumingang ? defaultDateFormat(zaak.datumingang) : '',
-      datumTot: zaak.besluitdatumvervallen
-        ? defaultDateFormat(zaak.besluitdatumvervallen)
-        : '',
+      datumTot,
       resultaat: transformResultaat(zaak.resultaat),
       heeftOvergangsRecht: !!zaak.resultaat?.includes(
         'Verleend met overgangsrecht'
