@@ -54,7 +54,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-document-download',
-    url: '/relay/wpi/document',
+    url: '/wpi/document',
     method: 'GET',
     variants: [
       {

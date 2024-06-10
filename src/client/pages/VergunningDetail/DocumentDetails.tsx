@@ -15,7 +15,6 @@ import InfoDetail, {
 } from '../../components/InfoDetail/InfoDetail';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { useDataApi } from '../../hooks/api/useDataApi';
-import { relayApiUrl } from '../../utils/utils';
 
 interface DocumentDetailsProps {
   vergunning: Vergunning;
@@ -28,9 +27,7 @@ export function DocumentDetails({
   opaque = true,
   trackPath,
 }: DocumentDetailsProps) {
-  const documentsUrl = vergunning?.documentsUrl
-    ? relayApiUrl(vergunning.documentsUrl)
-    : false;
+  const documentsUrl = vergunning?.documentsUrl;
 
   // Set-up the documents api source
   const [
@@ -51,7 +48,6 @@ export function DocumentDetails({
             // Some documents don't have titles, assign a default title.
             return Object.assign(document, {
               title: document.title || 'Document',
-              url: relayApiUrl(document.url),
             });
           })
         );

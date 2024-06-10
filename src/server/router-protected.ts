@@ -124,14 +124,15 @@ router.use(
           url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
           break;
       }
+      console.dir(url);
       return url;
     },
     {
       memoizeHost: false,
-      proxyReqPathResolver: function (req) {
+      proxyReqPathResolver: function(req) {
         return req.url;
       },
-      proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+      proxyReqOptDecorator: async function(proxyReqOpts, srcReq) {
         const { token } = await getAuth(srcReq);
         const headers = proxyReqOpts.headers || {};
         headers['Authorization'] = `Bearer ${token}`;

@@ -7,7 +7,7 @@
         "id": "660000000010112",
         "title": "Uitkeringsspecificatie Augustus-2019",
         "variant": null,
-        "url": "/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2019-09-01T00:00:00+02:00",

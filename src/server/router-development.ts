@@ -119,26 +119,26 @@ authRouterDevelopment.get(
 
 export const relayDevRouter = express.Router();
 
-relayDevRouter.get(
-  [
-    RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.BEZWAREN_DOCUMENT,
-    RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
-  ],
-  (req, res, next) => {
-    return res.sendFile(path.join(__dirname, '../../mocks/fixtures/documents/document.pdf'));
-  }
-);
-
-relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
-  return res.send(apiSuccessResult({ residentCount: 3 }));
-});
-
-relayDevRouter.get(
-  RelayPathsAllowed.VERGUNNINGEN_LIST_DOCUMENTS,
-  (req, res) => {
-    return res.send(VERGUNNINGEN_LIST_DOCUMENTS);
-  }
-);
+// relayDevRouter.get(
+//   [
+//     RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
+//     RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+//     RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
+//     RelayPathsAllowed.BEZWAREN_DOCUMENT,
+//     RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
+//   ],
+//   (req, res, next) => {
+//     return res.sendFile(path.join(__dirname, '../../mocks/fixtures/documents/document.pdf'));
+//   }
+// );
+//
+// relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
+//   return res.send(apiSuccessResult({ residentCount: 3 }));
+// });
+//
+// relayDevRouter.get(
+//   RelayPathsAllowed.VERGUNNINGEN_LIST_DOCUMENTS,
+//   (req, res) => {
+//     return res.send(VERGUNNINGEN_LIST_DOCUMENTS);
+//   }
+// );
