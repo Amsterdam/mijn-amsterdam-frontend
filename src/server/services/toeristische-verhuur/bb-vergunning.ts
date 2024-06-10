@@ -292,6 +292,7 @@ function transformPowerBrowserStatusResponse(
   console.log(
     '\n\n\n\n ====>>>',
     statusResponse,
+    zaak,
     datumOntvangen,
     datumInBehandeling,
     datumAfgehandeld,
