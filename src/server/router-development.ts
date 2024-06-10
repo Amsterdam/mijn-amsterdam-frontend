@@ -133,8 +133,8 @@ export const relayDevRouter = express.Router();
 
 // relayDevRouter.get(
 //   [
-//     RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
-//     RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+//     RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD, // Ovegezet!
+//     RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD, // Overgezet! RP TODO: maar test nog even
 //     RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
 //     RelayPathsAllowed.BEZWAREN_DOCUMENT,
 //     RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,

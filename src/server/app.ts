@@ -76,7 +76,6 @@ app.use(requestID);
 app.use(function(req, res, next) {
   res.on('finish', function() {
     clearRequestCache(req, res);
-    console.dir(req.url);
     console.log('the response has been sent');
   });
   next();

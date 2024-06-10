@@ -129,7 +129,6 @@ router.use(
           url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
           break;
       }
-      console.dir(url);
       return url;
     },
     {
