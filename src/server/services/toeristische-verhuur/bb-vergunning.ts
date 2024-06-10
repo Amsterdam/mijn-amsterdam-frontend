@@ -285,19 +285,6 @@ function transformPowerBrowserStatusResponse(
     isChecked: !!datumAfgehandeld,
   };
 
-  console.log(
-    '\n\n\n\n ====>>>',
-    statusResponse,
-    zaak,
-    datumOntvangen,
-    datumInBehandeling,
-    datumAfgehandeld,
-    statusOntvangen,
-    statusInBehandeling,
-    statusAfgehandeld,
-    '<===== \n\n\n\n'
-  );
-
   return [statusOntvangen, statusInBehandeling, statusAfgehandeld];
 }
 
