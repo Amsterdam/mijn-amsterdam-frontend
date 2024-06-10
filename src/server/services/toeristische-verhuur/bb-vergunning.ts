@@ -250,6 +250,10 @@ function transformPowerBrowserStatusResponse(
     return datum ? defaultDateFormat(datum) : '';
   }
 
+  const hasInBehandelingStep = statusResponse?.find(
+    ({ omschrijving }) => 'In behandeling' === omschrijving
+  );
+
   // Nieuwe zaken hebben wel statussen
   let datumOntvangen = getStatusDate(['Intake', 'Ontvangen']);
   let datumInBehandeling = getStatusDate(['In behandeling']);
@@ -264,13 +268,13 @@ function transformPowerBrowserStatusResponse(
   const statusOntvangen: StatusLineItem = {
     status: 'Ontvangen',
     datePublished: datumOntvangen,
-    isActive: !datumAfgehandeld && !datumInBehandeling,
+    isActive: false,
     isChecked: true,
   };
 
   const statusInBehandeling: StatusLineItem = {
     status: 'In behandeling',
-    datePublished: datumInBehandeling || datumOntvangen,
+    datePublished: hasInBehandelingStep ? datumInBehandeling : datumOntvangen,
     isActive: !datumAfgehandeld,
     isChecked: !!(datumInBehandeling || datumAfgehandeld),
   };
