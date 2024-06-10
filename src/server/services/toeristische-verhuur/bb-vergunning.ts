@@ -273,7 +273,7 @@ function transformPowerBrowserStatusResponse(
 
   const statusInBehandeling: StatusLineItem = {
     status: 'In behandeling',
-    datePublished: hasInBehandelingStep ? datumInBehandeling : datumOntvangen,
+    datePublished: hasInBehandelingStep ? datumInBehandeling : '',
     isActive: !datumAfgehandeld,
     isChecked: !!(datumInBehandeling || datumAfgehandeld),
   };
