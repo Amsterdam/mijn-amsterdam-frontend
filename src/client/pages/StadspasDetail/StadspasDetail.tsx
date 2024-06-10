@@ -31,7 +31,6 @@ import {
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { relayApiUrl } from '../../utils/utils';
 import styles from './StadspasDetail.module.scss';
 
 const PAGE_SIZE = 10;
@@ -93,9 +92,8 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
       <li
         className={styles.AmountSpent}
         style={{
-          width: `${
-            100 - (100 / budget.budgetAssigned) * budget.budgetBalance
-          }%`,
+          width: `${100 - (100 / budget.budgetAssigned) * budget.budgetBalance
+            }%`,
         }}
       >
         <span className={styles.Label}>

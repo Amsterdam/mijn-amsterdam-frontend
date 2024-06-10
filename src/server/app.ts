@@ -23,7 +23,7 @@ import morgan from 'morgan';
 import { BFF_BASE_PATH, BFF_PORT, BffEndpoints } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
-import { authRouterDevelopment, relayDevRouter } from './router-development';
+import { authRouterDevelopment } from './router-development';
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
@@ -76,6 +76,7 @@ app.use(requestID);
 app.use(function(req, res, next) {
   res.on('finish', function() {
     clearRequestCache(req, res);
+    console.dir(req.url);
     console.log('the response has been sent');
   });
   next();
@@ -102,10 +103,6 @@ app.use(BFF_BASE_PATH, publicRouter);
 ////////////////////////////////////////////////////////////////////////
 if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
-}
-///// [DEVELOPENT ONLY] /////
-if (IS_DEVELOPMENT) {
-  app.use(`${BFF_BASE_PATH + BffEndpoints.API_RELAY}`, relayDevRouter);
 }
 
 ////////////////////////////////////////////////////////////////////////
