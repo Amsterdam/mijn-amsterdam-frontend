@@ -263,6 +263,15 @@ function transformPowerBrowserStatusResponse(
     datumOntvangen = zaak.datumAanvraag;
     datumAfgehandeld = zaak.datumAfhandeling ?? '';
   }
+
+  if (!datumOntvangen && zaak.datumAanvraag) {
+    datumOntvangen = zaak.datumAanvraag;
+  }
+
+  if (!datumAfgehandeld && zaak.datumAfhandeling) {
+    datumAfgehandeld = zaak.datumAfhandeling;
+  }
+
   // Gemigreerde zaken hebben geen statussen
   const statusOntvangen: StatusLineItem = {
     status: 'Ontvangen',
