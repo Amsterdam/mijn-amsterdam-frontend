@@ -25,6 +25,8 @@
       "get-subsidie:standard",
       "get-cleopatra:standard",
       "get-verguninngen:standard",
+      "vergunningen-list-documents:standard",
+      "vergunningen-download-document:standard",
       "get-kvk:standard",
       "get-toeristische-verhuur-with-bsn:standard",
       "get-toeristische-verhuur-with-a-number:standard",
