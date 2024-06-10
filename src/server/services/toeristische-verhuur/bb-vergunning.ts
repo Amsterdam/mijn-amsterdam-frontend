@@ -223,6 +223,7 @@ function fetchPowerBrowserZaken(
       },
       headers: {
         Authorization: `Bearer ${bearerToken}`,
+        ...dataRequestConfig.headers,
       },
     },
     requestID,
