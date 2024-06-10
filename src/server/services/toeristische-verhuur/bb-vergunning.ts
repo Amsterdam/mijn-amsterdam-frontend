@@ -147,6 +147,7 @@ export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
     const isIngetrokken = !!zaak.resultaat
       ?.toLowerCase()
       .includes('ingetrokken');
+
     const isGeweigerd = !!zaak.resultaat?.toLowerCase().includes('geweigerd');
     const isVerlopen = false;
     const isVerleend = !!zaak.resultaat?.toLowerCase().includes('verleend');
@@ -251,6 +252,7 @@ function transformPowerBrowserStatusResponse(
 
   // Nieuwe zaken hebben wel statussen
   let datumOntvangen = getStatusDate(['Intake', 'Ontvangen']);
+  let datumInBehandeling = getStatusDate(['In behandeling']);
   let datumAfgehandeld: string = getStatusDate(['Afgehandeld', 'Gereed']);
 
   // NOTE: Gemigreerde zaken (van Decos naar Powerbrowser) hebben een negatief nummer als id gekregen.
@@ -262,19 +264,37 @@ function transformPowerBrowserStatusResponse(
   const statusOntvangen: StatusLineItem = {
     status: 'Ontvangen',
     datePublished: datumOntvangen,
-    isActive: !datumAfgehandeld,
+    isActive: !datumAfgehandeld && !datumInBehandeling,
     isChecked: true,
+  };
+
+  const statusInBehandeling: StatusLineItem = {
+    status: 'In behandeling',
+    datePublished: datumInBehandeling || datumOntvangen,
+    isActive: !datumAfgehandeld,
+    isChecked: !!(datumInBehandeling || datumAfgehandeld),
   };
 
   const statusAfgehandeld: StatusLineItem = {
     status: 'Afgehandeld',
     datePublished: datumAfgehandeld,
-    description: '',
     isActive: !!datumAfgehandeld,
     isChecked: !!datumAfgehandeld,
   };
 
-  return [statusOntvangen, statusAfgehandeld];
+  console.log(
+    '\n\n\n\n ====>>>',
+    statusResponse,
+    datumOntvangen,
+    datumInBehandeling,
+    datumAfgehandeld,
+    statusOntvangen,
+    statusInBehandeling,
+    statusAfgehandeld,
+    '<===== \n\n\n\n'
+  );
+
+  return [statusOntvangen, statusInBehandeling, statusAfgehandeld];
 }
 
 async function fetchPowerBrowserZaakStatus(
