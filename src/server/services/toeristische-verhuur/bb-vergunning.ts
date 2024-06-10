@@ -1,18 +1,18 @@
+import axios from 'axios';
+import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
+import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
+import { AppRoutes } from '../../../universal/config';
 import {
   apiErrorResult,
   apiSuccessResult,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { ApiUrls, BffEndpoints, getApiConfig } from '../../config';
-import { getRequestConfigCacheKey, requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
-import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
-import { AppRoutes } from '../../../universal/config';
-import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import axios from 'axios';
-import { parseISO } from 'date-fns';
+import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
+import { BffEndpoints, getApiConfig } from '../../config';
+import { requestData } from '../../helpers';
+import { AuthProfileAndToken } from '../../helpers/app';
 
 // zaak detail: record/GFO_ZAKEN/$id
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
@@ -205,10 +205,6 @@ function fetchPowerBrowserZaken(
   return requestData<BBVergunning[]>(
     {
       ...dataRequestConfig,
-      cacheKey: getRequestConfigCacheKey(
-        `${requestID}/zaken`,
-        dataRequestConfig
-      ),
       url: `${dataRequestConfig.url}/Report/RunSavedReport`,
       data: {
         reportFileName:
@@ -320,10 +316,6 @@ async function fetchPowerBrowserZaakStatus(
     {
       ...dataRequestConfig,
       url: `${dataRequestConfig.url}/Report/RunSavedReport`,
-      cacheKey: getRequestConfigCacheKey(
-        `${requestID}/statussen`,
-        dataRequestConfig
-      ),
       data: {
         reportFileName:
           'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamStatus.gov',
