@@ -10,7 +10,10 @@ import {
   fetchBezwaarDocument,
   fetchBezwaren,
   fetchBezwarenNotifications,
+  forTesting,
 } from './bezwaren';
+import { range } from '../../../universal/helpers/utils';
+import { remoteApiHost } from '../../../setupTests';
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
 
@@ -111,24 +114,59 @@ describe('Bezwaren', () => {
   });
 
   describe('fetch multiple pages of bezwaren', () => {
-    describe('empty response', () => {
+    it('should fetch only once', async () => {
       const emptyResponse = {
         count: 0,
         results: null,
       };
 
-      beforeEach(() => {
-        remoteApi
-          .post(`${endpointBase}/_zoek?page=1`)
-          .reply(200, emptyResponse);
+      remoteApi.post(`${endpointBase}/_zoek?page=1`).reply(200, emptyResponse);
+      const res = await fetchBezwaren(requestId, profileAndToken);
+
+      expect(res.status).toEqual('OK');
+      expect(res.content?.length).toEqual(0);
+    });
+
+    test('fetchMultiple success', async () => {
+      remoteApi
+        .post(`${endpointBase}/_zoek?page=1`)
+        .reply(200, { count: 75, items: range(1, 20) })
+        .post(`${endpointBase}/_zoek?page=2`)
+        .reply(200, { count: 75, items: range(21, 40) })
+        .post(`${endpointBase}/_zoek?page=3`)
+        .reply(200, { count: 75, items: range(41, 60) })
+        .post(`${endpointBase}/_zoek?page=4`)
+        .reply(200, { count: 75, items: range(61, 75) });
+
+      const response = await forTesting.fetchMultiple('xx', {
+        url: `${remoteApiHost}${endpointBase}/_zoek`,
+        method: 'post',
+        params: {
+          page: 1,
+        },
       });
 
-      it('should fetch only once', async () => {
-        const res = await fetchBezwaren(requestId, profileAndToken);
+      expect(response.content?.[0]).toBe(1);
+      expect(response.content?.[74]).toBe(75);
+    });
 
-        expect(res.status).toEqual('OK');
-        expect(res.content?.length).toEqual(0);
+    test('fetchMultiple error', async () => {
+      remoteApi
+        .post(`${endpointBase}/_zoek?page=1`)
+        .reply(200, { count: 75, items: range(1, 20) })
+        .post(`${endpointBase}/_zoek?page=2`)
+        .reply(500, undefined);
+
+      const response = await forTesting.fetchMultiple('xx', {
+        url: `${remoteApiHost}${endpointBase}/_zoek`,
+        method: 'post',
+        params: {
+          page: 1,
+        },
       });
+
+      expect(response.status).toBe('ERROR');
+      expect(response.content).toBe(null);
     });
 
     it('should fetch more results', async () => {

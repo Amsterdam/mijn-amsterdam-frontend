@@ -117,7 +117,7 @@ export interface BezwaarDocument extends GenericDocument {
   dossiertype: BezwaarSourceDocument['dossiertype'];
 }
 
-export interface BezwaarResponse {
-  bezwaren: Bezwaar[];
+export interface OctopusApiResponse<T> {
+  items: T[];
   count: number;
 }
