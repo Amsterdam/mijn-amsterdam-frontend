@@ -133,8 +133,9 @@ function transformBezwaarStatus(
 }
 
 async function fetchBezwaarStatus(
-  zaakId: string,
-  authProfileAndToken: AuthProfileAndToken
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zaakId: string
 ) {
   const params = {
     zaak: getZaakUrl(zaakId),
@@ -148,15 +149,17 @@ async function fetchBezwaarStatus(
 
   const statusResponse = await requestData<BezwaarStatus[]>(
     requestConfig,
-    zaakId
+    requestID,
+    authProfileAndToken
   );
 
   return statusResponse;
 }
 
 export async function fetchBezwarenDocuments(
-  zaakId: string,
-  authProfileAndToken: AuthProfileAndToken
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zaakId: string
 ) {
   const params = {
     identifier: zaakId,
@@ -174,7 +177,8 @@ export async function fetchBezwarenDocuments(
       },
       headers: await getBezwarenApiHeaders(authProfileAndToken),
     }),
-    zaakId
+    requestID,
+    authProfileAndToken
   );
 }
 
@@ -404,10 +408,15 @@ export async function fetchBezwaarDetail(
     return apiErrorResult('Not authorized', null, 401);
   }
 
-  const bezwaarStatusRequest = fetchBezwaarStatus(zaakId, authProfileAndToken);
+  const bezwaarStatusRequest = fetchBezwaarStatus(
+    requestID,
+    authProfileAndToken,
+    zaakId
+  );
   const bezwaarDocumentsRequest = fetchBezwarenDocuments(
-    zaakId,
-    authProfileAndToken
+    requestID,
+    authProfileAndToken,
+    zaakId
   );
 
   const [statussenResponse, documentsResponse] = await Promise.allSettled([
