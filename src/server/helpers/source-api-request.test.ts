@@ -9,6 +9,7 @@ import {
   axiosRequest,
   cache,
   findApiByRequestUrl,
+  getRequestConfigCacheKey,
   requestData,
 } from './source-api-request';
 import { remoteApi } from '../../test-utils';
@@ -46,8 +47,8 @@ describe('requestData.ts', () => {
     token: TOKEN,
   };
 
-  const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params`;
-  const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params`;
+  const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
+  const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
 
   let axiosRequestSpy: MockInstance;
 
@@ -260,5 +261,41 @@ describe('requestData.ts', () => {
     expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
       Authorization: `Bearer ababababab`,
     });
+  });
+
+  test('getRequestConfigCacheKey', () => {
+    expect(
+      getRequestConfigCacheKey('x1', {
+        method: 'post',
+        data: { foo: 'bar' },
+      })
+    ).toMatchInlineSnapshot(`"x1-post--no-params-{"foo":"bar"}-no-headers"`);
+
+    expect(
+      getRequestConfigCacheKey('x2', {
+        method: 'get',
+        url: 'http://foo',
+        params: { foo: 'bar' },
+      })
+    ).toMatchInlineSnapshot(
+      `"x2-get-http://foo-{"foo":"bar"}-no-data-no-headers"`
+    );
+
+    expect(
+      getRequestConfigCacheKey('x3', {
+        method: 'get',
+        url: 'http://foo',
+      })
+    ).toMatchInlineSnapshot(`"x3-get-http://foo-no-params-no-data-no-headers"`);
+
+    expect(
+      getRequestConfigCacheKey('x4', {
+        method: 'get',
+        url: 'http://foo',
+        headers: {
+          Authorization: 'Bearer 123123123123',
+        },
+      })
+    ).toMatchInlineSnapshot(`"x4-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}"`);
   });
 });

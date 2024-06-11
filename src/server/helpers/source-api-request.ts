@@ -136,6 +136,9 @@ export function getRequestConfigCacheKey(
     requestConfig.url,
     requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
     requestConfig.data ? JSON.stringify(requestConfig.data) : 'no-data',
+    requestConfig.headers
+      ? JSON.stringify(requestConfig.headers)
+      : 'no-headers',
   ].join('-');
 }
 
