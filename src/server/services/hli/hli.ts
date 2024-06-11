@@ -12,7 +12,7 @@ import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types'
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
-import { HLIRegeling } from './regelingen-types';
+import { HLIRegeling, HLIresponseData } from './regelingen-types';
 import { fetchStadspas } from './stadspas';
 import { REGELING } from './status-line-items/regeling';
 
@@ -223,7 +223,7 @@ export async function fetchHLI(
     fetchRegelingen(requestID, authProfileAndToken),
   ]);
 
-  const HLIResponseData = {
+  const HLIResponseData: HLIresponseData = {
     regelingen: getSettledResult(regelingenResult).content ?? [],
     stadspas: getSettledResult(stadspasResult).content,
   };

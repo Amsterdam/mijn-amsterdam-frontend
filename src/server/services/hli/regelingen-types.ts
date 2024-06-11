@@ -1,5 +1,6 @@
 import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
 import { LinkProps } from '../../../universal/types/App.types';
+import { Stadspas, StadspasResponseData } from './stadspas-types';
 
 export type HLIRegeling = {
   id: string;
@@ -82,4 +83,9 @@ export interface ZorgnedRegelingAanvraag {
 
 export interface RegelingenSourceResponseData {
   _embedded: { aanvraag: ZorgnedRegelingAanvraag[] };
+}
+
+export interface HLIresponseData {
+  regelingen: HLIRegeling[];
+  stadspas: StadspasResponseData | null;
 }
