@@ -77,47 +77,6 @@ router.get(
   }
 );
 
-router.use(
-  BffEndpoints.API_RELAY,
-  proxy(
-    (req: Request) => {
-      let url = '';
-      switch (true) {
-        case req.path.startsWith('/decosjoin/'):
-          url = String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/wpi/'):
-          url = String(process.env.BFF_WPI_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/brp/'):
-          url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/wmoned/'):
-          url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
-          break;
-      }
-      return url;
-    },
-    {
-      memoizeHost: false,
-      proxyReqPathResolver: function(req) {
-        return req.url;
-      },
-      proxyReqOptDecorator: async function(proxyReqOpts, srcReq) {
-        const { token } = await getAuth(srcReq);
-        const headers = proxyReqOpts.headers || {};
-        headers['Authorization'] = `Bearer ${token}`;
-        proxyReqOpts.headers = headers;
-        return proxyReqOpts;
-      },
-      proxyErrorHandler: (err, res, next) => {
-        captureException(err);
-        next();
-      },
-    }
-  )
-);
-
 router.get(
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
