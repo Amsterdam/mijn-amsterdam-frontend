@@ -165,11 +165,13 @@ export async function fetchBezwarenDocuments(
   return requestData<BezwaarDocument[]>(
     getApiConfig('BEZWAREN_DOCUMENTS', {
       params,
-      transformResponse: (responseData) =>
-        transformBezwarenDocumentsResults(
+      transformResponse: (responseData) => {
+        console.log('\n\nhuu!!!\n\n', responseData);
+        return transformBezwarenDocumentsResults(
           authProfileAndToken.profile.sid,
           responseData
-        ),
+        );
+      },
       headers: await getBezwarenApiHeaders(authProfileAndToken),
     }),
     zaakId
