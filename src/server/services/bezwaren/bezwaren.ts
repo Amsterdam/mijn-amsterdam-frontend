@@ -102,7 +102,7 @@ async function fetchMultiple<T>(
     let items: T[] = response.content.items;
     if (resultCount > itemsLength) {
       while (
-        itemsLength <= resultCount &&
+        itemsLength < resultCount &&
         requestConfig.params.page < maxPageCount
       ) {
         requestConfig.params.page += 1; //Fetch next page
@@ -113,7 +113,7 @@ async function fetchMultiple<T>(
 
         if (response.status === 'OK') {
           items = items.concat(response.content.items);
-          itemsLength += items.length;
+          itemsLength += response.content.items.length;
         } else {
           return response;
         }
@@ -498,3 +498,7 @@ export async function fetchBezwaarDocument(
     responseType: isDownload ? 'stream' : 'json',
   });
 }
+
+export const forTesting = {
+  fetchMultiple,
+};
