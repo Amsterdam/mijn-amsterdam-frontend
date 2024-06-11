@@ -626,8 +626,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/wpi/document/id"
-                      rel="external noopener noreferrer"
+                      href="/wpi/document/id"
                     >
                       PDF
                     </a>
@@ -753,8 +752,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/wpi/document/id"
-                      rel="external noopener noreferrer"
+                      href="/wpi/document/id"
                     >
                       PDF
                     </a>
@@ -1125,8 +1123,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/wpi/document/id"
-                      rel="external noopener noreferrer"
+                      href="/wpi/document/id"
                     >
                       PDF
                     </a>
@@ -1252,8 +1249,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/wpi/document/id"
-                      rel="external noopener noreferrer"
+                      href="/wpi/document/id"
                     >
                       PDF
                     </a>

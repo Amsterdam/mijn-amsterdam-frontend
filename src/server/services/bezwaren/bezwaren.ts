@@ -283,7 +283,7 @@ function transformBezwarenResults(
           // Het resultaat van het bezwaar
           datumResultaat:
             bezwaarBron.publicatiedatum &&
-            !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
+              !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
               ? bezwaarBron.publicatiedatum
               : null,
           resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
@@ -398,8 +398,8 @@ export async function fetchBezwarenNotifications(
   if (bezwaren.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(bezwaren.content)
       ? bezwaren.content
-          .map(createBezwaarNotification)
-          .filter((bezwaar) => isRecentNotification(bezwaar.datePublished))
+        .map(createBezwaarNotification)
+        .filter((bezwaar) => isRecentNotification(bezwaar.datePublished))
       : [];
 
     return apiSuccessResult({
@@ -485,10 +485,8 @@ export async function fetchBezwaarDocument(
     return apiErrorResult('Not authorized', null, 401);
   }
 
-  const url = generatePath(
-    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id${
-      isDownload ? '/download' : ''
-    }`,
+  const url = process.env.BFF_BEZWAREN_API + generatePath(
+    `/zgw/v1/enkelvoudiginformatieobjecten/:id${isDownload ? '/download' : ''}`,
     { id: documentId }
   );
 
