@@ -346,16 +346,6 @@ export function getApiConfig(
   return Object.assign(apiConfigCopy, config);
 }
 
-export const RelayPathsAllowed = {
-  VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
-  WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
-  WMO_DOCUMENT_DOWNLOAD: '/wmoned/document/:id',
-  BRP_BEWONERS: '/brp/aantal_bewoners',
-  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
-  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
-};
-
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
@@ -396,9 +386,6 @@ export const BffEndpoints = {
 
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
-
-  // WMO / Zorgned
-  WMO_DOCUMENT_DOWNLOAD: `/relay/wmoned/document/:id`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',

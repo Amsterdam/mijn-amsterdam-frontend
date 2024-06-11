@@ -21,7 +21,6 @@ import {
   fetchSignalsListByStatus,
 } from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { fetchDocument } from './services/wmo/wmo-zorgned-service';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
 
@@ -80,33 +79,6 @@ router.get(
 
     res.write('retry: 1000\n');
     loadServicesSSE(req, res);
-  }
-);
-
-// NOTE: Fix for legacy relayApi. WMONED api is archived and is not used anymore for downloads.
-router.get(
-  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const authProfileAndToken = await getAuth(req);
-    const documentResponse = await fetchDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    if (
-      documentResponse.status === 'ERROR' ||
-      !documentResponse.content?.data
-    ) {
-      return res.status(500).send(documentResponse);
-    }
-
-    res.type(documentResponse.content.mimetype ?? 'application/pdf');
-    res.header(
-      'Content-Disposition',
-      `attachment; filename="${documentResponse.content.title}.pdf"`
-    );
-    return res.send(documentResponse.content.data);
   }
 );
 
