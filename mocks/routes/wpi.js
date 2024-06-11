@@ -1,4 +1,4 @@
-const path = require('node:path');
+const settings = require('../settings.js');
 
 const RESPONSES = {
   AANVRAGEN: require('../fixtures/wpi-aanvragen.json'),
@@ -62,7 +62,7 @@ module.exports = [
         type: 'file',
         options: {
           status: 200,
-          path: path.resolve('/mocks/fixtures/documents/document.pdf'),
+          path: settings.MOCK_DOCUMENT_PATH,
         },
       },
     ],

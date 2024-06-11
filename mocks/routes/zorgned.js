@@ -1,5 +1,6 @@
 const ZORGNED_JZD_RESPONSE = require('../fixtures/zorgned-jzd.json');
 const ZORGNED_AV_RESPONSE = require('../fixtures/zorgned-av.json');
+const settings = require('../settings.js');
 
 module.exports = [
   {
@@ -28,6 +29,21 @@ module.exports = [
         options: {
           status: 200,
           body: ZORGNED_AV_RESPONSE,
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-zorgned-wmo-document',
+    url: '/wmoned/document/:id',
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'file',
+        options: {
+          status: 200,
+          path: settings.MOCK_DOCUMENT_PATH,
         },
       },
     ],
