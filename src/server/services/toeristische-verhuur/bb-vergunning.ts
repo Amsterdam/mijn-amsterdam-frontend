@@ -223,6 +223,7 @@ function fetchPowerBrowserZaken(
       },
       headers: {
         Authorization: `Bearer ${bearerToken}`,
+        ...dataRequestConfig.headers,
       },
     },
     requestID,
@@ -310,6 +311,7 @@ async function fetchPowerBrowserZaakStatus(
       },
       headers: {
         Authorization: `Bearer ${bearerToken}`,
+        ...dataRequestConfig.headers,
       },
     },
     requestID,
@@ -393,6 +395,7 @@ export async function fetchPowerBrowserDocuments(
       url: `${dataRequestConfig.url}/Link/GFO_ZAKEN/${zaakId}`,
       headers: {
         Authorization: `Bearer ${bearerToken}`,
+        ...dataRequestConfig.headers,
       },
     },
     requestID,

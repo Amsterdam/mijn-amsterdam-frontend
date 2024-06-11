@@ -20,6 +20,7 @@ import Linkd from '../Button/Button';
 import ThemaIcon from '../ThemaIcon/ThemaIcon';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import styles from './MyNotifications.module.scss';
+import { trackEvent } from '../../utils/monitoring';
 
 export interface MyNotification extends MyNotificationBase {
   Icon?: SVGComponent;
@@ -147,6 +148,15 @@ const Notification = ({
                         `${trackCategory} - ${notification.title}`,
                         profileType
                       );
+
+                      trackEvent('open-tip-url', [
+                        {
+                          title: `${trackCategory} - ${notification.title}`,
+                          url: notification.link?.to || '#',
+                          profileType,
+                        },
+                      ]);
+
                       if (notification.customLink?.callback) {
                         notification.customLink.callback();
                         return false;
@@ -162,9 +172,18 @@ const Notification = ({
                 <p className={styles.TipReason}>
                   <IconInfo />
                   <a
-                    onClick={() =>
-                      showTipReason((isTipReasonShown) => !isTipReasonShown)
-                    }
+                    onClick={() => {
+                      !isTipReasonShown &&
+                        trackEvent('expand-tip', [
+                          {
+                            title: `${trackCategory} - ${notification.title}`,
+                            profileType,
+                          },
+                        ]);
+                      return showTipReason(
+                        (isTipReasonShown) => !isTipReasonShown
+                      );
+                    }}
                   >
                     Waarom zie ik deze tip?
                   </a>
