@@ -127,8 +127,7 @@ describe('Bezwaren', () => {
       expect(res.content?.length).toEqual(0);
     });
 
-    test('fetchMultiple', async () => {
-      console.log('>>', `${endpointBase}/_zoek?page=1`);
+    test('fetchMultiple success', async () => {
       remoteApi
         .post(`${endpointBase}/_zoek?page=1`)
         .reply(200, { count: 75, items: range(1, 20) })
@@ -149,6 +148,25 @@ describe('Bezwaren', () => {
 
       expect(response.content?.[0]).toBe(1);
       expect(response.content?.[74]).toBe(75);
+    });
+
+    test('fetchMultiple error', async () => {
+      remoteApi
+        .post(`${endpointBase}/_zoek?page=1`)
+        .reply(200, { count: 75, items: range(1, 20) })
+        .post(`${endpointBase}/_zoek?page=2`)
+        .reply(500, undefined);
+
+      const response = await forTesting.fetchMultiple('xx', {
+        url: `${remoteApiHost}${endpointBase}/_zoek`,
+        method: 'post',
+        params: {
+          page: 1,
+        },
+      });
+
+      expect(response.status).toBe('ERROR');
+      expect(response.content).toBe(null);
     });
 
     it('should fetch more results', async () => {
