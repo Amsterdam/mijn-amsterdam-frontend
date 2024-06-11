@@ -1,4 +1,4 @@
-const path = require('node:path');
+const settings = require('../../settings.js');
 const BEZWAREN_DOCUMENTEN_RESPONSE = require('../../fixtures/bezwaren-documents.json');
 
 module.exports = [
@@ -26,7 +26,7 @@ module.exports = [
         type: 'file',
         options: {
           status: 200,
-          path: path.resolve('/mocks/fixtures/documents/document.pdf'),
+          path: settings.MOCK_DOCUMENT_PATH,
         },
       },
     ],
