@@ -10,6 +10,7 @@
       "get-bezwaren-download-document:standard",
       "get-zorgned-jzd:standard",
       "get-zorgned-av:standard",
+      "get-zorgned-wmo-document:standard",
       "get-gpass-pashouders:standard",
       "get-gpass-stadspas:standard",
       "get-gpass-transacties:standard",

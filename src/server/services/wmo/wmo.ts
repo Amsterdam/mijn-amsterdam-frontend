@@ -29,7 +29,7 @@ function encryptDocumentIds(
           const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
           return {
             ...document,
-            url: `/wmoned/document/${idEncrypted}`, // NOTE: Works with legacy relayApiUrl added in front-end. TODO: Remove relayApiUrl() concept.
+            url: `${process.env.BFF_WMO_API_BASE_URL ?? ''}/wmoned/document/${idEncrypted}`, // NOTE: Works with legacy relayApiUrl added in front-end
             id: idEncrypted,
           };
         }),
@@ -50,7 +50,7 @@ export function transformVoorzieningenForFrontend(
       MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
       ? !!voorziening.documenten?.length
       : parseISO(voorziening.datumAanvraag) <
-          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
+      MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
   });
 
   for (const voorziening of voorzieningenVisible) {

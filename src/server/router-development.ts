@@ -10,7 +10,6 @@ import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-  RelayPathsAllowed,
 } from './config';
 import {
   AuthProfile,
@@ -18,7 +17,6 @@ import {
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
-import VERGUNNINGEN_LIST_DOCUMENTS from '../../mocks/fixtures/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
 import { addToBlackList } from './services/session-blacklist';
@@ -117,28 +115,3 @@ authRouterDevelopment.get(
   }
 );
 
-export const relayDevRouter = express.Router();
-
-// relayDevRouter.get(
-//   [
-//     RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD, // Ovegezet!
-//     RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD, // Overgezet! RP TODO: maar test nog even
-//     RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD, // Overgezet!
-//     RelayPathsAllowed.BEZWAREN_DOCUMENT, // Overgezet!
-//     RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
-//   ],
-//   (req, res, next) => {
-//     return res.sendFile(path.join(__dirname, '../../mocks/fixtures/documents/document.pdf'));
-//   }
-// );
-//
-// relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
-//   return res.send(apiSuccessResult({ residentCount: 3 }));
-// });
-//
-// relayDevRouter.get(
-//   RelayPathsAllowed.VERGUNNINGEN_LIST_DOCUMENTS,
-//   (req, res) => {
-//     return res.send(VERGUNNINGEN_LIST_DOCUMENTS);
-//   }
-// );

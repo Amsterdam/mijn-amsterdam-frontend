@@ -35,7 +35,7 @@ module.exports = [
   },
   {
     id: 'get-zorgned-wmo-document',
-    url: '/wmoned/document/:id',
+    url: '/api/wmoned/document/:id',
     method: 'GET',
     variants: [
       {
