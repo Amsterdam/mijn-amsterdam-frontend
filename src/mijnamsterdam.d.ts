@@ -4,6 +4,7 @@
 
 // TODO: Add typings for this function
 declare module 'slugme';
+declare module 'log-that-http';
 
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 type Nullable<T> = T | null;

@@ -50,12 +50,12 @@ async function getServiceResults(
   const allResults: Record<string, ServiceResults> = {};
 
   for (const [Username, userId] of testAccountEntries) {
-    const url = `${process.env.BFF_API_BASE_URL}/api/v1/auth/digid/login/${Username}?redirectUrl=noredirect`;
+    const url = `${process.env.BFF_API_BASE_URL}/auth/digid/login/${Username}?redirectUrl=noredirect`;
     try {
       const serviceResults = await fetch(url).then((r) => {
         const Cookie = r.headers.get('Set-Cookie') ?? '';
         console.time(`Fetch data for ${Username}/${userId}`);
-        return fetch(`${process.env.BFF_API_BASE_URL}/api/v1/services/all`, {
+        return fetch(`${process.env.BFF_API_BASE_URL}/services/all`, {
           headers: {
             Cookie,
           },

@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from 'express';
-import proxy from 'express-http-proxy';
 import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
@@ -13,7 +12,6 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
-import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import {
   fetchSignalAttachments,
@@ -23,6 +21,7 @@ import {
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
+import { fetchDocument } from './services/wmo/wmo-zorgned-service';
 
 export const router = express.Router();
 
@@ -82,6 +81,37 @@ router.get(
   }
 );
 
+////////////////////////////////////////////////////
+//// BFF Service Api Endpoints /////////////////////
+////////////////////////////////////////////////////
+
+router.get(
+  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const authProfileAndToken = await getAuth(req);
+    const documentResponse = await fetchDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    if (
+      documentResponse.status === 'ERROR' ||
+      !documentResponse.content?.data
+    ) {
+      return res.status(500).send(documentResponse);
+    }
+
+    res.type(documentResponse.content.mimetype ?? 'application/pdf');
+    res.header(
+      'Content-Disposition',
+      `attachment; filename="${documentResponse.content.title}.pdf"`
+    );
+    return res.send(documentResponse.content.data);
+  }
+);
+
+// NOTE: To be removed MIJN-8635
 router.get(
   BffEndpoints.SIA_ATTACHMENTS,
   async (req: Request, res: Response) => {
@@ -100,7 +130,7 @@ router.get(
     return res.send(attachmentsResponse);
   }
 );
-
+// NOTE: To be removed MIJN-8635
 router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
   const authProfileAndToken = await getAuth(req);
 
@@ -116,7 +146,7 @@ router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
 
   return res.send(attachmentsResponse);
 });
-
+// NOTE: To be removed MIJN-8635
 router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
   const authProfileAndToken = await getAuth(req);
 

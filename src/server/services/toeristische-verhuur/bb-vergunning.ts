@@ -6,7 +6,7 @@ import {
 } from '../../../universal/helpers';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { getRequestConfigCacheKey, requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
 import { AppRoutes } from '../../../universal/config';
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
@@ -45,24 +45,24 @@ interface PowerBrowserZaak {
   datumingang: string; // dateStart
   besluitdatumvervallen: string; // verval datum
   status:
-  | string
-  | 'Gereed'
-  | 'Intake'
-  | 'In behandeling'
-  | 'Geaccepteerd'
-  | 'Afgehandeld'
-  | 'Toetsen volledigheid'
-  | 'Controle bezoek';
+    | string
+    | 'Gereed'
+    | 'Intake'
+    | 'In behandeling'
+    | 'Geaccepteerd'
+    | 'Afgehandeld'
+    | 'Toetsen volledigheid'
+    | 'Controle bezoek';
   resultaat:
-  | null
-  // | 'Niet van toepassing'
-  // | 'Buiten behandeling'
-  | 'Geweigerd'
-  | 'Geweigerd op basis van Quotum'
-  | 'Verleend met overgangsrecht'
-  | 'Verleend zonder overgangsrecht'
-  | 'Verleend'
-  | 'Ingetrokken';
+    | null
+    // | 'Niet van toepassing'
+    // | 'Buiten behandeling'
+    | 'Geweigerd'
+    | 'Geweigerd op basis van Quotum'
+    | 'Verleend met overgangsrecht'
+    | 'Verleend zonder overgangsrecht'
+    | 'Verleend'
+    | 'Ingetrokken';
   initator: string;
   adres: string;
 }
@@ -368,10 +368,10 @@ function transformPowerbrowserLinksResponse(responseData: PowerbrowserLink[]) {
         return {
           id: docIdEncrypted,
           title: docTitleTranslated ?? link.caption,
-          url: `${process.env.BFF_API_BASE_URL}/api/v1${generatePath(
+          url: generateFullApiUrlBFF(
             BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
             { docIdEncrypted }
-          )}`,
+          ),
           download: link.caption,
           external: true,
           datePublished: '',

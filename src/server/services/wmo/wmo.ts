@@ -8,7 +8,7 @@ import {
 } from '../../../universal/helpers';
 import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { StatusLineItem } from '../../../universal/types';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { getStatusLineItems } from './status-line-items/wmo-status-line-items';
 import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
@@ -16,6 +16,7 @@ import {
   WMOVoorzieningFrontend,
 } from './wmo-config-and-types';
 import { fetchVoorzieningen } from './wmo-zorgned-service';
+import { BffEndpoints } from '../../config';
 
 function encryptDocumentIds(
   sessionID: AuthProfileAndToken['profile']['sid'],
@@ -29,7 +30,9 @@ function encryptDocumentIds(
           const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
           return {
             ...document,
-            url: `${process.env.BFF_WMO_API_BASE_URL ?? ''}/wmoned/document/${idEncrypted}`, // NOTE: Works with legacy relayApiUrl added in front-end
+            url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
+              id: idEncrypted,
+            }),
             id: idEncrypted,
           };
         }),
@@ -50,7 +53,7 @@ export function transformVoorzieningenForFrontend(
       MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
       ? !!voorziening.documenten?.length
       : parseISO(voorziening.datumAanvraag) <
-      MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
+          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
   });
 
   for (const voorziening of voorzieningenVisible) {

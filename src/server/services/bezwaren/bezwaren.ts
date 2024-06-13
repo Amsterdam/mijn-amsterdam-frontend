@@ -16,7 +16,7 @@ import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { MyNotification } from '../../../universal/types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { captureException } from '../monitoring';
 import {
   Bezwaar,
@@ -182,10 +182,9 @@ function transformBezwarenDocumentsResults(
           id: documentIdEncrypted,
           title: bestandsnaam,
           datePublished: verzenddatum,
-          url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-            BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-            { id: documentIdEncrypted }
-          )}`,
+          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, {
+            id: documentIdEncrypted,
+          }),
           dossiertype,
         };
       }
@@ -283,7 +282,7 @@ function transformBezwarenResults(
           // Het resultaat van het bezwaar
           datumResultaat:
             bezwaarBron.publicatiedatum &&
-              !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
+            !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
               ? bezwaarBron.publicatiedatum
               : null,
           resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
@@ -398,8 +397,8 @@ export async function fetchBezwarenNotifications(
   if (bezwaren.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(bezwaren.content)
       ? bezwaren.content
-        .map(createBezwaarNotification)
-        .filter((bezwaar) => isRecentNotification(bezwaar.datePublished))
+          .map(createBezwaarNotification)
+          .filter((bezwaar) => isRecentNotification(bezwaar.datePublished))
       : [];
 
     return apiSuccessResult({
@@ -485,10 +484,12 @@ export async function fetchBezwaarDocument(
     return apiErrorResult('Not authorized', null, 401);
   }
 
-  const url = process.env.BFF_BEZWAREN_API + generatePath(
-    `/zgw/v1/enkelvoudiginformatieobjecten/:id${isDownload ? '/download' : ''}`,
-    { id: documentId }
-  );
+  const url =
+    process.env.BFF_BEZWAREN_API +
+    generatePath(
+      `/zgw/v1/enkelvoudiginformatieobjecten/:id${isDownload ? '/download' : ''}`,
+      { id: documentId }
+    );
 
   return axios({
     url,

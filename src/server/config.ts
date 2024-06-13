@@ -50,6 +50,7 @@ export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSI
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
+export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -359,8 +360,9 @@ export const AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN}`;
 export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
-export const BFF_OIDC_BASE_URL = `${process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
-  }`;
+export const BFF_OIDC_BASE_URL = `${
+  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
+}`;
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
 
@@ -386,6 +388,9 @@ export const BffEndpoints = {
 
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+
+  // WMO / Zorgned
+  WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',

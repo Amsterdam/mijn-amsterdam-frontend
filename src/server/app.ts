@@ -28,7 +28,7 @@ import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
-import { captureException, captureMessage } from './services/monitoring';
+import { captureException } from './services/monitoring';
 
 const app = express();
 
@@ -44,7 +44,7 @@ app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
 // Request logging
-morgan.token('build', function(req, res) {
+morgan.token('build', function (req, res) {
   return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
 });
 
@@ -73,8 +73,8 @@ app.use(compression());
 app.use(requestID);
 
 // Destroy the session as soon as the api requests are all processed
-app.use(function(req, res, next) {
-  res.on('finish', function() {
+app.use(function (req, res, next) {
+  res.on('finish', function () {
     clearRequestCache(req, res);
     console.log('the response has been sent');
   });
@@ -146,23 +146,28 @@ app.use((req: Request, res: Response) => {
   return res.end();
 });
 
-const server = app.listen(BFF_PORT, () => {
-  console.info(
-    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
-  );
-});
-
-server.on('error', (error) => {
-  captureException(error, {
-    properties: {
-      message: 'Server onError handler',
-    },
+(async function startServerBFF() {
+  if (IS_DEVELOPMENT) {
+    await import('log-that-http');
+  }
+  const server = app.listen(BFF_PORT, () => {
+    console.info(
+      `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
+    );
   });
-});
 
-// From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
-server.keepAliveTimeout = 60 * 1000;
-server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+  server.on('error', (error) => {
+    captureException(error, {
+      properties: {
+        message: 'Server onError handler',
+      },
+    });
+  });
+
+  // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
+  server.keepAliveTimeout = 60 * 1000;
+  server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+})();
 
 // Start Cron jobs
 cleanupSessionBlacklistTable.start();

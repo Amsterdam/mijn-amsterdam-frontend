@@ -4,12 +4,13 @@ import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoize from 'memoizee';
 import { createSecretKey, hkdfSync } from 'node:crypto';
-import { matchPath } from 'react-router-dom';
+import { generatePath, matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
+  BFF_API_BASE_URL,
   IS_DEBUG,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
@@ -392,4 +393,11 @@ export async function isAuthenticated(
     }
   }
   return sendUnauthorized(res);
+}
+
+export function generateFullApiUrlBFF(
+  path: string,
+  params?: Record<string, string>
+) {
+  return `${BFF_API_BASE_URL}${generatePath(path, params)}`;
 }
