@@ -50,7 +50,7 @@ const displayPropsTransacties = {
 };
 const displayPropsBudgets = {
   title: 'Omschrijving',
-  dateEndFormatted: 'Geldig t/m',
+  dateEndFormatted: 'Tegoed geldig t/m',
   amountFormatted: 'Bedrag',
   // balanceFormatted: 'Saldo',
 };
@@ -82,7 +82,7 @@ export default function HLIStadspas() {
         },
         {
           label: 'Saldo',
-          content: stadspas.balanceFormatted,
+          content: `${stadspas.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
         },
       ]
     : [];
