@@ -16,5 +16,6 @@ export function getThemaTitle(hasStadspas: boolean, hasRegelingen: boolean) {
 export function getThemaTitleWithAppState(appState: AppState) {
   const hasStadspas = !!appState.HLI.content?.stadspas?.stadspassen.length;
   const hasRegelingen = !!appState.HLI.content?.regelingen.length;
+  console.log('hasStadspas', hasStadspas, 'hasRegelingen', hasRegelingen);
   return getThemaTitle(hasStadspas, hasRegelingen);
 }

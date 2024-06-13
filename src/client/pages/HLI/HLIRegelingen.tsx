@@ -7,6 +7,12 @@ import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks';
 import { getThemaTitleWithAppState } from './helpers';
 
+const displayPropsEerdereRegelingen = {
+  title: 'Naam regeling',
+  receiverName: 'Naam ontvanger',
+  displayStatus: 'Status',
+};
+
 export default function HLIRegelingen() {
   const appState = useAppStateGetter();
   const { HLI } = appState;
@@ -23,7 +29,7 @@ export default function HLIRegelingen() {
       title="Eerdere en afgewezen regelingen"
       appRoute={AppRoutes['HLI/REGELINGEN_LIJST']}
       appRouteBack={AppRoutes['HLI']}
-      displayProps={{ title: 'Naam regeling' }}
+      displayProps={displayPropsEerdereRegelingen}
       thema={Themas.HLI}
       isLoading={isLoading(HLI)}
       isError={isError(HLI)}

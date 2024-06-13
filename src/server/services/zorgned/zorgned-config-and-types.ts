@@ -122,4 +122,5 @@ export interface ZorgnedAanvraagTransformed {
   titel: string;
   datumOpdrachtLevering: string | null;
   resultaat: BeschikkingsResultaat;
+  ontvanger: string;
 }

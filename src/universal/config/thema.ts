@@ -88,7 +88,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
   STADSPAS: 'Stadspas',
-  HLI: 'Stadspas en andere regelingen bij laag inkomen',
+  HLI: 'Stadspas en regelingen bij laag inkomen',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
   OVERTREDINGEN: 'Overtredingen voertuigen',
@@ -144,7 +144,7 @@ export const DocumentTitles: {
   [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
 
-  [AppRoutes.HLI]: `Stadspas en andere regelingen | overzicht`,
+  [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
   [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
   [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
 
@@ -311,6 +311,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   },
   {
     title: (appState: AppState) => {
+      console.log('whoaoao');
       return getThemaTitleWithAppState(appState);
     },
     id: Themas.HLI,

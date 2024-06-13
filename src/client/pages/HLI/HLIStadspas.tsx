@@ -183,7 +183,7 @@ export default function HLIStadspas() {
             <Grid.Cell span="all">
               <Heading>Uw uitgaven</Heading>
             </Grid.Cell>
-            <Grid.Cell span={8}>
+            <Grid.Cell span="all">
               {(isLoadingTransacties || isLoadingStadspas) && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}

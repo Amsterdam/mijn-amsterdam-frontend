@@ -72,6 +72,7 @@ function transformZorgnedAanvraag(
     productsoortCode: productsoortCode,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
+    ontvanger: '--NAAM-ONTVANGER--',
   };
 
   return aanvraagTransformed;

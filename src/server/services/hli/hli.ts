@@ -15,6 +15,7 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { HLIRegeling, HLIresponseData } from './regelingen-types';
 import { fetchStadspas } from './stadspas';
 import { REGELING } from './status-line-items/regeling';
+import { StatusLineItem } from '../../../universal/types';
 
 function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
   const route = generatePath(AppRoutes['HLI/REGELING'], {
@@ -38,6 +39,8 @@ function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
       about: omschrijving, // TODO: implement
       isActual: true, // Indicates if this item is designated Current or Previous
       link: { title: omschrijving, to: route },
+      receiverName: 'T.B Determined',
+      displayStatus: 'Toegewezen',
       steps: [
         {
           status: 'Besluit',
@@ -115,6 +118,8 @@ function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
       about: omschrijving, // TODO: implement
       isActual: false, // Indicates if this item is designated Current or Previous
       link: { title: omschrijving, to: route2 },
+      receiverName: 'Z.S Mogelijk',
+      displayStatus: 'Niet verleend',
       steps: [
         {
           status: 'Besluit',
@@ -143,6 +148,21 @@ function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
   });
 
   return [...regelingen, ...afgewezen];
+}
+
+function getDisplayStatus(
+  aanvraag: ZorgnedAanvraagTransformed,
+  statusLineItems: StatusLineItem[]
+) {
+  switch (true) {
+    case aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
+      return 'Toegewezen';
+    case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
+      return 'Einde recht';
+    case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
+      return 'Afgewezen';
+  }
+  return statusLineItems[statusLineItems.length - 1].status ?? 'NNB';
 }
 
 export function transformRegelingenForFrontend(
@@ -184,6 +204,8 @@ export function transformRegelingenForFrontend(
         dateDescision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
+        displayStatus: getDisplayStatus(aanvraag, statusLineItems),
+        receiverName: '',
       };
 
       regelingenFrontend.push(regelingFrontend);

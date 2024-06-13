@@ -13,6 +13,8 @@ export type HLIRegeling = {
   dateDescision: string;
   dateStart: string | null;
   dateEnd: string | null;
+  displayStatus: string;
+  receiverName: string;
 };
 
 export interface ZorgnedPersoonsgegevensNAWResponse {

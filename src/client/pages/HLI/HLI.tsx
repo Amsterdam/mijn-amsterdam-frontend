@@ -8,7 +8,7 @@ import {
 import { generatePath } from 'react-router-dom';
 import { HLIRegeling } from '../../../server/services/hli/regelingen-types';
 import { Stadspas } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
@@ -28,10 +28,13 @@ import { getThemaTitle } from './helpers';
 
 const displayPropsHuidigeRegelingen = {
   title: 'Naam regeling',
+  receiverName: 'Naam ontvanger',
 };
 
 const displayPropsEerdereRegelingen = {
   title: 'Naam regeling',
+  receiverName: 'Naam ontvanger',
+  displayStatus: 'Status',
 };
 
 function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
@@ -68,6 +71,11 @@ export default function ThemaPaginaHLI() {
   const eerdereRegelingen: HLIRegeling[] = regelingen.filter(
     (regeling) => !regeling.isActual
   );
+  const hasKindtegoed = stadspassen?.some((stadspas) =>
+    stadspas.budgets.some((budget) =>
+      budget.description.toLowerCase().includes('kind')
+    )
+  );
 
   return (
     <OverviewPage>
@@ -96,9 +104,11 @@ export default function ThemaPaginaHLI() {
               <LinkList.Link href="https://www.amsterdam.nl/stadspas">
                 Meer informatie over Stadspas
               </LinkList.Link>
-              <LinkList.Link href="https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/">
-                Meer informatie over Kindtegoed declareren
-              </LinkList.Link>
+              {hasKindtegoed && (
+                <LinkList.Link href="https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/">
+                  Meer informatie over Kindtegoed declareren
+                </LinkList.Link>
+              )}
             </LinkList>
           </Grid.Cell>
 
@@ -148,6 +158,7 @@ export default function ThemaPaginaHLI() {
                   caption="Huidige regelingen"
                   items={huidigeRegelingen}
                   displayProps={displayPropsHuidigeRegelingen}
+                  className={styles.HuidigeRegelingen}
                 />
 
                 {!huidigeRegelingen.length && (
@@ -163,6 +174,7 @@ export default function ThemaPaginaHLI() {
                     MAX_TABLE_ROWS_ON_THEMA_PAGINA
                   )}
                   displayProps={displayPropsEerdereRegelingen}
+                  className={styles.EerdereRegelingen}
                 />
 
                 {!eerdereRegelingen.length && (
