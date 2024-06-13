@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import proxy from 'express-http-proxy';
 import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
@@ -12,6 +13,7 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
+import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import {
   fetchSignalAttachments,
@@ -109,6 +111,45 @@ router.get(
     );
     return res.send(documentResponse.content.data);
   }
+);
+
+// TODO: Refactor relay functionality MIJN-8159
+router.use(
+  BffEndpoints.API_RELAY,
+  proxy(
+    (req: Request) => {
+      let url = '';
+      switch (true) {
+        case req.path.startsWith('/decosjoin/'):
+          url = String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
+          break;
+        case req.path.startsWith('/wpi/'):
+          url = String(process.env.BFF_WPI_API_BASE_URL ?? '');
+          break;
+        case req.path.startsWith('/brp/'):
+          url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
+          break;
+      }
+      return url;
+    },
+    {
+      memoizeHost: false,
+      proxyReqPathResolver: function (req) {
+        return req.url;
+      },
+      proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
+        const { token } = await getAuth(srcReq);
+        const headers = proxyReqOpts.headers || {};
+        headers['Authorization'] = `Bearer ${token}`;
+        proxyReqOpts.headers = headers;
+        return proxyReqOpts;
+      },
+      proxyErrorHandler: (err, res, next) => {
+        captureException(err);
+        next();
+      },
+    }
+  )
 );
 
 // NOTE: To be removed MIJN-8635

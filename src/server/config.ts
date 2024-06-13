@@ -361,7 +361,7 @@ export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BFF_OIDC_BASE_URL = `${
-  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
+  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn.amsterdam.nl'
 }`;
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
