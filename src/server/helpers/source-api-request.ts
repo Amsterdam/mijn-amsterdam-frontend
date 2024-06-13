@@ -200,14 +200,6 @@ export async function requestData<T>(
   }
 }
 
-function resolveWithDelay(delayMS: number = 0, data: any) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(data);
-    }, delayMS);
-  });
-}
-
 export function findApiByRequestUrl(
   apiUrlEntries: ApiUrlEntries,
   requestUrl?: string
