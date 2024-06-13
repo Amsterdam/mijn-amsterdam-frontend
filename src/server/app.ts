@@ -20,7 +20,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { BFF_BASE_PATH, BFF_PORT, BffEndpoints } from './config';
+import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, IS_DEBUG } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
 import { authRouterDevelopment } from './router-development';
@@ -147,7 +147,7 @@ app.use((req: Request, res: Response) => {
 });
 
 (async function startServerBFF() {
-  if (IS_DEVELOPMENT) {
+  if (IS_DEBUG) {
     await import('log-that-http');
   }
   const server = app.listen(BFF_PORT, () => {
