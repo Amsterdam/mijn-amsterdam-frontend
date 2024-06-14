@@ -3,59 +3,45 @@ import { ThemaTitles, Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
+import { useParams } from 'react-router-dom';
 import { VergunningV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks';
 import {
+  ListPageParamKind,
   displayPropsEerdereVergunningen,
   displayPropsHuidigeVergunningen,
+  listPageTitle,
 } from './config';
 
-export function EerdereVergunningen() {
+export function VergunningenList() {
+  const params = useParams<{ kind: ListPageParamKind }>();
+  const isListWithHistoricItems =
+    params.kind === 'eerdere-vergunningen-en-ontheffingen';
   const appState = useAppStateGetter();
   const { VERGUNNINGEN_V2 } = appState;
   const vergunningen: VergunningV2[] =
-    VERGUNNINGEN_V2.content?.filter((vergunninge) => vergunninge.processed) ??
-    [];
+    VERGUNNINGEN_V2.content?.filter((vergunninge) =>
+      params.kind === 'eerdere-vergunningen-en-ontheffingen'
+        ? vergunninge.processed
+        : !vergunninge.processed
+    ) ?? [];
   const huidigeVergunningen = addLinkElementToProperty<VergunningV2>(
     vergunningen,
     'title'
   );
-  const appRouteBack = AppRoutes['VERGUNNINGEN_V2'];
+  const displayProps = isListWithHistoricItems
+    ? displayPropsEerdereVergunningen
+    : displayPropsHuidigeVergunningen;
+  const appRouteBack = AppRoutes['VERGUNNINGEN'];
   return (
     <ListPagePaginated
       items={huidigeVergunningen}
       backLinkTitle={ThemaTitles.VERGUNNINGEN}
-      title="Eerdere en niet verleende vergunningen en ontheffingen"
-      appRoute={AppRoutes['VERGUNNINGEN_V2/EERDERE_VERGUNNINGEN']}
+      title={listPageTitle[params.kind]}
+      appRoute={AppRoutes['VERGUNNINGEN/LIST']}
       appRouteBack={appRouteBack}
-      displayProps={displayPropsEerdereVergunningen}
-      thema={Themas.VERGUNNINGEN_V2}
-      isLoading={isLoading(VERGUNNINGEN_V2)}
-      isError={isError(VERGUNNINGEN_V2)}
-    />
-  );
-}
-
-export function HuidigeVergunningen() {
-  const appState = useAppStateGetter();
-  const { VERGUNNINGEN_V2 } = appState;
-  const vergunningen: VergunningV2[] =
-    VERGUNNINGEN_V2.content?.filter((vergunninge) => !vergunninge.processed) ??
-    [];
-  const eerdereVergunningen = addLinkElementToProperty<VergunningV2>(
-    vergunningen,
-    'title'
-  );
-  const appRouteBack = AppRoutes['VERGUNNINGEN_V2'];
-  return (
-    <ListPagePaginated
-      items={eerdereVergunningen}
-      backLinkTitle={ThemaTitles.VERGUNNINGEN}
-      title="Huidige vergunningen en ontheffingen"
-      appRoute={AppRoutes['VERGUNNINGEN_V2/HUIDIGE_VERGUNNINGEN']}
-      appRouteBack={appRouteBack}
-      displayProps={displayPropsHuidigeVergunningen}
+      displayProps={displayProps}
       thema={Themas.VERGUNNINGEN_V2}
       isLoading={isLoading(VERGUNNINGEN_V2)}
       isError={isError(VERGUNNINGEN_V2)}

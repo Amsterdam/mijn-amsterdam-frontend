@@ -14,7 +14,9 @@ import ZakenTable from '../ThemaPagina/ZakenTable';
 import {
   displayPropsEerdereVergunningen,
   displayPropsHuidigeVergunningen,
+  listPageParamKind,
 } from './config';
+import { generatePath } from 'react-router-dom';
 
 export default function VergunningenV2() {
   const { VERGUNNINGEN_V2 } = useAppStateGetter();
@@ -40,17 +42,20 @@ export default function VergunningenV2() {
       <ZakenTable<VergunningV2>
         title="Huidige vergunningen en ontheffingen"
         zaken={huidigeVergunningen}
-        listPageRoute={AppRoutes['VERGUNNINGEN_V2/HUIDIGE_VERGUNNINGEN']}
+        listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
+          kind: listPageParamKind.actual,
+        })}
         displayProps={displayPropsHuidigeVergunningen}
         textNoContent="U heeft geen huidige vergunningen of ontheffingen."
       />
       <ZakenTable<VergunningV2>
         title="Eerdere en niet verleende vergunningen en ontheffingen"
         zaken={eerdereVergunningen}
-        listPageRoute={AppRoutes['VERGUNNINGEN_V2/EERDERE_VERGUNNINGEN']}
+        listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
+          kind: listPageParamKind.historic,
+        })}
         displayProps={displayPropsEerdereVergunningen}
-        textNoContent=" U heeft geen eerdere of niet verleende vergunningen of
-                    ontheffingen."
+        textNoContent="U heeft geen eerdere of niet verleende vergunningen of ontheffingen."
       />
     </>
   );

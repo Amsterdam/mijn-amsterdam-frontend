@@ -1,5 +1,5 @@
 import { isDateInPast } from '../helpers/date';
-import { IS_AP, IS_DEVELOPMENT, IS_PRODUCTION } from './env';
+import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   avgActive: true,
@@ -11,7 +11,7 @@ export const FeatureToggle = {
   cleopatraApiActive: true,
   cmsFooterActive: true,
   dbDisabled: false,
-  decosServiceActive: IS_DEVELOPMENT,
+  decosServiceActive: IS_OT,
   eherkenningActive: true,
   ehKetenmachtigingActive: !IS_PRODUCTION,
   erfpachtV2Active: !IS_PRODUCTION,
@@ -42,6 +42,7 @@ export const FeatureToggle = {
   tipsFlipActive: true,
   toeristischeVerhuurActive: true,
   vergunningenActive: true,
+  vergunningenV2Active: IS_OT,
   wiorDatasetActive: true,
   wiorMeldingen: true,
   zorgnedDocumentAttachmentsActive: true,

@@ -9,3 +9,17 @@ export const displayPropsEerdereVergunningen = {
   title: 'Soort vergunning',
   decision: 'Resultaat',
 };
+
+export const listPageParamKind = {
+  actual: 'huidige-vergunningen-en-ontheffingen',
+  historic: 'eerdere-vergunningen-en-ontheffingen',
+};
+
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+
+export const listPageTitle = {
+  [listPageParamKind.actual]: 'Huidige vergunningen en ontheffingen',
+  [listPageParamKind.historic]:
+    'Eerdere en niet verleende vergunningen en ontheffingen',
+};
