@@ -6,13 +6,13 @@ import {
 
 export function parseLabelContent(
   text: TextPartContents,
-  voorziening: ZorgnedAanvraagTransformed,
+  aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ): string {
   let rText = text || '';
 
   if (typeof rText === 'function') {
-    return rText(voorziening, today);
+    return rText(aanvraag, today);
   }
 
   return rText;

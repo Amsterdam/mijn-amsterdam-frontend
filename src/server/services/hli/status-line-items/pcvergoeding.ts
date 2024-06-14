@@ -4,9 +4,9 @@ import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-co
 export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
-    datePublished: (data) => data.datumBesluit,
-    isChecked: (stepIndex, data) => true,
-    isActive: (stepIndex, data) => data.isActueel === true,
+    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    isChecked: (stepIndex, aanvraag) => true,
+    isActive: (stepIndex, aanvraag) => aanvraag.isActueel === true,
     description: (regeling) =>
       `<p>
         ${
@@ -24,14 +24,14 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Voorwaarde vooldaan',
     isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
-    datePublished: (data) => data.datumBesluit,
-    isChecked: (stepIndex, data) => true,
-    isActive: (stepIndex, data) => data.isActueel === true,
-    description: (data) =>
+    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    isChecked: (stepIndex, aanvraag) => true,
+    isActive: (stepIndex, aanvraag) => aanvraag.isActueel === true,
+    description: (aanvraag) =>
       `
         <p>
-          Uw heeft voldaan aan de voorwaarde voor het recht op ${data.titel} per ${defaultDateFormat(
-            data.datumIngangGeldigheid
+          Uw heeft voldaan aan de voorwaarde voor het recht op ${aanvraag.titel} per ${defaultDateFormat(
+            aanvraag.datumIngangGeldigheid
           )}.
         </p>
         <p>
@@ -43,19 +43,19 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Einde recht',
     isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
-    datePublished: (data) =>
-      (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
+    datePublished: (aanvraag) =>
+      (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
     isChecked: () => false,
-    isActive: (stepIndex, data) => data.isActueel === false,
-    description: (data) =>
+    isActive: (stepIndex, aanvraag) => aanvraag.isActueel === false,
+    description: (aanvraag) =>
       `
         <p>
           ${
-            data.isActueel
+            aanvraag.isActueel
               ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-              : `Uw recht op ${data.titel} is beëindigd ${
-                  data.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(data.datumEindeGeldigheid)}`
+              : `Uw recht op ${aanvraag.titel} is beëindigd ${
+                  aanvraag.datumEindeGeldigheid
+                    ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                     : ''
                 }`
           }
