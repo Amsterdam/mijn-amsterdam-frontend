@@ -72,7 +72,7 @@ export default function ThemaDetailPagina<T extends StatusLine>({
 
   return (
     <DetailPage className={className}>
-      <PageHeading icon={icon} backLink={backLink} isLoading={isLoading}>
+      <PageHeading icon={icon} backLink={backLink}>
         {title}
       </PageHeading>
       <Screen>
