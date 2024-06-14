@@ -394,6 +394,7 @@ function transformDecosDocumentListResponse(decosDocumentsListResponse: {
         id: documentMetadata.mark,
         title: documentMetadata.text41,
         datePublished: null,
+        // TODO: Use generateFullApiUrlBFF when https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1314 makes it into main.
         url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
           `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD}`,
           {
