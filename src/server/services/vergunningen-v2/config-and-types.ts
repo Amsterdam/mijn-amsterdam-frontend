@@ -1,5 +1,9 @@
 import { ApiResponse } from '../../../universal/helpers';
-import { GenericDocument, LinkProps } from '../../../universal/types';
+import {
+  GenericDocument,
+  LinkProps,
+  StatusLine,
+} from '../../../universal/types';
 import {
   GetCaseType,
   DecosCaseType,
@@ -129,7 +133,7 @@ export type AddressBookEntry = {
 export type DecosWorkflowStepTitle = string;
 export type DecosWorkflowStepDate = string;
 
-export interface VergunningBase {
+export interface VergunningBase extends StatusLine {
   caseType: DecosCaseType;
   status: ZaakStatus;
   title: string;
