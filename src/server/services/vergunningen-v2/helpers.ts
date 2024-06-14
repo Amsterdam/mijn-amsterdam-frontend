@@ -2,6 +2,11 @@ import { isDateInPast, monthsFromNow } from '../../../universal/helpers/date';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
+  DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
+  DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
+  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
+  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
+  DECOS_PENDING_REMOVAL_DFUNCTION,
   DecosZaakSource,
   DecosZaakTypeTransformer,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
@@ -17,13 +22,15 @@ export function isWaitingForPaymentConfirmation(
   const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
 
   const isWaitingForPaymentConfirmation =
-    decosZaakSource.fields.text11 == 'Nogniet' &&
-    decosZaakSource.fields.text12 == 'Wacht op online betaling';
+    decosZaakSource.fields.text11?.toLowerCase() ==
+      DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 &&
+    decosZaakSource.fields.text12?.toLowerCase() ==
+      DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12;
 
-  const isWaitingForPaymentConfirmation2 = [
-    'wacht op online betaling',
-    'wacht op ideal betaling',
-  ].includes(decosZaakSource.fields.subject1?.toLowerCase());
+  const isWaitingForPaymentConfirmation2 =
+    DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1.includes(
+      decosZaakSource.fields.subject1?.toLowerCase()
+    );
 
   return (
     !!decosZaakTransformers[zaakType]?.requirePayment &&
@@ -31,20 +38,18 @@ export function isWaitingForPaymentConfirmation(
   );
 }
 
-// Cases that match the following condition are not show to the user.
+// Cases that match the following condition are not shown to the user.
 export function hasInvalidDecision(decosZaakSource: DecosZaakSource) {
-  return [
-    'buiten behandeling',
-    'geannuleerd',
-    'geen aanvraag of dubbel',
-  ].includes(decosZaakSource.fields.dfunction?.toLowerCase());
+  return DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION.includes(
+    decosZaakSource.fields.dfunction?.toLowerCase()
+  );
 }
 
 // Cases that match the following condition are not show to the user.
 export function isScheduledForRemoval(decosZaakSource: DecosZaakSource) {
   return !!decosZaakSource.fields.dfunction
     ?.toLowerCase()
-    .includes('*verwijder');
+    .includes(DECOS_PENDING_REMOVAL_DFUNCTION);
 }
 
 export function isExcludedFromTransformation(
