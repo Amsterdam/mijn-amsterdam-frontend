@@ -58,6 +58,10 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   postponeFetch?: boolean;
   urls?: Record<string, string>;
 
+  // Construct an url that will be assigned to the url key in the local requestConfig.
+  // Example: formatUrl: (requestConfig) => requestConfig.url + '/some/additional/path/segments/,
+  formatUrl?: (requestConfig: DataRequestConfig) => string;
+
   /**
    * The cacheKey is important if the automatically generated key doesn't suffice. For example if the url changes every request.
    * This can be the case if an IV encrypted parameter is added (erfpacht) to the url. If the url changes everytime the cache won't be hit.
@@ -364,7 +368,17 @@ export function getApiConfig(
     apiConfigCopy.httpsAgent = agent;
   }
 
-  return Object.assign(apiConfigCopy, config);
+  let customUrl = '';
+
+  if (typeof config.formatUrl === 'function') {
+    customUrl = config.formatUrl(apiConfig);
+  }
+
+  return Object.assign(
+    apiConfigCopy,
+    config,
+    customUrl ? { url: customUrl } : null
+  );
 }
 
 export const AUTH_BASE = '/api/v1/auth';
