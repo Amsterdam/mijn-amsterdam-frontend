@@ -54,14 +54,14 @@ type DecosDecision = string;
 export type DecosFieldNameSource = string;
 export type DecosFieldValue = string | number | boolean | null;
 
-type DecosTransformerOptions<T extends Vergunning = Vergunning> = {
+type DecosTransformerOptions<T extends VergunningV2 = VergunningV2> = {
   zaakTypeTransformer?: DecosZaakTypeTransformer<T>;
   fetchDecosWorkflowDate?: (
     stepTitle: DecosWorkflowStepTitle
   ) => Promise<ApiResponse<string | null>>;
 };
 
-export type DecosFieldTransformer<T extends Vergunning = Vergunning> = {
+export type DecosFieldTransformer<T extends VergunningV2 = VergunningV2> = {
   name: keyof T;
   transform?: (
     input: any,
@@ -69,10 +69,10 @@ export type DecosFieldTransformer<T extends Vergunning = Vergunning> = {
   ) => DecosFieldValue;
 };
 
-export type DecosZaakTypeTransformer<T extends Vergunning = Vergunning> = {
+export type DecosZaakTypeTransformer<T extends VergunningV2 = VergunningV2> = {
   // The caseType (zaaktype) of the sourceData.
   caseType: DecosCaseType;
-  // Title of the Vergunning, mostly a slightly different variant of the $caseType
+  // Title of the VergunningV2, mostly a slightly different variant of the $caseType
   title: string;
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
   // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
@@ -104,7 +104,7 @@ export type DecosZaakTypeTransformer<T extends Vergunning = Vergunning> = {
 };
 
 export type DecosFieldsObject = Record<DecosFieldNameSource, string>;
-export type DecosFieldTransformerObject<T extends Vergunning = Vergunning> =
+export type DecosFieldTransformerObject<T extends VergunningV2 = VergunningV2> =
   Record<DecosFieldNameSource, DecosFieldTransformer<T> | keyof T>;
 export type DecosZaakSource = {
   key: DecosZaakID;
@@ -202,7 +202,7 @@ export interface ERVV extends VergunningWithLocation {
 export interface VakantieverhuurVergunningaanvraag
   extends VergunningWithLocation {
   caseType: GetCaseType<'VakantieverhuurVergunningaanvraag'>;
-  title: 'Vergunning vakantieverhuur';
+  title: 'VergunningV2 vakantieverhuur';
   dateStart: string | null;
   dateEnd: string | null;
   decision: 'Verleend' | 'Ingetrokken';
@@ -210,7 +210,7 @@ export interface VakantieverhuurVergunningaanvraag
 
 export interface BBVergunning extends VergunningWithLocation {
   caseType: GetCaseType<'BBVergunning'>;
-  title: 'Vergunning bed & breakfast';
+  title: 'VergunningV2 bed & breakfast';
   decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
   dateStart: string | null;
   dateEnd: string | null;
@@ -395,7 +395,7 @@ export interface WerkzaamhedenEnVervoerOpStraat extends VergunningWithLocation {
   werkzaamheden: WVOSActiviteit[];
 }
 
-export type Vergunning =
+export type VergunningV2 =
   | TVMRVVObject
   | GPK
   | GPP
@@ -436,19 +436,19 @@ export type VergunningDetailType = Exclude<
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
 export type VergunningenSourceData = {
-  content?: Vergunning[];
+  content?: VergunningV2[];
   status: 'OK' | 'ERROR';
 };
 
-export type VergunningExpirable = Vergunning & { dateEnd?: string | null };
+export type VergunningExpirable = VergunningV2 & { dateEnd?: string | null };
 
 export interface VergunningDocument extends GenericDocument {
   sequence: number;
 }
 
-export type VergunningenData = Vergunning[];
+export type VergunningenData = VergunningV2[];
 
 export interface VergunningOptions {
-  filter?: (vergunning: Vergunning) => boolean;
-  appRoute: string | ((vergunning: Vergunning) => string);
+  filter?: (vergunning: VergunningV2) => boolean;
+  appRoute: string | ((vergunning: VergunningV2) => string);
 }

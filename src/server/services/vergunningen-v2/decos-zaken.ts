@@ -36,7 +36,7 @@ import {
   TouringcarDagontheffing as TouringcarDagontheffingType,
   TouringcarJaarontheffing as TouringcarJaarontheffingType,
   VakantieverhuurVergunningaanvraag as VakantieverhuurVergunningaanvraagType,
-  Vergunning,
+  VergunningV2,
   VormenVanWoonruimte as VormenVanWoonruimteType,
   WVOSActiviteit as WVOSActiviteitType,
   WerkzaamhedenEnVervoerOpStraat as WerkzaamhedenEnVervoerOpStraatType,
@@ -66,6 +66,7 @@ const decision: DecosFieldTransformer = {
   },
 };
 
+// A list of common readable api attributes
 const status = 'status';
 const caseType = 'caseType';
 const identifier = 'identifier';
@@ -80,9 +81,9 @@ const timeEnd = 'timeEnd';
 const destination = 'destination';
 const description = 'description';
 
-// 1 of meerdere kenteken(s)
+// 1 or multiple kenteken(s)
 const kentekens = {
-  name: 'kentekens' as keyof Vergunning, // TODO: Can this be typed stricter without casting?
+  name: 'kentekens' as keyof VergunningV2, // TODO: Can this be typed stricter without casting?
   transform: transformKenteken,
 };
 
@@ -141,7 +142,7 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTypeTransformer<Vakanti
   {
     isActive: true,
     caseType: CaseTypeV2.VakantieverhuurVergunningaanvraag,
-    title: 'Vergunning vakantieverhuur',
+    title: 'VergunningV2 vakantieverhuur',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
@@ -271,7 +272,7 @@ export const Omzettingsvergunning: DecosZaakTypeTransformer<Omzettingsvergunning
   {
     isActive: true,
     caseType: CaseTypeV2.Omzettingsvergunning,
-    title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
+    title: 'VergunningV2 voor kamerverhuur (omzettingsvergunning)',
     dateInBehandelingWorkflowStepTitle: 'Omzettingsvergunning - Behandelen',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -455,7 +456,7 @@ export const Samenvoegingsvergunning: DecosZaakTypeTransformer<Samenvoegingsverg
   {
     isActive: true,
     caseType: CaseTypeV2.Samenvoegingsvergunning,
-    title: 'Vergunning voor samenvoegen van woonruimten',
+    title: 'VergunningV2 voor samenvoegen van woonruimten',
     dateInBehandelingWorkflowStepTitle:
       'Samenvoegingsvergunning - Beoordelen en besluiten',
     transformFields: {
@@ -494,7 +495,7 @@ export const VormenVanWoonruimte: DecosZaakTypeTransformer<VormenVanWoonruimteTy
   {
     isActive: true,
     caseType: CaseTypeV2.VormenVanWoonruimte,
-    title: 'Vergunning voor woningvorming',
+    title: 'VergunningV2 voor woningvorming',
     dateInBehandelingWorkflowStepTitle:
       'Woningvormingsvergunning - Beoordelen en besluiten',
     transformFields: {
