@@ -53,7 +53,7 @@ export default function VergunningV2Detail() {
 
   return (
     <ThemaDetailPagina<VergunningV2>
-      title={vergunningDetail?.title}
+      title={vergunningDetail?.title ?? 'Vergunning'}
       zaak={vergunningDetail}
       isError={api.isError}
       isLoading={api.isLoading || api.isPristine}
