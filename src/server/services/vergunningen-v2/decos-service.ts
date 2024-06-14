@@ -17,7 +17,7 @@ import {
   DecosWorkflowStepTitle,
   DecosZaakSource,
   DecosZakenResponse,
-  Vergunning,
+  VergunningV2,
   VergunningDocument,
   adresBoekenByProfileType,
 } from './config-and-types';
@@ -185,7 +185,7 @@ async function transformDecosZaakResponse(
     title: zaakTypeTransformer.title,
     dateInBehandeling: null, // Serves as placeholder
     ...transformedFields,
-  } as Vergunning;
+  } as VergunningV2;
 
   // Try to fetch and assign a specific date on which the zaak was "In behandeling"
   if (
@@ -257,7 +257,7 @@ async function transformDecosZakenResponse(
 
   return vergunningen
     .filter(
-      (vergunning: Vergunning | null): vergunning is Vergunning =>
+      (vergunning: VergunningV2 | null): vergunning is VergunningV2 =>
         vergunning !== null
     )
     .sort(sortAlpha('identifier', 'desc'));
@@ -345,7 +345,7 @@ function transformDecosWorkflowDateResponse(
 
 export async function fetchDecosWorkflowDate(
   requestID: requestID,
-  zaakID: Vergunning['id'],
+  zaakID: VergunningV2['id'],
   stepTitle: DecosWorkflowStepTitle
 ) {
   const apiConfigWorkflows = getApiConfig('DECOS_VERGUNNINGEN', {
@@ -407,7 +407,7 @@ function transformDecosDocumentListResponse(decosDocumentsListResponse: {
 
 export async function fetchDecosDocumentList(
   requestID: requestID,
-  zaakID: Vergunning['id']
+  zaakID: VergunningV2['id']
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_VERGUNNINGEN', {
     formatUrl: (config) => {
@@ -431,7 +431,7 @@ export async function fetchDecosVergunning(
   vergunningIdEncrypted: string
 ) {
   let userID: AuthProfileAndToken['profile']['id'] | null = null;
-  let vergunningID: Vergunning['id'] | null = null;
+  let vergunningID: VergunningV2['id'] | null = null;
 
   try {
     [userID, vergunningID] = decrypt(vergunningIdEncrypted).split(':');
@@ -469,7 +469,7 @@ export async function fetchDecosVergunning(
   const documentsResponse = getSettledResult(documentsResponseSettled);
 
   let documents: VergunningDocument[] = [];
-  let vergunning: Vergunning | null = null;
+  let vergunning: VergunningV2 | null = null;
 
   if (zaakSourceResponse.status == 'OK') {
     const decosZaakResponseData = zaakSourceResponse.content;

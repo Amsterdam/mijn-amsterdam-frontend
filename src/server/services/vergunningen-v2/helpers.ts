@@ -10,7 +10,7 @@ import {
   DecosZaakSource,
   DecosZaakTypeTransformer,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  Vergunning,
+  VergunningV2,
   VergunningExpirable,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
@@ -84,7 +84,7 @@ export function transformKenteken(kentekenSource: string | null) {
 }
 
 export function getCustomTitleForVergunningWithLicensePlates(
-  vergunning: Vergunning
+  vergunning: VergunningV2
 ) {
   if ('kentekens' in vergunning) {
     const plates = vergunning.kentekens?.split(' | ');
@@ -152,11 +152,11 @@ export function isExpired(
 }
 
 export function hasOtherActualVergunningOfSameType(
-  items: Array<Vergunning>,
-  item: Vergunning
+  items: Array<VergunningV2>,
+  item: VergunningV2
 ): boolean {
   return items.some(
-    (otherVergunning: Vergunning) =>
+    (otherVergunning: VergunningV2) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
