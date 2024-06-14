@@ -1,7 +1,10 @@
 import { parseISO } from 'date-fns';
 import { IS_PRODUCTION } from '../../../universal/config';
 
-import { CaseType, DecosCaseType } from '../../../universal/types/vergunningen';
+import {
+  CaseTypeV2,
+  DecosCaseType,
+} from '../../../universal/types/vergunningen';
 import {
   AanbiedenDiensten as AanbiedenDienstenType,
   BZB as BZBType,
@@ -16,15 +19,15 @@ import {
   EigenParkeerplaats as EigenParkeerplaatsType,
   EvenementMelding as EvenementMeldingType,
   EvenementVergunning as EvenementVergunningType,
-  GPK as GPKType,
   ExploitatieHorecabedrijf as ExploitatieHorecabedrijfType,
   Flyeren as FlyerenType,
+  GPK as GPKType,
   GPP as GPPType,
   Ligplaatsvergunning as LigplaatsvergunningType,
   Nachtwerkontheffing as NachtwerkontheffingType,
   Omzettingsvergunning as OmzettingsvergunningType,
-  Onttrekkingsvergunning as OnttrekkingsvergunningType,
   OnttrekkingsvergunningSloop as OnttrekkingsvergunningSloopType,
+  Onttrekkingsvergunning as OnttrekkingsvergunningType,
   RVVHeleStad as RVVHeleStadType,
   RVVSloterweg as RVVSloterwegType,
   Samenvoegingsvergunning as SamenvoegingsvergunningType,
@@ -33,11 +36,11 @@ import {
   TouringcarDagontheffing as TouringcarDagontheffingType,
   TouringcarJaarontheffing as TouringcarJaarontheffingType,
   VakantieverhuurVergunningaanvraag as VakantieverhuurVergunningaanvraagType,
+  Vergunning,
   VormenVanWoonruimte as VormenVanWoonruimteType,
   WVOSActiviteit as WVOSActiviteitType,
   WerkzaamhedenEnVervoerOpStraat as WerkzaamhedenEnVervoerOpStraatType,
   ZwaarVerkeer as ZwaarVerkeerType,
-  Vergunning,
 } from './config-and-types';
 import {
   getCustomTitleForVergunningWithLicensePlates,
@@ -98,7 +101,7 @@ export const SELECT_FIELDS_TRANSFORM_BASE: Partial<DecosFieldTransformerObject> 
 
 export const TVMRVVObject: DecosZaakTypeTransformer<TVMRVVObjectType> = {
   isActive: true,
-  caseType: CaseType.TVMRVVObject,
+  caseType: CaseTypeV2.TVMRVVObject,
   title: 'Tijdelijke verkeersmaatregel (TVM-RVV-Object)',
   requirePayment: true,
   transformFields: {
@@ -137,7 +140,7 @@ export const TVMRVVObject: DecosZaakTypeTransformer<TVMRVVObjectType> = {
 export const VakantieverhuurVergunningaanvraag: DecosZaakTypeTransformer<VakantieverhuurVergunningaanvraagType> =
   {
     isActive: true,
-    caseType: CaseType.VakantieverhuurVergunningaanvraag,
+    caseType: CaseTypeV2.VakantieverhuurVergunningaanvraag,
     title: 'Vergunning vakantieverhuur',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -174,7 +177,7 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTypeTransformer<Vakanti
 
 export const GPP: DecosZaakTypeTransformer<GPPType> = {
   isActive: true,
-  caseType: CaseType.GPP,
+  caseType: CaseTypeV2.GPP,
   title: 'Vaste parkeerplaats voor gehandicapten (GPP)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -193,7 +196,7 @@ export const GPP: DecosZaakTypeTransformer<GPPType> = {
 
 export const GPK: DecosZaakTypeTransformer<GPKType> = {
   isActive: true,
-  caseType: CaseType.GPK,
+  caseType: CaseTypeV2.GPK,
   title: 'Europese gehandicaptenparkeerkaart (GPK)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -224,7 +227,7 @@ export const GPK: DecosZaakTypeTransformer<GPKType> = {
 export const EvenementMelding: DecosZaakTypeTransformer<EvenementMeldingType> =
   {
     isActive: true,
-    caseType: CaseType.EvenementMelding,
+    caseType: CaseTypeV2.EvenementMelding,
     title: 'Evenement melding',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -248,8 +251,8 @@ export const EvenementMelding: DecosZaakTypeTransformer<EvenementMeldingType> =
 export const EvenementVergunning: DecosZaakTypeTransformer<EvenementVergunningType> =
   {
     isActive: true,
-    caseType: CaseType.EvenementVergunning,
-    title: CaseType.EvenementVergunning,
+    caseType: CaseTypeV2.EvenementVergunning,
+    title: CaseTypeV2.EvenementVergunning,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       date6: dateStart,
@@ -267,7 +270,7 @@ export const EvenementVergunning: DecosZaakTypeTransformer<EvenementVergunningTy
 export const Omzettingsvergunning: DecosZaakTypeTransformer<OmzettingsvergunningType> =
   {
     isActive: true,
-    caseType: CaseType.Omzettingsvergunning,
+    caseType: CaseTypeV2.Omzettingsvergunning,
     title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
     dateInBehandelingWorkflowStepTitle: 'Omzettingsvergunning - Behandelen',
     transformFields: {
@@ -282,7 +285,7 @@ export const Omzettingsvergunning: DecosZaakTypeTransformer<Omzettingsvergunning
 
 export const ERVV_TVM: DecosZaakTypeTransformer<ERVV> = {
   isActive: true,
-  caseType: CaseType.Omzettingsvergunning,
+  caseType: CaseTypeV2.Omzettingsvergunning,
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -306,8 +309,8 @@ export const ERVV_TVM: DecosZaakTypeTransformer<ERVV> = {
 
 export const BZP: DecosZaakTypeTransformer<BZPType> = {
   isActive: true,
-  caseType: CaseType.BZP,
-  title: CaseType.BZP,
+  caseType: CaseTypeV2.BZP,
+  title: CaseTypeV2.BZP,
   requirePayment: true,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -323,8 +326,8 @@ export const BZP: DecosZaakTypeTransformer<BZPType> = {
 
 export const BZB: DecosZaakTypeTransformer<BZBType> = {
   isActive: true,
-  caseType: CaseType.BZB,
-  title: CaseType.BZB,
+  caseType: CaseTypeV2.BZB,
+  title: CaseTypeV2.BZB,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     date6: dateStart,
@@ -336,7 +339,7 @@ export const BZB: DecosZaakTypeTransformer<BZBType> = {
 
 export const Flyeren: DecosZaakTypeTransformer<FlyerenType> = {
   isActive: true,
-  caseType: CaseType.Flyeren,
+  caseType: CaseTypeV2.Flyeren,
   title: 'Verspreiden reclamemateriaal (sampling)',
   requirePayment: true,
   transformFields: {
@@ -352,8 +355,8 @@ export const Flyeren: DecosZaakTypeTransformer<FlyerenType> = {
 export const AanbiedenDiensten: DecosZaakTypeTransformer<AanbiedenDienstenType> =
   {
     isActive: true,
-    caseType: CaseType.AanbiedenDiensten,
-    title: CaseType.AanbiedenDiensten,
+    caseType: CaseTypeV2.AanbiedenDiensten,
+    title: CaseTypeV2.AanbiedenDiensten,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       date6: dateStart,
@@ -365,7 +368,7 @@ export const AanbiedenDiensten: DecosZaakTypeTransformer<AanbiedenDienstenType> 
 export const NachtwerkOntheffing: DecosZaakTypeTransformer<NachtwerkontheffingType> =
   {
     isActive: true,
-    caseType: CaseType.NachtwerkOntheffing,
+    caseType: CaseTypeV2.NachtwerkOntheffing,
     title:
       'Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)',
     dateInBehandelingWorkflowStepTitle: 'Nachtwerkontheffing - Behandelen',
@@ -385,7 +388,7 @@ export const NachtwerkOntheffing: DecosZaakTypeTransformer<NachtwerkontheffingTy
 
 export const ZwaarVerkeer: DecosZaakTypeTransformer<ZwaarVerkeerType> = {
   isActive: true,
-  caseType: CaseType.ZwaarVerkeer,
+  caseType: CaseTypeV2.ZwaarVerkeer,
   decisionTranslations: {
     Afgewezen: ['Niet verleend'],
     Toegekend: ['Verleend'],
@@ -451,7 +454,7 @@ export const ZwaarVerkeer: DecosZaakTypeTransformer<ZwaarVerkeerType> = {
 export const Samenvoegingsvergunning: DecosZaakTypeTransformer<SamenvoegingsvergunningType> =
   {
     isActive: true,
-    caseType: CaseType.Samenvoegingsvergunning,
+    caseType: CaseTypeV2.Samenvoegingsvergunning,
     title: 'Vergunning voor samenvoegen van woonruimten',
     dateInBehandelingWorkflowStepTitle:
       'Samenvoegingsvergunning - Beoordelen en besluiten',
@@ -464,8 +467,8 @@ export const Samenvoegingsvergunning: DecosZaakTypeTransformer<Samenvoegingsverg
 export const Onttrekkingsvergunning: DecosZaakTypeTransformer<OnttrekkingsvergunningType> =
   {
     isActive: true,
-    caseType: CaseType.Onttrekkingsvergunning,
-    title: CaseType.Onttrekkingsvergunning,
+    caseType: CaseTypeV2.Onttrekkingsvergunning,
+    title: CaseTypeV2.Onttrekkingsvergunning,
     dateInBehandelingWorkflowStepTitle:
       'Onttrekkingsvergunning voor ander gebruik - Beoordelen en besluiten',
     transformFields: {
@@ -477,8 +480,8 @@ export const Onttrekkingsvergunning: DecosZaakTypeTransformer<Onttrekkingsvergun
 export const OnttrekkingsvergunningSloop: DecosZaakTypeTransformer<OnttrekkingsvergunningSloopType> =
   {
     isActive: true,
-    caseType: CaseType.OnttrekkingsvergunningSloop,
-    title: CaseType.OnttrekkingsvergunningSloop,
+    caseType: CaseTypeV2.OnttrekkingsvergunningSloop,
+    title: CaseTypeV2.OnttrekkingsvergunningSloop,
     dateInBehandelingWorkflowStepTitle:
       'Onttrekkingsvergunning voor sloop - Beoordelen en besluiten',
     transformFields: {
@@ -490,7 +493,7 @@ export const OnttrekkingsvergunningSloop: DecosZaakTypeTransformer<Onttrekkingsv
 export const VormenVanWoonruimte: DecosZaakTypeTransformer<VormenVanWoonruimteType> =
   {
     isActive: true,
-    caseType: CaseType.VormenVanWoonruimte,
+    caseType: CaseTypeV2.VormenVanWoonruimte,
     title: 'Vergunning voor woningvorming',
     dateInBehandelingWorkflowStepTitle:
       'Woningvormingsvergunning - Beoordelen en besluiten',
@@ -503,8 +506,8 @@ export const VormenVanWoonruimte: DecosZaakTypeTransformer<VormenVanWoonruimteTy
 export const Splitsingsvergunning: DecosZaakTypeTransformer<SplitsingsvergunningType> =
   {
     isActive: true,
-    caseType: CaseType.Splitsingsvergunning,
-    title: CaseType.Splitsingsvergunning,
+    caseType: CaseTypeV2.Splitsingsvergunning,
+    title: CaseTypeV2.Splitsingsvergunning,
     dateInBehandelingWorkflowStepTitle: 'Splitsingsvergunning - Behandelen',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -515,7 +518,7 @@ export const Splitsingsvergunning: DecosZaakTypeTransformer<Splitsingsvergunning
 export const VOBvergunning: DecosZaakTypeTransformer<LigplaatsvergunningType> =
   {
     isActive: true,
-    caseType: CaseType.VOB,
+    caseType: CaseTypeV2.VOB,
     title: 'Ligplaatsvergunning',
     dateInBehandelingWorkflowStepTitle: 'VOB - Beoordelen en besluiten',
     transformFields: {
@@ -531,8 +534,8 @@ export const VOBvergunning: DecosZaakTypeTransformer<LigplaatsvergunningType> =
 export const ExploitatieHorecabedrijf: DecosZaakTypeTransformer<ExploitatieHorecabedrijfType> =
   {
     isActive: true,
-    caseType: CaseType.ExploitatieHorecabedrijf,
-    title: CaseType.ExploitatieHorecabedrijf,
+    caseType: CaseTypeV2.ExploitatieHorecabedrijf,
+    title: CaseTypeV2.ExploitatieHorecabedrijf,
     dateInBehandelingWorkflowStepTitle:
       'Horeca vergunning exploitatie Horecabedrijf - In behandeling nemen',
     transformFields: {
@@ -545,7 +548,7 @@ export const ExploitatieHorecabedrijf: DecosZaakTypeTransformer<ExploitatieHorec
 
 export const RVVHeleStad: DecosZaakTypeTransformer<RVVHeleStadType> = {
   isActive: !IS_PRODUCTION,
-  caseType: CaseType.RVVHeleStad,
+  caseType: CaseTypeV2.RVVHeleStad,
   title: 'RVV-verkeersontheffing',
   dateInBehandelingWorkflowStepTitle:
     'Status bijwerken en notificatie verzenden - In behandeling',
@@ -565,7 +568,7 @@ export const RVVHeleStad: DecosZaakTypeTransformer<RVVHeleStadType> = {
 
 export const RVVSloterweg: DecosZaakTypeTransformer<RVVSloterwegType> = {
   isActive: true,
-  caseType: CaseType.RVVSloterweg,
+  caseType: CaseTypeV2.RVVSloterweg,
   addToSelectFieldsBase: ['text10'], // Kenteken
   title: 'RVV ontheffing Sloterweg',
   dateInBehandelingWorkflowStepTitle: 'RVV Sloterweg - Behandelen',
@@ -607,7 +610,7 @@ export const RVVSloterweg: DecosZaakTypeTransformer<RVVSloterwegType> = {
     }
 
     // Add zone to title
-    if (vergunning.caseType === CaseType.RVVSloterweg) {
+    if (vergunning.caseType === CaseTypeV2.RVVSloterweg) {
       if (vergunning.area && vergunning.kentekens) {
         vergunning.title = `RVV ontheffing ${vergunning.area} (${vergunning.kentekens})`;
       }
@@ -620,9 +623,9 @@ export const RVVSloterweg: DecosZaakTypeTransformer<RVVSloterwegType> = {
 export const EigenParkeerplaats: DecosZaakTypeTransformer<EigenParkeerplaatsType> =
   {
     isActive: true,
-    caseType: CaseType.EigenParkeerplaats,
+    caseType: CaseTypeV2.EigenParkeerplaats,
     addToSelectFieldsBase: ['text13'], // Kenteken
-    title: CaseType.EigenParkeerplaats,
+    title: CaseTypeV2.EigenParkeerplaats,
     dateInBehandelingWorkflowStepTitle:
       'Status bijwerken en notificatie verzenden - In behandeling',
     transformFields: {
@@ -695,8 +698,8 @@ export const EigenParkeerplaats: DecosZaakTypeTransformer<EigenParkeerplaatsType
 export const EigenParkeerplaatsOpheffen: DecosZaakTypeTransformer<EigenParkeerplaatsOpheffenType> =
   {
     isActive: true,
-    caseType: CaseType.EigenParkeerplaatsOpheffen,
-    title: CaseType.EigenParkeerplaatsOpheffen,
+    caseType: CaseTypeV2.EigenParkeerplaatsOpheffen,
+    title: CaseTypeV2.EigenParkeerplaatsOpheffen,
     dateInBehandelingWorkflowStepTitle:
       'Status bijwerken en notificatie verzenden - In behandeling',
     requirePayment: true,
@@ -721,8 +724,8 @@ export const EigenParkeerplaatsOpheffen: DecosZaakTypeTransformer<EigenParkeerpl
 export const TouringcarDagontheffing: DecosZaakTypeTransformer<TouringcarDagontheffingType> =
   {
     isActive: true,
-    caseType: CaseType.TouringcarDagontheffing,
-    title: CaseType.TouringcarDagontheffing,
+    caseType: CaseTypeV2.TouringcarDagontheffing,
+    title: CaseTypeV2.TouringcarDagontheffing,
     dateInBehandelingWorkflowStepTitle: 'Status naar in behandeling',
     requirePayment: true,
     transformFields: {
@@ -745,9 +748,9 @@ export const TouringcarDagontheffing: DecosZaakTypeTransformer<TouringcarDagonth
 export const TouringcarJaarontheffing: DecosZaakTypeTransformer<TouringcarJaarontheffingType> =
   {
     isActive: true,
-    caseType: CaseType.TouringcarJaarontheffing,
+    caseType: CaseTypeV2.TouringcarJaarontheffing,
     addToSelectFieldsBase: ['text39'], // Kenteken
-    title: CaseType.TouringcarJaarontheffing,
+    title: CaseTypeV2.TouringcarJaarontheffing,
     dateInBehandelingWorkflowStepTitle: 'Status naar In Behandeling',
     requirePayment: true,
     transformFields: {
@@ -769,7 +772,7 @@ export const TouringcarJaarontheffing: DecosZaakTypeTransformer<TouringcarJaaron
 export const WerkEnVervoerOpStraat: DecosZaakTypeTransformer<WerkzaamhedenEnVervoerOpStraatType> =
   {
     isActive: !IS_PRODUCTION,
-    caseType: CaseType.WVOS,
+    caseType: CaseTypeV2.WVOS,
     addToSelectFieldsBase: ['text49'], // Kenteken
     title: 'Werkzaamheden en vervoer op straat',
     dateInBehandelingWorkflowStepTitle: 'Status - In behandeling',
