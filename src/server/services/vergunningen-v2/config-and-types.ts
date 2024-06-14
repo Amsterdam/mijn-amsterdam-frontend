@@ -56,7 +56,7 @@ export type DecosZaakTypeTransformer<T extends Vergunning = Vergunning> = {
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
   // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
   // For example String operations like, trim, split, uppercase etc.
-  transformFields?: Partial<DecosFieldTransformerObjeGetCaseType<T>>;
+  transformFields?: Partial<DecosFieldTransformerObject<T>>;
   // After transform is used to perform additional transformations after the initial transform.
   // Business logic is implemented at this point, also async calls to other services to enrich the data can be done here.
   afterTransform?: (
@@ -83,9 +83,8 @@ export type DecosZaakTypeTransformer<T extends Vergunning = Vergunning> = {
 };
 
 export type DecosFieldsObject = Record<DecosFieldNameSource, string>;
-export type DecosFieldTransformerObjeGetCaseType<
-  T extends Vergunning = Vergunning,
-> = Record<DecosFieldNameSource, DecosFieldTransformer<T> | keyof T>;
+export type DecosFieldTransformerObject<T extends Vergunning = Vergunning> =
+  Record<DecosFieldNameSource, DecosFieldTransformer<T> | keyof T>;
 export type DecosZaakSource = {
   key: DecosZaakID;
   fields: DecosFieldsObject;
