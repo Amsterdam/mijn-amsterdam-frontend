@@ -17,14 +17,14 @@ export function EerdereVergunningen() {
   const vergunningen: VergunningV2[] =
     VERGUNNINGEN_V2.content?.filter((vergunninge) => vergunninge.processed) ??
     [];
-  const regelingen = addLinkElementToProperty<VergunningV2>(
+  const huidigeVergunningen = addLinkElementToProperty<VergunningV2>(
     vergunningen,
     'title'
   );
   const appRouteBack = AppRoutes['VERGUNNINGEN_V2'];
   return (
     <ListPagePaginated
-      items={regelingen}
+      items={huidigeVergunningen}
       backLinkTitle={ThemaTitles.VERGUNNINGEN}
       title="Eerdere en niet verleende vergunningen en ontheffingen"
       appRoute={AppRoutes['VERGUNNINGEN_V2/EERDERE_VERGUNNINGEN']}
@@ -43,14 +43,14 @@ export function HuidigeVergunningen() {
   const vergunningen: VergunningV2[] =
     VERGUNNINGEN_V2.content?.filter((vergunninge) => !vergunninge.processed) ??
     [];
-  const regelingen = addLinkElementToProperty<VergunningV2>(
+  const eerdereVergunningen = addLinkElementToProperty<VergunningV2>(
     vergunningen,
     'title'
   );
   const appRouteBack = AppRoutes['VERGUNNINGEN_V2'];
   return (
     <ListPagePaginated
-      items={regelingen}
+      items={eerdereVergunningen}
       backLinkTitle={ThemaTitles.VERGUNNINGEN}
       title="Huidige vergunningen en ontheffingen"
       appRoute={AppRoutes['VERGUNNINGEN_V2/HUIDIGE_VERGUNNINGEN']}
