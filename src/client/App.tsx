@@ -256,6 +256,10 @@ function AppAuthenticated() {
             path={AppRoutes['BURGERZAKEN/ID-KAART']}
             component={BurgerzakenIDKaart}
           />
+          <Route
+            path={AppRoutes['BURGERZAKEN/PASPOORT']}
+            component={BurgerzakenIDKaart}
+          />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />

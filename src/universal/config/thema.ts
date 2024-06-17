@@ -15,7 +15,7 @@ import { Match } from '../../universal/types';
 export type Thema =
   //  | 'AFVAL'
 
-  //  | 'BELASTINGEN'
+  // | 'BELASTINGEN'
   //| 'BURGERZAKEN'
   | 'BUURT'
   //  | 'BEZWAREN'
@@ -73,14 +73,14 @@ export type AppRouteInfo = {
 
 type ThemaConfig = {
   title: string;
-  appRoutes: AppRouteInfo[];
+  appRoutes: AppRouteInfo[]; //geeft pad aan en wat in tabblad komt te staan
   isExternal: boolean; //gaat de pagina wel of niet naar een andere (externe) site
   profileTypes: inlogType[]; //dit zijn de inlogtypes (DIGID/EHERK of BEIDE)
   //icon: SVGComponent; // Add the themaIcon in '../../client/assets/icons' and import it.
   //isThemaActive: (state: AppState) => { return: true }; > zie app.ts
 };
 
-export const themas2: Record<ThemaIDs, ThemaConfig> = {
+export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
   BRP: {
     title: 'Mijn gegevens',
     appRoutes: [{ url: '/persoonlijke-gegevens', tabName: `Mijn gegevens` }],
@@ -117,7 +117,7 @@ export const themas2: Record<ThemaIDs, ThemaConfig> = {
     title: 'Bezwaren',
     appRoutes: [
       { url: '/bezwaren', tabName: ' Bezwaren | overzicht' },
-      { url: '/bezwaren:uuid', tabName: ' Bezwaren | bezwaar' },
+      { url: '/bezwaren/:uuid', tabName: ' Bezwaren | bezwaar' },
     ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
@@ -168,8 +168,8 @@ export const themas2: Record<ThemaIDs, ThemaConfig> = {
     appRoutes: [
       { url: '/burgerzaken', tabName: 'Burgerzaken | overzicht' },
       { url: '/burgerzaken/id-kaart/:id', tabName: 'Burgerzaken | ID - kaart' },
+      { url: '/burgerzaken/paspoort/:id', tabName: 'Burgerzaken | Paspoort' },
     ],
-
     isExternal: false,
     profileTypes: ['private'],
     //   //icon: IconBurgerzaken,
@@ -179,7 +179,7 @@ export const themas2: Record<ThemaIDs, ThemaConfig> = {
   HORECA: {
     title: 'Horeca',
     appRoutes: [
-      { url: '/horeca/', tabName: 'Horeca | ovrezicht' },
+      { url: '/horeca/', tabName: 'Horeca | overzicht' },
       { url: '/horeca/:title/:id', tabName: 'Vergunning | Horeca' },
     ],
     isExternal: false,
@@ -204,7 +204,6 @@ export const themas2: Record<ThemaIDs, ThemaConfig> = {
         //LET OP deze moet nog zie routes.ts AppRoutesRediect
       },
     ],
-
     isExternal: false,
     profileTypes: ['private'],
     //   //icon: IconWior,
@@ -244,7 +243,7 @@ export const themas2: Record<ThemaIDs, ThemaConfig> = {
   MILIEUZONE: {
     //   //volgens mij hetzelfde als overtredingen > niet in prod maar geen Featuretoggle..
     title: 'Milieuzone',
-    appRoutes: [{ url: 'ExternalUrls.SSO_MILIEUZONE || ', tabName: '' }],
+    appRoutes: [{ url: ExternalUrls.SSO_MILIEUZONE, tabName: '' }], //GAAT NIET GOED!!!
     isExternal: true,
     profileTypes: ['private', 'commercial'],
     //   //icon: IconMilieuzone,
@@ -253,10 +252,9 @@ export const themas2: Record<ThemaIDs, ThemaConfig> = {
   OVERTREDINGEN: {
     //   //is deze nog op prod > zelfde als miliee ,maar deze heeft wel een Feautiretoggle
     title: 'Overtredingen voertuigen',
-    appRoutes: [{ url: 'ExternalUrls.SSO_MILIEUZONE || ', tabName: '' }],
+    appRoutes: [{ url: ExternalUrls.SSO_MILIEUZONE, tabName: '' }],
     isExternal: true,
     profileTypes: ['private', 'commercial'],
-
     //   //icon: IconOvertredingen,
     //   //isThemaActive: (state: AppState) => { return: true }
   },
@@ -325,7 +323,7 @@ export let browserTabNames = {};
 // https://sentry.io/answers/how-can-i-add-a-key-value-pair-to-a-javascript-object/
 
 //omdat je object niet mag itereren > maak je er
-Object.values(themas2).forEach((value, index) => {
+Object.values(ThemaNieuw).forEach((value, index) => {
   // consol¿e.log(value);
   value.appRoutes.map((appRoute) => {
     Object.assign(browserTabNames, {
@@ -374,6 +372,7 @@ export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
 );
 
 // These are used for PageHeadings and link title props for example.
+//YACINE deze eventueel vervangen door waar ThemaTitles dit te vervangen met {ThemaNieuw.BURGERZAKEN.title}
 export const ThemaTitles: { [thema in Thema]: string } = {
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
@@ -478,9 +477,9 @@ export interface ThemaMenuItem extends LinkProps {
 ///nieuw  moet ThemamenuItem vervangen.
 
 let themaMenuItems = [];
-for (const [key, value] of Object.entries(themas2)) {
+for (const [key, value] of Object.entries(ThemaNieuw)) {
   let url = value.appRoutes[0].url;
-  // consol¿e.log(value);
+  // console.log(value);
   themaMenuItems.push({
     title: value.title,
     id: key,
@@ -488,15 +487,15 @@ for (const [key, value] of Object.entries(themas2)) {
     profileTypes: value.profileTypes,
   });
 
-  let externalCommercialUrl = value.isExternal ? value.appRoutes[1].url : null;
-  if (externalCommercialUrl) {
-    themaMenuItems.push({
-      title: value.title,
-      id: key,
-      to: externalCommercialUrl, // the first in this list is always the thema url
-      profileTypes: value.profileTypes,
-    });
-  }
+  // let externalCommercialUrl = value.isExternal ? value.appRoutes[1].url : null;
+  // if (externalCommercialUrl) {
+  //   themaMenuItems.push({
+  //     title: value.title,
+  //     id: key,
+  //     to: externalCommercialUrl, // the first in this list is always the thema url
+  //     profileTypes: value.profileTypes,
+  //   });
+  // }
 }
 //einde nieuw
 export const myThemasMenuItems: ThemaMenuItem[] = [

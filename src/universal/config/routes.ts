@@ -1,11 +1,13 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
+import { browserTabNames } from './thema';
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',
   'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
+  'BURGERZAKEN/PASPOORT': '/burgerzaken/paspoort/:id',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
@@ -161,6 +163,7 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
   [AppRoutes['INKOMEN/TONK']]: () => `/inkomen/tonk`,
 
   [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
+  [AppRoutes['BURGERZAKEN/PASPOORT']]: () => '/burgerzaken/paspoort',
 
   [AppRoutes['STADSPAS/AANVRAAG']]: () => '/stadspas/aavraag',
   [AppRoutes['STADSPAS/SALDO']]: () => '/stadspas/saldo',
