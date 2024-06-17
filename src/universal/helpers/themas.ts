@@ -20,7 +20,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     MILIEUZONE,
     OVERTREDINGEN,
     VERGUNNINGEN,
-    SIA,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     MY_LOCATION,
@@ -100,12 +99,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
           ? OVERTREDINGEN.content?.isKnown
           : false)
       );
-
-    case Themas.SIA:
-      const hasSiaItems =
-        !!SIA?.content?.open?.items.length ||
-        !!SIA?.content?.afgesloten?.items.length;
-      return (FeatureToggle.siaActive ? hasSiaItems : false) && !isLoading(SIA);
 
     case Themas.AFVAL:
       return (

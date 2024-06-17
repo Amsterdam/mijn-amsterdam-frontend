@@ -21,7 +21,6 @@ import {
   TokenIdAttribute,
   oidcConfigDigid,
   oidcConfigEherkenning,
-  oidcConfigYivi,
 } from '../config';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
@@ -30,7 +29,7 @@ import { captureException, captureMessage } from '../services/monitoring';
 // const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
 export interface AuthProfile {
-  authMethod: 'eherkenning' | 'digid' | 'yivi';
+  authMethod: 'eherkenning' | 'digid';
   profileType: ProfileType;
   id: string; // User id (bsn/kvknr)
   sid: string; // TMA Session ID
@@ -44,10 +43,6 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
     case oidcConfigEherkenning.clientID:
       authMethod = 'eherkenning';
       profileType = 'commercial';
-      break;
-    case oidcConfigYivi.clientID:
-      authMethod = 'yivi';
-      profileType = 'private-attributes';
       break;
     case oidcConfigDigid.clientID:
     default:

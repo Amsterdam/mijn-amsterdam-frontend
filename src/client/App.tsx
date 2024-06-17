@@ -50,10 +50,6 @@ import Parkeren from './pages/Parkeren/Parkeren';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
-// import Sia from './pages/Sia/Sia';
-// import SiaListClosed from './pages/Sia/SiaListClosed';
-// import SiaListOpen from './pages/Sia/SiaListOpen';
-// import SiaDetail from './pages/SiaDetail/SiaDetail';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
@@ -73,7 +69,6 @@ import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 import AVG from './pages/AVG/AVG';
 import AVGDetail from './pages/AVGDetail/AVGDetail';
 import BFF500Error from './pages/BffError/BffError';
-import LandingPageYivi from './pages/Landing/LandingYivi';
 
 import Bodem from './pages/Bodem/Bodem';
 import LoodMeting from './pages/Bodem/LoodMeting';
@@ -120,13 +115,6 @@ function AppNotAuthenticated() {
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
-          {FeatureToggle.yiviLandingActive && (
-            <Route
-              exact
-              path={AppRoutes.YIVI_LANDING}
-              component={LandingPageYivi}
-            />
-          )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route

@@ -19,12 +19,6 @@ export const AppRoutes: Record<string, string> = {
   INKOMEN: '/inkomen',
   STADSPAS: '/stadspas',
 
-  SIA: '/meldingen',
-  SIA_OPEN: '/alle-open-meldingen/:page?',
-  SIA_CLOSED: '/alle-afgesloten-meldingen/:page?',
-  'SIA/DETAIL/OPEN': '/detail-open-melding/:id',
-  'SIA/DETAIL/CLOSED': '/detail-afgesloten-melding/:id',
-
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
@@ -52,7 +46,6 @@ export const AppRoutes: Record<string, string> = {
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
   HORECA: '/horeca/',
   'HORECA/DETAIL': '/horeca/:title/:id',
-  YIVI_LANDING: '/inloggen-met-yivi',
   AVG: '/avg',
   'AVG/DETAIL': '/avg/verzoek/:id',
   BFF_500_ERROR: '/server-error-500',
@@ -121,7 +114,6 @@ export const PublicRoutes: string[] = [
   AppRoutes.API1_LOGIN,
   AppRoutes.API2_LOGIN,
   AppRoutes.ACCESSIBILITY,
-  AppRoutes.YIVI_LANDING,
   AppRoutes.BFF_500_ERROR,
   AppRoutes.ACCESSIBILITY,
   AppRoutes.GENERAL_INFO,
@@ -178,21 +170,8 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
-  [AppRoutes['SIA/DETAIL/OPEN']]: (match: Match) =>
-    `/yivi/open-melding/${match.params?.id}`,
-  [AppRoutes['SIA/DETAIL/CLOSED']]: (match: Match) =>
-    `/yivi/afgesloten-melding/${match.params?.id}`,
-  [AppRoutes.SIA_CLOSED]: (match: Match) =>
-    `/yivi/alle-afgesloten-meldingen/pagina-${match.params?.page ?? 1}`,
-  [AppRoutes.SIA_OPEN]: (match: Match) =>
-    `/yivi/alle-open-meldingen/pagina-${match.params?.page ?? 1}`,
-
   [AppRoutes.ROOT]: (
     match: Match,
     { profileType, isAuthenticated }: TrackingConfig
-  ) =>
-    profileType === 'private-attributes'
-      ? // NOTE: If we are going to have more kinds of authmethods and usecases for the private-attributes profileType this simple implementation is not sufficient.
-        `/yivi/meldingen-overzicht`
-      : `/${isAuthenticated ? 'dashboard' : 'landing'}`,
+  ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };

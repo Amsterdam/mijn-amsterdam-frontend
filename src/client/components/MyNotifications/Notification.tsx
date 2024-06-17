@@ -74,7 +74,15 @@ const Notification = ({
           aria-expanded={isCollapsed}
           className={styles.TitleToggle}
           disabled={!smallVariant}
-          onClick={() => toggleCollapsed(!isCollapsed)}
+          onClick={() => {
+            if (smallVariant) {
+              trackEvent('klik-op-tip-titel', {
+                title: `${trackCategory} - ${notification.title}`,
+                profileType,
+              });
+              toggleCollapsed(!isCollapsed);
+            }
+          }}
         >
           <Heading className={styles.NotificationHeader} level={4}>
             {notification.title}
@@ -149,13 +157,11 @@ const Notification = ({
                         profileType
                       );
 
-                      trackEvent('open-tip-url', [
-                        {
-                          title: `${trackCategory} - ${notification.title}`,
-                          url: notification.link?.to || '#',
-                          profileType,
-                        },
-                      ]);
+                      trackEvent('klik-op-tip-link', {
+                        title: `${trackCategory} - ${notification.title}`,
+                        url: notification.link?.to || '#',
+                        profileType,
+                      });
 
                       if (notification.customLink?.callback) {
                         notification.customLink.callback();
@@ -174,12 +180,10 @@ const Notification = ({
                   <a
                     onClick={() => {
                       !isTipReasonShown &&
-                        trackEvent('expand-tip', [
-                          {
-                            title: `${trackCategory} - ${notification.title}`,
-                            profileType,
-                          },
-                        ]);
+                        trackEvent('klik-op-tip-reden', {
+                          title: `${trackCategory} - ${notification.title}`,
+                          profileType,
+                        });
                       return showTipReason(
                         (isTipReasonShown) => !isTipReasonShown
                       );
