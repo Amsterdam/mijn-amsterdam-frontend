@@ -91,8 +91,6 @@ export interface StatusLine {
 
   link?: LinkProps;
   about?: string;
-  decision?: string;
-  status?: string;
 }
 
 export interface ApiError {

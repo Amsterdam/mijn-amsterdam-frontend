@@ -76,11 +76,11 @@ export default function StatusDetail<T extends StatusLine>({
   ) as T[];
 
   const { id } = useParams<{ id: string }>();
-  const statusItem = statusItems.find((item) => item.id === id);
+  const statusItem = statusItems.find((item) => item.id === id) as T;
   const noContent = !isStateLoading && !statusItem;
   const appRoute = backLinkRoute ?? AppRoutes[thema] ?? '/';
   const hasDecision =
-    !!statusItem?.decision ||
+    !!(statusItem && 'decision' in statusItem && statusItem?.decision) ||
     !!statusItem?.steps.some((step) => !!step.decision);
 
   useEffect(() => {
