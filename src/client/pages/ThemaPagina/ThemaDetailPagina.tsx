@@ -60,8 +60,10 @@ export default function ThemaDetailPagina<T extends StatusLine>({
   showStatusLineConnection = true,
   statusLabel = 'Status',
 }: ThemaDetailPaginaProps<T>) {
-  const hasDecision =
-    !!zaak?.decision || !!zaak?.steps?.some((step) => !!step.decision);
+  const hasDecision = !!(
+    (zaak && 'decision' in zaak && zaak?.decision) ||
+    zaak?.steps?.some((step) => !!step.decision)
+  );
 
   let statusItemSteps = zaak?.steps ?? [];
 
