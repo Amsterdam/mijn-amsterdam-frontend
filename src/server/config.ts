@@ -226,6 +226,15 @@ export const ApiConfig: ApiDataRequestConfig = {
       key: getCert('BFF_SERVER_CLIENT_KEY'),
     }),
   },
+  DECOS_VERGUNNINGEN: {
+    url: `${process.env.BFF_DECOS_API_BASE_URL}`,
+    postponeFetch: !FeatureToggle.decosServiceActive,
+    headers: {
+      Accept: 'application/itemdata',
+      Authorization: `Basic ${Buffer.from(`${process.env.BFF_DECOS_VERGUNNINGEN_USERNAME}:${process.env.BFF_DECOS_VERGUNNINGEN_PASSWORD}`).toString('base64')}`,
+      'Content-type': 'application/json; charset=utf-8',
+    },
+  },
   VERGUNNINGEN: {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
