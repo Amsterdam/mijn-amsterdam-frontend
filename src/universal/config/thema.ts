@@ -100,19 +100,6 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   ERFPACHTv2: 'Erfpacht V2',
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
-  VERGUNNINGEN: 'Vergunningen en ontheffingen',
-  VERGUNNINGEN_LOPEND: 'Vergunningen',
-  VERGUNNINGEN_EERDER: 'Vergunningen',
-  KVK: 'Mijn onderneming',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  KREFIA: 'Kredietbank & FIBU',
-  SEARCH: 'Zoeken',
-  PARKEREN: 'Parkeren',
-  KLACHTEN: 'Klachten',
-  HORECA: 'Horeca',
-  AVG: 'AVG persoonsgegevens',
-  BODEM: 'Bodem',
-  SVWI: 'SVWI',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
