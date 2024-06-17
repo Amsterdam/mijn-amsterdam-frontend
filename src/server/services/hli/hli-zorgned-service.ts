@@ -1,12 +1,18 @@
+import { parseISO } from 'date-fns';
 import {
   apiErrorResult,
   apiSuccessResult,
   getFullName,
   getSettledResult,
+  isDateInPast,
   jsonCopy,
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-config-and-types';
+import { MINIMUM_REQUEST_DATE_FOR_DOCUMENTS } from '../wmo/wmo-config-and-types';
+import {
+  ZORGNED_GEMEENTE_CODE,
+  ZorgnedAanvraagTransformed,
+} from '../zorgned/zorgned-config-and-types';
 import {
   fetchAanvragen,
   fetchPersoonsgegevensNAW,
@@ -102,6 +108,31 @@ export async function fetchNamenBetrokkenen(
   return apiSuccessResult(namen);
 }
 
+function assignIsActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
+  const isEOG =
+    !!aanvraagTransformed.datumEindeGeldigheid &&
+    isDateInPast(aanvraagTransformed.datumEindeGeldigheid); // is Einde Of Geldighed
+
+  let isActueel = !!aanvraagTransformed.isActueel;
+
+  // Override actueel indien er nog geen levering heeft plaatsgevonden en de geldigheid nog niet is afgelopen
+  if (
+    !isActueel &&
+    !aanvraagTransformed.datumEindeLevering &&
+    !aanvraagTransformed.datumBeginLevering &&
+    !isEOG
+  ) {
+    isActueel = true;
+  }
+
+  // Override actueel indien de einde geldigheid is verlopen
+  if (isActueel && isEOG) {
+    isActueel = false;
+  }
+
+  aanvraagTransformed.isActueel = isActueel;
+}
+
 export async function fetchZorgnedAanvragenHLI(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
@@ -111,6 +142,23 @@ export async function fetchZorgnedAanvragenHLI(
     authProfileAndToken,
     'ZORGNED_AV'
   );
+
+  if (aanvragenResponse.status === 'OK') {
+    const aanvragenFiltered = aanvragenResponse.content.map(
+      (aanvraagTransformed) => {
+        // Override isActueel for front-end.
+        assignIsActueel(aanvraagTransformed);
+        // Do not assign documents to steps attached to voorzieningen requested before MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+        if (
+          parseISO(aanvraagTransformed.datumAanvraag) <
+          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+        ) {
+          aanvraagTransformed.documenten = [];
+        }
+        return aanvraagTransformed;
+      }
+    );
+  }
 
   return aanvragenResponse;
 }

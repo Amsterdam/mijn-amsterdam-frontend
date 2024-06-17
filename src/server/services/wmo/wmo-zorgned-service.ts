@@ -98,13 +98,6 @@ export async function fetchZorgnedAanvragenWMO(
       .map((aanvraagTransformed) => {
         // Override isActueel for front-end.
         assignIsActueel(aanvraagTransformed);
-        // Do not assign documents to steps attached to voorzieningen requested before MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-        if (
-          parseISO(aanvraagTransformed.datumAanvraag) <
-          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-        ) {
-          aanvraagTransformed.documenten = [];
-        }
         return aanvraagTransformed;
       });
 
