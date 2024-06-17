@@ -9,7 +9,6 @@ import type {
 import { AVGRequest } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
-import { SIAItem } from '../../../server/services/sia';
 import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
@@ -427,14 +426,6 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     displayTitle(item: HorecaVergunningen) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
-    },
-  },
-  {
-    isEnabled: FeatureToggle.siaActive,
-    stateKey: 'SIA' as AppStateKey,
-    displayTitle(item: SIAItem) {
-      return (term: string) =>
-        displayPath(term, [`Melding ${item.identifier}`]);
     },
   },
 ].map((apiConfig) => {

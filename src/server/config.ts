@@ -123,7 +123,6 @@ export type SourceApiKey =
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
   | 'KREFIA'
-  | 'SIA'
   | 'ENABLEU_2_SMILE'
   | 'LOOD_365'
   | 'LOOD_365_OAUTH';
@@ -207,10 +206,6 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_SERVER_CLIENT_CERT'),
       key: getCert('BFF_SERVER_CLIENT_KEY'),
     }),
-  },
-  SIA: {
-    url: `${process.env.BFF_SIA_BASE_URL}/private/signals/`,
-    postponeFetch: !FeatureToggle.siaApiActive,
   },
   VERGUNNINGEN: {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
@@ -370,7 +365,6 @@ export const RelayPathsAllowed = {
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
-export const AUTH_BASE_YIVI = `${AUTH_BASE}/yivi`;
 
 export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
 export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
@@ -416,11 +410,6 @@ export const BffEndpoints = {
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
 
-  // Signalen endpoints
-  SIA_ATTACHMENTS: '/services/signals/:id/attachments',
-  SIA_HISTORY: '/services/signals/:id/history',
-  SIA_LIST: '/services/signals/:status/:page',
-
   // Bezwaren
   BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document/:id',
   BEZWAREN_DETAIL: '/services/bezwaren/:id',
@@ -439,7 +428,6 @@ export const BffEndpoints = {
   AUTH_BASE_SSO,
   AUTH_BASE_SSO_DIGID,
   AUTH_BASE_SSO_EHERKENNING,
-  AUTH_BASE_YIVI,
 
   // Digid
   AUTH_CALLBACK_DIGID: BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
@@ -457,21 +445,13 @@ export const BffEndpoints = {
   AUTH_LOGOUT_EHERKENNING_LOCAL:
     AUTH_BASE_EHERKENNING + `${AUTH_LOGOUT}/local-session`,
 
-  // YIVI
-  AUTH_CALLBACK_YIVI: BFF_OIDC_BASE_URL + AUTH_BASE_YIVI + AUTH_CALLBACK,
-  AUTH_LOGIN_YIVI: AUTH_BASE_YIVI + AUTH_LOGIN,
-  AUTH_LOGIN_YIVI_LANDING: AUTH_BASE_YIVI + AUTH_LOGIN + '/landing',
-  AUTH_LOGOUT_YIVI: AUTH_BASE_YIVI + AUTH_LOGOUT,
-
   // Application specific urls
   AUTH_CHECK: `${AUTH_BASE}/check`,
   AUTH_CHECK_EHERKENNING: `${AUTH_BASE_EHERKENNING}/check`,
   AUTH_CHECK_DIGID: `${AUTH_BASE_DIGID}/check`,
-  AUTH_CHECK_YIVI: `${AUTH_BASE_YIVI}/check`,
   AUTH_TOKEN_DATA: `${AUTH_BASE}/token-data`,
   AUTH_TOKEN_DATA_EHERKENNING: `${AUTH_BASE_EHERKENNING}/token-data`,
   AUTH_TOKEN_DATA_DIGID: `${AUTH_BASE_DIGID}/token-data`,
-  AUTH_TOKEN_DATA_YIVI: `${AUTH_BASE_YIVI}/token-data`,
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
   // Bodem / loodmetingen
@@ -546,12 +526,6 @@ export const oidcConfigEherkenning: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
 };
 
-export const oidcConfigYivi: ConfigParams = {
-  ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
-  authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
-};
-
 // Op 1.13 met ketenmachtiging
 export const EH_ATTR_INTERMEDIATE_PRIMARY_ID =
   'urn:etoegang:core:LegalSubjectID';
@@ -566,7 +540,6 @@ export const EH_ATTR_PRIMARY_ID_LEGACY =
   'urn:etoegang:1.9:EntityConcernedID:KvKnr';
 
 export const DIGID_ATTR_PRIMARY = 'sub';
-export const YIVI_ATTR_PRIMARY = 'sub';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
@@ -587,24 +560,20 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
     return EH_ATTR_PRIMARY_ID_LEGACY;
   },
   digid: () => DIGID_ATTR_PRIMARY,
-  yivi: () => YIVI_ATTR_PRIMARY,
 };
 
 export type TokenIdAttribute =
   | typeof DIGID_ATTR_PRIMARY
-  | typeof EH_ATTR_PRIMARY_ID
-  | typeof YIVI_ATTR_PRIMARY;
+  | typeof EH_ATTR_PRIMARY_ID;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
   digid: DIGID_ATTR_PRIMARY,
-  yivi: YIVI_ATTR_PRIMARY,
 };
 
 export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType[]> = {
   digid: ['private'],
   eherkenning: ['commercial'],
-  yivi: ['private-attributes'],
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
@@ -613,9 +582,6 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   },
   get digid() {
     return oidcConfigDigid.clientID;
-  },
-  get yivi() {
-    return oidcConfigYivi.clientID;
   },
 };
 

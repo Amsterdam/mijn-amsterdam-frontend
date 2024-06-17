@@ -112,24 +112,6 @@ export const PRISTINE_APPSTATE: AppState = {
     { profileTypes: ['private'] }
   ),
 
-  SIA: apiPristineResult(
-    {
-      open: {
-        total: 0,
-        pageSize: 0,
-        items: [],
-      },
-      afgesloten: {
-        total: 0,
-        pageSize: 0,
-        items: [],
-      },
-    },
-    {
-      profileTypes: ['private-attributes'],
-      isActive: FeatureToggle.siaActive,
-    }
-  ),
   HORECA: apiPristineResult([]),
 
   AVG: apiPristineResult(null, {

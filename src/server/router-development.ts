@@ -80,12 +80,6 @@ authRouterDevelopment.get(
         ? String(req.query.redirectUrl)
         : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
-    switch (req.params.authMethod) {
-      case 'yivi':
-        redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT}`;
-        break;
-    }
-
     return res.redirect(redirectUrl);
   }
 );
@@ -98,12 +92,6 @@ authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
   let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
-
-  switch (auth.profile.authMethod) {
-    case 'yivi':
-      redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT}`;
-      break;
-  }
 
   return res.redirect(redirectUrl);
 });
