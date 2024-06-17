@@ -87,9 +87,12 @@ export interface StatusLineItem {
 export interface StatusLine {
   id: string;
   title: string;
-  about?: string;
-  link?: LinkProps;
   steps: StatusLineItem[];
+
+  link?: LinkProps;
+  about?: string;
+  decision?: string;
+  status?: string;
 }
 
 export interface ApiError {
