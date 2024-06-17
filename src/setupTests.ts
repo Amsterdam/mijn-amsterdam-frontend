@@ -82,8 +82,6 @@ process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
 
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
-process.env.BFF_SIA_BASE_URL = `${remoteApiHost}/sia`;
-process.env.BFF_SIA_IAM_TOKEN_ENDPOINT = `${remoteApiHost}/sia-iam-token`;
 
 process.env.BFF_BEZWAREN_API = `${remoteApiHost}/bezwaren`;
 process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';

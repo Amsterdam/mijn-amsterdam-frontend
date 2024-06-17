@@ -14,14 +14,14 @@ import {
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { MyNotification } from '../../../universal/types';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException } from '../monitoring';
 import {
   Bezwaar,
   BezwaarDocument,
-  BezwaarResponse,
+  OctopusApiResponse,
   BezwaarSourceData,
   BezwaarSourceDocument,
   BezwaarSourceStatus,
@@ -86,28 +86,42 @@ function getZaakUrl(zaakId: string) {
   return `${process.env.BFF_BEZWAREN_API}/zaken/${zaakId}`;
 }
 
-function transformBezwarenDocumentsResults(
-  sessionID: AuthProfileAndToken['profile']['sid'],
-  response: BezwarenSourceResponse<BezwaarSourceDocument>
-): BezwaarDocument[] {
-  if (Array.isArray(response.results)) {
-    return response.results.map(
-      ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
-        const [documentIdEncrypted] = encrypt(`${sessionID}:${identificatie}`);
-        return {
-          id: documentIdEncrypted,
-          title: bestandsnaam,
-          datePublished: verzenddatum,
-          url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-            BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-            { id: documentIdEncrypted }
-          )}`,
-          dossiertype,
-        };
+async function fetchMultiple<T>(
+  requestID: requestID,
+  requestConfig: DataRequestConfig,
+  maxPageCount: number = MAX_PAGE_COUNT
+) {
+  let response = await requestData<OctopusApiResponse<T>>(
+    requestConfig,
+    requestID
+  );
+  let itemsLength = response.content?.items.length ?? 0;
+  const resultCount = response.content?.count ?? 0;
+
+  if (response.status === 'OK') {
+    let items: T[] = response.content.items;
+    if (resultCount > itemsLength) {
+      while (
+        itemsLength < resultCount &&
+        requestConfig.params.page < maxPageCount
+      ) {
+        requestConfig.params.page += 1; //Fetch next page
+        response = await requestData<OctopusApiResponse<T>>(
+          requestConfig,
+          requestID
+        );
+
+        if (response.status === 'OK') {
+          items = items.concat(response.content.items);
+          itemsLength += response.content.items.length;
+        } else {
+          return response;
+        }
       }
-    );
+    }
+    return apiSuccessResult(items);
   }
-  return [];
+  return response;
 }
 
 function transformBezwaarStatus(
@@ -133,8 +147,9 @@ function transformBezwaarStatus(
 }
 
 async function fetchBezwaarStatus(
-  zaakId: string,
-  authProfileAndToken: AuthProfileAndToken
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zaakId: string
 ) {
   const params = {
     zaak: getZaakUrl(zaakId),
@@ -148,32 +163,71 @@ async function fetchBezwaarStatus(
 
   const statusResponse = await requestData<BezwaarStatus[]>(
     requestConfig,
-    zaakId
+    requestID,
+    authProfileAndToken
   );
 
   return statusResponse;
 }
 
+function transformBezwarenDocumentsResults(
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  response: BezwarenSourceResponse<BezwaarSourceDocument>
+): OctopusApiResponse<BezwaarDocument> {
+  if (Array.isArray(response.results)) {
+    const items = response.results.map(
+      ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
+        const [documentIdEncrypted] = encrypt(`${sessionID}:${identificatie}`);
+        return {
+          id: documentIdEncrypted,
+          title: bestandsnaam,
+          datePublished: verzenddatum,
+          url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
+            BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
+            { id: documentIdEncrypted }
+          )}`,
+          dossiertype,
+        };
+      }
+    );
+    return {
+      items,
+      count: response.count,
+    };
+  }
+  return {
+    count: 0,
+    items: [],
+  };
+}
+
 export async function fetchBezwarenDocuments(
-  zaakId: string,
-  authProfileAndToken: AuthProfileAndToken
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zaakId: string
 ) {
   const params = {
+    page: 1,
     identifier: zaakId,
   };
 
-  return requestData<BezwaarDocument[]>(
-    getApiConfig('BEZWAREN_DOCUMENTS', {
-      params,
-      transformResponse: (responseData) =>
-        transformBezwarenDocumentsResults(
-          authProfileAndToken.profile.sid,
-          responseData
-        ),
-      headers: await getBezwarenApiHeaders(authProfileAndToken),
-    }),
-    zaakId
+  const requestConfig = getApiConfig('BEZWAREN_DOCUMENTS', {
+    params,
+    transformResponse: (responseData) => {
+      return transformBezwarenDocumentsResults(
+        authProfileAndToken.profile.sid,
+        responseData
+      );
+    },
+    headers: await getBezwarenApiHeaders(authProfileAndToken),
+  });
+
+  const bezwaarDocumentenResponse = await fetchMultiple<BezwaarDocument>(
+    requestID,
+    requestConfig
   );
+
+  return bezwaarDocumentenResponse;
 }
 
 function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
@@ -189,7 +243,7 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
 function transformBezwarenResults(
   sessionID: AuthProfileAndToken['profile']['sid'],
   response: BezwarenSourceResponse<BezwaarSourceData>
-): BezwaarResponse {
+): OctopusApiResponse<Bezwaar> {
   const results = response.results;
 
   if (Array.isArray(results)) {
@@ -248,15 +302,22 @@ function transformBezwarenResults(
       .filter((bezwaar) => !!bezwaar.identificatie); // Filter bezwaren die nog niet inbehandeling zijn genomen (geen identificatie hebben)
 
     return {
-      bezwaren,
+      items: bezwaren,
       count: response.count,
     };
   }
 
   return {
-    bezwaren: [],
+    items: [],
     count: 0,
   };
+}
+
+function sortByBezwaarIdentificatie(item1: Bezwaar, item2: Bezwaar) {
+  // strip all non-numeric characters from the string and parse as integer so we can do a proper number sort
+  const identificatie1 = parseInt(item1.identificatie.replace(/\D/g, ''), 10);
+  const identificatie2 = parseInt(item2.identificatie.replace(/\D/g, ''), 10);
+  return identificatie2 - identificatie1;
 }
 
 export async function fetchBezwaren(
@@ -279,47 +340,16 @@ export async function fetchBezwaren(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  let bezwaren: Bezwaar[] = [];
-  let bezwarenResponse = await requestData<BezwaarResponse>(
-    requestConfig,
-    requestID
+  const bezwarenResponse = await fetchMultiple<Bezwaar>(
+    requestID,
+    requestConfig
   );
 
-  if (bezwarenResponse.status === 'OK' && bezwarenResponse.content) {
-    bezwaren = bezwaren.concat(bezwarenResponse.content.bezwaren);
-
-    while (
-      bezwaren.length < bezwarenResponse.content.count &&
-      bezwarenResponse.content.bezwaren.length > 0 &&
-      requestConfig.params.page < MAX_PAGE_COUNT
-    ) {
-      requestConfig.params.page += 1; //Fetch next page
-      bezwarenResponse = await requestData<BezwaarResponse>(
-        requestConfig,
-        requestID
-      );
-
-      if (bezwarenResponse.status === 'OK') {
-        bezwaren = bezwaren.concat(bezwarenResponse.content.bezwaren);
-      } else {
-        return bezwarenResponse;
-      }
-    }
-
-    return apiSuccessResult(
-      bezwaren.sort((item1, item2) => {
-        // strip all non-numeric characters from the string and parse as integer so we can do a proper number sort
-        const identificatie1 = parseInt(
-          item1.identificatie.replace(/\D/g, ''),
-          10
-        );
-        const identificatie2 = parseInt(
-          item2.identificatie.replace(/\D/g, ''),
-          10
-        );
-        return identificatie2 - identificatie1;
-      })
+  if (bezwarenResponse.status === 'OK') {
+    const bezwarenSorted = bezwarenResponse.content.sort(
+      sortByBezwaarIdentificatie
     );
+    return apiSuccessResult(bezwarenSorted);
   }
 
   // Return the likely error response otherwise. This will make sure the front-end knows to show an error message to the user.
@@ -402,10 +432,16 @@ export async function fetchBezwaarDetail(
     return apiErrorResult('Not authorized', null, 401);
   }
 
-  const bezwaarStatusRequest = fetchBezwaarStatus(zaakId, authProfileAndToken);
+  const bezwaarStatusRequest = fetchBezwaarStatus(
+    requestID,
+    authProfileAndToken,
+    zaakId
+  );
+
   const bezwaarDocumentsRequest = fetchBezwarenDocuments(
-    zaakId,
-    authProfileAndToken
+    requestID,
+    authProfileAndToken,
+    zaakId
   );
 
   const [statussenResponse, documentsResponse] = await Promise.allSettled([
@@ -462,3 +498,7 @@ export async function fetchBezwaarDocument(
     responseType: isDownload ? 'stream' : 'json',
   });
 }
+
+export const forTesting = {
+  fetchMultiple,
+};
