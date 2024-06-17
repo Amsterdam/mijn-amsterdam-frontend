@@ -90,7 +90,6 @@ export interface StatusLine {
   about?: string;
   link?: LinkProps;
   steps: StatusLineItem[];
-  [key: string]: any;
 }
 
 export interface ApiError {
