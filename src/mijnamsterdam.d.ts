@@ -22,7 +22,7 @@ type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
 
 type ProfileType = 'private' | 'private-attributes' | 'commercial';
 
-type AuthMethod = 'digid' | 'eherkenning' | 'yivi';
+type AuthMethod = 'digid' | 'eherkenning';
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -47,7 +47,7 @@ declare const MA_APP_VERSION: string;
 // Mode: Development Unittest Production
 declare const MA_APP_MODE: string;
 
-// A fixed user id for development purposes, for example when testing yivi an email address can be provided
+// A fixed user id (BSN/KVK) for development purposes.
 declare const MA_PROFILE_DEV_ID: string;
 
 // A list with test-accounts in the form of: foo=123,bar=456,hello=789

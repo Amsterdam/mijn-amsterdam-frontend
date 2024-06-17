@@ -23,7 +23,6 @@ export type Thema =
   | 'VERGUNNINGEN'
   | 'SVWI'
   | 'KVK'
-  | 'SIA'
   | 'TOERISTISCHE_VERHUUR'
   | 'SEARCH'
   | 'SUBSIDIE'
@@ -56,7 +55,6 @@ export const Themas: Record<Thema, Thema> = {
   ZORG: 'ZORG',
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
-  SIA: 'SIA',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
   KREFIA: 'KREFIA',
   SEARCH: 'SEARCH',
@@ -96,7 +94,6 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   VERGUNNINGEN_LOPEND: 'Vergunningen',
   VERGUNNINGEN_EERDER: 'Vergunningen',
   KVK: 'Mijn onderneming',
-  SIA: 'Meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
   KREFIA: 'Kredietbank & FIBU',
   SEARCH: 'Zoeken',
@@ -121,9 +118,6 @@ export const DocumentTitles: {
       case config.profileType === 'private-attributes' &&
         config.isAuthenticated:
         return 'Home | Meldingen overzicht';
-      case config.profileType === 'private-attributes' &&
-        !config.isAuthenticated:
-        return 'Inloggen met yivi | Mijn Amsterdam';
       case config.profileType !== 'private-attributes' &&
         config.isAuthenticated:
         return 'Home | Dashboard';
@@ -159,11 +153,6 @@ export const DocumentTitles: {
   [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
-  [AppRoutes.SIA]: `${ThemaTitles.SIA} overzicht`,
-  [AppRoutes['SIA/DETAIL/OPEN']]: `Melding open | ${ThemaTitles.SIA}`,
-  [AppRoutes['SIA/DETAIL/CLOSED']]: `Melding afgesloten | ${ThemaTitles.SIA}`,
-  [AppRoutes.SIA_OPEN]: `Meldingen | Alle openstaande meldingen`,
-  [AppRoutes.SIA_CLOSED]: `Meldingen | Alle afgesloten meldingen`,
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]:
     `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
@@ -178,7 +167,6 @@ export const DocumentTitles: {
   [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
   [AppRoutes.HORECA]: 'Horeca | overzicht',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
-  [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
   [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
   [AppRoutes['AVG/DETAIL']]: `${ThemaTitles.AVG} | verzoek`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
@@ -332,12 +320,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: ExternalUrls.SSO_MILIEUZONE || '', // TODO: In de toekomst wordt dit een andere link
     rel: 'external',
     profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.SIA,
-    id: Themas.SIA,
-    to: AppRoutes.SIA,
-    profileTypes: ['private-attributes'],
   },
   {
     title: ThemaTitles.TOERISTISCHE_VERHUUR,

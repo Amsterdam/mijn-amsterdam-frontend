@@ -8,7 +8,6 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
-  oidcConfigYivi,
 } from './config';
 import {
   decodeOIDCToken,
@@ -147,69 +146,6 @@ if (FeatureToggle.eherkenningActive) {
   );
 }
 
-/**
- * YIVI Oidc config
- */
-if (FeatureToggle.yiviActive) {
-  router.use(BffEndpoints.AUTH_BASE_YIVI, auth(oidcConfigYivi));
-
-  router.get(BffEndpoints.AUTH_BASE_YIVI + AUTH_CALLBACK, (req, res) =>
-    res.oidc.callback({
-      redirectUri: BffEndpoints.AUTH_CALLBACK_YIVI,
-    })
-  );
-
-  router.post(
-    BffEndpoints.AUTH_BASE_YIVI + AUTH_CALLBACK,
-    express.urlencoded({ extended: false }),
-    (req, res) =>
-      res.oidc.callback({
-        redirectUri: BffEndpoints.AUTH_CALLBACK_YIVI,
-      })
-  );
-
-  router.get(BffEndpoints.AUTH_LOGIN_YIVI, async (req, res) => {
-    try {
-      if (!(await isRequestAuthenticated(req, 'yivi'))) {
-        return res.oidc.login({
-          returnTo: BffEndpoints.AUTH_LOGIN_YIVI_LANDING,
-          authorizationParams: {
-            redirect_uri: BffEndpoints.AUTH_CALLBACK_YIVI,
-          },
-        });
-      }
-    } catch (error) {
-      captureException(error, {
-        properties: {
-          message: 'At Eherkenning landing',
-        },
-      });
-    }
-    return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=yivi');
-  });
-
-  router.get(BffEndpoints.AUTH_LOGIN_YIVI_LANDING, async (req, res) => {
-    try {
-      const auth = await getAuth(req);
-      if (auth.profile.id) {
-        countLoggedInVisit(auth.profile.id, 'yivi');
-      }
-    } catch (error) {
-      captureException(error, {
-        properties: {
-          message: 'At Yivi landing',
-        },
-      });
-    }
-    return res.redirect(`${process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT}`);
-  });
-
-  router.get(
-    BffEndpoints.AUTH_CHECK_YIVI,
-    verifyAuthenticated('yivi', 'private-attributes')
-  );
-}
-
 router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
   const authMethod = req.query.authMethod;
 
@@ -237,9 +173,6 @@ router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
           break;
         case 'digid':
           redirectUrl = BffEndpoints.AUTH_CHECK_DIGID;
-          break;
-        case 'yivi':
-          redirectUrl = BffEndpoints.AUTH_CHECK_YIVI;
           break;
       }
 
@@ -288,9 +221,6 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
     case 'digid':
       redirectUrl = BffEndpoints.AUTH_LOGOUT_DIGID;
       break;
-    case 'yivi':
-      redirectUrl = BffEndpoints.AUTH_LOGOUT_YIVI;
-      break;
   }
 
   return res.redirect(redirectUrl);
@@ -338,9 +268,4 @@ router.get(
 router.get(
   BffEndpoints.AUTH_LOGOUT_EHERKENNING_LOCAL,
   logout(process.env.MA_FRONTEND_URL!, false)
-);
-
-router.get(
-  BffEndpoints.AUTH_LOGOUT_YIVI,
-  logout(process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT!)
 );

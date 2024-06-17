@@ -31,7 +31,6 @@ import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
 import { fetchProfile } from './profile';
-import { fetchSignals } from './sia';
 import {
   fetchBelasting,
   fetchMilieuzone,
@@ -139,7 +138,6 @@ const ERFPACHTv2 = callService(fetchErfpachtV2);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
-const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
 const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
@@ -205,7 +203,6 @@ const SERVICES_INDEX = {
   NOTIFICATIONS,
   PROFILE,
   HORECA,
-  SIA,
   AVG,
   BODEM,
 };
@@ -214,15 +211,11 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = Omit<ServicesType, 'PROFILE' | 'SIA'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE'>;
 
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  | 'CMS_CONTENT'
-  | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'NOTIFICATIONS'
-  | 'PROFILE'
-  | 'SIA'
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
 >;
 
 type CommercialServices = Pick<
@@ -290,7 +283,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_MAINTENANCE_NOTIFICATIONS,
     NOTIFICATIONS,
     PROFILE,
-    SIA,
   },
   commercial: {
     AFVAL,
