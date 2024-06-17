@@ -88,7 +88,7 @@ export async function transformRegelingenForFrontend(
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
         displayStatus: getDisplayStatus(aanvraag, statusLineItems),
-        receiver: namen.join(', '),
+        receiver: namen.join('\n'),
       };
 
       regelingenFrontend.push(regelingFrontend);
