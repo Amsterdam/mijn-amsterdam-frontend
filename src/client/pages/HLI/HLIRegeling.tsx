@@ -1,12 +1,13 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { Datalist } from '../../components/Datalist/Datalist';
+import { Datalist, Row } from '../../components/Datalist/Datalist';
 import { useAppStateGetter } from '../../hooks';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
 import { getThemaTitleWithAppState } from './helpers';
+import styles from './HLI.module.scss';
 
-export default function HLIRegeling() {
+export default function HLIRegelingDetailPagina() {
   const appState = useAppStateGetter();
   const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
@@ -15,20 +16,28 @@ export default function HLIRegeling() {
 
   const pageContent = useCallback(
     (isLoading: boolean, hliRegeling: StatusSourceItem) => {
-      return (
-        hliRegeling?.supplier && (
-          <Grid.Cell span="all">
-            <Datalist
-              rows={[
-                {
-                  label: 'Aanbieder',
-                  content: hliRegeling.supplier,
-                },
-              ]}
-            />
-          </Grid.Cell>
-        )
-      );
+      const rows: Row[] = [];
+
+      if (hliRegeling?.supplier) {
+        rows.push({
+          label: 'Aanbieder',
+          content: hliRegeling.supplier,
+        });
+      }
+
+      if (hliRegeling?.receiver) {
+        rows.push({
+          label: 'Ontvanger',
+          content: hliRegeling.receiver,
+          classNameContent: styles.Ontvanger,
+        });
+      }
+
+      return !!rows.length ? (
+        <Grid.Cell span="all">
+          <Datalist rows={rows} />
+        </Grid.Cell>
+      ) : null;
     },
     []
   );
