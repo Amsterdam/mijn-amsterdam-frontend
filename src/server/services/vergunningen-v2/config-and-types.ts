@@ -2,11 +2,11 @@ import { ApiResponse } from '../../../universal/helpers';
 import {
   GenericDocument,
   LinkProps,
-  StatusLine,
+  ZaakDetail,
 } from '../../../universal/types';
 import {
-  GetCaseType,
   DecosCaseType,
+  GetCaseType,
 } from '../../../universal/types/vergunningen';
 
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
@@ -134,7 +134,7 @@ export type AddressBookEntry = {
 export type DecosWorkflowStepTitle = string;
 export type DecosWorkflowStepDate = string;
 
-export interface VergunningBase extends StatusLine {
+export interface VergunningBase extends ZaakDetail {
   caseType: DecosCaseType;
   dateDecision?: string | null;
   dateInBehandeling: string | null;
@@ -142,14 +142,11 @@ export interface VergunningBase extends StatusLine {
   decision: string | null;
   description: string;
   fetchUrl: string;
-  id: string;
   identifier: ZaakKenmerk;
   // Decos key (uuid) used as primary id's in api communication.
   key: string;
-  link: LinkProps;
   processed: boolean;
   status: ZaakStatus;
-  title: string;
 }
 
 export interface VergunningWithLocation extends VergunningBase {

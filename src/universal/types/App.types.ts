@@ -84,7 +84,7 @@ export interface StatusLineItem {
   [key: string]: any;
 }
 
-export interface StatusLine {
+export interface ZaakDetail {
   id: string;
   title: string;
   steps: StatusLineItem[];
@@ -92,6 +92,7 @@ export interface StatusLine {
   link?: LinkProps;
   about?: string;
 }
+export type StatusLine = ZaakDetail;
 
 export interface ApiError {
   name: string;
