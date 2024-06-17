@@ -144,6 +144,7 @@ export interface VergunningBase extends StatusLine {
   fetchUrl: string;
   id: string;
   identifier: ZaakKenmerk;
+  // Decos key (uuid) used as primary id's in api communication.
   key: string;
   link: LinkProps;
   processed: boolean;
