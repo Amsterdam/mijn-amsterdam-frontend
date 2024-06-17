@@ -78,17 +78,17 @@ export function isWoonvergunning(
 }
 
 export function isNearEndDate(
-  vergunning: VergunningExpirable,
+  dateEnd?: string | null,
   dateNow: Date = new Date()
 ) {
-  if (!vergunning.dateEnd) {
+  if (!dateEnd) {
     return false;
   }
 
-  const monthsTillEnd = monthsFromNow(vergunning.dateEnd, dateNow);
+  const monthsTillEnd = monthsFromNow(dateEnd, dateNow);
 
   return (
-    !isExpired(vergunning, dateNow) &&
+    !isDateInPast(dateEnd, dateNow) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
     monthsTillEnd >= 0 // Only show the notification if we have a long-running permit validity
   );

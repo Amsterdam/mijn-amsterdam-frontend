@@ -15,14 +15,10 @@ import {
 } from './services/controller';
 import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
-import {
-  fetchSignalAttachments,
-  fetchSignalHistory,
-  fetchSignalsListByStatus,
-} from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchDocument } from './services/wmo/wmo-zorgned-service';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
+import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
 
 export const router = express.Router();
 
@@ -124,6 +120,9 @@ router.use(
         case req.path.startsWith('/brp/'):
           url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
           break;
+        case req.path.startsWith('/wmoned/'):
+          url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
+          break;
       }
       return url;
     },
@@ -146,60 +145,6 @@ router.use(
     }
   )
 );
-
-router.get(
-  BffEndpoints.SIA_ATTACHMENTS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-
-    const attachmentsResponse = await fetchSignalAttachments(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    if (attachmentsResponse.status === 'ERROR') {
-      res.status(500);
-    }
-
-    return res.send(attachmentsResponse);
-  }
-);
-
-router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
-
-  const attachmentsResponse = await fetchSignalHistory(
-    res.locals.requestID,
-    authProfileAndToken,
-    req.params.id
-  );
-
-  if (attachmentsResponse.status === 'ERROR') {
-    res.status(500);
-  }
-
-  return res.send(attachmentsResponse);
-});
-
-router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
-
-  const siaResponse = await fetchSignalsListByStatus(
-    res.locals.requestID,
-    authProfileAndToken,
-    {
-      ...(pick(req.params, ['page', 'status']) as any),
-      pageSize: '20',
-    }
-  );
-
-  if (siaResponse.status === 'ERROR') {
-    res.status(500);
-  }
-
-  return res.send(siaResponse);
-});
 
 router.get(
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
@@ -288,6 +233,24 @@ router.get(
     }
 
     return res.send(response);
+  }
+);
+
+// Toeristische verhuur
+router.get(
+  BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchBBDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.docIdEncrypted
+    );
+
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
   }
 );
 

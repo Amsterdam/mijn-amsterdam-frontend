@@ -18,12 +18,16 @@ export default function ToeristischVerhuurDetail() {
   const { content } = TOERISTISCHE_VERHUUR;
   const { id } = useParams<{ id: string }>();
 
-  const Vergunning = content?.vergunningen?.find((item) => item.id === id);
-  const noContent = !isLoading(TOERISTISCHE_VERHUUR) && !Vergunning;
+  const vergunning =
+    content?.vakantieverhuurVergunningen?.find((item) => item.id === id) ||
+    content?.bbVergunningen?.find((item) => item.id === id);
+
+  const noContent = !isLoading(TOERISTISCHE_VERHUUR) && !vergunning;
 
   const hasWarning =
     hasFailedDependency(TOERISTISCHE_VERHUUR, 'vergunningen') || noContent;
   const isLoadingApi = isLoading(TOERISTISCHE_VERHUUR);
+
   return (
     <DetailPage>
       <PageHeading
@@ -34,7 +38,7 @@ export default function ToeristischVerhuurDetail() {
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >
-        {Vergunning?.title || 'Onbekende vergunning'}
+        {vergunning?.titel || 'Onbekende vergunning'}
       </PageHeading>
       {(isLoadingApi || hasWarning) && (
         <PageContent className={styles.DetailPageContent}>
@@ -48,9 +52,8 @@ export default function ToeristischVerhuurDetail() {
           )}
         </PageContent>
       )}
-      {(Vergunning?.title === 'Vergunning vakantieverhuur' ||
-        Vergunning?.title === 'Vergunning bed & breakfast') && (
-        <VergunningVerhuur vergunning={Vergunning} />
+      {vergunning?.titel.startsWith('Vergunning') && (
+        <VergunningVerhuur vergunning={vergunning} />
       )}
     </DetailPage>
   );

@@ -30,7 +30,7 @@ export async function fetchClientNummer(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const dataRequestConfig = getApiConfig('ZORGNED');
+  const dataRequestConfig = getApiConfig('ZORGNED_AV');
   const url = `${dataRequestConfig.url}/persoonsgegevensNAW`;
   const postData = {
     burgerservicenummer: authProfileAndToken.profile.id,

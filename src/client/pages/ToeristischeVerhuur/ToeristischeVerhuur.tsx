@@ -1,15 +1,8 @@
-import { useMemo } from 'react';
-import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur';
+import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
 import { AppRoutes, ThemaTitles } from '../../../universal/config/index';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
-import {
-  addTitleLinkComponent,
   ErrorAlert,
-  ThemaIcon,
   InfoDetail,
   Linkd,
   LinkdInline,
@@ -19,15 +12,17 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
 
 const DISPLAY_PROPS_VERGUNNINGEN = {
-  title: 'Soort vergunning',
+  titel: 'Soort vergunning',
   status: 'Status',
-  dateStart: 'Vanaf',
-  dateEnd: 'Tot',
+  datumVan: 'Vanaf',
+  datumTot: 'Tot',
 };
 
 const BB_VERGUNNING_DISCLAIMER =
@@ -37,83 +32,42 @@ export default function ToeristischeVerhuur() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
   const { content } = TOERISTISCHE_VERHUUR;
 
-  const hasVergunningenVakantieVerhuur = useMemo(() => {
-    return content?.vergunningen.some(
-      (vergunning) => vergunning.title === 'Vergunning vakantieverhuur'
+  const hasVergunningenVakantieVerhuur =
+    content?.vakantieverhuurVergunningen?.some(
+      (vergunning) => vergunning.titel === 'Vergunning vakantieverhuur'
     );
-  }, [content?.vergunningen]);
 
-  const hasVergunningenVakantieVerhuurVerleend = useMemo(() => {
-    return content?.vergunningen.some(
+  const hasVergunningenVakantieVerhuurVerleend =
+    content?.vakantieverhuurVergunningen?.some(
       (vergunning) =>
-        vergunning.title === 'Vergunning vakantieverhuur' &&
-        vergunning.decision === 'Verleend'
+        vergunning.titel === 'Vergunning vakantieverhuur' &&
+        vergunning.resultaat === 'Verleend'
     );
-  }, [content?.vergunningen]);
 
-  const hasVergunningBB = useMemo(() => {
-    return content?.vergunningen.some(
-      (vergunning) => vergunning.title === 'Vergunning bed & breakfast'
-    );
-  }, [content?.vergunningen]);
+  const hasVergunningBB = !!content?.bbVergunningen?.length;
 
-  const hasVergunningBBVerleend = useMemo(() => {
-    return content?.vergunningen.some(
-      (vergunning) =>
-        vergunning.title === 'Vergunning bed & breakfast' &&
-        vergunning.decision === 'Verleend'
-    );
-  }, [content?.vergunningen]);
-
-  const vergunningen = useMemo(() => {
-    if (!content?.vergunningen?.length) {
-      return [];
-    }
-
-    const vergunningen = [];
-
-    for (const vergunning of content.vergunningen) {
-      const displayVergunning = {
-        ...vergunning,
-        dateRequest: defaultDateFormat(vergunning.dateRequest),
-        dateEnd: vergunning.dateEnd
-          ? defaultDateFormat(vergunning.dateEnd)
-          : null,
-        dateStart: vergunning.dateStart
-          ? defaultDateFormat(vergunning.dateStart)
-          : null,
-      };
-      if (
-        ['Vergunning bed & breakfast', 'Vergunning vakantieverhuur'].includes(
-          vergunning.title
-        )
-      ) {
-        vergunningen.push(displayVergunning);
-      }
-    }
-
-    return addTitleLinkComponent(vergunningen, 'title');
-  }, [content?.vergunningen]);
-
-  const actieveVergunningen = vergunningen.filter((vergunning) => {
-    const vergunningEndDate = vergunning.dateEnd
-      ? new Date(vergunning.dateEnd)
-      : null;
-    const today = new Date();
-
-    return (
-      vergunning.status === 'Ontvangen' ||
-      (vergunning.status === 'Verleend' &&
-        vergunningEndDate &&
-        vergunningEndDate > today)
-    );
-  });
-
-  const inactieveVergunningen = vergunningen.filter(
-    (v) => !actieveVergunningen.includes(v)
+  const hasVergunningBBVerleend = content?.bbVergunningen?.some(
+    (vergunning) =>
+      vergunning.titel === 'Vergunning bed & breakfast' &&
+      vergunning.resultaat === 'Verleend'
   );
 
-  const hasRegistrations = !!content?.registraties.length;
+  const vergunningen = addTitleLinkComponent(
+    [
+      ...(content?.vakantieverhuurVergunningen ?? []),
+      ...(content?.bbVergunningen ?? []),
+    ],
+    'titel'
+  );
+
+  const actieveVergunningen = vergunningen.filter(
+    (vergunning) => vergunning.isActief
+  );
+  const inactieveVergunningen = vergunningen.filter(
+    (vergunning) => !vergunning.isActief
+  );
+
+  const hasRegistrations = !!content?.lvvRegistraties?.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
   const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const hasBothVerleend =
@@ -269,7 +223,7 @@ export default function ToeristischeVerhuur() {
           <InfoDetail
             label="Registratienummer toeristische verhuur"
             valueWrapperElement="div"
-            value={content?.registraties?.map(
+            value={content?.lvvRegistraties?.map(
               (registrationItem: ToeristischeVerhuurRegistratieDetail) => (
                 <article
                   key={registrationItem.registrationNumber}

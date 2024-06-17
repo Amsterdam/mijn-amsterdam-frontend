@@ -79,7 +79,7 @@ export function StatusLinePanelDocuments({
       ) : (
         altDocumentContent
       )}
-      {!!documents.length && (
+      {!!documents?.length && (
         <DocumentList documents={documents} trackPath={trackPath} />
       )}
     </StatusLinePanel>
@@ -257,8 +257,10 @@ function StatusLineConnection({
 
 interface StatusLineProps {
   items: StatusLineItem[];
-  trackCategory: string;
+  // Deprecated
+  trackCategory?: string;
   altDocumentContent?: AltDocumentContent;
+  // Deprecated
   id?: string;
   statusLabel?: string;
   showStatusLineConnection?: boolean;
@@ -270,10 +272,8 @@ interface StatusLineProps {
 
 export default function StatusLine({
   items,
-  trackCategory,
   statusLabel = 'Status',
   className,
-  id,
   maxStepCount,
   highlightKey = 'isActive',
   showStatusLineConnection = true,
@@ -311,7 +311,7 @@ export default function StatusLine({
               <StatusLinePanelDescription content={item.description ?? ''} />
 
               <StatusLinePanelDocuments
-                documents={item.documents}
+                documents={item.documents ?? []}
                 altDocumentContent={item.altDocumentContent}
                 trackPath={documentPathForTracking}
               />

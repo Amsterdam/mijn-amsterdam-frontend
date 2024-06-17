@@ -1,8 +1,7 @@
 import classnames from 'classnames';
 import { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-import { useLocation } from 'react-router-dom';
 import {
   ComponentChildren,
   LinkProps,

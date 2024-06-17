@@ -20,7 +20,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     MILIEUZONE,
     OVERTREDINGEN,
     VERGUNNINGEN,
-    SIA,
     TOERISTISCHE_VERHUUR,
     SUBSIDIE,
     MY_LOCATION,
@@ -101,12 +100,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
           : false)
       );
 
-    case Themas.SIA:
-      const hasSiaItems =
-        !!SIA?.content?.open?.items.length ||
-        !!SIA?.content?.afgesloten?.items.length;
-      return (FeatureToggle.siaActive ? hasSiaItems : false) && !isLoading(SIA);
-
     case Themas.AFVAL:
       return (
         FeatureToggle.garbageInformationPage &&
@@ -149,10 +142,11 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KVK) && !!KVK.content;
 
     case Themas.TOERISTISCHE_VERHUUR:
-      const { registraties, vergunningen } =
+      const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
         TOERISTISCHE_VERHUUR?.content ?? {};
-      const hasRegistraties = !!registraties?.length;
-      const hasVergunningen = !!vergunningen?.length;
+      const hasRegistraties = !!lvvRegistraties?.length;
+      const hasVergunningen =
+        !!vakantieverhuurVergunningen?.length || !!bbVergunningen?.length;
       return (
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );

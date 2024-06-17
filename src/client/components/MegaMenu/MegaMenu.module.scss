@@ -2,15 +2,16 @@
 
 .menu {
   @include centered-block;
-  padding: 4rem 0 6rem;
+  padding: 4rem 0 calc(6rem - var(--ams-link-list-gap));
   display: grid;
   grid-template-columns: 2fr 1fr;
 
-  :global(.ams-icon){
-    display: none;
+  .menuItem {
+    display: block;
+    margin-bottom: var(--ams-link-list-gap);
   }
 
-  :nth-child(1) :global(.ams-link-list) :global(.ams-link) {
+  nav:first-child .menuItem {
     font-weight: 800;
   }
 
@@ -18,9 +19,10 @@
     grid-template-columns: 1fr;
     padding: 2rem 0 4rem;
 
-    & > div {
+    & > nav {
       padding-top: 2rem;
     }
   }
 }
+
 

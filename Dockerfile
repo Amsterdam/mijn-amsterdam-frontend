@@ -3,7 +3,7 @@
 # Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:20-bookworm as updated-local
+FROM node:22-bookworm as updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -186,4 +186,3 @@ RUN apt-get install -y --no-install-recommends openssh-server \
 
 # SSH config
 COPY conf/sshd_config /etc/ssh/
-COPY files /app/files

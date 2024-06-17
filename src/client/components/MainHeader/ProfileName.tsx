@@ -1,3 +1,4 @@
+import { Icon } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,19 +9,30 @@ import { BRPData } from '../../../universal/types';
 import { IconProfile } from '../../assets/icons';
 import { useAppStateReady } from '../../hooks';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import { MaRouterLink } from '../MaLink/MaLink';
 import styles from './ProfileName.module.scss';
-import { PageMenu } from '@amsterdam/design-system-react';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 interface CommercialProfileNameProps {
   company?: KVKData;
   href: string;
+  showIcon: boolean;
+  className?: string;
 }
 
-function CommercialProfileName({ company, href }: CommercialProfileNameProps) {
+function CommercialProfileName({
+  company,
+  href,
+  showIcon = false,
+  className,
+}: CommercialProfileNameProps) {
   const label = company?.onderneming.handelsnaam || 'Mijn onderneming';
   return (
-    <MaRouterLink maVariant="noDefaultUnderline" href={href}>
+    <MaRouterLink
+      className={className}
+      maVariant="noDefaultUnderline"
+      href={href}
+    >
+      {showIcon && <Icon svg={IconProfile} />}
       {label}
     </MaRouterLink>
   );
@@ -29,16 +41,28 @@ function CommercialProfileName({ company, href }: CommercialProfileNameProps) {
 interface PrivateProfileNameProps {
   href: string;
   person?: BRPData['persoon'];
+  showIcon: boolean;
+  className?: string;
 }
 
-function PrivateProfileName({ person, href }: PrivateProfileNameProps) {
+function PrivateProfileName({
+  person,
+  href,
+  showIcon,
+  className,
+}: PrivateProfileNameProps) {
   const label = person?.opgemaakteNaam
     ? person.opgemaakteNaam
     : person?.voornamen
       ? getFullName(person)
       : 'Mijn gegevens';
   return (
-    <MaRouterLink maVariant="noDefaultUnderline" href={href}>
+    <MaRouterLink
+      className={className}
+      maVariant="noDefaultUnderline"
+      href={href}
+    >
+      {showIcon && <Icon svg={IconProfile} />}
       {label}
     </MaRouterLink>
   );
@@ -49,6 +73,8 @@ interface ProfileNameProps {
   company?: KVKData | null;
   profileAttribute?: string;
   profileType: ProfileType;
+  showIcons: boolean;
+  className?: string;
 }
 
 export function ProfileName({
@@ -56,6 +82,8 @@ export function ProfileName({
   company,
   profileAttribute,
   profileType,
+  showIcons = false,
+  className,
 }: ProfileNameProps) {
   const history = useHistory();
   const isAppStateReady = useAppStateReady();
@@ -76,12 +104,22 @@ export function ProfileName({
     switch (true) {
       case profileType === 'private':
         nameContent = (
-          <PrivateProfileName person={person!} href={AppRoutes.BRP} />
+          <PrivateProfileName
+            className={className}
+            showIcon={showIcons}
+            person={person!}
+            href={AppRoutes.BRP}
+          />
         );
         break;
       case FeatureToggle.kvkActive && profileType === 'commercial':
         nameContent = (
-          <CommercialProfileName company={company!} href={AppRoutes.KVK} />
+          <CommercialProfileName
+            className={className}
+            showIcon={showIcons}
+            company={company!}
+            href={AppRoutes.KVK}
+          />
         );
         break;
       case !!profileAttribute:
@@ -91,7 +129,8 @@ export function ProfileName({
               styles.ProfileLink,
               styles['ProfileLink--private'],
               styles['ProfileLink--private-attributes'],
-              styles['ProfileLink--active']
+              styles['ProfileLink--active'],
+              className
             )}
           >
             <IconProfile className={styles.IconProfile} /> {profileAttribute}

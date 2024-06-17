@@ -22,7 +22,6 @@ export const BFFApiUrls = {
 // Urls directly used from front-end
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/login`;
 export const LOGIN_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/login`;
-export const LOGIN_URL_YIVI = `${BFF_API_BASE_URL}/auth/yivi/login`;
 export const LOGOUT_URL = `${BFF_API_BASE_URL}/auth/logout`;
 export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
 export const AUTH_API_URL_EHERKENNING = `${BFF_API_BASE_URL}/auth/eherkenning/check`;
@@ -33,7 +32,6 @@ export const AUTH_API_URL_DIGID_SSO_CHECK = `${BFF_API_BASE_URL}/auth/digid/sso?
 export const loginUrlByAuthMethod: Record<string, string> = {
   eherkenning: LOGIN_URL_EHERKENNING,
   digid: LOGIN_URL_DIGID,
-  yivi: LOGIN_URL_YIVI,
 };
 
 export const ExcludePageViewTrackingUrls = [
@@ -66,12 +64,12 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   AFVALPUNTEN: 'Afvalpunten',
   SVWI: 'Werk & Inkomen portaal',
   KVK: 'Mijn onderneming',
-  SIA: 'Mijn meldingen',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
-  TOERISTISCHE_VERHUUR_vergunningen:
-    'Toeristische verhuur: Vergunningen + meldingen',
-  TOERISTISCHE_VERHUUR_registraties:
+  TOERISTISCHE_VERHUUR_lvvRegistraties:
     'Toeristische verhuur: Registratienummers + meldingen',
+  TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',
+  TOERISTISCHE_VERHUUR_vakantieverhuurVergunningen:
+    'Uw vergunning vakantieverhuur',
   KREFIA: 'Kredietbank & FIBU',
   KLACHTEN: 'Ingediende klachten',
   BEZWAREN: 'Ingediende bezwaren',

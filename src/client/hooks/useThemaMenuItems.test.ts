@@ -4,7 +4,7 @@ import {
   isThemaActive,
 } from '../../universal/helpers/themas';
 
-describe('useThemas', () => {
+describe('useThemaMenuItems', () => {
   test('isThemaActive (No AppState Value)', () => {
     const item: ThemaMenuItem = {
       id: 'PARKEREN',

@@ -60,10 +60,11 @@ process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
 process.env.BFF_LVV_API_URL = `${remoteApiHost}/lvv`;
 process.env.BFF_SMILE_USERNAME = 'test2';
 process.env.BFF_SMILE_PASSWORD = 'testpwd2';
-process.env.BFF_SISA_ENCRYPTION_KEY = 'xxxxxxxxxxxxxxxx';
+process.env.BFF_SISA_ENCRYPTION_KEY = 'aP#c%f9q9%2ZQgU2&yfzX4-ktDrvbJAF';
 process.env.BFF_SISA_CLIENT_SECRET = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_API_ENDPOINT = `${remoteApiHost}/subsidies/`;
 process.env.BFF_CLEOPATRA_API_ENDPOINT = `${remoteApiHost}/cleopatra`;
+process.env.BFF_POWERBROWSER_API_URL = `${remoteApiHost}/powerbrowser`;
 
 // Koppel api base urls
 process.env.BFF_MKS_API_BASE_URL = `${remoteApiHost}`;
@@ -81,8 +82,6 @@ process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
 
 process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
-process.env.BFF_SIA_BASE_URL = `${remoteApiHost}/sia`;
-process.env.BFF_SIA_IAM_TOKEN_ENDPOINT = `${remoteApiHost}/sia-iam-token`;
 
 process.env.BFF_BEZWAREN_API = `${remoteApiHost}/bezwaren`;
 process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';

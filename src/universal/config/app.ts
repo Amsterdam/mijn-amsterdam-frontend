@@ -16,10 +16,6 @@ export const FeatureToggle = {
   residentCountActive: true,
   sportDatasetsActive: true,
   wiorDatasetActive: true,
-  siaActive: true,
-  siaApiActive: true,
-  yiviActive: !IS_PRODUCTION,
-  yiviLandingActive: !isDateInPast('2023-12-31 23:59:00') || !IS_PRODUCTION,
   toeristischeVerhuurActive: true,
   krefiaActive: true,
   isSearchEnabled: true,
@@ -44,7 +40,9 @@ export const FeatureToggle = {
   passQueryParamsToStreamUrl: !IS_AP,
   laadpalenActive: !IS_PRODUCTION,
   oidcLogoutHintActive: !IS_PRODUCTION,
-  zorgnedDocumentAttachmentsActive: !IS_PRODUCTION,
+  zorgnedDocumentAttachmentsActive: true,
+  powerbrowserActive: !IS_AP,
+  bbDocumentDownloadsActive: false,
 };
 
 // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
