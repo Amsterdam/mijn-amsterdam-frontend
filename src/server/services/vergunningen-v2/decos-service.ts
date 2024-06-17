@@ -174,7 +174,7 @@ async function transformDecosZaakResponse(
     id: transformedFields.identifier.replace(/\//g, '-'),
     key: decosZaakSource.key,
     title: zaakTypeTransformer.title,
-    dateInBehandeling: null, // Serves as placeholder
+    dateInBehandeling: null, // Serves as placeholder, value for this property will be added async below.
     ...transformedFields,
   };
 
