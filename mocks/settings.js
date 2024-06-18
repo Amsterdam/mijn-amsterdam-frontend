@@ -1,12 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const MOCK_DOCUMENT_PATH = path.join(
-  __dirname,
-  path.resolve('/fixtures/documents/document.pdf')
-);
+// Mocks server will do some path magic and will prepend process.pwd() to the following.
+const MOCK_DOCUMENT_PATH = 'mocks/fixtures/documents/document.pdf';
 
-const MOCK_DOCUMENT = fs.readFileSync(MOCK_DOCUMENT_PATH, {
+const MOCK_DOCUMENT = fs.readFileSync(path.resolve(MOCK_DOCUMENT_PATH), {
   encoding: 'base64',
 });
 

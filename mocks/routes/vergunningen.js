@@ -1,4 +1,5 @@
 const settings = require('../settings.js');
+const path = require('node:path');
 
 const PRIVATE_RESPONSE = require('../fixtures/vergunningen.json');
 const VERGUNNINGEN_DOCUMENTS_LIST = require('../fixtures/vergunningen-documenten.json');
