@@ -46,8 +46,8 @@ class ProfileTypeHandler {
   }
 
   middleware(req, res, _next) {
-    let resStatus = undefined;
-    let resBody = undefined;
+    let resStatus = this._privateUser.status;
+    let resBody = this._privateUser.body;
 
     if (isCommercialUser(req)) {
       this._core.logger.debug('Request from a commercial user');
@@ -55,8 +55,6 @@ class ProfileTypeHandler {
       resBody = this._commercialUser.body;
     } else {
       this._core.logger.debug('Request from a non-commercial user');
-      resStatus = this._privateUser.status;
-      resBody = this._privateUser.body;
     }
 
     res.status(resStatus);
@@ -71,13 +69,14 @@ class ProfileTypeHandler {
 function isCommercialUser(req) {
   const auth = req.headers?.authorization;
 
-  if (auth === undefined || auth === null || !auth.startsWith('Bearer ')) {
+  if (!auth?.startsWith('Bearer ')) {
     return false;
   }
 
-  const jwtDecoded = jose.decodeJwt(auth.split(' ')[1]);
+  const jwtToken = auth.split(' ')[1];
+  const jwtDecoded = jwtToken ? jose.decodeJwt(jwtToken) : jwtToken;
 
-  if (jwtDecoded === undefined) {
+  if (!jwtDecoded) {
     return false;
   }
 

@@ -4,9 +4,16 @@
 const ProfileTypeHandler = require('./mocks/handlers/ProfileTypeHandler.js');
 const IntermediateAPIHandler = require('./mocks/handlers/IntermediateAPIHandler.js');
 
+// RP TODO: Env file gebruiken om de basis van routes te definieren
+//
+// const ENV_FILE = '.env.local';
+// console.debug(`trying env file ${ENV_FILE}`);
+// const envConfig = dotenv.config({ path: ENV_FILE });
+// dotenvExpand.expand(envConfig);
+
 module.exports = {
   // Log level. Can be one of silly, debug, verbose, info, warn or error
-  log: 'info',
+  log: 'debug',
   config: {
     //allowUnknownArguments: false,
   },

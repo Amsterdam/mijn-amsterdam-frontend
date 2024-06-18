@@ -14,7 +14,7 @@ function noCommercialPermits(vergunning) {
 
 module.exports = [
   {
-    id: 'vergunningen-download-document',
+    id: 'get-vergunningen-download-document',
     url: '/decosjoin/document/:encryptedID',
     method: 'GET',
     variants: [
@@ -44,7 +44,8 @@ module.exports = [
           commercialUser: {
             status: 200,
             body: {
-              content: { ...COMMERCIAL_RESPONSE },
+              // RP TODO: test deze route
+              content: COMMERCIAL_RESPONSE,
               status: 'OK',
             },
           },
@@ -53,7 +54,7 @@ module.exports = [
     ],
   },
   {
-    id: 'vergunningen-list-documents',
+    id: 'get-vergunningen-list-documents',
     url: '/decosjoin/listdocuments/:encryptedID',
     method: 'GET',
     variants: [
