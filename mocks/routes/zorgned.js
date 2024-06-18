@@ -35,15 +35,15 @@ module.exports = [
   },
   {
     id: 'get-zorgned-wmo-document',
-    url: '/api/wmoned/document/:id',
-    method: 'GET',
+    url: '/api/remote/zorgned/document',
+    method: 'POST',
     variants: [
       {
         id: 'standard',
-        type: 'file',
+        type: 'json',
         options: {
           status: 200,
-          path: settings.MOCK_DOCUMENT_PATH,
+          body: settings.DOCUMENT_IN_OBJECT,
         },
       },
     ],

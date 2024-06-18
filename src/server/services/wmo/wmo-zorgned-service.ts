@@ -225,12 +225,12 @@ export async function fetchVoorzieningen(
 export async function fetchDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  documentIdEncrpted: ZorgnedDocument['documentidentificatie']
+  documentIdEncrypted: ZorgnedDocument['documentidentificatie']
 ) {
   let documentId: string = '';
   let sessionID: string = '';
   try {
-    [sessionID, documentId] = decrypt(documentIdEncrpted).split(':');
+    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
   } catch (error) {
     captureException(error);
   }
