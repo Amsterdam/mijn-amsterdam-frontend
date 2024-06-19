@@ -45,7 +45,6 @@ module.exports = [
           commercialUser: {
             status: 200,
             body: {
-              // RP TODO: test deze route
               content: COMMERCIAL_RESPONSE,
               status: 'OK',
             },
