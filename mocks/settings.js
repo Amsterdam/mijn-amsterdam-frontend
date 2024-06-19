@@ -13,6 +13,7 @@ const MOCK_DOCUMENT = fs.readFileSync(path.resolve(MOCK_DOCUMENT_PATH), {
 const DOCUMENT_IN_OBJECT = { inhoud: MOCK_DOCUMENT };
 
 const ENV_CONFIG = loadEnv();
+const MOCK_BASE_PATH = getMockBaseRoute(ENV_CONFIG);
 
 function loadEnv() {
   const ENV_FILE = '.env.local';
@@ -24,7 +25,29 @@ function loadEnv() {
   }
 
   dotenvExpand.expand(envConfig);
-  return envConfig;
+
+  return envConfig.parsed;
 }
 
-module.exports = { MOCK_DOCUMENT_PATH, DOCUMENT_IN_OBJECT, ENV_CONFIG };
+function getMockBaseRoute(env_config) {
+  const basepath = env_config.BFF_MOCK_API_BASE_PATH;
+
+  if (!basepath) {
+    throw new Error('BFF_MOCK_API_BASE_PATH not found in env_config');
+  }
+
+  if (basepath.startsWith('/')) {
+    throw new Error(
+      `Unexpected forward slash at the beggining of basepath: '${basepath}'`
+    );
+  }
+
+  if (basepath.endsWith('/')) {
+    throw new Error(`basepath: '${basepath}' may not end with a slash`);
+  }
+
+  // Mocks Server expects paths to begin with a forward slash
+  return '/' + env_config.BFF_MOCK_API_BASE_PATH;
+}
+
+module.exports = { MOCK_DOCUMENT_PATH, DOCUMENT_IN_OBJECT, MOCK_BASE_PATH };

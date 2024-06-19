@@ -31,7 +31,7 @@ module.exports = [
   },
   {
     id: 'get-verguninngen',
-    url: '/api/decosjoin/getvergunningen',
+    url: `${settings.MOCK_BASE_PATH}/decosjoin/getvergunningen`,
     method: 'GET',
     variants: [
       {

@@ -1,3 +1,4 @@
+const settings = require('../settings');
 const BSN_RESPONSE = require('../fixtures/registraties-toeristische-verhuur-bsn.json');
 const NORMAL_RESPONSE = require('../fixtures/registraties-toeristische-verhuur.json');
 
@@ -7,7 +8,7 @@ const B_NUMBER = 'BBBBBBBBBBBBBBBBBBBB';
 module.exports = [
   {
     id: 'get-toeristische-verhuur-with-bsn',
-    url: '/remote/vakantieverhuur/bsn',
+    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/bsn`,
     method: 'POST',
     variants: [
       {
@@ -22,7 +23,7 @@ module.exports = [
   },
   {
     id: 'get-toeristische-verhuur-with-a-number',
-    url: `/remote/vakantieverhuur/${A_NUMBER}`,
+    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/${A_NUMBER}`,
     method: 'GET',
     variants: [
       {
@@ -40,7 +41,7 @@ module.exports = [
   },
   {
     id: 'get-toeristische-verhuur-with-b-number',
-    url: `/remote/vakantieverhuur/${B_NUMBER}`,
+    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/${B_NUMBER}`,
     method: 'GET',
     variants: [
       {

@@ -1,9 +1,10 @@
+const settings = require('../settings');
 const CLEOPATRA_RESPONSE = require('../fixtures/cleopatra.json');
 
 module.exports = [
   {
     id: 'get-cleopatra',
-    url: '/remote/milieuzone',
+    url: `${settings.MOCK_BASE_PATH}/milieuzone`,
     method: 'POST',
     variants: [
       {

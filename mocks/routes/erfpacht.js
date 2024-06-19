@@ -1,3 +1,5 @@
+const settings = require('../settings');
+
 const ERFPACHT_RESPONSES = {
   NOTIFICATIONS: require('../fixtures/erfpacht-notifications.json'),
 };
@@ -11,7 +13,7 @@ const ERFPACHT_V2_RESPONSES = {
 module.exports = [
   {
     id: 'get-erfpacht',
-    url: '/remote/erfpacht/api/v2/check/groundlease/:profile(user|company)/*',
+    url: `${settings.MOCK_BASE_PATH}/erfpacht/api/v2/check/groundlease/:profile(user|company)/*`,
     method: 'get',
     variants: [
       {
@@ -26,7 +28,7 @@ module.exports = [
   },
   {
     id: 'get-erfpacht-notifications',
-    url: '/remote/erfpacht/api/v2/notifications/:profile(bsn|kvk)/*',
+    url: `${settings.MOCK_BASE_PATH}/erfpacht/api/v2/notifications/:profile(bsn|kvk)/*`,
     method: 'get',
     variants: [
       {
@@ -41,7 +43,7 @@ module.exports = [
   },
   {
     id: 'get-erfpacht-v2-erfpachter',
-    url: '/remote/erfpachtv2/vernise/api/erfpachter',
+    url: `${settings.MOCK_BASE_PATH}/erfpachtv2/vernise/api/erfpachter`,
     method: 'GET',
     variants: [
       {
@@ -56,7 +58,7 @@ module.exports = [
   },
   {
     id: 'get-erfpacht-v2-dossiers',
-    url: '/remote/erfpachtv2/vernise/api/dossierinfo',
+    url: `${settings.MOCK_BASE_PATH}/erfpachtv2/vernise/api/dossierinfo`,
     method: 'GET',
     variants: [
       {
@@ -71,7 +73,7 @@ module.exports = [
   },
   {
     id: 'get-erfpacht-v2-dossier-info-details',
-    url: '/remote/erfpachtv2/vernise/api/dossierinfo/*',
+    url: `${settings.MOCK_BASE_PATH}/erfpachtv2/vernise/api/dossierinfo/*`,
     method: 'GET',
     variants: [
       {

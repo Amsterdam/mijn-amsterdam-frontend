@@ -1,3 +1,4 @@
+const settings = require('../settings');
 const RESPONSES = {
   PASHOUDER: require('../fixtures/gpass-pashouders.json'),
   STADSPAS: require('../fixtures/gpass-stadspas.json'),
@@ -7,7 +8,7 @@ const RESPONSES = {
 module.exports = [
   {
     id: 'get-gpass-pashouders',
-    url: '/remote/gpass/rest/sales/v1/pashouder',
+    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pashouder`,
     method: 'GET',
     variants: [
       {
@@ -22,7 +23,7 @@ module.exports = [
   },
   {
     id: 'get-gpass-stadspas',
-    url: '/remote/gpass/rest/sales/v1/pas/*',
+    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/*`,
     method: 'GET',
     variants: [
       {
@@ -37,7 +38,7 @@ module.exports = [
   },
   {
     id: 'get-gpass-transacties',
-    url: '/remote/gpass/rest/transacties/v1/budget*',
+    url: `${settings.MOCK_BASE_PATH}/gpass/rest/transacties/v1/budget*`,
     method: 'GET',
     variants: [
       {

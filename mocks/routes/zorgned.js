@@ -5,7 +5,7 @@ const settings = require('../settings.js');
 module.exports = [
   {
     id: 'get-zorgned-jzd',
-    url: '/api/remote/zorgned/aanvragen',
+    url: `${settings.MOCK_BASE_PATH}/zorgned/aanvragen`,
     method: 'POST',
     variants: [
       {
@@ -20,7 +20,7 @@ module.exports = [
   },
   {
     id: 'get-zorgned-av',
-    url: '/api/remote/zorgned/persoonsgegevensNAW',
+    url: `${settings.MOCK_BASE_PATH}/zorgned/persoonsgegevensNAW`,
     method: 'POST',
     variants: [
       {
@@ -35,7 +35,7 @@ module.exports = [
   },
   {
     id: 'get-zorgned-wmo-document',
-    url: '/api/remote/zorgned/document',
+    url: `${settings.MOCK_BASE_PATH}/zorgned/document`,
     method: 'POST',
     variants: [
       {

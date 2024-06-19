@@ -1,5 +1,7 @@
 const settings = require('../settings.js');
 
+// RP TODO: Find and replace voor urls in json zodat deze naar de origin van env kijken
+
 const RESPONSES = {
   AANVRAGEN: require('../fixtures/wpi-aanvragen.json'),
   E_AANVRAGEN: require('../fixtures/wpi-e-aanvragen.json'),
@@ -9,7 +11,7 @@ const RESPONSES = {
 module.exports = [
   {
     id: 'get-wpi-aanvragen',
-    url: '/api/wpi/uitkering/aanvragen',
+    url: `${settings.MOCK_BASE_PATH}/wpi/uitkering/aanvragen`,
     method: 'GET',
     variants: [
       {
@@ -25,7 +27,7 @@ module.exports = [
   {
     id: 'get-wpi-e-aanvragen',
     method: 'GET',
-    url: '/api/wpi/e-aanvragen',
+    url: `${settings.MOCK_BASE_PATH}/wpi/e-aanvragen`,
     variants: [
       {
         id: 'standard',
@@ -39,7 +41,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-specificaties',
-    url: '/api/wpi/uitkering/specificaties-en-jaaropgaven',
+    url: `${settings.MOCK_BASE_PATH}/wpi/uitkering/specificaties-en-jaaropgaven`,
     method: 'GET',
     variants: [
       {

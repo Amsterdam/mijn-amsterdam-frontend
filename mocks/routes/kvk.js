@@ -1,10 +1,11 @@
 const KVK_PRIVATE_RESPONSE = require('../fixtures/kvk-handelsregister.json');
 const KVK_COMMERCIAL_RESPONSE = require('../fixtures/kvk-handelsregister2.json');
+const settings = require('../settings.js');
 
 module.exports = [
   {
     id: 'get-kvk',
-    url: '/api/brp/hr',
+    url: `${settings.MOCK_BASE_PATH}/brp/hr`,
     method: 'GET',
     variants: [
       {

@@ -8,6 +8,7 @@
       "get-bezwaren-list:standard",
       "get-bezwaren-status:standard",
       "get-brp:standard",
+      "get-brp-aantal-bewoners:standard",
       "get-cleopatra:standard",
       "get-cms-maintainance-dashboard:standard",
       "get-cms-maintainance-landingspagina:standard",
