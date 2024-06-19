@@ -7,23 +7,11 @@ module.exports = [
     method: 'GET',
     variants: [
       {
-        id: 'success',
+        id: 'standard',
         type: 'json',
         options: {
           status: 200,
           body: BELASTINGEN,
-        },
-      },
-      {
-        id: 'commercial-user',
-        type: 'middleware',
-        options: {
-          middleware: (req, resp, next, core) => {
-            console.log(req);
-            core.logger.info('recieved');
-            resp.status(200);
-            resp.send('TEST');
-          },
         },
       },
     ],

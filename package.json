@@ -8,6 +8,7 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
     "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
+    "mocks": "mocks-server",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release": "sh scripts/release.sh --minor",
@@ -143,5 +144,8 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.14.3"
+  },
+  "devDependencies": {
+    "@mocks-server/main": "^4.1.0"
   }
 }

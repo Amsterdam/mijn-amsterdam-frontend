@@ -1,6 +1,9 @@
 [
   {
     "id": "base",
-    "routes": ["get-belastingen:success"]
+    "routes": [
+      "get-belastingen:standard",
+      "get-brp:standard"
+    ]
   }
 ]

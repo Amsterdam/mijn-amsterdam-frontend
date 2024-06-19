@@ -83,22 +83,6 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [String(ApiUrls.BELASTINGEN)]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      return loadMockApiResponseJson(BELASTINGEN);
-    },
-  },
-  [String(ApiUrls.BRP)]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 2500,
-    responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
-      return loadMockApiResponseJson(BRP);
-    },
-  },
   [String(ApiUrls.BEZWAREN_LIST)]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
@@ -267,29 +251,29 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1']:
-    {
-      status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-      responseData: async (config: any) => {
-        return loadMockApiResponseJson({
-          features: [SIA_MELDINGEN_BUURT.features[0]],
-        });
-      },
-      headers: {
-        link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=2>; rel="next"',
-      },
+  {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson({
+        features: [SIA_MELDINGEN_BUURT.features[0]],
+      });
     },
+    headers: {
+      link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=2>; rel="next"',
+    },
+  },
   ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=2']:
-    {
-      status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-      responseData: async (config: any) => {
-        return loadMockApiResponseJson({
-          features: [SIA_MELDINGEN_BUURT.features[1]],
-        });
-      },
-      headers: {
-        link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3>; rel="next"',
-      },
+  {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson({
+        features: [SIA_MELDINGEN_BUURT.features[1]],
+      });
     },
+    headers: {
+      link: '<https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3>; rel="next"',
+    },
+  },
   ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3']:
     {
       status: (config: any) => (isCommercialUser(config) ? 200 : 200),
@@ -415,7 +399,7 @@ export const mockDataConfig: MockDataConfig = {
         return loadMockApiResponseJson(KLACHTEN);
       },
       params: {
-        asymmetricMatch: function (actual: any) {
+        asymmetricMatch: function(actual: any) {
           return actual.getBuffer().toString().includes('readKlacht');
         },
       },
@@ -427,7 +411,7 @@ export const mockDataConfig: MockDataConfig = {
         return loadMockApiResponseJson(AVG);
       },
       params: {
-        asymmetricMatch: function (actual: any) {
+        asymmetricMatch: function(actual: any) {
           return actual.getBuffer().toString().includes('readAVGverzoek');
         },
       },
@@ -439,7 +423,7 @@ export const mockDataConfig: MockDataConfig = {
         return loadMockApiResponseJson(AVG_THEMAS);
       },
       params: {
-        asymmetricMatch: function (actual: any) {
+        asymmetricMatch: function(actual: any) {
           return actual
             .getBuffer()
             .toString()
@@ -477,19 +461,19 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   ['https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/?Appidt=app-pagetype&reload=true']:
-    {
-      status: () => 200,
-      method: 'get',
-      responseData: async (config: any) => {
-        return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_DASHBOARD);
-      },
+  {
+    status: () => 200,
+    method: 'get',
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_DASHBOARD);
     },
+  },
   ['https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina/?Appidt=app-pagetype&reload=true']:
-    {
-      status: () => 200,
-      method: 'get',
-      responseData: async (config: any) => {
-        return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_LANDINGSPAGE);
-      },
+  {
+    status: () => 200,
+    method: 'get',
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson(MAINTENANCE_NOTIFICATIONS_LANDINGSPAGE);
     },
+  },
 };
