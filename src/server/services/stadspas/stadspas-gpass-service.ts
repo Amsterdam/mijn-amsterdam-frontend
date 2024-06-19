@@ -7,7 +7,7 @@ import {
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
   GPASS_API_TOKEN,
   GPASS_BUDGET_ONLY_FOR_CHILDREN,
@@ -49,12 +49,12 @@ function formatBudget(
     `${sessionID}:${budget.code}:${administratienummer}:${pasnummer}`
   );
 
-  const urlTransactions = `${process.env.BFF_OIDC_BASE_URL}${BFF_BASE_PATH}${generatePath(
+  const urlTransactions = generateFullApiUrlBFF(
     BffEndpoints.STADSPAS_TRANSACTIONS,
     {
       transactionsKey,
     }
-  )}`;
+  );
 
   return {
     description: budget.omschrijving,
