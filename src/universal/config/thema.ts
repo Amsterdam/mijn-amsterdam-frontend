@@ -311,7 +311,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   },
   {
     title: (appState: AppState) => {
-      console.log('whoaoao');
       return getThemaTitleWithAppState(appState);
     },
     id: Themas.HLI,
