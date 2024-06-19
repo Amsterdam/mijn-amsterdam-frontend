@@ -126,7 +126,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         class="_Detail_702859"
       >
         <section
-          class="ams-alert ams-alert--warning"
+          class="ams-alert ams-alert--warning _ErrorAlert_702859"
         >
           <div
             class="ams-alert__icon"

@@ -38,20 +38,26 @@ export default function VergunningVerhuur({
           label="Gemeentelijk zaaknummer"
           value={vergunning?.zaaknummer ?? '-'}
         />
-        <InfoDetailGroup>
-          <InfoDetail
-            label="Vanaf"
-            value={
-              vergunning.datumVan ? defaultDateFormat(vergunning.datumVan) : '-'
-            }
-          />
-          <InfoDetail
-            label="Tot"
-            value={
-              vergunning.datumTot ? defaultDateFormat(vergunning.datumTot) : '-'
-            }
-          />
-        </InfoDetailGroup>
+        {(vergunning.datumVan || vergunning.datumTot) && (
+          <InfoDetailGroup>
+            <InfoDetail
+              label="Vanaf"
+              value={
+                vergunning.datumVan
+                  ? defaultDateFormat(vergunning.datumVan)
+                  : '-'
+              }
+            />
+            <InfoDetail
+              label="Tot"
+              value={
+                vergunning.datumTot
+                  ? defaultDateFormat(vergunning.datumTot)
+                  : '-'
+              }
+            />
+          </InfoDetailGroup>
+        )}
         {vergunning.titel === 'Vergunning bed & breakfast' &&
           vergunning.eigenaar &&
           vergunning.aanvrager && (
