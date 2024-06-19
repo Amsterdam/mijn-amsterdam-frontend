@@ -139,7 +139,7 @@ export default function ToeristischeVerhuur() {
         <div className={styles.Detail}>
           {hasBothVerleend && (
             <ErrorAlert severity="warning" title="Let op!">
-              U heeft een vergunning voor vakantieverhuur Žn bed &amp;
+              U heeft een vergunning voor vakantieverhuur &eacute;n bed &amp;
               breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan
               vakantieverhuur als bed &amp; breakfast te doen. U moet daarom 1
               van deze vergunningen opzeggen.
