@@ -5,13 +5,14 @@ import { REGELING } from './status-line-items/regeling';
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     leveringsVorm: '',
-    productsoortCodes: ['AV-UPC', 'AV-PCV'],
+    productsoortCodes: ['AV-ALG'],
+    productIdentificatie: ['AV-UPC', 'AV-PCV', 'AV-PCVZIL', 'AV-UPCZIL'],
     lineItemTransformers: PCVERGOEDING,
   },
   {
     leveringsVorm: '',
-    productsoortCodes: [
-      'AV-ALG',
+    productsoortCodes: ['AV-ALG'],
+    productIdentificatie: [
       'AV-CZM',
       'AV-GOV',
       'AV-IIT',

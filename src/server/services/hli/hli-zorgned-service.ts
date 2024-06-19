@@ -18,6 +18,7 @@ import {
 } from '../zorgned/zorgned-service';
 
 import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
+import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
 
 function volledigClientnummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -108,10 +109,7 @@ export async function fetchNamenBetrokkenen(
 }
 
 function assignIsActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
-  const isEOG =
-    !!aanvraagTransformed.datumEindeGeldigheid &&
-    isDateInPast(aanvraagTransformed.datumEindeGeldigheid); // is Einde Of Geldighed
-
+  const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);
   let isActueel = !!aanvraagTransformed.isActueel;
 
   // Override actueel indien er nog geen levering heeft plaatsgevonden en de geldigheid nog niet is afgelopen

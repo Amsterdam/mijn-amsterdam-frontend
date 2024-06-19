@@ -1,12 +1,32 @@
-import { defaultDateFormat } from '../../../../universal/helpers';
-import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
+import { defaultDateFormat, isDateInPast } from '../../../../universal/helpers';
+import {
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../zorgned/zorgned-config-and-types';
+
+function isVerzilvering(aanvraag: ZorgnedAanvraagTransformed) {
+  return (
+    !!aanvraag.productIdentificatie &&
+    ['AV-PCVZIL', 'AV-UPCZIL'].includes(aanvraag.productIdentificatie)
+  );
+}
+
+export function isEindeGeldigheidVerstreken(
+  aanvraag: ZorgnedAanvraagTransformed
+) {
+  return (
+    !!aanvraag.datumEindeGeldigheid &&
+    isDateInPast(aanvraag.datumEindeGeldigheid)
+  );
+}
 
 export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
     datePublished: (aanvraag) => aanvraag.datumBesluit,
     isChecked: (stepIndex, aanvraag) => true,
-    isActive: (stepIndex, aanvraag) => aanvraag.isActueel === true,
+    isActive: (stepIndex, aanvraag) =>
+      !isVerzilvering(aanvraag) && aanvraag.isActueel === true,
     description: (regeling) =>
       `<p>
         ${
@@ -23,10 +43,12 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Voorwaarde vooldaan',
-    isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
     datePublished: (aanvraag) => aanvraag.datumBesluit,
-    isChecked: (stepIndex, aanvraag) => true,
-    isActive: (stepIndex, aanvraag) => aanvraag.isActueel === true,
+    isChecked: (stepIndex, aanvraag) => isVerzilvering(aanvraag),
+    isActive: (stepIndex, aanvraag) =>
+      isVerzilvering(aanvraag) &&
+      aanvraag.isActueel === true &&
+      !isEindeGeldigheidVerstreken(aanvraag),
     description: (aanvraag) =>
       `
         <p>
@@ -42,11 +64,12 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Einde recht',
-    isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
     datePublished: (aanvraag) =>
       (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
-    isChecked: () => false,
-    isActive: (stepIndex, aanvraag) => aanvraag.isActueel === false,
+    isChecked: (stepIndex, aanvraag) =>
+      isVerzilvering(aanvraag) && isEindeGeldigheidVerstreken(aanvraag),
+    isActive: (stepIndex, aanvraag) =>
+      isVerzilvering(aanvraag) && aanvraag.isActueel === false,
     description: (aanvraag) =>
       `
         <p>

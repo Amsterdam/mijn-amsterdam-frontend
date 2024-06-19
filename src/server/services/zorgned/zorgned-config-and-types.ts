@@ -37,10 +37,12 @@ export interface ZorgnedStatusLineItemsConfig {
   leveringsVorm: LeveringsVorm;
   lineItemTransformers: ZorgnedStatusLineItemTransformerConfig[];
   productsoortCodes: ProductSoortCode[];
+  productIdentificatie?: ProductIdentificatie[];
 }
 
 export type LeveringsVorm = 'ZIN' | 'PGB' | '';
 export type ProductSoortCode = string;
+export type ProductIdentificatie = string;
 
 export interface Levering {
   begindatum: string | null;
@@ -72,6 +74,7 @@ export interface BeschiktProduct {
   product: {
     omschrijving: string;
     productsoortCode: ProductSoortCode;
+    identificatie?: ProductIdentificatie;
   };
   resultaat: BeschikkingsResultaat;
   toegewezenProduct: ToegewezenProduct;
@@ -122,6 +125,7 @@ export interface ZorgnedAanvraagTransformed {
   leverancier: string;
   leveringsVorm: LeveringsVorm;
   productsoortCode: ProductSoortCode;
+  productIdentificatie?: ProductIdentificatie;
   resultaat: BeschikkingsResultaat;
   titel: string;
 }

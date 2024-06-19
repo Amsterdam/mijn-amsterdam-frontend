@@ -12,7 +12,14 @@ function getStatusLineItemTransformers(
   return statusLineItemsConfig.find((config) => {
     return (
       aanvraagTransformed.leveringsVorm === config.leveringsVorm &&
-      config.productsoortCodes.includes(aanvraagTransformed.productsoortCode)
+      config.productsoortCodes.includes(aanvraagTransformed.productsoortCode) &&
+      (typeof config.productIdentificatie !== 'undefined'
+        ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
+          ? config.productIdentificatie.includes(
+              aanvraagTransformed.productIdentificatie
+            )
+          : false
+        : true)
     );
   })?.lineItemTransformers;
 }

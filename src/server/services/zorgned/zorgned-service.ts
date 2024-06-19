@@ -54,6 +54,11 @@ function transformZorgnedAanvraag(
     productsoortCode = productsoortCode.toUpperCase();
   }
 
+  let productIdentificatie = beschiktProduct.product.identificatie;
+  if (productIdentificatie) {
+    productIdentificatie = productIdentificatie.toUpperCase();
+  }
+
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
     id,
     datumAanvraag: datumAanvraag,
@@ -68,6 +73,7 @@ function transformZorgnedAanvraag(
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
     productsoortCode: productsoortCode,
+    productIdentificatie: productIdentificatie,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
     betrokkenen: toegewezenProduct?.betrokkenen ?? [],
