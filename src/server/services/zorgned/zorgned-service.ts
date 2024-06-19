@@ -10,7 +10,7 @@ import {
 } from './zorgned-config-and-types';
 
 import { GenericDocument } from '../../../universal/types';
-import { getApiConfig } from '../../config';
+import { IS_DEBUG, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
@@ -79,6 +79,7 @@ function transformZorgnedAanvraag(
 export function transformZorgnedAanvragen(
   responseData: ZorgnedResponseDataSource
 ) {
+  console.log('zorgned', JSON.stringify(responseData, null, '  '));
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
   const aanvragenTransformed: ZorgnedAanvraagTransformed[] = [];
