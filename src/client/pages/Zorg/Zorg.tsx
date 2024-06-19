@@ -73,7 +73,7 @@ export default function Zorg() {
       <SectionCollapsible
         id="SectionCollapsible-healthcare-granted"
         title="Huidige regelingen en hulpmiddelen"
-        noItemsMessage="U hebt geen huidige regelingen en hulpmiddelen."
+        noItemsMessage="U heeft geen huidige regelingen en hulpmiddelen."
         hasItems={!!itemsActual.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
@@ -85,7 +85,7 @@ export default function Zorg() {
       <SectionCollapsible
         id="SectionCollapsible-healthcare-previous"
         title="Eerdere regelingen en hulpmiddelen"
-        noItemsMessage="U hebt geen eerdere regelingen en hulpmiddelen."
+        noItemsMessage="U heeft geen eerdere regelingen en hulpmiddelen."
         hasItems={!!itemsPrevious.length}
         startCollapsed={true}
         isLoading={isLoading(WMO)}

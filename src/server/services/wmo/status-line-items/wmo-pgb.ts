@@ -10,7 +10,7 @@ export const PGB: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (data) =>
       `
             <p>
-              U hebt recht op ${data.titel} per ${defaultDateFormat(
+              U heeft recht op ${data.titel} per ${defaultDateFormat(
                 data.datumIngangGeldigheid
               )}.
             </p>

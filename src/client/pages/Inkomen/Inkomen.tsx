@@ -174,7 +174,7 @@ export default function Inkomen() {
         startCollapsed={false}
         isLoading={isLoadingWpi}
         hasItems={hasActiveRequests}
-        noItemsMessage="U hebt op dit moment geen lopende aanvragen."
+        noItemsMessage="U heeft op dit moment geen lopende aanvragen."
         className={styles.SectionCollapsible}
       >
         <Table
@@ -190,7 +190,7 @@ export default function Inkomen() {
         isLoading={isLoadingWpi}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
-        noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
+        noItemsMessage="U heeft op dit moment geen eerdere aanvragen."
       >
         <Table
           items={itemsCompleted}

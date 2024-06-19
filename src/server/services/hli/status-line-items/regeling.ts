@@ -7,12 +7,13 @@ export const REGELING: ZorgnedStatusLineItemTransformerConfig[] = [
     datePublished: (data) => data.datumBesluit,
     isChecked: (stepIndex, data) => true,
     isActive: (stepIndex, data) => data.isActueel === true,
-    description: (data) =>
-      `
-        <p>
-          U hebt recht op een ${data.titel} per ${defaultDateFormat(
-            data.datumIngangGeldigheid
-          )}.
+    description: (regeling) =>
+      `<p>
+        ${
+          regeling.resultaat === 'toegewezen'
+            ? `U heeft recht op ${regeling.titel} per ${defaultDateFormat(regeling.datumIngangGeldigheid)}`
+            : `U heeft geen recht op ${regeling.titel}`
+        }.
         </p>
         <p>
           In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -22,6 +23,7 @@ export const REGELING: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Einde recht',
+    isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
     datePublished: (data) =>
       (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
     isChecked: () => false,

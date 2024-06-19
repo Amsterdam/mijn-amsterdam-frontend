@@ -52,7 +52,7 @@ function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
   );
 }
 
-export default function _ThemaPaginaHLI() {
+export default function ThemaPaginaHLI() {
   const { HLI } = useAppStateGetter();
   const hasStadspas = !!HLI.content?.stadspas?.stadspassen?.length;
   const stadspassen = HLI.content?.stadspas?.stadspassen;

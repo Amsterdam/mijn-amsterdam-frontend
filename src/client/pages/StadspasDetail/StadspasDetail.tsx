@@ -218,7 +218,9 @@ function CStadspasBudget({
           </Button>
         ) : (
           !isLoadingTransactions && (
-            <p className={styles.NoTransactions}>U hebt nog geen transacties</p>
+            <p className={styles.NoTransactions}>
+              U heeft nog geen transacties
+            </p>
           )
         )}
       </PageContent>

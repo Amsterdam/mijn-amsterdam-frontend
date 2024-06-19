@@ -86,7 +86,7 @@ export function createProcessNotification(
       : `Update: ${requestProcess.about} aanvraag.`,
     description: descriptionTransform
       ? descriptionTransform(requestProcess, statusStep)
-      : `U hebt updates over uw ${
+      : `U heeft updates over uw ${
           statusStep.about || requestProcess.about
         }-aanvraag.`,
 

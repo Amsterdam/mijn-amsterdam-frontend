@@ -35,7 +35,10 @@ interface StatusDetailProps {
   stateKey: AppStateKey;
   getItems?: (content: AppState[AppStateKey]['content']) => StatusSourceItem[];
   pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
-  maxStepCount?: (hasDecision: boolean) => number | undefined;
+  maxStepCount?: (
+    hasDecision: boolean,
+    statusItem?: StatusSourceItem
+  ) => number | undefined;
   statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
   showStatusLineConnection?: boolean;
   reverseSteps?: boolean;
@@ -167,7 +170,7 @@ export default function StatusDetail({
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
               maxStepCount={
-                maxStepCount ? maxStepCount(hasDecision) : undefined
+                maxStepCount ? maxStepCount(hasDecision, statusItem) : undefined
               }
               highlightKey={highlightKey}
               id={`${thema}-${stateKey}-status`}

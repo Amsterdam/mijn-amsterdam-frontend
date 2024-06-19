@@ -86,7 +86,7 @@ export default function BEZWAREN() {
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Afgehandelde bezwaren"
-        noItemsMessage="U hebt nog geen afgehandelde bezwaren."
+        noItemsMessage="U heeft nog geen afgehandelde bezwaren."
         startCollapsed={false}
         hasItems={!!afgehandeldeBezwaren?.length}
         isLoading={isLoading(BEZWAREN)}

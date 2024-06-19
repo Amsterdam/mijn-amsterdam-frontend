@@ -124,7 +124,7 @@ export default function Vergunningen() {
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-actual"
         title="Lopende aanvragen"
-        noItemsMessage="U hebt geen lopende aanvragen."
+        noItemsMessage="U heeft geen lopende aanvragen."
         hasItems={!!vergunningenActual.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
@@ -140,7 +140,7 @@ export default function Vergunningen() {
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-previous"
         title="Eerdere aanvragen"
-        noItemsMessage="U hebt geen eerdere aanvragen."
+        noItemsMessage="U heeft geen eerdere aanvragen."
         hasItems={!!vergunningenPrevious.length}
         startCollapsed={true}
         className={styles.SectionCollapsiblePrevious}

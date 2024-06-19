@@ -18,7 +18,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (data) =>
       `
             <p>
-              U hebt recht op een ${data.titel} per ${defaultDateFormat(
+              U heeft recht op een ${data.titel} per ${defaultDateFormat(
                 data.datumIngangGeldigheid
               )}.
             </p>

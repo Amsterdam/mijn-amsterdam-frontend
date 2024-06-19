@@ -182,11 +182,11 @@ function AppAuthenticated() {
             component={StadspasDetail}
           />
           <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
-          <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
           <Route
             path={AppRoutes['HLI/REGELINGEN_LIJST']}
             component={HLIRegelingen}
           />
+          <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
           <Route path={AppRoutes['HLI']} component={HLI} />
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}

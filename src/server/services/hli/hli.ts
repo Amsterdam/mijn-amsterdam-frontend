@@ -14,6 +14,7 @@ import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { HLIRegeling } from './regelingen-types';
 import { fetchStadspas } from './stadspas';
+import { REGELING } from './status-line-items/regeling';
 
 function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
   const route = generatePath(AppRoutes['HLI/REGELING'], {
@@ -21,7 +22,6 @@ function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
     regeling: 'hli-regeling',
   });
   const regelingen: HLIRegeling[] = [
-    'Collectieve Ziektekosten Voorziening',
     'Gratis openbaar vervoer voor ouderen',
     'Individuele inkomenstoeslag',
     'Kindtegoed Voorschool',
@@ -44,12 +44,95 @@ function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
           isActive: true,
           isChecked: true,
           datePublished: '2024-05-31',
+          decision: 'toegewezen',
+          description:
+            typeof REGELING[0].description === 'function'
+              ? REGELING[0].description(
+                  {
+                    resultaat: 'toegewezen',
+                    titel: omschrijving,
+                    datumIngangGeldigheid: '2024-05-31',
+                  } as ZorgnedAanvraagTransformed,
+                  new Date()
+                )
+              : '',
         },
         {
           status: 'Einde recht',
           isActive: false,
           isChecked: false,
           datePublished: '',
+          description:
+            typeof REGELING[1].description === 'function'
+              ? REGELING[1].description(
+                  {
+                    resultaat: 'toegewezen',
+                    titel: omschrijving,
+                    datumIngangGeldigheid: '2024-05-31',
+                    isActueel: true,
+                  } as ZorgnedAanvraagTransformed,
+                  new Date()
+                )
+              : '',
+        },
+      ],
+      dateDescision: '2024-05-31',
+      dateStart: '2024-05-31',
+      dateEnd: '',
+    };
+    return aanvraag;
+  });
+  const route2 = generatePath(AppRoutes['HLI/REGELING'], {
+    id: '9798989898',
+    regeling: 'hli-regeling',
+  });
+  const afgewezen: HLIRegeling[] = [
+    'Gratis openbaar vervoer voor ouderen',
+    'Individuele inkomenstoeslag',
+    'Gratis openbaar vervoer voor ouderen',
+    'Individuele inkomenstoeslag',
+    'Kindtegoed Voorschool',
+    'Openbaar Vervoer voor Mantelzorgers',
+    'Gratis laptop of tablet middelbare school',
+    'Stadspas',
+    'Kindtegoed Voorschool',
+    'Gratis laptop of tablet basisschool',
+    'Individuele inkomenstoeslag',
+    'Gratis openbaar vervoer voor ouderen',
+    'Individuele inkomenstoeslag',
+    'Openbaar Vervoer voor Mantelzorgers',
+    'Gratis openbaar vervoer voor ouderen',
+    'Gratis laptop of tablet middelbare school',
+    'Stadspas',
+    'Tegemoetkoming Aanvullend Openbaar Vervoer voor ouderen',
+    'Tegemoetkoming Aanvullend Openbaar Vervoer voor ouderen',
+    'Gratis laptop of tablet basisschool',
+  ].map((omschrijving) => {
+    const aanvraag: HLIRegeling = {
+      id: `9798989898`,
+      title: omschrijving, // Omschrijving
+      supplier: 'Leverancier B.V', // Leverancier
+      about: omschrijving, // TODO: implement
+      isActual: false, // Indicates if this item is designated Current or Previous
+      link: { title: omschrijving, to: route2 },
+      steps: [
+        {
+          status: 'Besluit',
+          isActive: true,
+          isChecked: true,
+          decision: 'afgewezen',
+          datePublished: '2024-05-31',
+          description:
+            typeof REGELING[0].description === 'function'
+              ? REGELING[0].description(
+                  {
+                    resultaat: 'afgewezen',
+                    titel: omschrijving,
+                    datumIngangGeldigheid: '2024-05-31',
+                  } as ZorgnedAanvraagTransformed,
+                  new Date()
+                )
+              : '',
         },
       ],
       dateDescision: '2024-05-31',
@@ -59,7 +142,7 @@ function getFakeResponse(regelingenFrontend: HLIRegeling[]) {
     return aanvraag;
   });
 
-  return regelingen;
+  return [...regelingen, ...afgewezen];
 }
 
 export function transformRegelingenForFrontend(

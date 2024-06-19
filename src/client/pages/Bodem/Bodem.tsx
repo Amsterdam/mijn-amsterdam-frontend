@@ -83,7 +83,7 @@ export default function Bodem() {
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Eerdere aanvragen"
-        noItemsMessage="U hebt geen eerdere aanvragen."
+        noItemsMessage="U heeft geen eerdere aanvragen."
         startCollapsed={false}
         hasItems={!!afgerondeAanvragen?.length}
         isLoading={isLoading(BODEM)}

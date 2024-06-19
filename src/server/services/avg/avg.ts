@@ -275,7 +275,7 @@ function createAVGNotification(verzoek: AVGRequest) {
   if (isDone) {
     notification.title = 'AVG verzoek afgehandeld';
     notification.description =
-      'Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.';
+      'Uw verzoek is afgehandeld. U ontvangt of U heeft hierover bericht gekregen per e-mail of per brief.';
     notification.datePublished = verzoek.datumAfhandeling;
   }
 
