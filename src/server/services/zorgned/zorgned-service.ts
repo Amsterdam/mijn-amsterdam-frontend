@@ -85,7 +85,6 @@ function transformZorgnedAanvraag(
 export function transformZorgnedAanvragen(
   responseData: ZorgnedResponseDataSource
 ) {
-  console.log('zorgned', JSON.stringify(responseData, null, '  '));
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
   const aanvragenTransformed: ZorgnedAanvraagTransformed[] = [];
