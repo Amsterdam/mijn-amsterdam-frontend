@@ -31,7 +31,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `<p>
         ${
           regeling.resultaat === 'toegewezen'
-            ? `U heeft recht op een ${regeling.titel} per ${defaultDateFormat(regeling.datumIngangGeldigheid)}`
+            ? `U heeft recht op een ${regeling.titel}. U moet hiervoor eerst een cursus volgen.`
             : `U heeft geen recht op een ${regeling.titel}`
         }.
         </p>
@@ -42,7 +42,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `,
   },
   {
-    status: 'Voorwaarde vooldaan',
+    status: 'Cursus voldaan',
     datePublished: (aanvraag) => aanvraag.datumBesluit,
     isChecked: (stepIndex, aanvraag) => isVerzilvering(aanvraag),
     isActive: (stepIndex, aanvraag) =>
@@ -52,36 +52,11 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (aanvraag) =>
       `
         <p>
-          Uw heeft voldaan aan de voorwaarde voor het recht op ${aanvraag.titel} per ${defaultDateFormat(
-            aanvraag.datumIngangGeldigheid
-          )}.
+         U heeft voldaan aan de cursus voorwaarde voor het recht op ${aanvraag.titel}.
         </p>
         <p>
           In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
           indienen.
-        </p>
-      `,
-  },
-  {
-    status: 'Einde recht',
-    datePublished: (aanvraag) =>
-      (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
-    isChecked: (stepIndex, aanvraag) =>
-      isVerzilvering(aanvraag) && isEindeGeldigheidVerstreken(aanvraag),
-    isActive: (stepIndex, aanvraag) =>
-      isVerzilvering(aanvraag) && aanvraag.isActueel === false,
-    description: (aanvraag) =>
-      `
-        <p>
-          ${
-            aanvraag.isActueel
-              ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-              : `Uw recht op ${aanvraag.titel} is beëindigd ${
-                  aanvraag.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
-                    : ''
-                }`
-          }
         </p>
       `,
   },
