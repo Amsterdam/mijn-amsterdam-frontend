@@ -8,7 +8,6 @@ import {
   jsonCopy,
 } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { MINIMUM_REQUEST_DATE_FOR_DOCUMENTS } from '../wmo/wmo-config-and-types';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
@@ -144,20 +143,14 @@ export async function fetchZorgnedAanvragenHLI(
   );
 
   if (aanvragenResponse.status === 'OK') {
-    const aanvragenFiltered = aanvragenResponse.content.map(
+    const aanvragenTransformed = aanvragenResponse.content.map(
       (aanvraagTransformed) => {
         // Override isActueel for front-end.
         assignIsActueel(aanvraagTransformed);
-        // Do not assign documents to steps attached to voorzieningen requested before MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-        if (
-          parseISO(aanvraagTransformed.datumAanvraag) <
-          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-        ) {
-          aanvraagTransformed.documenten = [];
-        }
         return aanvraagTransformed;
       }
     );
+    return apiSuccessResult(aanvragenTransformed);
   }
 
   return aanvragenResponse;
