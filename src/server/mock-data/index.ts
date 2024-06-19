@@ -24,6 +24,9 @@ import LOODMETINGEN from './json/loodmetingen.json';
 import CLEOPATRA from './json/cleopatra.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIES_BSN from './json/registraties-toeristische-verhuur-bsn.json';
 import TOERISTISCHE_VERHUUR_REGISTRATIE from './json/registraties-toeristische-verhuur.json';
+import SIA_HISTORY from './json/sia-history.json';
+import SIA_ATTACHMENTS from './json/sia-melding-attachments.json';
+import SIA from './json/sia-meldingen.json';
 import SIA_MELDINGEN_BUURT from './json/sia-meldingen-buurt.json';
 import SUBSIDIE from './json/subsidie.json';
 import VERGUNNINGEN from './json/vergunningen.json';
@@ -83,11 +86,25 @@ interface DataConfigObject {
 type MockDataConfig = Record<string, DataConfigObject | DataConfigObject[]>;
 
 export const mockDataConfig: MockDataConfig = {
-  [String(ApiUrls.SUBSIDIE)]: {
-    pathReg: new RegExp('/remote/subsidies/*'),
+  [`${ApiUrls.SIA}`]: {
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      return loadMockApiResponseJson(SUBSIDIE);
+      if (config.params.status.includes('ingepland')) {
+        return loadMockApiResponseJson(SIA);
+      }
+      return loadMockApiResponseJson([]);
+    },
+  },
+  [`${ApiUrls.SIA}:id/attachments`]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson(SIA_ATTACHMENTS);
+    },
+  },
+  [`${ApiUrls.SIA}:id/history`]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson(SIA_HISTORY);
     },
   },
   ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=1']:
@@ -115,14 +132,23 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   ['https://acc.api.meldingen.amsterdam.nl/signals/v1/public/signals/geography?bbox=4.705770%2C52.256977%2C5.106206%2C52.467268&geopage=3']:
-    {
-      status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-      responseData: async (config: any) => {
-        return loadMockApiResponseJson({
-          features: [SIA_MELDINGEN_BUURT.features[2]],
-        });
-      },
+  {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson({
+        features: [SIA_MELDINGEN_BUURT.features[2]],
+      });
     },
+  },
+  [String(process.env.BFF_SIA_IAM_TOKEN_ENDPOINT)]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    method: 'post',
+    responseData: async (config: any) => {
+      return loadMockApiResponseJson({
+        access_token: 'xxxx',
+      });
+    },
+  },
   // [String(ApiUrls.AFVAL)]: {
   //   status: (config: any) => (isCommercialUser(config) ? 200 : 200),
   //   responseData: async (config: any) => {

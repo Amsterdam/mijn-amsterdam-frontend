@@ -19,7 +19,8 @@
       "get-erfpacht-notifications:standard",
       "get-erfpacht-v2-erfpachter:standard",
       "get-erfpacht-v2-dossiers:standard",
-      "get-erfpacht-v2-dossier-info-details:standard"
+      "get-erfpacht-v2-dossier-info-details:standard",
+      "get-subsidie:standard"
     ]
   }
 ]
