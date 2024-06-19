@@ -26,7 +26,7 @@ export { default as IconGarbage } from './Huisvuilkalender.svg?react';
 export { default as IconHome } from './home.svg?react';
 export { default as IconHomeCommercial } from './home-commercial.svg?react';
 export { default as IconHomeSimple } from './home-simple.svg?react';
-export { default as IconHLI } from './stadspas.svg?react';
+export { default as IconHLI } from './HLI.svg?react';
 export { default as IconHoreca } from './iconHoreca.svg?react';
 export {
   default as IconIndeterminate,
