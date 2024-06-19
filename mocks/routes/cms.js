@@ -1,4 +1,6 @@
-const ALLE_RESPONSE = require('../fixtures/maintenance-notifications-alle.json');
+const { loadFixture } = require('../loadJSON');
+
+const ALLE_RESPONSE = loadFixture('maintenance-notifications-alle.json');
 const DASHBOARD_RESPONSE = require('../fixtures/maintenance-notifications-dashboard.json');
 const LANDINGSPAGE_RESPONSE = require('../fixtures/maintenance-notifications-landingspagina.json');
 

@@ -1,5 +1,7 @@
 const settings = require('../../settings.js');
-const BEZWAREN_DOCUMENTEN_RESPONSE = require('../../fixtures/bezwaren-documents.json');
+const { loadFixture } = require('../../loadJSON.js');
+
+const BEZWAREN_DOCUMENTEN_RESPONSE = loadFixture('bezwaren-documents.json');
 
 module.exports = [
   {

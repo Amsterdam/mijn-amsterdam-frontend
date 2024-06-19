@@ -1,10 +1,12 @@
-const settings = require('../settings.js');
 const path = require('node:path');
+const settings = require('../settings.js');
+const { loadFixture } = require('../loadJSON.js');
 
-const PRIVATE_RESPONSE = require('../fixtures/vergunningen.json');
-const VERGUNNINGEN_DOCUMENTS_LIST = require('../fixtures/vergunningen-documenten.json');
+const PRIVATE_RESPONSE = loadFixture('vergunningen.json');
 const COMMERCIAL_RESPONSE =
   PRIVATE_RESPONSE.content.filter(noCommercialPermits);
+
+const VERGUNNINGEN_DOCUMENTS_LIST = loadFixture('vergunningen-documenten.json');
 
 function noCommercialPermits(vergunning) {
   return ![
