@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import {
@@ -146,61 +145,6 @@ router.use(
     }
   )
 );
-
-// NOTE: To be removed MIJN-8635
-router.get(
-  BffEndpoints.SIA_ATTACHMENTS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-
-    const attachmentsResponse = await fetchSignalAttachments(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    if (attachmentsResponse.status === 'ERROR') {
-      res.status(500);
-    }
-
-    return res.send(attachmentsResponse);
-  }
-);
-
-router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
-
-  const attachmentsResponse = await fetchSignalHistory(
-    res.locals.requestID,
-    authProfileAndToken,
-    req.params.id
-  );
-
-  if (attachmentsResponse.status === 'ERROR') {
-    res.status(500);
-  }
-
-  return res.send(attachmentsResponse);
-});
-
-router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
-
-  const siaResponse = await fetchSignalsListByStatus(
-    res.locals.requestID,
-    authProfileAndToken,
-    {
-      ...(pick(req.params, ['page', 'status']) as any),
-      pageSize: '20',
-    }
-  );
-
-  if (siaResponse.status === 'ERROR') {
-    res.status(500);
-  }
-
-  return res.send(siaResponse);
-});
 
 router.get(
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
