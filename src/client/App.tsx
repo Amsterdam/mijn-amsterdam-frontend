@@ -50,7 +50,7 @@ import Parkeren from './pages/Parkeren/Parkeren';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
-import Stadspas from './pages/Stadspas/Stadspas';
+import Stadspas from './pages/HLI/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import HLI from './pages/HLI/HLI';
