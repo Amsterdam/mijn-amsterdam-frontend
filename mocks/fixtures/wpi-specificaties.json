@@ -7,63 +7,63 @@
         "id": "660000000010112",
         "title": "Uitkeringsspecificatie Augustus-2019",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2019-09-01T00:00:00+02:00",
         "id": "660000000010113",
         "title": "Uitkeringsspecificatie September-2019",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2019-10-01T00:00:00+02:00",
         "id": "660000000010114",
         "title": "Uitkeringsspecificatie Oktober-2019",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2019-11-01T00:00:00+01:00",
         "id": "660000000010115",
         "title": "Uitkeringsspecificatie November-2019",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2019-12-01T00:00:00+01:00",
         "id": "660000000010116",
         "title": "Uitkeringsspecificatie December-2019",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2020-01-01T00:00:00+01:00",
         "id": "660000000010117",
         "title": "Uitkeringsspecificatie Januari-2020",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2020-02-01T00:00:00+01:00",
         "id": "660000000010118",
         "title": "Uitkeringsspecificatie Februari-2020",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2020-03-01T00:00:00+01:00",
         "id": "660000000010119",
         "title": "Uitkeringsspecificatie Maart-2020",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010112&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2021-01-01T00:00:00+01:00",
         "id": "660000000010015",
         "title": "Uitkeringsspecificatie Januari-2021",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010015&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010015&isBulk=False&isDms=False"
       }
     ],
     "jaaropgaven": [
@@ -72,56 +72,56 @@
         "id": "660000000010024",
         "title": "Jaaropgave 2022 rentedragende lening Bbz",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010024&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010024&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2023-05-05T00:00:00+01:00",
         "id": "660000000010024",
         "title": "Jaaropgave 2022 rentedragende lening Tozo",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010024&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010024&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2020-01-05T00:00:00+01:00",
         "id": "660000000010024",
         "title": "Jaaropgave 2020",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010024&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010024&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2020-01-05T00:00:00+01:00",
         "id": "660000000010113",
         "title": "Jaaropgave 2020",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010113&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010113&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2020-01-05T00:00:00+01:00",
         "id": "660000000010115",
         "title": "Jaaropgave 2020",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010115&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010115&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2021-01-05T00:00:00+01:00",
         "id": "660000000010116",
         "title": "Jaaropgave 2021",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010116&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010116&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2021-01-05T00:00:00+01:00",
         "id": "660000000010117",
         "title": "Jaaropgave 2021",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010117&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010117&isBulk=False&isDms=False"
       },
       {
         "datePublished": "2021-01-05T00:00:00+01:00",
         "id": "660000000010118",
         "title": "Jaaropgave 2021",
         "variant": null,
-        "url": "http://localhost:3100/wpi/document?id=660000000010118&isBulk=False&isDms=False"
+        "url": "{{origin}}/wpi/document?id=660000000010118&isBulk=False&isDms=False"
       }
     ]
   }

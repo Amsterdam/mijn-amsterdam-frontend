@@ -31,19 +31,19 @@
             {
               "id": "4400000007",
               "title": "Formulier Inlichtingen Klant",
-              "url": "/wpi/document?id=4400000007&isBulk=True&isDms=False",
+              "url": "{{origin}}/wpi/document?id=4400000007&isBulk=True&isDms=False",
               "datePublished": "2017-08-18T15:05:52+02:00"
             },
             {
               "id": "4400000010",
               "title": "Formulier Inlichtingen partner",
-              "url": "/wpi/document?id=4400000010&isBulk=True&isDms=False",
+              "url": "{{origin}}/wpi/document?id=4400000010&isBulk=True&isDms=False",
               "datePublished": "2017-08-18T15:05:52+02:00"
             },
             {
               "id": "4400000008",
               "title": "Aanvraagformulier WWB (kort)",
-              "url": "/wpi/document?id=4400000008&isBulk=True&isDms=False",
+              "url": "{{origin}}/wpi/document?id=4400000008&isBulk=True&isDms=False",
               "datePublished": "2017-08-18T15:05:52+02:00"
             }
           ],
@@ -90,7 +90,7 @@
             {
               "id": "4400000011",
               "title": "Formulier Inlichtingen partner",
-              "url": "/wpi/document?id=4400000011&isBulk=True&isDms=False",
+              "url": "{{origin}}/wpi/document?id=4400000011&isBulk=True&isDms=False",
               "datePublished": "2018-04-24T15:05:52+02:00"
             }
           ],
@@ -174,7 +174,7 @@
             {
               "id": "4400000013",
               "title": "Aanvraag Stadspas (balie)",
-              "url": "/wpi/document?id=4400000013&isBulk=True&isDms=False",
+              "url": "{{origin}}/wpi/document?id=4400000013&isBulk=True&isDms=False",
               "datePublished": "2022-05-08T15:05:52+02:00"
             }
           ],
@@ -221,7 +221,7 @@
             {
               "id": "4400000014",
               "title": "Aanvraag Stadspas (digitaal)",
-              "url": "/wpi/document?id=4400000014&isBulk=True&isDms=False",
+              "url": "{{origin}}/wpi/document?id=4400000014&isBulk=True&isDms=False",
               "datePublished": "2022-06-08T15:05:53+02:00"
             }
           ],

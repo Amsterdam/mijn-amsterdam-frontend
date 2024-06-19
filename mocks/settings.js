@@ -14,6 +14,7 @@ const DOCUMENT_IN_OBJECT = { inhoud: MOCK_DOCUMENT };
 
 const ENV_CONFIG = loadEnv();
 const MOCK_BASE_PATH = getMockBaseRoute(ENV_CONFIG);
+const MOCK_ORIGIN = getMockOrigin(ENV_CONFIG);
 
 function loadEnv() {
   const ENV_FILE = '.env.local';
@@ -50,4 +51,19 @@ function getMockBaseRoute(env_config) {
   return '/' + env_config.BFF_MOCK_API_BASE_PATH;
 }
 
-module.exports = { MOCK_DOCUMENT_PATH, DOCUMENT_IN_OBJECT, MOCK_BASE_PATH };
+function getMockOrigin(env_config) {
+  const origin = env_config.BFF_MOCK_API_ORIGIN;
+
+  if (!origin) {
+    throw new Error('BFF_MOCK_API_ORIGIN is undefined');
+  }
+
+  return origin;
+}
+
+module.exports = {
+  MOCK_DOCUMENT_PATH,
+  DOCUMENT_IN_OBJECT,
+  MOCK_BASE_PATH,
+  MOCK_ORIGIN,
+};

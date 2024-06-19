@@ -1,11 +1,15 @@
 const settings = require('../settings.js');
-
-// RP TODO: Find and replace voor urls in json zodat deze naar de origin van env kijken
+const { loadJSON } = require('../loadJSON.js');
+const path = require('node:path');
 
 const RESPONSES = {
-  AANVRAGEN: require('../fixtures/wpi-aanvragen.json'),
-  E_AANVRAGEN: require('../fixtures/wpi-e-aanvragen.json'),
-  SPECIFICATIES: require('../fixtures/wpi-specificaties.json'),
+  AANVRAGEN: loadJSON(path.join(__dirname, '../fixtures/wpi-aanvragen.json')),
+  E_AANVRAGEN: loadJSON(
+    path.join(__dirname, '../fixtures/wpi-e-aanvragen.json')
+  ),
+  SPECIFICATIES: loadJSON(
+    path.join(__dirname, '../fixtures/wpi-specificaties.json')
+  ),
 };
 
 module.exports = [

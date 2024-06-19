@@ -17,7 +17,7 @@
               "dcteId": "770",
               "id": "4400000031",
               "title": "Aanvraag Tozo 1\n01 april 2020 17:20",
-              "url": "/wpi/document?id=4400000031&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000031&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -31,7 +31,7 @@
               "dcteId": "175296",
               "id": "660000000000042",
               "title": "Brief betaling voorschot",
-              "url": "/wpi/document?id=660000000000042&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000042&isBulk=False&isDms=False"
             }
           ],
           "id": "voorschot",
@@ -46,7 +46,7 @@
               "dcteId": "175303",
               "id": "660000000000043",
               "title": "Besluit toekenning uitkering",
-              "url": "/wpi/document?id=660000000000043&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000043&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -73,7 +73,7 @@
               "dcteId": "777",
               "id": "4400000065",
               "title": "Aanvraag Tozo 2\n09 juni 2020 17:20",
-              "url": "/wpi/document?id=4400000065&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000065&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -87,7 +87,7 @@
               "dcteId": "175346",
               "id": "660000000000044",
               "title": "Brief betaling voorschot",
-              "url": "/wpi/document?id=660000000000044&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000044&isBulk=False&isDms=False"
             }
           ],
           "id": "voorschot",
@@ -101,7 +101,7 @@
               "dcteId": "175340",
               "id": "660000000000072",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000072&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000072&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -115,7 +115,7 @@
               "dcteId": "175340",
               "id": "660000000000073",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000073&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000073&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -130,7 +130,7 @@
               "dcteId": "175336",
               "id": "660000000000045",
               "title": "Besluit toekenning uitkering",
-              "url": "/wpi/document?id=660000000000045&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000045&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -146,7 +146,7 @@
               "dcteId": "175337",
               "id": "660000000000074",
               "title": "Besluit afwijzing",
-              "url": "/wpi/document?id=660000000000074&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000074&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -172,7 +172,7 @@
               "dcteId": "785",
               "id": "4400000058",
               "title": "Aanvraag Tozo 3\n08 oktober 2020 17:20",
-              "url": "/wpi/document?id=4400000058&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000058&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -186,7 +186,7 @@
               "dcteId": "175307",
               "id": "660000000000082",
               "title": "Brief betaling voorschot",
-              "url": "/wpi/document?id=660000000000082&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000082&isBulk=False&isDms=False"
             }
           ],
           "id": "voorschot",
@@ -200,7 +200,7 @@
               "dcteId": "175310",
               "id": "660000000000083",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000083&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000083&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -214,7 +214,7 @@
               "dcteId": "175310",
               "id": "660000000000084",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000084&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000084&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -229,7 +229,7 @@
               "dcteId": "175309",
               "id": "660000000000085",
               "title": "Besluit toekenning uitkering",
-              "url": "/wpi/document?id=660000000000085&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000085&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -245,7 +245,7 @@
               "dcteId": "175364",
               "id": "660000000000086",
               "title": "Besluit afwijzing",
-              "url": "/wpi/document?id=660000000000086&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000086&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -271,7 +271,7 @@
               "dcteId": "800",
               "id": "4400000117",
               "title": "Aanvraag Tozo 4\n03 april 2021 18:53",
-              "url": "/wpi/document?id=4400000117&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000117&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -285,7 +285,7 @@
               "dcteId": "175657",
               "id": "660000000000007",
               "title": "Brief betaling voorschot",
-              "url": "/wpi/document?id=660000000000007&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000007&isBulk=False&isDms=False"
             }
           ],
           "id": "voorschot",
@@ -299,7 +299,7 @@
               "dcteId": "175689",
               "id": "660000000000016",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000016&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000016&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -313,7 +313,7 @@
               "dcteId": "175689",
               "id": "660000000000017",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000017&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000017&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -328,7 +328,7 @@
               "dcteId": "175654",
               "id": "660000000000018",
               "title": "Besluit toekenning uitkering",
-              "url": "/wpi/document?id=660000000000018&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000018&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -344,7 +344,7 @@
               "dcteId": "175651",
               "id": "660000000000019",
               "title": "Besluit afwijzing",
-              "url": "/wpi/document?id=660000000000019&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000019&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -370,7 +370,7 @@
               "dcteId": "837",
               "id": "4400000015",
               "title": "Aanvraag Tozo 5\n03 juli 2021 18:53",
-              "url": "/wpi/document?id=4400000015&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000015&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -384,7 +384,7 @@
               "dcteId": "1725657",
               "id": "660000000000029",
               "title": "Brief betaling voorschot",
-              "url": "/wpi/document?id=660000000000029&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000029&isBulk=False&isDms=False"
             }
           ],
           "id": "voorschot",
@@ -398,7 +398,7 @@
               "dcteId": "176164",
               "id": "660000000000030",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000030&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000030&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -412,7 +412,7 @@
               "dcteId": "176164",
               "id": "660000000000033",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000033&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000033&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -427,7 +427,7 @@
               "dcteId": "176167",
               "id": "660000000000034",
               "title": "Besluit toekenning uitkering",
-              "url": "/wpi/document?id=660000000000034&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000034&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -443,7 +443,7 @@
               "dcteId": "176165",
               "id": "660000000000035",
               "title": "Besluit afwijzing",
-              "url": "/wpi/document?id=660000000000035&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000035&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -469,7 +469,7 @@
               "dcteId": "802",
               "id": "4400000091",
               "title": "Aanvraag TONK\n02 januari 2021 17:20",
-              "url": "/wpi/document?id=4400000091&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000091&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -484,7 +484,7 @@
               "dcteId": "176137",
               "id": "660000000000492",
               "title": "Brief meer informatie",
-              "url": "/wpi/document?id=660000000000492&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000492&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -500,7 +500,7 @@
               "dcteId": "176156",
               "id": "660000000000493",
               "title": "Besluit toekenning uitkering",
-              "url": "/wpi/document?id=660000000000493&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000000493&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -516,7 +516,7 @@
               "dcteId": "176180",
               "id": "660000000010180",
               "title": "Besluit verlenging",
-              "url": "/wpi/document?id=660000000010180&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010180&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -543,7 +543,7 @@
               "dcteId": "853",
               "id": "4400000174",
               "title": "Bbz aanvraag\n01 april 2022 18:20",
-              "url": "/wpi/document?id=4400000174&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000174&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -557,7 +557,7 @@
               "dcteId": "175885",
               "id": "660000000010268",
               "title": "Brief betaling voorschot",
-              "url": "/wpi/document?id=660000000010268&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010268&isBulk=False&isDms=False"
             }
           ],
           "id": "voorschot",
@@ -571,7 +571,7 @@
               "dcteId": "175863",
               "id": "660000000010269",
               "title": "Brief aanvraag adviesrapport",
-              "url": "/wpi/document?id=660000000010269&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010269&isBulk=False&isDms=False"
             }
           ],
           "id": "briefAdviesRapport",
@@ -586,7 +586,7 @@
               "dcteId": "1735802",
               "id": "660000000010270",
               "title": "Besluit afwijzing",
-              "url": "/wpi/document?id=660000000010270&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010270&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -602,7 +602,7 @@
               "dcteId": "1735840",
               "id": "660000000010271",
               "title": "Besluit toekenning",
-              "url": "/wpi/document?id=660000000010271&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010271&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -617,7 +617,7 @@
               "dcteId": "175861",
               "id": "660000000010272",
               "title": "Brief intrekken Bbz aanvraag",
-              "url": "/wpi/document?id=660000000010272&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010272&isBulk=False&isDms=False"
             }
           ],
           "id": "intrekking",
@@ -632,7 +632,7 @@
               "dcteId": "175866",
               "id": "660000000010273",
               "title": "Besluit buiten behandeling",
-              "url": "/wpi/document?id=660000000010273&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010273&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -647,7 +647,7 @@
               "dcteId": "1735866",
               "id": "660000000010274",
               "title": "Besluit buiten behandeling",
-              "url": "/wpi/document?id=660000000010274&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010274&isBulk=False&isDms=False"
             }
           ],
           "id": "besluit",
@@ -673,7 +673,7 @@
               "dcteId": "844",
               "id": "4400000138",
               "title": "Aanvraag Bbz\n01 september 2021 17:20",
-              "url": "/wpi/document?id=4400000138&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000138&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -687,7 +687,7 @@
               "dcteId": "175855",
               "id": "660000000010196",
               "title": "Brief verlenging beslistermijn",
-              "url": "/wpi/document?id=660000000010196&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010196&isBulk=False&isDms=False"
             }
           ],
           "id": "beslisTermijn",
@@ -701,7 +701,7 @@
               "dcteId": "176351",
               "id": "660000000010197",
               "title": "Brief verzoek om meer informatie",
-              "url": "/wpi/document?id=660000000010197&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010197&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -715,7 +715,7 @@
               "dcteId": "844",
               "id": "4400000139",
               "title": "Aanvraag Bbz\n15 september 2021 17:20",
-              "url": "/wpi/document?id=4400000139&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000139&isBulk=True&isDms=False"
             }
           ],
           "id": "aanvraag",
@@ -729,7 +729,7 @@
               "dcteId": "851",
               "id": "4400000160",
               "title": "Wijziging inkomsten Bbz",
-              "url": "/wpi/document?id=4400000160&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000160&isBulk=True&isDms=False"
             }
           ],
           "id": "inkomstenwijziging",
@@ -744,7 +744,7 @@
               "dcteId": "176322",
               "id": "660000000010198",
               "title": "Brief verzoek om meer informatie",
-              "url": "/wpi/document?id=660000000010198&isBulk=False&isDms=False"
+              "url": "{{origin}}/wpi/document?id=660000000010198&isBulk=False&isDms=False"
             }
           ],
           "id": "herstelTermijn",
@@ -758,7 +758,7 @@
               "dcteId": "854",
               "id": "4400000184",
               "title": "Wijziging inkomsten Bbz",
-              "url": "/wpi/document?id=4400000184&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000184&isBulk=True&isDms=False"
             }
           ],
           "id": "inkomstenwijziging",
@@ -772,7 +772,7 @@
               "dcteId": "8544",
               "id": "4400000186",
               "title": "Bbz: informatie doorgeven",
-              "url": "/wpi/document?id=4400000186&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000186&isBulk=True&isDms=False"
             }
           ],
           "id": "informatieOntvangen",
@@ -786,7 +786,7 @@
               "dcteId": "8544",
               "id": "4400000185",
               "title": "Mail Bbz",
-              "url": "/wpi/document?id=4400000185&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000185&isBulk=True&isDms=False"
             }
           ],
           "id": "correctiemail",
@@ -800,7 +800,7 @@
               "dcteId": "8546",
               "id": "4400000187",
               "title": "Besluit definitieve berekening Bbz uitkering",
-              "url": "/wpi/document?id=4400000187&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000187&isBulk=True&isDms=False"
             }
           ],
           "id": "besluit",
@@ -815,7 +815,7 @@
               "dcteId": "1538",
               "id": "4400001187",
               "title": "Bbz: informatie doorgeven",
-              "url": "/wpi/document?id=4400000187&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400000187&isBulk=True&isDms=False"
             }
           ],
           "id": "informatieOntvangen",
@@ -829,7 +829,7 @@
               "dcteId": "5641",
               "id": "4400001198",
               "title": "Brief Bbz",
-              "url": "/wpi/document?id=4400001198&isBulk=True&isDms=False"
+              "url": "{{origin}}/wpi/document?id=4400001198&isBulk=True&isDms=False"
             }
           ],
           "id": "algemeenBatchDocument",
