@@ -106,3 +106,5 @@ export interface StadspasResponseData {
   stadspassen: Stadspas[];
   aanvragen: never[];
 }
+
+export type StadspasAdministratieNummer = string;
