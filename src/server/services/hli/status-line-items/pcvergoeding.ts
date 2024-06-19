@@ -43,12 +43,34 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Cursus voldaan',
+    isVisible: (stepIndex, aanvraag) =>
+      isVerzilvering(aanvraag) && aanvraag.resultaat === 'toegewezen',
     datePublished: (aanvraag) => aanvraag.datumBesluit,
     isChecked: (stepIndex, aanvraag) => isVerzilvering(aanvraag),
     isActive: (stepIndex, aanvraag) =>
       isVerzilvering(aanvraag) &&
       aanvraag.isActueel === true &&
       !isEindeGeldigheidVerstreken(aanvraag),
+    description: (aanvraag) =>
+      `
+        <p>
+         U heeft voldaan aan de cursus voorwaarde voor het recht op ${aanvraag.titel}.
+        </p>
+        <p>
+          In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+          indienen.
+        </p>
+      `,
+  },
+  {
+    status: 'Cursus niet voldaan',
+    isVisible: (stepIndex, aanvraag) =>
+      isVerzilvering(aanvraag) && aanvraag.resultaat !== 'toegewezen',
+    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    isChecked: (stepIndex, aanvraag) => isVerzilvering(aanvraag),
+    isActive: (stepIndex, aanvraag) =>
+      (isVerzilvering(aanvraag) && aanvraag.isActueel !== true) ||
+      aanvraag.resultaat === 'afgewezen',
     description: (aanvraag) =>
       `
         <p>
