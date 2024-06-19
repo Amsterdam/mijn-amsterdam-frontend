@@ -1,15 +1,11 @@
 const settings = require('../settings.js');
-const { loadJSON } = require('../loadJSON.js');
+const { loadFixture } = require('../loadJSON.js');
 const path = require('node:path');
 
 const RESPONSES = {
-  AANVRAGEN: loadJSON(path.join(__dirname, '../fixtures/wpi-aanvragen.json')),
-  E_AANVRAGEN: loadJSON(
-    path.join(__dirname, '../fixtures/wpi-e-aanvragen.json')
-  ),
-  SPECIFICATIES: loadJSON(
-    path.join(__dirname, '../fixtures/wpi-specificaties.json')
-  ),
+  AANVRAGEN: loadFixture('wpi-aanvragen.json'),
+  E_AANVRAGEN: loadFixture('wpi-e-aanvragen.json'),
+  SPECIFICATIES: loadFixture('wpi-specificaties.json'),
 };
 
 module.exports = [
