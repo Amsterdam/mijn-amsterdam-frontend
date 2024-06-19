@@ -1,6 +1,5 @@
-const path = require('node:path');
 const settings = require('../settings.js');
-const { loadFixture } = require('../loadJSON.js');
+const loadFixture = require('../loadFixture.js');
 
 const PRIVATE_RESPONSE = loadFixture('vergunningen.json');
 const COMMERCIAL_RESPONSE =

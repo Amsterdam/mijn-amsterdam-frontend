@@ -1,5 +1,5 @@
 const settings = require('../../settings.js');
-const { loadFixture } = require('../../loadJSON.js');
+const loadFixture = require('../../loadFixture.js');
 
 const BEZWAREN_DOCUMENTEN_RESPONSE = loadFixture('bezwaren-documents.json');
 

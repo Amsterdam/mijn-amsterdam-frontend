@@ -39,7 +39,7 @@ describe('Horeca service', () => {
           "dateWorkflowActive": "2023-04-27",
           "decision": "Verleend",
           "description": "Nieuwe aanvraag, alcohol vrij, Het restotje, Berkelstraat  1",
-          "documentsUrl": "http://localhost:3100/decosjoin/listdocuments/gAAAAABkWjUO7A9AhzlW9X40GruHXP-NVljBzvfRd5xoYu06JeI8_-6iU1x-YbZylG9r1IrOPkcIYboFSaN44tZ-frbPjndv-cOVYN18x5uwswBfJsWCYnz1NRrvV22dWHKLR9qAsE6J",
+          "documentsUrl": "{{origin}}/decosjoin/listdocuments/gAAAAABkWjUO7A9AhzlW9X40GruHXP-NVljBzvfRd5xoYu06JeI8_-6iU1x-YbZylG9r1IrOPkcIYboFSaN44tZ-frbPjndv-cOVYN18x5uwswBfJsWCYnz1NRrvV22dWHKLR9qAsE6J",
           "id": "1234418712",
           "identifier": "Z/23/1984708",
           "link": {

@@ -1,5 +1,5 @@
 const settings = require('../settings.js');
-const { loadFixture } = require('../loadJSON.js');
+const loadFixture = require('../loadFixture.js');
 const path = require('node:path');
 
 const RESPONSES = {

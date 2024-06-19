@@ -20,4 +20,4 @@ function loadFixture(jsonFilePath) {
   return JSON.parse(jsonFile);
 }
 
-module.exports = { loadFixture };
+module.exports = loadFixture;
