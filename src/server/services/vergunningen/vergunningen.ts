@@ -361,7 +361,7 @@ export function transformVergunningenData(
       documentsUrl: generateFullApiUrlBFF(
         BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
         {
-          id: item.documentsUrl?.split('/').pop() ?? 'test',
+          id: item.documentsUrl?.split('/').pop() ?? '',
         }
       ),
     });
@@ -619,7 +619,7 @@ export async function fetchVergunningenDocumentsList(
                 url: generateFullApiUrlBFF(
                   BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
                   {
-                    id: document.url?.split('/').pop() ?? 'test',
+                    id: document.url?.split('/').pop() ?? '',
                   }
                 ),
               });
