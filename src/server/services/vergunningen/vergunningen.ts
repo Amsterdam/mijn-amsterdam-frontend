@@ -356,14 +356,15 @@ export function transformVergunningenData(
     const id = hash(
       `vergunning-${(item.identifier || item.caseType) + item.dateRequest}`
     );
+    const idEncrypted = item.documentsUrl?.split('/').pop();
+
     const vergunning = Object.assign({}, item, {
       id,
-      documentsUrl: generateFullApiUrlBFF(
-        BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
-        {
-          id: item.documentsUrl?.split('/').pop() ?? id, // Id fallback is fale,
-        }
-      ),
+      documentsUrl: idEncrypted
+        ? generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS, {
+            id: idEncrypted,
+          })
+        : item.documentsUrl ?? null,
     });
     return vergunning;
   });

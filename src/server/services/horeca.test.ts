@@ -60,7 +60,7 @@ describe('Horeca service', () => {
           "dateStartPermit": "2023-11-02T00:00:00",
           "dateWorkflowActive": "2022-11-25T00:00:00",
           "decision": null,
-          "documentsUrl": "http://bff-api-host/services/vergunningen/documents/list/test",
+          "documentsUrl": null,
           "id": "334568232",
           "identifier": "Z/23/1808827",
           "link": {
@@ -82,7 +82,7 @@ describe('Horeca service', () => {
           "dateStartPermit": "2022-11-02T00:00:00",
           "dateWorkflowActive": null,
           "decision": null,
-          "documentsUrl": "http://bff-api-host/services/vergunningen/documents/list/test",
+          "documentsUrl": null,
           "id": "3209922248",
           "identifier": "Z/23/1808826",
           "link": {
