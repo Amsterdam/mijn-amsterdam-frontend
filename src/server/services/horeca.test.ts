@@ -39,7 +39,7 @@ describe('Horeca service', () => {
           "dateWorkflowActive": "2023-04-27",
           "decision": "Verleend",
           "description": "Nieuwe aanvraag, alcohol vrij, Het restotje, Berkelstraat  1",
-          "documentsUrl": "{{BFF_MOCK_API_BASE_URL}}/vergunningen-koppel-api/decosjoin/listdocuments/gAAAAABkWjUO7A9AhzlW9X40GruHXP-NVljBzvfRd5xoYu06JeI8_-6iU1x-YbZylG9r1IrOPkcIYboFSaN44tZ-frbPjndv-cOVYN18x5uwswBfJsWCYnz1NRrvV22dWHKLR9qAsE6J",
+          "documentsUrl": "http://bff-api-host/services/vergunningen/documents/list/gAAAAABkWjUO7A9AhzlW9X40GruHXP-NVljBzvfRd5xoYu06JeI8_-6iU1x-YbZylG9r1IrOPkcIYboFSaN44tZ-frbPjndv-cOVYN18x5uwswBfJsWCYnz1NRrvV22dWHKLR9qAsE6J",
           "id": "1234418712",
           "identifier": "Z/23/1984708",
           "link": {
@@ -60,6 +60,7 @@ describe('Horeca service', () => {
           "dateStartPermit": "2023-11-02T00:00:00",
           "dateWorkflowActive": "2022-11-25T00:00:00",
           "decision": null,
+          "documentsUrl": "http://bff-api-host/services/vergunningen/documents/list/test",
           "id": "334568232",
           "identifier": "Z/23/1808827",
           "link": {
@@ -81,6 +82,7 @@ describe('Horeca service', () => {
           "dateStartPermit": "2022-11-02T00:00:00",
           "dateWorkflowActive": null,
           "decision": null,
+          "documentsUrl": "http://bff-api-host/services/vergunningen/documents/list/test",
           "id": "3209922248",
           "identifier": "Z/23/1808826",
           "link": {
