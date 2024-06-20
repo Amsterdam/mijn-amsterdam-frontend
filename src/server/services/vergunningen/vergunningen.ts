@@ -361,7 +361,7 @@ export function transformVergunningenData(
       documentsUrl: generateFullApiUrlBFF(
         BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
         {
-          id: item.documentsUrl?.split('/').pop() ?? '',
+          id: item.documentsUrl?.split('/').pop() ?? id, // Id fallback is fale,
         }
       ),
     });

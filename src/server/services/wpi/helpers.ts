@@ -46,7 +46,11 @@ export function addApiBasePathToDocumentUrls(
   documents: GenericDocument[]
 ): GenericDocument[] {
   return documents.map((document) => {
-    const sourceUrl = new URL(document.url);
+    const sourceUrl = new URL(
+      document.url.startsWith('http')
+        ? document.url
+        : `http://example.com${document.url}`
+    );
     const url = new URL(
       generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD)
     );

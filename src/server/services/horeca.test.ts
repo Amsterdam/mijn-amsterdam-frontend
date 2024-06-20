@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 import { bffApi, remoteApi } from '../../test-utils';
 import { AuthProfileAndToken } from '../helpers/app';
-import vergunningenMockData from 'mocks/fixtures/vergunningen.json';
+import vergunningenMockData from '../../../mocks/fixtures/vergunningen.json';
 import { fetchHorecaNotifications, fetchHorecaVergunningen } from './horeca';
 
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
