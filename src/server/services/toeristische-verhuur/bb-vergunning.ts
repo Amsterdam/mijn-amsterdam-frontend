@@ -1,17 +1,18 @@
+import axios from 'axios';
+import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
+import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
+import { AppRoutes } from '../../../universal/config';
 import {
   apiErrorResult,
   apiSuccessResult,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { BffEndpoints, getApiConfig } from '../../config';
-import { getRequestConfigCacheKey, requestData } from '../../helpers';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
-import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
-import { AppRoutes } from '../../../universal/config';
-import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import axios from 'axios';
+import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
+import { BffEndpoints, getApiConfig } from '../../config';
+import { requestData } from '../../helpers';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 
 // zaak detail: record/GFO_ZAKEN/$id
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
@@ -147,17 +148,20 @@ export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
     const isIngetrokken = !!zaak.resultaat
       ?.toLowerCase()
       .includes('ingetrokken');
+
+    const datumTot = zaak.besluitdatumvervallen
+      ? defaultDateFormat(zaak.besluitdatumvervallen)
+      : '';
     const isGeweigerd = !!zaak.resultaat?.toLowerCase().includes('geweigerd');
-    const isVerlopen = false;
+    const isVerlopen =
+      datumTot && parseISO(datumTot) < new Date() ? true : false;
     const isVerleend = !!zaak.resultaat?.toLowerCase().includes('verleend');
 
     const bbVergunnig: BBVergunning = {
       datumAfhandeling: defaultDateFormat(zaak.einddatum),
       datumAanvraag: defaultDateFormat(zaak.startdatum),
       datumVan: zaak.datumingang ? defaultDateFormat(zaak.datumingang) : '',
-      datumTot: zaak.besluitdatumvervallen
-        ? defaultDateFormat(zaak.besluitdatumvervallen)
-        : '',
+      datumTot,
       resultaat: transformResultaat(zaak.resultaat),
       heeftOvergangsRecht: !!zaak.resultaat?.includes(
         'Verleend met overgangsrecht'
@@ -201,10 +205,6 @@ function fetchPowerBrowserZaken(
   return requestData<BBVergunning[]>(
     {
       ...dataRequestConfig,
-      cacheKey: getRequestConfigCacheKey(
-        `${requestID}/zaken`,
-        dataRequestConfig
-      ),
       url: `${dataRequestConfig.url}/Report/RunSavedReport`,
       data: {
         reportFileName:
@@ -249,8 +249,13 @@ function transformPowerBrowserStatusResponse(
     return datum ? defaultDateFormat(datum) : '';
   }
 
+  const hasInBehandelingStep = statusResponse?.find(
+    ({ omschrijving }) => 'In behandeling' === omschrijving
+  );
+
   // Nieuwe zaken hebben wel statussen
   let datumOntvangen = getStatusDate(['Intake', 'Ontvangen']);
+  let datumInBehandeling = getStatusDate(['In behandeling']);
   let datumAfgehandeld: string = getStatusDate(['Afgehandeld', 'Gereed']);
 
   // NOTE: Gemigreerde zaken (van Decos naar Powerbrowser) hebben een negatief nummer als id gekregen.
@@ -258,23 +263,38 @@ function transformPowerBrowserStatusResponse(
     datumOntvangen = zaak.datumAanvraag;
     datumAfgehandeld = zaak.datumAfhandeling ?? '';
   }
+
+  if (!datumOntvangen && zaak.datumAanvraag) {
+    datumOntvangen = zaak.datumAanvraag;
+  }
+
+  if (!datumAfgehandeld && zaak.datumAfhandeling) {
+    datumAfgehandeld = zaak.datumAfhandeling;
+  }
+
   // Gemigreerde zaken hebben geen statussen
   const statusOntvangen: StatusLineItem = {
     status: 'Ontvangen',
     datePublished: datumOntvangen,
-    isActive: !datumAfgehandeld,
+    isActive: false,
     isChecked: true,
+  };
+
+  const statusInBehandeling: StatusLineItem = {
+    status: 'In behandeling',
+    datePublished: hasInBehandelingStep ? datumInBehandeling : '',
+    isActive: !datumAfgehandeld,
+    isChecked: !!(datumInBehandeling || datumAfgehandeld),
   };
 
   const statusAfgehandeld: StatusLineItem = {
     status: 'Afgehandeld',
     datePublished: datumAfgehandeld,
-    description: '',
     isActive: !!datumAfgehandeld,
     isChecked: !!datumAfgehandeld,
   };
 
-  return [statusOntvangen, statusAfgehandeld];
+  return [statusOntvangen, statusInBehandeling, statusAfgehandeld];
 }
 
 async function fetchPowerBrowserZaakStatus(
@@ -292,10 +312,6 @@ async function fetchPowerBrowserZaakStatus(
     {
       ...dataRequestConfig,
       url: `${dataRequestConfig.url}/Report/RunSavedReport`,
-      cacheKey: getRequestConfigCacheKey(
-        `${requestID}/statussen`,
-        dataRequestConfig
-      ),
       data: {
         reportFileName:
           'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamStatus.gov',
