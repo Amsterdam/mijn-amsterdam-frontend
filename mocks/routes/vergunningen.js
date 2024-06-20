@@ -17,7 +17,7 @@ function noCommercialPermits(vergunning) {
 module.exports = [
   {
     id: 'get-vergunningen-download-document',
-    url: '/decosjoin/document/:encryptedID',
+    url: `${settings.MOCK_BASE_PATH}/vergunningen-koppel-api/decosjoin/document/:encryptedID`,
     method: 'GET',
     variants: [
       {
@@ -32,7 +32,7 @@ module.exports = [
   },
   {
     id: 'get-verguninngen',
-    url: `${settings.MOCK_BASE_PATH}/decosjoin/getvergunningen`,
+    url: `${settings.MOCK_BASE_PATH}/vergunningen-koppel-api/decosjoin/getvergunningen`,
     method: 'GET',
     variants: [
       {
@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     id: 'get-vergunningen-list-documents',
-    url: '/decosjoin/listdocuments/:encryptedID',
+    url: `${settings.MOCK_BASE_PATH}/vergunningen-koppel-api/decosjoin/listdocuments/:encryptedID`,
     method: 'GET',
     variants: [
       {

@@ -4,7 +4,7 @@ const settings = require('../settings.js');
 module.exports = [
   {
     id: 'get-brp',
-    url: `${settings.MOCK_BASE_PATH}/brp/brp`,
+    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/brp`,
     method: 'GET',
     variants: [
       {
@@ -19,7 +19,7 @@ module.exports = [
   },
   {
     id: 'get-brp-aantal-bewoners',
-    url: `/brp/aantal_bewoners`,
+    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/aantal_bewoners`,
     method: 'POST',
     variants: [
       {

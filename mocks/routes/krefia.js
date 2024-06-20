@@ -4,7 +4,7 @@ const settings = require('../settings');
 module.exports = [
   {
     id: 'get-krefia',
-    url: `${settings.MOCK_BASE_PATH}/krefia/all`,
+    url: `${settings.MOCK_BASE_PATH}/krefia-koppel-api/krefia/all`,
     method: 'GET',
     variants: [
       {

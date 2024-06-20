@@ -5,7 +5,7 @@ const settings = require('../settings.js');
 module.exports = [
   {
     id: 'get-kvk',
-    url: `${settings.MOCK_BASE_PATH}/brp/hr`,
+    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/hr`,
     method: 'GET',
     variants: [
       {

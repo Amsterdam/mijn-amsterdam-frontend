@@ -11,7 +11,7 @@ const RESPONSES = {
 module.exports = [
   {
     id: 'get-wpi-aanvragen',
-    url: `${settings.MOCK_BASE_PATH}/wpi/uitkering/aanvragen`,
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/aanvragen`,
     method: 'GET',
     variants: [
       {
@@ -27,7 +27,7 @@ module.exports = [
   {
     id: 'get-wpi-e-aanvragen',
     method: 'GET',
-    url: `${settings.MOCK_BASE_PATH}/wpi/e-aanvragen`,
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/e-aanvragen`,
     variants: [
       {
         id: 'standard',
@@ -41,7 +41,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-specificaties',
-    url: `${settings.MOCK_BASE_PATH}/wpi/uitkering/specificaties-en-jaaropgaven`,
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/specificaties-en-jaaropgaven`,
     method: 'GET',
     variants: [
       {
@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-document-download',
-    url: '/wpi/document',
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/document`,
     method: 'GET',
     variants: [
       {
