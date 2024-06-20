@@ -1,5 +1,5 @@
 import { isDateInPast } from '../helpers/date';
-import { IS_AP, IS_PRODUCTION } from './env';
+import { IS_AP, IS_DEVELOPMENT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   garbageInformationPage: true,
@@ -32,7 +32,7 @@ export const FeatureToggle = {
   bezwarenActive: true,
   horecaActive: !IS_PRODUCTION,
   avgActive: true,
-  svwiLinkActive: false,
+  svwiLinkActive: IS_DEVELOPMENT,
   ehKetenmachtigingActive: !IS_PRODUCTION,
   bodemActive: true,
   stadspasRequestsActive: false,
