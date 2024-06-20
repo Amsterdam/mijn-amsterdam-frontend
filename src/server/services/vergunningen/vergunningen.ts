@@ -619,7 +619,7 @@ export async function fetchVergunningenDocumentsList(
                 url: generateFullApiUrlBFF(
                   BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
                   {
-                    id,
+                    id: id ?? '',
                   }
                 ),
               });
