@@ -1,5 +1,5 @@
 const LOODMETINGEN_RESPONSE = require('../fixtures/loodmetingen.json');
-const LOODMETINGEN_RAPPORT_RESPONSE = require('../fixtures/loodmeting_rapport.json');
+const LOODMETINGEN_RAPPORT_RESPONSE = require('../fixtures/loodmeting-rapport.json');
 
 module.exports = [
   {
