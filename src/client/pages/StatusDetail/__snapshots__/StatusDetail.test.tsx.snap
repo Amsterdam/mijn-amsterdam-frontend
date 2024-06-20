@@ -154,8 +154,7 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
-                      rel="external noopener noreferrer"
+                      href="/mijnamsterdamapi/kappie"
                     >
                       Documentje
                     </a>
@@ -373,8 +372,7 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
-                      rel="external noopener noreferrer"
+                      href="/mijnamsterdamapi/kappie"
                     >
                       Documentje
                     </a>
@@ -635,8 +633,7 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
                     </span>
                     <a
                       class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
-                      rel="external noopener noreferrer"
+                      href="/mijnamsterdamapi/kappie"
                     >
                       Documentje
                     </a>

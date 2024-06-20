@@ -25,7 +25,6 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { captureMessage } from '../../utils/monitoring';
-import { relayApiUrl } from '../../utils/utils';
 import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
@@ -98,17 +97,6 @@ export default function StatusDetail({
     statusItemSteps = [...statusItemSteps];
     statusItemSteps.reverse();
   }
-
-  statusItemSteps =
-    statusItemSteps.map((step) => {
-      return Object.assign({}, step, {
-        documents: step.documents?.map((document) => {
-          return Object.assign({}, document, {
-            url: relayApiUrl(document.url),
-          });
-        }),
-      });
-    }) || [];
 
   return (
     <DetailPage className={styles.StatusDetail}>

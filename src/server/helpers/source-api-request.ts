@@ -1,12 +1,9 @@
 import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import memoryCache from 'memory-cache';
-import { IS_TAP } from '../../universal/config/env';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
-  capitalizeFirstLetter,
-  entries,
 } from '../../universal/helpers';
 import {
   ApiErrorResponse,
@@ -18,10 +15,8 @@ import {
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
   IS_DEBUG,
-  apiUrlEntries,
 } from '../config';
-import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
-import { captureException, captureMessage } from '../services/monitoring';
+import { captureException } from '../services/monitoring';
 import { AuthProfileAndToken } from './app';
 import { Deferred } from './deferred';
 
@@ -53,65 +48,6 @@ if (IS_DEBUG) {
 }
 
 export const cache = new memoryCache.Cache<string, any>();
-
-function enableMockAdapter() {
-  const MockAdapter = require('axios-mock-adapter');
-
-  // This sets the mock adapter on the default instance, let unmatched request passthrough to the requested urls.
-  const mock = new MockAdapter(axiosRequest, { onNoMatch: 'passthrough' });
-
-  entries(mockDataConfig).forEach(async ([url, config]) => {
-    if (!Array.isArray(config)) {
-      config = [config];
-    }
-
-    config.forEach(
-      ({
-        status,
-        responseData,
-        method = 'get',
-        networkError,
-        delay,
-        headers,
-        params,
-        pathReg,
-      }) => {
-        const onMethod = `on${capitalizeFirstLetter(method)}`;
-
-        let matchUrl: string | RegExp = pathReg || url;
-
-        if (typeof url === 'string' && url.includes('/:')) {
-          const [basePath] = url.split('/:');
-          matchUrl = new RegExp(`${basePath}/*`);
-        }
-
-        const req = mock[onMethod](matchUrl, params);
-        if (networkError) {
-          req.networkError();
-        } else {
-          req.reply(async (...args: any[]) => {
-            const data = await resolveWithDelay(
-              delay,
-              await responseData(...args)
-            );
-            // Returns response type and content off all (mock) backendsystems APIs.
-            // Change this to trigger same response type for all APIs e.g. [500, data, headers];.
-            return [
-              typeof status === 'function' ? status(...args) : status,
-              data,
-              headers,
-            ];
-          });
-        }
-      }
-    );
-  });
-}
-
-if (!IS_TAP && process.env.BFF_ENABLE_MOCK_ADAPTER === 'true') {
-  console.info('Axios Mock adapter enabled');
-  enableMockAdapter();
-}
 
 export interface RequestConfig<Source, Transformed> {
   url: string;

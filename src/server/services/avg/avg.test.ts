@@ -1,8 +1,8 @@
 import { describe, expect, beforeEach, afterEach, vi, it } from 'vitest';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
-import apiResponse from '../../mock-data/json/avg.json';
-import avgThemasResponse from '../../mock-data/json/avg-themas.json';
+import apiResponse from 'mocks/fixtures/avg.json';
+import avgThemasResponse from 'mocks/fixtures/avg-themas.json';
 import { remoteApi } from '../../../test-utils';
 
 describe('AVG', () => {

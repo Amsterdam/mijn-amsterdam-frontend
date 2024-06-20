@@ -7,7 +7,9 @@
   "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
-    "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
+    "mock-server": "mocks-server",
+    "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled",
+    "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\" \"npm:mock-server:serve\"",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release": "sh scripts/release.sh --minor",
@@ -106,6 +108,7 @@
     "leaflet": "^1.9.4",
     "lodash.escaperegexp": "^4.1.2",
     "lodash.isequal": "^4.5.0",
+    "log-that-http": "^1.0.1",
     "marked": "^9.1.6",
     "memoizee": "^0.4.15",
     "memory-cache": "^0.2.0",
@@ -143,5 +146,9 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.14.3"
+  },
+  "devDependencies": {
+    "@mocks-server/main": "^4.1.0",
+    "formidable": "^3.5.1"
   }
 }

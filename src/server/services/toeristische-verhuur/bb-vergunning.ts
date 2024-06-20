@@ -12,7 +12,7 @@ import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 
 // zaak detail: record/GFO_ZAKEN/$id
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
@@ -384,10 +384,10 @@ function transformPowerbrowserLinksResponse(responseData: PowerbrowserLink[]) {
         return {
           id: docIdEncrypted,
           title: docTitleTranslated ?? link.caption,
-          url: `${process.env.BFF_API_BASE_URL}/api/v1${generatePath(
+          url: generateFullApiUrlBFF(
             BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
             { docIdEncrypted }
-          )}`,
+          ),
           download: link.caption,
           external: true,
           datePublished: '',

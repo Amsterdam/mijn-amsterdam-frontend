@@ -2,7 +2,7 @@
   {
     "category": "Algemeen",
     "itmidt": "1301694",
-    "feedid": "https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/",
+    "feedid": "{{origin}}/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/",
     "publication_date": "2024-03-25",
     "modification_date": "2024-03-25",
     "image_url": "https://www.amsterdam.nl/publish/varianten/368/logo_voor_social.png",
@@ -17,7 +17,7 @@
   {
     "category": "Algemeen",
     "itmidt": "1301694",
-    "feedid": "https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina/",
+    "feedid": "{{origin}}/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina/",
     "publication_date": "2024-03-25",
     "modification_date": "2024-03-25",
     "image_url": "https://www.amsterdam.nl/publish/varianten/368/logo_voor_social.png",

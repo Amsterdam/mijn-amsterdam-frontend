@@ -20,15 +20,15 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { BFF_BASE_PATH, BFF_PORT, BffEndpoints } from './config';
+import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, IS_DEBUG } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
-import { authRouterDevelopment, relayDevRouter } from './router-development';
+import { authRouterDevelopment } from './router-development';
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
-import { captureException, captureMessage } from './services/monitoring';
+import { captureException } from './services/monitoring';
 
 const app = express();
 
@@ -103,10 +103,6 @@ app.use(BFF_BASE_PATH, publicRouter);
 if (IS_OT && !IS_AP) {
   app.use(authRouterDevelopment);
 }
-///// [DEVELOPENT ONLY] /////
-if (IS_DEVELOPMENT) {
-  app.use(`${BFF_BASE_PATH + BffEndpoints.API_RELAY}`, relayDevRouter);
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///// Generic Router Method for All environments
@@ -150,23 +146,28 @@ app.use((req: Request, res: Response) => {
   return res.end();
 });
 
-const server = app.listen(BFF_PORT, () => {
-  console.info(
-    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
-  );
-});
-
-server.on('error', (error) => {
-  captureException(error, {
-    properties: {
-      message: 'Server onError handler',
-    },
+(async function startServerBFF() {
+  if (IS_DEBUG) {
+    await import('log-that-http');
+  }
+  const server = app.listen(BFF_PORT, () => {
+    console.info(
+      `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
+    );
   });
-});
 
-// From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
-server.keepAliveTimeout = 60 * 1000;
-server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+  server.on('error', (error) => {
+    captureException(error, {
+      properties: {
+        message: 'Server onError handler',
+      },
+    });
+  });
+
+  // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
+  server.keepAliveTimeout = 60 * 1000;
+  server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+})();
 
 // Start Cron jobs
 cleanupSessionBlacklistTable.start();

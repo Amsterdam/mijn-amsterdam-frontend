@@ -50,6 +50,7 @@ export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSI
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
+export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -237,7 +238,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
-    url: 'https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
+    url: `${process.env.BFF_API_BASE_URL}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
     cacheTimeout: ONE_HOUR_MS,
   },
   BRP: {
@@ -315,18 +316,7 @@ export const ApiConfig: ApiDataRequestConfig = {
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
 
-export const ApiUrls = Object.entries(ApiConfig).reduce(
-  (acc, [apiName, { url, urls }]) => {
-    if (urls) {
-      return Object.assign(acc, { [apiName]: urls });
-    }
-    return Object.assign(acc, { [apiName]: url || '' });
-  },
-  {} as Record<SourceApiKey, ApiUrlObject>
-);
-
 export type ApiUrlEntries = ApiUrlEntry[];
-export const apiUrlEntries = Object.entries(ApiUrls) as ApiUrlEntries;
 
 export function getApiConfig(
   name: SourceApiKey,
@@ -353,16 +343,6 @@ export function getApiConfig(
   return Object.assign(apiConfigCopy, config);
 }
 
-export const RelayPathsAllowed = {
-  VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
-  WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
-  WMO_DOCUMENT_DOWNLOAD: '/wmoned/document/:id',
-  BRP_BEWONERS: '/brp/aantal_bewoners',
-  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
-  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
-};
-
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
@@ -376,7 +356,7 @@ export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BFF_OIDC_BASE_URL = `${
-  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
+  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn.amsterdam.nl'
 }`;
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
@@ -405,7 +385,7 @@ export const BffEndpoints = {
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
 
   // WMO / Zorgned
-  WMO_DOCUMENT_DOWNLOAD: `/relay/wmoned/document/:id`,
+  WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',

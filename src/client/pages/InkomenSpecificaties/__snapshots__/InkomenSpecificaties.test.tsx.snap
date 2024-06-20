@@ -170,8 +170,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=20021871&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=20021871&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -231,8 +230,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=20021871&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=20021871&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -292,8 +290,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=95330222&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=95330222&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -353,8 +350,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=95330222&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=95330222&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -555,8 +551,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=31569261&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=31569261&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -628,8 +623,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=31569291&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=31569291&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -701,8 +695,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=24267671&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=24267671&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -774,8 +767,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=24267681&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=24267681&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -847,8 +839,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=24078481&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=24078481&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -920,8 +911,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=24078491&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=24078491&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -993,8 +983,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=30032581&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=30032581&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -1066,8 +1055,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=31569261&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=31569261&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -1139,8 +1127,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=31569291&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=31569291&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>
@@ -1212,8 +1199,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 </span>
                 <a
                   class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                  href="http://bff-api-host/relay/wpi/document?id=24267671&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
+                  href="/wpi/document?id=24267671&isBulk=false&isDms=false"
                 >
                   PDF
                 </a>

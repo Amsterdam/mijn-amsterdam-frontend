@@ -38,7 +38,7 @@ function transformIncomeSpecificationNotification(
       title: 'Nieuwe jaaropgave',
       description: `Uw ${item.title} staat voor u klaar.`,
       link: {
-        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${item.url}`,
+        to: `${process.env.BFF_API_BASE_URL}/relay${item.url}`,
         title: 'Bekijk jaaropgave',
         download: documentDownloadName(item),
       },
@@ -54,7 +54,7 @@ function transformIncomeSpecificationNotification(
       'MMMM yyyy'
     )} staat voor u klaar.`,
     link: {
-      to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${item.url}`,
+      to: `${process.env.BFF_API_BASE_URL}/relay${item.url}`,
       title: 'Bekijk uitkeringsspecificatie',
       download: documentDownloadName(item),
     },

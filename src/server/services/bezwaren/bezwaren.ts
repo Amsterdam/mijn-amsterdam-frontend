@@ -16,7 +16,7 @@ import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { MyNotification } from '../../../universal/types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { captureException } from '../monitoring';
 import {
   Bezwaar,
@@ -182,10 +182,9 @@ function transformBezwarenDocumentsResults(
           id: documentIdEncrypted,
           title: bestandsnaam,
           datePublished: verzenddatum,
-          url: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-            BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-            { id: documentIdEncrypted }
-          )}`,
+          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, {
+            id: documentIdEncrypted,
+          }),
           dossiertype,
         };
       }
@@ -485,12 +484,12 @@ export async function fetchBezwaarDocument(
     return apiErrorResult('Not authorized', null, 401);
   }
 
-  const url = generatePath(
-    `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id${
-      isDownload ? '/download' : ''
-    }`,
-    { id: documentId }
-  );
+  const url =
+    process.env.BFF_BEZWAREN_API +
+    generatePath(
+      `/zgw/v1/enkelvoudiginformatieobjecten/:id${isDownload ? '/download' : ''}`,
+      { id: documentId }
+    );
 
   return axios({
     url,

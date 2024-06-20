@@ -2,7 +2,7 @@ import nock from 'nock';
 import { describe, expect, it } from 'vitest';
 import { jsonCopy } from '../../universal/helpers';
 import { Adres } from '../../universal/types';
-import bagData from '../mock-data/json/bag.json';
+import bagData from 'mocks/fixtures/bag.json';
 import { fetchBAG } from './bag';
 
 describe('BAG service', () => {

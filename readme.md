@@ -13,11 +13,12 @@ To see the application quickly running locally, clone the repo and cd into the p
 
 Put the following commands in your terminal:
 
-```
-$ npm install -g ts-node nodemon
-$ npm install
-$ npm run bff-api:watch
-$ npm start
+```bash
+npm install -g ts-node nodemon
+npm install
+npm run mock-server
+npm run bff-api:watch
+npm start
 ```
 
 ## Accessibility + Targeted browsers

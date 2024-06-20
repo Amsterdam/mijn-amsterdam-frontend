@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { pick } from '../universal/helpers/utils';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import {
@@ -16,9 +15,9 @@ import {
 import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { fetchDocument } from './services/wmo/wmo-zorgned-service';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
+import { fetchDocument } from './services/wmo/wmo-zorgned-service';
 
 export const router = express.Router();
 
@@ -78,7 +77,10 @@ router.get(
   }
 );
 
-// NOTE: Fix for legacy relayApi. WMONED api is archived and is not used anymore for downloads.
+////////////////////////////////////////////////////
+//// BFF Service Api Endpoints /////////////////////
+////////////////////////////////////////////////////
+
 router.get(
   BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -105,6 +107,7 @@ router.get(
   }
 );
 
+// TODO: Refactor relay functionality MIJN-8159
 router.use(
   BffEndpoints.API_RELAY,
   proxy(
@@ -119,9 +122,6 @@ router.use(
           break;
         case req.path.startsWith('/brp/'):
           url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/wmoned/'):
-          url = String(process.env.BFF_WMO_API_BASE_URL ?? '');
           break;
       }
       return url;

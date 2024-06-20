@@ -1,7 +1,7 @@
 {
   "item": {
     "ItmIdt": "1203750",
-    "Url": "https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/",
+    "Url": "/www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard/",
     "publicatiedatum": "20230222",
     "resolved": "true",
     "relUrl": "storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard",

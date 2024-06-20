@@ -85,9 +85,7 @@ const besluitLabels: WpiRequestStatusLabels = {
         const [document] = statusStep!.documents!;
 
         return {
-          to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
-            document.url
-          }`,
+          to: `${process.env.BFF_API_BASE_URL}/relay${document.url}`,
           title: 'Bekijk het besluit',
           download: documentDownloadName({
             datePublished: requestProcess.datePublished,
@@ -144,9 +142,7 @@ const correctiemail: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
-          document.url
-        }`,
+        to: `${process.env.BFF_API_BASE_URL}/relay${document.url}`,
         title: 'Bekijk de mail',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished,
@@ -172,9 +168,7 @@ const informatieOntvangen: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
-          document.url
-        }`,
+        to: `${process.env.BFF_API_BASE_URL}/relay${document.url}`,
         title: 'Bekijk uw formulier',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished,
@@ -200,9 +194,7 @@ const algemeenBatchDocument: WpiRequestStatusLabels = {
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
-        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${
-          document.url
-        }`,
+        to: `${process.env.BFF_API_BASE_URL}/relay${document.url}`,
         title: 'Bekijk de brief voor meer details.',
         download: documentDownloadName({
           datePublished: requestProcess.datePublished,
