@@ -1,11 +1,9 @@
 const settings = require('../settings.js');
-const loadFixture = require('../loadFixture.js');
-const path = require('node:path');
 
 const RESPONSES = {
-  AANVRAGEN: loadFixture('wpi-aanvragen.json'),
-  E_AANVRAGEN: loadFixture('wpi-e-aanvragen.json'),
-  SPECIFICATIES: loadFixture('wpi-specificaties.json'),
+  AANVRAGEN: require('../fixtures/wpi-aanvragen.json'),
+  E_AANVRAGEN: require('../fixtures/wpi-e-aanvragen.json'),
+  SPECIFICATIES: require('../fixtures/wpi-specificaties.json'),
 };
 
 module.exports = [

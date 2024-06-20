@@ -4,7 +4,7 @@ const SUBSIDIE_RESPONSE = require('../fixtures/subsidie.json');
 module.exports = [
   {
     id: 'get-subsidie',
-    url: `${settings.MOCK_BASE_PATH}/subsidies(citizen|company)/*`,
+    url: `${settings.MOCK_BASE_PATH}/subsidies/:type(citizen|company)/:token`,
     method: 'GET',
     variants: [
       {

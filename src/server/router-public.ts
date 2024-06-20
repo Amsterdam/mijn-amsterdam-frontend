@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import proxy from 'express-http-proxy';
 import { DATASETS, OTAP_ENV, getDatasetCategoryId } from '../universal/config';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers';
 import { BffEndpoints, RELEASE_VERSION } from './config';
@@ -18,7 +19,6 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from './services/cms-maintenance-notifications';
-import proxy from 'express-http-proxy';
 
 export const router = express.Router();
 
@@ -175,7 +175,7 @@ router.all(
   BffEndpoints.TELEMETRY_PROXY,
   proxy('https://westeurope-5.in.applicationinsights.azure.com', {
     memoizeHost: true,
-    proxyReqPathResolver: function(req) {
+    proxyReqPathResolver: function (req) {
       return '/v2/track';
     },
   })

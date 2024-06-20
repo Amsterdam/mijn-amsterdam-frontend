@@ -8,7 +8,7 @@ is a portal for official communication with the municipality of Amsterdam. The a
 - React application
 - Node Express back-end-for-frontend (BFF)
 
-To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.template` inside the file AND ask one of the developers for values.
+To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.local.template` inside the file AND ask one of the developers for possible additional values.
 
 
 Put the following commands in your terminal:
@@ -55,6 +55,16 @@ In the microservices these tokens are verified once more for added security.
 The BFF also has a router that's intended for development purposes only. Not all api requests are targeted at the BFF api in production, some requests are made to the microservice api's directly.
 For this purpose we have a development router with mock endpoints see `router-development.ts`. For example, vergunning documents and resident count are retrieved directly without going through the BFF.
 It's basically an additional development server integrated in the BFF api.
+
+## Some code conventions
+
+- Constants are defined in `SCREAMING_SNAKE_CASE`
+- Variables that are not re-assigned are always `const`
+- Variables that get re-assigned are always `let`
+- All filenames in src/server should be `kebab-cased.ts`
+- React component Filenames in src/client are `PascalCased.tsx`
+- If you have a `TODO:`, provide  a ticket number
+- `TODO:` ES-Lint will be configured in the future.
 
 ## Tooling
 

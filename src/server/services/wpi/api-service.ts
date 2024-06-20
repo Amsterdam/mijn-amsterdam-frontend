@@ -1,9 +1,11 @@
+import axios from 'axios';
 import { Themas } from '../../../universal/config';
 import {
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   dateSort,
+  pick,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { SourceApiKey, getApiConfig } from '../../config';
@@ -297,4 +299,21 @@ export async function fetchWpiNotifications(
   }
 
   return apiSuccessResult({ notifications });
+}
+
+export async function fetchWpiDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  params: Record<string, string>
+) {
+  const url = `${process.env.BFF_WPI_API_BASE_URL}/wpi/document`;
+
+  return axios({
+    url,
+    params: pick(params, ['isBulk', 'isDms', 'id']),
+    headers: {
+      Authorization: `Bearer ${authProfileAndToken.token}`,
+    },
+    responseType: 'stream',
+  });
 }

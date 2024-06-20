@@ -3,6 +3,7 @@ import { generatePath } from 'react-router-dom';
 import { AppRoutes, Themas } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import {
+  ApiResponse,
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
@@ -12,9 +13,9 @@ import {
   BRPDataFromSource,
   MyNotification,
 } from '../../universal/types';
-import { getApiConfig } from '../config';
+import { BffEndpoints, getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../helpers/app';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
@@ -183,6 +184,14 @@ export function transformBRPData(
   responseData: ApiSuccessResponse<BRPDataFromSource>
 ) {
   const responseContent = responseData.content;
+  if (responseContent) {
+    responseContent.fetchUrlAantalBewoners = generateFullApiUrlBFF(
+      BffEndpoints.MKS_AANTAL_BEWONERS,
+      {
+        addressKeyEncrypted: responseContent?.adres?._adresSleutel ?? '',
+      }
+    );
+  }
   if (Array.isArray(responseContent?.identiteitsbewijzen)) {
     // Transform Identiteitsbewijzen
     Object.assign(responseContent, {
@@ -232,4 +241,31 @@ export async function fetchBrpNotifications(
     });
   }
   return apiDependencyError({ BRP });
+}
+
+export async function fetchAantalBewoners(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  addressKeyEncrypted: string
+) {
+  const url = `${process.env.BFF_MKS_API_BASE_URL}/brp/aantal_bewoners`;
+
+  return requestData(
+    {
+      url,
+      method: 'POST',
+      passthroughOIDCToken: true,
+      data: {
+        addressKey: addressKeyEncrypted,
+      },
+      transformResponse: (responseData: ApiResponse<string>) => {
+        if (responseData.status === 'OK') {
+          return responseData.content;
+        }
+        return responseData.content;
+      },
+    },
+    requestID,
+    authProfileAndToken
+  );
 }

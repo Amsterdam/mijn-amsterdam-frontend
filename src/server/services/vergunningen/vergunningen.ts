@@ -1,9 +1,13 @@
+import axios from 'axios';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 import { Themas } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
-import { apiDependencyError } from '../../../universal/helpers';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiDependencyError,
+  isRecentNotification,
+} from '../../../universal/helpers';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { hash, sortAlpha } from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
@@ -11,16 +15,15 @@ import {
   isExpired,
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
-import { isRecentNotification } from '../../../universal/helpers';
 import {
   GenericDocument,
   LinkProps,
   MyNotification,
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { getApiConfig } from '../../config';
+import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
   NotificationLabels,
   notificationContent,
@@ -355,6 +358,12 @@ export function transformVergunningenData(
     );
     const vergunning = Object.assign({}, item, {
       id,
+      documentsUrl: generateFullApiUrlBFF(
+        BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
+        {
+          id: item.documentsUrl?.split('/').pop() ?? 'test',
+        }
+      ),
     });
     return vergunning;
   });
@@ -571,4 +580,58 @@ export async function fetchVergunningenNotifications(
   }
 
   return apiDependencyError({ VERGUNNINGEN });
+}
+
+export async function fetchVergunningenDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentIdEncrypted: string
+) {
+  const url = `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/document/${documentIdEncrypted}`;
+
+  return axios({
+    url,
+    headers: {
+      Authorization: `Bearer ${authProfileAndToken.token}`,
+    },
+    responseType: 'stream',
+  });
+}
+
+export async function fetchVergunningenDocumentsList(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentIdEncrypted: string
+) {
+  const url = `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/listdocuments/${documentIdEncrypted}`;
+
+  return requestData(
+    {
+      url,
+      passthroughOIDCToken: true,
+      transformResponse: (responseData: ApiResponse<GenericDocument[]>) => {
+        if (responseData.status === 'OK') {
+          const documents: GenericDocument[] = responseData.content.map(
+            (document) => {
+              const id = document.url.split('/').pop();
+              const doc = Object.assign({}, document, {
+                id,
+                url: generateFullApiUrlBFF(
+                  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+                  {
+                    id: document.url?.split('/').pop() ?? 'test',
+                  }
+                ),
+              });
+              return doc;
+            }
+          );
+          return documents;
+        }
+        return responseData.content;
+      },
+    },
+    requestID,
+    authProfileAndToken
+  );
 }

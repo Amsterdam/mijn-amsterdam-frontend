@@ -490,8 +490,6 @@ export async function fetchBBDocument(
 
   const url = `${process.env.BFF_POWERBROWSER_API_URL}/Dms/${documentId}/Pdf`;
 
-  console.log(url);
-
   return axios({
     url,
     headers: {

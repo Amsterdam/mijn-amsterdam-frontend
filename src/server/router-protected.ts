@@ -1,7 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express';
-import proxy from 'express-http-proxy';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import {
+  fetchAantalBewoners,
+  fetchVergunningenDocument,
+  fetchVergunningenDocumentsList,
+} from './services';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,
@@ -12,12 +16,12 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
-import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
 import { fetchDocument } from './services/wmo/wmo-zorgned-service';
+import { fetchWpiDocument } from './services/wpi/api-service';
 
 export const router = express.Router();
 
@@ -107,43 +111,68 @@ router.get(
   }
 );
 
-// TODO: Refactor relay functionality MIJN-8159
-router.use(
-  BffEndpoints.API_RELAY,
-  proxy(
-    (req: Request) => {
-      let url = '';
-      switch (true) {
-        case req.path.startsWith('/decosjoin/'):
-          url = String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/wpi/'):
-          url = String(process.env.BFF_WPI_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/brp/'):
-          url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
-          break;
-      }
-      return url;
-    },
-    {
-      memoizeHost: false,
-      proxyReqPathResolver: function (req) {
-        return req.url;
-      },
-      proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
-        const { token } = await getAuth(srcReq);
-        const headers = proxyReqOpts.headers || {};
-        headers['Authorization'] = `Bearer ${token}`;
-        proxyReqOpts.headers = headers;
-        return proxyReqOpts;
-      },
-      proxyErrorHandler: (err, res, next) => {
-        captureException(err);
-        next();
-      },
-    }
-  )
+router.get(
+  BffEndpoints.MKS_AANTAL_BEWONERS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const bewonersResponse = await fetchAantalBewoners(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.addressKeyEncrypted
+    );
+
+    return res.send(bewonersResponse);
+  }
+);
+
+router.get(
+  BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentsListResponse = await fetchVergunningenDocumentsList(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    return res.send(documentsListResponse);
+  }
+);
+
+router.get(
+  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchVergunningenDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
+  }
+);
+
+router.get(
+  BffEndpoints.WPI_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchWpiDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params
+    );
+
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
+  }
 );
 
 router.get(

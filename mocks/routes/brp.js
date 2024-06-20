@@ -24,10 +24,13 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'text',
+        type: 'json',
         options: {
           status: 200,
-          body: 'MOCK DATA RESPONSE',
+          body: {
+            content: { residentCount: Math.round(Math.random() * 6) },
+            status: 'OK',
+          },
         },
       },
     ],

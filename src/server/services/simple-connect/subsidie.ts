@@ -61,6 +61,8 @@ async function getConfig(
   const url = apiEndpointUrl + ivAndPayload;
   const jwt = await getJWT();
 
+  console.log('url', url);
+
   return getApiConfig('SUBSIDIE', {
     url,
     cacheKey: apiEndpointUrl + requestID,

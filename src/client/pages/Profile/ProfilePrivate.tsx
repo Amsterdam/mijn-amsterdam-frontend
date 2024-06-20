@@ -27,7 +27,6 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatDataPrivate';
@@ -51,9 +50,8 @@ export default function Profile() {
     ApiResponse<{ residentCount: number }>
   >(
     {
-      url: BFFApiUrls.BRP_RESIDENTS_API_URL,
+      url: BRP.content?.fetchUrlAantalBewoners ?? '',
       postpone: true,
-      method: 'post',
     },
     apiPristineResult({ residentCount: -1 })
   );
@@ -84,10 +82,10 @@ export default function Profile() {
     if (
       FeatureToggle.residentCountActive &&
       BRP.content?.adres?.landnaam === 'Nederland' &&
-      BRP.content?.adres?._adresSleutel
+      BRP.content?.fetchUrlAantalBewoners
     ) {
       fetchResidentCount({
-        data: { addressKey: BRP.content?.adres?._adresSleutel },
+        url: BRP.content?.fetchUrlAantalBewoners ?? '',
       });
     }
   }, [BRP.content, fetchResidentCount]);
