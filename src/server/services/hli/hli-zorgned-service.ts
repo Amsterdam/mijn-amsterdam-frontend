@@ -153,3 +153,10 @@ export async function fetchZorgnedAanvragenHLI(
 
   return aanvragenResponse;
 }
+
+export const forTesting = {
+  assignIsActueel,
+  transformZorgnedBetrokkeneNaamResponse,
+  volledigClientnummer,
+  transformZorgnedClientNummerResponse,
+};
