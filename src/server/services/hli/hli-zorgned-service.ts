@@ -112,16 +112,6 @@ function assignIsActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);
   let isActueel = !!aanvraagTransformed.isActueel;
 
-  // Override actueel indien er nog geen levering heeft plaatsgevonden en de geldigheid nog niet is afgelopen
-  if (
-    !isActueel &&
-    !aanvraagTransformed.datumEindeLevering &&
-    !aanvraagTransformed.datumBeginLevering &&
-    !isEOG
-  ) {
-    isActueel = true;
-  }
-
   // Override actueel indien de einde geldigheid is verlopen
   if (isActueel && isEOG) {
     isActueel = false;
