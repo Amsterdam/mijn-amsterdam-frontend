@@ -1,17 +1,15 @@
 const settings = require('../settings.js');
-const loadFixture = require('../loadFixture.js');
-const path = require('node:path');
 
 const RESPONSES = {
-  AANVRAGEN: loadFixture('wpi-aanvragen.json'),
-  E_AANVRAGEN: loadFixture('wpi-e-aanvragen.json'),
-  SPECIFICATIES: loadFixture('wpi-specificaties.json'),
+  AANVRAGEN: require('../fixtures/wpi-aanvragen.json'),
+  E_AANVRAGEN: require('../fixtures/wpi-e-aanvragen.json'),
+  SPECIFICATIES: require('../fixtures/wpi-specificaties.json'),
 };
 
 module.exports = [
   {
     id: 'get-wpi-aanvragen',
-    url: `${settings.MOCK_BASE_PATH}/wpi/uitkering/aanvragen`,
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/aanvragen`,
     method: 'GET',
     variants: [
       {
@@ -27,7 +25,7 @@ module.exports = [
   {
     id: 'get-wpi-e-aanvragen',
     method: 'GET',
-    url: `${settings.MOCK_BASE_PATH}/wpi/e-aanvragen`,
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/e-aanvragen`,
     variants: [
       {
         id: 'standard',
@@ -41,7 +39,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-specificaties',
-    url: `${settings.MOCK_BASE_PATH}/wpi/uitkering/specificaties-en-jaaropgaven`,
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/specificaties-en-jaaropgaven`,
     method: 'GET',
     variants: [
       {
@@ -56,7 +54,7 @@ module.exports = [
   },
   {
     id: 'get-wpi-document-download',
-    url: '/wpi/document',
+    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/document`,
     method: 'GET',
     variants: [
       {

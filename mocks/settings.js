@@ -13,12 +13,13 @@ const MOCK_DOCUMENT = fs.readFileSync(path.resolve(MOCK_DOCUMENT_PATH), {
 const DOCUMENT_IN_OBJECT = { inhoud: MOCK_DOCUMENT };
 
 const ENV_CONFIG = loadEnv();
-const MOCK_BASE_PATH = getMockBaseRoute(ENV_CONFIG);
+const MOCK_BASE_PATH = getMockBasePath(ENV_CONFIG);
 const MOCK_ORIGIN = getMockOrigin(ENV_CONFIG);
+const MOCK_API_BASE_URL = MOCK_ORIGIN + MOCK_BASE_PATH;
 
 function loadEnv() {
   const ENV_FILE = '.env.local';
-  console.debug(`trying env file ${ENV_FILE}`);
+  console.debug(`[mocks server] trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
 
   if (envConfig.error) {
@@ -30,7 +31,7 @@ function loadEnv() {
   return envConfig.parsed;
 }
 
-function getMockBaseRoute(env_config) {
+function getMockBasePath(env_config) {
   const basepath = env_config.BFF_MOCK_API_BASE_PATH;
 
   if (!basepath) {
@@ -66,4 +67,5 @@ module.exports = {
   DOCUMENT_IN_OBJECT,
   MOCK_BASE_PATH,
   MOCK_ORIGIN,
+  MOCK_API_BASE_URL,
 };

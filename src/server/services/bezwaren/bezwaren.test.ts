@@ -1,10 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import bezwarenDocumenten from '../../../../mocks/fixtures/bezwaren-documents.json';
+import bezwarenStatus from '../../../../mocks/fixtures/bezwaren-status.json';
+import bezwarenApiResponse from '../../../../mocks/fixtures/bezwaren.json';
+import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
-import bezwarenDocumenten from 'mocks/fixtures/bezwaren-documents.json';
-import bezwarenStatus from 'mocks/fixtures/bezwaren-status.json';
-import bezwarenApiResponse from 'mocks/fixtures/bezwaren.json';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,
@@ -12,8 +13,6 @@ import {
   fetchBezwarenNotifications,
   forTesting,
 } from './bezwaren';
-import { range } from '../../../universal/helpers/utils';
-import { remoteApiHost } from '../../../setupTests';
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
 

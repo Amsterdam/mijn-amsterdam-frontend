@@ -10,7 +10,7 @@ import {
 
 if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
-  console.debug(`trying env file ${ENV_FILE}`);
+  console.debug(`[BFF server] trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
   dotenvExpand.expand(envConfig);
 }

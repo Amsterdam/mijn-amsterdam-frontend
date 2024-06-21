@@ -5,7 +5,7 @@ const SVWI_RESPONSE = require('../fixtures/svwi.json');
 module.exports = [
   {
     id: 'get-svwi-tegel',
-    url: `${settings.MOCK_BASE_PATH}/mijnamsterdam/v1/autorisatie/tegel`,
+    url: `${settings.MOCK_BASE_PATH}/svwi/mijnamsterdam/v1/autorisatie/tegel`,
     method: 'get',
     variants: [
       {

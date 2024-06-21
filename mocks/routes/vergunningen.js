@@ -1,11 +1,10 @@
 const settings = require('../settings.js');
-const loadFixture = require('../loadFixture.js');
 
-const PRIVATE_RESPONSE = loadFixture('vergunningen.json');
+const PRIVATE_RESPONSE = require('../fixtures/vergunningen.json');
 const COMMERCIAL_RESPONSE =
   PRIVATE_RESPONSE.content.filter(noCommercialPermits);
 
-const VERGUNNINGEN_DOCUMENTS_LIST = loadFixture('vergunningen-documenten.json');
+const VERGUNNINGEN_DOCUMENTS_LIST = require('../fixtures/vergunningen-documenten.json');
 
 function noCommercialPermits(vergunning) {
   return ![
@@ -17,7 +16,7 @@ function noCommercialPermits(vergunning) {
 module.exports = [
   {
     id: 'get-vergunningen-download-document',
-    url: '/decosjoin/document/:encryptedID',
+    url: `${settings.MOCK_BASE_PATH}/vergunningen-koppel-api/decosjoin/document/:encryptedID`,
     method: 'GET',
     variants: [
       {
@@ -32,7 +31,7 @@ module.exports = [
   },
   {
     id: 'get-verguninngen',
-    url: `${settings.MOCK_BASE_PATH}/decosjoin/getvergunningen`,
+    url: `${settings.MOCK_BASE_PATH}/vergunningen-koppel-api/decosjoin/getvergunningen`,
     method: 'GET',
     variants: [
       {
@@ -56,7 +55,7 @@ module.exports = [
   },
   {
     id: 'get-vergunningen-list-documents',
-    url: '/decosjoin/listdocuments/:encryptedID',
+    url: `${settings.MOCK_BASE_PATH}/vergunningen-koppel-api/decosjoin/listdocuments/:encryptedID`,
     method: 'GET',
     variants: [
       {

@@ -1,21 +1,19 @@
+import BRP from '../../../../mocks/fixtures/brp.json';
+import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import { ApiSuccessResponse } from '../../../universal/helpers';
-import { CaseType } from '../../../universal/types/vergunningen';
-import BRP from 'mocks/fixtures/brp.json';
-import WPI_E from 'mocks/fixtures/wpi-e-aanvragen.json';
-import VERGUNNINGEN from 'mocks/fixtures/vergunningen.json';
 import {
   createTipsFromServiceResults,
   prefixTipNotification,
 } from './tips-service';
 
 import {
-  vi,
-  describe,
+  afterAll,
   beforeAll,
   beforeEach,
-  it,
+  describe,
   expect,
-  afterAll,
+  it,
+  vi,
 } from 'vitest';
 
 const TOZO = {

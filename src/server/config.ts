@@ -224,21 +224,18 @@ export const ApiConfig: ApiDataRequestConfig = {
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
     urls: {
-      private:
-        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
-      'private-attributes':
-        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
-      commercial:
-        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
+      private: `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+      'private-attributes': `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+      commercial: `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data`,
     },
   },
   CMS_CONTENT_FOOTER: {
-    url: 'https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data',
+    url: `${process.env.BFF_CMS_BASE_URL}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
-    url: `${process.env.BFF_API_BASE_URL}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
+    url: `${process.env.BFF_CMS_BASE_URL}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
     cacheTimeout: ONE_HOUR_MS,
   },
   BRP: {
@@ -262,7 +259,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       !process.env.BFF_ERFPACHT_API_URL,
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
-      'apiKey': process.env.BFF_ENABLEU_ERFPACHT_API_KEY,
+      apiKey: process.env.BFF_ENABLEU_ERFPACHT_API_KEY,
     },
   },
   AFVAL: {
@@ -363,7 +360,6 @@ export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}
 
 export const BffEndpoints = {
   ROOT: '/',
-  API_RELAY: '/relay',
   SERVICES_ALL: '/services/all',
   SERVICES_TIPS: '/services/tips',
   SERVICES_STREAM: '/services/stream',
@@ -383,6 +379,17 @@ export const BffEndpoints = {
 
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+
+  // Vergunningen
+  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
+  VERGUNNINGEN_DOCUMENT_DOWNLOAD:
+    '/services/vergunningen/documents/download/:id',
+
+  // MKS bewoners
+  MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
+
+  // WPI Document download
+  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
   // WMO / Zorgned
   WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,

@@ -1,10 +1,11 @@
+const settings = require('../settings');
 const LOODMETINGEN_RESPONSE = require('../fixtures/loodmetingen.json');
 const LOODMETINGEN_RAPPORT_RESPONSE = require('../fixtures/loodmeting-rapport.json');
 
 module.exports = [
   {
     id: 'get-loodmetingen-details',
-    url: '/be_getrequestdetails',
+    url: `${settings.MOCK_BASE_PATH}/loodmetingen/be_getrequestdetails`,
     method: 'POST',
     variants: [
       {
@@ -19,7 +20,7 @@ module.exports = [
   },
   {
     id: 'get-loodmetingen-rapport',
-    url: '/be_downloadleadreport',
+    url: `${settings.MOCK_BASE_PATH}/loodmetingen/be_downloadleadreport`,
     method: 'POST',
     variants: [
       {
@@ -34,7 +35,7 @@ module.exports = [
   },
   {
     id: 'get-loodmetingen-auth',
-    url: '/tenant123/oauth2/v2.0/token',
+    url: `${settings.MOCK_BASE_PATH}/loodmetingen/auth/tenant123/oauth2/v2.0/token`,
     method: 'POST',
     variants: [
       {

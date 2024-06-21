@@ -164,23 +164,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CmsMaintenanceResponse'
-  /relay/{rpath}:
-    parameters:
-      - name: rpath
-        in: path
-        required: true
-        description: The path of the api to request data from
-        schema:
-          type: string
-    get:
-      description: Retrieves data from the given api
-      responses:
-        '200':
-          description: Result is the direct response from the requested api
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiConfigResponse'
 components:
   schemas:
     HealthyResponse:
