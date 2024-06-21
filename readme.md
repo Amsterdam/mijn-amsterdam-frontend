@@ -10,15 +10,23 @@ is a portal for official communication with the municipality of Amsterdam. The a
 
 To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.local.template` inside the file AND ask one of the developers for possible additional values.
 
+## Running localy
 
 Put the following commands in your terminal:
 
 ```bash
+cp -i .env.local.template .env.local
 npm install -g ts-node nodemon
 npm install
+npm run serve-dev
+npm start
+```
+
+It's also possible to run both the mocks server and bff seperately with:
+
+```bash
 npm run mock-server
 npm run bff-api:watch
-npm start
 ```
 
 ## Accessibility + Targeted browsers
