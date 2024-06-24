@@ -169,15 +169,6 @@ describe('hli-zorgned-service', () => {
   });
 
   test('fetchZorgnedAanvragenHLI', async () => {
-    // remoteApi.post('/zorgned/aanvragen').reply(200, {
-    //   persoon: {
-    //     voorvoegsel: null,
-    //     geboortenaam: 'Alex',
-    //     voornamen: 'Flex',
-    //   },
-    // } as ZorgnedPersoonsgegevensNAWResponse);
-
-    // vitest.mock('../zorgned/zorgned-service');
     const fetchAanvragenSpy = vitest
       .spyOn(zorgnedService, 'fetchAanvragen')
       .mockResolvedValueOnce({ content: [], status: 'OK' });
