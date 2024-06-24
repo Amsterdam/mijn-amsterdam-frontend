@@ -136,20 +136,22 @@ describe('zorgned-service', () => {
   });
 
   it('should fetch document error (non matching session id)', async () => {
+    remoteApi.post('/zorgned/document').reply(200, '');
+
     const result = await forTesting.fetchDocument(
       mocks.mockRequestID,
       {
         ...mocks.mockAuthProfileAndToken,
         profile: { sid: 'nope' },
       } as AuthProfileAndToken,
-      mocks.mockDocumentIdEncrypted
+      'ZORGNED_JZD',
+      mocks.mockDocumentId
     );
 
     expect(result).toMatchInlineSnapshot(`
       {
-        "code": 401,
         "content": null,
-        "message": "Not authorized",
+        "message": "Error: No document content",
         "status": "ERROR",
       }
     `);
@@ -165,7 +167,8 @@ describe('zorgned-service', () => {
     const result = await fetchDocument(
       mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken,
-      mocks.mockDocumentIdEncrypted
+      'ZORGNED_JZD',
+      mocks.mockDocumentId
     );
 
     expect(requestData).toHaveBeenCalledWith(
@@ -187,8 +190,6 @@ describe('zorgned-service', () => {
       mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken
     );
-
-    expect(decrypt).toHaveBeenCalledWith(mocks.mockDocumentIdEncrypted);
 
     expect(result).toEqual({
       status: 'OK',

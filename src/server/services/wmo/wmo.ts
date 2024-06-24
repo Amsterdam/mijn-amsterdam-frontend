@@ -11,33 +11,51 @@ import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
+  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
   SINGLE_DOC_TITLE_BESLUIT,
   WMOVoorzieningFrontend,
 } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
+import parseISO from 'date-fns/parseISO';
 
 function assignLineItemDocuments(
   sessionID: AuthProfileAndToken['profile']['sid'],
   aanvraagTransformed: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
 ) {
-  return statusLineItems.map((lineItem) => {
-    if (lineItem.documents) {
+  function getAanvraagDocumentenFrontend() {
+    return aanvraagTransformed.documenten.map((document) => {
+      const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
       return {
-        ...lineItem,
-        documents: lineItem.documents.map((document) => {
-          const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
-          return {
-            ...document,
-            url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
+        ...document,
+        title: SINGLE_DOC_TITLE_BESLUIT, // TODO: Change if we get proper document names from Zorgned api
+        url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
               id: idEncrypted,
             }),
-            id: idEncrypted,
-          };
-        }),
-      };
+        };
+    });
+  }
+
+  return statusLineItems.map((lineItem) => {
+    // NOTE: We only show a single document for now. If document management and processing policy is implemented in Zorgned/WMO we'll show more documents.
+    if (lineItem.status === 'Besluit') {
+      if (
+        FeatureToggle.zorgnedDocumentAttachmentsActive &&
+        aanvraagTransformed.documenten.length === 1 &&
+        parseISO(aanvraagTransformed.datumAanvraag) >=
+          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+      ) {
+        lineItem.documents = getAanvraagDocumentenFrontend();
+      } else {
+        lineItem.altDocumentContent = `<p>
+              <strong>
+                Verstuurd per post
+              </strong>
+            </p>`;
+      }
     }
+
     return lineItem;
   });
 }
