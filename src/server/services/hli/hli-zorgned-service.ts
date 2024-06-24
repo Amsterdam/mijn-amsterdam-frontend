@@ -110,11 +110,14 @@ export async function fetchNamenBetrokkenen(
 
 function assignIsActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);
-  let isActueel = !!aanvraagTransformed.isActueel;
+  let isActueel = aanvraagTransformed.isActueel;
 
   // Override actueel indien de einde geldigheid is verlopen
   if (isActueel && isEOG) {
     isActueel = false;
+  }
+  if (!isActueel && !isEOG) {
+    isActueel = true;
   }
 
   aanvraagTransformed.isActueel = isActueel;

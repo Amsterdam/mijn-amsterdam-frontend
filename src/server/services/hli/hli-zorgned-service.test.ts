@@ -149,7 +149,7 @@ describe('hli-zorgned-service', () => {
 
     expect(aanvraag).toMatchInlineSnapshot(`
       {
-        "isActueel": false,
+        "isActueel": true,
       }
     `);
 
@@ -168,7 +168,7 @@ describe('hli-zorgned-service', () => {
     `);
   });
 
-  test('fetchZorgnedAanvragenHLI', async () => {
+  test('fetchZorgnedAanvragenHLI no content', async () => {
     const fetchAanvragenSpy = vitest
       .spyOn(zorgnedService, 'fetchAanvragen')
       .mockResolvedValueOnce({ content: [], status: 'OK' });
@@ -182,6 +182,70 @@ describe('hli-zorgned-service', () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "content": [],
+        "status": "OK",
+      }
+    `);
+  });
+
+  test('fetchZorgnedAanvragenHLI Einde geldigheid niet verstreken', async () => {
+    const fetchAanvragenSpy = vitest
+      .spyOn(zorgnedService, 'fetchAanvragen')
+      .mockResolvedValueOnce({
+        content: [
+          {
+            isActueel: false,
+            datumEindeGeldigheid: '2032-01-01',
+          } as ZorgnedAanvraagTransformed,
+        ],
+        status: 'OK',
+      });
+
+    const result = await fetchZorgnedAanvragenHLI(
+      'xxx4xxx',
+      authProfileAndToken
+    );
+
+    expect(fetchAanvragenSpy).toHaveBeenCalled();
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "content": [
+          {
+            "datumEindeGeldigheid": "2032-01-01",
+            "isActueel": true,
+          },
+        ],
+        "status": "OK",
+      }
+    `);
+  });
+
+  test('fetchZorgnedAanvragenHLI Einde geldigheid verstreken', async () => {
+    const fetchAanvragenSpy = vitest
+      .spyOn(zorgnedService, 'fetchAanvragen')
+      .mockResolvedValueOnce({
+        content: [
+          {
+            isActueel: true,
+            datumEindeGeldigheid: '2022-01-01',
+          } as ZorgnedAanvraagTransformed,
+        ],
+        status: 'OK',
+      });
+
+    const result = await fetchZorgnedAanvragenHLI(
+      'xxx4xxx',
+      authProfileAndToken
+    );
+
+    expect(fetchAanvragenSpy).toHaveBeenCalled();
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "content": [
+          {
+            "datumEindeGeldigheid": "2022-01-01",
+            "isActueel": false,
+          },
+        ],
         "status": "OK",
       }
     `);
