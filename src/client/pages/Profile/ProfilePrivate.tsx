@@ -81,6 +81,7 @@ export default function Profile() {
   useEffect(() => {
     if (
       FeatureToggle.residentCountActive &&
+      BRP.content?.adres?._adresSleutel &&
       BRP.content?.adres?.landnaam === 'Nederland' &&
       BRP.content?.fetchUrlAantalBewoners
     ) {
