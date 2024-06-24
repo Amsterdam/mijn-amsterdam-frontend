@@ -62,9 +62,9 @@ function formatBudget(
     description: budget.omschrijving,
     code: budget.code,
     budgetAssigned: budget.budget_assigned,
-    budgetAssignedFormatted: `€ ${displayAmount(budget.budget_assigned)}`,
+    budgetAssignedFormatted: `€${displayAmount(budget.budget_assigned)}`,
     budgetBalance: budget.budget_balance,
-    budgetBalanceFormatted: `€ ${displayAmount(budget.budget_balance)}`,
+    budgetBalanceFormatted: `€${displayAmount(budget.budget_balance)}`,
     urlTransactions: urlTransactions,
     transactionsKey,
     dateEnd: budget.expiry_date,
@@ -93,7 +93,7 @@ function transformStadspasResponse(
     dateEnd: gpassStadspasResonseData.expiry_date,
     dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
     budgets: budgets,
-    balanceFormatted: `€ ${displayAmount(
+    balanceFormatted: `€${displayAmount(
       budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
     )}`,
     urlTransactions: generateFullApiUrlBFF(BffEndpoints.STADSPAS_TRANSACTIONS),
@@ -215,7 +215,7 @@ function transformGpassTransactionsResponse(
         id: String(transactie.id),
         title: transactie.budget.aanbieder.naam,
         amount: transactie.bedrag,
-        amountFormatted: `- € ${displayAmount(Math.abs(transactie.bedrag))}`,
+        amountFormatted: `- €${displayAmount(Math.abs(transactie.bedrag))}`,
         datePublished: transactie.transactiedatum,
         datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
       };
