@@ -20,7 +20,7 @@ import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import parseISO from 'date-fns/parseISO';
 import { BffEndpoints } from '../../config';
 
-function assignLineItemDocuments(
+function addDocumentLinksToLineItems(
   sessionID: AuthProfileAndToken['profile']['sid'],
   aanvraagTransformed: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
@@ -61,7 +61,7 @@ function assignLineItemDocuments(
   });
 }
 
-export function transformVoorzieningenForFrontend(
+function transformVoorzieningenForFrontend(
   sessionID: AuthProfileAndToken['profile']['sid'],
   aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
@@ -83,7 +83,7 @@ export function transformVoorzieningenForFrontend(
     }
 
     const statusLineItems = Array.isArray(lineItems)
-      ? assignLineItemDocuments(sessionID, aanvraag, lineItems)
+      ? addDocumentLinksToLineItems(sessionID, aanvraag, lineItems)
       : [];
 
     const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
@@ -137,3 +137,8 @@ export async function fetchWmo(
 
   return voorzieningenResponse;
 }
+
+export const forTesting = {
+  transformVoorzieningenForFrontend,
+  addDocumentLinksToLineItems,
+};

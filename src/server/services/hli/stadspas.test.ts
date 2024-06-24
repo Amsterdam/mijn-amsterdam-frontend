@@ -1,7 +1,6 @@
 import { remoteApi } from '../../../test-utils';
 import * as encryptDecrypt from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
-import * as request from '../../helpers/source-api-request';
 import { fetchClientNummer } from './hli-zorgned-service';
 import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';
 
@@ -92,6 +91,10 @@ const authProfileAndToken: AuthProfileAndToken = {
 };
 
 describe('stadspas services', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   test('stadspas-zorgned-service', async () => {
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
       persoon: {

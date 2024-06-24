@@ -31,9 +31,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2023-03-16T15:56:11.41",
-              "id": "123-123-123-123",
+              "id": "B2516440",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -108,9 +108,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2023-03-02T11:17:08.293",
-              "id": "123-123-123-123",
+              "id": "B2510020",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -186,9 +186,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-10-19T14:27:42.643",
-              "id": "123-123-123-123",
+              "id": "B2391009",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -239,9 +239,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-04-19T13:16:44",
-              "id": "123-123-123-123",
+              "id": "B2268406",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -318,9 +318,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-03-14T16:12:12",
-              "id": "123-123-123-123",
+              "id": "B2258816",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -396,9 +396,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-03-14T16:11:29",
-              "id": "123-123-123-123",
+              "id": "B2258817",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",

@@ -148,31 +148,33 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=20021871&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -209,31 +211,33 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=20021871&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -270,31 +274,33 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=95330222&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -331,31 +337,33 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=95330222&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -533,31 +541,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=31569261&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -606,31 +616,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=31569291&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -679,31 +691,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=24267671&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -752,31 +766,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=24267681&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -825,31 +841,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=24078481&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -898,31 +916,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=24078491&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -971,31 +991,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=30032581&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -1044,31 +1066,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=31569261&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -1117,31 +1141,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=31569291&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>
@@ -1190,31 +1216,33 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/services/wpi/document?id=24267671&isBulk=false&isDms=false"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <title>
+                          download-icoon
+                        </title>
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   PDF
                 </a>
               </span>

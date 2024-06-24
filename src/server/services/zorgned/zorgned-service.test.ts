@@ -1,15 +1,14 @@
-import { fetchAanvragen, fetchDocument, forTesting } from './zorgned-service';
 import Mockdate from 'mockdate';
+import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
-import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import * as request from '../../helpers/source-api-request';
-import ZorgnedVragenWMO from '../../mock-data/json/zorgned-wmo-aanvragen.json';
 import {
-  ZorgnedResponseDataSource,
   ZORGNED_GEMEENTE_CODE,
+  ZorgnedResponseDataSource,
 } from './zorgned-config-and-types';
+import { fetchAanvragen, fetchDocument, forTesting } from './zorgned-service';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -82,7 +81,7 @@ describe('zorgned-service', () => {
   test('transformZorgnedAanvragen', () => {
     expect(
       forTesting.transformZorgnedAanvragen(
-        ZorgnedVragenWMO as ZorgnedResponseDataSource
+        ZORGNED_JZD_AANVRAGEN as ZorgnedResponseDataSource
       )
     ).toMatchSnapshot();
 

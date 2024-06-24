@@ -4,16 +4,10 @@ import { remoteApi } from '../../../test-utils';
 import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import * as request from '../../helpers/source-api-request';
-import WMO from '../../../../mocks/fixtures/zorgned-jzd.json';
-import {
-  WMOSourceResponseData,
-  ZORGNED_GEMEENTE_CODE,
-} from './wmo-config-and-types';
-import {
-  fetchDocument,
-  fetchVoorzieningen,
-  forTesting,
-} from './wmo-zorgned-service';
+import WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
+import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
+import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-config-and-types';
+import { fetchDocument } from '../zorgned/zorgned-service';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -75,31 +69,9 @@ describe('wmo-zorgned-service', () => {
     ).toBe(true);
   });
 
-  test('transformDocumenten', () => {
-    expect(
-      forTesting.transformDocumenten([
-        {
-          documentidentificatie: 'B73199',
-          omschrijving: 'WRA beschikking Definitief',
-          datumDefinitief: '2013-05-17T00:00:00',
-          zaakidentificatie: null,
-        },
-      ])
-    ).toMatchInlineSnapshot(`
-      [
-        {
-          "datePublished": "2013-05-17T00:00:00",
-          "id": "B73199",
-          "title": "Brief",
-          "url": "",
-        },
-      ]
-    `);
-  });
-
   test('isActual', () => {
     expect(
-      forTesting.isActual({
+      forTesting.assignIsActueel({
         toegewezenProduct: {
           actueel: false,
           datumEindeGeldigheid: '',
@@ -110,11 +82,11 @@ describe('wmo-zorgned-service', () => {
         },
         productsoortCode: 'WRA',
         leveringsVorm: 'ZIN',
-      } as unknown as Parameters<typeof forTesting.isActual>[0])
+      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
     ).toBe(true);
 
     expect(
-      forTesting.isActual({
+      forTesting.assignIsActueel({
         toegewezenProduct: {
           actueel: false,
           datumEindeGeldigheid: '2022-12-31',
@@ -125,42 +97,30 @@ describe('wmo-zorgned-service', () => {
         },
         productsoortCode: 'WRA',
         leveringsVorm: 'ZIN',
-      } as unknown as Parameters<typeof forTesting.isActual>[0])
+      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
     ).toBe(false);
 
     expect(
-      forTesting.isActual({
+      forTesting.assignIsActueel({
         toegewezenProduct: {
           actueel: true,
           datumEindeGeldigheid: '2024-01-01',
         },
-      } as unknown as Parameters<typeof forTesting.isActual>[0])
+      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
     ).toBe(true);
 
     expect(
-      forTesting.isActual({
+      forTesting.assignIsActueel({
         productsoortCode: 'BLA',
         leveringsVorm: 'BLO',
-      } as unknown as Parameters<typeof forTesting.isActual>[0])
+      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
     ).toBe(false);
-  });
-
-  test('transformAanvraagToVoorziening', () => {
-    expect(
-      forTesting.transformAanvragenToVoorzieningen(WMO as WMOSourceResponseData)
-    ).toMatchSnapshot();
-
-    expect(
-      forTesting.transformAanvragenToVoorzieningen(
-        null as unknown as WMOSourceResponseData
-      )
-    ).toStrictEqual([]);
   });
 
   it('should fetch voorzieningen', async () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, []);
 
-    const result = await fetchVoorzieningen(
+    const result = await fetchZorgnedAanvragenWMO(
       mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken
     );
@@ -192,70 +152,5 @@ describe('wmo-zorgned-service', () => {
         "status": "OK",
       }
     `);
-  });
-
-  it('should fetch document error (non matching session id)', async () => {
-    const result = await fetchDocument(
-      mocks.mockRequestID,
-      {
-        ...mocks.mockAuthProfileAndToken,
-        profile: { sid: 'nope' },
-      } as AuthProfileAndToken,
-      mocks.mockDocumentIdEncrypted
-    );
-
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "code": 401,
-        "content": null,
-        "message": "Not authorized",
-        "status": "ERROR",
-      }
-    `);
-  });
-
-  it('should fetch document successfully', async () => {
-    remoteApi.post('/zorgned/document').reply(200, {
-      inhoud: 'Zm9vLWJhcg==',
-      omschrijving: 'Naam documentje',
-      mimetype: 'foo/bar',
-    });
-
-    const result = await fetchDocument(
-      mocks.mockRequestID,
-      mocks.mockAuthProfileAndToken as AuthProfileAndToken,
-      mocks.mockDocumentIdEncrypted
-    );
-
-    expect(requestData).toHaveBeenCalledWith(
-      {
-        url: `${remoteApiHost}/zorgned/document`,
-        data: {
-          burgerservicenummer: mocks.mockAuthProfileAndToken.profile.id,
-          gemeentecode: ZORGNED_GEMEENTE_CODE,
-          documentidentificatie: mocks.mockDocumentId,
-        },
-        transformResponse: expect.any(Function),
-        method: 'post',
-        headers: {
-          Token: process.env.BFF_ZORGNED_API_TOKEN,
-          'Content-type': 'application/json; charset=utf-8',
-        },
-        httpsAgent: expect.any(Object),
-      },
-      mocks.mockRequestID,
-      mocks.mockAuthProfileAndToken as AuthProfileAndToken
-    );
-
-    expect(decrypt).toHaveBeenCalledWith(mocks.mockDocumentIdEncrypted);
-
-    expect(result).toEqual({
-      status: 'OK',
-      content: {
-        title: 'Naam documentje',
-        mimetype: 'foo/bar',
-        data: Buffer.from('Zm9vLWJhcg==', 'base64'),
-      },
-    });
   });
 });
