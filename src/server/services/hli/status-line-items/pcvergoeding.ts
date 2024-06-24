@@ -7,7 +7,7 @@ import {
   isServiceDeliveryActive,
 } from '../../zorgned/zorgned-helpers';
 
-export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
+export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
     datePublished: (data) => data.datumBesluit,
@@ -39,40 +39,42 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
       !isServiceDeliveryStarted(sourceData, today),
     description: (data) =>
       `<p>
-            De gemeente heeft opdracht gegeven aan ${data.leverancier} om een ${data.titel} aan u te leveren.
+            De gemeente heeft opdracht gegeven aan ${data.leverancier} om de aanpassingen aan uw woning uit
+            te voeren.
           </p>`,
   },
   {
-    status: 'Product geleverd',
+    status: 'Aanpassing uitgevoerd',
     datePublished: () => '',
     isChecked: (stepIndex, sourceData, today) =>
       isServiceDeliveryStarted(sourceData, today),
-    isActive: (stepIndex, sourceData, today: Date) =>
+    isActive: (stepIndex, sourceData, today) =>
       isServiceDeliveryActive(sourceData, today),
-    description: (data) =>
-      `<p>
-            ${data.leverancier} heeft aan ons doorgegeven dat een ${data.titel} bij u is afgeleverd.
-          </p>`,
     isVisible: (stepIndex, sourceData, today) => {
       return !!sourceData.datumBeginLevering || sourceData.isActueel;
     },
+    description: (data) =>
+      `<p>
+            ${data.leverancier} heeft aan ons doorgegeven dat de
+            aanpassing aan uw woning is uitgevoerd.
+          </p>`,
   },
   {
     status: 'Einde recht',
     datePublished: (data) =>
       (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
     isChecked: (stepIndex, sourceData) => sourceData.isActueel === false,
-    isActive: (stepIndex, sourceData) => sourceData.isActueel === false,
+    isActive: (stepIndex, sourceData, today) => sourceData.isActueel === false,
     description: (data) =>
       `<p>
             ${
               data.isActueel
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${data.titel} is beëindigd${
+                : `Uw recht op ${data.titel} is beëindigd ${
                     data.datumEindeGeldigheid
-                      ? ` per ${defaultDateFormat(data.datumEindeGeldigheid)}`
+                      ? `per ${defaultDateFormat(data.datumEindeGeldigheid)}`
                       : ''
-                  }.`
+                  }`
             }
           </p>`,
   },

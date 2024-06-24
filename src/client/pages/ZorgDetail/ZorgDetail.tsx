@@ -13,6 +13,9 @@ export default function ZorgDetail() {
           )
         );
       }}
+      documentPathForTracking={(document) =>
+        `/downloads/zorg-en-ondersteuning/${document.title.split(/\n/)[0]}`
+      }
     />
   );
 }

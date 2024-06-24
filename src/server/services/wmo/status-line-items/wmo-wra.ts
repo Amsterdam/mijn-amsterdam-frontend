@@ -1,12 +1,13 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WMOStatusLineItemFormatterConfig } from '../wmo-config-and-types';
+import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
+
 import {
   hasHistoricDate,
   isServiceDeliveryStarted,
   isServiceDeliveryActive,
-} from './wmo-helpers';
+} from '../../zorgned/zorgned-helpers';
 
-export const WRA: WMOStatusLineItemFormatterConfig[] = [
+export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
     datePublished: (data) => data.datumBesluit,

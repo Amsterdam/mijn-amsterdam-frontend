@@ -1,6 +1,5 @@
-import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import {
   apiSuccessResult,
   capitalizeFirstLetter,
@@ -9,17 +8,18 @@ import {
 import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
-import { getStatusLineItems } from './status-line-items/wmo-status-line-items';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
-  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-  WMOVoorziening,
+  SINGLE_DOC_TITLE_BESLUIT,
   WMOVoorzieningFrontend,
 } from './wmo-config-and-types';
-import { fetchVoorzieningen } from './wmo-zorgned-service';
-import { BffEndpoints } from '../../config';
+import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
+import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 
-function encryptDocumentIds(
+function assignLineItemDocuments(
   sessionID: AuthProfileAndToken['profile']['sid'],
+  aanvraagTransformed: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
 ) {
   return statusLineItems.map((lineItem) => {
@@ -44,29 +44,29 @@ function encryptDocumentIds(
 
 export function transformVoorzieningenForFrontend(
   sessionID: AuthProfileAndToken['profile']['sid'],
-  voorzieningen: WMOVoorziening[],
+  aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
 ): WMOVoorzieningFrontend[] {
   const voorzieningenFrontend: WMOVoorzieningFrontend[] = [];
-  const voorzieningenVisible = voorzieningen.filter((voorziening) => {
-    return parseISO(voorziening.datumAanvraag) >
-      MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-      ? !!voorziening.documenten?.length
-      : parseISO(voorziening.datumAanvraag) <
-          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
-  });
 
-  for (const voorziening of voorzieningenVisible) {
-    const id = voorziening.id;
-    const lineItems = getStatusLineItems(voorziening, today);
+  for (const aanvraag of aanvragen) {
+    const id = aanvraag.id;
+
+    const lineItems = getStatusLineItems(
+      'WMO',
+      wmoStatusLineItemsConfig,
+      aanvraag,
+      today
+    );
 
     if (!Array.isArray(lineItems) || !lineItems.length) {
       continue;
     }
 
     const statusLineItems = Array.isArray(lineItems)
-      ? encryptDocumentIds(sessionID, lineItems)
+      ? assignLineItemDocuments(sessionID, aanvraag, lineItems)
       : [];
+
     const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
       id,
     });
@@ -74,19 +74,19 @@ export function transformVoorzieningenForFrontend(
     if (statusLineItems) {
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
-        title: capitalizeFirstLetter(voorziening.titel),
-        supplier: voorziening.leverancier,
-        isActual: voorziening.isActueel,
+        title: capitalizeFirstLetter(aanvraag.titel),
+        supplier: aanvraag.leverancier,
+        isActual: aanvraag.isActueel,
         link: {
           title: 'Meer informatie',
           to: route,
         },
         steps: statusLineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
-        itemTypeCode: voorziening.productsoortCode,
-        dateDescision: voorziening.datumBesluit,
-        dateStart: voorziening.datumIngangGeldigheid,
-        dateEnd: voorziening.datumEindeGeldigheid,
+        itemTypeCode: aanvraag.productsoortCode,
+        dateDescision: aanvraag.datumBesluit,
+        dateStart: aanvraag.datumIngangGeldigheid,
+        dateEnd: aanvraag.datumEindeGeldigheid,
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
@@ -102,7 +102,7 @@ export async function fetchWmo(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const voorzieningenResponse = await fetchVoorzieningen(
+  const voorzieningenResponse = await fetchZorgnedAanvragenWMO(
     requestID,
     authProfileAndToken
   );

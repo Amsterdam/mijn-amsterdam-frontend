@@ -1,6 +1,6 @@
 import Mockdate from 'mockdate';
 import { remoteApi } from '../../../test-utils';
-import WMO from '../../../../mocks/fixtures/zorgned-jzd.json';
+import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-wmo-aanvragen.json';
 import { fetchWmo } from './wmo';
 
 vi.mock('../../../universal/helpers/encrypt-decrypt', () => ({
@@ -21,7 +21,7 @@ describe('Transform api items', () => {
   });
 
   test('fetchWmo', async () => {
-    remoteApi.post('/zorgned/aanvragen').reply(200, WMO);
+    remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
 
     expect(
       await fetchWmo('xxxx', {

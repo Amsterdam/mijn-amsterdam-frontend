@@ -1,7 +1,7 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WMOStatusLineItemFormatterConfig } from '../wmo-config-and-types';
+import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 
-export const AOV: WMOStatusLineItemFormatterConfig[] = [
+export const AOV: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
     datePublished: (data) => data.datumBesluit,

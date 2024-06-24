@@ -1,10 +1,11 @@
-import { LinkProps } from 'react-router-dom';
 import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
+import { LinkProps } from '../../../universal/types/App.types';
 
 export type HLIRegeling = {
   id: string;
   title: string; // Omschrijving
   supplier: string | null; // Leverancier
+  about?: string; // TODO: implement
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
   steps: StatusLineItem[];

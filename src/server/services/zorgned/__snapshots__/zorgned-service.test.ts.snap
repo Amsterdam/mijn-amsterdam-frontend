@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
+exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
 [
   {
     "datumAanvraag": "2013-04-25",
@@ -10,12 +10,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2013-05-06",
     "datumOpdrachtLevering": "2013-05-17T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2013-05-17T00:00:00",
+        "id": "B73199",
+        "title": "WRA beschikking Definitief",
+        "url": "",
+      },
+    ],
     "id": "1672363416",
     "isActueel": true,
     "leverancier": "Gebr Koenen B.V.",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
+    "resultaat": "toegewezen",
     "titel": "woonruimteaanpassing met doc 1",
   },
   {
@@ -32,6 +40,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Transvision",
     "leveringsVorm": "",
     "productsoortCode": "AOV",
+    "resultaat": "toegewezen",
     "titel": "kamer tot kamer vervoer",
   },
   {
@@ -42,12 +51,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2013-12-05",
     "datumOpdrachtLevering": "2013-12-09T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2013-12-09T00:00:00",
+        "id": "B137364",
+        "title": "WRA beschikking Definitief",
+        "url": "",
+      },
+    ],
     "id": "2730893522",
     "isActueel": true,
     "leverancier": "Gebr Koenen B.V.",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
+    "resultaat": "toegewezen",
     "titel": "woonruimteaanpassing met doc 2",
   },
   {
@@ -58,12 +75,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2023-03-30",
     "datumIngangGeldigheid": "2014-09-08",
     "datumOpdrachtLevering": "2017-06-01T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2014-09-10T00:00:00",
+        "id": "B195848",
+        "title": "New Toekenning hulpmiddel zonder keuze",
+        "url": "",
+      },
+    ],
     "id": "2067143485",
     "isActueel": false,
     "leverancier": "Harting-Bank",
     "leveringsVorm": "ZIN",
     "productsoortCode": "OVE",
+    "resultaat": "toegewezen",
     "titel": "elektrische hulpaandrijving voor rolstoel",
   },
   {
@@ -74,12 +99,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2014-09-08",
     "datumOpdrachtLevering": "2014-09-11T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2014-09-11T00:00:00",
+        "id": "B196206",
+        "title": "WRA beschikking Definitief",
+        "url": "",
+      },
+    ],
     "id": "4216491004",
     "isActueel": true,
     "leverancier": "Gebr Koenen B.V.",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
+    "resultaat": "toegewezen",
     "titel": "woonruimteaanpassing 3",
   },
   {
@@ -96,6 +129,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Harting-Bank",
     "leveringsVorm": "ZIN",
     "productsoortCode": "RWD",
+    "resultaat": "toegewezen",
     "titel": "douche-/toiletstoel (verrijdb/kantelb/ind aangep.)",
   },
   {
@@ -112,6 +146,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -128,6 +163,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -144,6 +180,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "AWBG",
+    "resultaat": "toegewezen",
     "titel": "aanvullende individuele ondersteuning",
   },
   {
@@ -160,6 +197,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -176,6 +214,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -186,12 +225,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2018-10-24",
     "datumOpdrachtLevering": "2019-02-15T13:45:36",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2018-12-27T00:00:00",
+        "id": "B538689",
+        "title": "WRA beschikking Definitief",
+        "url": "",
+      },
+    ],
     "id": "2889701237",
     "isActueel": true,
     "leverancier": "Welzorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA",
+    "resultaat": "toegewezen",
     "titel": "woonruimteaanpassing met doc 4",
   },
   {
@@ -208,6 +255,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "AWBG",
+    "resultaat": "toegewezen",
     "titel": "aanvullende individuele ondersteuning",
   },
   {
@@ -224,6 +272,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -240,6 +289,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "AWBG",
+    "resultaat": "toegewezen",
     "titel": "aanvullende individuele ondersteuning",
   },
   {
@@ -256,6 +306,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -272,6 +323,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Welzorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA3",
+    "resultaat": "toegewezen",
     "titel": "reparatie-/verwijderopdracht natte cel en toilet",
   },
   {
@@ -282,12 +334,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2020-06-14",
     "datumIngangGeldigheid": "2020-03-09",
     "datumOpdrachtLevering": "2020-03-12T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2020-03-12T16:12:23",
+        "id": "B628498",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "url": "",
+      },
+    ],
     "id": "3441632088",
     "isActueel": false,
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -298,12 +358,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2020-12-31",
     "datumIngangGeldigheid": "2020-03-09",
     "datumOpdrachtLevering": "2020-03-12T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2020-03-12T16:17:07",
+        "id": "B628499",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "url": "",
+      },
+    ],
     "id": "636127578",
     "isActueel": false,
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "AWBG",
+    "resultaat": "toegewezen",
     "titel": "aanvullende individuele ondersteuning",
   },
   {
@@ -314,12 +382,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2020-12-31",
     "datumIngangGeldigheid": "2020-03-09",
     "datumOpdrachtLevering": "2020-03-12T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2020-03-12T16:16:35",
+        "id": "B628500",
+        "title": "Opstellen beschikking wijkzorg Hbh",
+        "url": "",
+      },
+    ],
     "id": "1926069212",
     "isActueel": false,
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -336,6 +412,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Welzorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA3",
+    "resultaat": "toegewezen",
     "titel": "reparatie-/verwijderopdracht natte cel en toilet",
   },
   {
@@ -346,12 +423,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2020-06-10",
     "datumOpdrachtLevering": "2020-06-18T14:21:01",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2020-06-18T14:20:12",
+        "id": "B650917",
+        "title": "New Toekenning hulpmiddel zonder keuze",
+        "url": "",
+      },
+    ],
     "id": "134062321",
     "isActueel": true,
     "leverancier": "Medipoint",
     "leveringsVorm": "ZIN",
     "productsoortCode": "RWD",
+    "resultaat": "toegewezen",
     "titel": "douche-/toiletstoel zelfrijder",
   },
   {
@@ -362,12 +447,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2020-12-31",
     "datumIngangGeldigheid": "2020-06-15",
     "datumOpdrachtLevering": "2020-06-16T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2020-06-16T15:20:47",
+        "id": "B648401",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "url": "",
+      },
+    ],
     "id": "3303327448",
     "isActueel": false,
     "leverancier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -378,12 +471,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2020-11-13",
     "datumOpdrachtLevering": "2020-12-07T07:01:20",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2020-12-07T07:01:05",
+        "id": "B691905",
+        "title": "Opstellen beschikking grote WRA",
+        "url": "",
+      },
+    ],
     "id": "4005950334",
     "isActueel": true,
     "leverancier": "Meyra Wooncare B.V.",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA3",
+    "resultaat": "toegewezen",
     "titel": "antislipvloer/behandeling badkamer",
   },
   {
@@ -394,12 +495,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2021-03-09",
     "datumIngangGeldigheid": "2021-01-01",
     "datumOpdrachtLevering": "2021-01-09T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-01-09T17:26:23",
+        "id": "B700835",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "url": "",
+      },
+    ],
     "id": "226616664",
     "isActueel": false,
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "AWBG",
+    "resultaat": "toegewezen",
     "titel": "aanvullende individuele ondersteuning",
   },
   {
@@ -410,12 +519,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2021-03-09",
     "datumIngangGeldigheid": "2021-01-01",
     "datumOpdrachtLevering": "2021-01-09T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-01-10T01:50:21",
+        "id": "B700836",
+        "title": "Opstellen beschikking wijkzorg Hbh",
+        "url": "",
+      },
+    ],
     "id": "1855927508",
     "isActueel": false,
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -426,12 +543,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2021-03-09",
     "datumIngangGeldigheid": "2021-01-01",
     "datumOpdrachtLevering": "2021-01-09T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-01-09T23:06:12",
+        "id": "B700837",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "url": "",
+      },
+    ],
     "id": "1499176916",
     "isActueel": false,
     "leverancier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -442,12 +567,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2022-03-10",
     "datumIngangGeldigheid": "2021-03-10",
     "datumOpdrachtLevering": "2021-03-11T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-03-11T15:26:28",
+        "id": "B739256",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "url": "",
+      },
+    ],
     "id": "3608314454",
     "isActueel": false,
     "leverancier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -458,12 +591,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2021-04-01",
     "datumIngangGeldigheid": "2021-03-10",
     "datumOpdrachtLevering": "2021-03-11T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-03-11T15:29:20",
+        "id": "B739257",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "url": "",
+      },
+    ],
     "id": "2624361688",
     "isActueel": false,
     "leverancier": "Amstelring",
     "leveringsVorm": "ZIN",
     "productsoortCode": "AWBG",
+    "resultaat": "toegewezen",
     "titel": "aanvullende individuele ondersteuning",
   },
   {
@@ -474,12 +615,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "2022-03-10",
     "datumIngangGeldigheid": "2021-03-10",
     "datumOpdrachtLevering": "2021-03-11T00:00:00",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-03-11T15:24:06",
+        "id": "B739258",
+        "title": "Opstellen beschikking wijkzorg Hbh",
+        "url": "",
+      },
+    ],
     "id": "2758572638",
     "isActueel": false,
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -490,12 +639,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2021-10-13",
     "datumOpdrachtLevering": "2021-10-22T16:51:15",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-10-22T16:50:57",
+        "id": "B792435",
+        "title": "Opstellen beschikking grote WRA",
+        "url": "",
+      },
+    ],
     "id": "3645917971",
     "isActueel": true,
     "leverancier": "Welzorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA3",
+    "resultaat": "toegewezen",
     "titel": "niet standaard opdracht natte cel en toilet",
   },
   {
@@ -512,6 +669,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Van der Leij Bouwbedrijven B.V",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA2",
+    "resultaat": "toegewezen",
     "titel": "reparatie-/verwijderopdracht toegang",
   },
   {
@@ -522,12 +680,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2021-12-20",
     "datumOpdrachtLevering": "2021-12-20T14:05:02",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-12-20T14:08:20",
+        "id": "B809511",
+        "title": "Opstellen brief handzender",
+        "url": "",
+      },
+    ],
     "id": "1035945789",
     "isActueel": true,
     "leverancier": "Van der Leij Bouwbedrijven B.V",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA2",
+    "resultaat": "toegewezen",
     "titel": "handzender(s) voor deurautomaat",
   },
   {
@@ -538,12 +704,20 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "datumEindeLevering": "",
     "datumIngangGeldigheid": "2021-12-08",
     "datumOpdrachtLevering": "2021-12-08T10:54:18",
-    "documenten": [],
+    "documenten": [
+      {
+        "datePublished": "2021-12-20T14:08:20",
+        "id": "B809511",
+        "title": "Opstellen brief handzender",
+        "url": "",
+      },
+    ],
     "id": "1035945788",
-    "isActueel": true,
+    "isActueel": false,
     "leverancier": "Van der Leij Bouwbedrijven B.V",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA2",
+    "resultaat": "toegewezen",
     "titel": "reparatie-/verwijderopdracht toegang",
   },
   {
@@ -558,7 +732,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-03-14T16:12:12",
         "id": "B2258816",
-        "title": "Brief",
+        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -567,6 +741,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
     "leveringsVorm": "ZIN",
     "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
     "titel": "dagbesteding",
   },
   {
@@ -581,7 +756,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-03-14T16:11:29",
         "id": "B2258817",
-        "title": "Brief",
+        "title": "Opstellen beschikking wijkzorg Hbh",
         "url": "",
       },
     ],
@@ -590,6 +765,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -604,7 +780,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-04-19T13:16:44",
         "id": "B2268406",
-        "title": "Brief",
+        "title": "Opstellen beschikking grote WRA",
         "url": "",
       },
     ],
@@ -613,6 +789,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Welzorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA3",
+    "resultaat": "toegewezen",
     "titel": "niet standaard opdracht natte cel en toilet",
   },
   {
@@ -629,6 +806,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "RMC Amsterdam",
     "leveringsVorm": "ZIN",
     "productsoortCode": "AOV",
+    "resultaat": "toegewezen",
     "titel": "kamer tot kamer vervoer",
   },
   {
@@ -643,7 +821,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2022-10-19T14:27:42.643",
         "id": "B2391009",
-        "title": "Brief",
+        "title": "AOV Beschikking positief",
         "url": "",
       },
     ],
@@ -652,6 +830,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "RMC Amsterdam",
     "leveringsVorm": "",
     "productsoortCode": "AOV",
+    "resultaat": "toegewezen",
     "titel": "kamer tot kamer vervoer",
   },
   {
@@ -666,7 +845,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2023-03-02T11:17:08.293",
         "id": "B2510020",
-        "title": "Brief",
+        "title": "New Toekenning hulpmiddel zonder keuze",
         "url": "",
       },
     ],
@@ -675,6 +854,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Medipoint",
     "leveringsVorm": "ZIN",
     "productsoortCode": "ROL",
+    "resultaat": "toegewezen",
     "titel": "elektrische rolstoel voor binnen en buiten",
   },
   {
@@ -691,6 +871,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Welzorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA5",
+    "resultaat": "toegewezen",
     "titel": "Adviesconsult",
   },
   {
@@ -705,7 +886,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
       {
         "datePublished": "2023-03-16T15:56:11.41",
         "id": "B2516440",
-        "title": "Brief",
+        "title": "Opstellen beschikking wijkzorg Hbh",
         "url": "",
       },
     ],
@@ -714,6 +895,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Emile Thuiszorg",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WMH",
+    "resultaat": "toegewezen",
     "titel": "hulp bij het huishouden",
   },
   {
@@ -730,6 +912,7 @@ exports[`wmo-zorgned-service > transformAanvraagToVoorziening 1`] = `
     "leverancier": "Van der Leij Bouwbedrijven B.V",
     "leveringsVorm": "ZIN",
     "productsoortCode": "WRA2",
+    "resultaat": "toegewezen",
     "titel": "reparatie-/verwijderopdracht toegang",
   },
 ]

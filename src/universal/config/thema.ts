@@ -12,6 +12,7 @@ export type Thema =
   | 'BEZWAREN'
   | 'INKOMEN'
   | 'STADSPAS'
+  | 'HLI'
   | 'BRP'
   | 'MILIEUZONE'
   | 'OVERTREDINGEN'
@@ -44,6 +45,7 @@ export const Themas: Record<Thema, Thema> = {
   BEZWAREN: 'BEZWAREN',
   INKOMEN: 'INKOMEN',
   STADSPAS: 'STADSPAS',
+  HLI: 'HLI',
   SVWI: 'SVWI',
   BRP: 'BRP',
   MILIEUZONE: 'MILIEUZONE',
@@ -81,6 +83,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
   STADSPAS: 'Stadspas',
+  HLI: 'Stadspas en andere regelingen',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
   OVERTREDINGEN: 'Overtredingen voertuigen',
@@ -135,6 +138,11 @@ export const DocumentTitles: {
   [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
   [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
+
+  [AppRoutes.HLI]: `Stadspas en andere regelingen | overzicht`,
+  [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
+  [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
+
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/BBZ']]: `Bbz | ${ThemaTitles.INKOMEN}`,
@@ -293,6 +301,12 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.STADSPAS,
     id: Themas.STADSPAS,
     to: AppRoutes.STADSPAS,
+    profileTypes: ['private'],
+  },
+  {
+    title: ThemaTitles.HLI,
+    id: Themas.HLI,
+    to: AppRoutes.HLI,
     profileTypes: ['private'],
   },
   {

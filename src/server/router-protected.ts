@@ -16,6 +16,7 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
+import { fetchTransacties } from './services/hli/stadspas-gpass-service';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
@@ -300,5 +301,24 @@ router.get(
     }
 
     return res.send(response);
+  }
+);
+
+router.post(
+  BffEndpoints.STADSPAS_TRANSACTIONS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const transactionKeys = req.body as string[];
+
+    if (transactionKeys?.length) {
+      const response = await fetchTransacties(
+        res.locals.requestID,
+        authProfileAndToken,
+        transactionKeys
+      );
+
+      return res.send(response);
+    }
+    return res.status(400).send(apiErrorResult('Bad request', null, 400));
   }
 );

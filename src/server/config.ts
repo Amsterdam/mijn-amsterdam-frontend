@@ -378,7 +378,7 @@ export const BffEndpoints = {
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // Stadspas
-  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
   // Vergunningen
   VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',

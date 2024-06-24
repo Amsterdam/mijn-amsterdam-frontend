@@ -53,6 +53,7 @@ import Search from './pages/Search/Search';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
+import HLI from './pages/HLI/HLI';
 import ToeristischeVerhuur from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
 import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
@@ -78,6 +79,9 @@ import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
 import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
 import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
 import { useMonitoring } from './utils/monitoring';
+import HLIRegeling from './pages/HLI/HLIRegeling';
+import HLIStadspas from './pages/HLI/HLIStadspas';
+import HLIRegelingen from './pages/HLI/HLIRegelingen';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -177,6 +181,13 @@ function AppAuthenticated() {
             path={AppRoutes['STADSPAS/SALDO']}
             component={StadspasDetail}
           />
+          <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
+          <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
+          <Route
+            path={AppRoutes['HLI/REGELINGEN_LIJST']}
+            component={HLIRegelingen}
+          />
+          <Route path={AppRoutes['HLI']} component={HLI} />
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetailUitkering}

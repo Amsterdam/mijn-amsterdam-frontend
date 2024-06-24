@@ -80,9 +80,13 @@ export interface StadspasBudget {
   description: string;
   code: string;
   budgetAssigned: number;
+  budgetAssignedFormatted: string;
   budgetBalance: number;
+  budgetBalanceFormatted: string;
   urlTransactions: string;
+  transactionsKey: string;
   dateEnd: string;
+  dateEndFormatted: string;
 }
 
 export interface Stadspas {
@@ -91,7 +95,10 @@ export interface Stadspas {
   passType: 'kind' | 'ouder';
   owner: string;
   dateEnd: string;
+  dateEndFormatted: string;
   budgets: StadspasBudget[];
+  balanceFormatted: string;
+  urlTransactions: string;
   link?: LinkProps;
 }
 
@@ -99,7 +106,9 @@ export interface StadspasTransaction {
   id: string;
   title: string;
   amount: number;
+  amountFormatted: number;
   datePublished: string;
+  datePublishedFormatted: string;
 }
 
 export interface StadspasResponseData {

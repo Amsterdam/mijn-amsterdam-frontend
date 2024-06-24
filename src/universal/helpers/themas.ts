@@ -4,32 +4,33 @@ import type { AppState, AppStateKey } from '../../client/AppState';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
-    WMO,
-    WPI_SPECIFICATIES,
-    WPI_AANVRAGEN,
-    STADSPAS,
-    WPI_TOZO,
-    WPI_TONK,
-    WPI_BBZ,
-    SVWI,
+    AFVAL,
+    AVG,
+    BELASTINGEN,
+    BEZWAREN,
+    BODEM,
+    BRP,
     ERFPACHT,
     ERFPACHTv2,
-    AFVAL,
-    BRP,
-    BELASTINGEN,
-    MILIEUZONE,
-    OVERTREDINGEN,
-    VERGUNNINGEN,
-    TOERISTISCHE_VERHUUR,
-    SUBSIDIE,
-    MY_LOCATION,
-    KVK,
-    KREFIA,
-    KLACHTEN,
-    BEZWAREN,
+    HLI,
     HORECA,
-    AVG,
-    BODEM,
+    KLACHTEN,
+    KREFIA,
+    KVK,
+    MILIEUZONE,
+    MY_LOCATION,
+    OVERTREDINGEN,
+    STADSPAS,
+    SUBSIDIE,
+    SVWI,
+    TOERISTISCHE_VERHUUR,
+    VERGUNNINGEN,
+    WMO,
+    WPI_AANVRAGEN,
+    WPI_BBZ,
+    WPI_SPECIFICATIES,
+    WPI_TONK,
+    WPI_TOZO,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -68,12 +69,20 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         SVWI?.content?.isKnown === true
       );
 
-    case Themas.STADSPAS:
+    case Themas.STADSPAS: {
       const hasStadspas =
         !!STADSPAS?.content?.stadspassen?.length ||
         !!STADSPAS?.content?.aanvragen?.length;
       const isLoadingStadspas = isLoading(STADSPAS);
       return !isLoadingStadspas && hasStadspas;
+    }
+
+    case Themas.HLI: {
+      const hasStadspas = !!HLI?.content?.stadspas?.stadspassen?.length;
+      const hasRegelingen = !!HLI?.content?.regelingen?.length;
+      const isLoadingHLI = isLoading(HLI);
+      return !isLoadingHLI && (hasStadspas || hasRegelingen);
+    }
 
     case Themas.ZORG:
       return !isLoading(WMO) && !!WMO.content?.length;

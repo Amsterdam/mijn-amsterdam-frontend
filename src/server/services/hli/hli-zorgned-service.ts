@@ -1,8 +1,11 @@
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { ZORGNED_GEMEENTE_CODE } from '../wmo/wmo-config-and-types';
+import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-config-and-types';
+import { fetchAanvragen } from '../zorgned/zorgned-service';
+
 import {
+  HLIRegeling,
   RegelingenSourceResponseData,
   ZorgnedPersoonsgegevensNAWResponse,
 } from './regelingen-types';
@@ -48,30 +51,17 @@ export async function fetchClientNummer(
   return clientNummerResponse;
 }
 
-function transformRegelingenResponse(
-  regelingenResponseData: RegelingenSourceResponseData
-) {}
-
-export async function fetchRegelingen(
+export async function fetchZorgnedAanvragenHLI(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const dataRequestConfig = getApiConfig('ZORGNED_AV');
-  const url = `${dataRequestConfig.url}/aanvragen`;
-  const postData = {
-    burgerservicenummer: authProfileAndToken.profile.id,
-    gemeentecode: ZORGNED_GEMEENTE_CODE,
-  };
-  const regelingenResponse = requestData<string>(
-    {
-      ...dataRequestConfig,
-      data: postData,
-      transformResponse: transformRegelingenResponse,
-      url,
-    },
+  const aanvragenResponse = await fetchAanvragen(
     requestID,
-    authProfileAndToken
+    authProfileAndToken,
+    'ZORGNED_AV'
   );
 
-  return regelingenResponse;
+  // TODO: Filter response
+
+  return aanvragenResponse;
 }

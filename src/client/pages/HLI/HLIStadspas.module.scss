@@ -1,0 +1,12 @@
+.Table_budgets,
+.Table_transactions {
+  tr {
+    > th,
+    > td {
+      width: 25%;
+      &:nth-child(1) {
+        width: 50%;
+      }
+    }
+  }
+}
