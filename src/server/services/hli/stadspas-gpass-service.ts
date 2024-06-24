@@ -138,10 +138,8 @@ export async function fetchStadspassen(
     return administratienummerResponse;
   }
 
-  const administratienummer = administratienummerResponse.content;
-
+  const administratienummer = administratienummerResponse.content as string;
   const headers = getHeaders(administratienummer);
-
   const stadspasHouderResponse = await requestData<StadspasPasHouderResponse>(
     {
       ...dataRequestConfig,

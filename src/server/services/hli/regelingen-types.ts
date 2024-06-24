@@ -14,12 +14,17 @@ export type HLIRegeling = {
   dateStart: string | null;
   dateEnd: string | null;
   displayStatus: string;
-  receiverName: string;
+  receiver: string;
 };
 
 export interface ZorgnedPersoonsgegevensNAWResponse {
   persoon: {
     clientidentificatie: number | null;
+    geboortenaam: string;
+    roepnaam: string | null;
+    voorletters: string;
+    voornamen: string;
+    voorvoegsel: string | null;
   };
 }
 

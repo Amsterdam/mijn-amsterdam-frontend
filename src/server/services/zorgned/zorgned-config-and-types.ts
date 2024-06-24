@@ -35,8 +35,8 @@ export type ZorgnedStatusLineItemTransformerConfig = {
 
 export interface ZorgnedStatusLineItemsConfig {
   leveringsVorm: LeveringsVorm;
-  productsoortCodes: ProductSoortCode[];
   lineItemTransformers: ZorgnedStatusLineItemTransformerConfig[];
+  productsoortCodes: ProductSoortCode[];
 }
 
 export type LeveringsVorm = 'ZIN' | 'PGB' | '';
@@ -48,8 +48,8 @@ export interface Levering {
 }
 
 interface Toewijzing {
-  leveringen: Levering[];
   datumOpdracht: string;
+  leveringen: Levering[];
 }
 
 interface Leverancier {
@@ -60,46 +60,47 @@ export type BeschikkingsResultaat = 'toegewezen' | string;
 
 export interface ToegewezenProduct {
   actueel: boolean;
+  betrokkenen?: string[];
   datumEindeGeldigheid: string;
   datumIngangGeldigheid: string;
-  toewijzingen: Toewijzing[];
-  leveringsvorm: LeveringsVorm;
   leverancier: Leverancier;
+  leveringsvorm: LeveringsVorm;
+  toewijzingen: Toewijzing[];
 }
 
 export interface BeschiktProduct {
-  toegewezenProduct: ToegewezenProduct;
   product: {
-    productsoortCode: ProductSoortCode;
     omschrijving: string;
+    productsoortCode: ProductSoortCode;
   };
   resultaat: BeschikkingsResultaat;
+  toegewezenProduct: ToegewezenProduct;
 }
 
 interface Beschikking {
   beschikkingNummer: number;
-  datumAfgifte: string;
   beschikteProducten: BeschiktProduct[];
+  datumAfgifte: string;
 }
 
 export interface ZorgnedDocument {
+  datumDefinitief: string | null;
   documentidentificatie: string;
   omschrijving: string;
-  datumDefinitief: string | null;
   zaakidentificatie: string | null;
 }
 
 export interface ZorgnedDocumentData {
-  title: string;
-  mimetype: string;
   data: Buffer;
+  mimetype: string;
+  title: string;
 }
 
 export interface ZorgnedAanvraagSource {
-  identificatie: string;
   beschikking: Beschikking;
   datumAanvraag: string;
   documenten: ZorgnedDocument[];
+  identificatie: string;
 }
 
 export interface ZorgnedResponseDataSource {
@@ -107,20 +108,20 @@ export interface ZorgnedResponseDataSource {
 }
 
 export interface ZorgnedAanvraagTransformed {
-  id: string;
+  betrokkenen: string[];
   datumAanvraag: string;
+  datumBeginLevering: string | null;
   datumBesluit: string;
   datumEindeGeldigheid: string;
+  datumEindeLevering: string | null;
   datumIngangGeldigheid: string;
+  datumOpdrachtLevering: string | null;
   documenten: GenericDocument[];
+  id: string;
   isActueel: boolean;
   leverancier: string;
-  datumEindeLevering: string | null;
-  datumBeginLevering: string | null;
   leveringsVorm: LeveringsVorm;
   productsoortCode: ProductSoortCode;
-  titel: string;
-  datumOpdrachtLevering: string | null;
   resultaat: BeschikkingsResultaat;
-  ontvanger: string;
+  titel: string;
 }

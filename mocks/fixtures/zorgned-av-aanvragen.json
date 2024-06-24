@@ -1,0 +1,213 @@
+{
+  "_embedded": {
+    "aanvraag": [
+      {
+        "identificatie": "2697941",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-02-08",
+          "aanmeldwijze": { "omschrijving": "AV-E formulier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" },
+            "naam": "AV-cliënt"
+          }
+        },
+        "datumAanmelding": "2024-02-08",
+        "datumAanvraag": "2024-02-08"
+      },
+      {
+        "identificatie": "2707674",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-06-17",
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
+          "verwijzer": {
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
+          }
+        },
+        "datumAanmelding": "2024-06-17",
+        "datumAanvraag": "2024-06-17",
+        "beschikking": {
+          "beschikkingNummer": 300985074,
+          "datumAfgifte": "2024-06-17",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204587",
+              "product": {
+                "identificatie": "AV-IIT",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Individuele inkomenstoeslag"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-01-01",
+                "datumEindeGeldigheid": "2024-12-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123459965"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806770",
+            "omschrijving": "AV-IIT Toekenning",
+            "datumDefinitief": "2024-06-17T11:15:35.287"
+          }
+        ]
+      },
+      {
+        "identificatie": "2702967",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-03-27",
+          "aanmeldwijze": { "omschrijving": "AV-HLI" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" },
+            "naam": "AV-cliënt"
+          }
+        },
+        "datumAanmelding": "2024-03-27",
+        "datumAanvraag": "2024-03-27",
+        "beschikking": {
+          "beschikkingNummer": 300985072,
+          "datumAfgifte": "2024-06-17",
+          "beschikteProducten": [
+            {
+              "identificatie": "1200445",
+              "product": {
+                "identificatie": "AV-CZM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Collectieve Ziektekosten Voorziening"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-01-01",
+                "datumEindeGeldigheid": "2024-12-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": [
+                  "999991619",
+                  "234397305",
+                  "999990202",
+                  "187836644"
+                ]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806765",
+            "omschrijving": "AV-CZM Rapportage instroom",
+            "datumDefinitief": "2024-06-17T10:47:22.25"
+          },
+          {
+            "documentidentificatie": "B2806766",
+            "omschrijving": "AV-CZM Instroom Toekenning",
+            "datumDefinitief": "2024-06-17T10:47:14.133"
+          }
+        ]
+      },
+      {
+        "identificatie": "2707672",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-03-27",
+          "aanmeldwijze": { "omschrijving": "AV-HLI" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" },
+            "naam": "AV-cliënt"
+          }
+        },
+        "datumAanmelding": "2024-03-27",
+        "datumAanvraag": "2024-03-27",
+        "beschikking": {
+          "beschikkingNummer": 300985073,
+          "datumAfgifte": "2024-06-17",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204586",
+              "product": {
+                "identificatie": "AV-SPM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Stadspas"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-08-01",
+                "datumEindeGeldigheid": "2025-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["999991619", "234397305", "999990202"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806767",
+            "omschrijving": "AV-SP Rapportage verkort",
+            "datumDefinitief": "2024-06-17T11:01:01.083"
+          },
+          {
+            "documentidentificatie": "B2806768",
+            "omschrijving": "AV-SP aanvraag 23-24 toekenning 24-25 - TIJDELIJK",
+            "datumDefinitief": "2024-06-17T11:00:51.177"
+          }
+        ]
+      }
+    ]
+  }
+}

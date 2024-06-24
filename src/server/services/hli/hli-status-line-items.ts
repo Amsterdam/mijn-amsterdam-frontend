@@ -11,6 +11,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     leveringsVorm: '',
     productsoortCodes: [
+      'AV-ALG',
       'AV-CZM',
       'AV-GOV',
       'AV-IIT',

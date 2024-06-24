@@ -185,6 +185,5 @@ export function getSettledResult<T extends any>(
   } catch (error) {
     errorMessage = 'An error occurred';
   }
-  console.log('resultssserrerer', result);
   return apiErrorResult(errorMessage, null);
 }

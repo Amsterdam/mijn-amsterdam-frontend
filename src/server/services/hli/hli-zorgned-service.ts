@@ -1,14 +1,18 @@
-import { getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getFullName,
+  getSettledResult,
+  jsonCopy,
+} from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-config-and-types';
-import { fetchAanvragen } from '../zorgned/zorgned-service';
-
 import {
-  HLIRegeling,
-  RegelingenSourceResponseData,
-  ZorgnedPersoonsgegevensNAWResponse,
-} from './regelingen-types';
+  fetchAanvragen,
+  fetchPersoonsgegevensNAW,
+} from '../zorgned/zorgned-service';
+
+import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
 
 function volledigClientnummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -31,24 +35,71 @@ export async function fetchClientNummer(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const dataRequestConfig = getApiConfig('ZORGNED_AV');
-  const url = `${dataRequestConfig.url}/persoonsgegevensNAW`;
-  const postData = {
-    burgerservicenummer: authProfileAndToken.profile.id,
-    gemeentecode: ZORGNED_GEMEENTE_CODE,
-  };
-  const clientNummerResponse = requestData<string>(
-    {
-      ...dataRequestConfig,
-      data: postData,
-      transformResponse: transformZorgnedClientNummerResponse,
-      url,
-    },
+  const response = await fetchPersoonsgegevensNAW(
     requestID,
-    authProfileAndToken
+    authProfileAndToken,
+    'ZORGNED_AV'
   );
 
-  return clientNummerResponse;
+  if (response.status === 'OK') {
+    const clientNummer = transformZorgnedClientNummerResponse(response.content);
+    if (clientNummer) {
+      return apiSuccessResult(clientNummer);
+    }
+  }
+
+  return response;
+}
+
+function transformZorgnedBetrokkeneNaamResponse(
+  zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
+) {
+  if (zorgnedResponseData?.persoon) {
+    return getFullName({
+      voornamen: zorgnedResponseData?.persoon?.voornamen,
+      geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
+      voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
+    });
+  }
+  return null;
+}
+
+export async function fetchNamenBetrokkenen(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  ids: string[]
+) {
+  const requests = ids.map((id) => {
+    const authProfileAndTokenCopied = jsonCopy(authProfileAndToken);
+    authProfileAndTokenCopied.profile.id = id;
+    authProfileAndToken.token = ''; // Token is bound to another ID, we don't need it.
+    return fetchPersoonsgegevensNAW(
+      requestID,
+      authProfileAndTokenCopied,
+      'ZORGNED_AV'
+    );
+  });
+
+  const results = await Promise.allSettled(requests);
+  const namen: string[] = [];
+
+  for (const result of results) {
+    const response = getSettledResult(result);
+    const naam =
+      response.status === 'OK'
+        ? transformZorgnedBetrokkeneNaamResponse(response.content)
+        : null;
+    if (naam) {
+      namen.push(naam);
+    } else {
+      return apiErrorResult(
+        'Something went wrong when retrieving names of betrokkenen.',
+        null
+      );
+    }
+  }
+
+  return apiSuccessResult(namen);
 }
 
 export async function fetchZorgnedAanvragenHLI(
@@ -61,6 +112,5 @@ export async function fetchZorgnedAanvragenHLI(
     'ZORGNED_AV'
   );
 
-  // TODO: Filter response
   return aanvragenResponse;
 }

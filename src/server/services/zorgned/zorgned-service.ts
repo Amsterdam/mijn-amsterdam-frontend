@@ -15,7 +15,7 @@ import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException } from '../monitoring';
-import { FeatureToggle } from '../../../universal/config';
+import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -72,7 +72,7 @@ function transformZorgnedAanvraag(
     productsoortCode: productsoortCode,
     resultaat: beschiktProduct.resultaat,
     titel: beschiktProduct.product.omschrijving ?? '',
-    ontvanger: '--NAAM-ONTVANGER--',
+    betrokkenen: toegewezenProduct?.betrokkenen ?? [],
   };
 
   return aanvraagTransformed;
@@ -81,7 +81,6 @@ function transformZorgnedAanvraag(
 export function transformZorgnedAanvragen(
   responseData: ZorgnedResponseDataSource
 ) {
-  console.log(JSON.stringify(responseData));
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
   const aanvragenTransformed: ZorgnedAanvraagTransformed[] = [];
@@ -138,14 +137,7 @@ export async function fetchAanvragen(
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
 
-  const dataRequestConfig = getApiConfig(
-    zorgnedApiConfigKey,
-    zorgnedApiConfigKey === 'ZORGNED_AV'
-      ? {
-          postponeFetch: FeatureToggle.hliThemaActive,
-        }
-      : {}
-  );
+  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
 
   const url = `${dataRequestConfig.url}/aanvragen`;
 
@@ -210,6 +202,63 @@ export async function fetchDocument(
     requestID,
     authProfileAndToken
   );
+}
+
+function transformZorgnedRelaties(responseData: any) {
+  console.dir(responseData);
+  return responseData;
+}
+
+export async function fetchRelaties(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
+) {
+  const postBody = {
+    burgerservicenummer: authProfileAndToken.profile.id,
+    gemeentecode: ZORGNED_GEMEENTE_CODE,
+  };
+
+  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
+
+  const url = `${dataRequestConfig.url}/relaties`;
+
+  const relaties = await requestData<ZorgnedAanvraagTransformed[]>(
+    {
+      ...dataRequestConfig,
+      url,
+      data: postBody,
+      transformResponse: transformZorgnedRelaties,
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  return relaties;
+}
+
+export async function fetchPersoonsgegevensNAW(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
+) {
+  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
+  const url = `${dataRequestConfig.url}/persoonsgegevensNAW`;
+  const postData = {
+    burgerservicenummer: authProfileAndToken.profile.id,
+    gemeentecode: ZORGNED_GEMEENTE_CODE,
+  };
+  const response = requestData<ZorgnedPersoonsgegevensNAWResponse>(
+    {
+      ...dataRequestConfig,
+      data: postData,
+      url,
+    },
+    requestID,
+    authProfileAndToken
+  );
+
+  return response;
 }
 
 export const forTesting = {

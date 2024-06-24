@@ -28,12 +28,12 @@ import { getThemaTitle } from './helpers';
 
 const displayPropsHuidigeRegelingen = {
   title: 'Naam regeling',
-  receiverName: 'Naam ontvanger',
+  receiver: 'Naam ontvanger',
 };
 
 const displayPropsEerdereRegelingen = {
   title: 'Naam regeling',
-  receiverName: 'Naam ontvanger',
+  receiver: 'Naam ontvanger',
   displayStatus: 'Status',
 };
 

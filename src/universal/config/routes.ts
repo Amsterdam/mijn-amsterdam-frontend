@@ -14,7 +14,7 @@ export const AppRoutes: Record<string, string> = {
 
   HLI: '/regelingen-bij-laag-inkomen',
   'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
-  'HLI/REGELING': '/regelingen-bij-laag-inkomen/:regeling/:id',
+  'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
   'HLI/REGELINGEN_LIJST':
     '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
 
