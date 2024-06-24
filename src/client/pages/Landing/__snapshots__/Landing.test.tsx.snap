@@ -153,7 +153,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         <h4
           class="ams-heading ams-heading--4"
         >
-          U hebt eHerkenning niveau 3 nodig om in te loggen.
+          U heeft eHerkenning niveau 3 nodig om in te loggen.
         </h4>
         <p>
           Ga naar 

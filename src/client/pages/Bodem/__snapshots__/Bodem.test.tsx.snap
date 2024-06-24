@@ -602,7 +602,7 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U hebt geen eerdere aanvragen.
+            U heeft geen eerdere aanvragen.
           </p>
         </div>
       </div>

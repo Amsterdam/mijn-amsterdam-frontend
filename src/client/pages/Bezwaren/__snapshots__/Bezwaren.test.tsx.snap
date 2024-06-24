@@ -241,7 +241,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U hebt nog geen afgehandelde bezwaren.
+            U heeft nog geen afgehandelde bezwaren.
           </p>
         </div>
       </div>
@@ -452,7 +452,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U hebt nog geen afgehandelde bezwaren.
+            U heeft nog geen afgehandelde bezwaren.
           </p>
         </div>
       </div>
@@ -744,7 +744,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U hebt nog geen afgehandelde bezwaren.
+            U heeft nog geen afgehandelde bezwaren.
           </p>
         </div>
       </div>

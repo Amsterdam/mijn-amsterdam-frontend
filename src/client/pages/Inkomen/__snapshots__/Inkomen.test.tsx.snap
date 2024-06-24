@@ -941,7 +941,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U hebt op dit moment geen lopende aanvragen.
+            U heeft op dit moment geen lopende aanvragen.
           </p>
         </div>
       </div>
@@ -987,7 +987,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
           <p
             class="_NoItemsMessage_b93dc7"
           >
-            U hebt op dit moment geen eerdere aanvragen.
+            U heeft op dit moment geen eerdere aanvragen.
           </p>
         </div>
       </div>

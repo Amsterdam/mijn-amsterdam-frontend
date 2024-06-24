@@ -3,7 +3,7 @@
 exports[`<Stadpas /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0 _Stadspas_ef3b7a"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _Stadspas_d93cb2"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -115,7 +115,7 @@ exports[`<Stadpas /> > Matches the Full Page snapshot 1`] = `
       </p>
     </div>
     <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_ef3b7a"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_d93cb2"
     >
       <h3
         class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
@@ -153,7 +153,7 @@ exports[`<Stadpas /> > Matches the Full Page snapshot 1`] = `
           class="_PanelInner_b93dc7"
         >
           <table
-            class="_Table_a66dcc _Table_ef3b7a"
+            class="_Table_a66dcc _Table_d93cb2"
           >
             <thead>
               <tr

@@ -71,7 +71,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
       class="_PageContent_47d7c0"
     >
       <p>
-        Hier ziet u een overzicht van de klachten die u hebt ingediend bij gemeente Amsterdam.
+        Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
       </p>
       <p>
         <a
@@ -261,7 +261,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
       class="_PageContent_47d7c0"
     >
       <p>
-        Hier ziet u een overzicht van de klachten die u hebt ingediend bij gemeente Amsterdam.
+        Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
       </p>
       <p>
         <a
@@ -556,7 +556,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
       class="_PageContent_47d7c0"
     >
       <p>
-        Hier ziet u een overzicht van de klachten die u hebt ingediend bij gemeente Amsterdam.
+        Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
       </p>
       <p>
         <a
