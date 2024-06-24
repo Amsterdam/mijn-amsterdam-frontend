@@ -91,8 +91,8 @@ const authProfileAndToken: AuthProfileAndToken = {
 };
 
 describe('stadspas services', () => {
-  beforeEach(() => {
-    vi.resetAllMocks();
+  afterAll(() => {
+    vi.restoreAllMocks();
   });
 
   test('stadspas-zorgned-service', async () => {
@@ -182,13 +182,13 @@ describe('stadspas services', () => {
           "administratienummer": "0363000123-123",
           "stadspassen": [
             {
-              "balanceFormatted": "€ 0,00",
+              "balanceFormatted": "€0,00",
               "budgets": [
                 {
                   "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€ 150,00",
+                  "budgetAssignedFormatted": "€150,00",
                   "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€ 0,00",
+                  "budgetBalanceFormatted": "€0,00",
                   "code": "AMSTEG_10-14",
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
@@ -251,13 +251,13 @@ describe('stadspas services', () => {
           "administratienummer": "0363000123-123",
           "stadspassen": [
             {
-              "balanceFormatted": "€ 0,00",
+              "balanceFormatted": "€0,00",
               "budgets": [
                 {
                   "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€ 150,00",
+                  "budgetAssignedFormatted": "€150,00",
                   "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€ 0,00",
+                  "budgetBalanceFormatted": "€0,00",
                   "code": "AMSTEG_10-14",
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
@@ -275,13 +275,13 @@ describe('stadspas services', () => {
               "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
             },
             {
-              "balanceFormatted": "€ 0,00",
+              "balanceFormatted": "€0,00",
               "budgets": [
                 {
                   "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€ 150,00",
+                  "budgetAssignedFormatted": "€150,00",
                   "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€ 0,00",
+                  "budgetBalanceFormatted": "€0,00",
                   "code": "AMSTEG_10-14",
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
@@ -299,13 +299,13 @@ describe('stadspas services', () => {
               "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
             },
             {
-              "balanceFormatted": "€ 0,00",
+              "balanceFormatted": "€0,00",
               "budgets": [
                 {
                   "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€ 150,00",
+                  "budgetAssignedFormatted": "€150,00",
                   "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€ 0,00",
+                  "budgetBalanceFormatted": "€0,00",
                   "code": "AMSTEG_10-14",
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
@@ -362,7 +362,7 @@ describe('stadspas services', () => {
         "content": [
           {
             "amount": 34.5,
-            "amountFormatted": "- € 34,50",
+            "amountFormatted": "- €34,50",
             "datePublished": "2024-04-25",
             "datePublishedFormatted": "25 april 2024",
             "id": "transactie-id",
@@ -413,7 +413,7 @@ describe('stadspas services', () => {
         "content": [
           {
             "amount": 34.5,
-            "amountFormatted": "- € 34,50",
+            "amountFormatted": "- €34,50",
             "datePublished": "2024-04-25",
             "datePublishedFormatted": "25 april 2024",
             "id": "transactie-id",
