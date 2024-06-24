@@ -1,4 +1,4 @@
-import { apiErrorResult, hash } from '../../../universal/helpers';
+import { hash } from '../../../universal/helpers';
 import {
   BeschiktProduct,
   LeveringsVorm,
@@ -9,12 +9,10 @@ import {
   ZorgnedResponseDataSource,
 } from './zorgned-config-and-types';
 
-import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { captureException } from '../monitoring';
 import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
@@ -159,21 +157,8 @@ export async function fetchDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
-  documentIdEncrypted: ZorgnedDocument['documentidentificatie']
+  documentId: ZorgnedDocument['documentidentificatie']
 ) {
-  let documentId: string = '';
-  let sessionID: string = '';
-
-  try {
-    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
-  }
-
-  if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
   const postBody = {
     burgerservicenummer: authProfileAndToken.profile.id,
     gemeentecode: ZORGNED_GEMEENTE_CODE,

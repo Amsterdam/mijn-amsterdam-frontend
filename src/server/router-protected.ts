@@ -17,12 +17,14 @@ import {
   loadServicesSSE,
 } from './services/controller';
 import { fetchTransacties } from './services/hli/stadspas-gpass-service';
+import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
 import { fetchDocument } from './services/zorgned/zorgned-service';
 import { fetchWpiDocument } from './services/wpi/api-service';
+import { decrypt } from '../universal/helpers/encrypt-decrypt';
 
 export const router = express.Router();
 
@@ -89,13 +91,31 @@ router.get(
 function downloadZorgnedDocument(
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
     const authProfileAndToken = await getAuth(req);
+
+    let documentId: string = '';
+    let sessionID: string = '';
+
+    try {
+      [sessionID, documentId] = decrypt(req.params.id).split(':');
+    } catch (error) {
+      captureException(error);
+    }
+
+    if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
+      return apiErrorResult('Not authorized', null, 401);
+    }
+
     const documentResponse = await fetchDocument(
       res.locals.requestID,
       authProfileAndToken,
       zorgnedApiConfigKey,
-      req.params.id
+      documentId
     );
 
     if (

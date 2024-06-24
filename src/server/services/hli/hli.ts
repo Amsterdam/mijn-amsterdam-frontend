@@ -17,8 +17,10 @@ import {
 } from './hli-zorgned-service';
 import { HLIRegeling, HLIresponseData } from './regelingen-types';
 import { fetchStadspas } from './stadspas';
-import { StatusLineItem } from '../../../universal/types';
+import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import slug from 'slugme';
+import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { BFF_BASE_PATH, BffEndpoints } from '../../config';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,
@@ -33,6 +35,25 @@ function getDisplayStatus(
       return 'Afgewezen';
   }
   return statusLineItems[statusLineItems.length - 1].status ?? 'NNB';
+}
+
+function getDocumentsFrontend(
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  documents: GenericDocument[]
+) {
+  return documents.map((document) => {
+    const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
+    return {
+      ...document,
+      url: `${process.env.BFF_OIDC_BASE_URL}${BFF_BASE_PATH}${generatePath(
+        BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
+        {
+          id: idEncrypted,
+        }
+      )}`,
+      id: idEncrypted,
+    };
+  });
 }
 
 export async function transformRegelingenForFrontend(
@@ -89,7 +110,10 @@ export async function transformRegelingenForFrontend(
         dateEnd: aanvraag.datumEindeGeldigheid,
         displayStatus: getDisplayStatus(aanvraag, statusLineItems),
         receiver: namen.join('\n'),
-        documents: aanvraag.documenten,
+        documents: getDocumentsFrontend(
+          authProfileAndToken.profile.sid,
+          aanvraag.documenten
+        ),
       };
 
       regelingenFrontend.push(regelingFrontend);
