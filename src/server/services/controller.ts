@@ -39,7 +39,7 @@ import {
 } from './simple-connect';
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
-import { fetchStadspas } from './stadspas/stadspas';
+import { fetchStadspas } from './hli/stadspas';
 import {
   fetchTipsAndNotifications,
   sortNotifications,

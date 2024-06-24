@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import {
   StadspasBudget,
   StadspasTransaction,
-} from '../../../server/services/stadspas/stadspas-types';
+} from '../../../server/services/hli/stadspas-types';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ApiResponse,

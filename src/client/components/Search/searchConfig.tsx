@@ -17,7 +17,7 @@ import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-v
 import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 
-import { StadspasResponseData } from '../../../server/services/stadspas/stadspas-types';
+import { StadspasResponseData } from '../../../server/services/hli/stadspas-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';

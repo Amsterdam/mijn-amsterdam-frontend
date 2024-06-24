@@ -9,7 +9,7 @@ import { StadspasResponseDataTransformed } from '../wpi/api-service';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
 import { AppState } from '../../../client/AppState';
-import { StadspasResponseData } from '../stadspas/stadspas-types';
+import { StadspasResponseData } from '../hli/stadspas-types';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
