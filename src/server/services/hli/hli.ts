@@ -89,6 +89,7 @@ export async function transformRegelingenForFrontend(
         dateEnd: aanvraag.datumEindeGeldigheid,
         displayStatus: getDisplayStatus(aanvraag, statusLineItems),
         receiver: namen.join('\n'),
+        documents: aanvraag.documenten,
       };
 
       regelingenFrontend.push(regelingFrontend);

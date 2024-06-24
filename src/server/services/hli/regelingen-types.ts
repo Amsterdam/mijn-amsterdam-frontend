@@ -1,21 +1,26 @@
 import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
-import { LinkProps } from '../../../universal/types/App.types';
+import {
+  GenericDocument,
+  LinkProps,
+  StatusLine,
+} from '../../../universal/types/App.types';
 import { Stadspas, StadspasResponseData } from './stadspas-types';
 
-export type HLIRegeling = {
-  id: string;
-  title: string; // Omschrijving
-  supplier: string | null; // Leverancier
+export interface HLIRegeling extends StatusLine {
   about?: string; // TODO: implement
+  dateDescision: string;
+  dateEnd: string | null;
+  dateStart: string | null;
+  displayStatus: string;
+  documents: GenericDocument[];
+  id: string;
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
-  steps: StatusLineItem[];
-  dateDescision: string;
-  dateStart: string | null;
-  dateEnd: string | null;
-  displayStatus: string;
   receiver: string;
-};
+  steps: StatusLineItem[];
+  supplier: string | null; // Leverancier
+  title: string; // Omschrijving
+}
 
 export interface ZorgnedPersoonsgegevensNAWResponse {
   persoon: {

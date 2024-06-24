@@ -158,13 +158,14 @@ export async function fetchAanvragen(
 export async function fetchDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  documentIdEncrpted: ZorgnedDocument['documentidentificatie']
+  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
+  documentIdEncrypted: ZorgnedDocument['documentidentificatie']
 ) {
   let documentId: string = '';
   let sessionID: string = '';
 
   try {
-    [sessionID, documentId] = decrypt(documentIdEncrpted).split(':');
+    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
   } catch (error) {
     captureException(error);
   }
@@ -179,7 +180,7 @@ export async function fetchDocument(
     documentidentificatie: documentId,
   };
 
-  const dataRequestConfig = getApiConfig('ZORGNED_JZD');
+  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
   const url = `${dataRequestConfig.url}/document`;
 
   return requestData<ZorgnedDocumentData>(

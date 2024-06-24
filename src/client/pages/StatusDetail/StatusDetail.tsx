@@ -30,24 +30,24 @@ import { captureMessage } from '../../utils/monitoring';
 import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
-interface StatusDetailProps {
+interface StatusDetailProps<T extends StatusLine> {
   backLinkTitle?: string;
   documentPathForTracking?: (document: GenericDocument) => string;
-  getItems?: (content: AppState[AppStateKey]['content']) => StatusSourceItem[];
+  getItems?: (content: AppState[AppStateKey]['content']) => T[];
   highlightKey?: string | false;
-  maxStepCount?: (
-    hasDecision: boolean,
-    statusItem?: StatusSourceItem
-  ) => number | undefined;
-  pageContent?: (isLoading: boolean, statusItem: StatusSourceItem) => ReactNode;
+  maxStepCount?: (hasDecision: boolean, statusItem?: T) => number | undefined;
+  pageContent?: <T extends StatusLine>(
+    isLoading: boolean,
+    statusItem: T
+  ) => ReactNode;
   reverseSteps?: boolean;
   showStatusLineConnection?: boolean;
   stateKey: AppStateKey;
-  statusLabel?: string | 'Status' | ((statusItem: StatusSourceItem) => string);
+  statusLabel?: string | 'Status' | ((statusItem: T) => string);
   thema: Thema;
 }
 
-export default function StatusDetail({
+export default function StatusDetail<T extends StatusLine>({
   backLinkTitle,
   documentPathForTracking,
   getItems,
@@ -59,7 +59,7 @@ export default function StatusDetail({
   stateKey,
   statusLabel = 'Status',
   thema,
-}: StatusDetailProps) {
+}: StatusDetailProps<T>) {
   const appState = useAppStateGetter();
   const STATE = appState[stateKey];
   const isStateLoading = isLoading(STATE);
@@ -71,7 +71,7 @@ export default function StatusDetail({
           ? STATE.content
           : [],
     [STATE.content, getItems]
-  ) as StatusSourceItem[];
+  ) as T[];
 
   const { id } = useParams<{ id: string }>();
   const statusItem = statusItems.find((item) => item.id === id);

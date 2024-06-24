@@ -394,6 +394,9 @@ export const BffEndpoints = {
   // WMO / Zorgned
   WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
 
+  // AV / Zorgned
+  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
+
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',

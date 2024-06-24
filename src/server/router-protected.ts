@@ -21,7 +21,7 @@ import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
-import { fetchDocument } from './services/wmo/wmo-zorgned-service';
+import { fetchDocument } from './services/zorgned/zorgned-service';
 import { fetchWpiDocument } from './services/wpi/api-service';
 
 export const router = express.Router();
@@ -86,13 +86,15 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-router.get(
-  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response, next: NextFunction) => {
+function downloadZorgnedDocument(
+  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
+) {
+  return async (req: Request, res: Response, next: NextFunction) => {
     const authProfileAndToken = await getAuth(req);
     const documentResponse = await fetchDocument(
       res.locals.requestID,
       authProfileAndToken,
+      zorgnedApiConfigKey,
       req.params.id
     );
 
@@ -109,7 +111,16 @@ router.get(
       `attachment; filename="${documentResponse.content.title}.pdf"`
     );
     return res.send(documentResponse.content.data);
-  }
+  };
+}
+
+router.get(
+  BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
+  downloadZorgnedDocument('ZORGNED_JZD')
+);
+router.get(
+  BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
+  downloadZorgnedDocument('ZORGNED_AV')
 );
 
 router.get(
@@ -291,7 +302,7 @@ router.get(
     const response = await fetchTransacties(
       res.locals.requestID,
       authProfileAndToken,
-      req.params.transactionsKey
+      [req.params.transactionsKey]
     );
 
     if (response.status === 'ERROR') {
