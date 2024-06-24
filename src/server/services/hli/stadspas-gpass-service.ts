@@ -96,9 +96,7 @@ function transformStadspasResponse(
     balanceFormatted: `€ ${displayAmount(
       budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
     )}`,
-    urlTransactions: `${process.env.BFF_OIDC_BASE_URL}/api/v1${generatePath(
-      BffEndpoints.STADSPAS_TRANSACTIONS
-    )}`,
+    urlTransactions: generateFullApiUrlBFF(BffEndpoints.STADSPAS_TRANSACTIONS),
     passNumber: gpassStadspasResonseData.pasnummer_volledig,
     passType:
       budgets.length && GPASS_BUDGET_ONLY_FOR_CHILDREN ? 'kind' : 'ouder', // TODO: Uitzoeken of we pas kunnen koppelen aan type
