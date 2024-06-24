@@ -188,7 +188,8 @@ export function transformBRPData(
     responseContent.fetchUrlAantalBewoners = generateFullApiUrlBFF(
       BffEndpoints.MKS_AANTAL_BEWONERS,
       {
-        addressKeyEncrypted: responseContent?.adres?._adresSleutel ?? '',
+        addressKeyEncrypted:
+          responseContent?.adres?._adresSleutel ?? '--no-address-key--',
       }
     );
   }
