@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import {
@@ -17,13 +18,11 @@ import {
   loadServicesSSE,
 } from './services/controller';
 import { fetchTransacties } from './services/hli/stadspas-gpass-service';
-import { captureException } from './services/monitoring';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
-import { downloadZorgnedDocument } from './services/zorgned/wmo-hli-document-download-route-handler';
 import { fetchWpiDocument } from './services/wpi/api-service';
+import { downloadZorgnedDocument } from './services/zorgned/wmo-hli-document-download-route-handler';
 
 export const router = express.Router();
 
@@ -273,12 +272,6 @@ router.get(
       authProfileAndToken,
       [req.params.transactionsKey]
     );
-
-    if (response.status === 'ERROR') {
-      return res
-        .status(typeof response.code === 'number' ? response.code : 500)
-        .end();
-    }
 
     return res.send(response);
   }
