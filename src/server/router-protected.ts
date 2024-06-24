@@ -22,7 +22,7 @@ import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
 import { fetchWpiDocument } from './services/wpi/api-service';
-import { downloadZorgnedDocument } from './services/zorgned/wmo-hli-document-download-route-handler';
+import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
 
 export const router = express.Router();
 
