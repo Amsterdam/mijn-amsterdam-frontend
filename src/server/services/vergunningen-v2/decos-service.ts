@@ -493,4 +493,5 @@ export async function fetchDecosDocument(
 
 export const forTesting = {
   getUserKeys,
+  fetchDecosDocument,
 };
