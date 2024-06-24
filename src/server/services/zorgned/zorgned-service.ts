@@ -10,7 +10,7 @@ import {
 } from './zorgned-config-and-types';
 
 import { GenericDocument } from '../../../universal/types';
-import { IS_DEBUG, getApiConfig } from '../../config';
+import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
@@ -142,7 +142,6 @@ export async function fetchAanvragen(
   };
 
   const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
-
   const url = `${dataRequestConfig.url}/aanvragen`;
 
   const voorzieningen = await requestData<ZorgnedAanvraagTransformed[]>(

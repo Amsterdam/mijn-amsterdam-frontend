@@ -137,6 +137,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: process.env.BFF_ZORGNED_API_TOKEN,
       'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'JZD',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_SERVER_CLIENT_CERT'),
@@ -149,6 +150,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: process.env.BFF_ZORGNED_API_TOKEN,
       'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'AV',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
