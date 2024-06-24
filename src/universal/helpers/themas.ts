@@ -1,6 +1,6 @@
-import { ThemaMenuItem, Themas, FeatureToggle } from '../config';
 import { isLoading, isMokum } from '.';
 import type { AppState, AppStateKey } from '../../client/AppState';
+import { FeatureToggle, ThemaMenuItem, Themas } from '../config';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -81,7 +81,11 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       const hasStadspas = !!HLI?.content?.stadspas?.stadspassen?.length;
       const hasRegelingen = !!HLI?.content?.regelingen?.length;
       const isLoadingHLI = isLoading(HLI);
-      return !isLoadingHLI && (hasStadspas || hasRegelingen);
+      return (
+        FeatureToggle.hliThemaActive &&
+        !isLoadingHLI &&
+        (hasStadspas || hasRegelingen)
+      );
     }
 
     case Themas.ZORG:
