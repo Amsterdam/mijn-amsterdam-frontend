@@ -54,6 +54,7 @@ export const PRISTINE_APPSTATE: AppState = {
     },
     {
       profileTypes: ['private'],
+      isActive: FeatureToggle.hliThemaActive,
     }
   ),
   SVWI: apiPristineResult(null, {
