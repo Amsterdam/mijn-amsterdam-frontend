@@ -6,14 +6,12 @@ import {
   getSettledResult,
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import {
-  BFF_BASE_PATH,
-  BFF_OIDC_BASE_URL,
-  BffEndpoints,
-  getApiConfig,
-} from '../../config';
+import displayAmount from '../../../universal/helpers/text';
+import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { captureException } from '../monitoring';
+import { fetchClientNummer } from './hli-zorgned-service';
 import {
   GPASS_API_TOKEN,
   GPASS_BUDGET_ONLY_FOR_CHILDREN,
@@ -28,10 +26,6 @@ import {
   StadspasTransactiesResponse,
   StadspasTransaction,
 } from './stadspas-types';
-import { fetchClientNummer } from './hli-zorgned-service';
-import { captureException } from '../monitoring';
-import displayAmount from '../../../universal/helpers/text';
-import { differenceInYears, parseISO, subYears } from 'date-fns';
 
 function getHeaders(administratienummer: string) {
   return {
