@@ -41,7 +41,7 @@ export const FeatureToggle = {
   laadpalenActive: !IS_PRODUCTION,
   oidcLogoutHintActive: !IS_PRODUCTION,
   zorgnedDocumentAttachmentsActive: true,
-  powerbrowserActive: !IS_AP,
+  powerbrowserActive: !IS_PRODUCTION,
   bbDocumentDownloadsActive: false,
 };
 
