@@ -128,6 +128,7 @@ function transformIsErfpachterResponseSource(
   responseData: Erfpachtv2ErpachterResponseSource,
   profileType: ProfileType
 ): Erfpachtv2ErpachterResponse {
+  console.log('\n\nERFPACHT:', responseData, '\n\n');
   return {
     isKnown: !!responseData?.erfpachter,
     relatieCode: responseData?.relationCode,
