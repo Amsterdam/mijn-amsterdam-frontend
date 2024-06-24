@@ -14,7 +14,11 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res, next, core) => {
-            res.status(200);
+            if (!('x-mams-api-user' in req.headers)) {
+              return res
+                .status(500)
+                .send('x-mams-api-user key not found in request headers.');
+            }
             return res.send(
               req.headers['x-mams-api-user'] === 'AV'
                 ? ZORGNED_AV_AANVRAGEN_RESPONSE
