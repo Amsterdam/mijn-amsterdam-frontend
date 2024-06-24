@@ -16,7 +16,7 @@ module.exports = [
           middleware: (req, res, next, core) => {
             if (!('x-mams-api-user' in req.headers)) {
               return res
-                .status(500)
+                .status(400)
                 .send('x-mams-api-user key not found in request headers.');
             }
             return res.send(
