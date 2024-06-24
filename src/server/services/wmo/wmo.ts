@@ -18,6 +18,7 @@ import {
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import parseISO from 'date-fns/parseISO';
+import { BffEndpoints } from '../../config';
 
 function assignLineItemDocuments(
   sessionID: AuthProfileAndToken['profile']['sid'],
@@ -31,9 +32,9 @@ function assignLineItemDocuments(
         ...document,
         title: SINGLE_DOC_TITLE_BESLUIT, // TODO: Change if we get proper document names from Zorgned api
         url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
-              id: idEncrypted,
-            }),
-        };
+          id: idEncrypted,
+        }),
+      };
     });
   }
 
