@@ -149,10 +149,6 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error: any) {
-    if (IS_DEBUG) {
-      console.error(error);
-    }
-
     const errorMessageBasic = error.toString();
     const errorMessage = error?.response?.data
       ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
