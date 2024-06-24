@@ -70,51 +70,47 @@ describe('wmo-zorgned-service', () => {
   });
 
   test('isActual', () => {
-    expect(
-      forTesting.assignIsActueel({
-        toegewezenProduct: {
-          actueel: false,
-          datumEindeGeldigheid: '',
-        },
-        levering: {
-          einddatum: '',
-          begindatum: '',
-        },
-        productsoortCode: 'WRA',
-        leveringsVorm: 'ZIN',
-      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
-    ).toBe(true);
+    const aanvraag1 = {
+      isActueel: false,
+      datumEindeGeldigheid: '',
+      datumEindeLevering: '',
+      datumBeginLevering: '',
+      productsoortCode: 'WRA',
+      leveringsVorm: 'ZIN',
+    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
 
-    expect(
-      forTesting.assignIsActueel({
-        toegewezenProduct: {
-          actueel: false,
-          datumEindeGeldigheid: '2022-12-31',
-        },
-        levering: {
-          einddatum: '2023-01-01',
-          begindatum: '2022-12-12',
-        },
-        productsoortCode: 'WRA',
-        leveringsVorm: 'ZIN',
-      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
-    ).toBe(false);
+    forTesting.assignIsActueel(aanvraag1);
+    expect(aanvraag1.isActueel).toBe(true);
 
-    expect(
-      forTesting.assignIsActueel({
-        toegewezenProduct: {
-          actueel: true,
-          datumEindeGeldigheid: '2024-01-01',
-        },
-      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
-    ).toBe(true);
+    const aanvraag2 = {
+      isActueel: false,
+      datumEindeGeldigheid: '2022-12-31',
+      datumEindeLevering: '2023-01-01',
+      datumBeginLevering: '2022-12-12',
+      productsoortCode: 'WRA',
+      leveringsVorm: 'ZIN',
+    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
 
-    expect(
-      forTesting.assignIsActueel({
-        productsoortCode: 'BLA',
-        leveringsVorm: 'BLO',
-      } as unknown as Parameters<typeof forTesting.assignIsActueel>[0])
-    ).toBe(false);
+    forTesting.assignIsActueel(aanvraag2);
+    expect(aanvraag2.isActueel).toBe(false);
+
+    const aanvraag3 = {
+      isActueel: true,
+      datumEindeGeldigheid: '2024-01-01',
+    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
+
+    forTesting.assignIsActueel(aanvraag3);
+
+    expect(aanvraag3.isActueel).toBe(true);
+
+    const aanvraag4 = {
+      productsoortCode: 'BLA',
+      leveringsVorm: 'BLO',
+    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
+
+    forTesting.assignIsActueel(aanvraag4);
+
+    expect(aanvraag4.isActueel).toBe(false);
   });
 
   it('should fetch voorzieningen', async () => {
@@ -139,6 +135,7 @@ describe('wmo-zorgned-service', () => {
         headers: {
           Token: process.env.BFF_ZORGNED_API_TOKEN,
           'Content-type': 'application/json; charset=utf-8',
+          'X-Mams-Api-User': 'JZD',
         },
         httpsAgent: expect.any(Object),
       },
