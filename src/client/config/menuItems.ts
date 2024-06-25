@@ -25,6 +25,7 @@ export const themasByProfileType: Record<ProfileType, ThemaMenuItem[]> = {
   commercial: myThemasMenuItems
     .filter((item) => item.profileTypes.includes('commercial'))
     .map((item) => {
+      console.log('pipo', item);
       return {
         ...item,
         title: termReplace('commercial', ThemaTitles[item.id]),

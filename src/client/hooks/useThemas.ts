@@ -24,9 +24,10 @@ export function useThemas(): ThemasState {
   const themaItems = useThemaMenuItems();
 
   const items = themaItems.filter((item) => {
-    // Check to see if Thema has been loaded or if it is directly available
     return item.isAlwaysVisible || isThemaActive(item, appState);
   });
+  // Check to see if Thema has been loaded or if it is directly available
+  //console.log('useThemas ', items);
 
   const themaItemsWithAppState = getThemaMenuItemsAppState(
     appState,

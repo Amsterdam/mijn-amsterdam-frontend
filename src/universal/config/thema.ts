@@ -15,27 +15,27 @@ import { Match } from '../../universal/types';
 export type Thema =
   //  | 'AFVAL'
 
-  // | 'BELASTINGEN'
+  //| 'BELASTINGEN'
   //| 'BURGERZAKEN'
-  | 'BUURT'
+  //| 'BUURT'
   //  | 'BEZWAREN'
-  | 'INKOMEN'
-  | 'STADSPAS'
+  //| 'INKOMEN'
+  // | 'STADSPAS'
   // | 'BRP'
   // | 'MILIEUZONE'
   //| 'OVERTREDINGEN'
-  | 'NOTIFICATIONS'
+  // | 'NOTIFICATIONS'
   | 'ROOT'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
   // | 'ZORG'
-  | 'VERGUNNINGEN'
-  | 'SVWI'
+  //| 'VERGUNNINGEN'
+  //| 'SVWI'
   // | 'KVK'
   | 'SIA'
   // | 'TOERISTISCHE_VERHUUR'
-  | 'SEARCH'
-  | 'SUBSIDIE'
+  //| 'SEARCH'
+  //| 'SUBSIDIE'
   //| 'PARKEREN'
   // | 'KLACHTEN'
   //| 'HORECA'
@@ -47,9 +47,10 @@ export type Thema =
 export type ThemaIDs =
   | 'AVG'
   | 'AFVAL'
-  // | 'BELASTINGEN'
+  | 'BELASTINGEN'
   | 'BEZWAREN'
   | 'BODEM'
+  | 'BUURT'
   | 'BRP'
   | 'BURGERZAKEN'
   | 'HORECA'
@@ -58,11 +59,18 @@ export type ThemaIDs =
   | 'KREFIA'
   | 'KVK'
   | 'MILIEUZONE'
+  | 'NOTIFICATIONS'
   | 'OVERTREDINGEN'
   | 'PARKEREN'
   | 'TOERISTISCHE_VERHUUR'
-  | 'ZORG';
+  | 'STADSPAS'
+  | 'SUBSIDIE'
+  | 'SEARCH'
+  | 'SVWI'
+  | 'VERGUNNINGEN'
+  | 'ZORG'; ///let op deze bestond niet bij type Thema en zie m nu ook niet op themapagina
 
+//NIEUW
 export type inlogType = 'private' | 'commercial';
 
 export type AppRouteInfo = {
@@ -73,9 +81,14 @@ export type AppRouteInfo = {
 
 type ThemaConfig = {
   title: string;
-  appRoutes: AppRouteInfo[]; //geeft pad aan en wat in tabblad komt te staan
+
+  // NOTE: If patroon c then these appRoutes are a list of first private then commercial
+  appRoutes: AppRouteInfo[]; //geeft pad aan (url) EN wat in tabblad komt te staan (tabName)
   isExternal: boolean; //gaat de pagina wel of niet naar een andere (externe) site
   profileTypes: inlogType[]; //dit zijn de inlogtypes (DIGID/EHERK of BEIDE)
+  isAlwaysVisible?: boolean;
+  hasAppStateValue?: boolean;
+
   //icon: SVGComponent; // Add the themaIcon in '../../client/assets/icons' and import it.
   //isThemaActive: (state: AppState) => { return: true }; > zie app.ts
 };
@@ -114,7 +127,7 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     //isThemaActive: (state: AppState) => { return: true },
   },
   BEZWAREN: {
-    title: 'Bezwaren',
+    title: 'B',
     appRoutes: [
       { url: '/bezwaren', tabName: ' Bezwaren | overzicht' },
       { url: '/bezwaren/:uuid', tabName: ' Bezwaren | bezwaar' },
@@ -125,31 +138,18 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     //isThemaActive: (state: AppState) => { return: true }
   },
 
-  // BELASTINGEN: {
-  //   //nog een voor Eherk
-  //   title: 'Belastingen',
-  //   browserTabName: 'none',
-  //   browserTabNameDetail: 'none',
-  //   appRoute: ExternalUrls.SSO_BELASTINGEN,
-  //   appRouteDetail: 'none',
-  //   isExternal: 'extern', //wanneer extern opnemen url opnemen in app.ts > doet het niet plakt het erachter..
-  //   profileTypes: ['private'],
-  //   //icon: IconBelastingen,
-  //   //isThemaActive: (state: AppState) => { return: true }
-  // },
-
-  // // BELASTINGEN: {
-  // //     title: 'Belastingen',
-  // //   browserTabName: 'none',
-  // //   browserTabNameDetail: 'none',
-  // //   appRoute: ExternalUrls.EH_SSO_BELASTINGEN,
-  // //   appRouteDetail: 'none',
-  // //   isExternal: 'extern', //wanneer extern opnemen url opnemen in app.ts > doet het niet plakt het erachter..
-  // //   profileTypes: ['commercial'],
-  // //   //icon: IconBelastingen,
-  // //   //isThemaActive: (state: AppState) => { return: true }
-  // //   //isAlwaysVisible: true,  ????
-  // // },
+  BELASTINGEN: {
+    title: 'Belastingen',
+    appRoutes: [
+      { url: ExternalUrls.SSO_BELASTINGEN, tabName: ' ' },
+      { url: ExternalUrls.EH_SSO_BELASTINGEN, tabName: ' ' },
+    ],
+    isExternal: true,
+    profileTypes: ['private', 'commercial'],
+    //icon: IconBelastingen,
+    //   //isThemaActive: (state: AppState) => { return: true }
+    //   //isAlwaysVisible: true,  ???? > dit alleen voor commercial NAAR KIJKEN
+  },
 
   BODEM: {
     title: 'Bodem',
@@ -174,6 +174,14 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     profileTypes: ['private'],
     //   //icon: IconBurgerzaken,
     //   //isThemaActive: (state: AppState) => { return: true }
+  },
+
+  BUURT: {
+    title: 'Mijn Buurt',
+    appRoutes: [{ url: '/buurt', tabName: 'Mijn Buurt' }],
+    isExternal: false,
+    profileTypes: ['private', 'commercial'],
+    //   //icon:IconWior,
   },
 
   HORECA: {
@@ -201,7 +209,7 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
       {
         url: '/inkomen/specificaties/:variant/:page?',
         tabName: 'Uitkeringsspecificaties | Inkomen',
-        //LET OP deze moet nog zie routes.ts AppRoutesRediect
+        //LET OP deze moet nog zie routes.ts AppRoutesRedirect
       },
     ],
     isExternal: false,
@@ -249,8 +257,19 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     //   //icon: IconMilieuzone,
     //   //isThemaActive: (state: AppState) => { return: true }
   },
+
+  NOTIFICATIONS: {
+    title: 'Actueel',
+    appRoutes: [
+      { url: '/overzicht-updates/:page?', tabName: 'Actueel | Overzicht' },
+    ],
+    isExternal: false,
+    profileTypes: ['private', 'commercial'],
+    //   //icon:  IconMyNotifications,
+  },
+
   OVERTREDINGEN: {
-    //   //is deze nog op prod > zelfde als miliee ,maar deze heeft wel een Feautiretoggle
+    //   //is deze nog op prod > zelfde als milieu ,maar deze heeft wel een FeatureToggle
     title: 'Overtredingen voertuigen',
     appRoutes: [{ url: ExternalUrls.SSO_MILIEUZONE, tabName: '' }],
     isExternal: true,
@@ -262,16 +281,11 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
   PARKEREN: {
     title: 'Parkeren',
     appRoutes: [{ url: '/parkeren', tabName: 'Parkeren' }],
-    //   appRoutes: [{ url: '/parkeren', tabName: '' }],
-    //   //   browserTabName: '',
-    //   //   browserTabNameDetail: 'none',
-    //   //   appRoute: '/parkeren',
-    //   //   appRouteDetail: 'none',
     isExternal: false,
     profileTypes: ['private', 'commercial'],
     //icon: IconParkeren,
     //isThemaActive: (state: AppState) => { return: true },
-    //hasAppStateValue: false, ??
+    //hasAppStateValue: false, ?? NAAR KIJKEN
   },
   TOERISTISCHE_VERHUUR: {
     title: 'Toeristische verhuur',
@@ -300,6 +314,71 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     //isThemaActive: (state: AppState) => { return: true }
   },
 
+  SEARCH: {
+    title: 'Zoeken',
+    appRoutes: [{ url: '/zoeken', tabName: 'Home | Dashboard' }],
+    isExternal: false,
+    profileTypes: ['private', 'commercial'],
+    //icon: IconSearch,
+  },
+
+  SUBSIDIE: {
+    title: 'Subsidies',
+    appRoutes: [
+      { url: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`, tabName: '' },
+      {
+        url: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
+        tabName: '',
+      },
+    ],
+    isExternal: true,
+    profileTypes: ['private', 'commercial'],
+    //icon:IconSubsidie,
+    //isThemaActive: (state: AppState) => { return: true }
+  },
+
+  STADSPAS: {
+    title: 'Stadspas',
+    appRoutes: [{ url: '/stadspas', tabName: 'Stadspas | Overzicht' }],
+    isExternal: false,
+    profileTypes: ['private'],
+    //icon:IconStadspas,
+    //isThemaActive: (state: AppState) => { return: true }
+  },
+
+  SVWI: {
+    title: 'SVWI',
+    appRoutes: [
+      {
+        url: 'nu.nl',
+        //   `https://mijn.werkeninkomen${
+        //   !IS_PRODUCTION ? '-acc' : ''
+        // }.amsterdam.nl/`,
+        tabName: '',
+      },
+    ],
+    isExternal: true,
+    profileTypes: ['private'],
+  },
+
+  VERGUNNINGEN: {
+    title: 'Vergunningen en ontheffingen',
+    appRoutes: [
+      {
+        url: '/vergunningen',
+        tabName: 'Vergunningen en ontheffingen | Overzicht',
+      },
+      {
+        url: '/vergunningen/:title/:id',
+        tabName: 'Vergunning | Vergunningen en ontheffingen',
+      },
+    ],
+    isExternal: false,
+    profileTypes: ['private', 'commercial'],
+    //icon:IconVergunningen,
+    //isThemaActive: (state: AppState) => { return: true }
+  },
+
   ZORG: {
     title: 'Zorg en ondersteuning',
     appRoutes: [
@@ -324,7 +403,6 @@ export let browserTabNames = {};
 
 //omdat je object niet mag itereren > maak je er
 Object.values(ThemaNieuw).forEach((value, index) => {
-  // consol¿e.log(value);
   value.appRoutes.map((appRoute) => {
     Object.assign(browserTabNames, {
       [appRoute.url]: appRoute.tabName,
@@ -378,7 +456,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
   BUURT: 'Mijn buurt',
-  BEZWAREN: 'Bezwaren',
+  BEZWAREN: 'Bezwaaaren',
   INKOMEN: 'Inkomen',
   STADSPAS: 'Stadspas',
   BRP: 'Mijn gegevens',
@@ -479,13 +557,32 @@ export interface ThemaMenuItem extends LinkProps {
 let themaMenuItems = [];
 for (const [key, value] of Object.entries(ThemaNieuw)) {
   let url = value.appRoutes[0].url;
-  // console.log(value);
-  themaMenuItems.push({
-    title: value.title,
-    id: key,
-    to: url, // the first in this list is always the thema url
-    profileTypes: value.profileTypes,
-  });
+
+  if (key === 'BELASTINGEN') {
+    themaMenuItems.push({
+      title: value.title,
+      id: key,
+      to: value.appRoutes[0].url, // the first in this list is always the thema url
+      rel: value.isExternal ? 'external' : '',
+      profileTypes: ['private'] as inlogType[],
+    });
+    themaMenuItems.push({
+      title: value.title,
+      id: key,
+      to: value.appRoutes[1].url, // the first in this list is always the thema url
+      rel: value.isExternal ? 'external' : '',
+      isAlwaysVisible: true,
+      profileTypes: ['commercial'] as inlogType[],
+    });
+  } else {
+    themaMenuItems.push({
+      title: value.title,
+      id: key,
+      to: url, // the first in this list is always the thema url
+      rel: value.isExternal ? 'external' : '',
+      profileTypes: value.profileTypes,
+    });
+  }
 
   // let externalCommercialUrl = value.isExternal ? value.appRoutes[1].url : null;
   // if (externalCommercialUrl) {
@@ -497,6 +594,7 @@ for (const [key, value] of Object.entries(ThemaNieuw)) {
   //   });
   // }
 }
+
 //einde nieuw
 export const myThemasMenuItems: ThemaMenuItem[] = [
   {
@@ -526,42 +624,50 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     rel: 'external',
     profileTypes: ['commercial'],
   },
-  {
-    title: ThemaTitles.SUBSIDIE,
-    id: Themas.SUBSIDIE,
-    to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`,
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.SUBSIDIE,
-    id: Themas.SUBSIDIE,
-    to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
-    rel: 'external',
-    profileTypes: ['commercial'],
-  },
+  // {
+  //   title: ThemaTitles.SUBSIDIE,
+  //   id: Themas.SUBSIDIE,
+  //   to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`,
+  //   rel: 'external',
+  //   profileTypes: ['private'],
+  // },
+  // {
+  //   title: ThemaTitles.SUBSIDIE,
+  //   id: Themas.SUBSIDIE,
+  //   to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
+  //   rel: 'external',
+  //   profileTypes: ['commercial'],
+  // },
 
-  {
-    title: ThemaTitles.SVWI,
-    id: Themas.SVWI,
-    to: ExternalUrls.SVWI,
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.STADSPAS,
-    id: Themas.STADSPAS,
-    to: AppRoutes.STADSPAS,
-    profileTypes: ['private'],
-  },
+  // {
+  //   title: ThemaTitles.SVWI,
+  //   id: Themas.SVWI,
+  //   to: ExternalUrls.SVWI,
+  //   rel: 'external',
+  //   profileTypes: ['private'],
+  // },
+  // {
+  //   title: ThemaTitles.STADSPAS,
+  //   id: Themas.STADSPAS,
+  //   to: AppRoutes.STADSPAS,
+  //   profileTypes: ['private'],
+  // },
 
-  {
-    title: ThemaTitles.VERGUNNINGEN,
-    id: Themas.VERGUNNINGEN,
-    to: AppRoutes.VERGUNNINGEN,
-    profileTypes: ['private', 'commercial'],
-  },
+  // {
+  //   title: ThemaTitles.VERGUNNINGEN,
+  //   id: Themas.VERGUNNINGEN,
+  //   to: AppRoutes.VERGUNNINGEN,
+  //   profileTypes: ['private', 'commercial'],
+  // },
 
+  // {
+  //   title: ThemaTitles.BELASTINGEN,
+  //   id: Themas.BELASTINGEN,
+  //   to: 'nu.nl',
+  //   rel: 'external',
+  //   profileTypes: ['commercial'],
+  //   isAlwaysVisible: true,
+  // },
   {
     title: ThemaTitles.SIA,
     id: Themas.SIA,
@@ -583,14 +689,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   //   to: ExternalUrls.SSO_BELASTINGEN,
   //   rel: 'external',
   //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.BELASTINGEN,
-  //   id: Themas.BELASTINGEN,
-  //   to: ExternalUrls.EH_SSO_BELASTINGEN,
-  //   rel: 'external',
-  //   profileTypes: ['commercial'],
-  //   isAlwaysVisible: true,
   // },
   // {
   //   title: ThemaTitles.BEZWAREN,
