@@ -145,6 +145,7 @@ export interface VergunningBase extends StatusLine {
   dateDecision?: string | null;
   id: string;
   link: LinkProps;
+  fetchUrl: string;
   processed: boolean;
 }
 

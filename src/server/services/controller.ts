@@ -50,6 +50,7 @@ import {
   prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {
@@ -115,7 +116,7 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
 const VERGUNNINGENv2 = async (requestID: requestID, req: Request) =>
-  fetchDecosVergunningen(requestID, await getAuth(req));
+  fetchVergunningenV2(requestID, await getAuth(req));
 
 const HORECA = async (requestID: requestID, req: Request) =>
   fetchHorecaVergunningen(
@@ -211,7 +212,8 @@ const SERVICES_INDEX = {
   WPI_BBZ,
   WPI_SPECIFICATIES,
   WPI_TONK,
-  WPI_TOZO,};
+  WPI_TOZO
+};
 
 export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;

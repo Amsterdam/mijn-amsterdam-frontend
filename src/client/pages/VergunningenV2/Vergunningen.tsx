@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { VergunningV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -68,12 +68,14 @@ export default function VergunningenV2() {
   );
 
   const pageContentBottom = hasActualGPK && (
-    <Paragraph className={styles.SuppressedParagraph}>
-      Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste
-      parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u hier in
-      Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra de GPK is
-      gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn Amsterdam.
-    </Paragraph>
+    <Grid.Cell start={3} span={7}>
+      <Paragraph className={styles.SuppressedParagraph}>
+        Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste
+        parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u hier in
+        Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra de GPK is
+        gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn Amsterdam.
+      </Paragraph>
+    </Grid.Cell>
   );
 
   const linkListItems: LinkProps[] = [
