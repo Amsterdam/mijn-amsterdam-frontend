@@ -1,0 +1,19 @@
+{
+  "itemtypeBuckets": [],
+  "itemDataResultSet": {
+    "count": 10,
+    "content": [
+      {
+        "key": "9C1DEF944FC34EE1959AAF47BE2FB242",
+        "fields": {},
+        "links": [
+          {
+            "rel": "self",
+            "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1.0/items/9C1DEF944FC34EE1959AAF47BE2FB242"
+          }
+        ]
+      }
+    ],
+    "links": []
+  }
+}
