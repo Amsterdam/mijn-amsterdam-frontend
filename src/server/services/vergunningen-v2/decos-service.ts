@@ -490,3 +490,7 @@ export async function fetchDecosDocument(
 
   return requestData(apiConfigDocument, requestID);
 }
+
+export const forTesting = {
+  getUserKeys,
+};

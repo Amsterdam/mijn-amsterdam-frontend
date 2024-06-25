@@ -55,6 +55,10 @@ process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_MIJN_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
 
 // V2
+process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;
+process.env.BFF_DECOS_VERGUNNINGEN_ADRES_BOEKEN_BSN = 'bookKeyA'
+process.env.BFF_DECOS_VERGUNNINGEN_ADRES_BOEKEN_KVK = 'bookKey1';
+
 process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
 
 process.env.BFF_LVV_API_URL = `${remoteApiHost}/lvv`;
