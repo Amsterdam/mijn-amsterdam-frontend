@@ -1,15 +1,18 @@
-import { isDateInPast } from '../../../../universal/helpers';
-import { TextPartContents, WMOVoorziening } from '../wmo-config-and-types';
+import { isDateInPast } from '../../../universal/helpers';
+import {
+  TextPartContents,
+  ZorgnedAanvraagTransformed,
+} from './zorgned-config-and-types';
 
 export function parseLabelContent(
   text: TextPartContents,
-  voorziening: WMOVoorziening,
+  aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ): string {
   let rText = text || '';
 
   if (typeof rText === 'function') {
-    return rText(voorziening, today);
+    return rText(aanvraag, today);
   }
 
   return rText;
@@ -30,21 +33,21 @@ export function hasHistoricDate(dateStr: string | null, compareDate: Date) {
 }
 
 export function isServiceDeliveryStarted(
-  sourceData: WMOVoorziening,
+  sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
   return hasHistoricDate(sourceData.datumBeginLevering, compareDate);
 }
 
 export function isServiceDeliveryStopped(
-  sourceData: WMOVoorziening,
+  sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
   return hasHistoricDate(sourceData.datumEindeLevering, compareDate);
 }
 
 export function isServiceDeliveryActive(
-  sourceData: WMOVoorziening,
+  sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
   return (

@@ -30,7 +30,7 @@ export default function Parkeren() {
             amsterdam.nl
           </a>
           . Daar kunt u ook terecht voor informatie over fietskelders, laadpalen
-          voor elektrische auto's en andere vragen die u hebt over parkeren of
+          voor elektrische auto's en andere vragen die U heeft over parkeren of
           vervoer. Het aanvragen of wijzigen van een parkeervergunning voor
           bewoners kan via Mijn Parkeren. U moet hier wel opnieuw inloggen.
         </p>

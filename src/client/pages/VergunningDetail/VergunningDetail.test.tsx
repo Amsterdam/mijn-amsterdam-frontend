@@ -43,9 +43,11 @@ export function MockVergunningDetail({ identifier }: { identifier: string }) {
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
 
-  bffApi.get(/\/relay\/decosjoin\/listdocuments\/(.*)/).reply(200, {
-    content: [],
-  });
+  bffApi
+    .get(/\/api\/v1\/services\/vergunningen\/documents\/list\/(.*)/)
+    .reply(200, {
+      content: [],
+    });
 
   return (
     <MockApp

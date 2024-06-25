@@ -30,11 +30,30 @@ import { loginUrlByAuthMethod } from './config/api';
 import { default as LandingPage } from './pages/Landing/Landing';
 
 import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
+import AVG from './pages/AVG/AVG';
+import AVGDetail from './pages/AVGDetail/AVGDetail';
 import Accessibility from './pages/Accessibility/Accessibility';
+import Bezwaren from './pages/Bezwaren/Bezwaren';
+import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
+import BFF500Error from './pages/BffError/BffError';
+import Bodem from './pages/Bodem/Bodem';
+import LoodMeting from './pages/Bodem/LoodMeting';
 import BurgerzakenIDKaart from './pages/BurgerzakenDetail/BurgerzakenIDKaart';
 import Dashboard from './pages/Dashboard/Dashboard';
+import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
+import Erfpacht from './pages/Erfpacht/Erfpacht';
+import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
+import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
+import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
 import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
 import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
+import HLI from './pages/HLI/HLI';
+import HLIRegeling from './pages/HLI/HLIRegeling';
+import HLIRegelingen from './pages/HLI/HLIRegelingen';
+import HLIStadspas from './pages/HLI/HLIStadspas';
+import Stadspas from './pages/HLI/Stadspas';
+import Horeca from './pages/Horeca/Horeca';
+import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 import Inkomen from './pages/Inkomen/Inkomen';
 import InkomenDetailBbz from './pages/InkomenDetail/InkomenDetailBbz';
 import InkomenDetailTonk from './pages/InkomenDetail/InkomenDetailTonk';
@@ -50,7 +69,6 @@ import Parkeren from './pages/Parkeren/Parkeren';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
-import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import ToeristischeVerhuur from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
@@ -59,24 +77,6 @@ import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
 import Zorg from './pages/Zorg/Zorg';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
-
-import Bezwaren from './pages/Bezwaren/Bezwaren';
-import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
-
-import Horeca from './pages/Horeca/Horeca';
-import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
-
-import AVG from './pages/AVG/AVG';
-import AVGDetail from './pages/AVGDetail/AVGDetail';
-import BFF500Error from './pages/BffError/BffError';
-
-import Bodem from './pages/Bodem/Bodem';
-import LoodMeting from './pages/Bodem/LoodMeting';
-import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
-import Erfpacht from './pages/Erfpacht/Erfpacht';
-import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
-import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
-import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
 import { useMonitoring } from './utils/monitoring';
 
 function AppNotAuthenticated() {
@@ -177,6 +177,21 @@ function AppAuthenticated() {
             path={AppRoutes['STADSPAS/SALDO']}
             component={StadspasDetail}
           />
+          {FeatureToggle.hliThemaActive && (
+            <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
+          )}
+          {FeatureToggle.hliThemaActive && (
+            <Route
+              path={AppRoutes['HLI/REGELINGEN_LIJST']}
+              component={HLIRegelingen}
+            />
+          )}
+          {FeatureToggle.hliThemaActive && (
+            <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
+          )}
+          {FeatureToggle.hliThemaActive && (
+            <Route path={AppRoutes['HLI']} component={HLI} />
+          )}
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetailUitkering}
@@ -275,7 +290,6 @@ function AppAuthenticated() {
               component={LoodMeting}
             />
           )}
-
           {FeatureToggle.erfpachtV2Active && (
             <Route
               path={AppRoutes['ERFPACHTv2/DOSSIERS']}

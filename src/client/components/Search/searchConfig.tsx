@@ -17,7 +17,7 @@ import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-v
 import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 
-import { StadspasResponseData } from '../../../server/services/stadspas/stadspas-types';
+import { StadspasResponseData } from '../../../server/services/hli/stadspas-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
@@ -37,6 +37,7 @@ import {
 import { AppState, AppStateKey } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
+import { HLIresponseData } from '../../../server/services/hli/regelingen-types';
 
 export interface SearchEntry {
   url: string;
@@ -300,6 +301,34 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         const segments = [wmoItem.title];
         if (wmoItem.supplier) {
           segments.push(`door ${wmoItem.supplier}`);
+        }
+        return displayPath(term, segments);
+      };
+    },
+  },
+  {
+    stateKey: 'HLI' as AppStateKey,
+    getApiBaseItems: (apiContent: HLIresponseData) => {
+      const stadspassen =
+        apiContent?.stadspas?.stadspassen?.map((stadspas) => {
+          return {
+            ...stadspas,
+            title: `Stadspas van ${stadspas.owner}`,
+          };
+        }) || [];
+      const regelingen = apiContent?.regelingen || [];
+      return [...stadspassen, ...regelingen];
+    },
+    displayTitle: (item: {
+      title: string;
+      about?: string;
+      datePublished: string;
+      statusId?: string;
+    }) => {
+      return (term: string) => {
+        const segments = item.about ? [`Aanvraag ${item.about}`] : [item.title];
+        if (item.statusId === 'besluit') {
+          segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
         }
         return displayPath(term, segments);
       };

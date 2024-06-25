@@ -42,9 +42,9 @@
       "get-wpi-document-download:standard",
       "get-wpi-e-aanvragen:standard",
       "get-wpi-specificaties:standard",
-      "get-zorgned-av:standard",
-      "get-zorgned-jzd:standard",
-      "get-zorgned-wmo-document:standard",
+      "post-zorgned-persoonsgegevens:standard",
+      "post-zorgned-aanvragen:standard",
+      "post-zorgned-document:standard",
       "post-powerbrowser-bb-vergunning-attachments:standard",
       "post-powerbrowser-token:standard",
       "post-powerbrowser-vergunningen:standard"

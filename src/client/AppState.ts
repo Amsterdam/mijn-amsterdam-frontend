@@ -47,6 +47,16 @@ export const PRISTINE_APPSTATE: AppState = {
   STADSPAS: apiPristineResult(null, {
     profileTypes: ['private'],
   }),
+  HLI: apiPristineResult(
+    {
+      stadspas: null,
+      regelingen: [],
+    },
+    {
+      profileTypes: ['private'],
+      isActive: FeatureToggle.hliThemaActive,
+    }
+  ),
   SVWI: apiPristineResult(null, {
     isActive: FeatureToggle.svwiLinkActive,
     profileTypes: ['private'],

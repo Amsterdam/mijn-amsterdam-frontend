@@ -3,7 +3,7 @@
     {
       "url": "/",
       "displayTitle": "Home - Dashboard",
-      "description": "Dashboard pagina met overzicht van wat u hebt op Mijn Amsterdam.",
+      "description": "Dashboard pagina met overzicht van wat U heeft op Mijn Amsterdam.",
       "keywords": [
         "Home",
         "Dashboard",
@@ -83,6 +83,40 @@
         "Aanvraag",
         "Zorgaanvraag",
         "Taxi"
+      ],
+      "profileTypes": ["private"]
+    },
+    {
+      "url": "/regelingen-bij-laag-inkomen",
+      "displayTitle": "Stadspas en andere regelingen bij laag inkomen.",
+      "description": "Stadspas en andere regelingen bij laag inkomen.",
+      "keywords": [
+        "Stadspas",
+        "Groene stip",
+        "Blauwe ruit",
+        "Gratis pas",
+        "Saldo checken",
+        "stadspasnummer",
+        "pasnummer",
+        "pas nummer",
+        "einddatum stadspas",
+        "Geld ",
+        "Afschrijvingen",
+        "Gratis pas",
+        "Pas",
+        "Transacties",
+        "Hoeveel heb ik uitgegeven?",
+        "Tegoed",
+        "Bonus",
+        "Kind",
+        "laptop",
+        "gratis",
+        "weinig geld",
+        "vergoeding",
+        "inkomen",
+        "regeling",
+        "pakjekans",
+        "laag inkomen"
       ],
       "profileTypes": ["private"]
     },

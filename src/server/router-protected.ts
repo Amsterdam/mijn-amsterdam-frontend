@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import {
@@ -16,12 +17,12 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
+import { fetchTransacties } from './services/hli/stadspas-gpass-service';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
-import { fetchDocument } from './services/wmo/wmo-zorgned-service';
 import { fetchWpiDocument } from './services/wpi/api-service';
+import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
 
 export const router = express.Router();
 
@@ -81,34 +82,13 @@ router.get(
   }
 );
 
-////////////////////////////////////////////////////
-//// BFF Service Api Endpoints /////////////////////
-////////////////////////////////////////////////////
-
 router.get(
   BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const authProfileAndToken = await getAuth(req);
-    const documentResponse = await fetchDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    if (
-      documentResponse.status === 'ERROR' ||
-      !documentResponse.content?.data
-    ) {
-      return res.status(500).send(documentResponse);
-    }
-
-    res.type(documentResponse.content.mimetype ?? 'application/pdf');
-    res.header(
-      'Content-Disposition',
-      `attachment; filename="${documentResponse.content.title}.pdf"`
-    );
-    return res.send(documentResponse.content.data);
-  }
+  downloadZorgnedDocument('ZORGNED_JZD')
+);
+router.get(
+  BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
+  downloadZorgnedDocument('ZORGNED_AV')
 );
 
 router.get(
@@ -290,15 +270,28 @@ router.get(
     const response = await fetchTransacties(
       res.locals.requestID,
       authProfileAndToken,
-      req.params.transactionsKey
+      [req.params.transactionsKey]
     );
 
-    if (response.status === 'ERROR') {
-      return res
-        .status(typeof response.code === 'number' ? response.code : 500)
-        .end();
-    }
-
     return res.send(response);
+  }
+);
+
+router.post(
+  BffEndpoints.STADSPAS_TRANSACTIONS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const transactionKeys = req.body as string[];
+
+    if (transactionKeys?.length) {
+      const response = await fetchTransacties(
+        res.locals.requestID,
+        authProfileAndToken,
+        transactionKeys
+      );
+
+      return res.send(response);
+    }
+    return res.status(400).send(apiErrorResult('Bad request', null, 400));
   }
 );

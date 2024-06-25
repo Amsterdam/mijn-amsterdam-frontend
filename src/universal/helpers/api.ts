@@ -123,8 +123,8 @@ export function getFailedDependencies<T extends object>(results: T) {
 
   for (const [key, apiResult] of Object.entries(results)) {
     if (
-      apiResult.status === 'ERROR' ||
-      apiResult.status === 'DEPENDENCY_ERROR'
+      apiResult?.status === 'ERROR' ||
+      apiResult?.status === 'DEPENDENCY_ERROR'
     ) {
       if (!failedDependencies) {
         failedDependencies = {};

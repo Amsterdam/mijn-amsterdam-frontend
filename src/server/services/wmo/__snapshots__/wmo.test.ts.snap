@@ -19,7 +19,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2023-03-16",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 12 maart 2023.
+                U heeft recht op hulp bij het huishouden per 12 maart 2023.
               </p>
               <p>
                 
@@ -31,9 +31,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2023-03-16T15:56:11.41",
-              "id": "123-123-123-123",
+              "id": "B2516440",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -98,7 +98,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2023-03-01",
           "description": "
             <p>
-              U hebt recht op een elektrische rolstoel voor binnen en buiten per 21 december 2022.
+              U heeft recht op een elektrische rolstoel voor binnen en buiten per 21 december 2022.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -108,9 +108,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2023-03-02T11:17:08.293",
-              "id": "123-123-123-123",
+              "id": "B2510020",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -175,7 +175,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2022-10-20",
           "description": "
             <p>
-              U hebt recht op een kamer tot kamer vervoer per 19 oktober 2022. De vervoerspas ontvangt u per
+              U heeft recht op een kamer tot kamer vervoer per 19 oktober 2022. De vervoerspas ontvangt u per
               post.
             </p>
             <p>
@@ -186,9 +186,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-10-19T14:27:42.643",
-              "id": "123-123-123-123",
+              "id": "B2391009",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -229,7 +229,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2022-04-15",
           "description": "
             <p>
-              U hebt recht op een niet standaard opdracht natte cel en toilet per 24 maart 2022.
+              U heeft recht op een niet standaard opdracht natte cel en toilet per 24 maart 2022.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -239,9 +239,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-04-19T13:16:44",
-              "id": "123-123-123-123",
+              "id": "B2268406",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -308,7 +308,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2022-03-14",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 11 maart 2022.
+                U heeft recht op dagbesteding per 11 maart 2022.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -318,9 +318,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-03-14T16:12:12",
-              "id": "123-123-123-123",
+              "id": "B2258816",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -386,7 +386,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2022-03-14",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 11 maart 2022.
+                U heeft recht op hulp bij het huishouden per 11 maart 2022.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -396,9 +396,9 @@ exports[`Transform api items > fetchWmo 1`] = `
           "documents": [
             {
               "datePublished": "2022-03-14T16:11:29",
-              "id": "123-123-123-123",
+              "id": "B2258817",
               "title": "Brief",
-              "url": "http://bff-api-host/services/wmo/document/123-123-123-123",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ],
           "id": "status-step-0",
@@ -469,7 +469,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-12-08",
           "description": "
             <p>
-              U hebt recht op een handzender(s) voor deurautomaat per 20 december 2021.
+              U heeft recht op een handzender(s) voor deurautomaat per 20 december 2021.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -546,7 +546,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-12-08",
           "description": "
             <p>
-              U hebt recht op een reparatie-/verwijderopdracht toegang per 08 december 2021.
+              U heeft recht op een reparatie-/verwijderopdracht toegang per 08 december 2021.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -623,7 +623,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-12-06",
           "description": "
             <p>
-              U hebt recht op een reparatie-/verwijderopdracht toegang per 06 december 2021.
+              U heeft recht op een reparatie-/verwijderopdracht toegang per 06 december 2021.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -700,7 +700,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-10-22",
           "description": "
             <p>
-              U hebt recht op een niet standaard opdracht natte cel en toilet per 13 oktober 2021.
+              U heeft recht op een niet standaard opdracht natte cel en toilet per 13 oktober 2021.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -777,7 +777,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-03-11",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 10 maart 2021.
+                U heeft recht op dagbesteding per 10 maart 2021.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -853,7 +853,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-03-11",
           "description": "
               <p>
-                U hebt recht op aanvullende individuele ondersteuning per 10 maart 2021.
+                U heeft recht op aanvullende individuele ondersteuning per 10 maart 2021.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -929,7 +929,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-03-11",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 10 maart 2021.
+                U heeft recht op hulp bij het huishouden per 10 maart 2021.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1005,7 +1005,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-01-09",
           "description": "
               <p>
-                U hebt recht op aanvullende individuele ondersteuning per 01 januari 2021.
+                U heeft recht op aanvullende individuele ondersteuning per 01 januari 2021.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1081,7 +1081,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-01-09",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 01 januari 2021.
+                U heeft recht op hulp bij het huishouden per 01 januari 2021.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1157,7 +1157,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-01-09",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 01 januari 2021.
+                U heeft recht op dagbesteding per 01 januari 2021.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1233,7 +1233,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2020-12-04",
           "description": "
             <p>
-              U hebt recht op een antislipvloer/behandeling badkamer per 13 november 2020.
+              U heeft recht op een antislipvloer/behandeling badkamer per 13 november 2020.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1310,7 +1310,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2020-06-16",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 15 juni 2020.
+                U heeft recht op dagbesteding per 15 juni 2020.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1386,7 +1386,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2020-06-18",
           "description": "
             <p>
-              U hebt recht op een douche-/toiletstoel zelfrijder per 10 juni 2020.
+              U heeft recht op een douche-/toiletstoel zelfrijder per 10 juni 2020.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1461,7 +1461,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2020-06-05",
           "description": "
             <p>
-              U hebt recht op een reparatie-/verwijderopdracht natte cel en toilet per 05 juni 2020.
+              U heeft recht op een reparatie-/verwijderopdracht natte cel en toilet per 05 juni 2020.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1525,7 +1525,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2020-03-12",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 09 maart 2020.
+                U heeft recht op dagbesteding per 09 maart 2020.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1601,7 +1601,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2020-03-12",
           "description": "
               <p>
-                U hebt recht op aanvullende individuele ondersteuning per 09 maart 2020.
+                U heeft recht op aanvullende individuele ondersteuning per 09 maart 2020.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1677,7 +1677,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2020-03-12",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 09 maart 2020.
+                U heeft recht op hulp bij het huishouden per 09 maart 2020.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1753,7 +1753,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2019-10-09",
           "description": "
             <p>
-              U hebt recht op een reparatie-/verwijderopdracht natte cel en toilet per 09 oktober 2019.
+              U heeft recht op een reparatie-/verwijderopdracht natte cel en toilet per 09 oktober 2019.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1830,7 +1830,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2019-04-15",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 14 april 2019.
+                U heeft recht op hulp bij het huishouden per 14 april 2019.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1906,7 +1906,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2019-03-11",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 09 maart 2019.
+                U heeft recht op dagbesteding per 09 maart 2019.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -1982,7 +1982,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2019-03-11",
           "description": "
               <p>
-                U hebt recht op aanvullende individuele ondersteuning per 09 maart 2019.
+                U heeft recht op aanvullende individuele ondersteuning per 09 maart 2019.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2058,7 +2058,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2018-11-29",
           "description": "
               <p>
-                U hebt recht op aanvullende individuele ondersteuning per 28 november 2018.
+                U heeft recht op aanvullende individuele ondersteuning per 28 november 2018.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2134,7 +2134,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2018-12-27",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing met doc 4 per 24 oktober 2018.
+              U heeft recht op een woonruimteaanpassing met doc 4 per 24 oktober 2018.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2211,7 +2211,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2018-04-25",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 14 april 2018.
+                U heeft recht op hulp bij het huishouden per 14 april 2018.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2287,7 +2287,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2018-04-19",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 09 maart 2018.
+                U heeft recht op dagbesteding per 09 maart 2018.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2363,7 +2363,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2017-11-24",
           "description": "
               <p>
-                U hebt recht op aanvullende individuele ondersteuning per 24 november 2017.
+                U heeft recht op aanvullende individuele ondersteuning per 24 november 2017.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2439,7 +2439,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2017-06-01",
           "description": "
               <p>
-                U hebt recht op hulp bij het huishouden per 01 juni 2017.
+                U heeft recht op hulp bij het huishouden per 01 juni 2017.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2515,7 +2515,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2017-06-01",
           "description": "
               <p>
-                U hebt recht op dagbesteding per 01 juni 2017.
+                U heeft recht op dagbesteding per 01 juni 2017.
               </p>
               <p>
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2591,7 +2591,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2014-09-09",
           "description": "
             <p>
-              U hebt recht op een elektrische hulpaandrijving voor rolstoel per 08 september 2014.
+              U heeft recht op een elektrische hulpaandrijving voor rolstoel per 08 september 2014.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2666,7 +2666,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2014-09-11",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing 3 per 08 september 2014.
+              U heeft recht op een woonruimteaanpassing 3 per 08 september 2014.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2743,7 +2743,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2013-12-09",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing met doc 2 per 05 december 2013.
+              U heeft recht op een woonruimteaanpassing met doc 2 per 05 december 2013.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2820,7 +2820,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2013-05-17",
           "description": "
             <p>
-              U hebt recht op een woonruimteaanpassing met doc 1 per 06 mei 2013.
+              U heeft recht op een woonruimteaanpassing met doc 1 per 06 mei 2013.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2897,7 +2897,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2012-10-05",
           "description": "
             <p>
-              U hebt recht op een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) per 05 oktober 2012.
+              U heeft recht op een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) per 05 oktober 2012.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
@@ -2972,7 +2972,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2012-08-07",
           "description": "
             <p>
-              U hebt recht op een kamer tot kamer vervoer per 07 augustus 2012. De vervoerspas ontvangt u per
+              U heeft recht op een kamer tot kamer vervoer per 07 augustus 2012. De vervoerspas ontvangt u per
               post.
             </p>
             <p>

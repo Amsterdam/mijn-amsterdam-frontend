@@ -137,6 +137,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: process.env.BFF_ZORGNED_API_TOKEN,
       'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'JZD',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_SERVER_CLIENT_CERT'),
@@ -149,6 +150,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: process.env.BFF_ZORGNED_API_TOKEN,
       'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'AV',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
@@ -378,7 +380,7 @@ export const BffEndpoints = {
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // Stadspas
-  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
   // Vergunningen
   VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
@@ -393,6 +395,9 @@ export const BffEndpoints = {
 
   // WMO / Zorgned
   WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
+
+  // AV / Zorgned
+  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',

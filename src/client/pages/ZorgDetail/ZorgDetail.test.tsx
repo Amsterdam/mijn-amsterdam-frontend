@@ -47,7 +47,7 @@ const testState: any = {
             id: 'status-step-0',
             status: 'Besluit',
             description:
-              '\n              <p>\n                U hebt recht op hulp bij het huishouden (nog niet geleverd) per 15 januari 2022.\n              </p>\n              <p>\n                \n                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht\n                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>\n                  \n              </p>\n            ',
+              '\n              <p>\n                U heeft recht op hulp bij het huishouden (nog niet geleverd) per 15 januari 2022.\n              </p>\n              <p>\n                \n                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht\n                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>\n                  \n              </p>\n            ',
             datePublished: '2022-01-15',
             isActive: true,
             isChecked: true,
@@ -104,7 +104,7 @@ const testState: any = {
             id: 'status-step-0',
             status: 'Besluit',
             description:
-              '\n              <p>\n                U hebt recht op hulp bij het huishouden (geleverd) per 15 december 2021.\n              </p>\n              <p>\n                \n                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht\n                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>\n                  \n              </p>\n            ',
+              '\n              <p>\n                U heeft recht op hulp bij het huishouden (geleverd) per 15 december 2021.\n              </p>\n              <p>\n                \n                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht\n                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>\n                  \n              </p>\n            ',
             datePublished: '2022-01-15',
             isActive: false,
             isChecked: true,
@@ -161,7 +161,7 @@ const testState: any = {
             id: 'status-step-0',
             status: 'Besluit',
             description:
-              '\n              <p>\n                U hebt recht op hulp bij het huishouden (tijdelijk gestopt) per 15 december 2021.\n              </p>\n              <p>\n                \n                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht\n                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>\n                  \n              </p>\n            ',
+              '\n              <p>\n                U heeft recht op hulp bij het huishouden (tijdelijk gestopt) per 15 december 2021.\n              </p>\n              <p>\n                \n                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht\n                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>\n                  \n              </p>\n            ',
             datePublished: '2022-01-15',
             isActive: false,
             isChecked: true,
@@ -218,13 +218,13 @@ const testState: any = {
             id: 'status-step-0',
             status: 'Besluit',
             description:
-              '\n              <p>\n                U hebt recht op hulp bij het huishouden (gestopt) per 15 december 2021.\n              </p>\n              <p>\n                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan\n              indienen.\n              </p>\n            ',
+              '\n              <p>\n                U heeft recht op hulp bij het huishouden (gestopt) per 15 december 2021.\n              </p>\n              <p>\n                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan\n              indienen.\n              </p>\n            ',
             datePublished: '2022-01-15',
             isActive: false,
             isChecked: true,
             documents: [],
             altDocumentContent:
-              '<p>\n            <strong>\n              U hebt dit besluit per post ontvangen.\n            </strong>\n          </p>',
+              '<p>\n            <strong>\n              U heeft dit besluit per post ontvangen.\n            </strong>\n          </p>',
           },
           {
             id: 'status-step-1',

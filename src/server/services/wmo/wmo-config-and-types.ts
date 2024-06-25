@@ -1,19 +1,20 @@
+import { parseISO } from 'date-fns';
 import {
   GenericDocument,
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
-
-export type LeveringsVorm = 'ZIN' | 'PGB' | '';
-export type ProductSoortCode = string;
+import {
+  LeveringsVorm,
+  ProductSoortCode,
+} from '../zorgned/zorgned-config-and-types';
 
 export const SINGLE_DOC_TITLE_BESLUIT = 'Brief';
 
-export const ZORGNED_GEMEENTE_CODE = '0363';
 export const REGELING_IDENTIFICATIE = 'wmo';
 export const BESCHIKTPRODUCT_RESULTAAT = ['toegewezen'];
 export const DATE_END_NOT_OLDER_THAN = '2018-01-01';
-export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = new Date('2022-01-01'); // After this date documents are WCAG proof.
+export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = parseISO('2022-01-01'); // After this date documents are WCAG proof.
 
 export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
   {
@@ -54,105 +55,6 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
     '': ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AAN', 'FIE'],
     PGB: [],
   };
-
-export interface Levering {
-  begindatum: string | null;
-  einddatum: string | null;
-}
-
-interface Toewijzing {
-  leveringen: Levering[];
-  datumOpdracht: string;
-}
-
-interface Leverancier {
-  omschrijving: string;
-}
-
-export type BeschikkingsResultaat = 'toegewezen' | string;
-
-export interface ToegewezenProduct {
-  actueel: boolean;
-  datumEindeGeldigheid: string;
-  datumIngangGeldigheid: string;
-  toewijzingen: Toewijzing[];
-  leveringsvorm: LeveringsVorm;
-  leverancier: Leverancier;
-}
-
-export interface BeschiktProduct {
-  toegewezenProduct: ToegewezenProduct;
-  product: {
-    productsoortCode: ProductSoortCode;
-    omschrijving: string;
-  };
-  resultaat: BeschikkingsResultaat;
-}
-
-interface Beschikking {
-  beschikkingNummer: number;
-  datumAfgifte: string;
-  beschikteProducten: BeschiktProduct[];
-}
-
-export interface ZorgnedDocument {
-  documentidentificatie: string;
-  omschrijving: string;
-  datumDefinitief: string;
-  zaakidentificatie: string | null;
-}
-
-export interface ZorgnedDocumentData {
-  title: string;
-  mimetype: string;
-  data: Buffer;
-}
-
-export interface WMOAanvraag {
-  identificatie: string;
-  beschikking: Beschikking;
-  datumAanvraag: string;
-  documenten: ZorgnedDocument[];
-}
-
-export interface WMOSourceResponseData {
-  _embedded: { aanvraag: WMOAanvraag[] };
-}
-
-export interface WMOVoorziening {
-  id: string;
-  datumAanvraag: string;
-  datumBesluit: string;
-  datumEindeGeldigheid: string;
-  datumIngangGeldigheid: string;
-  documenten: GenericDocument[];
-  isActueel: boolean;
-  leverancier: string;
-  datumEindeLevering: string | null;
-  datumBeginLevering: string | null;
-  leveringsVorm: LeveringsVorm;
-  productsoortCode: ProductSoortCode;
-  titel: string;
-  datumOpdrachtLevering: string | null;
-}
-
-export type TextPartContent = string;
-export type TextPartContentFormatter = (
-  data: WMOVoorziening,
-  today: Date
-) => TextPartContent;
-export type TextPartContents = TextPartContent | TextPartContentFormatter;
-
-export type LeveringsVormConfig = Record<LeveringsVorm, ProductSoortCode[]>;
-
-export type WMOStatusLineItemFormatterConfig = {
-  status: string;
-  datePublished: TextPartContents;
-  description: TextPartContents;
-  isChecked: (stepIndex: number, data: WMOVoorziening, today: Date) => boolean;
-  isActive: (stepIndex: number, data: WMOVoorziening, today: Date) => boolean;
-  isVisible?: (stepIndex: number, data: WMOVoorziening, today: Date) => boolean;
-};
 
 export interface WMOVoorzieningFrontend {
   id: string;

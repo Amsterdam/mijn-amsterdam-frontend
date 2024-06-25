@@ -11,6 +11,13 @@ export const AppRoutes: Record<string, string> = {
 
   'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
   'STADSPAS/SALDO': '/stadspas/saldo-en-transacties/:id',
+
+  HLI: '/regelingen-bij-laag-inkomen',
+  'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
+  'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+  'HLI/REGELINGEN_LIJST':
+    '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
+
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',

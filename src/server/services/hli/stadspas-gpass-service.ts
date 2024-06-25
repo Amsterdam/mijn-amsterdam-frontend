@@ -2,12 +2,16 @@ import { generatePath } from 'react-router-dom';
 import {
   apiErrorResult,
   apiSuccessResult,
+  defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import displayAmount from '../../../universal/helpers/text';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { captureException } from '../monitoring';
+import { fetchClientNummer } from './hli-zorgned-service';
 import {
   GPASS_API_TOKEN,
   GPASS_BUDGET_ONLY_FOR_CHILDREN,
@@ -22,8 +26,6 @@ import {
   StadspasTransactiesResponse,
   StadspasTransaction,
 } from './stadspas-types';
-import { fetchClientNummer } from './stadspas-zorgned-service';
-import { captureException } from '../monitoring';
 
 function getHeaders(administratienummer: string) {
   return {
@@ -60,9 +62,13 @@ function formatBudget(
     description: budget.omschrijving,
     code: budget.code,
     budgetAssigned: budget.budget_assigned,
+    budgetAssignedFormatted: `€${displayAmount(budget.budget_assigned)}`,
     budgetBalance: budget.budget_balance,
+    budgetBalanceFormatted: `€${displayAmount(budget.budget_balance)}`,
     urlTransactions: urlTransactions,
+    transactionsKey,
     dateEnd: budget.expiry_date,
+    dateEndFormatted: defaultDateFormat(budget.expiry_date),
   };
 }
 
@@ -85,7 +91,12 @@ function transformStadspasResponse(
     id: String(gpassStadspasResonseData.id),
     owner: getOwnerName(pashouder),
     dateEnd: gpassStadspasResonseData.expiry_date,
+    dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
     budgets: budgets,
+    balanceFormatted: `€${displayAmount(
+      budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
+    )}`,
+    urlTransactions: generateFullApiUrlBFF(BffEndpoints.STADSPAS_TRANSACTIONS),
     passNumber: gpassStadspasResonseData.pasnummer_volledig,
     passType:
       budgets.length && GPASS_BUDGET_ONLY_FOR_CHILDREN ? 'kind' : 'ouder', // TODO: Uitzoeken of we pas kunnen koppelen aan type
@@ -125,10 +136,8 @@ export async function fetchStadspassen(
     return administratienummerResponse;
   }
 
-  const administratienummer = administratienummerResponse.content;
-
+  const administratienummer = administratienummerResponse.content as string;
   const headers = getHeaders(administratienummer);
-
   const stadspasHouderResponse = await requestData<StadspasPasHouderResponse>(
     {
       ...dataRequestConfig,
@@ -206,7 +215,9 @@ function transformGpassTransactionsResponse(
         id: String(transactie.id),
         title: transactie.budget.aanbieder.naam,
         amount: transactie.bedrag,
+        amountFormatted: `- €${displayAmount(Math.abs(transactie.bedrag))}`,
         datePublished: transactie.transactiedatum,
+        datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
       };
     }
   );
@@ -215,47 +226,59 @@ function transformGpassTransactionsResponse(
 export async function fetchTransacties(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  transactionsKeyEncrypted: string
+  transactionsKeysEncrypted: string[]
 ) {
-  let sessionID: string = '';
-  let budgetcode: string = '';
-  let administratienummer: string = '';
-  let pasnummer: string = '';
+  const requests = transactionsKeysEncrypted.map((transactionsKeyEncrypted) => {
+    let sessionID: string = '';
+    let budgetcode: string = '';
+    let administratienummer: string = '';
+    let pasnummer: string = '';
 
-  try {
-    [sessionID, budgetcode, administratienummer, pasnummer] = decrypt(
-      transactionsKeyEncrypted
-    ).split(':');
-  } catch (error) {
-    captureException(error);
-  }
+    try {
+      [sessionID, budgetcode, administratienummer, pasnummer] = decrypt(
+        transactionsKeyEncrypted
+      ).split(':');
+    } catch (error) {
+      captureException(error);
+    }
 
-  if (
-    !budgetcode ||
-    !administratienummer ||
-    !pasnummer ||
-    sessionID !== authProfileAndToken.profile.sid
-  ) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
+    if (
+      !budgetcode ||
+      !administratienummer ||
+      !pasnummer ||
+      sessionID !== authProfileAndToken.profile.sid
+    ) {
+      return apiErrorResult('Not authorized', null, 401);
+    }
 
-  const dataRequestConfig = getApiConfig('GPASS');
-  const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
-  const cfg = {
-    ...dataRequestConfig,
-    url: GPASS_ENDPOINT_TRANSACTIONS,
-    transformResponse: transformGpassTransactionsResponse,
-    headers: getHeaders(administratienummer),
-    params: {
-      pasnummer,
-      budgetcode,
-      sub_transactions: true,
-    },
-  };
+    const dataRequestConfig = getApiConfig('GPASS');
+    const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
+    const cfg = {
+      ...dataRequestConfig,
+      url: GPASS_ENDPOINT_TRANSACTIONS,
+      transformResponse: transformGpassTransactionsResponse,
+      headers: getHeaders(administratienummer),
+      params: {
+        pasnummer,
+        budgetcode,
+        sub_transactions: true,
+      },
+    };
 
-  return requestData<StadspasTransaction[]>(
-    cfg,
-    requestID,
-    authProfileAndToken
-  );
+    return requestData<StadspasTransaction[]>(
+      cfg,
+      requestID,
+      authProfileAndToken
+    );
+  });
+
+  // Only merge transactions of succesful requests
+  const allTransactions: StadspasTransaction[] = (
+    await Promise.allSettled(requests)
+  ).flatMap((result) => {
+    const response = getSettledResult(result);
+    return response.status === 'OK' ? response.content : [];
+  });
+
+  return apiSuccessResult(allTransactions);
 }

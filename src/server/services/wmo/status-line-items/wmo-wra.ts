@@ -1,12 +1,13 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WMOStatusLineItemFormatterConfig } from '../wmo-config-and-types';
+import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
+
 import {
   hasHistoricDate,
   isServiceDeliveryStarted,
   isServiceDeliveryActive,
-} from './wmo-helpers';
+} from '../../zorgned/zorgned-helpers';
 
-export const WRA: WMOStatusLineItemFormatterConfig[] = [
+export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
     datePublished: (data) => data.datumBesluit,
@@ -17,7 +18,7 @@ export const WRA: WMOStatusLineItemFormatterConfig[] = [
     description: (data) =>
       `
             <p>
-              U hebt recht op een ${data.titel} per ${defaultDateFormat(
+              U heeft recht op een ${data.titel} per ${defaultDateFormat(
                 data.datumIngangGeldigheid
               )}.
             </p>
