@@ -1,6 +1,9 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
-import { VergunningV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import {
+  VergunningDocument,
+  VergunningV2,
+} from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes, BagThemas, ThemaTitles } from '../../../universal/config';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
@@ -9,10 +12,11 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 interface PageContentProps {
   vergunning?: VergunningV2;
+  documents?: VergunningDocument[];
 }
 
 // TODO: Implement detailpages per case
-function PageContent({ vergunning }: PageContentProps) {
+function PageContent({ vergunning, documents }: PageContentProps) {
   return (
     !!vergunning && (
       <Grid.Cell span="all">
@@ -34,15 +38,18 @@ export default function VergunningV2Detail() {
   const { VERGUNNINGENv2 } = appState;
   const { id } = useParams<{ id: VergunningV2['id'] }>();
   const vergunning = VERGUNNINGENv2.content?.find((item) => item.id === id);
-  console.log('vergunning', vergunning);
   const fetchUrl = vergunning?.fetchUrl ?? '';
-  const [vergunningDetail, api] = useAppStateBagApi<VergunningV2 | null>({
+  const [vergunningDetailResponseContent, api] = useAppStateBagApi<{
+    vergunning: VergunningV2 | null;
+    documents: VergunningDocument[];
+  }>({
     url: fetchUrl,
     bagThema: BagThemas.BEZWAREN,
     key: id,
   });
 
-  console.log('api', fetchUrl, api);
+  const vergunningDetail = vergunningDetailResponseContent?.vergunning ?? null;
+  const vergunningDocuments = vergunningDetailResponseContent?.documents ?? [];
 
   return (
     <ThemaDetailPagina<VergunningV2>
@@ -52,14 +59,19 @@ export default function VergunningV2Detail() {
       isLoading={api.isLoading || api.isPristine}
       icon={<ThemaIcon />}
       pageContentTop={
-        vergunningDetail && <PageContent vergunning={vergunningDetail} />
+        vergunningDetail && (
+          <PageContent
+            vergunning={vergunningDetail}
+            documents={vergunningDocuments}
+          />
+        )
       }
       backLink={{
         title: ThemaTitles.VERGUNNINGEN,
         to: AppRoutes.VERGUNNINGEN,
       }}
       documentPathForTracking={(document) =>
-        `/downloads/vergunningen/${vergunning?.caseType}/${document.title.split(/\n/)[0]}`
+        `/downloads/vergunningen/${vergunningDetail?.caseType}/${document.title.split(/\n/)[0]}`
       }
     />
   );

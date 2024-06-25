@@ -25,7 +25,9 @@ export async function fetchVergunningenV2(
   const response = await fetchDecosVergunningen(requestID, authProfileAndToken);
   if (response.status === 'OK') {
     const vergunningenFrontend = response.content.map((vergunning) => {
-      const [idEncrypted] = encrypt(vergunning.key);
+      const [idEncrypted] = encrypt(
+        `${authProfileAndToken.profile.id}:${vergunning.key}`
+      );
       return {
         ...vergunning,
         steps: getStatusLineItems(vergunning),
@@ -85,7 +87,32 @@ export async function fetchVergunningV2(
   );
 
   if (decryptResult.status === 'OK') {
-    return fetchDecosVergunning(requestID, decryptResult.content);
+    const response = await fetchDecosVergunning(
+      requestID,
+      decryptResult.content
+    );
+    if (response.status === 'OK') {
+      const { vergunning, documents } = response.content;
+      const documentsTransformed = documents.map((document) => {
+        const [documentIdEncrypted] = encrypt(
+          `${authProfileAndToken.profile.id}:${document.key}`
+        );
+        return {
+          ...document,
+          url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
+            `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD}`,
+            {
+              id: documentIdEncrypted,
+            }
+          )}`,
+        };
+      });
+      return apiSuccessResult({
+        vergunning,
+        documents: documentsTransformed,
+      });
+    }
+    return response;
   }
 
   return decryptResult;

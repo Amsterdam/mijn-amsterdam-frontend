@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode } from 'react';
 
-import { Grid, Screen } from '@amsterdam/design-system-react';
+import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import {
   GenericDocument,
   LinkProps,
@@ -79,7 +79,7 @@ export default function ThemaDetailPagina<T extends StatusLine>({
         <Grid>
           <Grid.Cell span="all">{pageContentTop}</Grid.Cell>
 
-          {isError && (
+          {!isLoading && (isError || !zaak) && (
             <Grid.Cell span="all">
               <ErrorAlert>{errorAlertContent}</ErrorAlert>
             </Grid.Cell>
