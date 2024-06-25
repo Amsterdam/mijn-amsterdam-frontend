@@ -1,0 +1,12 @@
+{
+  "count": 1,
+  "content": [
+    {
+      "worklfowType": "FOLDER",
+      "workflowType": "FOLDER",
+      "mainItemBookKey": "IETS_VAN_EEN_ID",
+      "key": "HEXSTRING_ALL_WORKFLOWS_RESPONSE_OMZETTINGSVERGUNNING",
+      "workflowName": "Zaak-workflow-naam - vergunning Versie 77899"
+    }
+  ]
+}
