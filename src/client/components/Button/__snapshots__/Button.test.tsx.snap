@@ -8,6 +8,7 @@ exports[`Linkd > Linkd default renders correctly 1`] = `
   >
     <svg
       aria-hidden="true"
+      aria-label="chevron-rechts-icoon"
       class="_Icon_c3ab45 _Icon__left_c3ab45"
       fill="#000"
       focusable="false"
@@ -17,23 +18,18 @@ exports[`Linkd > Linkd default renders correctly 1`] = `
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
-      <title>
-        chevron-rechts-icoon
-      </title>
       <polygon
         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
       />
     </svg>
     <svg
+      aria-label="waarschuwing-icoon"
       focusable="false"
       height="36"
       viewBox="0 0 36 36"
       width="36"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>
-        waarschuwing-icoon
-      </title>
       <path
         d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
       />
@@ -63,6 +59,7 @@ exports[`Linkd > Linkd external renders correctly 1`] = `
   >
     <svg
       aria-hidden="true"
+      aria-label="chevron-rechts-icoon"
       class="_Icon_c3ab45 _Icon__left_c3ab45"
       fill="#000"
       focusable="false"
@@ -72,9 +69,6 @@ exports[`Linkd > Linkd external renders correctly 1`] = `
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
-      <title>
-        chevron-rechts-icoon
-      </title>
       <polygon
         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
       />
@@ -92,6 +86,7 @@ exports[`Linkd > Renders 1`] = `
   >
     <svg
       aria-hidden="true"
+      aria-label="chevron-rechts-icoon"
       class="_Icon_c3ab45 _Icon__left_c3ab45"
       fill="#000"
       focusable="false"
@@ -101,9 +96,6 @@ exports[`Linkd > Renders 1`] = `
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
-      <title>
-        chevron-rechts-icoon
-      </title>
       <polygon
         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
       />
