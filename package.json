@@ -32,10 +32,10 @@
   ],
   "dependencies": {
     "@amsterdam/design-system-assets": "^0.2.0",
-    "@amsterdam/design-system-css": "^0.7.1",
-    "@amsterdam/design-system-react": "^0.7.1",
+    "@amsterdam/design-system-css": "^0.9.0",
+    "@amsterdam/design-system-react": "^0.9.0",
     "@amsterdam/design-system-react-icons": "^0.1.12",
-    "@amsterdam/design-system-tokens": "^0.7.1",
+    "@amsterdam/design-system-tokens": "^0.9.0",
     "@amsterdam/piwik-tracker": "^2.0.3",
     "@amsterdam/react-maps": "^1.1.1",
     "@microsoft/applicationinsights-react-js": "^17.1.2",
@@ -143,7 +143,7 @@
     "xlsx": "file:vendor/xlsx-0.20.2.tgz"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.14.3"
+    "@rollup/rollup-linux-x64-gnu": "4.18.0"
   },
   "devDependencies": {
     "@mocks-server/main": "^4.1.0",
