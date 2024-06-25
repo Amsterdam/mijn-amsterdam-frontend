@@ -7,7 +7,7 @@ const B_NUMBER = 'BBBBBBBBBBBBBBBBBBBB';
 
 module.exports = [
   {
-    id: 'get-toeristische-verhuur-with-bsn',
+    id: 'post-toeristische-verhuur-with-bsn',
     url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/bsn`,
     method: 'POST',
     variants: [
