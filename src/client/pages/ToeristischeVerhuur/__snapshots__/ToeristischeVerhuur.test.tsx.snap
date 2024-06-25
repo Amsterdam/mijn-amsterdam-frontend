@@ -21,9 +21,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
           width="32"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <title>
-            Toeristische verhuur
-          </title>
           <path
             d="M2.91 5v13.2h11.635V7.933h11.637C29.396 7.933 32 10.56 32 13.8V27h-2.91v-4.4H2.91V27H0V5h2.91zM8.5 8c2.49 0 4.5 2.01 4.5 4.5S10.99 17 8.5 17 4 14.99 4 12.5 6.01 8 8.5 8z"
             fill-rule="evenodd"
@@ -39,6 +36,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -48,9 +46,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -78,6 +73,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -87,9 +83,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -103,6 +96,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -112,9 +106,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -186,6 +177,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -194,9 +186,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -259,6 +248,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -268,9 +258,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -332,6 +319,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -341,9 +329,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -405,6 +390,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -414,9 +400,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -474,6 +457,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -483,9 +467,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -543,6 +524,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -551,9 +533,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -616,6 +595,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -625,9 +605,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -689,6 +666,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -698,9 +676,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -762,6 +737,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -771,9 +747,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -835,6 +808,7 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -844,9 +818,6 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />

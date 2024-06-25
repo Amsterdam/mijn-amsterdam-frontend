@@ -56,6 +56,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -65,9 +66,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -95,6 +93,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -104,9 +103,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -166,6 +162,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -174,9 +171,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -212,6 +206,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -220,9 +215,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -306,6 +298,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -315,9 +308,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -345,6 +335,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -354,9 +345,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -377,6 +365,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -385,9 +374,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -423,6 +409,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -431,9 +418,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -517,6 +501,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -526,9 +511,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -556,6 +538,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -565,9 +548,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -588,6 +568,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -596,9 +577,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -656,6 +634,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -665,9 +644,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -715,6 +691,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -723,9 +700,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />

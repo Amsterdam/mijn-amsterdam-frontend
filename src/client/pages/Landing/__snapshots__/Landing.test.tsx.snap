@@ -44,12 +44,10 @@ exports[`<Landing /> > Renders without crashing 1`] = `
               class="_LoginLogoWrap_39d0ac"
             >
               <svg
+                aria-label="DigiD"
                 viewBox="0 0 150 150"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <title>
-                  DigiD logo
-                </title>
                 <path
                   d="M136 150H14c-8 0-14-6-14-14V14C0 6 6 0 14 0h122c8 0 14 6 14 14v122c0 8-6 14-14 14z"
                 />

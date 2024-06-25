@@ -4,8 +4,7 @@
    version="1.0"
    width="32px"
    height="28px"
-   viewBox="0 0 120 150">
-      <title>Wior icoon</title>
+   viewBox="0 0 120 150" aria-label="Wior icoon">
   <g
      transform="translate(-115,-370) scale(1)"
      id="layer1">

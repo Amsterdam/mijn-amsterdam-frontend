@@ -23,9 +23,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            zorg-en-ondersteuning-icoon
-          </title>
           <polygon
             id="Path"
             points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
@@ -45,6 +42,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -54,9 +52,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -359,9 +354,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            zorg-en-ondersteuning-icoon
-          </title>
           <polygon
             id="Path"
             points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
@@ -381,6 +373,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -390,9 +383,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -695,9 +685,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            zorg-en-ondersteuning-icoon
-          </title>
           <polygon
             id="Path"
             points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
@@ -717,6 +704,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -726,9 +714,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -1031,9 +1016,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            zorg-en-ondersteuning-icoon
-          </title>
           <polygon
             id="Path"
             points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
@@ -1053,6 +1035,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -1062,9 +1045,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -1367,9 +1347,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            zorg-en-ondersteuning-icoon
-          </title>
           <polygon
             id="Path"
             points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
@@ -1389,6 +1366,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -1398,9 +1376,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
