@@ -24,6 +24,8 @@ import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
+import { fetchHLI } from './hli/hli';
+import { fetchStadspas } from './hli/stadspas';
 import { fetchMyLocation } from './home';
 import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
@@ -39,7 +41,6 @@ import {
 } from './simple-connect';
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
-import { fetchStadspas } from './hli/stadspas';
 import {
   fetchTipsAndNotifications,
   sortNotifications,
@@ -60,8 +61,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchHLI } from './hli/hli';
-import { fetchDecosVergunningen } from './vergunningen-v2/decos-service';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -212,7 +211,7 @@ const SERVICES_INDEX = {
   WPI_BBZ,
   WPI_SPECIFICATIES,
   WPI_TONK,
-  WPI_TOZO
+  WPI_TOZO,
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
