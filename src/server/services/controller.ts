@@ -202,6 +202,7 @@ const SERVICES_INDEX = {
   SVWI,
   TOERISTISCHE_VERHUUR,
   VERGUNNINGEN,
+  VERGUNNINGENV2,
   WMO,
   WPI_AANVRAGEN,
   WPI_BBZ,
@@ -224,21 +225,22 @@ type CommercialServices = Pick<
   ServiceMap,
   | 'AFVAL'
   | 'AFVALPUNTEN'
+  | 'BEZWAREN'
+  | 'BODEM'
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
-  | 'SUBSIDIE'
-  | 'NOTIFICATIONS'
-  | 'MY_LOCATION'
+  | 'HORECA'
   | 'KVK'
   | 'MILIEUZONE'
+  | 'MY_LOCATION'
+  | 'NOTIFICATIONS'
   | 'OVERTREDINGEN'
-  | 'VERGUNNINGEN'
+  | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
-  | 'HORECA'
-  | 'BODEM'
-  | 'BEZWAREN'
+  | 'VERGUNNINGEN'
+  | 'VERGUNNINGENV2'
 >;
 
 type ServicesByProfileType = {
@@ -274,6 +276,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SVWI,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
+    VERGUNNINGENV2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -305,6 +308,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
+    VERGUNNINGENV2,
   },
 };
 
