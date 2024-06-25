@@ -135,18 +135,19 @@ export type DecosWorkflowStepDate = string;
 
 export interface VergunningBase extends StatusLine {
   caseType: DecosCaseType;
+  dateDecision?: string | null;
+  dateInBehandeling: string | null;
+  dateRequest: string;
+  decision: string | null;
+  description: string;
+  fetchUrl: string;
+  id: string;
+  identifier: ZaakKenmerk;
+  key: string;
+  link: LinkProps;
+  processed: boolean;
   status: ZaakStatus;
   title: string;
-  description: string;
-  identifier: ZaakKenmerk;
-  dateRequest: string;
-  dateInBehandeling: string | null;
-  decision: string | null;
-  dateDecision?: string | null;
-  id: string;
-  link: LinkProps;
-  fetchUrl: string;
-  processed: boolean;
 }
 
 export interface VergunningWithLocation extends VergunningBase {
