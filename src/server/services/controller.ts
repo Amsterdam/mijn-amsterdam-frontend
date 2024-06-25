@@ -60,6 +60,7 @@ import {
   fetchTozo,
 } from './wpi';
 import { fetchHLI } from './hli/hli';
+import { fetchDecosVergunningen } from './vergunningen-v2/decos-service';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -113,7 +114,7 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
-const VERGUNNINGENV2 = async (requestID: requestID, req: Request) =>
+const VERGUNNINGENv2 = async (requestID: requestID, req: Request) =>
   fetchDecosVergunningen(requestID, await getAuth(req));
 
 const HORECA = async (requestID: requestID, req: Request) =>
@@ -204,7 +205,7 @@ const SERVICES_INDEX = {
   SVWI,
   TOERISTISCHE_VERHUUR,
   VERGUNNINGEN,
-  VERGUNNINGENV2,
+  VERGUNNINGENv2,
   WMO,
   WPI_AANVRAGEN,
   WPI_BBZ,
@@ -242,7 +243,7 @@ type CommercialServices = Pick<
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
   | 'VERGUNNINGEN'
-  | 'VERGUNNINGEN_V2'
+  | 'VERGUNNINGENv2'
 >;
 
 type ServicesByProfileType = {
@@ -278,7 +279,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SVWI,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
-    VERGUNNINGENV2,
+    VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -310,7 +311,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
-    VERGUNNINGENV2,
+    VERGUNNINGENv2,
   },
 };
 

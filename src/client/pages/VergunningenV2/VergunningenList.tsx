@@ -19,9 +19,9 @@ export function VergunningenList() {
   const isListWithHistoricItems =
     params.kind === 'eerdere-vergunningen-en-ontheffingen';
   const appState = useAppStateGetter();
-  const { VERGUNNINGEN_V2 } = appState;
+  const { VERGUNNINGENv2 } = appState;
   const vergunningen: VergunningV2[] =
-    VERGUNNINGEN_V2.content?.filter((vergunninge) =>
+    VERGUNNINGENv2.content?.filter((vergunninge) =>
       params.kind === 'eerdere-vergunningen-en-ontheffingen'
         ? vergunninge.processed
         : !vergunninge.processed
@@ -42,9 +42,9 @@ export function VergunningenList() {
       appRoute={AppRoutes['VERGUNNINGEN/LIST']}
       appRouteBack={appRouteBack}
       displayProps={displayProps}
-      thema={Themas.VERGUNNINGEN_V2}
-      isLoading={isLoading(VERGUNNINGEN_V2)}
-      isError={isError(VERGUNNINGEN_V2)}
+      thema={Themas.VERGUNNINGENv2}
+      isLoading={isLoading(VERGUNNINGENv2)}
+      isError={isError(VERGUNNINGENv2)}
     />
   );
 }
