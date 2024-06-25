@@ -23,10 +23,10 @@ interface ThemaPaginaProps {
   title: string;
   backLink: LinkProps;
   icon: ReactElement;
-  pageContentTop: ReactElement;
-  pageContentTables: ReactElement;
+  pageContentTop: ReactNode;
+  pageContentTables: ReactNode;
   linkListItems: LinkProps[];
-  pageContentBottom?: ReactElement;
+  pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
   isError: boolean;

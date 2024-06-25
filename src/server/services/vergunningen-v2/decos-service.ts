@@ -1,10 +1,11 @@
 import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 import {
   apiErrorResult,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { sortAlpha } from '../../../universal/helpers/utils';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -17,8 +18,8 @@ import {
   DecosWorkflowStepTitle,
   DecosZaakSource,
   DecosZakenResponse,
-  VergunningV2,
   VergunningDocument,
+  VergunningV2,
   adresBoekenByProfileType,
 } from './config-and-types';
 import {
@@ -30,7 +31,6 @@ import {
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
 } from './helpers';
-
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of vergunningen.
  *
@@ -125,7 +125,6 @@ async function getUserKeys(
 
 async function transformDecosZaakResponse(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
   decosZaakSource: DecosZaakSource
 ) {
   const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
@@ -173,15 +172,12 @@ async function transformDecosZaakResponse(
     return [fieldNameTransformed ?? fieldNameSource, nValue];
   });
 
-  const [idEncrypted] = encrypt(
-    `${authProfileAndToken.profile.id}:${decosZaakSource.key}`
-  );
-
   // Create an object from the transformed fieldNames and values
   const transformedFields = Object.fromEntries(transformedFieldEntries);
 
   let vergunning = {
-    id: idEncrypted,
+    id: transformedFields.identifier.replace(/\//g, '-'),
+    key: decosZaakSource.key,
     title: zaakTypeTransformer.title,
     dateInBehandeling: null, // Serves as placeholder
     ...transformedFields,
@@ -243,11 +239,7 @@ async function transformDecosZakenResponse(
   const vergunningen = await Promise.all(
     zakenToBeTransformed.map((decosZaak) => {
       try {
-        return transformDecosZaakResponse(
-          requestID,
-          authProfileAndToken,
-          decosZaak
-        );
+        return transformDecosZaakResponse(requestID, decosZaak);
       } catch (err) {
         captureException(err);
       }
@@ -345,7 +337,7 @@ function transformDecosWorkflowDateResponse(
 
 export async function fetchDecosWorkflowDate(
   requestID: requestID,
-  zaakID: VergunningV2['id'],
+  zaakID: VergunningV2['key'],
   stepTitle: DecosWorkflowStepTitle
 ) {
   const apiConfigWorkflows = getApiConfig('DECOS_VERGUNNINGEN', {
@@ -407,7 +399,7 @@ function transformDecosDocumentListResponse(decosDocumentsListResponse: {
 
 export async function fetchDecosDocumentList(
   requestID: requestID,
-  zaakID: VergunningV2['id']
+  zaakID: VergunningV2['key']
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_VERGUNNINGEN', {
     formatUrl: (config) => {
@@ -427,25 +419,12 @@ export async function fetchDecosDocumentList(
 
 export async function fetchDecosVergunning(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  vergunningIdEncrypted: string
+  zaakID: VergunningV2['key']
 ) {
-  let userID: AuthProfileAndToken['profile']['id'] | null = null;
-  let vergunningID: VergunningV2['id'] | null = null;
-
-  try {
-    [userID, vergunningID] = decrypt(vergunningIdEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
-  }
-
-  if (!userID || !vergunningID || authProfileAndToken.profile.id !== userID) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
   // Fetch the zaak from Decos, this request will return all the fieldNames, no need to specify the ?select= query.
   const apiConfig = getApiConfig('DECOS_VERGUNNINGEN', {
     formatUrl: (config) => {
-      return `${config.url}/items/${vergunningID}`;
+      return `${config.url}/items/${zaakID}`;
     },
   });
 
@@ -454,10 +433,7 @@ export async function fetchDecosVergunning(
     requestID
   );
 
-  const decosZaakDocumentsRequest = fetchDecosDocumentList(
-    requestID,
-    vergunningID
-  );
+  const decosZaakDocumentsRequest = fetchDecosDocumentList(requestID, zaakID);
 
   const [zaakSourceResponseSettled, documentsResponseSettled] =
     await Promise.allSettled([
@@ -478,7 +454,6 @@ export async function fetchDecosVergunning(
       try {
         vergunning = await transformDecosZaakResponse(
           requestID,
-          authProfileAndToken,
           decosZaakResponseData
         );
       } catch (error) {
