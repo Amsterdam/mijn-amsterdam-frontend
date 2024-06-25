@@ -115,6 +115,8 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
+const VERGUNNINGENV2 = async (requestID: requestID, req: Request) =>
+  fetchDecosVergunningen(requestID, await getAuth(req));
 
 const HORECA = async (requestID: requestID, req: Request) =>
   fetchHorecaVergunningen(requestID, await getAuth(req));
@@ -241,7 +243,7 @@ type CommercialServices = Pick<
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
   | 'VERGUNNINGEN'
-  | 'VERGUNNINGENV2'
+  | 'VERGUNNINGEN_V2'
 >;
 
 type ServicesByProfileType = {
