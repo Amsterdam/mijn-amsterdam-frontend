@@ -1,11 +1,5 @@
 import { generatePath } from 'react-router-dom';
-import slug from 'slugme';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  getSettledResult,
-} from '../../../universal/helpers';
-import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
 import { sortAlpha } from '../../../universal/helpers/utils';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -13,6 +7,7 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException, captureMessage } from '../monitoring';
 import {
   AddressBookEntry,
+  DecosDocumentSource,
   DecosFieldValue,
   DecosWorkflowStepDate,
   DecosWorkflowStepTitle,
@@ -175,13 +170,13 @@ async function transformDecosZaakResponse(
   // Create an object from the transformed fieldNames and values
   const transformedFields = Object.fromEntries(transformedFieldEntries);
 
-  let vergunning = {
+  let vergunning: VergunningV2 = {
     id: transformedFields.identifier.replace(/\//g, '-'),
     key: decosZaakSource.key,
     title: zaakTypeTransformer.title,
     dateInBehandeling: null, // Serves as placeholder
     ...transformedFields,
-  } as VergunningV2;
+  };
 
   // Try to fetch and assign a specific date on which the zaak was "In behandeling"
   if (
@@ -368,8 +363,8 @@ export async function fetchDecosWorkflowDate(
 }
 
 function transformDecosDocumentListResponse(decosDocumentsListResponse: {
-  content: DecosZaakSource[];
-}) {
+  content: DecosDocumentSource[];
+}): Omit<VergunningDocument, 'url'>[] {
   return decosDocumentsListResponse.content
     .filter(({ fields: documentMetadata }) => {
       const isDefinitief =
@@ -378,21 +373,14 @@ function transformDecosDocumentListResponse(decosDocumentsListResponse: {
         documentMetadata.text40?.toLowerCase()
       );
       const isAllowed = documentMetadata.text41?.toLowerCase() !== 'nvt';
-
       return isDefinitief && isOpenbaar && isAllowed;
     })
     .map(({ fields: documentMetadata, key }) => {
       return {
         id: documentMetadata.mark,
+        key: key,
         title: documentMetadata.text41,
-        datePublished: null,
-        // TODO: Use generateFullApiUrlBFF when https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1314 makes it into main.
-        url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-          `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD}`,
-          {
-            id: key,
-          }
-        )}`,
+        datePublished: '', // TODO: Which field is this?
       };
     });
 }
@@ -426,6 +414,12 @@ export async function fetchDecosVergunning(
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}`;
     },
+    transformResponse: (responseData: { content: [DecosZaakSource] }) => {
+      if (responseData.content) {
+        return responseData.content[0];
+      }
+      return responseData;
+    },
   });
 
   const decosZaakSourceRequest = requestData<DecosZaakSource | null>(
@@ -443,6 +437,8 @@ export async function fetchDecosVergunning(
 
   const zaakSourceResponse = getSettledResult(zaakSourceResponseSettled);
   const documentsResponse = getSettledResult(documentsResponseSettled);
+
+  console.log(zaakSourceResponse, documentsResponse);
 
   let documents: VergunningDocument[] = [];
   let vergunning: VergunningV2 | null = null;

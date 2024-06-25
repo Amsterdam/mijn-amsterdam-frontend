@@ -114,6 +114,7 @@ export type DecosZaakSource = {
   key: DecosZaakID;
   fields: DecosFieldsObject;
 };
+export type DecosDocumentSource = DecosZaakSource;
 
 export type DecosZakenResponse = {
   count: number;
@@ -448,9 +449,7 @@ export type VergunningenSourceData = {
 
 export type VergunningExpirable = VergunningV2 & { dateEnd?: string | null };
 
-export interface VergunningDocument extends GenericDocument {
-  sequence: number;
-}
+export type VergunningDocument = GenericDocument;
 
 export type VergunningenData = VergunningV2[];
 
