@@ -33,7 +33,7 @@ export async function fetchVergunningenV2(
         steps: getStatusLineItems(vergunning),
         // TODO: Use generateFullApiUrlBFF when https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1314 makes it into main.
         fetchUrl: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-          `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGEN_DETAIL}`,
+          `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGENv2_DETAIL}`,
           {
             id: idEncrypted,
           }
@@ -56,7 +56,7 @@ export async function fetchVergunningenV2(
 }
 
 // TODO: Make generic for all endpoints
-function handleEncryption(
+function decryptAndValidate(
   idEncrypted: string,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -81,7 +81,7 @@ export async function fetchVergunningV2(
   authProfileAndToken: AuthProfileAndToken,
   vergunningIdEncrypted: string
 ) {
-  const decryptResult = handleEncryption(
+  const decryptResult = decryptAndValidate(
     vergunningIdEncrypted,
     authProfileAndToken
   );
@@ -123,7 +123,7 @@ export async function fetchVergunningDocumentV2(
   authProfileAndToken: AuthProfileAndToken,
   vergunningDocumentIdEncrypted: string
 ) {
-  const decryptResult = handleEncryption(
+  const decryptResult = decryptAndValidate(
     vergunningDocumentIdEncrypted,
     authProfileAndToken
   );
