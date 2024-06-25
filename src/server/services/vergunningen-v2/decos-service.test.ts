@@ -1,41 +1,53 @@
 import { remoteApi } from '../../../test-utils';
-import { forTesting as decos, fetchDecosDocument } from './decos-service';
-import { getAuthProfile } from '../../helpers/app';
+import { forTesting, fetchDecosDocument } from './decos-service';
+import { AuthProfileAndToken, getAuthProfile } from '../../helpers/app';
 import nock from 'nock';
 
-describe('decos-service api test', () => {
-  // describe('getUserKey tests', () => {
-  //   beforeEach(() => {
-  //     // RP TODO: Nock adds port :80 after origin, other tests also have this problem
-  //     // If unless that's not a problem?
-  //     remoteApi
-  //       .post('/decos/search/books?properties=false&select=key')
-  //       .reply(200, {});
-  //     console.log(nock.activeMocks());
-  //   });
-  //   it('Regular happy path', async () => {
-  //     const profile = getAuthProfile({
-  //       authMethod: 'digid',
-  //       profileType: 'commercial',
-  //       aud: 'test1',
-  //       sid: 'test5',
-  //       sub: '',
-  //     });
-  //     const authProfileAndToken = { profile, token: '111222333' };
-  //     const requestID = '456';
-  //     const userKeys = await decos.getUserKeys(requestID, authProfileAndToken);
-  //
-  //     // RP TODO: Still have to determine a good response after fixing nock problem
-  //     expect(userKeys).toEqual(['somekey']);
-  //   });
-  // });
+describe('decos-service', () => {
+  const authProfileAndToken: AuthProfileAndToken = {
+    profile: {
+      id: 'b123123123',
+      authMethod: 'digid',
+      profileType: 'private',
+      sid: 's999999',
+    },
+    token: '111222333',
+  };
+  const reqID: requestID = '456';
 
-  describe('fetchDecosDocument tests', () => {
-    beforeEach(() => {
-      remoteApi.get('/items/:docId/content').reply(200, {});
+  describe('getUserKey', () => {
+    it('Fetches user keys', async () => {
+      remoteApi
+        .post('/decos/search/books?properties=false&select=key')
+        .reply(200, {
+          itemDataResultSet: {
+            content: ['A', 'B', 'C'],
+          },
+        })
+        .post('/decos/search/books?properties=false&select=key')
+        .reply(200, {
+          itemDataResultSet: {
+            content: [],
+          },
+        })
+        .post('/decos/search/books?properties=false&select=key')
+        .reply(200, {
+          itemDataResultSet: {
+            content: ['D', 'E', 'F'],
+          },
+        })
+        .post('/decos/search/books?properties=false&select=key')
+        .reply(500);
+
+      const userKeys = await forTesting.getUserKeys(reqID, authProfileAndToken);
+
+      expect(userKeys).toEqual(['A', 'B', 'C', 'D', 'E', 'F']);
     });
+  });
 
-    it('fetches a document', async () => {
+  describe('fetchDecosDocument', () => {
+    test('fetches a document', async () => {
+      remoteApi.get('/items/:docId/content').reply(200, {});
       const doc = await fetchDecosDocument('456', '123456789');
       expect(doc).toBe('jjj');
     });
