@@ -1,7 +1,6 @@
-import { generatePath } from 'react-router-dom';
 import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
 import { sortAlpha } from '../../../universal/helpers/utils';
-import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
+import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException, captureMessage } from '../monitoring';
@@ -493,5 +492,4 @@ export async function fetchDecosDocument(
 
 export const forTesting = {
   getUserKeys,
-  fetchDecosDocument,
 };
