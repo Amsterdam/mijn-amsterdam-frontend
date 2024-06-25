@@ -422,6 +422,7 @@ export const BffEndpoints = {
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
   // Vergunningen
+  VERGUNNINGEN_DETAIL: `/services/vergunningen/:id`,
   VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
   VERGUNNINGEN_DOCUMENT_DOWNLOAD:
     '/services/vergunningen/documents/download/:id',
