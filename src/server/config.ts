@@ -421,11 +421,15 @@ export const BffEndpoints = {
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
-  // Vergunningen
-  VERGUNNINGEN_DETAIL: `/services/vergunningen/:id`,
-  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
+  // Vergunningen V2
+  VERGUNNINGENv2_DETAIL: `/services/vergunningen/v2/:id`,
+  VERGUNNINGENv2_DOCUMENT_DOWNLOAD:
+    '/services/vergunningen/v2/documents/download/:id',
+
+  // Vergunningen / Koppel api
   VERGUNNINGEN_DOCUMENT_DOWNLOAD:
     '/services/vergunningen/documents/download/:id',
+  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
 
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
