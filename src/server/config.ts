@@ -115,7 +115,7 @@ export type SourceApiKey =
   | 'BEZWAREN_STATUS'
   | 'CLEOPATRA'
   | 'VERGUNNINGEN'
-  | 'DECOS_VERGUNNINGEN'
+  | 'DECOS_API'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
@@ -215,12 +215,12 @@ export const ApiConfig: ApiDataRequestConfig = {
       key: getCert('BFF_SERVER_CLIENT_KEY'),
     }),
   },
-  DECOS_VERGUNNINGEN: {
+  DECOS_API: {
     url: `${process.env.BFF_DECOS_API_BASE_URL}`,
     postponeFetch: !FeatureToggle.decosServiceActive,
     headers: {
       Accept: 'application/itemdata',
-      Authorization: `Basic ${Buffer.from(`${process.env.BFF_DECOS_VERGUNNINGEN_USERNAME}:${process.env.BFF_DECOS_VERGUNNINGEN_PASSWORD}`).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(`${process.env.BFF_DECOS_API_USERNAME}:${process.env.BFF_DECOS_API_PASSWORD}`).toString('base64')}`,
       'Content-type': 'application/json; charset=utf-8',
     },
   },

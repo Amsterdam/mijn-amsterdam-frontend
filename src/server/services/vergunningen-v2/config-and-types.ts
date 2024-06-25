@@ -33,10 +33,10 @@ export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
   'wacht op online betaling';
 
 const adresBoekenBSN =
-  process.env.BFF_DECOS_VERGUNNINGEN_ADRES_BOEKEN_BSN?.split(',') ?? [];
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
 
 const adresBoekenKVK =
-  process.env.BFF_DECOS_VERGUNNINGEN_ADRES_BOEKEN_KVK?.split(',') ?? [];
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK?.split(',') ?? [];
 
 export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
   private: adresBoekenBSN,
