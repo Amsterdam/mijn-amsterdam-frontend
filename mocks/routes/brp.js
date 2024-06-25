@@ -18,7 +18,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-brp-aantal-bewoners',
+    id: 'post-brp-aantal-bewoners',
     url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/aantal_bewoners`,
     method: 'POST',
     variants: [

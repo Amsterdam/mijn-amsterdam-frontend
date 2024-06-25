@@ -9,7 +9,7 @@ function getSmileIdentifyingField(fields) {
 
 module.exports = [
   {
-    id: 'get-enableu2smile-klachten',
+    id: 'post-enableu2smile-klachten',
     url: `${settings.MOCK_BASE_PATH}/smile`,
     method: 'POST',
     variants: [
