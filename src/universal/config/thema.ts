@@ -1,9 +1,6 @@
 import { generatePath } from 'react-router-dom';
 import { AppState } from '../../client/AppState';
-import {
-  getThemaTitle,
-  getThemaTitleWithAppState,
-} from '../../client/pages/HLI/helpers';
+import { getThemaTitleWithAppState } from '../../client/pages/HLI/helpers';
 import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
@@ -45,33 +42,33 @@ export type BagThema = `${Thema}_BAG`;
 export const Themas: Record<Thema, Thema> = {
   AFIS: 'AFIS',
   AFVAL: 'AFVAL',
+  AVG: 'AVG',
   BELASTINGEN: 'BELASTINGEN',
+  BEZWAREN: 'BEZWAREN',
+  BODEM: 'BODEM',
+  BRP: 'BRP',
   BURGERZAKEN: 'BURGERZAKEN',
   BUURT: 'BUURT',
-  BEZWAREN: 'BEZWAREN',
-  INKOMEN: 'INKOMEN',
-  STADSPAS: 'STADSPAS',
-  HLI: 'HLI',
-  SVWI: 'SVWI',
-  BRP: 'BRP',
-  MILIEUZONE: 'MILIEUZONE',
-  OVERTREDINGEN: 'OVERTREDINGEN',
-  NOTIFICATIONS: 'NOTIFICATIONS',
-  ROOT: 'ROOT',
   ERFPACHT: 'ERFPACHT',
   ERFPACHTv2: 'ERFPACHTv2',
-  ZORG: 'ZORG',
-  VERGUNNINGEN: 'VERGUNNINGEN',
-  KVK: 'KVK',
-  TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
-  KREFIA: 'KREFIA',
-  SEARCH: 'SEARCH',
-  SUBSIDIE: 'SUBSIDIE',
-  PARKEREN: 'PARKEREN',
-  KLACHTEN: 'KLACHTEN',
+  HLI: 'HLI',
   HORECA: 'HORECA',
-  AVG: 'AVG',
-  BODEM: 'BODEM',
+  INKOMEN: 'INKOMEN',
+  KLACHTEN: 'KLACHTEN',
+  KREFIA: 'KREFIA',
+  KVK: 'KVK',
+  MILIEUZONE: 'MILIEUZONE',
+  NOTIFICATIONS: 'NOTIFICATIONS',
+  OVERTREDINGEN: 'OVERTREDINGEN',
+  PARKEREN: 'PARKEREN',
+  ROOT: 'ROOT',
+  SEARCH: 'SEARCH',
+  STADSPAS: 'STADSPAS',
+  SUBSIDIE: 'SUBSIDIE',
+  SVWI: 'SVWI',
+  TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
+  VERGUNNINGEN: 'VERGUNNINGEN',
+  ZORG: 'ZORG',
 };
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
@@ -100,6 +97,19 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   ERFPACHTv2: 'Erfpacht V2',
   SUBSIDIE: 'Subsidies',
   ZORG: 'Zorg en ondersteuning',
+  VERGUNNINGEN: 'Vergunningen en ontheffingen',
+  VERGUNNINGEN_LOPEND: 'Vergunningen',
+  VERGUNNINGEN_EERDER: 'Vergunningen',
+  KVK: 'Mijn onderneming',
+  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
+  KREFIA: 'Kredietbank & FIBU',
+  SEARCH: 'Zoeken',
+  PARKEREN: 'Parkeren',
+  KLACHTEN: 'Klachten',
+  HORECA: 'Horeca',
+  AVG: 'AVG persoonsgegevens',
+  BODEM: 'Bodem',
+  SVWI: 'SVWI',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
