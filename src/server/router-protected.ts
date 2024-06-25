@@ -139,6 +139,33 @@ router.get(
 );
 
 router.get(
+  BffEndpoints.VERGUNNINGEN_DETAIL,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const response = await fetchDecosVergunning(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
+
+    return res.send(response);
+  }
+);
+
+router.get(
+  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+  async (req: Request<{ id: string }>, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const response = await fetchDecosDocument(
+      res.locals.requestID,
+      req.params.id
+    );
+
+    return res.send(response);
+  }
+);
+
+router.get(
   BffEndpoints.WPI_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
