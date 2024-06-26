@@ -4,6 +4,7 @@ import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 import { AppState } from '../../client/AppState';
 import { Match } from '../../universal/types';
+import { IS_PRODUCTION } from './env';
 
 //import { ExternalUrls } from '../../universal/config/app';
 
@@ -26,8 +27,8 @@ export type Thema =
   //| 'OVERTREDINGEN'
   // | 'NOTIFICATIONS'
   | 'ROOT'
-  | 'ERFPACHT'
-  | 'ERFPACHTv2'
+  // | 'ERFPACHT'
+  //| 'ERFPACHTv2'
   // | 'ZORG'
   //| 'VERGUNNINGEN'
   //| 'SVWI'
@@ -44,6 +45,7 @@ export type Thema =
   // | 'BODEM'
   | string;
 
+// SIA is not available anymore and also ROOT is not in list below
 export type ThemaIDs =
   | 'AVG'
   | 'AFVAL'
@@ -53,6 +55,8 @@ export type ThemaIDs =
   | 'BUURT'
   | 'BRP'
   | 'BURGERZAKEN'
+  | 'ERFPACHT'
+  | 'ERFPACHTv2'
   | 'HORECA'
   | 'INKOMEN'
   | 'KLACHTEN'
@@ -127,7 +131,7 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     //isThemaActive: (state: AppState) => { return: true },
   },
   BEZWAREN: {
-    title: 'B',
+    title: 'Bezwaren',
     appRoutes: [
       { url: '/bezwaren', tabName: ' Bezwaren | overzicht' },
       { url: '/bezwaren/:uuid', tabName: ' Bezwaren | bezwaar' },
@@ -182,6 +186,49 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     isExternal: false,
     profileTypes: ['private', 'commercial'],
     //   //icon:IconWior,
+  },
+
+  ERFPACHT: {
+    title: 'Erfpacht',
+    appRoutes: [
+      { url: ExternalUrls.SSO_ERFPACHT, tabName: '' },
+      { url: ExternalUrls.EH_SSO_ERFPACHT, tabName: '' },
+    ],
+    isExternal: true,
+    profileTypes: ['private', 'commercial'],
+    //   //icon:IIconErfpacht,
+    //isThemaActive: (state: AppState) => { return: true }
+  },
+
+  ERFPACHTv2: {
+    title: 'Erfpachtv2',
+    appRoutes: [
+      { url: '/erfpacht', tabName: 'Erfpacht | overzicht' },
+      {
+        url: `https://erfpachtzakelijk${!IS_PRODUCTION ? '-ont' : ''}.amsterdam.nl`,
+        tabName: '',
+      },
+      {
+        url: '/erfpacht/dossiers/:page?',
+        tabName: 'Erfpacht | Lijst met dossiers',
+      },
+      {
+        url: '/erfpacht/dossier/:dossierNummerUrlParam',
+        tabName: 'Erfpacht | dossier',
+      },
+      {
+        url: '/erfpacht/open-facturen/:page?',
+        tabName: 'Erfpacht | Lijst met facturen',
+      },
+      {
+        url: '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
+        tabName: 'Erfpacht | factuur',
+      },
+    ],
+    isExternal: false,
+    profileTypes: ['private', 'commercial'],
+    //   //icon:IIconErfpacht,
+    //isThemaActive: (state: AppState) => { return: true }
   },
 
   HORECA: {
@@ -350,10 +397,9 @@ export const ThemaNieuw: Record<ThemaIDs, ThemaConfig> = {
     title: 'SVWI',
     appRoutes: [
       {
-        url: 'nu.nl',
-        //   `https://mijn.werkeninkomen${
-        //   !IS_PRODUCTION ? '-acc' : ''
-        // }.amsterdam.nl/`,
+        url: `https://mijn.werkeninkomen${
+          !IS_PRODUCTION ? '-acc' : ''
+        }.amsterdam.nl/`,
         tabName: '',
       },
     ],
@@ -412,6 +458,7 @@ Object.values(ThemaNieuw).forEach((value, index) => {
 
 export type BagThema = `${Thema}_BAG`;
 
+// TODO kan straks weg
 export const Themas: Record<Thema, Thema> = {
   AFVAL: 'AFVAL',
   BELASTINGEN: 'BELASTINGEN',
@@ -444,45 +491,18 @@ export const Themas: Record<Thema, Thema> = {
 };
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
-  Object.entries(Themas).map(([key, key2]) => {
-    return [key, `${key2}_BAG`];
+  Object.entries(ThemaNieuw).map(([key]) => {
+    return [key, `${key}_BAG`];
   })
 );
 
-// These are used for PageHeadings and link title props for example.
-//YACINE deze eventueel vervangen door waar ThemaTitles dit te vervangen met {ThemaNieuw.BURGERZAKEN.title}
-export const ThemaTitles: { [thema in Thema]: string } = {
-  AFVAL: 'Afval',
-  BELASTINGEN: 'Belastingen',
-  BURGERZAKEN: 'Burgerzaken',
-  BUURT: 'Mijn buurt',
-  BEZWAREN: 'Bezwaaaren',
-  INKOMEN: 'Inkomen',
-  STADSPAS: 'Stadspas',
-  BRP: 'Mijn gegevens',
-  MILIEUZONE: 'Milieuzone',
-  OVERTREDINGEN: 'Overtredingen voertuigen',
-  NOTIFICATIONS: 'Actueel',
-  ROOT: 'Home',
-  ERFPACHT: 'Erfpacht',
-  ERFPACHTv2: 'Erfpacht V2',
-  SUBSIDIE: 'Subsidies',
-  ZORG: 'Zorg en ondersteuning',
-  VERGUNNINGEN: 'Vergunningen en ontheffingen',
-  VERGUNNINGEN_LOPEND: 'Vergunningen',
-  VERGUNNINGEN_EERDER: 'Vergunningen',
-  KVK: 'Mijn onderneming',
-  SIA: 'Meldingen',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  KREFIA: 'Kredietbank & FIBU',
-  SEARCH: 'Zoeken',
-  PARKEREN: 'Parkeren',
-  KLACHTEN: 'Klachten',
-  HORECA: 'Horeca',
-  AVG: 'AVG persoonsgegevens',
-  BODEM: 'Bodem',
-  SVWI: 'SVWI',
-};
+export const ThemaTitles: Record<Thema, string> = Object.fromEntries(
+  Object.entries(ThemaNieuw).map(([key, value]) => {
+    return [key, value.title];
+  })
+);
+
+// console.log(ThemaTitles);
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
 export const DocumentTitleMain = 'Mijn Amsterdam';
@@ -554,11 +574,12 @@ export interface ThemaMenuItem extends LinkProps {
 
 ///nieuw  moet ThemamenuItem vervangen.
 
+// value.appRoutes[0]url, is for private (DIGID) and value.appRoutes[1].url is for commercial (EHERK).
 let themaMenuItems = [];
 for (const [key, value] of Object.entries(ThemaNieuw)) {
   let url = value.appRoutes[0].url;
 
-  if (key === 'BELASTINGEN') {
+  if (key === 'BELASTINGEN' || key === 'ERFPACHTv2') {
     themaMenuItems.push({
       title: value.title,
       id: key,
@@ -569,7 +590,7 @@ for (const [key, value] of Object.entries(ThemaNieuw)) {
     themaMenuItems.push({
       title: value.title,
       id: key,
-      to: value.appRoutes[1].url, // the first in this list is always the thema url
+      to: value.appRoutes[1].url,
       rel: value.isExternal ? 'external' : '',
       isAlwaysVisible: true,
       profileTypes: ['commercial'] as inlogType[],
@@ -596,190 +617,6 @@ for (const [key, value] of Object.entries(ThemaNieuw)) {
 }
 
 //einde nieuw
-export const myThemasMenuItems: ThemaMenuItem[] = [
-  {
-    title: ThemaTitles.ERFPACHT,
-    id: Themas.ERFPACHT,
-    to: ExternalUrls.SSO_ERFPACHT || '',
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.ERFPACHTv2,
-    id: Themas.ERFPACHTv2,
-    to: AppRoutes.ERFPACHTv2,
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.ERFPACHTv2,
-    id: Themas.ERFPACHTv2,
-    to: ExternalUrls.ERFPACHTv2_ZAKELIJK,
-    profileTypes: ['commercial'],
-    rel: 'external',
-  },
-  {
-    title: ThemaTitles.ERFPACHT,
-    id: Themas.ERFPACHT,
-    to: ExternalUrls.EH_SSO_ERFPACHT || '',
-    rel: 'external',
-    profileTypes: ['commercial'],
-  },
-  // {
-  //   title: ThemaTitles.SUBSIDIE,
-  //   id: Themas.SUBSIDIE,
-  //   to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`,
-  //   rel: 'external',
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.SUBSIDIE,
-  //   id: Themas.SUBSIDIE,
-  //   to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
-  //   rel: 'external',
-  //   profileTypes: ['commercial'],
-  // },
+export const myThemasMenuItems: ThemaMenuItem[] = [...themaMenuItems];
 
-  // {
-  //   title: ThemaTitles.SVWI,
-  //   id: Themas.SVWI,
-  //   to: ExternalUrls.SVWI,
-  //   rel: 'external',
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.STADSPAS,
-  //   id: Themas.STADSPAS,
-  //   to: AppRoutes.STADSPAS,
-  //   profileTypes: ['private'],
-  // },
-
-  // {
-  //   title: ThemaTitles.VERGUNNINGEN,
-  //   id: Themas.VERGUNNINGEN,
-  //   to: AppRoutes.VERGUNNINGEN,
-  //   profileTypes: ['private', 'commercial'],
-  // },
-
-  // {
-  //   title: ThemaTitles.BELASTINGEN,
-  //   id: Themas.BELASTINGEN,
-  //   to: 'nu.nl',
-  //   rel: 'external',
-  //   profileTypes: ['commercial'],
-  //   isAlwaysVisible: true,
-  // },
-  {
-    title: ThemaTitles.SIA,
-    id: Themas.SIA,
-    to: AppRoutes.SIA,
-    profileTypes: ['private-attributes'],
-  },
-
-  ...themaMenuItems,
-  // {
-  //   title: ThemaTitles.AVG,
-  //   id: Themas.AVG,
-  //   to: generatePath(AppRoutes.AVG, { page: 1 }),
-  //   profileTypes: ['private'],
-  // },
-  //
-  // {
-  //   title: ThemaTitles.BELASTINGEN,
-  //   id: Themas.BELASTINGEN,
-  //   to: ExternalUrls.SSO_BELASTINGEN,
-  //   rel: 'external',
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.BEZWAREN,
-  //   id: Themas.BEZWAREN,
-  //   to: AppRoutes.BEZWAREN,
-  //   profileTypes: ['private', 'commercial'],
-  // },
-  // ];  {
-  //     title: ThemaTitles.AFVAL,
-  //     id: Themas.AFVAL,
-  //     to: AppRoutes.AFVAL,
-  //     profileTypes: ['private', 'commercial'],
-  //   }
-  // {
-  //   title: ThemaTitles.BODEM,
-  //   id: Themas.BODEM,
-  //   to: AppRoutes.BODEM,
-  //   profileTypes: ['private', 'commercial'],
-  // },
-  // {
-  //   title: ThemaTitles.BURGERZAKEN,
-  //   id: Themas.BURGERZAKEN,
-  //   to: AppRoutes.BURGERZAKEN,
-  //   profileTypes: ['private'],
-
-  //   title: ThemaTitles.INKOMEN,
-  //   id: Themas.INKOMEN,
-  //   to: AppRoutes.INKOMEN,
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.ZORG,
-  //   id: Themas.ZORG,
-  //   to: AppRoutes.ZORG,
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.KLACHTEN,
-  //   id: Themas.KLACHTEN,
-  //   to: generatePath(AppRoutes.KLACHTEN, { page: 1 }),
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.BRP,
-  //   id: Themas.BRP,
-  //   to: AppRoutes.BRP,
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.HORECA,
-  //   id: Themas.HORECA,
-  //   to: AppRoutes.HORECA,
-  //   profileTypes: ['private', 'commercial'],
-  // },
-  // {
-  //   title: ThemaTitles.TOERISTISCHE_VERHUUR,
-  //   id: Themas.TOERISTISCHE_VERHUUR,
-  //   to: AppRoutes.TOERISTISCHE_VERHUUR,
-  //   profileTypes: ['private', 'commercial'],
-  // },
-  // {
-  //   title: ThemaTitles.KREFIA,
-  //   id: Themas.KREFIA,
-  //   to: AppRoutes.KREFIA,
-  //   profileTypes: ['private'],
-  // },
-  // {
-  //   title: ThemaTitles.OVERTREDINGEN,
-  //   id: Themas.OVERTREDINGEN,
-  //   to: ExternalUrls.SSO_MILIEUZONE || '', // TODO: In de toekomst wordt dit een andere link
-  //   rel: 'external',
-  //   profileTypes: ['private', 'commercial'],
-  // },
-  // {
-  //   title: ThemaTitles.MILIEUZONE,
-  //   id: Themas.MILIEUZONE,
-  //   to: ExternalUrls.SSO_MILIEUZONE || '',
-  //   rel: 'external',
-  //   profileTypes: ['private', 'commercial'],
-  // },
-  // {
-  //   title: ThemaTitles.PARKEREN,
-  //   id: Themas.PARKEREN,
-  //   to: AppRoutes.PARKEREN,
-  //   profileTypes: ['private', 'commercial'],
-  //   hasAppStateValue: false,
-  // },
-  // {
-  //   title: ThemaTitles.KVK,
-  //   id: Themas.KVK,
-  //   to: AppRoutes.KVK,
-  //   profileTypes: ['commercial', 'private'],
-  // },
-];
+console.log(myThemasMenuItems);
