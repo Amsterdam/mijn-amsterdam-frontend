@@ -10,8 +10,10 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-      - name: Create release notification
-        env:
-          webhook_host: ${{ secrets.MS_TEAMS_WEBHOOK_HOST }}
-          webhook_path: ${{ secrets.MS_TEAMS_RELEASE_NOTIFICATION_WEBHOOK_PATH }}
-        run: npm run release:notification
+
+      - name: Extract tag name
+        id: extract_tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Create Release
+        run: gh release create ${{ env.TAG_NAME }} --generate-notes
