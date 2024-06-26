@@ -39,7 +39,7 @@ export const FeatureToggle = {
   dbDisabled: false,
   passQueryParamsToStreamUrl: !IS_AP,
   laadpalenActive: !IS_PRODUCTION,
-  oidcLogoutHintActive: !IS_PRODUCTION,
+  oidcLogoutHintActive: true,
   zorgnedDocumentAttachmentsActive: true,
   powerbrowserActive: !IS_PRODUCTION,
   bbDocumentDownloadsActive: false,
