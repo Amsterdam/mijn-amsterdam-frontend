@@ -1,7 +1,12 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
-import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import {
+  getAuth,
+  isAuthenticated,
+  isProtectedRoute,
+  sendResponseContent,
+} from './helpers/app';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
@@ -245,19 +250,13 @@ router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
-    const response = await fetchErfpachtV2DossiersDetail(
+    const apiResponse = await fetchErfpachtV2DossiersDetail(
       res.locals.requestID,
       authProfileAndToken,
       req.params.dossierNummerUrlParam
     );
 
-    if (response.status === 'ERROR') {
-      return res
-        .status(typeof response.code === 'number' ? response.code : 500)
-        .end();
-    }
-
-    return res.send(response);
+    return sendResponseContent(res, apiResponse);
   }
 );
 
