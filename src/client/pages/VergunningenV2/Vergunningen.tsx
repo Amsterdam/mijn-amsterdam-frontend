@@ -1,7 +1,7 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { ThemaIcon } from '../../components';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -27,12 +27,22 @@ export default function VergunningenV2() {
   );
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter: vergunningenListFilter }]) => {
+    ([
+      kind,
+      {
+        title,
+        displayProps,
+        filter: vergunningenListFilter,
+        sort: vergunningenListSort,
+      },
+    ]) => {
       return (
         <ZakenTable<VergunningFrontendV2>
           key={kind}
           title={title}
-          zaken={vergunningen.filter(vergunningenListFilter)}
+          zaken={vergunningen
+            .filter(vergunningenListFilter)
+            .sort(vergunningenListSort)}
           listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
             kind,
           })}

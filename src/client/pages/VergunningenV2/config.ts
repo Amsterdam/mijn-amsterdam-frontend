@@ -1,4 +1,5 @@
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { dateSort } from '../../../universal/helpers/date';
 
 export const displayPropsHuidigeVergunningen = {
   identifier: 'Kenmerk',
@@ -38,17 +39,20 @@ export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (vergunning: VergunningFrontendV2) => !vergunning.processed,
+    sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
     filter: (vergunning: VergunningFrontendV2) =>
       'isExpired' in vergunning && vergunning.isExpired !== true,
+    sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
     filter: (vergunning: VergunningFrontendV2) => vergunning.processed,
+    sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
   },
 };

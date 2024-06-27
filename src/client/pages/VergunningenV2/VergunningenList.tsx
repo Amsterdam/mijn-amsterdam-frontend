@@ -17,10 +17,13 @@ export function VergunningenList() {
     title,
     displayProps,
     filter: vergunningenListFilter,
+    sort: vergunningenListSort,
   } = tableConfig[params.kind] ?? null;
 
   const vergunningenFiltered: VergunningFrontendV2[] =
-    VERGUNNINGENv2.content?.filter(vergunningenListFilter) ?? [];
+    VERGUNNINGENv2.content
+      ?.filter(vergunningenListFilter)
+      .sort(vergunningenListSort) ?? [];
   const vergunningen =
     addLinkElementToProperty<VergunningFrontendV2>(vergunningenFiltered);
 
