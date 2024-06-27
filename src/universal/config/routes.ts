@@ -1,13 +1,24 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
 import { browserTabNames } from './thema';
+import { themaNieuw } from './thema-data';
+
+const entries = Object.entries({});
+Object.values(themaNieuw).forEach((value) => {
+  value.appRoutes.forEach((urlItems) => {
+    if (urlItems.urlID) entries.push([urlItems.urlID, urlItems.url]);
+  });
+});
+
+console.log('13');
+export const ThemeRoutes = Object.fromEntries(entries);
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   HOME: '/',
-  BURGERZAKEN: '/burgerzaken',
-  'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
-  'BURGERZAKEN/PASPOORT': '/burgerzaken/paspoort/:id',
+  // BURGERZAKEN: '/burgerzaken',
+  // 'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
+  // 'BURGERZAKEN/PASPOORT': '/burgerzaken/paspoort/:id',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
@@ -41,12 +52,12 @@ export const AppRoutes: Record<string, string> = {
   GENERAL_INFO: '/uitleg',
   VERGUNNINGEN: '/vergunningen',
   'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
-  TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
-  'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
-  'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
-    '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
-  'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
-    '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
+  // TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
+  // 'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
+  // 'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
+  //   '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
+  // 'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
+  //   '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   PARKEREN: '/parkeren',
@@ -55,8 +66,8 @@ export const AppRoutes: Record<string, string> = {
   HORECA: '/horeca/',
   'HORECA/DETAIL': '/horeca/:title/:id',
   YIVI_LANDING: '/inloggen-met-yivi',
-  AVG: '/avg',
-  'AVG/DETAIL': '/avg/verzoek/:id',
+  // AVG: '/avg',
+  // 'AVG/DETAIL': '/avg/verzoek/:id',
   BFF_500_ERROR: '/server-error-500',
   BODEM: '/bodem',
   'BODEM/LOOD_METING': '/lood-meting/:id',
@@ -68,7 +79,10 @@ export const AppRoutes: Record<string, string> = {
   'ERFPACHTv2/OPEN_FACTUREN': '/erfpacht/open-facturen/:page?',
   'ERFPACHTv2/ALLE_FACTUREN':
     '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
+  ...ThemeRoutes,
 } as const;
+
+console.log('routests', AppRoutes);
 
 export const AppRoutesRedirect = [
   {
