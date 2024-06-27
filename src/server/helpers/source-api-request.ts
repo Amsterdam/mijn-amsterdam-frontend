@@ -164,7 +164,7 @@ export async function requestData<T>(
     const responseData = apiErrorResult(
       errorMessage,
       null,
-      statusCode ? `${statusCode}` : undefined
+      statusCode ? parseInt(statusCode, 10) : undefined
     );
 
     if (cache.get(cacheKey)) {
