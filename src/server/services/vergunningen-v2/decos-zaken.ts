@@ -87,6 +87,10 @@ const kentekens = {
   transform: transformKenteken,
 };
 
+// Fields are selected per case initially but don't end up in the data we send to front end.
+// These fields are fore example used to determine payment status.
+export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
+
 // The set of field transforms that applies to every case.
 // { $api_attribute_name_source: $api_attribute_name_mijn_amsterdam }
 export const SELECT_FIELDS_TRANSFORM_BASE: Partial<DecosFieldTransformerObject> =
@@ -820,6 +824,8 @@ export const WerkEnVervoerOpStraat: DecosZaakTypeTransformer<WerkzaamhedenEnVerv
       if (vergunning.werkzaamheden.length > 1 && vergunning.decision) {
         vergunning.decision = 'Zie besluit';
       }
+
+      console.log(vergunning.werkzaamheden);
 
       vergunning.title =
         getCustomTitleForVergunningWithLicensePlates(vergunning);
