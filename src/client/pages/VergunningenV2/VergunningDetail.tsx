@@ -2,7 +2,7 @@ import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import {
   VergunningDocument,
-  VergunningV2,
+  VergunningFrontendV2,
 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes, BagThemas, ThemaTitles } from '../../../universal/config';
 import { ThemaIcon } from '../../components';
@@ -11,7 +11,7 @@ import { useAppStateBagApi, useAppStateGetter } from '../../hooks';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 interface PageContentProps {
-  vergunning?: VergunningV2;
+  vergunning?: VergunningFrontendV2;
   documents?: VergunningDocument[];
 }
 
@@ -36,11 +36,11 @@ function PageContent({ vergunning, documents }: PageContentProps) {
 export default function VergunningV2Detail() {
   const appState = useAppStateGetter();
   const { VERGUNNINGENv2 } = appState;
-  const { id } = useParams<{ id: VergunningV2['id'] }>();
+  const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
   const vergunning = VERGUNNINGENv2.content?.find((item) => item.id === id);
   const fetchUrl = vergunning?.fetchUrl ?? '';
   const [vergunningDetailResponseContent, api] = useAppStateBagApi<{
-    vergunning: VergunningV2 | null;
+    vergunning: VergunningFrontendV2 | null;
     documents: VergunningDocument[];
   }>({
     url: fetchUrl,
@@ -52,7 +52,7 @@ export default function VergunningV2Detail() {
   const vergunningDocuments = vergunningDetailResponseContent?.documents ?? [];
 
   return (
-    <ThemaDetailPagina<VergunningV2>
+    <ThemaDetailPagina<VergunningFrontendV2>
       title={vergunningDetail?.title ?? 'Vergunning'}
       zaak={vergunningDetail}
       isError={api.isError}

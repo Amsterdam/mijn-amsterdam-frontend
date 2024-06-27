@@ -134,15 +134,25 @@ export type AddressBookEntry = {
 export type DecosWorkflowStepTitle = string;
 export type DecosWorkflowStepDate = string;
 
-export interface VergunningBase extends ZaakDetail {
+export interface VergunningBase {
   caseType: DecosCaseType;
   dateDecision?: string | null;
   dateInBehandeling: string | null;
   dateRequest: string;
+
+  // DateStart and DateEnd are not applicable to every single vergunning but general enough to but in base Type.
+  dateStart: string | null;
+  dateEnd: string | null;
+
   decision: string | null;
   description: string;
+
+  // Url to BFF Detail paga api
   fetchUrl: string;
+
   identifier: ZaakKenmerk;
+  title: string;
+  id: string;
   // Decos key (uuid) used as primary id's in api communication.
   key: string;
   processed: boolean;
@@ -431,13 +441,6 @@ export type VergunningV2 =
   | TouringcarJaarontheffing
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type VergunningDetailType = Exclude<
-  DecosCaseType,
-  | 'B&B - vergunning'
-  | 'Horeca vergunning exploitatie Horecabedrijf'
-  | 'Vakantieverhuur vergunningsaanvraag'
->;
-
 export type HorecaVergunningen = ExploitatieHorecabedrijf;
 
 export type VergunningenSourceData = {
@@ -455,3 +458,12 @@ export interface VergunningOptions {
   filter?: (vergunning: VergunningV2) => boolean;
   appRoute: string | ((vergunning: VergunningV2) => string);
 }
+
+export type VergunningFrontendV2 = VergunningV2 & {
+  dateDecisionFormatted?: string | null;
+  dateInBehandelingFormatted: string | null;
+  dateRequestFormatted: string;
+  dateStartFormatted?: string | null;
+  dateEndFormatted?: string | null;
+  isExpired?: boolean;
+} & ZaakDetail;

@@ -98,6 +98,8 @@ export const SELECT_FIELDS_TRANSFORM_BASE: Partial<DecosFieldTransformerObject> 
     processed: processed,
     date5: dateDecision,
     document_date: dateRequest,
+    date6: dateStart,
+    date7: dateEnd,
   };
 
 export const TVMRVVObject: DecosZaakTypeTransformer<TVMRVVObjectType> = {

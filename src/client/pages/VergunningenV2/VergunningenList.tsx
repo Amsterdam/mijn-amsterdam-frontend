@@ -4,7 +4,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 import { generatePath, useParams } from 'react-router-dom';
-import { VergunningV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks';
 import {
@@ -20,7 +20,7 @@ export function VergunningenList() {
     params.kind === 'eerdere-vergunningen-en-ontheffingen';
   const appState = useAppStateGetter();
   const { VERGUNNINGENv2 } = appState;
-  const vergunningenFiltered: VergunningV2[] =
+  const vergunningenFiltered: VergunningFrontendV2[] =
     VERGUNNINGENv2.content?.filter((vergunninge) =>
       params.kind === 'eerdere-vergunningen-en-ontheffingen'
         ? vergunninge.processed
@@ -28,7 +28,7 @@ export function VergunningenList() {
     ) ?? [];
 
   const vergunningen =
-    addLinkElementToProperty<VergunningV2>(vergunningenFiltered);
+    addLinkElementToProperty<VergunningFrontendV2>(vergunningenFiltered);
 
   console.log(vergunningen);
 

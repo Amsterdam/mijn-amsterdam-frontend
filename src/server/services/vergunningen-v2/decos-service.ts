@@ -170,7 +170,9 @@ async function transformDecosZaakResponse(
   const transformedFields = Object.fromEntries(transformedFieldEntries);
 
   let vergunning: VergunningV2 = {
-    id: transformedFields.identifier.replace(/\//g, '-'),
+    id:
+      transformedFields.identifier?.replace(/\//g, '-') ??
+      'unknown-vergunning-id',
     key: decosZaakSource.key,
     title: zaakTypeTransformer.title,
     dateInBehandeling: null, // Serves as placeholder, value for this property will be added async below.
@@ -291,9 +293,12 @@ export async function fetchDecosVergunningen(
 
   for (const decosZakenSource of zakenSourceResponses) {
     const response = getSettledResult(decosZakenSource);
+    const responseContent = response.content ?? [];
 
-    if (response.status === 'OK' && Array.isArray(response.content)) {
-      zakenSource.push(...response.content);
+    if (response.status === 'OK') {
+      zakenSource.push(...responseContent);
+    } else if (response.status === 'ERROR') {
+      return response;
     }
   }
 
