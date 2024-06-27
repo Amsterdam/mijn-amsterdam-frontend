@@ -1,3 +1,4 @@
+import memoizee from 'memoizee';
 import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { getApiConfig } from '../../config';
@@ -285,7 +286,7 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
   return responseSource;
 }
 
-export async function fetchDecosVergunningen(
+async function fetchDecosVergunningen_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -316,6 +317,8 @@ export async function fetchDecosVergunningen(
 
   return apiSuccessResult(vergunningen);
 }
+
+export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_);
 
 function transformDecosWorkflowKeysResponse(workflowsResponseData: {
   content: Array<{ key: string }>;
