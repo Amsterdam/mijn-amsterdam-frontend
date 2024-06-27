@@ -1,3 +1,5 @@
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+
 export const displayPropsHuidigeVergunningen = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
@@ -30,4 +32,23 @@ export const listPageTitle = {
   [listPageParamKind.actual]: 'Huidige vergunningen en ontheffingen',
   [listPageParamKind.historic]:
     'Eerdere en niet verleende vergunningen en ontheffingen',
+};
+
+export const tableConfig = {
+  [listPageParamKind.inProgress]: {
+    title: 'Lopende aanvragen',
+    filter: (vergunning: VergunningFrontendV2) => !vergunning.processed,
+    displayProps: displayPropsLopendeAanvragen,
+  },
+  [listPageParamKind.actual]: {
+    title: 'Huidige vergunningen en ontheffingen',
+    filter: (vergunning: VergunningFrontendV2) =>
+      'isExpired' in vergunning && vergunning.isExpired !== true,
+    displayProps: displayPropsHuidigeVergunningen,
+  },
+  [listPageParamKind.historic]: {
+    title: 'Eerdere en niet verleende vergunningen en ontheffingen',
+    filter: (vergunning: VergunningFrontendV2) => vergunning.processed,
+    displayProps: displayPropsEerdereVergunningen,
+  },
 };
