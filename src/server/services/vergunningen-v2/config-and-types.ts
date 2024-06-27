@@ -153,10 +153,15 @@ export interface VergunningBase {
   identifier: ZaakKenmerk;
   title: string;
   id: string;
+
   // Decos key (uuid) used as primary id's in api communication.
   key: string;
+
   processed: boolean;
   status: ZaakStatus;
+
+  paymentStatus: string | null;
+  paymentMethod: string | null;
 }
 
 export interface VergunningWithLocation extends VergunningBase {

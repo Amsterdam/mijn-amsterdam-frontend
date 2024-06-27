@@ -2,204 +2,6 @@
   "count": 75,
   "content": [
     {
-      "key": "EB94F2B068F34ABFA8B37FFCBA5FCF46",
-      "fields": {
-        "title": "Toewijzen",
-        "text45": "Touringcar Jaarontheffing",
-        "mark": "Z/24/2231328",
-        "processed": false,
-        "document_date": "2024-01-25T00:00:00",
-        "date6": "2024-02-01T00:00:00",
-        "date7": "2025-02-01T00:00:00",
-        "text9": "Kinderen tot 12",
-        "text10": "13,9",
-        "text13": "15,616",
-        "text39": "76BKS2"
-      },
-      "links": []
-    },
-    {
-      "key": "7BA6774B7D184F7DBEA52CC885BACE95",
-      "fields": {
-        "title": "Toewijzen",
-        "text45": "Touringcar Jaarontheffing",
-        "mark": "Z/24/2231329",
-        "processed": false,
-        "document_date": "2024-01-25T00:00:00",
-        "date6": "2024-03-01T00:00:00",
-        "date7": "2025-03-01T00:00:00",
-        "text9": "Mensen met een beperking",
-        "text10": "9,3",
-        "text13": "10,5",
-        "text39": "BZDJ40"
-      },
-      "links": []
-    },
-    {
-      "key": "341974CD60864FBEABEFD5B0BB406323",
-      "fields": {
-        "title": "Toewijzen",
-        "text45": "Touringcar Jaarontheffing",
-        "mark": "Z/24/2231330",
-        "processed": false,
-        "document_date": "2024-01-25T00:00:00",
-        "date6": "2024-02-01T00:00:00",
-        "date7": "2025-02-01T00:00:00",
-        "text9": "Artiesten en gezelschappen",
-        "text10": "9,3",
-        "text13": "10,5",
-        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
-      },
-      "links": []
-    },
-    {
-      "key": "4C8A4693F4B4484AB7D6E0E1464E7C4D",
-      "fields": {
-        "title": "Afgehandeld",
-        "text45": "GPP",
-        "dfunction": "Verleend",
-        "mark": "Z/21/1858540",
-        "processed": true,
-        "date5": "2021-02-01T00:00:00",
-        "document_date": "2021-01-25T00:00:00",
-        "date6": "2021-01-07T00:00:00"
-      },
-      "links": []
-    },
-    {
-      "key": "5138C79B50984FDBA444C760B1996414",
-      "fields": {
-        "title": "Afgehandeld",
-        "text45": "GPK",
-        "dfunction": "Niet verleend",
-        "mark": "Z/20/1794210",
-        "processed": true,
-        "date5": "2020-10-09T00:00:00",
-        "document_date": "2020-07-27T00:00:00",
-        "date6": "2020-09-11T00:00:00"
-      },
-      "links": []
-    },
-    {
-      "key": "51EBD49673A54A55ACC8204396CD33CA",
-      "fields": {
-        "title": "Afgehandeld",
-        "text45": "GPK",
-        "dfunction": "Verleend",
-        "mark": "Z/20/1839511",
-        "processed": true,
-        "date5": "2021-02-01T00:00:00",
-        "document_date": "2020-11-17T00:00:00",
-        "date6": "2021-01-07T00:00:00",
-        "date7": "2026-01-25T00:00:00"
-      },
-      "links": []
-    },
-    {
-      "key": "7B54FB3073EF4A89ADB3A9E7350F7567",
-      "fields": {
-        "title": "Afgehandeld",
-        "text45": "GPP",
-        "dfunction": "Verleend",
-        "mark": "Z/21/1953929",
-        "processed": true,
-        "date5": "2021-09-14T00:00:00",
-        "document_date": "2021-08-26T00:00:00"
-      },
-      "links": []
-    },
-    {
-      "key": "9352A968A19C4E8BBBD45DBF72305735",
-      "fields": {
-        "title": "Ophalen GPK",
-        "text45": "GPK",
-        "dfunction": "Verleend Bestuurder, niet verleend Passagier",
-        "mark": "Z/22/2028396",
-        "processed": true,
-        "date5": "2022-04-29T00:00:00",
-        "document_date": "2022-04-11T00:00:00",
-        "date6": "2020-09-11T00:00:00",
-        "date7": "2026-01-25T00:00:00"
-      },
-      "links": []
-    },
-    {
-      "key": "C5CEA9FA089542C7B37A56467F98C92E",
-      "fields": {
-        "title": "Ontvangen",
-        "text45": "GPP",
-        "mark": "Z/23/2230261",
-        "processed": false,
-        "document_date": "2023-10-02T00:00:00"
-      },
-      "links": []
-    },
-    {
-      "key": "CC595BA85A4340A0B6EE0198A8B895E8",
-      "fields": {
-        "title": "Afgehandeld",
-        "text45": "GPP",
-        "dfunction": "Verleend",
-        "mark": "Z/21/1970076",
-        "processed": true,
-        "date5": "2021-10-15T00:00:00",
-        "document_date": "2021-10-11T00:00:00"
-      },
-      "links": []
-    },
-    {
-      "key": "9F4EF2B076DA4B90B217E72AE882A658",
-      "fields": {
-        "title": "Toewijzen",
-        "text45": "Touringcar Jaarontheffing",
-        "mark": "Z/24/2231331",
-        "processed": false,
-        "document_date": "2024-01-25T00:00:00",
-        "date6": "2024-02-01T00:00:00",
-        "date7": "2025-02-01T00:00:00",
-        "text9": "Artiesten en gezelschappen",
-        "text10": "9,3",
-        "text13": "10,5",
-        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
-      },
-      "links": []
-    },
-    {
-      "key": "E62139CC670D4B9D835DE82E4A83A02E",
-      "fields": {
-        "title": "Toewijzen",
-        "text45": "Touringcar Jaarontheffing",
-        "mark": "Z/24/2231332",
-        "processed": false,
-        "document_date": "2024-01-25T00:00:00",
-        "date6": "2024-02-01T00:00:00",
-        "date7": "2025-02-01T00:00:00",
-        "text9": "Artiesten en gezelschappen",
-        "text10": "9,3",
-        "text13": "10,5",
-        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
-      },
-      "links": []
-    },
-    {
-      "key": "19ED20D94C6E48389F15F8AA154224C9",
-      "fields": {
-        "title": "Afgehandeld",
-        "text45": "Touringcar Dagontheffing",
-        "dfunction": "Niet verleend",
-        "mark": "Z/24/2231334",
-        "processed": true,
-        "date5": "2024-01-26T00:00:00",
-        "document_date": "2024-01-26T00:00:00",
-        "date6": "2024-02-12T00:00:00",
-        "date7": "2024-02-13T00:00:00",
-        "text9": "Kinderen tot 12",
-        "text10": "BTBV76",
-        "text13": "NL"
-      },
-      "links": []
-    },
-    {
       "key": "084239C942C647F79F1C2B5CCF8DC5DA",
       "fields": {
         "title": "In behandeling",
@@ -473,6 +275,204 @@
         "text9": "Eten en drinken",
         "text10": "Barbecue",
         "text13": "16:00"
+      },
+      "links": []
+    },
+    {
+      "key": "EB94F2B068F34ABFA8B37FFCBA5FCF46",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231328",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Kinderen tot 12",
+        "text10": "13,9",
+        "text13": "15,616",
+        "text39": "76BKS2"
+      },
+      "links": []
+    },
+    {
+      "key": "7BA6774B7D184F7DBEA52CC885BACE95",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231329",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-03-01T00:00:00",
+        "date7": "2025-03-01T00:00:00",
+        "text9": "Mensen met een beperking",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40"
+      },
+      "links": []
+    },
+    {
+      "key": "341974CD60864FBEABEFD5B0BB406323",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231330",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Artiesten en gezelschappen",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
+      },
+      "links": []
+    },
+    {
+      "key": "4C8A4693F4B4484AB7D6E0E1464E7C4D",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPP",
+        "dfunction": "Verleend",
+        "mark": "Z/21/1858540",
+        "processed": true,
+        "date5": "2021-02-01T00:00:00",
+        "document_date": "2021-01-25T00:00:00",
+        "date6": "2021-01-07T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "5138C79B50984FDBA444C760B1996414",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPK",
+        "dfunction": "Niet verleend",
+        "mark": "Z/20/1794210",
+        "processed": true,
+        "date5": "2020-10-09T00:00:00",
+        "document_date": "2020-07-27T00:00:00",
+        "date6": "2020-09-11T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "51EBD49673A54A55ACC8204396CD33CA",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPK",
+        "dfunction": "Verleend",
+        "mark": "Z/20/1839511",
+        "processed": true,
+        "date5": "2021-02-01T00:00:00",
+        "document_date": "2020-11-17T00:00:00",
+        "date6": "2021-01-07T00:00:00",
+        "date7": "2026-01-25T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "7B54FB3073EF4A89ADB3A9E7350F7567",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPP",
+        "dfunction": "Verleend",
+        "mark": "Z/21/1953929",
+        "processed": true,
+        "date5": "2021-09-14T00:00:00",
+        "document_date": "2021-08-26T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "9352A968A19C4E8BBBD45DBF72305735",
+      "fields": {
+        "title": "Ophalen GPK",
+        "text45": "GPK",
+        "dfunction": "Verleend Bestuurder, niet verleend Passagier",
+        "mark": "Z/22/2028396",
+        "processed": true,
+        "date5": "2022-04-29T00:00:00",
+        "document_date": "2022-04-11T00:00:00",
+        "date6": "2020-09-11T00:00:00",
+        "date7": "2026-01-25T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "C5CEA9FA089542C7B37A56467F98C92E",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "GPP",
+        "mark": "Z/23/2230261",
+        "processed": false,
+        "document_date": "2023-10-02T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "CC595BA85A4340A0B6EE0198A8B895E8",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPP",
+        "dfunction": "Verleend",
+        "mark": "Z/21/1970076",
+        "processed": true,
+        "date5": "2021-10-15T00:00:00",
+        "document_date": "2021-10-11T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "9F4EF2B076DA4B90B217E72AE882A658",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231331",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Artiesten en gezelschappen",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
+      },
+      "links": []
+    },
+    {
+      "key": "E62139CC670D4B9D835DE82E4A83A02E",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231332",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Artiesten en gezelschappen",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
+      },
+      "links": []
+    },
+    {
+      "key": "19ED20D94C6E48389F15F8AA154224C9",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "Touringcar Dagontheffing",
+        "dfunction": "Niet verleend",
+        "mark": "Z/24/2231334",
+        "processed": true,
+        "date5": "2024-01-26T00:00:00",
+        "document_date": "2024-01-26T00:00:00",
+        "date6": "2024-02-12T00:00:00",
+        "date7": "2024-02-13T00:00:00",
+        "text9": "Kinderen tot 12",
+        "text10": "BTBV76",
+        "text13": "NL"
       },
       "links": []
     },

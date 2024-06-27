@@ -18,6 +18,7 @@ import {
   adresBoekenByProfileType,
 } from './config-and-types';
 import {
+  SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
   decosZaakTransformers,
 } from './decos-zaken';
@@ -256,13 +257,14 @@ async function transformDecosZakenResponse(
 }
 
 async function getZakenByUserKey(requestID: requestID, userKey: string) {
-  const selectFieldsBase = Object.keys(SELECT_FIELDS_TRANSFORM_BASE);
+  const selectFieldsAllCases = Object.keys(SELECT_FIELDS_TRANSFORM_BASE);
   const additionalSelectFields = Object.values(decosZaakTransformers).flatMap(
     (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
   );
 
   const selectFields = uniqueArray([
-    ...selectFieldsBase,
+    ...SELECT_FIELDS_META,
+    ...selectFieldsAllCases,
     ...additionalSelectFields,
   ]).join(',');
 
@@ -306,8 +308,6 @@ async function fetchDecosVergunningen_(
       return response;
     }
   }
-
-  console.log('ZAKEN:', JSON.stringify(zakenSource));
 
   const vergunningen = await transformDecosZakenResponse(
     requestID,
@@ -428,7 +428,6 @@ export async function fetchDecosVergunning(
       return `${config.url}/items/${zaakID}`;
     },
     transformResponse: (responseData: { content: [DecosZaakSource] }) => {
-      console.log('ZAAKDETAIL:', JSON.stringify(responseData));
       if (responseData.content) {
         return responseData.content[0];
       }
