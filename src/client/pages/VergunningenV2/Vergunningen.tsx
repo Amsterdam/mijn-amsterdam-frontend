@@ -1,5 +1,5 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
-import { VergunningV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { ThemaIcon } from '../../components';
@@ -14,23 +14,28 @@ import ZakenTable from '../ThemaPagina/ZakenTable';
 import {
   displayPropsEerdereVergunningen,
   displayPropsHuidigeVergunningen,
+  displayPropsLopendeAanvragen,
   listPageParamKind,
 } from './config';
 import { generatePath } from 'react-router-dom';
 
 export default function VergunningenV2() {
   const { VERGUNNINGENv2 } = useAppStateGetter();
-  const vergunningen = addLinkElementToProperty<VergunningV2>(
+  const vergunningen = addLinkElementToProperty<VergunningFrontendV2>(
     VERGUNNINGENv2.content ?? [],
     'title'
   );
 
-  const huidigeVergunningen: VergunningV2[] = vergunningen.filter(
-    (regeling) => !regeling.processed
+  const lopendeAanvragen: VergunningFrontendV2[] = vergunningen.filter(
+    (vergunning) => !vergunning.processed
   );
 
-  const eerdereVergunningen: VergunningV2[] = vergunningen.filter(
-    (regeling) => regeling.processed
+  const huidigeVergunningen: VergunningFrontendV2[] = vergunningen.filter(
+    (vergunning) => 'isExpired' in vergunning && vergunning.isExpired !== true
+  );
+
+  const eerdereVergunningen: VergunningFrontendV2[] = vergunningen.filter(
+    (vergunning) => vergunning.processed
   );
 
   const hasActualGPK = huidigeVergunningen.find(
@@ -39,8 +44,17 @@ export default function VergunningenV2() {
 
   const pageContentTables = (
     <>
-      <ZakenTable<VergunningV2>
-        title="Huidige vergunningen en ontheffingen"
+      <ZakenTable<VergunningFrontendV2>
+        title="Lopende aanvragen"
+        zaken={lopendeAanvragen}
+        listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
+          kind: listPageParamKind.inProgress,
+        })}
+        displayProps={displayPropsLopendeAanvragen}
+        textNoContent="U heeft geen lopende aanvragen."
+      />
+      <ZakenTable<VergunningFrontendV2>
+        title="Actieve vergunningen en ontheffingen"
         zaken={huidigeVergunningen}
         listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
           kind: listPageParamKind.actual,
@@ -48,7 +62,7 @@ export default function VergunningenV2() {
         displayProps={displayPropsHuidigeVergunningen}
         textNoContent="U heeft geen huidige vergunningen of ontheffingen."
       />
-      <ZakenTable<VergunningV2>
+      <ZakenTable<VergunningFrontendV2>
         title="Eerdere en niet verleende vergunningen en ontheffingen"
         zaken={eerdereVergunningen}
         listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {

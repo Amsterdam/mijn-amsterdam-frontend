@@ -1,7 +1,14 @@
 export const displayPropsHuidigeVergunningen = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
-  dateRequest: 'Aangevraagd',
+  dateStartFormatted: 'Startdatum',
+  dateEndFormatted: 'Einddatum',
+};
+
+export const displayPropsLopendeAanvragen = {
+  identifier: 'Kenmerk',
+  title: 'Soort vergunning',
+  dateRequestFormatted: 'Aangevraagd',
 };
 
 export const displayPropsEerdereVergunningen = {
@@ -13,6 +20,7 @@ export const displayPropsEerdereVergunningen = {
 export const listPageParamKind = {
   actual: 'huidige-vergunningen-en-ontheffingen',
   historic: 'eerdere-vergunningen-en-ontheffingen',
+  inProgress: 'lopende-aanvragen',
 };
 
 export type ListPageParamKey = keyof typeof listPageParamKind;

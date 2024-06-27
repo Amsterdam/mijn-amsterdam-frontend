@@ -1,10 +1,14 @@
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 import { AppRoutes } from '../../../universal/config';
-import { apiErrorResult, apiSuccessResult } from '../../../universal/helpers';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  defaultDateFormat,
+} from '../../../universal/helpers';
 import { BFF_BASE_PATH, BffEndpoints } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
-import { VergunningV2 } from './config-and-types';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { VergunningV2, VergunningFrontendV2 } from './config-and-types';
 import {
   fetchDecosDocument,
   fetchDecosVergunning,
@@ -13,6 +17,7 @@ import {
 
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
+import { isExpired } from './helpers';
 
 function getStatusLineItems(vergunning: VergunningV2) {
   return [];
@@ -23,32 +28,56 @@ export async function fetchVergunningenV2(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchDecosVergunningen(requestID, authProfileAndToken);
+
   if (response.status === 'OK') {
-    const vergunningenFrontend = response.content.map((vergunning) => {
-      const [idEncrypted] = encrypt(
-        `${authProfileAndToken.profile.id}:${vergunning.key}`
-      );
-      return {
-        ...vergunning,
-        steps: getStatusLineItems(vergunning),
-        // TODO: Use generateFullApiUrlBFF when https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1314 makes it into main.
-        fetchUrl: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-          `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGENv2_DETAIL}`,
-          {
+    const vergunningenFrontend: VergunningFrontendV2[] = response.content.map(
+      (vergunning) => {
+        const [idEncrypted] = encrypt(
+          `${authProfileAndToken.profile.id}:${vergunning.key}`
+        );
+        const vergunningFrontend: VergunningFrontendV2 = {
+          ...vergunning,
+          dateDecisionFormatted: vergunning.dateDecision
+            ? defaultDateFormat(vergunning.dateDecision)
+            : null,
+          dateInBehandelingFormatted: vergunning.dateInBehandeling
+            ? defaultDateFormat(vergunning.dateInBehandeling)
+            : null,
+          dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
+          steps: getStatusLineItems(vergunning),
+          fetchUrl: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DETAIL, {
             id: idEncrypted,
-          }
-        )}`,
-        link: {
-          to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
-            title: slug(vergunning.caseType, {
-              lower: true,
-            }),
-            id: vergunning.id,
           }),
-          title: `Bekijk hoe het met uw aanvraag staat`,
-        },
-      };
-    });
+          link: {
+            to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
+              title: slug(vergunning.caseType, {
+                lower: true,
+              }),
+              id: vergunning.id,
+            }),
+            title: `Bekijk hoe het met uw aanvraag staat`,
+          },
+        };
+
+        // If a vergunning has both dateStart and dateEnd add formatted dates and an expiration indication.
+        if (
+          'dateEnd' in vergunning &&
+          'dateStart' in vergunning &&
+          vergunning.dateStart &&
+          vergunning.dateEnd
+        ) {
+          vergunningFrontend.isExpired = isExpired(vergunning);
+          vergunningFrontend.dateStartFormatted = defaultDateFormat(
+            vergunning.dateStart
+          );
+          vergunningFrontend.dateEndFormatted = defaultDateFormat(
+            vergunning.dateEnd
+          );
+        }
+
+        return vergunningFrontend;
+      }
+    );
     return apiSuccessResult(vergunningenFrontend);
   }
 
