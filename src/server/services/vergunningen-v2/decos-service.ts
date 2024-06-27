@@ -270,7 +270,6 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
       return `${config.url}/items/${userKey}/folders?top=50&select=${selectFields}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
-      console.log('ZAKEN:', JSON.stringify(responseData));
       if (!Array.isArray(responseData?.content)) {
         return null;
       }
@@ -306,6 +305,8 @@ export async function fetchDecosVergunningen(
       return response;
     }
   }
+
+  console.log('ZAKEN:', JSON.stringify(zakenSource));
 
   const vergunningen = await transformDecosZakenResponse(
     requestID,

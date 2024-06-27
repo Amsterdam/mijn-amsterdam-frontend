@@ -3,38 +3,26 @@ import { ThemaTitles, Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
-import { generatePath, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks';
-import {
-  ListPageParamKind,
-  displayPropsEerdereVergunningen,
-  displayPropsHuidigeVergunningen,
-  listPageTitle,
-} from './config';
+import { ListPageParamKind, tableConfig } from './config';
 
 export function VergunningenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
-  const isListWithHistoricItems =
-    params.kind === 'eerdere-vergunningen-en-ontheffingen';
   const appState = useAppStateGetter();
   const { VERGUNNINGENv2 } = appState;
-  const vergunningenFiltered: VergunningFrontendV2[] =
-    VERGUNNINGENv2.content?.filter((vergunninge) =>
-      params.kind === 'eerdere-vergunningen-en-ontheffingen'
-        ? vergunninge.processed
-        : !vergunninge.processed
-    ) ?? [];
+  const {
+    title,
+    displayProps,
+    filter: vergunningenListFilter,
+  } = tableConfig[params.kind] ?? null;
 
+  const vergunningenFiltered: VergunningFrontendV2[] =
+    VERGUNNINGENv2.content?.filter(vergunningenListFilter) ?? [];
   const vergunningen =
     addLinkElementToProperty<VergunningFrontendV2>(vergunningenFiltered);
-
-  console.log(vergunningen);
-
-  const displayProps = isListWithHistoricItems
-    ? displayPropsEerdereVergunningen
-    : displayPropsHuidigeVergunningen;
 
   const appRouteBack = AppRoutes['VERGUNNINGEN'];
 
@@ -42,7 +30,7 @@ export function VergunningenList() {
     <ListPagePaginated
       items={vergunningen}
       backLinkTitle={ThemaTitles.VERGUNNINGEN}
-      title={listPageTitle[params.kind]}
+      title={title}
       appRoute={AppRoutes['VERGUNNINGEN/LIST']}
       appRouteParams={params}
       appRouteBack={appRouteBack}

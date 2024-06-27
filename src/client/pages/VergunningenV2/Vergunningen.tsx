@@ -7,17 +7,12 @@ import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
+import { generatePath } from 'react-router-dom';
 import { LinkProps } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ZakenTable from '../ThemaPagina/ZakenTable';
-import {
-  displayPropsEerdereVergunningen,
-  displayPropsHuidigeVergunningen,
-  displayPropsLopendeAanvragen,
-  listPageParamKind,
-} from './config';
-import { generatePath } from 'react-router-dom';
+import { tableConfig } from './config';
 
 export default function VergunningenV2() {
   const { VERGUNNINGENv2 } = useAppStateGetter();
@@ -26,52 +21,26 @@ export default function VergunningenV2() {
     'title'
   );
 
-  const lopendeAanvragen: VergunningFrontendV2[] = vergunningen.filter(
-    (vergunning) => !vergunning.processed
+  const hasActualGPK = vergunningen.find(
+    (vergunning) =>
+      !vergunning.processed && vergunning.caseType === CaseTypeV2.GPK
   );
 
-  const huidigeVergunningen: VergunningFrontendV2[] = vergunningen.filter(
-    (vergunning) => 'isExpired' in vergunning && vergunning.isExpired !== true
-  );
-
-  const eerdereVergunningen: VergunningFrontendV2[] = vergunningen.filter(
-    (vergunning) => vergunning.processed
-  );
-
-  const hasActualGPK = huidigeVergunningen.find(
-    (vergunning) => vergunning.caseType === CaseTypeV2.GPK
-  );
-
-  const pageContentTables = (
-    <>
-      <ZakenTable<VergunningFrontendV2>
-        title="Lopende aanvragen"
-        zaken={lopendeAanvragen}
-        listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
-          kind: listPageParamKind.inProgress,
-        })}
-        displayProps={displayPropsLopendeAanvragen}
-        textNoContent="U heeft geen lopende aanvragen."
-      />
-      <ZakenTable<VergunningFrontendV2>
-        title="Actieve vergunningen en ontheffingen"
-        zaken={huidigeVergunningen}
-        listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
-          kind: listPageParamKind.actual,
-        })}
-        displayProps={displayPropsHuidigeVergunningen}
-        textNoContent="U heeft geen huidige vergunningen of ontheffingen."
-      />
-      <ZakenTable<VergunningFrontendV2>
-        title="Eerdere en niet verleende vergunningen en ontheffingen"
-        zaken={eerdereVergunningen}
-        listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
-          kind: listPageParamKind.historic,
-        })}
-        displayProps={displayPropsEerdereVergunningen}
-        textNoContent="U heeft geen eerdere of niet verleende vergunningen of ontheffingen."
-      />
-    </>
+  const tables = Object.entries(tableConfig).map(
+    ([kind, { title, displayProps, filter: vergunningenListFilter }]) => {
+      return (
+        <ZakenTable<VergunningFrontendV2>
+          key={kind}
+          title={title}
+          zaken={vergunningen.filter(vergunningenListFilter)}
+          listPageRoute={generatePath(AppRoutes['VERGUNNINGEN/LIST'], {
+            kind,
+          })}
+          displayProps={displayProps}
+          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+        />
+      );
+    }
   );
 
   const pageContentTop = (
@@ -110,7 +79,7 @@ export default function VergunningenV2() {
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
       pageContentBottom={pageContentBottom}
-      pageContentTables={pageContentTables}
+      pageContentTables={tables}
       isError={isError(VERGUNNINGENv2)}
       isLoading={isLoading(VERGUNNINGENv2)}
     />
