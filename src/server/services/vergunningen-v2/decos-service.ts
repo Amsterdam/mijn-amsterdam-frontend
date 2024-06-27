@@ -1,5 +1,5 @@
 import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
-import { sortAlpha } from '../../../universal/helpers/utils';
+import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
@@ -122,7 +122,6 @@ async function transformDecosZaakResponse(
   decosZaakSource: DecosZaakSource
 ) {
   const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
-
   const zaakTypeTransformer = decosZaakTransformers[zaakType];
 
   if (!zaakTypeTransformer || !zaakTypeTransformer.transformFields) {
@@ -138,6 +137,7 @@ async function transformDecosZaakResponse(
   const fetchWorkflowDate = (stepTitle: string) =>
     fetchDecosWorkflowDate(requestID, decosZaakSource.key, stepTitle);
 
+  // Iterates over the desired data fields (key=>value pairs) and transforms values if necessary.
   const transformedFieldEntries = Object.entries(
     zaakTypeTransformer.transformFields
   ).map(([fieldNameSource, fieldTransformer]) => {
@@ -169,6 +169,9 @@ async function transformDecosZaakResponse(
   // Create an object from the transformed fieldNames and values
   const transformedFields = Object.fromEntries(transformedFieldEntries);
 
+  // Create the base data for the vergunning. This object is not guaranteed to have all fields defined in the type for a specific vergunning.
+  // It depends on the query and resturned result to the decos api which field value ends up in the vergunning.
+  // For example, if we selected only the sourcefield `mark` we'd have a vergunning with a value for `identifier`..
   let vergunning: VergunningV2 = {
     id:
       transformedFields.identifier?.replace(/\//g, '-') ??
@@ -257,15 +260,17 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
     (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
   );
 
-  const selectFields = [...selectFieldsBase, ...additionalSelectFields].join(
-    ','
-  );
+  const selectFields = uniqueArray([
+    ...selectFieldsBase,
+    ...additionalSelectFields,
+  ]).join(',');
 
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${userKey}/folders?top=10&select=${selectFields}`;
+      return `${config.url}/items/${userKey}/folders?top=50&select=${selectFields}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
+      console.log('ZAKEN:', JSON.stringify(responseData));
       if (!Array.isArray(responseData?.content)) {
         return null;
       }
@@ -419,6 +424,7 @@ export async function fetchDecosVergunning(
       return `${config.url}/items/${zaakID}`;
     },
     transformResponse: (responseData: { content: [DecosZaakSource] }) => {
+      console.log('ZAAKDETAIL:', JSON.stringify(responseData));
       if (responseData.content) {
         return responseData.content[0];
       }

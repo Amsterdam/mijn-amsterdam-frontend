@@ -8,7 +8,11 @@ import { generatePath, matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
-import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
+import {
+  ApiResponse,
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../universal/helpers';
 import {
   BFF_API_BASE_URL,
   IS_DEBUG,
@@ -395,4 +399,11 @@ export function generateFullApiUrlBFF(
   params?: Record<string, string>
 ) {
   return `${BFF_API_BASE_URL}${generatePath(path, params)}`;
+}
+
+export function sendResponseContent(res: Response, apiResponse: ApiResponse) {
+  if (apiResponse.status === 'ERROR' && apiResponse.code) {
+    res.status(apiResponse.code);
+  }
+  return res.send(apiResponse);
 }

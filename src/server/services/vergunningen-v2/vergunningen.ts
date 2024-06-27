@@ -45,6 +45,7 @@ export async function fetchVergunningenV2(
             : null,
           dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
           steps: getStatusLineItems(vergunning),
+          // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
           fetchUrl: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DETAIL, {
             id: idEncrypted,
           }),
@@ -128,6 +129,7 @@ export async function fetchVergunningV2(
         );
         return {
           ...document,
+          // Adds an url to the BFF api for document download which accepts an encrypted ID only
           url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
             `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD}`,
             {
