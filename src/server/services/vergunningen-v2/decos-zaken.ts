@@ -767,6 +767,9 @@ export const TouringcarJaarontheffing: DecosZaakTypeTransformer<TouringcarJaaron
     async afterTransform(vergunning) {
       if ('routetest' in vergunning && vergunning.routetest) {
         vergunning.title = 'Touringcar jaarontheffing met routetoets';
+      } else {
+        vergunning.title =
+          getCustomTitleForVergunningWithLicensePlates(vergunning);
       }
       return vergunning;
     },
