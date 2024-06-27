@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAuth } from '../../helpers/app';
+import { getAuth, sendResponseContent } from '../../helpers/app';
 import { fetchVergunningDocumentV2, fetchVergunningV2 } from './vergunningen';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
@@ -18,11 +18,11 @@ export async function fetchVergunningDocument(
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  const response = await fetchVergunningDocumentV2(
+  const apiResponse = await fetchVergunningDocumentV2(
     res.locals.requestID,
     authProfileAndToken,
     req.params.id
   );
 
-  return res.send(response);
+  return sendResponseContent(res, apiResponse);
 }
