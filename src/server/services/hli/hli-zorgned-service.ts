@@ -78,7 +78,7 @@ export async function fetchNamenBetrokkenen(
   const requests = ids.map((id) => {
     const authProfileAndTokenCopied = jsonCopy(authProfileAndToken);
     authProfileAndTokenCopied.profile.id = id;
-    authProfileAndToken.token = ''; // Token is bound to another ID, we don't need it.
+    authProfileAndToken.token = ''; // Token is bound to another ID, we don't need it and don't want to mistakenly use it anyway.
     return fetchPersoonsgegevensNAW(
       requestID,
       authProfileAndTokenCopied,
