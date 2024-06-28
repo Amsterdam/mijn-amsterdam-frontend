@@ -67,7 +67,6 @@ export interface GenericDocument {
   download?: string;
   external?: boolean;
   datePublished: string;
-  [key: string]: any;
 }
 
 export type AltDocumentContent = string | ReactNode;
@@ -81,7 +80,6 @@ export interface StatusLineItem {
   isActive?: boolean;
   isChecked?: boolean;
   altDocumentContent?: AltDocumentContent;
-  [key: string]: any;
 }
 
 export interface ZaakDetail {

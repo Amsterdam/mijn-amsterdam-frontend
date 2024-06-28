@@ -1,4 +1,8 @@
-import { isDateInPast, monthsFromNow } from '../../../universal/helpers/date';
+import {
+  defaultDateFormat,
+  isDateInPast,
+  monthsFromNow,
+} from '../../../universal/helpers/date';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -161,4 +165,8 @@ export function hasOtherActualVergunningOfSameType(
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
   );
+}
+
+export function toDateFormatted(input: string | null) {
+  return input ? defaultDateFormat(input) : null;
 }

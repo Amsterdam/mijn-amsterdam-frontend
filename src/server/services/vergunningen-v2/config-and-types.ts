@@ -136,7 +136,7 @@ export type DecosWorkflowStepDate = string;
 
 export interface VergunningBase {
   caseType: DecosCaseType;
-  dateDecision?: string | null;
+  dateDecision: string | null;
   dateInBehandeling: string | null;
   dateRequest: string;
 
@@ -449,7 +449,7 @@ export type VergunningenSourceData = {
 
 export type VergunningExpirable = VergunningV2 & { dateEnd?: string | null };
 
-export type VergunningDocument = GenericDocument;
+export type VergunningDocument = GenericDocument & { key: string };
 
 export type VergunningenData = VergunningV2[];
 
