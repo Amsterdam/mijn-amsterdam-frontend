@@ -822,10 +822,9 @@ export const WerkEnVervoerOpStraat: DecosZaakTypeTransformer<WerkzaamhedenEnVerv
         .map(([activiteit]) => activiteit as WVOSActiviteitType);
 
       if (vergunning.werkzaamheden.length > 1 && vergunning.decision) {
-        vergunning.decision = 'Zie besluit';
+        vergunning.decision =
+          'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.';
       }
-
-      console.log(vergunning.werkzaamheden);
 
       vergunning.title =
         getCustomTitleForVergunningWithLicensePlates(vergunning);
