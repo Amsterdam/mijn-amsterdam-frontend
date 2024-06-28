@@ -411,7 +411,7 @@ function filterValidDocument({
 
 async function transformDecosDocumentListResponse(
   requestID: requestID,
-  decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource>
+  decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource[]>
 ) {
   if (Array.isArray(decosDocumentsListResponse.content)) {
     const documentsSourceFiltered = decosDocumentsListResponse.content
@@ -449,16 +449,19 @@ export async function fetchDecosDocumentList(
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date`;
     },
-    transformResponse: (responseDataSource) => {
-      return transformDecosDocumentListResponse(requestID, responseDataSource);
-    },
   });
 
-  const documentsTransformed = await requestData<VergunningDocument[]>(
-    apiConfigDocuments,
-    requestID
-  );
-  return documentsTransformed;
+  const documentsSource = await requestData<
+    DecosZakenResponse<DecosDocumentSource[]>
+  >(apiConfigDocuments, requestID);
+  if (documentsSource.status === 'OK') {
+    const documentsTransformed = await transformDecosDocumentListResponse(
+      requestID,
+      documentsSource.content
+    );
+    return apiSuccessResult(documentsTransformed);
+  }
+  return documentsSource;
 }
 
 export async function fetchDecosVergunning(
@@ -493,8 +496,6 @@ export async function fetchDecosVergunning(
 
   const zaakSourceResponse = getSettledResult(zaakSourceResponseSettled);
   const documentsResponse = getSettledResult(documentsResponseSettled);
-
-  console.log('documentsResponse', JSON.stringify(documentsResponse));
 
   let documents: VergunningDocument[] = [];
   let vergunning: VergunningV2 | null = null;
