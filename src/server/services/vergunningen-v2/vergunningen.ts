@@ -6,9 +6,14 @@ import {
   apiSuccessResult,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { BFF_BASE_PATH, BffEndpoints } from '../../config';
+import { BffEndpoints } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
-import { VergunningV2, VergunningFrontendV2 } from './config-and-types';
+import {
+  RVVSloterweg,
+  VergunningDocument,
+  VergunningFrontendV2,
+  VergunningV2,
+} from './config-and-types';
 import {
   fetchDecosDocument,
   fetchDecosVergunning,
@@ -16,11 +21,169 @@ import {
 } from './decos-service';
 
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { StatusLineItem } from '../../../universal/types';
 import { captureException } from '../monitoring';
-import { isExpired } from './helpers';
+import { isExpired, toDateFormatted } from './helpers';
 
-function getStatusLineItems(vergunning: VergunningV2) {
-  return [];
+// Sloterweg
+export function getRVVSloterwegLineItems(
+  vergunning: RVVSloterweg
+): StatusLineItem[] {
+  const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
+  const RVV_SLOTERWEG_RESULT_EXPIRED = 'Verlopen';
+  const RVV_SLOTERWEG_RESULT_UPDATED_WITH_NEW_KENTEKEN = 'Vervallen';
+
+  // Update of the kentekens on an active permit.
+  const isChangeRequest = vergunning.requestType !== 'Nieuw';
+
+  const isReceived =
+    (!vergunning.dateInBehandeling || !vergunning.dateWorkflowVerleend) &&
+    !vergunning.decision;
+
+  const isInprogress = !!vergunning.dateInBehandeling || !isChangeRequest;
+  const isGranted = !!vergunning.dateWorkflowVerleend;
+  const isExpiredByEndDate =
+    vergunning.dateEnd &&
+    isGranted &&
+    new Date(vergunning.dateEnd) <= new Date();
+  const isExpired =
+    isExpiredByEndDate || vergunning.decision === RVV_SLOTERWEG_RESULT_EXPIRED;
+
+  const dateInProgress =
+    (isChangeRequest ? vergunning.dateInBehandeling : vergunning.dateRequest) ??
+    '';
+
+  const hasDecision = [
+    RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
+    RVV_SLOTERWEG_RESULT_EXPIRED,
+    RVV_SLOTERWEG_RESULT_UPDATED_WITH_NEW_KENTEKEN,
+  ].includes(vergunning.decision);
+
+  const isIngetrokken =
+    vergunning.decision === RVV_SLOTERWEG_RESULT_NOT_APPLICABLE;
+
+  const hasUpdatedKenteken =
+    vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WITH_NEW_KENTEKEN;
+
+  const descriptionIngetrokken = `Wij hebben uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.kentekens} ingetrokken. Zie het intrekkingsbesluit voor meer informatie.`;
+
+  let descriptionAfgehandeld = '';
+
+  switch (true) {
+    case isGranted && isChangeRequest:
+      descriptionAfgehandeld = `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`;
+      break;
+    case isGranted && !isChangeRequest:
+      descriptionAfgehandeld = `Wij hebben uw aanvraag voor een RVV ontheffing ${vergunning.area} ${vergunning.kentekens} verleend.`;
+      break;
+    case !isGranted && isIngetrokken:
+      descriptionAfgehandeld = descriptionIngetrokken;
+      break;
+  }
+
+  const steps: StatusLineItem[] = [
+    {
+      id: 'step-1',
+      status: 'Ontvangen',
+      datePublished: vergunning.dateRequest,
+      description: '',
+      documents: [],
+      isActive: isReceived && !isGranted && !isInprogress,
+      isChecked: true,
+    },
+    {
+      id: 'step-2',
+      status: 'In behandeling',
+      datePublished: dateInProgress,
+      description: '',
+      documents: [],
+      isActive: isInprogress && !isGranted && !hasDecision,
+      isChecked: isInprogress || isGranted || hasDecision,
+    },
+    {
+      id: 'step-3',
+      status: 'Afgehandeld',
+      datePublished:
+        !vergunning.dateWorkflowVerleend && !!vergunning.dateDecision
+          ? vergunning.dateDecision
+          : !!vergunning.dateWorkflowVerleend
+            ? vergunning.dateWorkflowVerleend
+            : '',
+      description: descriptionAfgehandeld,
+      documents: [],
+      isActive: (isGranted && !hasDecision) || (!isGranted && hasDecision),
+      isChecked: isGranted || hasDecision,
+    },
+  ];
+
+  if (isGranted && (isIngetrokken || isExpired || hasUpdatedKenteken)) {
+    let description = '';
+
+    switch (true) {
+      case isIngetrokken:
+        description = descriptionIngetrokken;
+        break;
+      case isExpired:
+        description = `Uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.kentekens} is verlopen.`;
+        break;
+      case hasUpdatedKenteken:
+        description =
+          'U heeft een nieuw kenteken doorgegeven. Bekijk de ontheffing voor het nieuwe kenteken in het overzicht.';
+        break;
+    }
+
+    steps.push({
+      id: 'step-4',
+      status: 'Gewijzigd',
+      datePublished:
+        (isExpiredByEndDate ? vergunning.dateEnd : vergunning.dateDecision) ??
+        '',
+      description,
+      documents: [],
+      isActive: true,
+      isChecked: true,
+    });
+  }
+
+  return steps;
+}
+
+function getStatusSteps(vergunning: VergunningV2) {
+  const isAfgehandeld = vergunning.processed;
+  const hasDateInBehandeling = !!vergunning.dateInBehandeling;
+  const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
+
+  const steps: StatusLineItem[] = [
+    {
+      id: 'step-1',
+      status: 'Ontvangen',
+      datePublished: vergunning.dateRequest,
+      description: '',
+      documents: [],
+      isActive: !isInBehandeling && !isAfgehandeld,
+      isChecked: true,
+    },
+    {
+      id: 'step-2',
+      status: 'In behandeling',
+      datePublished: vergunning.dateInBehandeling || '',
+      description: '',
+      documents: [],
+      isActive: isInBehandeling,
+      isChecked: hasDateInBehandeling || isAfgehandeld,
+    },
+    {
+      id: 'step-3',
+      status: 'Afgehandeld',
+      datePublished: vergunning.dateDecision || '',
+      description: '',
+      documents: [],
+      isActive: isAfgehandeld,
+      isChecked: isAfgehandeld,
+    },
+  ];
+
+  return steps;
 }
 
 export async function fetchVergunningenV2(
@@ -37,14 +200,13 @@ export async function fetchVergunningenV2(
         );
         const vergunningFrontend: VergunningFrontendV2 = {
           ...vergunning,
-          dateDecisionFormatted: vergunning.dateDecision
-            ? defaultDateFormat(vergunning.dateDecision)
-            : null,
-          dateInBehandelingFormatted: vergunning.dateInBehandeling
-            ? defaultDateFormat(vergunning.dateInBehandeling)
-            : null,
+          dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
+          dateInBehandelingFormatted: toDateFormatted(
+            vergunning.dateInBehandeling
+          ),
           dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
-          steps: getStatusLineItems(vergunning),
+          // Assign Status steps
+          steps: getStatusSteps(vergunning),
           // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
           fetchUrl: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DETAIL, {
             id: idEncrypted,
@@ -106,6 +268,21 @@ function decryptAndValidate(
   return apiSuccessResult(id);
 }
 
+function addEncryptedDocumentIdToUrl(
+  userID: AuthProfileAndToken['profile']['id'],
+  document: VergunningDocument
+) {
+  const [documentIdEncrypted] = encrypt(`${userID}:${document.key}`);
+
+  return {
+    ...document,
+    // Adds an url to the BFF api for document download which accepts an encrypted ID only
+    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD, {
+      id: documentIdEncrypted,
+    }),
+  };
+}
+
 export async function fetchVergunningV2(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -123,21 +300,9 @@ export async function fetchVergunningV2(
     );
     if (response.status === 'OK') {
       const { vergunning, documents } = response.content;
-      const documentsTransformed = documents.map((document) => {
-        const [documentIdEncrypted] = encrypt(
-          `${authProfileAndToken.profile.id}:${document.key}`
-        );
-        return {
-          ...document,
-          // Adds an url to the BFF api for document download which accepts an encrypted ID only
-          url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-            `${BFF_BASE_PATH}${BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD}`,
-            {
-              id: documentIdEncrypted,
-            }
-          )}`,
-        };
-      });
+      const documentsTransformed = documents.map((document) =>
+        addEncryptedDocumentIdToUrl(authProfileAndToken.profile.id, document)
+      );
       return apiSuccessResult({
         vergunning,
         documents: documentsTransformed,
