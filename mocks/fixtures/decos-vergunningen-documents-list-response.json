@@ -4,18 +4,15 @@
     {
       "key": "11890A30006B4A67A2FB5384F67353B1",
       "fields": {
+        "subject1": "document-123123.pdf",
         "sequence": 8,
         "mark": "D/4379600",
-        "text39": "Concept",
+        "text39": "Definitief",
+        "text40": "Beperkt openbaar",
         "text41": "Systeem - Factuurregel Stadsloket automatisch",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/11890A30006B4A67A2FB5384F67353B1"
-        }
-      ]
+      "links": []
     },
     {
       "key": "2AC4589D7C3A442C9C1852EC0C4AE922",
@@ -27,29 +24,20 @@
         "text41": "Bijlage",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/2AC4589D7C3A442C9C1852EC0C4AE922"
-        }
-      ]
+      "links": []
     },
     {
       "key": "5ABB64ECB9944F0E9A35C6C9964349C8",
       "fields": {
-        "subject1": "ZaakDetailsBericht.xml",
+        "subject1": "ZaakDetailsBericht.pdf",
         "sequence": 12,
         "mark": "D/4379697",
-        "text39": "Concept",
+        "text39": "Definitief",
+        "text40": "Beperkt openbaar",
         "text41": "Bijlage",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/5ABB64ECB9944F0E9A35C6C9964349C8"
-        }
-      ]
+      "links": []
     },
     {
       "key": "9B89C06BF0C1484F9DF07917DEC0301F",
@@ -61,12 +49,7 @@
         "text41": "Bijlage",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/9B89C06BF0C1484F9DF07917DEC0301F"
-        }
-      ]
+      "links": []
     },
     {
       "key": "A5A1AEEE3D4B480D863F0F66151A21E6",
@@ -77,12 +60,7 @@
         "text41": "Systeem - Factuurregel Stadsloket automatisch",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/A5A1AEEE3D4B480D863F0F66151A21E6"
-        }
-      ]
+      "links": []
     },
     {
       "key": "A6E9E79A70CB4007B9947CF63CE776F4",
@@ -93,17 +71,12 @@
         "text41": "Systeem - Factuurregel Stadsloket automatisch",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/A6E9E79A70CB4007B9947CF63CE776F4"
-        }
-      ]
+      "links": []
     },
     {
       "key": "ADCBCBF29CCB44FF80E08B8683A4D616",
       "fields": {
-        "subject1": "Document aangemaakt door DI voor kenteken L002ZS",
+        "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF",
         "sequence": 4,
         "mark": "D/4379593",
         "text39": "Concept",
@@ -111,12 +84,7 @@
         "text41": "Raamkaart RVV",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/ADCBCBF29CCB44FF80E08B8683A4D616"
-        }
-      ]
+      "links": []
     },
     {
       "key": "B25D7AA3CFC348E988C2AECA1812E4E5",
@@ -128,12 +96,7 @@
         "text41": "Bijlage",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/B25D7AA3CFC348E988C2AECA1812E4E5"
-        }
-      ]
+      "links": []
     },
     {
       "key": "BFAA3D7FD9C747F8A7F2792A4821344F",
@@ -146,17 +109,12 @@
         "text41": "Aanvraag",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/BFAA3D7FD9C747F8A7F2792A4821344F"
-        }
-      ]
+      "links": []
     },
     {
       "key": "C43062273C0C4005A7998AB67808B125",
       "fields": {
-        "subject1": "Document aangemaakt door DI voor kenteken 00BFP2",
+        "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF",
         "sequence": 6,
         "mark": "D/4379595",
         "text39": "Concept",
@@ -164,12 +122,7 @@
         "text41": "Raamkaart RVV",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/C43062273C0C4005A7998AB67808B125"
-        }
-      ]
+      "links": []
     },
     {
       "key": "D744DA85BB5A4FF186DF2750C83B4561",
@@ -180,12 +133,7 @@
         "text41": "Systeem - Factuurregel Stadsloket automatisch",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/D744DA85BB5A4FF186DF2750C83B4561"
-        }
-      ]
+      "links": []
     },
     {
       "key": "E307D0C1DB104346AA08AEB92D481294",
@@ -197,54 +145,34 @@
         "text41": "Bijlage",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/E307D0C1DB104346AA08AEB92D481294"
-        }
-      ]
+      "links": []
     },
     {
       "key": "EBB692546BCB43689C7E8DE82FE73138",
       "fields": {
-        "subject1": "Document aangemaakt door DI voor kenteken 95GHZ4",
+        "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF.pdf",
         "sequence": 5,
         "mark": "D/4379594",
-        "text39": "Concept",
+        "text39": "Definitief",
         "text40": "Beperkt openbaar",
         "text41": "Raamkaart RVV",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/EBB692546BCB43689C7E8DE82FE73138"
-        }
-      ]
+      "links": []
     },
     {
       "key": "F62158CD16054E9E9701CB545F4AD60A",
       "fields": {
-        "subject1": "Document aangemaakt door DI voor kenteken BE1776",
+        "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF.pdf",
         "sequence": 7,
         "mark": "D/4379596",
-        "text39": "Concept",
+        "text39": "Definitief",
         "text40": "Beperkt openbaar",
-        "text41": "Raamkaart RVV",
+        "text41": "Raamkaart RVV 2",
         "itemtype_key": "DOCUMENT"
       },
-      "links": [
-        {
-          "rel": "self",
-          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/F62158CD16054E9E9701CB545F4AD60A"
-        }
-      ]
+      "links": []
     }
   ],
-  "links": [
-    {
-      "rel": "itemprofile",
-      "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/itemprofiles/007992321A8F49E9AF5041EDF1504F20|19B6B0FE018840EEB544B2CF71EDDF3B/list"
-    }
-  ]
+  "links": []
 }

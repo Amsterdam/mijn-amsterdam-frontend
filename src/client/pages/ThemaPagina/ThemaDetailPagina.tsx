@@ -34,7 +34,7 @@ interface ThemaDetailPaginaProps<T> {
   pageContentTop: ReactNode;
   reverseSteps?: boolean;
   showStatusLineConnection?: boolean;
-  statusLabel?: string | 'Status' | ((zaak: T) => string);
+  statusLabel?: string;
   title?: string;
   className?: string;
 }
@@ -86,14 +86,10 @@ export default function ThemaDetailPagina<T extends StatusLine>({
         </Grid>
       </Screen>
       <Grid>
-        {!!(zaak?.steps && statusItemSteps.length) && (
+        {!!statusItemSteps.length && zaak && (
           <Grid.Cell span="all">
             <StatusLineComponent
-              statusLabel={
-                typeof statusLabel === 'function'
-                  ? statusLabel(zaak)
-                  : statusLabel
-              }
+              statusLabel={statusLabel}
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
               documentPathForTracking={documentPathForTracking}
