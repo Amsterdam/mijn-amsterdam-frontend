@@ -106,7 +106,7 @@ export type DecosZaakTypeTransformer<T extends VergunningV2 = VergunningV2> = {
   // We select a specific set of fields because otherwise we receive all the fields of a zaak which are bloated and mostly unused.
   addToSelectFieldsBase?: string[];
 
-  notifications: [];
+  // notifications: [];
 };
 
 export type DecosFieldsObject = Record<DecosFieldNameSource, string>;
