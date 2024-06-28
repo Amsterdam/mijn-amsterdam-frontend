@@ -168,13 +168,29 @@ export interface VergunningWithLocation extends VergunningBase {
   location: string | null;
 }
 
-export interface TVMRVVObject extends VergunningWithLocation {
-  caseType: GetCaseType<'TVMRVVObject'>;
+export interface VergunningWithKentekens extends VergunningBase {
+  kentekens: string | null;
+}
+
+export interface VergunningWithDateRange extends VergunningBase {
   dateStart: string | null;
   dateEnd: string | null;
+}
+
+export interface VergunningWithTimeRange extends VergunningBase {
   timeStart: string | null;
   timeEnd: string | null;
-  kentekens: string | null;
+}
+
+export interface VergunningWithDateTimeRange
+  extends VergunningWithDateRange,
+    VergunningWithTimeRange {}
+
+export interface TVMRVVObject
+  extends VergunningWithLocation,
+    VergunningWithDateTimeRange,
+    VergunningWithKentekens {
+  caseType: GetCaseType<'TVMRVVObject'>;
 }
 
 export interface GPK extends VergunningWithLocation {
@@ -190,20 +206,16 @@ export interface GPP extends VergunningWithLocation {
   kentekens: string | null;
 }
 
-export interface EvenementMelding extends VergunningWithLocation {
+export interface EvenementMelding
+  extends VergunningWithLocation,
+    VergunningWithDateTimeRange {
   caseType: GetCaseType<'EvenementMelding'>;
-  timeStart: string | null;
-  timeEnd: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
 }
 
-export interface EvenementVergunning extends VergunningWithLocation {
+export interface EvenementVergunning
+  extends VergunningWithLocation,
+    VergunningWithDateTimeRange {
   caseType: GetCaseType<'EvenementVergunning'>;
-  timeStart: string | null;
-  timeEnd: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
 }
 
 export interface Omzettingsvergunning extends VergunningWithLocation {
@@ -211,29 +223,26 @@ export interface Omzettingsvergunning extends VergunningWithLocation {
   dateInBehandeling: string | null;
 }
 
-export interface ERVV extends VergunningWithLocation {
+export interface ERVV
+  extends VergunningWithLocation,
+    VergunningWithDateTimeRange {
   caseType: GetCaseType<'ERVV'>;
-  dateStart: string | null;
-  dateEnd: string | null;
-  timeStart: string | null;
-  timeEnd: string | null;
 }
 
 export interface VakantieverhuurVergunningaanvraag
-  extends VergunningWithLocation {
+  extends VergunningWithLocation,
+    VergunningWithDateRange {
   caseType: GetCaseType<'VakantieverhuurVergunningaanvraag'>;
   title: 'VergunningV2 vakantieverhuur';
-  dateStart: string | null;
-  dateEnd: string | null;
   decision: 'Verleend' | 'Ingetrokken';
 }
 
-export interface BBVergunning extends VergunningWithLocation {
+export interface BBVergunning
+  extends VergunningWithLocation,
+    VergunningWithDateRange {
   caseType: GetCaseType<'BBVergunning'>;
   title: 'VergunningV2 bed & breakfast';
   decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
-  dateStart: string | null;
-  dateEnd: string | null;
   requester: string | null;
   owner: string | null;
   hasTransitionAgreement: boolean;
@@ -241,90 +250,75 @@ export interface BBVergunning extends VergunningWithLocation {
 }
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
-export interface BZB extends VergunningBase {
+export interface BZB extends VergunningWithDateRange {
   caseType: GetCaseType<'BZB'>;
   companyName: string | null;
   numberOfPermits: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
   decision: string | null;
 }
 
 // BZP is short for Parkeerontheffingen Blauwe zone particulieren
-export interface BZP extends VergunningBase {
+export interface BZP extends VergunningWithDateRange, VergunningWithKentekens {
   caseType: GetCaseType<'BZP'>;
   kentekens: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
   decision: string | null;
 }
 
-export interface Flyeren extends VergunningWithLocation {
+export interface Flyeren
+  extends VergunningWithLocation,
+    VergunningWithDateTimeRange {
   caseType: GetCaseType<'Flyeren'>;
   decision: 'Verleend' | 'Niet verleend' | 'Ingetrokken';
-  dateStart: string | null;
-  dateEnd: string | null;
-  timeStart: string | null;
-  timeEnd: string | null;
 }
 
-export interface AanbiedenDiensten extends VergunningWithLocation {
+export interface AanbiedenDiensten
+  extends VergunningWithLocation,
+    VergunningWithDateRange {
   caseType: GetCaseType<'AanbiedenDiensten'>;
-  dateStart: string | null;
-  dateEnd: string | null;
 }
 
-export interface Nachtwerkontheffing extends VergunningWithLocation {
+export interface Nachtwerkontheffing
+  extends VergunningWithLocation,
+    VergunningWithDateTimeRange {
   caseType: GetCaseType<'NachtwerkOntheffing'>;
-  dateStart: string | null;
-  dateEnd: string | null;
-  timeStart: string | null;
-  timeEnd: string | null;
 }
 
-export interface ZwaarVerkeer extends VergunningBase {
+export interface ZwaarVerkeer
+  extends VergunningWithKentekens,
+    VergunningWithDateRange {
   caseType: GetCaseType<'ZwaarVerkeer'>;
   exemptionKind: string | null;
-  kentekens: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
 }
 
-export interface RVVHeleStad extends VergunningBase {
+export interface RVVHeleStad
+  extends VergunningWithKentekens,
+    VergunningWithDateRange {
   caseType: GetCaseType<'RVVHeleStad'>;
-  kentekens: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
 }
 
-export interface RVVSloterweg extends VergunningBase {
+export interface RVVSloterweg
+  extends VergunningWithKentekens,
+    VergunningWithDateRange {
   caseType: GetCaseType<'RVVSloterweg'>;
-  kentekens: string | null;
   vorigeKentekens: string | null;
   dateWorkflowVerleend: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
   requestType: 'Nieuw' | 'Wijziging';
   area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
   decision: 'Verlopen' | 'Ingetrokken' | 'Vervallen' | 'Verleend';
   status: ZaakStatus & 'Actief';
 }
 
-export interface TouringcarDagontheffing extends VergunningBase {
+export interface TouringcarDagontheffing
+  extends VergunningWithKentekens,
+    VergunningWithDateTimeRange {
   caseType: GetCaseType<'TouringcarDagontheffing'>;
-  dateStart: string | null;
-  timeStart: string | null;
-  dateEnd: string | null;
-  timeEnd: string | null;
-  kentekens: string | null;
   destination: string | null;
 }
 
-export interface TouringcarJaarontheffing extends VergunningBase {
+export interface TouringcarJaarontheffing
+  extends VergunningWithKentekens,
+    VergunningWithDateRange {
   caseType: GetCaseType<'TouringcarJaarontheffing'>;
-  dateStart: string | null;
-  dateEnd: string | null;
-  kentekens: string | null;
   destination: string | null;
   routetest: boolean;
 }
@@ -349,10 +343,10 @@ export interface Splitsingsvergunning extends VergunningWithLocation {
   caseType: GetCaseType<'Splitsingsvergunning'>;
 }
 
-export interface ExploitatieHorecabedrijf extends VergunningWithLocation {
+export interface ExploitatieHorecabedrijf
+  extends VergunningWithLocation,
+    VergunningWithDateRange {
   caseType: GetCaseType<'ExploitatieHorecabedrijf'>;
-  dateStart: string | null;
-  dateEnd: string | null;
   dateStartPermit: string | null;
   numberOfPermits: string | null;
 }
@@ -380,21 +374,21 @@ export type EigenParkeerplaatsRequestType =
   | 'Verhuizing'
   | 'Verlenging';
 
-export interface EigenParkeerplaats extends VergunningBase {
+export interface EigenParkeerplaats
+  extends VergunningBase,
+    VergunningWithKentekens,
+    VergunningWithDateRange {
   caseType: GetCaseType<'EigenParkeerplaats'>;
-  kentekens: string | null;
   vorigeKentekens: string | null;
-  dateStart: string | null;
-  dateEnd: string | null;
-  locations: Parkeerplaats[];
   requestTypes: EigenParkeerplaatsRequestType[];
+  locations: Parkeerplaats[];
 }
 
 export interface EigenParkeerplaatsOpheffen extends VergunningBase {
   caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
   isCarsharingpermit: boolean;
-  location: Parkeerplaats;
   dateEnd: string | null;
+  location: Parkeerplaats;
 }
 
 export type WVOSActiviteit =
@@ -407,11 +401,11 @@ export type WVOSActiviteit =
   | 'Verhuizing tussen twee locaties binnen Amsterdam'
   | 'Filmen';
 
-export interface WerkzaamhedenEnVervoerOpStraat extends VergunningWithLocation {
+export interface WerkzaamhedenEnVervoerOpStraat
+  extends VergunningWithLocation,
+    VergunningWithDateRange,
+    VergunningWithKentekens {
   caseType: GetCaseType<'WVOS'>;
-  dateStart: string | null;
-  dateEnd: string | null;
-  kentekens: string | null;
   werkzaamheden: WVOSActiviteit[];
 }
 
@@ -464,7 +458,7 @@ export interface VergunningOptions {
   appRoute: string | ((vergunning: VergunningV2) => string);
 }
 
-export type VergunningFrontendV2 = VergunningV2 & {
+export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
   dateDecisionFormatted?: string | null;
   dateInBehandelingFormatted: string | null;
   dateRequestFormatted: string;
