@@ -326,10 +326,11 @@ export async function fetchVergunningV2(
       decryptResult.content
     );
     if (response.status === 'OK' && response.content?.vergunning) {
-      const { vergunning, documents } = response.content;
+      const { vergunning, documents = [] } = response.content;
       const documentsTransformed = documents.map((document) =>
         addEncryptedDocumentIdToUrl(authProfileAndToken.profile.id, document)
       );
+
       return apiSuccessResult({
         vergunning: transformVergunningFrontend(
           authProfileAndToken.profile.id,
