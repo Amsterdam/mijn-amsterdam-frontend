@@ -275,6 +275,7 @@ function transformPowerBrowserStatusResponse(
 
   // Gemigreerde zaken hebben geen statussen
   const statusOntvangen: StatusLineItem = {
+    id: 'step-1',
     status: 'Ontvangen',
     datePublished: datumOntvangen,
     isActive: false,
@@ -282,6 +283,7 @@ function transformPowerBrowserStatusResponse(
   };
 
   const statusInBehandeling: StatusLineItem = {
+    id: 'step-2',
     status: 'In behandeling',
     datePublished: hasInBehandelingStep ? datumInBehandeling : '',
     isActive: !datumAfgehandeld,
@@ -289,6 +291,7 @@ function transformPowerBrowserStatusResponse(
   };
 
   const statusAfgehandeld: StatusLineItem = {
+    id: 'step-3',
     status: 'Afgehandeld',
     datePublished: datumAfgehandeld,
     isActive: !!datumAfgehandeld,

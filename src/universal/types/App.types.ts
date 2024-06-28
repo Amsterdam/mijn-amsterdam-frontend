@@ -72,13 +72,14 @@ export interface GenericDocument {
 export type AltDocumentContent = string | ReactNode;
 
 export interface StatusLineItem {
-  id?: string;
+  id: string;
   status: string;
   datePublished: string;
   description?: string;
   documents?: GenericDocument[];
-  isActive?: boolean;
-  isChecked?: boolean;
+  isActive: boolean;
+  isChecked: boolean;
+  isVisible?: boolean;
   altDocumentContent?: AltDocumentContent;
 }
 

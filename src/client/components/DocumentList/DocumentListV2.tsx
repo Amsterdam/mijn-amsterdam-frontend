@@ -5,9 +5,9 @@ import { DocumentLink } from './DocumentLink';
 import styles from './DocumentListV2.module.scss';
 import { Table } from '@amsterdam/design-system-react';
 
-interface DocumentListProps {
-  documents: GenericDocument[];
-  trackPath?: (document: GenericDocument) => string;
+interface DocumentListProps<T extends GenericDocument = GenericDocument> {
+  documents: T[];
+  trackPath?: (document: T) => string;
 }
 
 export default function DocumentListV2({
