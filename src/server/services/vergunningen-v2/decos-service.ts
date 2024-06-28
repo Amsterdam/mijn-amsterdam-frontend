@@ -404,9 +404,10 @@ export async function fetchDecosDocumentList(
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key`; // TODO: Top/From paginate..
+      return `${config.url}/items/${zaakID}/documents?top=50`; // TODO: Top/From paginate..
     },
     transformResponse: (responseDataSource) => {
+      console.log('DOCUMENTS:', JSON.stringify(responseDataSource));
       return transformDecosDocumentListResponse(responseDataSource);
     },
   });

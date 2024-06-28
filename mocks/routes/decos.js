@@ -4,7 +4,6 @@ const ADDRESS_BOOKS = require('../fixtures/decos-vergunningen-addressbook-respon
 const DOCUMENTS_LIST = require('../fixtures/decos-vergunningen-documents-list-response.json');
 const WORKFLOW_INSTANCES = require('../fixtures/decos-vergunningen-workflowinstances-response.json');
 const WORKFLOWS = require('../fixtures/decos-vergunningen-workflows-response.json');
-const ZAAK_DETAIL = require('../fixtures/decos-vergunningen-zaakdetail-response.json');
 const ZAKEN = require('../fixtures/decos-vergunningen-zaken-response.json');
 
 module.exports = [
@@ -30,10 +29,14 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: ZAAK_DETAIL,
+          middleware: (req, res, next, core) => {
+            // NOTE: Does not send same/full detailpage response as would be on TAP envs.
+            return res.send(
+              ZAKEN.content.find((zaak) => zaak.key === req.params.key) ?? null
+            );
+          },
         },
       },
     ],

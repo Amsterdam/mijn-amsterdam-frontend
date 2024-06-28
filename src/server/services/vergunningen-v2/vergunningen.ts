@@ -24,9 +24,9 @@ import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { StatusLineItem } from '../../../universal/types';
 import { captureException } from '../monitoring';
 import { isExpired, toDateFormatted } from './helpers';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 
-// Sloterweg
-export function getRVVSloterwegLineItems(
+export function getStatusStepsRVVSloterweg(
   vergunning: RVVSloterweg
 ): StatusLineItem[] {
   const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
@@ -148,7 +148,11 @@ export function getRVVSloterwegLineItems(
   return steps;
 }
 
-function getStatusSteps(vergunning: VergunningV2) {
+function getStatusSteps(vergunning: VergunningFrontendV2) {
+  if (vergunning.caseType === CaseTypeV2.RVVSloterweg) {
+    return getStatusStepsRVVSloterweg(vergunning);
+  }
+
   const isAfgehandeld = vergunning.processed;
   const hasDateInBehandeling = !!vergunning.dateInBehandeling;
   const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
@@ -176,14 +180,81 @@ function getStatusSteps(vergunning: VergunningV2) {
       id: 'step-3',
       status: 'Afgehandeld',
       datePublished: vergunning.dateDecision || '',
-      description: '',
+      description: `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`,
       documents: [],
       isActive: isAfgehandeld,
       isChecked: isAfgehandeld,
     },
   ];
 
+  if ('isExpired' in vergunning) {
+    const isExpiredByEndDate =
+      !!vergunning.dateEnd &&
+      vergunning.decision === 'Verleend' &&
+      new Date(vergunning.dateEnd) <= new Date();
+
+    const isExpired = isExpiredByEndDate;
+
+    if (isExpired) {
+      steps.push({
+        id: 'step-4',
+        status: 'Gewijzigd',
+        datePublished: vergunning.dateEnd ?? '',
+        description: `Uw ${vergunning.title} is verlopen.`,
+        documents: [],
+        isActive: true,
+        isChecked: true,
+      });
+    }
+  }
+
   return steps;
+}
+
+function transformVergunningFrontend(
+  userId: AuthProfileAndToken['profile']['id'],
+  vergunning: VergunningV2
+) {
+  const [idEncrypted] = encrypt(`${userId}:${vergunning.key}`);
+  const vergunningFrontend: VergunningFrontendV2 = {
+    ...vergunning,
+    dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
+    dateInBehandelingFormatted: toDateFormatted(vergunning.dateInBehandeling),
+    dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
+    // Assign Status steps
+    steps: [],
+    // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
+    fetchUrl: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DETAIL, {
+      id: idEncrypted,
+    }),
+    link: {
+      to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
+        title: slug(vergunning.caseType, {
+          lower: true,
+        }),
+        id: vergunning.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  };
+
+  // If a vergunning has both dateStart and dateEnd add formatted dates and an expiration indication.
+  if (
+    'dateEnd' in vergunning &&
+    'dateStart' in vergunning &&
+    vergunning.dateStart &&
+    vergunning.dateEnd
+  ) {
+    vergunningFrontend.isExpired = isExpired(vergunning);
+    vergunningFrontend.dateStartFormatted = defaultDateFormat(
+      vergunning.dateStart
+    );
+    vergunningFrontend.dateEndFormatted = defaultDateFormat(vergunning.dateEnd);
+  }
+
+  vergunningFrontend.steps = getStatusSteps(vergunningFrontend);
+
+  return vergunningFrontend;
 }
 
 export async function fetchVergunningenV2(
@@ -194,52 +265,8 @@ export async function fetchVergunningenV2(
 
   if (response.status === 'OK') {
     const vergunningenFrontend: VergunningFrontendV2[] = response.content.map(
-      (vergunning) => {
-        const [idEncrypted] = encrypt(
-          `${authProfileAndToken.profile.id}:${vergunning.key}`
-        );
-        const vergunningFrontend: VergunningFrontendV2 = {
-          ...vergunning,
-          dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
-          dateInBehandelingFormatted: toDateFormatted(
-            vergunning.dateInBehandeling
-          ),
-          dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
-          // Assign Status steps
-          steps: getStatusSteps(vergunning),
-          // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
-          fetchUrl: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DETAIL, {
-            id: idEncrypted,
-          }),
-          link: {
-            to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
-              title: slug(vergunning.caseType, {
-                lower: true,
-              }),
-              id: vergunning.id,
-            }),
-            title: `Bekijk hoe het met uw aanvraag staat`,
-          },
-        };
-
-        // If a vergunning has both dateStart and dateEnd add formatted dates and an expiration indication.
-        if (
-          'dateEnd' in vergunning &&
-          'dateStart' in vergunning &&
-          vergunning.dateStart &&
-          vergunning.dateEnd
-        ) {
-          vergunningFrontend.isExpired = isExpired(vergunning);
-          vergunningFrontend.dateStartFormatted = defaultDateFormat(
-            vergunning.dateStart
-          );
-          vergunningFrontend.dateEndFormatted = defaultDateFormat(
-            vergunning.dateEnd
-          );
-        }
-
-        return vergunningFrontend;
-      }
+      (vergunning) =>
+        transformVergunningFrontend(authProfileAndToken.profile.id, vergunning)
     );
     return apiSuccessResult(vergunningenFrontend);
   }
@@ -298,13 +325,16 @@ export async function fetchVergunningV2(
       requestID,
       decryptResult.content
     );
-    if (response.status === 'OK') {
+    if (response.status === 'OK' && response.content?.vergunning) {
       const { vergunning, documents } = response.content;
       const documentsTransformed = documents.map((document) =>
         addEncryptedDocumentIdToUrl(authProfileAndToken.profile.id, document)
       );
       return apiSuccessResult({
-        vergunning,
+        vergunning: transformVergunningFrontend(
+          authProfileAndToken.profile.id,
+          vergunning
+        ),
         documents: documentsTransformed,
       });
     }
