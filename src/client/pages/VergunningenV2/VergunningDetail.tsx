@@ -9,10 +9,11 @@ import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 
 interface PageContentProps {
-  vergunning?: VergunningFrontendV2;
-  documents?: VergunningDocument[];
+  vergunning: VergunningFrontendV2;
+  documents: VergunningDocument[];
 }
 
 // TODO: Implement detailpages per case
@@ -28,6 +29,7 @@ function PageContent({ vergunning, documents }: PageContentProps) {
               content,
             }))}
         />
+        <DocumentListV2 documents={documents} />
       </Grid.Cell>
     )
   );

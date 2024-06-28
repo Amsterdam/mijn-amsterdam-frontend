@@ -41,6 +41,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
     (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());
 
   const statusOntvangen: StatusLineItem = {
+    id: 'step-1',
     status: 'Ontvangen',
     datePublished: vergunning.dateRequest,
     isActive: false,
@@ -48,6 +49,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   };
 
   const statusInBehandeling: StatusLineItem = {
+    id: 'step-2',
     status: 'In behandeling',
     datePublished: vergunning.dateRequest,
     isActive: false,
@@ -55,6 +57,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   };
 
   const statusAfgehandeld: StatusLineItem = {
+    id: 'step-3',
     status: 'Afgehandeld',
     datePublished: vergunning.dateDecision ?? vergunning.dateRequest ?? '',
     description: '',
@@ -66,6 +69,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
 
   if (isVerlopen || isIngetrokken) {
     const statusGewijzigd: StatusLineItem = {
+      id: 'step-4',
       status: 'Gewijzigd',
       datePublished:
         (isVerlopen && !isIngetrokken

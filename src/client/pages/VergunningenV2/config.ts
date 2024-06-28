@@ -45,7 +45,9 @@ export const tableConfig = {
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
     filter: (vergunning: VergunningFrontendV2) =>
-      'isExpired' in vergunning && vergunning.isExpired !== true,
+      vergunning.decision === 'Verleend' &&
+      'isExpired' in vergunning &&
+      vergunning.isExpired !== true,
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
   },
