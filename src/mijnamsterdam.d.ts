@@ -27,6 +27,10 @@ type AuthMethod = 'digid' | 'eherkenning';
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+
 declare module '*.scss' {
   const content: { [className: string]: string };
   export = content;
