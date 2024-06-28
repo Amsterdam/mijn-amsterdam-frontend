@@ -118,9 +118,9 @@ export type DecosZaakSource = {
 };
 export type DecosDocumentSource = DecosZaakSource;
 
-export type DecosZakenResponse = {
+export type DecosZakenResponse<T = DecosZaakSource[]> = {
   count: number;
-  content: DecosZaakSource[];
+  content: T;
 };
 
 export type DecosResponse<T> = {
