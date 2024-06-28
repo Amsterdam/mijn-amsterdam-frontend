@@ -375,43 +375,23 @@ export async function fetchDecosWorkflowDate(
   return requestData<DecosWorkflowStepDate>(apiConfigSingleWorkflow, requestID);
 }
 
-async function fetchDocument(
+async function isPdfDocument(
   requestID: requestID,
   documentKey: VergunningDocument['key']
 ) {
   // items / { document_id } / blob ? select = bol10
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${documentKey}/blob`;
+      return `${config.url}/items/${documentKey}/blob?select=bol10`;
     },
-    transformResponse: (responseDataSource) => {
-      console.log('BLOB:', JSON.stringify(responseDataSource));
-      return responseDataSource;
-    },
-  });
-
-  const documentTransformed = await requestData<VergunningDocument[]>(
-    apiConfigDocuments,
-    requestID
-  );
-  return documentTransformed;
-}
-async function fetchDocumentFolder(
-  requestID: requestID,
-  documentKey: VergunningDocument['key']
-) {
-  // items / { document_id } / blob ? select = bol10
-  const apiConfigDocuments = getApiConfig('DECOS_API', {
-    formatUrl: (config) => {
-      return `${config.url}/items/${documentKey}/folders`;
-    },
-    transformResponse: (responseDataSource) => {
-      console.log('BLOB:', JSON.stringify(responseDataSource));
-      return responseDataSource;
+    transformResponse: (
+      responseDataSource: DecosZakenResponse<DecosDocumentSource[]>
+    ) => {
+      return { isPDF: !!responseDataSource.content?.pop()?.fields.bol10 };
     },
   });
 
-  const documentTransformed = await requestData<VergunningDocument[]>(
+  const documentTransformed = await requestData<{ isPDF: boolean }>(
     apiConfigDocuments,
     requestID
   );
@@ -431,29 +411,33 @@ function filterValidDocument({
 
 async function transformDecosDocumentListResponse(
   requestID: requestID,
-  decosDocumentsListResponse: {
-    content: DecosDocumentSource[];
-  }
+  decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource>
 ) {
   if (Array.isArray(decosDocumentsListResponse.content)) {
     const documentsSourceFiltered = decosDocumentsListResponse.content
       .filter(filterValidDocument)
       .map(async ({ fields: documentMetadata, key }) => {
-        const doc = await fetchDocument(requestID, key);
-        const folders = await fetchDocumentFolder(requestID, key);
-        const vergunningDocument: VergunningDocument = {
-          id: documentMetadata.mark,
-          key: key,
-          title: documentMetadata.text41,
-          datePublished: documentMetadata.received_date, // TODO: Which field is this?
-          url: '',
-        };
-        return vergunningDocument;
+        const isPdfResponse = await isPdfDocument(requestID, key);
+        if (isPdfResponse.status === 'OK' && isPdfResponse.content.isPDF) {
+          const vergunningDocument: VergunningDocument = {
+            id: documentMetadata.mark,
+            key: key,
+            title: documentMetadata.text41,
+            datePublished: documentMetadata.received_date, // TODO: Which field is this?
+            url: '',
+          };
+          return vergunningDocument;
+        }
+        return null;
       });
-    const documents = await Promise.all(documentsSourceFiltered);
 
+    const documents = (await Promise.all(documentsSourceFiltered)).filter(
+      (document: VergunningDocument | null): document is VergunningDocument =>
+        document !== null
+    );
     return documents;
   }
+
   return [];
 }
 
@@ -463,10 +447,9 @@ export async function fetchDecosDocumentList(
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date,bol10`;
+      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date`;
     },
     transformResponse: (responseDataSource) => {
-      console.log('DOCUMENTS:', JSON.stringify(responseDataSource));
       return transformDecosDocumentListResponse(requestID, responseDataSource);
     },
   });
@@ -487,7 +470,7 @@ export async function fetchDecosVergunning(
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}`;
     },
-    transformResponse: (responseData: { content: [DecosZaakSource] }) => {
+    transformResponse: (responseData: DecosZakenResponse) => {
       if (responseData.content) {
         return responseData.content[0];
       }
@@ -510,6 +493,8 @@ export async function fetchDecosVergunning(
 
   const zaakSourceResponse = getSettledResult(zaakSourceResponseSettled);
   const documentsResponse = getSettledResult(documentsResponseSettled);
+
+  console.log('documentsResponse', JSON.stringify(documentsResponse));
 
   let documents: VergunningDocument[] = [];
   let vergunning: VergunningV2 | null = null;
