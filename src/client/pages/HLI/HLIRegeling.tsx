@@ -22,14 +22,6 @@ export default function HLIRegelingDetailPagina() {
       thema="HLI"
       stateKey="HLI"
       backLinkTitle={getThemaTitleWithAppState(appState)}
-      maxStepCount={(hasDescision, regeling) => {
-        const decisionStep = regeling?.steps.find(
-          (step) => step.status === 'Besluit'
-        );
-        return decisionStep?.decision === 'afgewezen'
-          ? -1
-          : regeling?.steps.length ?? -1;
-      }}
       getItems={(hliContent) => {
         if (hliContent !== null && 'regelingen' in hliContent) {
           return hliContent.regelingen;
