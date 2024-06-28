@@ -105,6 +105,8 @@ export type DecosZaakTypeTransformer<T extends VergunningV2 = VergunningV2> = {
   // This means even though we do not want, for example, date7 for case A we will receive it anyway.
   // We select a specific set of fields because otherwise we receive all the fields of a zaak which are bloated and mostly unused.
   addToSelectFieldsBase?: string[];
+
+  notifications: [];
 };
 
 export type DecosFieldsObject = Record<DecosFieldNameSource, string>;

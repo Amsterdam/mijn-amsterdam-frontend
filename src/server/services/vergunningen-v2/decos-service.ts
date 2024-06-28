@@ -375,9 +375,34 @@ export async function fetchDecosWorkflowDate(
   return requestData<DecosWorkflowStepDate>(apiConfigSingleWorkflow, requestID);
 }
 
-function transformDecosDocumentListResponse(decosDocumentsListResponse: {
-  content: DecosDocumentSource[];
-}): Omit<VergunningDocument, 'url'>[] {
+async function fetchDocument(
+  requestID: requestID,
+  documentKey: VergunningDocument['key']
+) {
+  // items / { document_id } / blob ? select = bol10
+  const apiConfigDocuments = getApiConfig('DECOS_API', {
+    formatUrl: (config) => {
+      return `${config.url}/items/${documentKey}/blob`;
+    },
+    transformResponse: (responseDataSource) => {
+      console.log('BLOB:', JSON.stringify(responseDataSource));
+      return responseDataSource;
+    },
+  });
+
+  const documentTransformed = await requestData<VergunningDocument[]>(
+    apiConfigDocuments,
+    requestID
+  );
+  return documentTransformed;
+}
+
+async function transformDecosDocumentListResponse(
+  requestID: requestID,
+  decosDocumentsListResponse: {
+    content: DecosDocumentSource[];
+  }
+) {
   return decosDocumentsListResponse.content
     .filter(({ fields: documentMetadata }) => {
       const isDefinitief =
@@ -389,12 +414,15 @@ function transformDecosDocumentListResponse(decosDocumentsListResponse: {
       return isDefinitief && isOpenbaar && isAllowed;
     })
     .map(({ fields: documentMetadata, key }) => {
-      return {
+      const doc = fetchDocument(requestID, key);
+      const vergunningDocument: VergunningDocument = {
         id: documentMetadata.mark,
         key: key,
         title: documentMetadata.text41,
-        datePublished: '', // TODO: Which field is this?
+        datePublished: documentMetadata.received_date, // TODO: Which field is this?
+        url: '',
       };
+      return vergunningDocument;
     });
 }
 
@@ -404,11 +432,11 @@ export async function fetchDecosDocumentList(
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/documents?top=50`; // TODO: Top/From paginate..
+      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date`; // TODO: Top/From paginate..
     },
     transformResponse: (responseDataSource) => {
       console.log('DOCUMENTS:', JSON.stringify(responseDataSource));
-      return transformDecosDocumentListResponse(responseDataSource);
+      return transformDecosDocumentListResponse(requestID, responseDataSource);
     },
   });
 

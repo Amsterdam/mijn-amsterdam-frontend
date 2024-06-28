@@ -156,6 +156,11 @@ function getStatusSteps(vergunning: VergunningFrontendV2) {
   const isAfgehandeld = vergunning.processed;
   const hasDateInBehandeling = !!vergunning.dateInBehandeling;
   const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
+  const isExpiredByEndDate =
+    !!vergunning.dateEnd &&
+    vergunning.decision === 'Verleend' &&
+    new Date(vergunning.dateEnd) <= new Date();
+  const isExpired = isExpiredByEndDate;
 
   const steps: StatusLineItem[] = [
     {
@@ -180,21 +185,16 @@ function getStatusSteps(vergunning: VergunningFrontendV2) {
       id: 'step-3',
       status: 'Afgehandeld',
       datePublished: vergunning.dateDecision || '',
-      description: `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`,
+      description: isAfgehandeld
+        ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
+        : '',
       documents: [],
-      isActive: isAfgehandeld,
+      isActive: !isExpired && isAfgehandeld,
       isChecked: isAfgehandeld,
     },
   ];
 
   if ('isExpired' in vergunning) {
-    const isExpiredByEndDate =
-      !!vergunning.dateEnd &&
-      vergunning.decision === 'Verleend' &&
-      new Date(vergunning.dateEnd) <= new Date();
-
-    const isExpired = isExpiredByEndDate;
-
     if (isExpired) {
       steps.push({
         id: 'step-4',
