@@ -43,8 +43,6 @@ export default function InkomenDetailTozo() {
       thema="INKOMEN"
       stateKey="WPI_TOZO"
       pageContent={pageContent}
-      maxStepCount={() => -1}
-      highlightKey={false}
       statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
       documentPathForTracking={(document) =>
         `/downloads/inkomen/tozo/${document.title.split(/\n/)[0]}`

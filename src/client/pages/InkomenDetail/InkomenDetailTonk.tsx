@@ -40,8 +40,6 @@ export default function InkomenDetailTonk() {
       thema="INKOMEN"
       stateKey="WPI_TONK"
       pageContent={pageContent}
-      maxStepCount={() => -1}
-      highlightKey={false}
       statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
       documentPathForTracking={(document) =>
         `/downloads/inkomen/tonk/${document.title.split(/\n/)[0]}`

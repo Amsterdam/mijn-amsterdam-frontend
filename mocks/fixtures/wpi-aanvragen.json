@@ -84,21 +84,6 @@
           "dateDecisionExpected": "2018-05-13T15:05:52+02:00"
         },
         {
-          "id": "herstelTermijn",
-          "status": "Meer informatie",
-          "documents": [
-            {
-              "id": "4400000011",
-              "title": "Formulier Inlichtingen partner",
-              "url": "https://example.com/wpi/document?id=4400000011&isBulk=True&isDms=False",
-              "datePublished": "2018-04-24T15:05:52+02:00"
-            }
-          ],
-          "datePublished": "2018-04-24T15:05:52+02:00",
-          "dateDecisionExpected": "2018-05-23T15:05:52+02:00",
-          "dateUserFeedbackExpected": "2018-04-04T15:05:52+02:00"
-        },
-        {
           "id": "besluit",
           "status": "Besluit",
           "documents": [],

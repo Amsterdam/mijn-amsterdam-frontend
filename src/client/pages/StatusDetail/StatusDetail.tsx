@@ -36,8 +36,6 @@ interface StatusDetailProps<T> {
   backLinkRoute?: string;
   documentPathForTracking?: (document: GenericDocument) => string;
   getItems?: (content: AppState[AppStateKey]['content']) => T[];
-  highlightKey?: string | false;
-  maxStepCount?: (hasDecision: boolean, statusItem?: T) => number | undefined;
   pageContent?:
     | ReactElement
     | ((isLoading: boolean, statusItem: T) => ReactElement);
@@ -53,8 +51,6 @@ export default function StatusDetail<T extends StatusLine>({
   backLinkRoute,
   documentPathForTracking,
   getItems,
-  highlightKey,
-  maxStepCount,
   pageContent,
   reverseSteps = false,
   showStatusLineConnection = true,
@@ -79,9 +75,6 @@ export default function StatusDetail<T extends StatusLine>({
   const statusItem = statusItems.find((item) => item.id === id) as T;
   const noContent = !isStateLoading && !statusItem;
   const appRoute = backLinkRoute ?? AppRoutes[thema] ?? '/';
-  const hasDecision =
-    !!(statusItem && 'decision' in statusItem && statusItem?.decision) ||
-    !!statusItem?.steps.some((step) => !!step.decision);
 
   useEffect(() => {
     if (!isStateLoading && !statusItem) {
@@ -176,10 +169,6 @@ export default function StatusDetail<T extends StatusLine>({
               }
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
-              maxStepCount={
-                maxStepCount ? maxStepCount(hasDecision, statusItem) : undefined
-              }
-              highlightKey={highlightKey}
               id={`${thema}-${stateKey}-status`}
               documentPathForTracking={documentPathForTracking}
             />

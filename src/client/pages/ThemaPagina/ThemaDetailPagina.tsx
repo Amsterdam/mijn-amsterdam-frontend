@@ -27,11 +27,9 @@ interface ThemaDetailPaginaProps<T> {
   documentPathForTracking?: (document: GenericDocument) => string;
   errorAlertContent?: ReactNode;
   icon: ReactElement;
-  highlightKey?: string | false;
   isError: boolean;
   isLoading: boolean;
   loadingBarConfig?: BarConfig;
-  maxStepCount?: (hasDecision: boolean, zaak?: T) => number | undefined;
   pageContentBottom?: ReactNode;
   pageContentTop: ReactNode;
   reverseSteps?: boolean;
@@ -46,7 +44,6 @@ export default function ThemaDetailPagina<T extends StatusLine>({
   title = 'Detailpagina',
   backLink,
   className,
-  highlightKey,
   icon,
   pageContentTop,
   pageContentBottom,
@@ -55,16 +52,10 @@ export default function ThemaDetailPagina<T extends StatusLine>({
   isError,
   isLoading,
   documentPathForTracking,
-  maxStepCount,
   reverseSteps = false,
   showStatusLineConnection = true,
   statusLabel = 'Status',
 }: ThemaDetailPaginaProps<T>) {
-  const hasDecision = !!(
-    (zaak && 'decision' in zaak && zaak?.decision) ||
-    zaak?.steps?.some((step) => !!step.decision)
-  );
-
   let statusItemSteps = zaak?.steps ?? [];
 
   if (reverseSteps && statusItemSteps.length) {
@@ -105,10 +96,6 @@ export default function ThemaDetailPagina<T extends StatusLine>({
               }
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
-              maxStepCount={
-                maxStepCount ? maxStepCount(hasDecision, zaak) : undefined
-              }
-              highlightKey={highlightKey}
               documentPathForTracking={documentPathForTracking}
             />
           </Grid.Cell>

@@ -55,8 +55,6 @@ export default function InkomenDetailBbz() {
       thema="INKOMEN"
       stateKey="WPI_BBZ"
       pageContent={pageContent}
-      maxStepCount={() => -1}
-      highlightKey={false}
       statusLabel={() => `Bbz-aanvraag`}
       showStatusLineConnection={!hasDecisionStep} // There is no logical connection between the historic BBZ steps, therefor we do not show the checkmarks as they imply a linear proces.
       documentPathForTracking={(document) =>

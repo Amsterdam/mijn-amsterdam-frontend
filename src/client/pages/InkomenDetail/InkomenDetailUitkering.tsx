@@ -44,9 +44,6 @@ export default function InkomenDetailUitkering() {
       thema="INKOMEN"
       stateKey="WPI_AANVRAGEN"
       pageContent={pageContent}
-      maxStepCount={(hasDecision) =>
-        !hasDecision ? MAX_STEP_COUNT_WPI_REQUEST : undefined
-      }
       documentPathForTracking={(document) =>
         `/downloads/inkomen/bijstandsuitkering/${document.title.replace(
           /\\n/,
