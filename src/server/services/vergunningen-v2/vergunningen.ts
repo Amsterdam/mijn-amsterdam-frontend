@@ -327,6 +327,7 @@ export async function fetchVergunningV2(
     );
     if (response.status === 'OK' && response.content?.vergunning) {
       const { vergunning, documents = [] } = response.content;
+      console.log(vergunning, documents);
       const documentsTransformed = documents.map((document) =>
         addEncryptedDocumentIdToUrl(authProfileAndToken.profile.id, document)
       );
