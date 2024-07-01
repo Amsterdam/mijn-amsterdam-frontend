@@ -151,20 +151,22 @@ export async function fetchVakantieverhuurVergunningen(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const vakantieverhuurVergunningResponse = await fetchVergunningen<
-    VakantieverhuurVergunningDecos[]
-  >(requestID, authProfileAndToken, {
-    appRoute: (vergunning: Vergunning) => {
-      switch (vergunning.caseType) {
-        case CaseType.VakantieverhuurVergunning:
-          return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
-        default:
-          return AppRoutes['TOERISTISCHE_VERHUUR'];
-      }
-    },
-    filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>
-      toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
-  });
+  const vakantieverhuurVergunningResponse = await fetchVergunningen(
+    requestID,
+    authProfileAndToken,
+    {
+      appRoute: (vergunning: Vergunning) => {
+        switch (vergunning.caseType) {
+          case CaseType.VakantieverhuurVergunning:
+            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
+          default:
+            return AppRoutes['TOERISTISCHE_VERHUUR'];
+        }
+      },
+      filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>
+        toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
+    }
+  );
 
   if (vakantieverhuurVergunningResponse.status === 'OK') {
     return apiSuccessResult(
