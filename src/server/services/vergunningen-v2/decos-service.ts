@@ -474,6 +474,7 @@ export async function fetchDecosVergunning(
       return `${config.url}/items/${zaakID}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
+      console.log('ZAAK:', JSON.stringify(responseData, null, '  '));
       if (responseData.content) {
         return responseData.content[0];
       }
