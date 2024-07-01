@@ -29,7 +29,7 @@ function PageContent({ vergunning, documents }: PageContentProps) {
               content: JSON.stringify(content),
             }))}
         />
-        <DocumentListV2 documents={documents} />
+        {!!documents.length && <DocumentListV2 documents={documents} />}
       </Grid.Cell>
     )
   );
@@ -46,7 +46,7 @@ export default function VergunningV2Detail() {
     documents: VergunningDocument[];
   }>({
     url: fetchUrl,
-    bagThema: BagThemas.BEZWAREN,
+    bagThema: BagThemas.VERGUNNINGENv2,
     key: id,
   });
 
