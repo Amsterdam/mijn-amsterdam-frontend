@@ -425,8 +425,8 @@ async function transformDecosDocumentListResponse(
             id: documentMetadata.mark,
             key: key,
             title: documentMetadata.text41,
-            datePublished: documentMetadata.received_date, // TODO: Which field is this?
-            url: '',
+            datePublished: documentMetadata.received_date,
+            url: '', // Url is constructed in vergunningen.ts
           };
           return vergunningDocument;
         }
