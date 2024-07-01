@@ -5,7 +5,7 @@ import {
   defaultDateFormat,
 } from '../../../universal/helpers';
 import { LinkProps, StatusLineItem } from '../../../universal/types/App.types';
-import { CaseType } from '../../../universal/types/vergunningen';
+import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   VakantieverhuurVergunning as VakantieverhuurVergunningDecos,
@@ -14,6 +14,8 @@ import {
   fetchVergunningen,
   toeristischeVerhuurVergunningTypes,
 } from '../vergunningen/vergunningen';
+import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
+import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
 
 export interface VakantieverhuurVergunning {
   datumAfhandeling?: string | null;
@@ -173,4 +175,24 @@ export async function fetchVakantieverhuurVergunningen(
   }
 
   return vakantieverhuurVergunningResponse;
+}
+
+export async function fetchVakantieverhuurVergunningenV2(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const vergunningenResponse = await fetchVergunningenV2(
+    requestID,
+    authProfileAndToken
+  );
+
+  if (vergunningenResponse.status === 'OK') {
+    return apiSuccessResult(
+      vergunningenResponse.content.filter(
+        (zaak) => zaak.caseType === CaseTypeV2.VakantieverhuurVergunningaanvraag
+      )
+    );
+  }
+
+  return vergunningenResponse;
 }

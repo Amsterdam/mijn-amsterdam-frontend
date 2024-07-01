@@ -31,6 +31,9 @@ import {
   VakantieverhuurVergunning,
   fetchVakantieverhuurVergunningen,
 } from './vakantieverhuur-vergunning';
+import { fetchAndFilterVergunningenV2 } from '../vergunningen-v2/vergunningen';
+import { VergunningV2 } from '../vergunningen-v2/config-and-types';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 
 export function hasOtherActualVergunningOfSameType(
   items: Array<VakantieverhuurVergunning | BBVergunning>,
@@ -67,9 +70,15 @@ async function fetchAndTransformToeristischeVerhuur(
     authProfileAndToken
   );
 
-  const vakantieverhuurVergunningenRequest = fetchVakantieverhuurVergunningen(
+  const vakantieverhuurVergunningenRequest = fetchAndFilterVergunningenV2(
     requestID,
-    authProfileAndToken
+    authProfileAndToken,
+    AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
+    (vergunning: VergunningV2) => {
+      return (
+        vergunning.caseType === CaseTypeV2.VakantieverhuurVergunningaanvraag
+      );
+    }
   );
 
   const [
@@ -249,15 +258,15 @@ export async function fetchToeristischeVerhuurNotifications(
   if (TOERISTISCHE_VERHUUR.status === 'OK') {
     const compareToDate = compareDate || new Date();
 
-    const vakantieverhuurVergunningen =
-      TOERISTISCHE_VERHUUR.content.vakantieverhuurVergunningen ?? [];
-    const vakantieverhuurVergunningNotifications =
-      vakantieverhuurVergunningen.map((vergunning) =>
-        createToeristischeVerhuurNotification(
-          vergunning,
-          vakantieverhuurVergunningen
-        )
-      );
+    // const vakantieverhuurVergunningen =
+    //   TOERISTISCHE_VERHUUR.content.vakantieverhuurVergunningen ?? [];
+    // const vakantieverhuurVergunningNotifications =
+    //   vakantieverhuurVergunningen.map((vergunning) =>
+    //     createToeristischeVerhuurNotification(
+    //       vergunning,
+    //       vakantieverhuurVergunningen
+    //     )
+    //   );
     const bbVergunningen = TOERISTISCHE_VERHUUR.content.bbVergunningen ?? [];
     const vergunningNotifications = bbVergunningen.map((vergunning) =>
       createToeristischeVerhuurNotification(vergunning, bbVergunningen)
@@ -269,7 +278,7 @@ export async function fetchToeristischeVerhuurNotifications(
       ) ?? [];
 
     const notifications = [
-      ...vakantieverhuurVergunningNotifications,
+      // ...vakantieverhuurVergunningNotifications,
       ...vergunningNotifications,
       ...registrationsNotifications,
     ];

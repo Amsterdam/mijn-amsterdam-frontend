@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoute, AppRoutes } from '../../../universal/config';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -9,6 +9,8 @@ import {
 import { BffEndpoints } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
+  EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN,
+  VergunningCaseTypeFilter,
   VergunningDocument,
   VergunningFrontendV2,
   VergunningV2,
@@ -23,10 +25,16 @@ import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
+import {
+  CaseTypeV2,
+  DecosCaseType,
+} from '../../../universal/types/vergunningen';
+import memoizee from 'memoizee';
 
 function transformVergunningFrontend(
   userId: AuthProfileAndToken['profile']['id'],
-  vergunning: VergunningV2
+  vergunning: VergunningV2,
+  appRoute: AppRoute
 ) {
   const [idEncrypted] = encrypt(`${userId}:${vergunning.key}`);
   const vergunningFrontend: VergunningFrontendV2 = {
@@ -41,7 +49,7 @@ function transformVergunningFrontend(
       id: idEncrypted,
     }),
     link: {
-      to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
+      to: generatePath(appRoute, {
         title: slug(vergunning.caseType, {
           lower: true,
         }),
@@ -71,21 +79,51 @@ function transformVergunningFrontend(
   return vergunningFrontend;
 }
 
-export async function fetchVergunningenV2(
+async function fetchAndFilterVergunningenV2_(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  appRoute: AppRoute,
+  caseTypeFilter?: VergunningCaseTypeFilter
 ) {
   const response = await fetchDecosVergunningen(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
-    const vergunningenFrontend: VergunningFrontendV2[] = response.content.map(
+    let decosVergunningen = response.content;
+    if (caseTypeFilter) {
+      decosVergunningen = decosVergunningen.filter(caseTypeFilter);
+    }
+    const vergunningenFrontend: VergunningFrontendV2[] = decosVergunningen.map(
       (vergunning) =>
-        transformVergunningFrontend(authProfileAndToken.profile.id, vergunning)
+        transformVergunningFrontend(
+          authProfileAndToken.profile.id,
+          vergunning,
+          appRoute
+        )
     );
     return apiSuccessResult(vergunningenFrontend);
   }
 
   return response;
+}
+
+export const fetchAndFilterVergunningenV2 = memoizee(
+  fetchAndFilterVergunningenV2_
+);
+
+export async function fetchVergunningenV2(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  return fetchAndFilterVergunningenV2(
+    requestID,
+    authProfileAndToken,
+    AppRoutes['VERGUNNINGEN/DETAIL'],
+    (vergunning: VergunningV2) => {
+      return !EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN.includes(
+        vergunning.caseType
+      );
+    }
+  );
 }
 
 // TODO: Make generic for all endpoints
@@ -148,7 +186,8 @@ export async function fetchVergunningV2(
       return apiSuccessResult({
         vergunning: transformVergunningFrontend(
           authProfileAndToken.profile.id,
-          vergunning
+          vergunning,
+          AppRoutes['VERGUNNINGEN/DETAIL']
         ),
         documents: documentsTransformed,
       });
