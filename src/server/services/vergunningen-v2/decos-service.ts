@@ -449,14 +449,14 @@ export async function fetchDecosDocumentList(
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date`;
+      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date&filter=text39 eq 'Definitief'`;
     },
   });
 
   const documentsSource = await requestData<
     DecosZakenResponse<DecosDocumentSource[]>
   >(apiConfigDocuments, requestID);
-  console.log('!!! documentsSource !!!!', documentsSource);
+  console.log('!!! documentsSource !!!!', documentsSource.content);
   if (documentsSource.status === 'OK') {
     const documentsTransformed = await transformDecosDocumentListResponse(
       requestID,

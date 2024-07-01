@@ -1,8 +1,4 @@
-import {
-  Alert as DSAlert,
-  Paragraph,
-  AlertProps,
-} from '@amsterdam/design-system-react';
+import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import { ComponentChildren } from '../../../universal/types';
 
 export interface ComponentProps {
