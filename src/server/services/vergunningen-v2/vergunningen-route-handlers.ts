@@ -30,16 +30,23 @@ export async function fetchVergunningDocument(
 }
 
 export async function fetchZakenSource(
-  req: Request<{ props?: 'true' }>,
+  req: Request<{ props?: 'true'; merged?: 'true' }>,
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  return sendResponseContent(
-    res,
-    await fetchDecosVergunningenSource(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.query.props === 'true'
-    )
+  let responseData: any = await fetchDecosVergunningenSource(
+    res.locals.requestID,
+    authProfileAndToken,
+    req.query.props === 'true'
   );
+  if (req.query.merged === 'true') {
+    responseData = responseData.content.reduce(
+      (acc: any, { field, value, description }: any) => {
+        acc[`${field}_${description}`] = value;
+        return acc;
+      },
+      {}
+    );
+  }
+  return sendResponseContent(res, responseData);
 }
