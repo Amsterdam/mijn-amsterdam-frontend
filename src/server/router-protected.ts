@@ -155,14 +155,14 @@ router.get(
 );
 
 // Vergunningen V2
+if (IS_TEST) {
+  router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenSource);
+}
 router.get(BffEndpoints.VERGUNNINGENv2_DETAIL, fetchVergunningDetail);
 router.get(
   BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD,
   fetchVergunningDocument
 );
-if (IS_TEST) {
-  router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenSource);
-}
 
 router.get(
   BffEndpoints.WPI_DOCUMENT_DOWNLOAD,

@@ -140,7 +140,7 @@ async function fetchVergunningenV2Notifications_(
   return apiDependencyError({ VERGUNNINGEN });
 }
 
-export const fetchAndFilterVergunningenV2 = memoizee(
+export const fetchVergunningenV2Notifications = memoizee(
   fetchVergunningenV2Notifications_,
   {
     maxAge: 45 * ONE_SECOND_MS,
