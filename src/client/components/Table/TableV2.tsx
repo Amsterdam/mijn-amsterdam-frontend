@@ -72,11 +72,11 @@ export function TableV2<T extends Unshaped>({
       )}
       <Table.Body>
         {items.map((item, index) => (
-          <tr key={'id' in item ? item.id : undefined ?? `tr-${index}`}>
+          <Table.Row key={'id' in item ? item.id : undefined ?? `tr-${index}`}>
             {displayPropEntries.map(([key, label], index) => (
               <Table.Cell key={`td-${key}`}>{item[key]}</Table.Cell>
             ))}
-          </tr>
+          </Table.Row>
         ))}
       </Table.Body>
     </Table>
