@@ -45,6 +45,8 @@ export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
   'private-attributes': [],
 };
 
+export const MA_DECISION_DEFAULT = 'Zie besluit';
+
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
 export type DecosZaakID = string;
 export type ZaakStatus =
@@ -475,7 +477,11 @@ export type NotificationProperty =
   | 'description'
   | 'datePublished'
   | 'link';
-type NotificationPropertyValue = (vergunning: VergunningFrontendV2) => string;
+
+type NotificationPropertyValue = (
+  vergunning: VergunningFrontendV2
+) => string | null;
+
 type NotificationLink = (vergunning: VergunningFrontendV2) => LinkProps;
 
 export type NotificationLinks = {

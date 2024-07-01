@@ -24,6 +24,7 @@ import {
   GPK as GPKType,
   GPP as GPPType,
   Ligplaatsvergunning as LigplaatsvergunningType,
+  MA_DECISION_DEFAULT,
   Nachtwerkontheffing as NachtwerkontheffingType,
   Omzettingsvergunning as OmzettingsvergunningType,
   OnttrekkingsvergunningSloop as OnttrekkingsvergunningSloopType,
@@ -67,7 +68,7 @@ const decision: DecosFieldTransformer = {
       )?.[0];
       return maDecision ?? decision;
     }
-    return decision;
+    return decision || MA_DECISION_DEFAULT;
   },
 };
 

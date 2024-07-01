@@ -161,9 +161,14 @@ export function getStatusSteps(vergunning: VergunningFrontendV2) {
       id: 'step-3',
       status: 'Afgehandeld',
       datePublished: vergunning.dateDecision || '',
-      description: isAfgehandeld
-        ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
-        : '',
+      description:
+        isAfgehandeld &&
+        vergunning.decision &&
+        ['Verleend', 'Ingetrokken', 'Niet verleend', 'Geweigerd'].includes(
+          vergunning.decision
+        )
+          ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
+          : '', // Complex decisions cannot be captured in a generic text.
       documents: [],
       isActive: !isExpired && isAfgehandeld,
       isChecked: isAfgehandeld,
