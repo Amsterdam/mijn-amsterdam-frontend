@@ -260,7 +260,6 @@ export function useAppStateBagApi<T extends unknown>({
   );
 
   useEffect(() => {
-    console.log(url);
     if (url && !isApiDataCached && !api.isDirty && !api.isLoading) {
       fetch({
         url,

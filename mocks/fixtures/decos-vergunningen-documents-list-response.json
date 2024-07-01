@@ -5,6 +5,7 @@
       "key": "11890A30006B4A67A2FB5384F67353B1",
       "fields": {
         "subject1": "document-123123.pdf",
+        "received_date": "2024-06-06",
         "sequence": 8,
         "mark": "D/4379600",
         "text39": "Definitief",
@@ -18,6 +19,7 @@
       "key": "2AC4589D7C3A442C9C1852EC0C4AE922",
       "fields": {
         "subject1": "Upload_20240327093329000.pdf",
+        "received_date": "2024-06-06",
         "sequence": 14,
         "mark": "D/4379699",
         "text39": "Concept",
@@ -30,6 +32,7 @@
       "key": "5ABB64ECB9944F0E9A35C6C9964349C8",
       "fields": {
         "subject1": "ZaakDetailsBericht.pdf",
+        "received_date": "2024-06-06",
         "sequence": 12,
         "mark": "D/4379697",
         "text39": "Definitief",
@@ -43,6 +46,7 @@
       "key": "9B89C06BF0C1484F9DF07917DEC0301F",
       "fields": {
         "subject1": "BUG Report_Amsterdam_ITEMEVENT_22022024.docx",
+        "received_date": "2024-06-06",
         "sequence": 13,
         "mark": "D/4379698",
         "text39": "Concept",
@@ -77,6 +81,7 @@
       "key": "ADCBCBF29CCB44FF80E08B8683A4D616",
       "fields": {
         "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF",
+        "received_date": "2024-06-06",
         "sequence": 4,
         "mark": "D/4379593",
         "text39": "Concept",
@@ -90,6 +95,7 @@
       "key": "B25D7AA3CFC348E988C2AECA1812E4E5",
       "fields": {
         "subject1": "Testplaatje.PNG",
+        "received_date": "2024-06-06",
         "sequence": 2,
         "mark": "D/4379591",
         "text39": "Concept",
@@ -102,6 +108,7 @@
       "key": "BFAA3D7FD9C747F8A7F2792A4821344F",
       "fields": {
         "subject1": "Samenvatting-87442b59-8a3c-4a76-abb9-9d8c1a317626.pdf",
+        "received_date": "2024-06-06",
         "sequence": 3,
         "mark": "D/4379592",
         "text39": "Concept",
@@ -115,6 +122,7 @@
       "key": "C43062273C0C4005A7998AB67808B125",
       "fields": {
         "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF",
+        "received_date": "2024-06-06",
         "sequence": 6,
         "mark": "D/4379595",
         "text39": "Concept",
@@ -139,6 +147,7 @@
       "key": "E307D0C1DB104346AA08AEB92D481294",
       "fields": {
         "subject1": "Test document situatieschets.pdf",
+        "received_date": "2024-06-06",
         "sequence": 1,
         "mark": "D/4379590",
         "text39": "Concept",
@@ -151,6 +160,7 @@
       "key": "EBB692546BCB43689C7E8DE82FE73138",
       "fields": {
         "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF.pdf",
+        "received_date": "2024-06-06",
         "sequence": 5,
         "mark": "D/4379594",
         "text39": "Definitief",
@@ -164,6 +174,7 @@
       "key": "F62158CD16054E9E9701CB545F4AD60A",
       "fields": {
         "subject1": "Document aangemaakt door DI voor kenteken AB-CD-EF.pdf",
+        "received_date": "2024-06-06",
         "sequence": 7,
         "mark": "D/4379596",
         "text39": "Definitief",

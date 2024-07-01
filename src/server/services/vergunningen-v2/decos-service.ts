@@ -391,6 +391,8 @@ async function isPdfDocument(
     },
   });
 
+  console.log(apiConfigDocuments);
+
   const documentTransformed = await requestData<{ isPDF: boolean }>(
     apiConfigDocuments,
     requestID
@@ -454,11 +456,13 @@ export async function fetchDecosDocumentList(
   const documentsSource = await requestData<
     DecosZakenResponse<DecosDocumentSource[]>
   >(apiConfigDocuments, requestID);
+  console.log('!!! documentsSource !!!!', documentsSource);
   if (documentsSource.status === 'OK') {
     const documentsTransformed = await transformDecosDocumentListResponse(
       requestID,
       documentsSource.content
     );
+    console.log('\n\n', documentsTransformed, '\n\n');
     return apiSuccessResult(documentsTransformed);
   }
   return documentsSource;
@@ -474,7 +478,6 @@ export async function fetchDecosVergunning(
       return `${config.url}/items/${zaakID}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
-      console.log('ZAAK:', JSON.stringify(responseData, null, '  '));
       if (responseData.content) {
         return responseData.content[0];
       }

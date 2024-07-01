@@ -21,6 +21,7 @@
       "get-decos-zaak-documents:standard",
       "get-decos-zaak-workflows:standard",
       "get-decos-zaak-workflowdetails:standard",
+      "get-decos-document-blob:standard",
       "get-decos-document-download:standard",
       "post-enableu2smile-klachten:standard",
       "get-erfpacht-notifications:standard",

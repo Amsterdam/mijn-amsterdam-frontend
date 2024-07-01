@@ -134,6 +134,29 @@ module.exports = [
     ],
   },
   {
+    id: 'get-decos-document-blob',
+    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/blob`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            content: [
+              {
+                fields: {
+                  bol10: true,
+                },
+              },
+            ],
+          },
+        },
+      },
+    ],
+  },
+  {
     id: 'get-decos-document-download',
     url: `${settings.MOCK_BASE_PATH}/decos/items/:key/content`,
     method: 'GET',
