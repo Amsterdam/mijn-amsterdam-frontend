@@ -8,16 +8,25 @@ is a portal for official communication with the municipality of Amsterdam. The a
 - React application
 - Node Express back-end-for-frontend (BFF)
 
-To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.template` inside the file AND ask one of the developers for values.
+To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.local.template` inside the file AND ask one of the developers for possible additional values.
 
+## Running localy
 
 Put the following commands in your terminal:
 
+```bash
+cp -i .env.local.template .env.local
+npm install -g ts-node nodemon
+npm install
+npm run serve-dev
+npm start
 ```
-$ npm install -g ts-node nodemon
-$ npm install
-$ npm run bff-api:watch
-$ npm start
+
+It's also possible to run both the mocks server and bff seperately with:
+
+```bash
+npm run mock-server
+npm run bff-api:watch
 ```
 
 ## Accessibility + Targeted browsers
@@ -55,6 +64,16 @@ The BFF also has a router that's intended for development purposes only. Not all
 For this purpose we have a development router with mock endpoints see `router-development.ts`. For example, vergunning documents and resident count are retrieved directly without going through the BFF.
 It's basically an additional development server integrated in the BFF api.
 
+## Some code conventions
+
+- Constants are defined in `SCREAMING_SNAKE_CASE`
+- Variables that are not re-assigned are always `const`
+- Variables that get re-assigned are always `let`
+- All filenames in src/server should be `kebab-cased.ts`
+- React component Filenames in src/client are `PascalCased.tsx`
+- If you have a `TODO:`, provide  a ticket number
+- `TODO:` ES-Lint will be configured in the future.
+
 ## Tooling
 
 #### System
@@ -84,3 +103,6 @@ We currently work with a trunk based development approach. [see also](https://tr
 The main branch should always be production worthy in terms of functionality, stability and code quality.
 Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you are about create a release, use the `npm run release` or `npm run release:(major|bug)` (for more specific versions) command. This command
 creates a [semver](https://semver.org/) version of the release tag and pushes it to origin in a separte production branch. The CI/CD pipeline will automatically detect the branch and starts building a release.
+
+### Debugging
+`export DEBUG=1` will log outgoing http requests via the `log-that-http` package. Headers and Body can be made visible as well by `export LOG_THAT_HTTP_HEADERS=true` for headers and `export LOG_THAT_HTTP_BODY=true` for request bodies.

@@ -9,15 +9,16 @@ import type {
 import { AVGRequest } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
-import { SIAItem } from '../../../server/services/sia';
 import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import type {
-  ToeristischeVerhuurRegistratieDetail,
-  ToeristischeVerhuurVergunning,
-} from '../../../server/services/toeristische-verhuur';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
+import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
+import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
+
+import { StadspasResponseData } from '../../../server/services/hli/stadspas-types';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -36,11 +37,7 @@ import {
 import { AppState, AppStateKey } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
-import { StadspasResponseData } from '../../../server/services/stadspas/stadspas-types';
-import {
-  WMOVoorziening,
-  WMOVoorzieningFrontend,
-} from '../../../server/services/wmo/wmo-config-and-types';
+import { HLIresponseData } from '../../../server/services/hli/regelingen-types';
 
 export interface SearchEntry {
   url: string;
@@ -228,31 +225,47 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
     getApiBaseItems: (apiContent: {
-      registraties: ToeristischeVerhuurRegistratieDetail[];
-      vergunningen: ToeristischeVerhuurVergunning[];
-    }): ToeristischRegistratieItem[] => {
-      const registratienummers = apiContent.registraties?.map((registratie) => {
-        return {
-          title: 'Landelijk registratienummer',
-          identifier: registratie.registrationNumber,
-          link: {
-            to: AppRoutes.TOERISTISCHE_VERHUUR,
-            title: 'Landelijk registratienummer',
-          },
-        };
-      });
-      const zaken = apiContent.vergunningen?.map(
-        (vergunning: ToeristischeVerhuurVergunning) => {
-          const title = vergunning.title;
+      lvvRegistraties: ToeristischeVerhuurRegistratieDetail[];
+      vakantieverhuurVergunningen: VakantieverhuurVergunning[];
+      bbVergunningen: BBVergunning[];
+    }) => {
+      const registratienummers = apiContent.lvvRegistraties?.map(
+        (registratie) => {
           return {
-            ...vergunning,
-            title,
-            identifier: vergunning.identifier,
-            link: vergunning.link,
+            title: 'Landelijk registratienummer',
+            identifier: registratie.registrationNumber,
+            link: {
+              to: AppRoutes.TOERISTISCHE_VERHUUR,
+              title: 'Landelijk registratienummer',
+            },
           };
         }
       );
-      return [...(zaken || []), ...(registratienummers || [])];
+      const zaken = apiContent.vakantieverhuurVergunningen?.map(
+        (vergunning: VakantieverhuurVergunning) => {
+          const title = vergunning.titel;
+          return {
+            ...vergunning,
+            title,
+            identifier: vergunning.zaaknummer,
+          };
+        }
+      );
+      const zaken2 = apiContent.bbVergunningen?.map(
+        (vergunning: BBVergunning) => {
+          const title = vergunning.titel;
+          return {
+            ...vergunning,
+            title,
+            identifier: vergunning.zaaknummer,
+          };
+        }
+      );
+      return [
+        ...(zaken || []),
+        ...(zaken2 || []),
+        ...(registratienummers || []),
+      ];
     },
     displayTitle: (toeristischVerhuurItem: ToeristischRegistratieItem) => {
       if (
@@ -288,6 +301,34 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         const segments = [wmoItem.title];
         if (wmoItem.supplier) {
           segments.push(`door ${wmoItem.supplier}`);
+        }
+        return displayPath(term, segments);
+      };
+    },
+  },
+  {
+    stateKey: 'HLI' as AppStateKey,
+    getApiBaseItems: (apiContent: HLIresponseData) => {
+      const stadspassen =
+        apiContent?.stadspas?.stadspassen?.map((stadspas) => {
+          return {
+            ...stadspas,
+            title: `Stadspas van ${stadspas.owner}`,
+          };
+        }) || [];
+      const regelingen = apiContent?.regelingen || [];
+      return [...stadspassen, ...regelingen];
+    },
+    displayTitle: (item: {
+      title: string;
+      about?: string;
+      datePublished: string;
+      statusId?: string;
+    }) => {
+      return (term: string) => {
+        const segments = item.about ? [`Aanvraag ${item.about}`] : [item.title];
+        if (item.statusId === 'besluit') {
+          segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
         }
         return displayPath(term, segments);
       };
@@ -414,14 +455,6 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     displayTitle(item: HorecaVergunningen) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
-    },
-  },
-  {
-    isEnabled: FeatureToggle.siaActive,
-    stateKey: 'SIA' as AppStateKey,
-    displayTitle(item: SIAItem) {
-      return (term: string) =>
-        displayPath(term, [`Melding ${item.identifier}`]);
     },
   },
 ].map((apiConfig) => {

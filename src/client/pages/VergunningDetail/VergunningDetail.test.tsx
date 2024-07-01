@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
 import { describe, expect, it, test } from 'vitest';
-import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { transformVergunningenData } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
@@ -43,9 +43,11 @@ export function MockVergunningDetail({ identifier }: { identifier: string }) {
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
 
-  bffApi.get(/\/relay\/decosjoin\/listdocuments\/(.*)/).reply(200, {
-    content: [],
-  });
+  bffApi
+    .get(/\/api\/v1\/services\/vergunningen\/documents\/list\/(.*)/)
+    .reply(200, {
+      content: [],
+    });
 
   return (
     <MockApp

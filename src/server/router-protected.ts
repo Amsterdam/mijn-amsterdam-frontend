@@ -1,8 +1,12 @@
 import express, { NextFunction, Request, Response } from 'express';
-import proxy from 'express-http-proxy';
-import { pick } from '../universal/helpers/utils';
+import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import {
+  fetchAantalBewoners,
+  fetchVergunningenDocument,
+  fetchVergunningenDocumentsList,
+} from './services';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,
@@ -13,16 +17,12 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
-import { captureException } from './services/monitoring';
+import { fetchTransacties } from './services/hli/stadspas-gpass-service';
 import { isBlacklistedHandler } from './services/session-blacklist';
-import {
-  fetchSignalAttachments,
-  fetchSignalHistory,
-  fetchSignalsListByStatus,
-} from './services/sia';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { fetchDocument } from './services/wmo/wmo-zorgned-service';
-import { fetchTransacties } from './services/stadspas/stadspas-gpass-service';
+import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
+import { fetchWpiDocument } from './services/wpi/api-service';
+import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
 
 export const router = express.Router();
 
@@ -82,124 +82,78 @@ router.get(
   }
 );
 
-// NOTE: Fix for legacy relayApi. WMONED api is archived and is not used anymore for downloads.
 router.get(
   BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const authProfileAndToken = await getAuth(req);
-    const documentResponse = await fetchDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    if (
-      documentResponse.status === 'ERROR' ||
-      !documentResponse.content?.data
-    ) {
-      return res.status(500).send(documentResponse);
-    }
-
-    res.type(documentResponse.content.mimetype ?? 'application/pdf');
-    res.header(
-      'Content-Disposition',
-      `attachment; filename="${documentResponse.content.title}.pdf"`
-    );
-    return res.send(documentResponse.content.data);
-  }
+  downloadZorgnedDocument('ZORGNED_JZD')
 );
-
-router.use(
-  BffEndpoints.API_RELAY,
-  proxy(
-    (req: Request) => {
-      let url = '';
-      switch (true) {
-        case req.path.startsWith('/decosjoin/'):
-          url = String(process.env.BFF_VERGUNNINGEN_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/wpi/'):
-          url = String(process.env.BFF_WPI_API_BASE_URL ?? '');
-          break;
-        case req.path.startsWith('/brp/'):
-          url = String(process.env.BFF_MKS_API_BASE_URL ?? '');
-          break;
-      }
-      return url;
-    },
-    {
-      memoizeHost: false,
-      proxyReqPathResolver: function (req) {
-        return req.url;
-      },
-      proxyReqOptDecorator: async function (proxyReqOpts, srcReq) {
-        const { token } = await getAuth(srcReq);
-        const headers = proxyReqOpts.headers || {};
-        headers['Authorization'] = `Bearer ${token}`;
-        proxyReqOpts.headers = headers;
-        return proxyReqOpts;
-      },
-      proxyErrorHandler: (err, res, next) => {
-        captureException(err);
-        next();
-      },
-    }
-  )
+router.get(
+  BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
+  downloadZorgnedDocument('ZORGNED_AV')
 );
 
 router.get(
-  BffEndpoints.SIA_ATTACHMENTS,
+  BffEndpoints.MKS_AANTAL_BEWONERS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
 
-    const attachmentsResponse = await fetchSignalAttachments(
+    const bewonersResponse = await fetchAantalBewoners(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.addressKeyEncrypted
+    );
+
+    return res.send(bewonersResponse);
+  }
+);
+
+router.get(
+  BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentsListResponse = await fetchVergunningenDocumentsList(
       res.locals.requestID,
       authProfileAndToken,
       req.params.id
     );
 
-    if (attachmentsResponse.status === 'ERROR') {
-      res.status(500);
-    }
-
-    return res.send(attachmentsResponse);
+    return res.send(documentsListResponse);
   }
 );
 
-router.get(BffEndpoints.SIA_HISTORY, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
+router.get(
+  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
 
-  const attachmentsResponse = await fetchSignalHistory(
-    res.locals.requestID,
-    authProfileAndToken,
-    req.params.id
-  );
+    const documentResponse = await fetchVergunningenDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
 
-  if (attachmentsResponse.status === 'ERROR') {
-    res.status(500);
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
   }
+);
 
-  return res.send(attachmentsResponse);
-});
+router.get(
+  BffEndpoints.WPI_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
 
-router.get(BffEndpoints.SIA_LIST, async (req: Request, res: Response) => {
-  const authProfileAndToken = await getAuth(req);
+    const documentResponse = await fetchWpiDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params
+    );
 
-  const siaResponse = await fetchSignalsListByStatus(
-    res.locals.requestID,
-    authProfileAndToken,
-    {
-      ...(pick(req.params, ['page', 'status']) as any),
-      pageSize: '20',
-    }
-  );
-
-  if (siaResponse.status === 'ERROR') {
-    res.status(500);
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
   }
-
-  return res.send(siaResponse);
-});
+);
 
 router.get(
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
@@ -291,6 +245,24 @@ router.get(
   }
 );
 
+// Toeristische verhuur
+router.get(
+  BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+
+    const documentResponse = await fetchBBDocument(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.docIdEncrypted
+    );
+
+    const contentType = documentResponse.headers['content-type'];
+    res.setHeader('content-type', contentType);
+    documentResponse.data.pipe(res);
+  }
+);
+
 router.get(
   BffEndpoints.STADSPAS_TRANSACTIONS,
   async (req: Request<{ transactionsKey: string }>, res: Response) => {
@@ -298,15 +270,28 @@ router.get(
     const response = await fetchTransacties(
       res.locals.requestID,
       authProfileAndToken,
-      req.params.transactionsKey
+      [req.params.transactionsKey]
     );
 
-    if (response.status === 'ERROR') {
-      return res
-        .status(typeof response.code === 'number' ? response.code : 500)
-        .end();
-    }
-
     return res.send(response);
+  }
+);
+
+router.post(
+  BffEndpoints.STADSPAS_TRANSACTIONS,
+  async (req: Request, res: Response) => {
+    const authProfileAndToken = await getAuth(req);
+    const transactionKeys = req.body as string[];
+
+    if (transactionKeys?.length) {
+      const response = await fetchTransacties(
+        res.locals.requestID,
+        authProfileAndToken,
+        transactionKeys
+      );
+
+      return res.send(response);
+    }
+    return res.status(400).send(apiErrorResult('Bad request', null, 400));
   }
 );

@@ -42,6 +42,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -51,9 +52,6 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -159,6 +157,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -168,9 +167,6 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -304,6 +300,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -313,9 +310,6 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />

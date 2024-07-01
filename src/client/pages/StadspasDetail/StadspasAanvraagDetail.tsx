@@ -7,7 +7,12 @@ export default function StadspasAanvraagDetail() {
     <StatusDetail
       thema="STADSPAS"
       stateKey="STADSPAS"
-      getItems={(stadspasContent) => stadspasContent?.aanvragen || []}
+      getItems={(stadspasContent) => {
+        if (stadspasContent !== null && 'aanvragen' in stadspasContent) {
+          return stadspasContent.aanvragen;
+        }
+        return [];
+      }}
       maxStepCount={(hasDecision) =>
         !hasDecision ? MAX_STEP_COUNT_WPI_REQUEST : undefined
       }

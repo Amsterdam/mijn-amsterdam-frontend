@@ -12,7 +12,7 @@ import {
 import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemas } from '../../hooks/useThemas';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './Dashboard.module.scss';
@@ -32,7 +32,8 @@ export default function Dashboard() {
   const isPhoneScreen = usePhoneScreen();
   const NOTIFICATIONSTotal = notifications.length;
 
-  const { items: myThemaItems, isLoading: isMyThemasLoading } = useThemas();
+  const { items: myThemaItems, isLoading: isMyThemasLoading } =
+    useThemaMenuItems();
 
   const profileType = useProfileTypeValue();
 

@@ -123,7 +123,7 @@ export async function loginStats(req: Request, res: Response) {
 
   let authMethodSelected = '';
 
-  if (['yivi', 'eherkenning', 'digid'].includes(req.params.authMethod)) {
+  if (['eherkenning', 'digid'].includes(req.params.authMethod)) {
     authMethodSelected = req.params.authMethod;
   }
 

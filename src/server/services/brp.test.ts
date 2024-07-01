@@ -1,7 +1,7 @@
 import { ApiSuccessResponse, getFullAddress } from '../../universal/helpers';
 import { getBagSearchAddress } from '../../universal/helpers/bag';
 import { BRPDataFromSource } from '../../universal/types/brp';
-import brpData from '../mock-data/json/brp.json';
+import brpData from '../../../mocks/fixtures/brp.json';
 import { transformBRPData, transformBRPNotifications } from './brp';
 
 const brpDataTyped = brpData as ApiSuccessResponse<BRPDataFromSource>;

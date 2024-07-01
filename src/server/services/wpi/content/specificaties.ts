@@ -3,7 +3,7 @@ import { Themas, IS_PRODUCTION } from '../../../../universal/config';
 import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
 import { MyNotification } from '../../../../universal/types';
 import { ServiceResults } from '../../tips/tip-types';
-import { documentDownloadName } from '../helpers';
+import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
 import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
@@ -38,7 +38,7 @@ function transformIncomeSpecificationNotification(
       title: 'Nieuwe jaaropgave',
       description: `Uw ${item.title} staat voor u klaar.`,
       link: {
-        to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${item.url}`,
+        to: item.url,
         title: 'Bekijk jaaropgave',
         download: documentDownloadName(item),
       },
@@ -54,7 +54,7 @@ function transformIncomeSpecificationNotification(
       'MMMM yyyy'
     )} staat voor u klaar.`,
     link: {
-      to: `${process.env.BFF_OIDC_BASE_URL || ''}/api/v1/relay${item.url}`,
+      to: item.url,
       title: 'Bekijk uitkeringsspecificatie',
       download: documentDownloadName(item),
     },
@@ -112,7 +112,7 @@ export function transformIncomeSpecificationItem(
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
   const displayDatePublished = defaultDateFormat(item.datePublished);
-  const url = `${item.url}`;
+  const [{ url }] = addApiBasePathToDocumentUrls([item]);
   const categoryFromSource = item.variant;
 
   return {

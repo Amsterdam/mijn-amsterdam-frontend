@@ -1,6 +1,5 @@
 import { generatePath } from 'react-router-dom';
 import { Match } from '../types';
-import { browserTabNames } from './thema';
 import { themaNieuw } from './thema-data';
 
 const entries = Object.entries({});
@@ -33,6 +32,11 @@ export const AppRoutes: Record<string, string> = {
   // 'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
   // INKOMEN: '/inkomen',
   // STADSPAS: '/stadspas',
+  HLI: '/regelingen-bij-laag-inkomen',
+  'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
+  'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+  'HLI/REGELINGEN_LIJST':
+    '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
 
   SIA: '/meldingen',
   SIA_OPEN: '/alle-open-meldingen/:page?',
@@ -140,7 +144,6 @@ export const PublicRoutes: string[] = [
   AppRoutes.API1_LOGIN,
   AppRoutes.API2_LOGIN,
   AppRoutes.ACCESSIBILITY,
-  AppRoutes.YIVI_LANDING,
   AppRoutes.BFF_500_ERROR,
   AppRoutes.ACCESSIBILITY,
   AppRoutes.GENERAL_INFO,
@@ -200,21 +203,8 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
-  [AppRoutes['SIA/DETAIL/OPEN']]: (match: Match) =>
-    `/yivi/open-melding/${match.params?.id}`,
-  [AppRoutes['SIA/DETAIL/CLOSED']]: (match: Match) =>
-    `/yivi/afgesloten-melding/${match.params?.id}`,
-  [AppRoutes.SIA_CLOSED]: (match: Match) =>
-    `/yivi/alle-afgesloten-meldingen/pagina-${match.params?.page ?? 1}`,
-  [AppRoutes.SIA_OPEN]: (match: Match) =>
-    `/yivi/alle-open-meldingen/pagina-${match.params?.page ?? 1}`,
-
   [AppRoutes.ROOT]: (
     match: Match,
     { profileType, isAuthenticated }: TrackingConfig
-  ) =>
-    profileType === 'private-attributes'
-      ? // NOTE: If we are going to have more kinds of authmethods and usecases for the private-attributes profileType this simple implementation is not sufficient.
-        `/yivi/meldingen-overzicht`
-      : `/${isAuthenticated ? 'dashboard' : 'landing'}`,
+  ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };

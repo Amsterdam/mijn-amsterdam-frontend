@@ -39,8 +39,8 @@ export const tips: Tip[] = [
     profileTypes: ['private'],
     thema: Themas.AFVAL,
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
-    predicates: [isLivingInAmsterdamLessThanNumberOfDays(3)],
-    reason: 'U ziet deze tip omdat u net bent verhuisd',
+    predicates: [isLivingInAmsterdamLessThanNumberOfDays(90)],
+    reason: 'U ziet deze tip omdat u in Amsterdam woont.',
     link: {
       title: 'Kijk op de kaart',
       to: '/buurt',
@@ -76,12 +76,12 @@ export const tips: Tip[] = [
     thema: Themas.BRP,
     profileTypes: ['private'],
     description:
-      'U bent net in Amsterdam komen wonen, welkom! Blijf op de hoogte van het nieuws in uw stadsdeel.',
+      'U woont in Amsterdam, welkom! Blijf op de hoogte van de producten en diensten die u heeft bij de gemeente Amsterdam.nl.',
     predicates: [
-      isLivingInAmsterdamLessThanNumberOfDays(6),
+      isLivingInAmsterdamLessThanNumberOfDays(90),
       not(previouslyLivingInAmsterdam),
     ],
-    reason: 'U ziet deze tip omdat u net naar Amsterdam bent verhuisd',
+    reason: 'U ziet deze tip omdat u in Amsterdam woont.',
     link: {
       title: 'Lees meer in deze nieuwsbrief',
       to: 'https://www.amsterdam.nl/nieuwsbrief/',
@@ -161,7 +161,7 @@ export const tips: Tip[] = [
     thema: Themas.BRP,
     profileTypes: ['private'],
     description:
-      'U hebt een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
+      'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
       not(hasValidIdForVoting),
       is18OrOlder,

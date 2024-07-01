@@ -39,6 +39,7 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -48,9 +49,6 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -65,154 +63,166 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
-    />
-    <div
-      class="_StatusLine_a12ff2"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
-      <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+      <div
+        class="ams-grid"
+      />
+    </div>
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-all"
       >
-        Test item-aanvraag
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+        <div
+          class="_StatusLine_a12ff2"
         >
-          <div
-            class="_ListItemInner_a12ff2"
+          <h4
+            class="ams-heading ams-heading--4 _ListHeading_a12ff2"
           >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                aanvraag
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                24 juli 2020
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            Test item-aanvraag
+          </h4>
+          <ul
+            class="_List_a12ff2"
+          >
+            <li
+              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                <p>
-                  Uw aanvraag is binngekomen
-                </p>
-              </div>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            >
-              <ul
-                class="_DocumentList_7ed0ad"
-              >
-                <li
-                  class="_DocumentListItem_7ed0ad"
+                <div
+                  aria-label="Vinkje, processtap gereed"
+                  class="_StatusConnection_a12ff2"
                 >
                   <span
-                    class="_DocumentLinkWrap_81c3b4"
+                    class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
                   >
-                    <span
-                      class="_DownloadIcon_81c3b4"
+                    aanvraag
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    24 juli 2020
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  >
+                    <p>
+                      Uw aanvraag is binngekomen
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                >
+                  <ul
+                    class="_DocumentList_7ed0ad"
+                  >
+                    <li
+                      class="_DocumentListItem_7ed0ad"
                     >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        height="14"
-                        viewBox="0 0 32 32"
-                        width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      <span
+                        class="_DocumentLinkWrap_81c3b4"
                       >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
-                      </svg>
-                    </span>
-                    <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
-                      rel="external noopener noreferrer"
-                    >
-                      Documentje
-                    </a>
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                inbehandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                28 juli 2020
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                        <a
+                          class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                          href="/mijnamsterdamapi/kappie"
+                        >
+                          <span
+                            class="_DocumentLinkIcon_81c3b4"
+                          >
+                            <span
+                              class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                            >
+                              <svg
+                                aria-label="sluiten-icoon"
+                                focusable="false"
+                                height="32px"
+                                viewBox="0 0 32 32"
+                                width="32px"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                              >
+                                <path
+                                  d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          Documentje
+                        </a>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                <p>
-                  Uw aanvraag is in behandeling
-                </p>
+                <div
+                  aria-label="Vinkje, processtap gereed"
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    inbehandeling
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    28 juli 2020
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  >
+                    <p>
+                      Uw aanvraag is in behandeling
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
               </div>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-      </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -257,6 +267,7 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -266,9 +277,6 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -283,152 +291,164 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
-      <p>
-        This text will appear. Aanvraag Test item
-      </p>
+      <div
+        class="ams-grid"
+      >
+        <p>
+          This text will appear. Aanvraag Test item
+        </p>
+      </div>
     </div>
     <div
-      class="_StatusLine_a12ff2"
+      class="ams-grid"
     >
-      <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-all"
       >
-        Test item-aanvraag
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2"
+        <div
+          class="_StatusLine_a12ff2"
         >
-          <div
-            class="_ListItemInner_a12ff2"
+          <h4
+            class="ams-heading ams-heading--4 _ListHeading_a12ff2"
           >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                aanvraag
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                24 juli 2020
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            Test item-aanvraag
+          </h4>
+          <ul
+            class="_List_a12ff2"
+          >
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                <p>
-                  Uw aanvraag is binngekomen
-                </p>
-              </div>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            >
-              <ul
-                class="_DocumentList_7ed0ad"
-              >
-                <li
-                  class="_DocumentListItem_7ed0ad"
+                <div
+                  aria-label="Vinkje, processtap gereed"
+                  class="_StatusConnection_a12ff2"
                 >
                   <span
-                    class="_DocumentLinkWrap_81c3b4"
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
                   >
-                    <span
-                      class="_DownloadIcon_81c3b4"
+                    aanvraag
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    24 juli 2020
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  >
+                    <p>
+                      Uw aanvraag is binngekomen
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                >
+                  <ul
+                    class="_DocumentList_7ed0ad"
+                  >
+                    <li
+                      class="_DocumentListItem_7ed0ad"
                     >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        height="14"
-                        viewBox="0 0 32 32"
-                        width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      <span
+                        class="_DocumentLinkWrap_81c3b4"
                       >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
-                      </svg>
-                    </span>
-                    <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
-                      rel="external noopener noreferrer"
-                    >
-                      Documentje
-                    </a>
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                inbehandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                28 juli 2020
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                        <a
+                          class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                          href="/mijnamsterdamapi/kappie"
+                        >
+                          <span
+                            class="_DocumentLinkIcon_81c3b4"
+                          >
+                            <span
+                              class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                            >
+                              <svg
+                                aria-label="sluiten-icoon"
+                                focusable="false"
+                                height="32px"
+                                viewBox="0 0 32 32"
+                                width="32px"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                              >
+                                <path
+                                  d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          Documentje
+                        </a>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                <p>
-                  Uw aanvraag is in behandeling
-                </p>
+                <div
+                  aria-label="Vinkje, processtap gereed"
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    inbehandeling
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    28 juli 2020
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  >
+                    <p>
+                      Uw aanvraag is in behandeling
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
               </div>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-      </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -473,6 +493,7 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -482,9 +503,6 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -499,154 +517,166 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0 _DetailPageContent_3aea40"
-    />
-    <div
-      class="_StatusLine_a12ff2"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
-      <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+      <div
+        class="ams-grid"
+      />
+    </div>
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-all"
       >
-        Test item-aanvraag
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+        <div
+          class="_StatusLine_a12ff2"
         >
-          <div
-            class="_ListItemInner_a12ff2"
+          <h4
+            class="ams-heading ams-heading--4 _ListHeading_a12ff2"
           >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                inbehandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                28 juli 2020
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            Test item-aanvraag
+          </h4>
+          <ul
+            class="_List_a12ff2"
+          >
+            <li
+              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                <p>
-                  Uw aanvraag is in behandeling
-                </p>
-              </div>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Vinkje, processtap gereed"
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                aanvraag
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                24 juli 2020
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              >
-                <p>
-                  Uw aanvraag is binngekomen
-                </p>
-              </div>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            >
-              <ul
-                class="_DocumentList_7ed0ad"
-              >
-                <li
-                  class="_DocumentListItem_7ed0ad"
+                <div
+                  aria-label="Vinkje, processtap gereed"
+                  class="_StatusConnection_a12ff2"
                 >
                   <span
-                    class="_DocumentLinkWrap_81c3b4"
+                    class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
                   >
-                    <span
-                      class="_DownloadIcon_81c3b4"
+                    inbehandeling
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    28 juli 2020
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  >
+                    <p>
+                      Uw aanvraag is in behandeling
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+            >
+              <div
+                class="_ListItemInner_a12ff2"
+              >
+                <div
+                  aria-label="Vinkje, processtap gereed"
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    aanvraag
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    24 juli 2020
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  >
+                    <p>
+                      Uw aanvraag is binngekomen
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                >
+                  <ul
+                    class="_DocumentList_7ed0ad"
+                  >
+                    <li
+                      class="_DocumentListItem_7ed0ad"
                     >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        height="14"
-                        viewBox="0 0 32 32"
-                        width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      <span
+                        class="_DocumentLinkWrap_81c3b4"
                       >
-                        <title>
-                          download-icoon
-                        </title>
-                        <path
-                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                        />
-                      </svg>
-                    </span>
-                    <a
-                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
-                      href="http://bff-api-host/relay/mijnamsterdamapi/kappie"
-                      rel="external noopener noreferrer"
-                    >
-                      Documentje
-                    </a>
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </ul>
+                        <a
+                          class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                          href="/mijnamsterdamapi/kappie"
+                        >
+                          <span
+                            class="_DocumentLinkIcon_81c3b4"
+                          >
+                            <span
+                              class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                            >
+                              <svg
+                                aria-label="sluiten-icoon"
+                                focusable="false"
+                                height="32px"
+                                viewBox="0 0 32 32"
+                                width="32px"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                              >
+                                <path
+                                  d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                          Documentje
+                        </a>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </main>
 </DocumentFragment>

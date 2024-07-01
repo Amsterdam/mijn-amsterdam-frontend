@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import {
   StadspasBudget,
   StadspasTransaction,
-} from '../../../server/services/stadspas/stadspas-types';
+} from '../../../server/services/hli/stadspas-types';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import {
   ApiResponse,
@@ -31,7 +31,6 @@ import {
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { relayApiUrl } from '../../utils/utils';
 import styles from './StadspasDetail.module.scss';
 
 const PAGE_SIZE = 10;
@@ -93,9 +92,8 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
       <li
         className={styles.AmountSpent}
         style={{
-          width: `${
-            100 - (100 / budget.budgetAssigned) * budget.budgetBalance
-          }%`,
+          width: `${100 - (100 / budget.budgetAssigned) * budget.budgetBalance
+            }%`,
         }}
       >
         <span className={styles.Label}>
@@ -220,7 +218,9 @@ function CStadspasBudget({
           </Button>
         ) : (
           !isLoadingTransactions && (
-            <p className={styles.NoTransactions}>U hebt nog geen transacties</p>
+            <p className={styles.NoTransactions}>
+              U heeft nog geen transacties
+            </p>
           )
         )}
       </PageContent>

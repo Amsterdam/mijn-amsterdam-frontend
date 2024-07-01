@@ -12,43 +12,4 @@ export const PLACEHOLDER_IMAGE_URL =
 // Legacy export, these used to live in this file
 export { ExternalUrls, Colors } from '../../universal/config/app';
 
-interface UiElementConfig {
-  MainNavBarSimple: boolean;
-}
-
-type UiElementConfigByProfileType = Record<ProfileType, UiElementConfig | null>;
-
-const uiElementConfigByProfileType: UiElementConfigByProfileType = {
-  'private-attributes': {
-    MainNavBarSimple: true,
-  },
-  private: {
-    MainNavBarSimple: false,
-  },
-  commercial: {
-    MainNavBarSimple: false,
-  },
-};
-
-export function isUiElementVisible(
-  profileType: ProfileType,
-  uiElementName: keyof UiElementConfig
-): boolean {
-  const elementConfigByProfileType =
-    uiElementConfigByProfileType?.[profileType];
-
-  if (elementConfigByProfileType) {
-    return elementConfigByProfileType?.[uiElementName] ?? false;
-  }
-
-  return true;
-}
-
-export function isUiElementHidden(
-  profileType: ProfileType,
-  uiElementName: keyof UiElementConfig
-): boolean {
-  return !isUiElementVisible(profileType, uiElementName);
-}
-
 export const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 3;

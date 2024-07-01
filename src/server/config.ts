@@ -30,7 +30,7 @@ function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
   return undefined;
 }
 
-function getCert(envVarName: string | undefined) {
+export function getCert(envVarName: string) {
   return IS_DEVELOPMENT
     ? getCertificateSync(envVarName)
     : decodeBase64EncodedCertificateFromEnv(envVarName);
@@ -50,6 +50,7 @@ export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSI
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
+export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -95,11 +96,13 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'ZORGNED'
+  | 'ZORGNED_JZD'
+  | 'ZORGNED_AV'
   | 'GPASS'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
+  | 'POWERBROWSER'
   | 'SVWI'
   | 'BELASTINGEN'
   | 'BEZWAREN_LIST'
@@ -121,7 +124,6 @@ export type SourceApiKey =
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
   | 'KREFIA'
-  | 'SIA'
   | 'ENABLEU_2_SMILE'
   | 'LOOD_365'
   | 'LOOD_365_OAUTH';
@@ -129,16 +131,30 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  ZORGNED: {
+  ZORGNED_JZD: {
     method: 'post',
     url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
     headers: {
       Token: process.env.BFF_ZORGNED_API_TOKEN,
       'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'JZD',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_SERVER_CLIENT_CERT'),
       key: getCert('BFF_SERVER_CLIENT_KEY'),
+    }),
+  },
+  ZORGNED_AV: {
+    method: 'post',
+    url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
+    headers: {
+      Token: process.env.BFF_ZORGNED_API_TOKEN,
+      'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'AV',
+    },
+    httpsAgent: new https.Agent({
+      cert: getCert('BFF_ZORGNED_AV_CERT'),
+      key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
   },
   GPASS: {
@@ -194,33 +210,34 @@ export const ApiConfig: ApiDataRequestConfig = {
       key: getCert('BFF_SERVER_CLIENT_KEY'),
     }),
   },
-  SIA: {
-    url: `${process.env.BFF_SIA_BASE_URL}/private/signals/`,
-    postponeFetch: !FeatureToggle.siaApiActive,
-  },
   VERGUNNINGEN: {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
     passthroughOIDCToken: true,
   },
+  POWERBROWSER: {
+    method: 'POST',
+    url: `${process.env.BFF_POWERBROWSER_API_URL}`,
+    postponeFetch: !FeatureToggle.powerbrowserActive,
+    headers: {
+      apiKey: process.env.BFF_POWERBROWSER_API_KEY,
+    },
+  },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
     urls: {
-      private:
-        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
-      'private-attributes':
-        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
-      commercial:
-        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
+      private: `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+      'private-attributes': `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+      commercial: `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data`,
     },
   },
   CMS_CONTENT_FOOTER: {
-    url: 'https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data',
+    url: `${process.env.BFF_CMS_BASE_URL}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
-    url: 'https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true',
+    url: `${process.env.BFF_CMS_BASE_URL}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
     cacheTimeout: ONE_HOUR_MS,
   },
   BRP: {
@@ -237,13 +254,14 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: process.env.BFF_ERFPACHT_API_URL,
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCert(process.env.BFF_SERVER_CLIENT_CERT) : [],
+      ca: IS_TAP ? getCert('BFF_SERVER_CLIENT_CERT') : [],
     }),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
       !process.env.BFF_ERFPACHT_API_URL,
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
+      apiKey: process.env.BFF_ENABLEU_ERFPACHT_API_KEY,
     },
   },
   AFVAL: {
@@ -297,18 +315,7 @@ export const ApiConfig: ApiDataRequestConfig = {
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
 
-export const ApiUrls = Object.entries(ApiConfig).reduce(
-  (acc, [apiName, { url, urls }]) => {
-    if (urls) {
-      return Object.assign(acc, { [apiName]: urls });
-    }
-    return Object.assign(acc, { [apiName]: url || '' });
-  },
-  {} as Record<SourceApiKey, ApiUrlObject>
-);
-
 export type ApiUrlEntries = ApiUrlEntry[];
-export const apiUrlEntries = Object.entries(ApiUrls) as ApiUrlEntries;
 
 export function getApiConfig(
   name: SourceApiKey,
@@ -335,20 +342,9 @@ export function getApiConfig(
   return Object.assign(apiConfigCopy, config);
 }
 
-export const RelayPathsAllowed = {
-  VERGUNNINGEN_LIST_DOCUMENTS: '/decosjoin/listdocuments/:key',
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD: '/decosjoin/document/:key',
-  WPI_DOCUMENT_DOWNLOAD: '/wpi/document',
-  WMO_DOCUMENT_DOWNLOAD: '/wmoned/document/:id',
-  BRP_BEWONERS: '/brp/aantal_bewoners',
-  LOOD_DOCUMENT_DOWNLOAD: '/services/lood/:id/attachments',
-  BEZWAREN_DOCUMENT: '/services/bezwaren/:id/attachments',
-};
-
 export const AUTH_BASE = '/api/v1/auth';
 export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
 export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
-export const AUTH_BASE_YIVI = `${AUTH_BASE}/yivi`;
 
 export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
 export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
@@ -359,14 +355,13 @@ export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT}`;
 export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK}`;
 
 export const BFF_OIDC_BASE_URL = `${
-  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn-bff.amsterdam.nl'
+  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn.amsterdam.nl'
 }`;
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
 
 export const BffEndpoints = {
   ROOT: '/',
-  API_RELAY: '/relay',
   SERVICES_ALL: '/services/all',
   SERVICES_TIPS: '/services/tips',
   SERVICES_STREAM: '/services/stream',
@@ -385,19 +380,28 @@ export const BffEndpoints = {
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // Stadspas
-  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
+
+  // Vergunningen
+  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
+  VERGUNNINGEN_DOCUMENT_DOWNLOAD:
+    '/services/vergunningen/documents/download/:id',
+
+  // MKS bewoners
+  MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
+
+  // WPI Document download
+  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
 
   // WMO / Zorgned
-  WMO_DOCUMENT_DOWNLOAD: `/relay/wmoned/document/:id`,
+  WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
+
+  // AV / Zorgned
+  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
-
-  // Signalen endpoints
-  SIA_ATTACHMENTS: '/services/signals/:id/attachments',
-  SIA_HISTORY: '/services/signals/:id/history',
-  SIA_LIST: '/services/signals/:status/:page',
 
   // Bezwaren
   BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document/:id',
@@ -407,13 +411,16 @@ export const BffEndpoints = {
   ERFPACHTv2_DOSSIER_DETAILS:
     '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
 
+  // Toeristische verhuur / Bed & Breakfast
+  TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
+    '/services/toeristische-verhuur/bb/document/:docIdEncrypted',
+
   // start: OIDC config
   AUTH_BASE_DIGID,
   AUTH_BASE_EHERKENNING,
   AUTH_BASE_SSO,
   AUTH_BASE_SSO_DIGID,
   AUTH_BASE_SSO_EHERKENNING,
-  AUTH_BASE_YIVI,
 
   // Digid
   AUTH_CALLBACK_DIGID: BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
@@ -431,21 +438,13 @@ export const BffEndpoints = {
   AUTH_LOGOUT_EHERKENNING_LOCAL:
     AUTH_BASE_EHERKENNING + `${AUTH_LOGOUT}/local-session`,
 
-  // YIVI
-  AUTH_CALLBACK_YIVI: BFF_OIDC_BASE_URL + AUTH_BASE_YIVI + AUTH_CALLBACK,
-  AUTH_LOGIN_YIVI: AUTH_BASE_YIVI + AUTH_LOGIN,
-  AUTH_LOGIN_YIVI_LANDING: AUTH_BASE_YIVI + AUTH_LOGIN + '/landing',
-  AUTH_LOGOUT_YIVI: AUTH_BASE_YIVI + AUTH_LOGOUT,
-
   // Application specific urls
   AUTH_CHECK: `${AUTH_BASE}/check`,
   AUTH_CHECK_EHERKENNING: `${AUTH_BASE_EHERKENNING}/check`,
   AUTH_CHECK_DIGID: `${AUTH_BASE_DIGID}/check`,
-  AUTH_CHECK_YIVI: `${AUTH_BASE_YIVI}/check`,
   AUTH_TOKEN_DATA: `${AUTH_BASE}/token-data`,
   AUTH_TOKEN_DATA_EHERKENNING: `${AUTH_BASE_EHERKENNING}/token-data`,
   AUTH_TOKEN_DATA_DIGID: `${AUTH_BASE_DIGID}/token-data`,
-  AUTH_TOKEN_DATA_YIVI: `${AUTH_BASE_YIVI}/token-data`,
   AUTH_LOGOUT: `${AUTH_BASE}/logout`,
   // end: OIDC config
   // Bodem / loodmetingen
@@ -520,12 +519,6 @@ export const oidcConfigEherkenning: ConfigParams = {
   clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
 };
 
-export const oidcConfigYivi: ConfigParams = {
-  ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_YIVI,
-  authorizationParams: { prompt: 'login', max_age: 0, response_type: 'code' },
-};
-
 // Op 1.13 met ketenmachtiging
 export const EH_ATTR_INTERMEDIATE_PRIMARY_ID =
   'urn:etoegang:core:LegalSubjectID';
@@ -540,7 +533,6 @@ export const EH_ATTR_PRIMARY_ID_LEGACY =
   'urn:etoegang:1.9:EntityConcernedID:KvKnr';
 
 export const DIGID_ATTR_PRIMARY = 'sub';
-export const YIVI_ATTR_PRIMARY = 'sub';
 
 export const OIDC_TOKEN_ID_ATTRIBUTE = {
   eherkenning: (tokenData: TokenData) => {
@@ -561,24 +553,20 @@ export const OIDC_TOKEN_ID_ATTRIBUTE = {
     return EH_ATTR_PRIMARY_ID_LEGACY;
   },
   digid: () => DIGID_ATTR_PRIMARY,
-  yivi: () => YIVI_ATTR_PRIMARY,
 };
 
 export type TokenIdAttribute =
   | typeof DIGID_ATTR_PRIMARY
-  | typeof EH_ATTR_PRIMARY_ID
-  | typeof YIVI_ATTR_PRIMARY;
+  | typeof EH_ATTR_PRIMARY_ID;
 
 export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   eherkenning: EH_ATTR_PRIMARY_ID,
   digid: DIGID_ATTR_PRIMARY,
-  yivi: YIVI_ATTR_PRIMARY,
 };
 
 export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType[]> = {
   digid: ['private'],
   eherkenning: ['commercial'],
-  yivi: ['private-attributes'],
 };
 
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
@@ -587,9 +575,6 @@ export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   },
   get digid() {
     return oidcConfigDigid.clientID;
-  },
-  get yivi() {
-    return oidcConfigYivi.clientID;
   },
 };
 

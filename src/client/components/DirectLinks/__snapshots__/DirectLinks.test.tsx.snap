@@ -32,6 +32,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -41,9 +42,6 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -65,6 +63,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -74,9 +73,6 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -98,6 +94,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -107,9 +104,6 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -131,6 +125,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -140,9 +135,6 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -164,6 +156,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -173,9 +166,6 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -197,6 +187,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -206,9 +197,6 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -259,6 +247,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -268,9 +257,6 @@ exports[`<DirectLinks /> > renders private links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -292,6 +278,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -301,9 +288,6 @@ exports[`<DirectLinks /> > renders private links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -325,6 +309,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -334,9 +319,6 @@ exports[`<DirectLinks /> > renders private links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -358,6 +340,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -367,9 +350,6 @@ exports[`<DirectLinks /> > renders private links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -391,6 +371,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -400,9 +381,6 @@ exports[`<DirectLinks /> > renders private links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"
@@ -424,6 +402,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="externe-link-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -433,9 +412,6 @@ exports[`<DirectLinks /> > renders private links 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              externe-link-icoon
-            </title>
             <g
               fill-rule="evenodd"
               stroke="none"

@@ -1,0 +1,248 @@
+{
+  "status": "OK",
+  "content": [
+    {
+      "id": "966d872b686bbf363f5ac78f8bad9fc6",
+      "title": "Bijstandsuitkering",
+      "about": "Bijstandsuitkering",
+      "statusId": "besluit",
+      "decision": "afwijzing",
+      "datePublished": "2017-08-21T15:05:52+02:00",
+      "dateStart": "2017-08-17T15:05:52+02:00",
+      "dateEnd": "2017-08-21T15:05:52+02:00",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [],
+          "datePublished": "2017-08-17T15:05:52+02:00"
+        },
+        {
+          "id": "inBehandeling",
+          "status": "In behandeling",
+          "documents": [],
+          "datePublished": "2017-08-17T15:05:52+02:00",
+          "dateDecisionExpected": "2017-10-05T15:05:52+02:00"
+        },
+        {
+          "id": "herstelTermijn",
+          "status": "Meer informatie",
+          "documents": [
+            {
+              "id": "4400000007",
+              "title": "Formulier Inlichtingen Klant",
+              "url": "https://example.com/wpi/document?id=4400000007&isBulk=True&isDms=False",
+              "datePublished": "2017-08-18T15:05:52+02:00"
+            },
+            {
+              "id": "4400000010",
+              "title": "Formulier Inlichtingen partner",
+              "url": "https://example.com/wpi/document?id=4400000010&isBulk=True&isDms=False",
+              "datePublished": "2017-08-18T15:05:52+02:00"
+            },
+            {
+              "id": "4400000008",
+              "title": "Aanvraagformulier WWB (kort)",
+              "url": "https://example.com/wpi/document?id=4400000008&isBulk=True&isDms=False",
+              "datePublished": "2017-08-18T15:05:52+02:00"
+            }
+          ],
+          "datePublished": "2017-08-18T15:05:52+02:00",
+          "dateDecisionExpected": "2017-10-15T15:05:52+02:00",
+          "dateUserFeedbackExpected": "2017-08-27T15:05:52+02:00"
+        },
+        {
+          "id": "besluit",
+          "status": "Besluit",
+          "documents": [],
+          "datePublished": "2017-08-21T15:05:52+02:00",
+          "decision": "afwijzing"
+        }
+      ]
+    },
+    {
+      "id": "312e470327f8fd195d3869c45ffd041e",
+      "title": "Bijstandsuitkering",
+      "about": "Bijstandsuitkering",
+      "statusId": "besluit",
+      "decision": "toekenning",
+      "datePublished": "2018-04-25T15:05:52+02:00",
+      "dateStart": "2018-03-25T15:05:52+02:00",
+      "dateEnd": "2018-04-25T15:05:52+02:00",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [],
+          "datePublished": "2018-03-25T15:05:52+02:00"
+        },
+        {
+          "id": "inBehandeling",
+          "status": "In behandeling",
+          "documents": [],
+          "datePublished": "2018-03-26T15:05:52+02:00",
+          "dateDecisionExpected": "2018-05-13T15:05:52+02:00"
+        },
+        {
+          "id": "herstelTermijn",
+          "status": "Meer informatie",
+          "documents": [
+            {
+              "id": "4400000011",
+              "title": "Formulier Inlichtingen partner",
+              "url": "https://example.com/wpi/document?id=4400000011&isBulk=True&isDms=False",
+              "datePublished": "2018-04-24T15:05:52+02:00"
+            }
+          ],
+          "datePublished": "2018-04-24T15:05:52+02:00",
+          "dateDecisionExpected": "2018-05-23T15:05:52+02:00",
+          "dateUserFeedbackExpected": "2018-04-04T15:05:52+02:00"
+        },
+        {
+          "id": "besluit",
+          "status": "Besluit",
+          "documents": [],
+          "datePublished": "2018-04-25T15:05:52+02:00",
+          "decision": "toekenning"
+        }
+      ]
+    },
+    {
+      "id": "d14956153a92128ae7feceabe0775537",
+      "title": "Bijstandsuitkering",
+      "about": "Bijstandsuitkering",
+      "statusId": "aanvraag",
+      "decision": null,
+      "datePublished": "2019-05-31T15:05:52+02:00",
+      "dateStart": "2019-05-31T15:05:52+02:00",
+      "dateEnd": null,
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [],
+          "datePublished": "2019-05-31T15:05:52+02:00"
+        }
+      ]
+    },
+    {
+      "id": "51918e8b948742c8b25e97889b2f07b1",
+      "title": "Stadspas",
+      "about": "Stadspas",
+      "statusId": "besluit",
+      "decision": "afwijzing",
+      "datePublished": "2019-04-28T00:00:00+02:00",
+      "dateStart": "2019-04-08T15:05:52+02:00",
+      "dateEnd": "2019-04-28T00:00:00+02:00",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [],
+          "datePublished": "2019-04-08T15:05:52+02:00"
+        },
+        {
+          "id": "inBehandeling",
+          "status": "In behandeling",
+          "documents": [],
+          "datePublished": "2019-04-10T15:05:52+02:00",
+          "dateDecisionExpected": "2019-06-03T15:05:52+02:00"
+        },
+        {
+          "id": "besluit",
+          "status": "Besluit",
+          "documents": [],
+          "datePublished": "2019-04-28T00:00:00+02:00",
+          "decision": "afwijzing"
+        }
+      ]
+    },
+    {
+      "id": "a66eb50acbe6cb38283cf4fcb5c8af21",
+      "title": "Stadspas",
+      "about": "Stadspas",
+      "statusId": "besluit",
+      "decision": "toekenning",
+      "datePublished": "2022-06-07T15:05:52+02:00",
+      "dateStart": "2022-05-08T15:05:52+02:00",
+      "dateEnd": "2022-06-07T15:05:52+02:00",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [
+            {
+              "id": "4400000013",
+              "title": "Aanvraag Stadspas (balie)",
+              "url": "https://example.com/wpi/document?id=4400000013&isBulk=True&isDms=False",
+              "datePublished": "2022-05-08T15:05:52+02:00"
+            }
+          ],
+          "datePublished": "2022-05-08T15:05:52+02:00"
+        },
+        {
+          "id": "inBehandeling",
+          "status": "In behandeling",
+          "documents": [],
+          "datePublished": "2022-05-10T15:05:52+02:00",
+          "dateDecisionExpected": "2022-07-03T15:05:52+02:00"
+        },
+        {
+          "id": "herstelTermijn",
+          "status": "Meer informatie",
+          "documents": [],
+          "datePublished": "2022-05-17T15:05:52+02:00",
+          "dateDecisionExpected": "2022-07-23T15:05:52+02:00",
+          "dateUserFeedbackExpected": "2022-05-28T15:05:52+02:00"
+        },
+        {
+          "id": "besluit",
+          "status": "Besluit",
+          "documents": [],
+          "datePublished": "2022-06-07T15:05:52+02:00",
+          "decision": "toekenning"
+        }
+      ]
+    },
+    {
+      "id": "92a210e56af0124f32296c3d4e33112e",
+      "title": "Stadspas",
+      "about": "Stadspas",
+      "statusId": "herstelTermijn",
+      "decision": null,
+      "datePublished": "2022-06-23T15:05:53+02:00",
+      "dateStart": "2022-06-08T15:05:53+02:00",
+      "dateEnd": "2022-06-23T15:05:53+02:00",
+      "steps": [
+        {
+          "id": "aanvraag",
+          "status": "Aanvraag",
+          "documents": [
+            {
+              "id": "4400000014",
+              "title": "Aanvraag Stadspas (digitaal)",
+              "url": "https://example.com/wpi/document?id=4400000014&isBulk=True&isDms=False",
+              "datePublished": "2022-06-08T15:05:53+02:00"
+            }
+          ],
+          "datePublished": "2022-06-08T15:05:53+02:00"
+        },
+        {
+          "id": "inBehandeling",
+          "status": "In behandeling",
+          "documents": [],
+          "datePublished": "2022-06-11T15:05:53+02:00",
+          "dateDecisionExpected": "2022-08-03T15:05:53+02:00"
+        },
+        {
+          "id": "herstelTermijn",
+          "status": "Meer informatie",
+          "documents": [],
+          "datePublished": "2022-06-13T15:05:53+02:00",
+          "dateDecisionExpected": "2022-08-18T15:05:53+02:00",
+          "dateUserFeedbackExpected": "2022-06-23T15:05:53+02:00"
+        }
+      ]
+    }
+  ]
+}

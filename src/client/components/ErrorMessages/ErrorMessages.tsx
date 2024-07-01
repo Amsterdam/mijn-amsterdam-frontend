@@ -76,6 +76,25 @@ export default function ErrorMessages({
       <Modal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
+        actions={
+          <div>
+            <p>
+              Probeer het later nog eens.{' '}
+              {isAllErrorMessage ? (
+                <LinkdInline
+                  external={true}
+                  role="button"
+                  onClick={() => session.logout()}
+                >
+                  Uitloggen
+                </LinkdInline>
+              ) : (
+                ''
+              )}
+            </p>
+            <Button onClick={() => setModalOpen(false)}>OK</Button>
+          </div>
+        }
         title={title}
         contentVerticalPosition={el.current ? Math.max(top, 0) : 'center'}
       >
@@ -90,21 +109,6 @@ export default function ErrorMessages({
               );
             })}
           </ul>
-          <p>
-            Probeer het later nog eens.{' '}
-            {isAllErrorMessage ? (
-              <LinkdInline
-                external={true}
-                role="button"
-                onClick={() => session.logout()}
-              >
-                Uitloggen
-              </LinkdInline>
-            ) : (
-              ''
-            )}
-          </p>
-          <Button onClick={() => setModalOpen(false)}>OK</Button>
         </div>
       </Modal>
     </div>

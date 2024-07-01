@@ -3,7 +3,7 @@
 # Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:20-bookworm as updated-local
+FROM node:22-bookworm as updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -29,6 +29,7 @@ COPY package-lock.json /build-space/
 COPY package.json /build-space/
 COPY vite.config.ts /build-space/
 COPY vendor /build-space/vendor
+COPY mocks/fixtures /build-space/mocks/fixtures
 
 # Install the dependencies
 RUN npm ci --prefer-offline --no-audit --progress=false
@@ -186,4 +187,3 @@ RUN apt-get install -y --no-install-recommends openssh-server \
 
 # SSH config
 COPY conf/sshd_config /etc/ssh/
-COPY files /app/files

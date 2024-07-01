@@ -31,7 +31,6 @@ import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
 import { fetchProfile } from './profile';
-import { fetchSignals } from './sia';
 import {
   fetchBelasting,
   fetchMilieuzone,
@@ -40,7 +39,7 @@ import {
 } from './simple-connect';
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
-import { fetchStadspas } from './stadspas/stadspas';
+import { fetchStadspas } from './hli/stadspas';
 import {
   fetchTipsAndNotifications,
   sortNotifications,
@@ -50,7 +49,7 @@ import {
   createTipsFromServiceResults,
   prefixTipNotification,
 } from './tips/tips-service';
-import { fetchToeristischeVerhuur } from './toeristische-verhuur';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {
@@ -60,6 +59,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import { fetchHLI } from './hli/hli';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -99,6 +99,7 @@ const WPI_TOZO = callService(fetchTozo);
 const WPI_TONK = callService(fetchTonk);
 const WPI_BBZ = callService(fetchBbz);
 const STADSPAS = callService(fetchStadspas);
+const HLI = callService(fetchHLI);
 const SVWI = callService(fetchSVWI);
 
 const WMO = callService(fetchWmo);
@@ -139,7 +140,6 @@ const ERFPACHTv2 = callService(fetchErfpachtV2);
 const SUBSIDIE = callService(fetchSubsidie);
 const KLACHTEN = callService(fetchAllKlachten);
 const BEZWAREN = callService(fetchBezwaren);
-const SIA = callService(fetchSignals);
 const PROFILE = callService(fetchProfile);
 const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
@@ -176,53 +176,48 @@ export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
+  AFVAL,
+  AFVALPUNTEN,
+  AVG,
+  BELASTINGEN,
+  BEZWAREN,
+  BODEM,
   BRP,
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
-  KVK,
-  KREFIA,
-  WPI_AANVRAGEN,
-  WPI_SPECIFICATIES,
-  WPI_TOZO,
-  WPI_TONK,
-  WPI_BBZ,
-  STADSPAS,
-  SVWI,
-  WMO,
-  VERGUNNINGEN,
-  MY_LOCATION,
-  AFVAL,
-  AFVALPUNTEN,
-  BELASTINGEN,
-  MILIEUZONE,
-  OVERTREDINGEN,
-  TOERISTISCHE_VERHUUR,
   ERFPACHT,
   ERFPACHTv2,
-  SUBSIDIE,
-  KLACHTEN,
-  BEZWAREN,
-  NOTIFICATIONS,
-  PROFILE,
+  HLI,
   HORECA,
-  SIA,
-  AVG,
-  BODEM,
-};
+  KLACHTEN,
+  KREFIA,
+  KVK,
+  MILIEUZONE,
+  MY_LOCATION,
+  NOTIFICATIONS,
+  OVERTREDINGEN,
+  PROFILE,
+  STADSPAS,
+  SUBSIDIE,
+  SVWI,
+  TOERISTISCHE_VERHUUR,
+  VERGUNNINGEN,
+  WMO,
+  WPI_AANVRAGEN,
+  WPI_BBZ,
+  WPI_SPECIFICATIES,
+  WPI_TONK,
+  WPI_TOZO,};
 
 export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = Omit<ServicesType, 'PROFILE' | 'SIA'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE'>;
 
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
-  | 'CMS_CONTENT'
-  | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'NOTIFICATIONS'
-  | 'PROFILE'
-  | 'SIA'
+  'CMS_CONTENT' | 'CMS_MAINTENANCE_NOTIFICATIONS' | 'NOTIFICATIONS' | 'PROFILE'
 >;
 
 type CommercialServices = Pick<
@@ -256,60 +251,60 @@ export const servicesByProfileType: ServicesByProfileType = {
   private: {
     AFVAL,
     AFVALPUNTEN,
+    AVG,
+    BELASTINGEN,
+    BEZWAREN,
+    BODEM,
     BRP,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     ERFPACHTv2,
+    HLI,
+    HORECA,
+    KLACHTEN,
     KREFIA,
-    WPI_AANVRAGEN,
-    WPI_SPECIFICATIES,
-    WPI_TOZO,
-    WPI_BBZ,
-    WPI_TONK,
-    STADSPAS,
-    SVWI,
-    NOTIFICATIONS,
-    MY_LOCATION,
     KVK,
     MILIEUZONE,
+    MY_LOCATION,
+    NOTIFICATIONS,
     OVERTREDINGEN,
-    TOERISTISCHE_VERHUUR,
+    STADSPAS,
     SUBSIDIE,
+    SVWI,
+    TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
     WMO,
-    KLACHTEN,
-    BEZWAREN,
-    BELASTINGEN,
-    HORECA,
-    AVG,
-    BODEM,
+    WPI_AANVRAGEN,
+    WPI_BBZ,
+    WPI_SPECIFICATIES,
+    WPI_TONK,
+    WPI_TOZO,
   },
   'private-attributes': {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     NOTIFICATIONS,
     PROFILE,
-    SIA,
   },
   commercial: {
     AFVAL,
     AFVALPUNTEN,
+    BEZWAREN,
+    BODEM,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     ERFPACHTv2,
-    NOTIFICATIONS,
-    MY_LOCATION,
+    HORECA,
     KVK,
     MILIEUZONE,
+    MY_LOCATION,
+    NOTIFICATIONS,
     OVERTREDINGEN,
-    TOERISTISCHE_VERHUUR,
     SUBSIDIE,
+    TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
-    HORECA,
-    BODEM,
-    BEZWAREN,
   },
 };
 

@@ -1,17 +1,5 @@
-import { generatePath } from 'react-router-dom';
-import { differenceInMonths } from 'date-fns';
 import FormData from 'form-data';
-import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../helpers/app';
-import {
-  Lood365Response,
-  LoodMeting,
-  LoodMetingDocument,
-  LoodMetingRequestsSource,
-  LoodMetingen,
-} from './types';
+import { generatePath } from 'react-router-dom';
 import { AppRoutes, Themas } from '../../../universal/config';
 import {
   apiDependencyError,
@@ -19,7 +7,18 @@ import {
   apiSuccessResult,
   sortAlpha,
 } from '../../../universal/helpers';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
+import { BffEndpoints, getApiConfig } from '../../config';
+import { requestData } from '../../helpers';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import {
+  Lood365Response,
+  LoodMeting,
+  LoodMetingDocument,
+  LoodMetingRequestsSource,
+  LoodMetingen,
+} from './types';
 
 import { captureException } from '../monitoring';
 
@@ -80,12 +79,12 @@ function transformLood365Response(response: Lood365Response): LoodMetingen {
               ? {
                   title: 'Rapport Lood in de bodem-check',
                   id: location.Workorderid,
-                  url: `${process.env.BFF_OIDC_BASE_URL}${generatePath(
-                    `${BFF_BASE_PATH}${BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD}`,
+                  url: generateFullApiUrlBFF(
+                    BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
                     {
                       id: location.Workorderid,
                     }
-                  )}`,
+                  ),
                   datePublished: location.Reportsenton,
                 }
               : null,

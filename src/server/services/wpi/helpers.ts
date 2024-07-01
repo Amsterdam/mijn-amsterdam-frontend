@@ -11,6 +11,8 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
+import { generateFullApiUrlBFF } from '../../helpers/app';
+import { BffEndpoints } from '../../config';
 
 export function transformToStatusLine(
   requestProcess: WpiRequestProcess,
@@ -44,9 +46,22 @@ export function addApiBasePathToDocumentUrls(
   documents: GenericDocument[]
 ): GenericDocument[] {
   return documents.map((document) => {
+    const sourceUrl = new URL(
+      document.url.startsWith('http')
+        ? document.url
+        : `http://example.com${document.url}`
+    );
+    const url = new URL(
+      generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD)
+    );
+
+    for (const [key, val] of sourceUrl.searchParams) {
+      url.searchParams.append(key, val);
+    }
+
     return {
       ...document,
-      url: document.url,
+      url: url.toString(),
     };
   });
 }
@@ -71,7 +86,7 @@ export function createProcessNotification(
       : `Update: ${requestProcess.about} aanvraag.`,
     description: descriptionTransform
       ? descriptionTransform(requestProcess, statusStep)
-      : `U hebt updates over uw ${
+      : `U heeft updates over uw ${
           statusStep.about || requestProcess.about
         }-aanvraag.`,
 

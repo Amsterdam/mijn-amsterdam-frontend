@@ -1,0 +1,843 @@
+{
+  "content": [
+    {
+      "about": "Tozo 1",
+      "dateEnd": "2020-05-11T17:20:04+02:00",
+      "datePublished": "2020-05-11T17:20:04+02:00",
+      "dateStart": "2020-04-01T17:20:04+02:00",
+      "decision": "toekenning",
+      "id": "c3e7f16357066f0de5383517bfa6b910",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2020-04-01T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-04-01T17:20:04+02:00",
+              "dcteId": "770",
+              "id": "4400000031",
+              "title": "Aanvraag Tozo 1\n01 april 2020 17:20",
+              "url": "https://example.com/wpi/document?id=4400000031&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2020-04-08T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-04-08T17:20:04+02:00",
+              "dcteId": "175296",
+              "id": "660000000000042",
+              "title": "Brief betaling voorschot",
+              "url": "https://example.com/wpi/document?id=660000000000042&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "voorschot",
+          "status": "Voorschot"
+        },
+        {
+          "datePublished": "2020-05-11T17:20:04+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2020-05-11T17:20:04+02:00",
+              "dcteId": "175303",
+              "id": "660000000000043",
+              "title": "Besluit toekenning uitkering",
+              "url": "https://example.com/wpi/document?id=660000000000043&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        }
+      ],
+      "title": "Tozo 1 (aangevraagd voor 1 juni 2020)"
+    },
+    {
+      "about": "Tozo 2",
+      "dateEnd": "2020-06-25T17:20:04+02:00",
+      "datePublished": "2020-06-25T17:20:04+02:00",
+      "dateStart": "2020-06-09T17:20:04+02:00",
+      "decision": "afwijzing",
+      "id": "3b69a75c48f6f16380e82361116675b6",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2020-06-09T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-06-09T17:20:04+02:00",
+              "dcteId": "777",
+              "id": "4400000065",
+              "title": "Aanvraag Tozo 2\n09 juni 2020 17:20",
+              "url": "https://example.com/wpi/document?id=4400000065&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2020-06-16T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-06-16T17:20:04+02:00",
+              "dcteId": "175346",
+              "id": "660000000000044",
+              "title": "Brief betaling voorschot",
+              "url": "https://example.com/wpi/document?id=660000000000044&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "voorschot",
+          "status": "Voorschot"
+        },
+        {
+          "datePublished": "2020-06-17T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-06-17T17:20:04+02:00",
+              "dcteId": "175340",
+              "id": "660000000000072",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000072&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2020-06-18T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-06-18T17:20:04+02:00",
+              "dcteId": "175340",
+              "id": "660000000000073",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000073&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2020-06-24T17:20:04+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2020-06-24T17:20:04+02:00",
+              "dcteId": "175336",
+              "id": "660000000000045",
+              "title": "Besluit toekenning uitkering",
+              "url": "https://example.com/wpi/document?id=660000000000045&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2020-06-25T17:20:04+02:00",
+          "decision": "afwijzing",
+          "documents": [
+            {
+              "datePublished": "2020-06-25T17:20:04+02:00",
+              "dcteId": "175337",
+              "id": "660000000000074",
+              "title": "Besluit afwijzing",
+              "url": "https://example.com/wpi/document?id=660000000000074&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
+        }
+      ],
+      "title": "Tozo 2 (aangevraagd vanaf 1 juni 2020)"
+    },
+    {
+      "about": "Tozo 3",
+      "dateEnd": "2020-10-20T17:20:04+02:00",
+      "datePublished": "2020-10-20T17:20:04+02:00",
+      "dateStart": "2020-10-08T17:20:04+02:00",
+      "decision": "afwijzing",
+      "id": "f2610a1b3e9ecc40feeda204ed72ec62",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2020-10-08T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-10-08T17:20:04+02:00",
+              "dcteId": "785",
+              "id": "4400000058",
+              "title": "Aanvraag Tozo 3\n08 oktober 2020 17:20",
+              "url": "https://example.com/wpi/document?id=4400000058&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2020-10-11T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-10-11T17:20:04+02:00",
+              "dcteId": "175307",
+              "id": "660000000000082",
+              "title": "Brief betaling voorschot",
+              "url": "https://example.com/wpi/document?id=660000000000082&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "voorschot",
+          "status": "Voorschot"
+        },
+        {
+          "datePublished": "2020-10-14T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-10-14T17:20:04+02:00",
+              "dcteId": "175310",
+              "id": "660000000000083",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000083&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2020-10-15T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2020-10-15T17:20:04+02:00",
+              "dcteId": "175310",
+              "id": "660000000000084",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000084&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2020-10-19T17:20:04+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2020-10-19T17:20:04+02:00",
+              "dcteId": "175309",
+              "id": "660000000000085",
+              "title": "Besluit toekenning uitkering",
+              "url": "https://example.com/wpi/document?id=660000000000085&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2020-10-20T17:20:04+02:00",
+          "decision": "afwijzing",
+          "documents": [
+            {
+              "datePublished": "2020-10-20T17:20:04+02:00",
+              "dcteId": "175364",
+              "id": "660000000000086",
+              "title": "Besluit afwijzing",
+              "url": "https://example.com/wpi/document?id=660000000000086&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
+        }
+      ],
+      "title": "Tozo 3 (aangevraagd vanaf 1 oktober 2020)"
+    },
+    {
+      "about": "Tozo 4",
+      "dateEnd": "2021-04-13T18:53:05+02:00",
+      "datePublished": "2021-04-13T18:53:05+02:00",
+      "dateStart": "2021-04-03T18:53:05+02:00",
+      "decision": "afwijzing",
+      "id": "c4c47bde17798d0604c132b44f35bc6a",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2021-04-03T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-04-03T18:53:05+02:00",
+              "dcteId": "800",
+              "id": "4400000117",
+              "title": "Aanvraag Tozo 4\n03 april 2021 18:53",
+              "url": "https://example.com/wpi/document?id=4400000117&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-04-05T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-04-05T18:53:05+02:00",
+              "dcteId": "175657",
+              "id": "660000000000007",
+              "title": "Brief betaling voorschot",
+              "url": "https://example.com/wpi/document?id=660000000000007&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "voorschot",
+          "status": "Voorschot"
+        },
+        {
+          "datePublished": "2021-04-07T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-04-07T18:53:05+02:00",
+              "dcteId": "175689",
+              "id": "660000000000016",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000016&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-04-09T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-04-09T18:53:05+02:00",
+              "dcteId": "175689",
+              "id": "660000000000017",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000017&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-04-11T18:53:05+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2021-04-11T18:53:05+02:00",
+              "dcteId": "175654",
+              "id": "660000000000018",
+              "title": "Besluit toekenning uitkering",
+              "url": "https://example.com/wpi/document?id=660000000000018&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2021-04-13T18:53:05+02:00",
+          "decision": "afwijzing",
+          "documents": [
+            {
+              "datePublished": "2021-04-13T18:53:05+02:00",
+              "dcteId": "175651",
+              "id": "660000000000019",
+              "title": "Besluit afwijzing",
+              "url": "https://example.com/wpi/document?id=660000000000019&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
+        }
+      ],
+      "title": "Tozo 4 (aangevraagd vanaf 1 april 2021)"
+    },
+    {
+      "about": "Tozo 5",
+      "dateEnd": "2021-07-13T18:53:05+02:00",
+      "datePublished": "2021-07-13T18:53:05+02:00",
+      "dateStart": "2021-07-03T18:53:05+02:00",
+      "decision": "afwijzing",
+      "id": "e89b22f64ab2b9a6330c8ea370b8556f",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2021-07-03T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-07-03T18:53:05+02:00",
+              "dcteId": "837",
+              "id": "4400000015",
+              "title": "Aanvraag Tozo 5\n03 juli 2021 18:53",
+              "url": "https://example.com/wpi/document?id=4400000015&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-07-05T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-07-05T18:53:05+02:00",
+              "dcteId": "1725657",
+              "id": "660000000000029",
+              "title": "Brief betaling voorschot",
+              "url": "https://example.com/wpi/document?id=660000000000029&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "voorschot",
+          "status": "Voorschot"
+        },
+        {
+          "datePublished": "2021-07-07T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-07-07T18:53:05+02:00",
+              "dcteId": "176164",
+              "id": "660000000000030",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000030&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-07-09T18:53:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-07-09T18:53:05+02:00",
+              "dcteId": "176164",
+              "id": "660000000000033",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000033&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-07-11T18:53:05+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2021-07-11T18:53:05+02:00",
+              "dcteId": "176167",
+              "id": "660000000000034",
+              "title": "Besluit toekenning uitkering",
+              "url": "https://example.com/wpi/document?id=660000000000034&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2021-07-13T18:53:05+02:00",
+          "decision": "afwijzing",
+          "documents": [
+            {
+              "datePublished": "2021-07-13T18:53:05+02:00",
+              "dcteId": "176165",
+              "id": "660000000000035",
+              "title": "Besluit afwijzing",
+              "url": "https://example.com/wpi/document?id=660000000000035&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
+        }
+      ],
+      "title": "Tozo 5 (aangevraagd vanaf 1 juli 2021)"
+    },
+    {
+      "about": "TONK",
+      "dateEnd": "2021-07-20T17:20:04+02:00",
+      "datePublished": "2021-07-20T17:20:04+02:00",
+      "dateStart": "2021-01-02T17:20:04+01:00",
+      "decision": "verlenging",
+      "id": "dcf9ac79cb54f43fc4cf64111aa3545e",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2021-01-02T17:20:04+01:00",
+          "documents": [
+            {
+              "datePublished": "2021-01-02T17:20:04+01:00",
+              "dcteId": "802",
+              "id": "4400000091",
+              "title": "Aanvraag TONK\n02 januari 2021 17:20",
+              "url": "https://example.com/wpi/document?id=4400000091&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "productSpecific": "uitkering",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-01-04T17:20:04+01:00",
+          "documents": [
+            {
+              "datePublished": "2021-01-04T17:20:04+01:00",
+              "dcteId": "176137",
+              "id": "660000000000492",
+              "title": "Brief meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000000492&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "productSpecific": "uitkering",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-01-06T17:20:04+01:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2021-01-06T17:20:04+01:00",
+              "dcteId": "176156",
+              "id": "660000000000493",
+              "title": "Besluit toekenning uitkering",
+              "url": "https://example.com/wpi/document?id=660000000000493&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2021-07-20T17:20:04+02:00",
+          "decision": "verlenging",
+          "documents": [
+            {
+              "datePublished": "2021-07-20T17:20:04+02:00",
+              "dcteId": "176180",
+              "id": "660000000010180",
+              "title": "Besluit verlenging",
+              "url": "https://example.com/wpi/document?id=660000000010180&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        }
+      ],
+      "title": "TONK"
+    },
+    {
+      "about": "Bbz",
+      "dateEnd": "2022-04-08T18:20:04+02:00",
+      "datePublished": "2022-04-08T18:20:04+02:00",
+      "dateStart": "2022-04-01T18:20:04+02:00",
+      "decision": "buitenBehandeling",
+      "id": "f8d271f0a006d95217cc99a0d3b4db33",
+      "statusId": "besluit",
+      "steps": [
+        {
+          "datePublished": "2022-04-01T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-01T18:20:04+02:00",
+              "dcteId": "853",
+              "id": "4400000174",
+              "title": "Bbz aanvraag\n01 april 2022 18:20",
+              "url": "https://example.com/wpi/document?id=4400000174&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2022-04-02T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-02T18:20:04+02:00",
+              "dcteId": "175885",
+              "id": "660000000010268",
+              "title": "Brief betaling voorschot",
+              "url": "https://example.com/wpi/document?id=660000000010268&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "voorschot",
+          "status": "Voorschot"
+        },
+        {
+          "datePublished": "2022-04-03T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-03T18:20:04+02:00",
+              "dcteId": "175863",
+              "id": "660000000010269",
+              "title": "Brief aanvraag adviesrapport",
+              "url": "https://example.com/wpi/document?id=660000000010269&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "briefAdviesRapport",
+          "status": "Brief"
+        },
+        {
+          "datePublished": "2022-04-04T18:20:04+02:00",
+          "decision": "afwijzing",
+          "documents": [
+            {
+              "datePublished": "2022-04-04T18:20:04+02:00",
+              "dcteId": "1735802",
+              "id": "660000000010270",
+              "title": "Besluit afwijzing",
+              "url": "https://example.com/wpi/document?id=660000000010270&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-04-05T18:20:04+02:00",
+          "decision": "toekenning",
+          "documents": [
+            {
+              "datePublished": "2022-04-05T18:20:04+02:00",
+              "dcteId": "1735840",
+              "id": "660000000010271",
+              "title": "Besluit toekenning",
+              "url": "https://example.com/wpi/document?id=660000000010271&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "productSpecific": "uitkering",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-04-06T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-06T18:20:04+02:00",
+              "dcteId": "175861",
+              "id": "660000000010272",
+              "title": "Brief intrekken Bbz aanvraag",
+              "url": "https://example.com/wpi/document?id=660000000010272&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "intrekking",
+          "status": "Brief"
+        },
+        {
+          "datePublished": "2022-04-07T18:20:04+02:00",
+          "decision": "buitenBehandeling",
+          "documents": [
+            {
+              "datePublished": "2022-04-07T18:20:04+02:00",
+              "dcteId": "175866",
+              "id": "660000000010273",
+              "title": "Besluit buiten behandeling",
+              "url": "https://example.com/wpi/document?id=660000000010273&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
+        },
+        {
+          "datePublished": "2022-04-08T18:20:04+02:00",
+          "decision": "buitenBehandeling",
+          "documents": [
+            {
+              "datePublished": "2022-04-08T18:20:04+02:00",
+              "dcteId": "1735866",
+              "id": "660000000010274",
+              "title": "Besluit buiten behandeling",
+              "url": "https://example.com/wpi/document?id=660000000010274&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit"
+        }
+      ],
+      "title": "Bbz"
+    },
+    {
+      "about": "Bbz",
+      "dateEnd": "2021-09-18T17:20:04+02:00",
+      "datePublished": "2023-06-05T17:20:04+02:00",
+      "dateStart": "2021-09-01T17:20:04+02:00",
+      "decision": "toekenning",
+      "id": "9748588bbdf6491845c9b6c2b13c8f28",
+      "statusId": "inkomstenwijziging",
+      "steps": [
+        {
+          "datePublished": "2021-09-01T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-01T17:20:04+02:00",
+              "dcteId": "844",
+              "id": "4400000138",
+              "title": "Aanvraag Bbz\n01 september 2021 17:20",
+              "url": "https://example.com/wpi/document?id=4400000138&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-09-05T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-05T17:20:04+02:00",
+              "dcteId": "175855",
+              "id": "660000000010196",
+              "title": "Brief verlenging beslistermijn",
+              "url": "https://example.com/wpi/document?id=660000000010196&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "beslisTermijn",
+          "status": "Tijd nodig"
+        },
+        {
+          "datePublished": "2021-09-07T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-07T17:20:04+02:00",
+              "dcteId": "176351",
+              "id": "660000000010197",
+              "title": "Brief verzoek om meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000010197&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2021-09-15T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-15T17:20:04+02:00",
+              "dcteId": "844",
+              "id": "4400000139",
+              "title": "Aanvraag Bbz\n15 september 2021 17:20",
+              "url": "https://example.com/wpi/document?id=4400000139&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "aanvraag",
+          "status": "Aanvraag"
+        },
+        {
+          "datePublished": "2021-09-15T18:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-15T18:20:04+02:00",
+              "dcteId": "851",
+              "id": "4400000160",
+              "title": "Wijziging inkomsten Bbz",
+              "url": "https://example.com/wpi/document?id=4400000160&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "inkomstenwijziging",
+          "status": "Wijziging inkomsten"
+        },
+        {
+          "about": "IOAZ",
+          "datePublished": "2021-09-16T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2021-09-16T17:20:04+02:00",
+              "dcteId": "176322",
+              "id": "660000000010198",
+              "title": "Brief verzoek om meer informatie",
+              "url": "https://example.com/wpi/document?id=660000000010198&isBulk=False&isDms=False"
+            }
+          ],
+          "id": "herstelTermijn",
+          "status": "Informatie nodig"
+        },
+        {
+          "datePublished": "2022-04-01T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2022-04-01T17:20:04+02:00",
+              "dcteId": "854",
+              "id": "4400000184",
+              "title": "Wijziging inkomsten Bbz",
+              "url": "https://example.com/wpi/document?id=4400000184&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "inkomstenwijziging",
+          "status": "Wijziging inkomsten"
+        },
+        {
+          "datePublished": "2023-05-15T17:20:04+02:00",
+          "documents": [
+            {
+              "datePublished": "2023-05-15T17:20:04+02:00",
+              "dcteId": "8544",
+              "id": "4400000186",
+              "title": "Bbz: informatie doorgeven",
+              "url": "https://example.com/wpi/document?id=4400000186&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "informatieOntvangen",
+          "status": "Informatie ontvangen"
+        },
+        {
+          "datePublished": "2023-05-30T17:20:05+02:00",
+          "documents": [
+            {
+              "datePublished": "2023-05-30T17:20:05+02:00",
+              "dcteId": "8544",
+              "id": "4400000185",
+              "title": "Mail Bbz",
+              "url": "https://example.com/wpi/document?id=4400000185&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "correctiemail",
+          "status": "Mail"
+        },
+        {
+          "datePublished": "2023-06-05T17:20:06+02:00",
+          "documents": [
+            {
+              "datePublished": "2023-06-05T17:20:06+02:00",
+              "dcteId": "8546",
+              "id": "4400000187",
+              "title": "Besluit definitieve berekening Bbz uitkering",
+              "url": "https://example.com/wpi/document?id=4400000187&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "besluit",
+          "status": "Besluit",
+          "decision": "beschikking"
+        },
+        {
+          "datePublished": "2023-07-28T17:20:06+02:00",
+          "documents": [
+            {
+              "datePublished": "2023-07-28T17:20:06+02:00",
+              "dcteId": "1538",
+              "id": "4400001187",
+              "title": "Bbz: informatie doorgeven",
+              "url": "https://example.com/wpi/document?id=4400000187&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "informatieOntvangen",
+          "status": "Informatie ontvangen"
+        },
+        {
+          "datePublished": "2023-12-03T17:20:06+02:00",
+          "documents": [
+            {
+              "datePublished": "2023-12-03T17:20:06+02:00",
+              "dcteId": "5641",
+              "id": "4400001198",
+              "title": "Brief Bbz",
+              "url": "https://example.com/wpi/document?id=4400001198&isBulk=True&isDms=False"
+            }
+          ],
+          "id": "algemeenBatchDocument",
+          "status": "Brief"
+        }
+      ],
+      "title": "Bbz"
+    }
+  ],
+  "status": "OK"
+}

@@ -1,0 +1,52 @@
+@import '../../styles/_global.scss';
+
+.Stadspas_owner {
+  color: var(--ams-link-color);
+  font-size: var(--ams-text-level-2-font-size);
+}
+
+.Stadspas_balance {
+  color: var(--ams-paragraph-color);
+  font-weight: var(--ams-paragraph-font-weight);
+  padding-left: 1rem;
+}
+
+.Stadspas_secondaryInfo {
+  font-size: var(--ams-text-level-6-font-size) !important;
+}
+
+@media screen and (min-width: $ams-breakpoint-medium) {
+  .HuidigeRegelingen {
+    tr {
+      > th,
+      > td {
+        &:nth-child(1) {
+          width: 60%;
+        }
+        &:nth-child(2) {
+          width: 40%;
+          white-space: break-spaces;
+        }
+      }
+    }
+  }
+
+  .EerdereRegelingen {
+    tr {
+      > th,
+      > td {
+        &:nth-child(1) {
+          width: 60%;
+        }
+        &:nth-child(2),
+        &:nth-child(3) {
+          width: 20%;
+        }
+      }
+    }
+  }
+}
+
+.Ontvanger {
+  white-space: break-spaces;
+}

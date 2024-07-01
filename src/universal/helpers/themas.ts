@@ -1,36 +1,36 @@
-import { ThemaMenuItem, Themas, FeatureToggle } from '../config';
 import { isLoading, isMokum } from '.';
 import type { AppState, AppStateKey } from '../../client/AppState';
+import { FeatureToggle, ThemaMenuItem, Themas } from '../config';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
-    WMO,
-    WPI_SPECIFICATIES,
-    WPI_AANVRAGEN,
-    STADSPAS,
-    WPI_TOZO,
-    WPI_TONK,
-    WPI_BBZ,
-    SVWI,
+    AFVAL,
+    AVG,
+    BELASTINGEN,
+    BEZWAREN,
+    BODEM,
+    BRP,
     ERFPACHT,
     ERFPACHTv2,
-    AFVAL,
-    BRP,
-    BELASTINGEN,
-    MILIEUZONE,
-    OVERTREDINGEN,
-    VERGUNNINGEN,
-    SIA,
-    TOERISTISCHE_VERHUUR,
-    SUBSIDIE,
-    MY_LOCATION,
-    KVK,
-    KREFIA,
-    KLACHTEN,
-    BEZWAREN,
+    HLI,
     HORECA,
-    AVG,
-    BODEM,
+    KLACHTEN,
+    KREFIA,
+    KVK,
+    MILIEUZONE,
+    MY_LOCATION,
+    OVERTREDINGEN,
+    STADSPAS,
+    SUBSIDIE,
+    SVWI,
+    TOERISTISCHE_VERHUUR,
+    VERGUNNINGEN,
+    WMO,
+    WPI_AANVRAGEN,
+    WPI_BBZ,
+    WPI_SPECIFICATIES,
+    WPI_TONK,
+    WPI_TOZO,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -69,12 +69,24 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         SVWI?.content?.isKnown === true
       );
 
-    case Themas.STADSPAS:
+    case Themas.STADSPAS: {
       const hasStadspas =
         !!STADSPAS?.content?.stadspassen?.length ||
         !!STADSPAS?.content?.aanvragen?.length;
       const isLoadingStadspas = isLoading(STADSPAS);
       return !isLoadingStadspas && hasStadspas;
+    }
+
+    case Themas.HLI: {
+      const hasStadspas = !!HLI?.content?.stadspas?.stadspassen?.length;
+      const hasRegelingen = !!HLI?.content?.regelingen?.length;
+      const isLoadingHLI = isLoading(HLI);
+      return (
+        FeatureToggle.hliThemaActive &&
+        !isLoadingHLI &&
+        (hasStadspas || hasRegelingen)
+      );
+    }
 
     case Themas.ZORG:
       return !isLoading(WMO) && !!WMO.content?.length;
@@ -100,12 +112,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
           ? OVERTREDINGEN.content?.isKnown
           : false)
       );
-
-    case Themas.SIA:
-      const hasSiaItems =
-        !!SIA?.content?.open?.items.length ||
-        !!SIA?.content?.afgesloten?.items.length;
-      return (FeatureToggle.siaActive ? hasSiaItems : false) && !isLoading(SIA);
 
     case Themas.AFVAL:
       return (
@@ -149,10 +155,11 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KVK) && !!KVK.content;
 
     case Themas.TOERISTISCHE_VERHUUR:
-      const { registraties, vergunningen } =
+      const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
         TOERISTISCHE_VERHUUR?.content ?? {};
-      const hasRegistraties = !!registraties?.length;
-      const hasVergunningen = !!vergunningen?.length;
+      const hasRegistraties = !!lvvRegistraties?.length;
+      const hasVergunningen =
+        !!vakantieverhuurVergunningen?.length || !!bbVergunningen?.length;
       return (
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );

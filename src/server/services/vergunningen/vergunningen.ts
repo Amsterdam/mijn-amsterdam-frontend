@@ -1,9 +1,13 @@
+import axios from 'axios';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 import { Themas } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
-import { apiDependencyError } from '../../../universal/helpers';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiDependencyError,
+  isRecentNotification,
+} from '../../../universal/helpers';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { hash, sortAlpha } from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
@@ -11,16 +15,15 @@ import {
   isExpired,
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
-import { isRecentNotification } from '../../../universal/helpers';
 import {
   GenericDocument,
   LinkProps,
   MyNotification,
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { getApiConfig } from '../../config';
+import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
   NotificationLabels,
   notificationContent,
@@ -28,7 +31,7 @@ import {
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
-> = [CaseType.VakantieverhuurVergunningaanvraag, CaseType.BBVergunning];
+> = [CaseType.VakantieverhuurVergunning];
 
 export const horecaVergunningTypes: Array<VergunningBase['caseType']> = [
   CaseType.ExploitatieHorecabedrijf,
@@ -105,25 +108,12 @@ export interface ERVV extends VergunningWithLocation {
   timeEnd: string | null;
 }
 
-export interface VakantieverhuurVergunningaanvraag
-  extends VergunningWithLocation {
-  caseType: CaseType.VakantieverhuurVergunningaanvraag;
+export interface VakantieverhuurVergunning extends VergunningWithLocation {
+  caseType: CaseType.VakantieverhuurVergunning;
   title: 'Vergunning vakantieverhuur';
   dateStart: string | null;
   dateEnd: string | null;
   decision: 'Verleend' | 'Ingetrokken';
-}
-
-export interface BBVergunning extends VergunningWithLocation {
-  caseType: CaseType.BBVergunning;
-  title: 'Vergunning bed & breakfast';
-  decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
-  dateStart: string | null;
-  dateEnd: string | null;
-  requester: string | null;
-  owner: string | null;
-  hasTransitionAgreement: boolean;
-  dateWorkflowActive: string | null;
 }
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
@@ -292,6 +282,7 @@ export interface WerkzaamhedenEnVervoerOpStraat extends VergunningWithLocation {
   dateEnd: string | null;
   licensePlates: string | null;
   block: boolean;
+  eblock: boolean;
   bicycleRack: boolean;
   eParkingspace: boolean;
   filming: boolean;
@@ -301,6 +292,7 @@ export interface WerkzaamhedenEnVervoerOpStraat extends VergunningWithLocation {
   eRvv: boolean;
   rvv: boolean;
   vezip: boolean;
+  movingLocations: boolean;
 }
 
 export type Vergunning =
@@ -313,8 +305,7 @@ export type Vergunning =
   | ERVV
   | BZB
   | BZP
-  | BBVergunning
-  | VakantieverhuurVergunningaanvraag
+  | VakantieverhuurVergunning
   | Flyeren
   | AanbiedenDiensten
   | Nachtwerkontheffing
@@ -365,8 +356,15 @@ export function transformVergunningenData(
     const id = hash(
       `vergunning-${(item.identifier || item.caseType) + item.dateRequest}`
     );
+    const idEncrypted = item.documentsUrl?.split('/').pop();
+
     const vergunning = Object.assign({}, item, {
       id,
+      documentsUrl: idEncrypted
+        ? generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS, {
+            id: idEncrypted,
+          })
+        : item.documentsUrl ?? null,
     });
     return vergunning;
   });
@@ -391,7 +389,7 @@ const vergunningOptionsDefault: VergunningOptions = {
   appRoute: AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: (
     vergunning: Vergunning
-  ): vergunning is VakantieverhuurVergunningaanvraag | HorecaVergunningen =>
+  ): vergunning is VakantieverhuurVergunning | HorecaVergunningen =>
     ![...toeristischeVerhuurVergunningTypes, ...horecaVergunningTypes].includes(
       vergunning.caseType
     ),
@@ -419,7 +417,7 @@ export function addLinks(
   });
 }
 
-export async function fetchVergunningen(
+export async function fetchVergunningen<T>(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   options: VergunningOptions = vergunningOptionsDefault
@@ -428,11 +426,12 @@ export async function fetchVergunningen(
 
   if (response.status === 'OK') {
     let { content: vergunningen } = response;
-    vergunningen = addLinks(vergunningen, options.appRoute);
 
     if (options?.filter) {
       vergunningen = vergunningen.filter(options.filter);
     }
+
+    vergunningen = addLinks(vergunningen, options.appRoute);
 
     return apiSuccessResult(vergunningen);
   }
@@ -453,7 +452,7 @@ export function getNotificationLabels(
   switch (true) {
     // NOTE: For permits you can only have one of.
     // prettier-ignore
-    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
+    case item.caseType === CaseType.GPK && item.decision === 'Verleend' && isNearEndDate(item.dateEnd, compareToDate) && !hasOtherActualVergunningOfSameType(allItemsOfSameType, item):
       return notificationContent[item.caseType]?.almostExpired;
 
     // prettier-ignore
@@ -465,9 +464,9 @@ export function getNotificationLabels(
     case [CaseType.BZB, CaseType.BZP].includes(item.caseType) && item.decision === 'Verleend' && isExpired(item, compareToDate):
       return notificationContent[item.caseType]?.isExpired;
 
-    case [CaseType.BZB, CaseType.BZP].includes(item.caseType) &&
+    case (CaseType.BZB === item.caseType || CaseType.BZP === item.caseType) &&
       item.decision === 'Verleend' &&
-      isNearEndDate(item, compareToDate):
+      isNearEndDate(item.dateEnd, compareToDate):
       return notificationContent[item.caseType]?.almostExpired;
 
     case item.caseType === CaseType.RVVSloterweg &&
@@ -582,4 +581,58 @@ export async function fetchVergunningenNotifications(
   }
 
   return apiDependencyError({ VERGUNNINGEN });
+}
+
+export async function fetchVergunningenDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentIdEncrypted: string
+) {
+  const url = `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/document/${documentIdEncrypted}`;
+
+  return axios({
+    url,
+    headers: {
+      Authorization: `Bearer ${authProfileAndToken.token}`,
+    },
+    responseType: 'stream',
+  });
+}
+
+export async function fetchVergunningenDocumentsList(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentIdEncrypted: string
+) {
+  const url = `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/listdocuments/${documentIdEncrypted}`;
+
+  return requestData(
+    {
+      url,
+      passthroughOIDCToken: true,
+      transformResponse: (responseData: ApiResponse<GenericDocument[]>) => {
+        if (responseData.status === 'OK') {
+          const documents: GenericDocument[] = responseData.content.map(
+            (document) => {
+              const id = document.url.split('/').pop();
+              const doc = Object.assign({}, document, {
+                id,
+                url: generateFullApiUrlBFF(
+                  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+                  {
+                    id: id ?? '',
+                  }
+                ),
+              });
+              return doc;
+            }
+          );
+          return documents;
+        }
+        return responseData.content;
+      },
+    },
+    requestID,
+    authProfileAndToken
+  );
 }

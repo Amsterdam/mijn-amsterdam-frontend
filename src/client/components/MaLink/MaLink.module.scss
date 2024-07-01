@@ -1,0 +1,9 @@
+.MaRouterLink__no-underline-fat {
+  --ams-link-font-weight: bold;
+  --ams-link-standalone-text-decoration-line: none;
+}
+
+.MaRouterLink__no-default-underline:not(:hover){
+  --ams-link-standalone-text-decoration-line: none;
+
+}

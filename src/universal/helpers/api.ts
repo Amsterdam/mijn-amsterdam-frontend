@@ -123,8 +123,8 @@ export function getFailedDependencies<T extends object>(results: T) {
 
   for (const [key, apiResult] of Object.entries(results)) {
     if (
-      apiResult.status === 'ERROR' ||
-      apiResult.status === 'DEPENDENCY_ERROR'
+      apiResult?.status === 'ERROR' ||
+      apiResult?.status === 'DEPENDENCY_ERROR'
     ) {
       if (!failedDependencies) {
         failedDependencies = {};
@@ -179,7 +179,7 @@ export function getSettledResult<T extends any>(
   if (result.status === 'fulfilled') {
     return result.value;
   }
-  let errorMessage = result.reason.toString();
+  let errorMessage: string;
   try {
     errorMessage = result.reason.message || result.reason.toString();
   } catch (error) {

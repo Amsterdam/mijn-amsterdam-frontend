@@ -1,21 +1,19 @@
+import BRP from '../../../../mocks/fixtures/brp.json';
+import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import { ApiSuccessResponse } from '../../../universal/helpers';
-import { CaseType } from '../../../universal/types/vergunningen';
-import BRP from '../../mock-data/json/brp.json';
-import WPI_E from '../../mock-data/json/wpi-e-aanvragen.json';
-import VERGUNNINGEN from '../../mock-data/json/vergunningen.json';
 import {
   createTipsFromServiceResults,
   prefixTipNotification,
 } from './tips-service';
 
 import {
-  vi,
-  describe,
+  afterAll,
   beforeAll,
   beforeEach,
-  it,
+  describe,
   expect,
-  afterAll,
+  it,
+  vi,
 } from 'vitest';
 
 const TOZO = {
@@ -25,10 +23,9 @@ const TOZO = {
 
 const TOERISTISCHE_VERHUUR = {
   content: {
-    registraties: [],
-    vergunningen: VERGUNNINGEN.content.filter(
-      (c) => c.caseType === CaseType.VakantieverhuurVergunningaanvraag
-    ),
+    lvvRegistraties: [],
+    vakantieverhuurVergunningen: [1],
+    bbVergunningen: [1],
   },
 };
 
@@ -71,9 +68,6 @@ describe('createTipsFromServiceResults', () => {
 
     TOZO_copy.content[0].decision = 'toekenning';
     TOZO_copy.content[0].datePublished = '2021-07-24';
-
-    VERHUUR_copy.content.registraties = [];
-    VERHUUR_copy.content.vergunningen[0].caseType = CaseType.BBVergunning;
 
     const tips = await createTipsFromServiceResults('private', {
       serviceResults: {

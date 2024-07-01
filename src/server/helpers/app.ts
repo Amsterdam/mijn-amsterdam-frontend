@@ -4,12 +4,13 @@ import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoize from 'memoizee';
 import { createSecretKey, hkdfSync } from 'node:crypto';
-import { matchPath } from 'react-router-dom';
+import { generatePath, matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { apiErrorResult, apiSuccessResult } from '../../universal/helpers';
 import {
+  BFF_API_BASE_URL,
   IS_DEBUG,
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
@@ -17,12 +18,10 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
   PUBLIC_BFF_ENDPOINTS,
-  RelayPathsAllowed,
   TOKEN_ID_ATTRIBUTE,
   TokenIdAttribute,
   oidcConfigDigid,
   oidcConfigEherkenning,
-  oidcConfigYivi,
 } from '../config';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
@@ -31,7 +30,7 @@ import { captureException, captureMessage } from '../services/monitoring';
 // const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
 export interface AuthProfile {
-  authMethod: 'eherkenning' | 'digid' | 'yivi';
+  authMethod: 'eherkenning' | 'digid';
   profileType: ProfileType;
   id: string; // User id (bsn/kvknr)
   sid: string; // TMA Session ID
@@ -45,10 +44,6 @@ export function getAuthProfile(tokenData: TokenData): AuthProfile {
     case oidcConfigEherkenning.clientID:
       authMethod = 'eherkenning';
       profileType = 'commercial';
-      break;
-    case oidcConfigYivi.clientID:
-      authMethod = 'yivi';
-      profileType = 'private-attributes';
       break;
     case oidcConfigDigid.clientID:
     default:
@@ -278,16 +273,6 @@ export async function decodeOIDCToken(token: string): Promise<TokenData> {
   return verified.payload as unknown as TokenData;
 }
 
-export function isRelayAllowed(pathRequested: string) {
-  return Object.values(RelayPathsAllowed).some((pathAllowed) => {
-    return matchPath(pathRequested, {
-      path: pathAllowed,
-      exact: true,
-      strict: false,
-    });
-  });
-}
-
 export function isProtectedRoute(pathRequested: string) {
   // NOT A PUBLIC ENDPOINT
   return !PUBLIC_BFF_ENDPOINTS.some((pathPublic) => {
@@ -403,4 +388,11 @@ export async function isAuthenticated(
     }
   }
   return sendUnauthorized(res);
+}
+
+export function generateFullApiUrlBFF(
+  path: string,
+  params?: Record<string, string>
+) {
+  return `${BFF_API_BASE_URL}${generatePath(path, params)}`;
 }

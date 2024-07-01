@@ -1,4 +1,8 @@
 import { generatePath } from 'react-router-dom';
+import {
+  getThemaTitle,
+  getThemaTitleWithAppState,
+} from '../../client/pages/HLI/helpers';
 import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
@@ -31,6 +35,7 @@ export type Thema =
   | 'BURGERZAKEN'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
+  | 'HLI'
   | 'HORECA'
   | 'INKOMEN'
   | 'KLACHTEN'
@@ -94,9 +99,6 @@ export const DocumentTitles: {
       case config.profileType === 'private-attributes' &&
         config.isAuthenticated:
         return 'Home | Meldingen overzicht';
-      case config.profileType === 'private-attributes' &&
-        !config.isAuthenticated:
-        return 'Inloggen met yivi | Mijn Amsterdam';
       case config.profileType !== 'private-attributes' &&
         config.isAuthenticated:
         return 'Home | Dashboard';
@@ -117,6 +119,9 @@ export const DocumentTitles: {
   // [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
   // [AppRoutes['VERGUNNINGEN/DETAIL']]:
   //   `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
+  [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
+  [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
+  [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
 
   [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
@@ -142,11 +147,12 @@ export const DocumentTitles: {
   ...browserTabNames,
 };
 
-export interface ThemaMenuItem extends LinkProps {
+export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
   id: Thema;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
+  title: LinkProps['title'] | ((appState: AppState) => string);
 }
 
 // value.appRoutes[0]url, is for private (DIGID) and value.appRoutes[1].url is for commercial (EHERK).
@@ -200,6 +206,16 @@ for (const [key, value] of Object.entries(themaNieuw)) {
       rel: value.isExternal ? 'external' : '',
       profileTypes: ['commercial'] as inlogType[],
       hasAppStateValue: false,
+    });
+  } else if (key === 'HLI') {
+    themaMenuItems.push({
+      title: (appState: AppState) => {
+        console.log('HALLOOOTJES', appState.HLI?.content);
+        return getThemaTitleWithAppState(appState);
+      },
+      id: Themas.HLI,
+      to: AppRoutes.HLI,
+      profileTypes: ['private'] as inlogType[],
     });
   } else {
     themaMenuItems.push({

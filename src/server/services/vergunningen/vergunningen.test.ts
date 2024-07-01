@@ -4,7 +4,7 @@ import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../helpers/app';
-import vergunningenData from '../../mock-data/json/vergunningen.json';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
   BZB,
   BZP,

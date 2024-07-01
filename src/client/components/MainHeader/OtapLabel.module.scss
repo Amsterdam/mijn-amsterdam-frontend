@@ -1,0 +1,11 @@
+@import '../../styles/_global.scss';
+
+.otap-env {
+  font-size: small;
+  color: $color-primary-red;
+  font-weight: bold;
+  position: absolute;
+  white-space: nowrap;
+  top: 5px;
+  left: calc(50% - 90px);
+}

@@ -87,6 +87,7 @@ export interface BRPDataFromSource {
   adres: Adres;
   adresHistorisch?: Adres[];
   identiteitsbewijzen?: IdentiteitsbewijsFromSource[];
+  fetchUrlAantalBewoners: string;
 }
 
 export interface BRPData extends BRPDataFromSource {

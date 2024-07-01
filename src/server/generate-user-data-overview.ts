@@ -1,10 +1,12 @@
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 
-const ENV_FILE = '.env.local';
-console.debug(`trying env file ${ENV_FILE}`);
-const envConfig = dotenv.config({ path: ENV_FILE });
-dotenvExpand.expand(envConfig);
+if (!process.env.BFF_API_BASE_URL) {
+  const ENV_FILE = '.env.local';
+  console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
+  const envConfig = dotenv.config({ path: ENV_FILE });
+  dotenvExpand.expand(envConfig);
+}
 
 import jsonpath from 'jsonpath';
 import * as XLSX from 'xlsx';
@@ -50,12 +52,12 @@ async function getServiceResults(
   const allResults: Record<string, ServiceResults> = {};
 
   for (const [Username, userId] of testAccountEntries) {
-    const url = `${process.env.BFF_API_BASE_URL}/api/v1/auth/digid/login/${Username}?redirectUrl=noredirect`;
+    const url = `${process.env.BFF_API_BASE_URL}/auth/digid/login/${Username}?redirectUrl=noredirect`;
     try {
       const serviceResults = await fetch(url).then((r) => {
         const Cookie = r.headers.get('Set-Cookie') ?? '';
         console.time(`Fetch data for ${Username}/${userId}`);
-        return fetch(`${process.env.BFF_API_BASE_URL}/api/v1/services/all`, {
+        return fetch(`${process.env.BFF_API_BASE_URL}/services/all`, {
           headers: {
             Cookie,
           },
@@ -386,7 +388,7 @@ function getServiceErrors(resultsByUser: Record<string, ServiceResults>) {
 
 function getRows(
   labels: string[],
-  results: Array<Record<string, string | number>>,
+  results: Array<Record<string, string | number | Function>>,
   addRowLabel: boolean = true
 ) {
   const rowsMap: any = {};

@@ -1,14 +1,14 @@
+import { Icon } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types';
 import { IconAlert, IconDownload } from '../../assets/icons';
-import { Colors } from '../../config/app';
 import { trackDownload, useProfileTypeValue } from '../../hooks';
 import { useUserCity } from '../../hooks/useUserCity';
-import Linkd from '../Button/Button';
+import { captureException } from '../../utils/monitoring';
+import { MaLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './DocumentLink.module.scss';
-import { captureException } from '../../utils/monitoring';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -76,7 +76,7 @@ export function DocumentLink({
           const trackingUrl = trackPath
             ? trackPath(document)
             : window.location.pathname +
-              addFileType(`/downloads/${document.download || document.title}`);
+            addFileType(`/downloads/${document.download || document.title}`);
 
           const fileType = trackingUrl.split('.').pop();
 
@@ -125,36 +125,36 @@ export function DocumentLink({
   );
 
   return (
-    <span className={styles.DocumentLinkWrap}>
-      <span className={styles.DownloadIcon}>
-        {isLoading ? (
-          <Spinner />
-        ) : isErrorVisible ? (
-          <IconAlert
-            aria-hidden="true"
-            width="18"
-            height="18"
-            fill={Colors.primaryRed}
-          />
-        ) : (
-          <IconDownload aria-hidden="true" width="14" height="14" />
-        )}
-      </span>
-      <Linkd
+    <span
+      className={classnames(
+        styles.DocumentLinkWrap,
+        isErrorVisible && styles.DocumentDownloadError
+      )}
+    >
+      <MaLink
+        maVariant="noDefaultUnderline"
         className={classnames(
           styles.DocumentLink,
           isErrorVisible && styles.DocumentLinkError
         )}
-        icon={null}
-        external={document.url.startsWith('http')}
         href={document.url}
         onClick={onClickDocumentLink}
       >
+        <span className={styles.DocumentLinkIcon}>
+          {isLoading && <Spinner />}
+          {!isLoading && (
+            <Icon
+              className={styles.LinkIcon}
+              svg={isErrorVisible ? IconAlert : IconDownload}
+              size="level-5"
+            />
+          )}
+        </span>
         {label || document.title}
-      </Linkd>
-      {isLoading && <span className={styles.DownloadInfo}>Ophalen...</span>}
+      </MaLink>
+      {isLoading && <span className={styles.DownloadInfo}>Downloaden...</span>}
       {isErrorVisible && (
-        <span className={styles.DownloadInfo}>Download mislukt</span>
+        <span className={styles.DownloadInfo}>Downloaden mislukt</span>
       )}
     </span>
   );

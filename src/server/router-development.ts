@@ -10,7 +10,6 @@ import { apiSuccessResult } from '../universal/helpers';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-  RelayPathsAllowed,
 } from './config';
 import {
   AuthProfile,
@@ -18,7 +17,6 @@ import {
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
-import VERGUNNINGEN_LIST_DOCUMENTS from './mock-data/json/vergunningen-documenten.json';
 import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
 import { addToBlackList } from './services/session-blacklist';
@@ -80,12 +78,6 @@ authRouterDevelopment.get(
         ? String(req.query.redirectUrl)
         : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
-    switch (req.params.authMethod) {
-      case 'yivi':
-        redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGIN_REDIRECT}`;
-        break;
-    }
-
     return res.redirect(redirectUrl);
   }
 );
@@ -98,12 +90,6 @@ authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
   let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
-
-  switch (auth.profile.authMethod) {
-    case 'yivi':
-      redirectUrl = `${process.env.BFF_OIDC_YIVI_POST_LOGOUT_REDIRECT}`;
-      break;
-  }
 
   return res.redirect(redirectUrl);
 });
@@ -121,7 +107,7 @@ authRouterDevelopment.get(
             authMethod: auth.profile.authMethod,
           })
         );
-      } catch (error) {}
+      } catch (error) { }
     }
 
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
@@ -129,28 +115,3 @@ authRouterDevelopment.get(
   }
 );
 
-export const relayDevRouter = express.Router();
-
-relayDevRouter.get(
-  [
-    RelayPathsAllowed.WPI_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.LOOD_DOCUMENT_DOWNLOAD,
-    RelayPathsAllowed.BEZWAREN_DOCUMENT,
-    RelayPathsAllowed.WMO_DOCUMENT_DOWNLOAD,
-  ],
-  (req, res, next) => {
-    return res.sendFile(path.join(__dirname, 'mock-data/document.pdf'));
-  }
-);
-
-relayDevRouter.post(RelayPathsAllowed.BRP_BEWONERS, (req, res) => {
-  return res.send(apiSuccessResult({ residentCount: 3 }));
-});
-
-relayDevRouter.get(
-  RelayPathsAllowed.VERGUNNINGEN_LIST_DOCUMENTS,
-  (req, res) => {
-    return res.send(VERGUNNINGEN_LIST_DOCUMENTS);
-  }
-);

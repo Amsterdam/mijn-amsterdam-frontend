@@ -23,9 +23,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -40,6 +37,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -49,9 +47,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -322,9 +317,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -339,6 +331,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -348,9 +341,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -599,9 +589,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -616,6 +603,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -625,9 +613,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -828,9 +813,6 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -845,6 +827,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -854,9 +837,6 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -1122,9 +1102,6 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -1139,6 +1116,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -1148,9 +1126,6 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -1435,9 +1410,6 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -1452,6 +1424,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -1461,9 +1434,6 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -1707,9 +1677,6 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -1724,6 +1691,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -1733,9 +1701,6 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -2014,9 +1979,6 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -2031,6 +1993,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -2040,9 +2003,6 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -2266,9 +2226,6 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -2283,6 +2240,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -2292,9 +2250,6 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -2504,9 +2459,6 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -2521,6 +2473,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -2530,9 +2483,6 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -2810,9 +2760,6 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -2827,6 +2774,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -2836,9 +2784,6 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -3200,9 +3145,6 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -3217,6 +3159,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -3226,9 +3169,6 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -3453,9 +3393,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -3470,6 +3407,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -3479,9 +3417,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -3753,9 +3688,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -3770,6 +3702,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -3779,9 +3712,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -4072,9 +4002,6 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -4089,6 +4016,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -4098,9 +4026,6 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -4385,9 +4310,6 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -4402,6 +4324,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -4411,9 +4334,6 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -4624,9 +4544,6 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -4641,6 +4558,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -4650,9 +4568,6 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -4898,9 +4813,6 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -4915,6 +4827,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -4924,9 +4837,6 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -5147,9 +5057,6 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -5164,6 +5071,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -5173,9 +5081,6 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -5391,9 +5296,6 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -5408,6 +5310,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -5417,9 +5320,6 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -5662,9 +5562,6 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -5679,6 +5576,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -5688,9 +5586,6 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -5953,9 +5848,6 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -5970,6 +5862,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -5979,9 +5872,6 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -6197,9 +6087,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -6214,6 +6101,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -6223,9 +6111,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -6308,6 +6193,9 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
             </li>
             <li>
               Filmen
+            </li>
+            <li>
+              Verhuizing tussen twee locaties binnen Amsterdam
             </li>
           </ul>
         </div>
@@ -6477,9 +6365,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -6494,6 +6379,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -6503,9 +6389,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -6767,9 +6650,6 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -6784,6 +6664,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -6793,9 +6674,6 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />

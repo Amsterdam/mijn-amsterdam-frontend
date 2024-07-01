@@ -56,6 +56,7 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -65,9 +66,6 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -184,6 +182,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -193,9 +192,6 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -276,6 +272,42 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="_InfoDetailGroup_6f1df2"
+      >
+        <div
+          class="_InfoDetailGroupContent_6f1df2"
+        >
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Resultaat bezwaar
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              Niet-ontvankelijk
+            </p>
+          </div>
+          <div
+            class="_InfoDetail_6f1df2"
+          >
+            <h3
+              class="ams-heading ams-heading--4 _Label_6f1df2"
+            >
+              Datum
+            </h3>
+            <p
+              class="_Value_6f1df2"
+            >
+              10 mei 2023
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <div
       class="_PageContent_47d7c0"
@@ -309,31 +341,31 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        aria-label="sluiten-icoon"
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   connector.docx
                 </a>
               </span>
@@ -349,31 +381,31 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        aria-label="sluiten-icoon"
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   Bezwaar_JB20230049.pdf
                 </a>
               </span>
@@ -415,31 +447,31 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        aria-label="sluiten-icoon"
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   connector.docx
                 </a>
               </span>
@@ -481,31 +513,31 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
               <span
                 class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="_DownloadIcon_81c3b4"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    height="14"
-                    viewBox="0 0 32 32"
-                    width="14"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>
-                      download-icoon
-                    </title>
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
                 <a
-                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_81c3b4"
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments"
-                  rel="external noopener noreferrer"
                 >
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
+                  >
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        aria-label="sluiten-icoon"
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
                   Bezwaar_JB20230049.pdf
                 </a>
               </span>

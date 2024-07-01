@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import proxy from 'express-http-proxy';
 import { DATASETS, OTAP_ENV, getDatasetCategoryId } from '../universal/config';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers';
 import { BffEndpoints, RELEASE_VERSION } from './config';
@@ -18,7 +19,6 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from './services/cms-maintenance-notifications';
-import proxy from 'express-http-proxy';
 
 export const router = express.Router();
 
