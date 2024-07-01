@@ -257,7 +257,11 @@ async function transformDecosZakenResponse(
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-async function getZakenByUserKey(requestID: requestID, userKey: string) {
+async function getZakenByUserKey(
+  requestID: requestID,
+  userKey: string,
+  includeProperties: boolean = false
+) {
   const selectFieldsAllCases = Object.keys(SELECT_FIELDS_TRANSFORM_BASE);
   const additionalSelectFields = Object.values(decosZaakTransformers).flatMap(
     (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
@@ -271,7 +275,7 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
 
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${userKey}/folders?top=50&select=${selectFields}`;
+      return `${config.url}/items/${userKey}/folders?top=50&select=${selectFields}${includeProperties ? '&properties=true' : ''}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
       if (!Array.isArray(responseData?.content)) {
@@ -289,13 +293,16 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
   return responseSource;
 }
 
-async function fetchDecosVergunningen_(
+export async function fetchDecosVergunningenSource(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  includeProperties: boolean = false
 ) {
   const userKeys = await getUserKeys(requestID, authProfileAndToken);
   const zakenSourceResponses = await Promise.allSettled(
-    userKeys.map((userKey) => getZakenByUserKey(requestID, userKey))
+    userKeys.map((userKey) =>
+      getZakenByUserKey(requestID, userKey, includeProperties)
+    )
   );
   const zakenSource = [];
 
@@ -310,17 +317,29 @@ async function fetchDecosVergunningen_(
     }
   }
 
-  if (IS_OT) {
-    console.log('ZAKEN:', JSON.stringify(zakenSource));
-  }
+  return apiSuccessResult(zakenSource);
+}
 
-  const vergunningen = await transformDecosZakenResponse(
+async function fetchDecosVergunningen_(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const zakenSourceResponse = await fetchDecosVergunningenSource(
     requestID,
-    authProfileAndToken,
-    zakenSource
+    authProfileAndToken
   );
 
-  return apiSuccessResult(vergunningen);
+  if (zakenSourceResponse.status === 'OK') {
+    const vergunningen = await transformDecosZakenResponse(
+      requestID,
+      authProfileAndToken,
+      zakenSourceResponse.content
+    );
+
+    return apiSuccessResult(vergunningen);
+  }
+
+  return zakenSourceResponse;
 }
 
 export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_);

@@ -29,9 +29,11 @@ import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
 import {
   fetchVergunningDetail,
   fetchVergunningDocument,
+  fetchZakenSource,
 } from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
+import { IS_TEST } from '../universal/config';
 
 export const router = express.Router();
 
@@ -158,6 +160,9 @@ router.get(
   BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD,
   fetchVergunningDocument
 );
+if (IS_TEST) {
+  router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenSource);
+}
 
 router.get(
   BffEndpoints.WPI_DOCUMENT_DOWNLOAD,
