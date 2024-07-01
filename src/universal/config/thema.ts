@@ -13,16 +13,14 @@ import { inlogType, themaNieuw } from './thema-data';
 // 1. Kan zorg, subsidies en  stadspas niet testen
 // 2. type is hiet met een hoofdletter is  dit niet inconsequent: AppRouteInfo of is deze niet ok inlogType
 // 2. Wanneer je naar de console log kijkt wordt uitsluitend de eerste url gepakt,
-//dus wanneer ik routes.ts uitschakel lijk ik wel op de themapagina uit te komen,
-// maar niet op de detail of andere
-// LET OP de tabNames haalt ie wel uit onze info
+//ZIJN ROOT SEARCH EN NOTIFICATION WEL THEMA"S?????
 
 // Within the team we call these Themes / Thema's
 //export type Thema = string;
 
 // SIA is not available anymore
 export type Thema =
-  | 'ROOT'
+  | 'ROOT' //IS DIT WEL EEN THEMA?
   | 'AVG'
   | 'AFVAL'
   | 'BELASTINGEN'
@@ -39,13 +37,13 @@ export type Thema =
   | 'KREFIA'
   | 'KVK'
   | 'MILIEUZONE'
-  | 'NOTIFICATIONS'
+  | 'NOTIFICATIONS' //IS DIT WEL EEN THEMA?
   | 'OVERTREDINGEN'
   | 'PARKEREN'
   | 'TOERISTISCHE_VERHUUR'
   | 'STADSPAS'
   | 'SUBSIDIE'
-  | 'SEARCH'
+  | 'SEARCH' //IS DIT WEL EEN THEMA?
   | 'SVWI'
   | 'VERGUNNINGEN'
   | 'ZORG'
@@ -108,9 +106,9 @@ export const DocumentTitles: {
   },
 
   //einde inkomen moet verwerkt worden
-  [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
-  [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
+  // [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
+  // [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
+  // [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
 
   [`${AppRoutes['INKOMEN/SPECIFICATIES']}/jaaropgaven`]: `Jaaropgaven | ${ThemaTitles.INKOMEN}`,
 

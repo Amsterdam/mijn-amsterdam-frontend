@@ -6,7 +6,9 @@ import { themaNieuw } from './thema-data';
 const entries = Object.entries({});
 Object.values(themaNieuw).forEach((value) => {
   value.appRoutes.forEach((urlItems) => {
-    if (urlItems.urlID) entries.push([urlItems.urlID, urlItems.url]);
+    if (urlItems.urlID) {
+      entries.push([urlItems.urlID, urlItems.url]);
+    }
   });
 });
 
@@ -19,18 +21,18 @@ export const AppRoutes: Record<string, string> = {
   // BURGERZAKEN: '/burgerzaken',
   // 'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
   // 'BURGERZAKEN/PASPOORT': '/burgerzaken/paspoort/:id',
-  ZORG: '/zorg-en-ondersteuning',
-  'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
+  // ZORG: '/zorg-en-ondersteuning',
+  // 'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
-  'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
-  'STADSPAS/SALDO': '/stadspas/saldo-en-transacties/:id',
-  'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
-  'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
-  'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
-  'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
-  INKOMEN: '/inkomen',
-  STADSPAS: '/stadspas',
+  // 'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
+  // 'STADSPAS/SALDO': '/stadspas/saldo-en-transacties/:id',
+  // 'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
+  // 'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
+  // 'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
+  // 'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
+  // 'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
+  // INKOMEN: '/inkomen',
+  // STADSPAS: '/stadspas',
 
   SIA: '/meldingen',
   SIA_OPEN: '/alle-open-meldingen/:page?',
@@ -38,20 +40,20 @@ export const AppRoutes: Record<string, string> = {
   'SIA/DETAIL/OPEN': '/detail-open-melding/:id',
   'SIA/DETAIL/CLOSED': '/detail-afgesloten-melding/:id',
 
-  BRP: '/persoonlijke-gegevens',
-  KVK: '/gegevens-handelsregister',
-  BUURT: '/buurt',
-  BEZWAREN: '/bezwaren',
-  'BEZWAREN/DETAIL': '/bezwaren/:uuid',
+  // BRP: '/persoonlijke-gegevens',
+  // KVK: '/gegevens-handelsregister',
+  // BUURT: '/buurt',
+  // BEZWAREN: '/bezwaren',
+  // 'BEZWAREN/DETAIL': '/bezwaren/:uuid',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',
   NOTIFICATIONS: '/overzicht-updates/:page?',
-  AFVAL: '/afval',
+  // AFVAL: '/afval',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
-  VERGUNNINGEN: '/vergunningen',
-  'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
+  // VERGUNNINGEN: '/vergunningen',
+  // 'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
   // TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
   // 'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
   // 'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
@@ -59,31 +61,32 @@ export const AppRoutes: Record<string, string> = {
   // 'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
   //   '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
   SEARCH: '/zoeken',
-  KREFIA: '/kredietbank-fibu',
-  PARKEREN: '/parkeren',
-  KLACHTEN: '/klachten/:page?',
-  'KLACHTEN/KLACHT': '/klachten/klacht/:id',
-  HORECA: '/horeca/',
-  'HORECA/DETAIL': '/horeca/:title/:id',
+  // KREFIA: '/kredietbank-fibu',
+  // PARKEREN: '/parkeren',
+  // KLACHTEN: '/klachten/:page?',
+  // 'KLACHTEN/KLACHT': '/klachten/klacht/:id',
+  // HORECA: '/horeca/',
+  // 'HORECA/DETAIL': '/horeca/:title/:id',
   YIVI_LANDING: '/inloggen-met-yivi',
   // AVG: '/avg',
   // 'AVG/DETAIL': '/avg/verzoek/:id',
   BFF_500_ERROR: '/server-error-500',
-  BODEM: '/bodem',
-  'BODEM/LOOD_METING': '/lood-meting/:id',
+  // BODEM: '/bodem',
+  // 'BODEM/LOOD_METING': '/lood-meting/:id',
 
   // Erfpacht v2
-  ERFPACHTv2: '/erfpacht',
-  'ERFPACHTv2/DOSSIERS': '/erfpacht/dossiers/:page?',
-  'ERFPACHTv2/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
-  'ERFPACHTv2/OPEN_FACTUREN': '/erfpacht/open-facturen/:page?',
-  'ERFPACHTv2/ALLE_FACTUREN':
-    '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
+  // ERFPACHTv2: '/erfpacht',
+  // 'ERFPACHTv2/DOSSIERS': '/erfpacht/dossiers/:page?',
+  // 'ERFPACHTv2/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
+  // 'ERFPACHTv2/OPEN_FACTUREN': '/erfpacht/open-facturen/:page?',
+  // 'ERFPACHTv2/ALLE_FACTUREN':
+  //   '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
   ...ThemeRoutes,
 } as const;
 
 console.log('routests', AppRoutes);
 
+// For legacy bookmarks, so for new themas you dont need to use this
 export const AppRoutesRedirect = [
   {
     from: '/burgerzaken/document/:id',
@@ -155,6 +158,8 @@ export interface TrackingConfig {
   profileType: ProfileType;
   isAuthenticated: boolean;
 }
+
+//IS MADE FOR ANALITICS IN PIWIKPRO...
 
 type CustomTrackingUrlMap = {
   [key in AppRoute]+?: (match: Match, trackingConfig: TrackingConfig) => string;

@@ -1,7 +1,7 @@
 import { ExternalUrls } from './app';
 import { IS_PRODUCTION } from './env';
 import { generatePath } from 'react-router-dom';
-import { Thema } from './thema';
+import { Thema, ThemaTitles } from './thema';
 
 export type inlogType = 'private' | 'commercial';
 
@@ -26,18 +26,34 @@ export type ThemaConfig = {
 };
 
 export const themaNieuw: Record<Thema, ThemaConfig> = {
-  ROOT: {
-    title: '',
-    appRoutes: [{ url: '', tabName: 'Home | Dashboard' }],
+  NOTIFICATIONS: {
+    //IS DIT WEL EEN THEMA? NIET UITGEZET IN ROUTES.TS
+    title: 'Actueel',
+    appRoutes: [
+      { url: '/overzicht-updates/:page?', tabName: 'Actueel | Overzicht' },
+    ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
-    //   //icon: IconAVG,
-    //   //isThemaActive: (state: AppState) => { return: true },
+    //   //icon:  IconMyNotifications,
   },
 
+  SEARCH: {
+    //IS DIT WEL EEN THEMA?NIET UITGEZET IN ROUTES.TS
+    title: 'Zoeken',
+    appRoutes: [{ url: '/zoeken', tabName: 'Home | Dashboard' }],
+    isExternal: false,
+    profileTypes: ['private', 'commercial'],
+    //icon: IconSearch,
+  },
   BRP: {
     title: 'Mijn gegevens',
-    appRoutes: [{ url: '/persoonlijke-gegevens', tabName: `Mijn gegevens` }],
+    appRoutes: [
+      {
+        urlID: 'BRP',
+        url: '/persoonlijke-gegevens',
+        tabName: `Mijn gegevens`,
+      },
+    ],
     isExternal: false,
     profileTypes: ['private'],
     //   //icon: IconMijnGegevens,
@@ -46,7 +62,9 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
 
   AFVAL: {
     title: 'Afval',
-    appRoutes: [{ url: '/afval', tabName: 'Afval rond uw adres' }],
+    appRoutes: [
+      { urlID: 'AFVAL', url: '/afval', tabName: 'Afval rond uw adres' },
+    ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
     //   //icon: IconAVG,
@@ -59,12 +77,12 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
       {
         urlID: 'AVG',
         url: generatePath('/avg', { page: 1 }),
-        tabName: ' AVG persoonsgegevens | verzoeken',
+        tabName: 'AVG persoonsgegevens | verzoeken',
       },
       {
         urlID: 'AVG/DETAIL',
         url: '/avg/verzoek/:id',
-        tabName: ' AVG persoonsgegevens | verzoek',
+        tabName: 'AVG persoonsgegevens | verzoek',
       },
     ],
     profileTypes: ['private', 'commercial'],
@@ -75,8 +93,12 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
   BEZWAREN: {
     title: 'Bezwaren',
     appRoutes: [
-      { url: '/bezwaren', tabName: ' Bezwaren | overzicht' },
-      { url: '/bezwaren/:uuid', tabName: ' Bezwaren | bezwaar' },
+      { urlID: 'BEZWAREN', url: '/bezwaren', tabName: 'Bezwaren | overzicht' },
+      {
+        urlID: 'BEZWAREN/DETAIL',
+        url: '/bezwaren/:uuid',
+        tabName: 'Bezwaren | bezwaar',
+      },
     ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
@@ -100,8 +122,12 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
   BODEM: {
     title: 'Bodem',
     appRoutes: [
-      { url: '/bodem', tabName: 'Bodem | overzicht' },
-      { url: '/lood-meting/:id', tabName: 'Bodem | lood in de bodem-check' },
+      { urlID: 'BODEM', url: '/bodem', tabName: 'Bodem | overzicht' },
+      {
+        urlID: 'BODEM/LOOD_METING',
+        url: '/lood-meting/:id',
+        tabName: 'Bodem | lood in de bodem-check',
+      },
     ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
@@ -136,7 +162,7 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
 
   BUURT: {
     title: 'Mijn Buurt',
-    appRoutes: [{ url: '/buurt', tabName: 'Mijn Buurt' }],
+    appRoutes: [{ urlID: 'BUURT', url: '/buurt', tabName: 'Mijn Buurt' }],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
     //   //icon:IconWior,
@@ -157,24 +183,32 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
   ERFPACHTv2: {
     title: 'Erfpachtv2',
     appRoutes: [
-      { url: '/erfpacht', tabName: 'Erfpacht | overzicht' },
+      {
+        urlID: 'ERFPACHTv2',
+        url: '/erfpacht',
+        tabName: 'Erfpacht | overzicht',
+      },
       {
         url: `https://erfpachtzakelijk${!IS_PRODUCTION ? '-ont' : ''}.amsterdam.nl`,
         tabName: '',
       },
       {
+        urlID: 'ERFPACHTv2/DOSSIERS',
         url: '/erfpacht/dossiers/:page?',
         tabName: 'Erfpacht | Lijst met dossiers',
       },
       {
+        urlID: 'ERFPACHTv2/DOSSIERDETAIL',
         url: '/erfpacht/dossier/:dossierNummerUrlParam',
         tabName: 'Erfpacht | dossier',
       },
       {
+        urlID: 'ERFPACHTv2/OPEN_FACTUREN',
         url: '/erfpacht/open-facturen/:page?',
         tabName: 'Erfpacht | Lijst met open facturen',
       },
       {
+        urlID: 'ERFPACHTv2/ALLE_FACTUREN',
         url: '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
         tabName: 'Erfpacht | Lijst met facturen',
       },
@@ -188,8 +222,12 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
   HORECA: {
     title: 'Horeca',
     appRoutes: [
-      { url: '/horeca/', tabName: 'Horeca | overzicht' },
-      { url: '/horeca/:title/:id', tabName: 'Vergunning | Horeca' },
+      { urlID: 'HORECA', url: '/horeca/', tabName: 'Horeca | overzicht' },
+      {
+        urlID: 'HORECA/DETAIL',
+        url: '/horeca/:title/:id',
+        tabName: 'Vergunning | Horeca',
+      },
     ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
@@ -199,15 +237,29 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
   INKOMEN: {
     title: 'Inkomen',
     appRoutes: [
-      { url: '/inkomen', tabName: 'Inkomen | overzicht' },
+      { urlID: 'INKOMEN', url: '/inkomen', tabName: 'Inkomen | overzicht' },
       {
+        urlID: 'INKOMEN/BIJSTANDSUITKERING',
         url: '/inkomen/bijstandsuitkering/:id',
         tabName: 'Bijstandsuitkering | Inkomen',
       },
-      { url: '/inkomen/tozo/:version/:id', tabName: 'Tozo | Inkomen' },
-      { url: '/inkomen/tonk/:version/:id', tabName: 'TONK | Inkomen' },
-      { url: '/inkomen/bbz/:version/:id', tabName: 'Bbz |Inkomen' },
       {
+        urlID: 'INKOMEN/TOZO',
+        url: '/inkomen/tozo/:version/:id',
+        tabName: 'Tozo | Inkomen',
+      },
+      {
+        urlID: 'INKOMEN/TONK',
+        url: '/inkomen/tonk/:version/:id',
+        tabName: 'TONK | Inkomen',
+      },
+      {
+        urlID: 'INKOMEN/BBZ',
+        url: '/inkomen/bbz/:version/:id',
+        tabName: 'Bbz |Inkomen',
+      },
+      {
+        urlID: 'INKOMEN/SPECIFICATIES',
         url: '/inkomen/specificaties/:variant/:page?',
         tabName: 'Uitkeringsspecificaties | Inkomen',
         //LET OP deze moet nog zie routes.ts AppRoutesRedirect
@@ -221,8 +273,16 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
   KLACHTEN: {
     title: 'Klachten',
     appRoutes: [
-      { url: '/klachten/:page?', tabName: 'Klachten | overzicht' },
-      { url: '/klachten/klacht/:id', tabName: 'Klachten | klacht' },
+      {
+        urlID: 'KLACHTEN',
+        url: '/klachten/:page?',
+        tabName: 'Klachten | overzicht',
+      },
+      {
+        urlID: 'KLACHTEN/KLACHT',
+        url: '/klachten/klacht/:id',
+        tabName: 'Klachten | klacht',
+      },
     ],
     isExternal: false,
     profileTypes: ['private'],
@@ -233,7 +293,11 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
   KVK: {
     title: 'Mijn onderneming',
     appRoutes: [
-      { url: '/gegevens-handelsregister', tabName: `Mijn onderneming` },
+      {
+        urlID: 'KVK',
+        url: '/gegevens-handelsregister',
+        tabName: `Mijn onderneming`,
+      },
     ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
@@ -243,7 +307,13 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
 
   KREFIA: {
     title: 'Kredietbank & FIBU',
-    appRoutes: [{ url: '/kredietbank-fibu', tabName: 'Kredietbank & FIBU' }],
+    appRoutes: [
+      {
+        urlID: 'KREFIA',
+        url: '/kredietbank-fibu',
+        tabName: 'Kredietbank & FIBU',
+      },
+    ],
     isExternal: false,
     profileTypes: ['private'],
     //   //icon: IconKrefia,
@@ -259,16 +329,6 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     //   //isThemaActive: (state: AppState) => { return: true }
   },
 
-  NOTIFICATIONS: {
-    title: 'Actueel',
-    appRoutes: [
-      { url: '/overzicht-updates/:page?', tabName: 'Actueel | Overzicht' },
-    ],
-    isExternal: false,
-    profileTypes: ['private', 'commercial'],
-    //   //icon:  IconMyNotifications,
-  },
-
   OVERTREDINGEN: {
     //   //is deze nog op prod > zelfde als milieu ,maar deze heeft wel een FeatureToggle
     title: 'Overtredingen voertuigen',
@@ -281,12 +341,62 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
 
   PARKEREN: {
     title: 'Parkeren',
-    appRoutes: [{ url: '/parkeren', tabName: 'Parkeren' }],
+    appRoutes: [{ urlID: 'PARKEREN', url: '/parkeren', tabName: 'Parkeren' }],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
     //icon: IconParkeren,
     //isThemaActive: (state: AppState) => { return: true },
     //hasAppStateValue: false, //?? NAAR KIJKEN
+  },
+
+  SUBSIDIE: {
+    title: 'Subsidies',
+    appRoutes: [
+      { url: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`, tabName: '' },
+      {
+        url: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
+        tabName: '',
+      },
+    ],
+    isExternal: true,
+    profileTypes: ['private', 'commercial'],
+    //icon:IconSubsidie,
+    //isThemaActive: (state: AppState) => { return: true }
+  },
+
+  STADSPAS: {
+    title: 'Stadspas',
+    appRoutes: [
+      { urlID: 'STADSPAS', url: '/stadspas', tabName: 'Stadspas | Overzicht' },
+      {
+        urlID: 'STADSPAS/AANVRAAG',
+        url: '/stadspas/aanvraag/:id',
+        tabName: `Stadspas | Inkomen`, // tonen we wel stadspasaanvragen?
+      },
+      {
+        urlID: 'STADSPAS/SALDO',
+        url: '/stadspas/saldo-en-transacties/:id',
+        tabName: `Stadspas | Saldo`,
+      }, //staat deze wel goed hier, of moet ie bij Inkomen?
+    ],
+    isExternal: false,
+    profileTypes: ['private'],
+    //icon:IconStadspas,
+    //isThemaActive: (state: AppState) => { return: true }
+  },
+
+  SVWI: {
+    title: 'SVWI',
+    appRoutes: [
+      {
+        url: `https://mijn.werkeninkomen${
+          !IS_PRODUCTION ? '-acc' : ''
+        }.amsterdam.nl/`,
+        tabName: '',
+      },
+    ],
+    isExternal: true,
+    profileTypes: ['private'],
   },
   TOERISTISCHE_VERHUUR: {
     title: 'Toeristische verhuur',
@@ -319,60 +429,16 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     //isThemaActive: (state: AppState) => { return: true }
   },
 
-  SEARCH: {
-    title: 'Zoeken',
-    appRoutes: [{ url: '/zoeken', tabName: 'Home | Dashboard' }],
-    isExternal: false,
-    profileTypes: ['private', 'commercial'],
-    //icon: IconSearch,
-  },
-
-  SUBSIDIE: {
-    title: 'Subsidies',
-    appRoutes: [
-      { url: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`, tabName: '' },
-      {
-        url: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
-        tabName: '',
-      },
-    ],
-    isExternal: true,
-    profileTypes: ['private', 'commercial'],
-    //icon:IconSubsidie,
-    //isThemaActive: (state: AppState) => { return: true }
-  },
-
-  STADSPAS: {
-    title: 'Stadspas',
-    appRoutes: [{ url: '/stadspas', tabName: 'Stadspas | Overzicht' }],
-    isExternal: false,
-    profileTypes: ['private'],
-    //icon:IconStadspas,
-    //isThemaActive: (state: AppState) => { return: true }
-  },
-
-  SVWI: {
-    title: 'SVWI',
-    appRoutes: [
-      {
-        url: `https://mijn.werkeninkomen${
-          !IS_PRODUCTION ? '-acc' : ''
-        }.amsterdam.nl/`,
-        tabName: '',
-      },
-    ],
-    isExternal: true,
-    profileTypes: ['private'],
-  },
-
   VERGUNNINGEN: {
     title: 'Vergunningen en ontheffingen',
     appRoutes: [
       {
+        urlID: 'VERGUNNINGEN',
         url: '/vergunningen',
         tabName: 'Vergunningen en ontheffingen | Overzicht',
       },
       {
+        urlID: 'VERGUNNINGEN/DETAIL',
         url: '/vergunningen/:title/:id',
         tabName: 'Vergunning | Vergunningen en ontheffingen',
       },
@@ -387,10 +453,12 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     title: 'Zorg en ondersteuning',
     appRoutes: [
       {
+        urlID: 'ZORG',
         url: '/zorg-en-ondersteuning',
         tabName: 'Zorg en ondersteuning | overzicht',
       },
       {
+        urlID: 'ZORG/VOORZIENINGEN',
         url: '/zorg-en-ondersteuning/voorzieningen/:id',
         tabName: 'Voorziening | Zorg en ondersteuning',
       },
