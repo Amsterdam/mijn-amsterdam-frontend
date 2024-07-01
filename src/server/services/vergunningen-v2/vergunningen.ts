@@ -9,7 +9,7 @@ import {
 import { BffEndpoints } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
-  EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN,
+  EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
   VergunningCaseTypeFilter,
   VergunningDocument,
   VergunningFrontendV2,
@@ -21,15 +21,11 @@ import {
   fetchDecosVergunningen,
 } from './decos-service';
 
+import memoizee from 'memoizee';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
-import {
-  CaseTypeV2,
-  DecosCaseType,
-} from '../../../universal/types/vergunningen';
-import memoizee from 'memoizee';
 
 function transformVergunningFrontend(
   userId: AuthProfileAndToken['profile']['id'],
@@ -119,7 +115,7 @@ export async function fetchVergunningenV2(
     authProfileAndToken,
     AppRoutes['VERGUNNINGEN/DETAIL'],
     (vergunning: VergunningV2) => {
-      return !EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN.includes(
+      return !EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
         vergunning.caseType
       );
     }

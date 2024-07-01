@@ -13,7 +13,7 @@ import {
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 
-export const EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN: DecosCaseType[] = [
+export const EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA: DecosCaseType[] = [
   CaseTypeV2.VakantieverhuurVergunningaanvraag,
   CaseTypeV2.ExploitatieHorecabedrijf,
 ];
