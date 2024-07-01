@@ -853,7 +853,7 @@ export const WerkEnVervoerOpStraat: DecosZaakTypeTransformer<WerkzaamhedenEnVerv
         })
         .map(([activiteit]) => activiteit as WVOSActiviteitType);
 
-      if (vergunning.werkzaamheden.length > 1 && vergunning.decision) {
+      if (vergunning.werkzaamheden.length > 1 && vergunning.processed) {
         vergunning.decision =
           'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.';
       }
