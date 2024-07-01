@@ -1,0 +1,139 @@
+import { differenceInMonths, parseISO } from 'date-fns';
+import { Themas } from '../../../universal/config';
+import {
+  apiDependencyError,
+  apiSuccessResult,
+  isRecentNotification,
+} from '../../../universal/helpers';
+import { MyNotification } from '../../../universal/types';
+import { AuthProfileAndToken } from '../../helpers/app';
+import {
+  NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
+  NotificationLabelByType,
+  NotificationLabels,
+  NotificationProperty,
+  VergunningFrontendV2,
+} from './config-and-types';
+import { decosZaakTransformers } from './decos-zaken';
+import { isNearEndDate } from './helpers';
+import { fetchVergunningenV2 } from './vergunningen';
+
+// prettier-ignore
+export function getNotificationLabels(
+  notificationLabels: Partial<NotificationLabelByType>,
+  vergunning: VergunningFrontendV2,
+  vergunningen: VergunningFrontendV2[],
+  compareToDate: Date = new Date()
+) {
+  // Ignore formatting of the switch case statements for readability
+  switch (true) {
+    // TODO: Check if we always have Verleend as decision for expirable vergunning
+    case notificationLabels.verlooptBinnenkort && vergunning.decision === 'Verleend' && isNearEndDate(vergunning, compareToDate):
+      return notificationLabels.verlooptBinnenkort;
+
+    case notificationLabels.isVerlopen && vergunning.decision === 'Verleend' && vergunning.isExpired && vergunning.dateEnd && differenceInMonths(parseISO(vergunning.dateEnd), compareToDate) < NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED:
+      return notificationLabels.isVerlopen;
+
+    case notificationLabels.isIngetrokken && vergunning.decision === 'Ingetrokken' && vergunning.dateDecision && isRecentNotification(vergunning.dateDecision):
+      return notificationLabels.isIngetrokken;
+
+    case notificationLabels.statusAfgehandeld && vergunning.processed && vergunning.dateDecision && isRecentNotification(vergunning.dateDecision):
+      return notificationLabels.statusAfgehandeld;
+
+    case notificationLabels.statusInBehandeling && !vergunning.processed && !!vergunning.dateInBehandeling:
+      return notificationLabels.statusInBehandeling;
+
+    case notificationLabels.statusAanvraag && !vergunning.processed:
+      return notificationLabels.statusAanvraag;
+  }
+
+  return null;
+}
+
+function getNotificationBase(vergunning: VergunningFrontendV2) {
+  const notificationBaseProperties = {
+    thema: Themas.VERGUNNINGEN,
+    id: `vergunning-${vergunning.id}-notification`,
+    link: {
+      to: vergunning.link.to,
+      title: 'Bekijk details',
+    },
+  };
+  return notificationBaseProperties;
+}
+
+function mergeNotificationProperties(
+  notification: Partial<MyNotification>,
+  content: NotificationLabels,
+  vergunning: VergunningFrontendV2
+) {
+  for (const [key, getValue] of Object.entries(content)) {
+    notification[key as NotificationProperty] = getValue(vergunning);
+  }
+  return notification as MyNotification;
+}
+
+export function createVergunningNotification(
+  vergunning: VergunningFrontendV2,
+  vergunningen: VergunningFrontendV2[],
+  dateNow?: Date
+): MyNotification | null {
+  const zaakTypeTransformer = decosZaakTransformers[vergunning.caseType];
+  const labels = zaakTypeTransformer.notificationLabels;
+
+  if (labels) {
+    const notificationBase = getNotificationBase(vergunning);
+    const notificationLabels = getNotificationLabels(
+      labels,
+      vergunning,
+      vergunningen
+    );
+    if (notificationLabels !== null) {
+      return mergeNotificationProperties(
+        notificationBase,
+        notificationLabels,
+        vergunning
+      );
+    }
+  }
+
+  return null;
+}
+
+export function getVergunningNotifications(
+  vergunningen: VergunningFrontendV2[],
+  compareDate: Date = new Date()
+) {
+  return vergunningen
+    .map((vergunning, index, allVergunningen) =>
+      createVergunningNotification(vergunning, allVergunningen, compareDate)
+    )
+    .filter(
+      (notification: MyNotification | null): notification is MyNotification =>
+        notification !== null
+    );
+}
+
+export async function fetchVergunningenV2Notifications(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  compareDate?: Date
+) {
+  const VERGUNNINGEN = await fetchVergunningenV2(
+    requestID,
+    authProfileAndToken
+  );
+
+  if (VERGUNNINGEN.status === 'OK') {
+    const notifications = getVergunningNotifications(
+      VERGUNNINGEN.content,
+      compareDate
+    );
+
+    return apiSuccessResult({
+      notifications,
+    });
+  }
+
+  return apiDependencyError({ VERGUNNINGEN });
+}

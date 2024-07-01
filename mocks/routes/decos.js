@@ -6,6 +6,14 @@ const WORKFLOW_INSTANCES = require('../fixtures/decos-vergunningen-workflowinsta
 const WORKFLOWS = require('../fixtures/decos-vergunningen-workflows-response.json');
 const ZAKEN = require('../fixtures/decos-vergunningen-zaken-response.json');
 
+const zakenKeysStatusInBehandeling = ZAKEN.content
+  .filter((zaak) => zaak.fields.title === 'In behandeling')
+  .map((zaak) => zaak.key);
+
+function getZaakByKey(key) {
+  return ZAKEN.content.find((zaak) => zaak.key === key);
+}
+
 module.exports = [
   {
     id: 'post-decos-address-books',
@@ -78,10 +86,14 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: WORKFLOWS,
+          middleware: (req, res, next, core) => {
+            if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
+              WORKFLOWS.content[0].key = req.params.key;
+            }
+            return res.send(WORKFLOWS);
+          },
         },
       },
     ],
@@ -93,10 +105,30 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: WORKFLOW_INSTANCES,
+          middleware: (req, res, next, core) => {
+            if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
+              const queryParams = new URLSearchParams(req.query);
+              const stepTitle = queryParams.get('filter').match(/'(.*?)'/g); //filter=text7 eq '${stepTitle}';
+
+              WORKFLOW_INSTANCES.content[1].fields.text7 = stepTitle[0]
+                .replaceAll("'", '')
+                .trim();
+
+              const dateRequest = new Date(
+                getZaakByKey(req.params.key).fields.document_date
+              );
+
+              dateRequest.setDate(dateRequest.getDate() + 4);
+
+              WORKFLOW_INSTANCES.content[1].fields.date1 =
+                dateRequest.toISOString();
+
+              return res.send(WORKFLOW_INSTANCES);
+            }
+            return res.send({ content: [] });
+          },
         },
       },
     ],

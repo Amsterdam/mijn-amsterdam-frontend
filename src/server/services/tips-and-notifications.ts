@@ -30,6 +30,8 @@ import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { fetchSVWINotifications } from './simple-connect/svwi';
+import { FeatureToggle } from '../../universal/config';
+import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 
 export function sortNotifications(
   notifications: MyNotification[],
@@ -147,7 +149,9 @@ const notificationServices: NotificationServices = {
   commercial: {
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
-    vergunningen: fetchVergunningenNotifications,
+    vergunningen: FeatureToggle.vergunningenV2Active
+      ? fetchVergunningenV2Notifications
+      : fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
     erfpacht: fetchErfpachtNotifications,
     maintenanceNotifications: (requestID: requestID) =>
@@ -168,33 +172,35 @@ const notificationServices: NotificationServices = {
   },
   'private-attributes': {},
   private: {
-    brp: fetchBrpNotifications,
-    belasting: fetchBelastingNotifications,
-    milieuzone: fetchMilieuzoneNotifications,
-    overtredingen: fetchOvertredingenNotifications,
-    vergunningen: fetchVergunningenNotifications,
-    erfpacht: fetchErfpachtNotifications,
-    subsidie: fetchSubsidieNotifications,
-    maintenance: (requestID: requestID) =>
-      fetchMaintenanceNotificationsDashboard(requestID),
-    toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
-    fetchKrefia: fetchKrefiaNotifications,
-    fetchWior: (
-      requestID: requestID,
-      authProfileAndToken: AuthProfileAndToken
-    ) =>
-      fetchWiorNotifications(
-        requestID,
-        authProfileAndToken,
-        authProfileAndToken.profile.profileType
-      ),
-    fetchWpi: fetchWpiNotifications,
-    fetchSVWI: fetchSVWINotifications,
-    klachten: fetchKlachtenNotifications,
-    horeca: fetchHorecaNotifications,
-    avg: fetchAVGNotifications,
-    bodem: fetchLoodMetingNotifications,
-    bezwaren: fetchBezwarenNotifications,
+    // brp: fetchBrpNotifications,
+    // belasting: fetchBelastingNotifications,
+    // milieuzone: fetchMilieuzoneNotifications,
+    // overtredingen: fetchOvertredingenNotifications,
+    vergunningen: FeatureToggle.vergunningenV2Active
+      ? fetchVergunningenV2Notifications
+      : fetchVergunningenNotifications,
+    // erfpacht: fetchErfpachtNotifications,
+    // subsidie: fetchSubsidieNotifications,
+    // maintenance: (requestID: requestID) =>
+    //   fetchMaintenanceNotificationsDashboard(requestID),
+    // toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
+    // fetchKrefia: fetchKrefiaNotifications,
+    // fetchWior: (
+    //   requestID: requestID,
+    //   authProfileAndToken: AuthProfileAndToken
+    // ) =>
+    //   fetchWiorNotifications(
+    //     requestID,
+    //     authProfileAndToken,
+    //     authProfileAndToken.profile.profileType
+    //   ),
+    // fetchWpi: fetchWpiNotifications,
+    // fetchSVWI: fetchSVWINotifications,
+    // klachten: fetchKlachtenNotifications,
+    // horeca: fetchHorecaNotifications,
+    // avg: fetchAVGNotifications,
+    // bodem: fetchLoodMetingNotifications,
+    // bezwaren: fetchBezwarenNotifications,
   },
 };
 
