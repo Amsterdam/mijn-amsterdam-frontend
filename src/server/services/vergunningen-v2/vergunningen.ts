@@ -6,7 +6,7 @@ import {
   apiSuccessResult,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { BffEndpoints } from '../../config';
+import { BffEndpoints, ONE_SECOND_MS } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
@@ -103,7 +103,10 @@ async function fetchAndFilterVergunningenV2_(
 }
 
 export const fetchAndFilterVergunningenV2 = memoizee(
-  fetchAndFilterVergunningenV2_
+  fetchAndFilterVergunningenV2_,
+  {
+    maxAge: 45 * ONE_SECOND_MS,
+  }
 );
 
 export async function fetchVergunningenV2(
