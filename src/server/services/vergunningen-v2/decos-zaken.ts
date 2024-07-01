@@ -47,6 +47,11 @@ import {
   transformBoolean,
   transformKenteken,
 } from './helpers';
+import {
+  caseNotificationLabelsDefault,
+  caseNotificationLabelsExpirables,
+  caseNotificationLabelsRevoke,
+} from './vergunningen-notification-labels';
 
 const decision: DecosFieldTransformer = {
   name: 'decision',
@@ -142,6 +147,7 @@ export const TVMRVVObject: DecosZaakTypeTransformer<TVMRVVObjectType> = {
 
     return vergunning;
   },
+  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 export const VakantieverhuurVergunningaanvraag: DecosZaakTypeTransformer<VakantieverhuurVergunningaanvraagType> =
@@ -180,6 +186,7 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTypeTransformer<Vakanti
 
       return vergunning;
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const GPP: DecosZaakTypeTransformer<GPPType> = {
@@ -199,6 +206,7 @@ export const GPP: DecosZaakTypeTransformer<GPPType> = {
     Ingetrokken: ['Ingetrokken i.v.m. overlijden of verhuizing'],
     '': ['Nog niet bekend'],
   },
+  notificationLabels: caseNotificationLabelsDefault,
 };
 
 export const GPK: DecosZaakTypeTransformer<GPKType> = {
@@ -229,6 +237,7 @@ export const GPK: DecosZaakTypeTransformer<GPKType> = {
       'Verleend Passagier met GPP (niet verleend Bestuurd',
     ],
   },
+  notificationLabels: caseNotificationLabelsDefault,
 };
 
 export const EvenementMelding: DecosZaakTypeTransformer<EvenementMeldingType> =
@@ -253,6 +262,7 @@ export const EvenementMelding: DecosZaakTypeTransformer<EvenementMeldingType> =
       'Niet toegestaan': ['Niet verleend'],
       '': ['Nog niet  bekend', 'Nog niet bekend'],
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const EvenementVergunning: DecosZaakTypeTransformer<EvenementVergunningType> =
@@ -272,6 +282,7 @@ export const EvenementVergunning: DecosZaakTypeTransformer<EvenementVergunningTy
       Verleend: ['Verleend (Bijzonder/Bewaren)', 'Verleend zonder borden'],
       '': ['Nog niet bekend', 'Nog niet  bekend'],
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const Omzettingsvergunning: DecosZaakTypeTransformer<OmzettingsvergunningType> =
@@ -288,6 +299,7 @@ export const Omzettingsvergunning: DecosZaakTypeTransformer<Omzettingsvergunning
       Verleend: ['Verleend zonder borden'],
       '': ['Nog niet bekend', 'Nog niet  bekend'],
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const ERVV_TVM: DecosZaakTypeTransformer<ERVV> = {
@@ -312,6 +324,7 @@ export const ERVV_TVM: DecosZaakTypeTransformer<ERVV> = {
       'Verleend zonder borden',
     ],
   },
+  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 export const BZP: DecosZaakTypeTransformer<BZPType> = {
@@ -329,6 +342,7 @@ export const BZP: DecosZaakTypeTransformer<BZPType> = {
     vergunning.title = getCustomTitleForVergunningWithLicensePlates(vergunning);
     return vergunning;
   },
+  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 export const BZB: DecosZaakTypeTransformer<BZBType> = {
@@ -342,6 +356,7 @@ export const BZB: DecosZaakTypeTransformer<BZBType> = {
     company: { name: 'companyName' },
     num6: { name: 'numberOfPermits' },
   },
+  notificationLabels: caseNotificationLabelsDefault,
 };
 
 export const Flyeren: DecosZaakTypeTransformer<FlyerenType> = {
@@ -357,6 +372,7 @@ export const Flyeren: DecosZaakTypeTransformer<FlyerenType> = {
     text7: timeStart,
     text8: timeEnd,
   },
+  notificationLabels: caseNotificationLabelsDefault,
 };
 
 export const AanbiedenDiensten: DecosZaakTypeTransformer<AanbiedenDienstenType> =
@@ -370,6 +386,7 @@ export const AanbiedenDiensten: DecosZaakTypeTransformer<AanbiedenDienstenType> 
       date7: dateEnd,
       text6: location,
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const NachtwerkOntheffing: DecosZaakTypeTransformer<NachtwerkontheffingType> =
@@ -391,6 +408,7 @@ export const NachtwerkOntheffing: DecosZaakTypeTransformer<NachtwerkontheffingTy
     decisionTranslations: {
       Verleend: ['Verleend met borden', 'Verleend zonder borden'],
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const ZwaarVerkeer: DecosZaakTypeTransformer<ZwaarVerkeerType> = {
@@ -456,6 +474,7 @@ export const ZwaarVerkeer: DecosZaakTypeTransformer<ZwaarVerkeerType> = {
     vergunning.title = getCustomTitleForVergunningWithLicensePlates(vergunning);
     return vergunning;
   },
+  notificationLabels: caseNotificationLabelsDefault,
 };
 
 export const Samenvoegingsvergunning: DecosZaakTypeTransformer<SamenvoegingsvergunningType> =
@@ -469,6 +488,7 @@ export const Samenvoegingsvergunning: DecosZaakTypeTransformer<Samenvoegingsverg
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const Onttrekkingsvergunning: DecosZaakTypeTransformer<OnttrekkingsvergunningType> =
@@ -482,6 +502,7 @@ export const Onttrekkingsvergunning: DecosZaakTypeTransformer<Onttrekkingsvergun
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const OnttrekkingsvergunningSloop: DecosZaakTypeTransformer<OnttrekkingsvergunningSloopType> =
@@ -495,6 +516,7 @@ export const OnttrekkingsvergunningSloop: DecosZaakTypeTransformer<Onttrekkingsv
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const VormenVanWoonruimte: DecosZaakTypeTransformer<VormenVanWoonruimteType> =
@@ -508,6 +530,7 @@ export const VormenVanWoonruimte: DecosZaakTypeTransformer<VormenVanWoonruimteTy
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const Splitsingsvergunning: DecosZaakTypeTransformer<SplitsingsvergunningType> =
@@ -520,6 +543,7 @@ export const Splitsingsvergunning: DecosZaakTypeTransformer<Splitsingsvergunning
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const VOBvergunning: DecosZaakTypeTransformer<LigplaatsvergunningType> =
@@ -536,6 +560,7 @@ export const VOBvergunning: DecosZaakTypeTransformer<LigplaatsvergunningType> =
       text10: { name: 'vesselKind' }, // soort vaartuig
       text14: { name: 'vesselName' }, // naam vaartuig
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const ExploitatieHorecabedrijf: DecosZaakTypeTransformer<ExploitatieHorecabedrijfType> =
@@ -551,6 +576,7 @@ export const ExploitatieHorecabedrijf: DecosZaakTypeTransformer<ExploitatieHorec
       date6: dateStart,
       text6: location,
     },
+    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const RVVHeleStad: DecosZaakTypeTransformer<RVVHeleStadType> = {
@@ -571,6 +597,7 @@ export const RVVHeleStad: DecosZaakTypeTransformer<RVVHeleStadType> = {
     vergunning.title = getCustomTitleForVergunningWithLicensePlates(vergunning);
     return vergunning;
   },
+  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 export const RVVSloterweg: DecosZaakTypeTransformer<RVVSloterwegType> = {
@@ -625,6 +652,7 @@ export const RVVSloterweg: DecosZaakTypeTransformer<RVVSloterwegType> = {
 
     return vergunning;
   },
+  notificationLabels: caseNotificationLabelsRevoke,
 };
 
 export const EigenParkeerplaats: DecosZaakTypeTransformer<EigenParkeerplaatsType> =
@@ -700,6 +728,7 @@ export const EigenParkeerplaats: DecosZaakTypeTransformer<EigenParkeerplaatsType
 
       return vergunning;
     },
+    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const EigenParkeerplaatsOpheffen: DecosZaakTypeTransformer<EigenParkeerplaatsOpheffenType> =
@@ -726,6 +755,7 @@ export const EigenParkeerplaatsOpheffen: DecosZaakTypeTransformer<EigenParkeerpl
       };
       return vergunning;
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const TouringcarDagontheffing: DecosZaakTypeTransformer<TouringcarDagontheffingType> =
@@ -750,6 +780,7 @@ export const TouringcarDagontheffing: DecosZaakTypeTransformer<TouringcarDagonth
         getCustomTitleForVergunningWithLicensePlates(vergunning);
       return vergunning;
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const TouringcarJaarontheffing: DecosZaakTypeTransformer<TouringcarJaarontheffingType> =
@@ -777,6 +808,7 @@ export const TouringcarJaarontheffing: DecosZaakTypeTransformer<TouringcarJaaron
       }
       return vergunning;
     },
+    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const WerkEnVervoerOpStraat: DecosZaakTypeTransformer<WerkzaamhedenEnVervoerOpStraatType> =
@@ -831,35 +863,36 @@ export const WerkEnVervoerOpStraat: DecosZaakTypeTransformer<WerkzaamhedenEnVerv
 
       return vergunning;
     },
+    notificationLabels: caseNotificationLabelsDefault,
   };
 
 const zaakTransformerEntries = Object.values({
-  VakantieverhuurVergunningaanvraag,
-  GPK,
-  GPP,
-  TVMRVVObject,
-  EvenementMelding,
-  EvenementVergunning,
-  BZP,
-  BZB,
-  Flyeren,
   AanbiedenDiensten,
-  NachtwerkOntheffing,
-  ZwaarVerkeer,
-  Samenvoegingsvergunning,
-  Onttrekkingsvergunning,
-  OnttrekkingsvergunningSloop,
-  VormenVanWoonruimte,
-  Splitsingsvergunning,
-  VOBvergunning,
-  ExploitatieHorecabedrijf,
-  RVVHeleStad,
-  RVVSloterweg,
+  BZB,
+  BZP,
   EigenParkeerplaats,
   EigenParkeerplaatsOpheffen,
+  EvenementMelding,
+  EvenementVergunning,
+  ExploitatieHorecabedrijf,
+  Flyeren,
+  GPK,
+  GPP,
+  NachtwerkOntheffing,
+  Onttrekkingsvergunning,
+  OnttrekkingsvergunningSloop,
+  RVVHeleStad,
+  RVVSloterweg,
+  Samenvoegingsvergunning,
+  Splitsingsvergunning,
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
+  TVMRVVObject,
+  VakantieverhuurVergunningaanvraag,
+  VOBvergunning,
+  VormenVanWoonruimte,
   WerkEnVervoerOpStraat,
+  ZwaarVerkeer,
 }).map((zaakTransformer) => {
   return [zaakTransformer.caseType, zaakTransformer] as const;
 });

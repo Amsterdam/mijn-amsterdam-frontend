@@ -10,6 +10,7 @@ import {
 } from '../../../universal/types/vergunningen';
 
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
+export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 
 // Cases with this one of these dfunction values will not be included in the cases shown to the user.
 export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [
@@ -105,8 +106,8 @@ export type DecosZaakTypeTransformer<T extends VergunningV2 = VergunningV2> = {
   // This means even though we do not want, for example, date7 for case A we will receive it anyway.
   // We select a specific set of fields because otherwise we receive all the fields of a zaak which are bloated and mostly unused.
   addToSelectFieldsBase?: string[];
-
-  // notifications: [];
+  // Notifications for this specific
+  notificationLabels?: Partial<NotificationLabelByType>;
 };
 
 export type DecosFieldsObject = Record<DecosFieldNameSource, string>;
@@ -468,3 +469,36 @@ export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
   dateEndFormatted?: string | null;
   isExpired?: boolean;
 } & ZaakDetail;
+
+export type NotificationProperty =
+  | 'title'
+  | 'description'
+  | 'datePublished'
+  | 'link';
+type NotificationPropertyValue = (vergunning: VergunningFrontendV2) => string;
+type NotificationLink = (vergunning: VergunningFrontendV2) => LinkProps;
+
+export type NotificationLinks = {
+  [key in VergunningFrontendV2['caseType']]?: string;
+};
+
+type NotificationLabelsBase = {
+  [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;
+};
+
+export interface NotificationLabels extends NotificationLabelsBase {
+  link: NotificationLink;
+}
+
+export type NotificationTypeKey =
+  | 'statusAanvraag'
+  | 'statusInBehandeling'
+  | 'statusAfgehandeld'
+  | 'verlooptBinnenkort'
+  | 'isVerlopen'
+  | 'isIngetrokken';
+
+export type NotificationLabelByType = Record<
+  NotificationTypeKey,
+  NotificationLabels
+>;

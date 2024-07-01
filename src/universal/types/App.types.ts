@@ -87,8 +87,7 @@ export interface ZaakDetail {
   id: string;
   title: string;
   steps: StatusLineItem[];
-
-  link?: LinkProps;
+  link: LinkProps;
   about?: string;
 }
 export type StatusLine = ZaakDetail;
