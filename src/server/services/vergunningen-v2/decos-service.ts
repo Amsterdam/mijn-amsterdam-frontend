@@ -27,6 +27,7 @@ import {
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
 } from './helpers';
+import { IS_OT } from '../../../universal/config';
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of vergunningen.
  *
@@ -309,6 +310,10 @@ async function fetchDecosVergunningen_(
     }
   }
 
+  if (IS_OT) {
+    console.log('ZAKEN:', JSON.stringify(zakenSource));
+  }
+
   const vergunningen = await transformDecosZakenResponse(
     requestID,
     authProfileAndToken,
@@ -387,7 +392,6 @@ async function isPdfDocument(
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentSource[]>
     ) => {
-      console.log('responseDataSource', responseDataSource);
       return { isPDF: !!responseDataSource.content?.pop()?.fields.bol10 };
     },
   });
@@ -463,7 +467,6 @@ export async function fetchDecosDocumentList(
       requestID,
       documentsSource.content
     );
-    console.log('\n\n', documentsTransformed, '\n\n');
     return apiSuccessResult(documentsTransformed);
   }
   return documentsSource;
@@ -479,6 +482,9 @@ export async function fetchDecosVergunning(
       return `${config.url}/items/${zaakID}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
+      if (IS_OT) {
+        console.log('ZAAK:', JSON.stringify(responseData));
+      }
       if (responseData.content) {
         return responseData.content[0];
       }
