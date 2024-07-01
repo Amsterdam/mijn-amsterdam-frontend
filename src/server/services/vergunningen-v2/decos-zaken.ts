@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { IS_PRODUCTION } from '../../../universal/config';
+import { FeatureToggle, IS_PRODUCTION } from '../../../universal/config';
 
 import {
   CaseTypeV2,
@@ -566,7 +566,7 @@ export const VOBvergunning: DecosZaakTypeTransformer<LigplaatsvergunningType> =
 
 export const ExploitatieHorecabedrijf: DecosZaakTypeTransformer<ExploitatieHorecabedrijfType> =
   {
-    isActive: true,
+    isActive: FeatureToggle.horecaActive,
     caseType: CaseTypeV2.ExploitatieHorecabedrijf,
     title: CaseTypeV2.ExploitatieHorecabedrijf,
     dateInBehandelingWorkflowStepTitle:
