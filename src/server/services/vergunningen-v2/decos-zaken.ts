@@ -187,7 +187,7 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTypeTransformer<Vakanti
 
       return vergunning;
     },
-    notificationLabels: caseNotificationLabelsDefault,
+    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const GPP: DecosZaakTypeTransformer<GPPType> = {

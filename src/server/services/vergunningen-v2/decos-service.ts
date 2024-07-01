@@ -382,11 +382,12 @@ async function isPdfDocument(
   // items / { document_id } / blob ? select = bol10
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${documentKey}/blob?select=bol10`;
+      return `${config.url}/items/${documentKey}/blob?select=bol10&filter=bol10 eq true`;
     },
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentSource[]>
     ) => {
+      console.log('responseDataSource', responseDataSource);
       return { isPDF: !!responseDataSource.content?.pop()?.fields.bol10 };
     },
   });
@@ -456,7 +457,7 @@ export async function fetchDecosDocumentList(
   const documentsSource = await requestData<
     DecosZakenResponse<DecosDocumentSource[]>
   >(apiConfigDocuments, requestID);
-  console.log('!!! documentsSource !!!!', documentsSource.content);
+
   if (documentsSource.status === 'OK') {
     const documentsTransformed = await transformDecosDocumentListResponse(
       requestID,

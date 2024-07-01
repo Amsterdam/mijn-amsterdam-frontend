@@ -5,12 +5,18 @@ import {
   ZaakDetail,
 } from '../../../universal/types';
 import {
+  CaseTypeV2,
   DecosCaseType,
   GetCaseType,
 } from '../../../universal/types/vergunningen';
 
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
+
+export const EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN: DecosCaseType[] = [
+  CaseTypeV2.VakantieverhuurVergunningaanvraag,
+  CaseTypeV2.ExploitatieHorecabedrijf,
+];
 
 // Cases with this one of these dfunction values will not be included in the cases shown to the user.
 export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [
@@ -131,6 +137,8 @@ export type DecosResponse<T> = {
     content: T[];
   };
 };
+
+export type VergunningCaseTypeFilter = (vergunning: VergunningV2) => boolean;
 
 export type AddressBookEntry = {
   key: string;

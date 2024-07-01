@@ -22,12 +22,10 @@ function PageContent({ vergunning, documents }: PageContentProps) {
     !!vergunning && (
       <Grid.Cell span="all">
         <Datalist
-          rows={Object.entries(vergunning)
-            // .filter(([label, content]) => typeof content !== 'object')
-            .map(([label, content]) => ({
-              label,
-              content: JSON.stringify(content),
-            }))}
+          rows={Object.entries(vergunning).map(([label, content]) => ({
+            label,
+            content: JSON.stringify(content),
+          }))}
         />
         {!!documents.length && <DocumentListV2 documents={documents} />}
       </Grid.Cell>
