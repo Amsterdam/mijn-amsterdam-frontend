@@ -219,6 +219,31 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     //isThemaActive: (state: AppState) => { return: true }
   },
 
+  HLI: {
+    title: '',
+    appRoutes: [
+      { urlID: 'HLI', url: '/regelingen-bij-laag-inkomen', tabName: '' },
+      {
+        urlID: 'HLI/STADSPAS',
+        url: '/regelingen-bij-laag-inkomen/stadspas/:id',
+        tabName: '',
+      },
+      {
+        urlID: 'HLI/REGELING',
+        url: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+        tabName: '',
+      },
+      {
+        urlID: 'HLI/REGELINGEN_LIJST',
+        url: '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
+        tabName: '',
+      },
+    ],
+
+    isExternal: false,
+    profileTypes: ['private'],
+  },
+
   HORECA: {
     title: 'Horeca',
     appRoutes: [
