@@ -238,7 +238,7 @@ export const GPK: DecosZaakTypeTransformer<GPKType> = {
       'Verleend Passagier met GPP (niet verleend Bestuurd',
     ],
   },
-  notificationLabels: caseNotificationLabelsDefault,
+  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 export const EvenementMelding: DecosZaakTypeTransformer<EvenementMeldingType> =
