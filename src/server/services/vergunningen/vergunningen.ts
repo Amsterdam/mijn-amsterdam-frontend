@@ -21,13 +21,14 @@ import {
   MyNotification,
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BffEndpoints, ONE_SECOND_MS, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
   NotificationLabels,
   notificationContent,
 } from './vergunningen-content';
+import memoizee from 'memoizee';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
@@ -417,7 +418,7 @@ export function addLinks(
   });
 }
 
-export async function fetchVergunningen<T>(
+async function fetchVergunningen_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   options: VergunningOptions = vergunningOptionsDefault
@@ -438,6 +439,10 @@ export async function fetchVergunningen<T>(
 
   return response;
 }
+
+export const fetchVergunningen = memoizee(fetchVergunningen_, {
+  maxAge: 45 * ONE_SECOND_MS,
+});
 
 export function getNotificationLabels(
   item: Vergunning,
@@ -530,7 +535,7 @@ export function createVergunningNotification(
   return null;
 }
 
-export function getVergunningNotifications(
+function getVergunningNotifications_(
   vergunningen: Vergunning[],
   compareDate: Date = new Date()
 ) {
@@ -561,6 +566,13 @@ export function getVergunningNotifications(
     })
     .map(([notification]) => notification);
 }
+
+export const getVergunningNotifications = memoizee(
+  getVergunningNotifications_,
+  {
+    maxAge: 45 * ONE_SECOND_MS,
+  }
+);
 
 export async function fetchVergunningenNotifications(
   requestID: requestID,

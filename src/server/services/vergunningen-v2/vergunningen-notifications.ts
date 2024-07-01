@@ -1,4 +1,5 @@
 import { differenceInMonths, parseISO } from 'date-fns';
+import memoizee from 'memoizee';
 import { Themas } from '../../../universal/config';
 import {
   apiDependencyError,
@@ -6,6 +7,7 @@ import {
   isRecentNotification,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
+import { ONE_SECOND_MS } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
@@ -114,7 +116,7 @@ export function getVergunningNotifications(
     );
 }
 
-export async function fetchVergunningenV2Notifications(
+async function fetchVergunningenV2Notifications_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
@@ -137,3 +139,10 @@ export async function fetchVergunningenV2Notifications(
 
   return apiDependencyError({ VERGUNNINGEN });
 }
+
+export const fetchAndFilterVergunningenV2 = memoizee(
+  fetchVergunningenV2Notifications_,
+  {
+    maxAge: 45 * ONE_SECOND_MS,
+  }
+);

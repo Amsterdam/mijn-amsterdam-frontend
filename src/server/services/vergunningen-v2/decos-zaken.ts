@@ -630,7 +630,8 @@ export const RVVSloterweg: DecosZaakTypeTransformer<RVVSloterwegType> = {
     if (dateVerleend) {
       vergunning['processed'] = true;
       // if the workflow verleend has run but there is no decision then its actually Verleend.
-      // this decision (verleend) is not set by decos eventhough the actual permit is granted
+      // this decision (verleend) is not set by decos eventhough the actual permit is granted.
+      // This is some hack to have an overview of active permits in the Decos back-office.
       if (!vergunning.decision) {
         vergunning.decision = 'Verleend';
       }
