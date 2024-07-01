@@ -17,8 +17,10 @@ export default function DocumentListV2({
   return (
     <table className={styles.DocumentListV2}>
       <thead>
-        <th>Document</th>
-        <th>Datum</th>
+        <tr>
+          <th>Document</th>
+          <th>Datum</th>
+        </tr>
       </thead>
       <tbody>
         {documents.map((document) => (
