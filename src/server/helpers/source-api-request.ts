@@ -61,6 +61,10 @@ export async function requestData<T>(
   requestID: requestID,
   authProfileAndToken?: AuthProfileAndToken
 ) {
+  if (!requestID) {
+    throw new Error('Request ID not provided in requestData(...) call.');
+  }
+
   const source = axios.CancelToken.source();
 
   const requestConfig: DataRequestConfig = {
