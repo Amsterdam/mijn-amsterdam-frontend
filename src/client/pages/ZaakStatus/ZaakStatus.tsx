@@ -2,24 +2,29 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAppStateGetter, useAppStateReady } from '../../hooks';
 import {
+  ErrorAlert,
   LinkdInline,
   PageContent,
   PageHeading,
   TextPage,
 } from '../../components';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { AppRoutes, DocumentTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { Paragraph } from '@amsterdam/design-system-react';
 
 const ITEM_NOT_FOUND = 'not-found';
-const STATE_ERROR = 'not-found';
+const STATE_ERROR = 'state-error';
 
 type ThemaQueryParam = 'vergunningen';
+type PageRouteResolver = {
+  baseRoute: string;
+  getRoute: (detailPageItemId, appState) => string;
+};
+
 const pageRouteResolvers: {
-  vergunningen: {
-    baseRoute: string;
-    getRoute: (detailPageItemId, appState) => string;
-  };
+  [key: ThemaQueryParam]: PageRouteResolver;
 } = {
   vergunningen: {
     baseRoute: AppRoutes.VERGUNNINGEN,
@@ -38,7 +43,7 @@ const pageRouteResolvers: {
   },
 };
 
-function useNavigateToPage(queryParams) {
+function useNavigateToPage(queryParams: URLSearchParams) {
   const history = useHistory();
   const appState = useAppStateGetter();
   const thema = queryParams.get('thema') as ThemaQueryParam;
@@ -71,51 +76,51 @@ export default function ZaakStatus() {
   const history = useHistory();
   const queryParams = new URLSearchParams(history.location.search);
   const pageRoute = useNavigateToPage(queryParams);
-  let pageHeadingText = 'Er is een fout opgetreden';
-  let pageContentText = 'Ga naar ';
   let redirectRoute = AppRoutes.HOME;
-  let redirectName = 'home';
+  let redirectName = 'Ga naar het dashboard';
 
   if (pageRoute.unResolvedState === ITEM_NOT_FOUND || appStateReady) {
     if (pageRoute.baseRoute) {
       redirectRoute = pageRoute.baseRoute;
-      redirectName = DocumentTitles[pageRoute.baseRoute] as string;
+      redirectName = 'Bekijk het overzicht';
     }
-    if (queryParams.get('payment')) {
-      pageHeadingText = 'Wachten op betaling';
-      pageContentText = 'Momenteel wordt er gewacht op de betaling.';
-    }
-  } else if (pageRoute.unResolvedState === STATE_ERROR) {
-    pageHeadingText = 'Er is een error';
-    pageContentText = 'Er is een error opgetreden, probeer het later nog eens.';
   }
+
   return (
-    <div>
-      <TextPage>
-        {!appStateReady ? (
-          <>
-            {' '}
-            <PageContent>
-              <p>
-                <LoadingContent
-                  barConfig={[
-                    ['auto', '2rem', '1rem'],
-                    ['auto', '2rem', '0'],
-                  ]}
-                />
-              </p>
-            </PageContent>
-          </>
-        ) : (
-          <>
-            <PageHeading>{pageHeadingText}</PageHeading>
-            <PageContent id="skip-to-id-AppContent">
-              {pageContentText}
-              <LinkdInline href={redirectRoute}>{redirectName}</LinkdInline>
-            </PageContent>
-          </>
+    <TextPage>
+      <PageHeading>Status van uw aanvraag</PageHeading>
+      <PageContent>
+        {pageRoute.unResolvedState === undefined && !appStateReady && (
+          <p>
+            <LoadingContent
+              barConfig={[
+                ['auto', '2rem', '1rem'],
+                ['auto', '2rem', '0'],
+              ]}
+            />
+          </p>
         )}
-      </TextPage>
-    </div>
+        {pageRoute.unResolvedState === ITEM_NOT_FOUND ||
+          (appStateReady && queryParams.get('payment') && (
+            <Paragraph>
+              U heeft een betaald voor deze aanvraag. Het kan even duren voordat
+              uw aanvraag op Mijn Amsterdam te zien is.
+            </Paragraph>
+          ))}
+        {appStateReady && (
+          <Paragraph>
+            Wij kunnen de status van uw aanvraag nu niet laten zien.
+          </Paragraph>
+        )}
+        {pageRoute.unResolvedState === STATE_ERROR && (
+          <ErrorAlert>
+            Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
+          </ErrorAlert>
+        )}
+        <Paragraph>
+          <MaRouterLink to={redirectRoute}>{redirectName}</MaRouterLink>
+        </Paragraph>
+      </PageContent>
+    </TextPage>
   );
 }

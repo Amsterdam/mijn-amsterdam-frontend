@@ -120,7 +120,6 @@
     "proj4": "^2.11.0",
     "pug": "^3.0.3",
     "qs": "^6.12.1",
-    "query-string": "^9.0.0",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
