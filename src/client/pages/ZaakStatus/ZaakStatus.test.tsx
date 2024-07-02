@@ -75,6 +75,8 @@ describe('ZaakStatus', () => {
       )
     ).toBeInTheDocument();
 
+    expect(pushMock).not.toHaveBeenCalled();
+
     expect(asFragment).toMatchSnapshot();
   });
 
@@ -82,7 +84,7 @@ describe('ZaakStatus', () => {
     historyReturnValue = {
       location: {
         pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000001.c&payment=true',
+        search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
       },
       push: pushMock,
     };
@@ -103,6 +105,8 @@ describe('ZaakStatus', () => {
         'U heeft een betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.'
       )
     ).toBeInTheDocument();
+
+    expect(pushMock).not.toHaveBeenCalled();
 
     expect(asFragment).toMatchSnapshot();
   });
