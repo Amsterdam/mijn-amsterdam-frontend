@@ -11,6 +11,7 @@ export const FeatureToggle = {
   cleopatraApiActive: true,
   cmsFooterActive: true,
   dbDisabled: false,
+  decosServiceActive: IS_DEVELOPMENT,
   eherkenningActive: true,
   ehKetenmachtigingActive: !IS_PRODUCTION,
   erfpachtV2Active: !IS_PRODUCTION,
