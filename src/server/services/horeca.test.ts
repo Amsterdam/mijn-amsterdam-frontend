@@ -102,6 +102,35 @@ describe('Horeca service', () => {
   it('should return the expected notifications', async () => {
     const result = await fetchHorecaNotifications('x', authProfileAndToken);
 
-    expect(result.content).toMatchInlineSnapshot('null');
+    expect(result.content).toMatchInlineSnapshot(`
+      {
+        "notifications": [
+          {
+            "datePublished": "2022-11-25T00:00:00",
+            "description": "Wij hebben uw aanvraag voor een horeca vergunning exploitatie horecabedrijf in behandeling genomen.",
+            "id": "vergunning-334568232-notification",
+            "link": {
+              "title": "Bekijk details",
+              "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/334568232",
+            },
+            "subject": "334568232",
+            "thema": "VERGUNNINGEN",
+            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf in behandeling",
+          },
+          {
+            "datePublished": "2022-10-20T00:00:00",
+            "description": "Wij hebben uw aanvraag voor een horeca vergunning exploitatie horecabedrijf ontvangen.",
+            "id": "vergunning-3209922248-notification",
+            "link": {
+              "title": "Bekijk details",
+              "to": "/horeca/horeca-vergunning-exploitatie-horecabedrijf/3209922248",
+            },
+            "subject": "3209922248",
+            "thema": "VERGUNNINGEN",
+            "title": "Aanvraag horeca vergunning exploitatie horecabedrijf ontvangen",
+          },
+        ],
+      }
+    `);
   });
 });
