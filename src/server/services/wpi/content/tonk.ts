@@ -7,14 +7,14 @@ const weigeringVerlengingLabels: WpiRequestStatusLabels = {
     title: (requestProcess, statusStep) =>
       `${statusStep.about || requestProcess.about}: Verlenging geweigerd`,
     description: (requestProcess, statusStep) =>
-      `U hebt de verlenging van uw ${productName(
+      `U heeft de verlenging van uw ${productName(
         requestProcess,
         statusStep,
         false
       )} geweigerd.`,
   },
   description: (requestProcess, statusStep) =>
-    `<p> U hebt uw ${
+    `<p> U heeft uw ${
       statusStep.about || requestProcess.about
     } verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -23,7 +23,7 @@ const correctieMailLabels: WpiRequestStatusLabels = {
   notification: {
     title: () => `Mail over verkeerde TONK-brief ontvangen`,
     description: () =>
-      `U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen.`,
+      `U heeft een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen.`,
     link: (requestProcess, statusStep) => {
       const [document] = statusStep!.documents!;
       return {
@@ -37,7 +37,7 @@ const correctieMailLabels: WpiRequestStatusLabels = {
     },
   },
   description: () =>
-    `<p>U hebt een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>U heeft een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const besluitLabels: WpiRequestStatusLabels = {
@@ -95,7 +95,7 @@ const besluitLabels: WpiRequestStatusLabels = {
         )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
 
       case 'verlenging':
-        return `<p>U hebt recht op verlenging van ${productName(
+        return `<p>U heeft recht op verlenging van ${productName(
           requestProcess,
           statusStep
         )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;

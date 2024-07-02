@@ -41,7 +41,7 @@ export const remoteApiHost = 'http://remote-api-host';
 
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
-process.env.BFF_API_BASE_URL = bffApiHost;
+process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
 process.env.BFF_REQUEST_CACHE_ENABLED = 'false';
@@ -53,6 +53,12 @@ process.env.BFF_OIDC_USERINFO_ENDPOINT = `${bffApiHost}/oidc/userinfo`;
 process.env.BFF_MIJN_ERFPACHT_API_KEY = 'foo-bar-123';
 process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_MIJN_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
+
+//AFIS
+process.env.BFF_AFIS_API_BASE_URL = `${remoteApiHost}/afis`;
+process.env.BFF_AFIS_OAUTH_CLIENT_ID = 'mijnamsterdam';
+process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
+  'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 // V2
 process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;

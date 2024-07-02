@@ -161,7 +161,7 @@ export const tips: Tip[] = [
     thema: Themas.BRP,
     profileTypes: ['private'],
     description:
-      'U hebt een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
+      'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
       not(hasValidIdForVoting),
       is18OrOlder,

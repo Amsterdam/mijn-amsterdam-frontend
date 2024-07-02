@@ -76,7 +76,7 @@ export default function Klachten() {
       </PageHeading>
       <PageContent>
         <p>
-          Hier ziet u een overzicht van de klachten die u hebt ingediend bij
+          Hier ziet u een overzicht van de klachten die U heeft ingediend bij
           gemeente Amsterdam.
         </p>
         <p>

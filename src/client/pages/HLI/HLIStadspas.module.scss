@@ -1,0 +1,20 @@
+@import '../../styles/_global.scss';
+
+@media screen and (min-width: $ams-breakpoint-medium) {
+  .Table_budgets,
+  .Table_transactions {
+    tr {
+      > th,
+      > td {
+        width: 25%;
+        &:nth-child(1) {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+.StadspasNummerInfo {
+  padding-bottom: var(--ams-grid-row-gap-sm);
+}

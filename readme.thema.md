@@ -13,8 +13,8 @@ Roughly follow the following steps to integrate a new thema into the application
 - determine the profile types for the service and integrate in the correct variables/types in `services/controller.ts`
 - if the service will have notifications and recent cases also update `services/generated.ts` in a likewise manner as already defined.
 - add an Api Source Url to src/server/config.ts `{ [$THEMA]: { url: 'https://some/service/endpoint' } }`
-- get/create some mock data that will represent the appropriate api response and put in `mock-data/json/$thema.json`
-- add Mock data entry in src/server/mock-data/index.ts and load the mock data
+- get/create some mock data that will represent the appropriate api response and put in `mocks/fixtures/`
+- add Mock route to `mocks/routes/` and register this in `mocks/collections.json` using its id and variant id
 
 # In the src/client folder
 

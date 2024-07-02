@@ -1,7 +1,7 @@
 import { defaultDateFormat } from '../../../../universal/helpers';
-import { WMOStatusLineItemFormatterConfig } from '../wmo-config-and-types';
+import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 
-export const vergoeding: WMOStatusLineItemFormatterConfig[] = [
+export const vergoeding: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
     datePublished: (data) => data.datumBesluit,
@@ -10,7 +10,7 @@ export const vergoeding: WMOStatusLineItemFormatterConfig[] = [
     description: (data) =>
       `
             <p>
-              U hebt recht op een ${data.titel} per ${defaultDateFormat(
+              U heeft recht op een ${data.titel} per ${defaultDateFormat(
                 data.datumIngangGeldigheid
               )}.
             </p>

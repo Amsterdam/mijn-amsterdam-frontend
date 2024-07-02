@@ -1,6 +1,11 @@
+import {
+  Grid,
+  Link,
+  LinkList,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import Linkd from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
@@ -16,23 +21,29 @@ export default function InkomenDetailBbz() {
     (isLoading: boolean, inkomenItem: StatusSourceItem) => {
       return (
         <>
-          <p>
-            Hieronder ziet u de status van uw aanvraag voor een uitkering of
-            lening van het Bbz. Ook als u een IOAZ uitkering heeft aangevraagd
-            ziet u de status hieronder. Als u meerdere aanvragen voor het Bbz
-            hebt gedaan, dan krijgt u 1 besluit als antwoord op al uw aanvragen
-            voor het Bbz. Het duurt maximaal 3 werkdagen voordat uw documenten
-            over het Bbz in Mijn Amsterdam staan.
-          </p>
-          <p>
-            Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u
-            opgenomen.
-          </p>
-          <p>
-            <Linkd external={true} href={ExternalUrls.WPI_BBZ}>
-              Meer informatie over het Bbz
-            </Linkd>
-          </p>
+          <Grid.Cell span="all">
+            <Paragraph>
+              Hieronder ziet u de status van uw aanvraag voor een uitkering of
+              lening van het Bbz. Ook als u een IOAZ uitkering heeft aangevraagd
+              ziet u de status hieronder. Als u meerdere aanvragen voor het Bbz
+              hebt gedaan, dan krijgt u 1 besluit als antwoord op al uw
+              aanvragen voor het Bbz. Het duurt maximaal 3 werkdagen voordat uw
+              documenten over het Bbz in Mijn Amsterdam staan.
+            </Paragraph>
+          </Grid.Cell>
+          <Grid.Cell span="all">
+            <Paragraph>
+              Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u
+              opgenomen.
+            </Paragraph>
+          </Grid.Cell>
+          <Grid.Cell span="all">
+            <LinkList>
+              <LinkList.Link rel="noreferrer" href={ExternalUrls.WPI_BBZ}>
+                Meer informatie over het Bbz
+              </LinkList.Link>
+            </LinkList>
+          </Grid.Cell>
         </>
       );
     },

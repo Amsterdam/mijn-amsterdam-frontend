@@ -41,7 +41,7 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
       "woonplaatsNaam": "Amsterdam",
     },
   ],
-  "fetchUrlAantalBewoners": "http://bff-api-host/service/mks/aantal-bewoners/xxxcasdasfada",
+  "fetchUrlAantalBewoners": "http://bff-api-host/api/v1/service/mks/aantal-bewoners/xxxcasdasfada",
   "identiteitsbewijzen": [
     {
       "datumAfloop": "2025-10-15",

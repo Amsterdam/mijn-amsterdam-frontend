@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { Stadspas } from '../../../server/services/stadspas/stadspas-types';
+import { Stadspas } from '../../../server/services/hli/stadspas-types';
 import { AppRoutes, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';

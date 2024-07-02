@@ -96,47 +96,63 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'ZORGNED_JZD'
-  | 'ZORGNED_AV'
-  | 'GPASS'
-  | 'WPI_E_AANVRAGEN'
-  | 'WPI_AANVRAGEN'
-  | 'WPI_SPECIFICATIES'
-  | 'POWERBROWSER'
-  | 'SVWI'
+  | 'AFIS_OAUTH'
+  | 'AFIS_BUSINESSPARTNER'
+  | 'AFVAL'
+  | 'BAG'
   | 'BELASTINGEN'
-  | 'BEZWAREN_LIST'
   | 'BEZWAREN_DOCUMENT'
   | 'BEZWAREN_DOCUMENTS'
+  | 'BEZWAREN_LIST'
   | 'BEZWAREN_STATUS'
-  | 'CLEOPATRA'
-  | 'VERGUNNINGEN'
-  | 'CMS_CONTENT_GENERAL_INFO'
-  | 'CMS_CONTENT_FOOTER'
-  | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'BRP'
+  | 'CLEOPATRA'
+  | 'CMS_CONTENT_FOOTER'
+  | 'CMS_CONTENT_GENERAL_INFO'
+  | 'CMS_MAINTENANCE_NOTIFICATIONS'
+  | 'ENABLEU_2_SMILE'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
-  | 'BAG'
-  | 'AFVAL'
-  | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
+  | 'GPASS'
+  | 'KREFIA'
   | 'KVK'
+  | 'LOOD_365'
+  | 'LOOD_365_OAUTH'
+  | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
-  | 'KREFIA'
-  | 'ENABLEU_2_SMILE'
-  | 'LOOD_365'
-  | 'LOOD_365_OAUTH';
+  | 'SVWI'
+  | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
+  | 'VERGUNNINGEN'
+  | 'WPI_AANVRAGEN'
+  | 'WPI_E_AANVRAGEN'
+  | 'WPI_SPECIFICATIES'
+  | 'ZORGNED_AV'
+  | 'ZORGNED_JZD';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
+  AFIS_OAUTH: {
+    method: 'post',
+    url: `${process.env.BFF_AFIS_API_BASE_URL}/OAuthServer`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    postponeFetch: !FeatureToggle.afisActive,
+  },
+  AFIS_BUSINESSPARTNER: {
+    method: 'post',
+    url: `${process.env.BFF_AFIS_API_BASE_URL}/businesspartner`,
+    postponeFetch: !FeatureToggle.afisActive,
+  },
   ZORGNED_JZD: {
     method: 'post',
     url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
     headers: {
       Token: process.env.BFF_ZORGNED_API_TOKEN,
       'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'JZD',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_SERVER_CLIENT_CERT'),
@@ -149,6 +165,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: process.env.BFF_ZORGNED_API_TOKEN,
       'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'AV',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
@@ -378,7 +395,7 @@ export const BffEndpoints = {
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // Stadspas
-  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey',
+  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
   // Vergunningen
   VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
@@ -393,6 +410,9 @@ export const BffEndpoints = {
 
   // WMO / Zorgned
   WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
+
+  // AV / Zorgned
+  HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
 
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',

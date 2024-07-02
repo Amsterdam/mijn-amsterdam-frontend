@@ -106,12 +106,12 @@ const intrekkenLabels: WpiRequestStatusLabels = {
     title: (requestProcess, statusStep) =>
       `${statusStep.about || requestProcess.about}: Aanvraag ingetrokken`,
     description: (requestProcess, statusStep) =>
-      `U hebt uw ${
+      `U heeft uw ${
         statusStep.about || requestProcess.about
       } aanvraag ingetrokken.`,
   },
   description: (requestProcess, statusStep) =>
-    `<p>U hebt uw ${
+    `<p>U heeft uw ${
       statusStep.about || requestProcess.about
     } aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
@@ -145,13 +145,13 @@ const besluitLabels: WpiRequestStatusLabels = {
     description: (requestProcess, statusStep) => {
       switch (statusStep?.decision) {
         case 'toekenning':
-          return `U hebt recht op ${productName(
+          return `U heeft recht op ${productName(
             requestProcess,
             statusStep
           )} (besluit: ${defaultDateFormat(statusStep!.datePublished)}).`;
 
         case 'afwijzing':
-          return `U hebt geen recht op ${productName(
+          return `U heeft geen recht op ${productName(
             requestProcess,
             statusStep
           )} (besluit: ${defaultDateFormat(statusStep!.datePublished)}).`;
@@ -177,7 +177,7 @@ const besluitLabels: WpiRequestStatusLabels = {
     switch (statusStep?.decision) {
       case 'toekenning':
         return `<p>
-        U hebt recht op ${productName(
+        U heeft recht op ${productName(
           requestProcess,
           statusStep
         )}. Bekijk de brief voor meer details.
@@ -190,7 +190,7 @@ const besluitLabels: WpiRequestStatusLabels = {
 
       case 'afwijzing':
         return `<p>
-        U hebt geen recht op ${productName(
+        U heeft geen recht op ${productName(
           requestProcess,
           statusStep
         )}. Bekijk de brief voor meer details.

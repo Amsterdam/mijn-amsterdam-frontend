@@ -24,7 +24,7 @@ export const requestProcess: WpiRequestProcessLabels = {
     },
     description: (requestProcess) =>
       `
-          <p>U hebt op ${defaultDateFormat(
+          <p>U heeft op ${defaultDateFormat(
             requestProcess.dateStart
           )} een bijstandsuitkering aangevraagd.</p>
           <p>
@@ -110,11 +110,11 @@ export const requestProcess: WpiRequestProcessLabels = {
       description: (requestProcess, statusStep) => {
         switch (requestProcess.decision) {
           case 'afwijzing':
-            return `U hebt geen recht op een bijstandsuitkering (besluit ${defaultDateFormat(
+            return `U heeft geen recht op een bijstandsuitkering (besluit ${defaultDateFormat(
               statusStep.datePublished
             )}).`;
           case 'toekenning':
-            return `U hebt recht op een bijstandsuitkering (besluit ${defaultDateFormat(
+            return `U heeft recht op een bijstandsuitkering (besluit ${defaultDateFormat(
               statusStep.datePublished
             )}).`;
           case 'buitenBehandeling':
@@ -127,11 +127,11 @@ export const requestProcess: WpiRequestProcessLabels = {
     description: (requestProcess) => {
       switch (requestProcess.decision) {
         case 'afwijzing':
-          return 'U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.';
+          return 'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.';
         case 'toekenning':
           return `
             <p>
-              U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
+              U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
               details.
             </p>
             <p>

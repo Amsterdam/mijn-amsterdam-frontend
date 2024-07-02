@@ -18,6 +18,7 @@ interface ListPagePaginatedProps {
   appRoute: string;
   appRouteBack: string;
   appRouteParams?: Record<string, string> | null;
+  backLinkTitle?: string;
   displayProps: Record<string, string> | null;
   isError: boolean;
   isLoading: boolean;
@@ -34,6 +35,7 @@ export function ListPagePaginated({
   appRoute,
   appRouteBack,
   appRouteParams = null,
+  backLinkTitle = 'Overzicht',
   body,
   thema,
   displayProps,
@@ -71,8 +73,7 @@ export function ListPagePaginated({
     <OverviewPage>
       <PageHeading
         icon={<ThemaIcon thema={thema} />}
-        backLink={{ to: appRouteBack, title: 'Overzicht' }}
-        isLoading={isLoading}
+        backLink={{ to: appRouteBack, title: backLinkTitle }}
       >
         {title}
       </PageHeading>
@@ -96,7 +97,7 @@ export function ListPagePaginated({
             )}
             {!isError && (
               <>
-                {!itemsPaginated.length && !!noItemsText && (
+                {!isLoading && !itemsPaginated.length && !!noItemsText && (
                   <Grid.Cell span="all">
                     <Paragraph>{noItemsText}</Paragraph>
                   </Grid.Cell>

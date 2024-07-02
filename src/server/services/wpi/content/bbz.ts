@@ -101,7 +101,7 @@ const besluitLabels: WpiRequestStatusLabels = {
     switch (statusStep?.decision) {
       case 'toekenning':
         return `<p>
-        U hebt recht op ${productName(
+        U heeft recht op ${productName(
           requestProcess,
           statusStep
         )}. Bekijk de brief voor meer details.
@@ -114,7 +114,7 @@ const besluitLabels: WpiRequestStatusLabels = {
 
       case 'toekenningVoorlopig':
         return `<p>
-          U hebt recht op ${productName(
+          U heeft recht op ${productName(
             requestProcess,
             statusStep
           )}. Kijk voor de voorwaarden in de brief.

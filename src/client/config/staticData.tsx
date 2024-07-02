@@ -36,7 +36,7 @@ export const WelcomeNotification2: MyNotification = {
       </p>
       <ul>
         <li>welke gegevens de gemeente van u heeft vastgelegd. </li>
-        <li>welke producten en diensten u hebt bij de gemeente Amsterdam. </li>
+        <li>welke producten en diensten U heeft bij de gemeente Amsterdam. </li>
         <li>
           wat de status is en hoe u het kunt doorgeven als er iets niet klopt.
         </li>
@@ -74,7 +74,7 @@ export const WelcomeNotification2Commercial: MyNotification = {
       </p>
       <ul>
         <li>welke gegevens de gemeente van u heeft vastgelegd. </li>
-        <li>welke producten en diensten u hebt bij de gemeente Amsterdam. </li>
+        <li>welke producten en diensten U heeft bij de gemeente Amsterdam. </li>
         <li>
           wat de status is en hoe u het kunt doorgeven als er iets niet klopt.
         </li>

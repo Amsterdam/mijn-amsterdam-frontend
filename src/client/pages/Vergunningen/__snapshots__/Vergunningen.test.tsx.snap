@@ -23,9 +23,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <title>
-            Vergunningen en ontheffingen
-          </title>
           <path
             d="M16.484451,4 L32,4 L32,32 L9,32 L9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 C12.1204161,0 14.8699283,1.58802851 16.484451,4 L16.484451,4 Z M13,17.0644804 L13,28 L28,28 L28,8 L17.9450712,8 C17.9813667,8.32833385 18,8.6619909 18,9 C18,9.68738796 17.9229386,10.3567773 17.7769836,11 L26,11 L26,13 L17.0644804,13 C16.7026429,13.7281052 16.2451031,14.4002581 15.7083195,15 L26,15 L26,17 L15,17 L15,15.7083195 C14.4002581,16.2451031 13.7281052,16.7026429 13,17.0644804 L13,17.0644804 Z M15,19 L26,19 L26,21 L15,21 L15,19 Z M15,23 L26,23 L26,25 L15,25 L15,23 Z M9,16 C12.8659932,16 16,12.8659932 16,9 C16,5.13400675 12.8659932,2 9,2 C5.13400675,2 2,5.13400675 2,9 C2,12.8659932 5.13400675,16 9,16 Z M6.66999759,7.79669628 L8.79131794,9.91801663 L12.3300024,6.37933216 L13.744216,7.79354572 L8.79131794,12.7464438 L5.25578403,9.21090984 L6.66999759,7.79669628 Z"
           />
@@ -40,6 +37,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-links-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -49,9 +47,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-links-icoon
-            </title>
             <polygon
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
@@ -79,6 +74,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_Icon_c3ab45 _Icon__left_c3ab45"
             fill="#000"
             focusable="false"
@@ -88,9 +84,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -111,6 +104,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -119,9 +113,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -174,6 +165,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -183,9 +175,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -230,6 +219,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -239,9 +229,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -286,6 +273,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -295,9 +283,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -342,6 +327,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -351,9 +337,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -398,6 +381,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -407,9 +391,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -454,6 +435,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -463,9 +445,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -510,6 +489,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -519,9 +499,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -566,6 +543,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -575,9 +553,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -622,6 +597,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -631,9 +607,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -678,6 +651,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -687,9 +661,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -734,6 +705,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -743,9 +715,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -790,6 +759,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -799,9 +769,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -846,6 +813,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -855,9 +823,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -902,6 +867,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -911,9 +877,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -958,6 +921,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -967,9 +931,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1014,6 +975,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1023,9 +985,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1070,6 +1029,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1079,9 +1039,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1126,6 +1083,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1135,9 +1093,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1182,6 +1137,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1191,9 +1147,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1238,6 +1191,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1247,9 +1201,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1294,6 +1245,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1303,9 +1255,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1350,6 +1299,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1359,9 +1309,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1406,6 +1353,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1415,9 +1363,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1462,6 +1407,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1471,9 +1417,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1518,6 +1461,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1527,9 +1471,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1574,6 +1515,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1583,9 +1525,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1630,6 +1569,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1639,9 +1579,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1686,6 +1623,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1695,9 +1633,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1742,6 +1677,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1751,9 +1687,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1798,6 +1731,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1807,9 +1741,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1854,6 +1785,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1863,9 +1795,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1910,6 +1839,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1919,9 +1849,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -1966,6 +1893,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -1975,9 +1903,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2022,6 +1947,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2031,9 +1957,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2078,6 +2001,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2087,9 +2011,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2134,6 +2055,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2143,9 +2065,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2190,6 +2109,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2199,9 +2119,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2246,6 +2163,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2255,9 +2173,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2302,6 +2217,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2311,9 +2227,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2358,6 +2271,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2367,9 +2281,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2419,6 +2330,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
             class="_CaretIcon_b93dc7"
             focusable="false"
             height="32px"
@@ -2427,9 +2339,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <title>
-              chevron-rechts-icoon
-            </title>
             <polygon
               points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
             />
@@ -2482,6 +2391,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2491,9 +2401,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2538,6 +2445,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2547,9 +2455,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2594,6 +2499,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2603,9 +2509,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2650,6 +2553,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2659,9 +2563,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2706,6 +2607,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2715,9 +2617,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2762,6 +2661,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2771,9 +2671,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2818,6 +2715,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2827,9 +2725,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2874,6 +2769,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2883,9 +2779,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2930,6 +2823,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2939,9 +2833,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -2986,6 +2877,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -2995,9 +2887,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3042,6 +2931,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3051,9 +2941,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3098,6 +2985,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3107,9 +2995,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3154,6 +3039,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3163,9 +3049,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3210,6 +3093,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3219,9 +3103,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3266,6 +3147,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3275,9 +3157,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3322,6 +3201,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3331,9 +3211,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3378,6 +3255,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3387,9 +3265,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3434,6 +3309,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3443,9 +3319,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3490,6 +3363,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3499,9 +3373,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3546,6 +3417,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3555,9 +3427,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3602,6 +3471,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3611,9 +3481,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3658,6 +3525,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3667,9 +3535,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3714,6 +3579,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3723,9 +3589,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3770,6 +3633,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3779,9 +3643,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3826,6 +3687,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3835,9 +3697,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3882,6 +3741,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3891,9 +3751,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3938,6 +3795,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -3947,9 +3805,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -3994,6 +3849,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4003,9 +3859,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -4050,6 +3903,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4059,9 +3913,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -4106,6 +3957,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4115,9 +3967,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -4162,6 +4011,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4171,9 +4021,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -4218,6 +4065,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4227,9 +4075,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -4274,6 +4119,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4283,9 +4129,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -4330,6 +4173,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4339,9 +4183,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -4386,6 +4227,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -4395,9 +4237,6 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />

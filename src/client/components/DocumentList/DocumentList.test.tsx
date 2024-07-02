@@ -138,7 +138,7 @@ describe('DocumentList', () => {
     });
 
     await waitFor(() => expect(track).not.toHaveBeenCalled());
-    await screen.findByText('Download mislukt');
+    await screen.findByText('Downloaden mislukt');
     await waitFor(() =>
       expect(captureException).toHaveBeenCalledWith(
         new Error(`Failed to download document. Error: not found, Code: 404`),

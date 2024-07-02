@@ -48,9 +48,7 @@ export default function Landing() {
         Welkom op Mijn Amsterdam
       </PageHeading>
       <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
-        <p>
-        Uw Amsterdamse zaken op 1 plek.
-        </p>
+        <p>Uw Amsterdamse zaken op 1 plek.</p>
         <MaintenanceNotifications
           fromApiDirectly={true}
           page="landingspagina"
@@ -136,7 +134,7 @@ export default function Landing() {
               </a>
             </p>
             <Heading size="level-4" level={4}>
-              U hebt eHerkenning niveau 3 nodig om in te loggen.
+              U heeft eHerkenning niveau 3 nodig om in te loggen.
             </Heading>
             <p>
               Ga naar{' '}

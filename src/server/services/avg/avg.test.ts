@@ -217,7 +217,7 @@ describe('AVG', () => {
               },
               {
                 "datePublished": "2023-03-19T00:00:00.000Z",
-                "description": "Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.",
+                "description": "Uw verzoek is afgehandeld. U ontvangt of U heeft hierover bericht gekregen per e-mail of per brief.",
                 "id": "avg-223-notification",
                 "link": {
                   "title": "Bekijk details",
@@ -228,7 +228,7 @@ describe('AVG', () => {
               },
               {
                 "datePublished": "2023-03-25T00:00:00.000Z",
-                "description": "Uw verzoek is afgehandeld. U ontvangt of u hebt hierover bericht gekregen per e-mail of per brief.",
+                "description": "Uw verzoek is afgehandeld. U ontvangt of U heeft hierover bericht gekregen per e-mail of per brief.",
                 "id": "avg-425-notification",
                 "link": {
                   "title": "Bekijk details",

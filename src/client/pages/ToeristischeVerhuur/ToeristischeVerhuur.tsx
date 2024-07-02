@@ -132,19 +132,15 @@ export default function ToeristischeVerhuur() {
           <MaintenanceNotifications page="toeristische-verhuur" />
         </p>
         {isError(TOERISTISCHE_VERHUUR) && (
-          <ErrorAlert className={styles.ErrorAlert}>
+          <ErrorAlert>
             We kunnen op dit moment niet alle gegevens tonen.
           </ErrorAlert>
         )}
         <div className={styles.Detail}>
           {hasBothVerleend && (
-            <ErrorAlert
-              severity="warning"
-              title="Let op!"
-              className={styles.ErrorAlert}
-            >
-              U hebt een vergunning voor vakantieverhuur én bed &amp; breakfast.
-              Het is niet toegestaan om op hetzelfde adres zowel aan
+            <ErrorAlert severity="warning" title="Let op!">
+              U heeft een vergunning voor vakantieverhuur &eacute;n bed &amp;
+              breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan
               vakantieverhuur als bed &amp; breakfast te doen. U moet daarom 1
               van deze vergunningen opzeggen.
               <LinkdInline
@@ -157,13 +153,9 @@ export default function ToeristischeVerhuur() {
             </ErrorAlert>
           )}
           {!hasRegistrations && hasPermits && (
-            <ErrorAlert
-              severity="info"
-              title="Let op!"
-              className={styles.ErrorAlert}
-            >
-              U hebt een vergunning voor vakantieverhuur of bed &amp; breakfast.
-              U moet daarom ook een landelijk registratienummer voor
+            <ErrorAlert severity="info" title="Let op!">
+              U heeft een vergunning voor vakantieverhuur of bed &amp;
+              breakfast. U moet daarom ook een landelijk registratienummer voor
               toeristische verhuur aanvragen.
               <LinkdInline
                 external={true}

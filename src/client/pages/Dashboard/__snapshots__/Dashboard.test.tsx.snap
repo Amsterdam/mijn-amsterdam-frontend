@@ -80,6 +80,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </div>
                 <svg
                   aria-hidden="true"
+                  aria-label="chevron-rechts-icoon"
                   class="_CaretIcon_63df5c"
                   focusable="false"
                   height="32px"
@@ -88,9 +89,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
-                  <title>
-                    chevron-rechts-icoon
-                  </title>
                   <polygon
                     points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                   />
@@ -118,6 +116,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -127,9 +126,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -190,6 +186,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </div>
                 <svg
                   aria-hidden="true"
+                  aria-label="chevron-rechts-icoon"
                   class="_CaretIcon_63df5c"
                   focusable="false"
                   height="32px"
@@ -198,9 +195,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
-                  <title>
-                    chevron-rechts-icoon
-                  </title>
                   <polygon
                     points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                   />
@@ -228,6 +222,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -237,9 +232,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -275,9 +267,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   width="36"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <title>
-                    waarschuwing-icoon
-                  </title>
                   <path
                     d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
                   />
@@ -311,6 +300,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </div>
                 <svg
                   aria-hidden="true"
+                  aria-label="chevron-rechts-icoon"
                   class="_CaretIcon_63df5c"
                   focusable="false"
                   height="32px"
@@ -319,9 +309,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
-                  <title>
-                    chevron-rechts-icoon
-                  </title>
                   <polygon
                     points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                   />
@@ -349,6 +336,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -358,9 +346,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -397,9 +382,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
-                  <title>
-                    bel-icoon
-                  </title>
                   <path
                     d="M12,27 L1,27 L1,23 C3.209139,23 5,21.209139 5,19 L5,11 C5,6.581722 8.581722,3 13,3 L14,3 C14,1.8954305 14.8954305,1 16,1 C17.1045695,1 18,1.8954305 18,3 L19,3 C23.418278,3 27,6.581722 27,11 L27,19 C27,21.209139 28.790861,23 31,23 L31,27 L20,27 C20,29.209139 18.209139,31 16,31 C13.790861,31 12,29.209139 12,27 Z M14,27 C14,28.1045695 14.8954305,29 16,29 C17.1045695,29 18,28.1045695 18,27 L14,27 Z M9,11 L9,19 C9,20.4571486 8.61042286,21.8233065 7.92974244,23 L24.0702576,23 C23.3895771,21.8233065 23,20.4571486 23,19 L23,11 C23,8.790861 21.209139,7 19,7 L13,7 C10.790861,7 9,8.790861 9,11 Z"
                   />
@@ -415,6 +397,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </div>
                 <svg
                   aria-hidden="true"
+                  aria-label="chevron-rechts-icoon"
                   class="_CaretIcon_63df5c"
                   focusable="false"
                   height="32px"
@@ -423,9 +406,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
-                  <title>
-                    chevron-rechts-icoon
-                  </title>
                   <polygon
                     points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                   />
@@ -453,6 +433,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   >
                     <svg
                       aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
                       class="_Icon_c3ab45 _Icon__left_c3ab45"
                       fill="#000"
                       focusable="false"
@@ -462,9 +443,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>
-                        chevron-rechts-icoon
-                      </title>
                       <polygon
                         points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
                       />
@@ -495,6 +473,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="info-icoon"
               class="_Icon_c3ab45 _Icon__left_c3ab45"
               fill="#000"
               height="14px"
@@ -503,9 +482,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>
-                info-icoon
-              </title>
               <g
                 fill-rule="evenodd"
                 stroke="none"
@@ -536,6 +512,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
             >
               <svg
                 aria-hidden="true"
+                aria-label="belasting-icoon"
                 fill="#767676"
                 height="32px"
                 viewBox="0 0 32 32"
@@ -543,9 +520,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                <title>
-                  belasting-icoon
-                </title>
                 <g
                   transform="translate(11.000000, 11.000000)"
                 >
@@ -575,6 +549,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
             >
               <svg
                 aria-hidden="true"
+                aria-label="inkomen-icoon"
                 fill="#767676"
                 height="28px"
                 viewBox="0 0 32 28"
@@ -582,9 +557,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                <title>
-                  inkomen-icoon
-                </title>
                 <path
                   d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
                   id="Shape"
@@ -615,6 +587,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
             >
               <svg
                 aria-hidden="true"
+                aria-label="Milieuzone"
                 fill="#767676"
                 height="32px"
                 viewBox="0 0 32 32"
@@ -622,9 +595,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                <title>
-                  Milieuzone
-                </title>
                 <path
                   d="M9,26 C10.6568542,26 12,27.3431458 12,29 C12,30.6568542 10.6568542,32 9,32 C7.34314575,32 6,30.6568542 6,29 C6,27.3431458 7.34314575,26 9,26 Z M9,13 L16,20 L16,29 L14,29 C14,26.2385763 11.7614237,24 9,24 C6.3112453,24 4.11818189,26.1223067 4.00461951,28.7831104 L4,29 L0,29 L0,19.999 L3,20 L3,15 L0,14.999 L0,13 L9,13 Z M22.125,4 C25.4389703,4 28.125,6.68640077 28.125,10 L28.1225667,10.1616961 L28.1144389,10.337265 C30.1336416,11.0466433 31.6586282,12.8055029 32.0351278,14.9592191 L32.0524152,15.067199 C32.0729524,15.1952229 32.0888297,15.3241498 32.1005526,15.4542744 L32.1121702,15.6055966 L32.1201598,15.7577643 L32.125,16 C32.125,19.3142847 29.4392847,22 26.125,22 L25.8455789,21.9935516 L25.5663435,21.9741237 L25.3050342,21.9440108 L25.0264176,21.8992684 L24.7943147,21.8515243 L24.6670491,21.8204926 C22.942852,21.3910434 21.5142487,20.2151929 20.7433216,18.6559159 L20.6728164,18.6886828 C20.3420323,18.8277714 19.9915265,18.9224925 19.6294217,18.968293 L19.3557953,18.9933996 L19.125,19 C16.9157153,19 15.125,17.2092847 15.125,15 C15.125,13.95041 15.5366504,12.9770373 16.2324936,12.2515352 L16.3859063,12.0999269 L16.488,12.008 L16.3947397,11.7355015 C16.27675,11.3615132 16.1961956,10.9785224 16.1556026,10.5889625 L16.1326901,10.2955989 L16.125,10 C16.125,6.68640077 18.8110297,4 22.125,4 Z M8,15 L5,15 L5,20 L13,20 L8,15 Z M22.125,6 C19.915661,6 18.125,7.79090843 18.125,10 C18.125,10.5651135 18.2555713,11.1198969 18.5052481,11.6529079 L18.611,11.864 L19.1888733,12.7777863 L18.1971113,13.2429495 C17.5401254,13.5915375 17.125,14.2582795 17.125,15 C17.125,16.1047153 18.0202847,17 19.125,17 C19.5004655,17 19.8583801,16.8962652 20.1676152,16.7062976 C20.1474373,16.5462006 20.1350925,16.3862058 20.1291376,16.2245758 L20.125,15.9996 L22.125,15.9996 C22.125,16.303418 22.1588436,16.5993071 22.2229678,16.8837043 L22.2332189,16.8867576 C22.5965869,18.4884552 23.8982221,19.6944791 25.4926675,19.9498304 C25.6984661,19.9826111 25.909743,19.9996 26.125,19.9996 C28.3347153,19.9996 30.125,18.2093153 30.125,15.9996 C30.125,15.759169 30.1037887,15.5236915 30.0631349,15.2949374 C29.7832082,13.7371124 28.5938651,12.4765351 27.0297587,12.1147315 L26.8236635,12.0726861 L26.815712,12.0590079 C26.5913422,12.0199572 26.3605507,11.9996 26.125,11.9996 C24.9306728,11.9996 23.8244658,12.5266407 23.0711642,13.416737 L22.9252878,13.5995484 L21.3267122,12.3976516 C22.4525366,10.9002558 24.2153641,9.9996 26.125,9.9996 L26.1201052,9.80036371 C26.0160906,7.68401307 24.2673893,6 22.125,6 Z"
                   transform="translate(16.062500, 18.000000) scale(-1, 1) translate(-16.062500, -18.000000) "
@@ -647,6 +617,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
             >
               <svg
                 aria-hidden="true"
+                aria-label="Auto"
                 fill="#767676"
                 height="34px"
                 viewBox="0 0 56 34"
@@ -654,9 +625,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                <title>
-                  Auto
-                </title>
                 <g
                   transform="translate(0, -12.000000)"
                 >
@@ -732,6 +700,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="externe-link-icoon"
               class="_Icon_c3ab45 _Icon__left_c3ab45"
               fill="#000"
               focusable="false"
@@ -741,9 +710,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>
-                externe-link-icoon
-              </title>
               <g
                 fill-rule="evenodd"
                 stroke="none"
@@ -765,6 +731,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="externe-link-icoon"
               class="_Icon_c3ab45 _Icon__left_c3ab45"
               fill="#000"
               focusable="false"
@@ -774,9 +741,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>
-                externe-link-icoon
-              </title>
               <g
                 fill-rule="evenodd"
                 stroke="none"
@@ -798,6 +762,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="externe-link-icoon"
               class="_Icon_c3ab45 _Icon__left_c3ab45"
               fill="#000"
               focusable="false"
@@ -807,9 +772,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>
-                externe-link-icoon
-              </title>
               <g
                 fill-rule="evenodd"
                 stroke="none"
@@ -831,6 +793,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="externe-link-icoon"
               class="_Icon_c3ab45 _Icon__left_c3ab45"
               fill="#000"
               focusable="false"
@@ -840,9 +803,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>
-                externe-link-icoon
-              </title>
               <g
                 fill-rule="evenodd"
                 stroke="none"
@@ -864,6 +824,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="externe-link-icoon"
               class="_Icon_c3ab45 _Icon__left_c3ab45"
               fill="#000"
               focusable="false"
@@ -873,9 +834,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>
-                externe-link-icoon
-              </title>
               <g
                 fill-rule="evenodd"
                 stroke="none"
@@ -897,6 +855,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="externe-link-icoon"
               class="_Icon_c3ab45 _Icon__left_c3ab45"
               fill="#000"
               focusable="false"
@@ -906,9 +865,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <title>
-                externe-link-icoon
-              </title>
               <g
                 fill-rule="evenodd"
                 stroke="none"

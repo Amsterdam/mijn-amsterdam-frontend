@@ -5,13 +5,26 @@ import classNames from 'classnames';
 export interface Row {
   label: ReactNode;
   content: ReactNode;
+  classNameLabel?: string;
+  classNameContent?: string;
 }
 
-export function DatalistRow({ label, content }: Row) {
+export function DatalistRow({
+  label,
+  content,
+  classNameLabel,
+  classNameContent,
+}: Row) {
   return (
     <>
-      <dt className={styles.Datalist__title}>{label}</dt>
-      <dd className={styles.Datalist__description}>{content}</dd>
+      <dt className={classNames(styles.Datalist__title, classNameLabel)}>
+        {label}
+      </dt>
+      <dd
+        className={classNames(styles.Datalist__description, classNameContent)}
+      >
+        {content}
+      </dd>
     </>
   );
 }
@@ -73,6 +86,8 @@ export function Datalist({ className, rows }: DatalistProps) {
             key={`row-${index}`}
             label={row.label}
             content={row.content}
+            classNameLabel={row.classNameLabel}
+            classNameContent={row.classNameContent}
           />
         )
       )}

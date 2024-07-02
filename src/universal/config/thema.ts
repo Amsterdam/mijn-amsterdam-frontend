@@ -1,4 +1,9 @@
 import { generatePath } from 'react-router-dom';
+import { AppState } from '../../client/AppState';
+import {
+  getThemaTitle,
+  getThemaTitleWithAppState,
+} from '../../client/pages/HLI/helpers';
 import { LinkProps } from '../types/App.types';
 import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
@@ -12,6 +17,7 @@ export type Thema =
   | 'BEZWAREN'
   | 'INKOMEN'
   | 'STADSPAS'
+  | 'HLI'
   | 'BRP'
   | 'MILIEUZONE'
   | 'OVERTREDINGEN'
@@ -37,6 +43,7 @@ export type Thema =
 export type BagThema = `${Thema}_BAG`;
 
 export const Themas: Record<Thema, Thema> = {
+  AFIS: 'AFIS',
   AFVAL: 'AFVAL',
   BELASTINGEN: 'BELASTINGEN',
   BURGERZAKEN: 'BURGERZAKEN',
@@ -44,6 +51,7 @@ export const Themas: Record<Thema, Thema> = {
   BEZWAREN: 'BEZWAREN',
   INKOMEN: 'INKOMEN',
   STADSPAS: 'STADSPAS',
+  HLI: 'HLI',
   SVWI: 'SVWI',
   BRP: 'BRP',
   MILIEUZONE: 'MILIEUZONE',
@@ -74,6 +82,7 @@ export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
 
 // These are used for PageHeadings and link title props for example.
 export const ThemaTitles: { [thema in Thema]: string } = {
+  AFIS: 'AFIS',
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
@@ -81,6 +90,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
   STADSPAS: 'Stadspas',
+  HLI: 'Stadspas en regelingen bij laag inkomen',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
   OVERTREDINGEN: 'Overtredingen voertuigen',
@@ -135,6 +145,11 @@ export const DocumentTitles: {
   [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
   [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
+
+  [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
+  [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
+  [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
+
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/BBZ']]: `Bbz | ${ThemaTitles.INKOMEN}`,
@@ -182,14 +197,21 @@ export const DocumentTitles: {
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
 };
 
-export interface ThemaMenuItem extends LinkProps {
+export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
   id: Thema;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
+  title: LinkProps['title'] | ((appState: AppState) => string);
 }
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
+  {
+    title: ThemaTitles.AFIS,
+    id: Themas.AFIS,
+    to: AppRoutes.AFIS,
+    profileTypes: ['private', 'commercial'],
+  },
   {
     title: ThemaTitles.BRP,
     id: Themas.BRP,
@@ -293,6 +315,14 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.STADSPAS,
     id: Themas.STADSPAS,
     to: AppRoutes.STADSPAS,
+    profileTypes: ['private'],
+  },
+  {
+    title: (appState: AppState) => {
+      return getThemaTitleWithAppState(appState);
+    },
+    id: Themas.HLI,
+    to: AppRoutes.HLI,
     profileTypes: ['private'],
   },
   {
