@@ -13,6 +13,7 @@ import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { captureException } from '../monitoring';
 
 // zaak detail: record/GFO_ZAKEN/$id
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
@@ -357,7 +358,10 @@ interface PowerbrowserLink {
   note: string | 'Bijlage';
 }
 
-function transformPowerbrowserLinksResponse(responseData: PowerbrowserLink[]) {
+function transformPowerbrowserLinksResponse(
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  responseData: PowerbrowserLink[]
+) {
   return (
     responseData
       ?.filter(
@@ -367,10 +371,7 @@ function transformPowerbrowserLinksResponse(responseData: PowerbrowserLink[]) {
           !!link.caption?.toLowerCase().includes('.pdf')
       )
       .map((link) => {
-        const [docIdEncrypted] = encrypt(
-          String(link.mainId),
-          process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-        );
+        const [docIdEncrypted] = encrypt(`${sessionID}:${link.mainId}`);
 
         const [docTitleTranslated] =
           Object.entries(documentNamenMA_PB).find(
@@ -407,7 +408,11 @@ export async function fetchPowerBrowserDocuments(
   return requestData<GenericDocument[]>(
     {
       ...dataRequestConfig,
-      transformResponse: transformPowerbrowserLinksResponse,
+      transformResponse: (responseData) =>
+        transformPowerbrowserLinksResponse(
+          authProfileAndToken.profile.sid,
+          responseData
+        ),
       url: `${dataRequestConfig.url}/Link/GFO_ZAKEN/${zaakId}`,
       headers: {
         Authorization: `Bearer ${bearerToken}`,
@@ -483,10 +488,17 @@ export async function fetchBBDocument(
     authProfileAndToken
   );
 
-  const documentId = decrypt(
-    documentIdEncrypted,
-    process.env.BFF_GENERAL_ENCRYPTION_KEY ?? ''
-  );
+  let sessionID;
+  let documentId;
+  try {
+    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
+  } catch (error) {
+    captureException(error);
+  }
+
+  if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
+    return apiErrorResult('Not authorized', null, 401);
+  }
 
   const url = `${process.env.BFF_POWERBROWSER_API_URL}/Dms/${documentId}/Pdf`;
 
