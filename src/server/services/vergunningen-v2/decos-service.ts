@@ -262,11 +262,7 @@ async function transformDecosZakenResponse(
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-async function getZakenByUserKey(
-  requestID: requestID,
-  userKey: string,
-  includeProperties: boolean = false
-) {
+async function getZakenByUserKey(requestID: requestID, userKey: string) {
   const selectFieldsAllCases = Object.keys(SELECT_FIELDS_TRANSFORM_BASE);
   const additionalSelectFields = Object.values(decosZaakTransformers).flatMap(
     (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
@@ -280,7 +276,7 @@ async function getZakenByUserKey(
 
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${userKey}/folders?top=50&select=${selectFields}${includeProperties ? '&properties=true' : ''}`;
+      return `${config.url}/items/${userKey}/folders?top=50&select=${selectFields}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
       if (!Array.isArray(responseData?.content)) {
@@ -298,16 +294,13 @@ async function getZakenByUserKey(
   return responseSource;
 }
 
-export async function fetchDecosVergunningenSource(
+export async function fetchDecosZakenSource(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  includeProperties: boolean = false
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const userKeys = await getUserKeys(requestID, authProfileAndToken);
   const zakenSourceResponses = await Promise.allSettled(
-    userKeys.map((userKey) =>
-      getZakenByUserKey(requestID, userKey, includeProperties)
-    )
+    userKeys.map((userKey) => getZakenByUserKey(requestID, userKey))
   );
   const zakenSource = [];
 
@@ -327,7 +320,7 @@ async function fetchDecosVergunningen_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const zakenSourceResponse = await fetchDecosVergunningenSource(
+  const zakenSourceResponse = await fetchDecosZakenSource(
     requestID,
     authProfileAndToken
   );
@@ -418,8 +411,6 @@ async function fetchIsPdfDocument(
     },
   });
 
-  console.log(apiConfigDocuments);
-
   const documentTransformed = await requestData<{ isPDF: boolean }>(
     apiConfigDocuments,
     requestID
@@ -494,14 +485,15 @@ export async function fetchDecosDocumentList(
   return documentsSource;
 }
 
-export async function fetchDecosVergunning(
+export async function fetchDecosZaakSource(
   requestID: requestID,
-  zaakID: VergunningV2['key']
+  zaakID: VergunningV2['key'],
+  includeProperties: boolean = false
 ) {
   // Fetch the zaak from Decos, this request will return all the fieldNames, no need to specify the ?select= query.
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}`;
+      return `${config.url}/items/${zaakID}${includeProperties ? '?properties=true' : ''}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
       if (IS_OT) {
@@ -514,11 +506,14 @@ export async function fetchDecosVergunning(
     },
   });
 
-  const decosZaakSourceRequest = requestData<DecosZaakSource | null>(
-    apiConfig,
-    requestID
-  );
+  return requestData<DecosZaakSource | null>(apiConfig, requestID);
+}
 
+export async function fetchDecosVergunning(
+  requestID: requestID,
+  zaakID: VergunningV2['key']
+) {
+  const decosZaakSourceRequest = fetchDecosZaakSource(requestID, zaakID);
   const decosZaakDocumentsRequest = fetchDecosDocumentList(requestID, zaakID);
 
   const [zaakSourceResponseSettled, documentsResponseSettled] =
