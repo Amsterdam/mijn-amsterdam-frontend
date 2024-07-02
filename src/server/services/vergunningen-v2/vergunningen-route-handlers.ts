@@ -8,6 +8,7 @@ import {
 } from '../../helpers/app';
 import { fetchDecosZaakSource, fetchDecosZakenSource } from './decos-service';
 import { fetchVergunningDocumentV2, fetchVergunningV2 } from './vergunningen';
+import { DecosZaakSource } from './config-and-types';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
   const authProfileAndToken = await getAuth(req);
@@ -46,9 +47,26 @@ export async function fetchZakenSource(
   const authProfileAndToken = await getAuth(req);
 
   if (req.params.id) {
-    return res.send(
-      await fetchDecosZaakSource(res.locals.requestID, req.params.id, true)
+    const zaakResponse = await fetchDecosZaakSource(
+      res.locals.requestID,
+      req.params.id,
+      true
     );
+    if (zaakResponse.status === 'OK' && req.query.merge === 'true') {
+      const zaak = zaakResponse.content as DecosZaakSource & {
+        properties: Array<{
+          field: string;
+          value: unknown;
+          description: string;
+        }>;
+      };
+      const zaakMerged: Record<string, unknown> = {};
+      for (const { field, description, value } of zaak.properties) {
+        zaakMerged[`${field}_${description}`] = value;
+      }
+      return res.send(apiSuccessResult(zaakMerged));
+    }
+    return zaakResponse;
   }
 
   const zakenResponseData = await fetchDecosZakenSource(
