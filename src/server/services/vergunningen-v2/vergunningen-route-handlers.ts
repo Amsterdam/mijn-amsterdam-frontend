@@ -40,12 +40,10 @@ export async function fetchZakenSource(
     req.query.props === 'true'
   );
   if (req.query.merged === 'true') {
-    responseData = responseData.content.reduce(
-      (acc: any, { field, value, description }: any) => {
-        acc[`${field}_${description}`] = value;
-        return acc;
-      },
-      {}
+    responseData = responseData.content.map(
+      ({ field, description, value }: any) => {
+        return { [`${field}_${description}`]: value };
+      }
     );
   }
   return sendResponseContent(res, responseData);
