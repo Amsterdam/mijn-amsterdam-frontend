@@ -28,6 +28,7 @@ import {
   isExcludedFromTransformation,
 } from './helpers';
 import { IS_OT } from '../../../universal/config';
+import axios from 'axios';
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of vergunningen.
  *
@@ -279,7 +280,7 @@ async function getZakenByUserKey(
     },
     transformResponse: (responseData: DecosZakenResponse) => {
       if (!Array.isArray(responseData?.content)) {
-        return null;
+        return [];
       }
       return responseData.content;
     },
@@ -308,10 +309,8 @@ export async function fetchDecosVergunningenSource(
 
   for (const decosZakenSource of zakenSourceResponses) {
     const response = getSettledResult(decosZakenSource);
-    const responseContent = response.content ?? [];
-
     if (response.status === 'OK') {
-      zakenSource.push(...responseContent);
+      zakenSource.push(...response.content);
     } else if (response.status === 'ERROR') {
       return response;
     }
@@ -557,13 +556,6 @@ export async function fetchDecosVergunning(
   return zaakSourceResponse;
 }
 
-function transformDecosDocumentResponse(decosDocumentResponse: any) {
-  return {
-    'Content-Type': '',
-    fileData: decosDocumentResponse,
-  };
-}
-
 export async function fetchDecosDocument(
   requestID: requestID,
   documentID: string
@@ -572,10 +564,12 @@ export async function fetchDecosDocument(
     formatUrl: (config) => {
       return `${config.url}/items/${documentID}/content`;
     },
-    transformResponse: transformDecosDocumentResponse,
   });
 
-  return requestData(apiConfigDocument, requestID);
+  return axios({
+    url: apiConfigDocument.url,
+    responseType: 'stream',
+  });
 }
 
 export const forTesting = {

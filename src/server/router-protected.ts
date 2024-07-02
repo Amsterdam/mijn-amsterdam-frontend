@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { IS_OT } from '../universal/config';
 import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import {
@@ -33,7 +34,6 @@ import {
 } from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
-import { IS_TEST } from '../universal/config';
 
 export const router = express.Router();
 
@@ -155,7 +155,7 @@ router.get(
 );
 
 // Vergunningen V2
-if (IS_TEST) {
+if (IS_OT) {
   router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenSource);
 }
 router.get(BffEndpoints.VERGUNNINGENv2_DETAIL, fetchVergunningDetail);
