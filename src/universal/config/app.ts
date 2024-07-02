@@ -1,5 +1,4 @@
-import { isDateInPast } from '../helpers/date';
-import { IS_AP, IS_OT, IS_PRODUCTION } from './env';
+import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   afisActive: !IS_AP,
