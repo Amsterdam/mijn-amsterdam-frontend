@@ -91,14 +91,14 @@ export default function ZaakStatus() {
       <PageHeading>Status van uw aanvraag</PageHeading>
       <PageContent>
         {pageRoute.unResolvedState === undefined && !appStateReady && (
-          <p>
+          <Paragraph>
             <LoadingContent
               barConfig={[
                 ['auto', '2rem', '1rem'],
                 ['auto', '2rem', '0'],
               ]}
             />
-          </p>
+          </Paragraph>
         )}
         {pageRoute.unResolvedState === ITEM_NOT_FOUND ||
           (appStateReady && queryParams.get('payment') && (
