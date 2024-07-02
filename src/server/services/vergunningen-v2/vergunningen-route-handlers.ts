@@ -20,13 +20,18 @@ export async function fetchVergunningDocument(
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
+
   const apiResponse = await fetchVergunningDocumentV2(
     res.locals.requestID,
     authProfileAndToken,
     req.params.id
   );
 
-  return sendResponseContent(res, apiResponse);
+  if (apiResponse.status === 'ERROR') {
+    return sendResponseContent(res, apiResponse);
+  }
+
+  apiResponse.data.pipe(res);
 }
 
 export async function fetchZakenSource(
@@ -40,11 +45,15 @@ export async function fetchZakenSource(
     req.query.props === 'true'
   );
   if (req.query.merged === 'true') {
-    responseData = responseData.content.map(
-      ({ field, description, value }: any) => {
-        return { [`${field}_${description}`]: value };
-      }
-    );
+    responseData = responseData.content.map(({ properties }: any) => {
+      return properties.reduce(
+        (acc: any, { field, description, value }: any) => {
+          acc[`${field}_${description}`] = value;
+          return acc;
+        },
+        {}
+      );
+    });
   }
   return sendResponseContent(res, responseData);
 }
