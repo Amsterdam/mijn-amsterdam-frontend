@@ -38,7 +38,7 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 }
 
 describe('wpi/app-service', () => {
-  let requestID = '';
+  let requestID = 'xxxxxxx';
   let authProfileAndToken: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxx',

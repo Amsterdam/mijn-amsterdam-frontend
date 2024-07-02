@@ -1,5 +1,9 @@
 import memoizee from 'memoizee';
-import { apiSuccessResult, getSettledResult } from '../../../universal/helpers';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../../universal/helpers';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -398,7 +402,7 @@ export async function fetchDecosWorkflowDate(
   return requestData<DecosWorkflowStepDate>(apiConfigSingleWorkflow, requestID);
 }
 
-async function isPdfDocument(
+async function fetchIsPdfDocument(
   requestID: requestID,
   documentKey: VergunningDocument['key']
 ) {
@@ -442,7 +446,7 @@ async function transformDecosDocumentListResponse(
     const documentsSourceFiltered = decosDocumentsListResponse.content
       .filter(filterValidDocument)
       .map(async ({ fields: documentMetadata, key }) => {
-        const isPdfResponse = await isPdfDocument(requestID, key);
+        const isPdfResponse = await fetchIsPdfDocument(requestID, key);
         if (isPdfResponse.status === 'OK' && isPdfResponse.content.isPDF) {
           const vergunningDocument: VergunningDocument = {
             id: documentMetadata.mark,
@@ -569,6 +573,8 @@ export async function fetchDecosDocument(
   return axios({
     url: apiConfigDocument.url,
     responseType: 'stream',
+  }).catch((error) => {
+    return apiErrorResult(error.message, null, error.code);
   });
 }
 

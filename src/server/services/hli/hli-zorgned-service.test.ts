@@ -70,7 +70,7 @@ describe('hli-zorgned-service', () => {
 
     expect(response).toMatchInlineSnapshot(`
       {
-        "code": "500",
+        "code": 500,
         "content": null,
         "message": "AxiosError: Request failed with status code 500",
         "status": "ERROR",
