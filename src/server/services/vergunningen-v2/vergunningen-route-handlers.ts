@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
-import { getAuth, sendResponseContent } from '../../helpers/app';
+import { apiSuccessResult } from '../../../universal/helpers';
+import { BffEndpoints } from '../../config';
+import {
+  generateFullApiUrlBFF,
+  getAuth,
+  sendResponseContent,
+} from '../../helpers/app';
+import { fetchDecosZaakSource, fetchDecosZakenSource } from './decos-service';
 import { fetchVergunningDocumentV2, fetchVergunningV2 } from './vergunningen';
-import { IS_TEST } from '../../../universal/config';
-import { fetchDecosVergunningenSource } from './decos-service';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
   const authProfileAndToken = await getAuth(req);
@@ -35,25 +40,34 @@ export async function fetchVergunningDocument(
 }
 
 export async function fetchZakenSource(
-  req: Request<{ props?: 'true'; merged?: 'true' }>,
+  req: Request<{ id?: string }>,
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  let responseData: any = await fetchDecosVergunningenSource(
-    res.locals.requestID,
-    authProfileAndToken,
-    req.query.props === 'true'
-  );
-  if (req.query.merged === 'true') {
-    responseData = responseData.content.map(({ properties }: any) => {
-      return properties.reduce(
-        (acc: any, { field, description, value }: any) => {
-          acc[`${field}_${description}`] = value;
-          return acc;
-        },
-        {}
-      );
-    });
+
+  if (req.params.id) {
+    return res.send(
+      await fetchDecosZaakSource(res.locals.requestID, req.params.id, true)
+    );
   }
-  return sendResponseContent(res, responseData);
+
+  const zakenResponseData = await fetchDecosZakenSource(
+    res.locals.requestID,
+    authProfileAndToken
+  );
+
+  if (zakenResponseData.status === 'OK') {
+    const links = [];
+    for (const zaak of zakenResponseData.content) {
+      const url = generateFullApiUrlBFF(
+        BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE,
+        {
+          id: zaak.key,
+        }
+      );
+      links.push(`${url}`);
+    }
+    return res.send(apiSuccessResult(links));
+  }
+  return res.send(zakenResponseData);
 }
