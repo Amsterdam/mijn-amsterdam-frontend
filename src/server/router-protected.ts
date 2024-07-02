@@ -257,6 +257,10 @@ router.get(
       req.params.docIdEncrypted
     );
 
+    if (documentResponse.status === 'ERROR') {
+      return documentResponse;
+    }
+
     const contentType = documentResponse.headers['content-type'];
     res.setHeader('content-type', contentType);
     documentResponse.data.pipe(res);
