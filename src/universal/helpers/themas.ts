@@ -38,7 +38,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
 
   switch (item.id) {
     case Themas.AFIS: {
-      return FeatureToggle.afisActive && AFIS.content?.isKnown;
+      return FeatureToggle.afisActive && AFIS?.content?.isKnown;
     }
     case Themas.INKOMEN:
       const { jaaropgaven, uitkeringsspecificaties } =
