@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
@@ -80,15 +81,18 @@ export async function fetchIsKnownInAFIS(
     return bearerTokenResponse;
   }
 
+  let profileType: 'BSN' | 'KVK' = 'BSN';
+  if (authProfileAndToken.profile.profileType === 'commercial') {
+    profileType = 'KVK';
+  }
+
   const baseConfig: DataRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: bearerTokenResponse.content,
     },
-    // RP TODO: eruit trekken
     data: {
-      [authProfileAndToken.profile.profileType === 'private' ? 'BSN' : 'KVK']:
-        authProfileAndToken.profile.id,
+      [profileType]: authProfileAndToken.profile.id,
     },
     transformResponse: transformBusinessPartnerisKnown,
   };
@@ -135,17 +139,28 @@ function transformBusinessPartnerisKnown(
     | AFISBusinessPartnerPrivateSourceResponse
     | AFISBusinessPartnerCommercialSourceResponse
 ): BusinessPartnerKnownResponse {
-  switch (true) {
-    case 'Record' in response && Array.isArray(response.Record):
-      return {
-        isKnown: response.Record.some((record) => record.Gevonden === 'Ja'),
-      };
-    case 'Record' in response && !Array.isArray(response.Record):
-      return { isKnown: response.Record.Gevonden === 'Ja' };
-    case 'BSN' in response:
-      return { isKnown: response.Gevonden === 'Ja' };
+  if (!response) {
+    throw new AxiosError(
+      `Response is '${response}' and of type '${typeof response}'`
+    );
   }
 
-  console.debug("Known keys 'Record' or 'BSN' not found in API response");
-  return { isKnown: false };
+  let transformedResponse: BusinessPartnerKnownResponse = { isKnown: false };
+
+  if ('Record' in response) {
+    if (Array.isArray(response.Record)) {
+      transformedResponse.isKnown = response.Record.some(
+        (record) => record.Gevonden === 'Ja'
+      );
+    } else {
+      transformedResponse.isKnown = response.Record.Gevonden === 'Ja';
+    }
+  } else if ('BSN' in response) {
+    transformedResponse.isKnown = response.Gevonden === 'Ja';
+  } else {
+    console.debug("Known keys 'Record' or 'BSN' not found in API response");
+    transformedResponse.isKnown = false;
+  }
+
+  return transformedResponse;
 }
