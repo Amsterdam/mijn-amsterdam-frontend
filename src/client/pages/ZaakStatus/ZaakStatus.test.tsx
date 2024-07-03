@@ -102,7 +102,7 @@ describe('ZaakStatus', () => {
 
     expect(
       screen.getByText(
-        'U heeft een betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.'
+        'U heeft betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.'
       )
     ).toBeInTheDocument();
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAppStateGetter, useAppStateReady } from '../../hooks';
+import styles from './ZaakStatus.module.scss';
 import {
   ErrorAlert,
-  LinkdInline,
   PageContent,
   PageHeading,
   TextPage,
@@ -18,14 +18,17 @@ const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
 
 type ThemaQueryParam = 'vergunningen';
+
 type PageRouteResolver = {
   baseRoute: string;
   getRoute: (detailPageItemId, appState) => string;
 };
 
-const pageRouteResolvers: {
+type PageRouteResolvers = {
   [key: ThemaQueryParam]: PageRouteResolver;
-} = {
+};
+
+const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: {
     baseRoute: AppRoutes.VERGUNNINGEN,
     getRoute: (detailPageItemId, appState) => {
@@ -90,21 +93,20 @@ export default function ZaakStatus() {
     <TextPage>
       <PageHeading>Status van uw aanvraag</PageHeading>
       <PageContent>
-        {pageRoute.unResolvedState === undefined && !appStateReady && (
-          <Paragraph>
-            <LoadingContent
-              barConfig={[
-                ['auto', '2rem', '1rem'],
-                ['auto', '2rem', '0'],
-              ]}
-            />
-          </Paragraph>
+        {true && (
+          <LoadingContent
+            className={styles.LoadingContent}
+            barConfig={[
+              ['auto', '2rem', '1rem'],
+              ['auto', '2rem', '0'],
+            ]}
+          />
         )}
         {pageRoute.unResolvedState === ITEM_NOT_FOUND ||
           (appStateReady && queryParams.get('payment') && (
             <Paragraph>
-              U heeft een betaald voor deze aanvraag. Het kan even duren voordat
-              uw aanvraag op Mijn Amsterdam te zien is.
+              U heeft betaald voor deze aanvraag. Het kan even duren voordat uw
+              aanvraag op Mijn Amsterdam te zien is.
             </Paragraph>
           ))}
         {appStateReady && (
