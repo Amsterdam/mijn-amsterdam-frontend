@@ -10,7 +10,6 @@ export function GPPContent({
 }: {
   vergunning: VergunningFrontendV2<GPP>;
 }) {
-  console.log(vergunning);
   const rows = getRows(vergunning, [
     'identifier',
     'location',

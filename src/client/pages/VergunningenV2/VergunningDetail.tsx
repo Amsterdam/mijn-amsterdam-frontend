@@ -69,7 +69,7 @@ export default function VergunningV2Detail() {
       title={vergunningDetail?.title ?? 'Vergunning'}
       zaak={vergunningDetail}
       isError={api.isError}
-      isLoading={api.isLoading || api.isPristine}
+      isLoading={api.isLoading}
       icon={<ThemaIcon />}
       pageContentTop={
         vergunningDetail && (
