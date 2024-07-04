@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo } from 'react';
+import { ReactElement, ReactNode, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -13,16 +13,16 @@ import {
 import {
   GenericDocument,
   StatusLine,
+  Unshaped,
 } from '../../../universal/types/App.types';
 import { AppState, AppStateKey } from '../../AppState';
 import {
-  ThemaIcon,
   DetailPage,
   ErrorAlert,
   LoadingContent,
-  PageContent,
   PageHeading,
   StatusLine as StatusLineComponent,
+  ThemaIcon,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -30,16 +30,17 @@ import { captureMessage } from '../../utils/monitoring';
 import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
-interface StatusDetailProps<T extends StatusLine> {
+
+interface StatusDetailProps<T> {
   backLinkTitle?: string;
+  backLinkRoute?: string;
   documentPathForTracking?: (document: GenericDocument) => string;
   getItems?: (content: AppState[AppStateKey]['content']) => T[];
   highlightKey?: string | false;
   maxStepCount?: (hasDecision: boolean, statusItem?: T) => number | undefined;
-  pageContent?: <T extends StatusLine>(
-    isLoading: boolean,
-    statusItem: T
-  ) => ReactNode;
+  pageContent?:
+    | ReactElement
+    | ((isLoading: boolean, statusItem: T) => ReactElement);
   reverseSteps?: boolean;
   showStatusLineConnection?: boolean;
   stateKey: AppStateKey;
@@ -49,6 +50,7 @@ interface StatusDetailProps<T extends StatusLine> {
 
 export default function StatusDetail<T extends StatusLine>({
   backLinkTitle,
+  backLinkRoute,
   documentPathForTracking,
   getItems,
   highlightKey,
@@ -76,7 +78,7 @@ export default function StatusDetail<T extends StatusLine>({
   const { id } = useParams<{ id: string }>();
   const statusItem = statusItems.find((item) => item.id === id);
   const noContent = !isStateLoading && !statusItem;
-  const appRoute = AppRoutes[thema];
+  const appRoute = backLinkRoute ?? AppRoutes[thema] ?? '/';
   const hasDecision =
     !!statusItem?.decision ||
     !!statusItem?.steps.some((step) => !!step.decision);
@@ -109,16 +111,19 @@ export default function StatusDetail<T extends StatusLine>({
     <DetailPage className={styles.StatusDetail}>
       <PageHeading
         icon={<ThemaIcon />}
-        backLink={{ to: appRoute, title: backLinkTitle ?? ThemaTitles[thema] }}
+        backLink={{
+          to: appRoute,
+          title: backLinkTitle ?? ThemaTitles[thema],
+        }}
         isLoading={isStateLoading}
       >
         {title}
       </PageHeading>
       <Screen className={styles.DetailPageContent}>
         <Grid>
-          {!!statusItem &&
-            pageContent &&
-            pageContent(isStateLoading, statusItem)}
+          {!!statusItem && typeof pageContent === 'function'
+            ? (pageContent as Function)(isStateLoading, statusItem)
+            : pageContent}
 
           {(isError(STATE) || (noContent && !statusItems.length)) && (
             <Grid.Cell span="all">
@@ -134,7 +139,7 @@ export default function StatusDetail<T extends StatusLine>({
             <Grid.Cell span="all">
               <DSAlert title="Deze pagina is mogelijk verplaatst">
                 <Paragraph className={styles.MarginBottom}>
-                  Kies hieronder een van de beschikbare aanvragen.
+                  Kies hieronder een van de beschikbare zaken.
                 </Paragraph>
                 <LinkList>
                   {statusItems.map((statusItem, index) => {
