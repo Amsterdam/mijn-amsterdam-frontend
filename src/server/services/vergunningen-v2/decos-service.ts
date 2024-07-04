@@ -224,7 +224,6 @@ async function transformDecosZaakResponse(
 
 async function transformDecosZakenResponse(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
   decosZakenSource: DecosZaakSource[]
 ) {
   const zakenToBeTransformed = [];
@@ -341,7 +340,6 @@ async function fetchDecosVergunningen_(
   if (zakenSourceResponse.status === 'OK') {
     const vergunningen = await transformDecosZakenResponse(
       requestID,
-      authProfileAndToken,
       zakenSourceResponse.content
     );
 
