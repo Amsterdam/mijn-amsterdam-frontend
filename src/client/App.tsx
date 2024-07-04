@@ -79,6 +79,8 @@ import Zorg from './pages/Zorg/Zorg';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import { useMonitoring } from './utils/monitoring';
+import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
+import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -235,9 +237,18 @@ function AppAuthenticated() {
           <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
-            component={VergunningDetail}
+            component={
+              FeatureToggle.vergunningenV2Active
+                ? VergunningV2Detail
+                : VergunningDetail
+            }
           />
-          <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+          <Route
+            path={AppRoutes.VERGUNNINGEN}
+            component={
+              FeatureToggle.vergunningenV2Active ? VergunningenV2 : Vergunningen
+            }
+          />
           <Route
             path={AppRoutes['KLACHTEN/KLACHT']}
             component={KlachtenDetail}
