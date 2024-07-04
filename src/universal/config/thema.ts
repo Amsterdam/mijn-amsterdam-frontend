@@ -82,7 +82,7 @@ export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
 
 // These are used for PageHeadings and link title props for example.
 export const ThemaTitles: { [thema in Thema]: string } = {
-  AFIS: 'Facturen en Betalen',
+  AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
@@ -207,12 +207,6 @@ export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
   {
-    title: ThemaTitles.AFIS,
-    id: Themas.AFIS,
-    to: AppRoutes.AFIS,
-    profileTypes: ['private', 'commercial'],
-  },
-  {
     title: ThemaTitles.BRP,
     id: Themas.BRP,
     to: AppRoutes.BRP,
@@ -230,6 +224,12 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: ExternalUrls.SSO_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
+  },
+  {
+    title: ThemaTitles.AFIS,
+    id: Themas.AFIS,
+    to: AppRoutes.AFIS,
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.BEZWAREN,
