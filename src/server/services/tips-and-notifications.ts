@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
+import { FeatureToggle } from '../../universal/config';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification, MyTip } from '../../universal/types';
@@ -21,17 +22,16 @@ import {
   fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
 } from './simple-connect';
+import { fetchSVWINotifications } from './simple-connect/svwi';
 import {
   convertTipToNotication,
   prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
-import { fetchSVWINotifications } from './simple-connect/svwi';
-import { FeatureToggle } from '../../universal/config';
-import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 
 export function sortNotifications(
   notifications: MyNotification[],
@@ -172,35 +172,35 @@ const notificationServices: NotificationServices = {
   },
   'private-attributes': {},
   private: {
-    // brp: fetchBrpNotifications,
-    // belasting: fetchBelastingNotifications,
-    // milieuzone: fetchMilieuzoneNotifications,
-    // overtredingen: fetchOvertredingenNotifications,
+    brp: fetchBrpNotifications,
+    belasting: fetchBelastingNotifications,
+    milieuzone: fetchMilieuzoneNotifications,
+    overtredingen: fetchOvertredingenNotifications,
     vergunningen: FeatureToggle.vergunningenV2Active
       ? fetchVergunningenV2Notifications
       : fetchVergunningenNotifications,
-    // erfpacht: fetchErfpachtNotifications,
-    // subsidie: fetchSubsidieNotifications,
-    // maintenance: (requestID: requestID) =>
-    //   fetchMaintenanceNotificationsDashboard(requestID),
-    // toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
-    // fetchKrefia: fetchKrefiaNotifications,
-    // fetchWior: (
-    //   requestID: requestID,
-    //   authProfileAndToken: AuthProfileAndToken
-    // ) =>
-    //   fetchWiorNotifications(
-    //     requestID,
-    //     authProfileAndToken,
-    //     authProfileAndToken.profile.profileType
-    //   ),
-    // fetchWpi: fetchWpiNotifications,
-    // fetchSVWI: fetchSVWINotifications,
-    // klachten: fetchKlachtenNotifications,
-    // horeca: fetchHorecaNotifications,
-    // avg: fetchAVGNotifications,
-    // bodem: fetchLoodMetingNotifications,
-    // bezwaren: fetchBezwarenNotifications,
+    erfpacht: fetchErfpachtNotifications,
+    subsidie: fetchSubsidieNotifications,
+    maintenance: (requestID: requestID) =>
+      fetchMaintenanceNotificationsDashboard(requestID),
+    toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
+    fetchKrefia: fetchKrefiaNotifications,
+    fetchWior: (
+      requestID: requestID,
+      authProfileAndToken: AuthProfileAndToken
+    ) =>
+      fetchWiorNotifications(
+        requestID,
+        authProfileAndToken,
+        authProfileAndToken.profile.profileType
+      ),
+    fetchWpi: fetchWpiNotifications,
+    fetchSVWI: fetchSVWINotifications,
+    klachten: fetchKlachtenNotifications,
+    horeca: fetchHorecaNotifications,
+    avg: fetchAVGNotifications,
+    bodem: fetchLoodMetingNotifications,
+    bezwaren: fetchBezwarenNotifications,
   },
 };
 
