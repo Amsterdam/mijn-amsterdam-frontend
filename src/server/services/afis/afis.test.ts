@@ -1,5 +1,5 @@
 import { fetchAFISBearerToken, fetchIsKnownInAFIS } from './afis';
-import * as test from '../../../test-utils';
+import { remoteApi, authProfileAndToken } from '../../../test-utils';
 import { AxiosError } from 'axios';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
@@ -13,14 +13,14 @@ const access_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 describe('fetchBearerToken tests', () => {
   it('Filters out the access token', async () => {
-    test.remoteApi.post(ROUTES.OAUTH).reply(200, {
+    remoteApi.post(ROUTES.OAUTH).reply(200, {
       access_token,
       token_type: 'bearer',
       expires_in: 3600,
     });
     const bearerToken = await fetchAFISBearerToken(
       REQUEST_ID,
-      test.authProfileAndToken('private')
+      authProfileAndToken('private')
     );
 
     expect(bearerToken).toStrictEqual({
@@ -30,9 +30,9 @@ describe('fetchBearerToken tests', () => {
   });
 });
 
-describe('fetchIsKnownInAFIS tests', () => {
+describe('fetchIsKnownInAFIS ', () => {
   beforeEach(() => {
-    test.remoteApi.post(ROUTES.OAUTH).reply(200, {
+    remoteApi.post(ROUTES.OAUTH).reply(200, {
       access_token,
       token_type: 'bearer',
       expires_in: 3600,
@@ -85,51 +85,51 @@ describe('fetchIsKnownInAFIS tests', () => {
     },
   };
 
-  describe('BSN Businesspartner tests', async () => {
+  describe('BSN Businesspartner ', async () => {
     it('Does a request with BSN and transforms the response', async () => {
-      test.remoteApi
+      remoteApi
         .post(ROUTES.businesspartnerBSN)
         .reply(200, RESPONSE_BODIES.BSNFound);
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        test.authProfileAndToken('private')
+        authProfileAndToken('private')
       );
 
       expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isKnown);
     });
 
     it("Transforms response to '{isKnown: false }' when BSN is not found", async () => {
-      test.remoteApi.post(ROUTES.businesspartnerBSN).reply(200, {
+      remoteApi.post(ROUTES.businesspartnerBSN).reply(200, {
         BSN: 123456789,
         Gevonden: 'Nee',
       });
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        test.authProfileAndToken('private')
+        authProfileAndToken('private')
       );
 
       expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isNotKnown);
     });
   });
 
-  describe('KVK Businesspartner tests', async () => {
+  describe('KVK Businesspartner ', async () => {
     it('Does a request with KVK and transforms the output', async () => {
-      test.remoteApi
+      remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKFound);
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        test.authProfileAndToken('commercial')
+        authProfileAndToken('commercial')
       );
 
       expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isKnown);
     });
 
     it("Transforms response to '{isKnown: false }' when KVK is not found", async () => {
-      test.remoteApi.post(ROUTES.businesspartnerKVK).reply(200, {
+      remoteApi.post(ROUTES.businesspartnerKVK).reply(200, {
         Record: {
           KVK: 12345678,
           Vestigingsnummer: '000038509490',
@@ -139,14 +139,14 @@ describe('fetchIsKnownInAFIS tests', () => {
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        test.authProfileAndToken('commercial')
+        authProfileAndToken('commercial')
       );
 
       expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isNotKnown);
     });
 
     it('Handles a response with multiple vestigingen', async () => {
-      test.remoteApi.post(ROUTES.businesspartnerKVK).reply(200, {
+      remoteApi.post(ROUTES.businesspartnerKVK).reply(200, {
         Record: [
           {
             KVK: 11111111,
@@ -166,16 +166,16 @@ describe('fetchIsKnownInAFIS tests', () => {
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        test.authProfileAndToken('commercial')
+        authProfileAndToken('commercial')
       );
 
       expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isKnown);
     });
   });
 
-  describe('Error behavior tests', () => {
+  describe('Error behavior ', () => {
     it('Handles a bad request by returning an AxiosError', async () => {
-      test.remoteApi.post(ROUTES.businesspartnerBSN).reply(400, {
+      remoteApi.post(ROUTES.businesspartnerBSN).reply(400, {
         error: {
           code: '400',
           message: '', // Empty, because not important
@@ -184,7 +184,7 @@ describe('fetchIsKnownInAFIS tests', () => {
       });
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        test.authProfileAndToken('private')
+        authProfileAndToken('private')
       );
 
       expect(response).toMatchInlineSnapshot(`
@@ -200,10 +200,10 @@ describe('fetchIsKnownInAFIS tests', () => {
     it('Handles server error as expected', async () => {
       const err = new AxiosError('error retrieving doc', '500');
 
-      test.remoteApi.post(ROUTES.businesspartnerBSN).replyWithError(err);
+      remoteApi.post(ROUTES.businesspartnerBSN).replyWithError(err);
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        test.authProfileAndToken('private')
+        authProfileAndToken('private')
       );
 
       expect(response).toMatchInlineSnapshot(`
@@ -217,10 +217,10 @@ describe('fetchIsKnownInAFIS tests', () => {
   });
 
   it('Handles getting just null as a response by returning an AxiosError', async () => {
-    test.remoteApi.post(ROUTES.businesspartnerBSN).reply(200, 'null');
+    remoteApi.post(ROUTES.businesspartnerBSN).reply(200, 'null');
     const response = await fetchIsKnownInAFIS(
       REQUEST_ID,
-      test.authProfileAndToken('private')
+      authProfileAndToken('private')
     );
 
     expect(response.content).toBe(null);
