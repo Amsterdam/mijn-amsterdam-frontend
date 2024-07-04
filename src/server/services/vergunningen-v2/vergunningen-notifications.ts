@@ -1,6 +1,6 @@
 import { differenceInMonths, parseISO } from 'date-fns';
 import memoizee from 'memoizee';
-import { AppRoute, AppRoutes, Themas } from '../../../universal/config';
+import { AppRoute, AppRoutes, Thema, Themas } from '../../../universal/config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -56,9 +56,9 @@ export function getNotificationLabels(
   return null;
 }
 
-function getNotificationBase(vergunning: VergunningFrontendV2) {
+function getNotificationBase(vergunning: VergunningFrontendV2, thema: Thema) {
   const notificationBaseProperties = {
-    thema: Themas.VERGUNNINGEN,
+    thema: thema,
     id: `vergunning-${vergunning.id}-notification`,
     link: {
       to: vergunning.link.to,
@@ -82,13 +82,13 @@ function mergeNotificationProperties(
 export function createVergunningNotification(
   vergunning: VergunningFrontendV2,
   vergunningen: VergunningFrontendV2[],
-  dateNow?: Date
+  thema: Thema
 ): MyNotification | null {
   const zaakTypeTransformer = decosZaakTransformers[vergunning.caseType];
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
-    const notificationBase = getNotificationBase(vergunning);
+    const notificationBase = getNotificationBase(vergunning, thema);
     const notificationLabels = getNotificationLabels(
       labels,
       vergunning,
@@ -108,11 +108,11 @@ export function createVergunningNotification(
 
 export function getVergunningNotifications(
   vergunningen: VergunningFrontendV2[],
-  compareDate: Date = new Date()
+  thema: Thema
 ) {
   return vergunningen
     .map((vergunning, index, allVergunningen) =>
-      createVergunningNotification(vergunning, allVergunningen, compareDate)
+      createVergunningNotification(vergunning, allVergunningen, thema)
     )
     .filter(
       (notification: MyNotification | null): notification is MyNotification =>
@@ -125,7 +125,7 @@ async function fetchVergunningenV2Notifications_(
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT,
-  compareDate?: Date
+  thema: Thema = Themas.VERGUNNINGEN
 ) {
   const VERGUNNINGEN = await fetchVergunningenV2(
     requestID,
@@ -137,7 +137,7 @@ async function fetchVergunningenV2Notifications_(
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content,
-      compareDate
+      thema
     );
 
     return apiSuccessResult({
