@@ -118,14 +118,73 @@ export type DecosZaakTypeTransformer<T extends VergunningV2 = VergunningV2> = {
   notificationLabels?: Partial<NotificationLabelByType>;
 };
 
-export type DecosFieldsObject = Record<DecosFieldNameSource, string>;
+type DecosZaakBase = {
+  // status
+  title: string;
+  // caseType
+  text45: DecosCaseType | string;
+  // decision
+  dfunction?: string | null;
+  // identifier / zaaknummer
+  mark: string;
+  // processed
+  processed: boolean;
+  // dateDecision
+  date5?: string | null;
+  // dateRequest
+  document_date: string;
+  // dateStart
+  date6?: string | null;
+  // dateEnd
+  date7?: string | null;
+
+  subject1?: string;
+  // Info regarding possible payment
+  text11?: string | null;
+  // Info regarding possible payment
+  text12?: string | null;
+};
+
+type DecosDocumentBase = {
+  text39: string;
+  text40: string;
+  text41: string;
+  // identifier / zaaknummer
+  mark: string;
+  // datePublished
+  received_date: string;
+};
+
+type DecosDocumentBlobBase = {
+  // IS PDF
+  bol10: boolean;
+};
+
+export type DecosFieldsObject = Record<
+  DecosFieldNameSource,
+  string | boolean | null | number
+>;
+
 export type DecosFieldTransformerObject<T extends VergunningV2 = VergunningV2> =
   Record<DecosFieldNameSource, DecosFieldTransformer<T> | keyof T>;
+
 export type DecosZaakSource = {
   key: DecosZaakID;
-  fields: DecosFieldsObject;
+  links: string[];
+  fields: DecosZaakBase & DecosFieldsObject;
 };
-export type DecosDocumentSource = DecosZaakSource;
+
+export type DecosDocumentSource = {
+  key: DecosZaakID;
+  links: string[];
+  fields: DecosDocumentBase & DecosFieldsObject;
+};
+
+export type DecosDocumentBlobSource = {
+  key: DecosZaakID;
+  links: string[];
+  fields: DecosDocumentBlobBase & DecosFieldsObject;
+};
 
 export type DecosZakenResponse<T = DecosZaakSource[]> = {
   count: number;

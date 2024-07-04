@@ -24,7 +24,6 @@ import {
   GPK as GPKType,
   GPP as GPPType,
   Ligplaatsvergunning as LigplaatsvergunningType,
-  MA_DECISION_DEFAULT,
   Nachtwerkontheffing as NachtwerkontheffingType,
   Omzettingsvergunning as OmzettingsvergunningType,
   OnttrekkingsvergunningSloop as OnttrekkingsvergunningSloopType,
@@ -68,7 +67,7 @@ const decision: DecosFieldTransformer = {
       )?.[0];
       return maDecision ?? decision;
     }
-    return decision || MA_DECISION_DEFAULT;
+    return decision;
   },
 };
 
@@ -687,21 +686,21 @@ export const EigenParkeerplaats: DecosZaakTypeTransformer<EigenParkeerplaatsType
 
       if (zaakSource.fields.text25) {
         locations.push({
-          type: zaakSource.fields.text17,
-          street: zaakSource.fields.tex25,
+          type: String(zaakSource.fields.text17),
+          street: String(zaakSource.fields.tex25),
           houseNumber: `${zaakSource.fields.num14 ?? ''}`,
-          fiscalNumber: zaakSource.fields.text18,
-          url: zaakSource.fields.text19,
+          fiscalNumber: String(zaakSource.fields.text18),
+          url: String(zaakSource.fields.text19),
         });
       }
 
       if (zaakSource.fields.streetLocation2) {
         locations.push({
-          type: zaakSource.fields.text20,
-          street: zaakSource.fields.text15,
+          type: String(zaakSource.fields.text20),
+          street: String(zaakSource.fields.text15),
           houseNumber: `${zaakSource.fields.num15 ?? ''}`,
-          fiscalNumber: zaakSource.fields.text21,
-          url: zaakSource.fields.text22,
+          fiscalNumber: String(zaakSource.fields.text21),
+          url: String(zaakSource.fields.text22),
         });
       }
 
@@ -749,11 +748,11 @@ export const EigenParkeerplaatsOpheffen: DecosZaakTypeTransformer<EigenParkeerpl
     },
     async afterTransform(vergunning, zaakSource) {
       vergunning.location = {
-        street: zaakSource.fields.text25,
-        houseNumber: zaakSource.fields.num14,
-        type: zaakSource.fields.text17,
-        url: zaakSource.fields.tex19,
-        fiscalNumber: zaakSource.fields.tex18,
+        street: String(zaakSource.fields.text25),
+        houseNumber: String(zaakSource.fields.num14),
+        type: String(zaakSource.fields.text17),
+        url: String(zaakSource.fields.tex19),
+        fiscalNumber: String(zaakSource.fields.tex18),
       };
       return vergunning;
     },

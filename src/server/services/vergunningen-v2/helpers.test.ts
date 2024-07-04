@@ -15,21 +15,21 @@ describe('helpers/Vergunningen', () => {
       const vergunning: any = {
         dateEnd: null,
       };
-      expect(isNearEndDate(vergunning.dateEnd)).toBe(false);
+      expect(isNearEndDate(vergunning)).toBe(false);
     }
     {
       // Near end
       const vergunning: any = {
         dateEnd: '2022-10-28',
       };
-      expect(isNearEndDate(vergunning.dateEnd)).toBe(true);
+      expect(isNearEndDate(vergunning)).toBe(true);
     }
     {
       // Not near end
       const vergunning: any = {
         dateEnd: '2023-10-28',
       };
-      expect(isNearEndDate(vergunning.dateEnd)).toBe(false);
+      expect(isNearEndDate(vergunning)).toBe(false);
     }
   });
 

@@ -11,12 +11,14 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException, captureMessage } from '../monitoring';
 import {
   AddressBookEntry,
+  DecosDocumentBlobSource,
   DecosDocumentSource,
   DecosFieldValue,
   DecosWorkflowStepDate,
   DecosWorkflowStepTitle,
   DecosZaakSource,
   DecosZakenResponse,
+  MA_DECISION_DEFAULT,
   VergunningDocument,
   VergunningV2,
   adresBoekenByProfileType,
@@ -109,20 +111,19 @@ async function getUserKeys(
   }
 
   const bookSearchResponses = await Promise.all(bookSearches);
-  // Take only results of the succesful requests
-  const successfulBookResponses = bookSearchResponses.filter(
-    (response) => response.status === 'OK'
-  );
 
   const userKeys = [];
 
-  for (const response of successfulBookResponses) {
+  for (const response of bookSearchResponses) {
+    if (response.status === 'ERROR') {
+      return response;
+    }
     if (Array.isArray(response.content)) {
       userKeys.push(...response.content.map((record) => record.key));
     }
   }
 
-  return userKeys;
+  return apiSuccessResult(userKeys);
 }
 
 async function transformDecosZaakResponse(
@@ -142,8 +143,9 @@ async function transformDecosZaakResponse(
   }
 
   // Reference to decos workflow service for use in transformers
-  const fetchWorkflowDate = (stepTitle: string) =>
-    fetchDecosWorkflowDate(requestID, decosZaakSource.key, stepTitle);
+  const fetchWorkflowDate = (stepTitle: string) => {
+    return fetchDecosWorkflowDate(requestID, decosZaakSource.key, stepTitle);
+  };
 
   // Iterates over the desired data fields (key=>value pairs) and transforms values if necessary.
   const transformedFieldEntries = Object.entries(
@@ -191,16 +193,17 @@ async function transformDecosZaakResponse(
   };
 
   // Try to fetch and assign a specific date on which the zaak was "In behandeling"
-  if (
-    zaakTypeTransformer.dateInBehandelingWorkflowStepTitle &&
-    vergunning.status !== 'Ontvangen' // TODO: Verify if we can test agains status === 'Ontvangen'
-  ) {
+  if (zaakTypeTransformer.dateInBehandelingWorkflowStepTitle) {
     const { content: dateInBehandeling } = await fetchWorkflowDate(
       zaakTypeTransformer.dateInBehandelingWorkflowStepTitle
     );
     if (dateInBehandeling) {
       vergunning.dateInBehandeling = dateInBehandeling;
     }
+  }
+
+  if (vergunning.processed && !vergunning.decision) {
+    vergunning.decision = MA_DECISION_DEFAULT;
   }
 
   // After initial transformation of the data is done, perform a Post transform action.
@@ -237,6 +240,7 @@ async function transformDecosZakenResponse(
 
     // Exclude zaken that match the following conditions
     if (isExcludedFromTransformation(decosZaakSource, zaakTypeTransformer)) {
+      console.log('whoa!!');
       continue;
     }
 
@@ -298,14 +302,23 @@ export async function fetchDecosZakenSource(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const userKeys = await getUserKeys(requestID, authProfileAndToken);
+  const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
+
+  if (userKeysResponse.status === 'ERROR') {
+    return userKeysResponse;
+  }
+
   const zakenSourceResponses = await Promise.allSettled(
-    userKeys.map((userKey) => getZakenByUserKey(requestID, userKey))
+    userKeysResponse.content.map((userKey) =>
+      getZakenByUserKey(requestID, userKey)
+    )
   );
+
   const zakenSource = [];
 
   for (const decosZakenSource of zakenSourceResponses) {
     const response = getSettledResult(decosZakenSource);
+
     if (response.status === 'OK') {
       zakenSource.push(...response.content);
     } else if (response.status === 'ERROR') {
@@ -353,7 +366,7 @@ function transformDecosWorkflowKeysResponse(workflowsResponseData: {
 function transformDecosWorkflowDateResponse(
   stepTitle: DecosWorkflowStepTitle,
   singleWorkflowResponseData: {
-    content: Array<{ fields: { text7: ''; date1: '' } }>;
+    content: Array<{ fields: { text7: string; date1?: string } }>;
   }
 ) {
   return (
@@ -405,7 +418,7 @@ async function fetchIsPdfDocument(
       return `${config.url}/items/${documentKey}/blob?select=bol10&filter=bol10 eq true`;
     },
     transformResponse: (
-      responseDataSource: DecosZakenResponse<DecosDocumentSource[]>
+      responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
     ) => {
       return { isPDF: !!responseDataSource.content?.pop()?.fields.bol10 };
     },
@@ -555,10 +568,7 @@ export async function fetchDecosVergunning(
   return zaakSourceResponse;
 }
 
-export async function fetchDecosDocument(
-  requestID: requestID,
-  documentID: string
-) {
+export async function fetchDecosDocument(documentID: string) {
   const apiConfigDocument = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${documentID}/content`;
@@ -574,5 +584,12 @@ export async function fetchDecosDocument(
 }
 
 export const forTesting = {
+  filterValidDocument,
   getUserKeys,
+  getZakenByUserKey,
+  transformDecosDocumentListResponse,
+  transformDecosWorkflowDateResponse,
+  transformDecosWorkflowKeysResponse,
+  transformDecosZaakResponse,
+  transformDecosZakenResponse,
 };

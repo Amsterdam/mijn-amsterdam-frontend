@@ -44,9 +44,11 @@ export function isWaitingForPaymentConfirmation(
 
 // Cases that match the following condition are not shown to the user.
 export function hasInvalidDecision(decosZaakSource: DecosZaakSource) {
-  return DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION.includes(
-    decosZaakSource.fields.dfunction?.toLowerCase()
-  );
+  return decosZaakSource.fields.dfunction
+    ? DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION.includes(
+        decosZaakSource.fields.dfunction?.toLowerCase()
+      )
+    : false;
 }
 
 // Cases that match the following condition are not show to the user.

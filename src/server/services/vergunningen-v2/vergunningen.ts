@@ -208,7 +208,7 @@ export async function fetchVergunningDocumentV2(
   );
 
   if (decryptResult.status === 'OK') {
-    return fetchDecosDocument(requestID, decryptResult.content);
+    return fetchDecosDocument(decryptResult.content);
   }
 
   return decryptResult;
