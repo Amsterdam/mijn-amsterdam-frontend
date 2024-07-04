@@ -25,8 +25,7 @@
     "bff-api:test": "cross-env MA_APP_MODE=unittest vitest --environment=node src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
-    "bff-api:build": "tsc --project ./tsconfig.bff.json",
-    "release:notification": "node scripts/release-notifications/release-notes"
+    "bff-api:build": "tsc --project ./tsconfig.bff.json"
   },
   "browserslist": [
     ">0.2%",
