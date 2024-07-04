@@ -569,13 +569,16 @@ export async function fetchDecosDocument(documentID: string) {
     },
   });
 
-  return axios({
-    url: apiConfigDocument.url,
-    responseType: 'stream',
-    headers: apiConfigDocument.headers,
-  }).catch((error) => {
-    return apiErrorResult(error.message, null, error.code);
-  });
+  try {
+    return axios({
+      url: apiConfigDocument.url,
+      responseType: 'stream',
+      headers: apiConfigDocument.headers,
+    });
+  } catch (error: any) {
+    const statusCode = error.statusCode ?? error?.response?.status;
+    return apiErrorResult((error as Error).message, statusCode);
+  }
 }
 
 export const forTesting = {
