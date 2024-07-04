@@ -28,6 +28,14 @@ import { captureException } from '../monitoring';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 
+export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
+  vergunning: VergunningV2
+) => {
+  return EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
+    vergunning.caseType
+  );
+};
+
 function transformVergunningFrontend(
   userId: AuthProfileAndToken['profile']['id'],
   vergunning: VergunningV2,
@@ -114,11 +122,7 @@ export async function fetchVergunningenV2(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
-  filter: VergunningFilter = (vergunning: VergunningV2) => {
-    return EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
-      vergunning.caseType
-    );
-  }
+  filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT
 ) {
   return fetchAndFilterVergunningenV2(
     requestID,

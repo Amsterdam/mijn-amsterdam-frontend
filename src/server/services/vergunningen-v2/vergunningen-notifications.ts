@@ -1,6 +1,6 @@
 import { differenceInMonths, parseISO } from 'date-fns';
 import memoizee from 'memoizee';
-import { Themas } from '../../../universal/config';
+import { AppRoute, AppRoutes, Themas } from '../../../universal/config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -14,11 +14,15 @@ import {
   NotificationLabelByType,
   NotificationLabels,
   NotificationProperty,
+  VergunningFilter,
   VergunningFrontendV2,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { isNearEndDate } from './helpers';
-import { fetchVergunningenV2 } from './vergunningen';
+import {
+  FILTER_VERGUNNINGEN_DEFAULT,
+  fetchVergunningenV2,
+} from './vergunningen';
 
 // prettier-ignore
 export function getNotificationLabels(
@@ -119,11 +123,15 @@ export function getVergunningNotifications(
 async function fetchVergunningenV2Notifications_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
+  appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
+  filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT,
   compareDate?: Date
 ) {
   const VERGUNNINGEN = await fetchVergunningenV2(
     requestID,
-    authProfileAndToken
+    authProfileAndToken,
+    appRoute,
+    filter
   );
 
   if (VERGUNNINGEN.status === 'OK') {
