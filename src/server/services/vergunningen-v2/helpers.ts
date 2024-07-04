@@ -32,6 +32,7 @@ export function isWaitingForPaymentConfirmation(
       DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12;
 
   const isWaitingForPaymentConfirmation2 =
+    !!decosZaakSource.fields.subject1 &&
     DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1.includes(
       decosZaakSource.fields.subject1?.toLowerCase()
     );
@@ -53,7 +54,7 @@ export function hasInvalidDecision(decosZaakSource: DecosZaakSource) {
 
 // Cases that match the following condition are not show to the user.
 export function isScheduledForRemoval(decosZaakSource: DecosZaakSource) {
-  return !!decosZaakSource.fields.dfunction
+  return !!decosZaakSource.fields.subject1
     ?.toLowerCase()
     .includes(DECOS_PENDING_REMOVAL_DFUNCTION);
 }
@@ -68,7 +69,7 @@ export function isExcludedFromTransformation(
     hasInvalidDecision(zaakSource) ||
     !zaakTypeTransformer.isActive ||
     // Check if we have data we want to transform or not.
-    (zaakTypeTransformer.hasValidSourceData &&
+    (typeof zaakTypeTransformer.hasValidSourceData === 'function' &&
       !zaakTypeTransformer.hasValidSourceData(zaakSource))
   );
 }
