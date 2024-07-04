@@ -98,7 +98,7 @@ export const PRISTINE_APPSTATE: AppState = {
     bbVergunningen: [],
   }),
   VERGUNNINGEN: apiPristineResult([]),
-  VERGUNNINGEN_V2: apiPristineResult([]),
+  VERGUNNINGENv2: apiPristineResult([]),
 
   // KVK / Handelsregister
   KVK: apiPristineResult(null),

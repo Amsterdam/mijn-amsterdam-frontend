@@ -61,6 +61,7 @@ import {
 } from './wpi';
 import { fetchHLI } from './hli/hli';
 import { fetchIsKnownInAFIS } from './afis/afis';
+import { fetchDecosVergunningen } from './vergunningen-v2/decos-service';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -203,7 +204,7 @@ const SERVICES_INDEX = {
   SVWI,
   TOERISTISCHE_VERHUUR,
   VERGUNNINGEN,
-  VERGUNNINGENV2,
+  VERGUNNINGENv2,
   WMO,
   WPI_AANVRAGEN,
   WPI_BBZ,
@@ -243,7 +244,7 @@ type CommercialServices = Pick<
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
   | 'VERGUNNINGEN'
-  | 'VERGUNNINGEN_V2'
+  | 'VERGUNNINGENv2'
 >;
 
 type ServicesByProfileType = {
@@ -280,7 +281,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SVWI,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
-    VERGUNNINGENV2,
+    VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -313,7 +314,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
-    VERGUNNINGENV2,
+    VERGUNNINGENv2,
   },
 };
 

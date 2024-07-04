@@ -33,14 +33,14 @@ function PageContent({ vergunning }: PageContentProps) {
 
 export default function VergunningV2Detail() {
   const appState = useAppStateGetter();
-  const { VERGUNNINGEN_V2 } = appState;
+  const { VERGUNNINGENv2 } = appState;
   const { id } = useParams<{ id: string }>();
-  const vergunning = VERGUNNINGEN_V2.content?.find((item) => item.id === id);
+  const vergunning = VERGUNNINGENv2.content?.find((item) => item.id === id);
 
   return (
     <StatusDetail<VergunningV2>
-      thema="VERGUNNINGEN_V2"
-      stateKey="VERGUNNINGEN_V2"
+      thema="VERGUNNINGENv2"
+      stateKey="VERGUNNINGENv2"
       backLinkTitle={ThemaTitles.VERGUNNINGEN}
       pageContent={<PageContent vergunning={vergunning} />}
       documentPathForTracking={(document) =>

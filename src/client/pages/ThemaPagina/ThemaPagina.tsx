@@ -58,7 +58,7 @@ export default function ThemaPagina({
             <Grid.Cell span="all">
               <LinkList>
                 {linkListItems.map(({ to, title }) => (
-                  <LinkList.Link rel="noreferrer" href={to}>
+                  <LinkList.Link key={to} rel="noreferrer" href={to}>
                     {title}
                   </LinkList.Link>
                 ))}

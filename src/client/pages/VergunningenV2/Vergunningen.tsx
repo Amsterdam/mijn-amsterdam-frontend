@@ -19,9 +19,9 @@ import {
 import { generatePath } from 'react-router-dom';
 
 export default function VergunningenV2() {
-  const { VERGUNNINGEN_V2 } = useAppStateGetter();
+  const { VERGUNNINGENv2 } = useAppStateGetter();
   const vergunningen = addLinkElementToProperty<VergunningV2>(
-    VERGUNNINGEN_V2.content ?? [],
+    VERGUNNINGENv2.content ?? [],
     'title'
   );
 
@@ -95,8 +95,8 @@ export default function VergunningenV2() {
       linkListItems={linkListItems}
       pageContentBottom={pageContentBottom}
       pageContentTables={pageContentTables}
-      isError={isError(VERGUNNINGEN_V2)}
-      isLoading={isLoading(VERGUNNINGEN_V2)}
+      isError={isError(VERGUNNINGENv2)}
+      isLoading={isLoading(VERGUNNINGENv2)}
     />
   );
 }
