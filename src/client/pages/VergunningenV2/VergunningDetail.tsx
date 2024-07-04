@@ -10,14 +10,27 @@ import { Datalist } from '../../components/Datalist/Datalist';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { GPPContent } from './detail-page-content/GPP';
+import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
+import { WVOSContent } from './detail-page-content/WVOS';
 
-interface PageContentProps {
+interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
   documents: VergunningDocument[];
 }
 
 // TODO: Implement detailpages per case
-function PageContent({ vergunning, documents }: PageContentProps) {
+function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
+  switch (vergunning.caseType) {
+    case CaseTypeV2.GPP:
+      return <GPPContent vergunning={vergunning} />;
+    case CaseTypeV2.AanbiedenDiensten:
+      return <AanbiedenDienstenContent vergunning={vergunning} />;
+    case CaseTypeV2.WVOS:
+      return <WVOSContent vergunning={vergunning} />;
+  }
+
   return (
     !!vergunning && (
       <Grid.Cell span="all">
@@ -44,7 +57,7 @@ export default function VergunningV2Detail() {
     documents: VergunningDocument[];
   }>({
     url: fetchUrl,
-    bagThema: BagThemas.VERGUNNINGENv2,
+    bagThema: BagThemas.VERGUNNINGEN,
     key: id,
   });
 
@@ -60,7 +73,7 @@ export default function VergunningV2Detail() {
       icon={<ThemaIcon />}
       pageContentTop={
         vergunningDetail && (
-          <PageContent
+          <DetailPageContent
             vergunning={vergunningDetail}
             documents={vergunningDocuments}
           />

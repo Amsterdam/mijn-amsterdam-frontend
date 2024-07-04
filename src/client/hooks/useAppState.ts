@@ -189,7 +189,6 @@ export function isAppStateReady(
   profileType: ProfileType
 ) {
   const isLegacyProfileType = ['private', 'commercial'].includes(profileType);
-
   const profileStates = Object.entries(appState).filter(
     ([appStateKey, state]) => {
       const key = appStateKey as AppStateKey;
