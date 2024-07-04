@@ -10,8 +10,49 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-      - name: Create release notification
-        env:
-          webhook_host: ${{ secrets.MS_TEAMS_WEBHOOK_HOST }}
-          webhook_path: ${{ secrets.MS_TEAMS_RELEASE_NOTIFICATION_WEBHOOK_PATH }}
-        run: npm run release:notification
+
+      - name: Extract tag name
+        id: extract_tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Create Release
+        run: |
+            gh release create ${{ env.TAG_NAME }} --generate-notes
+            RELEASE_NOTES=$(gh release view ${{ github.ref }} --json body -q .body)
+            echo "release_notes=$RELEASE_NOTES" >> $GITHUB_OUTPUT
+
+      - name: Divide Notes into Chores, Stories, and Bugs
+        id: categorize_notes
+        run: |
+          echo "${{ steps.create_release.outputs.release_notes }}" > release_notes.txt
+          grep -i 'CHORE:' release_notes.txt > chores.txt || true
+          grep -i 'STORY:' release_notes.txt > stories.txt || true
+          grep -i 'FIX\|BUG:' release_notes.txt > bugs.txt || true
+# todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
+          grep -i 'MIJN:' release_notes.txt > mijn.txt || true
+          echo "chores=$(cat chores.txt)" >> $GITHUB_OUTPUT
+          echo "stories=$(cat stories.txt)" >> $GITHUB_OUTPUT
+          echo "bugs=$(cat bugs.txt)" >> $GITHUB_OUTPUT
+# todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
+          echo "mijn=$(cat mijn.txt)" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Create Customized Release Notes
+        id: custom_release_notes
+        run: |
+          echo "## Release Notes" > custom_release_notes.md
+          echo "### Chores" >> custom_release_notes.md
+          cat chores.txt >> custom_release_notes.md
+          echo "### Stories" >> custom_release_notes.md
+          cat stories.txt >> custom_release_notes.md
+          echo "### Bugs" >> custom_release_notes.md
+          cat bugs.txt >> custom_release_notes.md
+# todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
+          echo "### Mijn" >> custom_release_notes.md
+          cat mijn.txt >> custom_release_notes.md
+          CUSTOM_NOTES=$(cat custom_release_notes.md)
+          echo "custom_notes=$CUSTOM_NOTES" >> $GITHUB_OUTPUT
+
+      - name: Update Release with Custom Notes
+        run: |
+          gh release edit ${{ github.ref }} --notes "${{ steps.custom_release_notes.outputs.custom_notes }}"
