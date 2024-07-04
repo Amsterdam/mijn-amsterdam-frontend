@@ -4,6 +4,10 @@
     "type": "git",
     "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
   },
+  "engines": {
+    "npm": ">=10.8.1",
+    "node": ">=22.4"
+  },
   "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
