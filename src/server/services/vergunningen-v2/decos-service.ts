@@ -572,6 +572,7 @@ export async function fetchDecosDocument(documentID: string) {
   return axios({
     url: apiConfigDocument.url,
     responseType: 'stream',
+    headers: apiConfigDocument.headers,
   }).catch((error) => {
     return apiErrorResult(error.message, null, error.code);
   });
