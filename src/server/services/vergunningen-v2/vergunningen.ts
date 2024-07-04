@@ -31,7 +31,7 @@ import { getStatusSteps } from './vergunningen-status-steps';
 export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
   vergunning: VergunningV2
 ) => {
-  return EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
+  return !EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
     vergunning.caseType
   );
 };
