@@ -268,6 +268,7 @@ function AppAuthenticated() {
               component={ToeristischeVerhuur}
             />
           )}
+          {FeatureToggle.afisActive && <Route path={AppRoutes.AFIS} />}
           {FeatureToggle.krefiaActive && (
             <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}

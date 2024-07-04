@@ -25,7 +25,7 @@ export const AppRoutes: Record<string, string> = {
   'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
   INKOMEN: '/inkomen',
   STADSPAS: '/stadspas',
-
+  AFIS: '/afis',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',

@@ -18,7 +18,13 @@ export const PRISTINE_APPSTATE: AppState = {
   // Generated
   NOTIFICATIONS: apiPristineResult([]),
 
-  // Direct
+  AFIS: apiPristineResult(
+    { isKnown: false },
+    {
+      isActive: FeatureToggle.afisActive,
+      profileTypes: ['private', 'commercial'],
+    }
+  ),
   WPI_SPECIFICATIES: apiPristineResult(
     {
       jaaropgaven: [],

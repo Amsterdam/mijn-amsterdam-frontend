@@ -1,6 +1,7 @@
 import { Thema, Themas } from '../../universal/config';
 import { SVGComponent } from '../../universal/types';
 import {
+  IconAFIS,
   IconAlert,
   IconAVG,
   IconBelastingen,
@@ -31,6 +32,7 @@ import {
 } from '../assets/icons';
 
 export const ThemaIcons: Record<Thema, SVGComponent> = {
+  [Themas.AFIS]: IconAFIS,
   [Themas.AFVAL]: IconGarbage,
   [Themas.AVG]: IconAVG,
   [Themas.BELASTINGEN]: IconBelastingen,

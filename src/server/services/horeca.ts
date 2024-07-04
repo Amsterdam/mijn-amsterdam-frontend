@@ -25,8 +25,7 @@ export const horecaOptions = {
 
 export async function fetchHorecaVergunningen(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType = 'private'
+  authProfileAndToken: AuthProfileAndToken
 ) {
   if (!FeatureToggle.horecaActive) {
     return apiSuccessResult([]);
