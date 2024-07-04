@@ -239,7 +239,6 @@ async function transformDecosZakenResponse(
 
     // Exclude zaken that match the following conditions
     if (isExcludedFromTransformation(decosZaakSource, zaakTypeTransformer)) {
-      console.log('whoa!!');
       continue;
     }
 
@@ -507,9 +506,6 @@ export async function fetchDecosZaakSource(
       return `${config.url}/items/${zaakID}${includeProperties ? '?properties=true' : ''}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
-      if (IS_OT) {
-        console.log('ZAAK:', JSON.stringify(responseData));
-      }
       if (responseData.content) {
         return responseData.content[0];
       }
