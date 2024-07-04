@@ -23,10 +23,21 @@ export const commonRows: Record<string, VergunningDataListRow> = {
     content: vergunning.identifier,
   }),
   location: (vergunning) =>
-    'location' in vergunning && vergunning.location
+    'location' in vergunning && typeof vergunning.location === 'string'
       ? {
-          label: 'Kenmerk',
-          content: <LocationModal location={vergunning.location as string} />,
+          label: 'Adres',
+          content: (
+            <LocationModal location={vergunning.location as string}>
+              {vergunning.location}
+            </LocationModal>
+          ),
+        }
+      : null,
+  location2: (vergunning) =>
+    'location' in vergunning && typeof vergunning.location !== 'string'
+      ? {
+          label: 'Adres',
+          content: JSON.stringify(vergunning.location),
         }
       : null,
   decision: (vergunning) =>
