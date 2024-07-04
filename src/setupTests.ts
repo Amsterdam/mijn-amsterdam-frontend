@@ -62,9 +62,9 @@ process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
 
 // V2
 process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;
-process.env.BFF_DECOS_VERGUNNINGEN_ADRES_BOEKEN_BSN =
+process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN =
   'bookKeyA,BookKeyB,bookKeyC,bookKeyD';
-process.env.BFF_DECOS_VERGUNNINGEN_ADRES_BOEKEN_KVK = 'bookKey1';
+process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK = 'bookKey1';
 
 process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
 

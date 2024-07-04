@@ -74,7 +74,7 @@ async function getUserKeys(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const apiConfig = getApiConfig('DECOS_VERGUNNINGEN', {
+  const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
     formatUrl: (config) => {
       return `${config.url}/search/books?properties=false&select=key`;
@@ -259,7 +259,7 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
     ','
   );
 
-  const apiConfig = getApiConfig('DECOS_VERGUNNINGEN', {
+  const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${userKey}/folders?top=10&select=${selectFields}`;
     },
@@ -334,7 +334,7 @@ export async function fetchDecosWorkflowDate(
   zaakID: VergunningV2['key'],
   stepTitle: DecosWorkflowStepTitle
 ) {
-  const apiConfigWorkflows = getApiConfig('DECOS_VERGUNNINGEN', {
+  const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
     },
@@ -350,7 +350,7 @@ export async function fetchDecosWorkflowDate(
     return apiSuccessResult(null);
   }
 
-  const apiConfigSingleWorkflow = getApiConfig('DECOS_VERGUNNINGEN', {
+  const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?properties=false&fetchParents=false&select=mark,date1,date2,text7,sequence&orderBy=sequence&filter=text7 eq '${stepTitle}'`;
     },
@@ -388,7 +388,7 @@ export async function fetchDecosDocumentList(
   requestID: requestID,
   zaakID: VergunningV2['key']
 ) {
-  const apiConfigDocuments = getApiConfig('DECOS_VERGUNNINGEN', {
+  const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key`; // TODO: Top/From paginate..
     },
@@ -409,7 +409,7 @@ export async function fetchDecosVergunning(
   zaakID: VergunningV2['key']
 ) {
   // Fetch the zaak from Decos, this request will return all the fieldNames, no need to specify the ?select= query.
-  const apiConfig = getApiConfig('DECOS_VERGUNNINGEN', {
+  const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}`;
     },
@@ -436,8 +436,6 @@ export async function fetchDecosVergunning(
 
   const zaakSourceResponse = getSettledResult(zaakSourceResponseSettled);
   const documentsResponse = getSettledResult(documentsResponseSettled);
-
-  console.log(zaakSourceResponse, documentsResponse);
 
   let documents: VergunningDocument[] = [];
   let vergunning: VergunningV2 | null = null;
@@ -480,7 +478,7 @@ export async function fetchDecosDocument(
   requestID: requestID,
   documentID: string
 ) {
-  const apiConfigDocument = getApiConfig('DECOS_VERGUNNINGEN', {
+  const apiConfigDocument = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${documentID}/content`;
     },
