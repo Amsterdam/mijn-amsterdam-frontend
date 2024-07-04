@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import uid from 'uid-safe';
 import { remoteApi } from '../../../test-utils';
-import { jsonCopy } from '../../../universal/helpers';
+import { jsonCopy, range } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   DecosDocumentSource,
@@ -674,6 +674,24 @@ describe('decos-service', () => {
   });
 
   describe('transformDecosZakenResponse', () => {
-    test('Success', () => {});
+    test('Transforms and sorts', async () => {
+      const zaken = range(0, 3).map((n) => {
+        const zaak: DecosZaakSource = jsonCopy(zakenSource.content[0]);
+        return {
+          ...zaak,
+          fields: {
+            ...zaak.fields,
+            mark: `${n} - xxx`,
+          },
+        };
+      });
+      const zakenTransformed = await forTesting.transformDecosZakenResponse(
+        reqID,
+        zaken
+      );
+      expect(
+        zakenTransformed.map(({ identifier }) => identifier)
+      ).toStrictEqual(['3 - xxx', '2 - xxx', '1 - xxx', '0 - xxx']);
+    });
   });
 });
