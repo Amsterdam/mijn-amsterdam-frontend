@@ -417,14 +417,15 @@ async function fetchIsPdfDocument(
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
     ) => {
-      return { isPDF: !!responseDataSource.content?.pop()?.fields.bol10 };
+      const lastDoc = responseDataSource.content?.pop();
+      return { isPDF: !!lastDoc?.fields.bol10, key: lastDoc?.key };
     },
   });
 
-  const documentTransformed = await requestData<{ isPDF: boolean }>(
-    apiConfigDocuments,
-    requestID
-  );
+  const documentTransformed = await requestData<{
+    isPDF: boolean;
+    key: string;
+  }>(apiConfigDocuments, requestID);
   return documentTransformed;
 }
 
@@ -451,7 +452,7 @@ async function transformDecosDocumentListResponse(
         if (isPdfResponse.status === 'OK' && isPdfResponse.content.isPDF) {
           const vergunningDocument: VergunningDocument = {
             id: documentMetadata.mark,
-            key: key,
+            key: isPdfResponse.content.key,
             title: documentMetadata.text41,
             datePublished: documentMetadata.received_date,
             url: '', // Url is constructed in vergunningen.ts
@@ -573,10 +574,14 @@ export async function fetchDecosDocument(documentID: string) {
     return axios({
       url: apiConfigDocument.url,
       responseType: 'stream',
-      headers: apiConfigDocument.headers,
+      headers: {
+        Authorization: apiConfigDocument.headers?.Authorization,
+        Accept: 'application/octet-stream',
+      },
     });
   } catch (error: any) {
-    const statusCode = error.statusCode ?? error?.response?.status;
+    const statusCode =
+      error.statusCode ?? error?.status ?? error.response.status;
     return apiErrorResult((error as Error).message, statusCode);
   }
 }
