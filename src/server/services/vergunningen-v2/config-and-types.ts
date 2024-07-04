@@ -539,6 +539,8 @@ export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
   isExpired?: boolean;
 } & ZaakDetail;
 
+export type VergunningFilter = (vergunning: VergunningV2) => boolean;
+
 export type NotificationProperty =
   | 'title'
   | 'description'

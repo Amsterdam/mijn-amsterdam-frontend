@@ -12,6 +12,7 @@ import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
   VergunningCaseTypeFilter,
   VergunningDocument,
+  VergunningFilter,
   VergunningFrontendV2,
   VergunningV2,
 } from './config-and-types';
@@ -111,17 +112,19 @@ export const fetchAndFilterVergunningenV2 = memoizee(
 
 export async function fetchVergunningenV2(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
+  filter: VergunningFilter = (vergunning: VergunningV2) => {
+    return EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
+      vergunning.caseType
+    );
+  }
 ) {
   return fetchAndFilterVergunningenV2(
     requestID,
     authProfileAndToken,
-    AppRoutes['VERGUNNINGEN/DETAIL'],
-    (vergunning: VergunningV2) => {
-      return !EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
-        vergunning.caseType
-      );
-    }
+    appRoute,
+    filter
   );
 }
 
