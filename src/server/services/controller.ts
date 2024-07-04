@@ -118,7 +118,7 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
 const VERGUNNINGENv2 = async (requestID: requestID, req: Request) =>
-  fetchDecosVergunningen(requestID, await getAuth(req));
+  fetchVergunningenV2(requestID, await getAuth(req));
 
 const HORECA = async (requestID: requestID, req: Request) =>
   fetchHorecaVergunningen(requestID, await getAuth(req));
