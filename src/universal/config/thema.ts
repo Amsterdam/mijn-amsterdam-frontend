@@ -82,7 +82,7 @@ export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
 
 // These are used for PageHeadings and link title props for example.
 export const ThemaTitles: { [thema in Thema]: string } = {
-  AFIS: 'AFIS',
+  AFIS: 'Facturen en Betalen',
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
