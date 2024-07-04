@@ -2,13 +2,13 @@ import { AxiosError } from 'axios';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
+import {
+  OathResponseData,
+  BusinessPartnerKnownResponse,
+  AFISBusinessPartnerPrivateSourceResponse,
+  AFISBusinessPartnerCommercialSourceResponse,
+} from './afis-types';
 import qs from 'qs';
-
-export type OathResponseData = {
-  access_token: string;
-  token_type: 'bearer';
-  expires_in: number;
-};
 
 /** Fetch a bearer token for use in succedent requests */
 export async function fetchAFISBearerToken(
@@ -36,42 +36,6 @@ export async function fetchAFISBearerToken(
   return response;
 }
 
-export type JaOfNee = 'Ja' | 'Nee';
-
-/** Business partner private response from external AFIS API.
- *
- *  # Properties
- *
- *  Record.BSN - Is a string when there is a leading zero present, otherwise a number.
- */
-export type AFISBusinessPartnerPrivateSourceResponse = {
-  BSN: number | string;
-  Gevonden: JaOfNee;
-  Zakenpartnernummer?: string;
-  Blokkade?: JaOfNee;
-  Afnemers_indicatie?: JaOfNee;
-};
-
-/** Business partner commercial response from external AFIS API.
- *
- *  # Properties
- *
- *  Record.KVK - Is a string when there is a leading zero present, otherwise a number.
- */
-type AFISBusinessPartnerRecord = {
-  KVK: number | string;
-  Zakenpartnernummer: string;
-  Vestigingsnummer?: string;
-  Blokkade: JaOfNee;
-  Gevonden: JaOfNee;
-};
-
-export type AFISBusinessPartnerCommercialSourceResponse = {
-  Record: AFISBusinessPartnerRecord | AFISBusinessPartnerRecord[];
-};
-
-export type BusinessPartnerKnownResponse = { isKnown: boolean };
-
 /** Returns if the person logging in is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
   requestID: requestID,
@@ -90,7 +54,7 @@ export async function fetchIsKnownInAFIS(
     profileType = 'KVK';
   }
 
-  const baseConfig: DataRequestConfig = {
+  const baseConfig = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: bearerTokenResponse.content,
@@ -104,11 +68,12 @@ export async function fetchIsKnownInAFIS(
   const dataRequestConfig = getApiConfig('AFIS_BUSINESSPARTNER', baseConfig);
 
   dataRequestConfig.url = appendBusinessPartnerEndpoint(
-    dataRequestConfig.url,
+    // We know for sure this is defined in an environment variable.
+    dataRequestConfig.url!,
     authProfileAndToken.profile
   );
 
-  const response = await requestData<BusinessPartnerKnownResponse>(
+  const response = await requestData<BusinessPartnerKnownResponse | null>(
     dataRequestConfig,
     requestID,
     authProfileAndToken
@@ -117,24 +82,12 @@ export async function fetchIsKnownInAFIS(
   return response;
 }
 
-function appendBusinessPartnerEndpoint(
-  url: string | undefined,
-  authProfile: AuthProfile
-) {
-  // RP Note: Is there a better place to do a check like this?
-  if (!url) {
-    throw new Error(
-      `url is ${url}, please define this in the ApiConfig (src/server/config.ts)`
-    );
-  }
-
+function appendBusinessPartnerEndpoint(url: string, authProfile: AuthProfile) {
   switch (authProfile.authMethod) {
-    case 'digid': {
-      return url + '/BSN/';
-    }
-    case 'eherkenning': {
-      return url + '/KVK/';
-    }
+    case 'digid':
+      return `${url}/BSN/`;
+    case 'eherkenning':
+      return `${url}/KVK/`;
   }
 }
 
@@ -142,11 +95,9 @@ function transformBusinessPartnerisKnown(
   response:
     | AFISBusinessPartnerPrivateSourceResponse
     | AFISBusinessPartnerCommercialSourceResponse
-): BusinessPartnerKnownResponse {
+): BusinessPartnerKnownResponse | null {
   if (!response) {
-    throw new AxiosError(
-      `Response is '${response}' and of type '${typeof response}'`
-    );
+    return null;
   }
 
   let transformedResponse: BusinessPartnerKnownResponse = { isKnown: false };

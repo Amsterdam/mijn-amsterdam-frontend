@@ -224,9 +224,6 @@ describe('fetchIsKnownInAFIS ', () => {
     );
 
     expect(response.content).toBe(null);
-    expect(response.status).toBe('ERROR');
-
-    // @ts-ignore (It does have a message field)
-    expect(response.message).toContain('AxiosError');
+    expect(response.status).toBe('OK');
   });
 });
