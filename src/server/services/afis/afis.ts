@@ -38,24 +38,28 @@ export async function fetchAFISBearerToken(
 
 export type JaOfNee = 'Ja' | 'Nee';
 
-/** Business partner private response from external AFIS API */
+/** Business partner private response from external AFIS API.
+ *
+ *  # Properties
+ *
+ *  Record.BSN - Is a string when there is a leading zero present, otherwise a number.
+ */
 export type AFISBusinessPartnerPrivateSourceResponse = {
-  BSN: number; // RP TODO: shouldnt this be a string? and how to we make sure our json doesnt cut off a leading zero while parsing?
+  BSN: number | string;
   Gevonden: JaOfNee;
   Zakenpartnernummer?: string;
   Blokkade?: JaOfNee;
   Afnemers_indicatie?: JaOfNee;
 };
 
-/** Business partner commercial response from external AFIS API
+/** Business partner commercial response from external AFIS API.
  *
- *  # Property
+ *  # Properties
  *
- *  Record.KVK - number can start with a zero and is made out of 8 digits
+ *  Record.KVK - Is a string when there is a leading zero present, otherwise a number.
  */
-
 type AFISBusinessPartnerRecord = {
-  KVK: number; // RP TODO: Can KVK start with zero's? JA en het bestaat uit 8 cijvers
+  KVK: number | string;
   Zakenpartnernummer: string;
   Vestigingsnummer?: string;
   Blokkade: JaOfNee;
