@@ -201,7 +201,6 @@ export async function fetchVergunningV2(
 }
 
 export async function fetchVergunningDocumentV2(
-  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   vergunningDocumentIdEncrypted: string
 ) {

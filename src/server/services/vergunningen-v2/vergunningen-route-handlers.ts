@@ -28,7 +28,6 @@ export async function fetchVergunningDocument(
   const authProfileAndToken = await getAuth(req);
 
   const apiResponse = await fetchVergunningDocumentV2(
-    res.locals.requestID,
     authProfileAndToken,
     req.params.id
   );
