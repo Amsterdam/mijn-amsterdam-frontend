@@ -1,8 +1,5 @@
 import { selectorFamily, useRecoilValue } from 'recoil';
-import {
-  WelcomeNotification,
-  WelcomeNotification2Commercial,
-} from '../config/staticData';
+import { WelcomeNotification } from '../config/staticData';
 import { appStateAtom } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 
@@ -14,12 +11,7 @@ const appStateNotificationsSelector = selectorFamily({
       const appState = get(appStateAtom);
       let notifications = appState.NOTIFICATIONS.content || [];
 
-      return [
-        ...notifications,
-        profileType === 'private'
-          ? WelcomeNotification
-          : WelcomeNotification2Commercial,
-      ];
+      return [...notifications, WelcomeNotification];
     },
 });
 
