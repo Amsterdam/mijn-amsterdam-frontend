@@ -92,7 +92,7 @@ process.env.BFF_GPASS_API_TOKEN = '22222xx22222';
 process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
 
-process.env.BFF_GENERAL_ENCRYPTION_KEY = 'aP#c%f9q9%2ZQgU2&yfzX4-ktDrvbJAF';
+process.env.BFF_GENERAL_ENCRYPTION_KEY = 'MacRpR8tT9jQBEGYCvS?H2rEh3hukwDz';
 
 process.env.BFF_BEZWAREN_API = `${remoteApiHost}/bezwaren`;
 process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';
