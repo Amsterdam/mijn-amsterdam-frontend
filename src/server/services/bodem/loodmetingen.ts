@@ -181,7 +181,7 @@ export async function fetchLoodMetingDocument(
     transformResponse: (documentResponseData: LoodMetingDocument) => {
       const data = Buffer.from(documentResponseData.documentbody, 'base64');
       return {
-        filename: `${documentResponseData.filename ?? 'Besluit'}.pdf`,
+        filename: `${documentResponseData.filename ?? 'Besluit.pdf'}`,
         mimetype:
           documentResponseData.mimetype ?? DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
         data,
