@@ -16,7 +16,11 @@ import {
   VergunningFrontendV2,
   VergunningV2,
 } from './config-and-types';
-import { fetchDecosVergunning, fetchDecosVergunningen } from './decos-service';
+import {
+  fetchDecosDocument,
+  fetchDecosVergunning,
+  fetchDecosVergunningen,
+} from './decos-service';
 
 import memoizee from 'memoizee';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
