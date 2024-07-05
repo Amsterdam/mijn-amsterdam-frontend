@@ -32,7 +32,11 @@ export async function fetchVergunningDocument(
     req.params.id
   );
 
-  if (apiResponse.status === 'ERROR') {
+  if (
+    'content' in apiResponse &&
+    'message' in apiResponse &&
+    apiResponse.status === 'ERROR'
+  ) {
     return sendResponseContent(res, apiResponse);
   }
 
