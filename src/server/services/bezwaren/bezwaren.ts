@@ -1,4 +1,3 @@
-import axios from 'axios';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
@@ -7,7 +6,6 @@ import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
-  dateSort,
   getFailedDependencies,
   getSettledResult,
   isRecentNotification,
@@ -18,23 +16,19 @@ import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { captureException } from '../monitoring';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   Bezwaar,
   BezwaarDocument,
-  OctopusApiResponse,
   BezwaarSourceData,
   BezwaarSourceDocument,
   BezwaarSourceStatus,
   BezwaarStatus,
   BezwarenSourceResponse,
   Kenmerk,
+  OctopusApiResponse,
   kenmerkKey,
 } from './types';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_FILENAME,
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
-  DocumentDownloadData,
-} from '../shared/document-download-route-handler';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
@@ -488,8 +482,6 @@ export async function fetchBezwaarDocument(
       headers: await getBezwarenApiHeaders(authProfileAndToken),
       transformResponse: (documentResponseData) => {
         return {
-          filename: DEFAULT_DOCUMENT_DOWNLOAD_FILENAME,
-          mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
           data: documentResponseData,
         };
       },

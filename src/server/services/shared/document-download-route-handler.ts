@@ -16,8 +16,8 @@ export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';
 
 export type DocumentDownloadData = {
   data: AxiosResponse['data'] | Buffer;
-  mimetype: string;
-  filename: string;
+  mimetype?: string;
+  filename?: string;
 };
 
 export type DocumentDownloadResponse =
@@ -72,14 +72,17 @@ export function downloadDocumentRouteHandler(
       return res.status(500).send(documentResponse);
     }
 
-    if ('mimetype' in documentResponse.content) {
+    if (
+      'mimetype' in documentResponse.content &&
+      documentResponse.content.mimetype
+    ) {
       res.type(
         documentResponse.content.mimetype ?? DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
       );
     }
     res.header(
       'Content-Disposition',
-      `attachment; filename="${documentResponse.content.filename || DEFAULT_DOCUMENT_DOWNLOAD_FILENAME}"`
+      `attachment${documentResponse.content.filename ? `;${documentResponse.content.filename}` : ''}`
     );
     return 'pipe' in documentResponse.content.data &&
       typeof documentResponse.content.data.pipe === 'function'

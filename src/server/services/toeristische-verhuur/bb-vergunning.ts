@@ -12,11 +12,7 @@ import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_FILENAME,
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
-  DocumentDownloadData,
-} from '../shared/document-download-route-handler';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // zaak detail: record/GFO_ZAKEN/$id
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
@@ -512,8 +508,6 @@ export async function fetchBBDocument(
     },
     transformResponse: (documentResponseData) => {
       return {
-        filename: DEFAULT_DOCUMENT_DOWNLOAD_FILENAME,
-        mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
         data: documentResponseData,
       };
     },
