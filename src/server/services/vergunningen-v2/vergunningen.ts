@@ -16,11 +16,7 @@ import {
   VergunningFrontendV2,
   VergunningV2,
 } from './config-and-types';
-import {
-  fetchDecosDocument,
-  fetchDecosVergunning,
-  fetchDecosVergunningen,
-} from './decos-service';
+import { fetchDecosVergunning, fetchDecosVergunningen } from './decos-service';
 
 import memoizee from 'memoizee';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
@@ -37,11 +33,11 @@ export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
 };
 
 function transformVergunningFrontend(
-  userId: AuthProfileAndToken['profile']['id'],
+  sessionId: AuthProfileAndToken['profile']['sid'],
   vergunning: VergunningV2,
   appRoute: AppRoute
 ) {
-  const [idEncrypted] = encrypt(`${userId}:${vergunning.key}`);
+  const [idEncrypted] = encrypt(`${sessionId}:${vergunning.key}`);
   const vergunningFrontend: VergunningFrontendV2 = {
     ...vergunning,
     dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
@@ -100,7 +96,7 @@ async function fetchAndFilterVergunningenV2_(
     const vergunningenFrontend: VergunningFrontendV2[] = decosVergunningen.map(
       (vergunning) =>
         transformVergunningFrontend(
-          authProfileAndToken.profile.id,
+          authProfileAndToken.profile.sid,
           vergunning,
           appRoute
         )
