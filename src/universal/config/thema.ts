@@ -43,6 +43,7 @@ export type Thema =
 export type BagThema = `${Thema}_BAG`;
 
 export const Themas: Record<Thema, Thema> = {
+  AFIS: 'AFIS',
   AFVAL: 'AFVAL',
   BELASTINGEN: 'BELASTINGEN',
   BURGERZAKEN: 'BURGERZAKEN',
@@ -81,6 +82,7 @@ export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
 
 // These are used for PageHeadings and link title props for example.
 export const ThemaTitles: { [thema in Thema]: string } = {
+  AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
@@ -222,6 +224,12 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: ExternalUrls.SSO_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
+  },
+  {
+    title: ThemaTitles.AFIS,
+    id: Themas.AFIS,
+    to: AppRoutes.AFIS,
+    profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.BEZWAREN,

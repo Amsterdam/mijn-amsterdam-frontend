@@ -25,6 +25,7 @@ npm start
 It's also possible to run both the mocks server and bff seperately with:
 
 ```bash
+npm run start
 npm run mock-server
 npm run bff-api:watch
 ```

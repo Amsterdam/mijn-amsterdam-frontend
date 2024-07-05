@@ -54,6 +54,12 @@ process.env.BFF_MIJN_ERFPACHT_API_KEY = 'foo-bar-123';
 process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_MIJN_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
 
+//AFIS
+process.env.BFF_AFIS_API_BASE_URL = `${remoteApiHost}/afis/RESTAdapter`;
+process.env.BFF_AFIS_OAUTH_CLIENT_ID = 'mijnamsterdam';
+process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
+  'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
 // V2
 process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
 

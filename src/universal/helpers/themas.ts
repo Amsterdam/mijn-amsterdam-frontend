@@ -4,6 +4,7 @@ import { FeatureToggle, ThemaMenuItem, Themas } from '../config';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
+    AFIS,
     AFVAL,
     AVG,
     BELASTINGEN,
@@ -36,6 +37,9 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
   switch (item.id) {
+    case Themas.AFIS: {
+      return FeatureToggle.afisActive && AFIS?.content?.isKnown;
+    }
     case Themas.INKOMEN:
       const { jaaropgaven, uitkeringsspecificaties } =
         WPI_SPECIFICATIES?.content ?? {};

@@ -2,6 +2,7 @@ import { isDateInPast } from '../helpers/date';
 import { IS_AP, IS_DEVELOPMENT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
+  afisActive: !IS_AP,
   avgActive: true,
   bbDocumentDownloadsActive: false,
   bekendmakingenDatasetActive: false,
@@ -11,13 +12,12 @@ export const FeatureToggle = {
   cleopatraApiActive: true,
   cmsFooterActive: true,
   dbDisabled: false,
-  eherkenningActive: true,
   ehKetenmachtigingActive: !IS_PRODUCTION,
+  eherkenningActive: true,
   erfpachtV2Active: !IS_PRODUCTION,
   erfpachtV2EndpointActive: !IS_PRODUCTION,
   evenementenDatasetActive: false,
   garbageInformationPage: true,
-  hliThemaActive: !IS_PRODUCTION,
   horecaActive: true,
   identiteitsbewijzenActive: true,
   inkomenBBZActive: true,
@@ -32,6 +32,7 @@ export const FeatureToggle = {
   parkerenActive: true,
   passQueryParamsToStreamUrl: !IS_AP,
   powerbrowserActive: !IS_PRODUCTION,
+  hliThemaActive: !IS_PRODUCTION,
   profileToggleActive: true,
   residentCountActive: true,
   sportDatasetsActive: true,

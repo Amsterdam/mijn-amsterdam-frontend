@@ -3,6 +3,7 @@ export {
   MinimiseIcon as IconMinimise,
   SpinnerIcon as IconSpinner,
 } from '@amsterdam/design-system-react-icons';
+export { default as IconAFIS } from './AFIS.svg?react';
 export { default as IconAlert } from './Alert.svg?react';
 export { default as IconArrowRrimaryWhite } from './Arrow__primary-white.svg?react';
 export { default as IconAVG } from './AVG-verzoeken.svg?react';
