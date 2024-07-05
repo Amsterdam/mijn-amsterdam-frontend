@@ -146,7 +146,7 @@ describe('<StatusDetail />', () => {
     render(<Component />);
     expect(screen.getByText('Detailpagina')).toBeInTheDocument();
     expect(
-      screen.getByText('Kies hieronder een van de beschikbare aanvragen.')
+      screen.getByText('Kies hieronder een van de beschikbare zaken.')
     ).toBeInTheDocument();
     expect(screen.getByText('Aanvraag Test item')).toBeInTheDocument();
   });
