@@ -20,6 +20,9 @@ export const WelcomeNotification: MyNotification = {
           wat de status is en hoe u het kunt doorgeven als er iets niet klopt.
         </li>
       </ul>
+      <p>
+      Mijn Amsterdam wordt nog steeds verder ontwikkeld. Er komt steeds meer informatie bij.
+      </p>
 
     `,
   customLink: {
