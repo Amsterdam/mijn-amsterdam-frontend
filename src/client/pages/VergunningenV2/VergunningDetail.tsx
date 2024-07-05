@@ -5,14 +5,15 @@ import {
   VergunningFrontendV2,
 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes, BagThemas, ThemaTitles } from '../../../universal/config';
+import { isLoading } from '../../../universal/helpers/api';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
+import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
-import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
-import { GPPContent } from './detail-page-content/GPP';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
+import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
 
 interface DetailPageContentProps {
@@ -69,7 +70,7 @@ export default function VergunningV2Detail() {
       title={vergunningDetail?.title ?? 'Vergunning'}
       zaak={vergunningDetail}
       isError={api.isError}
-      isLoading={api.isLoading}
+      isLoading={api.isLoading || isLoading(VERGUNNINGENv2)}
       icon={<ThemaIcon />}
       pageContentTop={
         vergunningDetail && (
