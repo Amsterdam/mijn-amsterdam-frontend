@@ -61,7 +61,7 @@ describe('<Erfpacht/DossierDetail />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Erfpacht V2dossier')).toBeInTheDocument();
+      expect(screen.getByText('Erfpachtv2 dossier')).toBeInTheDocument();
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
         screen.getByText('We kunnen op dit moment geen erfpachtdossier tonen.')

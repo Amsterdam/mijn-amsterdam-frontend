@@ -46,7 +46,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   Notification
                 </h4>
                 <svg
-                  aria-label="Home"
                   class="_ThemaIcon_2fc54d _Icon_63df5c"
                   fill="#EC0000"
                   height="32px"
@@ -68,9 +67,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 >
                   <em
                     class="_ThemaIndication_63df5c"
-                  >
-                    Home
-                  </em>
+                  />
                   <time
                     class="_Datum_63df5c"
                     datetime="2020-07-24"
@@ -152,7 +149,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   Notification
                 </h4>
                 <svg
-                  aria-label="Home"
                   class="_ThemaIcon_2fc54d _Icon_63df5c"
                   fill="#EC0000"
                   height="32px"
@@ -174,9 +170,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 >
                   <em
                     class="_ThemaIndication_63df5c"
-                  >
-                    Home
-                  </em>
+                  />
                   <time
                     class="_Datum_63df5c"
                     datetime="2020-07-24"
@@ -288,9 +282,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 >
                   <em
                     class="_ThemaIndication_63df5c"
-                  >
-                    Home
-                  </em>
+                  />
                   <time
                     class="_Datum_63df5c"
                     datetime="2020-07-24"
@@ -584,6 +576,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
             class="_MainNavSubmenuLink_c3c96e"
             data-thema-id="INKOMEN"
             href="/inkomen"
+            rel=""
           >
             <span
               class="_SubmenuItemIcon_c3c96e"
@@ -652,6 +645,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
             class="_MainNavSubmenuLink_c3c96e"
             data-thema-id="PARKEREN"
             href="/parkeren"
+            rel=""
           >
             <span
               class="_SubmenuItemIcon_c3c96e"
@@ -703,7 +697,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <h3
             class="ams-heading ams-heading--2"
           >
-            Mijn buurt
+            Mijn Buurt
           </h3>
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw eigen woning.

@@ -64,7 +64,7 @@ export default function ErfpachtDossierDetail() {
         }}
         icon={<ThemaIcon />}
       >
-        {dossier?.title ?? `${ThemaTitles.ERFPACHTv2}dossier`}
+        {dossier?.title ?? `${ThemaTitles.ERFPACHTv2} dossier`}
       </PageHeading>
       <Screen>
         <Grid className={styles.Grid}>

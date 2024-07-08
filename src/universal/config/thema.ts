@@ -192,5 +192,3 @@ for (const [key, value] of Object.entries(themaNieuw)) {
 }
 
 export const myThemasMenuItems: ThemaMenuItem[] = [...themaMenuItems];
-
-console.log(myThemasMenuItems);
