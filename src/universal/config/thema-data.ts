@@ -17,12 +17,9 @@ export type ThemaConfig = {
   // NOTE: If 1 THEMA has and PATRON A and PATRON C then these appRoutes are a list of first private / Digid (appRoutes[0]) then commercial/EHerk (appRoutes[1])
   appRoutes: AppRouteInfo[]; //path (url) AND whats in tehe TAB (tabName)
   isExternal: boolean; // YES or NO to (externe) site
-  profileTypes: inlogType[]; //dinlogtypes (private = DIGID / commercial=EHERK or Both)
+  profileTypes: inlogType[]; //inlogtypes (private = DIGID / commercial=EHERK or Both)
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
-
-  //icon: SVGComponent; // Add the themaIcon in '../../client/assets/icons' and import it.
-  //isThemaActive: (state: AppState) => { return: true }; > zie app.ts
 };
 
 export const themaNieuw: Record<Thema, ThemaConfig> = {
@@ -62,19 +59,7 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
-  },
-  BRP: {
-    title: 'Mijn gegevens',
-    appRoutes: [
-      {
-        urlID: 'BRP',
-        url: '/persoonlijke-gegevens',
-        tabName: `Mijn gegevens`,
-      },
-    ],
-    isExternal: false,
-    profileTypes: ['private'],
-    //   //icon: IconMijnGegevens,
+    //   //icon: IconAFIS,
     //   //isThemaActive: (state: AppState) => { return: true }
   },
 
@@ -108,6 +93,7 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     //icon: IconAVG,
     //isThemaActive: (state: AppState) => { return: true },
   },
+
   BEZWAREN: {
     title: 'Bezwaren',
     appRoutes: [
@@ -150,6 +136,21 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     isExternal: false,
     profileTypes: ['private', 'commercial'],
     //   //icon: IconBodem,
+    //   //isThemaActive: (state: AppState) => { return: true }
+  },
+
+  BRP: {
+    title: 'Mijn gegevens',
+    appRoutes: [
+      {
+        urlID: 'BRP',
+        url: '/persoonlijke-gegevens',
+        tabName: `Mijn gegevens`,
+      },
+    ],
+    isExternal: false,
+    profileTypes: ['private'],
+    //   //icon: IconMijnGegevens,
     //   //isThemaActive: (state: AppState) => { return: true }
   },
 
@@ -260,6 +261,8 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
 
     isExternal: false,
     profileTypes: ['private'],
+    //   //icon: IconHLI,
+    //   //isThemaActive: (state: AppState) => { return: true }
   },
 
   HORECA: {
@@ -363,7 +366,6 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     //   //isThemaActive: (state: AppState) => { return: true }
   },
   MILIEUZONE: {
-    //   //volgens mij hetzelfde als overtredingen > niet in prod maar geen Featuretoggle..
     title: 'Milieuzone',
     appRoutes: [{ url: ExternalUrls.SSO_MILIEUZONE, tabName: '' }], //GAAT NIET GOED!!!
     isExternal: true,

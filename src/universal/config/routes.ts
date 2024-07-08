@@ -16,18 +16,6 @@ export const ThemeRoutes = Object.fromEntries(entries);
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   HOME: '/',
-
-  // HLI: '/regelingen-bij-laag-inkomen',
-  // 'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
-  // 'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-  // 'HLI/REGELINGEN_LIJST':
-  //   '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
-
-  SIA: '/meldingen',
-  SIA_OPEN: '/alle-open-meldingen/:page?',
-  SIA_CLOSED: '/alle-afgesloten-meldingen/:page?',
-  'SIA/DETAIL/OPEN': '/detail-open-melding/:id',
-  'SIA/DETAIL/CLOSED': '/detail-afgesloten-melding/:id',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',
@@ -36,14 +24,10 @@ export const AppRoutes: Record<string, string> = {
   GENERAL_INFO: '/uitleg',
   ZAAK_STATUS: '/zaak-status',
 
-  // SEARCH: '/zoeken',
-  YIVI_LANDING: '/inloggen-met-yivi',
   BFF_500_ERROR: '/server-error-500',
 
   ...ThemeRoutes,
 } as const;
-
-console.log('route tests', AppRoutes);
 
 // For legacy bookmarks, so for new themas you dont need to use this
 export const AppRoutesRedirect = [

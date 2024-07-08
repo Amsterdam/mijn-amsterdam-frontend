@@ -170,17 +170,16 @@ for (const [key, value] of Object.entries(themaNieuw)) {
       profileTypes: ['commercial'] as inlogType[],
       hasAppStateValue: false,
     });
-  } else if (key === 'HLI') {
-    let title2be = (appState: AppState) => {
-      return getThemaTitleWithAppState(appState);
-    };
-    console.log('HALLO', title2be);
-    themaMenuItems.push({
-      title: 'title2be',
-      id: Themas.HLI,
-      to: AppRoutes.HLI,
-      profileTypes: ['private'] as inlogType[],
-    });
+    // } else if (key === 'HLI') {
+    // themaMenuItems.push({
+    //   title: (appState: AppState) => {
+    //     return getThemaTitleWithAppState(appState);
+    //   },
+    //   id: Themas.HLI,
+    //   to: AppRoutes.HLI,
+    //   profileTypes: ['private'] as inlogType[],
+    // });    // let title2be =
+    // console.log('HALLO', title2be);
   } else {
     themaMenuItems.push({
       title: value.title,
