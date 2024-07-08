@@ -5,7 +5,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { getApiConfig } from '../../config';
+import { DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException, captureMessage } from '../monitoring';
@@ -245,16 +245,17 @@ async function transformDecosZakenResponse(
     zakenToBeTransformed.push(decosZaakSource);
   }
 
-  const vergunningen = await Promise.all(
-    zakenToBeTransformed.map((decosZaak) => {
-      try {
+  let vergunningen: Array<VergunningV2 | null> = [];
+
+  try {
+    vergunningen = await Promise.all(
+      zakenToBeTransformed.map((decosZaak) => {
         return transformDecosZaakResponse(requestID, decosZaak);
-      } catch (err) {
-        captureException(err);
-      }
-      return null;
-    })
-  );
+      })
+    );
+  } catch (err) {
+    captureException(err);
+  }
 
   return vergunningen
     .filter(
@@ -571,14 +572,15 @@ export async function fetchDecosDocument(documentID: string) {
   });
 
   try {
-    return axios({
+    const config: DataRequestConfig = {
       url: apiConfigDocument.url,
       responseType: 'stream',
       headers: {
         Authorization: apiConfigDocument.headers?.Authorization,
         Accept: 'application/octet-stream',
       },
-    });
+    };
+    return axios(config);
   } catch (error: any) {
     const statusCode =
       error.statusCode ?? error?.status ?? error.response.status;

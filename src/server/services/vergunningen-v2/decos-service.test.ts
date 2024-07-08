@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import uid from 'uid-safe';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy, range } from '../../../universal/helpers';
@@ -9,7 +8,6 @@ import {
   DecosZakenResponse,
 } from './config-and-types';
 import {
-  fetchDecosDocument,
   fetchDecosDocumentList,
   fetchDecosVergunningen,
   fetchDecosWorkflowDate,
@@ -70,7 +68,7 @@ const documents: DecosZakenResponse<DecosDocumentSource[]> = {
   count: 1,
   content: [
     {
-      key: 'blob-key',
+      key: 'doc-key',
       fields: {
         subject1: 'document-123123.pdf',
         received_date: '2024-06-06',
@@ -89,6 +87,7 @@ const documents: DecosZakenResponse<DecosDocumentSource[]> = {
 const blob = {
   content: [
     {
+      key: 'blob-key',
       fields: {
         bol10: true,
       },
@@ -276,7 +275,7 @@ describe('decos-service', () => {
       remoteApi
         .get(/\/decos\/items\/zaak-id-2\/documents/)
         .reply(200, documents);
-      remoteApi.get(/\/decos\/items\/blob-key\/blob/).reply(200, blob);
+      remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
 
       const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
       expect(responseData).toMatchInlineSnapshot(`
@@ -302,7 +301,7 @@ describe('decos-service', () => {
 
       const blob2: typeof blob = jsonCopy(blob);
       blob2.content[0].fields.bol10 = false;
-      remoteApi.get(/\/decos\/items\/blob-key\/blob/).reply(200, blob2);
+      remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob2);
 
       const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
       expect(responseData).toMatchInlineSnapshot(`
@@ -357,31 +356,6 @@ describe('decos-service', () => {
 
       expect(responseData.status).toBe('OK');
       expect(responseData.content?.length).toBe(4);
-    });
-  });
-
-  describe('fetchDecosDocument', () => {
-    test('fetches a document', async () => {
-      remoteApi.get('/decos/items/123456789/content').reply(200, 'xx');
-      const response = await fetchDecosDocument('123456789');
-
-      expect((response as AxiosResponse).config.responseType).toBe('stream');
-    });
-
-    test('fails to fetch a document', async () => {
-      remoteApi
-        .get('/decos/items/123456789/content')
-        .replyWithError('error retrieving doc');
-
-      const response = await fetchDecosDocument('123456789');
-
-      expect(response).toMatchInlineSnapshot(`
-        {
-          "content": null,
-          "message": "error retrieving doc",
-          "status": "ERROR",
-        }
-      `);
     });
   });
 
@@ -520,7 +494,7 @@ describe('decos-service', () => {
 
   describe('transformDecosDocumentListResponse', () => {
     test('Success', async () => {
-      remoteApi.get(/\/decos\/items\/blob-key\/blob/).reply(200, blob);
+      remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
       const documentsTransformed =
         await forTesting.transformDecosDocumentListResponse(reqID, documents);
       expect(documentsTransformed).toMatchInlineSnapshot(`

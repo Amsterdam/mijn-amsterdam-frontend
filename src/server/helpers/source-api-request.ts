@@ -96,8 +96,6 @@ export async function requestData<T>(
     );
   }
 
-  const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
-
   // Construct a cache key based on unique properties of a request
   const cacheKey =
     requestConfig.cacheKey ||
