@@ -1,26 +1,9 @@
-import { generatePath } from 'react-router-dom';
-import {
-  getThemaTitle,
-  getThemaTitleWithAppState,
-} from '../../client/pages/HLI/helpers';
 import { LinkProps } from '../types/App.types';
-import { ExternalUrls } from './app';
 import { AppRoute, AppRoutes, TrackingConfig } from './routes';
 import { AppState } from '../../client/AppState';
-import { Match } from '../../universal/types';
-import { IS_PRODUCTION } from './env';
-import { url } from 'node:inspector';
 import { inlogType, themaNieuw } from './thema-data';
-
-//import { ExternalUrls } from '../../universal/config/app';
-
-// 1. Kan zorg, subsidies en  stadspas niet testen
-// 2. type is hiet met een hoofdletter is  dit niet inconsequent: AppRouteInfo of is deze niet ok inlogType
-// 2. Wanneer je naar de console log kijkt wordt uitsluitend de eerste url gepakt,
-//ZIJN ROOT SEARCH EN NOTIFICATION WEL THEMA"S?????
-
-// Within the team we call these Themes / Thema's
-//export type Thema = string;
+import { getThemaTitleWithAppState } from '../../client/pages/HLI/helpers';
+import { title } from 'process';
 
 // SIA is not available anymore
 export type Thema =
@@ -56,7 +39,6 @@ export type Thema =
   | string;
 
 export let browserTabNames = {};
-// https://sentry.io/answers/how-can-i-add-a-key-value-pair-to-a-javascript-object/
 
 //omdat je object niet mag itereren > maak je er
 Object.values(themaNieuw).forEach((value, index) => {
@@ -108,18 +90,11 @@ export const DocumentTitles: {
     }
   },
 
-  //einde inkomen moet verwerkt worden
-  // [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
-  // [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
-  // [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
-
   [`${AppRoutes['INKOMEN/SPECIFICATIES']}/jaaropgaven`]: `Jaaropgaven | ${ThemaTitles.INKOMEN}`,
 
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
-  // [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
-  // [AppRoutes['VERGUNNINGEN/DETAIL']]:
-  //   `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
+
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
   [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
   [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
@@ -127,21 +102,8 @@ export const DocumentTitles: {
   [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
 
-  // [AppRoutes.SIA]: `${ThemaTitles.SIA} overzicht`,
-  // [AppRoutes['SIA/DETAIL/OPEN']]: `Melding open | ${ThemaTitles.SIA}`,
-  // [AppRoutes['SIA/DETAIL/CLOSED']]: `Melding afgesloten | ${ThemaTitles.SIA}`,
-  // [AppRoutes.SIA_OPEN]: `Meldingen | Alle openstaande meldingen`,
-  // [AppRoutes.SIA_CLOSED]: `Meldingen | Alle afgesloten meldingen`,
-  // [AppRoutes.SEARCH]: `Zoeken`,
-
-  // [AppRoutes.YIVI_LANDING]: 'Inloggen met yivi | Mijn Amsterdam',
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
 
-  // [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
-  // [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
-  // [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
-  // [AppRoutes['ERFPACHTv2/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
-  // [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: 'Erfpacht | dossier',
   [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
@@ -209,11 +171,12 @@ for (const [key, value] of Object.entries(themaNieuw)) {
       hasAppStateValue: false,
     });
   } else if (key === 'HLI') {
+    let title2be = (appState: AppState) => {
+      return getThemaTitleWithAppState(appState);
+    };
+    console.log('HALLO', title2be);
     themaMenuItems.push({
-      title: (appState: AppState) => {
-        console.log('HALLOOOTJES', appState.HLI?.content);
-        return getThemaTitleWithAppState(appState);
-      },
+      title: 'title2be',
       id: Themas.HLI,
       to: AppRoutes.HLI,
       profileTypes: ['private'] as inlogType[],
@@ -225,23 +188,10 @@ for (const [key, value] of Object.entries(themaNieuw)) {
       to: url, // the first in this list is always the thema url
       rel: value.isExternal ? 'external' : '',
       profileTypes: value.profileTypes,
-      //isAlwaysVisible: value,
-      //asAppStateValue: value,
     });
   }
-
-  // let externalCommercialUrl = value.isExternal ? value.appRoutes[1].url : null;
-  // if (externalCommercialUrl) {
-  //   themaMenuItems.push({
-  //     title: value.title,
-  //     id: key,
-  //     to: externalCommercialUrl, // the first in this list is always the thema url
-  //     profileTypes: value.profileTypes,
-  //   });
-  // }
 }
 
-//einde nieuw
 export const myThemasMenuItems: ThemaMenuItem[] = [...themaMenuItems];
 
-console.log(myThemasMenuItems);
+// console.log(myThemasMenuItems);

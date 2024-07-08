@@ -11,84 +11,38 @@ Object.values(themaNieuw).forEach((value) => {
   });
 });
 
-console.log('13');
 export const ThemeRoutes = Object.fromEntries(entries);
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   HOME: '/',
-  // BURGERZAKEN: '/burgerzaken',
-  // 'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
-  // 'BURGERZAKEN/PASPOORT': '/burgerzaken/paspoort/:id',
-  // ZORG: '/zorg-en-ondersteuning',
-  // 'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
-  // 'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
-  // 'STADSPAS/SALDO': '/stadspas/saldo-en-transacties/:id',
-  // 'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  // 'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
-  // 'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
-  // 'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
-  // 'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
-  // INKOMEN: '/inkomen',
-  // STADSPAS: '/stadspas',
-  HLI: '/regelingen-bij-laag-inkomen',
-  'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
-  'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-  'HLI/REGELINGEN_LIJST':
-    '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
+  // HLI: '/regelingen-bij-laag-inkomen',
+  // 'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
+  // 'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+  // 'HLI/REGELINGEN_LIJST':
+  //   '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
 
   SIA: '/meldingen',
   SIA_OPEN: '/alle-open-meldingen/:page?',
   SIA_CLOSED: '/alle-afgesloten-meldingen/:page?',
   'SIA/DETAIL/OPEN': '/detail-open-melding/:id',
   'SIA/DETAIL/CLOSED': '/detail-afgesloten-melding/:id',
-
-  // BRP: '/persoonlijke-gegevens',
-  // KVK: '/gegevens-handelsregister',
-  // BUURT: '/buurt',
-  // BEZWAREN: '/bezwaren',
-  // 'BEZWAREN/DETAIL': '/bezwaren/:uuid',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',
   NOTIFICATIONS: '/overzicht-updates/:page?',
-  // AFVAL: '/afval',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
-  // VERGUNNINGEN: '/vergunningen',
-  // 'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
-  // TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
-  // 'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
-  // 'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
-  //   '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
-  // 'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
-  //   '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
-  SEARCH: '/zoeken',
-  // KREFIA: '/kredietbank-fibu',
-  // PARKEREN: '/parkeren',
-  // KLACHTEN: '/klachten/:page?',
-  // 'KLACHTEN/KLACHT': '/klachten/klacht/:id',
-  // HORECA: '/horeca/',
-  // 'HORECA/DETAIL': '/horeca/:title/:id',
-  YIVI_LANDING: '/inloggen-met-yivi',
-  // AVG: '/avg',
-  // 'AVG/DETAIL': '/avg/verzoek/:id',
-  BFF_500_ERROR: '/server-error-500',
-  // BODEM: '/bodem',
-  // 'BODEM/LOOD_METING': '/lood-meting/:id',
 
-  // Erfpacht v2
-  // ERFPACHTv2: '/erfpacht',
-  // 'ERFPACHTv2/DOSSIERS': '/erfpacht/dossiers/:page?',
-  // 'ERFPACHTv2/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
-  // 'ERFPACHTv2/OPEN_FACTUREN': '/erfpacht/open-facturen/:page?',
-  // 'ERFPACHTv2/ALLE_FACTUREN':
-  //   '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
+  // SEARCH: '/zoeken',
+  YIVI_LANDING: '/inloggen-met-yivi',
+  BFF_500_ERROR: '/server-error-500',
+
   ...ThemeRoutes,
 } as const;
 
-console.log('routests', AppRoutes);
+console.log('route tests', AppRoutes);
 
 // For legacy bookmarks, so for new themas you dont need to use this
 export const AppRoutesRedirect = [

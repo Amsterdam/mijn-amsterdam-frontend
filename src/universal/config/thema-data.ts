@@ -37,13 +37,25 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     //   //icon:  IconMyNotifications,
   },
 
-  SEARCH: {
-    //IS DIT WEL EEN THEMA?NIET UITGEZET IN ROUTES.TS
-    title: 'Zoeken',
-    appRoutes: [{ url: '/zoeken', tabName: 'Home | Dashboard' }],
+  // SEARCH: {
+  //   //IS DIT WEL EEN THEMA?NIET UITGEZET IN ROUTES.TS
+  //   title: 'Zoeken',
+  //   appRoutes: [{ url: '/zoeken', tabName: 'Home | Dashboard' }],
+  //   isExternal: false,
+  //   profileTypes: ['private', 'commercial'],
+  //   //icon: IconSearch,
+  // },
+  AFIS: {
+    title: 'Facturen en betalen',
+    appRoutes: [
+      {
+        urlID: 'AFIS',
+        url: '/afis',
+        tabName: 'Facturen en betalen | overzicht',
+      },
+    ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
-    //icon: IconSearch,
   },
   BRP: {
     title: 'Mijn gegevens',
