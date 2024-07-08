@@ -26,6 +26,7 @@ import { inlogType, themaNieuw } from './thema-data';
 export type Thema =
   | 'ROOT' //IS DIT WEL EEN THEMA?
   | 'AVG'
+  | 'AFIS'
   | 'AFVAL'
   | 'BELASTINGEN'
   | 'BEZWAREN'

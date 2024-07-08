@@ -54,6 +54,12 @@ process.env.BFF_MIJN_ERFPACHT_API_KEY = 'foo-bar-123';
 process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_MIJN_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
 
+//AFIS
+process.env.BFF_AFIS_API_BASE_URL = `${remoteApiHost}/afis/RESTAdapter`;
+process.env.BFF_AFIS_OAUTH_CLIENT_ID = 'mijnamsterdam';
+process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
+  'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
 // V2
 process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
 
@@ -81,7 +87,7 @@ process.env.BFF_GPASS_API_TOKEN = '22222xx22222';
 process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
 
-process.env.BFF_GENERAL_ENCRYPTION_KEY = 'eA.6WMdq$BTgTHuJ';
+process.env.BFF_GENERAL_ENCRYPTION_KEY = 'aP#c%f9q9%2ZQgU2&yfzX4-ktDrvbJAF';
 
 process.env.BFF_BEZWAREN_API = `${remoteApiHost}/bezwaren`;
 process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';

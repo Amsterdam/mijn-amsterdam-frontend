@@ -77,6 +77,7 @@ import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
 import Zorg from './pages/Zorg/Zorg';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
+import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import { useMonitoring } from './utils/monitoring';
 
 function AppNotAuthenticated() {
@@ -162,6 +163,7 @@ function AppAuthenticated() {
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
+          <Route path={AppRoutes.ZAAK_STATUS} component={ZaakStatus} />
           <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
@@ -270,6 +272,7 @@ function AppAuthenticated() {
               component={ToeristischeVerhuur}
             />
           )}
+          {FeatureToggle.afisActive && <Route path={AppRoutes.AFIS} />}
           {FeatureToggle.krefiaActive && (
             <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}

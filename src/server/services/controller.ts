@@ -60,6 +60,7 @@ import {
   fetchTozo,
 } from './wpi';
 import { fetchHLI } from './hli/hli';
+import { fetchIsKnownInAFIS } from './afis/afis';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -90,6 +91,7 @@ const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
 );
 
 // Protected services
+const AFIS = callService(fetchIsKnownInAFIS);
 const BRP = callService(fetchBRP);
 const KVK = callService(fetchKVK);
 const KREFIA = callService(fetchKrefia);
@@ -115,11 +117,7 @@ const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
 
 const HORECA = async (requestID: requestID, req: Request) =>
-  fetchHorecaVergunningen(
-    requestID,
-    await getAuth(req),
-    await getProfileType(req)
-  );
+  fetchHorecaVergunningen(requestID, await getAuth(req));
 
 // Location, address, based services
 const MY_LOCATION = async (requestID: requestID, req: Request) =>
@@ -176,6 +174,7 @@ export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
 
 // Store all services for type derivation
 const SERVICES_INDEX = {
+  AFIS,
   AFVAL,
   AFVALPUNTEN,
   AVG,
@@ -207,7 +206,8 @@ const SERVICES_INDEX = {
   WPI_BBZ,
   WPI_SPECIFICATIES,
   WPI_TONK,
-  WPI_TOZO,};
+  WPI_TOZO,
+};
 
 export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
@@ -222,6 +222,7 @@ type PrivateServicesAttributeBased = Pick<
 
 type CommercialServices = Pick<
   ServiceMap,
+  | 'AFIS'
   | 'AFVAL'
   | 'AFVALPUNTEN'
   | 'CMS_CONTENT'
@@ -249,6 +250,7 @@ type ServicesByProfileType = {
 
 export const servicesByProfileType: ServicesByProfileType = {
   private: {
+    AFIS,
     AFVAL,
     AFVALPUNTEN,
     AVG,
@@ -288,6 +290,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     PROFILE,
   },
   commercial: {
+    AFIS,
     AFVAL,
     AFVALPUNTEN,
     BEZWAREN,
