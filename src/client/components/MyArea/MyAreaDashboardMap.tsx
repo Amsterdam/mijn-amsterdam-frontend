@@ -17,7 +17,8 @@ export default function MyAreaDashboard() {
   const { MY_LOCATION } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const locations = (MY_LOCATION.content || []).filter(
-    (location: BAGData | null): location is BAGData => !!location
+    (location: BAGData | null): location is BAGData =>
+      !!location && !!location.latlng
   );
   const [primaryLocation, ...secondaryLocations] = locations;
   let center: LatLngLiteral | undefined =
