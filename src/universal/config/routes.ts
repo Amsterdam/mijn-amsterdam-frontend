@@ -34,6 +34,7 @@ export const AppRoutes: Record<string, string> = {
   NOTIFICATIONS: '/overzicht-updates/:page?',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
+  ZAAK_STATUS: '/zaak-status',
 
   // SEARCH: '/zoeken',
   YIVI_LANDING: '/inloggen-met-yivi',

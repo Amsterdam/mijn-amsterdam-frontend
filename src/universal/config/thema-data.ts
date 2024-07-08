@@ -30,21 +30,27 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     //IS DIT WEL EEN THEMA? NIET UITGEZET IN ROUTES.TS
     title: 'Actueel',
     appRoutes: [
-      { url: '/overzicht-updates/:page?', tabName: 'Actueel | Overzicht' },
+      {
+        urlID: 'NOTIFICATIONS',
+        url: '/overzicht-updates/:page?',
+        tabName: 'Actueel | Overzicht',
+      },
     ],
     isExternal: false,
     profileTypes: ['private', 'commercial'],
     //   //icon:  IconMyNotifications,
   },
 
-  // SEARCH: {
-  //   //IS DIT WEL EEN THEMA?NIET UITGEZET IN ROUTES.TS
-  //   title: 'Zoeken',
-  //   appRoutes: [{ url: '/zoeken', tabName: 'Home | Dashboard' }],
-  //   isExternal: false,
-  //   profileTypes: ['private', 'commercial'],
-  //   //icon: IconSearch,
-  // },
+  SEARCH: {
+    //IS DIT WEL EEN THEMA?NIET UITGEZET IN ROUTES.TS
+    title: 'Zoeken',
+    appRoutes: [
+      { urlID: 'SEARCH', url: '/zoeken', tabName: 'Home | Dashboard' },
+    ],
+    isExternal: false,
+    profileTypes: ['private', 'commercial'],
+    //icon: IconSearch,
+  },
   AFIS: {
     title: 'Facturen en betalen',
     appRoutes: [
@@ -426,6 +432,7 @@ export const themaNieuw: Record<Thema, ThemaConfig> = {
     title: 'SVWI',
     appRoutes: [
       {
+        urlID: 'SWVI',
         url: `https://mijn.werkeninkomen${
           !IS_PRODUCTION ? '-acc' : ''
         }.amsterdam.nl/`,
