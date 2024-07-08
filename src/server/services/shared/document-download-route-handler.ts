@@ -76,9 +76,7 @@ export function downloadDocumentRouteHandler(
       'mimetype' in documentResponse.content &&
       documentResponse.content.mimetype
     ) {
-      res.type(
-        documentResponse.content.mimetype ?? DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE
-      );
+      res.type(documentResponse.content.mimetype);
     }
     res.header(
       'Content-Disposition',
