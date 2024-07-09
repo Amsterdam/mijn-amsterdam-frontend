@@ -145,7 +145,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=20021871&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -206,7 +206,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=20021871&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -267,7 +267,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=95330222&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -328,7 +328,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=95330222&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -525,7 +525,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=31569261&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -598,7 +598,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=31569291&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -671,7 +671,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=24267671&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -744,7 +744,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=24267681&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -817,7 +817,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=24078481&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -890,7 +890,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=24078491&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -963,7 +963,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=30032581&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -1036,7 +1036,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=31569261&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -1109,7 +1109,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=31569291&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"
@@ -1182,7 +1182,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               >
                 <a
                   class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                  href="http://bff-api-host/api/v1/services/wpi/document?id=24267671&isBulk=false&isDms=false"
+                  href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
                     class="_DocumentLinkIcon_81c3b4"

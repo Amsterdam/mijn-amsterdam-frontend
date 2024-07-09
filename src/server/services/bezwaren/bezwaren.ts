@@ -1,4 +1,3 @@
-import axios from 'axios';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
@@ -7,7 +6,6 @@ import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
-  dateSort,
   getFailedDependencies,
   getSettledResult,
   isRecentNotification,
@@ -18,18 +16,20 @@ import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { captureException } from '../monitoring';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   Bezwaar,
   BezwaarDocument,
-  OctopusApiResponse,
   BezwaarSourceData,
   BezwaarSourceDocument,
   BezwaarSourceStatus,
   BezwaarStatus,
   BezwarenSourceResponse,
   Kenmerk,
+  OctopusApiResponse,
   kenmerkKey,
 } from './types';
+import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
@@ -419,83 +419,76 @@ export async function fetchBezwaarDetail(
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
-  let sessionID;
-  let zaakId;
-  try {
-    [sessionID, zaakId] = decrypt(zaakIdEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
+  const decryptResult = decryptAndValidate(
+    zaakIdEncrypted,
+    authProfileAndToken
+  );
+
+  if (decryptResult.status === 'OK') {
+    const zaakId = decryptResult.content;
+
+    const bezwaarStatusRequest = fetchBezwaarStatus(
+      requestID,
+      authProfileAndToken,
+      zaakId
+    );
+
+    const bezwaarDocumentsRequest = fetchBezwarenDocuments(
+      requestID,
+      authProfileAndToken,
+      zaakId
+    );
+
+    const [statussenResponse, documentsResponse] = await Promise.allSettled([
+      bezwaarStatusRequest,
+      bezwaarDocumentsRequest,
+    ]);
+
+    const statussen = getSettledResult(statussenResponse);
+    const documents = getSettledResult(documentsResponse);
+
+    const failedDependencies = getFailedDependencies({
+      statussen,
+      documents,
+    });
+
+    return apiSuccessResult(
+      {
+        statussen: statussen.content,
+        documents: documents.content,
+      },
+      failedDependencies
+    );
   }
 
-  if (!zaakId || sessionID !== authProfileAndToken.profile.sid) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
-  const bezwaarStatusRequest = fetchBezwaarStatus(
-    requestID,
-    authProfileAndToken,
-    zaakId
-  );
-
-  const bezwaarDocumentsRequest = fetchBezwarenDocuments(
-    requestID,
-    authProfileAndToken,
-    zaakId
-  );
-
-  const [statussenResponse, documentsResponse] = await Promise.allSettled([
-    bezwaarStatusRequest,
-    bezwaarDocumentsRequest,
-  ]);
-
-  const statussen = getSettledResult(statussenResponse);
-  const documents = getSettledResult(documentsResponse);
-
-  const failedDependencies = getFailedDependencies({
-    statussen,
-    documents,
-  });
-
-  return apiSuccessResult(
-    {
-      statussen: statussen.content,
-      documents: documents.content,
-    },
-    failedDependencies
-  );
+  return decryptResult;
 }
 
 export async function fetchBezwaarDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  documentIdEncrypted: string,
-  isDownload: boolean = true
+  documentId: string
 ) {
-  let sessionID: string = '';
-  let documentId: string = '';
-
-  try {
-    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
-  }
-
-  if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
   const url =
     process.env.BFF_BEZWAREN_API +
-    generatePath(
-      `/zgw/v1/enkelvoudiginformatieobjecten/:id${isDownload ? '/download' : ''}`,
-      { id: documentId }
-    );
+    generatePath('/zgw/v1/enkelvoudiginformatieobjecten/:id/download', {
+      id: documentId,
+    });
 
-  return axios({
-    url,
-    headers: await getBezwarenApiHeaders(authProfileAndToken),
-    responseType: isDownload ? 'stream' : 'json',
-  });
+  return requestData<DocumentDownloadData>(
+    {
+      url,
+      responseType: 'stream',
+      headers: await getBezwarenApiHeaders(authProfileAndToken),
+      transformResponse: (documentResponseData) => {
+        return {
+          data: documentResponseData,
+        };
+      },
+    },
+    requestID,
+    authProfileAndToken
+  );
 }
 
 export const forTesting = {

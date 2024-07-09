@@ -240,7 +240,7 @@ describe('Loodmeting', () => {
       expect(response.content?.filename).toEqual(
         'Rapportage Lood in de bodem-check Weesperplein 8 1018XA Amsterdam.pdf'
       );
-      expect(response.content?.documentbody.length).toEqual(8796);
+      expect(response.content?.data.length).toEqual(6597);
     });
   });
 });

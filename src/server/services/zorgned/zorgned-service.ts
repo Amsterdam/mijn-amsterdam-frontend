@@ -5,7 +5,6 @@ import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
   ZorgnedDocument,
-  ZorgnedDocumentData,
   ZorgnedResponseDataSource,
 } from './zorgned-config-and-types';
 
@@ -14,6 +13,7 @@ import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -180,21 +180,18 @@ export async function fetchDocument(
   const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
   const url = `${dataRequestConfig.url}/document`;
 
-  return requestData<ZorgnedDocumentData>(
+  return requestData<DocumentDownloadData>(
     {
       ...dataRequestConfig,
       url,
       data: postBody,
       transformResponse: (documentResponseData) => {
-        if (documentResponseData) {
-          const data = Buffer.from(documentResponseData.inhoud, 'base64');
-          return {
-            title: documentResponseData.omschrijving ?? 'Besluit',
-            mimetype: documentResponseData.mimetype,
-            data,
-          };
-        }
-        throw new Error('No document content');
+        const data = Buffer.from(documentResponseData.inhoud, 'base64');
+        return {
+          filename: documentResponseData.omschrijving ?? 'Besluit.pdf',
+          mimetype: documentResponseData.mimetype,
+          data,
+        };
       },
     },
     requestID,

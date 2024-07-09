@@ -179,9 +179,7 @@ describe('requestData.ts', () => {
       AUTH_PROFILE_AND_TOKEN
     );
 
-    const error = new Error('Network Error');
-
-    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null));
+    expect(rs).toStrictEqual(apiErrorResult('Network Error', null));
   });
 
   test('Find corresponding api', () => {
@@ -296,6 +294,8 @@ describe('requestData.ts', () => {
           Authorization: 'Bearer 123123123123',
         },
       })
-    ).toMatchInlineSnapshot(`"x4-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}"`);
+    ).toMatchInlineSnapshot(
+      `"x4-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}"`
+    );
   });
 });
