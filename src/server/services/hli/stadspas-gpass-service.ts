@@ -123,8 +123,8 @@ export async function fetchStadspassen(
   );
 
   if (
-    administratienummerResponse.status === 'ERROR' &&
-    administratienummerResponse.code === 404 // 404 means there is no record available in the ZORGNED api for the requested BSN
+    administratienummerResponse.status === 'OK' &&
+    !administratienummerResponse.content
   ) {
     return noContentResponse;
   }

@@ -47,10 +47,19 @@ export async function fetchAdministratienummer(
     'ZORGNED_AV'
   );
 
-  if (response.status === 'OK' && response.content) {
-    const administratienummer = transformZorgnedClientNummerResponse(
-      response.content
-    );
+  let administratienummer: string | null = null;
+
+  if (response.status === 'OK') {
+    if (response.content) {
+      administratienummer = transformZorgnedClientNummerResponse(
+        response.content
+      );
+    }
+    return apiSuccessResult(administratienummer);
+  }
+
+  if (response.status === 'ERROR' && response.code === 404) {
+    // 404 means there is no record available in the ZORGNED api for the requested BSN
     return apiSuccessResult(administratienummer);
   }
 

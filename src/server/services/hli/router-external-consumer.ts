@@ -1,6 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from '../../config';
-import { getAuth, sendUnauthorized } from '../../helpers/app';
+import {
+  AuthProfileAndToken,
+  getAuth,
+  sendUnauthorized,
+} from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
@@ -21,35 +25,48 @@ router.get(
   }
 );
 
-router.get(
-  BffEndpoints.STADSPAS_CLIENTNUMMER,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
+async function sendAdministratienummerResponse(req: Request, res: Response) {
+  let authProfileAndToken: AuthProfileAndToken | null = null;
+  try {
+    authProfileAndToken = await getAuth(req);
+  } catch (error) {}
 
-    if (
-      authProfileAndToken.profile.id &&
-      authProfileAndToken.profile.profileType === 'private'
-    ) {
-      const clientNummerResponse = await fetchAdministratienummer(
-        res.locals.requestID,
-        authProfileAndToken
-      );
+  if (
+    authProfileAndToken?.profile.id &&
+    authProfileAndToken.profile.profileType === 'private'
+  ) {
+    const clientNummerResponse = await fetchAdministratienummer(
+      res.locals.requestID,
+      authProfileAndToken
+    );
 
-      if (clientNummerResponse.status === 'OK') {
-        const [clientnummerEncrypted] =
-          clientNummerResponse.content !== null
-            ? encrypt(clientNummerResponse.content)
-            : [];
-        return res.render('amsapp-stadspas-clientnummer', {
-          sid: authProfileAndToken.profile.sid,
-          clientnummerEncrypted,
-          AMSAPP_PROTOCOl,
-        });
-      }
+    if (clientNummerResponse.status === 'OK') {
+      const [administratienummerEncrypted] =
+        clientNummerResponse.content !== null
+          ? encrypt(clientNummerResponse.content)
+          : [];
+      return res.render('amsapp-stadspas-administratienummer', {
+        administratienummerEncrypted,
+        AMSAPP_PROTOCOl,
+      });
     }
 
-    return sendUnauthorized(res);
+    if (clientNummerResponse.status === 'ERROR') {
+      return res.render('amsapp-stadspas-administratienummer', {
+        error:
+          clientNummerResponse.message ??
+          'Administratienummer kon niet worden opgehaald',
+        AMSAPP_PROTOCOl,
+      });
+    }
   }
+
+  return sendUnauthorized(res);
+}
+
+router.get(
+  BffEndpoints.STADSPAS_ADMINISTRATIENUMMER,
+  sendAdministratienummerResponse
 );
 
 function apiKeyHandler(req: Request, res: Response, next: NextFunction) {
@@ -61,16 +78,17 @@ router.get(
   BffEndpoints.STADSPAS_PASSEN,
   apiKeyHandler,
   (
-    req: Request<{ clientNummerEncrypted: string }>,
+    req: Request<{ administratienummerEncrypted: string }>,
     res: Response,
     next: NextFunction
   ) => {
     let reason = '';
     try {
-      const clientNummerEncrypted = req.params.clientNummerEncrypted;
+      const administratienummerEncrypted =
+        req.params.administratienummerEncrypted;
 
-      if (clientNummerEncrypted) {
-        const clientnummer = decrypt(clientNummerEncrypted);
+      if (administratienummerEncrypted) {
+        const clientnummer = decrypt(administratienummerEncrypted);
         // TODO: Implement service call with clientnummer param
         return res.send({
           clientnummer,
@@ -87,3 +105,7 @@ router.get(
 );
 
 export const stadspasExternalConsumerRouter = router;
+
+export const forTesting = {
+  sendAdministratienummerResponse,
+};
