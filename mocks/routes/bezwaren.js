@@ -6,7 +6,7 @@ const BEZWAREN_DOCUMENTEN_RESPONSE = require('../fixtures/bezwaren-documents.jso
 
 module.exports = [
   {
-    id: 'get-bezwaren-list',
+    id: 'post-bezwaren-list',
     url: `${settings.MOCK_BASE_PATH}/bezwaren/zgw/v1/zaken/_zoek`,
     method: 'POST',
     variants: [

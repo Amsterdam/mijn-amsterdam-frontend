@@ -3,7 +3,10 @@ import classnames from 'classnames';
 import { CSSProperties } from 'react';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
-import { GenericDocument } from '../../../universal/types/App.types';
+import {
+  GenericDocument,
+  ZaakDetail,
+} from '../../../universal/types/App.types';
 import { IconChevronLeft } from '../../assets/icons';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
@@ -46,11 +49,11 @@ export function StatusLinePanelStatus({
 }
 
 interface StatusLinePanelDescriptionProps {
-  content: string;
+  content?: string;
 }
 
 export function StatusLinePanelDescription({
-  content,
+  content = '',
 }: StatusLinePanelDescriptionProps) {
   return (
     <StatusLinePanel name="description">
@@ -66,7 +69,7 @@ interface StatusLinePanelDocumentsProps {
 }
 
 export function StatusLinePanelDocuments({
-  documents,
+  documents = [],
   altDocumentContent,
   trackPath,
 }: StatusLinePanelDocumentsProps) {
@@ -110,28 +113,6 @@ export function LineItem({
   );
 }
 
-interface ToggleMoreProps {
-  isCollapsed: boolean;
-  toggleCollapsed: () => void;
-}
-
-export function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
-  return (
-    <Button
-      className={classnames(styles.MoreStatus, {
-        [styles.MoreStatusClosed]: isCollapsed,
-      })}
-      onClick={toggleCollapsed}
-      icon={IconChevronLeft}
-      variant="plain"
-      aria-expanded={!isCollapsed}
-      lean={true}
-    >
-      {isCollapsed ? 'Toon alles' : 'Toon minder'}
-    </Button>
-  );
-}
-
 function StatusLineConnectionPlaceholder() {
   return <div className={styles.StatusConnection} />;
 }
@@ -139,7 +120,6 @@ function StatusLineConnectionPlaceholder() {
 interface StatusLineConnectionProps {
   index: number;
   total: number;
-  max?: number | -1;
   isActive: boolean;
   isChecked: boolean;
 }
@@ -147,27 +127,24 @@ interface StatusLineConnectionProps {
 function StatusLineConnection({
   index,
   total,
-  max,
   isChecked,
   isActive,
 }: StatusLineConnectionProps) {
-  const isEnd =
-    (typeof max !== 'undefined' && index === max - 1) ||
-    (typeof max === 'undefined' && index === total - 1);
+  const maxIndex = total - 1;
+  const isEnd = maxIndex !== -1 ? index === maxIndex : false;
 
   let status = null;
+  let ariaLabel = 'Toekomstige status, nog niet aangevinkt.';
+  switch (true) {
+    case isActive:
+      ariaLabel = 'Huidige status, aangevinkt.';
+      break;
+    case isChecked:
+      ariaLabel = 'Status aangevinkt.';
+      break;
+  }
 
-  if (max === -1) {
-    status = (
-      <span
-        className={classnames(
-          styles.Checkmark,
-          isActive && styles['Checkmark--active'],
-          isChecked && styles['Checkmark--checked']
-        )}
-      />
-    );
-  } else if (index === 0) {
+  if (index === 0) {
     status = (
       <>
         <span
@@ -246,10 +223,7 @@ function StatusLineConnection({
     );
   }
   return (
-    <div
-      aria-label="Vinkje, processtap gereed"
-      className={styles.StatusConnection}
-    >
+    <div aria-label={ariaLabel} className={styles.StatusConnection}>
       {status}
     </div>
   );
@@ -265,8 +239,6 @@ interface StatusLineProps {
   statusLabel?: string;
   showStatusLineConnection?: boolean;
   className?: string;
-  maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
-  highlightKey?: string | false; // key of data item which corresponding value is cast to a boolean and controls wether this item gets the highlight class.
   documentPathForTracking?: (document: GenericDocument) => string;
 }
 
@@ -274,8 +246,6 @@ export default function StatusLine({
   items,
   statusLabel = 'Status',
   className,
-  maxStepCount,
-  highlightKey = 'isActive',
   showStatusLineConnection = true,
   documentPathForTracking,
 }: StatusLineProps) {
@@ -289,15 +259,14 @@ export default function StatusLine({
           {items.map((item, index) => (
             <LineItem
               key={`step-${item.id}-${index}`}
-              highlight={highlightKey ? !!item[highlightKey] : false}
+              highlight={item.isActive}
             >
-              {!!showStatusLineConnection ? (
+              {showStatusLineConnection === true ? (
                 <StatusLineConnection
                   index={index}
                   total={items.length}
-                  max={maxStepCount}
-                  isActive={Boolean(item.isActive)}
-                  isChecked={Boolean(item.isChecked)}
+                  isActive={item.isActive}
+                  isChecked={item.isChecked}
                 />
               ) : (
                 <StatusLineConnectionPlaceholder />
@@ -308,7 +277,7 @@ export default function StatusLine({
                 status={item.status}
               />
 
-              <StatusLinePanelDescription content={item.description ?? ''} />
+              <StatusLinePanelDescription content={item.description} />
 
               <StatusLinePanelDocuments
                 documents={item.documents ?? []}

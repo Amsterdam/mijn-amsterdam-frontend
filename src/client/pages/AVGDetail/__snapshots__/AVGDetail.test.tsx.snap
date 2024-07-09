@@ -245,7 +245,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Status aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -288,7 +288,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Status aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -331,7 +331,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Huidige status, aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span

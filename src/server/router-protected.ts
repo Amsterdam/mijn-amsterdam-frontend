@@ -1,7 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { IS_OT } from '../universal/config';
 import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
-import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import {
+  getAuth,
+  isAuthenticated,
+  isProtectedRoute,
+  sendResponseContent,
+} from './helpers/app';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
@@ -21,6 +27,11 @@ import { fetchTransacties } from './services/hli/stadspas-gpass-service';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
+import {
+  fetchVergunningDetail,
+  fetchVergunningDocument,
+  fetchZakenSource,
+} from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
 
@@ -82,6 +93,10 @@ router.get(
   }
 );
 
+////////////////////////////////////////////////////
+//// BFF Service Api Endpoints /////////////////////
+////////////////////////////////////////////////////
+
 router.get(
   BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
   downloadZorgnedDocument('ZORGNED_JZD')
@@ -106,6 +121,7 @@ router.get(
   }
 );
 
+// Vergunningen V1
 router.get(
   BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
   async (req: Request, res: Response) => {
@@ -120,7 +136,7 @@ router.get(
     return res.send(documentsListResponse);
   }
 );
-
+// Vergunningen V1
 router.get(
   BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
@@ -136,6 +152,16 @@ router.get(
     res.setHeader('content-type', contentType);
     documentResponse.data.pipe(res);
   }
+);
+
+// Vergunningen V2
+if (IS_OT) {
+  router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenSource);
+}
+router.get(BffEndpoints.VERGUNNINGENv2_DETAIL, fetchVergunningDetail);
+router.get(
+  BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD,
+  fetchVergunningDocument
 );
 
 router.get(
@@ -229,19 +255,13 @@ router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
-    const response = await fetchErfpachtV2DossiersDetail(
+    const apiResponse = await fetchErfpachtV2DossiersDetail(
       res.locals.requestID,
       authProfileAndToken,
       req.params.dossierNummerUrlParam
     );
 
-    if (response.status === 'ERROR') {
-      return res
-        .status(typeof response.code === 'number' ? response.code : 500)
-        .end();
-    }
-
-    return res.send(response);
+    return sendResponseContent(res, apiResponse);
   }
 );
 

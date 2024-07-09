@@ -50,6 +50,7 @@ import {
   prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {
@@ -61,6 +62,7 @@ import {
 } from './wpi';
 import { fetchHLI } from './hli/hli';
 import { fetchIsKnownInAFIS } from './afis/afis';
+import { fetchDecosVergunningen } from './vergunningen-v2/decos-service';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -115,6 +117,8 @@ const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
 
 const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
+const VERGUNNINGENv2 = async (requestID: requestID, req: Request) =>
+  fetchVergunningenV2(requestID, await getAuth(req));
 
 const HORECA = async (requestID: requestID, req: Request) =>
   fetchHorecaVergunningen(requestID, await getAuth(req));
@@ -201,12 +205,13 @@ const SERVICES_INDEX = {
   SVWI,
   TOERISTISCHE_VERHUUR,
   VERGUNNINGEN,
+  VERGUNNINGENv2,
   WMO,
   WPI_AANVRAGEN,
   WPI_BBZ,
   WPI_SPECIFICATIES,
   WPI_TONK,
-  WPI_TOZO,
+  WPI_TOZO
 };
 
 export type ServicesType = typeof SERVICES_INDEX;
@@ -225,21 +230,22 @@ type CommercialServices = Pick<
   | 'AFIS'
   | 'AFVAL'
   | 'AFVALPUNTEN'
+  | 'BEZWAREN'
+  | 'BODEM'
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
-  | 'SUBSIDIE'
-  | 'NOTIFICATIONS'
-  | 'MY_LOCATION'
+  | 'HORECA'
   | 'KVK'
   | 'MILIEUZONE'
+  | 'MY_LOCATION'
+  | 'NOTIFICATIONS'
   | 'OVERTREDINGEN'
-  | 'VERGUNNINGEN'
+  | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
-  | 'HORECA'
-  | 'BODEM'
-  | 'BEZWAREN'
+  | 'VERGUNNINGEN'
+  | 'VERGUNNINGENv2'
 >;
 
 type ServicesByProfileType = {
@@ -276,6 +282,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SVWI,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
+    VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -308,6 +315,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
+    VERGUNNINGENv2,
   },
 };
 

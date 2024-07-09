@@ -160,7 +160,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Status aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -203,7 +203,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Status aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -246,7 +246,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Huidige status, aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -404,7 +404,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Status aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -447,7 +447,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Status aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -490,7 +490,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Huidige status, aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -648,7 +648,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Huidige status, aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -691,7 +691,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Toekomstige status, nog niet aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span
@@ -729,7 +729,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_ListItemInner_a12ff2"
           >
             <div
-              aria-label="Vinkje, processtap gereed"
+              aria-label="Toekomstige status, nog niet aangevinkt."
               class="_StatusConnection_a12ff2"
             >
               <span

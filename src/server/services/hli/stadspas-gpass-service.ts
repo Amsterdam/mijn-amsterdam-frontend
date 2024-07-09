@@ -124,7 +124,7 @@ export async function fetchStadspassen(
 
   if (
     administratienummerResponse.status === 'ERROR' &&
-    administratienummerResponse.code === '404' // 404 means there is no record available in the ZORGNED api for the requested BSN
+    administratienummerResponse.code === 404 // 404 means there is no record available in the ZORGNED api for the requested BSN
   ) {
     return noContentResponse;
   }
@@ -152,7 +152,7 @@ export async function fetchStadspassen(
   );
 
   if (stadspasHouderResponse.status === 'ERROR') {
-    if (stadspasHouderResponse.code === '401') {
+    if (stadspasHouderResponse.code === 401) {
       // 401 means there is no record available in the GPASS api for the requested administratienummer
       return noContentResponse;
     }

@@ -5,9 +5,9 @@ import { DocumentLink } from './DocumentLink';
 import styles from './DocumentListV2.module.scss';
 import { Table } from '@amsterdam/design-system-react';
 
-interface DocumentListProps {
-  documents: GenericDocument[];
-  trackPath?: (document: GenericDocument) => string;
+interface DocumentListProps<T extends GenericDocument = GenericDocument> {
+  documents: T[];
+  trackPath?: (document: T) => string;
 }
 
 export default function DocumentListV2({
@@ -17,8 +17,10 @@ export default function DocumentListV2({
   return (
     <table className={styles.DocumentListV2}>
       <thead>
-        <th>Document</th>
-        <th>Datum</th>
+        <tr>
+          <th>Document</th>
+          <th>Datum</th>
+        </tr>
       </thead>
       <tbody>
         {documents.map((document) => (

@@ -67,31 +67,30 @@ export interface GenericDocument {
   download?: string;
   external?: boolean;
   datePublished: string;
-  [key: string]: any;
 }
 
 export type AltDocumentContent = string | ReactNode;
 
 export interface StatusLineItem {
-  id?: string;
+  id: string;
   status: string;
   datePublished: string;
   description?: string;
   documents?: GenericDocument[];
-  isActive?: boolean;
-  isChecked?: boolean;
+  isActive: boolean;
+  isChecked: boolean;
+  isVisible?: boolean;
   altDocumentContent?: AltDocumentContent;
-  [key: string]: any;
 }
 
-export interface StatusLine {
+export interface ZaakDetail {
   id: string;
   title: string;
-  about?: string;
-  link?: LinkProps;
   steps: StatusLineItem[];
-  [key: string]: any;
+  link: LinkProps;
+  about?: string;
 }
+export type StatusLine = ZaakDetail;
 
 export interface ApiError {
   name: string;

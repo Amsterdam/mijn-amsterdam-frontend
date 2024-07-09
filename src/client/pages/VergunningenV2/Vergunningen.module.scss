@@ -1,0 +1,6 @@
+@import '../../styles/_global.scss';
+
+.SuppressedParagraph {
+  --ams-paragraph-color: #{$color-neutral-grey4};
+  text-align: center;
+}

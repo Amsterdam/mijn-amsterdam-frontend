@@ -19,6 +19,7 @@ import { VakantieverhuurVergunning } from '../../../server/services/toeristische
 
 import { StadspasResponseData } from '../../../server/services/hli/stadspas-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullAddress, getFullName } from '../../../universal/helpers';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -32,9 +33,8 @@ import {
   BRPData,
   Identiteitsbewijs,
   LinkProps,
-  StatusLine,
 } from '../../../universal/types';
-import { AppState, AppStateKey } from '../../AppState';
+import { AppStateKey } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
 import { HLIresponseData } from '../../../server/services/hli/regelingen-types';
@@ -164,11 +164,11 @@ const getWpiConfig = (
   'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
 > => ({
   stateKey,
-  generateKeywords: (aanvraag: StatusLine) =>
+  generateKeywords: (aanvraag: WpiRequestProcess) =>
     uniqueArray(
       aanvraag.steps.flatMap((step: any) => [step.title, step.status])
     ),
-  displayTitle: (aanvraag: StatusLine) => {
+  displayTitle: (aanvraag: WpiRequestProcess) => {
     return (term: string) => {
       const segments =
         aanvraag.about === 'Bbz'

@@ -4,6 +4,7 @@ import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanc
 import { Button } from '../Button/Button';
 import styles from './MaintenanceNotifications.module.scss';
 import Linkd from '../Button/Button';
+import { Alert } from '@amsterdam/design-system-react';
 
 interface MaintenanceNotificationsProps {
   page?: string;
@@ -28,7 +29,7 @@ export default function MaintenanceNotifications({
     <>
       {maintenanceNotifications.map((notification, index) => {
         return (
-          <ErrorAlert
+          <Alert
             key={notification.title + index}
             severity="warning"
             title="Onderhoudsmelding"
@@ -59,7 +60,7 @@ export default function MaintenanceNotifications({
                 </Linkd>
               </p>
             )}
-          </ErrorAlert>
+          </Alert>
         );
       })}
     </>

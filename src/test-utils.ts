@@ -10,7 +10,7 @@ const defaultReplyHeaders = {
 export const bffApi = nock(`${bffApiHost}:80`).defaultReplyHeaders(
   defaultReplyHeaders
 );
-export const remoteApi = nock(`${remoteApiHost}`).defaultReplyHeaders(
+export const remoteApi = nock(`${remoteApiHost}:80`).defaultReplyHeaders(
   defaultReplyHeaders
 );
 

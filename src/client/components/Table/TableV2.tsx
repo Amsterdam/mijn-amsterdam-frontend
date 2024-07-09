@@ -9,10 +9,6 @@ interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
 }
 
-interface ObjectWithOptionalId extends Unshaped {
-  id?: number | string;
-}
-
 export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
   titleKey: keyof T = 'title'
@@ -48,7 +44,7 @@ export interface TableV2Props<T> {
   caption?: string;
 }
 
-export function TableV2<T extends ObjectWithOptionalId>({
+export function TableV2<T extends Unshaped>({
   caption,
   items,
   displayProps,
@@ -76,11 +72,11 @@ export function TableV2<T extends ObjectWithOptionalId>({
       )}
       <Table.Body>
         {items.map((item, index) => (
-          <tr key={item.id ?? `tr-${index}`}>
+          <Table.Row key={'id' in item ? item.id : undefined ?? `tr-${index}`}>
             {displayPropEntries.map(([key, label], index) => (
               <Table.Cell key={`td-${key}`}>{item[key]}</Table.Cell>
             ))}
-          </tr>
+          </Table.Row>
         ))}
       </Table.Body>
     </Table>

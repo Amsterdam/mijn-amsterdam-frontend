@@ -61,6 +61,10 @@ export async function requestData<T>(
   requestID: requestID,
   authProfileAndToken?: AuthProfileAndToken
 ) {
+  if (!requestID) {
+    throw new Error('Request ID not provided in requestData(...) call.');
+  }
+
   const source = axios.CancelToken.source();
 
   const requestConfig: DataRequestConfig = {
@@ -91,8 +95,6 @@ export async function requestData<T>(
       headers
     );
   }
-
-  const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 
   // Construct a cache key based on unique properties of a request
   const cacheKey =
@@ -164,7 +166,7 @@ export async function requestData<T>(
     const responseData = apiErrorResult(
       errorMessage,
       null,
-      statusCode ? `${statusCode}` : undefined
+      statusCode ? parseInt(statusCode, 10) : undefined
     );
 
     if (cache.get(cacheKey)) {

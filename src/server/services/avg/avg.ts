@@ -80,10 +80,11 @@ function getDataForAvgThemas(avgIds: string[]) {
 }
 
 export async function enrichAvgResponse(
+  requestID: requestID,
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
   const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
-  const themasResponse = await fetchAVGRequestThemes(avgIds);
+  const themasResponse = await fetchAVGRequestThemes(requestID, avgIds);
 
   if (themasResponse.status === 'OK') {
     const enrichedAvgRequests: AVGRequest[] = [];
@@ -180,7 +181,7 @@ export async function fetchAVG(
   );
 
   if (response.status === 'OK') {
-    return enrichAvgResponse(response);
+    return enrichAvgResponse(requestID, response);
   }
 
   return response;
@@ -204,7 +205,10 @@ export function transformAVGThemeResponse(
   };
 }
 
-export async function fetchAVGRequestThemes(avgIds: string[]) {
+export async function fetchAVGRequestThemes(
+  requestID: requestID,
+  avgIds: string[]
+) {
   const data = getDataForAvgThemas(avgIds);
   const cacheKey = avgIds.join('-');
 
@@ -216,7 +220,7 @@ export async function fetchAVGRequestThemes(avgIds: string[]) {
       cacheKey: `avg-themes-${cacheKey}`,
       postponeFetch: !FeatureToggle.avgActive,
     }),
-    cacheKey
+    requestID
   );
 
   return res;

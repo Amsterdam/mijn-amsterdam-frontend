@@ -189,7 +189,6 @@ export function isAppStateReady(
   profileType: ProfileType
 ) {
   const isLegacyProfileType = ['private', 'commercial'].includes(profileType);
-
   const profileStates = Object.entries(appState).filter(
     ([appStateKey, state]) => {
       const key = appStateKey as AppStateKey;
@@ -233,6 +232,7 @@ export interface AppStateBagApiParams {
   url: string;
   bagThema: BagThema;
   key: string;
+  postponeFetch?: boolean;
 }
 
 // Use this hook for loading additional data that needs to be persisted in the state. For example additional data loaded if a user navigates to a detailpage
@@ -241,6 +241,7 @@ export function useAppStateBagApi<T extends unknown>({
   url,
   bagThema,
   key,
+  postponeFetch = false,
 }: AppStateBagApiParams) {
   const [appState, setAppState] = useRecoilState(appStateAtom);
   const isApiDataCached =
@@ -249,14 +250,21 @@ export function useAppStateBagApi<T extends unknown>({
     typeof appState[bagThema] !== 'undefined' &&
     key in appState[bagThema]!;
 
-  const [api] = useDataApi<ApiResponse<T | null>>(
+  const [api, fetch] = useDataApi<ApiResponse<T | null>>(
     {
       url,
-      postpone: isApiDataCached,
+      postpone: isApiDataCached || !url,
     },
     apiPristineResult(null)
   );
+
   useEffect(() => {
+    if (url && !isApiDataCached && !api.isDirty && !api.isLoading) {
+      fetch({
+        url,
+        postpone: false,
+      });
+    }
     if (!isApiDataCached && !!api.data.content) {
       setAppState((state) => {
         let localState = state[bagThema];
@@ -273,9 +281,9 @@ export function useAppStateBagApi<T extends unknown>({
         };
       });
     }
-  }, [isApiDataCached, api, key]);
+  }, [isApiDataCached, api, key, url]);
 
-  return [appState?.[bagThema]?.[key] as T, api] as const;
+  return [appState?.[bagThema]?.[key] as T, api, fetch] as const;
 }
 
 export function useRemoveAppStateBagData() {

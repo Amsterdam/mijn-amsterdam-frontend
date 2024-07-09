@@ -3,7 +3,7 @@ export interface ApiErrorResponse<T> {
   content: T;
   status: 'ERROR';
   id?: string;
-  code?: string | number;
+  code?: number;
 }
 
 export type FailedDependencies = Record<string, ApiErrorResponse<any>>;
@@ -52,7 +52,7 @@ export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
   ReturnType<T>
 >;
 
-export type ApiResponse<T> =
+export type ApiResponse<T extends unknown = unknown> =
   | ApiErrorResponse<T>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>

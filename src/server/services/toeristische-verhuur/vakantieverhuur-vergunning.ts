@@ -5,7 +5,7 @@ import {
   defaultDateFormat,
 } from '../../../universal/helpers';
 import { LinkProps, StatusLineItem } from '../../../universal/types/App.types';
-import { CaseType } from '../../../universal/types/vergunningen';
+import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   VakantieverhuurVergunning as VakantieverhuurVergunningDecos,
@@ -14,6 +14,8 @@ import {
   fetchVergunningen,
   toeristischeVerhuurVergunningTypes,
 } from '../vergunningen/vergunningen';
+import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
+import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
 
 export interface VakantieverhuurVergunning {
   datumAfhandeling?: string | null;
@@ -41,6 +43,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
     (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());
 
   const statusOntvangen: StatusLineItem = {
+    id: 'step-1',
     status: 'Ontvangen',
     datePublished: vergunning.dateRequest,
     isActive: false,
@@ -48,6 +51,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   };
 
   const statusInBehandeling: StatusLineItem = {
+    id: 'step-2',
     status: 'In behandeling',
     datePublished: vergunning.dateRequest,
     isActive: false,
@@ -55,6 +59,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   };
 
   const statusAfgehandeld: StatusLineItem = {
+    id: 'step-3',
     status: 'Afgehandeld',
     datePublished: vergunning.dateDecision ?? vergunning.dateRequest ?? '',
     description: '',
@@ -66,6 +71,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
 
   if (isVerlopen || isIngetrokken) {
     const statusGewijzigd: StatusLineItem = {
+      id: 'step-4',
       status: 'Gewijzigd',
       datePublished:
         (isVerlopen && !isIngetrokken
@@ -145,20 +151,22 @@ export async function fetchVakantieverhuurVergunningen(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const vakantieverhuurVergunningResponse = await fetchVergunningen<
-    VakantieverhuurVergunningDecos[]
-  >(requestID, authProfileAndToken, {
-    appRoute: (vergunning: Vergunning) => {
-      switch (vergunning.caseType) {
-        case CaseType.VakantieverhuurVergunning:
-          return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
-        default:
-          return AppRoutes['TOERISTISCHE_VERHUUR'];
-      }
-    },
-    filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>
-      toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
-  });
+  const vakantieverhuurVergunningResponse = await fetchVergunningen(
+    requestID,
+    authProfileAndToken,
+    {
+      appRoute: (vergunning: Vergunning) => {
+        switch (vergunning.caseType) {
+          case CaseType.VakantieverhuurVergunning:
+            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
+          default:
+            return AppRoutes['TOERISTISCHE_VERHUUR'];
+        }
+      },
+      filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>
+        toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
+    }
+  );
 
   if (vakantieverhuurVergunningResponse.status === 'OK') {
     return apiSuccessResult(
@@ -169,4 +177,24 @@ export async function fetchVakantieverhuurVergunningen(
   }
 
   return vakantieverhuurVergunningResponse;
+}
+
+export async function fetchVakantieverhuurVergunningenV2(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const vergunningenResponse = await fetchVergunningenV2(
+    requestID,
+    authProfileAndToken
+  );
+
+  if (vergunningenResponse.status === 'OK') {
+    return apiSuccessResult(
+      vergunningenResponse.content.filter(
+        (zaak) => zaak.caseType === CaseTypeV2.VakantieverhuurVergunningaanvraag
+      )
+    );
+  }
+
+  return vergunningenResponse;
 }

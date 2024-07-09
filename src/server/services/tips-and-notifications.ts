@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
+import { FeatureToggle } from '../../universal/config';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification, MyTip } from '../../universal/types';
@@ -21,15 +22,16 @@ import {
   fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
 } from './simple-connect';
+import { fetchSVWINotifications } from './simple-connect/svwi';
 import {
   convertTipToNotication,
   prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
-import { fetchSVWINotifications } from './simple-connect/svwi';
 
 export function sortNotifications(
   notifications: MyNotification[],
@@ -147,7 +149,9 @@ const notificationServices: NotificationServices = {
   commercial: {
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
-    vergunningen: fetchVergunningenNotifications,
+    vergunningen: FeatureToggle.vergunningenV2Active
+      ? fetchVergunningenV2Notifications
+      : fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
     erfpacht: fetchErfpachtNotifications,
     maintenanceNotifications: (requestID: requestID) =>
@@ -172,7 +176,9 @@ const notificationServices: NotificationServices = {
     belasting: fetchBelastingNotifications,
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
-    vergunningen: fetchVergunningenNotifications,
+    vergunningen: FeatureToggle.vergunningenV2Active
+      ? fetchVergunningenV2Notifications
+      : fetchVergunningenNotifications,
     erfpacht: fetchErfpachtNotifications,
     subsidie: fetchSubsidieNotifications,
     maintenance: (requestID: requestID) =>

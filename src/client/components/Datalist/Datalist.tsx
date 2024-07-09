@@ -44,7 +44,7 @@ function DatalistRowWrapped({ label, content, className }: WrappedRow) {
   );
 }
 
-interface RowSet {
+export interface RowSet {
   rows: WrappedRow[];
   className?: string;
 }
@@ -70,27 +70,29 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
   );
 }
 
-interface DatalistProps {
-  rows: Row[] | RowSet[];
+export interface DatalistProps {
+  rows: Array<Row | RowSet>;
   className?: string;
 }
 
 export function Datalist({ className, rows }: DatalistProps) {
   return (
     <dl className={classNames(styles.Datalist, className)}>
-      {rows.map((row, index) =>
-        'rows' in row ? (
-          <DatalistRowsWithWrapper key={`row-${index}`} rows={row.rows} />
-        ) : (
-          <DatalistRow
-            key={`row-${index}`}
-            label={row.label}
-            content={row.content}
-            classNameLabel={row.classNameLabel}
-            classNameContent={row.classNameContent}
-          />
-        )
-      )}
+      {rows
+        .filter(Boolean)
+        .map((row: Row | RowSet, index) =>
+          'rows' in row ? (
+            <DatalistRowsWithWrapper key={`row-${index}`} rows={row.rows} />
+          ) : (
+            <DatalistRow
+              key={`row-${index}`}
+              label={row.label}
+              content={row.content}
+              classNameLabel={row.classNameLabel}
+              classNameContent={row.classNameContent}
+            />
+          )
+        )}
     </dl>
   );
 }

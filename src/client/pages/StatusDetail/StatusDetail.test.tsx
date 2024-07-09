@@ -79,8 +79,6 @@ describe('<StatusDetail />', () => {
           thema="INKOMEN"
           stateKey="WPI_TOZO"
           pageContent={pageContent}
-          maxStepCount={() => -1}
-          highlightKey={false}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
@@ -107,7 +105,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           thema="INKOMEN"
           stateKey="WPI_TOZO"
-          maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
@@ -132,7 +129,6 @@ describe('<StatusDetail />', () => {
         <StatusDetail
           thema="INKOMEN"
           stateKey="WPI_TOZO"
-          maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );
@@ -150,7 +146,7 @@ describe('<StatusDetail />', () => {
     render(<Component />);
     expect(screen.getByText('Detailpagina')).toBeInTheDocument();
     expect(
-      screen.getByText('Kies hieronder een van de beschikbare aanvragen.')
+      screen.getByText('Kies hieronder een van de beschikbare zaken.')
     ).toBeInTheDocument();
     expect(screen.getByText('Aanvraag Test item')).toBeInTheDocument();
   });
@@ -162,7 +158,6 @@ describe('<StatusDetail />', () => {
           thema="INKOMEN"
           stateKey="WPI_TOZO"
           reverseSteps={true}
-          maxStepCount={() => 3}
           statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
         />
       );

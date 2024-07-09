@@ -1,0 +1,722 @@
+{
+  "count": 75,
+  "content": [
+    {
+      "key": "084239C942C647F79F1C2B5CCF8DC5DA",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/23/2230424",
+        "processed": false,
+        "document_date": "2023-11-06T00:00:00",
+        "date6": "2023-11-27T00:00:00",
+        "date7": "2023-12-14T00:00:00",
+        "text9": "95GHZ4",
+        "text49": "95GHZ4"
+      },
+      "links": []
+    },
+    {
+      "key": "0B6841B845634067AB7262643AC0B8F4",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233018",
+        "processed": false,
+        "document_date": "2024-04-10T00:00:00",
+        "date6": "2024-04-17T00:00:00",
+        "date7": "2024-04-17T00:00:00",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "0E4721EB611442D8A81FF3975F5E66F6",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "Evenement melding plus",
+        "dfunction": "Nog niet bekend",
+        "mark": "Z/24/2233037",
+        "processed": false,
+        "document_date": "2024-04-16T00:00:00",
+        "date6": "2024-04-26T00:00:00",
+        "date7": "2024-04-27T00:00:00",
+        "text10": "Buurtfeest"
+      },
+      "links": []
+    },
+    {
+      "key": "24F8ED3AD3A14014B3F312302480CA2C",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "Touringcar Dagontheffing",
+        "dfunction": "Niet verleend",
+        "mark": "Z/24/2232885",
+        "processed": false,
+        "document_date": "2024-03-27T00:00:00",
+        "date6": "2024-03-30T00:00:00",
+        "date7": "2024-03-31T00:00:00",
+        "text9": "Ouderen van de AOW leeftijd",
+        "text10": "51BHH3",
+        "text13": "NL"
+      },
+      "links": []
+    },
+    {
+      "key": "2C9BC563EF594780809DD6B04746A359",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "GPK",
+        "mark": "Z/24/2232968",
+        "processed": false,
+        "document_date": "2024-04-03T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "54C4DC4C95224479B82E621A61134D1B",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "GPP Opheffen",
+        "dfunction": "Nog niet bekend",
+        "mark": "Z/24/2232948",
+        "processed": false,
+        "document_date": "2024-03-28T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "69F33F7BD56E4F53ACFA998BE5131463",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2232423",
+        "processed": false,
+        "document_date": "2024-02-21T00:00:00",
+        "date6": "2024-02-28T00:00:00",
+        "date7": "2024-03-01T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "6AC705BA7B3E4460891CC00AA989FD96",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "Touringcar Dagontheffing",
+        "dfunction": "Niet verleend",
+        "mark": "Z/24/2232739",
+        "processed": false,
+        "document_date": "2024-03-07T00:00:00",
+        "date6": "2024-03-07T00:00:00",
+        "date7": "2024-03-08T00:00:00",
+        "text9": "Mensen met een beperking",
+        "text10": "51BHH3",
+        "text13": "NL"
+      },
+      "links": []
+    },
+    {
+      "key": "70C3AA6AA5FA4846A827C3ABDD9AADB9",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "Horeca vergunning exploitatie Horecabedrijf",
+        "mark": "Z/24/2231961",
+        "processed": false,
+        "document_date": "2024-02-14T00:00:00",
+        "text10": "afhaalrestaurant"
+      },
+      "links": []
+    },
+    {
+      "key": "79060035DB184502BAEF23B00A1AA345",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2232835",
+        "processed": false,
+        "document_date": "2024-03-21T00:00:00",
+        "date6": "2024-04-22T00:00:00",
+        "date7": "2024-04-22T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "8A78A87A0BD74E179EF141BE4BCC5C1F",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2231326",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-02T00:00:00",
+        "date7": "2024-02-02T00:00:00",
+        "text10": "09.00",
+        "text13": "17.30"
+      },
+      "links": []
+    },
+    {
+      "key": "A515CA17E0BC48488BEB7F9A2B213E7C",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/23/2230423",
+        "processed": false,
+        "document_date": "2023-11-06T00:00:00",
+        "date6": "2023-11-27T00:00:00",
+        "date7": "2023-12-02T00:00:00",
+        "text9": "95GHZ4",
+        "text49": "95GHZ4"
+      },
+      "links": []
+    },
+    {
+      "key": "AB790045B2174005A8B519E66A72107A",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233041",
+        "processed": false,
+        "document_date": "2024-04-17T00:00:00",
+        "date6": "2024-04-24T00:00:00",
+        "date7": "2024-04-24T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "ACEE05C6116E40B4B6201E86A064CE94",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/23/2230425",
+        "processed": false,
+        "document_date": "2023-11-06T00:00:00",
+        "date6": "2023-12-01T00:00:00",
+        "date7": "2023-12-24T00:00:00",
+        "text9": "95GHZ4",
+        "text49": "95GHZ4",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "B14E38F20D77455588CD840E754DB938",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "VOB",
+        "dfunction": "Verleend",
+        "mark": "Z/24/2231398",
+        "processed": true,
+        "date5": "2024-01-31T00:00:00",
+        "document_date": "2024-01-31T00:00:00",
+        "date6": "2024-01-31T00:00:00",
+        "text9": "Ligplaatsvergunning woonboot",
+        "text10": "Woonschip"
+      },
+      "links": []
+    },
+    {
+      "key": "C69889BBDFA94A3F9F125175DC268D38",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2231473",
+        "processed": false,
+        "document_date": "2024-02-08T00:00:00",
+        "date6": "2024-02-20T00:00:00",
+        "date7": "2024-02-21T00:00:00",
+        "text9": "GB001B",
+        "text49": "GB001B",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "D077915EB2A1470BB5DD03398D07BA20",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2232780",
+        "processed": false,
+        "document_date": "2024-03-13T00:00:00",
+        "date6": "2024-03-20T00:00:00",
+        "date7": "2024-03-28T00:00:00",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "D9CDE2E6E133423CAC680F4E4FFB7512",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "Eigen parkeerplaats",
+        "mark": "Z/24/2232696",
+        "processed": false,
+        "document_date": "2024-03-04T00:00:00",
+        "text13": "8SLG41"
+      },
+      "links": []
+    },
+    {
+      "key": "FFC76A22645A49A5BC81DAF32F955384",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "Evenement melding",
+        "dfunction": "Nog niet bekend",
+        "mark": "Z/24/2233022",
+        "processed": false,
+        "document_date": "2024-04-11T00:00:00",
+        "date6": "2024-05-05T00:00:00",
+        "date7": "2024-05-05T00:00:00",
+        "text9": "Eten en drinken",
+        "text10": "Barbecue",
+        "text13": "16:00"
+      },
+      "links": []
+    },
+    {
+      "key": "EB94F2B068F34ABFA8B37FFCBA5FCF46",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231328",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Kinderen tot 12",
+        "text10": "13,9",
+        "text13": "15,616",
+        "text39": "76BKS2"
+      },
+      "links": []
+    },
+    {
+      "key": "7BA6774B7D184F7DBEA52CC885BACE95",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231329",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-03-01T00:00:00",
+        "date7": "2025-03-01T00:00:00",
+        "text9": "Mensen met een beperking",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40"
+      },
+      "links": []
+    },
+    {
+      "key": "341974CD60864FBEABEFD5B0BB406323",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231330",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Artiesten en gezelschappen",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
+      },
+      "links": []
+    },
+    {
+      "key": "4C8A4693F4B4484AB7D6E0E1464E7C4D",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPP",
+        "dfunction": "Verleend",
+        "mark": "Z/21/1858540",
+        "processed": true,
+        "date5": "2021-02-01T00:00:00",
+        "document_date": "2021-01-25T00:00:00",
+        "date6": "2021-01-07T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "5138C79B50984FDBA444C760B1996414",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPK",
+        "dfunction": "Niet verleend",
+        "mark": "Z/20/1794210",
+        "processed": true,
+        "date5": "2020-10-09T00:00:00",
+        "document_date": "2020-07-27T00:00:00",
+        "date6": "2020-09-11T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "51EBD49673A54A55ACC8204396CD33CA",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPK",
+        "dfunction": "Verleend",
+        "mark": "Z/20/1839511",
+        "processed": true,
+        "date5": "2021-02-01T00:00:00",
+        "document_date": "2020-11-17T00:00:00",
+        "date6": "2021-01-07T00:00:00",
+        "date7": "2024-08-25T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "7B54FB3073EF4A89ADB3A9E7350F7567",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPP",
+        "dfunction": "Verleend",
+        "mark": "Z/21/1953929",
+        "processed": true,
+        "date5": "2021-09-14T00:00:00",
+        "document_date": "2021-08-26T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "9352A968A19C4E8BBBD45DBF72305735",
+      "fields": {
+        "title": "Ophalen GPK",
+        "text45": "GPK",
+        "dfunction": "Verleend Bestuurder, niet verleend Passagier",
+        "mark": "Z/22/2028396",
+        "processed": true,
+        "date5": "2022-04-29T00:00:00",
+        "document_date": "2022-04-11T00:00:00",
+        "date6": "2020-09-11T00:00:00",
+        "date7": "2026-01-25T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "C5CEA9FA089542C7B37A56467F98C92E",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "GPP",
+        "mark": "Z/23/2230261",
+        "processed": false,
+        "document_date": "2023-10-02T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "CC595BA85A4340A0B6EE0198A8B895E8",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "GPP",
+        "dfunction": "Verleend",
+        "mark": "Z/21/1970076",
+        "processed": true,
+        "date5": "2021-10-15T00:00:00",
+        "document_date": "2021-10-11T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "9F4EF2B076DA4B90B217E72AE882A658",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231331",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Artiesten en gezelschappen",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
+      },
+      "links": []
+    },
+    {
+      "key": "E62139CC670D4B9D835DE82E4A83A02E",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231332",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Artiesten en gezelschappen",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
+      },
+      "links": []
+    },
+    {
+      "key": "19ED20D94C6E48389F15F8AA154224C9",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "Touringcar Dagontheffing",
+        "dfunction": "Niet verleend",
+        "mark": "Z/24/2231334",
+        "processed": true,
+        "date5": "2024-01-26T00:00:00",
+        "document_date": "2024-01-26T00:00:00",
+        "date6": "2024-02-12T00:00:00",
+        "date7": "2024-02-13T00:00:00",
+        "text9": "Kinderen tot 12",
+        "text10": "BTBV76",
+        "text13": "NL"
+      },
+      "links": []
+    },
+    {
+      "key": "11A006F5CE7848DFAF032B285735198C",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233453",
+        "processed": true,
+        "date5": "2024-06-17T00:00:00",
+        "document_date": "2024-05-29T00:00:00",
+        "date6": "2024-06-05T00:00:00",
+        "date7": "2024-06-05T00:00:00",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "1A408E94F7D74285AC9BE7C777F47E0F",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "RVV Toegang afgesloten gebieden particulieren",
+        "dfunction": "Nog niet bekend",
+        "mark": "Z/24/2233221",
+        "processed": false,
+        "document_date": "2024-05-02T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "58B8F20F8F8F42E8A49A7FE0DFC640CB",
+      "fields": {
+        "title": "Geannuleerd",
+        "text45": "GPK",
+        "dfunction": "Geannuleerd",
+        "mark": "Z/24/2233054",
+        "processed": false,
+        "document_date": "2024-04-18T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "761F4ED4DEB24ACCA496054259A0A633",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "Werk en vervoer op straat",
+        "dfunction": "Verleend",
+        "mark": "Z/24/2233496",
+        "processed": true,
+        "date5": "2024-06-17T00:00:00",
+        "document_date": "2024-06-05T00:00:00",
+        "date6": "2024-06-12T00:00:00",
+        "date7": "2024-06-12T00:00:00",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "7D6A79837C4A4B9EA5A731D051286FB3",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233094",
+        "processed": false,
+        "document_date": "2024-04-25T00:00:00",
+        "date6": "2024-05-02T00:00:00",
+        "date7": "2024-05-02T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "89E9C4AC96C245D19ED244BF41690CB9",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "RVV Toegang afgesloten gebieden particulieren",
+        "mark": "Z/24/2233405",
+        "processed": false,
+        "document_date": "2024-05-23T00:00:00",
+        "date6": "2024-05-30T00:00:00",
+        "date7": "2026-05-30T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "9E7A7F37C48140A68C006E2B104561B7",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233330",
+        "processed": false,
+        "document_date": "2024-05-16T00:00:00",
+        "date6": "2024-05-28T00:00:00",
+        "date7": "2024-05-30T00:00:00",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "AD50C9EC86454454AB5754B25CDB4F41",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2233514",
+        "processed": false,
+        "document_date": "2024-06-05T00:00:00",
+        "date6": "2024-06-24T00:00:00",
+        "date7": "2025-06-24T00:00:00",
+        "text9": "Kinderen tot 12",
+        "text10": "13,9",
+        "text13": "15,616",
+        "text39": "76BKS2"
+      },
+      "links": []
+    },
+    {
+      "key": "BE6FC4426E5A4AA5AC4C5B159F0BA4F3",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "Eigen parkeerplaats",
+        "mark": "Z/24/2233193",
+        "processed": false,
+        "document_date": "2024-04-30T00:00:00",
+        "text13": "12RDT1"
+      },
+      "links": []
+    },
+    {
+      "key": "C02C37A29615409EB24FEDEA64C04EB0",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "Werk en vervoer op straat",
+        "dfunction": "Verleend",
+        "mark": "Z/24/2233327",
+        "processed": true,
+        "date5": "2024-06-03T00:00:00",
+        "document_date": "2024-05-16T00:00:00",
+        "date6": "2024-05-25T00:00:00",
+        "date7": "2024-05-25T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "C55BF892761C4E4FB9301F37493C6316",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "Flyeren-Sampling",
+        "dfunction": "Nog niet bekend",
+        "mark": "Z/24/2233462",
+        "processed": false,
+        "document_date": "2024-05-31T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "D0B05048CE634EA3841068EC6EBF38EA",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233093",
+        "processed": false,
+        "document_date": "2024-04-25T00:00:00",
+        "date6": "2024-05-02T00:00:00",
+        "date7": "2024-05-02T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "D8DEC5AD3C6F456D954C53DEF791EAA3",
+      "fields": {
+        "title": "Ontvangen",
+        "text45": "GPP",
+        "mark": "Z/24/2233516",
+        "processed": false,
+        "document_date": "2024-06-05T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "DBE923D097E24190AE8CDC3DBCE5E988",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233529",
+        "processed": true,
+        "date5": "2024-06-17T00:00:00",
+        "document_date": "2024-06-06T00:00:00",
+        "date6": "2024-06-13T00:00:00",
+        "date7": "2024-06-13T00:00:00",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "E2FDC4FFD9E94AF697DB43E4AFB83433",
+      "fields": {
+        "title": "In behandeling",
+        "text45": "Werk en vervoer op straat",
+        "mark": "Z/24/2233273",
+        "processed": true,
+        "date5": "2024-06-05T00:00:00",
+        "document_date": "2024-05-08T00:00:00",
+        "date6": "2024-05-23T00:00:00",
+        "date7": "2024-05-23T00:00:00",
+        "text10": "09.00",
+        "text13": "09.00"
+      },
+      "links": []
+    },
+    {
+      "key": "F481428B3D4E4643BC0B8CE9D44C1163",
+      "fields": {
+        "title": "Toewijzen",
+        "text45": "Touringcar Jaarontheffing",
+        "mark": "Z/24/2231333",
+        "processed": false,
+        "document_date": "2024-01-25T00:00:00",
+        "date6": "2024-02-01T00:00:00",
+        "date7": "2025-02-01T00:00:00",
+        "text9": "Artiesten en gezelschappen",
+        "text10": "9,3",
+        "text13": "10,5",
+        "text39": "BZDJ40, BZBJ32, 43BKT6, 04BDK9, BZGD21"
+      },
+      "links": []
+    },
+    {
+      "key": "FEA9F714ED244867A0EE7386B7B11875",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "RVV Toegang afgesloten gebieden particulieren",
+        "dfunction": "Verleend",
+        "mark": "Z/24/2233267",
+        "processed": false,
+        "document_date": "2024-05-08T00:00:00",
+        "date6": "2024-05-16T00:00:00",
+        "date7": "2026-05-16T00:00:00",
+        "text9": "69BTR4"
+      },
+      "links": []
+    }
+  ]
+}

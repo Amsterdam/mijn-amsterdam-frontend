@@ -3,7 +3,7 @@ const CLEOPATRA_RESPONSE = require('../fixtures/cleopatra.json');
 
 module.exports = [
   {
-    id: 'get-cleopatra',
+    id: 'post-cleopatra',
     url: `${settings.MOCK_BASE_PATH}/milieuzone`,
     method: 'POST',
     variants: [

@@ -58,6 +58,10 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   postponeFetch?: boolean;
   urls?: Record<string, string>;
 
+  // Construct an url that will be assigned to the url key in the local requestConfig.
+  // Example: formatUrl: (requestConfig) => requestConfig.url + '/some/additional/path/segments/,
+  formatUrl?: (requestConfig: DataRequestConfig) => string;
+
   /**
    * The cacheKey is important if the automatically generated key doesn't suffice. For example if the url changes every request.
    * This can be the case if an IV encrypted parameter is added (erfpacht) to the url. If the url changes everytime the cache won't be hit.
@@ -110,6 +114,7 @@ export type SourceApiKey =
   | 'CMS_CONTENT_FOOTER'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
+  | 'DECOS_API'
   | 'ENABLEU_2_SMILE'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
@@ -224,6 +229,15 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_SERVER_CLIENT_CERT'),
       key: getCert('BFF_SERVER_CLIENT_KEY'),
     }),
+  },
+  DECOS_API: {
+    url: `${process.env.BFF_DECOS_API_BASE_URL}`,
+    postponeFetch: !FeatureToggle.decosServiceActive,
+    headers: {
+      Accept: 'application/itemdata',
+      Authorization: `Basic ${Buffer.from(`${process.env.BFF_DECOS_API_USERNAME}:${process.env.BFF_DECOS_API_PASSWORD}`).toString('base64')}`,
+      'Content-type': 'application/json; charset=utf-8',
+    },
   },
   VERGUNNINGEN: {
     url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
@@ -354,7 +368,17 @@ export function getApiConfig(
     apiConfigCopy.httpsAgent = agent;
   }
 
-  return Object.assign(apiConfigCopy, config);
+  let customUrl = '';
+
+  if (typeof config.formatUrl === 'function') {
+    customUrl = config.formatUrl(apiConfig);
+  }
+
+  return Object.assign(
+    apiConfigCopy,
+    config,
+    customUrl ? { url: customUrl } : null
+  );
 }
 
 export const AUTH_BASE = '/api/v1/auth';
@@ -397,10 +421,16 @@ export const BffEndpoints = {
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
-  // Vergunningen
-  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
+  // Vergunningen V2
+  VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',
+  VERGUNNINGENv2_DETAIL: `/services/vergunningen/v2/:id`,
+  VERGUNNINGENv2_DOCUMENT_DOWNLOAD:
+    '/services/vergunningen/v2/documents/download/:id',
+
+  // Vergunningen / Koppel api
   VERGUNNINGEN_DOCUMENT_DOWNLOAD:
     '/services/vergunningen/documents/download/:id',
+  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
 
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',

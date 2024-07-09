@@ -4,7 +4,7 @@ const LOODMETINGEN_RAPPORT_RESPONSE = require('../fixtures/loodmeting-rapport.js
 
 module.exports = [
   {
-    id: 'get-loodmetingen-details',
+    id: 'post-loodmetingen-details',
     url: `${settings.MOCK_BASE_PATH}/loodmetingen/be_getrequestdetails`,
     method: 'POST',
     variants: [
@@ -19,7 +19,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-loodmetingen-rapport',
+    id: 'post-loodmetingen-rapport',
     url: `${settings.MOCK_BASE_PATH}/loodmetingen/be_downloadleadreport`,
     method: 'POST',
     variants: [
@@ -34,7 +34,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-loodmetingen-auth',
+    id: 'post-loodmetingen-auth',
     url: `${settings.MOCK_BASE_PATH}/loodmetingen/auth/tenant123/oauth2/v2.0/token`,
     method: 'POST',
     variants: [
