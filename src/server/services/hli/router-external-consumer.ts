@@ -65,6 +65,7 @@ router.get(
     res: Response,
     next: NextFunction
   ) => {
+    let reason = '';
     try {
       const clientNummerEncrypted = req.params.clientNummerEncrypted;
 
@@ -76,10 +77,12 @@ router.get(
           passen: [],
         });
       }
+      reason = 'missing encrypted param';
     } catch (error) {
+      reason = 'wrong encyption';
       captureException(error);
     }
-    return res.status(400).send(apiErrorResult('Bad request', null));
+    return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
   }
 );
 
