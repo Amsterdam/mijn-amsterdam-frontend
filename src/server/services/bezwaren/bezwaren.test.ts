@@ -104,11 +104,10 @@ describe('Bezwaren', () => {
       const documentResponse = await fetchBezwaarDocument(
         requestId,
         profileAndToken,
-        documentIdEncrypted,
-        true
+        documentIdEncrypted
       );
 
-      expect(documentResponse.status).toEqual(200);
+      expect(documentResponse.status).toEqual('OK');
     });
   });
 

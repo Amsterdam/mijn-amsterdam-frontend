@@ -188,13 +188,13 @@ describe('fetchIsKnownInAFIS ', () => {
       );
 
       expect(response).toMatchInlineSnapshot(`
-        {
-          "code": 400,
-          "content": null,
-          "message": "AxiosError: Request failed with status code 400 {"isKnown":false}",
-          "status": "ERROR",
-        }
-      `);
+      {
+        "code": 400,
+        "content": null,
+        "message": "AxiosError: Request failed with status code 400",
+        "status": "ERROR",
+      }
+    `);
     });
 
     it('Handles server error as expected', async () => {
