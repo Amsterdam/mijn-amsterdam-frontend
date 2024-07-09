@@ -1,13 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { IS_OT } from '../universal/config';
 import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
-import {
-  getAuth,
-  isAuthenticated,
-  isProtectedRoute,
-  sendResponseContent,
-} from './helpers/app';
+import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
@@ -25,13 +19,9 @@ import {
 } from './services/controller';
 import { fetchTransacties } from './services/hli/stadspas-gpass-service';
 import { isBlacklistedHandler } from './services/session-blacklist';
+import { attachDocumentDownloadRoute } from './services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
-import {
-  fetchVergunningDetail,
-  fetchVergunningDocument,
-  fetchZakenSource,
-} from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
 
@@ -97,11 +87,14 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
-router.get(
+attachDocumentDownloadRoute(
+  router,
   BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
   downloadZorgnedDocument('ZORGNED_JZD')
 );
-router.get(
+
+attachDocumentDownloadRoute(
+  router,
   BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
   downloadZorgnedDocument('ZORGNED_AV')
 );
@@ -121,7 +114,6 @@ router.get(
   }
 );
 
-// Vergunningen V1
 router.get(
   BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
   async (req: Request, res: Response) => {
@@ -136,7 +128,8 @@ router.get(
     return res.send(documentsListResponse);
   }
 );
-// Vergunningen V1
+
+// Deprecated, will be removed in MIJN-8299
 router.get(
   BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
@@ -154,87 +147,22 @@ router.get(
   }
 );
 
-// Vergunningen V2
-if (IS_OT) {
-  router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenSource);
-}
-router.get(BffEndpoints.VERGUNNINGENv2_DETAIL, fetchVergunningDetail);
-router.get(
-  BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD,
-  fetchVergunningDocument
-);
-
-router.get(
+attachDocumentDownloadRoute(
+  router,
   BffEndpoints.WPI_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-
-    const documentResponse = await fetchWpiDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params
-    );
-
-    const contentType = documentResponse.headers['content-type'];
-    res.setHeader('content-type', contentType);
-    documentResponse.data.pipe(res);
-  }
+  fetchWpiDocument
 );
 
-router.get(
+attachDocumentDownloadRoute(
+  router,
   BffEndpoints.LOODMETING_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-
-    const documentResponse = await fetchLoodMetingDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    if (
-      documentResponse.status === 'ERROR' ||
-      !documentResponse.content?.documentbody
-    ) {
-      return res.status(500).end();
-    }
-
-    res.type('application/pdf');
-    res.header(
-      'Content-Disposition',
-      `attachment; filename="${documentResponse.content!.filename}.pdf"`
-    );
-    return res.send(
-      Buffer.from(documentResponse.content.documentbody, 'base64')
-    );
-  }
+  fetchLoodMetingDocument
 );
 
-router.get(
+attachDocumentDownloadRoute(
+  router,
   BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD,
-  async (req: Request<{ id: string }>, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-
-    const documentResponse = await fetchBezwaarDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    if (documentResponse.status === 'ERROR') {
-      return res
-        .status(
-          typeof documentResponse.code === 'number'
-            ? documentResponse.code
-            : 500
-        )
-        .end();
-    }
-
-    const contentType = documentResponse.headers['content-type'];
-    res.setHeader('content-type', contentType);
-    documentResponse.data.pipe(res);
-  }
+  fetchBezwaarDocument
 );
 
 router.get(
@@ -255,36 +183,27 @@ router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = await getAuth(req);
-    const apiResponse = await fetchErfpachtV2DossiersDetail(
+    const response = await fetchErfpachtV2DossiersDetail(
       res.locals.requestID,
       authProfileAndToken,
       req.params.dossierNummerUrlParam
     );
 
-    return sendResponseContent(res, apiResponse);
+    if (response.status === 'ERROR') {
+      return res
+        .status(typeof response.code === 'number' ? response.code : 500)
+        .end();
+    }
+
+    return res.send(response);
   }
 );
 
 // Toeristische verhuur
-router.get(
+attachDocumentDownloadRoute(
+  router,
   BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-
-    const documentResponse = await fetchBBDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.docIdEncrypted
-    );
-
-    if (documentResponse.status === 'ERROR') {
-      return documentResponse;
-    }
-
-    const contentType = documentResponse.headers['content-type'];
-    res.setHeader('content-type', contentType);
-    documentResponse.data.pipe(res);
-  }
+  fetchBBDocument
 );
 
 router.get(

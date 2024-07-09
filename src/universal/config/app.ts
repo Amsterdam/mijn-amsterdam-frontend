@@ -1,9 +1,10 @@
-import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
+import { isDateInPast } from '../helpers/date';
+import { IS_AP, IS_DEVELOPMENT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   afisActive: !IS_AP,
   avgActive: true,
-  bbDocumentDownloadsActive: false,
+  bbDocumentDownloadsActive: IS_OT,
   bekendmakingenDatasetActive: false,
   belastingApiActive: true,
   bezwarenActive: true,

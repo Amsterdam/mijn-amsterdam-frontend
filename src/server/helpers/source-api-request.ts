@@ -153,7 +153,7 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessageBasic = error.toString();
     const errorMessage = error?.response?.data
-      ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
+      ? errorMessageBasic
       : errorMessageBasic;
 
     captureException(error, {

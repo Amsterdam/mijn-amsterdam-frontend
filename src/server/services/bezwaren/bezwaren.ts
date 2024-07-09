@@ -30,6 +30,11 @@ import {
   Kenmerk,
   kenmerkKey,
 } from './types';
+import {
+  DEFAULT_DOCUMENT_DOWNLOAD_FILENAME,
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+  DocumentDownloadData,
+} from '../shared/document-download-route-handler';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
@@ -468,34 +473,30 @@ export async function fetchBezwaarDetail(
 export async function fetchBezwaarDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  documentIdEncrypted: string,
-  isDownload: boolean = true
+  documentId: string
 ) {
-  let sessionID: string = '';
-  let documentId: string = '';
-
-  try {
-    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
-  }
-
-  if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
   const url =
     process.env.BFF_BEZWAREN_API +
-    generatePath(
-      `/zgw/v1/enkelvoudiginformatieobjecten/:id${isDownload ? '/download' : ''}`,
-      { id: documentId }
-    );
+    generatePath('/zgw/v1/enkelvoudiginformatieobjecten/:id/download', {
+      id: documentId,
+    });
 
-  return axios({
-    url,
-    headers: await getBezwarenApiHeaders(authProfileAndToken),
-    responseType: isDownload ? 'stream' : 'json',
-  });
+  return requestData<DocumentDownloadData>(
+    {
+      url,
+      responseType: 'stream',
+      headers: await getBezwarenApiHeaders(authProfileAndToken),
+      transformResponse: (documentResponseData) => {
+        return {
+          filename: DEFAULT_DOCUMENT_DOWNLOAD_FILENAME,
+          mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+          data: documentResponseData,
+        };
+      },
+    },
+    requestID,
+    authProfileAndToken
+  );
 }
 
 export const forTesting = {
