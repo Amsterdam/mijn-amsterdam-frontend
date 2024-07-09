@@ -152,5 +152,6 @@ export const fetchVergunningenV2Notifications = memoizee(
   fetchVergunningenV2Notifications_,
   {
     maxAge: 45 * ONE_SECOND_MS,
+    length: 5,
   }
 );

@@ -5,7 +5,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig, ONE_SECOND_MS, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException, captureMessage } from '../monitoring';
@@ -350,7 +350,9 @@ async function fetchDecosVergunningen_(
   return zakenSourceResponse;
 }
 
-export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_);
+export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_, {
+  maxAge: 45 * ONE_SECOND_MS,
+});
 
 function transformDecosWorkflowKeysResponse(workflowsResponseData: {
   content: Array<{ key: string }>;
