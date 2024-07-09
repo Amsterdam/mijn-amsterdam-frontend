@@ -4,7 +4,7 @@ import { generateFullApiUrlBFF } from './app';
 
 export const RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER =
   'amsapp-stadspas-clientnummer';
-export const RETURNTO_MAMS_LANDING = 'amsapp-stadspas-clientnummer';
+export const RETURNTO_MAMS_LANDING = 'mams-landing';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
