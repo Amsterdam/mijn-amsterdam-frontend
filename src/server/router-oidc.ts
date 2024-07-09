@@ -18,9 +18,10 @@ import {
   sendUnauthorized,
   verifyAuthenticated,
 } from './helpers/app';
+import { getReturnToUrl } from './helpers/auth';
+import { captureException } from './services/monitoring';
 import { addToBlackList } from './services/session-blacklist';
 import { countLoggedInVisit } from './services/visitors';
-import { captureException } from './services/monitoring';
 
 export const router = express.Router();
 
@@ -57,7 +58,7 @@ router.use(
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, async (req, res) => {
   if (!(await isRequestAuthenticated(req, 'digid'))) {
     return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_DIGID_LANDING,
+      returnTo: getReturnToUrl(req.query),
       authorizationParams: {
         redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
       },
