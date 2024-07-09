@@ -424,6 +424,7 @@ export const BffEndpoints = {
   // Stadspas external
   STADSPAS_AMSAPP_LOGIN: '/services/amsapp/stadspas/login',
   STADSPAS_CLIENTNUMMER: '/services/amsapp/stadspas/clientnummer',
+  STADSPAS_PASSEN: '/services/amsapp/stadspas/passen/:clientNummerEncrypted',
 
   // Vergunningen V2
   VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',

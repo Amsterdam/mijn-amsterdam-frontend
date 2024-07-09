@@ -47,11 +47,9 @@ export async function fetchClientNummer(
     'ZORGNED_AV'
   );
 
-  if (response.status === 'OK') {
+  if (response.status === 'OK' && response.content) {
     const clientNummer = transformZorgnedClientNummerResponse(response.content);
-    if (clientNummer) {
-      return apiSuccessResult(clientNummer);
-    }
+    return apiSuccessResult(clientNummer);
   }
 
   return response;
