@@ -12,6 +12,6 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
       return generateFullApiUrlBFF(BffEndpoints.STADSPAS_CLIENTNUMMER);
     default:
     case RETURNTO_MAMS_LANDING:
-      return generateFullApiUrlBFF(BffEndpoints.AUTH_LOGIN_DIGID_LANDING);
+      return generateFullApiUrlBFF(BffEndpoints.AUTH_LOGIN_DIGID_NO_API_PREFIX);
   }
 }
