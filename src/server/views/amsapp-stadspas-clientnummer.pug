@@ -1,0 +1,16 @@
+doctype html
+html(lang="en")
+  head
+    title Stadspas clientnummer
+  body
+    h1 Stadspas clientnummer
+
+    if clientnummer
+      p
+        a(href=AMSAPP_PROTOCOl + 'stadspas-clientnummer?clientnummer='+clientnummer+'&sid='+sid id='protocol-link') Klik hier om uw clientnummer in de Amsterdam app te laden.
+
+      script(type='text/javascript').
+        document.getElementById('protocol-link').click();
+    else
+      p U heeft (nog) geen Stadspas
+

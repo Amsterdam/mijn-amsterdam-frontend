@@ -1,19 +1,18 @@
-export const router = express.Router();
 import express, { Request, Response } from 'express';
 import { BffEndpoints } from '../../config';
-import {
-  generateFullApiUrlBFF,
-  getAuth,
-  sendUnauthorized,
-} from '../../helpers/app';
+import { getAuth, sendUnauthorized } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
 import { fetchClientNummer } from './hli-zorgned-service';
+
+const AMSAPP_PROTOCOl = 'amsterdam://';
+
+export const router = express.Router();
 
 router.get(
   BffEndpoints.STADSPAS_AMSAPP_LOGIN,
   async (req: Request, res: Response) => {
     return res.redirect(
-      generateFullApiUrlBFF(BffEndpoints.AUTH_LOGIN_DIGID) +
+      BffEndpoints.AUTH_LOGIN_DIGID +
         `?returnTo=${RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER}`
     );
   }
@@ -34,10 +33,16 @@ router.get(
       );
 
       if (clientNummerResponse.status === 'OK') {
-        return res.send(clientNummerResponse);
+        return res.render('amsapp-stadspas-clientnummer', {
+          sid: authProfileAndToken.profile.sid,
+          clientnummer: clientNummerResponse.content,
+          AMSAPP_PROTOCOl,
+        });
       }
     }
 
     return sendUnauthorized(res);
   }
 );
+
+export const stadspasExternalConsumerRouter = router;
