@@ -41,7 +41,12 @@ function transformZorgnedAanvraag(
   documenten: ZorgnedDocument[]
 ) {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
-  const toewijzingen = toegewezenProduct.toewijzingen ?? [];
+
+  if (!toegewezenProduct) {
+    return null;
+  }
+
+  const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
   const leveringen = toewijzing?.leveringen ?? [];
   const levering = leveringen.pop();
