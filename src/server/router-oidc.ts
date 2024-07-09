@@ -18,11 +18,10 @@ import {
   sendUnauthorized,
   verifyAuthenticated,
 } from './helpers/app';
+import { getReturnToUrl } from './helpers/auth';
+import { captureException } from './services/monitoring';
 import { addToBlackList } from './services/session-blacklist';
 import { countLoggedInVisit } from './services/visitors';
-import { captureException } from './services/monitoring';
-import { ParsedQs } from 'qs';
-import { getReturnToUrl } from './helpers/auth';
 
 export const router = express.Router();
 

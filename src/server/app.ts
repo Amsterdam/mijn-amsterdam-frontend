@@ -24,11 +24,13 @@ import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, IS_DEBUG } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
 import { authRouterDevelopment } from './router-development';
+
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { captureException } from './services/monitoring';
+import { stadspasExternalConsumerRouter } from './services/hli/router-external-consumer';
 
 const app = express();
 
@@ -108,7 +110,13 @@ if (IS_OT && !IS_AP) {
 ///// Generic Router Method for All environments
 ////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
+app.use(
+  BFF_BASE_PATH,
+  nocache,
+  stadspasExternalConsumerRouter,
+  protectedRouter,
+  adminRouter
+);
 
 app.get(BffEndpoints.ROOT, (req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
