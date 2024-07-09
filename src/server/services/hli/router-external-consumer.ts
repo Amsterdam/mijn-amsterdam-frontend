@@ -5,6 +5,7 @@ import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
 import { fetchClientNummer } from './hli-zorgned-service';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { apiErrorResult } from '../../../universal/helpers';
+import { captureException } from '../monitoring';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 
@@ -76,8 +77,9 @@ router.get(
         });
       }
     } catch (error) {
-      return res.status(400).send(apiErrorResult('Bad request', null));
+      captureException(error);
     }
+    return res.status(400).send(apiErrorResult('Bad request', null));
   }
 );
 
