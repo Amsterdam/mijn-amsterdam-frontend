@@ -151,10 +151,7 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error: any) {
-    const errorMessageBasic = error.toString();
-    const errorMessage = error?.response?.data
-      ? `${errorMessageBasic} ${JSON.stringify(error.response.data)}`
-      : errorMessageBasic;
+    const errorMessage = 'message' in error ? error.message : error.toString();
 
     captureException(error, {
       properties: {

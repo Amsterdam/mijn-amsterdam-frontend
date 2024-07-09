@@ -141,7 +141,7 @@ describe('Toeristische verhuur service', () => {
     ).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: No can do!',
+      message: 'No can do!',
     });
   });
 
@@ -152,7 +152,7 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
       status: 'DEPENDENCY_ERROR',
       content: null,
-      message: `[registrationNumbers] Error: Not Available`,
+      message: `[registrationNumbers] Not Available`,
     });
   });
 
@@ -174,7 +174,7 @@ describe('Toeristische verhuur service', () => {
     ).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: No can do!',
+      message: 'No can do!',
     });
   });
 
@@ -201,18 +201,21 @@ describe('Toeristische verhuur service', () => {
       zaaknummer: 'Z/000/000040',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'In behandeling',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-3',
           status: 'Afgehandeld',
           datePublished: '2021-05-10',
           description: '',
@@ -220,6 +223,7 @@ describe('Toeristische verhuur service', () => {
           isChecked: true,
         },
         {
+          id: 'step-4',
           status: 'Gewijzigd',
           datePublished: '2020-05-31',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
@@ -257,12 +261,14 @@ describe('Toeristische verhuur service', () => {
       titel: 'Vergunning bed & breakfast',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '13 februari 2023',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'Afgehandeld',
           datePublished: '22 maart 2023',
           description: '',
@@ -284,7 +290,8 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag ${vakantieverhuurVergunning.titel.toLowerCase()} verleend`
     );
     expect(notification3.description).toBe(
-      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.titel.toLowerCase()} met gemeentelijk zaaknummer ${vakantieverhuurVergunning.zaaknummer
+      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.titel.toLowerCase()} met gemeentelijk zaaknummer ${
+        vakantieverhuurVergunning.zaaknummer
       } verleend.`
     );
     expect(notification3.link?.title).toBe('Bekijk uw aanvraag');

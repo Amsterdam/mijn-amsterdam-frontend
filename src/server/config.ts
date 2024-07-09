@@ -436,7 +436,7 @@ export const BffEndpoints = {
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
 
   // WPI Document download
-  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document',
+  WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document/:id',
 
   // WMO / Zorgned
   WMO_DOCUMENT_DOWNLOAD: `/services/wmo/document/:id`,
@@ -458,7 +458,7 @@ export const BffEndpoints = {
 
   // Toeristische verhuur / Bed & Breakfast
   TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
-    '/services/toeristische-verhuur/bb/document/:docIdEncrypted',
+    '/services/toeristische-verhuur/bb/document/:id',
 
   // start: OIDC config
   AUTH_BASE_DIGID,

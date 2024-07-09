@@ -27,6 +27,7 @@ import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
+import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
   vergunning: VergunningV2
@@ -37,11 +38,11 @@ export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
 };
 
 function transformVergunningFrontend(
-  sessionId: AuthProfileAndToken['profile']['sid'],
+  sessionID: AuthProfileAndToken['profile']['sid'],
   vergunning: VergunningV2,
   appRoute: AppRoute
 ) {
-  const [idEncrypted] = encrypt(`${sessionId}:${vergunning.key}`);
+  const [idEncrypted] = encrypt(`${sessionID}:${vergunning.key}`);
   const vergunningFrontend: VergunningFrontendV2 = {
     ...vergunning,
     dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
@@ -133,32 +134,11 @@ export async function fetchVergunningenV2(
   );
 }
 
-// TODO: Make generic for all endpoints
-function decryptAndValidate(
-  idEncrypted: string,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  let userID: AuthProfileAndToken['profile']['id'] | null = null;
-  let id: string | null = null;
-
-  try {
-    [userID, id] = decrypt(idEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
-  }
-
-  if (!userID || !id || authProfileAndToken.profile.id !== userID) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
-  return apiSuccessResult(id);
-}
-
 function addEncryptedDocumentIdToUrl(
-  userID: AuthProfileAndToken['profile']['id'],
+  sessionID: AuthProfileAndToken['profile']['sid'],
   document: VergunningDocument
 ) {
-  const [documentIdEncrypted] = encrypt(`${userID}:${document.key}`);
+  const [documentIdEncrypted] = encrypt(`${sessionID}:${document.key}`);
 
   return {
     ...document,
@@ -187,7 +167,7 @@ export async function fetchVergunningV2(
     if (response.status === 'OK' && response.content?.vergunning) {
       const { vergunning, documents } = response.content;
       const documentsTransformed = documents.map((document) =>
-        addEncryptedDocumentIdToUrl(authProfileAndToken.profile.id, document)
+        addEncryptedDocumentIdToUrl(authProfileAndToken.profile.sid, document)
       );
 
       return apiSuccessResult({
@@ -200,22 +180,6 @@ export async function fetchVergunningV2(
       });
     }
     return response;
-  }
-
-  return decryptResult;
-}
-
-export async function fetchVergunningDocumentV2(
-  authProfileAndToken: AuthProfileAndToken,
-  vergunningDocumentIdEncrypted: string
-) {
-  const decryptResult = decryptAndValidate(
-    vergunningDocumentIdEncrypted,
-    authProfileAndToken
-  );
-
-  if (decryptResult.status === 'OK') {
-    return fetchDecosDocument(decryptResult.content);
   }
 
   return decryptResult;

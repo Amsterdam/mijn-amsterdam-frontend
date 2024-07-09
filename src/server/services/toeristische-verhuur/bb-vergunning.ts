@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
@@ -8,12 +7,12 @@ import {
   apiSuccessResult,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
-import { captureException } from '../monitoring';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // zaak detail: record/GFO_ZAKEN/$id
 // gelinkte dingen, bv documenten: link/GFO_ZAKEN/$id
@@ -390,10 +389,9 @@ function transformPowerbrowserLinksResponse(
           title: docTitleTranslated ?? link.caption,
           url: generateFullApiUrlBFF(
             BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
-            { docIdEncrypted }
+            { id: docIdEncrypted }
           ),
           download: link.caption,
-          external: true,
           datePublished: '',
         };
       }) ?? []
@@ -484,32 +482,40 @@ export async function fetchBBVergunning(
 export async function fetchBBDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  documentIdEncrypted: string
+  documentId: string
 ) {
   const tokenResponse = await fetchPowerBrowserToken(
     requestID,
     authProfileAndToken
   );
 
-  let sessionID;
-  let documentId;
-  try {
-    [sessionID, documentId] = decrypt(documentIdEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
+  if (tokenResponse.status === 'ERROR') {
+    return tokenResponse;
   }
 
-  if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
-  const url = `${process.env.BFF_POWERBROWSER_API_URL}/Dms/${documentId}/Pdf`;
-
-  return axios({
-    url,
+  const dataRequestConfigBase = getApiConfig('POWERBROWSER');
+  const dataRequestConfig: DataRequestConfig = {
+    ...dataRequestConfigBase,
+    url:
+      dataRequestConfigBase.url +
+      generatePath('/Dms/:id/Pdf', {
+        id: documentId,
+      }),
+    responseType: 'stream',
     headers: {
       Authorization: `Bearer ${tokenResponse.content}`,
+      ...dataRequestConfigBase.headers,
     },
-    responseType: 'stream',
-  });
+    transformResponse: (documentResponseData) => {
+      return {
+        data: documentResponseData,
+      };
+    },
+  };
+
+  return requestData<DocumentDownloadData>(
+    dataRequestConfig,
+    requestID,
+    authProfileAndToken
+  );
 }

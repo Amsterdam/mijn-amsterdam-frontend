@@ -35,6 +35,7 @@ import {
 } from './helpers';
 import { IS_OT } from '../../../universal/config';
 import axios from 'axios';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of vergunningen.
  *
@@ -297,7 +298,7 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
   return responseSource;
 }
 
-export async function fetchDecosZakenSource(
+export async function fetchDecosZakenFromSource(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -332,7 +333,7 @@ async function fetchDecosVergunningen_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const zakenSourceResponse = await fetchDecosZakenSource(
+  const zakenSourceResponse = await fetchDecosZakenFromSource(
     requestID,
     authProfileAndToken
   );
@@ -499,7 +500,7 @@ export async function fetchDecosDocumentList(
   return documentsSource;
 }
 
-export async function fetchDecosZaakSource(
+export async function fetchDecosZaakFromSource(
   requestID: requestID,
   zaakID: VergunningV2['key'],
   includeProperties: boolean = false
@@ -524,7 +525,7 @@ export async function fetchDecosVergunning(
   requestID: requestID,
   zaakID: VergunningV2['key']
 ) {
-  const decosZaakSourceRequest = fetchDecosZaakSource(requestID, zaakID);
+  const decosZaakSourceRequest = fetchDecosZaakFromSource(requestID, zaakID);
   const decosZaakDocumentsRequest = fetchDecosDocumentList(requestID, zaakID);
 
   const [zaakSourceResponseSettled, documentsResponseSettled] =
@@ -566,28 +567,36 @@ export async function fetchDecosVergunning(
   return zaakSourceResponse;
 }
 
-export async function fetchDecosDocument(documentID: string) {
+export async function fetchDecosDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentID: string
+) {
   const apiConfigDocument = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${documentID}/content`;
     },
   });
 
-  try {
-    const config: DataRequestConfig = {
-      url: apiConfigDocument.url,
-      responseType: 'stream',
-      headers: {
-        Authorization: apiConfigDocument.headers?.Authorization,
-        Accept: 'application/octet-stream',
-      },
-    };
-    return axios(config);
-  } catch (error: any) {
-    const statusCode =
-      error.statusCode ?? error?.status ?? error.response.status;
-    return apiErrorResult((error as Error).message, statusCode);
-  }
+  const config: DataRequestConfig = {
+    ...apiConfigDocument,
+    responseType: 'stream',
+    headers: {
+      Authorization: apiConfigDocument.headers?.Authorization,
+      Accept: 'application/octet-stream',
+    },
+    transformResponse: (documentResponseData) => {
+      return {
+        data: documentResponseData,
+      };
+    },
+  };
+
+  return requestData<DocumentDownloadData>(
+    config,
+    requestID,
+    authProfileAndToken
+  );
 }
 
 export const forTesting = {

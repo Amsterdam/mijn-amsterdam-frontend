@@ -71,7 +71,8 @@ process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
 process.env.BFF_LVV_API_URL = `${remoteApiHost}/lvv`;
 process.env.BFF_SMILE_USERNAME = 'test2';
 process.env.BFF_SMILE_PASSWORD = 'testpwd2';
-process.env.BFF_SISA_ENCRYPTION_KEY = 'aP#c%f9q9%2ZQgU2&yfzX4-ktDrvbJAF';
+process.env.BFF_SISA_ENCRYPTION_KEY = 'FaKeKeYtT9jQBEGYCvS?H2rEh3hukwDz';
+
 process.env.BFF_SISA_CLIENT_SECRET = 'xxxxxxxxxxxxxxxx';
 process.env.BFF_SISA_API_ENDPOINT = `${remoteApiHost}/subsidies/`;
 process.env.BFF_CLEOPATRA_API_ENDPOINT = `${remoteApiHost}/cleopatra`;
@@ -92,7 +93,7 @@ process.env.BFF_GPASS_API_TOKEN = '22222xx22222';
 process.env.BFF_SVWI_API_BASE_URL = `${remoteApiHost}`;
 process.env.BFF_SVWI_API_KEY = 'xxx';
 
-process.env.BFF_GENERAL_ENCRYPTION_KEY = 'aP#c%f9q9%2ZQgU2&yfzX4-ktDrvbJAF';
+process.env.BFF_GENERAL_ENCRYPTION_KEY = 'FaKeKeYtT9jQBEGYCvS?H2rEh3hukwDz';
 
 process.env.BFF_BEZWAREN_API = `${remoteApiHost}/bezwaren`;
 process.env.BFF_BEZWAREN_USER = 'BEZWAREN_USER';

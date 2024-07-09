@@ -1,6 +1,6 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Themas, FeatureToggle } from '../../../universal/config';
+import { AppRoutes, FeatureToggle, Themas } from '../../../universal/config';
 import {
   ApiSuccessResponse,
   apiDependencyError,

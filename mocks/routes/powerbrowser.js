@@ -50,15 +50,15 @@ module.exports = [
   },
   {
     id: 'post-powerbrowser-bb-vergunning-attachments',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Dms`,
+    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Dms/:id/Pdf`,
     method: 'POST',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'file',
         options: {
           status: 200,
-          body: BB_VERGUNNING_ATTACHMENTS,
+          path: settings.MOCK_DOCUMENT_PATH,
         },
       },
     ],
