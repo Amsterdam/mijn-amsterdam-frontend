@@ -117,6 +117,7 @@ export function transformZorgnedAanvragen(
         const idGenerated = hash(
           `${index}-${aanvraagSource.identificatie}-${beschikking.beschikkingNummer}-${datumBesluit}`
         );
+
         const aanvraagTransformed = transformZorgnedAanvraag(
           idGenerated,
           datumAanvraag,
@@ -124,6 +125,7 @@ export function transformZorgnedAanvragen(
           beschiktProduct,
           documenten
         );
+
         if (aanvraagTransformed) {
           aanvragenTransformed.push(aanvraagTransformed);
         }
