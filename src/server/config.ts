@@ -422,7 +422,8 @@ export const BffEndpoints = {
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
   // Stadspas external
-  STADSPAS_CLIENTNUMMER: '/services/stadspas/clientnummer',
+  STADSPAS_AMSAPP_LOGIN: '/services/amsapp/stadspas/login',
+  STADSPAS_CLIENTNUMMER: '/services/amsapp/stadspas/clientnummer',
 
   // Vergunningen V2
   VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',

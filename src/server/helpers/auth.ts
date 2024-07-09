@@ -1,12 +1,17 @@
 import { ParsedQs } from 'qs';
 import { BffEndpoints } from '../config';
+import { generateFullApiUrlBFF } from './app';
+
+export const RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER =
+  'amsapp-stadspas-clientnummer';
+export const RETURNTO_MAMS_LANDING = 'amsapp-stadspas-clientnummer';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
-    case 'amsapp-stadspas-clientnummer':
-      return BffEndpoints.STADSPAS_CLIENTNUMMER;
+    case RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER:
+      return generateFullApiUrlBFF(BffEndpoints.STADSPAS_CLIENTNUMMER);
     default:
-    case 'mams-landing':
-      return BffEndpoints.AUTH_LOGIN_DIGID_LANDING;
+    case RETURNTO_MAMS_LANDING:
+      return generateFullApiUrlBFF(BffEndpoints.AUTH_LOGIN_DIGID_LANDING);
   }
 }
