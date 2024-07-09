@@ -41,7 +41,12 @@ function transformZorgnedAanvraag(
   documenten: ZorgnedDocument[]
 ) {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
-  const toewijzingen = toegewezenProduct.toewijzingen ?? [];
+
+  if (!toegewezenProduct) {
+    return null;
+  }
+
+  const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
   const leveringen = toewijzing?.leveringen ?? [];
   const levering = leveringen.pop();
@@ -112,6 +117,7 @@ export function transformZorgnedAanvragen(
         const idGenerated = hash(
           `${index}-${aanvraagSource.identificatie}-${beschikking.beschikkingNummer}-${datumBesluit}`
         );
+
         const aanvraagTransformed = transformZorgnedAanvraag(
           idGenerated,
           datumAanvraag,
@@ -119,6 +125,7 @@ export function transformZorgnedAanvragen(
           beschiktProduct,
           documenten
         );
+
         if (aanvraagTransformed) {
           aanvragenTransformed.push(aanvraagTransformed);
         }

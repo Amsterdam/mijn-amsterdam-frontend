@@ -77,7 +77,7 @@ export interface BeschiktProduct {
     identificatie?: ProductIdentificatie;
   };
   resultaat: BeschikkingsResultaat;
-  toegewezenProduct: ToegewezenProduct;
+  toegewezenProduct: ToegewezenProduct | null;
 }
 
 interface Beschikking {
