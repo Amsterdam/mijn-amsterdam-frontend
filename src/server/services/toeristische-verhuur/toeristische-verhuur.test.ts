@@ -201,18 +201,21 @@ describe('Toeristische verhuur service', () => {
       zaaknummer: 'Z/000/000040',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'In behandeling',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-3',
           status: 'Afgehandeld',
           datePublished: '2021-05-10',
           description: '',
@@ -220,6 +223,7 @@ describe('Toeristische verhuur service', () => {
           isChecked: true,
         },
         {
+          id: 'step-4',
           status: 'Gewijzigd',
           datePublished: '2020-05-31',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
@@ -257,12 +261,14 @@ describe('Toeristische verhuur service', () => {
       titel: 'Vergunning bed & breakfast',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '13 februari 2023',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'Afgehandeld',
           datePublished: '22 maart 2023',
           description: '',
