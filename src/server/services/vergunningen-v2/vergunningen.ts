@@ -115,6 +115,7 @@ export const fetchAndFilterVergunningenV2 = memoizee(
   fetchAndFilterVergunningenV2_,
   {
     maxAge: 45 * ONE_SECOND_MS,
+    length: 4,
   }
 );
 
