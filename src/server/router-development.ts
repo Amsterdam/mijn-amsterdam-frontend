@@ -21,6 +21,7 @@ import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
 import { addToBlackList } from './services/session-blacklist';
 import UID from 'uid-safe';
+import { getReturnToUrl } from './helpers/auth';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
@@ -76,7 +77,9 @@ authRouterDevelopment.get(
     let redirectUrl =
       req.query.redirectUrl && isValidRedirectOption
         ? String(req.query.redirectUrl)
-        : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
+        : req.query.returnTo
+          ? getReturnToUrl(req.query)
+          : `${process.env.MA_FRONTEND_URL}?authMethod=${req.params.authMethod}`;
 
     return res.redirect(redirectUrl);
   }
@@ -107,11 +110,10 @@ authRouterDevelopment.get(
             authMethod: auth.profile.authMethod,
           })
         );
-      } catch (error) { }
+      } catch (error) {}
     }
 
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
     return sendUnauthorized(res);
   }
 );
-
