@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from '../../config';
 import { getAuth, sendUnauthorized } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
-import { fetchClientNummer } from './hli-zorgned-service';
+import { fetchAdministratienummer } from './hli-zorgned-service';
 import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { apiErrorResult } from '../../../universal/helpers';
 import { captureException } from '../monitoring';
@@ -30,7 +30,7 @@ router.get(
       authProfileAndToken.profile.id &&
       authProfileAndToken.profile.profileType === 'private'
     ) {
-      const clientNummerResponse = await fetchClientNummer(
+      const clientNummerResponse = await fetchAdministratienummer(
         res.locals.requestID,
         authProfileAndToken
       );

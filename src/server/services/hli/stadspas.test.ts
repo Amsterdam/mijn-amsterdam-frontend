@@ -1,7 +1,7 @@
 import { remoteApi } from '../../../test-utils';
 import * as encryptDecrypt from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchClientNummer } from './hli-zorgned-service';
+import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';
 
 const pashouderResponse = {
@@ -102,7 +102,10 @@ describe('stadspas services', () => {
       },
     });
 
-    const response = await fetchClientNummer('xyz123', authProfileAndToken);
+    const response = await fetchAdministratienummer(
+      'xyz123',
+      authProfileAndToken
+    );
 
     expect(response).toMatchInlineSnapshot(`
       {

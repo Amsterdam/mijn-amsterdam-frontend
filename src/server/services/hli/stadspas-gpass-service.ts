@@ -11,7 +11,7 @@ import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { captureException } from '../monitoring';
-import { fetchClientNummer } from './hli-zorgned-service';
+import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
   GPASS_API_TOKEN,
   GPASS_BUDGET_ONLY_FOR_CHILDREN,
@@ -117,7 +117,7 @@ export async function fetchStadspassen(
   const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v1/pashouder`;
   const GPASS_ENDPOINT_PAS = `${dataRequestConfig.url}/rest/sales/v1/pas`;
 
-  const administratienummerResponse = await fetchClientNummer(
+  const administratienummerResponse = await fetchAdministratienummer(
     requestID,
     authProfileAndToken
   );

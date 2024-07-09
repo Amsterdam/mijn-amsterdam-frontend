@@ -2,7 +2,7 @@ import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import {
-  fetchClientNummer,
+  fetchAdministratienummer,
   fetchNamenBetrokkenen,
   fetchZorgnedAanvragenHLI,
   forTesting,
@@ -22,11 +22,11 @@ describe('hli-zorgned-service', () => {
     token: '',
   };
 
-  test('volledigClientnummer', () => {
-    const nr = forTesting.volledigClientnummer(1234567);
+  test('transformToAdministratienummer', () => {
+    const nr = forTesting.transformToAdministratienummer(1234567);
     expect(nr).toMatchInlineSnapshot(`"03630001234567"`);
 
-    const nr2 = forTesting.volledigClientnummer(8888888888);
+    const nr2 = forTesting.transformToAdministratienummer(8888888888);
     expect(nr2).toMatchInlineSnapshot(`"03638888888888"`);
   });
 
@@ -46,14 +46,17 @@ describe('hli-zorgned-service', () => {
     expect(response2).toBe(null);
   });
 
-  test('fetchClientNummer success', async () => {
+  test('fetchAdministratienummer success', async () => {
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
       persoon: {
         clientidentificatie: 567890,
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
-    const response = await fetchClientNummer('xxxx', authProfileAndToken);
+    const response = await fetchAdministratienummer(
+      'xxxx',
+      authProfileAndToken
+    );
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -63,10 +66,13 @@ describe('hli-zorgned-service', () => {
     `);
   });
 
-  test('fetchClientNummer fail', async () => {
+  test('fetchAdministratienummer fail', async () => {
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-    const response = await fetchClientNummer('xxxx', authProfileAndToken);
+    const response = await fetchAdministratienummer(
+      'xxxx',
+      authProfileAndToken
+    );
 
     expect(response).toMatchInlineSnapshot(`
       {
