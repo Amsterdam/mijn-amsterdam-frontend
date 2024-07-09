@@ -191,7 +191,7 @@ describe('fetchIsKnownInAFIS ', () => {
         {
           "code": 400,
           "content": null,
-          "message": "AxiosError: Request failed with status code 400 {"isKnown":false}",
+          "message": "Request failed with status code 400",
           "status": "ERROR",
         }
       `);
@@ -207,12 +207,12 @@ describe('fetchIsKnownInAFIS ', () => {
       );
 
       expect(response).toMatchInlineSnapshot(`
-      {
-        "content": null,
-        "message": "AxiosError: error retrieving doc",
-        "status": "ERROR",
-      }
-    `);
+        {
+          "content": null,
+          "message": "error retrieving doc",
+          "status": "ERROR",
+        }
+      `);
     });
   });
 

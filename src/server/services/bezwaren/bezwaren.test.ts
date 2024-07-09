@@ -104,11 +104,10 @@ describe('Bezwaren', () => {
       const documentResponse = await fetchBezwaarDocument(
         requestId,
         profileAndToken,
-        documentIdEncrypted,
-        true
+        documentIdEncrypted
       );
 
-      expect(documentResponse.status).toEqual(200);
+      expect(documentResponse.status).toEqual('OK');
     });
   });
 
@@ -216,7 +215,7 @@ describe('Bezwaren', () => {
         {
           "code": 401,
           "content": null,
-          "message": "Not authorized",
+          "message": "Not authorized: incomplete session validation",
           "status": "ERROR",
         }
       `);

@@ -135,28 +135,6 @@ describe('zorgned-service', () => {
     `);
   });
 
-  it('should fetch document error (non matching session id)', async () => {
-    remoteApi.post('/zorgned/document').reply(200, '');
-
-    const result = await forTesting.fetchDocument(
-      mocks.mockRequestID,
-      {
-        ...mocks.mockAuthProfileAndToken,
-        profile: { sid: 'nope' },
-      } as AuthProfileAndToken,
-      'ZORGNED_JZD',
-      mocks.mockDocumentId
-    );
-
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "content": null,
-        "message": "Error: No document content",
-        "status": "ERROR",
-      }
-    `);
-  });
-
   it('should fetch document successfully', async () => {
     remoteApi.post('/zorgned/document').reply(200, {
       inhoud: 'Zm9vLWJhcg==',
@@ -195,7 +173,7 @@ describe('zorgned-service', () => {
     expect(result).toEqual({
       status: 'OK',
       content: {
-        title: 'Naam documentje',
+        filename: 'Naam documentje',
         mimetype: 'foo/bar',
         data: Buffer.from('Zm9vLWJhcg==', 'base64'),
       },

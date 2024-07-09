@@ -8,6 +8,7 @@ import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
 } from '../wpi-types';
+import { AuthProfileAndToken } from '../../../helpers/app';
 
 const MONTHS_TO_KEEP_UITKERING_NOTIFICATION = 1;
 const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;
@@ -109,10 +110,11 @@ export function getNotifications(
 }
 
 export function transformIncomeSpecificationItem(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
   const displayDatePublished = defaultDateFormat(item.datePublished);
-  const [{ url }] = addApiBasePathToDocumentUrls([item]);
+  const [{ url }] = addApiBasePathToDocumentUrls(sessionID, [item]);
   const categoryFromSource = item.variant;
 
   return {

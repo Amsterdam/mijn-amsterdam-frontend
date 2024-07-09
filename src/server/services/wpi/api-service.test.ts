@@ -66,12 +66,16 @@ describe('wpi/app-service', () => {
           status: 'Begin van aanvraagproces',
           datePublished: '2022-01-09T13:22',
           documents: [],
+          isActive: false,
+          isChecked: true,
         },
         {
           id: 'otherStep',
           status: '2e stap in aanvraagproces',
           datePublished: '2022-02-13T06:10',
           documents: [],
+          isActive: false,
+          isChecked: true,
         },
         {
           id: 'finish',
@@ -79,6 +83,8 @@ describe('wpi/app-service', () => {
           datePublished: '2022-03-01T09:49',
           documents: [],
           decision: 'toekenning',
+          isActive: true,
+          isChecked: true,
         },
       ],
     },
@@ -155,7 +161,7 @@ describe('wpi/app-service', () => {
 
     expect(response.status).toBe('ERROR');
     expect((response as ApiErrorResponse<any>).message).toBe(
-      'AxiosError: Request failed with status code 500'
+      'Request failed with status code 500'
     );
   });
 

@@ -33,6 +33,10 @@ import {
   WpiRequestProcess,
   WpiRequestProcessLabels,
 } from './wpi-types';
+import {
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+  DocumentDownloadData,
+} from '../shared/document-download-route-handler';
 
 type FilterResponse = (
   response: ApiSuccessResponse<WpiRequestProcess[]>
@@ -45,6 +49,7 @@ export interface FetchConfig {
 }
 
 function statusLineTransformer(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   response: WpiRequestProcess[],
   getLabels: (
     requestProcess: WpiRequestProcess
@@ -53,7 +58,7 @@ function statusLineTransformer(
   const statusLineRequestProcesses = response?.flatMap((requestProcess) => {
     const labels = getLabels(requestProcess);
     if (labels) {
-      return [transformToStatusLine(requestProcess, labels)];
+      return [transformToStatusLine(sessionID, requestProcess, labels)];
     } else {
       captureMessage('Unknown request process labels', {
         properties: {
@@ -92,6 +97,7 @@ export async function fetchRequestProcess(
   if (response.status === 'OK') {
     const responseFiltered = fetchConfig.filterResponse(response);
     const responseTransformed = statusLineTransformer(
+      authProfileAndToken['profile']['sid'],
       responseFiltered,
       getLabels
     );
@@ -188,16 +194,21 @@ export async function fetchTonk(
 }
 
 export function transformIncomSpecificationResponse(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
 ) {
   return {
     jaaropgaven:
       response.content?.jaaropgaven
-        .map(transformIncomeSpecificationItem)
+        .map((jaaropgave) =>
+          transformIncomeSpecificationItem(sessionID, jaaropgave)
+        )
         .sort(dateSort('datePublished', 'desc')) ?? [],
     uitkeringsspecificaties:
       response.content?.uitkeringsspecificaties
-        .map(transformIncomeSpecificationItem)
+        .map((specification) =>
+          transformIncomeSpecificationItem(sessionID, specification)
+        )
         .sort(dateSort('datePublished', 'desc')) ?? [],
   };
 }
@@ -208,7 +219,11 @@ export function fetchSpecificaties(
 ) {
   const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
     getApiConfig('WPI_SPECIFICATIES', {
-      transformResponse: transformIncomSpecificationResponse,
+      transformResponse: (responseData) =>
+        transformIncomSpecificationResponse(
+          authProfileAndToken.profile.sid,
+          responseData
+        ),
     }),
     requestID,
     authProfileAndToken
@@ -304,16 +319,31 @@ export async function fetchWpiNotifications(
 export async function fetchWpiDocument(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  params: Record<string, string>
+  documentId: string,
+  queryParams?: Record<string, string>
 ) {
   const url = `${process.env.BFF_WPI_API_BASE_URL}/wpi/document`;
 
-  return axios({
-    url,
-    params: pick(params, ['isBulk', 'isDms', 'id']),
-    headers: {
-      Authorization: `Bearer ${authProfileAndToken.token}`,
+  return requestData<DocumentDownloadData>(
+    {
+      url,
+      responseType: 'stream',
+      params: {
+        ...pick(queryParams ?? {}, ['isBulk', 'isDms']),
+        id: documentId,
+      },
+      headers: {
+        Authorization: `Bearer ${authProfileAndToken.token}`,
+      },
+      transformResponse: (documentResponseData) => {
+        return {
+          filename: 'Brief.pdf',
+          mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+          data: documentResponseData,
+        };
+      },
     },
-    responseType: 'stream',
-  });
+    requestID,
+    authProfileAndToken
+  );
 }

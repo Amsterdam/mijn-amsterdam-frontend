@@ -54,7 +54,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: settings.DOCUMENT_IN_OBJECT,
+          body: { inhoud: settings.MOCK_DOCUMENT_B64 },
         },
       },
     ],

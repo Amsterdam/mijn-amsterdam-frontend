@@ -6,8 +6,11 @@ import {
   getAuth,
   sendResponseContent,
 } from '../../helpers/app';
-import { fetchDecosZaakSource, fetchDecosZakenSource } from './decos-service';
-import { fetchVergunningDocumentV2, fetchVergunningV2 } from './vergunningen';
+import {
+  fetchDecosZaakFromSource,
+  fetchDecosZakenFromSource,
+} from './decos-service';
+import { fetchVergunningV2 } from './vergunningen';
 import { DecosZaakSource } from './config-and-types';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
@@ -21,36 +24,14 @@ export async function fetchVergunningDetail(req: Request, res: Response) {
   return res.send(response);
 }
 
-export async function fetchVergunningDocument(
-  req: Request<{ id: string }>,
-  res: Response
-) {
-  const authProfileAndToken = await getAuth(req);
-
-  const apiResponse = await fetchVergunningDocumentV2(
-    authProfileAndToken,
-    req.params.id
-  );
-
-  if (
-    'content' in apiResponse &&
-    'message' in apiResponse &&
-    apiResponse.status === 'ERROR'
-  ) {
-    return sendResponseContent(res, apiResponse);
-  }
-
-  apiResponse.data.pipe(res);
-}
-
-export async function fetchZakenSource(
+export async function fetchZakenFromSource(
   req: Request<{ id?: string }>,
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
 
   if (req.params.id) {
-    const zaakResponse = await fetchDecosZaakSource(
+    const zaakResponse = await fetchDecosZaakFromSource(
       res.locals.requestID,
       req.params.id,
       true
@@ -72,7 +53,7 @@ export async function fetchZakenSource(
     return zaakResponse;
   }
 
-  const zakenResponseData = await fetchDecosZakenSource(
+  const zakenResponseData = await fetchDecosZakenFromSource(
     res.locals.requestID,
     authProfileAndToken
   );

@@ -11,10 +11,12 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
-import { generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { BffEndpoints } from '../../config';
+import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
 
 export function transformToStatusLine(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   requestProcess: WpiRequestProcess,
   labels: WpiRequestProcessLabels
 ): WpiRequestProcess {
@@ -26,7 +28,7 @@ export function transformToStatusLine(
 
     return {
       ...statusStep,
-      documents: addApiBasePathToDocumentUrls(statusStep.documents),
+      documents: addApiBasePathToDocumentUrls(sessionID, statusStep.documents),
       isActive: false,
       isChecked: true,
       description,
@@ -43,20 +45,26 @@ export function transformToStatusLine(
 }
 
 export function addApiBasePathToDocumentUrls(
+  sessionID: AuthProfileAndToken['profile']['sid'],
   documents: GenericDocument[]
 ): GenericDocument[] {
   return documents.map((document) => {
     const sourceUrl = new URL(
       document.url.startsWith('http')
         ? document.url
-        : `http://example.com${document.url}`
+        : `http://example.com${document.url}` // Create FAKE url so URL can parse correctly.
+    );
+    const [idEncrypted] = encrypt(
+      `${sessionID}:${sourceUrl.searchParams.get('id') ?? ''}`
     );
     const url = new URL(
-      generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD)
+      generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD, {
+        id: idEncrypted,
+      })
     );
 
-    for (const [key, val] of sourceUrl.searchParams) {
-      url.searchParams.append(key, val);
+    for (const key of ['isBulk', 'isDms']) {
+      url.searchParams.append(key, sourceUrl.searchParams.get(key) ?? 'False');
     }
 
     return {

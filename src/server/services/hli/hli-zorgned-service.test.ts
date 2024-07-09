@@ -72,7 +72,7 @@ describe('hli-zorgned-service', () => {
       {
         "code": 500,
         "content": null,
-        "message": "AxiosError: Request failed with status code 500",
+        "message": "Request failed with status code 500",
         "status": "ERROR",
       }
     `);

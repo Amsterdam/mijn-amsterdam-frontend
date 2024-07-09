@@ -65,7 +65,7 @@ describe('Vergunningen service', () => {
     const response = await fetchAllVergunningen('x3', authProfileAndToken);
     const errorResponse = {
       content: null,
-      message: 'Error: fat chance!',
+      message: 'fat chance!',
       status: 'ERROR',
     };
     expect(response).toStrictEqual(errorResponse);

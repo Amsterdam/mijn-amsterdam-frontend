@@ -11,6 +11,16 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import InkomenSpecificaties from './InkomenSpecificaties';
 
+vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
+  return {
+    ...((await requireActual()) as object),
+    encrypt: () => {
+      return ['test-encrypted-id'];
+    },
+    decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+  };
+});
+
 const sourceData: WpiIncomeSpecificationResponseData = {
   jaaropgaven: [
     {
@@ -145,7 +155,7 @@ const sourceData: WpiIncomeSpecificationResponseData = {
   ].sort(dateSort('datePublished', 'desc')),
 };
 
-const content = transformIncomSpecificationResponse({
+const content = transformIncomSpecificationResponse('xxxxxxxxxxxxxxxxxxxxx', {
   content: sourceData,
   status: 'OK',
 });
