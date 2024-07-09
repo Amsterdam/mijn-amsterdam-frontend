@@ -442,6 +442,7 @@ async function fetchVergunningen_(
 
 export const fetchVergunningen = memoizee(fetchVergunningen_, {
   maxAge: 45 * ONE_SECOND_MS,
+  length: 3,
 });
 
 export function getNotificationLabels(
