@@ -7,10 +7,12 @@ html(lang="en")
 
     if clientnummerEncrypted
       p
-        a(href=AMSAPP_PROTOCOl + 'stadspas?clientnummerEncrypted='+clientnummerEncrypted id='protocol-link') Klik hier om uw clientnummer in de Amsterdam app te laden.
+        a(href=AMSAPP_PROTOCOl + 'stadspas?clientnummerEncrypted='+clientnummerEncrypted id='protocol-link') Klik hier om uw clientnummer met de Amsterdam app te openen.
 
-      script(type='text/javascript').
-        document.getElementById('protocol-link').click();
     else
       p U heeft (nog) geen Stadspas
+        a(href=AMSAPP_PROTOCOl + 'stadspas' id='protocol-link') Klik hier om de Amsterdam app te openen.
+
+    script(type='text/javascript').
+        document.getElementById('protocol-link').click();
 
