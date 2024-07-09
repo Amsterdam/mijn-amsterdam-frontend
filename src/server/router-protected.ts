@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { IS_OT } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
@@ -22,6 +23,11 @@ import { isBlacklistedHandler } from './services/session-blacklist';
 import { attachDocumentDownloadRoute } from './services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
 import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
+import { fetchDecosDocument } from './services/vergunningen-v2/decos-service';
+import {
+  fetchVergunningDetail,
+  fetchZakenFromSource,
+} from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
 
@@ -114,6 +120,7 @@ router.get(
   }
 );
 
+// Deprecated, will be removed in MIJN-8916
 router.get(
   BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
   async (req: Request, res: Response) => {
@@ -129,7 +136,7 @@ router.get(
   }
 );
 
-// Deprecated, will be removed in MIJN-8299
+// Deprecated, will be removed in MIJN-8916
 router.get(
   BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
@@ -145,6 +152,18 @@ router.get(
     res.setHeader('content-type', contentType);
     documentResponse.data.pipe(res);
   }
+);
+
+// Vergunningen V2
+if (IS_OT) {
+  router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenFromSource);
+}
+router.get(BffEndpoints.VERGUNNINGENv2_DETAIL, fetchVergunningDetail);
+
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD,
+  fetchDecosDocument
 );
 
 attachDocumentDownloadRoute(
@@ -206,20 +225,6 @@ attachDocumentDownloadRoute(
   fetchBBDocument
 );
 
-router.get(
-  BffEndpoints.STADSPAS_TRANSACTIONS,
-  async (req: Request<{ transactionsKey: string }>, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-    const response = await fetchTransacties(
-      res.locals.requestID,
-      authProfileAndToken,
-      [req.params.transactionsKey]
-    );
-
-    return res.send(response);
-  }
-);
-
 router.post(
   BffEndpoints.STADSPAS_TRANSACTIONS,
   async (req: Request, res: Response) => {
@@ -235,6 +240,9 @@ router.post(
 
       return res.send(response);
     }
-    return res.status(400).send(apiErrorResult('Bad request', null, 400));
+
+    return res
+      .status(400)
+      .send(apiErrorResult('Bad request: transactions key missing', null, 400));
   }
 );

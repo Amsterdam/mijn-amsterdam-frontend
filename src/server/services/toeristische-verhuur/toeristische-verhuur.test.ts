@@ -141,7 +141,7 @@ describe('Toeristische verhuur service', () => {
     ).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: No can do!',
+      message: 'No can do!',
     });
   });
 
@@ -152,7 +152,7 @@ describe('Toeristische verhuur service', () => {
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
       status: 'DEPENDENCY_ERROR',
       content: null,
-      message: `[registrationNumbers] Error: Not Available`,
+      message: `[registrationNumbers] Not Available`,
     });
   });
 
@@ -174,7 +174,7 @@ describe('Toeristische verhuur service', () => {
     ).toStrictEqual({
       status: 'ERROR',
       content: null,
-      message: 'Error: No can do!',
+      message: 'No can do!',
     });
   });
 
@@ -284,7 +284,8 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag ${vakantieverhuurVergunning.titel.toLowerCase()} verleend`
     );
     expect(notification3.description).toBe(
-      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.titel.toLowerCase()} met gemeentelijk zaaknummer ${vakantieverhuurVergunning.zaaknummer
+      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.titel.toLowerCase()} met gemeentelijk zaaknummer ${
+        vakantieverhuurVergunning.zaaknummer
       } verleend.`
     );
     expect(notification3.link?.title).toBe('Bekijk uw aanvraag');

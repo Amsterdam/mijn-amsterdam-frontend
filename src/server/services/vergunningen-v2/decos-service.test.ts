@@ -11,7 +11,7 @@ import {
   fetchDecosDocumentList,
   fetchDecosVergunningen,
   fetchDecosWorkflowDate,
-  fetchDecosZakenSource,
+  fetchDecosZakenFromSource,
   forTesting,
 } from './decos-service';
 
@@ -127,7 +127,7 @@ describe('decos-service', () => {
     test('Error response in userkeys', async () => {
       remoteApi.post(/\/decos\/search\/books/).replyWithError('request failed');
 
-      const responseData = await fetchDecosZakenSource(
+      const responseData = await fetchDecosZakenFromSource(
         reqID,
         authProfileAndToken
       );
@@ -149,7 +149,7 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123456789\/folders/)
         .reply(200, zakenSource);
 
-      const responseData = await fetchDecosZakenSource(
+      const responseData = await fetchDecosZakenFromSource(
         reqID,
         authProfileAndToken
       );
@@ -171,14 +171,14 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123456789\/folders/)
         .replyWithError('bad request');
 
-      const responseData = await fetchDecosZakenSource(
+      const responseData = await fetchDecosZakenFromSource(
         reqID,
         authProfileAndToken
       );
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": null,
-          "message": "Error: bad request",
+          "message": "bad request",
           "status": "ERROR",
         }
       `);
@@ -328,7 +328,7 @@ describe('decos-service', () => {
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": null,
-          "message": "Error: Booksearch failed",
+          "message": "Booksearch failed",
           "status": "ERROR",
         }
       `);
@@ -452,7 +452,7 @@ describe('decos-service', () => {
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": null,
-          "message": "Error: De api geeft een error.",
+          "message": "De api geeft een error.",
           "status": "ERROR",
         }
       `);

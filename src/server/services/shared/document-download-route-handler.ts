@@ -10,6 +10,7 @@ import {
 import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
 import { AuthProfileAndToken, getAuth } from '../../helpers/app';
 import { captureException } from '../monitoring';
+import { decryptAndValidate } from './decrypt-route-param';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';
@@ -41,51 +42,43 @@ export function downloadDocumentRouteHandler(
   ) {
     const authProfileAndToken = await getAuth(req);
 
-    let documentId: string = '';
-    let sessionID: string = '';
+    const decryptResult = decryptAndValidate(
+      req.params.id,
+      authProfileAndToken
+    );
 
-    try {
-      [sessionID, documentId] = decrypt(req.params.id).split(':');
-    } catch (error) {
-      captureException(error);
-    }
+    if (decryptResult.status === 'OK') {
+      const documentResponse = await fetchDocument(
+        res.locals.requestID,
+        authProfileAndToken,
+        decryptResult.content,
+        req.query as Record<string, string>
+      );
 
-    if (!documentId || sessionID !== authProfileAndToken.profile.sid) {
-      let message = 'Not authorized';
-      if (!IS_PRODUCTION) {
-        message = `${message}${!documentId || !sessionID ? ' -  documentID or sessionID is missing' : ''}`;
+      if (
+        documentResponse.status === 'ERROR' ||
+        documentResponse.status === 'POSTPONE'
+      ) {
+        return res.status(500).send(documentResponse);
       }
-      return res.status(401).send(apiErrorResult(message, null, 401));
+
+      if (
+        'mimetype' in documentResponse.content &&
+        documentResponse.content.mimetype
+      ) {
+        res.type(documentResponse.content.mimetype);
+      }
+      res.header(
+        'Content-Disposition',
+        `attachment${documentResponse.content.filename ? `;${documentResponse.content.filename}` : ''}`
+      );
+      return 'pipe' in documentResponse.content.data &&
+        typeof documentResponse.content.data.pipe === 'function'
+        ? documentResponse.content.data.pipe(res)
+        : res.send(documentResponse.content.data);
     }
 
-    const documentResponse = await fetchDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      documentId,
-      req.query as Record<string, string>
-    );
-
-    if (
-      documentResponse.status === 'ERROR' ||
-      documentResponse.status === 'POSTPONE'
-    ) {
-      return res.status(500).send(documentResponse);
-    }
-
-    if (
-      'mimetype' in documentResponse.content &&
-      documentResponse.content.mimetype
-    ) {
-      res.type(documentResponse.content.mimetype);
-    }
-    res.header(
-      'Content-Disposition',
-      `attachment${documentResponse.content.filename ? `;${documentResponse.content.filename}` : ''}`
-    );
-    return 'pipe' in documentResponse.content.data &&
-      typeof documentResponse.content.data.pipe === 'function'
-      ? documentResponse.content.data.pipe(res)
-      : res.send(documentResponse.content.data);
+    return res.status(400).send(decryptResult);
   };
 }
 

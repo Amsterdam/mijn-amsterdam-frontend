@@ -41,7 +41,7 @@ export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
 }
 
 function transformLood365Response(
-  sessionId: AuthProfileAndToken['profile']['sid'],
+  sessionID: AuthProfileAndToken['profile']['sid'],
   response: Lood365Response
 ): LoodMetingen {
   let metingen: LoodMeting[] = [];
@@ -67,7 +67,7 @@ function transformLood365Response(
           !!location.Reportavailable
         ) {
           const [documentIDEncrypted] = encrypt(
-            `${sessionId}:${location.Workorderid}`
+            `${sessionID}:${location.Workorderid}`
           );
 
           document = {

@@ -155,7 +155,7 @@ describe('wpi/app-service', () => {
 
     expect(response.status).toBe('ERROR');
     expect((response as ApiErrorResponse<any>).message).toBe(
-      'AxiosError: Request failed with status code 500'
+      'Request failed with status code 500'
     );
   });
 

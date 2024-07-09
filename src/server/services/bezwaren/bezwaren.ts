@@ -29,6 +29,7 @@ import {
   OctopusApiResponse,
   kenmerkKey,
 } from './types';
+import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
@@ -418,50 +419,49 @@ export async function fetchBezwaarDetail(
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
-  let sessionID;
-  let zaakId;
-  try {
-    [sessionID, zaakId] = decrypt(zaakIdEncrypted).split(':');
-  } catch (error) {
-    captureException(error);
+  const decryptResult = decryptAndValidate(
+    zaakIdEncrypted,
+    authProfileAndToken
+  );
+
+  if (decryptResult.status === 'OK') {
+    const zaakId = decryptResult.content;
+
+    const bezwaarStatusRequest = fetchBezwaarStatus(
+      requestID,
+      authProfileAndToken,
+      zaakId
+    );
+
+    const bezwaarDocumentsRequest = fetchBezwarenDocuments(
+      requestID,
+      authProfileAndToken,
+      zaakId
+    );
+
+    const [statussenResponse, documentsResponse] = await Promise.allSettled([
+      bezwaarStatusRequest,
+      bezwaarDocumentsRequest,
+    ]);
+
+    const statussen = getSettledResult(statussenResponse);
+    const documents = getSettledResult(documentsResponse);
+
+    const failedDependencies = getFailedDependencies({
+      statussen,
+      documents,
+    });
+
+    return apiSuccessResult(
+      {
+        statussen: statussen.content,
+        documents: documents.content,
+      },
+      failedDependencies
+    );
   }
 
-  if (!zaakId || sessionID !== authProfileAndToken.profile.sid) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
-  const bezwaarStatusRequest = fetchBezwaarStatus(
-    requestID,
-    authProfileAndToken,
-    zaakId
-  );
-
-  const bezwaarDocumentsRequest = fetchBezwarenDocuments(
-    requestID,
-    authProfileAndToken,
-    zaakId
-  );
-
-  const [statussenResponse, documentsResponse] = await Promise.allSettled([
-    bezwaarStatusRequest,
-    bezwaarDocumentsRequest,
-  ]);
-
-  const statussen = getSettledResult(statussenResponse);
-  const documents = getSettledResult(documentsResponse);
-
-  const failedDependencies = getFailedDependencies({
-    statussen,
-    documents,
-  });
-
-  return apiSuccessResult(
-    {
-      statussen: statussen.content,
-      documents: documents.content,
-    },
-    failedDependencies
-  );
+  return decryptResult;
 }
 
 export async function fetchBezwaarDocument(

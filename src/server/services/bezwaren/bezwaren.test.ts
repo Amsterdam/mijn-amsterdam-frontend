@@ -215,7 +215,7 @@ describe('Bezwaren', () => {
         {
           "code": 401,
           "content": null,
-          "message": "Not authorized",
+          "message": "Not authorized: incomplete session validation",
           "status": "ERROR",
         }
       `);

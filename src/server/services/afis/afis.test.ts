@@ -188,13 +188,13 @@ describe('fetchIsKnownInAFIS ', () => {
       );
 
       expect(response).toMatchInlineSnapshot(`
-      {
-        "code": 400,
-        "content": null,
-        "message": "AxiosError: Request failed with status code 400",
-        "status": "ERROR",
-      }
-    `);
+        {
+          "code": 400,
+          "content": null,
+          "message": "Request failed with status code 400",
+          "status": "ERROR",
+        }
+      `);
     });
 
     it('Handles server error as expected', async () => {
@@ -207,12 +207,12 @@ describe('fetchIsKnownInAFIS ', () => {
       );
 
       expect(response).toMatchInlineSnapshot(`
-      {
-        "content": null,
-        "message": "AxiosError: error retrieving doc",
-        "status": "ERROR",
-      }
-    `);
+        {
+          "content": null,
+          "message": "error retrieving doc",
+          "status": "ERROR",
+        }
+      `);
     });
   });
 
