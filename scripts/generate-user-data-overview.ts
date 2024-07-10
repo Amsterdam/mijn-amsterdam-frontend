@@ -17,23 +17,23 @@ import {
   dateFormat,
   defaultDateFormat,
   getFullAddress,
-} from '../universal/helpers';
+} from '../src/universal/helpers';
 import {
   Adres,
   Kind,
   MyNotification,
   Persoon,
   Verbintenis,
-} from '../universal/types';
+} from '../src/universal/types';
 
 import { differenceInYears, parseISO } from 'date-fns';
 
-import { PRISTINE_APPSTATE, type AppState } from '../client/AppState';
-import { isThemaActive } from '../client/config/themas';
-import { ServiceResults } from './services/tips/tip-types';
-import { Thema } from '../universal/config';
-import { testAccounts } from '../universal/config/auth.development';
-import { myThemasMenuItems } from '../client/config/thema';
+import { PRISTINE_APPSTATE, type AppState } from '../src/client/AppState';
+import { myThemasMenuItems } from '../src/client/config/thema';
+import { isThemaActive } from '../src/client/config/themas';
+import { ServiceResults } from '../src/server/services/tips/tip-types';
+import { Thema } from '../src/universal/config';
+import { testAccounts } from '../src/universal/config/auth.development';
 
 XLSX.set_fs(fs);
 

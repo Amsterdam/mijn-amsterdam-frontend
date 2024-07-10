@@ -19,11 +19,12 @@
     "downlevelIteration": true,
     "importsNotUsedAsValues": "remove"
   },
-  "exclude": ["src/**/*.test.ts"],
+  "exclude": [
+    "src/**/*.test.ts"
+  ],
   "include": [
-    "src/generate-user-data-overview.ts",
     "src/server",
     "src/universal",
-    "src/mijnamsterdam.d.ts",
+    "src/mijnamsterdam.d.ts"
   ]
 }
