@@ -22,7 +22,7 @@ import {
   it,
   vi,
 } from 'vitest';
-import { FeatureToggle } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import * as Monitoring from '../utils/monitoring';
 
 vi.mock('./api/useTipsApi');

@@ -1,7 +1,7 @@
 import { isLoading, isMokum } from '../../universal/helpers';
 import type { AppState, AppStateKey } from '../AppState';
 import { ThemaMenuItem } from './thema';
-import { FeatureToggle } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { Themas } from '../../universal/config/thema';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {

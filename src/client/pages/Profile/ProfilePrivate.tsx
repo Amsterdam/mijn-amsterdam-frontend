@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useEffect, useMemo } from 'react';
 import { AppRoutes } from '../../../universal/config';
-import { FeatureToggle } from '../../../universal/config/app';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import {
   apiPristineResult,

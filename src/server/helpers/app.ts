@@ -7,7 +7,7 @@ import { createSecretKey, hkdfSync } from 'node:crypto';
 import { generatePath, matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
-import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
+import { DEFAULT_PROFILE_TYPE } from '../../universal/config/feature-toggles';
 import {
   ApiResponse,
   apiErrorResult,

@@ -2,7 +2,10 @@ import { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
-import { Colors, FeatureToggle } from '../../../universal/config/app';
+import {
+  Colors,
+  FeatureToggle,
+} from '../../../universal/config/feature-toggles';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DATASETS,

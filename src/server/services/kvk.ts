@@ -1,4 +1,4 @@
-import { FeatureToggle } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';

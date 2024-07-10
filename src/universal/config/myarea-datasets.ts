@@ -1,4 +1,4 @@
-import { FeatureToggle } from './app';
+import { FeatureToggle } from './feature-toggles';
 
 // Amsterdam center
 export const DEFAULT_LAT: number = 52.3676842478192;

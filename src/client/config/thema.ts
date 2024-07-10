@@ -2,7 +2,7 @@ import { generatePath } from 'react-router-dom';
 import { AppState } from '../AppState';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { LinkProps } from '../../universal/types/App.types';
-import { ExternalUrls } from '../../universal/config/app';
+import { ExternalUrls } from '../../universal/config/feature-toggles';
 import {
   AppRoute,
   AppRoutes,
