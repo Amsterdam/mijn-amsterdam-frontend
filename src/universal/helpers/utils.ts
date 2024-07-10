@@ -113,17 +113,6 @@ export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   return data;
 }
 
-export function recLookup(obj: any, path: string): any {
-  if (!obj) {
-    return;
-  }
-  const parts = path.split('.');
-  if (parts.length === 1) {
-    return obj[parts[0]];
-  }
-  return recLookup(obj[parts[0]], parts.slice(1).join('.'));
-}
-
 export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
 }

@@ -1,4 +1,3 @@
-import { Persoon } from '../types';
 import { defaultDateFormat, formatMonthAndYear, formatYear } from './date';
 
 export function getFullName(persoon: {
