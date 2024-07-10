@@ -1,9 +1,7 @@
+import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
-import {
-  useAppStateBagApi,
-  useAppStateGetter,
-  usePhoneScreen,
-} from '../../hooks';
+import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
+import { AppRoutes } from '../../../universal/config';
 import {
   defaultDateFormat,
   isError,
@@ -11,27 +9,30 @@ import {
   uniqueArray,
 } from '../../../universal/helpers';
 import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoDetail,
   LoadingContent,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
-import { AppRoutes, BagThemas, ThemaTitles } from '../../../universal/config';
+import DocumentList from '../../components/DocumentList/DocumentList';
 import {
   InfoDetailGroup,
   InfoDetailHeading,
 } from '../../components/InfoDetail/InfoDetail';
-import BezwarenStatusLines from './BezwarenStatusLines';
-import DocumentList from '../../components/DocumentList/DocumentList';
-import styles from './BezwarenDetail.module.scss';
 import { TextClamp } from '../../components/InfoDetail/TextClamp';
-import { BFFApiUrls } from '../../config/api';
-import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
-import { Heading } from '@amsterdam/design-system-react';
+import { BFFApiUrls } from '../../config/api';
+import { BagThemas, ThemaTitles } from '../../config/thema';
+import {
+  useAppStateBagApi,
+  useAppStateGetter,
+  usePhoneScreen,
+} from '../../hooks';
+import styles from './BezwarenDetail.module.scss';
+import BezwarenStatusLines from './BezwarenStatusLines';
 
 const loadingContentBarConfig2: BarConfig = [
   ['30rem', '4rem', '2rem'],

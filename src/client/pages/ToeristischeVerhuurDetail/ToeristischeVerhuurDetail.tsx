@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import { hasFailedDependency, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,

@@ -1,14 +1,15 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoDetail,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks';
 import AVGStatusLines from './AVGStatusLines';
 

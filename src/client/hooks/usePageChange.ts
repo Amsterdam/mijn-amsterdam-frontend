@@ -4,12 +4,14 @@ import {
   AppRoute,
   AppRoutes,
   CustomTrackingUrls,
-  DocumentTitles,
-  NOT_FOUND_TITLE,
-  PageTitleMain,
   TrackingConfig,
 } from '../../universal/config';
 import { ExcludePageViewTrackingUrls } from '../config/api';
+import {
+  DocumentTitles,
+  NOT_FOUND_TITLE,
+  PageTitleMain,
+} from '../config/thema';
 import { captureMessage } from '../utils/monitoring';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';

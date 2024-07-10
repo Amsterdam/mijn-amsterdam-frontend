@@ -6,7 +6,8 @@ import {
   StadspasBudget,
   StadspasTransaction,
 } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import {
   ApiResponse,
   apiPristineResult,
@@ -92,8 +93,9 @@ function BudgetBalance({ budget }: BudgetBalanceProps) {
       <li
         className={styles.AmountSpent}
         style={{
-          width: `${100 - (100 / budget.budgetAssigned) * budget.budgetBalance
-            }%`,
+          width: `${
+            100 - (100 / budget.budgetAssigned) * budget.budgetBalance
+          }%`,
         }}
       >
         <span className={styles.Label}>

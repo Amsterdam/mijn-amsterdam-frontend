@@ -1,5 +1,6 @@
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import {
   addTitleLinkComponent,
   ErrorAlert,

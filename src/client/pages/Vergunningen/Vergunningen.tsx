@@ -1,26 +1,27 @@
 import { useMemo } from 'react';
 
 import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes, ThemaTitles } from '../../../universal/config/index';
+import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Vergunningen.module.scss';
-import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal/helpers/vergunningen';
 import { hasMultiplePermits } from '../VergunningDetail/WVOS';
+import styles from './Vergunningen.module.scss';
 
 export const DISPLAY_PROPS = {
   identifier: 'Kenmerk',

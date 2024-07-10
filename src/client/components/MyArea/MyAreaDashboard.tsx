@@ -2,8 +2,9 @@ import { useRef } from 'react';
 import { generatePath, NavLink } from 'react-router-dom';
 
 import { Heading } from '@amsterdam/design-system-react';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { isMokum } from '../../../universal/helpers';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';

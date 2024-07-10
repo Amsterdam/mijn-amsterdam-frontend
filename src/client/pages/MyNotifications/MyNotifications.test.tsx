@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import MyNotifications from './MyNotifications';
-import { Themas } from '../../config/thema';
+import { Themas } from '../../../universal/config/thema';
 
 const testState: any = {
   NOTIFICATIONS: {

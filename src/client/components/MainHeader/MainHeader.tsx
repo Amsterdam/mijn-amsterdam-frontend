@@ -1,10 +1,11 @@
 import { Header, PageMenu } from '@amsterdam/design-system-react';
 import { animated, useSpring } from '@react-spring/web';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { useHistory, useLocation } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config';
 import { ErrorMessages } from '../../components';
 import { getApiErrors } from '../../config/api';
+import { ThemaTitles } from '../../config/thema';
 import {
   useAppStateGetter,
   usePhoneScreen,
@@ -20,8 +21,8 @@ import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
 import styles from './MainHeader.module.scss';
-import { SecondaryLinks } from './SecondaryLinks';
 import { OtapLabel } from './OtapLabel';
+import { SecondaryLinks } from './SecondaryLinks';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;

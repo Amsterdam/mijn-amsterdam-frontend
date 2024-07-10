@@ -13,7 +13,8 @@ import {
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
-import { LinkdInline, LoadingContent } from '../../components/index';
+import { LinkdInline } from '../../components/Button/Button';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

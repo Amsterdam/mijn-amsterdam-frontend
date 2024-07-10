@@ -1,7 +1,8 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {

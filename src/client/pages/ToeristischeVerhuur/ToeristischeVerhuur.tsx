@@ -1,5 +1,5 @@
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
-import { AppRoutes, ThemaTitles } from '../../../universal/config/index';
+import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   ErrorAlert,
@@ -15,6 +15,7 @@ import {
   ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuur.module.scss';
 

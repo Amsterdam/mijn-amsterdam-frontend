@@ -7,7 +7,8 @@ import {
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { StadspasTransaction } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import {
   ApiResponse,
   apiPristineResult,

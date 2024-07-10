@@ -1,5 +1,5 @@
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles, Themas } from '../../config/thema';
+import { ThemaTitles } from '../../config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
@@ -8,6 +8,7 @@ import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/c
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks';
 import { ListPageParamKind, tableConfig } from './config';
+import { Themas } from '../../../universal/config/thema';
 
 export function VergunningenList() {
   const params = useParams<{ kind: ListPageParamKind }>();

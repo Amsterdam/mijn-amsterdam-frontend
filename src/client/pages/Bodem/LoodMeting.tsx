@@ -10,7 +10,8 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import LoodStatusLines from './LoodStatusLines';
 import { Location } from '../VergunningDetail/Location';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';

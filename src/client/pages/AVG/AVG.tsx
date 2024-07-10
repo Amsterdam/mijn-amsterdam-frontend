@@ -1,20 +1,21 @@
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import {
   defaultDateFormat,
-  isLoading,
   isError,
+  isLoading,
 } from '../../../universal/helpers';
 import {
   ErrorAlert,
-  addTitleLinkComponent,
-  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks';
 import styles from './AVG.module.scss';
 

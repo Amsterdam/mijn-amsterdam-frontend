@@ -1,7 +1,8 @@
 import { createContext } from 'react';
 import type { ServiceID, ServicesType } from '../server/services/controller';
-import { BagThema, FeatureToggle } from '../universal/config';
+import { FeatureToggle } from '../universal/config';
 import { ApiResponse, apiPristineResult } from '../universal/helpers/api';
+import { BagThema } from './config/thema';
 
 export type AppState = {
   [key in ServiceID]: ApiResponse<

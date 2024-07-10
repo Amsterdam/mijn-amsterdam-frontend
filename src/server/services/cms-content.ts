@@ -64,7 +64,7 @@ interface CMSPageContent {
   content: string;
 }
 
-interface AstNode {
+export interface AstNode {
   type?: string;
   text?: string;
   content?: string;

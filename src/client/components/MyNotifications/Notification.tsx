@@ -1,9 +1,8 @@
 import { Heading } from '@amsterdam/design-system-react';
-import { useRef, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
+import { useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { InnerHtml } from '..';
-import { ThemaTitles } from '../../../universal/config';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   MyNotification as MyNotificationBase,
@@ -11,16 +10,17 @@ import {
 } from '../../../universal/types';
 import { IconChevronRight, IconInfo } from '../../assets/icons';
 import { Colors } from '../../config/app';
+import { ThemaTitles } from '../../config/thema';
 import {
   trackItemClick,
   useContentDimensions,
   useProfileTypeValue,
 } from '../../hooks';
-import Linkd from '../Button/Button';
-import ThemaIcon from '../ThemaIcon/ThemaIcon';
-import { DocumentLink } from '../DocumentList/DocumentLink';
-import styles from './MyNotifications.module.scss';
 import { trackEvent } from '../../utils/monitoring';
+import Linkd from '../Button/Button';
+import { DocumentLink } from '../DocumentList/DocumentLink';
+import ThemaIcon from '../ThemaIcon/ThemaIcon';
+import styles from './MyNotifications.module.scss';
 
 export interface MyNotification extends MyNotificationBase {
   Icon?: SVGComponent;

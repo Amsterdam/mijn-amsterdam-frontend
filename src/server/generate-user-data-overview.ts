@@ -31,8 +31,9 @@ import { differenceInYears, parseISO } from 'date-fns';
 import { PRISTINE_APPSTATE, type AppState } from '../client/AppState';
 import { isThemaActive } from '../universal/helpers/themas';
 import { ServiceResults } from './services/tips/tip-types';
-import { Thema, myThemasMenuItems } from '../universal/config';
+import { Thema } from '../universal/config';
 import { testAccounts } from '../universal/config/auth.development';
+import { myThemasMenuItems } from '../client/config/thema';
 
 XLSX.set_fs(fs);
 

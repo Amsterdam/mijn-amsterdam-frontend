@@ -8,72 +8,9 @@ import {
   AppRoutes,
   TrackingConfig,
 } from '../../universal/config/routes';
-
-// Within the team we call these Themes / Thema's
-export type Thema =
-  | 'AFVAL'
-  | 'BELASTINGEN'
-  | 'BURGERZAKEN'
-  | 'BUURT'
-  | 'BEZWAREN'
-  | 'INKOMEN'
-  | 'STADSPAS'
-  | 'HLI'
-  | 'BRP'
-  | 'MILIEUZONE'
-  | 'OVERTREDINGEN'
-  | 'NOTIFICATIONS'
-  | 'ROOT'
-  | 'ERFPACHT'
-  | 'ERFPACHTv2'
-  | 'ZORG'
-  | 'VERGUNNINGEN'
-  | 'SVWI'
-  | 'KVK'
-  | 'TOERISTISCHE_VERHUUR'
-  | 'SEARCH'
-  | 'SUBSIDIE'
-  | 'PARKEREN'
-  | 'KLACHTEN'
-  | 'HORECA'
-  | 'KREFIA'
-  | 'AVG'
-  | 'BODEM'
-  | string;
+import { Thema, Themas } from '../../universal/config/thema';
 
 export type BagThema = `${Thema}_BAG`;
-
-export const Themas: Record<Thema, Thema> = {
-  AFIS: 'AFIS',
-  AFVAL: 'AFVAL',
-  AVG: 'AVG',
-  BELASTINGEN: 'BELASTINGEN',
-  BEZWAREN: 'BEZWAREN',
-  BODEM: 'BODEM',
-  BRP: 'BRP',
-  BURGERZAKEN: 'BURGERZAKEN',
-  BUURT: 'BUURT',
-  ERFPACHT: 'ERFPACHT',
-  ERFPACHTv2: 'ERFPACHTv2',
-  HLI: 'HLI',
-  HORECA: 'HORECA',
-  INKOMEN: 'INKOMEN',
-  KLACHTEN: 'KLACHTEN',
-  KREFIA: 'KREFIA',
-  KVK: 'KVK',
-  MILIEUZONE: 'MILIEUZONE',
-  NOTIFICATIONS: 'NOTIFICATIONS',
-  OVERTREDINGEN: 'OVERTREDINGEN',
-  PARKEREN: 'PARKEREN',
-  ROOT: 'ROOT',
-  SEARCH: 'SEARCH',
-  STADSPAS: 'STADSPAS',
-  SUBSIDIE: 'SUBSIDIE',
-  SVWI: 'SVWI',
-  TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
-  VERGUNNINGEN: 'VERGUNNINGEN',
-  ZORG: 'ZORG',
-};
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {

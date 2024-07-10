@@ -1,6 +1,7 @@
 import { generatePath, useParams } from 'react-router-dom';
 import type { Klacht } from '../../../server/services/klachten/types';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import {
   defaultDateFormat,
   isError,

@@ -1,21 +1,18 @@
 import { Grid, Screen } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
+import { AppRoutes } from '../../../../universal/config';
 import {
-  AppRoutes,
-  BagThemas,
-  ThemaTitles,
-} from '../../../../universal/config';
-import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   LoadingContent,
   PageHeading,
+  ThemaIcon,
 } from '../../../components';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { BarConfig } from '../../../components/LoadingContent/LoadingContent';
 import { BFFApiUrls } from '../../../config/api';
+import { BagThemas, ThemaTitles } from '../../../config/thema';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
 import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { DataTableFacturen } from './DataTableFacturen';

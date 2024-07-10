@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
 import { Stadspas } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ThemaTitles } from '../../config/thema';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {

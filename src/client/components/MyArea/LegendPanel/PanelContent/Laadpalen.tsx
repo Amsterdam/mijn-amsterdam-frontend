@@ -1,15 +1,15 @@
-import GenericBase from './GenericBase';
-import { InfoDetail } from '../../../index';
 import { laadpaalValueConfig } from '../../../../../universal/config';
-import {
-  IconConnectorTypeMennekes,
-  IconConnectorTypeChademo,
-  IconConnectorTypeCCS,
-} from '../../../../assets/icons';
 import { getFullAddress } from '../../../../../universal/helpers';
+import {
+  IconConnectorTypeCCS,
+  IconConnectorTypeChademo,
+  IconConnectorTypeMennekes,
+} from '../../../../assets/icons';
+import GenericBase from './GenericBase';
 import styles from './Laadpalen.module.scss';
 
 import React from 'react';
+import InfoDetail from '../../../InfoDetail/InfoDetail';
 
 type Props = {
   panelItem: any;
