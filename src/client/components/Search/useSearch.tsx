@@ -35,7 +35,7 @@ import {
   SearchConfigRemote,
   SearchEntry,
 } from './searchConfig';
-import { uniqueArray } from '../../../universal/helpers/utils';
+import { uniqueArray, pick } from '../../../universal/helpers/utils';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,

@@ -11,7 +11,7 @@ import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { BagThemas, ThemaTitles } from '../../config/thema';
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks';
+import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';

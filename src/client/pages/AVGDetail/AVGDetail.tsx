@@ -10,7 +10,7 @@ import {
   ThemaIcon,
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import AVGStatusLines from './AVGStatusLines';
 
 const AVGDetail = () => {

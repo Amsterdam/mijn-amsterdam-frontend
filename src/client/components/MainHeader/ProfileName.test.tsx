@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom, useAppStateGetter } from '../../hooks';
 import MockApp from '../../pages/MockApp';
 import { ProfileName } from './ProfileName';
+import { appStateAtom, useAppStateGetter } from '../../hooks/useAppState';
 
 vi.mock('../../hooks/media.hook');
 
@@ -29,6 +29,7 @@ function Wrapper({ profileType = 'private' }: { profileType: ProfileType }) {
       company={state.KVK.content}
       profileAttribute={state.PROFILE.content?.profile?.id}
       profileType={profileType}
+      showIcons
     />
   );
 }

@@ -25,7 +25,7 @@ import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { TableV2 } from '../../components/Table/TableV2';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './HLIStadspas.module.scss';
 import { getThemaTitleWithAppState } from './helpers';

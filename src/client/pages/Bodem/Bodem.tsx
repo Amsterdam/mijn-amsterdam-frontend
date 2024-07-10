@@ -13,7 +13,7 @@ import {
   addTitleLinkComponent,
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 const DISPLAY_PROPS_BODEM = {
   adres: 'Adres',

@@ -6,7 +6,7 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 import { useParams } from 'react-router-dom';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { addLinkElementToProperty } from '../../components/Table/Table';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { ListPageParamKind, tableConfig } from './config';
 import { Themas } from '../../../universal/config/thema';
 

@@ -12,7 +12,7 @@ import {
 } from '../../components';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { Location } from '../VergunningDetail/Location';
 import LoodStatusLines from './LoodStatusLines';
 

@@ -10,7 +10,7 @@ import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
 import { PageContent, TextPage } from '../../components/Page/Page';
 import PageHeading from '../../components/PageHeading/PageHeading';
 import { ExternalUrls } from '../../config/external-urls';
-import { useDesktopScreen } from '../../hooks';
+import { useDesktopScreen } from '../../hooks/media.hook';
 import { useUsabilla } from '../../hooks/useUsabilla';
 import styles from './ApplicationError.module.scss';
 

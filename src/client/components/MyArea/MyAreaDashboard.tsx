@@ -5,7 +5,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isMokum } from '../../../universal/helpers/brp';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './MyAreaDashboard.module.scss';

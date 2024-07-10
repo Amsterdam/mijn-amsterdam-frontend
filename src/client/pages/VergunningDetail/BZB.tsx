@@ -6,7 +6,7 @@ import type { BZB as BZBVergunning } from '../../../server/services/vergunningen
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types';
 import { InnerHtml, LinkdInline } from '../../components';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 function ExpirationNotifications({ id }: { id: string }) {
   const appState = useAppStateGetter();

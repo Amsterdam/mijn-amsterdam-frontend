@@ -16,7 +16,6 @@ import { AppRoutes } from '../universal/config/routes';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
@@ -30,6 +29,8 @@ import { loginUrlByAuthMethod } from './config/api';
 import { default as LandingPage } from './pages/Landing/Landing';
 
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
+import { useAnalytics } from './hooks/analytics.hook';
+import { usePageChange } from './hooks/usePageChange';
 import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
 import AVG from './pages/AVG/AVG';
 import AVGDetail from './pages/AVGDetail/AVGDetail';

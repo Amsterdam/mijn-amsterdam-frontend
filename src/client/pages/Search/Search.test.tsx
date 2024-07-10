@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, it } from 'vitest';
 import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom } from '../../hooks';
+import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 import Search from './Search';
 

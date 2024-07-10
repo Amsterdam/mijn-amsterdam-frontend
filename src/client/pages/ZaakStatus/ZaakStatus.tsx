@@ -1,7 +1,9 @@
+import { Paragraph } from '@amsterdam/design-system-react';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAppStateGetter, useAppStateReady } from '../../hooks';
-import styles from './ZaakStatus.module.scss';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { AppState } from '../../AppState';
 import {
   ErrorAlert,
   PageContent,
@@ -9,10 +11,9 @@ import {
   TextPage,
 } from '../../components';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { AppRoutes } from '../../../universal/config/routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import { Paragraph } from '@amsterdam/design-system-react';
+import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import styles from './ZaakStatus.module.scss';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
@@ -20,13 +21,14 @@ const STATE_ERROR = 'state-error';
 type ThemaQueryParam = 'vergunningen';
 
 type PageRouteResolver = {
-  baseRoute: string;
-  getRoute: (detailPageItemId, appState) => string;
+  baseRoute: AppRoute;
+  getRoute: (
+    detailPageItemId: string,
+    appState: AppState
+  ) => string | undefined;
 };
 
-type PageRouteResolvers = {
-  [key: ThemaQueryParam]: PageRouteResolver;
-};
+type PageRouteResolvers = Record<ThemaQueryParam, PageRouteResolver>;
 
 const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: {
@@ -79,14 +81,13 @@ export default function ZaakStatus() {
   const history = useHistory();
   const queryParams = new URLSearchParams(history.location.search);
   const pageRoute = useNavigateToPage(queryParams);
-  let redirectRoute = AppRoutes.HOME;
-  let redirectName = 'Ga naar het dashboard';
 
-  if (pageRoute.unResolvedState === ITEM_NOT_FOUND || appStateReady) {
-    if (pageRoute.baseRoute) {
-      redirectRoute = pageRoute.baseRoute;
-      redirectName = 'Bekijk het overzicht';
-    }
+  let linkRoute: AppRoute = AppRoutes.HOME;
+  let linkText = 'Ga naar het dashboard';
+
+  if (pageRoute.baseRoute) {
+    linkRoute = pageRoute.baseRoute;
+    linkText = 'Bekijk het overzicht';
   }
 
   return (
@@ -102,13 +103,13 @@ export default function ZaakStatus() {
             ]}
           />
         )}
-        {pageRoute.unResolvedState === ITEM_NOT_FOUND ||
-          (appStateReady && queryParams.get('payment') && (
-            <Paragraph>
-              U heeft betaald voor deze aanvraag. Het kan even duren voordat uw
-              aanvraag op Mijn Amsterdam te zien is.
-            </Paragraph>
-          ))}
+        {(pageRoute.unResolvedState === ITEM_NOT_FOUND ||
+          (appStateReady && queryParams.get('payment'))) && (
+          <Paragraph>
+            U heeft betaald voor deze aanvraag. Het kan even duren voordat uw
+            aanvraag op Mijn Amsterdam te zien is.
+          </Paragraph>
+        )}
         {appStateReady && (
           <Paragraph>
             Wij kunnen de status van uw aanvraag nu niet laten zien.
@@ -120,7 +121,7 @@ export default function ZaakStatus() {
           </ErrorAlert>
         )}
         <Paragraph>
-          <MaRouterLink to={redirectRoute}>{redirectName}</MaRouterLink>
+          <MaRouterLink href={linkRoute}>{linkText}</MaRouterLink>
         </Paragraph>
       </PageContent>
     </TextPage>

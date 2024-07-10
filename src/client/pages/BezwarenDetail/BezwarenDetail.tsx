@@ -23,11 +23,8 @@ import { TextClamp } from '../../components/InfoDetail/TextClamp';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas, ThemaTitles } from '../../config/thema';
-import {
-  useAppStateBagApi,
-  useAppStateGetter,
-  usePhoneScreen,
-} from '../../hooks';
+import { usePhoneScreen } from '../../hooks/media.hook';
+import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import styles from './BezwarenDetail.module.scss';
 import BezwarenStatusLines from './BezwarenStatusLines';
 

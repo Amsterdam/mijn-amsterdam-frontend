@@ -12,7 +12,7 @@ import {
   ThemaIcon,
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { KLACHTEN_PAGE_SIZE } from '../Klachten/Klachten';
 
 export default function KlachtenDetail() {

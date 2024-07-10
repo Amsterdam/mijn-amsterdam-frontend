@@ -12,7 +12,7 @@ import {
   addTitleLinkComponent,
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Horeca.module.scss';
 
 const DISPLAY_PROPS_HORECA = {

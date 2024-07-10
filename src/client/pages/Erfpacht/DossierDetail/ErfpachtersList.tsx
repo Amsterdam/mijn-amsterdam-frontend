@@ -1,7 +1,7 @@
 import { Button, OrderedList } from '@amsterdam/design-system-react';
 import { useState } from 'react';
 import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
-import { useMediumScreen } from '../../../hooks';
+import { useMediumScreen } from '../../../hooks/media.hook';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
 

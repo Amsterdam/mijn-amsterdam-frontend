@@ -11,11 +11,9 @@ import {
 import { IconChevronRight, IconInfo } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
-import {
-  trackItemClick,
-  useContentDimensions,
-  useProfileTypeValue,
-} from '../../hooks';
+import { trackItemClick } from '../../hooks/analytics.hook';
+import { useContentDimensions } from '../../hooks/useContentDimensions';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { trackEvent } from '../../utils/monitoring';
 import { isInteralUrl } from '../../utils/utils';
 import Linkd from '../Button/Button';

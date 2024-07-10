@@ -6,12 +6,10 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { ErrorMessages } from '../../components';
 import { getApiErrors } from '../../config/api';
 import { ThemaTitles } from '../../config/thema';
-import {
-  useAppStateGetter,
-  usePhoneScreen,
-  useProfileTypeValue,
-  useTermReplacement,
-} from '../../hooks';
+import { usePhoneScreen } from '../../hooks/media.hook';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MaLink } from '../MaLink/MaLink';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';

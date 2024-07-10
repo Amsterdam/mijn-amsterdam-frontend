@@ -1,13 +1,13 @@
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
 import {
-  ThemaIcon,
   Page,
   PageContent,
   PageHeading,
   Search as SearchBar,
+  ThemaIcon,
 } from '../../components';
-import { useAppStateReady } from '../../hooks';
+import { ThemaTitles } from '../../config/thema';
+import { useAppStateReady } from '../../hooks/useAppState';
 import styles from './Search.module.scss';
 
 export default function Search() {

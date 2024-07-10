@@ -3,15 +3,15 @@ import classnames from 'classnames';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import type { KVKData } from '../../../server/services/kvk';
-import { BRPData } from '../../../universal/types';
-import { IconProfile } from '../../assets/icons';
-import { useAppStateReady } from '../../hooks';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import { MaRouterLink } from '../MaLink/MaLink';
-import styles from './ProfileName.module.scss';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { getFullName } from '../../../universal/helpers/brp';
+import { BRPData } from '../../../universal/types';
+import { IconProfile } from '../../assets/icons';
+import { useAppStateReady } from '../../hooks/useAppState';
+import LoadingContent from '../LoadingContent/LoadingContent';
+import { MaRouterLink } from '../MaLink/MaLink';
+import styles from './ProfileName.module.scss';
 
 interface CommercialProfileNameProps {
   company?: KVKData;
