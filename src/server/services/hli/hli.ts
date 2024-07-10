@@ -19,7 +19,7 @@ import { HLIRegeling, HLIresponseData } from './regelingen-types';
 import { fetchStadspas } from './stadspas';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import slug from 'slugme';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 import { BFF_BASE_PATH, BffEndpoints } from '../../config';
 
 function getDisplayStatus(

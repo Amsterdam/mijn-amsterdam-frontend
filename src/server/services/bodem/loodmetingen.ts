@@ -24,7 +24,7 @@ import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
 } from '../shared/document-download-route-handler';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {

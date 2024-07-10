@@ -7,7 +7,7 @@ import {
   apiSuccessResult,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';

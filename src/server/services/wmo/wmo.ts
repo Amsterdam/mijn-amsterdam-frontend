@@ -5,7 +5,7 @@ import {
   capitalizeFirstLetter,
   dateSort,
 } from '../../../universal/helpers';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';

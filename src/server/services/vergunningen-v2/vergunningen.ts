@@ -23,7 +23,7 @@ import {
 } from './decos-service';
 
 import memoizee from 'memoizee';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';

@@ -13,7 +13,7 @@ import {
 } from './wpi-types';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { BffEndpoints } from '../../config';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 
 export function transformToStatusLine(
   sessionID: AuthProfileAndToken['profile']['sid'],

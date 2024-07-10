@@ -6,7 +6,7 @@ import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);

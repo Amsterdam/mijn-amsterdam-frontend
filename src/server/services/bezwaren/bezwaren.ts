@@ -10,7 +10,7 @@ import {
   getSettledResult,
   isRecentNotification,
 } from '../../../universal/helpers';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { MyNotification } from '../../../universal/types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';

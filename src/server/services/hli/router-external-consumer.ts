@@ -7,7 +7,7 @@ import {
 } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { apiErrorResult } from '../../../universal/helpers';
 import { captureException } from '../monitoring';
 

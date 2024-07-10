@@ -5,7 +5,7 @@ import {
   defaultDateFormat,
   getSettledResult,
 } from '../../../universal/helpers';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import displayAmount from '../../../universal/helpers/text';
 import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
 import { requestData } from '../../helpers';

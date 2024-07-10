@@ -7,7 +7,7 @@ import {
   ApiSuccessResponse,
   apiErrorResult,
 } from '../../../universal/helpers';
-import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { decrypt } from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken, getAuth } from '../../helpers/app';
 import { captureException } from '../monitoring';
 import { decryptAndValidate } from './decrypt-route-param';
