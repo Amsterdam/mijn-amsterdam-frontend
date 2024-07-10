@@ -20,7 +20,7 @@ import {
 import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
 import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
 
-function volledigClientnummer(identificatie: number): string {
+function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
   const clientnummer = `${ZORGNED_GEMEENTE_CODE}${clientnummerPadded}`;
   return clientnummer;
@@ -30,14 +30,14 @@ function transformZorgnedClientNummerResponse(
   zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
 ) {
   if (zorgnedResponseData?.persoon?.clientidentificatie) {
-    return volledigClientnummer(
+    return transformToAdministratienummer(
       zorgnedResponseData.persoon.clientidentificatie
     );
   }
   return null;
 }
 
-export async function fetchClientNummer(
+export async function fetchAdministratienummer(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -47,9 +47,20 @@ export async function fetchClientNummer(
     'ZORGNED_AV'
   );
 
-  if (response.status === 'OK' && response.content) {
-    const clientNummer = transformZorgnedClientNummerResponse(response.content);
-    return apiSuccessResult(clientNummer);
+  let administratienummer: string | null = null;
+
+  if (response.status === 'OK') {
+    if (response.content) {
+      administratienummer = transformZorgnedClientNummerResponse(
+        response.content
+      );
+    }
+    return apiSuccessResult(administratienummer);
+  }
+
+  if (response.status === 'ERROR' && response.code === 404) {
+    // 404 means there is no record available in the ZORGNED api for the requested BSN
+    return apiSuccessResult(administratienummer);
   }
 
   return response;
@@ -148,6 +159,6 @@ export async function fetchZorgnedAanvragenHLI(
 export const forTesting = {
   assignIsActueel,
   transformZorgnedBetrokkeneNaamResponse,
-  volledigClientnummer,
+  transformToAdministratienummer,
   transformZorgnedClientNummerResponse,
 };
