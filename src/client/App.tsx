@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { AppRoutesRedirect } from '../universal/config/routes';
+
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
@@ -82,6 +82,7 @@ import { useMonitoring } from './utils/monitoring';
 import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
 import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
 import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
+import { AppRoutesRedirect } from './config/routes';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
