@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../universal/config/routes';
+import { AppRoute, AppRoutes } from '../../universal/config/routes';
+import { Match } from '../../universal/types';
 
 export const AppRoutesRedirect = [
   {
@@ -48,3 +49,66 @@ export const AppRoutesRedirect = [
   },
   { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
 ];
+
+export const PublicRoutes: string[] = [
+  AppRoutes.API_LOGIN,
+  AppRoutes.API1_LOGIN,
+  AppRoutes.API2_LOGIN,
+  AppRoutes.ACCESSIBILITY,
+  AppRoutes.BFF_500_ERROR,
+  AppRoutes.ACCESSIBILITY,
+  AppRoutes.GENERAL_INFO,
+  AppRoutes.ROOT,
+];
+
+export const PrivateRoutes = Object.values(AppRoutes).filter(
+  (path: string) => !PublicRoutes.includes(path)
+);
+
+export interface TrackingConfig {
+  profileType: ProfileType;
+  isAuthenticated: boolean;
+}
+
+type CustomTrackingUrlMap = {
+  [key in AppRoute]+?: (match: Match, trackingConfig: TrackingConfig) => string;
+};
+
+export const CustomTrackingUrls: CustomTrackingUrlMap = {
+  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match: Match) => {
+    return `/vergunning/${match.params?.title}`;
+  },
+  [AppRoutes['INKOMEN/BBZ']]: (match: Match) => {
+    return `/inkomen/bbz`;
+  },
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match: Match) => {
+    return `/inkomen/bijstandsuitkering`;
+  },
+  [AppRoutes['INKOMEN/TOZO']]: (match: Match) => {
+    return `/inkomen/tozo/${match.params?.version}`;
+  },
+  [AppRoutes['INKOMEN/TONK']]: () => `/inkomen/tonk`,
+
+  [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
+
+  [AppRoutes['STADSPAS/AANVRAAG']]: () => '/stadspas/aavraag',
+  [AppRoutes['STADSPAS/SALDO']]: () => '/stadspas/saldo',
+
+  [AppRoutes['ZORG/VOORZIENINGEN']]: () => '/zorg-en-ondersteuning/voorziening',
+
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]: () =>
+    '/toeristische-verhuur/vergunning/bed-and-breakfast',
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV']]: () =>
+    '/toeristische-verhuur/vergunning/vakantieverhuur',
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: () =>
+    '/toeristische-verhuur/vergunning',
+
+  [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
+
+  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
+
+  [AppRoutes.ROOT]: (
+    match: Match,
+    { profileType, isAuthenticated }: TrackingConfig
+  ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
+};

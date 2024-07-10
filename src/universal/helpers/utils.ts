@@ -1,7 +1,7 @@
 import { KeyboardEvent, MouseEvent } from 'react';
 import { matchPath } from 'react-router-dom';
-import { PrivateRoutes } from '../config';
 import { differenceInMonths } from 'date-fns';
+import { PrivateRoutes } from '../../client/config/routes';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
