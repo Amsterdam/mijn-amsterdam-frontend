@@ -1,5 +1,5 @@
 import { Heading } from '@amsterdam/design-system-react';
-import { ThemaTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../config/thema';
 import {
   LinkdInline,
   PageContent,

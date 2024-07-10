@@ -6,7 +6,7 @@ import {
   Thema as ThemaType,
   Themas,
 } from '../../../universal/config';
-import { ThemaTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../config/thema';
 import { entries } from '../../../universal/helpers';
 import { IconBurgerZaken } from '../../assets/icons';
 import { Colors } from '../../config/app';

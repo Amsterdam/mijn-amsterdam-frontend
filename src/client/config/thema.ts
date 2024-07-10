@@ -1,9 +1,13 @@
 import { generatePath } from 'react-router-dom';
-import { AppState } from '../../client/AppState';
-import { getThemaTitleWithAppState } from '../../client/pages/HLI/helpers';
-import { LinkProps } from '../types/App.types';
-import { ExternalUrls } from './app';
-import { AppRoute, AppRoutes, TrackingConfig } from './routes';
+import { AppState } from '../AppState';
+import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
+import { LinkProps } from '../../universal/types/App.types';
+import { ExternalUrls } from '../../universal/config/app';
+import {
+  AppRoute,
+  AppRoutes,
+  TrackingConfig,
+} from '../../universal/config/routes';
 
 // Within the team we call these Themes / Thema's
 export type Thema =

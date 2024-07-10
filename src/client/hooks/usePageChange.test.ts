@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import * as rrd from 'react-router-dom';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
-import { NOT_FOUND_TITLE } from '../../universal/config/thema';
+import { NOT_FOUND_TITLE } from '../config/thema';
 import type { TrackingConfig } from '../../universal/config/routes';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { usePageChange } from './usePageChange';

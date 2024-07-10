@@ -1,7 +1,7 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
-import { BagThemas, Themas } from '../../../universal/config/thema';
+import { BagThemas, Themas } from '../../config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { BFFApiUrls } from '../../config/api';

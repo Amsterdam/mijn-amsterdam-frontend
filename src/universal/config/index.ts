@@ -1,5 +1,5 @@
 export * from './app';
-export * from './thema';
+export * from '../../client/config/thema';
 export * from './env';
 export * from './myarea-datasets';
 export * from './routes';

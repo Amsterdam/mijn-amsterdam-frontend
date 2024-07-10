@@ -3,7 +3,7 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, expect, it } from 'vitest';
 import { AppRoutes } from '../../../universal/config';
-import { Themas } from '../../../universal/config/thema';
+import { Themas } from '../../config/thema';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';

@@ -5,7 +5,7 @@ import {
   Screen,
 } from '@amsterdam/design-system-react';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
-import { Themas } from '../../../universal/config/thema';
+import { Themas } from '../../config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {

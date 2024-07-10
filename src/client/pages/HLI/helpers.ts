@@ -1,4 +1,4 @@
-import { ThemaTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../config/thema';
 import { AppState } from '../../AppState';
 
 export function getThemaTitle(hasStadspas: boolean, hasRegelingen: boolean) {

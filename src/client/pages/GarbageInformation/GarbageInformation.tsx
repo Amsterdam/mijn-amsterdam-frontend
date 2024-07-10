@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../../universal/config/thema';
+import { ThemaTitles } from '../../config/thema';
 import {
   getFullAddress,
   isError,

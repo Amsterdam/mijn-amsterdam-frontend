@@ -1,4 +1,4 @@
-import { Themas } from '../../../universal/config/thema';
+import { Themas } from '../../config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';

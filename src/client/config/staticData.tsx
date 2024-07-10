@@ -1,4 +1,4 @@
-import { Themas } from '../../universal/config/thema';
+import { Themas } from './thema';
 import { MyNotification } from '../../universal/types';
 import { ExternalUrls } from './app';
 
