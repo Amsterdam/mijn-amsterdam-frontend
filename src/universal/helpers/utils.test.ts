@@ -1,8 +1,6 @@
 import {
   deepOmitKeys,
   jsonCopy,
-  isExternalUrl,
-  isInteralUrl,
   sortAlpha,
   range,
   isRecentNotification,
@@ -39,16 +37,6 @@ describe('Utils.ts', () => {
     const testDataCopied = jsonCopy(testData);
     expect(testData !== testDataCopied).toBe(true);
     expect(testData.hello !== testDataCopied.hello).toBe(true);
-  });
-
-  it('isInternalUrl: Should check if url is external', () => {
-    expect(isInteralUrl('http://example.org')).toBe(false);
-    expect(isInteralUrl('http://mijn.amsterdam.nl')).toBe(true);
-  });
-
-  it('isExternalUrl: Should check if url is external', () => {
-    expect(isExternalUrl('http://example.org')).toBe(true);
-    expect(isExternalUrl('http://mijn.amsterdam.nl')).toBe(false);
   });
 
   it('sortAlpha: Should sort array of object by key => value', () => {

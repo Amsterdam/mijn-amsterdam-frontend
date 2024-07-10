@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath, matchPath } from 'react-router-dom';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Match } from '../../universal/types';
 
@@ -112,3 +112,14 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
     { profileType, isAuthenticated }: TrackingConfig
   ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };
+
+export function isPrivateRoute(pathname: string) {
+  return PrivateRoutes.some(
+    (path) =>
+      !!matchPath(pathname, {
+        path,
+        exact: true,
+        strict: true,
+      })
+  );
+}

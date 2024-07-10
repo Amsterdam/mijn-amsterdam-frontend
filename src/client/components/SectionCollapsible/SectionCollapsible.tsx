@@ -1,12 +1,12 @@
 import { Heading } from '@amsterdam/design-system-react';
+import { animated, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { ReactNode, useRef, useState } from 'react';
-import { animated, useSpring } from '@react-spring/web';
 import { useDebouncedCallback } from 'use-debounce';
-import { withKeyPress } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
 import { useContentDimensions, useSessionStorage } from '../../hooks';
+import { withKeyPress } from '../../utils/utils';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './SectionCollapsible.module.scss';
 

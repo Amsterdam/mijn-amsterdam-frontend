@@ -4,7 +4,6 @@ import type {
   AstNode,
   CMSFooterContent,
 } from '../../../server/services/cms-content';
-import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types';
 import { useCMSApi } from '../../hooks/api/useCmsApi';
 import { useDesktopScreen } from '../../hooks/media.hook';
@@ -12,6 +11,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './MainFooter.module.scss';
+import { isExternalUrl } from '../../utils/utils';
 
 interface FooterBlockProps {
   startOpen?: boolean;
