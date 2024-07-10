@@ -1,7 +1,7 @@
 import { Grid, Screen } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
-import { AppRoutes } from '../../../../universal/config';
+import { AppRoutes } from '../../../../universal/config/routes';
 import {
   DetailPage,
   ErrorAlert,

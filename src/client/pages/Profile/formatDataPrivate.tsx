@@ -1,11 +1,11 @@
-import { FeatureToggle } from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
-  defaultDateFormat,
-  entries,
+  formatBirthdate,
   getFullAddress,
   hasDutchNationality,
-  formatBirthdate,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/brp';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { entries } from '../../../universal/helpers/utils';
 import {
   Adres,
   BRPData,

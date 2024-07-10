@@ -1,14 +1,11 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
-import { dateSort, isError, isLoading } from '../../../universal/helpers';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  addTitleLinkComponent,
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   OverviewPage,
@@ -16,8 +13,11 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
   annualStatementsTableDisplayProps,

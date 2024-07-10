@@ -1,14 +1,17 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
+import Mockdate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { bffApi } from '../../test-utils';
-import { apiErrorResult, jsonCopy } from '../../universal/helpers';
+import { apiErrorResult } from '../../universal/helpers/api';
 import * as config from '../config';
 import {
   addServiceResultHandler,
   clearRequestCache,
   combineCookieChunks,
   decodeOIDCToken,
+  decryptCookieValue,
+  encryptCookieValue,
   getAuth,
   getAuthProfile,
   getOIDCToken,
@@ -24,15 +27,12 @@ import {
   verifyAuthenticated,
   verifyUserIdWithRemoteUserinfo,
   type TokenData,
-  encryptCookieValue,
-  decryptCookieValue,
 } from './app';
-import { cache } from './source-api-request';
-import Mockdate from 'mockdate';
 import {
   generateDevSessionCookieValue,
   signDevelopmentToken,
 } from './app.development';
+import { cache } from './source-api-request';
 
 const {
   oidcConfigDigid,

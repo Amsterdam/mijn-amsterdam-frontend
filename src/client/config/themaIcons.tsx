@@ -1,17 +1,17 @@
-import { Thema, Themas } from '../../universal/config';
+import { Thema, Themas } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
   IconAFIS,
-  IconAlert,
   IconAVG,
+  IconAlert,
   IconBelastingen,
   IconBezwaren,
   IconBodem,
   IconBurgerZaken,
   IconErfpacht,
   IconGarbage,
-  IconHomeCommercial,
   IconHLI,
+  IconHomeCommercial,
   IconHoreca,
   IconInkomen,
   IconInkomenSVWI,

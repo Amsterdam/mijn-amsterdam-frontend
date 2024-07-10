@@ -1,7 +1,10 @@
-import { apiErrorResult, apiSuccessResult } from '../../../universal/helpers';
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { captureException } from '../monitoring';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 
 export function decryptAndValidate(
   idEncrypted: string,

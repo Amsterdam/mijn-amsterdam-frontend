@@ -1,11 +1,11 @@
-import { BrowserRouter } from 'react-router-dom';
-import MyNotifications from './MyNotifications';
 import { render, screen } from '@testing-library/react';
-import { MyNotification } from '../../../universal/types';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { defaultDateFormat } from '../../../universal/helpers';
-import { vi, describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { MyNotification } from '../../../universal/types';
+import MyNotifications from './MyNotifications';
 
 describe('<MyNotifications />', () => {
   const callback = vi.fn();

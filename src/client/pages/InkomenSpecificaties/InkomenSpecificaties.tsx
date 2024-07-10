@@ -2,9 +2,9 @@ import classnames from 'classnames';
 import { parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
-import { isError, isLoading } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
   Button,

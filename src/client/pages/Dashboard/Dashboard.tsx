@@ -1,20 +1,20 @@
 import { useEffect, useMemo } from 'react';
 import { Link, generatePath, useHistory } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
-import { isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isLoading } from '../../../universal/helpers/api';
 import {
   DirectLinks,
-  MyThemasPanel,
   MyNotifications,
+  MyThemasPanel,
   Page,
   PageHeading,
 } from '../../components';
 import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import styles from './Dashboard.module.scss';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;

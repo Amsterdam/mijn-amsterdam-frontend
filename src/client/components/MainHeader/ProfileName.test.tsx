@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom, useAppStateGetter } from '../../hooks';
 import MockApp from '../../pages/MockApp';
 import { ProfileName } from './ProfileName';

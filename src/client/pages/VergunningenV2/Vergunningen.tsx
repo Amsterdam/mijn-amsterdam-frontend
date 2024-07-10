@@ -1,8 +1,8 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
-import { isError, isLoading } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { ThemaIcon } from '../../components';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useAppStateGetter } from '../../hooks/useAppState';

@@ -9,8 +9,8 @@ import {
   TextPage,
 } from '../../components';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { AppRoutes } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { Paragraph } from '@amsterdam/design-system-react';
 

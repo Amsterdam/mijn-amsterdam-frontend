@@ -1,9 +1,9 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
-import { remoteApi } from '../../test-utils';
-import { jsonCopy, omit } from '../../universal/helpers';
-import { axiosRequest } from '../helpers';
-import { AuthProfileAndToken } from '../helpers/app';
 import KrefiaData from '../../../mocks/fixtures/krefia.json';
+import { remoteApi } from '../../test-utils';
+import { jsonCopy, omit } from '../../universal/helpers/utils';
+import { AuthProfileAndToken } from '../helpers/app';
+import { axiosRequest } from '../helpers/source-api-request';
 import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
 
 describe('Kredietbank & FIBU service', () => {

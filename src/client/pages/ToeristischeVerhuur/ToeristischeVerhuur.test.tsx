@@ -2,24 +2,12 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import {
-  transformVergunningenToVerhuur,
-  VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur';
-import {
-  toeristischeVerhuurVergunningTypes,
-  transformVergunningenData,
-  Vergunning,
-  VergunningenData,
-} from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes } from '../../../universal/config';
-import { CaseType } from '../../../universal/types/vergunningen';
+import { AppRoutes } from '../../../universal/config/routes';
+import { jsonCopy } from '../../../universal/helpers/utils';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischeVerhuur from './ToeristischeVerhuur';
-import { jsonCopy } from '../../../universal/helpers';
 
 type VerhuurState = Pick<AppState, 'TOERISTISCHE_VERHUUR'>;
 

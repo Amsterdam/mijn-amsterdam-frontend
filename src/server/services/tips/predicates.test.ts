@@ -1,12 +1,15 @@
 import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import { ApiResponse, ApiSuccessResponse } from '../../../universal/helpers';
 import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import { transformBRPData } from '../brp';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
-import { AppState } from '../../../client/AppState';
+import type { AppState } from '../../../client/AppState';
+import {
+  ApiResponse,
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,

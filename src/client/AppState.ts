@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import type { ServiceID, ServicesType } from '../server/services/controller';
-import { FeatureToggle } from '../universal/config';
+import { FeatureToggle } from '../universal/config/feature-toggles';
 import { ApiResponse, apiPristineResult } from '../universal/helpers/api';
 import { BagThema } from './config/thema';
 

@@ -2,7 +2,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useState } from 'react';
 import type { FallbackProps } from 'react-error-boundary';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import AmsterdamLogoLarge from '../../assets/images/logo-amsterdam-large.svg?react';
 import AmsterdamLogo from '../../assets/images/logo-amsterdam.svg?react';
 import { LinkdInline } from '../../components';

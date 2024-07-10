@@ -1,20 +1,17 @@
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
-import {
-  addTitleLinkComponent,
   ErrorAlert,
-  ThemaIcon,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks';
 import styles from './Horeca.module.scss';
 

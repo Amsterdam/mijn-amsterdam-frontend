@@ -1,4 +1,4 @@
-import { defaultDateFormat } from '../../../../universal/helpers';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';

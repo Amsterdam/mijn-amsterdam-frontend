@@ -1,21 +1,18 @@
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
-import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks';
 
 const DISPLAY_PROPS_BODEM = {

@@ -1,12 +1,9 @@
 import { useMemo } from 'react';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  addTitleLinkComponent,
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   MaintenanceNotifications,
   OverviewPage,
@@ -14,7 +11,10 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Burgerzaken.module.scss';
 

@@ -6,20 +6,18 @@ import {
   StadspasBudget,
   StadspasTransaction,
 } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse,
   apiPristineResult,
   isError,
   isLoading,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { IconChevronRight } from '../../assets/icons';
 import {
   Button,
-  ThemaIcon,
   DetailPage,
   ErrorAlert,
   Linkd,
@@ -28,7 +26,9 @@ import {
   PageContent,
   PageHeading,
   Pagination,
+  ThemaIcon,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';

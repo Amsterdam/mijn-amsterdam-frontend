@@ -1,6 +1,6 @@
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
-import { AppRoutes } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
   InfoDetail,

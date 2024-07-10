@@ -2,7 +2,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ConfigParams } from 'express-openid-connect';
 import https from 'https';
 import * as jose from 'jose';
-import { FeatureToggle } from '../universal/config';
+import { FeatureToggle } from '../universal/config/feature-toggles';
 import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { jsonCopy } from '../universal/helpers/utils';
 import { TokenData } from './helpers/app';

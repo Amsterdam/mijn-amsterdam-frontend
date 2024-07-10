@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Thema } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Thema } from '../../../universal/config/thema';
 import { LinkProps } from '../../../universal/types';
 import { ThemaMenuItem, ThemaTitles } from '../../config/thema';
 

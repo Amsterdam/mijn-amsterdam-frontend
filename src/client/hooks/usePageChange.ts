@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
-import { AppRoute, AppRoutes } from '../../universal/config';
+import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { ExcludePageViewTrackingUrls } from '../config/api';
 import { CustomTrackingUrls, TrackingConfig } from '../config/routes';
 import {

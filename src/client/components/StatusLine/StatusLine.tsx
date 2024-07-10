@@ -1,14 +1,9 @@
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { CSSProperties } from 'react';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { ComponentChildren } from '../../../universal/types';
-import {
-  GenericDocument,
-  ZaakDetail,
-} from '../../../universal/types/App.types';
-import { IconChevronLeft } from '../../assets/icons';
-import { Button } from '../Button/Button';
+import { GenericDocument } from '../../../universal/types/App.types';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';

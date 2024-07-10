@@ -1,6 +1,6 @@
 import type { AppState } from '../../../client/AppState';
-import { Thema } from '../../../universal/config';
-import { ApiResponse } from '../../../universal/helpers';
+import { Thema } from '../../../universal/config/thema';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types';
 
 export type ServiceResults = { [serviceId: string]: ApiResponse<any> };

@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import { ReactNode } from 'react';
 import { RecoilRoot } from 'recoil';
 import type { Vergunning } from '../../../server/services';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks';
 import {

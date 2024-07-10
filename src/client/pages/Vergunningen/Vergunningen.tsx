@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
 import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';

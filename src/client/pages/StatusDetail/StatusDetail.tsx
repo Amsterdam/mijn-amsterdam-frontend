@@ -1,8 +1,3 @@
-import { ReactElement, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { AppRoutes, Thema } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
-
 import {
   Alert as DSAlert,
   Grid,
@@ -10,6 +5,11 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
+import { ReactElement, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Thema } from '../../../universal/config/thema';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   GenericDocument,
   StatusLine,

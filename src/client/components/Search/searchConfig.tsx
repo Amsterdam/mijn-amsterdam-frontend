@@ -17,12 +17,14 @@ import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-v
 import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 
+import { HLIresponseData } from '../../../server/services/hli/regelingen-types';
 import { StadspasResponseData } from '../../../server/services/hli/stadspas-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
-import { AppRoutes, FeatureToggle } from '../../../universal/config';
-import { getFullAddress, getFullName } from '../../../universal/helpers';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import {
   defaultDateFormat,
   displayDateRange,
@@ -37,7 +39,6 @@ import {
 import { AppStateKey } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
-import { HLIresponseData } from '../../../server/services/hli/regelingen-types';
 
 export interface SearchEntry {
   url: string;

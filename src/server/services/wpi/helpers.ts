@@ -1,7 +1,11 @@
 import { differenceInMonths, format } from 'date-fns';
-import { generatePath, LinkProps } from 'react-router-dom';
-import { AppRoutes, Thema } from '../../../universal/config';
+import { LinkProps, generatePath } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Thema } from '../../../universal/config/thema';
 import { GenericDocument, MyNotification } from '../../../universal/types';
+import { BffEndpoints } from '../../config';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
@@ -11,9 +15,6 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
-import { BffEndpoints } from '../../config';
-import { encrypt } from '../../helpers/encrypt-decrypt';
 
 export function transformToStatusLine(
   sessionID: AuthProfileAndToken['profile']['sid'],

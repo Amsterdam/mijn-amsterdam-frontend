@@ -1,9 +1,6 @@
-import { AppRoutes } from '../../../universal/config';
-import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
   Linkd,

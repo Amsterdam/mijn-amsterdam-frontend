@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router-dom';
 import classnames from 'classnames';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';

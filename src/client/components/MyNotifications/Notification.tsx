@@ -3,7 +3,7 @@ import { animated, useSpring } from '@react-spring/web';
 import { useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { InnerHtml } from '..';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   MyNotification as MyNotificationBase,
   SVGComponent,
@@ -17,11 +17,11 @@ import {
   useProfileTypeValue,
 } from '../../hooks';
 import { trackEvent } from '../../utils/monitoring';
+import { isInteralUrl } from '../../utils/utils';
 import Linkd from '../Button/Button';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import ThemaIcon from '../ThemaIcon/ThemaIcon';
 import styles from './MyNotifications.module.scss';
-import { isInteralUrl } from '../../utils/utils';
 
 export interface MyNotification extends MyNotificationBase {
   Icon?: SVGComponent;

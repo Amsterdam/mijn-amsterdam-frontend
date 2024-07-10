@@ -1,7 +1,8 @@
-import { AppRoutes, ThemaMenuItem } from '../../../universal/config';
-import { ThemaIcons } from '../../config/themaIcons';
 import { Heading } from '@amsterdam/design-system-react';
+import { AppRoutes } from '../../../universal/config/routes';
 import { IconInfo } from '../../assets/icons';
+import { ThemaMenuItem } from '../../config/thema';
+import { ThemaIcons } from '../../config/themaIcons';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';

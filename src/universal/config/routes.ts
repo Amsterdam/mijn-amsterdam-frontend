@@ -68,5 +68,5 @@ export const AppRoutes = {
   ZAAK_STATUS: '/zaak-status',
 } as const;
 
-type RouteKey = keyof typeof AppRoutes;
+export type RouteKey = keyof typeof AppRoutes;
 export type AppRoute = (typeof AppRoutes)[RouteKey];

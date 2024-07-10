@@ -1,5 +1,5 @@
 import type { ZwaarVerkeer as ZwaarVerkeerType } from '../../../server/services';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';

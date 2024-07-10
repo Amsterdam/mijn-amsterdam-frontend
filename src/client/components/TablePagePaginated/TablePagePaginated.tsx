@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { Thema } from '../../../universal/config';
+
+import { Thema } from '../../../universal/config/thema';
 import {
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -11,6 +11,7 @@ import {
   Pagination,
   Section,
   Table,
+  ThemaIcon,
 } from '../../components';
 import { TableProps } from '../../components/Table/Table';
 import styles from './TablePagePaginated.module.scss';

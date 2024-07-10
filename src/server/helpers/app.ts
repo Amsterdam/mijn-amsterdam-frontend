@@ -6,13 +6,13 @@ import memoize from 'memoizee';
 import { createSecretKey, hkdfSync } from 'node:crypto';
 import { generatePath, matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
-import { IS_AP } from '../../universal/config';
+import { IS_AP } from '../../universal/config/env';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/feature-toggles';
 import {
   ApiResponse,
   apiErrorResult,
   apiSuccessResult,
-} from '../../universal/helpers';
+} from '../../universal/helpers/api';
 import {
   BFF_API_BASE_URL,
   IS_DEBUG,
@@ -27,9 +27,9 @@ import {
   oidcConfigDigid,
   oidcConfigEherkenning,
 } from '../config';
+import { captureException, captureMessage } from '../services/monitoring';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
-import { captureException, captureMessage } from '../services/monitoring';
 
 // const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 

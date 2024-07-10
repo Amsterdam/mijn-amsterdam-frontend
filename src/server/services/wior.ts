@@ -1,6 +1,10 @@
 import { LatLngBoundsLiteral } from 'leaflet';
-import { Themas, FeatureToggle } from '../../universal/config';
-import { apiDependencyError, apiSuccessResult } from '../../universal/helpers';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { Themas } from '../../universal/config/thema';
+import {
+  apiDependencyError,
+  apiSuccessResult,
+} from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../helpers/app';
 import { fetchDataset } from './buurt/buurt';
 import { datasetEndpoints } from './buurt/datasets';

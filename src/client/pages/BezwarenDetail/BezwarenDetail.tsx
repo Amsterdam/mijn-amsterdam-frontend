@@ -1,13 +1,10 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
-import { AppRoutes } from '../../../universal/config';
-import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-  uniqueArray,
-} from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { uniqueArray } from '../../../universal/helpers/utils';
 import {
   DetailPage,
   ErrorAlert,

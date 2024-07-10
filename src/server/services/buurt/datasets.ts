@@ -2,11 +2,11 @@ import { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   Colors,
   FeatureToggle,
 } from '../../../universal/config/feature-toggles';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   DATASETS,
   DatasetCategoryId,
@@ -16,10 +16,14 @@ import {
   DatasetPropertyValue,
   FeatureType,
 } from '../../../universal/config/myarea-datasets';
-import { capitalizeFirstLetter, uniqueArray } from '../../../universal/helpers';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { uniqueArray } from '../../../universal/helpers/utils';
 import { DataRequestConfig } from '../../config';
-import { axiosRequest, getNextUrlFromLinkHeader } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
+import {
+  axiosRequest,
+  getNextUrlFromLinkHeader,
+} from '../../helpers/source-api-request';
 import {
   discoverSingleDsoApiEmbeddedResponse,
   dsoApiListUrl,

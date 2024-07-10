@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react';
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import {

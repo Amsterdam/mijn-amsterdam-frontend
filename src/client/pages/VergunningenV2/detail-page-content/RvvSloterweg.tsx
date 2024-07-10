@@ -1,5 +1,5 @@
 import type { RVVSloterweg } from '../../../../server/services';
-import { defaultDateFormat } from '../../../../universal/helpers';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { StatusLineItem } from '../../../../universal/types';
 import { InfoDetail } from '../../../components';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';

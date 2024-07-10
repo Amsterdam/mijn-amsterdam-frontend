@@ -1,21 +1,21 @@
 import { useMemo } from 'react';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
-  addTitleLinkComponent,
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   LinkdInline,
+  MaintenanceNotifications,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  MaintenanceNotifications,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Zorg.module.scss';
 

@@ -1,20 +1,18 @@
 import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import memoryCache from 'memory-cache';
-import {
-  apiErrorResult,
-  apiPostponeResult,
-  apiSuccessResult,
-} from '../../universal/helpers';
+
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
+  apiErrorResult,
+  apiPostponeResult,
+  apiSuccessResult,
 } from '../../universal/helpers/api';
 import {
   ApiUrlEntries,
   BFF_REQUEST_CACHE_ENABLED,
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
-  IS_DEBUG,
 } from '../config';
 import { captureException } from '../services/monitoring';
 import { AuthProfileAndToken } from './app';

@@ -1,20 +1,17 @@
 import classnames from 'classnames';
 
 import { matchPath, useLocation } from 'react-router-dom';
-import {
-  AppRoutes,
-  Thema as ThemaType,
-  Themas,
-} from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
-import { entries } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Thema, Themas } from '../../../universal/config/thema';
+import { entries } from '../../../universal/helpers/utils';
 import { IconBurgerZaken } from '../../assets/icons';
 import { Colors } from '../../config/app';
+import { ThemaTitles } from '../../config/thema';
 import { ThemaIcons } from '../../config/themaIcons';
 import styles from './ThemaIcon.module.scss';
 
 export interface ThemaIconProps {
-  thema?: ThemaType;
+  thema?: Thema;
   fill?: string;
   className?: string;
 }
@@ -26,7 +23,7 @@ export default function ThemaIcon({
 }: ThemaIconProps) {
   const location = useLocation();
 
-  let matchThema: ThemaType = thema || Themas.ROOT;
+  let matchThema: Thema = thema || Themas.ROOT;
   let label = thema;
   if (!thema) {
     const route = entries(AppRoutes).find(([themaId, path]) => {
@@ -38,7 +35,7 @@ export default function ThemaIcon({
       return !!(match && themaId);
     });
     if (route) {
-      matchThema = route[0].split('/')[0] as ThemaType;
+      matchThema = route[0].split('/')[0] as Thema;
       label = ThemaTitles[matchThema];
     }
   }

@@ -1,8 +1,8 @@
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 import { VakantieverhuurVergunning as VakantieverhuurVergunningDecos } from '../../../server/services/vergunningen/vergunningen';
-import { FeatureToggle } from '../../../universal/config';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { DocumentList, LinkdInline, PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,

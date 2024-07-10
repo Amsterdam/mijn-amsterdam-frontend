@@ -1,20 +1,17 @@
 import { generatePath, useParams } from 'react-router-dom';
 import type { Klacht } from '../../../server/services/klachten/types';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
-import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoDetail,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks';
 import { KLACHTEN_PAGE_SIZE } from '../Klachten/Klachten';
 

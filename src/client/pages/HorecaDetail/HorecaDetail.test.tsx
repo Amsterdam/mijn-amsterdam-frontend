@@ -9,7 +9,7 @@ import {
   VergunningenSourceData,
 } from '../../../server/services/vergunningen/vergunningen';
 import { horecaOptions } from '../../../server/services/horeca';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks';
 import MockApp from '../MockApp';
 import HorecaDetail from './HorecaDetail';

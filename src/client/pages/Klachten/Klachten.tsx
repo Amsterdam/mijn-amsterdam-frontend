@@ -1,10 +1,10 @@
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
+import type { Klacht } from '../../../server/services/klachten/types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  addTitleLinkComponent,
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
@@ -12,14 +12,11 @@ import {
   Pagination,
   SectionCollapsible,
   Table,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
-import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks';
-import type { Klacht } from '../../../server/services/klachten/types';
 import styles from './Klachten.module.scss';
 
 const DISPLAY_PROPS_KLACHTEN = {

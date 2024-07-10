@@ -1,14 +1,19 @@
 import axios from 'axios';
+import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { Themas } from '../../../universal/config/index';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import {
+  ApiResponse,
   apiDependencyError,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import {
+  hash,
   isRecentNotification,
-} from '../../../universal/helpers';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
-import { hash, sortAlpha } from '../../../universal/helpers/utils';
+  sortAlpha,
+} from '../../../universal/helpers/utils';
 import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
@@ -22,13 +27,12 @@ import {
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { BffEndpoints, ONE_SECOND_MS, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import {
   NotificationLabels,
   notificationContent,
 } from './vergunningen-content';
-import memoizee from 'memoizee';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']

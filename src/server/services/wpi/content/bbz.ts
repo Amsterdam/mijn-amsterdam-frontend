@@ -1,4 +1,4 @@
-import { defaultDateTimeFormat } from '../../../../universal/helpers';
+import { defaultDateTimeFormat } from '../../../../universal/helpers/date';
 import { documentDownloadName, productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';

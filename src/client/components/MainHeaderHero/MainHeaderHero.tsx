@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import styles from './MainHeaderHero.module.scss';
 import { useLocation, matchPath } from 'react-router-dom';
 import classnames from 'classnames';

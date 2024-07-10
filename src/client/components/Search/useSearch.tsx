@@ -14,8 +14,7 @@ import {
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
-import { AppRoutes } from '../../../universal/config';
-import { pick, uniqueArray } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { AppState, AppStateKey } from '../../AppState';
 import { IconMarker } from '../../assets/icons';
@@ -36,6 +35,7 @@ import {
   SearchConfigRemote,
   SearchEntry,
 } from './searchConfig';
+import { uniqueArray } from '../../../universal/helpers/utils';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
@@ -74,7 +74,7 @@ export function generateSearchIndexPageEntry(
       searchEntry.keywords = [
         ...(searchEntry.keywords || []),
         ...generatedKeywordValues,
-      ];
+      ] as string[];
     } else {
       const key: keyof SearchEntry = prop;
       // @ts-expect-error

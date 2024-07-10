@@ -1,8 +1,8 @@
-import { create, clearCacheById, Cache } from 'flat-cache';
+import { Cache, clearCacheById, create } from 'flat-cache';
 import fs from 'fs';
-import path from 'path';
 import { createHash } from 'node:crypto';
-import { IS_AP } from '../../universal/config';
+import path from 'path';
+import { IS_AP } from '../../universal/config/env';
 
 interface FileCacheProps {
   name: string;

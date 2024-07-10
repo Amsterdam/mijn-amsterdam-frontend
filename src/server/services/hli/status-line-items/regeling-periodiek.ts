@@ -1,4 +1,4 @@
-import { defaultDateFormat } from '../../../../universal/helpers';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 
 export const REGELING_PERIODIEK: ZorgnedStatusLineItemTransformerConfig[] = [

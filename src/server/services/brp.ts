@@ -1,21 +1,23 @@
 import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Themas } from '../../universal/config';
-import { defaultDateFormat } from '../../universal/helpers';
+
+import { AppRoutes } from '../../universal/config/routes';
+import { Themas } from '../../universal/config/thema';
 import {
   ApiResponse,
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { defaultDateFormat } from '../../universal/helpers/date';
 import {
   BRPData,
   BRPDataFromSource,
   MyNotification,
 } from '../../universal/types';
 import { BffEndpoints, getApiConfig } from '../config';
-import { requestData } from '../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../helpers/app';
+import { requestData } from '../helpers/source-api-request';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;

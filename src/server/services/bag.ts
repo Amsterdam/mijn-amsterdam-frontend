@@ -1,5 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
-import { apiErrorResult } from '../../universal/helpers';
+import { apiErrorResult } from '../../universal/helpers/api';
 import {
   getBagResult,
   getBagSearchAddress,
@@ -7,8 +7,8 @@ import {
 } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';
-import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
+import { requestData } from '../helpers/source-api-request';
 
 export interface BAGData {
   latlng: LatLngLiteral | null;

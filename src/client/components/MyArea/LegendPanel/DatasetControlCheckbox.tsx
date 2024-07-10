@@ -6,7 +6,7 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-} from '../../../../universal/config';
+} from '../../../../universal/config/myarea-datasets';
 import Checkbox from '../../Checkbox/Checkbox';
 import { filterActiveDatasets } from '../MyArea.hooks';
 import styles from './PanelComponent.module.scss';

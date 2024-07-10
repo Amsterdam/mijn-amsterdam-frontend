@@ -10,7 +10,8 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { AppRoutes, FeatureToggle } from '../universal/config';
+import { FeatureToggle } from '../universal/config/feature-toggles';
+import { AppRoutes } from '../universal/config/routes';
 
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';

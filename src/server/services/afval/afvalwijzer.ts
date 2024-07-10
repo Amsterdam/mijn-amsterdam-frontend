@@ -1,5 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   GarbageFractionCode,
   GarbageFractionInformationTransformed,

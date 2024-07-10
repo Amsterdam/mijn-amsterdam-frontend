@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
-import { Thema } from '../config';
+import { Thema } from '../config/thema';
 
 // Generic object interface
 export interface Unshaped {

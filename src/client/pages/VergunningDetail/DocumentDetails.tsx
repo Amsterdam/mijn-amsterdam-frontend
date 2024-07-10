@@ -4,15 +4,13 @@ import type {
   VergunningDocument,
 } from '../../../server/services/vergunningen/vergunningen';
 import {
-  apiPristineResult,
   ApiResponse,
+  apiPristineResult,
   apiSuccessResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { GenericDocument } from '../../../universal/types';
 import DocumentList from '../../components/DocumentList/DocumentList';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../components/InfoDetail/InfoDetail';
+import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { useDataApi } from '../../hooks/api/useDataApi';
 

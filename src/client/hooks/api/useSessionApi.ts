@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import type { AuthProfile } from '../../../server/helpers/app';
-import { ApiSuccessResponse } from '../../../universal/helpers';
 import {
   ApiErrorResponse,
+  ApiSuccessResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AUTH_API_URL, LOGOUT_URL } from '../../config/api';

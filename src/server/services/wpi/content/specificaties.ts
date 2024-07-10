@@ -1,14 +1,18 @@
 import { differenceInMonths } from 'date-fns';
-import { Themas, IS_PRODUCTION } from '../../../../universal/config';
-import { dateFormat, defaultDateFormat } from '../../../../universal/helpers';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { Themas } from '../../../../universal/config/thema';
+import {
+  dateFormat,
+  defaultDateFormat,
+} from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
+import { AuthProfileAndToken } from '../../../helpers/app';
 import { ServiceResults } from '../../tips/tip-types';
 import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
 import type {
   WpiIncomeSpecification,
   WpiIncomeSpecificationTransformed,
 } from '../wpi-types';
-import { AuthProfileAndToken } from '../../../helpers/app';
 
 const MONTHS_TO_KEEP_UITKERING_NOTIFICATION = 1;
 const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;

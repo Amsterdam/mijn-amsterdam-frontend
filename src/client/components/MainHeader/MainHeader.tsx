@@ -2,7 +2,7 @@ import { Header, PageMenu } from '@amsterdam/design-system-react';
 import { animated, useSpring } from '@react-spring/web';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ErrorMessages } from '../../components';
 import { getApiErrors } from '../../config/api';
 import { ThemaTitles } from '../../config/thema';

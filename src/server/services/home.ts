@@ -2,12 +2,14 @@ import {
   DEFAULT_LAT,
   DEFAULT_LNG,
 } from '../../universal/config/myarea-datasets';
-import { apiDependencyError, isMokum } from '../../universal/helpers';
+
 import {
   ApiResponse,
+  apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { isMokum } from '../../universal/helpers/brp';
 import { Adres } from '../../universal/types';
 import { AuthProfileAndToken } from '../helpers/app';
 import { BAGData, fetchBAG } from './bag';

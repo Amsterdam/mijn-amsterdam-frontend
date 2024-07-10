@@ -1,9 +1,9 @@
-import { Heading, LinkList, MegaMenu } from '@amsterdam/design-system-react';
-import { ThemaMenuItem } from '../../../universal/config';
-import styles from './MegaMenu.module.scss';
-import { MenuItem } from '../MainHeader/MainHeader.constants';
+import { Heading, MegaMenu } from '@amsterdam/design-system-react';
+import { ThemaMenuItem } from '../../config/thema';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { MenuItem } from '../MainHeader/MainHeader.constants';
 import { SecondaryLinks } from '../MainHeader/SecondaryLinks';
+import styles from './MegaMenu.module.scss';
 
 type Props = {
   menuItems: MenuItem[];

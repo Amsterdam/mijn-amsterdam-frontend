@@ -1,6 +1,6 @@
 import { Icon } from '@amsterdam/design-system-react';
 import { LogoutIcon } from '@amsterdam/design-system-react-icons';
-import { isError } from '../../../universal/helpers';
+import { isError } from '../../../universal/helpers/api';
 import { LOGOUT_URL } from '../../config/api';
 import { useAppStateGetter, useProfileTypeValue } from '../../hooks';
 import { useSessionValue } from '../../hooks/api/useSessionApi';

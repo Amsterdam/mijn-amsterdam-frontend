@@ -8,8 +8,8 @@ import {
 import { generatePath } from 'react-router-dom';
 import { HLIRegeling } from '../../../server/services/hli/regelingen-types';
 import { Stadspas } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
   LoadingContent,

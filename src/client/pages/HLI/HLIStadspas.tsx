@@ -4,17 +4,16 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { StadspasTransaction } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse,
   apiPristineResult,
   isError,
   isLoading,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import {
   DetailPage,
   ErrorAlert,

@@ -5,7 +5,7 @@ import {
   DEFAULT_LAT,
   DEFAULT_LNG,
   LOCATION_ZOOM,
-} from '../../../universal/config';
+} from '../../../universal/config/myarea-datasets';
 import {
   extractAddress,
   getLatLonByAddress,

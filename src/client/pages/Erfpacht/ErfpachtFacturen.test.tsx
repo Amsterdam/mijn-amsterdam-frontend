@@ -7,7 +7,7 @@ import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
 } from '../../../server/services/simple-connect/erfpacht';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../AppState';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';

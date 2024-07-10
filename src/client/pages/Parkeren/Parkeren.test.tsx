@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 
 import MockApp from '../MockApp';

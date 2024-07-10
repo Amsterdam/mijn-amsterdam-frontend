@@ -1,13 +1,13 @@
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
-import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { formattedTimeFromSeconds } from '../../../universal/helpers';
+import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
 import { ComponentChildren } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import Linkd, { Button, ButtonStyles } from '../Button/Button';
+import Linkd, { Button } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 

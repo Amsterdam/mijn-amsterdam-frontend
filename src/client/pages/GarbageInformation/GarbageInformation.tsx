@@ -1,12 +1,8 @@
+import { Link } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { AppRoutes } from '../../../universal/config';
-import { ThemaTitles } from '../../config/thema';
-import {
-  getFullAddress,
-  isError,
-  isLoading,
-  isMokum,
-} from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { getFullAddress, isMokum } from '../../../universal/helpers/brp';
 import {
   GarbageFractionCode,
   GarbageFractionInformationTransformed,
@@ -20,10 +16,9 @@ import {
   IconAfvalTextiel,
 } from '../../assets/icons/map';
 import {
-  ErrorAlert,
   Button,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoDetail,
   InnerHtml,
   Linkd,
@@ -32,15 +27,16 @@ import {
   MaintenanceNotifications,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
 import { ButtonBody, buttonStyle } from '../../components/Button/Button';
 import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
 import { ExternalUrls } from '../../config/app';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
-import { Link } from '@amsterdam/design-system-react';
 
 function GarbageInfoDetail({ ...props }: InfoDetailProps) {
   return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;

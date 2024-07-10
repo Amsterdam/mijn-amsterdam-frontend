@@ -4,7 +4,7 @@ import {
   VergunningDocument,
   VergunningFrontendV2,
 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';

@@ -25,7 +25,7 @@ import {
   DatasetPropertyValue,
   HOOD_ZOOM,
 } from '../../../universal/config/myarea-datasets';
-import { getFullAddress } from '../../../universal/helpers';
+import { getFullAddress } from '../../../universal/helpers/brp';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter, useAppStateReady } from '../../hooks';

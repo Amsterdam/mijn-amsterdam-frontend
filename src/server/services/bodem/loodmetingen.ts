@@ -1,15 +1,11 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Themas } from '../../../universal/config';
 import {
-  apiDependencyError,
-  apiSuccessResult,
+  isRecentNotification,
   sortAlpha,
-} from '../../../universal/helpers';
-import { isRecentNotification } from '../../../universal/helpers/utils';
+} from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
   Lood365Response,
@@ -19,12 +15,19 @@ import {
   LoodMetingen,
 } from './types';
 
+import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
+import {
+  apiDependencyError,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { requestData } from '../../helpers/source-api-request';
 import { captureException } from '../monitoring';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
 } from '../shared/document-download-route-handler';
-import { encrypt } from '../../helpers/encrypt-decrypt';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {

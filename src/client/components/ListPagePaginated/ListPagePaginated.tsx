@@ -2,13 +2,13 @@ import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import { ReactNode, useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import {
-  ThemaIcon,
   ErrorAlert,
   LoadingContent,
   OverviewPage,
   PageHeading,
+  ThemaIcon,
 } from '..';
-import { Thema } from '../../../universal/config';
+import { Thema } from '../../../universal/config/thema';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { TableV2 } from '../Table/TableV2';
 
