@@ -7,7 +7,13 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     leveringsVorm: '',
     productsoortCodes: ['AV-ALG'],
-    productIdentificatie: ['AV-UPC', 'AV-PCV', 'AV-PCVZIL', 'AV-UPCZIL'],
+    productIdentificatie: [
+      'AV-UPC',
+      'AV-PCV',
+      'AV-PCVC',
+      'AV-PCVZIL',
+      'AV-UPCZIL',
+    ],
     lineItemTransformers: PCVERGOEDING,
   },
   {
