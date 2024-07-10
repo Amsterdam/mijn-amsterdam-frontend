@@ -2,13 +2,10 @@ import { generatePath } from 'react-router-dom';
 import { AppState } from '../AppState';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { LinkProps } from '../../universal/types/App.types';
-import { ExternalUrls } from '../../universal/config/feature-toggles';
-import {
-  AppRoute,
-  AppRoutes,
-  TrackingConfig,
-} from '../../universal/config/routes';
+import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
+import { ExternalUrls } from './external-urls';
+import { TrackingConfig } from './routes';
 
 export type BagThema = `${Thema}_BAG`;
 
@@ -87,6 +84,7 @@ export const DocumentTitles: {
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
   [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
   [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
+  [AppRoutes['HLI/REGELINGEN_LIJST']]: `Regelingen | ${ThemaTitles.HLI}`,
 
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
@@ -98,6 +96,8 @@ export const DocumentTitles: {
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
   [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
+  [AppRoutes['VERGUNNINGEN/LIST']]:
+    `Vergunningen | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes.KVK]: `Mijn onderneming`,
@@ -133,6 +133,8 @@ export const DocumentTitles: {
   [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
+  [AppRoutes.AFIS]: 'Facturen en betalen | Mijn Amsterdam',
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
