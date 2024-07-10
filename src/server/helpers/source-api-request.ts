@@ -24,9 +24,9 @@ export const axiosRequest = axios.create({
 });
 
 function debugResponseData(responseData: any) {
-  console.debug('\x1b[33m%s\x1b[0m', `\n\nResponse:\n`);
-  console.debug('\x1b[33m%s\x1b[0m', responseData);
-  console.debug('\x1b[33m%s\x1b[0m', `\nEnd response from `);
+  console.debug('\n\nResponse:\n');
+  console.debug(responseData);
+  console.debug('\nEnd response from');
   return responseData;
 }
 
@@ -41,7 +41,7 @@ if (debugResponseDataTerms) {
         return response.config.url?.includes(term.trim());
       })
     ) {
-      console.log('\x1b[33m%s\x1b[0m', response.config.url);
+      console.debug(response.config.url, '\n\n');
     }
     return response;
   });
