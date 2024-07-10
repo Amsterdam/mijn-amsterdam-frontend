@@ -4,10 +4,7 @@ import { ApiResponse, isError, isLoading } from '../../universal/helpers';
 import { themasByProfileType } from '../config/menuItems';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-import {
-  getThemaMenuItemsAppState,
-  isThemaActive,
-} from '../../universal/helpers/themas';
+import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
 
 export interface ThemasState {
   items: ThemaMenuItem[];

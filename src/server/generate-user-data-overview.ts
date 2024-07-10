@@ -29,7 +29,7 @@ import {
 import { differenceInYears, parseISO } from 'date-fns';
 
 import { PRISTINE_APPSTATE, type AppState } from '../client/AppState';
-import { isThemaActive } from '../universal/helpers/themas';
+import { isThemaActive } from '../client/config/themas';
 import { ServiceResults } from './services/tips/tip-types';
 import { Thema } from '../universal/config';
 import { testAccounts } from '../universal/config/auth.development';

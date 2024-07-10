@@ -1,8 +1,8 @@
-import { isLoading, isMokum } from '.';
-import type { AppState, AppStateKey } from '../../client/AppState';
-import { ThemaMenuItem } from '../../client/config/thema';
-import { FeatureToggle } from '../config/app';
-import { Themas } from '../config/thema';
+import { isLoading, isMokum } from '../../universal/helpers';
+import type { AppState, AppStateKey } from '../AppState';
+import { ThemaMenuItem } from './thema';
+import { FeatureToggle } from '../../universal/config/app';
+import { Themas } from '../../universal/config/thema';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
