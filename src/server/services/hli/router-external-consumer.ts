@@ -27,6 +27,11 @@ router.get(
   }
 );
 
+router.get(
+  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
+  sendAdministratienummerResponse
+);
+
 async function sendAdministratienummerResponse(req: Request, res: Response) {
   let authProfileAndToken: AuthProfileAndToken | null = null;
   try {
@@ -67,8 +72,9 @@ async function sendAdministratienummerResponse(req: Request, res: Response) {
 }
 
 router.get(
-  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
-  sendAdministratienummerResponse
+  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
+  apiKeyVerificationHandler,
+  sendStadspassenResponse
 );
 
 async function sendStadspassenResponse(
@@ -95,12 +101,6 @@ async function sendStadspassenResponse(
   }
   return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
 }
-
-router.get(
-  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
-  apiKeyVerificationHandler,
-  sendStadspassenResponse
-);
 
 export const stadspasExternalConsumerRouter = router;
 
