@@ -3,8 +3,6 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85',
   CHANGE_RESIDENT_COUNT:
     'https://www.amsterdam.nl/veelgevraagd/onjuiste-inschrijving-melden-ef918',
-  CHANGE_KVK_DATA:
-    'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
@@ -12,7 +10,6 @@ export const ExternalUrls = {
   BERICHTENBOX_BURGERS: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   BERICHTENBOX_ONDERNEMERS:
     'https://www.digitaleoverheid.nl/overzicht-van-alle-onderwerpen/berichtenbox-voor-bedrijven/',
-  CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:
     'https://www.amsterdam.nl/nieuwsbrieven/actueel/nieuwsbrief/nieuwsbrief/',
   AMSTERDAM_TWITTER: 'https://twitter.com/AmsterdamNL',
@@ -36,11 +33,6 @@ export const ExternalUrls = {
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL: 'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
-  AFVAL_AFSPRAAK_MAKEN:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofafval.aspx',
-  AMSTERDAM_COMPLAINTS_FROM:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx',
-  AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
   AFVAL_MELDING_FORMULIER:
     'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
   AFVAL_MELDING:
