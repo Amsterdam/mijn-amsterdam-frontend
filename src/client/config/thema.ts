@@ -194,8 +194,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.ERFPACHT,
     id: Themas.ERFPACHT,
-    to: import.meta.env
-      .REACT_APP_SSO_URL_BELASTINGENREACT_APP_SSO_URL_MIJNERFPACHT,
+    to: import.meta.env.REACT_APP_SSO_URL_MIJNERFPACHT,
     rel: 'external',
     profileTypes: ['private'],
   },
