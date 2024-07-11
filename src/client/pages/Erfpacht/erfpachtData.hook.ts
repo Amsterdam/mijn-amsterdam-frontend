@@ -1,9 +1,8 @@
 import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
-import { isLoading } from '../../../universal/helpers';
+import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/Table';
 import { useMediumScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Erfpacht.module.scss';
 
 type DisplayPropsDossiers = Record<string, string> & {
   voorkeursadres: string;

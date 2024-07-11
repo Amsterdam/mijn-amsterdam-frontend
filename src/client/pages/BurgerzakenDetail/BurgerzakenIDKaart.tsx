@@ -1,22 +1,20 @@
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
-  capitalizeFirstLetter,
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
-import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoDetail,
   LoadingContent,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
-import styles from './BurgerzakenDetail.module.scss';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import styles from './BurgerzakenDetail.module.scss';
 
 export default function BurgerzakenIDKaart() {
   const { BRP } = useAppStateGetter();

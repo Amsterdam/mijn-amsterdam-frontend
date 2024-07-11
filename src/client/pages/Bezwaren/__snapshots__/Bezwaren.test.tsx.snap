@@ -595,27 +595,6 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           <table
             class="_Table_a66dcc _DocumentsTable_995d68"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Zaaknummer
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Ontvangen op
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Onderwerp
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

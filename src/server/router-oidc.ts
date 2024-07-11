@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
-import { FeatureToggle } from '../universal/config';
-import { apiSuccessResult } from '../universal/helpers';
+import { FeatureToggle } from '../universal/config/feature-toggles';
+import { apiSuccessResult } from '../universal/helpers/api';
 import {
   AUTH_CALLBACK,
   BffEndpoints,

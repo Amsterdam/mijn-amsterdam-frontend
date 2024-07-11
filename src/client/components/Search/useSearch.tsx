@@ -5,8 +5,8 @@ import { LatLngTuple } from 'leaflet';
 import { useEffect, useMemo, useState } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
-  atom,
   Loadable,
+  atom,
   noWait,
   selector,
   selectorFamily,
@@ -14,9 +14,9 @@ import {
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
-import { AppRoutes } from '../../../universal/config';
-import { pick, uniqueArray } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
+import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState, AppStateKey } from '../../AppState';
 import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
@@ -31,10 +31,10 @@ import styles from './Search.module.scss';
 import {
   ApiBaseItem,
   ApiSearchConfig,
-  apiSearchConfigs,
-  displayPath,
   SearchConfigRemote,
   SearchEntry,
+  apiSearchConfigs,
+  displayPath,
 } from './searchConfig';
 
 export function generateSearchIndexPageEntry(
@@ -74,7 +74,7 @@ export function generateSearchIndexPageEntry(
       searchEntry.keywords = [
         ...(searchEntry.keywords || []),
         ...generatedKeywordValues,
-      ];
+      ] as string[];
     } else {
       const key: keyof SearchEntry = prop;
       // @ts-expect-error

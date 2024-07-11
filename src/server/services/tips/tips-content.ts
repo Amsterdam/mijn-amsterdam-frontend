@@ -1,4 +1,4 @@
-import { Themas } from '../../../universal/config';
+import { Themas } from '../../../universal/config/thema';
 import {
   hasBijstandsuitkering,
   hasBnBTransitionRight,

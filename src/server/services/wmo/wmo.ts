@@ -1,13 +1,14 @@
+import parseISO from 'date-fns/parseISO';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, FeatureToggle } from '../../../universal/config';
-import {
-  apiSuccessResult,
-  capitalizeFirstLetter,
-  dateSort,
-} from '../../../universal/helpers';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { AppRoutes } from '../../../universal/config/routes';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { dateSort } from '../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
+import { BffEndpoints } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
@@ -17,8 +18,6 @@ import {
 } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
-import parseISO from 'date-fns/parseISO';
-import { BffEndpoints } from '../../config';
 
 function addDocumentLinksToLineItems(
   sessionID: AuthProfileAndToken['profile']['sid'],

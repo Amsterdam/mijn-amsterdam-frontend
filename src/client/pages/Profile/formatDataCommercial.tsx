@@ -9,15 +9,15 @@ import type {
   Rechtspersoon,
   Vestiging,
 } from '../../../server/services/kvk';
+import { getFullAddress } from '../../../universal/helpers/brp';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
-  defaultDateFormat,
-  getFullAddress,
+  capitalizeFirstLetter,
   splitCapitals,
-} from '../../../universal/helpers';
-import { LinkdInline } from '../../components/index';
-import { format, ProfileSection } from './formatDataPrivate';
+} from '../../../universal/helpers/text';
 import { Adres } from '../../../universal/types';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { LinkdInline } from '../../components/Button/Button';
+import { ProfileSection, format } from './formatDataPrivate';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

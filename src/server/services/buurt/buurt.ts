@@ -4,19 +4,24 @@ import {
   DatasetId,
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/myarea-datasets';
-import { apiErrorResult, apiSuccessResult } from '../../../universal/helpers';
-import { ApiResponse } from '../../../universal/helpers/api';
+import {
+  ApiResponse,
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
-import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
+import { requestData } from '../../helpers/source-api-request';
+import { captureMessage } from '../monitoring';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+  DEFAULT_API_REQUEST_TIMEOUT,
   DatasetConfig,
   DatasetFeatures,
   DatasetResponse,
-  DEFAULT_API_REQUEST_TIMEOUT,
 } from './datasets';
+import { discoverSingleDsoApiEmbeddedResponse } from './dso-helpers';
 import {
   createDynamicFilterConfig,
   datasetApiResult,
@@ -25,8 +30,6 @@ import {
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
 } from './helpers';
-import { discoverSingleDsoApiEmbeddedResponse } from './dso-helpers';
-import { captureMessage } from '../monitoring';
 
 const fileCaches: Record<string, FileCache> = {};
 

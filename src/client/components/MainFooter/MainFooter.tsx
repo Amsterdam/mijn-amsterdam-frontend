@@ -1,21 +1,24 @@
 import classnames from 'classnames';
 import { useState } from 'react';
-import type { CMSFooterContent } from '../../../server/services/cms-content';
-import { isExternalUrl } from '../../../universal/helpers/utils';
-import { LinkProps } from '../../../universal/types/index';
+import type {
+  AstNode,
+  CMSFooterContent,
+} from '../../../server/services/cms-content';
+import { LinkProps } from '../../../universal/types';
 import { useCMSApi } from '../../hooks/api/useCmsApi';
 import { useDesktopScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
-import { InnerHtml } from '../index';
+import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './MainFooter.module.scss';
+import { isExternalUrl } from '../../utils/utils';
 
 interface FooterBlockProps {
   startOpen?: boolean;
   id: string;
   title: string;
   links: LinkProps[];
-  description: string | null;
+  description: string | null | AstNode[];
 }
 
 function FooterBlock({
@@ -36,7 +39,9 @@ function FooterBlock({
       <h3 role={titleRole} onClick={() => toggleOpen((isOpen) => !isOpen)}>
         {title}
       </h3>
-      {!!description && <InnerHtml>{description}</InnerHtml>}
+      {!!description && !Array.isArray(description) && (
+        <InnerHtml>{description}</InnerHtml>
+      )}
       {!!links.length && (
         <ul>
           {links.map((link) => (

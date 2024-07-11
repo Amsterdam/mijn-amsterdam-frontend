@@ -1,7 +1,7 @@
 import { Grid, Heading, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { generatePath, useParams } from 'react-router-dom';
-import { AppRoutes } from '../../../../universal/config';
+import { AppRoutes } from '../../../../universal/config/routes';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage';
 import { TableV2 } from '../../../components/Table/TableV2';

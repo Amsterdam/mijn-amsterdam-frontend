@@ -1,7 +1,7 @@
-import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
 import { GenericDocument } from '../../universal/types/App.types';
 import { AuthProfileAndToken } from '../helpers/app';
+import { requestData } from '../helpers/source-api-request';
 
 /**
  * This is a blueprint of a service. Change `ServiceName and SERVICE_NAME` to your specific needs.

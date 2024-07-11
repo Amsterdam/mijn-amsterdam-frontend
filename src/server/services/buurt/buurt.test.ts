@@ -1,12 +1,12 @@
 import {
   DatasetFilterSelection,
   POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config';
-import { jsonCopy, omit } from '../../../universal/helpers';
+} from '../../../universal/config/myarea-datasets';
 import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { jsonCopy, omit } from '../../../universal/helpers/utils';
 import FileCache from '../../helpers/file-cache';
 import { requestData } from '../../helpers/source-api-request';
 import * as service from './buurt';

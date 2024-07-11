@@ -9,11 +9,11 @@ import {
   VergunningenSourceData,
 } from '../../../server/services';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { generatePath } from 'react-router-dom';
 import MockApp from '../MockApp';
 import { MutableSnapshot } from 'recoil';
-import { appStateAtom } from '../../hooks';
+import { appStateAtom } from '../../hooks/useAppState';
 
 const pushMock = vi.fn();
 

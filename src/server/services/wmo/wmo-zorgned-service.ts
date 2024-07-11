@@ -1,5 +1,6 @@
 import { parseISO } from 'date-fns';
-import { apiSuccessResult, isDateInPast } from '../../../universal/helpers';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';

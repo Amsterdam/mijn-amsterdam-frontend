@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { ApiResponse } from '../../../universal/helpers';
+import { remoteApiHost } from '../../../setupTests';
+import { ApiResponse } from '../../../universal/helpers/api';
 import {
   DatasetConfig,
   DatasetResponse,
@@ -7,6 +8,10 @@ import {
   MaPolylineFeature,
   datasetEndpoints,
 } from './datasets';
+import {
+  getDsoApiEmbeddedResponse,
+  transformGenericApiListResponse,
+} from './dso-helpers';
 import {
   createDynamicFilterConfig,
   createFeaturePropertiesFromPropertyFilterConfig,
@@ -22,11 +27,6 @@ import {
   recursiveCoordinateSwap,
   refineFilterSelection,
 } from './helpers';
-import { remoteApiHost } from '../../../setupTests';
-import {
-  getDsoApiEmbeddedResponse,
-  transformGenericApiListResponse,
-} from './dso-helpers';
 
 const DSO_API_RESULT = {
   _links: {

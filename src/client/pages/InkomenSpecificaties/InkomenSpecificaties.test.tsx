@@ -5,13 +5,13 @@ import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 import { transformIncomSpecificationResponse } from '../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../server/services/wpi/wpi-types';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import InkomenSpecificaties from './InkomenSpecificaties';
 
-vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {

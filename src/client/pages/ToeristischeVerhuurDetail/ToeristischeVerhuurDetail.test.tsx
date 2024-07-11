@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 
 import { describe, expect } from 'vitest';
 import { bffApi } from '../../../test-utils';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';

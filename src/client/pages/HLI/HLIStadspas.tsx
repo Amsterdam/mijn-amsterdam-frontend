@@ -4,16 +4,16 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { StadspasTransaction } from '../../../server/services/hli/stadspas-types';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse,
   apiPristineResult,
   isError,
   isLoading,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import {
   DetailPage,
   ErrorAlert,
@@ -25,7 +25,7 @@ import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { TableV2 } from '../../components/Table/TableV2';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './HLIStadspas.module.scss';
 import { getThemaTitleWithAppState } from './helpers';

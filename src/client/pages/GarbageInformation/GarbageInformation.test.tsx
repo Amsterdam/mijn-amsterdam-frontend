@@ -2,12 +2,12 @@ import { render } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import { AppRoutes } from '../../../universal/config';
-import { jsonCopy } from '../../../universal/helpers';
+import { GarbageFractionData } from '../../../server/services/afval/afvalwijzer';
+import { AppRoutes } from '../../../universal/config/routes';
+import { jsonCopy } from '../../../universal/helpers/utils';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import GarbageInformation from './GarbageInformation';
-import { GarbageFractionData } from '../../../server/services/afval/afvalwijzer';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 

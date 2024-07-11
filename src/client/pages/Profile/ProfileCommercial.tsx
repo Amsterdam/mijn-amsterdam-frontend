@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { AppState } from '../../AppState';
 import {
   ErrorAlert,

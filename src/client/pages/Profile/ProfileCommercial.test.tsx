@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Profile from './ProfileCommercial';

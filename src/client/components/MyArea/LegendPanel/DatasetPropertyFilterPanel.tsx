@@ -1,12 +1,12 @@
 import { ReactNode, useMemo } from 'react';
-import { DatasetId } from '../../../../universal/config';
 import {
   DatasetFilterSelection,
+  DatasetId,
   DatasetProperty,
   DatasetPropertyName,
   DatasetPropertyValueWithCount,
 } from '../../../../universal/config/myarea-datasets';
-import { sortAlpha } from '../../../../universal/helpers';
+import { sortAlpha } from '../../../../universal/helpers/utils';
 import { getIcon, getIconChildIdFromValue } from '../dataset-icons';
 import {
   DatasetControlCheckbox,

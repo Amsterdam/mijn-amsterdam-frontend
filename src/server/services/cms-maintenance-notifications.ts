@@ -1,7 +1,8 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 import { marked } from 'marked';
-import { Themas, IS_TAP } from '../../universal/config';
-import { ApiResponse, apiSuccessResult } from '../../universal/helpers';
+import { IS_TAP } from '../../universal/config/env';
+import { Themas } from '../../universal/config/thema';
+import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import FileCache from '../helpers/file-cache';

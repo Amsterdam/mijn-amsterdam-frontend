@@ -1,10 +1,11 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
-import { BagThemas, Themas } from '../../../universal/config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { BFFApiUrls } from '../../config/api';
+import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 

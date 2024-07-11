@@ -1,9 +1,11 @@
 import { LatLngLiteral } from 'leaflet';
 import { BAGData } from '../../../server/services';
-import { ThemaTitles, HOOD_ZOOM } from '../../../universal/config';
-import { getFullAddress, isLoading } from '../../../universal/helpers';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
+import { isLoading } from '../../../universal/helpers/api';
+import { getFullAddress } from '../../../universal/helpers/brp';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { FitBounds } from './FitBounds';

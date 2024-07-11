@@ -1,4 +1,4 @@
-import { Themas } from '../../../universal/config';
+import { Themas } from '../../../universal/config/thema';
 import { getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchService, fetchTipsAndNotifications } from './api-service';

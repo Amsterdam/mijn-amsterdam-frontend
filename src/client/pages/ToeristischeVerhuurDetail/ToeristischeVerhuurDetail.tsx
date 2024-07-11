@@ -1,14 +1,15 @@
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import { hasFailedDependency, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { hasFailedDependency, isLoading } from '../../../universal/helpers/api';
 import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   LoadingContent,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import VergunningVerhuur from './VergunningVerhuur';

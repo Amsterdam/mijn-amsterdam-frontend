@@ -1,8 +1,9 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Themas } from '../../../universal/config';
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types';
 import { Stadspas } from './stadspas-types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
+import { defaultDateFormat, dateFormat } from '../../../universal/helpers/date';
 
 export const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
 export const GPASS_BUDGET_ONLY_FOR_CHILDREN = true;

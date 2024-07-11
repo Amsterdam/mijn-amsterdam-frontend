@@ -1,9 +1,10 @@
 import { Link, Table } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { ReactNode } from 'react';
-import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { entries } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped } from '../../../universal/types';
 import styles from './TableV2.module.scss';
-import classNames from 'classnames';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;

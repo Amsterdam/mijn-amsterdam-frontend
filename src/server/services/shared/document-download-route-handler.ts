@@ -1,15 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { Request, Response, Router } from 'express';
-import { IS_PRODUCTION } from '../../../universal/config';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
   ApiSuccessResponse,
-  apiErrorResult,
-} from '../../../universal/helpers';
-import { decrypt } from '../../../universal/helpers/encrypt-decrypt';
+} from '../../../universal/helpers/api';
 import { AuthProfileAndToken, getAuth } from '../../helpers/app';
-import { captureException } from '../monitoring';
 import { decryptAndValidate } from './decrypt-route-param';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';

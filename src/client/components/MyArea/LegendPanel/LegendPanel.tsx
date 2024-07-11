@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useLandScape, useWidescreen } from '../../../hooks';
+import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
 import {
   useFetchPanelFeature,
   useLoadingFeature,

@@ -1,21 +1,19 @@
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import {
-  defaultDateFormat,
-  isLoading,
-  isError,
-} from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  addTitleLinkComponent,
-  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
-import { useAppStateGetter } from '../../hooks';
+import { ThemaTitles } from '../../config/thema';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './AVG.module.scss';
 
 const DISPLAY_PROPS_AVG = {

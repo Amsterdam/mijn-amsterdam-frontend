@@ -1,24 +1,23 @@
+import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useEffect, useMemo } from 'react';
-import { AppRoutes } from '../../../universal/config';
-import { FeatureToggle } from '../../../universal/config/app';
-import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
-  apiPristineResult,
   ApiResponse,
-  defaultDateFormat,
+  apiPristineResult,
   isError,
   isLoading,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../universal/helpers/brp';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AppState } from '../../AppState';
 import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoPanel,
   InfoPanelCollapsible,
   LinkdInline,
@@ -26,12 +25,13 @@ import {
   MaintenanceNotifications,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { formatBrpProfileData } from './formatDataPrivate';
 import styles from './Profile.module.scss';
-import { panelConfig, PanelConfigFormatter } from './profilePanelConfig';
+import { formatBrpProfileData } from './formatDataPrivate';
+import { PanelConfigFormatter, panelConfig } from './profilePanelConfig';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,

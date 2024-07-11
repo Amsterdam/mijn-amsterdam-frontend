@@ -1,8 +1,3 @@
-import { ReactElement, ReactNode, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
-
 import {
   Alert as DSAlert,
   Grid,
@@ -10,10 +5,14 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
+import { ReactElement, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Thema } from '../../../universal/config/thema';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   GenericDocument,
   StatusLine,
-  Unshaped,
 } from '../../../universal/types/App.types';
 import { AppState, AppStateKey } from '../../AppState';
 import {
@@ -25,6 +24,7 @@ import {
   ThemaIcon,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { captureMessage } from '../../utils/monitoring';
 import styles from './StatusDetail.module.scss';

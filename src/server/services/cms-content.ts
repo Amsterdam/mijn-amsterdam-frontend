@@ -1,7 +1,9 @@
 import fs from 'fs';
+import { parse } from 'html-to-ast';
+import { Attr } from 'html-to-ast/dist/types';
 import path from 'path';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
-import { IS_TAP } from '../../universal/config';
+import { IS_TAP } from '../../universal/config/env';
 import {
   ApiResponse,
   apiSuccessResult,
@@ -10,10 +12,8 @@ import {
 import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
-import { requestData } from '../helpers';
 import FileCache from '../helpers/file-cache';
-import { parse } from 'html-to-ast';
-import { Attr } from 'html-to-ast/dist/types';
+import { requestData } from '../helpers/source-api-request';
 
 const TAGS_ALLOWED = [
   'a',
@@ -64,7 +64,7 @@ interface CMSPageContent {
   content: string;
 }
 
-interface AstNode {
+export interface AstNode {
   type?: string;
   text?: string;
   content?: string;

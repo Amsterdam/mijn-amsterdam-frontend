@@ -1,7 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { DATASETS, OTAP_ENV, getDatasetCategoryId } from '../universal/config';
-import { ApiResponse, apiSuccessResult } from '../universal/helpers';
+import { OTAP_ENV } from '../universal/config/env';
+import {
+  DATASETS,
+  getDatasetCategoryId,
+} from '../universal/config/myarea-datasets';
+import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
 import { BffEndpoints, RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
 import {

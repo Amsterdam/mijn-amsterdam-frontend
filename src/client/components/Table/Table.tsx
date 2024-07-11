@@ -1,14 +1,12 @@
 import classnames from 'classnames';
+import { keys } from 'memory-cache';
 import { isValidElement, ReactNode } from 'react';
-import {
-  capitalizeFirstLetter,
-  entries,
-  keys,
-} from '../../../universal/helpers';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { entries } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import InnerHtml from '../InnerHtml/InnerHtml';
-import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { MaRouterLink } from '../MaLink/MaLink';
 import styles from './Table.module.scss';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {

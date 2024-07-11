@@ -1,4 +1,3 @@
-import { hash } from '../../../universal/helpers';
 import {
   BeschiktProduct,
   LeveringsVorm,
@@ -10,8 +9,10 @@ import {
 
 import { GenericDocument } from '../../../universal/types';
 import { getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
+
+import { hash } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 

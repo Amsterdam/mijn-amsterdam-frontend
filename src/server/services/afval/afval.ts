@@ -1,11 +1,11 @@
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchMyLocation } from '../home';
-import { fetchAfvalwijzer } from './afvalwijzer';
 import { fetchAfvalpunten } from './afvalpunten';
+import { fetchAfvalwijzer } from './afvalwijzer';
 
 export async function fetchAfval(
   requestID: requestID,

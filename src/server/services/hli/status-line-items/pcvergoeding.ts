@@ -1,4 +1,4 @@
-import { defaultDateFormat, isDateInPast } from '../../../../universal/helpers';
+import { isDateInPast } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,

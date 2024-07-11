@@ -1,14 +1,10 @@
-import nock from 'nock';
 import MockDate from 'mockdate';
-import { ApiErrorResponse, jsonCopy } from '../../../universal/helpers';
-import { BFF_PORT } from '../../config';
+
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
   FetchConfig,
   fetchBijstandsuitkering,
   fetchRequestProcess,
-  fetchSpecificaties,
-  fetchWpiNotifications,
 } from './api-service';
 import {
   WpiRequestProcess,
@@ -18,6 +14,8 @@ import {
 
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { remoteApi } from '../../../test-utils';
+import { ApiErrorResponse } from '../../../universal/helpers/api';
+import { jsonCopy } from '../../../universal/helpers/utils';
 
 function fakeStepLabels(): WpiRequestStatusLabels {
   return {

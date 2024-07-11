@@ -1,15 +1,13 @@
 import crypto from 'crypto';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Themas } from '../../../universal/config';
-import {
-  defaultDateFormat,
-  jsonCopy,
-  sortAlpha,
-} from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 function encryptPayload(payload: string) {

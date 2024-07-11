@@ -1,5 +1,5 @@
-import { DatasetCategoryId } from '../../../../universal/config';
 import {
+  DatasetCategoryId,
   DatasetControl,
   DatasetId,
 } from '../../../../universal/config/myarea-datasets';

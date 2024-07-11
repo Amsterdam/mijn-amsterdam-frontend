@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { ThemaTitles } from '../../config/thema';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   isWoonvergunning,
   showDocuments,

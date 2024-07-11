@@ -3,14 +3,15 @@ import classnames from 'classnames';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
-import { useAppStateReady, usePhoneScreen } from '../../hooks';
 import {
   trackSearch,
   trackSearchResultClick,
 } from '../../hooks/analytics.hook';
+import { usePhoneScreen } from '../../hooks/media.hook';
+import { useAppStateReady } from '../../hooks/useAppState';
 import { useKeyDown } from '../../hooks/useKey';
 import {
   useProfileTypeSwitch,

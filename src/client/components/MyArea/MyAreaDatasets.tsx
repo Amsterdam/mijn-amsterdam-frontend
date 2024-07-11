@@ -8,7 +8,7 @@ import type {
   MaPointFeature,
   MaPolylineFeature,
 } from '../../../server/services/buurt/datasets';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   DatasetFilterSelection,
   DatasetId,

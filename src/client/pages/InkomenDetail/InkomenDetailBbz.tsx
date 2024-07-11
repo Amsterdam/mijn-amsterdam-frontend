@@ -7,7 +7,7 @@ import {
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { ExternalUrls } from '../../config/app';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
 
 export default function InkomenDetailBbz() {

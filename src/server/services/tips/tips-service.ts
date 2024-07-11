@@ -1,4 +1,5 @@
-import { apiSuccessResult, pick } from '../../../universal/helpers';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { pick } from '../../../universal/helpers/utils';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { collectTips } from './collect-tips';
 import { ServiceResults } from './tip-types';

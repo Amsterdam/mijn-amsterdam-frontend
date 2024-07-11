@@ -104,27 +104,6 @@ exports[`<Horeca /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Kenmerk
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Soort vergunning
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Aangevraagd
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -278,27 +257,6 @@ exports[`<Horeca /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Kenmerk
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Soort vergunning
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Resultaat
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

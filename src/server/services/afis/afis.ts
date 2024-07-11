@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { DataRequestConfig, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
+import { requestData } from '../../helpers/source-api-request';
 import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
 import {
   OathResponseData,

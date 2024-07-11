@@ -1,19 +1,20 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { useAppStateGetter } from '../../hooks';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoDetail,
   LoadingContent,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import LoodStatusLines from './LoodStatusLines';
-import { Location } from '../VergunningDetail/Location';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
+import { ThemaTitles } from '../../config/thema';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import { Location } from '../VergunningDetail/Location';
+import LoodStatusLines from './LoodStatusLines';
 
 export default function LoodMeting() {
   const { BODEM } = useAppStateGetter();

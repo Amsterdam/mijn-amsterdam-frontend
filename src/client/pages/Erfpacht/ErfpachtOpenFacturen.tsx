@@ -1,24 +1,15 @@
-import {
-  Grid,
-  Heading,
-  Paragraph,
-  Screen,
-} from '@amsterdam/design-system-react';
+import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
-import { Themas } from '../../../universal/config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  ThemaIcon,
   OverviewPage,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
-import {
-  DisplayProps,
-  TableV2,
-  TableV2Props,
-} from '../../components/Table/TableV2';
+import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 
 interface OpenFacturenListGroupedProps {

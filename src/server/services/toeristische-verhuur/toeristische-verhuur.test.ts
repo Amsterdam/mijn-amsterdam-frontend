@@ -1,6 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
 import { remoteApi } from '../../../test-utils';
-import { jsonCopy } from '../../../universal/helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
@@ -9,6 +8,7 @@ import {
 } from './toeristische-verhuur';
 import { VakantieverhuurVergunning } from './vakantieverhuur-vergunning';
 import { BBVergunning } from './bb-vergunning';
+import { jsonCopy } from '../../../universal/helpers/utils';
 
 describe('Toeristische verhuur service', () => {
   const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);

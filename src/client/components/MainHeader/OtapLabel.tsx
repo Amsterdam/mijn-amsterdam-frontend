@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { OTAP_ENV } from '../../../universal/config';
+import { OTAP_ENV } from '../../../universal/config/env';
 import styles from './OtapLabel.module.scss';
 
 export function OtapLabel() {

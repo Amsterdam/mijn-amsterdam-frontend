@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { apiPristineResult, apiSuccessResult } from '../../universal/helpers';
 import * as appStateModule from '../AppState';
 import { renderRecoilHook } from '../utils/renderRecoilHook';
 import { newEventSourceMock } from './EventSourceMock';
@@ -22,7 +21,11 @@ import {
   it,
   vi,
 } from 'vitest';
-import { FeatureToggle } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import {
+  apiPristineResult,
+  apiSuccessResult,
+} from '../../universal/helpers/api';
 import * as Monitoring from '../utils/monitoring';
 
 vi.mock('./api/useTipsApi');

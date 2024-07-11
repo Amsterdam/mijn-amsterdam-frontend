@@ -1,8 +1,8 @@
-import { Themas } from '../../../universal/config';
+import { Themas } from '../../../universal/config/thema';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { fetchTipsAndNotifications, fetchService } from './api-service';
+import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
   ? JSON.parse(process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS)

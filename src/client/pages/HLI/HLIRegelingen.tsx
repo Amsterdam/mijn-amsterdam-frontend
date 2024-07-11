@@ -4,7 +4,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { HLIRegeling } from '../../../server/services/hli/regelingen-types';
 import { addLinkElementToProperty } from '../../components/Table/Table';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { getThemaTitleWithAppState } from './helpers';
 
 const displayPropsEerdereRegelingen = {

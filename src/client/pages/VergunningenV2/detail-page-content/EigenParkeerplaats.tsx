@@ -1,6 +1,6 @@
 import { Link } from '@amsterdam/design-system-react';
 import type { EigenParkeerplaats as EigenParkeerplaatsType } from '../../../../server/services';
-import { defaultDateFormat } from '../../../../universal/helpers';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';

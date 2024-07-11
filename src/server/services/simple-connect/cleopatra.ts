@@ -1,7 +1,8 @@
-import fs from 'fs';
 import jose from 'node-jose';
-import { Themas, FeatureToggle, IS_TAP } from '../../../universal/config';
-import { apiSuccessResult } from '../../../universal/helpers';
+import { IS_TAP } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { Themas } from '../../../universal/config/thema';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig, getApiConfig, getCert } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';

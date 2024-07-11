@@ -7,9 +7,9 @@ import {
   VergunningenSourceData,
 } from '../../../server/services/vergunningen/vergunningen';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { horecaOptions } from '../../../server/services/horeca';
-import { appStateAtom } from '../../hooks';
+import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Horeca from './Horeca';
 

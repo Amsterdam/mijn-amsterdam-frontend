@@ -2,7 +2,7 @@ import {
   AanbiedenDiensten,
   VergunningFrontendV2,
 } from '../../../../server/services/vergunningen-v2/config-and-types';
-import { defaultDateFormat } from '../../../../universal/helpers';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { InfoDetail } from '../../../components';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';

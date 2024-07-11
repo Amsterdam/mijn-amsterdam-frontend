@@ -2,13 +2,13 @@ import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
 } from '../../../server/services';
+import {
+  dateTimeFormatYear,
+  defaultDateFormat,
+} from '../../../universal/helpers/date';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
-import {
-  defaultDateFormat,
-  dateTimeFormatYear,
-} from '../../../universal/helpers';
 import styles from './VergunningDetail.module.scss';
 
 export function Touringcar({

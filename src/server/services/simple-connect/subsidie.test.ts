@@ -1,16 +1,8 @@
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  test,
-  vi,
-} from 'vitest';
-import { Themas } from '../../../universal/config';
+import { describe, expect, test } from 'vitest';
+import { remoteApi } from '../../../test-utils';
+import { Themas } from '../../../universal/config/thema';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchSubsidieNotifications } from './subsidie';
-import { remoteApi } from '../../../test-utils';
 
 describe('Subsidie', () => {
   const authProfileAndToken: AuthProfileAndToken = {

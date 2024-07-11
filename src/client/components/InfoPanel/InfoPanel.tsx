@@ -1,11 +1,11 @@
 import { Heading } from '@amsterdam/design-system-react';
-import Linkd from '../Button/Button';
-import { isValidElement, useMemo } from 'react';
-import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
-import { Unshaped } from '../../../universal/types';
 import classnames from 'classnames';
-import { entries } from '../../../universal/helpers';
+import { isValidElement, useMemo } from 'react';
 import slug from 'slugme';
+import { entries } from '../../../universal/helpers/utils';
+import { Unshaped } from '../../../universal/types';
+import Linkd from '../Button/Button';
+import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
 import styles from './InfoPanel.module.scss';
 import { personalDetailFields } from './personalDetailFields';
 

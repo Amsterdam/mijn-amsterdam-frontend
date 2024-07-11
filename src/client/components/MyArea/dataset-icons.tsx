@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { PolylineOptions } from 'leaflet';
 import { isValidElement, ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { MaPointFeature } from '../../../server/services/buurt/datasets';

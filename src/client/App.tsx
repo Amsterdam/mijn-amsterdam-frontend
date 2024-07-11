@@ -10,13 +10,12 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { AppRoutes, FeatureToggle } from '../universal/config';
-import { AppRoutesRedirect } from '../universal/config/routes';
-import { isPrivateRoute } from '../universal/helpers';
+import { FeatureToggle } from '../universal/config/feature-toggles';
+import { AppRoutes } from '../universal/config/routes';
+
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
-import { useAnalytics, usePageChange } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
@@ -29,6 +28,9 @@ import { useUsabilla } from './hooks/useUsabilla';
 import { loginUrlByAuthMethod } from './config/api';
 import { default as LandingPage } from './pages/Landing/Landing';
 
+import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
+import { useAnalytics } from './hooks/analytics.hook';
+import { usePageChange } from './hooks/usePageChange';
 import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
 import AVG from './pages/AVG/AVG';
 import AVGDetail from './pages/AVGDetail/AVGDetail';
@@ -75,13 +77,13 @@ import ToeristischeVerhuur from './pages/ToeristischeVerhuur/ToeristischeVerhuur
 import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
-import Zorg from './pages/Zorg/Zorg';
-import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
-import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
-import { useMonitoring } from './utils/monitoring';
 import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
 import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
 import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
+import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
+import Zorg from './pages/Zorg/Zorg';
+import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
+import { useMonitoring } from './utils/monitoring';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);

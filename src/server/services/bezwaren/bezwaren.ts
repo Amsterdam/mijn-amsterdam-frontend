@@ -1,21 +1,23 @@
 import * as jose from 'jose';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Themas } from '../../../universal/config';
+
+import { MyNotification } from '../../../universal/types';
+import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+
+import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
-  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-  isRecentNotification,
-} from '../../../universal/helpers';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import { MyNotification } from '../../../universal/types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
+} from '../../../universal/helpers/api';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
-import { captureException } from '../monitoring';
+import { requestData } from '../../helpers/source-api-request';
+import { decryptAndValidate } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   Bezwaar,
@@ -29,7 +31,6 @@ import {
   OctopusApiResponse,
   kenmerkKey,
 } from './types';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 

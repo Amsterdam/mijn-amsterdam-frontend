@@ -3,7 +3,8 @@ import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types';
 import { IconAlert, IconDownload } from '../../assets/icons';
-import { trackDownload, useProfileTypeValue } from '../../hooks';
+import { trackDownload } from '../../hooks/analytics.hook';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
 import { captureException } from '../../utils/monitoring';
 import { MaLink } from '../MaLink/MaLink';
@@ -76,7 +77,7 @@ export function DocumentLink({
           const trackingUrl = trackPath
             ? trackPath(document)
             : window.location.pathname +
-            addFileType(`/downloads/${document.download || document.title}`);
+              addFileType(`/downloads/${document.download || document.title}`);
 
           const fileType = trackingUrl.split('.').pop();
 

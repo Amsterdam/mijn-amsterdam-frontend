@@ -1,11 +1,11 @@
-import { FeatureToggle } from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
-  defaultDateFormat,
-  entries,
+  formatBirthdate,
   getFullAddress,
   hasDutchNationality,
-  formatBirthdate,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/brp';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { entries } from '../../../universal/helpers/utils';
 import {
   Adres,
   BRPData,
@@ -13,7 +13,8 @@ import {
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
-import { LinkdInline, LoadingContent } from '../../components/index';
+import { LinkdInline } from '../../components/Button/Button';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

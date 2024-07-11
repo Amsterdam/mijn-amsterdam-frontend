@@ -1,8 +1,9 @@
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useRef, useState } from 'react';
-import { FeatureToggle, IS_TEST } from '../../../universal/config';
 import { testAccounts } from '../../../universal/config/auth.development';
+import { IS_TEST } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {

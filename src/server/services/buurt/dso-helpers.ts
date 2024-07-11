@@ -1,14 +1,17 @@
-import { DatasetId, POLYLINE_GEOMETRY_TYPES } from '../../../universal/config';
+import {
+  DatasetId,
+  POLYLINE_GEOMETRY_TYPES,
+} from '../../../universal/config/myarea-datasets';
 import type {
   DatasetConfig,
-  DatasetFeatures,
   DatasetFeatureProperties,
+  DatasetFeatures,
 } from './datasets';
 import {
-  getPropertyFilters,
-  getFeaturePolylineColor,
-  recursiveCoordinateSwap,
   createFeaturePropertiesFromPropertyFilterConfig,
+  getFeaturePolylineColor,
+  getPropertyFilters,
+  recursiveCoordinateSwap,
 } from './helpers';
 
 export function dsoApiListUrl(

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { IS_AP } from '../../universal/config';
+import { IS_AP } from '../../universal/config/env';
 import { captureException } from '../utils/monitoring';
 import { usePhoneScreen } from './media.hook';
 import { useScript } from './useScript';

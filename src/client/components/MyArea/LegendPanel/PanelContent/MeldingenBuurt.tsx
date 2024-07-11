@@ -1,7 +1,7 @@
 import { InfoDetail } from '../../..';
 import { DATASETS } from '../../../../../universal/config/myarea-datasets';
-import { capitalizeFirstLetter } from '../../../../../universal/helpers';
 import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
 import GenericBase from './GenericBase';
 
 interface MyArePanelContentMeldingenBuurtProps {

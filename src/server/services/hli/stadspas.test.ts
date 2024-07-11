@@ -1,5 +1,5 @@
 import { remoteApi } from '../../../test-utils';
-import * as encryptDecrypt from '../../../universal/helpers/encrypt-decrypt';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';

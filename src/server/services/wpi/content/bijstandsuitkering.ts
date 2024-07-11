@@ -1,5 +1,5 @@
-import { Themas } from '../../../../universal/config';
-import { defaultDateFormat } from '../../../../universal/helpers';
+import { Themas } from '../../../../universal/config/thema';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
 

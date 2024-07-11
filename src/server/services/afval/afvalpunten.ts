@@ -1,9 +1,7 @@
 import { LatLngLiteral } from 'leaflet';
-import {
-  apiSuccessResult,
-  getApproximateDistance,
-  sortByNumber,
-} from '../../../universal/helpers';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { getApproximateDistance } from '../../../universal/helpers/geo';
+import { sortByNumber } from '../../../universal/helpers/utils';
 import type {
   AfvalPuntenData,
   GarbageCenter,

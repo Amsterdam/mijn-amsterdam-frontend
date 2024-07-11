@@ -1,5 +1,5 @@
-import { Themas } from '../../../universal/config/thema';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { useErfpachtV2Data } from './erfpachtData.hook';

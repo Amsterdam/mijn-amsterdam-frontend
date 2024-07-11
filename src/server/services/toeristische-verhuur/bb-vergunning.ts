@@ -1,17 +1,17 @@
 import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
-import { AppRoutes } from '../../../universal/config';
+import type { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
   apiSuccessResult,
-  defaultDateFormat,
-} from '../../../universal/helpers';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
+} from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // zaak detail: record/GFO_ZAKEN/$id
