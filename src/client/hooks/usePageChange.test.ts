@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import * as rrd from 'react-router-dom';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
 import { NOT_FOUND_TITLE } from '../config/thema';
-import type { TrackingConfig } from '../../universal/config/routes';
+import type { TrackingConfig } from '../../client/config/routes';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { usePageChange } from './usePageChange';
 
@@ -67,7 +67,7 @@ vi.mock('./useProfileType', async (requireActual) => {
   };
 });
 
-vi.mock('../../universal/config/thema', async (requireActual) => {
+vi.mock('../../client/config/thema', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,

@@ -11,7 +11,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import InkomenSpecificaties from './InkomenSpecificaties';
 
-vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {

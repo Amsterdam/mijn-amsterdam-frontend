@@ -92,25 +92,6 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
       <table
         class="_Table_a66dcc _SpecificationsTable_028dc4"
       >
-        <thead>
-          <tr
-            class="_TableRow_a66dcc"
-          >
-            <td
-              class="_DisplayProp_a66dcc"
-            />
-            <th
-              class="_DisplayProp_a66dcc"
-            >
-              Datum
-            </th>
-            <th
-              class="_DisplayProp_a66dcc"
-            >
-              Documenten
-            </th>
-          </tr>
-        </thead>
         <tbody>
           <tr
             class="_TableRow_a66dcc"
@@ -455,30 +436,6 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
       <table
         class="_Table_a66dcc _SpecificationsTable_028dc4"
       >
-        <thead>
-          <tr
-            class="_TableRow_a66dcc"
-          >
-            <td
-              class="_DisplayProp_a66dcc"
-            />
-            <th
-              class="_DisplayProp_a66dcc"
-            >
-              Regeling
-            </th>
-            <th
-              class="_DisplayProp_a66dcc"
-            >
-              Datum
-            </th>
-            <th
-              class="_DisplayProp_a66dcc"
-            >
-              Documenten
-            </th>
-          </tr>
-        </thead>
         <tbody>
           <tr
             class="_TableRow_a66dcc"

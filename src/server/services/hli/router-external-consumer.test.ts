@@ -4,7 +4,7 @@ import { forTesting } from './router-external-consumer';
 import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { OIDC_SESSION_COOKIE_NAME } from '../../config';
 
-vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {

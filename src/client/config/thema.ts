@@ -53,11 +53,12 @@ export const ThemaTitles: { [thema in Thema]: string } = {
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
 export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
+export type DocumentTitlesConfig = {
+  [key in AppRoute]: string | ((config: TrackingConfig) => string);
+};
 
 // Used in <html><head><title>{PageTitle}</title></head>
-export const DocumentTitles: {
-  [key in AppRoute]: string | ((config: TrackingConfig) => string);
-} = {
+export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.ROOT]: (config) => {
     switch (true) {
       case config.profileType === 'private-attributes' &&

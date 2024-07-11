@@ -16,7 +16,7 @@ import {
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
 
-vi.mock('../../../universal/helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
