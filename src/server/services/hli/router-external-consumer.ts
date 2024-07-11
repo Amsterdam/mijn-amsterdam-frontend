@@ -6,8 +6,8 @@ import {
   getAuth,
   sendUnauthorized,
 } from '../../helpers/app';
-import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { apiKeyVerificationHandler } from '../../middleware';
@@ -22,7 +22,7 @@ router.get(
   async (req: Request, res: Response) => {
     return res.redirect(
       BffEndpoints.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER}`
+        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}`
     );
   }
 );
