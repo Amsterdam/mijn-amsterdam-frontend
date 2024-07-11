@@ -6,8 +6,8 @@ import memoize from 'memoizee';
 import { createSecretKey, hkdfSync } from 'node:crypto';
 import { generatePath, matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
+import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { IS_AP } from '../../universal/config/env';
-import { DEFAULT_PROFILE_TYPE } from '../../universal/config/feature-toggles';
 import {
   ApiResponse,
   apiErrorResult,

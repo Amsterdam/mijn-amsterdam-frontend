@@ -47,35 +47,3 @@ export const FeatureToggle = {
   wiorMeldingen: true,
   zorgnedDocumentAttachmentsActive: true,
 };
-
-// For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
-// For example, tipsCompareDate=2023-01-31 this will change the date that is used to compare with dates being used in the tips controller.
-export const streamEndpointQueryParamKeys = {
-  tipsCompareDate: 'tipsCompareDate',
-};
-
-export const DEFAULT_PROFILE_TYPE = 'private';
-
-// NOTE: Keep up-to-date with _colors.scss
-export const Colors = {
-  white: 'white',
-  black: 'black',
-  primaryRed: '#EC0000',
-  primaryDarkblue: '#004699',
-  neutralGrey1: '#F5F5F5',
-  neutralGrey2: '#E6E6E6',
-  neutralGrey3: '#B4B4B4',
-  neutralGrey4: '#767676',
-  neutralGrey5: '#323232',
-  supportValid: '#00A03C',
-  supportInvalid: '#EC0000',
-  supportFocus: '#FEC813',
-  supportPurple: '#A00078',
-  supportPink: '#E50082',
-  supportOrange: '#FF9100',
-  supportYellow: '#FFE600',
-  supportLightgreen: '#BED200',
-  supportDarkgreen: '#00A03C',
-  supportLightblue: '#009DEC',
-  overlayBlack50: 'rgba(0, 0, 0, 0.5)',
-};

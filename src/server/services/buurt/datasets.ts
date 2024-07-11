@@ -3,10 +3,7 @@ import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
 import { IS_PRODUCTION } from '../../../universal/config/env';
-import {
-  Colors,
-  FeatureToggle,
-} from '../../../universal/config/feature-toggles';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   DATASETS,
   DatasetCategoryId,
@@ -30,6 +27,7 @@ import {
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
 } from './dso-helpers';
+import { Colors } from '../../../universal/config/colors';
 
 enum zIndexPane {
   PARKEERZONES = '650',

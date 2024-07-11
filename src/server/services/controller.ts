@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
-import {
-  FeatureToggle,
-  streamEndpointQueryParamKeys,
-} from '../../universal/config/feature-toggles';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   apiSuccessResult,

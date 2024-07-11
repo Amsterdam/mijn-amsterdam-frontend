@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
-import {
-  FeatureToggle,
-  streamEndpointQueryParamKeys,
-} from '../../universal/config/feature-toggles';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   ApiPristineResponse,
   ApiResponse,
