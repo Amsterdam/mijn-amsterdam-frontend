@@ -8,8 +8,9 @@ import {
 } from './zorgned-config-and-types';
 
 import { GenericDocument } from '../../../universal/types';
-import { getApiConfig } from '../../config';
+import { getApiConfig, ONE_SECOND_MS } from '../../config';
 
+import memoizee from 'memoizee';
 import { hash } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';

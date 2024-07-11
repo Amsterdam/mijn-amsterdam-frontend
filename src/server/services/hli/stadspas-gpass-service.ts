@@ -1,3 +1,4 @@
+import memoizee from 'memoizee';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -5,7 +6,7 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
-import { BffEndpoints, getApiConfig } from '../../config';
+import { BffEndpoints, getApiConfig, ONE_SECOND_MS } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
