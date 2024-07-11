@@ -1,10 +1,9 @@
 import { generatePath } from 'react-router-dom';
-import { AppState } from '../AppState';
-import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
-import { LinkProps } from '../../universal/types/App.types';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
-import { ExternalUrls } from './external-urls';
+import { LinkProps } from '../../universal/types/App.types';
+import { AppState } from '../AppState';
+import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { TrackingConfig } from './routes';
 
 export type BagThema = `${Thema}_BAG`;
@@ -162,7 +161,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.BELASTINGEN,
     id: Themas.BELASTINGEN,
-    to: ExternalUrls.SSO_BELASTINGEN,
+    to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
   },
@@ -181,7 +180,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.BELASTINGEN,
     id: Themas.BELASTINGEN,
-    to: ExternalUrls.EH_SSO_BELASTINGEN,
+    to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK,
     rel: 'external',
     profileTypes: ['commercial'],
     isAlwaysVisible: true,
@@ -195,7 +194,8 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.ERFPACHT,
     id: Themas.ERFPACHT,
-    to: ExternalUrls.SSO_ERFPACHT || '',
+    to: import.meta.env
+      .REACT_APP_SSO_URL_BELASTINGENREACT_APP_SSO_URL_MIJNERFPACHT,
     rel: 'external',
     profileTypes: ['private'],
   },
@@ -208,28 +208,28 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.ERFPACHTv2,
     id: Themas.ERFPACHTv2,
-    to: ExternalUrls.ERFPACHTv2_ZAKELIJK,
+    to: import.meta.env.REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK,
     profileTypes: ['commercial'],
     rel: 'external',
   },
   {
     title: ThemaTitles.ERFPACHT,
     id: Themas.ERFPACHT,
-    to: ExternalUrls.EH_SSO_ERFPACHT || '',
+    to: import.meta.env.REACT_APP_SSO_URL_MIJNERFPACHT_ZAKELIJK,
     rel: 'external',
     profileTypes: ['commercial'],
   },
   {
     title: ThemaTitles.SUBSIDIE,
     id: Themas.SUBSIDIE,
-    to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=digid`,
+    to: `${import.meta.env.REACT_APP_SSO_URL_SUBSIDIES}?authMethod=digid`,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.SUBSIDIE,
     id: Themas.SUBSIDIE,
-    to: `${ExternalUrls.SSO_SUBSIDIE}?authMethod=eherkenning`,
+    to: `${import.meta.env.REACT_APP_SSO_URL_SUBSIDIES}?authMethod=eherkenning`,
     rel: 'external',
     profileTypes: ['commercial'],
   },
@@ -248,7 +248,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.SVWI,
     id: Themas.SVWI,
-    to: ExternalUrls.SVWI,
+    to: import.meta.env.REACT_APP_SSO_URL_SVWI,
     rel: 'external',
     profileTypes: ['private'],
   },
@@ -281,14 +281,14 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.MILIEUZONE,
     id: Themas.MILIEUZONE,
-    to: ExternalUrls.SSO_MILIEUZONE || '',
+    to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.OVERTREDINGEN,
     id: Themas.OVERTREDINGEN,
-    to: ExternalUrls.SSO_MILIEUZONE || '', // TODO: In de toekomst wordt dit een andere link
+    to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
