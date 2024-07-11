@@ -545,7 +545,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-thema-id="BELASTINGEN"
-            href="https://belastingbalie.amsterdam.nl/digid.saml.php?start"
+            href="http://remote-api-host/sso/portaal/belastingen"
             rel="external"
           >
             <span
@@ -620,7 +620,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-thema-id="MILIEUZONE"
-            href="https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen"
+            href="http://remote-api-host/sso/portaal/milieuzone"
             rel="external"
           >
             <span
