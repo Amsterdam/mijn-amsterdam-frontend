@@ -233,15 +233,15 @@ export async function fetchRelaties(
   return relaties;
 }
 
-export async function fetchPersoonsgegevensNAW(
+export async function fetchPersoonsgegevensNAW_(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
+  userID: AuthProfileAndToken['profile']['id'],
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
   const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
   const url = `${dataRequestConfig.url}/persoonsgegevensNAW`;
   const postData = {
-    burgerservicenummer: authProfileAndToken.profile.id,
+    burgerservicenummer: userID,
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
   const response = requestData<ZorgnedPersoonsgegevensNAWResponse>(
@@ -250,12 +250,16 @@ export async function fetchPersoonsgegevensNAW(
       data: postData,
       url,
     },
-    requestID,
-    authProfileAndToken
+    requestID
   );
 
   return response;
 }
+
+export const fetchPersoonsgegevensNAW = memoizee(fetchPersoonsgegevensNAW_, {
+  length: 3,
+  maxAge: 45 * ONE_SECOND_MS,
+});
 
 export const forTesting = {
   transformDocumenten,

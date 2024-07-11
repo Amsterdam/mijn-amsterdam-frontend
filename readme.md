@@ -106,4 +106,8 @@ Every release to production is accompanied with a release tag in the from of: `r
 creates a [semver](https://semver.org/) version of the release tag and pushes it to origin in a separte production branch. The CI/CD pipeline will automatically detect the branch and starts building a release.
 
 ### Debugging
-`export DEBUG=1` will log outgoing http requests via the `log-that-http` package. Headers and Body can be made visible as well by `export LOG_THAT_HTTP_HEADERS=true` for headers and `export LOG_THAT_HTTP_BODY=true` for request bodies.
+`export DEBUG=1` will log some BFF info and also outgoing http requests via the `log-that-http` package. Headers and Body can be made visible as well by `export LOG_THAT_HTTP_HEADERS=true` for headers and `export LOG_THAT_HTTP_BODY=true` for request bodies.
+
+`export DEBUG_RESPONSE_DATA=term1,term2` Logs response data from incoming responses before any transformation.
+A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
+

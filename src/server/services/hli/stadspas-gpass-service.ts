@@ -102,7 +102,7 @@ function transformStadspasResponse(
   };
 }
 
-export async function fetchStadspassen(
+export async function fetchStadspassen_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -204,6 +204,10 @@ export async function fetchStadspassen(
 
   return apiSuccessResult({ stadspassen, administratienummer });
 }
+
+export const fetchStadspassen = memoizee(fetchStadspassen_, {
+  maxAge: 45 * ONE_SECOND_MS,
+});
 
 function transformGpassTransactionsResponse(
   gpassTransactionsResponseData: StadspasTransactiesResponse

@@ -23,6 +23,30 @@ export const axiosRequest = axios.create({
   headers: { 'User-Agent': 'mijn-amsterdam-bff' },
 });
 
+function debugResponseData(responseData: any) {
+  console.debug('\x1b[33m%s\x1b[0m', `\n\nResponse:\n`);
+  console.debug('\x1b[33m%s\x1b[0m', responseData);
+  console.debug('\x1b[33m%s\x1b[0m', `\nEnd response from `);
+  return responseData;
+}
+
+const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA?.split(',');
+
+// Log response url after debugging the response data because the debugTransformer doesn't have access to the url
+// and interceptors cannot log untransformed response data.
+if (debugResponseDataTerms) {
+  axiosRequest.interceptors.response.use((response) => {
+    if (
+      debugResponseDataTerms.some((term) => {
+        return response.config.url?.includes(term.trim());
+      })
+    ) {
+      console.log('\x1b[33m%s\x1b[0m', response.config.url);
+    }
+    return response;
+  });
+}
+
 export const cache = new memoryCache.Cache<string, any>();
 
 export interface RequestConfig<Source, Transformed> {
@@ -80,6 +104,23 @@ export async function requestData<T>(
       axios.defaults.transformResponse as any,
       requestConfig.transformResponse as any
     );
+  }
+
+  // Log/Debug the untransformed response data
+  if (
+    debugResponseDataTerms?.some((term) => {
+      return requestConfig.url?.includes(term.trim());
+    }) &&
+    !requestConfig.transformResponse?.includes(debugResponseData)
+  ) {
+    // Add default transformer if no transformers are defined
+    if (!requestConfig.transformResponse) {
+      requestConfig.transformResponse = [].concat(
+        axios.defaults.transformResponse as any
+      );
+    }
+    // Add the debug transformer as first transformer
+    requestConfig.transformResponse.unshift(debugResponseData);
   }
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
