@@ -1,6 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { apiErrorResult } from '../../../universal/helpers/api';
-import { BffEndpoints, ExternalConsumerEndpoints } from '../../config';
+import {
+  BffEndpoints,
+  ExternalConsumerEndpoints,
+  STADSPASSEN_ENDPOINT_PARAMETER,
+} from '../../config';
 import {
   AuthProfileAndToken,
   getAuth,
@@ -78,27 +82,28 @@ router.get(
 );
 
 async function sendStadspassenResponse(
-  req: Request<{ administratienummerEncrypted: string }>,
+  req: Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>,
   res: Response
 ) {
   let reason = '';
-  try {
-    const amdministratienummerEncrypted =
-      req.params.administratienummerEncrypted;
 
-    if (amdministratienummerEncrypted) {
-      const administratienummer = decrypt(amdministratienummerEncrypted);
+  try {
+    const administratienummerEncrypted =
+      req.params[STADSPASSEN_ENDPOINT_PARAMETER];
+    if (administratienummerEncrypted) {
+      const administratienummer = decrypt(administratienummerEncrypted);
       const stadpassen = await fetchStadspassenByAdministratienummer(
         res.locals.requestID,
         administratienummer
       );
       return res.send(stadpassen);
     }
-    reason = 'missing encrypted param';
+    reason = `Missing encrypted url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`;
   } catch (error) {
-    reason = 'could not decrypt param';
+    reason = `Could not decrypt url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`;
     captureException(error);
   }
+
   return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
 }
 

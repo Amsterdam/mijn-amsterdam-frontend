@@ -402,6 +402,7 @@ export const BFF_OIDC_BASE_URL = `${
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
 
+export const STADSPASSEN_ENDPOINT_PARAMETER = 'administratienummerEncrypted';
 export const ExternalConsumerEndpoints = {
   // Publicly accessible
   public: {
@@ -410,7 +411,7 @@ export const ExternalConsumerEndpoints = {
   },
   // Privately accessible
   private: {
-    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:administratienummerEncrypted`,
+    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
   },
 };
 
