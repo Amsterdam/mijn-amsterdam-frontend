@@ -272,8 +272,7 @@ function transformContentToAST(content: CMSFooterContent) {
 
 async function fetchCmsBase(
   requestID: requestID,
-  query?: QueryParamsCMSFooter,
-  doTransformToAST: boolean = false
+  query?: QueryParamsCMSFooter
 ) {
   const forceRenew = !!(query?.forceRenew === 'true');
 
@@ -294,9 +293,7 @@ async function fetchCmsBase(
   let generalInfoContent = getSettledResult(generalInfo).content;
   let footerContent = getSettledResult(footer).content as CMSFooterContent;
 
-  if (doTransformToAST) {
-    footerContent = transformContentToAST(footerContent);
-  }
+  footerContent = transformContentToAST(footerContent);
 
   return {
     generalInfo: generalInfoContent as CMSPageContent | null,
@@ -313,17 +310,15 @@ export async function fetchCmsFooter(
   requestID: requestID,
   query?: QueryParamsCMSFooter
 ) {
-  const response = await fetchCmsBase(requestID, query, true);
+  const response = await fetchCmsBase(requestID, query);
   return apiSuccessResult(response.footer);
 }
 
 export async function fetchCMSCONTENT(
   requestID: requestID,
-  query?: QueryParamsCMSFooter,
-  doTransformToAST: boolean = false
+  query?: QueryParamsCMSFooter
 ) {
-  const response = await fetchCmsBase(requestID, query, doTransformToAST);
-
+  const response = await fetchCmsBase(requestID, query);
   return apiSuccessResult(response);
 }
 
