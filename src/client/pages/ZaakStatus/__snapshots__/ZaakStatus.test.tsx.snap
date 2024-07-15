@@ -34,6 +34,16 @@ exports[`ZaakStatus > should show an error 1`] = `
               style="width: auto; height: 2rem; margin-bottom: 0px;"
             />
           </span>
+          <span
+            class="_LoadingContent_16e37c _LoadingContent_fa1c1f"
+          >
+            <span
+              style="width: auto; height: 2rem; margin-bottom: 1rem;"
+            />
+            <span
+              style="width: auto; height: 2rem; margin-bottom: 0px;"
+            />
+          </span>
           <p
             class="ams-paragraph"
           >
@@ -73,6 +83,16 @@ exports[`ZaakStatus > should show an error 1`] = `
       <div
         class="_PageContent_47d7c0"
       >
+        <span
+          class="_LoadingContent_16e37c _LoadingContent_fa1c1f"
+        >
+          <span
+            style="width: auto; height: 2rem; margin-bottom: 1rem;"
+          />
+          <span
+            style="width: auto; height: 2rem; margin-bottom: 0px;"
+          />
+        </span>
         <span
           class="_LoadingContent_16e37c _LoadingContent_fa1c1f"
         >

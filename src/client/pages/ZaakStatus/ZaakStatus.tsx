@@ -94,21 +94,22 @@ export default function ZaakStatus() {
     <TextPage>
       <PageHeading>Status van uw aanvraag</PageHeading>
       <PageContent>
-        {true && (
-          <LoadingContent
-            className={styles.LoadingContent}
-            barConfig={[
-              ['auto', '2rem', '1rem'],
-              ['auto', '2rem', '0'],
-            ]}
-          />
-        )}
-        {(pageRoute.unResolvedState === ITEM_NOT_FOUND ||
-          (appStateReady && queryParams.get('payment'))) && (
+        {pageRoute.unResolvedState === ITEM_NOT_FOUND ||
+        (appStateReady && queryParams.get('payment')) ? (
           <Paragraph>
             U heeft betaald voor deze aanvraag. Het kan even duren voordat uw
             aanvraag op Mijn Amsterdam te zien is.
           </Paragraph>
+        ) : (
+          !appStateReady && (
+            <LoadingContent
+              className={styles.LoadingContent}
+              barConfig={[
+                ['auto', '2rem', '1rem'],
+                ['auto', '2rem', '0'],
+              ]}
+            />
+          )
         )}
         {appStateReady && (
           <Paragraph>
