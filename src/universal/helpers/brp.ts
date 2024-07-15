@@ -1,10 +1,12 @@
+import { Persoon } from '../types';
 import { defaultDateFormat, formatMonthAndYear, formatYear } from './date';
 
-export function getFullName(persoon: {
-  voornamen: string;
-  voorvoegselGeslachtsnaam: string | null;
-  geslachtsnaam: string;
-}) {
+export function getFullName(
+  persoon: Pick<
+    Persoon,
+    'voornamen' | 'geslachtsnaam' | 'voorvoegselGeslachtsnaam'
+  >
+) {
   return persoon
     ? `${persoon.voornamen} ${
         persoon.voorvoegselGeslachtsnaam

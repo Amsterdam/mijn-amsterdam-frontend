@@ -1,18 +1,19 @@
+import classnames from 'classnames';
 import { useMemo } from 'react';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
 import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoPanel,
   InfoPanelCollapsible,
   Linkd,
   LinkdInline,
   LoadingContent,
+  MaintenanceNotifications,
   PageContent,
   PageHeading,
-  MaintenanceNotifications,
+  ThemaIcon,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatKvkProfileData } from './formatDataCommercial';
@@ -22,7 +23,6 @@ import {
   panelConfigCommercial,
   PanelConfigFormatter,
 } from './profilePanelConfig';
-import classnames from 'classnames';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,

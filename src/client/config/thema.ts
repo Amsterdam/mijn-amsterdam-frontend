@@ -1,12 +1,10 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
-import { LinkProps } from '../../universal/types/App.types';
-import { AppState } from '../AppState';
+import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
+import { ExternalUrls } from './external-urls';
 import { TrackingConfig } from './routes';
-
-export type BagThema = `${Thema}_BAG`;
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {

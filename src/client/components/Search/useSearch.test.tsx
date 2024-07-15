@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { RecoilRoot } from 'recoil';
 import type { Vergunning } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
-import { AppState } from '../../AppState';
 import {
   API_SEARCH_CONFIG_DEFAULT,
   ApiBaseItem,
@@ -22,6 +21,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { bffApi } from '../../../test-utils';
 import { appStateAtom } from '../../hooks/useAppState';
 import * as remoteConfig from './search-config.json';
+import { AppState } from '../../../universal/types/App.types';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {

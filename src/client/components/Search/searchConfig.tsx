@@ -32,11 +32,11 @@ import {
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
 import {
+  AppStateKey,
   BRPData,
   Identiteitsbewijs,
   LinkProps,
 } from '../../../universal/types';
-import { AppStateKey } from '../../AppState';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
 
@@ -296,7 +296,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'WMO' as AppStateKey,
     generateKeywords: (wmoItem: WMOVoorzieningFrontend): string[] =>
-      uniqueArray(wmoItem.steps.flatMap((step) => [step.title, step.status])),
+      uniqueArray(wmoItem.steps.map((step) => [step.description, step.status])),
     displayTitle: (wmoItem: WMOVoorzieningFrontend) => {
       return (term: string) => {
         const segments = [wmoItem.title];

@@ -1,4 +1,5 @@
-import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
+import { AppState } from '../../universal/types/App.types';
+import { createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { captureMessage } from '../utils/monitoring';
 
 export function transformSourceData(data: Partial<AppState> | null) {

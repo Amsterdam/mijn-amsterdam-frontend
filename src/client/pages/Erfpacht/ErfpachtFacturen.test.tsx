@@ -1,19 +1,20 @@
-import { act, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import ERFPACHTv2_DOSSIER_DETAIL from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
+  ErfpachtV2DossiersResponse,
   transformDossierResponse,
   transformErfpachtDossierProperties,
 } from '../../../server/services/simple-connect/erfpacht';
+import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ErfpachtFacturen from './ErfpachtFacturen';
-import { bffApi, remoteApi } from '../../../test-utils';
-import userEvent from '@testing-library/user-event';
 
 describe('<ErfpachtOpenFacturen />', () => {
   const user = userEvent.setup();
@@ -73,7 +74,10 @@ describe('<ErfpachtOpenFacturen />', () => {
     const testState = {
       ERFPACHTv2: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHTv2_DOSSIERS as any),
+        content: transformDossierResponse(
+          ERFPACHTv2_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
+          'xxx-relatie-code-xxx'
+        ),
       },
     } as AppState;
 

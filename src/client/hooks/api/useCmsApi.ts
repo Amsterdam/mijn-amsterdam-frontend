@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { AppState, PRISTINE_APPSTATE } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
+import { PRISTINE_APPSTATE } from '../../AppState';
+import { BFFApiUrls } from '../../config/api';
 import { useAppStateSetter } from '../useAppState';
 import { useDataApi } from './useDataApi';
-import { BFFApiUrls } from '../../config/api';
 
 const pristineData = PRISTINE_APPSTATE.CMS_CONTENT;
 

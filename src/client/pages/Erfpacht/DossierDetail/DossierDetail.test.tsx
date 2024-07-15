@@ -11,7 +11,7 @@ import {
 import { bffApi } from '../../../../test-utils';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../AppState';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 import ErfpachtDossierDetail from './ErfpachtDossierDetail';

@@ -2,9 +2,12 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
-import { transformDossierResponse } from '../../../server/services/simple-connect/erfpacht';
+import {
+  ErfpachtV2DossiersResponse,
+  transformDossierResponse,
+} from '../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ErfpachtOpenFacturen from './ErfpachtOpenFacturen';
@@ -14,7 +17,8 @@ describe('<ErfpachtOpenFacturen />', () => {
   const routePath = AppRoutes['ERFPACHTv2/OPEN_FACTUREN'];
 
   const dossiersTransformed = transformDossierResponse(
-    ERFPACHTv2_DOSSIERS as any
+    ERFPACHTv2_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
+    'xxx-relatie-code-xxx'
   );
 
   const Component = ({

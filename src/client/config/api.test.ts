@@ -1,5 +1,5 @@
 import { FailedDependencies } from '../../universal/helpers/api';
-import { AppState } from '../AppState';
+import { AppState } from '../../universal/types/App.types';
 import {
   createErrorDisplayData,
   createFailedDependenciesError,
