@@ -156,10 +156,5 @@ describe('hli/router-external-consumer', async () => {
         status: 'ERROR',
       });
     });
-
-    // RP TODO: How to make decrypt throw? vi.hoisted()? something else?
-    // it('Returns an apiErrorResult when an error is thrown when checking administratienummer', () => {
-    //   decrypt.mockReturnValue(100);
-    // });
   });
 });
