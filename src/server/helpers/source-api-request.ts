@@ -34,11 +34,11 @@ const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA?.split(',');
 
 // Log response url after debugging the response data because the debugTransformer doesn't have access to the url
 // and interceptors cannot log untransformed response data.
-if (debugResponseDataTerms) {
+if (debugResponseDataTerms?.length) {
   axiosRequest.interceptors.response.use((response) => {
     if (
       debugResponseDataTerms.some((term) => {
-        return response.config.url?.includes(term.trim());
+        return !!term && response.config.url?.includes(term.trim());
       })
     ) {
       console.debug(response.config.url, '\n\n');
@@ -109,7 +109,7 @@ export async function requestData<T>(
   // Log/Debug the untransformed response data
   if (
     debugResponseDataTerms?.some((term) => {
-      return requestConfig.url?.includes(term.trim());
+      return !!term && requestConfig.url?.includes(term.trim());
     }) &&
     !requestConfig.transformResponse?.includes(debugResponseData)
   ) {
