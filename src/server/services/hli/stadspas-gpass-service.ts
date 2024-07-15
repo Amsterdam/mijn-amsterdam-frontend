@@ -247,13 +247,18 @@ export async function fetchTransacties(
     }
 
     if (
-      !budgetcode ||
       !administratienummer ||
       !pasnummer ||
       sessionID !== authProfileAndToken.profile.sid
     ) {
       return apiErrorResult('Not authorized', null, 401);
     }
+
+    const requestParams = {
+      pasnummer,
+      budgetcode,
+      sub_transactions: true,
+    };
 
     const dataRequestConfig = getApiConfig('GPASS');
     const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
@@ -262,11 +267,7 @@ export async function fetchTransacties(
       url: GPASS_ENDPOINT_TRANSACTIONS,
       transformResponse: transformGpassTransactionsResponse,
       headers: getHeaders(administratienummer),
-      params: {
-        pasnummer,
-        budgetcode,
-        sub_transactions: true,
-      },
+      params: requestParams,
     };
 
     return requestData<StadspasTransaction[]>(
