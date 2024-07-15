@@ -145,7 +145,7 @@ describe('hli/router-external-consumer', async () => {
       expect(resMock.send).toHaveBeenCalledWith('Success');
     });
 
-    it('Returns an apiErrorResult when url when administratienummer is empty', async () => {
+    it('Returns an apiErrorResult when administratienummer is empty', async () => {
       reqMock.params[STADSPASSEN_ENDPOINT_PARAMETER] =
         undefined as unknown as string;
 
