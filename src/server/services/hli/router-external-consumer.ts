@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { apiErrorResult } from '../../../universal/helpers/api';
-import { BffEndpoints } from '../../config';
+import { BffEndpoints, getApiConfig } from '../../config';
 import {
   AuthProfileAndToken,
   getAuth,
@@ -10,53 +10,119 @@ import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
+import { requestData } from '../../helpers/source-api-request';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
+const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
 
 export const router = express.Router();
 
 router.get(
   BffEndpoints.STADSPAS_AMSAPP_LOGIN,
-  async (req: Request, res: Response) => {
+  async (req: Request<{ token: string }>, res: Response) => {
     return res.redirect(
       BffEndpoints.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER}`
+        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER}&amsapp-session-token=${req.params.token}`
     );
   }
 );
 
-async function sendAdministratienummerResponse(req: Request, res: Response) {
+type ApiError = {
+  code: string;
+  message: string;
+};
+
+const errors: Record<string, ApiError> = {
+  DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },
+  ADMINISTRATIENUMMER_RESPONSE_ERROR: {
+    code: '002',
+    message: 'Kon het administratienummer niet ophalen',
+  },
+  ADMINISTRATIENUMMER_NOT_FOUND: {
+    code: '003',
+    message: 'Geen administratienummer gevonden',
+  },
+  AMSAPP_DELIVERY_FAILED: {
+    code: '004',
+    message:
+      'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
+  },
+  UNKNOWN: {
+    code: '000',
+    message: 'Onbekende error',
+  },
+} as const;
+
+async function sendAdministratienummerResponse(
+  req: Request<{ token: string }>,
+  res: Response
+) {
   let authProfileAndToken: AuthProfileAndToken | null = null;
+  let error: ApiError = errors.UNKNOWN;
+
   try {
     authProfileAndToken = await getAuth(req);
-  } catch (error) {}
+  } catch (error) {
+    error = errors.DIGID_AUTH;
+  }
 
   if (
     authProfileAndToken?.profile.id &&
     authProfileAndToken.profile.profileType === 'private'
   ) {
-    const clientNummerResponse = await fetchAdministratienummer(
+    const administratienummerResponse = await fetchAdministratienummer(
       res.locals.requestID,
       authProfileAndToken
     );
 
-    if (clientNummerResponse.status === 'OK') {
+    // Administratienummer found, encrypt and sent
+    if (
+      administratienummerResponse.status === 'OK' &&
+      administratienummerResponse.content
+    ) {
       const [administratienummerEncrypted] =
-        clientNummerResponse.content !== null
-          ? encrypt(clientNummerResponse.content)
+        administratienummerResponse.content !== null
+          ? encrypt(administratienummerResponse.content)
           : [];
-      return res.render('amsapp-stadspas-administratienummer', {
-        administratienummerEncrypted,
-        AMSAPP_PROTOCOl,
+
+      const requestConfig = getApiConfig('AMSAPP', {
+        data: {
+          administratienummerEncrypted,
+          token: req.params.token,
+        },
       });
+
+      // Deliver the token with administratienummer to app.amsterdam.nl
+      const deliveryResponse = await requestData(
+        requestConfig,
+        res.locals.requestID
+      );
+
+      if (deliveryResponse.status === 'OK') {
+        // Send app protocol header, should open app
+        return res.redirect(AMSAPP_STADSPAS_DEEP_LINK);
+      }
+
+      if (deliveryResponse.status === 'ERROR') {
+        // Delivery response error
+        error = errors.AMSAPP_DELIVERY_FAILED;
+      }
     }
 
-    if (clientNummerResponse.status === 'ERROR') {
+    // administratienummer not found in Zorgned
+    if (!administratienummerResponse.content) {
+      error = errors.ADMINISTRATIENUMMER_NOT_FOUND;
+    }
+
+    // administratienummer error Response
+    if (administratienummerResponse.status === 'ERROR') {
+      error = errors.ADMINISTRATIENUMMER_RESPONSE_ERROR;
+    }
+
+    if (error) {
       return res.render('amsapp-stadspas-administratienummer', {
-        error:
-          clientNummerResponse.message ??
-          'Administratienummer kon niet worden opgehaald',
-        AMSAPP_PROTOCOl,
+        error: error,
+        appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`,
       });
     }
   }

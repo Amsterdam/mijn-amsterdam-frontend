@@ -102,6 +102,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 export type SourceApiKey =
   | 'AFIS'
   | 'AFVAL'
+  | 'AMSAPP'
   | 'BAG'
   | 'BELASTINGEN'
   | 'BEZWAREN_DOCUMENT'
@@ -333,6 +334,13 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.bodemActive,
     cacheTimeout: 59 * ONE_MINUTE_MS,
   },
+  AMSAPP: {
+    url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,
+    method: 'POST',
+    headers: {
+      'X-Api-Key': process.env.BFF_AMSAPP_API_KEY,
+    },
+  },
 };
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
@@ -416,8 +424,9 @@ export const BffEndpoints = {
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
 
   // Stadspas external
-  STADSPAS_AMSAPP_LOGIN: '/services/amsapp/stadspas/login',
-  STADSPAS_ADMINISTRATIENUMMER: '/services/amsapp/stadspas/administratienummer',
+  STADSPAS_AMSAPP_LOGIN: '/services/amsapp/stadspas/login/:token',
+  STADSPAS_ADMINISTRATIENUMMER:
+    '/services/amsapp/stadspas/administratienummer/:token',
   STADSPAS_PASSEN:
     '/services/amsapp/stadspas/passen/:administratienummerEncrypted',
 
