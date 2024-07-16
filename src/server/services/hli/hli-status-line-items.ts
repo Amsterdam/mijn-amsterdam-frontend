@@ -12,7 +12,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   },
   {
     leveringsVorm: '',
-    productsoortCodes: ['AV-ALG'],
+    productsoortCodes: ['AV-ALG', 'AV-ALG_E'],
     productIdentificatie: ['AV-GOV', 'AV-OVM'],
     lineItemTransformers: REGELING,
   },
