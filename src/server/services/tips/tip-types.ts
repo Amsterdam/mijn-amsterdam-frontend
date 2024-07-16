@@ -1,6 +1,6 @@
 import { Thema } from '../../../universal/config/thema';
 import { ApiResponse } from '../../../universal/helpers/api';
-import { LinkProps } from '../../../universal/types';
+import { AppState, LinkProps } from '../../../universal/types';
 
 export type ServiceResults = { [serviceId: string]: ApiResponse<any> };
 
@@ -25,6 +25,6 @@ export type Tip = {
 };
 
 export type TipsPredicateFN = (
-  stateData: Partial<any>,
+  stateData: Partial<AppState>,
   today?: Date
 ) => boolean;
