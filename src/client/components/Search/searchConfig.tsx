@@ -36,6 +36,7 @@ import {
   BRPData,
   Identiteitsbewijs,
   LinkProps,
+  StatusLineItem,
 } from '../../../universal/types';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './Search.module.scss';
@@ -167,7 +168,10 @@ const getWpiConfig = (
   stateKey,
   generateKeywords: (aanvraag: WpiRequestProcess) =>
     uniqueArray(
-      aanvraag.steps.flatMap((step: any) => [step.title, step.status])
+      aanvraag.steps.flatMap((step: StatusLineItem) => [
+        step.description,
+        step.status,
+      ])
     ),
   displayTitle: (aanvraag: WpiRequestProcess) => {
     return (term: string) => {
@@ -296,7 +300,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'WMO' as AppStateKey,
     generateKeywords: (wmoItem: WMOVoorzieningFrontend): string[] =>
-      uniqueArray(wmoItem.steps.map((step) => [step.description, step.status])),
+      uniqueArray(
+        wmoItem.steps.flatMap((step) => [step.description, step.status])
+      ),
     displayTitle: (wmoItem: WMOVoorzieningFrontend) => {
       return (term: string) => {
         const segments = [wmoItem.title];
