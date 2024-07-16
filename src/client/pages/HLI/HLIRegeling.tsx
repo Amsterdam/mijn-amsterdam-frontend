@@ -31,13 +31,6 @@ export default function HLIRegelingDetailPagina() {
       pageContent={(isLoading, hliRegeling) => {
         const rows: Row[] = [];
 
-        if (hliRegeling?.supplier) {
-          rows.push({
-            label: 'Aanbieder',
-            content: hliRegeling.supplier,
-          });
-        }
-
         if (hliRegeling?.receiver) {
           rows.push({
             label: 'Ontvanger',
