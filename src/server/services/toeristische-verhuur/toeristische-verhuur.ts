@@ -1,20 +1,21 @@
 import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
-import { FeatureToggle, Themas } from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
-import {
-  dateFormat,
-  dateSort,
-  isDateInPast,
-  isRecentNotification,
-} from '../../../universal/helpers';
+import { Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import {
+  dateFormat,
+  dateSort,
+  isDateInPast,
+} from '../../../universal/helpers/date';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   isNearEndDate,

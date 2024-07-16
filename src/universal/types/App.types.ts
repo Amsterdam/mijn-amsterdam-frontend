@@ -1,5 +1,20 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
-import { Thema } from '../config';
+import { Thema } from '../config/thema';
+import { ServiceID, ServicesType } from '../../server/services/controller';
+import { ApiResponse } from '../helpers/api';
+
+export type BagThema = `${Thema}_BAG`;
+
+export type AppState = {
+  [key in ServiceID]: ApiResponse<
+    ReturnTypeAsync<ServicesType[key]>['content']
+  >;
+} & {
+  // A place to store additional data not loaded initially but needs to be stored persistently in the app.
+  [key in BagThema]?: Record<string, any>;
+};
+
+export type AppStateKey = Exclude<keyof AppState, BagThema>;
 
 // Generic object interface
 export interface Unshaped {

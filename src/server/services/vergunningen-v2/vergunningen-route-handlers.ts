@@ -1,17 +1,13 @@
 import { Request, Response } from 'express';
-import { apiSuccessResult } from '../../../universal/helpers';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { BffEndpoints } from '../../config';
-import {
-  generateFullApiUrlBFF,
-  getAuth,
-  sendResponseContent,
-} from '../../helpers/app';
+import { generateFullApiUrlBFF, getAuth } from '../../helpers/app';
+import { DecosZaakSource } from './config-and-types';
 import {
   fetchDecosZaakFromSource,
   fetchDecosZakenFromSource,
 } from './decos-service';
 import { fetchVergunningV2 } from './vergunningen';
-import { DecosZaakSource } from './config-and-types';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
   const authProfileAndToken = await getAuth(req);

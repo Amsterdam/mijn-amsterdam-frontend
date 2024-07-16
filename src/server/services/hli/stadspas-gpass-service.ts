@@ -1,15 +1,15 @@
-import { generatePath } from 'react-router-dom';
+import memoizee from 'memoizee';
 import {
   apiErrorResult,
   apiSuccessResult,
-  defaultDateFormat,
   getSettledResult,
-} from '../../../universal/helpers';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
+} from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
-import { BFF_BASE_PATH, BffEndpoints, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
+import { BffEndpoints, getApiConfig, ONE_SECOND_MS } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { requestData } from '../../helpers/source-api-request';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
@@ -103,7 +103,7 @@ function transformStadspasResponse(
   };
 }
 
-export async function fetchStadspassen(
+export async function fetchStadspassen_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -205,6 +205,10 @@ export async function fetchStadspassen(
 
   return apiSuccessResult({ stadspassen, administratienummer });
 }
+
+export const fetchStadspassen = memoizee(fetchStadspassen_, {
+  maxAge: 45 * ONE_SECOND_MS,
+});
 
 function transformGpassTransactionsResponse(
   gpassTransactionsResponseData: StadspasTransactiesResponse

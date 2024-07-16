@@ -1,15 +1,16 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
-  ErrorAlert,
-  ThemaIcon,
   DetailPage,
+  ErrorAlert,
   InfoDetail,
   PageContent,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
-import { useAppStateGetter } from '../../hooks';
+import { ThemaTitles } from '../../config/thema';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import AVGStatusLines from './AVGStatusLines';
 
 const AVGDetail = () => {

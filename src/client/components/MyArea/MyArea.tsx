@@ -1,9 +1,13 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ThemaTitles, HOOD_ZOOM } from '../../../universal/config';
+import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
+import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { getElementSize, useTermReplacement, useWidescreen } from '../../hooks';
+import { ThemaTitles } from '../../config/thema';
+import { useWidescreen } from '../../hooks/media.hook';
+import { getElementSize } from '../../hooks/useComponentSize';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
 import { LegendPanel } from './LegendPanel/LegendPanel';
 import {
@@ -30,7 +34,6 @@ import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButt
 import { MyAreaDatasets } from './MyAreaDatasets';
 import HomeControlButton from './MyAreaHomeControlButton';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 
 const baseLayerOptions: TileLayerOptions = {
   subdomains: ['t1', 't2', 't3', 't4'],

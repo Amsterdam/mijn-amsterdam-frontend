@@ -1,15 +1,17 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, FeatureToggle, Themas } from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import {
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 import {
   AVGRequest,

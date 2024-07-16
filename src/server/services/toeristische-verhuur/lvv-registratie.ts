@@ -2,10 +2,10 @@ import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import { isAmsterdamAddress } from '../buurt/helpers';
 
 export interface ToeristischeVerhuurRegistratieNumberSource {

@@ -1,4 +1,3 @@
-import { IS_TEST } from '../../../universal/config';
 import { MyTip } from '../../../universal/types';
 import { ServiceResults, Tip } from './tip-types';
 import { tips } from './tips-content';

@@ -141,7 +141,7 @@ export const hasKidsBetweenAges4And11: TipsPredicateFN = (
 
 export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
   const oldestKid = appState.BRP?.content?.kinderen?.sort(
-    (a, b) =>
+    (a: any, b: any) =>
       new Date(a.geboortedatum as string).getTime() -
       new Date(b.geboortedatum as string).getTime()
   )[0];

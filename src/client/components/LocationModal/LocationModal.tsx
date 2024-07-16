@@ -5,7 +5,7 @@ import {
   DEFAULT_LAT,
   DEFAULT_LNG,
   LOCATION_ZOOM,
-} from '../../../universal/config';
+} from '../../../universal/config/myarea-datasets';
 import {
   extractAddress,
   getLatLonByAddress,
@@ -14,7 +14,7 @@ import {
 import { Modal } from '../../components';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
-import { trackPageView } from '../../hooks';
+import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './LocationModal.module.scss';
 

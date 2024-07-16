@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useLandScape, useWidescreen } from '../../../hooks';
+import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
 import { PanelState, usePanelStateCycle } from './PanelComponent';
 
 export function useLegendPanelCycle() {

@@ -1,10 +1,10 @@
-import { HTMLAttributes } from 'react';
 import { Heading } from '@amsterdam/design-system-react';
-import { IconExternalLink } from '../../assets/icons';
-import { LINKS } from './DirectLinks.constants';
-import Linkd from '../Button/Button';
 import classnames from 'classnames';
-import { entries } from '../../../universal/helpers';
+import { HTMLAttributes } from 'react';
+import { entries } from '../../../universal/helpers/utils';
+import { IconExternalLink } from '../../assets/icons';
+import Linkd from '../Button/Button';
+import { LINKS } from './DirectLinks.constants';
 import styles from './DirectLinks.module.scss';
 
 export default function DirectLinks({

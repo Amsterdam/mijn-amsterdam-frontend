@@ -3,11 +3,11 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import { transformDossierResponse } from '../../../server/services/simple-connect/erfpacht';
-import { AppRoutes } from '../../../universal/config';
-import { AppState } from '../../AppState';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Erfpacht from './Erfpacht';
+import { AppState } from '../../../universal/types/App.types';
 
 describe('<Erfpacht />', () => {
   const routeEntry = generatePath(AppRoutes.ERFPACHTv2);

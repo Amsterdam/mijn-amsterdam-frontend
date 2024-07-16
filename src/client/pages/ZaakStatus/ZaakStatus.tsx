@@ -1,7 +1,9 @@
+import { Paragraph } from '@amsterdam/design-system-react';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAppStateGetter, useAppStateReady } from '../../hooks';
-import styles from './ZaakStatus.module.scss';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { AppState } from '../../../universal/types/App.types';
 import {
   ErrorAlert,
   PageContent,
@@ -9,10 +11,9 @@ import {
   TextPage,
 } from '../../components';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { AppRoutes } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import { Paragraph } from '@amsterdam/design-system-react';
+import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import styles from './ZaakStatus.module.scss';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
@@ -20,27 +21,28 @@ const STATE_ERROR = 'state-error';
 type ThemaQueryParam = 'vergunningen';
 
 type PageRouteResolver = {
-  baseRoute: string;
-  getRoute: (detailPageItemId, appState) => string;
+  baseRoute: AppRoute;
+  getRoute: (
+    detailPageItemId: string,
+    appState: AppState
+  ) => string | undefined;
 };
 
-type PageRouteResolvers = {
-  [key: ThemaQueryParam]: PageRouteResolver;
-};
+type PageRouteResolvers = Record<ThemaQueryParam, PageRouteResolver>;
 
 const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: {
     baseRoute: AppRoutes.VERGUNNINGEN,
     getRoute: (detailPageItemId, appState) => {
+      if (isError(appState.VERGUNNINGEN)) {
+        return STATE_ERROR;
+      }
       if (!isLoading(appState.VERGUNNINGEN)) {
-        if (isError(appState.VERGUNNINGEN)) {
-          return STATE_ERROR;
-        }
-        return appState.VERGUNNINGEN.content?.length
-          ? appState.VERGUNNINGEN.content?.find(
-              (vergunning) => vergunning.identifier === detailPageItemId
-            )?.link.to
-          : ITEM_NOT_FOUND;
+        return (
+          appState.VERGUNNINGEN.content?.find(
+            (vergunning) => vergunning.identifier === detailPageItemId
+          )?.link.to ?? ITEM_NOT_FOUND
+        );
       }
     },
   },
@@ -63,6 +65,7 @@ function useNavigateToPage(queryParams: URLSearchParams) {
       if (route === ITEM_NOT_FOUND || route === STATE_ERROR) {
         setUnresolvedState(route);
       } else if (route) {
+        // Will unmount component, no further action needed
         history.push(route);
       }
     }
@@ -79,13 +82,16 @@ export default function ZaakStatus() {
   const history = useHistory();
   const queryParams = new URLSearchParams(history.location.search);
   const pageRoute = useNavigateToPage(queryParams);
-  let redirectRoute = AppRoutes.HOME;
-  let redirectName = 'Ga naar het dashboard';
 
-  if (pageRoute.unResolvedState === ITEM_NOT_FOUND || appStateReady) {
-    if (pageRoute.baseRoute) {
-      redirectRoute = pageRoute.baseRoute;
-      redirectName = 'Bekijk het overzicht';
+  let linkRoute: AppRoute = AppRoutes.HOME;
+  let linkText = 'Ga naar het dashboard';
+
+  // Only needed if zaak with the is ID not found.
+  if (pageRoute.baseRoute && pageRoute.unResolvedState !== STATE_ERROR) {
+    linkRoute = pageRoute.baseRoute;
+    // Item not found but no state error, provide link to the themapagina.
+    if (pageRoute.unResolvedState === ITEM_NOT_FOUND) {
+      linkText = 'Bekijk het overzicht';
     }
   }
 
@@ -93,7 +99,33 @@ export default function ZaakStatus() {
     <TextPage>
       <PageHeading>Status van uw aanvraag</PageHeading>
       <PageContent>
-        {true && (
+        {/* If we have a state error, show only the error, no links to overview because that has a state error as well. */}
+        {pageRoute.unResolvedState === STATE_ERROR && (
+          <ErrorAlert className="ams-mb--xs">
+            Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
+          </ErrorAlert>
+        )}
+        {pageRoute.unResolvedState === ITEM_NOT_FOUND && (
+          <>
+            <Paragraph className="ams-mb--xs">
+              Wij kunnen de status van uw aanvraag nu niet laten zien.
+            </Paragraph>
+            {queryParams.get('payment') && (
+              <Paragraph className="ams-mb--xs">
+                U heeft betaald voor deze aanvraag. Het kan even duren voordat
+                uw aanvraag op Mijn Amsterdam te zien is.
+              </Paragraph>
+            )}
+          </>
+        )}
+        {/* As soon as we have a result (unResolvedState has a value) or if all state is loaded, show an alternative link. */}
+        {(appStateReady || pageRoute.unResolvedState) && (
+          <Paragraph>
+            <MaRouterLink href={linkRoute}>{linkText}</MaRouterLink>
+          </Paragraph>
+        )}
+        {/* Show the loader if we don't have result yet or when we are still loading. */}
+        {!appStateReady && !pageRoute.unResolvedState && (
           <LoadingContent
             className={styles.LoadingContent}
             barConfig={[
@@ -102,26 +134,6 @@ export default function ZaakStatus() {
             ]}
           />
         )}
-        {pageRoute.unResolvedState === ITEM_NOT_FOUND ||
-          (appStateReady && queryParams.get('payment') && (
-            <Paragraph>
-              U heeft betaald voor deze aanvraag. Het kan even duren voordat uw
-              aanvraag op Mijn Amsterdam te zien is.
-            </Paragraph>
-          ))}
-        {appStateReady && (
-          <Paragraph>
-            Wij kunnen de status van uw aanvraag nu niet laten zien.
-          </Paragraph>
-        )}
-        {pageRoute.unResolvedState === STATE_ERROR && (
-          <ErrorAlert>
-            Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
-          </ErrorAlert>
-        )}
-        <Paragraph>
-          <MaRouterLink to={redirectRoute}>{redirectName}</MaRouterLink>
-        </Paragraph>
       </PageContent>
     </TextPage>
   );

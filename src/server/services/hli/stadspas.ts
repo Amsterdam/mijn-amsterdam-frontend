@@ -1,12 +1,11 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
-  ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import { fetchStadspassen } from './stadspas-gpass-service';

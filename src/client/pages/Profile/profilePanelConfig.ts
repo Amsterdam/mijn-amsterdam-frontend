@@ -3,11 +3,11 @@ import {
   InfoPanelProps,
 } from '../../components/InfoPanel/InfoPanel';
 
-import { isMokum } from '../../../universal/helpers';
+import type { KVKData } from '../../../server/services/kvk';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isMokum } from '../../../universal/helpers/brp';
 import { BRPData } from '../../../universal/types';
 import { ExternalUrls } from '../../config/app';
-import type { KVKData } from '../../../server/services/kvk';
-import { FeatureToggle } from '../../../universal/config';
 import styles from './Profile.module.scss';
 
 type BRPPanelKey = keyof Omit<

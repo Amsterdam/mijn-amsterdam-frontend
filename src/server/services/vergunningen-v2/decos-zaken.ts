@@ -1,6 +1,6 @@
 import { parseISO } from 'date-fns';
-import { FeatureToggle, IS_PRODUCTION } from '../../../universal/config';
-
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   CaseTypeV2,
   DecosCaseType,

@@ -1,11 +1,5 @@
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { AppRoute, AppRoutes } from '../../../universal/config';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  defaultDateFormat,
-} from '../../../universal/helpers';
 import { BffEndpoints, ONE_SECOND_MS } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import {
@@ -16,18 +10,16 @@ import {
   VergunningFrontendV2,
   VergunningV2,
 } from './config-and-types';
-import {
-  fetchDecosDocument,
-  fetchDecosVergunning,
-  fetchDecosVergunningen,
-} from './decos-service';
+import { fetchDecosVergunning, fetchDecosVergunningen } from './decos-service';
 
 import memoizee from 'memoizee';
-import { decrypt, encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import { captureException } from '../monitoring';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { decryptAndValidate } from '../shared/decrypt-route-param';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
   vergunning: VergunningV2

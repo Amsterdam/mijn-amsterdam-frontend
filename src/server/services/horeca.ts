@@ -1,13 +1,17 @@
-import { AppRoutes, FeatureToggle } from '../../universal/config';
-import { apiDependencyError, apiSuccessResult } from '../../universal/helpers';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { AppRoutes } from '../../universal/config/routes';
+import {
+  apiDependencyError,
+  apiSuccessResult,
+} from '../../universal/helpers/api';
 import { CaseType } from '../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../helpers/app';
 import {
+  HorecaVergunningen,
+  Vergunning,
   fetchVergunningen,
   getVergunningNotifications,
-  HorecaVergunningen,
   horecaVergunningTypes,
-  Vergunning,
 } from './vergunningen/vergunningen';
 
 export const horecaOptions = {

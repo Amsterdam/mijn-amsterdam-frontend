@@ -1,4 +1,5 @@
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
+import { ThemaTitles } from '../../config/thema';
 import {
   ThemaIcon,
   Linkd,

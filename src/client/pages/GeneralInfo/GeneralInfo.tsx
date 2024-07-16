@@ -1,4 +1,4 @@
-import { isError, isLoading } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
   InnerHtml,

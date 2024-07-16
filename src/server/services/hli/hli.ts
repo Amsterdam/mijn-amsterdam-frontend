@@ -1,13 +1,17 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, IS_OT, IS_TEST } from '../../../universal/config';
+import slug from 'slugme';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiSuccessResult,
-  capitalizeFirstLetter,
-  dateSort,
   getFailedDependencies,
   getSettledResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
+import { dateSort } from '../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { GenericDocument, StatusLineItem } from '../../../universal/types';
+import { BFF_BASE_PATH, BffEndpoints } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
@@ -17,10 +21,6 @@ import {
 } from './hli-zorgned-service';
 import { HLIRegeling, HLIresponseData } from './regelingen-types';
 import { fetchStadspas } from './stadspas';
-import { GenericDocument, StatusLineItem } from '../../../universal/types';
-import slug from 'slugme';
-import { encrypt } from '../../../universal/helpers/encrypt-decrypt';
-import { BFF_BASE_PATH, BffEndpoints } from '../../config';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,

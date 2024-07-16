@@ -6,7 +6,7 @@ import slug from 'slugme';
 import { describe, expect, it, test } from 'vitest';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { transformVergunningenData } from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import VergunningDetail from './VergunningDetail';

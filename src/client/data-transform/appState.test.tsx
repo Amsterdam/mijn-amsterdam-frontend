@@ -1,6 +1,7 @@
-import { PRISTINE_APPSTATE, AppState, createAllErrorState } from '../AppState';
-import { transformSourceData } from './appState';
+import { AppState } from '../../universal/types/App.types';
+import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import * as Monitoring from '../utils/monitoring';
+import { transformSourceData } from './appState';
 
 describe('transformSourceData', () => {
   test('transformSourceData', () => {

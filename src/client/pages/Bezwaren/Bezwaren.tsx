@@ -1,23 +1,19 @@
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  ThemaIcon,
   Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
-import styles from './Bezwaren.module.scss';
-
 import { useAppStateGetter } from '../../hooks/useAppState';
-import {
-  defaultDateFormat,
-  isLoading,
-  isError,
-} from '../../../universal/helpers';
-import { AppRoutes } from '../../../universal/config';
+import styles from './Bezwaren.module.scss';
 
 const DISPLAY_PROPS_BEZWAREN = {
   identificatie: 'Zaaknummer',

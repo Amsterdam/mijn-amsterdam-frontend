@@ -1,6 +1,6 @@
 import { subMonths } from 'date-fns';
 import { LinkProps } from 'react-router-dom';
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   getCustomTitleForVergunningWithLicensePlates,

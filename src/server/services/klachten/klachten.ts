@@ -1,14 +1,14 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
 import UID from 'uid-safe';
-import { Themas } from '../../../universal/config';
+import { Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
+import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 import { AppRoutes } from './../../../universal/config/routes';
 import { AuthProfileAndToken } from './../../helpers/app';

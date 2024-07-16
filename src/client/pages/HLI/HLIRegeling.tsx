@@ -2,7 +2,7 @@ import { Grid } from '@amsterdam/design-system-react';
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Datalist, Row } from '../../components/Datalist/Datalist';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
 import { getThemaTitleWithAppState } from './helpers';
 import styles from './HLI.module.scss';

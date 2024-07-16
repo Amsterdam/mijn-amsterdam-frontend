@@ -4,12 +4,12 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-} from '../../../../universal/config';
+} from '../../../../universal/config/myarea-datasets';
 import { getIcon } from '../dataset-icons';
 import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
 import {
-  categoryCheckboxState,
   DatasetControlCheckbox,
+  categoryCheckboxState,
 } from './DatasetControlCheckbox';
 import { DatasetPanel } from './DatasetPanel';
 import { PanelList, PanelListItem } from './PanelList';

@@ -1,4 +1,4 @@
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ExternalUrls } from '../../config/app';
 
 export interface DirectLink {

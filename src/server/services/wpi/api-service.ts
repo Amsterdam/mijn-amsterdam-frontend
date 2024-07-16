@@ -1,17 +1,20 @@
-import axios from 'axios';
-import { Themas } from '../../../universal/config';
+import { Themas } from '../../../universal/config/thema';
 import {
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
-  dateSort,
-  pick,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
+import { dateSort } from '../../../universal/helpers/date';
+import { pick } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { SourceApiKey, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
+import {
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+  DocumentDownloadData,
+} from '../shared/document-download-route-handler';
 import {
   requestProcess as bijstandsuitkeringRequestProcessLabels,
   getNotifications as getBijstandsuitkeringNotifications,
@@ -33,10 +36,6 @@ import {
   WpiRequestProcess,
   WpiRequestProcessLabels,
 } from './wpi-types';
-import {
-  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
-  DocumentDownloadData,
-} from '../shared/document-download-route-handler';
 
 type FilterResponse = (
   response: ApiSuccessResponse<WpiRequestProcess[]>

@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import FocusTrap from 'focus-trap-react';
 import ReactDOM from 'react-dom';
 import { ComponentChildren } from '../../../universal/types';
-import { useModalRoot } from '../../hooks';
+import { useModalRoot } from '../../hooks/modalRoot.hook';
 import styles from './Modal.module.scss';
 
 interface ModalProps {

@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import { AppRoutes } from '../../universal/config';
+import { AppRoutes, RouteKey } from '../../universal/config/routes';
 import { appStateAtom } from '../hooks/useAppState';
 import MockApp from './MockApp';
 
 export function setupMockApp(
   Component: React.FC,
-  appRouteKey: string,
+  appRouteKey: RouteKey,
   testState: any
 ) {
   function initializeState(snapshot: MutableSnapshot) {

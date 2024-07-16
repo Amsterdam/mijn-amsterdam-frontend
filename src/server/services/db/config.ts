@@ -1,9 +1,5 @@
-import {
-  APP_MODE,
-  FeatureToggle,
-  IS_OT,
-  IS_PRODUCTION,
-} from '../../../universal/config';
+import { APP_MODE, IS_OT, IS_PRODUCTION } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 export const IS_PG = process.env.BFF_DB_PG_ENABLED === 'true';
 

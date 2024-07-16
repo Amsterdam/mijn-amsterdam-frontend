@@ -146,30 +146,6 @@ exports[`<Stadpas /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _Table_d93cb2"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayProp_a66dcc"
-                />
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Stadspasnummer
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Einddatum
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Tegoed
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

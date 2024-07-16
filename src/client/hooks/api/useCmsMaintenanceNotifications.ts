@@ -1,9 +1,8 @@
 import type { CMSMaintenanceNotification } from '../../../server/services/cms-maintenance-notifications';
-import { ApiResponse } from '../../../universal/helpers';
-import { apiPristineResult } from '../../../universal/helpers/api';
+import { ApiResponse, apiPristineResult } from '../../../universal/helpers/api';
 import { BFFApiUrls } from '../../config/api';
-import { useDataApi } from './useDataApi';
 import { useAppStateGetter } from '../useAppState';
+import { useDataApi } from './useDataApi';
 
 export function useCmsMaintenanceNotifications(
   page?: string,

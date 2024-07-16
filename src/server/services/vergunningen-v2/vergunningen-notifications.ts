@@ -1,11 +1,12 @@
 import { differenceInMonths, parseISO } from 'date-fns';
 import memoizee from 'memoizee';
-import { AppRoute, AppRoutes, Thema, Themas } from '../../../universal/config';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { Thema, Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
-  isRecentNotification,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { ONE_SECOND_MS } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';

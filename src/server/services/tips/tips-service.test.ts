@@ -1,6 +1,6 @@
 import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import { ApiSuccessResponse } from '../../../universal/helpers';
+import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import {
   createTipsFromServiceResults,
   prefixTipNotification,

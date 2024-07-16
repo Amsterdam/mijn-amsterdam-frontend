@@ -1,22 +1,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   ApiPristineResponse,
   ApiResponse,
   apiPristineResult,
-} from '../../universal/helpers';
-
-import {
-  BagThema,
-  FeatureToggle,
-  streamEndpointQueryParamKeys,
-} from '../../universal/config';
+} from '../../universal/helpers/api';
 import {
   AppState,
   AppStateKey,
-  PRISTINE_APPSTATE,
-  createAllErrorState,
-} from '../AppState';
+  BagThema,
+} from '../../universal/types/App.types';
+import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../utils/monitoring';

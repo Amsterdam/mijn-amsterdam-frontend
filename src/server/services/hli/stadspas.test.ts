@@ -1,5 +1,5 @@
 import { remoteApi } from '../../../test-utils';
-import * as encryptDecrypt from '../../../universal/helpers/encrypt-decrypt';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';
@@ -118,7 +118,7 @@ describe('stadspas services', () => {
   test('stadspas-gpass-service fail administratienummer endpoint', async () => {
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-    const response = await fetchStadspassen('xyz123', authProfileAndToken);
+    const response = await fetchStadspassen('8798712', authProfileAndToken);
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -177,7 +177,7 @@ describe('stadspas services', () => {
       .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
       .reply(200, pasResponse);
 
-    const response = await fetchStadspassen('xyz123', authProfileAndToken);
+    const response = await fetchStadspassen('0912039', authProfileAndToken);
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -246,7 +246,7 @@ describe('stadspas services', () => {
       .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
       .reply(200, pasResponse);
 
-    const response = await fetchStadspassen('xyz123', authProfileAndToken);
+    const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -402,13 +402,16 @@ describe('stadspas services', () => {
       .times(1)
       .reply(500);
 
-    const [transactionsKey] = encryptDecrypt.encrypt(
+    const [transactionsKey1] = encryptDecrypt.encrypt(
       `my-unique-session-id:yyyy:0363000123-123:xxx567`
+    );
+    const [transactionsKey2] = encryptDecrypt.encrypt(
+      `my-unique-session-id:yyyy:8787878788787:dddd`
     );
 
     const response = await fetchTransacties('abc678', authProfileAndToken, [
-      transactionsKey,
-      transactionsKey,
+      transactionsKey1,
+      transactionsKey2,
     ]);
 
     expect(response).toMatchInlineSnapshot(`

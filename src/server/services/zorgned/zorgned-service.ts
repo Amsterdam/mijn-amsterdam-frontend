@@ -1,4 +1,3 @@
-import { hash } from '../../../universal/helpers';
 import {
   BeschiktProduct,
   LeveringsVorm,
@@ -9,9 +8,12 @@ import {
 } from './zorgned-config-and-types';
 
 import { GenericDocument } from '../../../universal/types';
-import { getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
+import { getApiConfig, ONE_SECOND_MS } from '../../config';
+
+import memoizee from 'memoizee';
+import { hash } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
@@ -232,15 +234,15 @@ export async function fetchRelaties(
   return relaties;
 }
 
-export async function fetchPersoonsgegevensNAW(
+export async function fetchPersoonsgegevensNAW_(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
+  userID: AuthProfileAndToken['profile']['id'],
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
   const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
   const url = `${dataRequestConfig.url}/persoonsgegevensNAW`;
   const postData = {
-    burgerservicenummer: authProfileAndToken.profile.id,
+    burgerservicenummer: userID,
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
   const response = requestData<ZorgnedPersoonsgegevensNAWResponse>(
@@ -249,12 +251,16 @@ export async function fetchPersoonsgegevensNAW(
       data: postData,
       url,
     },
-    requestID,
-    authProfileAndToken
+    requestID
   );
 
   return response;
 }
+
+export const fetchPersoonsgegevensNAW = memoizee(fetchPersoonsgegevensNAW_, {
+  length: 3,
+  maxAge: 45 * ONE_SECOND_MS,
+});
 
 export const forTesting = {
   transformDocumenten,

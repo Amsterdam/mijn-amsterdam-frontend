@@ -1,6 +1,3 @@
-import { KeyboardEvent, MouseEvent } from 'react';
-import { matchPath } from 'react-router-dom';
-import { PrivateRoutes } from '../config';
 import { differenceInMonths } from 'date-fns';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -9,42 +6,6 @@ export const entries = Object.entries as <T>(
 ) => [Extract<keyof T, string>, T[keyof T]][];
 
 export const keys = Object.keys as <T>(o: T) => (keyof T)[];
-
-// Repeating conditions for accessible keyboard event
-export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
-  return (event: KeyboardEvent<T> | MouseEvent<T>) => {
-    if (!('key' in event) || event.key.toLowerCase() === keyName) {
-      fn(event);
-    }
-  };
-}
-
-/**
- * Sloppy determination if given url points to a page of the application
- * @param url string
- */
-export function isInteralUrl(url: string) {
-  return (
-    url.match(/mijn\.(acc\.)?amsterdam.nl/) !== null ||
-    url.startsWith('/') ||
-    !url.startsWith('http')
-  );
-}
-
-export function isPrivateRoute(pathname: string) {
-  return PrivateRoutes.some(
-    (path) =>
-      !!matchPath(pathname, {
-        path,
-        exact: true,
-        strict: true,
-      })
-  );
-}
-
-export function isExternalUrl(url: string) {
-  return !isInteralUrl(url);
-}
 
 export function range(a: number, b: number) {
   return Array.from(
@@ -150,17 +111,6 @@ export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
     return rdata;
   }
   return data;
-}
-
-export function recLookup(obj: any, path: string): any {
-  if (!obj) {
-    return;
-  }
-  const parts = path.split('.');
-  if (parts.length === 1) {
-    return obj[parts[0]];
-  }
-  return recLookup(obj[parts[0]], parts.slice(1).join('.'));
 }
 
 export function uniqueArray(arr: any[]) {

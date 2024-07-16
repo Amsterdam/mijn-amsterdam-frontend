@@ -1,24 +1,23 @@
 import {
   Grid,
   Heading,
-  Link,
   LinkList,
   Paragraph,
   Screen,
-  UnorderedList,
 } from '@amsterdam/design-system-react';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  ThemaIcon,
   LoadingContent,
   OverviewPage,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { ThemaTitles } from '../../config/thema';
 import styles from './Erfpacht.module.scss';
 import { OpenFacturenListGrouped } from './ErfpachtOpenFacturen';
 import { useErfpachtV2Data } from './erfpachtData.hook';

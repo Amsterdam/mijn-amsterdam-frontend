@@ -1,4 +1,4 @@
-import { IS_PRODUCTION } from '../../../universal/config';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   LinkdInline,
   PageContent,

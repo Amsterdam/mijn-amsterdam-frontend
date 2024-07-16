@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it, vi } from 'vitest';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 import MainFooter from './MainFooter';

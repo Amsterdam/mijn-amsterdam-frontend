@@ -1,5 +1,5 @@
-import { ThemaTitles } from '../../../universal/config/thema';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
+import { ThemaTitles } from '../../config/thema';
 
 export function getThemaTitle(hasStadspas: boolean, hasRegelingen: boolean) {
   switch (true) {

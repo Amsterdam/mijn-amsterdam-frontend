@@ -131,27 +131,6 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
           <table
             class="_Table_a66dcc"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Adres
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Aangevraagd
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Status
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -256,27 +235,6 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
           <table
             class="_Table_a66dcc"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Adres
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Aangevraagd
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Status
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

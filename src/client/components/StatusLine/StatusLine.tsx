@@ -1,21 +1,16 @@
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { CSSProperties } from 'react';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { ComponentChildren } from '../../../universal/types';
 import {
+  AltDocumentContent,
   GenericDocument,
-  ZaakDetail,
+  StatusLineItem,
 } from '../../../universal/types/App.types';
-import { IconChevronLeft } from '../../assets/icons';
-import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
-import { AltDocumentContent, StatusLineItem } from './StatusLine.types';
-
-// Types used to be in this file
-export * from './StatusLine.types';
 
 interface StatusLinePanelProps {
   children: ComponentChildren;

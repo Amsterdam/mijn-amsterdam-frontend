@@ -1,18 +1,7 @@
 import { createContext } from 'react';
-import type { ServiceID, ServicesType } from '../server/services/controller';
-import { BagThema, FeatureToggle } from '../universal/config';
-import { ApiResponse, apiPristineResult } from '../universal/helpers/api';
-
-export type AppState = {
-  [key in ServiceID]: ApiResponse<
-    ReturnTypeAsync<ServicesType[key]>['content']
-  >;
-} & {
-  // A place to store additional data not loaded initially but needs to be stored persistently in the app.
-  [key in BagThema]?: Record<string, any>;
-};
-
-export type AppStateKey = Exclude<keyof AppState, BagThema>;
+import { FeatureToggle } from '../universal/config/feature-toggles';
+import { apiPristineResult } from '../universal/helpers/api';
+import { AppState } from '../universal/types/App.types';
 
 export const PRISTINE_APPSTATE: AppState = {
   // Generated

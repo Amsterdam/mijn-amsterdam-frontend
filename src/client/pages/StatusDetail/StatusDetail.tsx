@@ -1,8 +1,3 @@
-import { ReactElement, ReactNode, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { AppRoutes, Thema, ThemaTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
-
 import {
   Alert as DSAlert,
   Grid,
@@ -10,12 +5,17 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
+import { ReactElement, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { AppRoutes, RouteKey } from '../../../universal/config/routes';
+import { Thema } from '../../../universal/config/thema';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import {
+  AppState,
+  AppStateKey,
   GenericDocument,
   StatusLine,
-  Unshaped,
 } from '../../../universal/types/App.types';
-import { AppState, AppStateKey } from '../../AppState';
 import {
   DetailPage,
   ErrorAlert,
@@ -25,6 +25,7 @@ import {
   ThemaIcon,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { captureMessage } from '../../utils/monitoring';
 import styles from './StatusDetail.module.scss';
@@ -74,7 +75,7 @@ export default function StatusDetail<T extends StatusLine>({
   const { id } = useParams<{ id: string }>();
   const statusItem = statusItems.find((item) => item.id === id) as T;
   const noContent = !isStateLoading && !statusItem;
-  const appRoute = backLinkRoute ?? AppRoutes[thema] ?? '/';
+  const appRoute = backLinkRoute ?? AppRoutes[thema as RouteKey] ?? '/';
 
   useEffect(() => {
     if (!isStateLoading && !statusItem) {

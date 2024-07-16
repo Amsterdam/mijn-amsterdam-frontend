@@ -1,10 +1,10 @@
-import { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
 import {
   GenericDocument,
   LinkProps,
   StatusLine,
+  StatusLineItem,
 } from '../../../universal/types/App.types';
-import { Stadspas, StadspasResponseData } from './stadspas-types';
+import { StadspasResponseData } from './stadspas-types';
 
 export interface HLIRegeling extends StatusLine {
   about?: string; // TODO: implement

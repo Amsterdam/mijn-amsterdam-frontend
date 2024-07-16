@@ -1,8 +1,5 @@
-import { ThemaMenuItem } from '../../universal/config';
-import {
-  getThemaMenuItemsAppState,
-  isThemaActive,
-} from '../../universal/helpers/themas';
+import { ThemaMenuItem } from '../config/thema';
+import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
 
 describe('useThemaMenuItems', () => {
   test('isThemaActive (No AppState Value)', () => {

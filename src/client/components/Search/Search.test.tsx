@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { bffApi, remoteApi } from '../../../test-utils';
-import { appStateAtom } from '../../hooks';
+import { appStateAtom } from '../../hooks/useAppState';
 import { Search } from './Search';
 import * as bagResponse from './bag-response.json';
 import * as remoteConfig from './search-config.json';

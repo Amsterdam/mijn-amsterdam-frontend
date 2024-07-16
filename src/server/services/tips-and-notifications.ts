@@ -1,6 +1,6 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
-import { FeatureToggle } from '../../universal/config';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification, MyTip } from '../../universal/types';

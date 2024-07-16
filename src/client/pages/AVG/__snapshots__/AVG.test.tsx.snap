@@ -538,27 +538,6 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
           <table
             class="_Table_a66dcc"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Nummer
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Ontvangen op
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Onderwerp
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -663,27 +642,6 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
           <table
             class="_Table_a66dcc"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Nummer
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Ontvangen op
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Onderwerp
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

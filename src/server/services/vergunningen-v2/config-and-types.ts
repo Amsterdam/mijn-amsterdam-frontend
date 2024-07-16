@@ -1,4 +1,4 @@
-import { ApiResponse } from '../../../universal/helpers';
+import { ApiResponse } from '../../../universal/helpers/api';
 import {
   GenericDocument,
   LinkProps,

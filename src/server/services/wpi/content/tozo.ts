@@ -1,8 +1,8 @@
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
-} from '../../../../universal/helpers';
-import { documentDownloadName, productName } from '../helpers';
+} from '../../../../universal/helpers/date';
+import { productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 
 const aanvraagLabels: WpiRequestStatusLabels = {

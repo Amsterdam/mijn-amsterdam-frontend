@@ -2,14 +2,15 @@ import { Heading } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useState } from 'react';
 import type { FallbackProps } from 'react-error-boundary';
-import { AppRoutes, ExternalUrls } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import AmsterdamLogoLarge from '../../assets/images/logo-amsterdam-large.svg?react';
 import AmsterdamLogo from '../../assets/images/logo-amsterdam.svg?react';
 import { LinkdInline } from '../../components';
 import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
 import { PageContent, TextPage } from '../../components/Page/Page';
 import PageHeading from '../../components/PageHeading/PageHeading';
-import { useDesktopScreen } from '../../hooks';
+import { ExternalUrls } from '../../config/external-urls';
+import { useDesktopScreen } from '../../hooks/media.hook';
 import { useUsabilla } from '../../hooks/useUsabilla';
 import styles from './ApplicationError.module.scss';
 

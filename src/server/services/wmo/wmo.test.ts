@@ -1,12 +1,12 @@
 import Mockdate from 'mockdate';
-import { remoteApi } from '../../../test-utils';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { fetchWmo, forTesting } from './wmo';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import { remoteApi } from '../../../test-utils';
+import { jsonCopy } from '../../../universal/helpers/utils';
 import { StatusLineItem } from '../../../universal/types';
-import { jsonCopy } from '../../../universal/helpers';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import { fetchWmo, forTesting } from './wmo';
 
-vi.mock('../../../universal/helpers/encrypt-decrypt', () => ({
+vi.mock('../../../server/helpers/encrypt-decrypt', () => ({
   encrypt: vi.fn().mockReturnValue(['123-123-123-123', 'xx']),
 }));
 
@@ -57,6 +57,8 @@ describe('Transform api items', () => {
         id: 'step-1',
         datePublished: '2024-06-24',
         status: 'Besluit',
+        isActive: true,
+        isChecked: true,
       },
     ];
 
@@ -80,6 +82,8 @@ describe('Transform api items', () => {
               },
             ],
             "id": "step-1",
+            "isActive": true,
+            "isChecked": true,
             "status": "Besluit",
           },
         ]
@@ -103,6 +107,8 @@ describe('Transform api items', () => {
                     </p>",
             "datePublished": "2024-06-24",
             "id": "step-1",
+            "isActive": true,
+            "isChecked": true,
             "status": "Besluit",
           },
         ]
@@ -129,6 +135,8 @@ describe('Transform api items', () => {
                     </p>",
             "datePublished": "2024-06-24",
             "id": "step-1",
+            "isActive": true,
+            "isChecked": true,
             "status": "Besluit",
           },
         ]

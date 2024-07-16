@@ -1,5 +1,4 @@
 import { subMonths } from 'date-fns';
-import { dateFormat } from '../../../universal/helpers';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import {
   NotificationLabels,
@@ -7,6 +6,7 @@ import {
   VergunningExpirable,
   VergunningFrontendV2,
 } from './config-and-types';
+import { dateFormat } from '../../../universal/helpers/date';
 
 const link = (vergunning: VergunningFrontendV2) => ({
   title: 'Bekijk details',

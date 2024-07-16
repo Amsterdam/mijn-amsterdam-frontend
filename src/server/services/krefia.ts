@@ -1,14 +1,14 @@
 import memoize from 'memoizee';
-import { Themas } from '../../universal/config';
-import { omit } from '../../universal/helpers';
+import { Themas } from '../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS, getApiConfig } from '../config';
-import { requestData } from '../helpers';
 import { AuthProfileAndToken } from '../helpers/app';
+import { requestData } from '../helpers/source-api-request';
 
 interface NotificationTrigger {
   datePublished: string;

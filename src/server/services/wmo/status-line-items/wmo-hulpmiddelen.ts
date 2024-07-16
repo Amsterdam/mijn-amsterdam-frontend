@@ -1,10 +1,10 @@
-import { defaultDateFormat } from '../../../../universal/helpers';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 
 import {
   hasHistoricDate,
-  isServiceDeliveryStarted,
   isServiceDeliveryActive,
+  isServiceDeliveryStarted,
 } from '../../zorgned/zorgned-helpers';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [

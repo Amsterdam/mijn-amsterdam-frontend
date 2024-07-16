@@ -1,10 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 import basicAuth from 'express-basic-auth';
-import { IS_DEVELOPMENT, IS_OT } from '../universal/config';
 import { BffEndpoints } from './config';
+import { cacheOverview } from './helpers/file-cache';
 import { sessionBlacklistTable } from './services/session-blacklist';
 import { loginStats, loginStatsTable } from './services/visitors';
-import { cacheOverview } from './helpers/file-cache';
 
 export const adminRouter = express.Router();
 
@@ -29,19 +28,4 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
       return res.json(overview);
     }
   );
-
-  if (IS_DEVELOPMENT) {
-    // Currently this endpoint can only be used when running the application locally.
-    // Requesting the endpoint on Azure results in a Gateway timeout which cannot be prevented easily at this time.
-    adminRouter.get(BffEndpoints.TEST_ACCOUNTS_OVERVIEW, async (req, res) => {
-      const { generateOverview } = await import(
-        './generate-user-data-overview'
-      );
-      generateOverview(req.query.fromCache == '1', `${__dirname}/cache`).then(
-        (fileName) => {
-          res.download(fileName);
-        }
-      );
-    });
-  }
 }

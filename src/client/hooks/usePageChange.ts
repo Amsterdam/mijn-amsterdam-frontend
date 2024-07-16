@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
+import { AppRoute, AppRoutes } from '../../universal/config/routes';
+import { ExcludePageViewTrackingUrls } from '../config/api';
+import { CustomTrackingUrls, TrackingConfig } from '../config/routes';
 import {
-  AppRoute,
-  AppRoutes,
-  CustomTrackingUrls,
   DocumentTitles,
   NOT_FOUND_TITLE,
   PageTitleMain,
-  TrackingConfig,
-} from '../../universal/config';
-import { ExcludePageViewTrackingUrls } from '../config/api';
+} from '../config/thema';
 import { captureMessage } from '../utils/monitoring';
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';

@@ -1,4 +1,4 @@
-import { act, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -9,12 +9,12 @@ import {
   transformErfpachtDossierProperties,
 } from '../../../../server/services/simple-connect/erfpacht';
 import { bffApi } from '../../../../test-utils';
-import { AppRoutes } from '../../../../universal/config';
-import { AppState } from '../../../AppState';
+import { AppRoutes } from '../../../../universal/config/routes';
+import { jsonCopy } from '../../../../universal/helpers/utils';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 import ErfpachtDossierDetail from './ErfpachtDossierDetail';
-import { jsonCopy } from '../../../../universal/helpers';
 
 describe('<Erfpacht/DossierDetail />', () => {
   const routeEntry = generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {

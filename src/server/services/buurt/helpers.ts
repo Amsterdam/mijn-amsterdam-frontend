@@ -16,7 +16,7 @@ import {
   ApiErrorResponse,
   ApiResponse,
   ApiSuccessResponse,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import type {

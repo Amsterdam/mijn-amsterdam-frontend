@@ -1,7 +1,6 @@
-import { FeatureToggle } from '../../universal/config';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
-import { ApiError } from '../../universal/types';
-import { AppState } from '../AppState';
+import { ApiError, AppState } from '../../universal/types';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;

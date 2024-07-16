@@ -2,15 +2,18 @@ import {
   DEFAULT_LAT,
   DEFAULT_LNG,
 } from '../../universal/config/myarea-datasets';
-import { apiDependencyError, isMokum } from '../../universal/helpers';
+
 import {
-  apiErrorResult,
   ApiResponse,
+  apiDependencyError,
+  apiErrorResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { isMokum } from '../../universal/helpers/brp';
 import { Adres } from '../../universal/types';
 import { AuthProfileAndToken } from '../helpers/app';
-import { BAGData, fetchBAG, fetchBRP } from './index';
+import { BAGData, fetchBAG } from './bag';
+import { fetchBRP } from './brp';
 import { fetchKVK, getKvkAddresses } from './kvk';
 
 async function fetchPrivate(

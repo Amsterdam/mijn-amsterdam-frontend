@@ -4,13 +4,14 @@ import {
   VergunningDocument,
   VergunningFrontendV2,
 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { AppRoutes, BagThemas, ThemaTitles } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks';
+import { BagThemas, ThemaTitles } from '../../config/thema';
+import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';

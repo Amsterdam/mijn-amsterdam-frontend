@@ -1,15 +1,14 @@
-import { ApiResponse, ApiSuccessResponse } from '../../../universal/helpers';
-import { BRPData, BRPDataFromSource } from '../../../universal/types';
 import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import VERGUNNINGEN from '../../../../mocks/fixtures/vergunningen.json';
+import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
 import { transformBRPData } from '../brp';
-import { StadspasResponseDataTransformed } from '../wpi/api-service';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
-import { AppState } from '../../../client/AppState';
-import { StadspasResponseData } from '../hli/stadspas-types';
+import {
+  ApiResponse,
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
@@ -432,8 +431,8 @@ describe('predicates', () => {
         UITKERINGEN.content[0].datePublished = wpiDateAndDecision[1];
 
         return {
-          WPI_TOZO: TOZO as AppState['WPI_TOZO'],
-          WPI_TONK: TONK as ApiResponse<WpiRequestProcess[] | null>,
+          WPI_TOZO: TOZO as unknown as AppState['WPI_TOZO'],
+          WPI_TONK: TONK as unknown as ApiResponse<WpiRequestProcess[] | null>,
           WPI_AANVRAGEN: UITKERINGEN as ApiResponse<WpiRequestProcess[] | null>,
         };
       };
@@ -536,7 +535,7 @@ describe('predicates', () => {
     describe('hasTozo', () => {
       it('should return true when there is some content', () => {
         const appState = {
-          WPI_TOZO: TOZO as ApiResponse<WpiRequestProcess[] | null>,
+          WPI_TOZO: TOZO as unknown as ApiResponse<WpiRequestProcess[] | null>,
         };
 
         expect(hasTozo(appState)).toBe(true);

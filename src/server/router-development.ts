@@ -4,9 +4,10 @@ import express, {
   Request,
   Response,
 } from 'express';
-import path from 'path';
 import { testAccounts } from '../universal/config/auth.development';
-import { apiSuccessResult } from '../universal/helpers';
+
+import UID from 'uid-safe';
+import { apiSuccessResult } from '../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
@@ -17,11 +18,10 @@ import {
   hasSessionCookie,
   sendUnauthorized,
 } from './helpers/app';
-import { countLoggedInVisit } from './services/visitors';
 import { generateDevSessionCookieValue } from './helpers/app.development';
-import { addToBlackList } from './services/session-blacklist';
-import UID from 'uid-safe';
 import { getReturnToUrl } from './helpers/auth';
+import { addToBlackList } from './services/session-blacklist';
+import { countLoggedInVisit } from './services/visitors';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',

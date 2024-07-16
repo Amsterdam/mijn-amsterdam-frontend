@@ -9,7 +9,7 @@ import {
   RVVSloterweg,
   transformVergunningenData,
 } from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import VergunningDetail from './VergunningDetail';

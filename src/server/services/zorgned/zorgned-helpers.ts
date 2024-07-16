@@ -1,4 +1,4 @@
-import { isDateInPast } from '../../../universal/helpers';
+import { isDateInPast } from '../../../universal/helpers/date';
 import {
   TextPartContents,
   ZorgnedAanvraagTransformed,

@@ -1,14 +1,14 @@
 import memoizee from 'memoizee';
 import {
-  apiErrorResult,
   apiSuccessResult,
   getSettledResult,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/api';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { DataRequestConfig, ONE_SECOND_MS, getApiConfig } from '../../config';
-import { requestData } from '../../helpers';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 import { captureException, captureMessage } from '../monitoring';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   AddressBookEntry,
   DecosDocumentBlobSource,
@@ -33,9 +33,6 @@ import {
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
 } from './helpers';
-import { IS_OT } from '../../../universal/config';
-import axios from 'axios';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of vergunningen.
  *

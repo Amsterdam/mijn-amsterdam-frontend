@@ -1,20 +1,18 @@
 import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import memoryCache from 'memory-cache';
-import {
-  apiErrorResult,
-  apiPostponeResult,
-  apiSuccessResult,
-} from '../../universal/helpers';
+
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
+  apiErrorResult,
+  apiPostponeResult,
+  apiSuccessResult,
 } from '../../universal/helpers/api';
 import {
   ApiUrlEntries,
   BFF_REQUEST_CACHE_ENABLED,
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
-  IS_DEBUG,
 } from '../config';
 import { captureException } from '../services/monitoring';
 import { AuthProfileAndToken } from './app';
@@ -24,6 +22,30 @@ export const axiosRequest = axios.create({
   responseType: 'json',
   headers: { 'User-Agent': 'mijn-amsterdam-bff' },
 });
+
+function debugResponseData(responseData: any) {
+  console.debug('\n\nResponse:\n');
+  console.debug(responseData);
+  console.debug('\nEnd response from');
+  return responseData;
+}
+
+const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA?.split(',');
+
+// Log response url after debugging the response data because the debugTransformer doesn't have access to the url
+// and interceptors cannot log untransformed response data.
+if (debugResponseDataTerms?.length) {
+  axiosRequest.interceptors.response.use((response) => {
+    if (
+      debugResponseDataTerms.some((term) => {
+        return !!term && response.config.url?.includes(term.trim());
+      })
+    ) {
+      console.debug(response.config.url, '\n\n');
+    }
+    return response;
+  });
+}
 
 export const cache = new memoryCache.Cache<string, any>();
 
@@ -82,6 +104,23 @@ export async function requestData<T>(
       axios.defaults.transformResponse as any,
       requestConfig.transformResponse as any
     );
+  }
+
+  // Log/Debug the untransformed response data
+  if (
+    debugResponseDataTerms?.some((term) => {
+      return !!term && requestConfig.url?.includes(term.trim());
+    }) &&
+    !requestConfig.transformResponse?.includes(debugResponseData)
+  ) {
+    // Add default transformer if no transformers are defined
+    if (!requestConfig.transformResponse) {
+      requestConfig.transformResponse = [].concat(
+        axios.defaults.transformResponse as any
+      );
+    }
+    // Add the debug transformer as first transformer
+    requestConfig.transformResponse.unshift(debugResponseData);
   }
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token

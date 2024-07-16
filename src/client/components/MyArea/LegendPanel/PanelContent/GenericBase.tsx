@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 import {
   DATASETS,
   getDatasetCategoryId,
-} from '../../../../../universal/config';
+} from '../../../../../universal/config/myarea-datasets';
 import { usePhoneScreen } from '../../../../hooks/media.hook';
 import styles from './GenericBase.module.scss';
 import JsonString from './JsonString';

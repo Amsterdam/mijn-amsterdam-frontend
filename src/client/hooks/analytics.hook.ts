@@ -1,4 +1,3 @@
-import memoize from 'memoizee';
 import PiwikTracker from '@amsterdam/piwik-tracker';
 import {
   CustomDimension,
@@ -7,7 +6,8 @@ import {
   TrackSiteSearchResultClick,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
-import { ThemaTitles } from '../../universal/config';
+import memoize from 'memoizee';
+import { ThemaTitles } from '../config/thema';
 
 let PiwikInstance: PiwikTracker;
 

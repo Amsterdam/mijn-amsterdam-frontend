@@ -2,7 +2,7 @@ import type { EvenementVergunning as EvenementVergunningType } from '../../../se
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
-} from '../../../universal/helpers';
+} from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types';
 import InfoDetail, {
   InfoDetailGroup,

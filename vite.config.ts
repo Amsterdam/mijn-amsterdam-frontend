@@ -1,5 +1,3 @@
-/// <reference types="vitest" />
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
@@ -30,11 +28,6 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2015',
   },
-  plugins: [
-    react(),
-    // svgr options: https://react-svgr.com/docs/options/
-    svgr(),
-  ],
   test: {
     globals: true,
     environment: 'jsdom', // NOTE: overridden with 'node' when testing bff application
@@ -43,6 +36,11 @@ export default defineConfig({
     // since parsing CSS is slow
     css: false,
   },
+  plugins: [
+    react(),
+    // svgr options: https://react-svgr.com/docs/options/
+    svgr(),
+  ],
   css: {
     modules: {
       scopeBehaviour: 'local',

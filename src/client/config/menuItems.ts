@@ -1,6 +1,6 @@
-import { ThemaMenuItem, myThemasMenuItems } from '../../universal/config';
-import { AppState } from '../AppState';
+import { AppState } from '../../universal/types/App.types';
 import { termReplace } from '../hooks/useTermReplacement';
+import { ThemaMenuItem, myThemasMenuItems } from './thema';
 
 export const themasByProfileType: (
   profileType: ProfileType,

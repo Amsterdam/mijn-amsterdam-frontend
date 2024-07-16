@@ -1,6 +1,7 @@
 import { generatePath, useParams } from 'react-router-dom';
-import { AppRoutes, ThemaTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { AppRoutes } from '../../../universal/config/routes';
+import { ThemaTitles } from '../../config/thema';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
@@ -10,7 +11,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { useAppStateGetter } from '../../hooks';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
 import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
 import { showDocuments } from '../../../universal/helpers/vergunningen';
