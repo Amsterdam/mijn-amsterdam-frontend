@@ -112,7 +112,7 @@ export default function HLIStadspas() {
   const isLoadingTransacties = transactionsApi.isLoading;
 
   useEffect(() => {
-    if (stadspas?.urlTransactions) {
+    if (!!transactionKeys?.length && stadspas?.urlTransactions) {
       fetchTransactions({ ...requestOptions, postpone: false });
     }
   }, [fetchTransactions, stadspas?.urlTransactions]);
