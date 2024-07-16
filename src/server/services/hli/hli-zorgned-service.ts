@@ -17,6 +17,8 @@ import { getFullName } from '../../../universal/helpers/brp';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
 import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
+import memoizee from 'memoizee';
+import { ONE_SECOND_MS } from '../../config';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -41,7 +43,7 @@ export async function fetchAdministratienummer(
 ) {
   const response = await fetchPersoonsgegevensNAW(
     requestID,
-    authProfileAndToken,
+    authProfileAndToken.profile.id,
     'ZORGNED_AV'
   );
 
@@ -77,20 +79,14 @@ function transformZorgnedBetrokkeneNaamResponse(
   return null;
 }
 
-export async function fetchNamenBetrokkenen(
+export async function fetchNamenBetrokkenen_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
-  ids: string[]
+  userIDs: string[]
 ) {
-  const requests = ids.map((id) => {
-    const authProfileAndTokenCopied = jsonCopy(authProfileAndToken);
-    authProfileAndTokenCopied.profile.id = id;
+  const requests = userIDs.map((userID) => {
     authProfileAndToken.token = ''; // Token is bound to another ID, we don't need it and don't want to mistakenly use it anyway.
-    return fetchPersoonsgegevensNAW(
-      requestID,
-      authProfileAndTokenCopied,
-      'ZORGNED_AV'
-    );
+    return fetchPersoonsgegevensNAW(requestID, userID, 'ZORGNED_AV');
   });
 
   const results = await Promise.allSettled(requests);
@@ -114,6 +110,11 @@ export async function fetchNamenBetrokkenen(
 
   return apiSuccessResult(namen);
 }
+
+export const fetchNamenBetrokkenen = memoizee(fetchNamenBetrokkenen_, {
+  length: 3,
+  maxAge: 45 * ONE_SECOND_MS,
+});
 
 function assignIsActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);

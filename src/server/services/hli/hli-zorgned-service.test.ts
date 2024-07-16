@@ -54,7 +54,7 @@ describe('hli-zorgned-service', () => {
     } as ZorgnedPersoonsgegevensNAWResponse);
 
     const response = await fetchAdministratienummer(
-      'xxxx',
+      'x0xx',
       authProfileAndToken
     );
 
@@ -70,7 +70,7 @@ describe('hli-zorgned-service', () => {
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
     const response = await fetchAdministratienummer(
-      'xxxx',
+      'x2xx',
       authProfileAndToken
     );
 
