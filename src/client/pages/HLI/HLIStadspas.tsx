@@ -60,8 +60,7 @@ const displayPropsTransactiesWithBudget = {
 const displayPropsBudgets = {
   title: 'Omschrijving',
   dateEndFormatted: 'Tegoed geldig t/m',
-  amountFormatted: 'Bedrag',
-  // balanceFormatted: 'Saldo',
+  budgetAssignedFormatted: 'Bedrag',
 };
 
 export default function HLIStadspas() {
@@ -118,22 +117,13 @@ export default function HLIStadspas() {
     }
   }, [fetchTransactions, stadspas?.urlTransactions]);
 
-  const budgetsFormatted =
-    stadspas?.budgets.map((budget) => {
-      return {
-        title: budget.description,
-        amountFormatted: budget.budgetAssignedFormatted,
-        dateEndFormatted: budget.dateEndFormatted,
-      };
-    }) ?? [];
-
   const transactions =
     stadspas?.budgets && transactionsApi.data.content
       ? transactionsApi.data.content
       : [];
 
   const showMultiBudgetTransactions =
-    budgetsFormatted.length > 1 && !isPhoneScreen;
+    !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
   return (
     <DetailPage>
@@ -171,7 +161,7 @@ export default function HLIStadspas() {
                 Hieronder staat het Stadspasnummer van uw actieve pas.
                 <br /> Dit pasnummer staat ook op de achterkant van uw pas.
               </Paragraph>
-              {!!budgetsFormatted.length && <Datalist rows={rowsNummerSaldo} />}
+              {!!stadspas.budgets.length && <Datalist rows={rowsNummerSaldo} />}
             </Grid.Cell>
           )}
 
@@ -183,14 +173,14 @@ export default function HLIStadspas() {
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}
-              {!isLoadingStadspas && !!budgetsFormatted.length && (
+              {!isLoadingStadspas && !!stadspas?.budgets.length && (
                 <TableV2
                   className={styles.Table_budgets}
-                  items={budgetsFormatted}
+                  items={stadspas.budgets}
                   displayProps={displayPropsBudgets}
                 />
               )}
-              {!isLoadingStadspas && !budgetsFormatted.length && (
+              {!isLoadingStadspas && !stadspas?.budgets.length && (
                 <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
               )}
             </Grid.Cell>
