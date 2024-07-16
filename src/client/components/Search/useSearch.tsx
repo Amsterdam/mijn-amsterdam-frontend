@@ -17,7 +17,7 @@ import {
 import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
-import { AppState, AppStateKey } from '../../AppState';
+import { AppState, AppStateKey } from '../../../universal/types/App.types';
 import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';

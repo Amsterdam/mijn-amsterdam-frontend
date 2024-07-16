@@ -1,9 +1,5 @@
 import { parseISO } from 'date-fns';
-import {
-  GenericDocument,
-  LinkProps,
-  StatusLineItem,
-} from '../../../universal/types';
+import { LinkProps, StatusLineItem } from '../../../universal/types';
 import {
   LeveringsVorm,
   ProductSoortCode,

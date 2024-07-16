@@ -1,13 +1,16 @@
 import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import type { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
+import {
+  GenericDocument,
+  LinkProps,
+  StatusLineItem,
+} from '../../../universal/types/App.types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';

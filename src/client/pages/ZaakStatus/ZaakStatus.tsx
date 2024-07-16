@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
 import {
   ErrorAlert,
   PageContent,

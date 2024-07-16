@@ -3,7 +3,6 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
-import styles from './VergunningDetail.module.scss';
 
 const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
 const RVV_SLOTERWEG_RESULT_EXPIRED = 'Verlopen';

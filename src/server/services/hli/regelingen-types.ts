@@ -1,8 +1,8 @@
-import type { StatusLineItem } from '../../../client/components/StatusLine/StatusLine.types';
 import {
   GenericDocument,
   LinkProps,
   StatusLine,
+  StatusLineItem,
 } from '../../../universal/types/App.types';
 import { StadspasResponseData } from './stadspas-types';
 
