@@ -53,6 +53,7 @@ export default function CStadspas() {
       return {
         ...stadspas,
         displayDateEnd: defaultDateFormat(stadspas.dateEnd),
+        owner: stadspas.owner.firstname,
         detailPageUrl: !!stadspas.budgets.length && (
           <LinkdInline
             href={generatePath(AppRoutes['STADSPAS/SALDO'], {
@@ -62,7 +63,6 @@ export default function CStadspas() {
             Bekijk saldo
           </LinkdInline>
         ),
-        owner: stadspas.owner,
       };
     });
   }, [STADSPAS.content]);

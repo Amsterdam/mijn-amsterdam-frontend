@@ -19,6 +19,7 @@ describe('hli/router-external-consumer', async () => {
   const sendMock = vi.fn();
   const statusMock = vi.fn();
   const renderMock = vi.fn();
+  const redirectMock = vi.fn();
 
   async function getReqMock() {
     const cookieValue = await generateDevSessionCookieValue(
@@ -30,7 +31,10 @@ describe('hli/router-external-consumer', async () => {
       cookies: {
         [OIDC_SESSION_COOKIE_NAME]: cookieValue,
       },
-    } as unknown as Request;
+      params: {
+        token: 'x123z',
+      },
+    } as unknown as Request<{ token: string }>;
 
     return reqMock;
   }
@@ -44,6 +48,7 @@ describe('hli/router-external-consumer', async () => {
     send: sendMock,
     status: statusMock,
     render: renderMock,
+    redirect: redirectMock,
   } as unknown as Response;
 
   beforeEach(() => {
@@ -52,6 +57,22 @@ describe('hli/router-external-consumer', async () => {
 
   describe('Administratienummer endpoint', () => {
     test('OK', async () => {
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+      remoteApi.post('/amsapp/administratienummer').reply(200, 'ok');
+
+      await forTesting.sendAdministratienummerResponse(
+        await getReqMock(),
+        resMock
+      );
+
+      expect(redirectMock).toHaveBeenCalledWith('amsterdam://stadspas');
+    });
+
+    test('Delivery failed', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
         persoon: {
           clientidentificatie: '123-123',
@@ -66,8 +87,13 @@ describe('hli/router-external-consumer', async () => {
       expect(renderMock).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
-          administratienummerEncrypted: 'test-encrypted-id',
-          AMSAPP_PROTOCOl: 'amsterdam://',
+          error: {
+            code: '004',
+            message:
+              'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
+          },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004',
         }
       );
     });
@@ -83,8 +109,12 @@ describe('hli/router-external-consumer', async () => {
       expect(renderMock).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
-          administratienummerEncrypted: undefined,
-          AMSAPP_PROTOCOl: 'amsterdam://',
+          error: {
+            code: '003',
+            message: 'Geen administratienummer gevonden',
+          },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003',
         }
       );
     });
@@ -100,8 +130,12 @@ describe('hli/router-external-consumer', async () => {
       expect(renderMock).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
-          error: 'Request failed with status code 500',
-          AMSAPP_PROTOCOl: 'amsterdam://',
+          error: {
+            message: 'Kon het administratienummer niet ophalen',
+            code: '002',
+          },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002',
         }
       );
     });
@@ -110,7 +144,7 @@ describe('hli/router-external-consumer', async () => {
       await forTesting.sendAdministratienummerResponse(
         {
           cookies: {},
-        } as unknown as Request,
+        } as unknown as Request<{ token: string }>,
         resMock
       );
 

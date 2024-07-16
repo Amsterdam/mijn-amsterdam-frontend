@@ -100,9 +100,7 @@ exports[`<StadspasDetail /> > Matches the Full Page snapshot 1`] = `
     >
       <h3
         class="ams-heading ams-heading--2"
-      >
-        G Braber
-      </h3>
+      />
       <p
         class="_StadspasNummer_f22d47"
       >

@@ -7,6 +7,7 @@ import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';
 const pashouderResponse = {
   initialen: 'A',
   achternaam: 'Achternaam',
+  voornaam: 'Vadertje',
   passen: [
     {
       actief: false,
@@ -21,6 +22,7 @@ const pashouderResponse = {
     {
       initialen: 'B',
       achternaam: 'Achternaam',
+      voornaam: 'Moedertje',
       passen: [
         {
           actief: true,
@@ -35,6 +37,7 @@ const pashouderResponse = {
     {
       initialen: 'C',
       achternaam: 'Achternaam',
+      voornaam: 'Kindje',
       passen: [
         {
           actief: true,
@@ -196,6 +199,7 @@ describe('stadspas services', () => {
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
+                  "title": "Kindtegoed 10-14",
                   "transactionsKey": "1x2x3x-##########-4x5x6x",
                   "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
@@ -203,7 +207,12 @@ describe('stadspas services', () => {
               "dateEnd": "2020-08-31T23:59:59.000Z",
               "dateEndFormatted": "01 september 2020",
               "id": "999999",
-              "owner": "A Achternaam",
+              "owner": {
+                "firstname": "Vadertje",
+                "initials": "A",
+                "lastname": "Achternaam",
+                "tussenvoegsel": undefined,
+              },
               "passNumber": "6666666666666666666",
               "passType": "kind",
               "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
@@ -265,6 +274,7 @@ describe('stadspas services', () => {
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
+                  "title": "Kindtegoed 10-14",
                   "transactionsKey": "1x2x3x-##########-4x5x6x",
                   "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
@@ -272,7 +282,12 @@ describe('stadspas services', () => {
               "dateEnd": "2020-08-31T23:59:59.000Z",
               "dateEndFormatted": "01 september 2020",
               "id": "999999",
-              "owner": "A Achternaam",
+              "owner": {
+                "firstname": "Vadertje",
+                "initials": "A",
+                "lastname": "Achternaam",
+                "tussenvoegsel": undefined,
+              },
               "passNumber": "6666666666666666666",
               "passType": "kind",
               "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
@@ -289,6 +304,7 @@ describe('stadspas services', () => {
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
+                  "title": "Kindtegoed 10-14",
                   "transactionsKey": "1x2x3x-##########-4x5x6x",
                   "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
@@ -296,7 +312,12 @@ describe('stadspas services', () => {
               "dateEnd": "2020-08-31T23:59:59.000Z",
               "dateEndFormatted": "01 september 2020",
               "id": "999999",
-              "owner": "B Achternaam",
+              "owner": {
+                "firstname": "Moedertje",
+                "initials": "B",
+                "lastname": "Achternaam",
+                "tussenvoegsel": undefined,
+              },
               "passNumber": "6666666666666666666",
               "passType": "kind",
               "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
@@ -313,6 +334,7 @@ describe('stadspas services', () => {
                   "dateEnd": "2021-08-31T21:59:59.000Z",
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
+                  "title": "Kindtegoed 10-14",
                   "transactionsKey": "1x2x3x-##########-4x5x6x",
                   "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
@@ -320,7 +342,12 @@ describe('stadspas services', () => {
               "dateEnd": "2020-08-31T23:59:59.000Z",
               "dateEndFormatted": "01 september 2020",
               "id": "999999",
-              "owner": "C Achternaam",
+              "owner": {
+                "firstname": "Kindje",
+                "initials": "C",
+                "lastname": "Achternaam",
+                "tussenvoegsel": undefined,
+              },
               "passNumber": "6666666666666666666",
               "passType": "kind",
               "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
@@ -345,7 +372,11 @@ describe('stadspas services', () => {
         transacties: [
           {
             id: 'transactie-id',
-            budget: { aanbieder: { naam: 'transactie naam' } },
+            budget: {
+              aanbieder: { naam: 'transactie naam' },
+              naam: 'budgetje',
+              code: '001',
+            },
             bedrag: 34.5,
             transactiedatum: '2024-04-25',
           },
@@ -366,6 +397,8 @@ describe('stadspas services', () => {
           {
             "amount": 34.5,
             "amountFormatted": "- €34,50",
+            "budget": "budgetje",
+            "budgetCode": "001",
             "datePublished": "2024-04-25",
             "datePublishedFormatted": "25 april 2024",
             "id": "transactie-id",
@@ -420,6 +453,8 @@ describe('stadspas services', () => {
           {
             "amount": 34.5,
             "amountFormatted": "- €34,50",
+            "budget": undefined,
+            "budgetCode": undefined,
             "datePublished": "2024-04-25",
             "datePublishedFormatted": "25 april 2024",
             "id": "transactie-id",

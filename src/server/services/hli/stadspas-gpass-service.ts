@@ -18,6 +18,7 @@ import {
 } from './stadspas-config-and-content';
 import {
   Stadspas,
+  StadspasBudget,
   StadspasDetailBudgetSource,
   StadspasDetailSource,
   StadspasHouderSource,
@@ -62,7 +63,8 @@ function formatBudget(
     }
   );
 
-  return {
+  const stadspasBudget: StadspasBudget = {
+    title: budget.naam,
     description: budget.omschrijving,
     code: budget.code,
     budgetAssigned: budget.budget_assigned,
@@ -74,6 +76,8 @@ function formatBudget(
     dateEnd: budget.expiry_date,
     dateEndFormatted: defaultDateFormat(budget.expiry_date),
   };
+
+  return stadspasBudget;
 }
 
 function transformStadspasResponse(

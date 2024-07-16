@@ -80,6 +80,7 @@ export interface StadspasDetailSource {
 
 // Transformed types
 export interface StadspasBudget {
+  title: string;
   description: string;
   code: string;
   budgetAssigned: number;
