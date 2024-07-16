@@ -182,11 +182,18 @@ export async function fetchDocument(
       ...dataRequestConfig,
       url,
       data: postBody,
-      transformResponse: (documentResponseData) => {
+      transformResponse: (documentResponseData: { inhoud: string }) => {
+        if (
+          !documentResponseData ||
+          typeof documentResponseData !== 'object' ||
+          !('inhoud' in documentResponseData)
+        ) {
+          throw new Error(
+            'Zorgned document download - no valid response data provided'
+          );
+        }
         const data = Buffer.from(documentResponseData.inhoud, 'base64');
         return {
-          filename: documentResponseData.omschrijving ?? 'Besluit.pdf',
-          mimetype: documentResponseData.mimetype,
           data,
         };
       },
