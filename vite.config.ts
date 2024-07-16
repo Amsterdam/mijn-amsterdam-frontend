@@ -28,6 +28,9 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2015',
   },
+  test: {
+    globals: true,
+  },
   plugins: [
     react(),
     // svgr options: https://react-svgr.com/docs/options/
