@@ -14,10 +14,11 @@ import { generatePath } from 'react-router-dom';
 import MockApp from '../MockApp';
 import { MutableSnapshot } from 'recoil';
 import { appStateAtom } from '../../hooks/useAppState';
+import { AppState } from '../../AppState';
 
 const pushMock = vi.fn();
 
-const testState: any = {
+const testState = {
   VERGUNNINGEN: {
     status: 'OK',
     content: addLinks(
@@ -33,7 +34,7 @@ const testState: any = {
       AppRoutes['VERGUNNINGEN/DETAIL']
     ),
   },
-};
+} as unknown as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
@@ -58,7 +59,7 @@ describe('ZaakStatus', () => {
   const routeEntry = generatePath(AppRoutes.ZAAK_STATUS);
   const routePath = AppRoutes.ZAAK_STATUS;
 
-  it('should show an error', async () => {
+  test('No query params passed', async () => {
     const Component = () => (
       <MockApp
         routeEntry={routeEntry}
@@ -67,7 +68,61 @@ describe('ZaakStatus', () => {
         initializeState={initializeState}
       />
     );
-    const asFragment = render(<Component />);
+    const { asFragment } = render(<Component />);
+
+    console.log(asFragment());
+
+    expect(pushMock).not.toHaveBeenCalled();
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('should show error alert', () => {
+    historyReturnValue = {
+      location: {
+        pathname: '/',
+        search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
+      },
+      push: pushMock,
+    };
+
+    const Component = () => (
+      <MockApp
+        routeEntry={routePath}
+        routePath={routePath}
+        component={ZaakStatus}
+        initializeState={(snapshot) =>
+          snapshot.set(appStateAtom, {
+            VERGUNNINGEN: { status: 'ERROR', content: null },
+          } as unknown as AppState)
+        }
+      />
+    );
+
+    const { asFragment } = render(<Component />);
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('should show not found message', () => {
+    historyReturnValue = {
+      location: {
+        pathname: '/',
+        search: 'thema=vergunningen&id=Z/000/000.c',
+      },
+      push: pushMock,
+    };
+
+    const Component = () => (
+      <MockApp
+        routeEntry={routePath}
+        routePath={routePath}
+        component={ZaakStatus}
+        initializeState={initializeState}
+      />
+    );
+
+    const { asFragment } = render(<Component />);
 
     expect(
       screen.getByText(
@@ -77,7 +132,7 @@ describe('ZaakStatus', () => {
 
     expect(pushMock).not.toHaveBeenCalled();
 
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('should show wachten op betaling', () => {
@@ -98,8 +153,13 @@ describe('ZaakStatus', () => {
       />
     );
 
-    const asFragment = render(<Component />);
+    const { asFragment } = render(<Component />);
 
+    expect(
+      screen.getByText(
+        'Wij kunnen de status van uw aanvraag nu niet laten zien.'
+      )
+    ).toBeInTheDocument();
     expect(
       screen.getByText(
         'U heeft betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.'
@@ -108,7 +168,7 @@ describe('ZaakStatus', () => {
 
     expect(pushMock).not.toHaveBeenCalled();
 
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('should call history push when a route is found', () => {
