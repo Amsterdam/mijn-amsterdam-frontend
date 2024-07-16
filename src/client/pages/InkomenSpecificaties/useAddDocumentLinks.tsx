@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 
 export function useAddDocumentLinkComponents(

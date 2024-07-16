@@ -14,7 +14,7 @@ import {
   isMokum,
 } from '../../../universal/helpers/brp';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
 import {
   DetailPage,
   ErrorAlert,

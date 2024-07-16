@@ -10,11 +10,10 @@ import {
 import {
   AppState,
   AppStateKey,
-  PRISTINE_APPSTATE,
-  createAllErrorState,
-} from '../AppState';
+  BagThema,
+} from '../../universal/types/App.types';
+import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
-import { BagThema } from '../config/thema';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../utils/monitoring';
 import { useDataApi } from './api/useDataApi';

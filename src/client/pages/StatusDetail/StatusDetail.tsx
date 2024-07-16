@@ -7,14 +7,15 @@ import {
 } from '@amsterdam/design-system-react';
 import { ReactElement, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config/routes';
+import { AppRoutes, RouteKey } from '../../../universal/config/routes';
 import { Thema } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
+  AppState,
+  AppStateKey,
   GenericDocument,
   StatusLine,
 } from '../../../universal/types/App.types';
-import { AppState, AppStateKey } from '../../AppState';
 import {
   DetailPage,
   ErrorAlert,
@@ -74,7 +75,7 @@ export default function StatusDetail<T extends StatusLine>({
   const { id } = useParams<{ id: string }>();
   const statusItem = statusItems.find((item) => item.id === id) as T;
   const noContent = !isStateLoading && !statusItem;
-  const appRoute = backLinkRoute ?? AppRoutes[thema] ?? '/';
+  const appRoute = backLinkRoute ?? AppRoutes[thema as RouteKey] ?? '/';
 
   useEffect(() => {
     if (!isStateLoading && !statusItem) {

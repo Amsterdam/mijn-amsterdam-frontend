@@ -3,14 +3,14 @@ import classnames from 'classnames';
 import { CSSProperties } from 'react';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { ComponentChildren } from '../../../universal/types';
-import { GenericDocument } from '../../../universal/types/App.types';
+import {
+  AltDocumentContent,
+  GenericDocument,
+  StatusLineItem,
+} from '../../../universal/types/App.types';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
-import { AltDocumentContent, StatusLineItem } from './StatusLine.types';
-
-// Types used to be in this file
-export * from './StatusLine.types';
 
 interface StatusLinePanelProps {
   children: ComponentChildren;

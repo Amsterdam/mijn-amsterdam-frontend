@@ -109,3 +109,6 @@ process.env.BFF_LOOD_USERNAME = 'username';
 process.env.BFF_LOOD_PWD = 'pwd';
 process.env.BFF_LOOD_TENANT = 'tenantid';
 process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
+
+process.env.REACT_APP_SSO_URL_BELASTINGEN = `${remoteApiHost}/sso/portaal/belastingen`;
+process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuzone`;

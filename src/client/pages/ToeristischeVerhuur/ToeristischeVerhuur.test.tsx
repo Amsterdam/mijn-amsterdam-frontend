@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { AppRoutes } from '../../../universal/config/routes';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ToeristischeVerhuur from './ToeristischeVerhuur';
@@ -47,18 +47,21 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       zaaknummer: 'Z/XXX/000007c',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2022-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'In behandeling',
           datePublished: '2022-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-3',
           status: 'Afgehandeld',
           datePublished: '2022-05-10',
           description: '',
@@ -66,6 +69,7 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
         {
+          id: 'step-4',
           status: 'Gewijzigd',
           datePublished: '2023-08-22',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
@@ -94,18 +98,21 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       zaaknummer: 'Z/XXX/000007b',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2023-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'In behandeling',
           datePublished: '2023-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-3',
           status: 'Afgehandeld',
           datePublished: '2023-05-10',
           description: '',
@@ -134,18 +141,21 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       zaaknummer: 'Z/XXX/000007',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2020-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'In behandeling',
           datePublished: '2020-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-3',
           status: 'Afgehandeld',
           datePublished: '2020-05-10',
           description: '',
@@ -153,6 +163,7 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
         {
+          id: 'step-4',
           status: 'Gewijzigd',
           datePublished: '2021-09-30',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
@@ -181,18 +192,21 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       zaaknummer: 'Z/001/000040',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'In behandeling',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-3',
           status: 'Afgehandeld',
           datePublished: '2021-05-10',
           description: '',
@@ -200,6 +214,7 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
         {
+          id: 'step-4',
           status: 'Gewijzigd',
           datePublished: '',
           description: 'Wij hebben uw Vergunning vakantieverhuur ingetrokken.',
@@ -228,18 +243,21 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       zaaknummer: 'Z/000/000040',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'In behandeling',
           datePublished: '2021-05-10',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-3',
           status: 'Afgehandeld',
           datePublished: '2021-05-10',
           description: '',
@@ -247,6 +265,7 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
         {
+          id: 'step-4',
           status: 'Gewijzigd',
           datePublished: '2020-05-31',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
@@ -285,12 +304,14 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       titel: 'Vergunning bed & breakfast',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '13 februari 2023',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'Afgehandeld',
           datePublished: '22 maart 2023',
           description: '',
@@ -322,12 +343,14 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       titel: 'Vergunning bed & breakfast',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '13 februari 2023',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'Afgehandeld',
           datePublished: '22 maart 2023',
           description: '',
@@ -359,12 +382,14 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       titel: 'Vergunning bed & breakfast',
       statussen: [
         {
+          id: 'step-1',
           status: 'Ontvangen',
           datePublished: '13 februari 2023',
           isActive: false,
           isChecked: true,
         },
         {
+          id: 'step-2',
           status: 'Afgehandeld',
           datePublished: '22 maart 2023',
           description: '',

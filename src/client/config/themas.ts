@@ -2,7 +2,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
-import type { AppState, AppStateKey } from '../AppState';
+import { AppState, AppStateKey } from '../../universal/types/App.types';
 import { ThemaMenuItem } from './thema';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
