@@ -272,7 +272,7 @@ export default function StadspasDetail() {
       {!!stadspasItem && (
         <PageContent className={styles.PageContentStadspasInfo}>
           <Heading size="level-2" level={3}>
-            {stadspasItem?.owner}
+            {stadspasItem?.owner.firstname}
           </Heading>
           <p className={styles.StadspasNummer}>
             Stadspasnummer: {stadspasItem.passNumber}

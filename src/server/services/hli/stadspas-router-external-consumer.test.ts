@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { remoteApi } from '../../../test-utils';
-import { forTesting } from './router-external-consumer';
+import { forTesting } from './stadspas-router-external-consumer';
 import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { OIDC_SESSION_COOKIE_NAME } from '../../config';
 import UID from 'uid-safe';

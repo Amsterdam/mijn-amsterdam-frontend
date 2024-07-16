@@ -46,7 +46,9 @@ function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
           id: stadspas.id,
         })}
       >
-        <span className={styles.Stadspas_owner}>{stadspas.owner}</span>
+        <span className={styles.Stadspas_owner}>
+          {stadspas.owner.firstname}
+        </span>
         <span className={styles.Stadspas_balance}>
           Saldo {stadspas.balanceFormatted}
         </span>

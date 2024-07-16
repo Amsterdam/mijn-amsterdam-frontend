@@ -1,6 +1,6 @@
 import { LinkProps } from '../../../universal/types/App.types';
 
-export interface StadspasTransactie {
+export interface StadspasTransactieSource {
   id: number;
   transactiedatum: string;
   bedrag: number;
@@ -23,10 +23,10 @@ export interface StadspasTransactie {
   };
 }
 
-export interface StadspasTransactiesResponse {
+export interface StadspasTransactiesResponseSource {
   number_of_items: number;
   total_items: number;
-  transacties: StadspasTransactie[];
+  transacties: StadspasTransactieSource[];
 }
 
 export interface StadspasHouderPasSource {
@@ -37,6 +37,8 @@ export interface StadspasHouderPasSource {
 export interface StadspasHouderSource {
   initialen: string;
   achternaam: string;
+  tussenvoegsel?: string;
+  voornaam: string;
   passen: StadspasHouderPasSource[];
   volledige_naam?: string;
 }
@@ -76,6 +78,7 @@ export interface StadspasDetailSource {
   passoort: { id: number; naam: string };
 }
 
+// Transformed types
 export interface StadspasBudget {
   description: string;
   code: string;
@@ -89,11 +92,18 @@ export interface StadspasBudget {
   dateEndFormatted: string;
 }
 
+export interface StadspasOwner {
+  initials: string;
+  firstname: string;
+  tussenvoegsel?: string;
+  lastname: string;
+}
+
 export interface Stadspas {
   id: string;
   passNumber: string;
   passType: 'kind' | 'ouder';
-  owner: string;
+  owner: StadspasOwner;
   dateEnd: string;
   dateEndFormatted: string;
   budgets: StadspasBudget[];
@@ -106,9 +116,11 @@ export interface StadspasTransaction {
   id: string;
   title: string;
   amount: number;
-  amountFormatted: number;
+  amountFormatted: string;
   datePublished: string;
   datePublishedFormatted: string;
+  budget: StadspasBudget['description'];
+  budgetCode: StadspasBudget['code'];
 }
 
 export interface StadspasResponseData {

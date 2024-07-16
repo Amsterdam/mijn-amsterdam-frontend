@@ -13,6 +13,14 @@
       }
     }
   }
+  .Table_transactions__withBudget {
+    tr {
+      > th,
+      > td {
+        width: 25%;
+      }
+    }
+  }
 }
 
 .StadspasNummerInfo {

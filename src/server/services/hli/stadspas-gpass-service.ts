@@ -21,11 +21,13 @@ import {
   StadspasDetailBudgetSource,
   StadspasDetailSource,
   StadspasHouderSource,
+  StadspasOwner,
   StadspasPasHouderResponse,
-  StadspasTransactie,
-  StadspasTransactiesResponse,
+  StadspasTransactieSource,
+  StadspasTransactiesResponseSource,
   StadspasTransaction,
 } from './stadspas-types';
+import { pick } from '../../../universal/helpers/utils';
 
 function getHeaders(administratienummer: string) {
   return {
@@ -34,11 +36,13 @@ function getHeaders(administratienummer: string) {
   };
 }
 
-function getOwnerName(pashouder: StadspasHouderSource) {
-  return (
-    pashouder.volledige_naam ??
-    `${pashouder['initialen']} ${pashouder['achternaam']}`
-  );
+function getOwner(pashouder: StadspasHouderSource): StadspasOwner {
+  return {
+    firstname: pashouder.voornaam,
+    lastname: pashouder.achternaam,
+    tussenvoegsel: pashouder.tussenvoegsel,
+    initials: pashouder.initialen,
+  };
 }
 
 function formatBudget(
@@ -89,7 +93,7 @@ function transformStadspasResponse(
 
   return {
     id: String(gpassStadspasResonseData.id),
-    owner: getOwnerName(pashouder),
+    owner: getOwner(pashouder),
     dateEnd: gpassStadspasResonseData.expiry_date,
     dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
     budgets: budgets,
@@ -211,18 +215,21 @@ export const fetchStadspassen = memoizee(fetchStadspassen_, {
 });
 
 function transformGpassTransactionsResponse(
-  gpassTransactionsResponseData: StadspasTransactiesResponse
+  gpassTransactionsResponseData: StadspasTransactiesResponseSource
 ) {
   return gpassTransactionsResponseData.transacties.map(
-    (transactie: StadspasTransactie) => {
-      return {
+    (transactie: StadspasTransactieSource) => {
+      const transaction: StadspasTransaction = {
         id: String(transactie.id),
         title: transactie.budget.aanbieder.naam,
         amount: transactie.bedrag,
         amountFormatted: `- €${displayAmount(Math.abs(transactie.bedrag))}`,
         datePublished: transactie.transactiedatum,
         datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
+        budget: transactie.budget.naam,
+        budgetCode: transactie.budget.code,
       };
+      return transaction;
     }
   );
 }

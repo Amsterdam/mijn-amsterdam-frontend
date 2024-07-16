@@ -33,7 +33,11 @@ function hasMultipleOwners(stadspassen: Stadspas[] | undefined) {
     return false;
   }
 
-  return stadspassen.some((pas) => pas.owner !== stadspassen[0].owner);
+  return stadspassen.some(
+    (pas) =>
+      pas.owner.initials !== stadspassen[0].owner.initials ||
+      pas.owner.firstname !== stadspassen[0].owner.firstname
+  );
 }
 
 export default function CStadspas() {

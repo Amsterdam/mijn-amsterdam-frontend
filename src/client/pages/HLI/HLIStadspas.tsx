@@ -29,6 +29,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './HLIStadspas.module.scss';
 import { getThemaTitleWithAppState } from './helpers';
+import { usePhoneScreen } from '../../hooks/media.hook';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -48,6 +49,14 @@ const displayPropsTransacties = {
   datePublishedFormatted: 'Datum',
   amountFormatted: 'Bedrag',
 };
+
+const displayPropsTransactiesWithBudget = {
+  title: displayPropsTransacties.title,
+  budget: 'Budget',
+  datePublishedFormatted: displayPropsTransacties.datePublishedFormatted,
+  amountFormatted: displayPropsTransacties.amountFormatted,
+};
+
 const displayPropsBudgets = {
   title: 'Omschrijving',
   dateEndFormatted: 'Tegoed geldig t/m',
@@ -56,6 +65,7 @@ const displayPropsBudgets = {
 };
 
 export default function HLIStadspas() {
+  const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
   const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
@@ -70,7 +80,7 @@ export default function HLIStadspas() {
     ? [
         {
           label: 'Naam',
-          content: stadspas.owner,
+          content: stadspas.owner.firstname,
         },
       ]
     : [];
@@ -122,6 +132,9 @@ export default function HLIStadspas() {
       ? transactionsApi.data.content
       : [];
 
+  const showMultiBudgetTransactions =
+    budgetsFormatted.length > 1 && !isPhoneScreen;
+
   return (
     <DetailPage>
       <PageHeading
@@ -131,7 +144,8 @@ export default function HLIStadspas() {
         }}
         icon={<ThemaIcon />}
       >
-        Overzicht stadspas {stadspas?.owner && ` van ${stadspas?.owner}`}
+        Overzicht stadspas{' '}
+        {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
       </PageHeading>
       <Screen>
         <Grid>
@@ -157,7 +171,7 @@ export default function HLIStadspas() {
                 Hieronder staat het Stadspasnummer van uw actieve pas.
                 <br /> Dit pasnummer staat ook op de achterkant van uw pas.
               </Paragraph>
-              <Datalist rows={rowsNummerSaldo} />
+              {!!budgetsFormatted.length && <Datalist rows={rowsNummerSaldo} />}
             </Grid.Cell>
           )}
 
@@ -169,7 +183,7 @@ export default function HLIStadspas() {
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}
-              {!isLoadingStadspas && budgetsFormatted.length && (
+              {!isLoadingStadspas && !!budgetsFormatted.length && (
                 <TableV2
                   className={styles.Table_budgets}
                   items={budgetsFormatted}
@@ -200,9 +214,17 @@ export default function HLIStadspas() {
                 <>
                   <Grid.Cell span="all">
                     <TableV2
-                      className={styles.Table_transactions}
+                      className={
+                        showMultiBudgetTransactions
+                          ? styles.Table_transactions__withBudget
+                          : styles.Table_transactions
+                      }
                       items={transactions}
-                      displayProps={displayPropsTransacties}
+                      displayProps={
+                        showMultiBudgetTransactions
+                          ? displayPropsTransactiesWithBudget
+                          : displayPropsTransacties
+                      }
                     />
                   </Grid.Cell>
                 </>
