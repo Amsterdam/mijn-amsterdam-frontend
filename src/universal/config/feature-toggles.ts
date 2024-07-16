@@ -42,7 +42,7 @@ export const FeatureToggle = {
   tipsFlipActive: true,
   toeristischeVerhuurActive: true,
   vergunningenActive: true,
-  vergunningenV2Active: IS_OT,
+  vergunningenV2Active: false,
   wiorDatasetActive: true,
   wiorMeldingen: true,
   zorgnedDocumentAttachmentsActive: true,

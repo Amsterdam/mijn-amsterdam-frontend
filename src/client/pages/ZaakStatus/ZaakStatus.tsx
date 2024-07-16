@@ -34,15 +34,15 @@ const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: {
     baseRoute: AppRoutes.VERGUNNINGEN,
     getRoute: (detailPageItemId, appState) => {
+      if (isError(appState.VERGUNNINGEN)) {
+        return STATE_ERROR;
+      }
       if (!isLoading(appState.VERGUNNINGEN)) {
-        if (isError(appState.VERGUNNINGEN)) {
-          return STATE_ERROR;
-        }
-        return appState.VERGUNNINGEN.content?.length
-          ? appState.VERGUNNINGEN.content?.find(
-              (vergunning) => vergunning.identifier === detailPageItemId
-            )?.link.to
-          : ITEM_NOT_FOUND;
+        return (
+          appState.VERGUNNINGEN.content?.find(
+            (vergunning) => vergunning.identifier === detailPageItemId
+          )?.link.to ?? ITEM_NOT_FOUND
+        );
       }
     },
   },
@@ -65,6 +65,7 @@ function useNavigateToPage(queryParams: URLSearchParams) {
       if (route === ITEM_NOT_FOUND || route === STATE_ERROR) {
         setUnresolvedState(route);
       } else if (route) {
+        // Will unmount component, no further action needed
         history.push(route);
       }
     }
@@ -85,16 +86,46 @@ export default function ZaakStatus() {
   let linkRoute: AppRoute = AppRoutes.HOME;
   let linkText = 'Ga naar het dashboard';
 
-  if (pageRoute.baseRoute) {
+  // Only needed if zaak with the is ID not found.
+  if (pageRoute.baseRoute && pageRoute.unResolvedState !== STATE_ERROR) {
     linkRoute = pageRoute.baseRoute;
-    linkText = 'Bekijk het overzicht';
+    // Item not found but no state error, provide link to the themapagina.
+    if (pageRoute.unResolvedState === ITEM_NOT_FOUND) {
+      linkText = 'Bekijk het overzicht';
+    }
   }
 
   return (
     <TextPage>
       <PageHeading>Status van uw aanvraag</PageHeading>
       <PageContent>
-        {true && (
+        {/* If we have a state error, show only the error, no links to overview because that has a state error as well. */}
+        {pageRoute.unResolvedState === STATE_ERROR && (
+          <ErrorAlert className="ams-mb--xs">
+            Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
+          </ErrorAlert>
+        )}
+        {pageRoute.unResolvedState === ITEM_NOT_FOUND && (
+          <>
+            <Paragraph className="ams-mb--xs">
+              Wij kunnen de status van uw aanvraag nu niet laten zien.
+            </Paragraph>
+            {queryParams.get('payment') && (
+              <Paragraph className="ams-mb--xs">
+                U heeft betaald voor deze aanvraag. Het kan even duren voordat
+                uw aanvraag op Mijn Amsterdam te zien is.
+              </Paragraph>
+            )}
+          </>
+        )}
+        {/* As soon as we have a result (unResolvedState has a value) or if all state is loaded, show an alternative link. */}
+        {(appStateReady || pageRoute.unResolvedState) && (
+          <Paragraph>
+            <MaRouterLink href={linkRoute}>{linkText}</MaRouterLink>
+          </Paragraph>
+        )}
+        {/* Show the loader if we don't have result yet or when we are still loading. */}
+        {!appStateReady && !pageRoute.unResolvedState && (
           <LoadingContent
             className={styles.LoadingContent}
             barConfig={[
@@ -103,26 +134,6 @@ export default function ZaakStatus() {
             ]}
           />
         )}
-        {(pageRoute.unResolvedState === ITEM_NOT_FOUND ||
-          (appStateReady && queryParams.get('payment'))) && (
-          <Paragraph>
-            U heeft betaald voor deze aanvraag. Het kan even duren voordat uw
-            aanvraag op Mijn Amsterdam te zien is.
-          </Paragraph>
-        )}
-        {appStateReady && (
-          <Paragraph>
-            Wij kunnen de status van uw aanvraag nu niet laten zien.
-          </Paragraph>
-        )}
-        {pageRoute.unResolvedState === STATE_ERROR && (
-          <ErrorAlert>
-            Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
-          </ErrorAlert>
-        )}
-        <Paragraph>
-          <MaRouterLink href={linkRoute}>{linkText}</MaRouterLink>
-        </Paragraph>
       </PageContent>
     </TextPage>
   );
