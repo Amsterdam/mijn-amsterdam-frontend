@@ -31,13 +31,29 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `<p>
         ${
           regeling.resultaat === 'toegewezen'
-            ? `U heeft recht op een ${regeling.titel}. U moet hiervoor eerst een cursus volgen.`
+            ? `U heeft recht op een ${regeling.titel}. U moet hiervoor eerst een cursus volgen`
             : `U heeft geen recht op een ${regeling.titel}`
         }.
         </p>
         <p>
-          In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-          indienen.
+          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+        </p>
+      `,
+  },
+  {
+    status: 'Cursus',
+    isVisible: (stepIndex, aanvraag) =>
+      !isVerzilvering(aanvraag) || !aanvraag.resultaat,
+    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    isChecked: (stepIndex, aanvraag) => true,
+    isActive: (stepIndex, aanvraag) => true,
+    description: (aanvraag) =>
+      `
+        <p>
+         Wij wachten op de uitslag van uw te volgen cursus.
+        </p>
+        <p>
+          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
         </p>
       `,
   },
@@ -46,39 +62,32 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     isVisible: (stepIndex, aanvraag) =>
       isVerzilvering(aanvraag) && aanvraag.resultaat === 'toegewezen',
     datePublished: (aanvraag) => aanvraag.datumBesluit,
-    isChecked: (stepIndex, aanvraag) => isVerzilvering(aanvraag),
-    isActive: (stepIndex, aanvraag) =>
-      isVerzilvering(aanvraag) &&
-      aanvraag.isActueel === true &&
-      !isEindeGeldigheidVerstreken(aanvraag),
+    isChecked: (stepIndex, aanvraag) => true,
+    isActive: (stepIndex, aanvraag) => true,
     description: (aanvraag) =>
       `
         <p>
          U heeft voldaan aan de cursus voorwaarde voor het recht op ${aanvraag.titel}.
         </p>
         <p>
-          In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-          indienen.
+          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
         </p>
       `,
   },
   {
     status: 'Cursus niet voldaan',
     isVisible: (stepIndex, aanvraag) =>
-      isVerzilvering(aanvraag) && aanvraag.resultaat !== 'toegewezen',
+      isVerzilvering(aanvraag) && aanvraag.resultaat === 'afgewezen',
     datePublished: (aanvraag) => aanvraag.datumBesluit,
-    isChecked: (stepIndex, aanvraag) => isVerzilvering(aanvraag),
-    isActive: (stepIndex, aanvraag) =>
-      (isVerzilvering(aanvraag) && aanvraag.isActueel !== true) ||
-      aanvraag.resultaat === 'afgewezen',
+    isChecked: (stepIndex, aanvraag) => true,
+    isActive: (stepIndex, aanvraag) => true,
     description: (aanvraag) =>
       `
         <p>
-         U heeft voldaan aan de cursus voorwaarde voor het recht op ${aanvraag.titel}.
+         U heeft geen recht op ${aanvraag.titel}
         </p>
         <p>
-          In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-          indienen.
+          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
         </p>
       `,
   },
