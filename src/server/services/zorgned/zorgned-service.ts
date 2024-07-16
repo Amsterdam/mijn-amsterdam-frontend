@@ -4,6 +4,7 @@ import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
   ZorgnedDocument,
+  ZorgnedDocumentResponseSource,
   ZorgnedResponseDataSource,
 } from './zorgned-config-and-types';
 
@@ -182,7 +183,9 @@ export async function fetchDocument(
       ...dataRequestConfig,
       url,
       data: postBody,
-      transformResponse: (documentResponseData: { inhoud: string }) => {
+      transformResponse: (
+        documentResponseData: ZorgnedDocumentResponseSource
+      ) => {
         if (
           !documentResponseData ||
           typeof documentResponseData !== 'object' ||
@@ -195,6 +198,8 @@ export async function fetchDocument(
         const data = Buffer.from(documentResponseData.inhoud, 'base64');
         return {
           data,
+          mimetype: documentResponseData.mimetype,
+          filename: documentResponseData.omschrijving,
         };
       },
     },

@@ -129,3 +129,9 @@ export interface ZorgnedAanvraagTransformed {
   resultaat: BeschikkingsResultaat;
   titel: string;
 }
+
+export interface ZorgnedDocumentResponseSource {
+  inhoud: string;
+  omschrijving: string;
+  mimetype: string;
+}
