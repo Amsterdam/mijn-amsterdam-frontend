@@ -101,7 +101,7 @@ export default function ThemaPaginaHLI() {
           <Grid.Cell span="all">
             <LinkList>
               <LinkList.Link href="https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/">
-                Meer informatie over voorzieningen
+                Meer informatie over regelingen
               </LinkList.Link>
               <LinkList.Link href="https://www.amsterdam.nl/stadspas">
                 Meer informatie over Stadspas
