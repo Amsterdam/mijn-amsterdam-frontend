@@ -37,6 +37,9 @@ const displayPropsEerdereRegelingen = {
   displayStatus: 'Status',
 };
 
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+
 function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
   return (
     <UnorderedList.Item key={stadspas.passNumber}>
@@ -161,7 +164,10 @@ export default function ThemaPaginaHLI() {
                 <TableV2
                   showTHead={!!huidigeRegelingen.length}
                   caption="Huidige regelingen"
-                  items={huidigeRegelingen}
+                  items={huidigeRegelingen.slice(
+                    0,
+                    MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG
+                  )}
                   displayProps={displayPropsHuidigeRegelingen}
                   className={styles.HuidigeRegelingen}
                 />
@@ -169,6 +175,12 @@ export default function ThemaPaginaHLI() {
                 {!huidigeRegelingen.length && (
                   <Paragraph>U heeft geen huidige regelingen.</Paragraph>
                 )}
+
+                <LinkToListPage
+                  count={huidigeRegelingen.length}
+                  route={AppRoutes['HLI/REGELINGEN_LIJST']}
+                  threshold={MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG}
+                />
               </Grid.Cell>
               <Grid.Cell span="all">
                 <TableV2
@@ -176,7 +188,7 @@ export default function ThemaPaginaHLI() {
                   caption="Eerdere en afgewezen regelingen"
                   items={eerdereRegelingen.slice(
                     0,
-                    MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                    MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER
                   )}
                   displayProps={displayPropsEerdereRegelingen}
                   className={styles.EerdereRegelingen}
@@ -191,6 +203,7 @@ export default function ThemaPaginaHLI() {
                 <LinkToListPage
                   count={eerdereRegelingen.length}
                   route={AppRoutes['HLI/REGELINGEN_LIJST']}
+                  threshold={MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER}
                 />
               </Grid.Cell>
             </>
