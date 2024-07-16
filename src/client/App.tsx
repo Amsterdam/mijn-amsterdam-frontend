@@ -135,7 +135,7 @@ function AppNotAuthenticated() {
           />
         </Switch>
       </div>
-      <MainFooter isAuthenticated={false} />
+      <MainFooter />
     </>
   );
 }
@@ -346,7 +346,7 @@ function AppAuthenticated() {
           <Route component={NotFound} />
         </Switch>
       </div>
-      <MainFooter isAuthenticated={true} />
+      <MainFooter />
     </>
   );
 }

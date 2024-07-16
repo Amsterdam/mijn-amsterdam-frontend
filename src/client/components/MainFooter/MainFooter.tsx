@@ -3,6 +3,8 @@ import {
   Footer,
   Grid,
   Heading,
+  Icon,
+  Link,
   LinkList,
   PageMenu,
   Paragraph,
@@ -10,11 +12,9 @@ import {
 } from '@amsterdam/design-system-react';
 import type { AstNode, CMSFooterContent } from '../../../server/services';
 import { LinkProps } from '../../../universal/types';
-import { useCMSApi } from '../../hooks/api/useCmsApi';
-import { useDesktopScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MainFooter.module.scss';
-import { MaLink } from '../MaLink/MaLink';
+import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
 
 interface FooterBlockProps {
   id: string;
@@ -24,71 +24,72 @@ interface FooterBlockProps {
 }
 
 function FooterBlock({ id, title, links, description }: FooterBlockProps) {
-  const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
   return (
-    <Grid.Cell span={4} className={'page-footer-space-y '}>
-      <Heading
-        inverseColor={true}
-        level={4}
-        role={titleRole}
-        className="ams-mb--xs"
-      >
+    <Grid.Cell key={title} span={4} className="page-footer-space-y">
+      <Heading inverseColor level={4} className="ams-mb--xs">
         {title}
       </Heading>
       {!!description && getEl(description as AstNode)}
       {!!links.length && (
-        <UnorderedList markers={false}>
+        <LinkList>
           {links.map((link) => (
-            <LinkList key={link.title}>
-              <LinkList.Link
-                variant="inList"
-                onBackground={'dark'}
-                href={link.to}
-              >
-                {link.title}
-              </LinkList.Link>
-            </LinkList>
+            <LinkList.Link
+              key={link.to}
+              variant="inList"
+              onBackground="dark"
+              href={link.to}
+            >
+              {link.title}
+            </LinkList.Link>
           ))}
-        </UnorderedList>
+        </LinkList>
       )}
     </Grid.Cell>
   );
 }
-function getEl(astElement: AstNode | AstNode[], index: number = 0) {
-  if (Array.isArray(astElement) && astElement.length > 0) {
+
+function getEl(astElement: AstNode | AstNode[], i: number = 0) {
+  let index = i;
+  if (Array.isArray(astElement)) {
     return astElement.map((el, index) => getEl(el, index));
   }
 
   if ('type' in astElement && astElement.type === 'text') {
-    return <>{astElement.content || ''}</>;
+    return <span>{astElement.content || ''}</span>;
   }
 
   if ('type' in astElement && astElement.type === 'tag') {
-    const children = astElement.children ? getEl(astElement.children) : null;
+    const children = astElement.children
+      ? getEl(astElement.children, index)
+      : null;
 
     switch (astElement.name) {
       case 'a':
         return (
-          <MaLink
+          <Link
+            onBackground="dark"
+            variant="standalone"
             key={index}
             href={String(astElement.attrs?.href || '#')}
-            className={
-              'ams-link-list__link ams-link-list__link--on-background-dark'
-            }
+            className="ams-link-list__link ams-link-list__link--on-background-dark"
           >
-            {astElement.children?.[0]?.content || ''}
-          </MaLink>
+            {children}
+          </Link>
         );
       case 'p':
         return (
-          <Paragraph inverseColor key={index} className={'ams-mb--xs'}>
+          <Paragraph
+            inverseColor
+            key={index}
+            className={classnames('ams-mb--xs', styles.Paragraph)}
+          >
             {children}
           </Paragraph>
         );
       case 'h3':
         return (
-          <Heading inverseColor level={4} className={'ams-mb--xs'}>
-            {astElement.children?.[0]?.content || ''}
+          <Heading inverseColor level={4} className="ams-mb--xs">
+            {children}
           </Heading>
         );
       case 'ul':
@@ -99,61 +100,45 @@ function getEl(astElement: AstNode | AstNode[], index: number = 0) {
         );
       case 'li':
         return (
-          <li className={styles.Link} key={index}>
-            {children}
-          </li>
+          <UnorderedList.Item className={styles.Link} key={index}>
+            <Icon svg={ChevronRightIcon} size="level-5" />
+            <div>{children}</div>
+          </UnorderedList.Item>
         );
       case 'strong':
-        return <strong>{children} </strong>;
+        return (
+          <>
+            <strong>{children}</strong>&nbsp;
+          </>
+        );
       default:
         return null;
     }
   }
-
-  return null; // Handle unexpected types accordingly
 }
 
-interface MainFooterProps {
-  isAuthenticated: boolean;
-}
-
-export default function MainFooter({
-  isAuthenticated = false,
-}: MainFooterProps) {
+export default function MainFooter() {
   const atom = useAppStateGetter();
   const { CMS_CONTENT } = atom;
   const footer: CMSFooterContent | null = CMS_CONTENT.content?.footer || null;
-
-  const { isLoading } = useCMSApi(isAuthenticated);
   return (
     <Footer>
       <Footer.Top className={classnames('page-footer-top', styles.FooterTop)}>
         <Grid gapVertical="large" paddingVertical="medium">
-          <Heading className="ams-visually-hidden" inverseColor>
-            Colofon
-          </Heading>
-          {isLoading && <div className={styles.FooterLoader}>...</div>}
           {footer?.blocks.map((footerItem) => (
             <FooterBlock key={footerItem.id} {...footerItem} />
           ))}
         </Grid>
       </Footer.Top>
       <Footer.Bottom>
-        <Heading className="ams-visually-hidden" level={2}>
-          Over deze website
-        </Heading>
         <Grid paddingVertical="small">
           <Grid.Cell span="all">
             <PageMenu>
               {footer?.sub.map((link) => {
                 return (
-                  <MaLink
-                    maVariant="noDefaultUnderline"
-                    key={link.title}
-                    href={link.to}
-                  >
+                  <PageMenu.Link key={link.title} href={link.to}>
                     {link.title}
-                  </MaLink>
+                  </PageMenu.Link>
                 );
               })}
             </PageMenu>

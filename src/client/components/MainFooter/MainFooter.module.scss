@@ -6,22 +6,38 @@
 }
 
 .FooterTop {
+  .Paragraph a {
+    outline-offset: var(--ams-link-list-link-outline-offset);
+    text-decoration-line: var(--ams-link-standalone-text-decoration-line);
+    text-decoration-thickness: var(
+      --ams-link-standalone-text-decoration-thickness
+    );
+    text-underline-offset: var(--ams-link-standalone-text-underline-offset);
+    &:hover {
+      text-decoration-thickness: var(
+        --ams-link-standalone-hover-text-decoration-thickness
+      );
+      text-underline-offset: var(
+        --ams-link-standalone-hover-text-underline-offset
+      );
+    }
+  }
   .Link {
-    color: $color-white;
-    margin-left: 2.8rem;
+    display: flex;
+    svg {
+      margin-right: 0.5rem;
+    }
 
-    &:before {
-      content: '';
-      background-image: url('../../assets/icons/Chevron-Right__primary-white.svg');
-      display: block;
-      width: 1.5rem;
-      height: 1.5rem;
-      background-size: 1.5rem;
-      margin-left: -2.8rem;
-      margin-bottom: -2rem;
+    span {
+      color: $color-white;
+      font-size: var(
+        --ams-paragraph-medium-font-size
+      ); // this helps to keep the font size consistent with the linklist in the middle
+      line-height: var(--ams-link-list-link-medium-line-height);
     }
   }
 }
+
 .BottomBar {
   background-color: $color-white;
   height: 4.4rem;
