@@ -8,17 +8,16 @@ import {
   fetchPersoonsgegevensNAW,
 } from '../zorgned/zorgned-service';
 
+import memoizee from 'memoizee';
 import {
   apiErrorResult,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
-import { jsonCopy } from '../../../universal/helpers/utils';
+import { ONE_SECOND_MS } from '../../config';
 import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
 import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
-import memoizee from 'memoizee';
-import { ONE_SECOND_MS } from '../../config';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -116,19 +115,21 @@ export const fetchNamenBetrokkenen = memoizee(fetchNamenBetrokkenen_, {
   maxAge: 45 * ONE_SECOND_MS,
 });
 
-function assignIsActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
+function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);
   let isActueel = aanvraagTransformed.isActueel;
 
-  // Override actueel indien de einde geldigheid is verlopen
-  if (isActueel && isEOG) {
-    isActueel = false;
-  }
-  if (!isActueel && !isEOG) {
-    isActueel = true;
+  switch (true) {
+    case !aanvraagTransformed.datumIngangGeldigheid:
+      return false;
+    // Override actueel indien de einde geldigheid is verlopen
+    case isActueel && isEOG:
+      return false;
+    case !isActueel && !isEOG:
+      return true;
   }
 
-  aanvraagTransformed.isActueel = isActueel;
+  return false;
 }
 
 export async function fetchZorgnedAanvragenHLI(
@@ -145,8 +146,9 @@ export async function fetchZorgnedAanvragenHLI(
     const aanvragenTransformed = aanvragenResponse.content.map(
       (aanvraagTransformed) => {
         // Override isActueel for front-end.
-        assignIsActueel(aanvraagTransformed);
-        return aanvraagTransformed;
+        return Object.assign(aanvraagTransformed, {
+          isActueel: isActueel(aanvraagTransformed),
+        });
       }
     );
     return apiSuccessResult(aanvragenTransformed);
@@ -156,7 +158,7 @@ export async function fetchZorgnedAanvragenHLI(
 }
 
 export const forTesting = {
-  assignIsActueel,
+  isActueel,
   transformZorgnedBetrokkeneNaamResponse,
   transformToAdministratienummer,
   transformZorgnedClientNummerResponse,

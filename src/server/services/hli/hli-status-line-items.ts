@@ -17,9 +17,21 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
     lineItemTransformers: REGELING,
   },
   {
+    leveringsVorm: 'ZIN',
+    productsoortCodes: ['AV-ALG_E'],
+    productIdentificatie: ['AV-GOV'],
+    lineItemTransformers: REGELING,
+  },
+  {
     leveringsVorm: '',
     productsoortCodes: ['AV-ALG'],
     productIdentificatie: ['AV-CZM', 'AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV'],
+    lineItemTransformers: REGELING_PERIODIEK,
+  },
+  {
+    leveringsVorm: 'ZIN',
+    productsoortCodes: ['AV-ALG'],
+    productIdentificatie: ['AV-TAOV', 'AV-IIT', 'AV-SPM'],
     lineItemTransformers: REGELING_PERIODIEK,
   },
 ];

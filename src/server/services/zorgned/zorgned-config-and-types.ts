@@ -115,9 +115,9 @@ export interface ZorgnedAanvraagTransformed {
   datumAanvraag: string;
   datumBeginLevering: string | null;
   datumBesluit: string;
-  datumEindeGeldigheid: string;
+  datumEindeGeldigheid: string | null;
   datumEindeLevering: string | null;
-  datumIngangGeldigheid: string;
+  datumIngangGeldigheid: string | null;
   datumOpdrachtLevering: string | null;
   documenten: GenericDocument[];
   id: string;

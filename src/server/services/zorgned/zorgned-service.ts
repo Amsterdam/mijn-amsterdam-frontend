@@ -43,11 +43,6 @@ function transformZorgnedAanvraag(
   documenten: ZorgnedDocument[]
 ) {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
-
-  if (!toegewezenProduct) {
-    return null;
-  }
-
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
   const leveringen = toewijzing?.leveringen ?? [];
@@ -69,14 +64,14 @@ function transformZorgnedAanvraag(
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
     id,
     datumAanvraag: datumAanvraag,
-    datumBeginLevering: levering?.begindatum ?? '',
+    datumBeginLevering: levering?.begindatum ?? null,
     datumBesluit: datumBesluit,
-    datumEindeGeldigheid: toegewezenProduct.datumEindeGeldigheid,
-    datumEindeLevering: levering?.einddatum ?? '',
-    datumIngangGeldigheid: toegewezenProduct.datumIngangGeldigheid,
-    datumOpdrachtLevering: toewijzing?.datumOpdracht ?? '',
+    datumEindeGeldigheid: toegewezenProduct?.datumEindeGeldigheid ?? null,
+    datumEindeLevering: levering?.einddatum ?? null,
+    datumIngangGeldigheid: toegewezenProduct?.datumIngangGeldigheid ?? null,
+    datumOpdrachtLevering: toewijzing?.datumOpdracht ?? null,
     documenten: transformDocumenten(documenten),
-    isActueel: toegewezenProduct.actueel,
+    isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
     productsoortCode: productsoortCode,
@@ -202,7 +197,6 @@ export async function fetchDocument(
 }
 
 function transformZorgnedRelaties(responseData: any) {
-  console.dir(responseData);
   return responseData;
 }
 

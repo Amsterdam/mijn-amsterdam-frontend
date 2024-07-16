@@ -10,9 +10,11 @@ export const PGB: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (data) =>
       `
             <p>
-              U heeft recht op ${data.titel} per ${defaultDateFormat(
+              U heeft recht op ${data.titel} per ${
                 data.datumIngangGeldigheid
-              )}.
+                  ? defaultDateFormat(data.datumIngangGeldigheid)
+                  : ''
+              }.
             </p>
             <p>
               In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan

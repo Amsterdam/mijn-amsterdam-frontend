@@ -146,32 +146,37 @@ describe('hli-zorgned-service', () => {
     `);
   });
 
-  test('assignIsActueel', () => {
+  test('isActueel', () => {
     const aanvraag = {
       isActueel: false,
     } as ZorgnedAanvraagTransformed;
 
-    forTesting.assignIsActueel(aanvraag);
+    expect(forTesting.isActueel(aanvraag)).toBe(false);
 
-    expect(aanvraag).toMatchInlineSnapshot(`
-      {
-        "isActueel": true,
-      }
-    `);
+    const aanvraag3 = {
+      isActueel: false,
+      datumIngangGeldigheid: '2022-01-12',
+      datumEindeGeldigheid: '2082-01-12',
+    } as ZorgnedAanvraagTransformed;
+
+    expect(forTesting.isActueel(aanvraag3)).toBe(true);
+
+    const aanvraag4 = {
+      isActueel: true,
+      datumEindeGeldigheid: '2082-01-12',
+    } as ZorgnedAanvraagTransformed;
+
+    expect(forTesting.isActueel(aanvraag4)).toBe(false);
 
     const aanvraag2 = {
       isActueel: true,
+      datumIngangGeldigheid: '2021-01-12',
       datumEindeGeldigheid: '2022-01-12',
     } as ZorgnedAanvraagTransformed;
 
-    forTesting.assignIsActueel(aanvraag2);
+    forTesting.isActueel(aanvraag2);
 
-    expect(aanvraag2).toMatchInlineSnapshot(`
-      {
-        "datumEindeGeldigheid": "2022-01-12",
-        "isActueel": false,
-      }
-    `);
+    expect(forTesting.isActueel(aanvraag2)).toBe(false);
   });
 
   test('fetchZorgnedAanvragenHLI no content', async () => {
@@ -217,7 +222,7 @@ describe('hli-zorgned-service', () => {
         "content": [
           {
             "datumEindeGeldigheid": "2032-01-01",
-            "isActueel": true,
+            "isActueel": false,
           },
         ],
         "status": "OK",

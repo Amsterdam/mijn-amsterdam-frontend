@@ -4,14 +4,14 @@ import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-co
 export const REGELING_PERIODIEK: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
-    datePublished: (data) => data.datumBesluit,
-    isChecked: (stepIndex, data) => true,
-    isActive: (stepIndex, data) => data.isActueel === true,
+    datePublished: (regeling) => regeling.datumBesluit,
+    isChecked: (stepIndex, regeling) => true,
+    isActive: (stepIndex, regeling) => regeling.isActueel === true,
     description: (regeling) =>
       `<p>
         ${
           regeling.resultaat === 'toegewezen'
-            ? `U heeft recht op ${regeling.titel} per ${defaultDateFormat(regeling.datumIngangGeldigheid)}`
+            ? `U heeft recht op ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}`
             : `U heeft geen recht op ${regeling.titel}`
         }.
         </p>
@@ -24,18 +24,18 @@ export const REGELING_PERIODIEK: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Einde recht',
     isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
-    datePublished: (data) => data.datumEindeGeldigheid,
+    datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
     isChecked: () => false,
-    isActive: (stepIndex, data) => data.isActueel === false,
-    description: (data) =>
+    isActive: (stepIndex, regeling) => regeling.isActueel === false,
+    description: (regeling) =>
       `
         <p>
           ${
-            data.isActueel
-              ? `Uw recht op ${data.titel} stopt per ${defaultDateFormat(data.datumEindeGeldigheid)}.`
-              : `Uw recht op ${data.titel} is beëindigd ${
-                  data.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(data.datumEindeGeldigheid)}`
+            regeling.isActueel
+              ? `Uw recht op ${regeling.titel} stopt per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}.`
+              : `Uw recht op ${regeling.titel} is beëindigd ${
+                  regeling.datumEindeGeldigheid
+                    ? `per ${defaultDateFormat(regeling.datumEindeGeldigheid)}`
                     : ''
                 }`
           }
