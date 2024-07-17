@@ -9,7 +9,7 @@ import { TokenData } from './helpers/app';
 import fs from 'fs';
 
 export function getCertificateSync(envVarName: string | undefined) {
-  const path = envVarName && process.env[envVarName];
+  const path = envVarName && getFromEnv(envVarName, false);
   if (path) {
     try {
       const fileContents = fs.readFileSync(path).toString();
@@ -23,7 +23,7 @@ export function getCertificateSync(envVarName: string | undefined) {
 }
 
 function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
-  const data = name && process.env[name];
+  const data = name && getFromEnv(name);
   if (data) {
     return Buffer.from(data, 'base64').toString('utf-8');
   }
@@ -34,6 +34,24 @@ export function getCert(envVarName: string) {
   return IS_DEVELOPMENT
     ? getCertificateSync(envVarName)
     : decodeBase64EncodedCertificateFromEnv(envVarName);
+}
+
+/** Retrieve an environment variable.
+ *
+ * - Will never return undefined when `isRequired` (defaults `true`).
+ * - Throws an error when a variable doesn't exist and it `isRequired`.
+ */
+export function getFromEnv(
+  key: string,
+  isRequired: boolean = true
+): string | undefined {
+  if (key in process.env) {
+    return process.env[key];
+  }
+  if (isRequired) {
+    throw new Error(`ENV undefined key: ${key}.`);
+  }
+  console.warn(`ENV undefined, but not required: ${key}`);
 }
 
 export const IS_DEBUG = process.env.DEBUG === '1';
@@ -140,7 +158,7 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS_OAUTH: {
     method: 'post',
-    url: `${process.env.BFF_AFIS_API_BASE_URL}/OAuthServer`,
+    url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}/OAuthServer`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -148,14 +166,14 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   AFIS_BUSINESSPARTNER: {
     method: 'post',
-    url: `${process.env.BFF_AFIS_API_BASE_URL}/businesspartner`,
+    url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}/businesspartner`,
     postponeFetch: !FeatureToggle.afisActive,
   },
   ZORGNED_JZD: {
     method: 'post',
-    url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
+    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
     headers: {
-      Token: process.env.BFF_ZORGNED_API_TOKEN,
+      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
       'X-Mams-Api-User': 'JZD',
     },
@@ -166,9 +184,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   ZORGNED_AV: {
     method: 'post',
-    url: `${process.env.BFF_ZORGNED_API_BASE_URL}`,
+    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
     headers: {
-      Token: process.env.BFF_ZORGNED_API_TOKEN,
+      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
       'X-Mams-Api-User': 'AV',
     },
@@ -178,51 +196,51 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   GPASS: {
-    url: `${process.env.BFF_GPASS_API_BASE_URL}`,
+    url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
   },
   WPI_E_AANVRAGEN: {
-    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/e-aanvragen`,
+    url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/e-aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_AANVRAGEN: {
-    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/aanvragen`,
+    url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/aanvragen`,
     passthroughOIDCToken: true,
   },
   WPI_SPECIFICATIES: {
-    url: `${process.env.BFF_WPI_API_BASE_URL}/wpi/uitkering/specificaties-en-jaaropgaven`,
+    url: `${getFromEnv('BFF_WPI_API_BASE_URL')}/wpi/uitkering/specificaties-en-jaaropgaven`,
     passthroughOIDCToken: true,
   },
   SVWI: {
-    url: `${process.env.BFF_SVWI_API_BASE_URL}/mijnamsterdam/v1/autorisatie/tegel`,
+    url: `${getFromEnv('BFF_SVWI_API_BASE_URL')}/mijnamsterdam/v1/autorisatie/tegel`,
     passthroughOIDCToken: true,
     postponeFetch: !FeatureToggle.svwiLinkActive,
     headers: {
-      'Ocp-Apim-Subscription-Key': process.env.BFF_SVWI_API_KEY,
+      'Ocp-Apim-Subscription-Key': getFromEnv('BFF_SVWI_API_KEY', false),
     },
   },
   BEZWAREN_LIST: {
-    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/zaken/_zoek`,
+    url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/zaken/_zoek`,
     method: 'POST',
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENT: {
-    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
+    url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_DOCUMENTS: {
-    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/enkelvoudiginformatieobjecten`,
+    url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/enkelvoudiginformatieobjecten`,
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BEZWAREN_STATUS: {
-    url: `${process.env.BFF_BEZWAREN_API}/zgw/v1/statussen`,
+    url: `${getFromEnv('BFF_BEZWAREN_API')}/zgw/v1/statussen`,
     postponeFetch: !FeatureToggle.bezwarenActive,
   },
   BELASTINGEN: {
-    url: `${process.env.BFF_BELASTINGEN_ENDPOINT}`,
+    url: `${getFromEnv('BFF_BELASTINGEN_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   CLEOPATRA: {
-    url: `${process.env.BFF_CLEOPATRA_API_ENDPOINT}`,
+    url: `${getFromEnv('BFF_CLEOPATRA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.cleopatraApiActive,
     method: 'POST',
     httpsAgent: new https.Agent({
@@ -231,91 +249,91 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   DECOS_API: {
-    url: `${process.env.BFF_DECOS_API_BASE_URL}`,
+    url: `${getFromEnv('BFF_DECOS_API_BASE_URL')}`,
     postponeFetch: !FeatureToggle.decosServiceActive,
     headers: {
       Accept: 'application/itemdata',
-      Authorization: `Basic ${Buffer.from(`${process.env.BFF_DECOS_API_USERNAME}:${process.env.BFF_DECOS_API_PASSWORD}`).toString('base64')}`,
+      Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`,
       'Content-type': 'application/json; charset=utf-8',
     },
   },
   VERGUNNINGEN: {
-    url: `${process.env.BFF_VERGUNNINGEN_API_BASE_URL}/decosjoin/getvergunningen`,
+    url: `${getFromEnv('BFF_VERGUNNINGEN_API_BASE_URL')}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
     passthroughOIDCToken: true,
   },
   POWERBROWSER: {
     method: 'POST',
-    url: `${process.env.BFF_POWERBROWSER_API_URL}`,
+    url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
     postponeFetch: !FeatureToggle.powerbrowserActive,
     headers: {
-      apiKey: process.env.BFF_POWERBROWSER_API_KEY,
+      apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'),
     },
   },
   CMS_CONTENT_GENERAL_INFO: {
     cacheTimeout: 4 * ONE_HOUR_MS,
     urls: {
-      private: `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
-      'private-attributes': `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
-      commercial: `${process.env.BFF_CMS_BASE_URL}/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data`,
+      private: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+      'private-attributes': `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+      commercial: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data`,
     },
   },
   CMS_CONTENT_FOOTER: {
-    url: `${process.env.BFF_CMS_BASE_URL}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
+    url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
-    url: `${process.env.BFF_CMS_BASE_URL}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
+    url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
     cacheTimeout: ONE_HOUR_MS,
   },
   BRP: {
-    url: `${process.env.BFF_MKS_API_BASE_URL}/brp/brp`,
+    url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
     passthroughOIDCToken: true,
   },
   ERFPACHT: {
-    url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}`,
+    url: `${getFromEnv('BFF_MIJN_ERFPACHT_API_URL')}`,
   },
   BAG: {
     url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
   },
   ERFPACHTv2: {
-    url: process.env.BFF_ERFPACHT_API_URL,
+    url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent({
       ca: IS_TAP ? getCert('BFF_SERVER_CLIENT_CERT') : [],
     }),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
-      !process.env.BFF_ERFPACHT_API_URL,
+      !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
-      apiKey: process.env.BFF_ENABLEU_ERFPACHT_API_KEY,
+      apiKey: getFromEnv('BFF_ENABLEU_ERFPACHT_API_KEY'),
     },
   },
   AFVAL: {
     url: `https://api.data.amsterdam.nl/v1/afvalwijzer/afvalwijzer/`,
-    headers: { 'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY },
+    headers: { 'X-Api-Key': getFromEnv('BFF_DATA_AMSTERDAM_API_KEY ', false) },
   },
   KVK: {
-    url: `${process.env.BFF_MKS_API_BASE_URL}/brp/hr`,
+    url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/hr`,
     passthroughOIDCToken: true,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
-    url: `${process.env.BFF_LVV_API_URL}`,
+    url: `${getFromEnv('BFF_LVV_API_URL')}`,
     headers: {
-      'X-Api-Key': process.env.BFF_LVV_API_KEY + '',
+      'X-Api-Key': getFromEnv('BFF_LVV_API_KEY') + '',
       'Content-Type': 'application/json',
     },
     postponeFetch: !FeatureToggle.toeristischeVerhuurActive,
   },
   KREFIA: {
-    url: `${process.env.BFF_KREFIA_API_BASE_URL}/krefia/all`,
+    url: `${getFromEnv('BFF_KREFIA_API_BASE_URL')}/krefia/all`,
     postponeFetch: !FeatureToggle.krefiaActive,
     passthroughOIDCToken: true,
   },
   SUBSIDIE: {
-    url: `${process.env.BFF_SISA_API_ENDPOINT}`,
+    url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.subsidieActive,
   },
   SEARCH_CONFIG: {
@@ -325,16 +343,16 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   ENABLEU_2_SMILE: {
-    url: `${process.env.BFF_ENABLEU_2_SMILE_ENDPOINT}`,
+    url: `${getFromEnv('BFF_ENABLEU_2_SMILE_ENDPOINT')}`,
     method: 'POST',
   },
   LOOD_365: {
-    url: `${process.env.BFF_LOOD_API_URL}`,
+    url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
     postponeFetch: !FeatureToggle.bodemActive,
   },
   LOOD_365_OAUTH: {
-    url: `${process.env.BFF_LOOD_OAUTH}/${process.env.BFF_LOOD_TENANT}/oauth2/v2.0/token`,
+    url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
     postponeFetch: !FeatureToggle.bodemActive,
     cacheTimeout: 59 * ONE_MINUTE_MS,
@@ -389,15 +407,15 @@ export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
 export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
 export const AUTH_BASE_SSO_EHERKENNING = `${AUTH_BASE}/eherkenning/sso`;
 
-export const AUTH_LOGIN = `${process.env.BFF_OIDC_LOGIN ?? '/login'}`;
-export const AUTH_LOGOUT = `${process.env.BFF_OIDC_LOGOUT ?? '/logout'}`;
-export const AUTH_CALLBACK = `${process.env.BFF_OIDC_CALLBACK ?? '/callback'}`;
+export const AUTH_LOGIN = `${getFromEnv('BFF_OIDC_LOGIN', false) ?? '/login'}`;
+export const AUTH_LOGOUT = `${getFromEnv('BFF_OIDC_LOGOUT', false) ?? '/logout'}`;
+export const AUTH_CALLBACK = `${getFromEnv('BFF_OIDC_CALLBACK', false) ?? '/callback'}`;
 
 export const BFF_OIDC_BASE_URL = `${
-  process.env.BFF_OIDC_BASE_URL ?? 'https://mijn.amsterdam.nl'
+  getFromEnv('BFF_OIDC_BASE_URL') ?? 'https://mijn.amsterdam.nl'
 }`;
 
-export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
+export const BFF_OIDC_ISSUER_BASE_URL = `${getFromEnv('BFF_OIDC_ISSUER_BASE_URL')}`;
 
 export const BffEndpoints = {
   ROOT: '/',
@@ -512,7 +530,7 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
 
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
-export const OIDC_COOKIE_ENCRYPTION_KEY = `${process.env.BFF_GENERAL_ENCRYPTION_KEY}`;
+export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
@@ -523,7 +541,7 @@ const oidcConfigBase: ConfigParams = {
   // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
-  clientSecret: process.env.BFF_OIDC_SECRET,
+  clientSecret: getFromEnv('BFF_OIDC_SECRET'),
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
@@ -562,12 +580,12 @@ const oidcConfigBase: ConfigParams = {
 
 export const oidcConfigDigid: ConfigParams = {
   ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
+  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_DIGID'),
 };
 
 export const oidcConfigEherkenning: ConfigParams = {
   ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
+  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING'),
 };
 
 // Op 1.13 met ketenmachtiging
