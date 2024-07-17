@@ -24,7 +24,7 @@
     "bff-api:watch": "nodemon -e ts -w ./src -w ./.env.local -x npm run bff-api:serve-dev",
     "bff-api:test": "cross-env MA_APP_MODE=unittest vitest --environment=node src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
-    "bff-api:serve-dev": "NODE_OPTS=--inspect ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
+    "bff-api:serve-dev": "cross-env NODE_OPTS=--inspect ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json"
   },
   "browserslist": [
