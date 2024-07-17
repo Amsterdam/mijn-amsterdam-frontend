@@ -15,6 +15,7 @@ import { LinkProps } from '../../../universal/types';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MainFooter.module.scss';
 import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
+import { ReactNode } from 'react';
 
 interface FooterBlockProps {
   id: string;
@@ -33,12 +34,7 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
-            <LinkList.Link
-              key={link.to}
-              variant="inList"
-              onBackground="dark"
-              href={link.to}
-            >
+            <LinkList.Link key={link.to} onBackground="dark" href={link.to}>
               {link.title}
             </LinkList.Link>
           ))}
@@ -48,10 +44,9 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
   );
 }
 
-function getEl(astElement: AstNode | AstNode[], i: number = 0) {
-  let index = i;
+function getEl(astElement: AstNode | AstNode[]): ReactNode {
   if (Array.isArray(astElement)) {
-    return astElement.map((el, index) => getEl(el, index));
+    return astElement.map((el) => getEl(el));
   }
 
   if ('type' in astElement && astElement.type === 'text') {
@@ -59,9 +54,7 @@ function getEl(astElement: AstNode | AstNode[], i: number = 0) {
   }
 
   if ('type' in astElement && astElement.type === 'tag') {
-    const children = astElement.children
-      ? getEl(astElement.children, index)
-      : null;
+    const children = astElement.children ? getEl(astElement.children) : null;
 
     switch (astElement.name) {
       case 'a':
@@ -69,7 +62,7 @@ function getEl(astElement: AstNode | AstNode[], i: number = 0) {
           <Link
             onBackground="dark"
             variant="standalone"
-            key={index}
+            key={String(astElement.attrs?.href || '#')}
             href={String(astElement.attrs?.href || '#')}
             className="ams-link-list__link ams-link-list__link--on-background-dark"
           >
@@ -80,7 +73,7 @@ function getEl(astElement: AstNode | AstNode[], i: number = 0) {
         return (
           <Paragraph
             inverseColor
-            key={index}
+            key={String(astElement.attrs?.href || '#')}
             className={classnames('ams-mb--xs', styles.Paragraph)}
           >
             {children}
@@ -94,13 +87,20 @@ function getEl(astElement: AstNode | AstNode[], i: number = 0) {
         );
       case 'ul':
         return (
-          <UnorderedList inverseColor key={index} markers={false}>
+          <UnorderedList
+            inverseColor
+            key={String(astElement.attrs?.href || '#')}
+            markers={false}
+          >
             {children}
           </UnorderedList>
         );
       case 'li':
         return (
-          <UnorderedList.Item className={styles.Link} key={index}>
+          <UnorderedList.Item
+            className={styles.Link}
+            key={String(astElement.attrs?.href || '#')}
+          >
             <Icon svg={ChevronRightIcon} size="level-5" />
             <div>{children}</div>
           </UnorderedList.Item>
@@ -108,7 +108,7 @@ function getEl(astElement: AstNode | AstNode[], i: number = 0) {
       case 'strong':
         return (
           <>
-            <strong>{children}</strong>&nbsp;
+            <strong>{children}</strong>{' '}
           </>
         );
       default:
