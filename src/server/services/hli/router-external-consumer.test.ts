@@ -118,12 +118,6 @@ describe('hli/router-external-consumer', async () => {
       };
     });
 
-    const RESPONSES = {
-      PASHOUDER: require('../../../../mocks/fixtures/gpass-pashouders.json'),
-      STADSPAS: require('../../../../mocks/fixtures/gpass-stadspas.json'),
-      TRANSACTIES: require('../../../../mocks/fixtures/gpass-transacties.json'),
-    };
-
     const reqMock = {
       params: { [STADSPASSEN_ENDPOINT_PARAMETER]: 'ADMINISTRATIENUMMER' },
     } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
