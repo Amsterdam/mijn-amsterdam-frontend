@@ -397,11 +397,19 @@ export async function isAuthenticated(
   return sendUnauthorized(res);
 }
 
+/** Helper for prepending a route with a pathPrefix and optionally interpolating route parameters.
+ *
+ * # Params
+ * | path: Path you want to prepend or interpolate the params into.
+ * | params: Optional value to interpolate into the url parameters.
+ * | pathPrefix: Value that will prefix the route (default value: `BFF_API_BASE_URL`)
+ */
 export function generateFullApiUrlBFF(
   path: string,
-  params?: Record<string, string>
+  params?: Record<string, string>,
+  pathPrefix: string = BFF_API_BASE_URL
 ) {
-  return `${BFF_API_BASE_URL}${generatePath(path, params)}`;
+  return `${pathPrefix}${generatePath(path, params)}`;
 }
 
 export function sendResponseContent(res: Response, apiResponse: ApiResponse) {
