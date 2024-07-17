@@ -1,16 +1,18 @@
 const axios = require('axios').default;
-const settings = require('./mocks/settings');
+const settings = require('./settings');
 
 sendRequestToAllEndpoints();
 
 async function sendRequestToAllEndpoints() {
-  const response = await axios.get('http://localhost:3110/api/mock/routes');
-  console.dir(response.data);
+  const routeResponse = await axios.get(
+    'http://localhost:3110/api/mock/routes'
+  );
 
-  for (let i = 0; i < response.data.length - 1; i++) {
-    const entry = response.data[i];
+  for (let i = 0; i < routeResponse.data.length - 1; i++) {
+    const entry = routeResponse.data[i];
 
     const requestUrl = `${settings.MOCK_ORIGIN}${replaceParametersWithConcreteData(entry.url)}`;
+    console.log(requestUrl);
 
     if (entry.method === 'get') {
       axios.get(requestUrl);
@@ -20,8 +22,10 @@ async function sendRequestToAllEndpoints() {
   }
 }
 
+// Ignore or it will remove all escape sequences in the regular expression.
 // prettier-ignore
 function replaceParametersWithConcreteData(url) {
-  url.replace(new RegExp(':.*/'), '1');
+  // Regex to replace all url parameters, like for example '/:something/' becomes '/1/'.
+  url = url.replaceAll(new RegExp('(?<=\/):.+?(?=\/|$)', 'g'), '1');
   return url.replace('*', 'wildcard');
 }

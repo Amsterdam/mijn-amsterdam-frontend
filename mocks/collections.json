@@ -38,7 +38,6 @@
       "post-loodmetingen-auth:standard",
       "post-loodmetingen-details:standard",
       "post-loodmetingen-rapport:standard",
-      "get-powerbrowser-bb-vergunning-attachments:standard",
       "get-subsidie:standard",
       "get-svwi-tegel:standard",
       "get-patroon-c:standard",
