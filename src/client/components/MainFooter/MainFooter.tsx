@@ -15,7 +15,7 @@ import { LinkProps } from '../../../universal/types';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MainFooter.module.scss';
 import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
-import { ReactNode } from 'react';
+import { Fragment, ReactNode, useId } from 'react';
 
 interface FooterBlockProps {
   id: string;
@@ -45,24 +45,24 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
 }
 
 function getEl(astElement: AstNode | AstNode[]): ReactNode {
+  const ui = useId();
   if (Array.isArray(astElement)) {
     return astElement.map((el) => getEl(el));
   }
 
   if ('type' in astElement && astElement.type === 'text') {
-    return <span>{astElement.content || ''}</span>;
+    return <span key={ui}>{astElement.content || ''}</span>;
   }
 
   if ('type' in astElement && astElement.type === 'tag') {
     const children = astElement.children ? getEl(astElement.children) : null;
-
     switch (astElement.name) {
       case 'a':
         return (
           <Link
+            key={ui}
             onBackground="dark"
             variant="standalone"
-            key={String(astElement.attrs?.href || '#')}
             href={String(astElement.attrs?.href || '#')}
             className="ams-link-list__link ams-link-list__link--on-background-dark"
           >
@@ -72,8 +72,8 @@ function getEl(astElement: AstNode | AstNode[]): ReactNode {
       case 'p':
         return (
           <Paragraph
+            key={ui}
             inverseColor
-            key={String(astElement.attrs?.href || '#')}
             className={classnames('ams-mb--xs', styles.Paragraph)}
           >
             {children}
@@ -81,35 +81,28 @@ function getEl(astElement: AstNode | AstNode[]): ReactNode {
         );
       case 'h3':
         return (
-          <Heading inverseColor level={4} className="ams-mb--xs">
+          <Heading key={ui} inverseColor level={4} className="ams-mb--xs">
             {children}
           </Heading>
         );
       case 'ul':
         return (
-          <UnorderedList
-            inverseColor
-            key={String(astElement.attrs?.href || '#')}
-            markers={false}
-          >
+          <UnorderedList key={ui} inverseColor markers={false}>
             {children}
           </UnorderedList>
         );
       case 'li':
         return (
-          <UnorderedList.Item
-            className={styles.Link}
-            key={String(astElement.attrs?.href || '#')}
-          >
-            <Icon svg={ChevronRightIcon} size="level-5" />
-            <div>{children}</div>
+          <UnorderedList.Item key={ui} className={styles.Link}>
+            <Icon key={ui + '-icon'} svg={ChevronRightIcon} size="level-5" />
+            <div key={ui + '-children'}>{children}</div>
           </UnorderedList.Item>
         );
       case 'strong':
         return (
-          <>
-            <strong>{children}</strong>{' '}
-          </>
+          <Fragment key={ui}>
+            <strong key={ui}>{children}</strong>{' '}
+          </Fragment>
         );
       default:
         return null;
