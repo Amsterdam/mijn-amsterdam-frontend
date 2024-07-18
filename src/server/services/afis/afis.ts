@@ -1,76 +1,33 @@
-import { AxiosError } from 'axios';
 import { DataRequestConfig, getApiConfig } from '../../config';
+import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
-import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
 import {
-  OathResponseData,
-  BusinessPartnerKnownResponse,
-  AFISBusinessPartnerPrivateSourceResponse,
   AFISBusinessPartnerCommercialSourceResponse,
+  AFISBusinessPartnerPrivateSourceResponse,
+  BusinessPartnerKnownResponse,
 } from './afis-types';
-import qs from 'qs';
-
-/** Fetch a bearer token for use in succedent requests */
-export async function fetchAFISBearerToken(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const baseConfig = {
-    data: qs.stringify({
-      client_id: process.env.BFF_AFIS_OAUTH_CLIENT_ID,
-      grant_type: 'client_credentials',
-      client_secret: process.env.BFF_AFIS_OAUTH_CLIENT_SECRET,
-    }),
-    transformResponse: (responseData: OathResponseData) =>
-      `${responseData.token_type} ${responseData.access_token}`,
-  };
-
-  const dataRequestConfig = getApiConfig('AFIS_OAUTH', baseConfig);
-
-  const response = await requestData<string>(
-    dataRequestConfig,
-    requestID,
-    authProfileAndToken
-  );
-
-  return response;
-}
 
 /** Returns if the person logging in is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const bearerTokenResponse = await fetchAFISBearerToken(
-    requestID,
-    authProfileAndToken
-  );
-  if (bearerTokenResponse.status === 'ERROR') {
-    return bearerTokenResponse;
-  }
+  const profileIdentifierType =
+    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
 
-  let profileType: 'BSN' | 'KVK' = 'BSN';
-  if (authProfileAndToken.profile.profileType === 'commercial') {
-    profileType = 'KVK';
-  }
-
-  const baseConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: bearerTokenResponse.content,
-    },
+  const additionalConfig: DataRequestConfig = {
     data: {
-      [profileType]: authProfileAndToken.profile.id,
+      [profileIdentifierType]: authProfileAndToken.profile.id,
     },
     transformResponse: transformBusinessPartnerisKnown,
+    formatUrl(config) {
+      return `${config.url}/${profileIdentifierType}/`;
+    },
   };
 
-  const dataRequestConfig = getApiConfig('AFIS_BUSINESSPARTNER', baseConfig);
-
-  dataRequestConfig.url = appendBusinessPartnerEndpoint(
-    // We know for sure this is defined in an environment variable.
-    dataRequestConfig.url!,
-    authProfileAndToken.profile
+  const dataRequestConfig = getApiConfig(
+    'AFIS_BUSINESSPARTNER',
+    additionalConfig
   );
 
   const response = await requestData<BusinessPartnerKnownResponse | null>(
@@ -80,15 +37,6 @@ export async function fetchIsKnownInAFIS(
   );
 
   return response;
-}
-
-function appendBusinessPartnerEndpoint(url: string, authProfile: AuthProfile) {
-  switch (authProfile.authMethod) {
-    case 'digid':
-      return `${url}/BSN/`;
-    case 'eherkenning':
-      return `${url}/KVK/`;
-  }
 }
 
 function transformBusinessPartnerisKnown(
