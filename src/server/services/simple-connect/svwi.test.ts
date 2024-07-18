@@ -30,7 +30,7 @@ describe('simple-connect/svwi', () => {
 
   test('fetchSvwi should give isknow equals true', async () => {
     remoteApi
-      .get('/mijnamsterdam/v1/autorisatie/tegel')
+      .get('/svwi/mijnamsterdam/v1/autorisatie/tegel')
       .matchHeader('Authorization', `Bearer ${authProfileAndToken.token}`)
       .matchHeader('Ocp-Apim-Subscription-Key', 'xxx')
       .reply(200, SVWI);
@@ -51,7 +51,7 @@ describe('simple-connect/svwi', () => {
     const SVWIWithUnknown = { ...SVWI, gebruikerBekend: false };
 
     remoteApi
-      .get('/mijnamsterdam/v1/autorisatie/tegel')
+      .get('/svwi/mijnamsterdam/v1/autorisatie/tegel')
       .matchHeader('Authorization', `Bearer ${authProfileAndToken.token}`)
       .matchHeader('Ocp-Apim-Subscription-Key', 'xxx')
       .reply(200, SVWIWithUnknown);

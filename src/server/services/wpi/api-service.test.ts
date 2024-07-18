@@ -98,7 +98,7 @@ describe('wpi/app-service', () => {
 
   test('fetchRequestProcess', async () => {
     remoteApi
-      .get('/wpi/uitkering/aanvragen')
+      .get('/wpi-remote-api/wpi/uitkering/aanvragen')
       .reply(200, { status: 'OK', content });
 
     const fetchConfig: FetchConfig = {
@@ -138,7 +138,9 @@ describe('wpi/app-service', () => {
   });
 
   test('fetchRequestProcess-with-error', async () => {
-    remoteApi.get('/wpi/uitkering/aanvragen').reply(500, { content: null });
+    remoteApi
+      .get('/wpi-koppel-api/wpi/uitkering/aanvragen')
+      .reply(500, { content: null });
 
     const fetchConfig: FetchConfig = {
       apiConfigName: 'WPI_AANVRAGEN',
@@ -185,7 +187,7 @@ describe('wpi/app-service', () => {
     contentBijstandsuitkering.steps[2].dateUserFeedbackExpected =
       '2022-04-27T15:05:52+02:00';
 
-    remoteApi.get('/wpi/uitkering/aanvragen').reply(200, {
+    remoteApi.get('/wpi-koppel-api/wpi/uitkering/aanvragen').reply(200, {
       status: 'OK',
       content: [contentBijstandsuitkering, { about: 'Stadspas' }, null],
     });
