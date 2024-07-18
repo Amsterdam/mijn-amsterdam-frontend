@@ -23,10 +23,8 @@ export default function Bff500Error() {
         <p>
           Er is een fout opgetreden in de communicatie met de server.{' '}
           <LinkdInline href="/">Ga verder naar home.</LinkdInline>
-          {!IS_PRODUCTION ? (
+          {!IS_PRODUCTION && (
             <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
-          ) : (
-            ''
           )}
         </p>
       </PageContent>
