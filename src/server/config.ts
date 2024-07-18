@@ -100,8 +100,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'AFIS_OAUTH'
-  | 'AFIS_BUSINESSPARTNER'
+  | 'AFIS'
   | 'AFVAL'
   | 'BAG'
   | 'BELASTINGEN'
@@ -138,18 +137,13 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  AFIS_OAUTH: {
+  AFIS: {
     method: 'post',
-    url: `${process.env.BFF_AFIS_API_BASE_URL}/OAuthServer`,
+    url: `${process.env.BFF_AFIS_API_BASE_URL}`,
+    postponeFetch: !FeatureToggle.afisActive,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      apiKey: process.env.BFF_ENABLEU_AFIS_API_KEY,
     },
-    postponeFetch: !FeatureToggle.afisActive,
-  },
-  AFIS_BUSINESSPARTNER: {
-    method: 'post',
-    url: `${process.env.BFF_AFIS_API_BASE_URL}/businesspartner`,
-    postponeFetch: !FeatureToggle.afisActive,
   },
   ZORGNED_JZD: {
     method: 'post',

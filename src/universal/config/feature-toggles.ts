@@ -1,7 +1,7 @@
 import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
-  afisActive: !IS_AP,
+  afisActive: !IS_PRODUCTION,
   avgActive: true,
   bbDocumentDownloadsActive: IS_OT,
   bekendmakingenDatasetActive: false,
