@@ -1,7 +1,7 @@
 import { Grid } from '@amsterdam/design-system-react';
-import { InfoDetail } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import StatusDetail from '../StatusDetail/StatusDetail';
+import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 
 export default function ZorgDetail() {
   return (
@@ -9,14 +9,31 @@ export default function ZorgDetail() {
       stateKey="WMO"
       thema="ZORG"
       pageContent={(isLoading, statusItem) => {
+        let documents = statusItem?.steps?.flatMap((step) => step.documents);
+
+        const rows = [];
+        if (statusItem?.resultaat) {
+          rows.push({ content: statusItem?.resultaat, label: 'Resultaat' });
+        }
+        if (statusItem?.supplier) {
+          rows.push({ content: statusItem?.supplier, label: 'Aanbieder' });
+        }
+
         return (
-          statusItem?.supplier && (
+          <>
+            {!!rows.length && (
+              <Grid.Cell span="all">
+                <Datalist rows={rows} />
+              </Grid.Cell>
+            )}
+
             <Grid.Cell span="all">
-              <Datalist
-                rows={[{ content: statusItem.supplier, label: 'Aanbieder' }]}
+              <DocumentListV2
+                documents={documents}
+                columns={['Documenten', 'Verzenddatum']}
               />
             </Grid.Cell>
-          )
+          </>
         );
       }}
       documentPathForTracking={(document) =>

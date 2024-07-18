@@ -545,7 +545,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-thema-id="BELASTINGEN"
-            href="http://remote-api-host/sso/portaal/belastingen"
+            href="http://remote-api-host/sso/portaal/belastingen/"
             rel="external"
           >
             <span
@@ -651,6 +651,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-thema-id="PARKEREN"
+            href="http://localhost:3000/sso/portaal/parkeren"
             rel="external"
           >
             <span
