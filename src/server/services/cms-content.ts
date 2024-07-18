@@ -76,10 +76,10 @@ export interface AstNode {
   comment?: string;
 }
 
-interface FooterBlock {
+export interface FooterBlock {
   id: string;
   title: string;
-  description: string | AstNode[] | null;
+  description: AstNode[] | null;
   links: LinkProps[];
 }
 
@@ -124,7 +124,7 @@ function transformFooterResponse(responseData: any) {
         id: hash(item.omschrijving.titel),
         title: item.omschrijving.titel,
         description: item.omschrijving.tekst
-          ? sanitizeCmsContent(item.omschrijving.tekst).trim()
+          ? parse(sanitizeCmsContent(item.omschrijving.tekst).trim())
           : null,
         links: [],
       };
@@ -259,17 +259,6 @@ async function getFooter(requestID: requestID, forceRenew: boolean = false) {
     });
 }
 
-function transformContentToAST(content: CMSFooterContent) {
-  let blocks = content.blocks.map((block) => {
-    return {
-      ...block,
-      description: block.description ? parse(<string>block.description) : null,
-    };
-  });
-
-  return { ...content, blocks };
-}
-
 async function fetchCmsBase(
   requestID: requestID,
   query?: QueryParamsCMSFooter
@@ -290,10 +279,8 @@ async function fetchCmsBase(
 
   const [generalInfo, footer] = await Promise.allSettled(requests);
 
-  let generalInfoContent = getSettledResult(generalInfo).content;
-  let footerContent = getSettledResult(footer).content as CMSFooterContent;
-
-  footerContent = transformContentToAST(footerContent);
+  const generalInfoContent = getSettledResult(generalInfo).content;
+  const footerContent = getSettledResult(footer).content as CMSFooterContent;
 
   return {
     generalInfo: generalInfoContent as CMSPageContent | null,

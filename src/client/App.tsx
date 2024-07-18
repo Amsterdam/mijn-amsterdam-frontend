@@ -162,7 +162,7 @@ function AppAuthenticated() {
 
   return (
     <>
-      <MainHeader isAuthenticated={true} isHeroVisible={isHeroVisible} />
+      <MainHeader isAuthenticated isHeroVisible={isHeroVisible} />
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
@@ -346,7 +346,7 @@ function AppAuthenticated() {
           <Route component={NotFound} />
         </Switch>
       </div>
-      <MainFooter />
+      <MainFooter isAuthenticated />
     </>
   );
 }

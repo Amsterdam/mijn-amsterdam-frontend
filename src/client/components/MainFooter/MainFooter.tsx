@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import {
   Footer,
   Grid,
@@ -10,19 +9,17 @@ import {
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
-import type { AstNode, CMSFooterContent } from '../../../server/services';
-import { LinkProps } from '../../../universal/types';
+import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
+import classnames from 'classnames';
+import { Fragment, ReactNode } from 'react';
+import type {
+  AstNode,
+  CMSFooterContent,
+  FooterBlock as FooterBlockProps,
+} from '../../../server/services';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MainFooter.module.scss';
-import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
-import { Fragment, ReactNode, useId } from 'react';
-
-interface FooterBlockProps {
-  id: string;
-  title: string;
-  links: LinkProps[];
-  description: string | null | AstNode[];
-}
+import { useCMSApi } from '../../hooks/api/useCmsApi';
 
 function FooterBlock({ id, title, links, description }: FooterBlockProps) {
   return (
@@ -30,7 +27,7 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
       <Heading inverseColor level={4} className="ams-mb--xs">
         {title}
       </Heading>
-      {!!description && getEl(description as AstNode)}
+      {!!description && getEl(description)}
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
@@ -45,13 +42,15 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
 }
 
 function getEl(astElement: AstNode | AstNode[]): ReactNode {
-  const ui = useId();
   if (Array.isArray(astElement)) {
-    return astElement.map((el) => getEl(el));
+    return astElement.map((el, index) => {
+      const key = `${el.type}-${el.name ?? el.text}-${index}`;
+      return <Fragment key={key}>{getEl(el)}</Fragment>;
+    });
   }
 
   if ('type' in astElement && astElement.type === 'text') {
-    return <span key={ui}>{astElement.content || ''}</span>;
+    return <span>{astElement.content || ''}</span>;
   }
 
   if ('type' in astElement && astElement.type === 'tag') {
@@ -60,7 +59,6 @@ function getEl(astElement: AstNode | AstNode[]): ReactNode {
       case 'a':
         return (
           <Link
-            key={ui}
             onBackground="dark"
             variant="standalone"
             href={String(astElement.attrs?.href || '#')}
@@ -72,7 +70,6 @@ function getEl(astElement: AstNode | AstNode[]): ReactNode {
       case 'p':
         return (
           <Paragraph
-            key={ui}
             inverseColor
             className={classnames('ams-mb--xs', styles.Paragraph)}
           >
@@ -81,28 +78,28 @@ function getEl(astElement: AstNode | AstNode[]): ReactNode {
         );
       case 'h3':
         return (
-          <Heading key={ui} inverseColor level={4} className="ams-mb--xs">
+          <Heading inverseColor level={4} className="ams-mb--xs">
             {children}
           </Heading>
         );
       case 'ul':
         return (
-          <UnorderedList key={ui} inverseColor markers={false}>
+          <UnorderedList inverseColor markers={false}>
             {children}
           </UnorderedList>
         );
       case 'li':
         return (
-          <UnorderedList.Item key={ui} className={styles.Link}>
-            <Icon key={ui + '-icon'} svg={ChevronRightIcon} size="level-5" />
-            <div key={ui + '-children'}>{children}</div>
+          <UnorderedList.Item className={styles.Link}>
+            <Icon svg={ChevronRightIcon} size="level-5" />
+            <div>{children}</div>
           </UnorderedList.Item>
         );
       case 'strong':
         return (
-          <Fragment key={ui}>
-            <strong key={ui}>{children}</strong>{' '}
-          </Fragment>
+          <>
+            <strong>{children}</strong>{' '}
+          </>
         );
       default:
         return null;
@@ -110,10 +107,18 @@ function getEl(astElement: AstNode | AstNode[]): ReactNode {
   }
 }
 
-export default function MainFooter() {
-  const atom = useAppStateGetter();
-  const { CMS_CONTENT } = atom;
+export default function MainFooter({
+  isAuthenticated = false,
+}: {
+  isAuthenticated?: boolean;
+}) {
+  const appState = useAppStateGetter();
+  const { CMS_CONTENT } = appState;
   const footer: CMSFooterContent | null = CMS_CONTENT.content?.footer || null;
+
+  // Calls CMS service for non-authenticated users, doesn't call the service for authenticated users, footer data will come from the services/stream endpoint in this case.
+  useCMSApi(isAuthenticated);
+
   return (
     <Footer>
       <Footer.Top className={classnames('page-footer-top', styles.FooterTop)}>
