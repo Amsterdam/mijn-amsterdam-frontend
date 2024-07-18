@@ -181,7 +181,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.PARKEREN:
       return (
         (isAmsterdam && FeatureToggle.parkerenActive) ||
-        (isAmsterdam && FeatureToggle.parkerenPatroonC)
+        FeatureToggle.parkerenPatroonC
       );
 
     case Themas.KLACHTEN:
