@@ -21,7 +21,7 @@ export async function fetchIsKnownInAFIS(
     },
     transformResponse: transformBusinessPartnerisKnown,
     formatUrl(config) {
-      return `${config.url}/${profileIdentifierType}/`;
+      return `${config.url}/businesspartner/${profileIdentifierType}/`;
     },
   };
 

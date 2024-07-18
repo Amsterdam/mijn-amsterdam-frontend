@@ -139,7 +139,7 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
     method: 'post',
-    url: `${process.env.BFF_AFIS_API_BASE_URL}/businesspartner`,
+    url: `${process.env.BFF_AFIS_API_BASE_URL}`,
     postponeFetch: !FeatureToggle.afisActive,
     headers: {
       apiKey: process.env.BFF_ENABLEU_AFIS_API_KEY,
