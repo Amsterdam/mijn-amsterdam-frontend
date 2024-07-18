@@ -142,10 +142,10 @@ async function sendAdministratienummerResponse(
 }
 
 router.get(
-  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
-  apiKeyVerificationHandler,
-  sendStadspassenResponse
+  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
+  sendAdministratienummerResponse
 );
+
 async function sendStadspassenResponse(
   req: Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>,
   res: Response
@@ -171,6 +171,12 @@ async function sendStadspassenResponse(
 
   return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
 }
+
+router.get(
+  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
+  apiKeyVerificationHandler,
+  sendStadspassenResponse
+);
 
 export const stadspasExternalConsumerRouter = router;
 

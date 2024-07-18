@@ -406,8 +406,8 @@ export const STADSPASSEN_ENDPOINT_PARAMETER = 'administratienummerEncrypted';
 export const ExternalConsumerEndpoints = {
   // Publicly accessible
   public: {
-    STADSPAS_AMSAPP_LOGIN: `${BFF_BASE_PATH}/services/amsapp/stadspas/login`,
-    STADSPAS_ADMINISTRATIENUMMER: `${BFF_BASE_PATH}/services/amsapp/stadspas/administratienummer`,
+    STADSPAS_AMSAPP_LOGIN: `${BFF_BASE_PATH}/services/amsapp/stadspas/login/:token`,
+    STADSPAS_ADMINISTRATIENUMMER: `${BFF_BASE_PATH}/services/amsapp/stadspas/administratienummer/:token`,
   },
   // Privately accessible
   private: {
