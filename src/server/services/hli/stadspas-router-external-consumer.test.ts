@@ -82,18 +82,22 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: {
-            code: '004',
-            message:
-              'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
-          },
-          appHref:
-            'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004',
-        }
+      expect(redirectMock).toHaveBeenCalledWith(
+        'amsterdam://stadspas?errorCode=004&errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt'
       );
+
+      // expect(renderMock).toHaveBeenCalledWith(
+      //   'amsapp-stadspas-administratienummer',
+      //   {
+      //     error: {
+      //       code: '004',
+      //       message:
+      //         'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
+      //     },
+      //     appHref:
+      //       'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004',
+      //   }
+      // );
     });
 
     test('NO Digid login', async () => {
@@ -117,17 +121,21 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: {
-            code: '003',
-            message: 'Geen administratienummer gevonden',
-          },
-          appHref:
-            'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003',
-        }
+      expect(redirectMock).toHaveBeenCalledWith(
+        'amsterdam://stadspas?errorCode=003&errorMessage=Geen administratienummer gevonden'
       );
+
+      // expect(renderMock).toHaveBeenCalledWith(
+      //   'amsapp-stadspas-administratienummer',
+      //   {
+      //     error: {
+      //       code: '003',
+      //       message: 'Geen administratienummer gevonden',
+      //     },
+      //     appHref:
+      //       'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003',
+      //   }
+      // );
     });
 
     test('ERROR', async () => {
@@ -138,17 +146,21 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: {
-            message: 'Kon het administratienummer niet ophalen',
-            code: '002',
-          },
-          appHref:
-            'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002',
-        }
+      expect(redirectMock).toHaveBeenCalledWith(
+        'amsterdam://stadspas?errorCode=002&errorMessage=Kon het administratienummer niet ophalen'
       );
+
+      // expect(renderMock).toHaveBeenCalledWith(
+      //   'amsapp-stadspas-administratienummer',
+      //   {
+      //     error: {
+      //       message: 'Kon het administratienummer niet ophalen',
+      //       code: '002',
+      //     },
+      //     appHref:
+      //       'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002',
+      //   }
+      // );
     });
 
     test('Unauthorized', async () => {

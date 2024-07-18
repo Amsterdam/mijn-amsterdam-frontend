@@ -120,10 +120,14 @@ async function sendAdministratienummerResponse(
     }
 
     if (error) {
-      return res.render('amsapp-stadspas-administratienummer', {
-        error: error,
-        appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`,
-      });
+      return res.redirect(
+        `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`
+      );
+      // TODO: Check if the header option works like we want to, if not render the html, if works: remove pug
+      // return res.render('amsapp-stadspas-administratienummer', {
+      //   error: error,
+      //   appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`,
+      // });
     }
   }
 
