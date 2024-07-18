@@ -651,7 +651,8 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           <a
             class="_MainNavSubmenuLink_c3c96e"
             data-thema-id="PARKEREN"
-            href="/parkeren"
+            href="http://localhost:3000/sso/portaal/parkeren"
+            rel="external"
           >
             <span
               class="_SubmenuItemIcon_c3c96e"
