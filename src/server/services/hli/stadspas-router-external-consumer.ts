@@ -82,7 +82,7 @@ async function sendAdministratienummerResponse(
       authProfileAndToken
     );
 
-    // Administratienummer found, encrypt and sent
+    // Administratienummer found, encrypt and send
     if (
       administratienummerResponse.status === 'OK' &&
       administratienummerResponse.content
