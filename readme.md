@@ -111,3 +111,16 @@ creates a [semver](https://semver.org/) version of the release tag and pushes it
 `export DEBUG_RESPONSE_DATA=term1,term2` Logs response data from incoming responses before any transformation.
 A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
 
+## Guides
+
+### Making use of an ENV variable in frontend
+
+- Add variable to `env.local.template`, prefix variable with `REACT_APP_` (don't forget to add to `env.local` as well)
+- Add variable as `build ARG` in Docker file 
+```
+ARG REACT_APP_VARIABLE_NAME=
+ENV REACT_APP_VARIABLE_NAME=$REACT_APP_VARIABLE_NAME
+```
+- Add variable to infra repo for frontend ci/cd
+
+You should now be able to access `import.meta.env.REACT_APP_VARIABLE_NAME`
