@@ -5,33 +5,15 @@ import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
-    leveringsVorm: '',
-    productsoortCodes: ['AV-ALG'],
     productIdentificatie: ['AV-UPCC', 'AV-UPCZIL', 'AV-PCVC', 'AV-PCVZIL'],
     lineItemTransformers: PCVERGOEDING,
   },
   {
-    leveringsVorm: '',
-    productsoortCodes: ['AV-ALG', 'AV-ALG_E', 'AV-D-OVM'],
     productIdentificatie: ['AV-GOV', 'AV-OVM'],
     lineItemTransformers: REGELING,
   },
   {
-    leveringsVorm: 'ZIN',
-    productsoortCodes: ['AV-ALG_E'],
-    productIdentificatie: ['AV-GOV'],
-    lineItemTransformers: REGELING,
-  },
-  {
-    leveringsVorm: '',
-    productsoortCodes: ['AV-ALG'],
     productIdentificatie: ['AV-CZM', 'AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV'],
-    lineItemTransformers: REGELING_PERIODIEK,
-  },
-  {
-    leveringsVorm: 'ZIN',
-    productsoortCodes: ['AV-ALG'],
-    productIdentificatie: ['AV-TAOV', 'AV-IIT', 'AV-SPM'],
     lineItemTransformers: REGELING_PERIODIEK,
   },
 ];

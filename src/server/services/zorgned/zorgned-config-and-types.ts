@@ -34,9 +34,9 @@ export type ZorgnedStatusLineItemTransformerConfig = {
 };
 
 export interface ZorgnedStatusLineItemsConfig {
-  leveringsVorm: LeveringsVorm;
+  leveringsVorm?: LeveringsVorm;
   lineItemTransformers: ZorgnedStatusLineItemTransformerConfig[];
-  productsoortCodes: ProductSoortCode[];
+  productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
 }
 
