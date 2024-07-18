@@ -54,10 +54,11 @@ function formatBudget(
   budget: StadspasDetailBudgetSource,
   administratienummer: string,
   pasnummer: number,
-  sessionID?: AuthProfileAndToken['profile']['sid'],
+  sessionID?: AuthProfileAndToken['profile']['sid']
 ) {
+  const sessionIDSegment = sessionID ? `${sessionID}:` : '';
   const [transactionsKey] = encrypt(
-    `${sessionID}:${budget.code}:${administratienummer}:${pasnummer}`
+    `${sessionIDSegment}${budget.code}:${administratienummer}:${pasnummer}`
   );
 
   const urlTransactions = generateFullApiUrlBFF(
@@ -88,14 +89,14 @@ function transformStadspasResponse(
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource,
   administratienummer: string,
-  sessionID: AuthProfileAndToken['profile']['sid']
+  sessionID?: AuthProfileAndToken['profile']['sid']
 ) {
   const budgets = gpassStadspasResonseData.budgetten.map((budget) =>
     formatBudget(
       budget,
       administratienummer,
-      gpassStadspasResonseData.pasnummer
-      sessionID,
+      gpassStadspasResonseData.pasnummer,
+      sessionID
     )
   );
 
@@ -205,7 +206,7 @@ export async function fetchStadspassen_(
     administratienummerResponse.status === 'OK' &&
     !administratienummerResponse.content
   ) {
-    return noC;
+    return NO_PASHOUDER_CONTENT_RESPONSE;
   }
 
   if (
