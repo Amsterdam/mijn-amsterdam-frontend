@@ -1,11 +1,11 @@
 import { ParsedQs } from 'qs';
 import {
+  BFF_API_BASE_URL,
   BFF_BASE_PATH,
   BffEndpoints,
   ExternalConsumerEndpoints,
 } from '../config';
 import { generateFullApiUrlBFF } from './app';
-import { BFF_API_BASE_URL } from '../../client/config/api';
 
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
   'amsapp-stadspas-administratienummer';
