@@ -8,7 +8,7 @@ import {
   listPageTitle,
   routes,
   tableConfig,
-} from './hli-thema-config';
+} from './HLI-thema-config';
 
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();

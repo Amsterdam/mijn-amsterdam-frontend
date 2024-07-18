@@ -7,7 +7,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeRegelingen = {
-  detailLinkComponent: 'Naam regeling',
+  detailLinkComponent: 'Regeling',
   receiver: 'Naam ontvanger',
 };
 
