@@ -4,7 +4,7 @@ exports[`Transform api items > fetchWmo 1`] = `
 {
   "content": [
     {
-      "dateDescision": "2023-03-16",
+      "dateDecision": "2023-03-16",
       "dateEnd": "2024-03-11",
       "dateStart": "2023-03-12",
       "id": "1986585525",
@@ -83,7 +83,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2023-03-01",
+      "dateDecision": "2023-03-01",
       "dateEnd": null,
       "dateStart": "2022-12-21",
       "id": "890306301",
@@ -160,7 +160,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Elektrische rolstoel voor binnen en buiten",
     },
     {
-      "dateDescision": "2022-10-20",
+      "dateDecision": "2022-10-20",
       "dateEnd": null,
       "dateStart": "2022-10-19",
       "id": "2941866748",
@@ -213,7 +213,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Kamer tot kamer vervoer",
     },
     {
-      "dateDescision": "2022-04-15",
+      "dateDecision": "2022-04-15",
       "dateEnd": null,
       "dateStart": "2022-03-24",
       "id": "3476086687",
@@ -292,7 +292,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Niet standaard opdracht natte cel en toilet",
     },
     {
-      "dateDescision": "2022-03-14",
+      "dateDecision": "2022-03-14",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
       "id": "955409908",
@@ -370,7 +370,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2022-03-14",
+      "dateDecision": "2022-03-14",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
       "id": "1811284656",
@@ -448,7 +448,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2021-12-08",
+      "dateDecision": "2021-12-08",
       "dateEnd": null,
       "dateStart": "2021-12-20",
       "id": "1035945789",
@@ -525,7 +525,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Handzender(s) voor deurautomaat",
     },
     {
-      "dateDescision": "2021-12-08",
+      "dateDecision": "2021-12-08",
       "dateEnd": null,
       "dateStart": "2021-12-08",
       "id": "1035945788",
@@ -602,7 +602,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht toegang",
     },
     {
-      "dateDescision": "2021-12-06",
+      "dateDecision": "2021-12-06",
       "dateEnd": "2022-02-06",
       "dateStart": "2021-12-06",
       "id": "2248022546",
@@ -679,7 +679,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht toegang",
     },
     {
-      "dateDescision": "2021-10-22",
+      "dateDecision": "2021-10-22",
       "dateEnd": null,
       "dateStart": "2021-10-13",
       "id": "3645917971",
@@ -756,7 +756,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Niet standaard opdracht natte cel en toilet",
     },
     {
-      "dateDescision": "2021-03-11",
+      "dateDecision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
       "id": "3608314454",
@@ -832,7 +832,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2021-03-11",
+      "dateDecision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
       "id": "2624361688",
@@ -908,7 +908,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDescision": "2021-03-11",
+      "dateDecision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
       "id": "2758572638",
@@ -984,7 +984,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2021-01-09",
+      "dateDecision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
       "id": "226616664",
@@ -1060,7 +1060,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDescision": "2021-01-09",
+      "dateDecision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
       "id": "1855927508",
@@ -1136,7 +1136,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2021-01-09",
+      "dateDecision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
       "id": "1499176916",
@@ -1212,7 +1212,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2020-12-04",
+      "dateDecision": "2020-12-04",
       "dateEnd": null,
       "dateStart": "2020-11-13",
       "id": "4005950334",
@@ -1289,7 +1289,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Antislipvloer/behandeling badkamer",
     },
     {
-      "dateDescision": "2020-06-16",
+      "dateDecision": "2020-06-16",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-06-15",
       "id": "3303327448",
@@ -1365,7 +1365,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2020-06-18",
+      "dateDecision": "2020-06-18",
       "dateEnd": null,
       "dateStart": "2020-06-10",
       "id": "134062321",
@@ -1440,7 +1440,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Douche-/toiletstoel zelfrijder",
     },
     {
-      "dateDescision": "2020-06-05",
+      "dateDecision": "2020-06-05",
       "dateEnd": "2020-08-05",
       "dateStart": "2020-06-05",
       "id": "1809360062",
@@ -1504,7 +1504,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht natte cel en toilet",
     },
     {
-      "dateDescision": "2020-03-12",
+      "dateDecision": "2020-03-12",
       "dateEnd": "2020-06-14",
       "dateStart": "2020-03-09",
       "id": "3441632088",
@@ -1580,7 +1580,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2020-03-12",
+      "dateDecision": "2020-03-12",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
       "id": "636127578",
@@ -1656,7 +1656,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDescision": "2020-03-12",
+      "dateDecision": "2020-03-12",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
       "id": "1926069212",
@@ -1732,7 +1732,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2019-10-09",
+      "dateDecision": "2019-10-09",
       "dateEnd": "2019-12-09",
       "dateStart": "2019-10-09",
       "id": "954761814",
@@ -1809,7 +1809,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht natte cel en toilet",
     },
     {
-      "dateDescision": "2019-04-15",
+      "dateDecision": "2019-04-15",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-04-14",
       "id": "446200219",
@@ -1885,7 +1885,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2019-03-11",
+      "dateDecision": "2019-03-11",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
       "id": "938485502",
@@ -1961,7 +1961,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2019-03-11",
+      "dateDecision": "2019-03-11",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
       "id": "1175100182",
@@ -2037,7 +2037,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDescision": "2018-11-29",
+      "dateDecision": "2018-11-29",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-11-28",
       "id": "300203506",
@@ -2113,7 +2113,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDescision": "2018-12-27",
+      "dateDecision": "2018-12-27",
       "dateEnd": null,
       "dateStart": "2018-10-24",
       "id": "2889701237",
@@ -2190,7 +2190,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing met doc 4",
     },
     {
-      "dateDescision": "2018-04-25",
+      "dateDecision": "2018-04-25",
       "dateEnd": "2019-04-13",
       "dateStart": "2018-04-14",
       "id": "4058168346",
@@ -2266,7 +2266,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2018-04-19",
+      "dateDecision": "2018-04-19",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-03-09",
       "id": "2707273693",
@@ -2342,7 +2342,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2017-11-24",
+      "dateDecision": "2017-11-24",
       "dateEnd": "2018-11-23",
       "dateStart": "2017-11-24",
       "id": "3209335922",
@@ -2418,7 +2418,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDescision": "2017-06-01",
+      "dateDecision": "2017-06-01",
       "dateEnd": "2018-04-13",
       "dateStart": "2017-06-01",
       "id": "3783046999",
@@ -2494,7 +2494,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDescision": "2017-06-01",
+      "dateDecision": "2017-06-01",
       "dateEnd": "2018-03-08",
       "dateStart": "2017-06-01",
       "id": "477515900",
@@ -2570,7 +2570,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDescision": "2014-09-09",
+      "dateDecision": "2014-09-09",
       "dateEnd": "2022-12-20",
       "dateStart": "2014-09-08",
       "id": "2067143485",
@@ -2645,7 +2645,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Elektrische hulpaandrijving voor rolstoel",
     },
     {
-      "dateDescision": "2014-09-11",
+      "dateDecision": "2014-09-11",
       "dateEnd": null,
       "dateStart": "2014-09-08",
       "id": "4216491004",
@@ -2722,7 +2722,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing 3",
     },
     {
-      "dateDescision": "2013-12-09",
+      "dateDecision": "2013-12-09",
       "dateEnd": null,
       "dateStart": "2013-12-05",
       "id": "2730893522",
@@ -2799,7 +2799,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing met doc 2",
     },
     {
-      "dateDescision": "2013-05-17",
+      "dateDecision": "2013-05-17",
       "dateEnd": null,
       "dateStart": "2013-05-06",
       "id": "1672363416",
@@ -2876,7 +2876,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing met doc 1",
     },
     {
-      "dateDescision": "2012-10-05",
+      "dateDecision": "2012-10-05",
       "dateEnd": "2020-06-09",
       "dateStart": "2012-10-05",
       "id": "1703298224",
@@ -2951,7 +2951,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Douche-/toiletstoel (verrijdb/kantelb/ind aangep.)",
     },
     {
-      "dateDescision": "2012-08-07",
+      "dateDecision": "2012-08-07",
       "dateEnd": "2022-07-31",
       "dateStart": "2012-08-07",
       "id": "4046397887",
