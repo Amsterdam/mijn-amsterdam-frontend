@@ -100,7 +100,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'AFIS_BUSINESSPARTNER'
+  | 'AFIS'
   | 'AFVAL'
   | 'BAG'
   | 'BELASTINGEN'
@@ -137,7 +137,7 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  AFIS_BUSINESSPARTNER: {
+  AFIS: {
     method: 'post',
     url: `${process.env.BFF_AFIS_API_BASE_URL}/businesspartner`,
     postponeFetch: !FeatureToggle.afisActive,
