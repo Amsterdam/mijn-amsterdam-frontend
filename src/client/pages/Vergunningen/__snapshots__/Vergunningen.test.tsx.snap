@@ -131,6 +131,27 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _Table_d146a0"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Kenmerk
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Aangevraagd
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -2336,6 +2357,27 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _Table_d146a0"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Kenmerk
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Resultaat
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

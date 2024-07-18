@@ -56,15 +56,12 @@ router.use(
 );
 
 router.get(BffEndpoints.AUTH_LOGIN_DIGID, async (req, res) => {
-  if (!(await isRequestAuthenticated(req, 'digid'))) {
-    return res.oidc.login({
-      returnTo: getReturnToUrl(req.query),
-      authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
-      },
-    });
-  }
-  return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
+  return res.oidc.login({
+    returnTo: getReturnToUrl(req.query),
+    authorizationParams: {
+      redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
+    },
+  });
 });
 
 router.get(
@@ -118,17 +115,12 @@ if (FeatureToggle.eherkenningActive) {
   );
 
   router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, async (req, res) => {
-    if (!(await isRequestAuthenticated(req, 'eherkenning'))) {
-      return res.oidc.login({
-        returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
-        authorizationParams: {
-          redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
-        },
-      });
-    }
-    return res.redirect(
-      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
-    );
+    return res.oidc.login({
+      returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
+      authorizationParams: {
+        redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+      },
+    });
   });
 
   router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {

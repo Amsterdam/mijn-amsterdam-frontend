@@ -204,6 +204,32 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _TableVergunningen_702859"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Vanaf
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Tot
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -525,6 +551,32 @@ exports[`<ToeristischeVerhuur /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _TableVergunningen_702859"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Vanaf
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Tot
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

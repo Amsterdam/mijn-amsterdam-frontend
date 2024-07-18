@@ -139,7 +139,9 @@ function CStadspasBudget({
 
   const [api] = useDataApi<ApiResponse<StadspasTransaction[]>>(
     {
+      method: 'POST',
       url: urlTransactions,
+      data: [budget.transactionsKey],
     },
     apiPristineResult([])
   );
@@ -167,7 +169,7 @@ function CStadspasBudget({
           level={3}
           size="level-3"
         >
-          {budget.description}
+          {budget.title}
         </Heading>
         <BudgetBalance budget={budget} />
       </PageContent>
@@ -272,7 +274,7 @@ export default function StadspasDetail() {
       {!!stadspasItem && (
         <PageContent className={styles.PageContentStadspasInfo}>
           <Heading size="level-2" level={3}>
-            {stadspasItem?.owner}
+            {stadspasItem?.owner.firstname}
           </Heading>
           <p className={styles.StadspasNummer}>
             Stadspasnummer: {stadspasItem.passNumber}
@@ -281,7 +283,7 @@ export default function StadspasDetail() {
       )}
       {stadspasItem?.budgets.map((budget, index) => (
         <CStadspasBudget
-          urlTransactions={budget.urlTransactions}
+          urlTransactions={stadspasItem.urlTransactions}
           key={budget.code}
           budget={budget}
           isTransactionOverviewActive={openTransactionOverview === index}

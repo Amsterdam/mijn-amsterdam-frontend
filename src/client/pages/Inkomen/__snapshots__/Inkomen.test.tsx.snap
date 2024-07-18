@@ -162,6 +162,25 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
           <table
             class="_Table_a66dcc _Table_93f942"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                />
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum aanvraag
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -306,6 +325,25 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
           <table
             class="_Table_a66dcc _Table_93f942"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                />
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum aanvraag
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum besluit
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -483,6 +521,30 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
           <table
             class="_Table_a66dcc _SpecificationsTable_028dc4"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                />
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Regeling
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Documenten
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -601,6 +663,25 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
           <table
             class="_Table_a66dcc _SpecificationsTable_028dc4 _SpecificationsTable--annualStatements_028dc4"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                />
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Documenten
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -922,6 +1003,30 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
           <table
             class="_Table_a66dcc _SpecificationsTable_028dc4"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                />
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Regeling
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Documenten
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -1040,6 +1145,25 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
           <table
             class="_Table_a66dcc _SpecificationsTable_028dc4 _SpecificationsTable--annualStatements_028dc4"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                />
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Documenten
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

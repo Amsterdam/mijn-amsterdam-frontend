@@ -134,6 +134,17 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
           <table
             class="_Table_a66dcc _DocumentsTable_8de9f6"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Geldig tot
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

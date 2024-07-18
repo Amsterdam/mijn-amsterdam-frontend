@@ -42,7 +42,7 @@ export async function fetchStadspas(
               to: generatePath(AppRoutes['STADSPAS/SALDO'], {
                 id: stadspas.id,
               }),
-              title: `Stadspas van ${stadspas.owner}`,
+              title: `Stadspas van ${stadspas.owner.firstname}`,
             },
           };
         })

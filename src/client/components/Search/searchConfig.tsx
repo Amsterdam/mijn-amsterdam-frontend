@@ -320,7 +320,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         apiContent?.stadspas?.stadspassen?.map((stadspas) => {
           return {
             ...stadspas,
-            title: `Stadspas van ${stadspas.owner}`,
+            title: `Stadspas van ${stadspas.owner.firstname}`,
           };
         }) || [];
       const regelingen = apiContent?.regelingen || [];
@@ -348,7 +348,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         apiContent?.stadspassen?.map((stadspas) => {
           return {
             ...stadspas,
-            title: `Stadspas van ${stadspas.owner}`,
+            title: `Stadspas van ${stadspas.owner.firstname}`,
           };
         }) || [];
       const aanvragen = apiContent?.aanvragen || [];

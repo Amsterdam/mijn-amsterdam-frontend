@@ -8,8 +8,13 @@ import {
 
 export default function Bff500Error() {
   const queryParams = new URL(location.href).searchParams;
-  const stack =
-    !IS_PRODUCTION && JSON.parse(queryParams.get('stack') as string);
+  let stack = '';
+  try {
+    stack = !IS_PRODUCTION && JSON.parse(queryParams.get('stack') as string);
+  } catch (error) {
+    stack = queryParams.get('stack') as string;
+    console.error(error);
+  }
 
   return (
     <TextPage>
@@ -18,7 +23,9 @@ export default function Bff500Error() {
         <p>
           Er is een fout opgetreden in de communicatie met de server.{' '}
           <LinkdInline href="/">Ga verder naar home.</LinkdInline>
-          {!IS_PRODUCTION ? <pre>{stack}</pre> : ''}
+          {!IS_PRODUCTION && (
+            <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
+          )}
         </p>
       </PageContent>
     </TextPage>

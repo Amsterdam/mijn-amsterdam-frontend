@@ -29,6 +29,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import styles from './HLIStadspas.module.scss';
 import { getThemaTitleWithAppState } from './helpers';
+import { usePhoneScreen } from '../../hooks/media.hook';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -48,14 +49,22 @@ const displayPropsTransacties = {
   datePublishedFormatted: 'Datum',
   amountFormatted: 'Bedrag',
 };
+
+const displayPropsTransactiesWithBudget = {
+  title: displayPropsTransacties.title,
+  budget: 'Budget',
+  datePublishedFormatted: displayPropsTransacties.datePublishedFormatted,
+  amountFormatted: displayPropsTransacties.amountFormatted,
+};
+
 const displayPropsBudgets = {
   title: 'Omschrijving',
   dateEndFormatted: 'Tegoed geldig t/m',
-  amountFormatted: 'Bedrag',
-  // balanceFormatted: 'Saldo',
+  budgetAssignedFormatted: 'Bedrag',
 };
 
 export default function HLIStadspas() {
+  const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
   const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
@@ -70,7 +79,7 @@ export default function HLIStadspas() {
     ? [
         {
           label: 'Naam',
-          content: stadspas.owner,
+          content: stadspas.owner.firstname,
         },
       ]
     : [];
@@ -103,24 +112,18 @@ export default function HLIStadspas() {
   const isLoadingTransacties = transactionsApi.isLoading;
 
   useEffect(() => {
-    if (stadspas?.urlTransactions) {
+    if (!!transactionKeys?.length && stadspas?.urlTransactions) {
       fetchTransactions({ ...requestOptions, postpone: false });
     }
   }, [fetchTransactions, stadspas?.urlTransactions]);
-
-  const budgetsFormatted =
-    stadspas?.budgets.map((budget) => {
-      return {
-        title: budget.description,
-        amountFormatted: budget.budgetAssignedFormatted,
-        dateEndFormatted: budget.dateEndFormatted,
-      };
-    }) ?? [];
 
   const transactions =
     stadspas?.budgets && transactionsApi.data.content
       ? transactionsApi.data.content
       : [];
+
+  const showMultiBudgetTransactions =
+    !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
   return (
     <DetailPage>
@@ -131,7 +134,8 @@ export default function HLIStadspas() {
         }}
         icon={<ThemaIcon />}
       >
-        Overzicht stadspas {stadspas?.owner && ` van ${stadspas?.owner}`}
+        Overzicht stadspas{' '}
+        {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
       </PageHeading>
       <Screen>
         <Grid>
@@ -157,7 +161,7 @@ export default function HLIStadspas() {
                 Hieronder staat het Stadspasnummer van uw actieve pas.
                 <br /> Dit pasnummer staat ook op de achterkant van uw pas.
               </Paragraph>
-              <Datalist rows={rowsNummerSaldo} />
+              {!!stadspas.budgets.length && <Datalist rows={rowsNummerSaldo} />}
             </Grid.Cell>
           )}
 
@@ -169,14 +173,14 @@ export default function HLIStadspas() {
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}
-              {!isLoadingStadspas && budgetsFormatted.length && (
+              {!isLoadingStadspas && !!stadspas?.budgets.length && (
                 <TableV2
                   className={styles.Table_budgets}
-                  items={budgetsFormatted}
+                  items={stadspas.budgets}
                   displayProps={displayPropsBudgets}
                 />
               )}
-              {!isLoadingStadspas && !budgetsFormatted.length && (
+              {!isLoadingStadspas && !stadspas?.budgets.length && (
                 <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
               )}
             </Grid.Cell>
@@ -200,9 +204,17 @@ export default function HLIStadspas() {
                 <>
                   <Grid.Cell span="all">
                     <TableV2
-                      className={styles.Table_transactions}
+                      className={
+                        showMultiBudgetTransactions
+                          ? styles.Table_transactions__withBudget
+                          : styles.Table_transactions
+                      }
                       items={transactions}
-                      displayProps={displayPropsTransacties}
+                      displayProps={
+                        showMultiBudgetTransactions
+                          ? displayPropsTransactiesWithBudget
+                          : displayPropsTransacties
+                      }
                     />
                   </Grid.Cell>
                 </>
