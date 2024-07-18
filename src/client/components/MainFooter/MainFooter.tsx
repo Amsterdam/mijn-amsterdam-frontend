@@ -27,7 +27,7 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
       <Heading inverseColor level={4} className="ams-mb--xs">
         {title}
       </Heading>
-      {!!description && getEl(description)}
+      {!!description && getEl(id, description)}
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
@@ -41,11 +41,13 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
   );
 }
 
-function getEl(astElement: AstNode | AstNode[]): ReactNode {
+function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
   if (Array.isArray(astElement)) {
     return astElement.map((el, index) => {
-      const key = `${el.type}-${el.name ?? el.text}-${index}`;
-      return <Fragment key={key}>{getEl(el)}</Fragment>;
+      // Not an ideal key as it uses index, it's hard to find suitable key value in these ast nodes without completely traversing the
+      // tree in search for a unique identifier.
+      const key = `${baseId}-${el.type}-${el.name ?? el.text}-${index}`;
+      return <Fragment key={key}>{getEl(baseId, el)}</Fragment>;
     });
   }
 
@@ -54,7 +56,9 @@ function getEl(astElement: AstNode | AstNode[]): ReactNode {
   }
 
   if ('type' in astElement && astElement.type === 'tag') {
-    const children = astElement.children ? getEl(astElement.children) : null;
+    const children = astElement.children
+      ? getEl(baseId, astElement.children)
+      : null;
     switch (astElement.name) {
       case 'a':
         return (
