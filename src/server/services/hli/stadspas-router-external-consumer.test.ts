@@ -83,7 +83,7 @@ describe('hli/router-external-consumer', async () => {
       );
 
       expect(redirectMock).toHaveBeenCalledWith(
-        'amsterdam://stadspas?errorCode=004&errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt'
+        'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004'
       );
 
       // expect(renderMock).toHaveBeenCalledWith(
@@ -122,7 +122,7 @@ describe('hli/router-external-consumer', async () => {
       );
 
       expect(redirectMock).toHaveBeenCalledWith(
-        'amsterdam://stadspas?errorCode=003&errorMessage=Geen administratienummer gevonden'
+        'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003'
       );
 
       // expect(renderMock).toHaveBeenCalledWith(
@@ -147,7 +147,7 @@ describe('hli/router-external-consumer', async () => {
       );
 
       expect(redirectMock).toHaveBeenCalledWith(
-        'amsterdam://stadspas?errorCode=002&errorMessage=Kon het administratienummer niet ophalen'
+        'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002'
       );
 
       // expect(renderMock).toHaveBeenCalledWith(

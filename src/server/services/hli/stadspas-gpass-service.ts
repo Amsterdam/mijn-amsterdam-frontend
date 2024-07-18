@@ -237,6 +237,30 @@ function transformGpassTransactionsResponse(
     }
   );
 }
+async function fetchPasBudgetTransactions(
+  requestID: requestID,
+  administratienummer: string,
+  passNumber: Stadspas['passNumber'],
+  budgetCode: StadspasBudget['code']
+) {
+  const requestParams = {
+    pasnummer: passNumber,
+    budgetcode: budgetCode,
+    sub_transactions: true,
+  };
+
+  const dataRequestConfig = getApiConfig('GPASS');
+  const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
+  const cfg = {
+    ...dataRequestConfig,
+    url: GPASS_ENDPOINT_TRANSACTIONS,
+    transformResponse: transformGpassTransactionsResponse,
+    headers: getHeaders(administratienummer),
+    params: requestParams,
+  };
+
+  return requestData<StadspasTransaction[]>(cfg, requestID);
+}
 
 export async function fetchTransacties(
   requestID: requestID,
@@ -245,12 +269,12 @@ export async function fetchTransacties(
 ) {
   const requests = transactionsKeysEncrypted.map((transactionsKeyEncrypted) => {
     let sessionID: string = '';
-    let budgetcode: string = '';
+    let budgetCode: string = '';
     let administratienummer: string = '';
-    let pasnummer: string = '';
+    let passNumber: string = '';
 
     try {
-      [sessionID, budgetcode, administratienummer, pasnummer] = decrypt(
+      [sessionID, budgetCode, administratienummer, passNumber] = decrypt(
         transactionsKeyEncrypted
       ).split(':');
     } catch (error) {
@@ -259,32 +283,18 @@ export async function fetchTransacties(
 
     if (
       !administratienummer ||
-      !pasnummer ||
+      !budgetCode ||
+      !passNumber ||
       sessionID !== authProfileAndToken.profile.sid
     ) {
       return apiErrorResult('Not authorized', null, 401);
     }
 
-    const requestParams = {
-      pasnummer,
-      budgetcode,
-      sub_transactions: true,
-    };
-
-    const dataRequestConfig = getApiConfig('GPASS');
-    const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
-    const cfg = {
-      ...dataRequestConfig,
-      url: GPASS_ENDPOINT_TRANSACTIONS,
-      transformResponse: transformGpassTransactionsResponse,
-      headers: getHeaders(administratienummer),
-      params: requestParams,
-    };
-
-    return requestData<StadspasTransaction[]>(
-      cfg,
+    return fetchPasBudgetTransactions(
       requestID,
-      authProfileAndToken
+      administratienummer,
+      passNumber,
+      budgetCode
     );
   });
 

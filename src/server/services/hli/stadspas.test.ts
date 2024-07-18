@@ -209,9 +209,9 @@ describe('stadspas services', () => {
               "id": "999999",
               "owner": {
                 "firstname": "Vadertje",
+                "infix": undefined,
                 "initials": "A",
                 "lastname": "Achternaam",
-                "tussenvoegsel": undefined,
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
@@ -284,9 +284,9 @@ describe('stadspas services', () => {
               "id": "999999",
               "owner": {
                 "firstname": "Vadertje",
+                "infix": undefined,
                 "initials": "A",
                 "lastname": "Achternaam",
-                "tussenvoegsel": undefined,
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
@@ -314,9 +314,9 @@ describe('stadspas services', () => {
               "id": "999999",
               "owner": {
                 "firstname": "Moedertje",
+                "infix": undefined,
                 "initials": "B",
                 "lastname": "Achternaam",
-                "tussenvoegsel": undefined,
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
@@ -344,9 +344,9 @@ describe('stadspas services', () => {
               "id": "999999",
               "owner": {
                 "firstname": "Kindje",
+                "infix": undefined,
                 "initials": "C",
                 "lastname": "Achternaam",
-                "tussenvoegsel": undefined,
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
@@ -430,7 +430,7 @@ describe('stadspas services', () => {
 
     remoteApi
       .get(
-        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&budgetcode=yyyy&sub_transactions=true'
+        '/stadspas/rest/transacties/v1/budget?pasnummer=dddd&budgetcode=yyyy&sub_transactions=true'
       )
       .times(1)
       .reply(500);
