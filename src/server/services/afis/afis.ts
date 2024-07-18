@@ -25,10 +25,7 @@ export async function fetchIsKnownInAFIS(
     },
   };
 
-  const dataRequestConfig = getApiConfig(
-    'AFIS_BUSINESSPARTNER',
-    additionalConfig
-  );
+  const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
 
   const response = await requestData<BusinessPartnerKnownResponse | null>(
     dataRequestConfig,
