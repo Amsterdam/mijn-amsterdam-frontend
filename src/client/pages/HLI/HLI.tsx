@@ -143,7 +143,10 @@ export default function ThemaPaginaHLI() {
                 <Grid.Cell span="all">
                   <UnorderedList markers={false}>
                     {stadspassen?.map((stadspas) => (
-                      <StadspasListItem stadspas={stadspas} />
+                      <StadspasListItem
+                        key={stadspas.owner.initials}
+                        stadspas={stadspas}
+                      />
                     ))}
                   </UnorderedList>
                   {!!stadspassen?.length && (
