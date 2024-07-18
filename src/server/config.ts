@@ -50,6 +50,7 @@ export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSI
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
+export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
 export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
@@ -401,6 +402,12 @@ export const BFF_OIDC_BASE_URL = `${
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
 
+export const ExternalConsumerEndpoints = {
+  STADSPAS_AMSAPP_LOGIN: `${BFF_BASE_PATH}/services/amsapp/stadspas/login`,
+  STADSPAS_ADMINISTRATIENUMMER: '/services/amsapp/stadspas/administratienummer',
+  STADSPAS_PASSEN: `/private${BFF_BASE_PATH}/services/amsapp/stadspas/passen/:clientNummerEncrypted`,
+};
+
 export const BffEndpoints = {
   ROOT: '/',
   SERVICES_ALL: '/services/all',
@@ -422,13 +429,6 @@ export const BffEndpoints = {
 
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
-
-  // Stadspas external
-  STADSPAS_AMSAPP_LOGIN: '/services/amsapp/stadspas/login/:token',
-  STADSPAS_ADMINISTRATIENUMMER:
-    '/services/amsapp/stadspas/administratienummer/:token',
-  STADSPAS_PASSEN:
-    '/services/amsapp/stadspas/passen/:administratienummerEncrypted',
 
   // Vergunningen V2
   VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',
