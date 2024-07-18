@@ -18,6 +18,7 @@ import {
 } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
+import { isAfter } from 'date-fns';
 
 function addDocumentLinksToLineItems(
   sessionID: AuthProfileAndToken['profile']['sid'],
@@ -58,6 +59,19 @@ function addDocumentLinksToLineItems(
 
     return lineItem;
   });
+}
+
+function getLatestStatus(steps: StatusLineItem[]) {
+  if (!steps.length) {
+    return 'Onbekend';
+  }
+  const mostRecentStep = steps.reduce((acc, step) =>
+    isAfter(new Date(step.datePublished), new Date(acc.datePublished))
+      ? step
+      : acc
+  );
+
+  return mostRecentStep.status;
 }
 
 function transformVoorzieningenForFrontend(
@@ -102,9 +116,11 @@ function transformVoorzieningenForFrontend(
         steps: statusLineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
+        resultaat: aanvraag.resultaat,
         dateDescision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
+        status: getLatestStatus(statusLineItems),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
