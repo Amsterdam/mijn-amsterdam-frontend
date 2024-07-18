@@ -40,8 +40,9 @@ function transformBusinessPartnerisKnown(
   response:
     | AFISBusinessPartnerPrivateSourceResponse
     | AFISBusinessPartnerCommercialSourceResponse
+    | string
 ): BusinessPartnerKnownResponse | null {
-  if (!response) {
+  if (!response || typeof response === 'string') {
     return null;
   }
 
