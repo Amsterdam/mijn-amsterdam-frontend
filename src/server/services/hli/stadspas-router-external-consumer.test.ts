@@ -21,12 +21,10 @@ describe('hli/router-external-consumer', async () => {
   const renderMock = vi.fn();
   const redirectMock = vi.fn();
 
-  async function getReqMock() {
-    const cookieValue = await generateDevSessionCookieValue(
-      'digid',
-      'digi1',
-      UID.sync(10)
-    );
+  async function getReqMock(useCookie: boolean = true) {
+    const cookieValue = useCookie
+      ? await generateDevSessionCookieValue('digid', 'digi1', UID.sync(10))
+      : undefined;
     const reqMock = {
       cookies: {
         [OIDC_SESSION_COOKIE_NAME]: cookieValue,
@@ -96,6 +94,19 @@ describe('hli/router-external-consumer', async () => {
             'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004',
         }
       );
+    });
+
+    test('NO Digid login', async () => {
+      await forTesting.sendAdministratienummerResponse(
+        await getReqMock(false),
+        resMock
+      );
+
+      expect(sendMock).toHaveBeenCalledWith({
+        status: 'ERROR',
+        message: 'Unauthorized',
+        content: null,
+      });
     });
 
     test('NO Administratienummer', async () => {
