@@ -150,6 +150,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     method: 'post',
     url: `${process.env.BFF_AFIS_API_BASE_URL}/businesspartner`,
     postponeFetch: !FeatureToggle.afisActive,
+    headers: {
+      apiKey: process.env.BFF_ENABLEU_AFIS_API_KEY,
+    },
   },
   ZORGNED_JZD: {
     method: 'post',
