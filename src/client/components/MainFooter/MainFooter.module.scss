@@ -39,22 +39,8 @@
 }
 
 .BottomBar {
-  background-color: $color-white;
-  height: 4.4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  .InnerContainer {
-    display: flex;
-    flex-direction: row;
-
-    @include select(Link) {
-      margin-right: 3rem;
-      font-size: 0.9em;
-      font-weight: bold;
-    }
-  }
+  --ams-page-menu-item-font-size: var(--ams-text-level-5-font-size);
+  --ams-page-menu-item-line-height: var(--ams-text-level-5-line-height);
 }
 
 .FooterLoader {

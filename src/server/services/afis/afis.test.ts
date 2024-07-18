@@ -1,44 +1,16 @@
-import { fetchAFISBearerToken, fetchIsKnownInAFIS } from './afis';
-import { remoteApi, authProfileAndToken } from '../../../test-utils';
 import { AxiosError } from 'axios';
+import { authProfileAndToken, remoteApi } from '../../../test-utils';
+import { fetchIsKnownInAFIS } from './afis';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
 const ROUTES = {
-  OAUTH: `${BASE_ROUTE}/OAuthServer`,
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
 };
 const REQUEST_ID = '456';
 const access_token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
-describe('fetchBearerToken tests', () => {
-  it('Filters out the access token', async () => {
-    remoteApi.post(ROUTES.OAUTH).reply(200, {
-      access_token,
-      token_type: 'bearer',
-      expires_in: 3600,
-    });
-    const bearerToken = await fetchAFISBearerToken(
-      REQUEST_ID,
-      authProfileAndToken('private')
-    );
-
-    expect(bearerToken).toStrictEqual({
-      content: `bearer ${access_token}`,
-      status: 'OK',
-    });
-  });
-});
-
 describe('fetchIsKnownInAFIS ', () => {
-  beforeEach(() => {
-    remoteApi.post(ROUTES.OAUTH).reply(200, {
-      access_token,
-      token_type: 'bearer',
-      expires_in: 3600,
-    });
-  });
-
   const RESPONSE_BODIES = {
     BSNFound: {
       BSN: 111111111,
