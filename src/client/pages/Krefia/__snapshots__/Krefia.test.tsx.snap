@@ -154,6 +154,22 @@ exports[`<Krefia /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _HulpTable_2f2815"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Bekijk op Krefia
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -224,6 +240,22 @@ exports[`<Krefia /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _HulpTable_2f2815"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Bekijk op Krefia
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
@@ -294,6 +326,22 @@ exports[`<Krefia /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc _HulpTable_2f2815"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Bekijk op Krefia
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

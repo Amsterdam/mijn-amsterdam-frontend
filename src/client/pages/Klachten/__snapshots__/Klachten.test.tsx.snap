@@ -320,6 +320,27 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
           <table
             class="_Table_a66dcc"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Nummer van uw klacht
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Onderwerp
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"

@@ -2,6 +2,7 @@
   {
     "id": "base",
     "routes": [
+      "post-amsapp-administratienummer:standard",
       "get-belastingen:standard",
       "get-bezwaren-documenten:standard",
       "get-bezwaren-download-document:standard",

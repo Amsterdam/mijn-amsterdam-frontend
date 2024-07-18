@@ -1,20 +1,14 @@
 doctype html
 html(lang="en")
   head
-    title Stadspas clientnummer
+    title Stadspas administratienummer
   body
-    h1 Stadspas clientnummer
+    h1 Stadspas administratienummer
 
-    if administratienummerEncrypted
-      p
-        a(href=AMSAPP_PROTOCOl + 'stadspas?administratienummerEncrypted='+administratienummerEncrypted id='protocol-link') Klik hier om uw clientnummer met de Amsterdam app te openen.
+    if error
+      p Foutmelding: #{error.code} - #{error.message}
 
-    else
-      if error
-        p Foutmelding: #{error}
-      else
-        p U heeft (nog) geen Stadspas
-          a(href=AMSAPP_PROTOCOl + 'stadspas' id='protocol-link') Klik hier om de Amsterdam app te openen.
+    a(href=appHref id='protocol-link') Klik hier om de Amsterdam app te openen.
 
     script(type='text/javascript').
         document.getElementById('protocol-link').click();

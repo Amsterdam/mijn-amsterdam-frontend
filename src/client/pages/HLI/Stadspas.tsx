@@ -33,7 +33,11 @@ function hasMultipleOwners(stadspassen: Stadspas[] | undefined) {
     return false;
   }
 
-  return stadspassen.some((pas) => pas.owner !== stadspassen[0].owner);
+  return stadspassen.some(
+    (pas) =>
+      pas.owner.initials !== stadspassen[0].owner.initials ||
+      pas.owner.firstname !== stadspassen[0].owner.firstname
+  );
 }
 
 export default function CStadspas() {
@@ -49,6 +53,7 @@ export default function CStadspas() {
       return {
         ...stadspas,
         displayDateEnd: defaultDateFormat(stadspas.dateEnd),
+        owner: stadspas.owner.firstname,
         detailPageUrl: !!stadspas.budgets.length && (
           <LinkdInline
             href={generatePath(AppRoutes['STADSPAS/SALDO'], {
@@ -58,7 +63,6 @@ export default function CStadspas() {
             Bekijk saldo
           </LinkdInline>
         ),
-        owner: stadspas.owner,
       };
     });
   }, [STADSPAS.content]);
