@@ -156,6 +156,18 @@
       );
     }
   }
+  
+  span > svg {
+    height: var(--ams-icon-size-3-font-size);
+    width: var(--ams-icon-size-3-font-size);
+  }
+
+  @media screen and (min-width: $ams-breakpoint-wide) {
+    span > svg {
+      height: var(--ams-icon-size-4-font-size);
+      width: var(--ams-icon-size-4-font-size);
+    }
+  }
 }
 
 .PageMenuLabel {
