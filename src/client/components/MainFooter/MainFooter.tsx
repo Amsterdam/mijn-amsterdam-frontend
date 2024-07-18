@@ -132,7 +132,7 @@ export default function MainFooter({
           ))}
         </Grid>
       </Footer.Top>
-      <Footer.Bottom>
+      <Footer.Bottom className={styles.BottomBar}>
         <Grid paddingVertical="small">
           <Grid.Cell span="all">
             <PageMenu>
