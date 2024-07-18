@@ -123,9 +123,12 @@ export function send404(res: Response) {
   return res.send(apiErrorResult('Not Found', null));
 }
 
-export function sendUnauthorized(res: Response) {
+export function sendUnauthorized(
+  res: Response,
+  message: string = 'Unauthorized'
+) {
   res.status(401);
-  return res.send(apiErrorResult('Unauthorized', null));
+  return res.send(apiErrorResult(message, null));
 }
 
 export function clearRequestCache(req: Request, res: Response) {

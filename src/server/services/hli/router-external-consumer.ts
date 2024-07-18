@@ -10,15 +10,15 @@ import { RETURNTO_AMSAPP_STADSPAS_CLIENTNUMMER } from '../../helpers/auth';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspassenByAdministratienummer } from '../hli/hli-zorgned-service';
 import { apiKeyVerificationHandler } from '../../middleware';
+import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 
-export const router = express.Router();
+const router = express.Router();
 
 router.get(
-  ExternalConsumerEndpoints.STADSPAS_AMSAPP_LOGIN,
+  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
   async (req: Request, res: Response) => {
     return res.redirect(
       BffEndpoints.AUTH_LOGIN_DIGID +
@@ -67,47 +67,44 @@ async function sendAdministratienummerResponse(req: Request, res: Response) {
 }
 
 router.get(
-  ExternalConsumerEndpoints.STADSPAS_ADMINISTRATIENUMMER,
+  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   sendAdministratienummerResponse
 );
 
-function apiKeyHandler(req: Request, res: Response, next: NextFunction) {
-  // TODO: implement api key validation
-  next();
+async function sendStadspassenResponse(
+  req: Request<{ administratienummerEncrypted: string }>,
+  res: Response
+) {
+  let reason = '';
+  try {
+    const amdministratienummerEncrypted =
+      req.params.administratienummerEncrypted;
+
+    if (amdministratienummerEncrypted) {
+      const administratienummer = decrypt(amdministratienummerEncrypted);
+      const stadpassen = await fetchStadspassenByAdministratienummer(
+        res.locals.requestID,
+        administratienummer
+      );
+      return res.send(stadpassen);
+    }
+    reason = 'missing encrypted param';
+  } catch (error) {
+    reason = 'could not decrypt param';
+    captureException(error);
+  }
+  return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
 }
 
 router.get(
-  ExternalConsumerEndpoints.STADSPAS_PASSEN,
+  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
   apiKeyVerificationHandler,
-  async (
-    req: Request<{ administratienummerEncrypted: string }>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    let reason = '';
-    try {
-      const administratienummerEncrypted =
-        req.params.administratienummerEncrypted;
-
-      if (administratienummerEncrypted) {
-        const administratienummer = decrypt(administratienummerEncrypted);
-        const stadpassen = await fetchStadspassenByAdministratienummer(
-          res.locals.requestID,
-          administratienummer
-        );
-        return res.send(stadpassen);
-      }
-      reason = 'missing encrypted param';
-    } catch (error) {
-      reason = 'wrong encryption';
-      captureException(error);
-    }
-    return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
-  }
+  sendStadspassenResponse
 );
 
 export const stadspasExternalConsumerRouter = router;
 
 export const forTesting = {
   sendAdministratienummerResponse,
+  sendStadspassenResponse,
 };

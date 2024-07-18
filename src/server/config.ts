@@ -403,9 +403,15 @@ export const BFF_OIDC_BASE_URL = `${
 export const BFF_OIDC_ISSUER_BASE_URL = `${process.env.BFF_OIDC_ISSUER_BASE_URL}`;
 
 export const ExternalConsumerEndpoints = {
-  STADSPAS_AMSAPP_LOGIN: `${BFF_BASE_PATH}/services/amsapp/stadspas/login`,
-  STADSPAS_ADMINISTRATIENUMMER: '/services/amsapp/stadspas/administratienummer',
-  STADSPAS_PASSEN: `/private${BFF_BASE_PATH}/services/amsapp/stadspas/passen/:clientNummerEncrypted`,
+  // Publicly accessible
+  public: {
+    STADSPAS_AMSAPP_LOGIN: `${BFF_BASE_PATH}/services/amsapp/stadspas/login`,
+    STADSPAS_ADMINISTRATIENUMMER: `${BFF_BASE_PATH}/services/amsapp/stadspas/administratienummer`,
+  },
+  // Privately accessible
+  private: {
+    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:administratienummerEncrypted`,
+  },
 };
 
 export const BffEndpoints = {

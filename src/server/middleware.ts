@@ -17,6 +17,5 @@ export function apiKeyVerificationHandler(
     return next();
   }
 
-  res.send('Api key ongeldig');
-  return sendUnauthorized(res);
+  return sendUnauthorized(res, 'Api key ongeldig');
 }
