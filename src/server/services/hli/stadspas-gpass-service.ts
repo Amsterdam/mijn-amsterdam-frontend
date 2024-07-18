@@ -41,7 +41,7 @@ function getOwner(pashouder: StadspasHouderSource): StadspasOwner {
   return {
     firstname: pashouder.voornaam,
     lastname: pashouder.achternaam,
-    tussenvoegsel: pashouder.tussenvoegsel,
+    infix: pashouder.tussenvoegsel,
     initials: pashouder.initialen,
   };
 }
