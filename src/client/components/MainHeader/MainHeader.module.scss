@@ -2,6 +2,7 @@
 
 .header {
   --ams-page-menu-item-font-size: 1.6rem;
+  --ams-link-standalone-font-size: 1.6rem;
   --mams-font-size-body: 1rem;
 
   &:first-child {
@@ -156,7 +157,7 @@
       );
     }
   }
-  
+
   span > svg {
     height: var(--ams-icon-size-3-font-size);
     width: var(--ams-icon-size-3-font-size);
