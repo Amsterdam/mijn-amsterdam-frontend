@@ -33,14 +33,6 @@ function getUpcPcvDecisionDate(
 ) {
   const regelingProductId = regeling.productIdentificatie;
   if (regelingProductId === AV_PCVZIL || regelingProductId === AV_UPCZIL) {
-    console.log(
-      'íszills',
-      allAanvragen.find((regeling) =>
-        regelingProductId === AV_PCVZIL
-          ? regeling.productIdentificatie === AV_PCVC
-          : regeling.productIdentificatie === AV_UPCC
-      )
-    );
     return (
       allAanvragen.find((regeling) =>
         regelingProductId === AV_PCVZIL
