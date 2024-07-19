@@ -70,7 +70,7 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
       <PageHeading icon={icon} backLink={backLink}>
         {title}
       </PageHeading>
-      <Screen>
+      <Screen className="ams-mb--lg">
         <Grid>
           {pageContentTop}
 
