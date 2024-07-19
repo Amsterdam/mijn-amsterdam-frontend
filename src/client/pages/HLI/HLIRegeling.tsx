@@ -39,7 +39,7 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
 }
 
 export default function HLIRegelingDetailPagina() {
-  const { regelingen, isError, title, routes } = useHliThemaData();
+  const { regelingen, isError, isLoading, title, routes } = useHliThemaData();
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 
@@ -48,7 +48,7 @@ export default function HLIRegelingDetailPagina() {
       title={regelingDetail?.title ?? 'Regeling bij laag inkomen'}
       zaak={regelingDetail}
       isError={isError}
-      isLoading={false}
+      isLoading={isLoading}
       pageContentTop={
         regelingDetail && <DetailPageContent hliRegeling={regelingDetail} />
       }

@@ -23,6 +23,8 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
 ];
 
+const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
+
 interface ThemaDetailPaginaProps<T> {
   zaak?: T | null;
   backLink: LinkProps;
@@ -49,7 +51,7 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   icon = <ThemaIcon />,
   pageContentTop,
   pageContentBottom,
-  errorAlertContent = 'We kunnen op dit moment geen gegevens tonen.',
+  errorAlertContent = ERROR_ALERT_DEFAULT,
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
   isError,
   isLoading,
