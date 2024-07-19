@@ -3,7 +3,6 @@ import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
-import { ExternalUrls } from './external-urls';
 import { TrackingConfig } from './routes';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 

@@ -123,9 +123,12 @@ export function send404(res: Response) {
   return res.send(apiErrorResult('Not Found', null));
 }
 
-export function sendUnauthorized(res: Response) {
+export function sendUnauthorized(
+  res: Response,
+  message: string = 'Unauthorized'
+) {
   res.status(401);
-  return res.send(apiErrorResult('Unauthorized', null));
+  return res.send(apiErrorResult(message, null));
 }
 
 export function clearRequestCache(req: Request, res: Response) {
@@ -394,11 +397,19 @@ export async function isAuthenticated(
   return sendUnauthorized(res);
 }
 
+/** Helper for prepending a route with a baseUrl and optionally interpolating route parameters.
+ *
+ * # Params
+ * | path: Path you want to prepend or interpolate the params into.
+ * | params: Optional value to interpolate into the url parameters.
+ * | baseUrl: Value that will be the base of the route (default value: `BFF_API_BASE_URL`)
+ */
 export function generateFullApiUrlBFF(
   path: string,
-  params?: Record<string, string>
+  params?: Record<string, string>,
+  baseUrl: string = BFF_API_BASE_URL
 ) {
-  return `${BFF_API_BASE_URL}${generatePath(path, params)}`;
+  return `${baseUrl}${generatePath(path, params)}`;
 }
 
 export function sendResponseContent(res: Response, apiResponse: ApiResponse) {
