@@ -6,10 +6,10 @@ import { PCVERGOEDING } from './status-line-items/pcvergoeding';
 import { REGELING } from './status-line-items/regeling';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
 
-const AV_UPCC = 'AV-UPCC';
-const AV_UPCZIL = 'AV-UPCZIL';
-const AV_PCVC = 'AV-PCVC';
-const AV_PCVZIL = 'AV-PCVZIL';
+export const AV_UPCC = 'AV-UPCC';
+export const AV_UPCZIL = 'AV-UPCZIL';
+export const AV_PCVC = 'AV-PCVC';
+export const AV_PCVZIL = 'AV-PCVZIL';
 
 function maybeExcludePcvcUpcc(
   aanvraag: ZorgnedAanvraagTransformed,

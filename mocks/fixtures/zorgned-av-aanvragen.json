@@ -528,17 +528,17 @@
           "omschrijving": "Armoedevoorzieningen"
         },
         "hulpvraag": {
-          "datumRegistratie": "2024-06-17",
+          "datumRegistratie": "2024-01-06",
           "aanmeldwijze": { "omschrijving": "AV-Papier" },
           "verwijzer": {
             "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
           }
         },
-        "datumAanmelding": "2024-06-17",
-        "datumAanvraag": "2024-06-17",
+        "datumAanmelding": "2024-01-06",
+        "datumAanvraag": "2024-01-06",
         "beschikking": {
           "beschikkingNummer": 300985080,
-          "datumAfgifte": "2024-06-17",
+          "datumAfgifte": "2024-01-06",
           "beschikteProducten": [
             {
               "identificatie": "1204597",
@@ -550,7 +550,7 @@
               "productCategorie": {},
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-06-17",
+                "datumIngangGeldigheid": "2024-01-06",
                 "datumEindeGeldigheid": "2028-07-31",
                 "actueel": false,
                 "omvang": {
@@ -570,10 +570,10 @@
                 "toewijzingen": [
                   {
                     "toewijzingNummer": "1970057",
-                    "toewijzingsDatumTijd": "2024-06-17T17:16:00.7133333",
-                    "ingangsdatum": "2024-06-17",
+                    "toewijzingsDatumTijd": "2024-01-06T17:16:00.7133333",
+                    "ingangsdatum": "2024-01-06",
                     "einddatum": "2028-07-31",
-                    "datumOpdracht": "2024-06-17T17:16:00.7133333",
+                    "datumOpdracht": "2024-01-06T17:16:00.7133333",
                     "leverancier": {
                       "identificatie": "AV02",
                       "omschrijving": "AV-Cybersoek Zelfaanmelders"
@@ -590,7 +590,7 @@
           {
             "documentidentificatie": "B2806781",
             "omschrijving": "AV-UPC aanmelden workshop",
-            "datumDefinitief": "2024-06-17T17:15:28.313"
+            "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
       },

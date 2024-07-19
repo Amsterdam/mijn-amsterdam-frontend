@@ -5,7 +5,8 @@ export const ZORGNED_GEMEENTE_CODE = '0363';
 export type TextPartContent = string;
 export type TextPartContentTransformer = (
   data: ZorgnedAanvraagTransformed,
-  today: Date
+  today: Date,
+  allAanvragen: ZorgnedAanvraagTransformed[]
 ) => TextPartContent;
 
 export type TextPartContents = TextPartContent | TextPartContentTransformer;
@@ -18,18 +19,21 @@ export type ZorgnedStatusLineItemTransformerConfig = {
   description: TextPartContents;
   isChecked: (
     stepIndex: number,
-    data: ZorgnedAanvraagTransformed,
-    today: Date
+    aanvraag: ZorgnedAanvraagTransformed,
+    today: Date,
+    allAanvragen: ZorgnedAanvraagTransformed[]
   ) => boolean;
   isActive: (
     stepIndex: number,
-    data: ZorgnedAanvraagTransformed,
-    today: Date
+    aanvraag: ZorgnedAanvraagTransformed,
+    today: Date,
+    allAanvragen: ZorgnedAanvraagTransformed[]
   ) => boolean;
   isVisible?: (
     stepIndex: number,
-    data: ZorgnedAanvraagTransformed,
-    today: Date
+    aanvraag: ZorgnedAanvraagTransformed,
+    today: Date,
+    allAanvragen: ZorgnedAanvraagTransformed[]
   ) => boolean;
 };
 

@@ -75,7 +75,8 @@ export function getStatusLineItems(
       const datePublished = parseLabelContent(
         statusItem.datePublished,
         aanvraagTransformed,
-        today
+        today,
+        allAanvragenTransformed
       ) as string;
 
       const stepData: StatusLineItem = {
@@ -84,13 +85,29 @@ export function getStatusLineItems(
         description: parseLabelContent(
           statusItem.description,
           aanvraagTransformed,
-          today
+          today,
+          allAanvragenTransformed
         ),
         datePublished,
-        isActive: statusItem.isActive(index, aanvraagTransformed, today),
-        isChecked: statusItem.isChecked(index, aanvraagTransformed, today),
+        isActive: statusItem.isActive(
+          index,
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        ),
+        isChecked: statusItem.isChecked(
+          index,
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        ),
         isVisible: statusItem.isVisible
-          ? statusItem.isVisible(index, aanvraagTransformed, today)
+          ? statusItem.isVisible(
+              index,
+              aanvraagTransformed,
+              today,
+              allAanvragenTransformed
+            )
           : true,
         documents: [], // NOTE: Assigned in specific service transformers.
       };
