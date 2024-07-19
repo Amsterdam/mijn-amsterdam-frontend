@@ -61,6 +61,7 @@ export interface WMOVoorzieningFrontend {
   steps: StatusLineItem[];
   itemTypeCode: ProductSoortCode;
   dateDescision: string;
+  resultaat: string;
   dateStart: string | null;
   dateEnd: string | null;
 }
