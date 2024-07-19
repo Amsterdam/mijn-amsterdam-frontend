@@ -5,7 +5,7 @@ import { Stadspas } from '../../../server/services/hli/stadspas-types';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ZakenTable from '../ThemaPagina/ZakenTable';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 
@@ -56,6 +56,7 @@ export default function ThemaPaginaHLI() {
     title,
     routes,
     tableConfig,
+    dependencyError,
   } = useHliThemaData();
 
   const pageContentTop = (
@@ -96,7 +97,7 @@ export default function ThemaPaginaHLI() {
       },
     ]) => {
       return (
-        <ZakenTable<HLIRegeling>
+        <ThemaPaginaTable<HLIRegeling>
           key={kind}
           title={title}
           className={className}
@@ -126,6 +127,8 @@ export default function ThemaPaginaHLI() {
         </>
       }
       isError={isError}
+      errorAlertContent={dependencyError}
+      isPartialError={!!dependencyError}
       isLoading={isLoading}
     />
   );

@@ -1,5 +1,9 @@
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
-import { isError, isLoading } from '../../../universal/helpers/api';
+import {
+  hasFailedDependency,
+  isError,
+  isLoading,
+} from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { getThemaTitle } from './helpers';
@@ -28,13 +32,26 @@ export function useHliThemaData() {
     )
   );
 
+  let dependencyError = '';
+  const isStadspasError = hasFailedDependency(HLI, 'stadspas');
+  const isRegelingenError = hasFailedDependency(HLI, 'regelingen');
+
+  if (isStadspasError && !isRegelingenError) {
+    dependencyError = 'Wij kunnen nu geen informatie tonen over Stadspassen';
+  }
+
+  if (isRegelingenError && !isStadspasError) {
+    dependencyError = 'Wij kunnen nu geen informatie tonen over de regelingen';
+  }
+
   return {
     stadspassen,
     regelingen,
     title,
     hasKindtegoed,
     isLoading: isLoading(HLI),
-    isError: isError(HLI),
+    isError: isError(HLI, false),
+    dependencyError,
     routes,
     tableConfig,
     listPageTitle,

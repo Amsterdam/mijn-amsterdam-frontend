@@ -21,6 +21,8 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['40rem', '2rem', '4rem'],
 ];
 
+const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment niet alle gegevens tonen.';
+
 interface ThemaPaginaProps {
   title: string;
   backLink?: LinkProps;
@@ -32,6 +34,7 @@ interface ThemaPaginaProps {
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
   isError: boolean;
+  isPartialError?: boolean;
   isLoading: boolean;
 }
 
@@ -46,11 +49,13 @@ export default function ThemaPagina({
   linkListItems = [],
   pageContentTables,
   pageContentBottom,
-  errorAlertContent = 'We kunnen op dit moment niet alle gegevens tonen.',
+  errorAlertContent,
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
   isError,
+  isPartialError,
   isLoading,
 }: ThemaPaginaProps) {
+  const showError = (!isError && isPartialError) || isError;
   return (
     <OverviewPage>
       <PageHeading backLink={backLink} icon={icon}>
@@ -71,9 +76,12 @@ export default function ThemaPagina({
             </Grid.Cell>
           )}
 
-          {isError && (
+          {showError && (
             <Grid.Cell span="all">
-              <ErrorAlert>{errorAlertContent}</ErrorAlert>
+              <ErrorAlert>
+                {errorAlertContent || ERROR_ALERT_DEFAULT}
+                {/* errorAlertContent could be an emty string, force to show an error. **/}
+              </ErrorAlert>
             </Grid.Cell>
           )}
 

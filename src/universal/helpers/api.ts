@@ -67,11 +67,16 @@ export function isLoading(apiResponseData: ApiResponse<any>) {
   );
 }
 
-export function isError(apiResponseData: ApiResponse<any>) {
+export function isError(
+  apiResponseData: ApiResponse<any>,
+  includeFailedDependencies: boolean = true
+) {
   return (
     apiResponseData?.status === 'ERROR' ||
     apiResponseData?.status === 'DEPENDENCY_ERROR' ||
-    (apiResponseData?.status === 'OK' && !!apiResponseData?.failedDependencies)
+    (includeFailedDependencies &&
+      apiResponseData?.status === 'OK' &&
+      !!apiResponseData?.failedDependencies)
   );
 }
 

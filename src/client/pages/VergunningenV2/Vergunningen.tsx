@@ -11,7 +11,7 @@ import { LinkProps } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ZakenTable from '../ThemaPagina/ZakenTable';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { tableConfig } from './config';
 
 export default function VergunningenV2() {
@@ -37,7 +37,7 @@ export default function VergunningenV2() {
       },
     ]) => {
       return (
-        <ZakenTable<VergunningFrontendV2>
+        <ThemaPaginaTable<VergunningFrontendV2>
           key={kind}
           title={title}
           zaken={vergunningen
