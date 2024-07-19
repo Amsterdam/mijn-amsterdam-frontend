@@ -66,6 +66,11 @@ export default function Zorg() {
             Lees hier meer over zorg en ondersteuning
           </Linkd>
         </p>
+        <p>
+          <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>
+            Documenten uploaden voor de Wmo
+          </Linkd>
+        </p>
         <MaintenanceNotifications page="zorg" />
         {isError(WMO) && (
           <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>

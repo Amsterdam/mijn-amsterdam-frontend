@@ -92,6 +92,7 @@ export interface StatusLineItem {
   datePublished: string;
   description?: string;
   documents?: GenericDocument[];
+  resultaat?: string;
   isActive: boolean;
   isChecked: boolean;
   isVisible?: boolean;

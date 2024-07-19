@@ -90,7 +90,19 @@ function transformVoorzieningenForFrontend(
     });
 
     if (statusLineItems) {
-      const voorzieningFrontend: WMOVoorzieningFrontend = {
+      const voorzieningFrontend: {
+        isActual: boolean;
+        dateStart: string;
+        supplier: string;
+        itemTypeCode: string;
+        link: { to: string; title: string };
+        dateDescision: string;
+        resultaat: string;
+        id: string;
+        dateEnd: string;
+        title: string;
+        steps: StatusLineItem[];
+      } = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
         supplier: aanvraag.leverancier,
@@ -102,6 +114,7 @@ function transformVoorzieningenForFrontend(
         steps: statusLineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
+        resultaat: aanvraag.resultaat,
         dateDescision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
