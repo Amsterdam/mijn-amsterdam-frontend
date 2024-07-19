@@ -4,6 +4,7 @@ import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { TrackingConfig } from './routes';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -281,6 +282,21 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
+  FeatureToggle.parkerenPatroonC
+    ? {
+        title: ThemaTitles.PARKEREN,
+        id: Themas.PARKEREN,
+        to: import.meta.env.REACT_APP_SSO_URL_PARKEREN,
+        rel: 'external',
+        profileTypes: ['private', 'commercial'],
+      }
+    : {
+        title: ThemaTitles.PARKEREN,
+        id: Themas.PARKEREN,
+        to: AppRoutes.PARKEREN,
+        profileTypes: ['private', 'commercial'],
+        hasAppStateValue: false,
+      },
   {
     title: ThemaTitles.OVERTREDINGEN,
     id: Themas.OVERTREDINGEN,
@@ -300,13 +316,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: AppRoutes.KREFIA,
     profileTypes: ['private'],
   },
-  {
-    title: ThemaTitles.PARKEREN,
-    id: Themas.PARKEREN,
-    to: AppRoutes.PARKEREN,
-    profileTypes: ['private', 'commercial'],
-    hasAppStateValue: false,
-  },
+
   {
     title: ThemaTitles.KLACHTEN,
     id: Themas.KLACHTEN,
