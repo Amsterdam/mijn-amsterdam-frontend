@@ -92,12 +92,14 @@ export default function ThemaPaginaHLI() {
         filter: regelingenListFilter,
         sort: regelingenListSort,
         maxItems,
+        className,
       },
     ]) => {
       return (
         <ZakenTable<HLIRegeling>
           key={kind}
           title={title}
+          className={className}
           zaken={regelingen
             .filter(regelingenListFilter)
             .sort(regelingenListSort)}

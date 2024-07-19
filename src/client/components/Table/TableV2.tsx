@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
-import { LinkProps, Unshaped } from '../../../universal/types';
+import { LinkProps, Unshaped, ZaakDetail } from '../../../universal/types';
 import { MaRouterLink } from '../MaLink/MaLink';
 import styles from './TableV2.module.scss';
 
@@ -55,7 +55,7 @@ export interface TableV2Props<T> {
   caption?: string;
 }
 
-export function TableV2<T extends Unshaped>({
+export function TableV2<T extends ZaakDetail>({
   caption,
   items,
   displayProps,
@@ -85,7 +85,11 @@ export function TableV2<T extends Unshaped>({
         {items.map((item, index) => (
           <Table.Row key={'id' in item ? item.id : undefined ?? `tr-${index}`}>
             {displayPropEntries.map(([key, label], index) => {
-              return <Table.Cell key={`td-${key}`}>{item[key]}</Table.Cell>;
+              return (
+                <Table.Cell key={`td-${key}`}>
+                  {item[key] as ReactNode}
+                </Table.Cell>
+              );
             })}
           </Table.Row>
         ))}

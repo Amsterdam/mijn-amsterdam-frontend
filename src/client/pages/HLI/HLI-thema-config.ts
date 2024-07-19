@@ -2,6 +2,7 @@ import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import styles from './HLI.module.scss';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
@@ -13,7 +14,6 @@ const displayPropsHuidigeRegelingen = {
 
 const displayPropsEerdereRegelingen = {
   detailLinkComponent: displayPropsHuidigeRegelingen.detailLinkComponent,
-  receiver: displayPropsHuidigeRegelingen.receiver,
   displayStatus: 'Status',
 };
 
@@ -37,6 +37,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
+    className: styles.HuidigeRegelingen,
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
@@ -44,6 +45,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
+    className: styles.EerdereRegelingen,
   },
 } as const;
 

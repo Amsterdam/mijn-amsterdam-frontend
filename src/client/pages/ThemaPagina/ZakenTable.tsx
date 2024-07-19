@@ -1,5 +1,5 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
-import { Unshaped } from '../../../universal/types';
+import { Unshaped, ZaakDetail } from '../../../universal/types';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
@@ -16,7 +16,7 @@ interface ZakenTableProps<T> {
   maxItems?: number;
 }
 
-export default function ZakenTable<T extends Unshaped>({
+export default function ZakenTable<T extends ZaakDetail>({
   title = 'Zaken',
   zaken,
   className,

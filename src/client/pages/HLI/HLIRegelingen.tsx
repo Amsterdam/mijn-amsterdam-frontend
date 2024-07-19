@@ -22,6 +22,7 @@ export default function HLIRegelingen() {
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}
+      tableClassName={listPageTableConfig.className}
     />
   );
 }
