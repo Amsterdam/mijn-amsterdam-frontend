@@ -13,7 +13,9 @@ function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
   return (
     <UnorderedList.Item>
       <MaRouterLink maVariant="fatNoUnderline" href={stadspas.link?.to}>
-        <span className={styles.Stadspas_owner}>{stadspas.owner}</span>
+        <span className={styles.Stadspas_owner}>
+          {stadspas.owner.firstname}
+        </span>
         <span className={styles.Stadspas_balance}>
           Saldo {stadspas.balanceFormatted}
         </span>
