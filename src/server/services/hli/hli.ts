@@ -14,12 +14,12 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
+import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import {
   fetchNamenBetrokkenen,
   fetchZorgnedAanvragenHLI,
 } from './hli-zorgned-service';
-import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { fetchStadspas } from './stadspas';
 
 function getDisplayStatus(
