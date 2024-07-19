@@ -22,18 +22,6 @@ import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service'
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
 
-export const router = express.Router();
-
-router.get(
-  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
-  async (req: Request<{ token: string }>, res: Response) => {
-    return res.redirect(
-      BffEndpoints.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
-    );
-  }
-);
-
 type ApiError = {
   code: string;
   message: string;
@@ -59,6 +47,18 @@ const errors: Record<string, ApiError> = {
     message: 'Onbekende error',
   },
 } as const;
+
+export const router = express.Router();
+
+router.get(
+  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
+  async (req: Request<{ token: string }>, res: Response) => {
+    return res.redirect(
+      BffEndpoints.AUTH_LOGIN_DIGID +
+        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
+    );
+  }
+);
 
 async function sendAdministratienummerResponse(
   req: Request<{ token: string }>,
