@@ -32,7 +32,7 @@ export const REGELING_PERIODIEK: ZorgnedStatusLineItemTransformerConfig[] = [
         <p>
           ${
             regeling.isActueel
-              ? `Uw recht op ${regeling.titel} stopt per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}.`
+              ? `Uw recht op ${regeling.titel} stopt per ${regeling.datumEindeGeldigheid ? defaultDateFormat(regeling.datumEindeGeldigheid) : ''}.`
               : `Uw recht op ${regeling.titel} is beëindigd ${
                   regeling.datumEindeGeldigheid
                     ? `per ${defaultDateFormat(regeling.datumEindeGeldigheid)}`
