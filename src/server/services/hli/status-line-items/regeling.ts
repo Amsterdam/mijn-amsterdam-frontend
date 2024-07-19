@@ -6,7 +6,8 @@ export const REGELING: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Besluit',
     datePublished: (regeling) => regeling.datumBesluit,
     isChecked: (stepIndex, regeling) => true,
-    isActive: (stepIndex, regeling) => regeling.isActueel === true,
+    isActive: (stepIndex, regeling) =>
+      regeling.isActueel === true || regeling.resultaat === 'afgewezen',
     description: (regeling) =>
       `<p>
         ${
