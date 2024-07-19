@@ -28,7 +28,11 @@ import {
   StadspasTransactiesResponseSource,
   StadspasTransaction,
 } from './stadspas-types';
-import { pick } from '../../../universal/helpers/utils';
+
+const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
+  stadspassen: [],
+  administratienummer: null,
+});
 
 function getHeaders(administratienummer: string) {
   return {
@@ -47,13 +51,14 @@ function getOwner(pashouder: StadspasHouderSource): StadspasOwner {
 }
 
 function formatBudget(
-  sessionID: AuthProfileAndToken['profile']['sid'],
   budget: StadspasDetailBudgetSource,
   administratienummer: string,
-  pasnummer: number
+  pasnummer: number,
+  sessionID?: AuthProfileAndToken['profile']['sid']
 ) {
+  const sessionIDSegment = sessionID ? `${sessionID}:` : '';
   const [transactionsKey] = encrypt(
-    `${sessionID}:${budget.code}:${administratienummer}:${pasnummer}`
+    `${sessionIDSegment}${budget.code}:${administratienummer}:${pasnummer}`
   );
 
   const urlTransactions = generateFullApiUrlBFF(
@@ -81,17 +86,17 @@ function formatBudget(
 }
 
 function transformStadspasResponse(
-  sessionID: AuthProfileAndToken['profile']['sid'],
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource,
-  administratienummer: string
+  administratienummer: string,
+  sessionID?: AuthProfileAndToken['profile']['sid']
 ) {
   const budgets = gpassStadspasResonseData.budgetten.map((budget) =>
     formatBudget(
-      sessionID,
       budget,
       administratienummer,
-      gpassStadspasResonseData.pasnummer
+      gpassStadspasResonseData.pasnummer,
+      sessionID
     )
   );
 
@@ -111,40 +116,16 @@ function transformStadspasResponse(
   };
 }
 
-export async function fetchStadspassen_(
+export async function fetchStadspassenByAdministratienummer(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+  administratienummer: string,
+  sessionID?: AuthProfileAndToken['profile']['sid']
 ) {
-  const noContentResponse = apiSuccessResult({
-    stadspassen: [],
-    administratienummer: null,
-  });
-
   const dataRequestConfig = getApiConfig('GPASS');
 
   const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v1/pashouder`;
   const GPASS_ENDPOINT_PAS = `${dataRequestConfig.url}/rest/sales/v1/pas`;
 
-  const administratienummerResponse = await fetchAdministratienummer(
-    requestID,
-    authProfileAndToken
-  );
-
-  if (
-    administratienummerResponse.status === 'OK' &&
-    !administratienummerResponse.content
-  ) {
-    return noContentResponse;
-  }
-
-  if (
-    administratienummerResponse.status === 'ERROR' ||
-    administratienummerResponse.status === 'POSTPONE'
-  ) {
-    return administratienummerResponse;
-  }
-
-  const administratienummer = administratienummerResponse.content as string;
   const headers = getHeaders(administratienummer);
   const stadspasHouderResponse = await requestData<StadspasPasHouderResponse>(
     {
@@ -155,14 +136,13 @@ export async function fetchStadspassen_(
         addsubs: true,
       },
     },
-    requestID,
-    authProfileAndToken
+    requestID
   );
 
   if (stadspasHouderResponse.status === 'ERROR') {
     if (stadspasHouderResponse.code === 401) {
       // 401 means there is no record available in the GPASS api for the requested administratienummer
-      return noContentResponse;
+      return NO_PASHOUDER_CONTENT_RESPONSE;
     }
     return stadspasHouderResponse;
   }
@@ -186,18 +166,17 @@ export async function fetchStadspassen_(
           url,
           transformResponse: (stadspas) =>
             transformStadspasResponse(
-              authProfileAndToken.profile.sid,
               stadspas,
               pashouder,
-              administratienummer
+              administratienummer,
+              sessionID
             ),
           headers,
           params: {
             include_balance: true,
           },
         },
-        requestID,
-        authProfileAndToken
+        requestID
       );
       pasRequests.push(request);
     }
@@ -214,6 +193,37 @@ export async function fetchStadspassen_(
   return apiSuccessResult({ stadspassen, administratienummer });
 }
 
+export async function fetchStadspassen_(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const administratienummerResponse = await fetchAdministratienummer(
+    requestID,
+    authProfileAndToken
+  );
+
+  if (
+    administratienummerResponse.status === 'OK' &&
+    !administratienummerResponse.content
+  ) {
+    return NO_PASHOUDER_CONTENT_RESPONSE;
+  }
+
+  if (
+    administratienummerResponse.status === 'ERROR' ||
+    administratienummerResponse.status === 'POSTPONE'
+  ) {
+    return administratienummerResponse;
+  }
+
+  const administratienummer = administratienummerResponse.content as string;
+
+  return fetchStadspassenByAdministratienummer(
+    requestID,
+    administratienummer,
+    authProfileAndToken.profile.sid
+  );
+}
 export const fetchStadspassen = memoizee(fetchStadspassen_, {
   maxAge: 45 * ONE_SECOND_MS,
 });

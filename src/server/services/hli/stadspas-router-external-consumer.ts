@@ -1,6 +1,11 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { apiErrorResult } from '../../../universal/helpers/api';
-import { BffEndpoints, getApiConfig } from '../../config';
+import {
+  BffEndpoints,
+  ExternalConsumerEndpoints,
+  getApiConfig,
+  STADSPASSEN_ENDPOINT_PARAMETER,
+} from '../../config';
 import {
   AuthProfileAndToken,
   getAuth,
@@ -8,24 +13,14 @@ import {
 } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { requestData } from '../../helpers/source-api-request';
+import { apiKeyVerificationHandler } from '../../middleware';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { requestData } from '../../helpers/source-api-request';
+import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
-
-export const router = express.Router();
-
-router.get(
-  BffEndpoints.STADSPAS_AMSAPP_LOGIN,
-  async (req: Request<{ token: string }>, res: Response) => {
-    return res.redirect(
-      BffEndpoints.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
-    );
-  }
-);
 
 type ApiError = {
   code: string;
@@ -53,6 +48,18 @@ const errors: Record<string, ApiError> = {
   },
 } as const;
 
+export const router = express.Router();
+
+router.get(
+  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
+  async (req: Request<{ token: string }>, res: Response) => {
+    return res.redirect(
+      BffEndpoints.AUTH_LOGIN_DIGID +
+        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
+    );
+  }
+);
+
 async function sendAdministratienummerResponse(
   req: Request<{ token: string }>,
   res: Response
@@ -75,7 +82,7 @@ async function sendAdministratienummerResponse(
       authProfileAndToken
     );
 
-    // Administratienummer found, encrypt and sent
+    // Administratienummer found, encrypt and send
     if (
       administratienummerResponse.status === 'OK' &&
       administratienummerResponse.content
@@ -135,47 +142,45 @@ async function sendAdministratienummerResponse(
 }
 
 router.get(
-  BffEndpoints.STADSPAS_ADMINISTRATIENUMMER,
+  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   sendAdministratienummerResponse
 );
 
-function apiKeyHandler(req: Request, res: Response, next: NextFunction) {
-  // TODO: implement api key validation
-  next();
+async function sendStadspassenResponse(
+  req: Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>,
+  res: Response
+) {
+  let reason = '';
+
+  try {
+    const administratienummerEncrypted =
+      req.params[STADSPASSEN_ENDPOINT_PARAMETER];
+    if (administratienummerEncrypted) {
+      const administratienummer = decrypt(administratienummerEncrypted);
+      const stadpassen = await fetchStadspassenByAdministratienummer(
+        res.locals.requestID,
+        administratienummer
+      );
+      return res.send(stadpassen);
+    }
+    reason = `Missing encrypted url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`;
+  } catch (error) {
+    reason = `Could not decrypt url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`;
+    captureException(error);
+  }
+
+  return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
 }
 
 router.get(
-  BffEndpoints.STADSPAS_PASSEN,
-  apiKeyHandler,
-  (
-    req: Request<{ administratienummerEncrypted: string }>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    let reason = '';
-    try {
-      const administratienummerEncrypted =
-        req.params.administratienummerEncrypted;
-
-      if (administratienummerEncrypted) {
-        const clientnummer = decrypt(administratienummerEncrypted);
-        // TODO: Implement service call with clientnummer param
-        return res.send({
-          clientnummer,
-          passen: [],
-        });
-      }
-      reason = 'missing encrypted param';
-    } catch (error) {
-      reason = 'wrong encryption';
-      captureException(error);
-    }
-    return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
-  }
+  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
+  apiKeyVerificationHandler,
+  sendStadspassenResponse
 );
 
 export const stadspasExternalConsumerRouter = router;
 
 export const forTesting = {
   sendAdministratienummerResponse,
+  sendStadspassenResponse,
 };
