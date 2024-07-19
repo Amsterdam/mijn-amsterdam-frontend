@@ -110,7 +110,7 @@ export async function transformRegelingenForFrontend(
         dateEnd: aanvraag.datumEindeGeldigheid,
         decision: aanvraag.resultaat,
         displayStatus: getDisplayStatus(aanvraag, statusLineItems),
-        receiver: namen.join('\n'),
+        receiver: namen.join(', '),
         documents: getDocumentsFrontend(
           authProfileAndToken.profile.sid,
           aanvraag.documenten
