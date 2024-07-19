@@ -74,6 +74,7 @@ function transformVoorzieningenForFrontend(
       'WMO',
       wmoStatusLineItemsConfig,
       aanvraag,
+      aanvragen,
       today
     );
 

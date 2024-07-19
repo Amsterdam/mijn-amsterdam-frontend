@@ -11,7 +11,8 @@ const PASS_MATCH_DEFAULT = true;
 
 function getStatusLineItemTransformers(
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig[],
-  aanvraagTransformed: ZorgnedAanvraagTransformed
+  aanvraagTransformed: ZorgnedAanvraagTransformed,
+  allAanvragenTransformed: ZorgnedAanvraagTransformed[]
 ) {
   return statusLineItemsConfig.find((config) => {
     const hasRegelingsVormMatch =
@@ -35,7 +36,13 @@ function getStatusLineItemTransformers(
           : false
         : PASS_MATCH_DEFAULT;
 
+    const isFilterMatch =
+      typeof config.filter !== 'undefined'
+        ? config.filter(aanvraagTransformed, allAanvragenTransformed)
+        : PASS_MATCH_DEFAULT;
+
     return (
+      isFilterMatch &&
       hasRegelingsVormMatch &&
       hasProductSoortCodeMatch &&
       hasProductIdentificatieMatch
@@ -47,11 +54,13 @@ export function getStatusLineItems(
   serviceName: 'WMO' | 'HLI',
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig[],
   aanvraagTransformed: ZorgnedAanvraagTransformed,
+  allAanvragenTransformed: ZorgnedAanvraagTransformed[],
   today: Date
 ) {
   const lineItemTransformer = getStatusLineItemTransformers(
     statusLineItemsConfig,
-    aanvraagTransformed
+    aanvraagTransformed,
+    allAanvragenTransformed
   );
 
   if (!lineItemTransformer) {

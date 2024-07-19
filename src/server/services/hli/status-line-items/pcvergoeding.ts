@@ -26,7 +26,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     datePublished: (aanvraag) => aanvraag.datumBesluit,
     isChecked: (stepIndex, aanvraag) => true,
     isActive: (stepIndex, aanvraag) =>
-      !isVerzilvering(aanvraag) && aanvraag.isActueel === true,
+      !isVerzilvering(aanvraag) &&
+      (aanvraag.isActueel === true || aanvraag.resultaat === 'afgewezen'),
     description: (regeling) =>
       `<p>
         ${
@@ -43,7 +44,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Cursus',
     isVisible: (stepIndex, aanvraag) =>
-      !isVerzilvering(aanvraag) || !aanvraag.resultaat,
+      !isVerzilvering(aanvraag) && aanvraag.resultaat !== 'afgewezen',
     datePublished: (aanvraag) => aanvraag.datumBesluit,
     isChecked: (stepIndex, aanvraag) => true,
     isActive: (stepIndex, aanvraag) => true,

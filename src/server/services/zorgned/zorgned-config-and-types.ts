@@ -33,11 +33,17 @@ export type ZorgnedStatusLineItemTransformerConfig = {
   ) => boolean;
 };
 
+type ZorgnedLineItemsFilter = (
+  aanvraag: ZorgnedAanvraagTransformed,
+  allAanvragen: ZorgnedAanvraagTransformed[]
+) => boolean;
+
 export interface ZorgnedStatusLineItemsConfig {
   leveringsVorm?: LeveringsVorm;
   lineItemTransformers: ZorgnedStatusLineItemTransformerConfig[];
   productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
+  filter?: ZorgnedLineItemsFilter;
 }
 
 export type LeveringsVorm = 'ZIN' | 'PGB' | '';

@@ -71,6 +71,7 @@ export async function transformRegelingenForFrontend(
       'HLI',
       hliStatusLineItemsConfig,
       aanvraag,
+      aanvragen,
       today
     );
 

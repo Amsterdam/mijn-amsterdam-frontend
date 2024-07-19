@@ -522,6 +522,79 @@
         "datumAanvraag": "2024-06-04"
       },
       {
+        "identificatie": "2707685",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-06-17",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2024-06-17",
+        "datumAanvraag": "2024-06-17",
+        "beschikking": {
+          "beschikkingNummer": 300985080,
+          "datumAfgifte": "2024-06-17",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204597",
+              "product": {
+                "identificatie": "AV-UPCC",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Gratis laptop of tablet basisschool"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-06-17",
+                "datumEindeGeldigheid": "2028-07-31",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leverancier": {
+                  "identificatie": "AV02",
+                  "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                },
+                "toelichting": "BO",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1970057",
+                    "toewijzingsDatumTijd": "2024-06-17T17:16:00.7133333",
+                    "ingangsdatum": "2024-06-17",
+                    "einddatum": "2028-07-31",
+                    "datumOpdracht": "2024-06-17T17:16:00.7133333",
+                    "leverancier": {
+                      "identificatie": "AV02",
+                      "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["999990512"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806781",
+            "omschrijving": "AV-UPC aanmelden workshop",
+            "datumDefinitief": "2024-06-17T17:15:28.313"
+          }
+        ]
+      },
+      {
         "identificatie": "2707686",
         "regeling": {
           "identificatie": "Armoedevrz",
@@ -529,14 +602,9 @@
         },
         "hulpvraag": {
           "datumRegistratie": "2024-06-17",
-          "aanmeldwijze": {
-            "omschrijving": "AV-Papier"
-          },
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
           "verwijzer": {
-            "soort": {
-              "identificatie": "3AV",
-              "omschrijving": "AV-Cliënt"
-            }
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
           }
         },
         "datumAanmelding": "2024-06-17",
@@ -560,10 +628,7 @@
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": {
-                    "code": "82",
-                    "omschrijving": "Stuks (output)"
-                  },
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
