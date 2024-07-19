@@ -83,8 +83,6 @@ export default function ThemaPaginaHLI() {
     });
   }
 
-  console.log(regelingen?.[0]);
-
   const tables = Object.entries(tableConfig).map(
     ([
       kind,
