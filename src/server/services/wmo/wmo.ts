@@ -18,6 +18,7 @@ import {
 } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
+import { isAfter } from 'date-fns';
 
 function addDocumentLinksToLineItems(
   sessionID: AuthProfileAndToken['profile']['sid'],
@@ -58,6 +59,18 @@ function addDocumentLinksToLineItems(
 
     return lineItem;
   });
+}
+
+function getLatestStatus(steps: StatusLineItem[]): string {
+  if (steps.length === 0) return 'Onbekend';
+
+  const mostRecentStep = steps.reduce((acc, step) =>
+    isAfter(new Date(step.datePublished), new Date(acc.datePublished))
+      ? step
+      : acc
+  );
+
+  return mostRecentStep.status;
 }
 
 function transformVoorzieningenForFrontend(
@@ -102,6 +115,7 @@ function transformVoorzieningenForFrontend(
         dateEnd: string;
         title: string;
         steps: StatusLineItem[];
+        status: string;
       } = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
@@ -118,6 +132,7 @@ function transformVoorzieningenForFrontend(
         dateDescision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
+        status: getLatestStatus(statusLineItems),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);

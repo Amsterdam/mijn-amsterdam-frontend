@@ -64,4 +64,5 @@ export interface WMOVoorzieningFrontend {
   resultaat: string;
   dateStart: string | null;
   dateEnd: string | null;
+  status: string;
 }
