@@ -20,7 +20,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
-  voorziening: 'Voorziening',
+  title: '',
   status: 'Status',
   dateDescision: 'Datum',
 };

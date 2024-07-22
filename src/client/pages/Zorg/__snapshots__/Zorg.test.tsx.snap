@@ -199,6 +199,30 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
                     Wmo item 1
                   </a>
                 </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Status:
+                  </span>
+                  <span>
+                    Levering gestart
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Datum:
+                  </span>
+                  <span>
+                    2020-07-24
+                  </span>
+                </td>
               </tr>
             </tbody>
           </table>
