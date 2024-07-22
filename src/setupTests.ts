@@ -112,3 +112,5 @@ process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 
 process.env.REACT_APP_SSO_URL_BELASTINGEN = `${remoteApiHost}/sso/portaal/belastingen`;
 process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuzone`;
+
+process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/administratienummer`;

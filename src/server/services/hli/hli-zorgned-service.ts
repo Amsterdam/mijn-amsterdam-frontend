@@ -22,8 +22,8 @@ import { ONE_SECOND_MS } from '../../config';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
-  const clientnummer = `${ZORGNED_GEMEENTE_CODE}${clientnummerPadded}`;
-  return clientnummer;
+  const administratienummer = `${ZORGNED_GEMEENTE_CODE}${clientnummerPadded}`;
+  return administratienummer;
 }
 
 function transformZorgnedClientNummerResponse(

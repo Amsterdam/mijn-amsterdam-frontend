@@ -50,7 +50,9 @@ export function getBudgetNotifications(stadspassen: Stadspas[]) {
 
   const needsNotification = !!stadspas;
   const isParent = stadspassen.some(
-    (pas) => pas.owner !== stadspassen[0].owner
+    (pas) =>
+      pas.owner.initials !== stadspassen[0].owner.initials ||
+      pas.owner.firstname !== stadspassen[0].owner.firstname
   );
   const now = new Date();
 

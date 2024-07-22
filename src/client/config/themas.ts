@@ -179,7 +179,10 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Themas.PARKEREN:
-      return isAmsterdam && FeatureToggle.parkerenActive;
+      return (
+        (isAmsterdam && FeatureToggle.parkerenActive) ||
+        FeatureToggle.parkerenPatroonC
+      );
 
     case Themas.KLACHTEN:
       return (

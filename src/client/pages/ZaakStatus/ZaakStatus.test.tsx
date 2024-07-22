@@ -70,8 +70,6 @@ describe('ZaakStatus', () => {
     );
     const { asFragment } = render(<Component />);
 
-    console.log(asFragment());
-
     expect(pushMock).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();

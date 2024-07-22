@@ -2,6 +2,7 @@
 
 .header {
   --ams-page-menu-item-font-size: 1.6rem;
+  --ams-link-standalone-font-size: 1.6rem;
   --mams-font-size-body: 1rem;
 
   &:first-child {
@@ -140,4 +141,38 @@
 .menuLinkSearch {
   @extend .baseMenuLink;
   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='%23004699' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M19.7996 17.8697L13.9049 11.975C16.1123 8.86891 15.5717 4.58951 12.6612 2.12992C9.75073 -0.32967 5.44111 -0.149054 2.74661 2.54544C0.0521181 5.23994 -0.128498 9.54956 2.33109 12.4601C4.79068 15.3706 9.07008 15.9112 12.1762 13.7037L18.0709 19.5984L19.7996 17.8697ZM7.93687 12.6225C5.23796 12.6225 3.05005 10.4346 3.05005 7.7357C3.05005 5.03678 5.23796 2.84888 7.93687 2.84888C10.6358 2.84888 12.8237 5.03678 12.8237 7.7357C12.8237 9.03176 12.3088 10.2747 11.3924 11.1912C10.4759 12.1077 9.23293 12.6225 7.93687 12.6225Z'/%3E%3C/svg%3E");
+}
+
+.PageMenu {
+  :global(.ams-page-menu__link) {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      text-decoration-thickness: var(
+        --ams-link-standalone-hover-text-decoration-thickness
+      );
+      text-underline-offset: var(
+        --ams-link-standalone-hover-text-underline-offset
+      );
+    }
+  }
+
+  span > svg {
+    height: var(--ams-icon-size-3-font-size);
+    width: var(--ams-icon-size-3-font-size);
+  }
+
+  @media screen and (min-width: $ams-breakpoint-wide) {
+    span > svg {
+      height: var(--ams-icon-size-4-font-size);
+      width: var(--ams-icon-size-4-font-size);
+    }
+  }
+}
+
+.PageMenuLabel {
+  @include mq-phone {
+    display: none;
+  }
 }

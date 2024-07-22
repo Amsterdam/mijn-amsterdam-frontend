@@ -1,3 +1,4 @@
+// Static links to external websites.
 export const ExternalUrls = {
   CHANGE_PERSONAL_DATA:
     'https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85',
