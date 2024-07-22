@@ -20,7 +20,9 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
-  title: '',
+  voorziening: 'Voorziening',
+  status: 'Status',
+  dateDescision: 'Datum',
 };
 
 export default function Zorg() {
