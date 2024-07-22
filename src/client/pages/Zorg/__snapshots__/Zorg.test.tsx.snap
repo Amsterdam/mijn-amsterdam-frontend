@@ -169,6 +169,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
           <table
             class="_Table_a66dcc"
           >
+            <thead>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayProp_a66dcc"
+                />
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Status
+                </th>
+                <th
+                  class="_DisplayProp_a66dcc"
+                >
+                  Datum
+                </th>
+              </tr>
+            </thead>
             <tbody>
               <tr
                 class="_TableRow_a66dcc"
