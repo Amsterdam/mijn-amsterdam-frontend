@@ -69,11 +69,14 @@ function transformZorgnedBetrokkeneNaamResponse(
   zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
 ) {
   if (zorgnedResponseData?.persoon) {
-    return getFullName({
-      voornamen: zorgnedResponseData?.persoon?.voornamen,
-      geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
-      voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
-    });
+    return (
+      zorgnedResponseData?.persoon?.voornamen ??
+      getFullName({
+        voornamen: zorgnedResponseData?.persoon?.voornamen,
+        geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
+        voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
+      })
+    );
   }
   return null;
 }
