@@ -61,9 +61,10 @@ function addDocumentLinksToLineItems(
   });
 }
 
-function getLatestStatus(steps: StatusLineItem[]): string {
-  if (steps.length === 0) return 'Onbekend';
-
+function getLatestStatus(steps: StatusLineItem[]) {
+  if (!steps.length) {
+    return 'Onbekend';
+  }
   const mostRecentStep = steps.reduce((acc, step) =>
     isAfter(new Date(step.datePublished), new Date(acc.datePublished))
       ? step
@@ -103,20 +104,7 @@ function transformVoorzieningenForFrontend(
     });
 
     if (statusLineItems) {
-      const voorzieningFrontend: {
-        isActual: boolean;
-        dateStart: string;
-        supplier: string;
-        itemTypeCode: string;
-        link: { to: string; title: string };
-        dateDescision: string;
-        resultaat: string;
-        id: string;
-        dateEnd: string;
-        title: string;
-        steps: StatusLineItem[];
-        status: string;
-      } = {
+      const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
         supplier: aanvraag.leverancier,

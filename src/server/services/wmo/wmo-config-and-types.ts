@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { LinkProps, StatusLineItem } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types';
 import {
   LeveringsVorm,
   ProductSoortCode,
@@ -52,13 +52,9 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
     PGB: [],
   };
 
-export interface WMOVoorzieningFrontend {
-  id: string;
-  title: string; // Omschrijving
+export interface WMOVoorzieningFrontend extends ZaakDetail {
   supplier: string | null; // Leverancier
   isActual: boolean; // Indicates if this item is designated Current or Previous
-  link: LinkProps;
-  steps: StatusLineItem[];
   itemTypeCode: ProductSoortCode;
   dateDescision: string;
   resultaat: string;
