@@ -55,7 +55,7 @@ export interface TableV2Props<T> {
   caption?: string;
 }
 
-export function TableV2<T extends ZaakDetail>({
+export function TableV2<T extends object = ZaakDetail>({
   caption,
   items,
   displayProps,
@@ -82,17 +82,22 @@ export function TableV2<T extends ZaakDetail>({
         </Table.Header>
       )}
       <Table.Body>
-        {items.map((item, index) => (
-          <Table.Row key={'id' in item ? item.id : undefined ?? `tr-${index}`}>
-            {displayPropEntries.map(([key, label], index) => {
-              return (
-                <Table.Cell key={`td-${key}`}>
-                  {item[key] as ReactNode}
-                </Table.Cell>
-              );
-            })}
-          </Table.Row>
-        ))}
+        {items.map((item, index) => {
+          const key = String(
+            'id' in item ? item.id : `item-${index}` ?? `tr-${index}`
+          );
+          return (
+            <Table.Row key={key}>
+              {displayPropEntries.map(([key]) => {
+                return (
+                  <Table.Cell key={`td-${key}`}>
+                    {item[key] as ReactNode}
+                  </Table.Cell>
+                );
+              })}
+            </Table.Row>
+          );
+        })}
       </Table.Body>
     </Table>
   );
