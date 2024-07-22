@@ -28,7 +28,7 @@ const testState: any = {
             id: 'wmo-step-1',
             status: 'Levering gestart',
             datePublished: '2020-07-24',
-            description: 'De levering van uw thuizorg is gestart',
+            description: 'De levering van uw thuiszorg is gestart',
             documents: [],
             isActive: true,
             isChecked: true,
