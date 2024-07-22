@@ -5,7 +5,7 @@
 ########################################################################################################################
 
 # Switched from, node:22-bookworm because node 22.5.0 didn't build
-FROM node:22.4.1 AS updated-local
+FROM node:22.5.1 AS updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
