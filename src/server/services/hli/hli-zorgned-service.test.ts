@@ -95,7 +95,7 @@ describe('hli-zorgned-service', () => {
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
-    expect(naam).toMatchInlineSnapshot(`"Flex Alex"`);
+    expect(naam).toMatchInlineSnapshot(`"Flex"`);
 
     const naam2 = forTesting.transformZorgnedBetrokkeneNaamResponse({
       persoon: {
@@ -105,7 +105,7 @@ describe('hli-zorgned-service', () => {
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
-    expect(naam2).toMatchInlineSnapshot(`"Baron de Jarvis"`);
+    expect(naam2).toMatchInlineSnapshot(`"Baron"`);
 
     const naam3 = forTesting.transformZorgnedBetrokkeneNaamResponse({
       persoon: null,
@@ -140,8 +140,8 @@ describe('hli-zorgned-service', () => {
     expect(response).toMatchInlineSnapshot(`
       {
         "content": [
-          "Baron de Jarvis",
-          "Flex Alex",
+          "Baron",
+          "Flex",
         ],
         "status": "OK",
       }
