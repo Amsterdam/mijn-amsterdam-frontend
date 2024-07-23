@@ -1,0 +1,19 @@
+const settings = require('../settings');
+
+module.exports = [
+  {
+    id: 'post-amsapp-administratienummer',
+    url: `${settings.MOCK_BASE_PATH}/amsapp/administratienummer`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'text',
+        options: {
+          status: 200,
+          body: 'ok',
+        },
+      },
+    ],
+  },
+];

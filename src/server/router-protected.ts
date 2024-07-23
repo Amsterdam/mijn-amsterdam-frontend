@@ -30,6 +30,7 @@ import {
 } from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
+import { handleFetchTransactionsRequest } from './services/hli/stadspas-route-handlers';
 
 export const router = express.Router();
 
@@ -225,24 +226,5 @@ attachDocumentDownloadRoute(
   fetchBBDocument
 );
 
-router.post(
-  BffEndpoints.STADSPAS_TRANSACTIONS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-    const transactionKeys = req.body as string[];
-
-    if (transactionKeys?.length) {
-      const response = await fetchTransacties(
-        res.locals.requestID,
-        authProfileAndToken,
-        transactionKeys
-      );
-
-      return res.send(response);
-    }
-
-    return res
-      .status(400)
-      .send(apiErrorResult('Bad request: transactions key missing', null, 400));
-  }
-);
+// Stadspas transacties
+router.post(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);

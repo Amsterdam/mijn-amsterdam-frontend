@@ -11,16 +11,17 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
-import { MaLink } from '../MaLink/MaLink';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MegaMenu from '../MegaMenu/MegaMenu';
 import { Search } from '../Search/Search';
+import { CloseIcon, MenuIcon } from '@amsterdam/design-system-react-icons';
 import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
 import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
 import styles from './MainHeader.module.scss';
 import { OtapLabel } from './OtapLabel';
 import { SecondaryLinks } from './SecondaryLinks';
+import { IconSearch } from '../../assets/icons';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -196,63 +197,58 @@ export default function MainHeader({
             isAuthenticated && (
               <PageMenu alignEnd>
                 <SecondaryLinks />
-                {isDisplayLiveSearch && (
-                  <MaLink
-                    maVariant="noDefaultUnderline"
-                    href={AppRoutes.SEARCH}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setSearchActive(!isSearchActive);
-                    }}
-                    className={styles.menuLinkSearch}
-                  >
-                    Zoeken
-                  </MaLink>
-                )}
               </PageMenu>
             )
           }
           menu={
             isAuthenticated && (
-              <>
-                {!isBurgerMenuVisible ? (
-                  <button
-                    aria-label="Open menu"
+              <PageMenu alignEnd className={styles.PageMenu}>
+                {isDisplayLiveSearch && (
+                  <PageMenu.Link
+                    icon={IconSearch}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSearchActive(!isSearchActive);
+                    }}
+                  >
+                    <span className={styles.PageMenuLabel}>Zoeken</span>
+                  </PageMenu.Link>
+                )}
+
+                {isBurgerMenuVisible ? (
+                  <PageMenu.Link
+                    icon={CloseIcon}
+                    onClick={(e) => {
+                      toggleBurgerMenu(false);
+                    }}
+                  >
+                    <span className={styles.PageMenuLabel}>Menu</span>
+                  </PageMenu.Link>
+                ) : (
+                  <PageMenu.Link
+                    icon={MenuIcon}
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleBurgerMenu(true);
                     }}
-                    className="ams-header__menu-button"
                   >
-                    Menu
-                  </button>
-                ) : (
-                  isBurgerMenuVisible && (
-                    <button
-                      aria-label="Sluit menu"
-                      onClick={() => toggleBurgerMenu(false)}
-                      className={styles.menuLinkClose}
-                    >
-                      Menu
-                    </button>
-                  )
+                    <span className={styles.PageMenuLabel}>Menu</span>
+                  </PageMenu.Link>
                 )}
-              </>
+              </PageMenu>
             )
           }
         />
         <OtapLabel />
         {isDisplayLiveSearch && isSearchActive && (
-          <div className={styles.Search}>
-            <div className={styles.SearchBar}>
-              <div className={styles.SearchBarInner}>
-                <Search
-                  onFinish={() => {
-                    setSearchActive(false);
-                  }}
-                  replaceResultUrl={replaceResultUrl}
-                />
-              </div>
+          <div className={styles.SearchBar}>
+            <div className={styles.SearchBarInner}>
+              <Search
+                onFinish={() => {
+                  setSearchActive(false);
+                }}
+                replaceResultUrl={replaceResultUrl}
+              />
             </div>
           </div>
         )}

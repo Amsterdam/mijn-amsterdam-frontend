@@ -1,97 +1,152 @@
+import {
+  Footer,
+  Grid,
+  Heading,
+  Icon,
+  Link,
+  LinkList,
+  PageMenu,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
+import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
-import { useState } from 'react';
+import { Fragment, ReactNode } from 'react';
 import type {
   AstNode,
   CMSFooterContent,
-} from '../../../server/services/cms-content';
-import { LinkProps } from '../../../universal/types';
-import { useCMSApi } from '../../hooks/api/useCmsApi';
-import { useDesktopScreen } from '../../hooks/media.hook';
+  FooterBlock as FooterBlockProps,
+} from '../../../server/services';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import Linkd from '../Button/Button';
-import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './MainFooter.module.scss';
-import { isExternalUrl } from '../../utils/utils';
+import { useCMSApi } from '../../hooks/api/useCmsApi';
 
-interface FooterBlockProps {
-  startOpen?: boolean;
-  id: string;
-  title: string;
-  links: LinkProps[];
-  description: string | null | AstNode[];
-}
-
-function FooterBlock({
-  id,
-  title,
-  links,
-  description,
-  startOpen = false,
-}: FooterBlockProps) {
-  const containerRole = useDesktopScreen() ? 'row' : undefined;
-  const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
-  const [isOpen, toggleOpen] = useState(startOpen);
+function FooterBlock({ id, title, links, description }: FooterBlockProps) {
   return (
-    <div
-      className={classnames(styles.Panel, isOpen && styles.PanelOpen)}
-      role={containerRole}
-    >
-      <h3 role={titleRole} onClick={() => toggleOpen((isOpen) => !isOpen)}>
+    <Grid.Cell key={title} span={4} className="page-footer-space-y">
+      <Heading inverseColor level={4} className="ams-mb--xs">
         {title}
-      </h3>
-      {!!description && !Array.isArray(description) && (
-        <InnerHtml>{description}</InnerHtml>
-      )}
+      </Heading>
+      {!!description && getEl(id, description)}
       {!!links.length && (
-        <ul>
+        <LinkList>
           {links.map((link) => (
-            <li key={link.title}>
-              <Linkd external={true} href={link.to}>
-                {link.title}
-              </Linkd>
-            </li>
+            <LinkList.Link key={link.to} onBackground="dark" href={link.to}>
+              {link.title}
+            </LinkList.Link>
           ))}
-        </ul>
+        </LinkList>
       )}
-    </div>
+    </Grid.Cell>
   );
 }
 
-interface MainFooterProps {
-  isAuthenticated: boolean;
+function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
+  if (Array.isArray(astElement)) {
+    return astElement.map((el, index) => {
+      // Not an ideal key as it uses index, it's hard to find suitable key value in these ast nodes without completely traversing the
+      // tree in search for a unique identifier.
+      const key = `${baseId}-${el.type}-${el.name ?? el.text}-${index}`;
+      return <Fragment key={key}>{getEl(baseId, el)}</Fragment>;
+    });
+  }
+
+  if ('type' in astElement && astElement.type === 'text') {
+    return <span>{astElement.content || ''}</span>;
+  }
+
+  if ('type' in astElement && astElement.type === 'tag') {
+    const children = astElement.children
+      ? getEl(baseId, astElement.children)
+      : null;
+    switch (astElement.name) {
+      case 'a':
+        return (
+          <Link
+            onBackground="dark"
+            variant="standalone"
+            href={String(astElement.attrs?.href || '#')}
+            className="ams-link-list__link ams-link-list__link--on-background-dark"
+          >
+            {children}
+          </Link>
+        );
+      case 'p':
+        return (
+          <Paragraph
+            inverseColor
+            className={classnames('ams-mb--xs', styles.Paragraph)}
+          >
+            {children}
+          </Paragraph>
+        );
+      case 'h3':
+        return (
+          <Heading inverseColor level={4} className="ams-mb--xs">
+            {children}
+          </Heading>
+        );
+      case 'ul':
+        return (
+          <UnorderedList inverseColor markers={false}>
+            {children}
+          </UnorderedList>
+        );
+      case 'li':
+        return (
+          <UnorderedList.Item className={styles.Link}>
+            <Icon svg={ChevronRightIcon} size="level-5" />
+            <div>{children}</div>
+          </UnorderedList.Item>
+        );
+      case 'strong':
+        return (
+          <>
+            <strong>{children}</strong>{' '}
+          </>
+        );
+      default:
+        return null;
+    }
+  }
 }
 
 export default function MainFooter({
   isAuthenticated = false,
-}: MainFooterProps) {
-  const atom = useAppStateGetter();
-  const { CMS_CONTENT } = atom;
+}: {
+  isAuthenticated?: boolean;
+}) {
+  const appState = useAppStateGetter();
+  const { CMS_CONTENT } = appState;
   const footer: CMSFooterContent | null = CMS_CONTENT.content?.footer || null;
-  const { isLoading } = useCMSApi(isAuthenticated);
+
+  // Calls CMS service for non-authenticated users, doesn't call the service for authenticated users, footer data will come from the services/stream endpoint in this case.
+  useCMSApi(isAuthenticated);
 
   return (
-    <footer className={styles.MainFooter} id="skip-to-id-MainFooter">
-      <div className={classnames(styles.TopBar, styles.InnerContainer)}>
-        {isLoading && <div className={styles.FooterLoader}>...</div>}
-        {footer?.blocks.map((footerItem) => {
-          return <FooterBlock key={footerItem.id} {...footerItem} />;
-        })}
-      </div>
-      <div className={styles.BottomBar}>
-        <div className={styles.InnerContainer}>
-          {footer?.sub.map((link) => {
-            return (
-              <Linkd
-                key={link.title}
-                href={link.to}
-                external={isExternalUrl(link.to)}
-              >
-                {link.title}
-              </Linkd>
-            );
-          })}
-        </div>
-      </div>
-    </footer>
+    <Footer>
+      <Footer.Top className={classnames('page-footer-top', styles.FooterTop)}>
+        <Grid gapVertical="large" paddingVertical="medium">
+          {footer?.blocks.map((footerItem) => (
+            <FooterBlock key={footerItem.id} {...footerItem} />
+          ))}
+        </Grid>
+      </Footer.Top>
+      <Footer.Bottom className={styles.BottomBar}>
+        <Grid paddingVertical="small">
+          <Grid.Cell span="all">
+            <PageMenu>
+              {footer?.sub.map((link) => {
+                return (
+                  <PageMenu.Link key={link.title} href={link.to}>
+                    {link.title}
+                  </PageMenu.Link>
+                );
+              })}
+            </PageMenu>
+          </Grid.Cell>
+        </Grid>
+      </Footer.Bottom>
+    </Footer>
   );
 }

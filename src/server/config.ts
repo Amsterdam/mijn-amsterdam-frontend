@@ -51,6 +51,7 @@ export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSI
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = '/api/v1';
+export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
 export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
 export interface DataRequestConfig extends AxiosRequestConfig {
@@ -101,9 +102,9 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 export type SourceApiKey =
-  | 'AFIS_OAUTH'
-  | 'AFIS_BUSINESSPARTNER'
+  | 'AFIS'
   | 'AFVAL'
+  | 'AMSAPP'
   | 'BAG'
   | 'BELASTINGEN'
   | 'BEZWAREN_DOCUMENT'
@@ -139,18 +140,13 @@ export type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
-  AFIS_OAUTH: {
+  AFIS: {
     method: 'post',
-    url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}/OAuthServer`,
+    postponeFetch: !FeatureToggle.afisActive,
+    url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      apiKey: process.env.BFF_ENABLEU_AFIS_API_KEY,
     },
-    postponeFetch: !FeatureToggle.afisActive,
-  },
-  AFIS_BUSINESSPARTNER: {
-    method: 'post',
-    url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}/businesspartner`,
-    postponeFetch: !FeatureToggle.afisActive,
   },
   ZORGNED_JZD: {
     method: 'post',
@@ -340,6 +336,13 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.bodemActive,
     cacheTimeout: 59 * ONE_MINUTE_MS,
   },
+  AMSAPP: {
+    url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,
+    method: 'POST',
+    headers: {
+      'X-Api-Key': process.env.BFF_AMSAPP_API_KEY,
+    },
+  },
 };
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
@@ -400,6 +403,19 @@ export const BFF_OIDC_BASE_URL = `${
 
 export const BFF_OIDC_ISSUER_BASE_URL = `${getFromEnv('BFF_OIDC_ISSUER_BASE_URL')}`;
 
+export const STADSPASSEN_ENDPOINT_PARAMETER = 'administratienummerEncrypted';
+export const ExternalConsumerEndpoints = {
+  // Publicly accessible
+  public: {
+    STADSPAS_AMSAPP_LOGIN: `${BFF_BASE_PATH}/services/amsapp/stadspas/login/:token`,
+    STADSPAS_ADMINISTRATIENUMMER: `${BFF_BASE_PATH}/services/amsapp/stadspas/administratienummer/:token`,
+  },
+  // Privately accessible
+  private: {
+    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
+  },
+};
+
 export const BffEndpoints = {
   ROOT: '/',
   SERVICES_ALL: '/services/all',
@@ -421,12 +437,6 @@ export const BffEndpoints = {
 
   // Stadspas
   STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
-
-  // Stadspas external
-  STADSPAS_AMSAPP_LOGIN: '/services/amsapp/stadspas/login',
-  STADSPAS_ADMINISTRATIENUMMER: '/services/amsapp/stadspas/administratienummer',
-  STADSPAS_PASSEN:
-    '/services/amsapp/stadspas/passen/:administratienummerEncrypted',
 
   // Vergunningen V2
   VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',

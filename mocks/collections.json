@@ -2,6 +2,7 @@
   {
     "id": "base",
     "routes": [
+      "post-amsapp-administratienummer:standard",
       "get-belastingen:standard",
       "get-bezwaren-documenten:standard",
       "get-bezwaren-download-document:standard",
@@ -50,7 +51,6 @@
       "get-wpi-document-download:standard",
       "get-wpi-e-aanvragen:standard",
       "get-wpi-specificaties:standard",
-      "post-afis-oauth:standard",
       "post-afis-businesspartner-bsn:standard",
       "post-afis-businesspartner-kvk:standard",
       "post-powerbrowser-bb-vergunning-attachments:standard",

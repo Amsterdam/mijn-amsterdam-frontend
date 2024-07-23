@@ -30,7 +30,7 @@ import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { captureException } from './services/monitoring';
-import { stadspasExternalConsumerRouter } from './services/hli/router-external-consumer';
+import { stadspasExternalConsumerRouter } from './services/hli/stadspas-router-external-consumer';
 
 const app = express();
 
@@ -110,13 +110,9 @@ if (IS_OT && !IS_AP) {
 ///// Generic Router Method for All environments
 ////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
-app.use(
-  BFF_BASE_PATH,
-  nocache,
-  stadspasExternalConsumerRouter,
-  protectedRouter,
-  adminRouter
-);
+app.use(nocache, stadspasExternalConsumerRouter);
+
+app.use(BFF_BASE_PATH, nocache, protectedRouter, adminRouter);
 
 app.get(BffEndpoints.ROOT, (req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);

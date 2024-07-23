@@ -1,7 +1,7 @@
 import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
-  afisActive: !IS_AP,
+  afisActive: !IS_PRODUCTION,
   avgActive: true,
   bbDocumentDownloadsActive: IS_OT,
   bekendmakingenDatasetActive: false,
@@ -30,7 +30,8 @@ export const FeatureToggle = {
   meldingenBuurtActive: true,
   oidcLogoutHintActive: true,
   overtredingenActive: !IS_PRODUCTION,
-  parkerenActive: true,
+  parkerenActive: IS_PRODUCTION,
+  parkerenPatroonC: !IS_PRODUCTION,
   passQueryParamsToStreamUrl: !IS_AP,
   powerbrowserActive: !IS_PRODUCTION,
   profileToggleActive: true,

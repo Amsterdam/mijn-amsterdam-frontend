@@ -1,9 +1,3 @@
-export type OathResponseData = {
-  access_token: string;
-  token_type: 'bearer';
-  expires_in: number;
-};
-
 type JaOfNee = 'Ja' | 'Nee';
 
 /** Business partner private response from external AFIS API.

@@ -3,7 +3,9 @@
 # Update Dist packages and install dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM node:22-bookworm as updated-local
+
+# Switched from, node:22-bookworm because node 22.5.0 didn't build
+FROM node:22.4.1 AS updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -20,7 +22,7 @@ RUN apt-get update \
 # Start with a node image for build dependencies
 ########################################################################################################################
 ########################################################################################################################
-FROM updated-local as build-deps
+FROM updated-local AS build-deps
 
 WORKDIR /build-space
 
@@ -47,7 +49,7 @@ COPY index.html /build-space/
 # Actually building the application
 ########################################################################################################################
 ########################################################################################################################
-FROM build-deps as build-app-fe
+FROM build-deps AS build-app-fe
 
 # Universal env variables (defined in vite.config.ts)
 ARG MA_OTAP_ENV=production
@@ -81,6 +83,33 @@ ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
 ARG REACT_APP_MONITORING_CONNECTION_STRING=
 ENV REACT_APP_MONITORING_CONNECTION_STRING=$REACT_APP_MONITORING_CONNECTION_STRING
 
+ARG REACT_APP_SSO_URL_BELASTINGEN=
+ENV REACT_APP_SSO_URL_BELASTINGEN=$REACT_APP_SSO_URL_BELASTINGEN
+
+ARG REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK=
+ENV REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK=$REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK
+
+ARG REACT_APP_SSO_URL_SUBSIDIES=
+ENV REACT_APP_SSO_URL_SUBSIDIES=$REACT_APP_SSO_URL_SUBSIDIES
+
+ARG REACT_APP_SSO_URL_MIJNERFPACHT=
+ENV REACT_APP_SSO_URL_MIJNERFPACHT=$REACT_APP_SSO_URL_MIJNERFPACHT
+
+ARG REACT_APP_SSO_URL_MIJNERFPACHT_ZAKELIJK=
+ENV REACT_APP_SSO_URL_MIJNERFPACHT_ZAKELIJK=$REACT_APP_SSO_URL_MIJNERFPACHT_ZAKELIJK
+
+ARG REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK=
+ENV REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK=$REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK
+
+ARG REACT_APP_SSO_URL_MILIEUZONE=
+ENV REACT_APP_SSO_URL_MILIEUZONE=$REACT_APP_SSO_URL_MILIEUZONE
+
+ARG REACT_APP_SSO_URL_SVWI=
+ENV REACT_APP_SSO_URL_SVWI=$REACT_APP_SSO_URL_SVWI
+
+ARG REACT_APP_SSO_URL_PARKEREN=
+ENV REACT_APP_SSO_URL_PARKEREN=$REACT_APP_SSO_URL_PARKEREN
+
 
 COPY public /build-space/public
 
@@ -88,7 +117,7 @@ COPY public /build-space/public
 RUN npm run build
 
 # Build BFF
-FROM build-deps as build-app-bff
+FROM build-deps AS build-app-bff
 
 RUN npm run bff-api:build
 
@@ -98,7 +127,7 @@ RUN npm run bff-api:build
 # Front-end Web server image (Acceptance, Production)
 ########################################################################################################################
 ########################################################################################################################
-FROM nginx:latest as deploy-frontend
+FROM nginx:latest AS deploy-frontend
 
 ENV TZ=Europe/Amsterdam
 
@@ -127,7 +156,7 @@ CMD nginx -g 'daemon off;'
 # Front-end Web server image Production
 ########################################################################################################################
 ########################################################################################################################
-FROM deploy-frontend as deploy-production-frontend
+FROM deploy-frontend AS deploy-production-frontend
 COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 
 
@@ -136,7 +165,7 @@ COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 # Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM updated-local as deploy-bff
+FROM updated-local AS deploy-bff
 
 WORKDIR /app
 
@@ -176,7 +205,7 @@ COPY src/server/views /app/build-bff/server/views
 # Run the app
 CMD /usr/local/bin/docker-entrypoint-bff.sh
 
-FROM deploy-bff as deploy-bff-az
+FROM deploy-bff AS deploy-bff-az
 
 # ssh ( see also: https://github.com/Azure-Samples/docker-django-webapp-linux )
 ARG SSH_PASSWD
