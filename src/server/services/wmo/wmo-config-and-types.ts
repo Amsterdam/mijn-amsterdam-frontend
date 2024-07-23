@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { ZaakDetail } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import {
   BeschikkingsResultaat,
   LeveringsVorm,
@@ -61,6 +61,7 @@ export interface WMOVoorzieningFrontend extends ZaakDetail {
   itemTypeCode: ProductSoortCode;
   dateDescision: string;
   resultaat: string;
+  documents: GenericDocument[];
   dateStart: string | null;
   dateEnd: string | null;
   status: string;

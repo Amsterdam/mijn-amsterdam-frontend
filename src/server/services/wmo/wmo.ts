@@ -5,7 +5,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { StatusLineItem } from '../../../universal/types';
+import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { BffEndpoints } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
@@ -20,11 +20,12 @@ import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import { isAfter } from 'date-fns';
 
-function addDocumentLinksToLineItems(
+function getDocuments(
   sessionID: AuthProfileAndToken['profile']['sid'],
-  aanvraagTransformed: ZorgnedAanvraagTransformed,
-  statusLineItems: StatusLineItem[]
+  aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
+  let documents: GenericDocument[] = [];
+
   function getAanvraagDocumentenFrontend() {
     return aanvraagTransformed.documenten.map((document) => {
       const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
@@ -38,8 +39,23 @@ function addDocumentLinksToLineItems(
     });
   }
 
+  if (
+    FeatureToggle.zorgnedDocumentAttachmentsActive &&
+    aanvraagTransformed.documenten.length === 1 &&
+    parseISO(aanvraagTransformed.datumAanvraag) >=
+      MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+  ) {
+    documents = getAanvraagDocumentenFrontend();
+  }
+
+  return documents;
+}
+
+function addAltDocumentContentToLineItems(
+  aanvraagTransformed: ZorgnedAanvraagTransformed,
+  statusLineItems: StatusLineItem[]
+) {
   return statusLineItems.map((lineItem) => {
-    // NOTE: We only show a single document for now. If document management and processing policy is implemented in Zorgned/WMO we'll show more documents.
     if (lineItem.status === 'Besluit') {
       if (
         FeatureToggle.zorgnedDocumentAttachmentsActive &&
@@ -47,16 +63,11 @@ function addDocumentLinksToLineItems(
         parseISO(aanvraagTransformed.datumAanvraag) >=
           MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
       ) {
-        lineItem.documents = getAanvraagDocumentenFrontend();
+        lineItem.altDocumentContent = `<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>`;
       } else {
-        lineItem.altDocumentContent = `<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>`;
+        lineItem.altDocumentContent = `<p><strong>Verstuurd per post</strong></p>`;
       }
     }
-
     return lineItem;
   });
 }
@@ -88,13 +99,12 @@ function transformVoorzieningenForFrontend(
     }
 
     const statusLineItems = Array.isArray(lineItems)
-      ? addDocumentLinksToLineItems(sessionID, aanvraag, lineItems)
+      ? addAltDocumentContentToLineItems(aanvraag, lineItems)
       : [];
 
     const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
       id,
     });
-
     if (statusLineItems) {
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
@@ -105,6 +115,7 @@ function transformVoorzieningenForFrontend(
           title: 'Meer informatie',
           to: route,
         },
+        documents: getDocuments(sessionID, aanvraag),
         steps: statusLineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
@@ -146,5 +157,6 @@ export async function fetchWmo(
 
 export const forTesting = {
   transformVoorzieningenForFrontend,
-  addDocumentLinksToLineItems,
+  getDocuments,
+  addAltDocumentContentToLineItems,
 };

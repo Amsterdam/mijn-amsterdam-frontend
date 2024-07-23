@@ -9,8 +9,6 @@ export default function ZorgDetail() {
       stateKey="WMO"
       thema="ZORG"
       pageContent={(isLoading, statusItem) => {
-        let documents = statusItem?.steps?.flatMap((step) => step.documents);
-
         const rows = [];
         if (statusItem?.resultaat) {
           rows.push({ content: statusItem?.resultaat, label: 'Resultaat' });
@@ -26,13 +24,14 @@ export default function ZorgDetail() {
                 <Datalist rows={rows} />
               </Grid.Cell>
             )}
-
-            <Grid.Cell span="all">
-              <DocumentListV2
-                documents={documents}
-                columns={['Documenten', 'Verzenddatum']}
-              />
-            </Grid.Cell>
+            {status?.documents?.length > 0 && (
+              <Grid.Cell span="all">
+                <DocumentListV2
+                  documents={statusItem.documents}
+                  columns={['Documenten', 'Verzenddatum']}
+                />
+              </Grid.Cell>
+            )}
           </>
         );
       }}
