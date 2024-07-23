@@ -84,7 +84,9 @@ describe('Vergunningen service', () => {
   });
 
   it('fetchVergunningenNotifications commercial', async () => {
-    remoteApi.get('/decosjoin/getvergunningen').reply(200, DUMMY_RESPONSE);
+    remoteApi
+      .get('/vergunningen-koppel-api/decosjoin/getvergunningen')
+      .reply(200, DUMMY_RESPONSE);
 
     const response = await fetchVergunningenNotifications(
       'x4',
@@ -108,7 +110,9 @@ describe('Vergunningen service', () => {
       x.caseType.includes('Blauwe zone')
     );
 
-    remoteApi.get('/decosjoin/getvergunningen').reply(200, { content: zaken });
+    remoteApi
+      .get('/vergunningen-koppel-api/decosjoin/getvergunningen')
+      .reply(200, { content: zaken });
 
     const response = await fetchVergunningenNotifications(
       'x5',

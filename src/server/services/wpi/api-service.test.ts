@@ -1,4 +1,5 @@
 import MockDate from 'mockdate';
+import nock from 'nock';
 
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
@@ -98,7 +99,7 @@ describe('wpi/app-service', () => {
 
   test('fetchRequestProcess', async () => {
     remoteApi
-      .get('/wpi-remote-api/wpi/uitkering/aanvragen')
+      .get('/wpi-koppel-api/wpi/uitkering/aanvragen')
       .reply(200, { status: 'OK', content });
 
     const fetchConfig: FetchConfig = {
@@ -145,7 +146,7 @@ describe('wpi/app-service', () => {
     const fetchConfig: FetchConfig = {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse: vi.fn((response) => response.content),
-      requestCacheKey: 'test-fetch-request-process',
+      requestCacheKey: 'test-fetch-request-for-fetchRequestProcess-with-error',
     };
 
     const getLabelsMock = vi.fn(

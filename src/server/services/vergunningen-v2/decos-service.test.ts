@@ -14,6 +14,7 @@ import {
   fetchDecosZakenFromSource,
   forTesting,
 } from './decos-service';
+import nock from 'nock';
 
 const zakenSource = {
   count: 1,
@@ -135,7 +136,7 @@ describe('decos-service', () => {
       expect(responseData.content).toBe(null);
     });
 
-    test('Error response in folders', async () => {
+    test('Error response in folders 1', async () => {
       remoteApi
         .post(/\/decos\/search\/books/)
         .times(numberOfAddressBooksToSearch)
@@ -158,7 +159,7 @@ describe('decos-service', () => {
       expect(responseData.content).toBe(null);
     });
 
-    test('Error response in folders', async () => {
+    test('Error response in folders 2', async () => {
       remoteApi
         .post(/\/decos\/search\/books/)
         .times(numberOfAddressBooksToSearch)
