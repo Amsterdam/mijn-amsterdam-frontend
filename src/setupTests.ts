@@ -4,6 +4,15 @@ import { cleanup } from '@testing-library/react';
 import nock from 'nock';
 import { vi, afterEach, expect, afterAll } from 'vitest';
 
+vi.mock('./server/helpers/env.ts', async (importOriginal) => {
+  const envModule = (await importOriginal()) as any;
+  return {
+    ...envModule,
+    // Prevent isRequired from spamming logs or throwing errors by ignoring it.
+    getFromEnv: (key: string) => process.env[key],
+  };
+});
+
 global.matchMedia =
   global.matchMedia ||
   function () {
