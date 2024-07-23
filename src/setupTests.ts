@@ -9,7 +9,7 @@ vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   return {
     ...envModule,
     // Prevent isRequired from spamming logs or throwing errors by ignoring it.
-    getFromEnv: (key: string, _isRequired: boolean = true) => process.env[key],
+    getFromEnv: (key: string) => process.env[key],
   };
 });
 
