@@ -49,7 +49,7 @@ export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';
 
 process.env.BFF_DB_FILE = ':memory:';
-process.env.REACT_APP_BFF_API_URL = bffApiHost;
+import.meta.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
@@ -119,7 +119,7 @@ process.env.BFF_LOOD_PWD = 'pwd';
 process.env.BFF_LOOD_TENANT = 'tenantid';
 process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 
-process.env.REACT_APP_SSO_URL_BELASTINGEN = `${remoteApiHost}/sso/portaal/belastingen`;
-process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuzone`;
+import.meta.env.REACT_APP_SSO_URL_BELASTINGEN = `${remoteApiHost}/sso/portaal/belastingen/`;
+import.meta.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuzone`;
 
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/administratienummer`;

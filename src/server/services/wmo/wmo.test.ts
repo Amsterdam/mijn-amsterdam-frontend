@@ -39,7 +39,7 @@ describe('Transform api items', () => {
     ).toMatchSnapshot();
   });
 
-  describe('addDocumentLinksToLineItems', () => {
+  describe('addAltDocumentContentToLineItems', () => {
     const aanvraag = {
       datumAanvraag: '2024-06-14',
       documenten: [
@@ -64,23 +64,15 @@ describe('Transform api items', () => {
 
     test('Assign documents after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
       expect(
-        forTesting.addDocumentLinksToLineItems(
-          'xx1xx',
+        forTesting.addAltDocumentContentToLineItems(
           jsonCopy(aanvraag),
           jsonCopy(lineItems)
         )
       ).toMatchInlineSnapshot(`
         [
           {
+            "altDocumentContent": "<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>",
             "datePublished": "2024-06-24",
-            "documents": [
-              {
-                "datePublished": "2024-06-24",
-                "id": "document-1",
-                "title": "Brief",
-                "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
-              },
-            ],
             "id": "step-1",
             "isActive": true,
             "isChecked": true,
@@ -92,19 +84,14 @@ describe('Transform api items', () => {
 
     test('Assign documents before MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
       expect(
-        forTesting.addDocumentLinksToLineItems(
-          'xx1xx',
+        forTesting.addAltDocumentContentToLineItems(
           jsonCopy({ ...aanvraag, datumAanvraag: '2017-04-12' }),
           jsonCopy(lineItems)
         )
       ).toMatchInlineSnapshot(`
         [
           {
-            "altDocumentContent": "<p>
-                      <strong>
-                        Verstuurd per post
-                      </strong>
-                    </p>",
+            "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
             "datePublished": "2024-06-24",
             "id": "step-1",
             "isActive": true,
@@ -123,24 +110,67 @@ describe('Transform api items', () => {
 
       expect(aanvraag2.documenten.length).toBe(2);
 
+      expect(forTesting.addAltDocumentContentToLineItems(aanvraag2, lineItems2))
+        .toMatchInlineSnapshot(`
+          [
+            {
+              "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
+              "datePublished": "2024-06-24",
+              "id": "step-1",
+              "isActive": true,
+              "isChecked": true,
+              "status": "Besluit",
+            },
+          ]
+        `);
+    });
+  });
+
+  describe('getDocuments', () => {
+    const aanvraag = {
+      datumAanvraag: '2024-06-14',
+      documenten: [
+        {
+          id: 'document-1',
+          title: 'Document 1',
+          datePublished: '2024-06-24',
+          url: '',
+        },
+      ],
+    } as ZorgnedAanvraagTransformed;
+
+    test('Assign documents after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
+      expect(forTesting.getDocuments('xxx-222', jsonCopy(aanvraag)))
+        .toMatchInlineSnapshot(`
+          [
+            {
+              "datePublished": "2024-06-24",
+              "id": "document-1",
+              "title": "Brief",
+              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+            },
+          ]
+        `);
+    });
+
+    test('Assign documents before MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
       expect(
-        forTesting.addDocumentLinksToLineItems('xx1xx', aanvraag2, lineItems2)
-      ).toMatchInlineSnapshot(`
-        [
-          {
-            "altDocumentContent": "<p>
-                      <strong>
-                        Verstuurd per post
-                      </strong>
-                    </p>",
-            "datePublished": "2024-06-24",
-            "id": "step-1",
-            "isActive": true,
-            "isChecked": true,
-            "status": "Besluit",
-          },
-        ]
-      `);
+        forTesting.getDocuments(
+          'xxx-222',
+          jsonCopy({ ...aanvraag, datumAanvraag: '2017-04-12' })
+        )
+      ).toMatchInlineSnapshot(`[]`);
+    });
+
+    test('Assign documents with multiple docs after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
+      const aanvraag2: ZorgnedAanvraagTransformed = jsonCopy(aanvraag);
+
+      aanvraag2.documenten[1] = aanvraag2.documenten[0];
+
+      expect(aanvraag2.documenten.length).toBe(2);
+
+      expect(forTesting.getDocuments('xxx-222', aanvraag2))
+        .toMatchInlineSnapshot(`[]`);
     });
   });
 });

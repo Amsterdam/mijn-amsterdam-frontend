@@ -7,6 +7,14 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2023-03-16",
       "dateEnd": "2024-03-11",
       "dateStart": "2023-03-12",
+      "documents": [
+        {
+          "datePublished": "2023-03-16T15:56:11.41",
+          "id": "B2516440",
+          "title": "Brief",
+          "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+        },
+      ],
       "id": "1986585525",
       "isActual": true,
       "itemTypeCode": "WMH",
@@ -14,8 +22,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1986585525",
       },
+      "resultaat": "toegewezen",
+      "status": "Levering gestart",
       "steps": [
         {
+          "altDocumentContent": "<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>",
           "datePublished": "2023-03-16",
           "description": "
               <p>
@@ -28,14 +39,7 @@ exports[`Transform api items > fetchWmo 1`] = `
                   
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2023-03-16T15:56:11.41",
-              "id": "B2516440",
-              "title": "Brief",
-              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -86,6 +90,14 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2023-03-01",
       "dateEnd": null,
       "dateStart": "2022-12-21",
+      "documents": [
+        {
+          "datePublished": "2023-03-02T11:17:08.293",
+          "id": "B2510020",
+          "title": "Brief",
+          "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+        },
+      ],
       "id": "890306301",
       "isActual": true,
       "itemTypeCode": "ROL",
@@ -93,8 +105,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/890306301",
       },
+      "resultaat": "toegewezen",
+      "status": "Product geleverd",
       "steps": [
         {
+          "altDocumentContent": "<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>",
           "datePublished": "2023-03-01",
           "description": "
             <p>
@@ -105,14 +120,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2023-03-02T11:17:08.293",
-              "id": "B2510020",
-              "title": "Brief",
-              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -163,6 +171,14 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2022-10-20",
       "dateEnd": null,
       "dateStart": "2022-10-19",
+      "documents": [
+        {
+          "datePublished": "2022-10-19T14:27:42.643",
+          "id": "B2391009",
+          "title": "Brief",
+          "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+        },
+      ],
       "id": "2941866748",
       "isActual": true,
       "itemTypeCode": "AOV",
@@ -170,8 +186,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2941866748",
       },
+      "resultaat": "toegewezen",
+      "status": "Besluit",
       "steps": [
         {
+          "altDocumentContent": "<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>",
           "datePublished": "2022-10-20",
           "description": "
             <p>
@@ -183,14 +202,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2022-10-19T14:27:42.643",
-              "id": "B2391009",
-              "title": "Brief",
-              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": true,
           "isChecked": true,
@@ -217,6 +229,14 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2022-04-15",
       "dateEnd": null,
       "dateStart": "2022-03-24",
+      "documents": [
+        {
+          "datePublished": "2022-04-19T13:16:44",
+          "id": "B2268406",
+          "title": "Brief",
+          "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+        },
+      ],
       "id": "3476086687",
       "isActual": true,
       "itemTypeCode": "WRA3",
@@ -224,8 +244,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3476086687",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
+          "altDocumentContent": "<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>",
           "datePublished": "2022-04-15",
           "description": "
             <p>
@@ -236,14 +259,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
             </p>
           ",
-          "documents": [
-            {
-              "datePublished": "2022-04-19T13:16:44",
-              "id": "B2268406",
-              "title": "Brief",
-              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -296,6 +312,14 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2022-03-14",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
+      "documents": [
+        {
+          "datePublished": "2022-03-14T16:12:12",
+          "id": "B2258816",
+          "title": "Brief",
+          "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+        },
+      ],
       "id": "955409908",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -303,8 +327,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/955409908",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
+          "altDocumentContent": "<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>",
           "datePublished": "2022-03-14",
           "description": "
               <p>
@@ -315,14 +342,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2022-03-14T16:12:12",
-              "id": "B2258816",
-              "title": "Brief",
-              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -374,6 +394,14 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2022-03-14",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
+      "documents": [
+        {
+          "datePublished": "2022-03-14T16:11:29",
+          "id": "B2258817",
+          "title": "Brief",
+          "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+        },
+      ],
       "id": "1811284656",
       "isActual": false,
       "itemTypeCode": "WMH",
@@ -381,8 +409,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1811284656",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
+          "altDocumentContent": "<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>",
           "datePublished": "2022-03-14",
           "description": "
               <p>
@@ -393,14 +424,7 @@ exports[`Transform api items > fetchWmo 1`] = `
               indienen.
               </p>
             ",
-          "documents": [
-            {
-              "datePublished": "2022-03-14T16:11:29",
-              "id": "B2258817",
-              "title": "Brief",
-              "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
-            },
-          ],
+          "documents": [],
           "id": "status-step-0",
           "isActive": false,
           "isChecked": true,
@@ -452,6 +476,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-12-08",
       "dateEnd": null,
       "dateStart": "2021-12-20",
+      "documents": [],
       "id": "1035945789",
       "isActual": true,
       "itemTypeCode": "WRA2",
@@ -459,13 +484,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1035945789",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-12-08",
           "description": "
             <p>
@@ -529,6 +552,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-12-08",
       "dateEnd": null,
       "dateStart": "2021-12-08",
+      "documents": [],
       "id": "1035945788",
       "isActual": true,
       "itemTypeCode": "WRA2",
@@ -536,13 +560,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1035945788",
       },
+      "resultaat": "toegewezen",
+      "status": "Opdracht gegeven",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-12-08",
           "description": "
             <p>
@@ -606,6 +628,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-12-06",
       "dateEnd": "2022-02-06",
       "dateStart": "2021-12-06",
+      "documents": [],
       "id": "2248022546",
       "isActual": false,
       "itemTypeCode": "WRA2",
@@ -613,13 +636,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2248022546",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-12-06",
           "description": "
             <p>
@@ -683,6 +704,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-10-22",
       "dateEnd": null,
       "dateStart": "2021-10-13",
+      "documents": [],
       "id": "3645917971",
       "isActual": true,
       "itemTypeCode": "WRA3",
@@ -690,13 +712,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3645917971",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-10-22",
           "description": "
             <p>
@@ -760,6 +780,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
+      "documents": [],
       "id": "3608314454",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -767,13 +788,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3608314454",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -836,6 +855,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
+      "documents": [],
       "id": "2624361688",
       "isActual": false,
       "itemTypeCode": "AWBG",
@@ -843,13 +863,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2624361688",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -912,6 +930,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
+      "documents": [],
       "id": "2758572638",
       "isActual": false,
       "itemTypeCode": "WMH",
@@ -919,13 +938,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2758572638",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-03-11",
           "description": "
               <p>
@@ -988,6 +1005,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
+      "documents": [],
       "id": "226616664",
       "isActual": false,
       "itemTypeCode": "AWBG",
@@ -995,13 +1013,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/226616664",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1064,6 +1080,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
+      "documents": [],
       "id": "1855927508",
       "isActual": false,
       "itemTypeCode": "WMH",
@@ -1071,13 +1088,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1855927508",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1140,6 +1155,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
+      "documents": [],
       "id": "1499176916",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -1147,13 +1163,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1499176916",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2021-01-09",
           "description": "
               <p>
@@ -1216,6 +1230,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2020-12-04",
       "dateEnd": null,
       "dateStart": "2020-11-13",
+      "documents": [],
       "id": "4005950334",
       "isActual": true,
       "itemTypeCode": "WRA3",
@@ -1223,13 +1238,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4005950334",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2020-12-04",
           "description": "
             <p>
@@ -1293,6 +1306,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2020-06-16",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-06-15",
+      "documents": [],
       "id": "3303327448",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -1300,13 +1314,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3303327448",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2020-06-16",
           "description": "
               <p>
@@ -1369,6 +1381,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2020-06-18",
       "dateEnd": null,
       "dateStart": "2020-06-10",
+      "documents": [],
       "id": "134062321",
       "isActual": true,
       "itemTypeCode": "RWD",
@@ -1376,13 +1389,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/134062321",
       },
+      "resultaat": "toegewezen",
+      "status": "Product geleverd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2020-06-18",
           "description": "
             <p>
@@ -1444,6 +1455,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2020-06-05",
       "dateEnd": "2020-08-05",
       "dateStart": "2020-06-05",
+      "documents": [],
       "id": "1809360062",
       "isActual": false,
       "itemTypeCode": "WRA3",
@@ -1451,13 +1463,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1809360062",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2020-06-05",
           "description": "
             <p>
@@ -1508,6 +1518,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2020-03-12",
       "dateEnd": "2020-06-14",
       "dateStart": "2020-03-09",
+      "documents": [],
       "id": "3441632088",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -1515,13 +1526,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3441632088",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1584,6 +1593,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2020-03-12",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
+      "documents": [],
       "id": "636127578",
       "isActual": false,
       "itemTypeCode": "AWBG",
@@ -1591,13 +1601,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/636127578",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1660,6 +1668,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2020-03-12",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
+      "documents": [],
       "id": "1926069212",
       "isActual": false,
       "itemTypeCode": "WMH",
@@ -1667,13 +1676,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1926069212",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2020-03-12",
           "description": "
               <p>
@@ -1736,6 +1743,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2019-10-09",
       "dateEnd": "2019-12-09",
       "dateStart": "2019-10-09",
+      "documents": [],
       "id": "954761814",
       "isActual": false,
       "itemTypeCode": "WRA3",
@@ -1743,13 +1751,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/954761814",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2019-10-09",
           "description": "
             <p>
@@ -1813,6 +1819,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2019-04-15",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-04-14",
+      "documents": [],
       "id": "446200219",
       "isActual": false,
       "itemTypeCode": "WMH",
@@ -1820,13 +1827,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/446200219",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2019-04-15",
           "description": "
               <p>
@@ -1889,6 +1894,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2019-03-11",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
+      "documents": [],
       "id": "938485502",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -1896,13 +1902,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/938485502",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2019-03-11",
           "description": "
               <p>
@@ -1965,6 +1969,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2019-03-11",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
+      "documents": [],
       "id": "1175100182",
       "isActual": false,
       "itemTypeCode": "AWBG",
@@ -1972,13 +1977,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1175100182",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2019-03-11",
           "description": "
               <p>
@@ -2041,6 +2044,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2018-11-29",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-11-28",
+      "documents": [],
       "id": "300203506",
       "isActual": false,
       "itemTypeCode": "AWBG",
@@ -2048,13 +2052,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/300203506",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2018-11-29",
           "description": "
               <p>
@@ -2117,6 +2119,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2018-12-27",
       "dateEnd": null,
       "dateStart": "2018-10-24",
+      "documents": [],
       "id": "2889701237",
       "isActual": true,
       "itemTypeCode": "WRA",
@@ -2124,13 +2127,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2889701237",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2018-12-27",
           "description": "
             <p>
@@ -2194,6 +2195,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2018-04-25",
       "dateEnd": "2019-04-13",
       "dateStart": "2018-04-14",
+      "documents": [],
       "id": "4058168346",
       "isActual": false,
       "itemTypeCode": "WMH",
@@ -2201,13 +2203,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4058168346",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2018-04-25",
           "description": "
               <p>
@@ -2270,6 +2270,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2018-04-19",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-03-09",
+      "documents": [],
       "id": "2707273693",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -2277,13 +2278,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2707273693",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2018-04-19",
           "description": "
               <p>
@@ -2346,6 +2345,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2017-11-24",
       "dateEnd": "2018-11-23",
       "dateStart": "2017-11-24",
+      "documents": [],
       "id": "3209335922",
       "isActual": false,
       "itemTypeCode": "AWBG",
@@ -2353,13 +2353,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3209335922",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2017-11-24",
           "description": "
               <p>
@@ -2422,6 +2420,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2017-06-01",
       "dateEnd": "2018-04-13",
       "dateStart": "2017-06-01",
+      "documents": [],
       "id": "3783046999",
       "isActual": false,
       "itemTypeCode": "WMH",
@@ -2429,13 +2428,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3783046999",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2017-06-01",
           "description": "
               <p>
@@ -2498,6 +2495,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2017-06-01",
       "dateEnd": "2018-03-08",
       "dateStart": "2017-06-01",
+      "documents": [],
       "id": "477515900",
       "isActual": false,
       "itemTypeCode": "DBS",
@@ -2505,13 +2503,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/477515900",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2017-06-01",
           "description": "
               <p>
@@ -2574,6 +2570,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2014-09-09",
       "dateEnd": "2022-12-20",
       "dateStart": "2014-09-08",
+      "documents": [],
       "id": "2067143485",
       "isActual": false,
       "itemTypeCode": "OVE",
@@ -2581,13 +2578,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2067143485",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2014-09-09",
           "description": "
             <p>
@@ -2649,6 +2644,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2014-09-11",
       "dateEnd": null,
       "dateStart": "2014-09-08",
+      "documents": [],
       "id": "4216491004",
       "isActual": true,
       "itemTypeCode": "WRA",
@@ -2656,13 +2652,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4216491004",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2014-09-11",
           "description": "
             <p>
@@ -2726,6 +2720,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2013-12-09",
       "dateEnd": null,
       "dateStart": "2013-12-05",
+      "documents": [],
       "id": "2730893522",
       "isActual": true,
       "itemTypeCode": "WRA",
@@ -2733,13 +2728,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2730893522",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2013-12-09",
           "description": "
             <p>
@@ -2803,6 +2796,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2013-05-17",
       "dateEnd": null,
       "dateStart": "2013-05-06",
+      "documents": [],
       "id": "1672363416",
       "isActual": true,
       "itemTypeCode": "WRA",
@@ -2810,13 +2804,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1672363416",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2013-05-17",
           "description": "
             <p>
@@ -2880,6 +2872,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2012-10-05",
       "dateEnd": "2020-06-09",
       "dateStart": "2012-10-05",
+      "documents": [],
       "id": "1703298224",
       "isActual": false,
       "itemTypeCode": "RWD",
@@ -2887,13 +2880,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1703298224",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2012-10-05",
           "description": "
             <p>
@@ -2955,6 +2946,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescision": "2012-08-07",
       "dateEnd": "2022-07-31",
       "dateStart": "2012-08-07",
+      "documents": [],
       "id": "4046397887",
       "isActual": false,
       "itemTypeCode": "AOV",
@@ -2962,13 +2954,11 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4046397887",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
-          "altDocumentContent": "<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>",
+          "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
           "datePublished": "2012-08-07",
           "description": "
             <p>
