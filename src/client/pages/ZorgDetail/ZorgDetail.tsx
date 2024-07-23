@@ -22,14 +22,12 @@ export default function ZorgDetail() {
             {!!rows.length && (
               <Grid.Cell span="all">
                 <Datalist rows={rows} />
-              </Grid.Cell>
-            )}
-            {status?.documents?.length > 0 && (
-              <Grid.Cell span="all">
-                <DocumentListV2
-                  documents={statusItem.documents}
-                  columns={['Documenten', 'Verzenddatum']}
-                />
+                {statusItem?.documents.length > 0 && (
+                  <DocumentListV2
+                    documents={statusItem.documents}
+                    columns={['Documenten', 'Verzenddatum']}
+                  />
+                )}
               </Grid.Cell>
             )}
           </>
