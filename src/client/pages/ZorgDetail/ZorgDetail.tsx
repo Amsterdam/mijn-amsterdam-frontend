@@ -15,18 +15,18 @@ export default function ZorgDetail() {
           statusItem?.resultaat && capitalizeFirstLetter(statusItem?.resultaat);
         return (
           <>
-            {resultaat && (
-              <Grid.Cell span="all">
-                <Datalist rows={[{ content: resultaat, label: 'Resultaat' }]} />
-              </Grid.Cell>
-            )}
-            {statusItem?.supplier && (
-              <Grid.Cell span="all">
-                <Datalist
-                  rows={[{ content: statusItem.supplier, label: 'Aanbieder' }]}
-                />
-              </Grid.Cell>
-            )}
+const rows = [];
+if (statusItem?.resultaat) {
+  rows.push({ content: statusItem?.resultaat, label: 'Resultaat' });
+}
+if (statusItem?.supplier) {
+  rows.push({ content: statusItem?.supplier, label: 'Aanbieder' });
+}
+{
+  !!rows.length && <Grid.Cell span="all">
+    <Datalist rows={rows} />
+  </Grid.Cell>
+}
             <Grid.Cell span="all">
               <DocumentListV2
                 documents={documents}
