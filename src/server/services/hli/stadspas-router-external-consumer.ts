@@ -17,7 +17,12 @@ import { requestData } from '../../helpers/source-api-request';
 import { apiKeyVerificationHandler } from '../../middleware';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
+import {
+  fetchPasBudgetTransactions,
+  fetchStadspassenByAdministratienummer,
+  fetchTransacties,
+} from './stadspas-gpass-service';
+import { handleFetchTransactionsRequest } from './stadspas-route-handlers';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -176,6 +181,45 @@ router.get(
   ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
   apiKeyVerificationHandler,
   sendStadspassenResponse
+);
+
+async function sendBudgetTransactiesResponse(
+  req: Request<{ pasNummer: string }>,
+  res: Response
+) {
+  function sendBadRequest(reason: string) {
+    return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
+  }
+
+  if (!req.params?.pasNummer || isNaN(Number(req.params.pasNummer))) {
+    return sendBadRequest(
+      'pasNummer in digit form required as an url parameter.'
+    );
+  }
+
+  if (
+    !req.body.administratieNummer ||
+    typeof req.body.administratieNummer !== 'string'
+  ) {
+    return sendBadRequest(
+      'administratieNummer in body required like so { administratieNummer: <string> }'
+    );
+  }
+
+  // RP TODO: How to get requestID? now '1'
+  const response = await fetchPasBudgetTransactions(
+    '1',
+    req.body.administratieNummber,
+    req.params.pasNummer
+  );
+
+  return res.send(response);
+}
+
+router.get(
+  ExternalConsumerEndpoints.private.STADPAS_TRANSACTIES,
+  apiKeyVerificationHandler,
+  sendBudgetTransactiesResponse
 );
 
 export const stadspasExternalConsumerRouter = router;

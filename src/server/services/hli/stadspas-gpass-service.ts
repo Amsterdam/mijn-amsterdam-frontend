@@ -247,11 +247,12 @@ function transformGpassTransactionsResponse(
     }
   );
 }
-async function fetchPasBudgetTransactions(
+
+export async function fetchPasBudgetTransactions(
   requestID: requestID,
   administratienummer: string,
   passNumber: Stadspas['passNumber'],
-  budgetCode: StadspasBudget['code']
+  budgetCode?: StadspasBudget['code']
 ) {
   const requestParams = {
     pasnummer: passNumber,

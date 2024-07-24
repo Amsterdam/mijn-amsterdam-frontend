@@ -413,6 +413,7 @@ export const ExternalConsumerEndpoints = {
   // Privately accessible
   private: {
     STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
+    STADPAS_TRANSACTIES: `${BFF_BASE_PATH_PRIVATE}/services/stadspas/transacties/:pasNummer`,
   },
 };
 
