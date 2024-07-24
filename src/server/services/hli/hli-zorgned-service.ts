@@ -16,8 +16,15 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
+import { isDateInPast } from '../../../universal/helpers/date';
 import { ONE_SECOND_MS } from '../../config';
-import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
+
+function isEindeGeldigheidVerstreken(aanvraag: ZorgnedAanvraagTransformed) {
+  return (
+    !!aanvraag.datumEindeGeldigheid &&
+    isDateInPast(aanvraag.datumEindeGeldigheid)
+  );
+}
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -83,11 +90,9 @@ function transformZorgnedBetrokkeneNaamResponse(
 
 export async function fetchNamenBetrokkenen_(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
   userIDs: string[]
 ) {
   const requests = userIDs.map((userID) => {
-    authProfileAndToken.token = ''; // Token is bound to another ID, we don't need it and don't want to mistakenly use it anyway.
     return fetchPersoonsgegevensNAW(requestID, userID, 'ZORGNED_AV');
   });
 

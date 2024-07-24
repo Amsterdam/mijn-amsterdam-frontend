@@ -5,8 +5,8 @@ import {
 } from './zorgned-config-and-types';
 import { parseLabelContent } from './zorgned-helpers';
 
-// If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found, we set the match to true so the check doesn't influence
-// the selection criteria
+// If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
+// we set the match to true so the check doesn't influence the selection criteria and returns items by default.
 const PASS_MATCH_DEFAULT = true;
 
 function getStatusLineItemTransformers(

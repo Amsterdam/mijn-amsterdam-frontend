@@ -21,6 +21,7 @@ import {
   fetchZorgnedAanvragenHLI,
 } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
+import { combineUpcPcvDocuments } from './status-line-items/pcvergoeding';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,
@@ -56,6 +57,52 @@ function getDocumentsFrontend(
   });
 }
 
+async function transformRegelingForFrontend(
+  requestID: requestID,
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  aanvraag: ZorgnedAanvraagTransformed,
+  statusLineItems: StatusLineItem[]
+) {
+  const id = aanvraag.id;
+
+  const route = generatePath(AppRoutes['HLI/REGELING'], {
+    id,
+    regeling: slug(aanvraag.titel),
+  });
+
+  let namen: string[] = [];
+
+  if (aanvraag.betrokkenen?.length) {
+    const namenResponse = await fetchNamenBetrokkenen(
+      requestID,
+      aanvraag.betrokkenen
+    );
+    if (namenResponse.status === 'OK') {
+      namen = namenResponse.content;
+    }
+  }
+
+  const regelingFrontend: HLIRegeling = {
+    id,
+    title: capitalizeFirstLetter(aanvraag.titel),
+    isActual: aanvraag.isActueel,
+    link: {
+      title: 'Meer informatie',
+      to: route,
+    },
+    steps: statusLineItems,
+    dateDecision: aanvraag.datumBesluit,
+    dateStart: aanvraag.datumIngangGeldigheid,
+    dateEnd: aanvraag.datumEindeGeldigheid,
+    decision: aanvraag.resultaat,
+    displayStatus: getDisplayStatus(aanvraag, statusLineItems),
+    receiver: namen.join(', '),
+    documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
+  };
+
+  return regelingFrontend;
+}
+
 export async function transformRegelingenForFrontend(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -64,9 +111,9 @@ export async function transformRegelingenForFrontend(
 ): Promise<HLIRegeling[]> {
   const regelingenFrontend: HLIRegeling[] = [];
 
-  for (const aanvraag of aanvragen) {
-    const id = aanvraag.id;
+  const aanvragenWithDocumentsCombined = combineUpcPcvDocuments(aanvragen);
 
+  for (const aanvraag of aanvragenWithDocumentsCombined) {
     const statusLineItems = getStatusLineItems(
       'HLI',
       hliStatusLineItemsConfig,
@@ -79,46 +126,14 @@ export async function transformRegelingenForFrontend(
       continue;
     }
 
-    const route = generatePath(AppRoutes['HLI/REGELING'], {
-      id,
-      regeling: slug(aanvraag.titel),
-    });
+    const regelingForFrontend = await transformRegelingForFrontend(
+      requestID,
+      authProfileAndToken.profile.sid,
+      aanvraag,
+      statusLineItems
+    );
 
-    if (statusLineItems) {
-      let namen: string[] = [];
-      if (aanvraag.betrokkenen?.length) {
-        const namenResponse = await fetchNamenBetrokkenen(
-          requestID,
-          authProfileAndToken,
-          aanvraag.betrokkenen
-        );
-        if (namenResponse.status === 'OK') {
-          namen = namenResponse.content;
-        }
-      }
-      const regelingFrontend: HLIRegeling = {
-        id,
-        title: capitalizeFirstLetter(aanvraag.titel),
-        isActual: aanvraag.isActueel,
-        link: {
-          title: 'Meer informatie',
-          to: route,
-        },
-        steps: statusLineItems,
-        dateDecision: aanvraag.datumBesluit,
-        dateStart: aanvraag.datumIngangGeldigheid,
-        dateEnd: aanvraag.datumEindeGeldigheid,
-        decision: aanvraag.resultaat,
-        displayStatus: getDisplayStatus(aanvraag, statusLineItems),
-        receiver: namen.join(', '),
-        documents: getDocumentsFrontend(
-          authProfileAndToken.profile.sid,
-          aanvraag.documenten
-        ),
-      };
-
-      regelingenFrontend.push(regelingFrontend);
-    }
+    regelingenFrontend.push(regelingForFrontend);
   }
 
   regelingenFrontend.sort(dateSort('dateStart', 'desc'));
