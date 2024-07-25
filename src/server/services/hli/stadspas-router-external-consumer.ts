@@ -196,6 +196,12 @@ router.get(
   sendStadspassenResponse
 );
 
+/** Sends transformed budget transactions.
+ *
+ * # Url Params
+ *
+ *  `transactionsKeyEncrypted`: is available in the response of `sendStadspassenResponse`.
+ */
 async function sendBudgetTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
