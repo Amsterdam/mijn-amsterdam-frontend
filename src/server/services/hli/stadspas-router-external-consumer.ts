@@ -18,12 +18,9 @@ import { apiKeyVerificationHandler } from '../../middleware';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
-  fetchPasBudgetTransactions,
   fetchStadspassenByAdministratienummer,
   fetchTransacties,
 } from './stadspas-gpass-service';
-import { handleFetchTransactionsRequest } from './stadspas-route-handlers';
-import { StadspasBudget } from './stadspas-types';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -209,16 +206,15 @@ async function sendBudgetTransactiesResponse(
 
   const response = await fetchTransacties(
     res.locals.requestID,
-    req.body.administratieNummber,
-    req.params.pasNummer,
-    req.query.budgetcode as StadspasBudget['code']
+    await getAuth(req.body.administratieNummer),
+    [`${req.body.administratieNummer}:${req.params.pasNummer}`]
   );
 
   return res.send(response);
 }
 
 router.get(
-  ExternalConsumerEndpoints.private.STADPAS_TRANSACTIES,
+  ExternalConsumerEndpoints.private.STADPAS_BUDGET_TRANSACTIES,
   apiKeyVerificationHandler,
   sendBudgetTransactiesResponse
 );
