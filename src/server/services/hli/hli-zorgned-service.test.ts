@@ -131,11 +131,7 @@ describe('hli-zorgned-service', () => {
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
-    const response = await fetchNamenBetrokkenen(
-      'xx2xxx',
-      authProfileAndToken,
-      ['1', '2']
-    );
+    const response = await fetchNamenBetrokkenen('xx2xxx', ['1', '2']);
 
     expect(response).toMatchInlineSnapshot(`
       {

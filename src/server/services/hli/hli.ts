@@ -21,7 +21,7 @@ import {
   fetchZorgnedAanvragenHLI,
 } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
-import { combineUpcPcvDocuments } from './status-line-items/pcvergoeding';
+import { combineUpcPcvData } from './status-line-items/pcvergoeding';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,
@@ -111,7 +111,7 @@ export async function transformRegelingenForFrontend(
 ): Promise<HLIRegeling[]> {
   const regelingenFrontend: HLIRegeling[] = [];
 
-  const aanvragenWithDocumentsCombined = combineUpcPcvDocuments(aanvragen);
+  const aanvragenWithDocumentsCombined = combineUpcPcvData(aanvragen);
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
     const statusLineItems = getStatusLineItems(

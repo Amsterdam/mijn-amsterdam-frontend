@@ -125,13 +125,15 @@ export const fetchNamenBetrokkenen = memoizee(fetchNamenBetrokkenen_, {
 
 function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);
-  let isActueel = aanvraagTransformed.isActueel;
+  const isActueel = aanvraagTransformed.isActueel;
 
   switch (true) {
+    case aanvraagTransformed.resultaat === 'afgewezen':
+      return false;
     case !aanvraagTransformed.datumIngangGeldigheid:
       return false;
     // Override actueel indien de einde geldigheid is verlopen
-    case isActueel && isEOG:
+    case isActueel && (isEOG || aanvraagTransformed.resultaat === 'afgewezen'):
       return false;
     case !isActueel && !isEOG:
       return true;
@@ -154,9 +156,10 @@ export async function fetchZorgnedAanvragenHLI(
     const aanvragenTransformed = aanvragenResponse.content.map(
       (aanvraagTransformed) => {
         // Override isActueel for front-end.
-        return Object.assign(aanvraagTransformed, {
+        return {
+          ...aanvraagTransformed,
           isActueel: isActueel(aanvraagTransformed),
-        });
+        };
       }
     );
     return apiSuccessResult(aanvragenTransformed);
