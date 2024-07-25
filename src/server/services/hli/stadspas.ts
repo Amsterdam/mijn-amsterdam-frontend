@@ -70,8 +70,6 @@ export async function fetchStadspasTransactions(
   try {
     const payload = decrypt(transactionsKeyEncrypted).split(':');
 
-    console.log('payload', payload);
-
     if (verifySessionId) {
       [sessionID, administratienummer, passNumber] = payload;
     } else {
