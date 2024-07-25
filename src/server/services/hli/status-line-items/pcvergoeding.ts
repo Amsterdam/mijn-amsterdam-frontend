@@ -1,7 +1,4 @@
-import {
-  dateSort,
-  defaultDateFormat,
-} from '../../../../universal/helpers/date';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
