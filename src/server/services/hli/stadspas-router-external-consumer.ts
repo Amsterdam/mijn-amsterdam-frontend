@@ -196,7 +196,7 @@ router.get(
   sendStadspassenResponse
 );
 
-async function sendBudgetTransactiesResponse(
+async function sendBudgetTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
@@ -212,7 +212,7 @@ async function sendBudgetTransactiesResponse(
 router.get(
   ExternalConsumerEndpoints.private.STADPAS_BUDGET_TRANSACTIES,
   apiKeyVerificationHandler,
-  sendBudgetTransactiesResponse
+  sendBudgetTransactionsResponse
 );
 
 export const stadspasExternalConsumerRouter = router;

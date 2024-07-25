@@ -10,7 +10,7 @@ import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
-  fetchPasBudgetTransactions,
+  fetchStadspasBudgetTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';
@@ -87,7 +87,7 @@ export async function fetchStadspasTransactions(
     return apiErrorResult('Not authorized', null, 401);
   }
 
-  return fetchPasBudgetTransactions(
+  return fetchStadspasBudgetTransactions(
     requestID,
     administratienummer,
     passNumber,
