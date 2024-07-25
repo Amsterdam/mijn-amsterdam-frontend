@@ -23,6 +23,7 @@ import {
   fetchTransacties,
 } from './stadspas-gpass-service';
 import { handleFetchTransactionsRequest } from './stadspas-route-handlers';
+import { StadspasBudget } from './stadspas-types';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -206,11 +207,11 @@ async function sendBudgetTransactiesResponse(
     );
   }
 
-  // RP TODO: How to get requestID? now '1'
-  const response = await fetchPasBudgetTransactions(
-    '1',
+  const response = await fetchTransacties(
+    res.locals.requestID,
     req.body.administratieNummber,
-    req.params.pasNummer
+    req.params.pasNummer,
+    req.query.budgetcode as StadspasBudget['code']
   );
 
   return res.send(response);
