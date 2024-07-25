@@ -4,6 +4,7 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { BffEndpoints } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
@@ -13,7 +14,6 @@ import {
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';
-import { BffEndpoints } from '../../config';
 
 export async function fetchStadspas(
   requestID: requestID,

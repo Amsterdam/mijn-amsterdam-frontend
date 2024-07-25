@@ -210,7 +210,7 @@ function transformGpassTransactionsResponse(
   );
 }
 
-async function fetchPasBudgetTransactions(
+export async function fetchPasBudgetTransactions(
   requestID: requestID,
   administratienummer: string,
   passNumber: Stadspas['passNumber'],
