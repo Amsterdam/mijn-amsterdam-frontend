@@ -181,6 +181,7 @@ describe('hli/router-external-consumer', async () => {
             status: 'OK',
             content: {
               administratienummer: '123456789',
+              stadspassen: [{ foo: 'bar' }],
             },
           };
         },
@@ -208,9 +209,9 @@ describe('hli/router-external-consumer', async () => {
       expect(resMock.send).toHaveBeenCalledOnce();
       expect(resMock.send).toHaveBeenCalledWith({
         status: 'OK',
-        content: {
-          administratienummer: null,
-        },
+        content: [
+          { foo: 'bar', transactionsKeyEncrypted: 'test-encrypted-id' },
+        ],
       });
     });
   });
