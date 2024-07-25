@@ -4,7 +4,7 @@ import {
   StatusLine,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import { StadspasResponseData } from './stadspas-types';
+import { StadspasFrontend } from './stadspas-types';
 
 export interface HLIRegeling extends StatusLine {
   about?: string; // TODO: implement
@@ -99,5 +99,5 @@ export interface RegelingenSourceResponseData {
 
 export interface HLIresponseData {
   regelingen: HLIRegeling[];
-  stadspas: StadspasResponseData | null;
+  stadspas: StadspasFrontend[] | null;
 }

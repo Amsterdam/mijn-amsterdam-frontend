@@ -24,7 +24,6 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchHLI } from './hli/hli';
-import { fetchStadspas } from './hli/stadspas';
 import { fetchMyLocation } from './home';
 import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
@@ -99,7 +98,6 @@ const WPI_SPECIFICATIES = callService(fetchSpecificaties);
 const WPI_TOZO = callService(fetchTozo);
 const WPI_TONK = callService(fetchTonk);
 const WPI_BBZ = callService(fetchBbz);
-const STADSPAS = callService(fetchStadspas);
 const HLI = callService(fetchHLI);
 const SVWI = callService(fetchSVWI);
 
@@ -197,7 +195,6 @@ const SERVICES_INDEX = {
   NOTIFICATIONS,
   OVERTREDINGEN,
   PROFILE,
-  STADSPAS,
   SUBSIDIE,
   SVWI,
   TOERISTISCHE_VERHUUR,
@@ -274,7 +271,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     MY_LOCATION,
     NOTIFICATIONS,
     OVERTREDINGEN,
-    STADSPAS,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,

@@ -55,7 +55,7 @@ export const tips: Tip[] = [
     datePublished: '2019-10-22',
     title: 'Tip: Op stap met uw Stadspas',
     profileTypes: ['private'],
-    thema: Themas.STADSPAS,
+    thema: Themas.HLI,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een stadspas hebt aangevraagd.',
     predicates: [hasValidStadspasRequest],
@@ -116,7 +116,7 @@ export const tips: Tip[] = [
     priority: 71,
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
-    thema: Themas.STADSPAS,
+    thema: Themas.HLI,
     profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',

@@ -24,7 +24,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     MILIEUZONE,
     MY_LOCATION,
     OVERTREDINGEN,
-    STADSPAS,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -77,16 +76,8 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         SVWI?.content?.isKnown === true
       );
 
-    case Themas.STADSPAS: {
-      const hasStadspas =
-        !!STADSPAS?.content?.stadspassen?.length ||
-        !!STADSPAS?.content?.aanvragen?.length;
-      const isLoadingStadspas = isLoading(STADSPAS);
-      return !isLoadingStadspas && hasStadspas;
-    }
-
     case Themas.HLI: {
-      const hasStadspas = !!HLI?.content?.stadspas?.stadspassen?.length;
+      const hasStadspas = !!HLI?.content?.stadspas?.length;
       const hasRegelingen = !!HLI?.content?.regelingen?.length;
       const isLoadingHLI = isLoading(HLI);
       return (

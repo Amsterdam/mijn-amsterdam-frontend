@@ -87,8 +87,6 @@ export interface StadspasBudget {
   budgetAssignedFormatted: string;
   budgetBalance: number;
   budgetBalanceFormatted: string;
-  urlTransactions: string;
-  transactionsKey: string;
   dateEnd: string;
   dateEndFormatted: string;
 }
@@ -109,8 +107,22 @@ export interface Stadspas {
   dateEndFormatted: string;
   budgets: StadspasBudget[];
   balanceFormatted: string;
+}
+
+export interface StadspasFrontend extends Stadspas {
   urlTransactions: string;
+  transactionsKeyEncrypted: string;
   link?: LinkProps;
+}
+
+export interface StadspasAMSAPPFrontend extends Stadspas {
+  transactionsKeyEncrypted: string;
+}
+
+export interface StadspasTransactionQueryParams {
+  pasnummer: Stadspas['passNumber'];
+  sub_transactions: true;
+  budgetCode?: string;
 }
 
 export interface StadspasTransaction {
@@ -122,11 +134,6 @@ export interface StadspasTransaction {
   datePublishedFormatted: string;
   budget: StadspasBudget['description'];
   budgetCode: StadspasBudget['code'];
-}
-
-export interface StadspasResponseData {
-  stadspassen: Stadspas[];
-  aanvragen: never[];
 }
 
 export type StadspasAdministratieNummer = string;

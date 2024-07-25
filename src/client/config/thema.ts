@@ -21,7 +21,6 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BUURT: 'Mijn buurt',
   BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
-  STADSPAS: 'Stadspas',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
@@ -75,10 +74,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
     `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes.STADSPAS]: `Stadspas | overzicht`,
-  [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ThemaTitles.INKOMEN}`,
-
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
   [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
   [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
@@ -247,12 +242,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: Themas.SVWI,
     to: import.meta.env.REACT_APP_SSO_URL_SVWI,
     rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.STADSPAS,
-    id: Themas.STADSPAS,
-    to: AppRoutes.STADSPAS,
     profileTypes: ['private'],
   },
   {

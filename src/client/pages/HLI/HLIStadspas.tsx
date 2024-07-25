@@ -69,7 +69,7 @@ export default function HLIStadspas() {
   const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
   const stadspas = id
-    ? HLI?.content?.stadspas?.stadspassen?.find((pass) => pass.id === id)
+    ? HLI?.content?.stadspas?.find((pass) => pass.id === id)
     : null;
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
@@ -96,15 +96,12 @@ export default function HLIStadspas() {
       ]
     : [];
 
-  const transactionKeys = stadspas?.budgets.map(
-    (budget) => budget.transactionsKey
-  );
   const requestOptions = {
-    method: 'post',
+    method: 'get',
     url: stadspas?.urlTransactions,
-    data: transactionKeys,
     postpone: true,
   };
+
   const [transactionsApi, fetchTransactions] = useDataApi<
     ApiResponse<StadspasTransaction[]>
   >(requestOptions, apiPristineResult([]));
@@ -112,7 +109,7 @@ export default function HLIStadspas() {
   const isLoadingTransacties = transactionsApi.isLoading;
 
   useEffect(() => {
-    if (!!transactionKeys?.length && stadspas?.urlTransactions) {
+    if (stadspas?.urlTransactions) {
       fetchTransactions({ ...requestOptions, postpone: false });
     }
   }, [fetchTransactions, stadspas?.urlTransactions]);
@@ -147,7 +144,7 @@ export default function HLIStadspas() {
               {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
                 <ErrorAlert>
                   We kunnen op dit moment geen gegevens tonen.{' '}
-                  <MaRouterLink href={AppRoutes.STADSPAS}>
+                  <MaRouterLink href={AppRoutes.HLI}>
                     Naar het overzicht
                   </MaRouterLink>
                 </ErrorAlert>

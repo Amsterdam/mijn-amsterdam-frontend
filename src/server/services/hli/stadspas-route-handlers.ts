@@ -1,26 +1,24 @@
 import { Request, Response } from 'express';
-import { apiErrorResult } from '../../../universal/helpers/api';
 import { getAuth } from '../../helpers/app';
-import { fetchTransacties } from './stadspas-gpass-service';
+import { fetchStadspasTransactions } from './stadspas';
+import { StadspasBudget } from './stadspas-types';
 
 export async function handleFetchTransactionsRequest(
-  req: Request,
+  req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  const transactionKeys = req.body as string[];
 
-  if (transactionKeys?.length) {
-    const response = await fetchTransacties(
-      res.locals.requestID,
-      authProfileAndToken,
-      transactionKeys
-    );
+  const response = await fetchStadspasTransactions(
+    res.locals.requestID,
+    req.params.transactionsKeyEncrypted,
+    req.query.budgetCode as StadspasBudget['code'],
+    authProfileAndToken.profile.sid
+  );
 
-    return res.send(response);
+  if (response.status === 'ERROR') {
+    res.status(typeof response.code === 'number' ? response.code : 500);
   }
 
-  return res
-    .status(400)
-    .send(apiErrorResult('Bad request: transactions key missing', null, 400));
+  return res.send(response);
 }

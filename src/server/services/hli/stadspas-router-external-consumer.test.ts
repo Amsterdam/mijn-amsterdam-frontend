@@ -7,7 +7,6 @@ import {
 } from '../../config';
 import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { forTesting } from './stadspas-router-external-consumer';
-import { forTesting as gpassService } from './stadspas-gpass-service';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -71,7 +70,12 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(redirectMock).toHaveBeenCalledWith('amsterdam://stadspas');
+      expect(renderMock).toHaveBeenCalledWith(
+        'amsapp-stadspas-administratienummer',
+        {
+          appHref: 'amsterdam://stadspas',
+        }
+      );
     });
 
     test('Delivery failed', async () => {
@@ -86,22 +90,18 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(redirectMock).toHaveBeenCalledWith(
-        'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004'
+      expect(renderMock).toHaveBeenCalledWith(
+        'amsapp-stadspas-administratienummer',
+        {
+          error: {
+            code: '004',
+            message:
+              'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
+          },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004',
+        }
       );
-
-      // expect(renderMock).toHaveBeenCalledWith(
-      //   'amsapp-stadspas-administratienummer',
-      //   {
-      //     error: {
-      //       code: '004',
-      //       message:
-      //         'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
-      //     },
-      //     appHref:
-      //       'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004',
-      //   }
-      // );
     });
 
     test('NO Digid login', async () => {
@@ -125,21 +125,17 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(redirectMock).toHaveBeenCalledWith(
-        'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003'
+      expect(renderMock).toHaveBeenCalledWith(
+        'amsapp-stadspas-administratienummer',
+        {
+          error: {
+            code: '003',
+            message: 'Geen administratienummer gevonden',
+          },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003',
+        }
       );
-
-      // expect(renderMock).toHaveBeenCalledWith(
-      //   'amsapp-stadspas-administratienummer',
-      //   {
-      //     error: {
-      //       code: '003',
-      //       message: 'Geen administratienummer gevonden',
-      //     },
-      //     appHref:
-      //       'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003',
-      //   }
-      // );
     });
 
     test('ERROR', async () => {
@@ -150,21 +146,17 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(redirectMock).toHaveBeenCalledWith(
-        'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002'
+      expect(renderMock).toHaveBeenCalledWith(
+        'amsapp-stadspas-administratienummer',
+        {
+          error: {
+            message: 'Kon het administratienummer niet ophalen',
+            code: '002',
+          },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002',
+        }
       );
-
-      // expect(renderMock).toHaveBeenCalledWith(
-      //   'amsapp-stadspas-administratienummer',
-      //   {
-      //     error: {
-      //       message: 'Kon het administratienummer niet ophalen',
-      //       code: '002',
-      //     },
-      //     appHref:
-      //       'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002',
-      //   }
-      // );
     });
 
     test('Unauthorized', async () => {
@@ -219,20 +211,6 @@ describe('hli/router-external-consumer', async () => {
         content: {
           administratienummer: null,
         },
-      });
-    });
-
-    it('Returns an apiErrorResult when administratienummer is empty', async () => {
-      const reqMock = {
-        params: { [STADSPASSEN_ENDPOINT_PARAMETER]: undefined },
-      } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
-
-      await forTesting.sendStadspassenResponse(reqMock, resMock);
-
-      expect(resMock.send).toHaveBeenCalledWith({
-        content: null,
-        message: `Bad request: Missing encrypted url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`,
-        status: 'ERROR',
       });
     });
   });

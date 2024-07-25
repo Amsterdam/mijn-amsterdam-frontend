@@ -2,7 +2,8 @@ import { remoteApi } from '../../../test-utils';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspassen, fetchTransacties } from './stadspas-gpass-service';
+import { fetchStadspassen } from './stadspas-gpass-service';
+import { fetchStadspasTransactions } from './stadspas';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -200,8 +201,6 @@ describe('stadspas services', () => {
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
                   "title": "Kindtegoed 10-14",
-                  "transactionsKey": "1x2x3x-##########-4x5x6x",
-                  "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
               ],
               "dateEnd": "2020-08-31T23:59:59.000Z",
@@ -215,7 +214,6 @@ describe('stadspas services', () => {
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
-              "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
             },
           ],
         },
@@ -275,8 +273,6 @@ describe('stadspas services', () => {
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
                   "title": "Kindtegoed 10-14",
-                  "transactionsKey": "1x2x3x-##########-4x5x6x",
-                  "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
               ],
               "dateEnd": "2020-08-31T23:59:59.000Z",
@@ -290,7 +286,6 @@ describe('stadspas services', () => {
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
-              "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
             },
             {
               "balanceFormatted": "€0,00",
@@ -305,8 +300,6 @@ describe('stadspas services', () => {
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
                   "title": "Kindtegoed 10-14",
-                  "transactionsKey": "1x2x3x-##########-4x5x6x",
-                  "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
               ],
               "dateEnd": "2020-08-31T23:59:59.000Z",
@@ -320,7 +313,6 @@ describe('stadspas services', () => {
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
-              "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
             },
             {
               "balanceFormatted": "€0,00",
@@ -335,8 +327,6 @@ describe('stadspas services', () => {
                   "dateEndFormatted": "31 augustus 2021",
                   "description": "Kindtegoed",
                   "title": "Kindtegoed 10-14",
-                  "transactionsKey": "1x2x3x-##########-4x5x6x",
-                  "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions/1x2x3x-%23%23%23%23%23%23%23%23%23%23-4x5x6x",
                 },
               ],
               "dateEnd": "2020-08-31T23:59:59.000Z",
@@ -350,7 +340,6 @@ describe('stadspas services', () => {
               },
               "passNumber": "6666666666666666666",
               "passType": "kind",
-              "urlTransactions": "http://bff-api-host/api/v1/services/stadspas/transactions",
             },
           ],
         },
@@ -365,7 +354,7 @@ describe('stadspas services', () => {
   test('stadspas transacties Happy!', async () => {
     remoteApi
       .get(
-        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&budgetcode=yyyy&sub_transactions=true'
+        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&sub_transactions=true'
       )
       .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
       .reply(200, {
@@ -383,13 +372,16 @@ describe('stadspas services', () => {
         ],
       });
 
-    const [transactionsKey] = encryptDecrypt.encrypt(
-      `my-unique-session-id:yyyy:0363000123-123:xxx567`
+    const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
+      `my-unique-session-id:0363000123-123:xxx567`
     );
 
-    const response = await fetchTransacties('abc123', authProfileAndToken, [
-      transactionsKey,
-    ]);
+    const response = await fetchStadspasTransactions(
+      'abc123',
+      transactionsKeyEncrypted,
+      undefined,
+      'my-unique-session-id'
+    );
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -410,91 +402,24 @@ describe('stadspas services', () => {
     `);
   });
 
-  test('stadspas transacties Failed and Happy!', async () => {
-    remoteApi
-      .get(
-        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&budgetcode=yyyy&sub_transactions=true'
-      )
-      .times(1)
-      .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
-      .reply(200, {
-        transacties: [
-          {
-            id: 'transactie-id',
-            budget: { aanbieder: { naam: 'transactie naam' } },
-            bedrag: 34.5,
-            transactiedatum: '2024-04-25',
-          },
-        ],
-      });
-
-    remoteApi
-      .get(
-        '/stadspas/rest/transacties/v1/budget?pasnummer=dddd&budgetcode=yyyy&sub_transactions=true'
-      )
-      .times(1)
-      .reply(500);
-
-    const [transactionsKey1] = encryptDecrypt.encrypt(
-      `my-unique-session-id:yyyy:0363000123-123:xxx567`
-    );
-    const [transactionsKey2] = encryptDecrypt.encrypt(
-      `my-unique-session-id:yyyy:8787878788787:dddd`
-    );
-
-    const response = await fetchTransacties('abc678', authProfileAndToken, [
-      transactionsKey1,
-      transactionsKey2,
-    ]);
-
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": [
-          {
-            "amount": 34.5,
-            "amountFormatted": "- €34,50",
-            "budget": undefined,
-            "budgetCode": undefined,
-            "datePublished": "2024-04-25",
-            "datePublishedFormatted": "25 april 2024",
-            "id": "transactie-id",
-            "title": "transactie naam",
-          },
-        ],
-        "status": "OK",
-      }
-    `);
-  });
-
   test('stadspas transacties unmatched session id', async () => {
-    remoteApi
-      .get(
-        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&budgetcode=yyyy&sub_transactions=true'
-      )
-      .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
-      .reply(200, {
-        transacties: [
-          {
-            id: 'transactie-id',
-            budget: { aanbieder: { naam: 'transactie naam' } },
-            bedrag: 34.5,
-            transactiedatum: '2024-04-25',
-          },
-        ],
-      });
-
-    const [transactionsKey] = encryptDecrypt.encrypt(
-      `another-session-id:yyyy:0363000123-123:xxx567`
+    const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
+      `another-session-id:0363000123-123:xxx567`
     );
 
-    const response = await fetchTransacties('abc123', authProfileAndToken, [
-      transactionsKey,
-    ]);
+    const response = await fetchStadspasTransactions(
+      'xyz098',
+      transactionsKeyEncrypted,
+      undefined,
+      'foo-bar'
+    );
 
     expect(response).toMatchInlineSnapshot(`
       {
-        "content": [],
-        "status": "OK",
+        "code": 401,
+        "content": null,
+        "message": "Not authorized",
+        "status": "ERROR",
       }
     `);
   });

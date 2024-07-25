@@ -6,7 +6,6 @@ export type Thema =
   | 'BUURT'
   | 'BEZWAREN'
   | 'INKOMEN'
-  | 'STADSPAS'
   | 'HLI'
   | 'BRP'
   | 'MILIEUZONE'
@@ -54,7 +53,6 @@ export const Themas: Record<Thema, Thema> = {
   PARKEREN: 'PARKEREN',
   ROOT: 'ROOT',
   SEARCH: 'SEARCH',
-  STADSPAS: 'STADSPAS',
   SUBSIDIE: 'SUBSIDIE',
   SVWI: 'SVWI',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
