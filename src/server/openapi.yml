@@ -232,8 +232,6 @@ components:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         WPI_BBZ:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        STADSPAS:
-          $ref: '#/components/schemas/ApiSearchConfigResult'
         WMO:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         VERGUNNINGEN:
@@ -299,8 +297,6 @@ components:
         WPI_TONK:
           type: object
         WPI_BBZ:
-          type: object
-        STADSPAS:
           type: object
         NOTIFICATIONS:
           type: object

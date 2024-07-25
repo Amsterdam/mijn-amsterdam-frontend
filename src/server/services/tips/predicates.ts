@@ -42,8 +42,8 @@ export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
 
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
-  if (appState.STADSPAS?.status === 'OK') {
-    const stadspassen = appState.STADSPAS?.content?.stadspassen ?? [];
+  if (appState.HLI?.status === 'OK') {
+    const stadspassen = appState.HLI?.content?.stadspas ?? [];
     return !!stadspassen.length;
   }
   return false;
@@ -53,12 +53,9 @@ export const hasValidStadspasRequest: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  if (appState.STADSPAS?.status === 'OK') {
-    return appState.STADSPAS?.content?.aanvragen.some(
-      (aanvraag: WpiRequestProcess) =>
-        aanvraag.decision === 'toekenning' &&
-        differenceInYears(today, new Date(aanvraag.datePublished)) <= 1
-    );
+  // TODO: Replace with implementation from https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1370
+  if (appState.HLI?.status === 'OK') {
+    return !!appState.HLI?.content?.stadspas?.length;
   }
   return false;
 };

@@ -53,7 +53,6 @@ import HLI from './pages/HLI/HLI';
 import HLIRegeling from './pages/HLI/HLIRegeling';
 import HLIRegelingen from './pages/HLI/HLIRegelingen';
 import HLIStadspas from './pages/HLI/HLIStadspas';
-import Stadspas from './pages/HLI/Stadspas';
 import Horeca from './pages/Horeca/Horeca';
 import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 import Inkomen from './pages/Inkomen/Inkomen';
@@ -71,8 +70,6 @@ import Parkeren from './pages/Parkeren/Parkeren';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
-import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
-import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import ToeristischeVerhuur from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
 import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
@@ -174,16 +171,6 @@ function AppAuthenticated() {
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-          {FeatureToggle.stadspasRequestsActive && (
-            <Route
-              path={AppRoutes['STADSPAS/AANVRAAG']}
-              component={StadspasAanvraagDetail}
-            />
-          )}
-          <Route
-            path={AppRoutes['STADSPAS/SALDO']}
-            component={StadspasDetail}
-          />
           {FeatureToggle.hliThemaActive && (
             <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
           )}
@@ -222,7 +209,6 @@ function AppAuthenticated() {
             />
           )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
-          <Route path={AppRoutes.STADSPAS} component={Stadspas} />
           <Route
             path={AppRoutes['ZORG/VOORZIENINGEN']}
             component={ZorgDetail}

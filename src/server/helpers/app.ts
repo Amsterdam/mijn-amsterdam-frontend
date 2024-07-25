@@ -131,6 +131,16 @@ export function sendUnauthorized(
   return res.send(apiErrorResult(message, null));
 }
 
+export function sendBadRequest(
+  res: Response,
+  reason: string,
+  content: object | string | null = null
+) {
+  return res
+    .status(400)
+    .send(apiErrorResult(`Bad request: ${reason}`, content));
+}
+
 export function clearRequestCache(req: Request, res: Response) {
   const requestID = res.locals.requestID!;
   clearSessionCache(requestID);

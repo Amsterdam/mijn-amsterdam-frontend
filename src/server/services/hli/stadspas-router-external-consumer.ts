@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { apiErrorResult } from '../../../universal/helpers/api';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import {
   BffEndpoints,
   ExternalConsumerEndpoints,
@@ -9,6 +9,7 @@ import {
 import {
   AuthProfileAndToken,
   getAuth,
+  sendBadRequest,
   sendUnauthorized,
 } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
@@ -17,10 +18,9 @@ import { requestData } from '../../helpers/source-api-request';
 import { apiKeyVerificationHandler } from '../../middleware';
 import { captureException } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import {
-  fetchStadspassenByAdministratienummer,
-  fetchTransacties,
-} from './stadspas-gpass-service';
+import { fetchStadspasTransactions } from './stadspas';
+import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
+import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -44,6 +44,10 @@ const errors: Record<string, ApiError> = {
     code: '004',
     message:
       'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
+  },
+  ADMINISTRATIENUMMER_FAILED_TO_DECRYPT: {
+    code: '005',
+    message: `Could not decrypt url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`,
   },
   UNKNOWN: {
     code: '000',
@@ -88,12 +92,11 @@ async function sendAdministratienummerResponse(
     // Administratienummer found, encrypt and send
     if (
       administratienummerResponse.status === 'OK' &&
-      administratienummerResponse.content
+      administratienummerResponse.content !== null
     ) {
-      const [administratienummerEncrypted] =
-        administratienummerResponse.content !== null
-          ? encrypt(administratienummerResponse.content)
-          : [];
+      const [administratienummerEncrypted] = encrypt(
+        administratienummerResponse.content
+      );
 
       const requestConfig = getApiConfig('AMSAPP', {
         data: {
@@ -109,8 +112,9 @@ async function sendAdministratienummerResponse(
       );
 
       if (deliveryResponse.status === 'OK') {
-        // Send app protocol header, should open app
-        return res.redirect(AMSAPP_STADSPAS_DEEP_LINK);
+        return res.render('amsapp-stadspas-administratienummer', {
+          appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
+        });
       }
 
       if (deliveryResponse.status === 'ERROR') {
@@ -130,14 +134,10 @@ async function sendAdministratienummerResponse(
     }
 
     if (error) {
-      return res.redirect(
-        `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`
-      );
-      // TODO: Check if the header option works like we want to, if not render the html, if works: remove pug
-      // return res.render('amsapp-stadspas-administratienummer', {
-      //   error: error,
-      //   appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`,
-      // });
+      return res.render('amsapp-stadspas-administratienummer', {
+        error: error,
+        appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`,
+      });
     }
   }
 
@@ -153,32 +153,41 @@ async function sendStadspassenResponse(
   req: Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>,
   res: Response
 ) {
-  let reason = '';
+  let error: ApiError = errors.UNKNOWN;
 
   try {
     const administratienummerEncrypted =
       req.params[STADSPASSEN_ENDPOINT_PARAMETER];
-    if (administratienummerEncrypted) {
-      const administratienummer = decrypt(administratienummerEncrypted);
-      const stadpassen = await fetchStadspassenByAdministratienummer(
-        res.locals.requestID,
-        administratienummer
-      );
 
-      // Empty administratienummer, so it doesn't end up unencrypted in the Ams App.
-      if (stadpassen.status === 'OK') {
-        stadpassen.content.administratienummer = null;
-      }
+    const administratienummer = decrypt(administratienummerEncrypted);
+    const stadspassenResponse = await fetchStadspassenByAdministratienummer(
+      res.locals.requestID,
+      administratienummer
+    );
 
-      return res.send(stadpassen);
+    if (stadspassenResponse.status === 'OK') {
+      // Add transactionsKey to response
+      const stadspassenTransformed: StadspasAMSAPPFrontend[] =
+        stadspassenResponse.content.stadspassen.map((stadspas) => {
+          const [transactionsKeyEncrypted] = encrypt(
+            `${administratienummer}:${stadspas.passNumber}`
+          );
+          return {
+            ...stadspas,
+            transactionsKeyEncrypted,
+          };
+        });
+      return res.send(apiSuccessResult(stadspassenTransformed));
     }
-    reason = `Missing encrypted url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`;
+
+    // Return the error response
+    return res.send(stadspassenResponse);
   } catch (error) {
-    reason = `Could not decrypt url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`;
+    error = errors.ADMINISTRATIENUMMER_FAILED_TO_DECRYPT;
     captureException(error);
   }
 
-  return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
+  return sendBadRequest(res, error.message, error);
 }
 
 router.get(
@@ -188,32 +197,13 @@ router.get(
 );
 
 async function sendBudgetTransactiesResponse(
-  req: Request<{ pasNummer: string }>,
+  req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  function sendBadRequest(reason: string) {
-    return res.status(400).send(apiErrorResult(`Bad request: ${reason}`, null));
-  }
-
-  if (!req.params?.pasNummer || isNaN(Number(req.params.pasNummer))) {
-    return sendBadRequest(
-      'pasNummer in digit form required as an url parameter.'
-    );
-  }
-
-  if (
-    !req.body.administratieNummer ||
-    typeof req.body.administratieNummer !== 'string'
-  ) {
-    return sendBadRequest(
-      'administratieNummer in body required like so { administratieNummer: <string> }'
-    );
-  }
-
-  const response = await fetchTransacties(
+  const response = await fetchStadspasTransactions(
     res.locals.requestID,
-    await getAuth(req.body.administratieNummer),
-    [`${req.body.administratieNummer}:${req.params.pasNummer}`]
+    req.params.transactionsKeyEncrypted,
+    req.query.budgetCode as StadspasBudget['code']
   );
 
   return res.send(response);

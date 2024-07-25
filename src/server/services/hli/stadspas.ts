@@ -1,63 +1,97 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
-  ApiSuccessResponse,
+  apiErrorResult,
   apiSuccessResult,
-  getFailedDependencies,
-  getSettledResult,
 } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { BffEndpoints } from '../../config';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
-import { fetchStadspassen } from './stadspas-gpass-service';
-import { Stadspas, StadspasResponseData } from './stadspas-types';
+import {
+  fetchPasBudgetTransactions,
+  fetchStadspassen,
+} from './stadspas-gpass-service';
+import { StadspasBudget, StadspasFrontend } from './stadspas-types';
 
 export async function fetchStadspas(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiSuccessResponse<StadspasResponseData>> {
-  // TODO: Fix when we can retrieve stadspas aanvragen from Zorgned
-
-  let aanvragenRequest: Promise<ApiSuccessResponse<never[]>> = Promise.resolve(
-    apiSuccessResult([])
+) {
+  const stadspasResponse = await fetchStadspassen(
+    requestID,
+    authProfileAndToken
   );
 
-  const stadspasRequest = fetchStadspassen(requestID, authProfileAndToken);
+  if (stadspasResponse.status === 'OK') {
+    const stadspassen: StadspasFrontend[] =
+      stadspasResponse.content.stadspassen.map((stadspas) => {
+        const [transactionsKeyEncrypted] = encrypt(
+          `${authProfileAndToken.profile.sid}:${stadspasResponse.content.administratienummer}:${stadspas.passNumber}`
+        );
 
-  const [aanvragenResponse, stadspasResponse] = await Promise.allSettled([
-    aanvragenRequest,
-    stadspasRequest,
-  ]);
+        const urlTransactions = generateFullApiUrlBFF(
+          BffEndpoints.STADSPAS_TRANSACTIONS,
+          {
+            transactionsKeyEncrypted,
+          }
+        );
 
-  const stadspasResult = getSettledResult(stadspasResponse);
-  const aanvragenResult = getSettledResult(aanvragenResponse);
+        return {
+          ...stadspas,
+          urlTransactions,
+          transactionsKeyEncrypted,
+          link: {
+            to: generatePath(AppRoutes['HLI/STADSPAS'], {
+              id: stadspas.id,
+            }),
+            title: `Stadspas van ${stadspas.owner.firstname}`,
+          },
+        };
+      });
 
-  const aanvragen = aanvragenResult.content ?? [];
+    return apiSuccessResult(stadspassen);
+  }
 
-  const stadspassen: Stadspas[] =
-    stadspasResult.status === 'OK'
-      ? stadspasResult.content.stadspassen.map((stadspas) => {
-          return {
-            ...stadspas,
-            link: {
-              to: generatePath(AppRoutes['STADSPAS/SALDO'], {
-                id: stadspas.id,
-              }),
-              title: `Stadspas van ${stadspas.owner.firstname}`,
-            },
-          };
-        })
-      : [];
+  return stadspasResponse;
+}
 
-  return apiSuccessResult(
-    {
-      aanvragen,
-      stadspassen,
-      administratienummer: stadspasResult.content?.administratienummer ?? null,
-    },
-    getFailedDependencies({
-      aanvragen: aanvragenResult,
-      stadspas: stadspasResult,
-    })
+export async function fetchStadspasTransactions(
+  requestID: requestID,
+  transactionsKeyEncrypted: string,
+  budgetCode?: StadspasBudget['code'],
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
+) {
+  let sessionID: string = '';
+  let administratienummer: string = '';
+  let passNumber: string = '';
+
+  try {
+    const payload = decrypt(transactionsKeyEncrypted).split(':');
+
+    if (verifySessionId) {
+      [sessionID, administratienummer, passNumber] = payload;
+    } else {
+      [administratienummer, passNumber] = payload;
+    }
+  } catch (error) {
+    captureException(error);
+  }
+
+  if (
+    !administratienummer ||
+    !passNumber ||
+    (verifySessionId && sessionID !== verifySessionId)
+  ) {
+    return apiErrorResult('Not authorized', null, 401);
+  }
+
+  return fetchPasBudgetTransactions(
+    requestID,
+    administratienummer,
+    passNumber,
+    budgetCode
   );
 }
 
@@ -65,9 +99,9 @@ export async function fetchStadspasNotifications(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const { content } = await fetchStadspas(requestID, authProfileAndToken);
+  const stadspasResponse = await fetchStadspas(requestID, authProfileAndToken);
 
-  return Array.isArray(content.stadspassen)
-    ? getBudgetNotifications(content.stadspassen)
+  return Array.isArray(stadspasResponse.content)
+    ? getBudgetNotifications(stadspasResponse.content)
     : [];
 }

@@ -368,50 +368,51 @@ describe('predicates', () => {
   describe('STADSPAS', () => {
     test('hasStadspasGroeneStip', () => {
       const appState = {
-        STADSPAS: {
+        HLI: {
           status: 'OK',
-          content: { stadspassen: [{ passType: 'kind' }] },
+          content: { stadspas: [{ passType: 'kind' }] },
         },
       } as AppState;
       expect(hasStadspasGroeneStip(appState)).toEqual(true);
     });
 
-    describe('hasValidStadspasRequest', () => {
-      const getMockAppState = (decision: string, datePublished: string) => {
-        const aanvraag = WPI_AANVRAGEN.content[3];
-        aanvraag.decision = decision;
-        aanvraag.datePublished = datePublished;
+    // TODO: Use implementation from https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1370
+    // describe('hasValidStadspasRequest', () => {
+    //   const getMockAppState = (decision: string, datePublished: string) => {
+    //     const aanvraag = WPI_AANVRAGEN.content[3];
+    //     aanvraag.decision = decision;
+    //     aanvraag.datePublished = datePublished;
 
-        return {
-          STADSPAS: {
-            content: {
-              stadspassen: [],
-              aanvragen: [aanvraag],
-            },
-            status: 'OK',
-          },
-        };
-      };
+    //     return {
+    //       STADSPAS: {
+    //         content: {
+    //           stadspassen: [],
+    //           aanvragen: [aanvraag],
+    //         },
+    //         status: 'OK',
+    //       },
+    //     };
+    //   };
 
-      it.each([
-        [true, 'toekenning', '2021-12-31'],
-        [true, 'toekenning', '2022-01-24'],
-        [true, 'toekenning', '2020-07-26'],
-        [false, 'toekenning', '2020-07-24'],
-        [false, 'toekenning', '2000-07-24'],
-        [false, 'afwijzing', '2022-01-24'],
-        [false, 'afwijzing', '2002-01-24'],
-      ])(
-        'should return %s for decision %s with datePublished %s',
-        (expected, decision, date) => {
-          expect(
-            hasValidStadspasRequest(
-              getMockAppState(decision, date) as unknown as AppState
-            )
-          ).toBe(expected);
-        }
-      );
-    });
+    //   it.each([
+    //     [true, 'toekenning', '2021-12-31'],
+    //     [true, 'toekenning', '2022-01-24'],
+    //     [true, 'toekenning', '2020-07-26'],
+    //     [false, 'toekenning', '2020-07-24'],
+    //     [false, 'toekenning', '2000-07-24'],
+    //     [false, 'afwijzing', '2022-01-24'],
+    //     [false, 'afwijzing', '2002-01-24'],
+    //   ])(
+    //     'should return %s for decision %s with datePublished %s',
+    //     (expected, decision, date) => {
+    //       expect(
+    //         hasValidStadspasRequest(
+    //           getMockAppState(decision, date) as unknown as AppState
+    //         )
+    //       ).toBe(expected);
+    //     }
+    //   );
+    // });
   });
 
   describe('WPI_TOZO & WPI_AANVRAGEN', () => {

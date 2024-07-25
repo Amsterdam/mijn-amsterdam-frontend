@@ -1,9 +1,9 @@
 import { generatePath } from 'react-router-dom';
-import { MyNotification } from '../../../universal/types';
-import { Stadspas } from './stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
-import { defaultDateFormat, dateFormat } from '../../../universal/helpers/date';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
+import { MyNotification } from '../../../universal/types';
+import { StadspasFrontend } from './stadspas-types';
 
 export const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
 export const GPASS_BUDGET_ONLY_FOR_CHILDREN = true;
@@ -20,7 +20,7 @@ const BUDGET_NOTIFICATION_CHILD = `
   Het saldo vervalt op ${defaultDateFormat(BUDGET_NOTIFICATION_DATE_END)}.
   `;
 
-export function getBudgetNotifications(stadspassen: Stadspas[]) {
+export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   const notifications: MyNotification[] = [];
 
   const createNotificationBudget = (
@@ -29,15 +29,15 @@ export function getBudgetNotifications(stadspassen: Stadspas[]) {
   ) => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
-    thema: Themas.STADSPAS,
+    thema: Themas.HLI,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
     )}!`,
     description,
     link: {
       to: stadspasId
-        ? generatePath(AppRoutes['STADSPAS/SALDO'], { id: stadspasId })
-        : AppRoutes.STADSPAS,
+        ? generatePath(AppRoutes['HLI/STADSPAS'], { id: stadspasId })
+        : AppRoutes.HLI,
       title: 'Check het saldo',
     },
   });
