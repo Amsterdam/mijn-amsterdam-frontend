@@ -225,15 +225,12 @@ export async function fetchStadspasBudgetTransactions(
     requestParams.budgetCode = budgetCode;
   }
 
-  const dataRequestConfig = getApiConfig('GPASS');
-  const GPASS_ENDPOINT_TRANSACTIONS = `${dataRequestConfig.url}/rest/transacties/v1/budget`;
-  const cfg = {
-    ...dataRequestConfig,
-    url: GPASS_ENDPOINT_TRANSACTIONS,
+  const dataRequestConfig = getApiConfig('GPASS', {
+    formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
     transformResponse: transformGpassTransactionsResponse,
     headers: getHeaders(administratienummer),
     params: requestParams,
-  };
+  });
 
-  return requestData<StadspasTransaction[]>(cfg, requestID);
+  return requestData<StadspasTransaction[]>(dataRequestConfig, requestID);
 }
