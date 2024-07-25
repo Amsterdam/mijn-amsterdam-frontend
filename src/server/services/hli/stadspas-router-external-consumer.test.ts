@@ -7,7 +7,6 @@ import {
 } from '../../config';
 import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { forTesting } from './stadspas-router-external-consumer';
-import { forTesting as gpassService } from './stadspas-gpass-service';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
