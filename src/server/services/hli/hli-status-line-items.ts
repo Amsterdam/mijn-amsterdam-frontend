@@ -17,7 +17,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
     filter: maybeExcludePcvcUpcc,
   },
   {
-    productIdentificatie: ['AV-GOV', 'AV-OVM'],
+    productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-DECLA'],
     lineItemTransformers: REGELING,
   },
   {
