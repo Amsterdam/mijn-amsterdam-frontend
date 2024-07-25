@@ -78,27 +78,20 @@ export default function HLIStadspas() {
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
 
-  const rowsBase = stadspas
-    ? [
-        {
-          label: 'Naam',
-          content: stadspas.owner.firstname,
-        },
-        {
-          label: 'Stadspasnummer',
-          content: stadspas.passNumber,
-        },
-      ]
-    : [];
+  const NAME = {
+    label: 'Naam',
+    content: stadspas?.owner.firstname,
+  };
 
-  const rowsNummerSaldo = stadspas
-    ? [
-        {
-          label: 'Saldo',
-          content: `${stadspas.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
-        },
-      ]
-    : [];
+  const NUMBER = {
+    label: 'Stadspasnummer',
+    content: stadspas?.passNumber,
+  };
+
+  const BALANCE = {
+    label: 'Saldo',
+    content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
+  };
 
   const requestOptions = {
     method: 'get',
@@ -157,12 +150,13 @@ export default function HLIStadspas() {
           )}
           {!!stadspas && (
             <Grid.Cell span="all">
-              <Datalist rows={rowsBase} />
+              <Datalist rows={[NAME]} />
               <Paragraph className={styles.StadspasNummerInfo}>
                 Hieronder staat het Stadspasnummer van uw actieve pas.
                 <br /> Dit pasnummer staat ook op de achterkant van uw pas.
               </Paragraph>
-              {!!stadspas.budgets.length && <Datalist rows={rowsNummerSaldo} />}
+              <Datalist rows={[NUMBER]} />
+              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             </Grid.Cell>
           )}
 
