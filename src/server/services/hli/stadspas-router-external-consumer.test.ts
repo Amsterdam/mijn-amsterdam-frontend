@@ -7,6 +7,7 @@ import {
 } from '../../config';
 import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { forTesting } from './stadspas-router-external-consumer';
+import { forTesting as gpassService } from './stadspas-gpass-service';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -183,13 +184,16 @@ describe('hli/router-external-consumer', async () => {
       const mod: object = await requireActual();
       return {
         ...mod,
-        fetchStadspassenByAdministratienummer: () => 'Success',
+        fetchStadspassenByAdministratienummer: () => {
+          return {
+            status: 'OK',
+            content: {
+              administratienummer: '123456789',
+            },
+          };
+        },
       };
     });
-
-    const reqMock = {
-      params: { [STADSPASSEN_ENDPOINT_PARAMETER]: 'ADMINISTRATIENUMMER' },
-    } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
 
     const resMock = {
       locals: { requestID: 'xxx' },
@@ -203,16 +207,28 @@ describe('hli/router-external-consumer', async () => {
     } as unknown as Response;
 
     it('Returns stadpassen when supplied with encrypted administratieNummer', async () => {
+      const reqMock = {
+        params: { [STADSPASSEN_ENDPOINT_PARAMETER]: 'ADMINISTRATIENUMMER' },
+      } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
+
       await forTesting.sendStadspassenResponse(reqMock, resMock);
+
       expect(resMock.send).toHaveBeenCalledOnce();
-      expect(resMock.send).toHaveBeenCalledWith('Success');
+      expect(resMock.send).toHaveBeenCalledWith({
+        status: 'OK',
+        content: {
+          administratienummer: null,
+        },
+      });
     });
 
     it('Returns an apiErrorResult when administratienummer is empty', async () => {
-      reqMock.params[STADSPASSEN_ENDPOINT_PARAMETER] =
-        undefined as unknown as string;
+      const reqMock = {
+        params: { [STADSPASSEN_ENDPOINT_PARAMETER]: undefined },
+      } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
 
       await forTesting.sendStadspassenResponse(reqMock, resMock);
+
       expect(resMock.send).toHaveBeenCalledWith({
         content: null,
         message: `Bad request: Missing encrypted url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`,

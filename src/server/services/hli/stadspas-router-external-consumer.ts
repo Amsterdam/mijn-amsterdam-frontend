@@ -164,6 +164,12 @@ async function sendStadspassenResponse(
         res.locals.requestID,
         administratienummer
       );
+
+      // Empty administratienummer, so it doesn't end up unencrypted in the Ams App.
+      if (stadpassen.status === 'OK') {
+        stadpassen.content.administratienummer = null;
+      }
+
       return res.send(stadpassen);
     }
     reason = `Missing encrypted url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`;
