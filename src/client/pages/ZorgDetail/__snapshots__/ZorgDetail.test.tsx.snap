@@ -89,6 +89,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </dd>
           </dl>
         </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <table
+            class="_DocumentListV2_a199da"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Documenten
+                </th>
+                <th>
+                  Verzenddatum
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
+        </div>
       </div>
     </div>
     <div
@@ -419,6 +438,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               Emile Thuiszorg
             </dd>
           </dl>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <table
+            class="_DocumentListV2_a199da"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Documenten
+                </th>
+                <th>
+                  Verzenddatum
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
         </div>
       </div>
     </div>
@@ -751,6 +789,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </dd>
           </dl>
         </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <table
+            class="_DocumentListV2_a199da"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Documenten
+                </th>
+                <th>
+                  Verzenddatum
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
+        </div>
       </div>
     </div>
     <div
@@ -1082,6 +1139,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </dd>
           </dl>
         </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <table
+            class="_DocumentListV2_a199da"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Documenten
+                </th>
+                <th>
+                  Verzenddatum
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
+        </div>
       </div>
     </div>
     <div
@@ -1412,6 +1488,25 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
               Mantelzorg B.V
             </dd>
           </dl>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <table
+            class="_DocumentListV2_a199da"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Documenten
+                </th>
+                <th>
+                  Verzenddatum
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
         </div>
       </div>
     </div>

@@ -18,6 +18,7 @@ import {
 } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
+import { isAfter } from 'date-fns';
 
 function addDocumentLinksToLineItems(
   sessionID: AuthProfileAndToken['profile']['sid'],
@@ -58,6 +59,10 @@ function addDocumentLinksToLineItems(
 
     return lineItem;
   });
+}
+
+function getLatestStatus(steps: StatusLineItem[]) {
+  return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
 }
 
 function transformVoorzieningenForFrontend(
@@ -103,9 +108,10 @@ function transformVoorzieningenForFrontend(
         steps: statusLineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
-        dateDecision: aanvraag.datumBesluit,
+        dateDescision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
+        status: getLatestStatus(statusLineItems),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);

@@ -6,18 +6,22 @@ import styles from './DocumentListV2.module.scss';
 interface DocumentListProps<T extends GenericDocument = GenericDocument> {
   documents: T[];
   trackPath?: (document: T) => string;
+  columns?: [string, string];
 }
 
 export default function DocumentListV2({
   documents,
   trackPath,
+  columns,
 }: DocumentListProps) {
+  const columnHeaders = columns ?? ['Document', 'Datum'];
+
   return (
     <table className={styles.DocumentListV2}>
       <thead>
         <tr>
-          <th>Document</th>
-          <th>Datum</th>
+          <th>{columnHeaders[0]}</th>
+          <th>{columnHeaders[1]}</th>
         </tr>
       </thead>
       <tbody>

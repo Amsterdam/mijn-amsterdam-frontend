@@ -14,6 +14,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1986585525",
       },
+      "resultaat": "toegewezen",
+      "status": "Levering gestart",
       "steps": [
         {
           "datePublished": "2023-03-16",
@@ -93,6 +95,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/890306301",
       },
+      "resultaat": "toegewezen",
+      "status": "Product geleverd",
       "steps": [
         {
           "datePublished": "2023-03-01",
@@ -170,6 +174,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2941866748",
       },
+      "resultaat": "toegewezen",
+      "status": "Besluit",
       "steps": [
         {
           "datePublished": "2022-10-20",
@@ -223,6 +229,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3476086687",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "datePublished": "2022-04-15",
@@ -302,6 +310,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/955409908",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "datePublished": "2022-03-14",
@@ -380,6 +390,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1811284656",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "datePublished": "2022-03-14",
@@ -458,6 +470,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1035945789",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -535,6 +549,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1035945788",
       },
+      "resultaat": "toegewezen",
+      "status": "Opdracht gegeven",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -612,6 +628,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2248022546",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -689,6 +707,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3645917971",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -766,6 +786,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3608314454",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -842,6 +864,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2624361688",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -918,6 +942,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2758572638",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -994,6 +1020,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/226616664",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1070,6 +1098,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1855927508",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1146,6 +1176,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1499176916",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1222,6 +1254,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4005950334",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1299,6 +1333,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3303327448",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1375,6 +1411,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/134062321",
       },
+      "resultaat": "toegewezen",
+      "status": "Product geleverd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1450,6 +1488,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1809360062",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1514,6 +1554,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3441632088",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1590,6 +1632,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/636127578",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1666,6 +1710,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1926069212",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1742,6 +1788,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/954761814",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1819,6 +1867,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/446200219",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1895,6 +1945,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/938485502",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -1971,6 +2023,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1175100182",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2047,6 +2101,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/300203506",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2123,6 +2179,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2889701237",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2200,6 +2258,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4058168346",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2276,6 +2336,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2707273693",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2352,6 +2414,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3209335922",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2428,6 +2492,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3783046999",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2504,6 +2570,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/477515900",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2580,6 +2648,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2067143485",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2655,6 +2725,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4216491004",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2732,6 +2804,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2730893522",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2809,6 +2883,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1672363416",
       },
+      "resultaat": "toegewezen",
+      "status": "Aanpassing uitgevoerd",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2886,6 +2962,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1703298224",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
@@ -2961,6 +3039,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4046397887",
       },
+      "resultaat": "toegewezen",
+      "status": "Einde recht",
       "steps": [
         {
           "altDocumentContent": "<p>
