@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getAuth } from '../../helpers/app';
 import { fetchStadspasTransactions } from './stadspas';
 import { StadspasBudget } from './stadspas-types';
+import { fetchDocument } from '../zorgned/zorgned-service';
 
 export async function handleFetchTransactionsRequest(
   req: Request<{ transactionsKeyEncrypted: string }>,
@@ -21,4 +22,18 @@ export async function handleFetchTransactionsRequest(
   }
 
   return res.send(response);
+}
+
+export async function fetchZorgnedAVDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentId: string
+) {
+  const response = fetchDocument(
+    requestID,
+    authProfileAndToken,
+    'ZORGNED_AV',
+    documentId
+  );
+  return response;
 }
