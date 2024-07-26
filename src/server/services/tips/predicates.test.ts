@@ -319,14 +319,15 @@ describe('predicates', () => {
     });
   });
 
-  describe('STADSPAS', () => {
+  describe('HLI/STADSPAS', () => {
     test('hasStadspasGroeneStip', () => {
       const appState = {
-        STADSPAS: {
+        HLI: {
           status: 'OK',
-          content: { stadspassen: [{ passType: 'kind' }] },
+          content: { stadspas: [{ passType: 'kind' }] },
         },
       } as AppState;
+
       expect(hasStadspasGroeneStip(appState)).toEqual(true);
     });
 

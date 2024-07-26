@@ -61,7 +61,6 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   MY_LOCATION: 'Uw locatie op de kaart',
   NOTIFICATIONS: 'Actuele updates',
   OVERTREDINGEN: 'Overtredingen voertuigen',
-  STADSPAS: 'Informatie over uw stadspassen',
   SUBSIDIE: 'Subsidies',
   SVWI: 'Werk & Inkomen portaal',
   TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',
@@ -118,7 +117,7 @@ export function createFailedDependenciesError(
 export function getApiErrors(appState: AppState): ApiError[] {
   if (!!appState) {
     const filteredResponses = Object.entries(appState).filter(
-      ([, apiResponseData]: [string, ApiResponse<any> | string | null]) => {
+      ([, apiResponseData]: [string, any]) => {
         return (
           typeof apiResponseData !== 'object' ||
           apiResponseData == null ||
@@ -135,6 +134,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
     for (const [stateKey, apiResponseData] of filteredResponses) {
       if (
         apiResponseData?.status === 'OK' &&
+        'failedDependencies' in apiResponseData &&
         apiResponseData?.failedDependencies
       ) {
         apiErrors.push(
@@ -144,7 +144,12 @@ export function getApiErrors(appState: AppState): ApiError[] {
           )
         );
       } else {
-        apiErrors.push(createErrorDisplayData(stateKey, apiResponseData));
+        apiErrors.push(
+          createErrorDisplayData(
+            stateKey,
+            apiResponseData as ApiResponse<any> | null | string
+          )
+        );
       }
     }
 

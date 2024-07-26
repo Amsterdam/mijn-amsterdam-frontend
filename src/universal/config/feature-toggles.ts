@@ -37,7 +37,6 @@ export const FeatureToggle = {
   profileToggleActive: true,
   residentCountActive: true,
   sportDatasetsActive: true,
-  stadspasLegacyActive: IS_PRODUCTION,
   subsidieActive: true,
   svwiLinkActive: IS_DEVELOPMENT,
   tipsFlipActive: true,

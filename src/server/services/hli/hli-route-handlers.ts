@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { getAuth } from '../../helpers/app';
+import { AuthProfileAndToken, getAuth } from '../../helpers/app';
+import { fetchDocument } from '../zorgned/zorgned-service';
 import { fetchStadspasTransactions } from './stadspas';
 import { StadspasBudget } from './stadspas-types';
-import { fetchDocument } from '../zorgned/zorgned-service';
 
 export async function handleFetchTransactionsRequest(
   req: Request<{ transactionsKeyEncrypted: string }>,

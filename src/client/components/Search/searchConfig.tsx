@@ -9,6 +9,7 @@ import type {
 import { AVGRequest } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
+import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
@@ -16,9 +17,6 @@ import {
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
 import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
-
-import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
-import { StadspasResponseData } from '../../../server/services/hli/stadspas-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -317,7 +315,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'HLI' as AppStateKey,
     getApiBaseItems: (apiContent: HLIresponseData) => {
       const stadspassen =
-        apiContent?.stadspas?.stadspassen?.map((stadspas) => {
+        apiContent?.stadspas?.map((stadspas) => {
           return {
             ...stadspas,
             title: `Stadspas van ${stadspas.owner.firstname}`,
@@ -325,34 +323,6 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         }) || [];
       const regelingen = apiContent?.regelingen || [];
       return [...stadspassen, ...regelingen];
-    },
-    displayTitle: (item: {
-      title: string;
-      about?: string;
-      datePublished: string;
-      statusId?: string;
-    }) => {
-      return (term: string) => {
-        const segments = item.about ? [`Aanvraag ${item.about}`] : [item.title];
-        if (item.statusId === 'besluit') {
-          segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
-        }
-        return displayPath(term, segments);
-      };
-    },
-  },
-  {
-    stateKey: 'STADSPAS' as AppStateKey,
-    getApiBaseItems: (apiContent: StadspasResponseData) => {
-      const stadspassen =
-        apiContent?.stadspassen?.map((stadspas) => {
-          return {
-            ...stadspas,
-            title: `Stadspas van ${stadspas.owner.firstname}`,
-          };
-        }) || [];
-      const aanvragen = apiContent?.aanvragen || [];
-      return [...stadspassen, ...aanvragen];
     },
     displayTitle: (item: {
       title: string;

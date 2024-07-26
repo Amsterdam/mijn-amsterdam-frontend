@@ -17,8 +17,7 @@ import { StadspasBudget, StadspasFrontend } from './stadspas-types';
 
 export async function fetchStadspas(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  appRoute: string = AppRoutes['STADSPAS/SALDO']
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const stadspasResponse = await fetchStadspassen(
     requestID,
@@ -44,7 +43,7 @@ export async function fetchStadspas(
           urlTransactions,
           transactionsKeyEncrypted,
           link: {
-            to: generatePath(appRoute, {
+            to: generatePath(AppRoutes['HLI/STADSPAS'], {
               id: stadspas.id,
             }),
             title: `Stadspas van ${stadspas.owner.firstname}`,

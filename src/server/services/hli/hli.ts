@@ -166,7 +166,7 @@ export async function fetchHLI(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const [stadspasResult, regelingenResult] = await Promise.allSettled([
-    fetchStadspas(requestID, authProfileAndToken, AppRoutes['HLI/STADSPAS']),
+    fetchStadspas(requestID, authProfileAndToken),
     fetchRegelingen(requestID, authProfileAndToken),
   ]);
 
