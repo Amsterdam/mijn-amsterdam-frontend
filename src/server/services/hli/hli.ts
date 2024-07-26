@@ -104,9 +104,10 @@ export async function transformRegelingenForFrontend(
           to: route,
         },
         steps: statusLineItems,
-        dateDescision: aanvraag.datumBesluit,
+        dateDecision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
+        decision: aanvraag.resultaat,
         displayStatus: getDisplayStatus(aanvraag, statusLineItems),
         receiver: namen.join('\n'),
         documents: getDocumentsFrontend(

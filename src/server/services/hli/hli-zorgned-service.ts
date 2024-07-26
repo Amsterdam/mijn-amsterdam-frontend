@@ -2,6 +2,7 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
+  ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-config-and-types';
 import {
   fetchAanvragen,
@@ -16,7 +17,6 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { ONE_SECOND_MS } from '../../config';
-import { ZorgnedPersoonsgegevensNAWResponse } from './hli-regelingen-types';
 import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
 
 function transformToAdministratienummer(identificatie: number): string {

@@ -102,7 +102,7 @@ function transformVoorzieningenForFrontend(
         steps: statusLineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
-        dateDescision: aanvraag.datumBesluit,
+        dateDecision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
       };

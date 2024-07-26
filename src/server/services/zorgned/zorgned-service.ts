@@ -5,6 +5,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedDocument,
   ZorgnedDocumentResponseSource,
+  ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
 } from './zorgned-config-and-types';
 
@@ -15,7 +16,6 @@ import memoizee from 'memoizee';
 import { hash } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
-import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/hli-regelingen-types';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {

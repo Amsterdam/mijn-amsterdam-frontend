@@ -1,13 +1,15 @@
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import {
+  ZorgnedAanvraagTransformed,
+  ZorgnedPersoonsgegevensNAWResponse,
+} from '../zorgned/zorgned-config-and-types';
 import {
   fetchAdministratienummer,
   fetchNamenBetrokkenen,
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
-import { ZorgnedPersoonsgegevensNAWResponse } from './hli-regelingen-types';
 
 import * as zorgnedService from '../zorgned/zorgned-service';
 

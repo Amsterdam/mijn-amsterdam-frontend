@@ -58,7 +58,7 @@ interface Leverancier {
   omschrijving: string;
 }
 
-export type BeschikkingsResultaat = 'toegewezen' | string;
+export type BeschikkingsResultaat = 'toegewezen' | 'afgewezen' | null;
 
 export interface ToegewezenProduct {
   actueel: boolean;
@@ -76,7 +76,7 @@ export interface BeschiktProduct {
     productsoortCode: ProductSoortCode;
     identificatie?: ProductIdentificatie;
   };
-  resultaat: BeschikkingsResultaat;
+  resultaat: BeschikkingsResultaat | null;
   toegewezenProduct: ToegewezenProduct | null;
 }
 
@@ -134,4 +134,15 @@ export interface ZorgnedDocumentResponseSource {
   inhoud: string;
   omschrijving: string;
   mimetype: string;
+}
+
+export interface ZorgnedPersoonsgegevensNAWResponse {
+  persoon: {
+    clientidentificatie: number | null;
+    geboortenaam: string;
+    roepnaam: string | null;
+    voorletters: string;
+    voornamen: string;
+    voorvoegsel: string | null;
+  };
 }

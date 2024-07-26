@@ -60,7 +60,7 @@ export interface WMOVoorzieningFrontend {
   link: LinkProps;
   steps: StatusLineItem[];
   itemTypeCode: ProductSoortCode;
-  dateDescision: string;
+  dateDecision: string;
   dateStart: string | null;
   dateEnd: string | null;
 }
