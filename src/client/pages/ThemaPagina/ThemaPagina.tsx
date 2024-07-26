@@ -4,9 +4,11 @@ import {
   LoadingContent,
   OverviewPage,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
 
 import { ReactElement, ReactNode } from 'react';
+import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 
@@ -21,8 +23,8 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
 
 interface ThemaPaginaProps {
   title: string;
-  backLink: LinkProps;
-  icon: ReactElement;
+  backLink?: LinkProps;
+  icon?: ReactElement;
   pageContentTop: ReactNode;
   pageContentTables: ReactNode;
   linkListItems: LinkProps[];
@@ -35,8 +37,11 @@ interface ThemaPaginaProps {
 
 export default function ThemaPagina({
   title,
-  backLink,
-  icon,
+  backLink = {
+    to: AppRoutes.HOME,
+    title: 'Home',
+  },
+  icon = <ThemaIcon />,
   pageContentTop,
   linkListItems = [],
   pageContentTables,

@@ -19,7 +19,7 @@ import {
   fetchNamenBetrokkenen,
   fetchZorgnedAanvragenHLI,
 } from './hli-zorgned-service';
-import { HLIRegeling, HLIresponseData } from './regelingen-types';
+import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { fetchStadspas } from './stadspas';
 
 function getDisplayStatus(
@@ -98,7 +98,6 @@ export async function transformRegelingenForFrontend(
       const regelingFrontend: HLIRegeling = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
-        supplier: aanvraag.leverancier,
         isActual: aanvraag.isActueel,
         link: {
           title: 'Meer informatie',

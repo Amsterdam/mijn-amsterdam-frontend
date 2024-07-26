@@ -1,16 +1,15 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ThemaIcon } from '../../components';
-import { addLinkElementToProperty } from '../../components/Table/Table';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
 import { generatePath } from 'react-router-dom';
 import { LinkProps } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ZakenTable from '../ThemaPagina/ZakenTable';
 import { tableConfig } from './config';
@@ -82,11 +81,6 @@ export default function VergunningenV2() {
   return (
     <ThemaPagina
       title={ThemaTitles.VERGUNNINGEN}
-      icon={<ThemaIcon />}
-      backLink={{
-        to: AppRoutes.HOME,
-        title: 'Home',
-      }}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
       pageContentBottom={pageContentBottom}

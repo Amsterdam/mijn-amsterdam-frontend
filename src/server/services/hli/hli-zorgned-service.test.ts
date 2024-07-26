@@ -7,7 +7,7 @@ import {
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
-import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
+import { ZorgnedPersoonsgegevensNAWResponse } from './hli-regelingen-types';
 
 import * as zorgnedService from '../zorgned/zorgned-service';
 

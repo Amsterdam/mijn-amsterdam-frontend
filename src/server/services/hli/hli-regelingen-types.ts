@@ -1,25 +1,17 @@
 import {
   GenericDocument,
-  LinkProps,
-  StatusLine,
-  StatusLineItem,
+  ZaakDetail,
 } from '../../../universal/types/App.types';
 import { StadspasFrontend } from './stadspas-types';
 
-export interface HLIRegeling extends StatusLine {
-  about?: string; // TODO: implement
+export interface HLIRegeling extends ZaakDetail {
   dateDescision: string;
   dateEnd: string | null;
   dateStart: string | null;
   displayStatus: string;
   documents: GenericDocument[];
-  id: string;
   isActual: boolean; // Indicates if this item is designated Current or Previous
-  link: LinkProps;
   receiver: string;
-  steps: StatusLineItem[];
-  supplier: string | null; // Leverancier
-  title: string; // Omschrijving
 }
 
 export interface ZorgnedPersoonsgegevensNAWResponse {
@@ -61,7 +53,7 @@ export interface ZorgnedToegewezenProduct {
 export interface ZorgnedBeschiktProduct {
   toegewezenProduct: ZorgnedToegewezenProduct;
   product: {
-    productsoortCode: ''; // ?????
+    productsoortCode: string | null;
     omschrijving: string;
   };
   resultaat: ZorgnedBeschikkingsResultaat;

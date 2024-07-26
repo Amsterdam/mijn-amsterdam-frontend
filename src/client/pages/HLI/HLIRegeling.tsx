@@ -1,61 +1,63 @@
 import { Grid } from '@amsterdam/design-system-react';
-import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../components/Datalist/Datalist';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
-import { getThemaTitleWithAppState } from './helpers';
-import styles from './HLI.module.scss';
-import { HLIRegeling } from '../../../server/services/hli/regelingen-types';
-import { DocumentList } from '../../components';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
+import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import styles from './HLI.module.scss';
+import { useHliThemaData } from './useHliThemaData';
 
-export default function HLIRegelingDetailPagina() {
-  const appState = useAppStateGetter();
-  const { HLI } = appState;
-  const { id } = useParams<{ id: string }>();
-  const statusItem = HLI.content?.regelingen?.find((item) => item.id === id);
-  const soortRegeling = statusItem?.about;
+type DetailPageContentProps = {
+  hliRegeling: HLIRegeling;
+};
+
+function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
+  const rows: Row[] = [];
+
+  if (hliRegeling?.receiver) {
+    rows.push({
+      label: 'Ontvanger',
+      content: hliRegeling.receiver,
+      classNameContent: styles.Ontvanger,
+    });
+  }
 
   return (
-    <StatusDetail<HLIRegeling>
-      thema="HLI"
-      stateKey="HLI"
-      backLinkTitle={getThemaTitleWithAppState(appState)}
-      getItems={(hliContent) => {
-        if (hliContent !== null && 'regelingen' in hliContent) {
-          return hliContent.regelingen;
-        }
-        return [];
-      }}
-      pageContent={(isLoading, hliRegeling) => {
-        const rows: Row[] = [];
+    <>
+      {!!rows.length && (
+        <Grid.Cell span="all">
+          <Datalist rows={rows} />
+        </Grid.Cell>
+      )}
+      {!!hliRegeling.documents.length && (
+        <Grid.Cell span="all">
+          <DocumentListV2 documents={hliRegeling.documents} />
+        </Grid.Cell>
+      )}
+    </>
+  );
+}
 
-        if (hliRegeling?.receiver) {
-          rows.push({
-            label: 'Ontvanger',
-            content: hliRegeling.receiver,
-            classNameContent: styles.Ontvanger,
-          });
-        }
+export default function HLIRegelingDetailPagina() {
+  const { regelingen, isError, title, routes } = useHliThemaData();
+  const { id } = useParams<{ id: string }>();
+  const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 
-        return (
-          <>
-            {!!rows.length && (
-              <Grid.Cell span="all">
-                <Datalist rows={rows} />
-              </Grid.Cell>
-            )}
-            {!!hliRegeling.documents.length && (
-              <Grid.Cell span="all">
-                <DocumentListV2 documents={hliRegeling.documents} />
-              </Grid.Cell>
-            )}
-          </>
-        );
+  return (
+    <ThemaDetailPagina<HLIRegeling>
+      title={regelingDetail?.title ?? 'Regeling bij laag inkomen'}
+      zaak={regelingDetail}
+      isError={isError}
+      isLoading={false}
+      pageContentTop={
+        regelingDetail && <DetailPageContent hliRegeling={regelingDetail} />
+      }
+      backLink={{
+        title: title,
+        to: routes.themaPage,
       }}
       documentPathForTracking={(document) =>
-        `/downloads/regelingen-bij-laag-inkomen/${soortRegeling}/${document.title.split(/\n/)[0]}`
+        `/downloads/hli/regeling/${regelingDetail?.title}/${document.title.split(/\n/)[0]}`
       }
     />
   );

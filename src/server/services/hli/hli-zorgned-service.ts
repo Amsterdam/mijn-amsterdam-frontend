@@ -16,7 +16,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { ONE_SECOND_MS } from '../../config';
-import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
+import { ZorgnedPersoonsgegevensNAWResponse } from './hli-regelingen-types';
 import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
 
 function transformToAdministratienummer(identificatie: number): string {

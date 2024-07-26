@@ -1,33 +1,43 @@
-import { Link, Table } from '@amsterdam/design-system-react';
+import { Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped } from '../../../universal/types';
+import { MaRouterLink } from '../MaLink/MaLink';
 import styles from './TableV2.module.scss';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
 }
 
-export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
+export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
-  titleKey: keyof T = 'title'
-) {
+  propertyName: keyof T = 'title',
+  addDetailLinkComponentAttr: boolean = false
+): Array<T & { detailLinkComponent?: ReactNode }> {
   return items.map((item) => {
     if (!item.link?.to) {
       return item;
     }
 
-    let title: string = item[titleKey];
-    if (typeof title !== 'string') {
-      title = 'Onbekend item';
+    let label: string = item[propertyName];
+    let linkPropertyName = propertyName;
+
+    if (typeof label !== 'string') {
+      label = 'Onbekend item';
+    }
+
+    if (addDetailLinkComponentAttr) {
+      linkPropertyName = 'detailLinkComponent';
     }
 
     return {
       ...item,
-      [titleKey]: (
-        <Link href={item.link.to}>{capitalizeFirstLetter(title)}</Link>
+      [linkPropertyName]: (
+        <MaRouterLink maVariant="fatNoUnderline" href={item.link.to}>
+          {capitalizeFirstLetter(label)}
+        </MaRouterLink>
       ),
     };
   });
@@ -74,9 +84,9 @@ export function TableV2<T extends Unshaped>({
       <Table.Body>
         {items.map((item, index) => (
           <Table.Row key={'id' in item ? item.id : undefined ?? `tr-${index}`}>
-            {displayPropEntries.map(([key, label], index) => (
-              <Table.Cell key={`td-${key}`}>{item[key]}</Table.Cell>
-            ))}
+            {displayPropEntries.map(([key, label], index) => {
+              return <Table.Cell key={`td-${key}`}>{item[key]}</Table.Cell>;
+            })}
           </Table.Row>
         ))}
       </Table.Body>

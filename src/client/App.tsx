@@ -175,13 +175,13 @@ function AppAuthenticated() {
             <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
           )}
           {FeatureToggle.hliThemaActive && (
-            <Route
-              path={AppRoutes['HLI/REGELINGEN_LIJST']}
-              component={HLIRegelingen}
-            />
+            <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
           )}
           {FeatureToggle.hliThemaActive && (
-            <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
+            <Route
+              path={AppRoutes['HLI/REGELINGEN_LIST']}
+              component={HLIRegelingen}
+            />
           )}
           {FeatureToggle.hliThemaActive && (
             <Route path={AppRoutes['HLI']} component={HLI} />

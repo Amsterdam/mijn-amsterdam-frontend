@@ -72,7 +72,7 @@ export function ListPagePaginated({
   return (
     <OverviewPage>
       <PageHeading
-        icon={<ThemaIcon thema={thema} />}
+        icon={thema ? <ThemaIcon thema={thema} /> : <ThemaIcon />}
         backLink={{ to: appRouteBack, title: backLinkTitle }}
       >
         {title}

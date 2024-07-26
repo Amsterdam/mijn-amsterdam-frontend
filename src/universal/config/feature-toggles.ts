@@ -43,7 +43,7 @@ export const FeatureToggle = {
   tipsFlipActive: true,
   toeristischeVerhuurActive: true,
   vergunningenActive: true,
-  vergunningenV2Active: false, // TODO: Enable when working on MIJN-8914
+  vergunningenV2Active: true, // TODO: Enable when working on MIJN-8914
   wiorDatasetActive: true,
   wiorMeldingen: true,
   zorgnedDocumentAttachmentsActive: true,
