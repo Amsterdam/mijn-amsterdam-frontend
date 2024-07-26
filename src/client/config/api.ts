@@ -79,10 +79,6 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WPI_TOZO: 'Aanvraag Tozo',
 };
 
-if (FeatureToggle.stadspasRequestsActive) {
-  ErrorNames['STADSPAS_aanvragen'] = 'Stadspasaanvragen';
-}
-
 export function createErrorDisplayData(
   stateKey: string,
   apiResponseData: ApiResponse<any> | null | string
