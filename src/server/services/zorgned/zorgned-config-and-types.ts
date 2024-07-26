@@ -4,7 +4,7 @@ export const ZORGNED_GEMEENTE_CODE = '0363';
 
 export type TextPartContent = string;
 export type TextPartContentTransformer = (
-  data: ZorgnedAanvraagTransformed,
+  aanvraag: ZorgnedAanvraagTransformed,
   today: Date,
   allAanvragen: ZorgnedAanvraagTransformed[]
 ) => TextPartContent;

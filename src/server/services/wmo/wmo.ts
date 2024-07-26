@@ -1,3 +1,4 @@
+import { isAfter } from 'date-fns';
 import parseISO from 'date-fns/parseISO';
 import { generatePath } from 'react-router-dom';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -5,7 +6,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { GenericDocument, StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types';
 import { BffEndpoints } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
@@ -13,12 +14,10 @@ import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types'
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-  SINGLE_DOC_TITLE_BESLUIT,
   WMOVoorzieningFrontend,
 } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
-import { isAfter } from 'date-fns';
 
 function isAfterWCAGValidDocumentsDate(date: string) {
   return isAfter(parseISO(date), MINIMUM_REQUEST_DATE_FOR_DOCUMENTS);

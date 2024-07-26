@@ -10,15 +10,15 @@
           "omschrijving": "WMO"
         },
         "hulpvraag": {
-          "datumRegistratie": "2013-04-25",
+          "datumRegistratie": "2023-04-25",
           "aanmeldwijze": null,
           "verwijzer": null
         },
-        "datumAanmelding": "2013-04-25",
-        "datumAanvraag": "2013-04-25",
+        "datumAanmelding": "2023-04-25",
+        "datumAanvraag": "2023-04-25",
         "beschikking": {
           "beschikkingNummer": 300111429,
-          "datumAfgifte": "2013-05-17",
+          "datumAfgifte": "2023-05-17",
           "toelichting": null,
           "beschikteProducten": [
             {
@@ -28,7 +28,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing met doc 1"
+                "omschrijving": "woonruimteaanpassing met doc 2 / meer info"
               },
               "productCategorie": {
                 "code": "13",
@@ -36,7 +36,7 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2013-05-06",
+                "datumIngangGeldigheid": "2023-05-06",
                 "datumEindeGeldigheid": null,
                 "datumCheck": null,
                 "actueel": true,
@@ -64,10 +64,10 @@
                 "toewijzingen": [
                   {
                     "toewijzingNummer": "62214",
-                    "toewijzingsDatumTijd": "2013-05-17T00:00:00",
-                    "ingangsdatum": "2013-05-06",
+                    "toewijzingsDatumTijd": "2023-05-17T00:00:00",
+                    "ingangsdatum": "2023-05-06",
                     "einddatum": null,
-                    "datumOpdracht": "2013-05-17T00:00:00",
+                    "datumOpdracht": "2023-05-17T00:00:00",
                     "leverancier": {
                       "identificatie": "LA0994",
                       "agbcode": null,
@@ -91,9 +91,15 @@
         },
         "documenten": [
           {
+            "documentidentificatie": "ABCDEF",
+            "omschrijving": "Informatie: nodig",
+            "datumDefinitief": "2023-05-17T00:00:00",
+            "zaakidentificatie": null
+          },
+          {
             "documentidentificatie": "B73199",
             "omschrijving": "WRA beschikking Definitief",
-            "datumDefinitief": "2013-05-17T00:00:00",
+            "datumDefinitief": "2023-05-17T00:00:00",
             "zaakidentificatie": null
           }
         ]

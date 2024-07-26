@@ -6,15 +6,20 @@ import {
   isServiceDeliveryStarted,
   isServiceDeliveryActive,
 } from '../../zorgned/zorgned-helpers';
+import { AANVRAAG, IN_BEHANDELING, MEER_INFORMATIE } from './wmo-generic';
 
 export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
+  AANVRAAG,
+  IN_BEHANDELING,
+  MEER_INFORMATIE,
   {
     status: 'Besluit',
-    datePublished: (data) => data.datumBesluit,
-    isChecked: () => true,
-    isActive: (stepIndex, sourceData, today) =>
-      !hasHistoricDate(sourceData.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(sourceData, today),
+    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
+    isActive: (stepIndex, aanvraag, today) =>
+      !!aanvraag.datumBesluit &&
+      !hasHistoricDate(aanvraag.datumOpdrachtLevering, today) &&
+      !isServiceDeliveryStarted(aanvraag, today),
     description: (data) =>
       `
             <p>
@@ -33,12 +38,12 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Opdracht gegeven',
     datePublished: () => '',
-    isChecked: (stepIndex, sourceData, today: Date) =>
-      hasHistoricDate(sourceData.datumOpdrachtLevering, today),
-    isActive: (stepIndex, sourceData, today) =>
-      sourceData.isActueel &&
-      hasHistoricDate(sourceData.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(sourceData, today),
+    isChecked: (stepIndex, aanvraag, today: Date) =>
+      hasHistoricDate(aanvraag.datumOpdrachtLevering, today),
+    isActive: (stepIndex, aanvraag, today) =>
+      aanvraag.isActueel &&
+      hasHistoricDate(aanvraag.datumOpdrachtLevering, today) &&
+      !isServiceDeliveryStarted(aanvraag, today),
     description: (data) =>
       `<p>
             De gemeente heeft opdracht gegeven aan ${data.leverancier} om de aanpassingen aan uw woning uit
@@ -48,12 +53,12 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Aanpassing uitgevoerd',
     datePublished: () => '',
-    isChecked: (stepIndex, sourceData, today) =>
-      isServiceDeliveryStarted(sourceData, today),
-    isActive: (stepIndex, sourceData, today) =>
-      isServiceDeliveryActive(sourceData, today),
-    isVisible: (stepIndex, sourceData, today) => {
-      return !!sourceData.datumBeginLevering || sourceData.isActueel;
+    isChecked: (stepIndex, aanvraag, today) =>
+      isServiceDeliveryStarted(aanvraag, today),
+    isActive: (stepIndex, aanvraag, today) =>
+      isServiceDeliveryActive(aanvraag, today),
+    isVisible: (stepIndex, aanvraag, today) => {
+      return !!aanvraag.datumBeginLevering || aanvraag.isActueel;
     },
     description: (data) =>
       `<p>
@@ -65,8 +70,8 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Einde recht',
     datePublished: (data) =>
       (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
-    isChecked: (stepIndex, sourceData) => sourceData.isActueel === false,
-    isActive: (stepIndex, sourceData, today) => sourceData.isActueel === false,
+    isChecked: (stepIndex, aanvraag) => aanvraag.isActueel === false,
+    isActive: (stepIndex, aanvraag, today) => aanvraag.isActueel === false,
     description: (data) =>
       `<p>
             ${

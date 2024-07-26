@@ -8,26 +8,30 @@ import {
   isServiceDeliveryStarted,
   isServiceDeliveryStopped,
 } from '../../zorgned/zorgned-helpers';
+import { AANVRAAG, IN_BEHANDELING, MEER_INFORMATIE } from './wmo-generic';
 
 export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
+  AANVRAAG,
+  IN_BEHANDELING,
+  MEER_INFORMATIE,
   {
     status: 'Besluit',
-    datePublished: (data) => data.datumBesluit,
-    isChecked: () => true,
-    isActive: (stepIndex, sourceData, today) =>
-      !isServiceDeliveryStarted(sourceData, today),
-    description: (data) => {
+    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
+    isActive: (stepIndex, aanvraag, today) =>
+      !!aanvraag.datumBesluit && !isServiceDeliveryStarted(aanvraag, today),
+    description: (aanvraag) => {
       return `
               <p>
-                U heeft recht op ${data.titel} per ${
-                  data.datumIngangGeldigheid
-                    ? defaultDateFormat(data.datumIngangGeldigheid)
+                U heeft recht op ${aanvraag.titel} per ${
+                  aanvraag.datumIngangGeldigheid
+                    ? defaultDateFormat(aanvraag.datumIngangGeldigheid)
                     : ''
                 }.
               </p>
               <p>
                 ${
-                  data.isActueel &&
+                  aanvraag.isActueel &&
                   [
                     'AWBG',
                     'WMH',
@@ -44,7 +48,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
                     'DBL',
                     'DBS',
                     'KVB',
-                  ].includes(data.productsoortCode)
+                  ].includes(aanvraag.productsoortCode)
                     ? `
                     In de brief leest u ook hoe u bezwaar kunt maken, een klacht
                     kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
@@ -59,57 +63,57 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Levering gestart',
     datePublished: () => '',
-    isChecked: (stepIndex, sourceData, today: Date) =>
-      isServiceDeliveryStarted(sourceData, today),
-    isActive: (stepIndex, sourceData, today: Date) =>
-      sourceData.isActueel && isServiceDeliveryActive(sourceData, today),
-    description: (data) =>
+    isChecked: (stepIndex, aanvraag, today: Date) =>
+      isServiceDeliveryStarted(aanvraag, today),
+    isActive: (stepIndex, aanvraag, today: Date) =>
+      aanvraag.isActueel && isServiceDeliveryActive(aanvraag, today),
+    description: (aanvraag) =>
       `<p>
-            ${data.leverancier} is gestart met het leveren van ${data.titel}.
+            ${aanvraag.leverancier} is gestart met het leveren van ${aanvraag.titel}.
           </p>`,
   },
   {
     status: 'Levering gestopt',
     datePublished: () => '',
-    isChecked: (stepIndex, sourceData, today: Date) =>
-      isServiceDeliveryStopped(sourceData, today) ||
-      hasHistoricDate(sourceData.datumEindeGeldigheid, today),
-    isActive: (stepIndex, sourceData, today) =>
-      sourceData.isActueel &&
-      isServiceDeliveryStopped(sourceData, today) &&
-      !sourceData.datumEindeGeldigheid,
-    description: (data) =>
+    isChecked: (stepIndex, aanvraag, today: Date) =>
+      isServiceDeliveryStopped(aanvraag, today) ||
+      hasHistoricDate(aanvraag.datumEindeGeldigheid, today),
+    isActive: (stepIndex, aanvraag, today) =>
+      aanvraag.isActueel &&
+      isServiceDeliveryStopped(aanvraag, today) &&
+      !aanvraag.datumEindeGeldigheid,
+    description: (aanvraag) =>
       `<p>
             ${
-              data.isActueel
+              aanvraag.isActueel
                 ? 'Niet van toepassing.'
-                : `${data.leverancier} heeft aan ons doorgegeven dat u geen ${data.titel}
+                : `${aanvraag.leverancier} heeft aan ons doorgegeven dat u geen ${aanvraag.titel}
             meer krijgt.`
             }
           </p>`,
-    isVisible: (stepIndex, sourceData, today) => {
-      return !!sourceData.datumBeginLevering || sourceData.isActueel;
+    isVisible: (stepIndex, aanvraag, today) => {
+      return !!aanvraag.datumBeginLevering || aanvraag.isActueel;
     },
   },
   {
     status: 'Einde recht',
-    datePublished: (data, today) =>
-      (hasFutureDate(data.datumEindeGeldigheid, today)
+    datePublished: (aanvraag, today) =>
+      (hasFutureDate(aanvraag.datumEindeGeldigheid, today)
         ? ''
-        : data.datumEindeGeldigheid) || '',
-    isChecked: (stepIndex, sourceData, today) =>
-      hasHistoricDate(sourceData.datumEindeGeldigheid, today),
-    isActive: (stepIndex, sourceData, today) =>
-      hasHistoricDate(sourceData.datumEindeGeldigheid, today),
-    description: (sourceData, today) =>
+        : aanvraag.datumEindeGeldigheid) || '',
+    isChecked: (stepIndex, aanvraag, today) =>
+      hasHistoricDate(aanvraag.datumEindeGeldigheid, today),
+    isActive: (stepIndex, aanvraag, today) =>
+      hasHistoricDate(aanvraag.datumEindeGeldigheid, today),
+    description: (aanvraag, today) =>
       `<p>
             ${
-              hasFutureDate(sourceData.datumEindeGeldigheid, today)
+              hasFutureDate(aanvraag.datumEindeGeldigheid, today)
                 ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${sourceData.titel} is beëindigd ${
-                    sourceData.datumEindeGeldigheid
+                : `Uw recht op ${aanvraag.titel} is beëindigd ${
+                    aanvraag.datumEindeGeldigheid
                       ? `per ${defaultDateFormat(
-                          sourceData.datumEindeGeldigheid
+                          aanvraag.datumEindeGeldigheid
                         )}`
                       : ''
                   }`

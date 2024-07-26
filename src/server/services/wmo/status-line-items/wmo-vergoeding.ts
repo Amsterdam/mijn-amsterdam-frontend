@@ -1,18 +1,23 @@
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
+import { AANVRAAG, IN_BEHANDELING, MEER_INFORMATIE } from './wmo-generic';
 
 export const vergoeding: ZorgnedStatusLineItemTransformerConfig[] = [
+  AANVRAAG,
+  IN_BEHANDELING,
+  MEER_INFORMATIE,
   {
     status: 'Besluit',
-    datePublished: (data) => data.datumBesluit,
-    isChecked: (stepIndex, data) => true,
-    isActive: (stepIndex, data) => data.isActueel === true,
-    description: (data) =>
+    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
+    isActive: (stepIndex, aanvraag, today) =>
+      !!aanvraag.datumBesluit && aanvraag.isActueel === true,
+    description: (aanvraag) =>
       `
             <p>
-              U heeft recht op een ${data.titel} per ${
-                data.datumIngangGeldigheid
-                  ? defaultDateFormat(data.datumIngangGeldigheid)
+              U heeft recht op een ${aanvraag.titel} per ${
+                aanvraag.datumIngangGeldigheid
+                  ? defaultDateFormat(aanvraag.datumIngangGeldigheid)
                   : ''
               }.
             </p>
@@ -24,25 +29,25 @@ export const vergoeding: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Einde recht',
-    datePublished: (data) =>
-      (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
+    datePublished: (aanvraag) =>
+      (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
     isChecked: () => false,
-    isActive: (stepIndex, data) => data.isActueel === false,
-    description: (data) =>
+    isActive: (stepIndex, aanvraag) => aanvraag.isActueel === false,
+    description: (aanvraag) =>
       `
             <p>
               ${
-                data.isActueel
+                aanvraag.isActueel
                   ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                  : `Uw recht op ${data.titel} is beëindigd ${
-                      data.datumEindeGeldigheid
-                        ? `per ${defaultDateFormat(data.datumEindeGeldigheid)}`
+                  : `Uw recht op ${aanvraag.titel} is beëindigd ${
+                      aanvraag.datumEindeGeldigheid
+                        ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                         : ''
                     }`
               }
             </p>
             ${
-              data.isActueel && data.leveringsVorm === 'PGB'
+              aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
                 ? `<p>
                 Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
                 verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
