@@ -1,14 +1,14 @@
+import Mockdate from 'mockdate';
 import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
-import { transformBRPData } from '../brp';
-import { WpiRequestProcess } from '../wpi/wpi-types';
-
 import {
   ApiResponse,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
+import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
+import { transformBRPData } from '../brp';
+import { WpiRequestProcess } from '../wpi/wpi-types';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
@@ -20,7 +20,7 @@ import {
   hasTozo,
   hasValidId,
   hasValidIdForVoting,
-  hasValidStadspasRequest,
+  hasValidRecentStadspasRequest,
   is18OrOlder,
   isBetween17and18,
   isLivingInAmsterdamLessThanNumberOfDays,
@@ -49,56 +49,6 @@ const UITKERINGEN = {
   status: 'OK',
 };
 
-const vakantieverhuurVergunningen = [
-  {
-    id: 'Z-001-000040',
-    titel: 'Vergunning vakantieverhuur',
-    datumAfhandeling: null,
-    datumAanvraag: '10 mei 2021',
-    datumVan: '01 juni 2020',
-    datumTot: '31 mei 2024',
-    adres: 'Amstel 1 1017AB Amsterdam',
-    resultaat: 'Ingetrokken',
-    zaaknummer: 'Z/001/000040',
-    statussen: [
-      {
-        status: 'Ontvangen',
-        datePublished: '2021-05-10',
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        status: 'In behandeling',
-        datePublished: '2021-05-10',
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        status: 'Afgehandeld',
-        datePublished: '2021-05-10',
-        description: '',
-        isActive: false,
-        isChecked: true,
-      },
-      {
-        status: 'Gewijzigd',
-        datePublished: '',
-        description: 'Wij hebben uw Vergunning vakantieverhuur ingetrokken.',
-        isActive: true,
-        isChecked: true,
-      },
-    ],
-    documentenUrl:
-      '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
-    link: {
-      to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-001-000040',
-      title: 'Bekijk hoe het met uw aanvraag staat',
-    },
-    isActief: false,
-    status: 'Ingetrokken',
-  },
-];
-
 const TOERISTISCHE_VERHUUR = {
   content: {
     lvvRegistraties: [1, 2, 3],
@@ -107,11 +57,15 @@ const TOERISTISCHE_VERHUUR = {
   },
 };
 
-describe('predicates', () => {
-  const DATE_TO_TEST_AGAINST = '2022-07-25';
+const DATE_TO_TEST_AGAINST = '2022-07-25';
 
+describe('predicates', () => {
   beforeAll(() => {
-    vi.useFakeTimers().setSystemTime(new Date(DATE_TO_TEST_AGAINST));
+    Mockdate.set(DATE_TO_TEST_AGAINST);
+  });
+
+  afterAll(() => {
+    Mockdate.reset();
   });
 
   describe('BRP', () => {
@@ -365,7 +319,7 @@ describe('predicates', () => {
     });
   });
 
-  describe('STADSPAS', () => {
+  describe('HLI/STADSPAS', () => {
     test('hasStadspasGroeneStip', () => {
       const appState = {
         HLI: {
@@ -373,46 +327,49 @@ describe('predicates', () => {
           content: { stadspas: [{ passType: 'kind' }] },
         },
       } as AppState;
+
       expect(hasStadspasGroeneStip(appState)).toEqual(true);
     });
 
-    // TODO: Use implementation from https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1370
-    // describe('hasValidStadspasRequest', () => {
-    //   const getMockAppState = (decision: string, datePublished: string) => {
-    //     const aanvraag = WPI_AANVRAGEN.content[3];
-    //     aanvraag.decision = decision;
-    //     aanvraag.datePublished = datePublished;
+    describe('hasValidRecentStadspasRequest', () => {
+      const getMockAppState = (decision: string, dateDecision: string) => {
+        const aanvraag = {
+          decision,
+          dateDecision,
+        };
 
-    //     return {
-    //       STADSPAS: {
-    //         content: {
-    //           stadspassen: [],
-    //           aanvragen: [aanvraag],
-    //         },
-    //         status: 'OK',
-    //       },
-    //     };
-    //   };
+        return {
+          HLI: {
+            content: {
+              stadspas: {
+                stadspassen: [],
+              },
+              regelingen: [aanvraag],
+            },
+            status: 'OK',
+          },
+        };
+      };
 
-    //   it.each([
-    //     [true, 'toekenning', '2021-12-31'],
-    //     [true, 'toekenning', '2022-01-24'],
-    //     [true, 'toekenning', '2020-07-26'],
-    //     [false, 'toekenning', '2020-07-24'],
-    //     [false, 'toekenning', '2000-07-24'],
-    //     [false, 'afwijzing', '2022-01-24'],
-    //     [false, 'afwijzing', '2002-01-24'],
-    //   ])(
-    //     'should return %s for decision %s with datePublished %s',
-    //     (expected, decision, date) => {
-    //       expect(
-    //         hasValidStadspasRequest(
-    //           getMockAppState(decision, date) as unknown as AppState
-    //         )
-    //       ).toBe(expected);
-    //     }
-    //   );
-    // });
+      it.each([
+        [true, 'toegewezen', '2021-12-31'],
+        [true, 'toegewezen', '2022-01-24'],
+        [true, 'toegewezen', '2020-07-26'],
+        [false, 'toegewezen', '2020-07-24'],
+        [false, 'toegewezen', '2000-07-24'],
+        [false, 'afgewezen', '2022-01-24'],
+        [false, 'afgewezen', '2002-01-24'],
+      ])(
+        'should return %s for decision %s with dateDecision %s',
+        (expected, decision, date) => {
+          expect(
+            hasValidRecentStadspasRequest(
+              getMockAppState(decision, date) as unknown as AppState
+            )
+          ).toBe(expected);
+        }
+      );
+    });
   });
 
   describe('WPI_TOZO & WPI_AANVRAGEN', () => {
@@ -434,7 +391,9 @@ describe('predicates', () => {
         return {
           WPI_TOZO: TOZO as unknown as AppState['WPI_TOZO'],
           WPI_TONK: TONK as unknown as ApiResponse<WpiRequestProcess[] | null>,
-          WPI_AANVRAGEN: UITKERINGEN as ApiResponse<WpiRequestProcess[] | null>,
+          WPI_AANVRAGEN: UITKERINGEN as unknown as ApiResponse<
+            WpiRequestProcess[] | null
+          >,
         };
       };
 
@@ -514,7 +473,9 @@ describe('predicates', () => {
         UITKERINGEN.content[0].datePublished = datePublished;
 
         return {
-          WPI_AANVRAGEN: UITKERINGEN as ApiResponse<WpiRequestProcess[] | null>,
+          WPI_AANVRAGEN: UITKERINGEN as unknown as ApiResponse<
+            WpiRequestProcess[] | null
+          >,
         };
       };
 

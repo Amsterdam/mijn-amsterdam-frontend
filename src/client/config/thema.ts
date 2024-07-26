@@ -77,7 +77,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
   [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
   [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
-  [AppRoutes['HLI/REGELINGEN_LIJST']]: `Regelingen | ${ThemaTitles.HLI}`,
+  [AppRoutes['HLI/REGELINGEN_LIST']]: `Regelingen | ${ThemaTitles.HLI}`,
 
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,

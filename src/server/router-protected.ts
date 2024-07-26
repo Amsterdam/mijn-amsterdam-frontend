@@ -17,7 +17,10 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from './services/controller';
-import { handleFetchTransactionsRequest } from './services/hli/stadspas-route-handlers';
+import {
+  fetchZorgnedAVDocument,
+  handleFetchTransactionsRequest,
+} from './services/hli/hli-route-handlers';
 import { isBlacklistedHandler } from './services/session-blacklist';
 import { attachDocumentDownloadRoute } from './services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
@@ -27,8 +30,8 @@ import {
   fetchVergunningDetail,
   fetchZakenFromSource,
 } from './services/vergunningen-v2/vergunningen-route-handlers';
+import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
-import { downloadZorgnedDocument } from './services/zorgned/zorgned-wmo-hli-document-download-route-handler';
 
 export const router = express.Router();
 
@@ -92,16 +95,11 @@ router.get(
 //// BFF Service Api Endpoints /////////////////////
 ////////////////////////////////////////////////////
 
+// WMO Zorgned Doc download
 attachDocumentDownloadRoute(
   router,
   BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
-  downloadZorgnedDocument('ZORGNED_JZD')
-);
-
-attachDocumentDownloadRoute(
-  router,
-  BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
-  downloadZorgnedDocument('ZORGNED_AV')
+  fetchZorgnedJZDDocument
 );
 
 router.get(
@@ -222,5 +220,12 @@ attachDocumentDownloadRoute(
   fetchBBDocument
 );
 
-// Stadspas transacties
+// HLI Stadspas transacties
 router.get(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);
+
+// HLI Regelingen / doc download
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
+  fetchZorgnedAVDocument
+);

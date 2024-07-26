@@ -5,6 +5,7 @@ import {
   GenericDocument,
   LinkProps,
   StatusLine,
+  ZaakDetail,
 } from '../../../universal/types/App.types';
 import {
   DetailPage,
@@ -12,6 +13,7 @@ import {
   LoadingContent,
   PageHeading,
   StatusLine as StatusLineComponent,
+  ThemaIcon,
 } from '../../components';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 
@@ -21,12 +23,14 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
 ];
 
+const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
+
 interface ThemaDetailPaginaProps<T> {
   zaak?: T | null;
   backLink: LinkProps;
   documentPathForTracking?: (document: GenericDocument) => string;
   errorAlertContent?: ReactNode;
-  icon: ReactElement;
+  icon?: ReactElement;
   isError: boolean;
   isLoading: boolean;
   loadingBarConfig?: BarConfig;
@@ -39,15 +43,15 @@ interface ThemaDetailPaginaProps<T> {
   className?: string;
 }
 
-export default function ThemaDetailPagina<T extends StatusLine>({
+export default function ThemaDetailPagina<T extends ZaakDetail>({
   zaak,
   title = 'Detailpagina',
   backLink,
   className,
-  icon,
+  icon = <ThemaIcon />,
   pageContentTop,
   pageContentBottom,
-  errorAlertContent = 'We kunnen op dit moment geen gegevens tonen.',
+  errorAlertContent = ERROR_ALERT_DEFAULT,
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
   isError,
   isLoading,
@@ -68,9 +72,9 @@ export default function ThemaDetailPagina<T extends StatusLine>({
       <PageHeading icon={icon} backLink={backLink}>
         {title}
       </PageHeading>
-      <Screen>
+      <Screen className="ams-mb--lg">
         <Grid>
-          <Grid.Cell span="all">{pageContentTop}</Grid.Cell>
+          {pageContentTop}
 
           {!isLoading && (isError || !zaak) && (
             <Grid.Cell span="all">

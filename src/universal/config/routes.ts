@@ -9,8 +9,7 @@ export const AppRoutes = {
   HLI: '/regelingen-bij-laag-inkomen',
   'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
   'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-  'HLI/REGELINGEN_LIJST':
-    '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
+  'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/:kind/:page?',
 
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',

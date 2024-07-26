@@ -9,29 +9,31 @@ import {
   ThemaIcon,
 } from '..';
 import { Thema } from '../../../universal/config/thema';
+import { ZaakDetail } from '../../../universal/types';
 import { PaginationV2 } from '../Pagination/PaginationV2';
-import { TableV2 } from '../Table/TableV2';
+import { DisplayProps, TableV2 } from '../Table/TableV2';
 
 const DEFAULT_PAGE_SIZE = 10;
 
-interface ListPagePaginatedProps {
+interface ListPagePaginatedProps<T> {
   appRoute: string;
   appRouteBack: string;
   appRouteParams?: Record<string, string> | null;
   backLinkTitle?: string;
-  displayProps: Record<string, string> | null;
+  displayProps: DisplayProps<T> | null;
   isError: boolean;
   isLoading: boolean;
-  items: object[];
+  items: T[];
   title: string;
   body?: ReactNode;
   thema?: Thema;
+  tableClassName?: string;
   errorText?: string;
   noItemsText?: string;
   pageSize?: number;
 }
 
-export function ListPagePaginated({
+export function ListPagePaginated<T extends ZaakDetail>({
   appRoute,
   appRouteBack,
   appRouteParams = null,
@@ -45,8 +47,9 @@ export function ListPagePaginated({
   isLoading,
   items,
   pageSize = DEFAULT_PAGE_SIZE,
+  tableClassName,
   title,
-}: ListPagePaginatedProps) {
+}: ListPagePaginatedProps<T>) {
   const history = useHistory();
 
   const { page = '1' } = useParams<{
@@ -72,7 +75,7 @@ export function ListPagePaginated({
   return (
     <OverviewPage>
       <PageHeading
-        icon={<ThemaIcon thema={thema} />}
+        icon={thema ? <ThemaIcon thema={thema} /> : <ThemaIcon />}
         backLink={{ to: appRouteBack, title: backLinkTitle }}
       >
         {title}
@@ -103,7 +106,11 @@ export function ListPagePaginated({
                   </Grid.Cell>
                 )}
                 {!isLoading && !!itemsPaginated.length && (
-                  <TableV2 items={itemsPaginated} displayProps={displayProps} />
+                  <TableV2<T>
+                    items={itemsPaginated}
+                    displayProps={displayProps}
+                    className={tableClassName}
+                  />
                 )}
                 {items.length > pageSize && (
                   <PaginationV2

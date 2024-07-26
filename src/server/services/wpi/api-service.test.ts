@@ -187,7 +187,7 @@ describe('wpi/app-service', () => {
 
     remoteApi.get('/wpi/uitkering/aanvragen').reply(200, {
       status: 'OK',
-      content: [contentBijstandsuitkering, { about: 'Stadspas' }, null],
+      content: [contentBijstandsuitkering, { about: 'FooBar' }, null],
     });
 
     const response = await fetchBijstandsuitkering(requestID, {

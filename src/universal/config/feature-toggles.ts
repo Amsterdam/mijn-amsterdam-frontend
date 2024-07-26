@@ -37,13 +37,12 @@ export const FeatureToggle = {
   profileToggleActive: true,
   residentCountActive: true,
   sportDatasetsActive: true,
-  stadspasRequestsActive: false,
   subsidieActive: true,
   svwiLinkActive: IS_DEVELOPMENT,
   tipsFlipActive: true,
   toeristischeVerhuurActive: true,
   vergunningenActive: true,
-  vergunningenV2Active: false, // TODO: Enable when working on MIJN-8914
+  vergunningenV2Active: true, // TODO: Enable when working on MIJN-8914
   wiorDatasetActive: true,
   wiorMeldingen: true,
   zorgnedDocumentAttachmentsActive: true,

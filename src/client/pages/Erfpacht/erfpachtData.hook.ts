@@ -1,6 +1,6 @@
 import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
 import { isLoading } from '../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../components/Table/Table';
+import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useMediumScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 

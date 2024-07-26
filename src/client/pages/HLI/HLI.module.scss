@@ -16,31 +16,17 @@
 }
 
 @media screen and (min-width: $ams-breakpoint-medium) {
+  .EerdereRegelingen,
   .HuidigeRegelingen {
     tr {
       > th,
       > td {
         &:nth-child(1) {
-          width: 60%;
+          width: 75%;
         }
         &:nth-child(2) {
-          width: 40%;
-          white-space: break-spaces;
-        }
-      }
-    }
-  }
-
-  .EerdereRegelingen {
-    tr {
-      > th,
-      > td {
-        &:nth-child(1) {
-          width: 60%;
-        }
-        &:nth-child(2),
-        &:nth-child(3) {
-          width: 20%;
+          width: 25%;
+          // white-space: break-spaces;
         }
       }
     }

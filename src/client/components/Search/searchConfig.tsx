@@ -9,6 +9,7 @@ import type {
 import { AVGRequest } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
+import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
@@ -16,8 +17,6 @@ import {
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
 import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
-
-import { HLIresponseData } from '../../../server/services/hli/regelingen-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';

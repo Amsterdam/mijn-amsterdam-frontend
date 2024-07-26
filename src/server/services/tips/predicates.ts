@@ -1,10 +1,16 @@
-import { differenceInCalendarDays, differenceInYears } from 'date-fns';
+import {
+  differenceInCalendarDays,
+  differenceInYears,
+  parseISO,
+} from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 import type { TipsPredicateFN } from './tip-types';
 import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
+import { HLIRegeling } from '../hli/hli-regelingen-types';
+import { BeschikkingsResultaat } from '../zorgned/zorgned-config-and-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
@@ -49,13 +55,17 @@ export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
   return false;
 };
 
-export const hasValidStadspasRequest: TipsPredicateFN = (
+export const hasValidRecentStadspasRequest: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  // TODO: Replace with implementation from https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1370
   if (appState.HLI?.status === 'OK') {
-    return !!appState.HLI?.content?.stadspas?.length;
+    return appState.HLI?.content?.regelingen.some((aanvraag: HLIRegeling) => {
+      return aanvraag.dateDecision
+        ? differenceInYears(today, parseISO(aanvraag.dateDecision)) <= 1 &&
+            aanvraag.decision === 'toegewezen'
+        : false;
+    });
   }
   return false;
 };

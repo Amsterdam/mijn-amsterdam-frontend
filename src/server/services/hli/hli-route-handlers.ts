@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { getAuth } from '../../helpers/app';
+import { AuthProfileAndToken, getAuth } from '../../helpers/app';
+import { fetchDocument } from '../zorgned/zorgned-service';
 import { fetchStadspasTransactions } from './stadspas';
 import { StadspasBudget } from './stadspas-types';
 
@@ -21,4 +22,18 @@ export async function handleFetchTransactionsRequest(
   }
 
   return res.send(response);
+}
+
+export async function fetchZorgnedAVDocument(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentId: string
+) {
+  const response = fetchDocument(
+    requestID,
+    authProfileAndToken,
+    'ZORGNED_AV',
+    documentId
+  );
+  return response;
 }

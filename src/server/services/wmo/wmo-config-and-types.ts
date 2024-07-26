@@ -1,6 +1,7 @@
 import { parseISO } from 'date-fns';
 import { LinkProps, StatusLineItem } from '../../../universal/types';
 import {
+  BeschikkingsResultaat,
   LeveringsVorm,
   ProductSoortCode,
 } from '../zorgned/zorgned-config-and-types';
@@ -8,7 +9,9 @@ import {
 export const SINGLE_DOC_TITLE_BESLUIT = 'Brief';
 
 export const REGELING_IDENTIFICATIE = 'wmo';
-export const BESCHIKTPRODUCT_RESULTAAT = ['toegewezen'];
+export const BESCHIKTPRODUCT_RESULTAAT: BeschikkingsResultaat[] = [
+  'toegewezen',
+];
 export const DATE_END_NOT_OLDER_THAN = '2018-01-01';
 export const MINIMUM_REQUEST_DATE_FOR_DOCUMENTS = parseISO('2022-01-01'); // After this date documents are WCAG proof.
 
@@ -60,7 +63,7 @@ export interface WMOVoorzieningFrontend {
   link: LinkProps;
   steps: StatusLineItem[];
   itemTypeCode: ProductSoortCode;
-  dateDescision: string;
+  dateDecision: string;
   dateStart: string | null;
   dateEnd: string | null;
 }

@@ -4,9 +4,11 @@ import {
   LoadingContent,
   OverviewPage,
   PageHeading,
+  ThemaIcon,
 } from '../../components';
 
 import { ReactElement, ReactNode } from 'react';
+import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 
@@ -19,10 +21,12 @@ const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['40rem', '2rem', '4rem'],
 ];
 
+const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment niet alle gegevens tonen.';
+
 interface ThemaPaginaProps {
   title: string;
-  backLink: LinkProps;
-  icon: ReactElement;
+  backLink?: LinkProps;
+  icon?: ReactElement;
   pageContentTop: ReactNode;
   pageContentTables: ReactNode;
   linkListItems: LinkProps[];
@@ -30,22 +34,28 @@ interface ThemaPaginaProps {
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
   isError: boolean;
+  isPartialError?: boolean;
   isLoading: boolean;
 }
 
 export default function ThemaPagina({
   title,
-  backLink,
-  icon,
+  backLink = {
+    to: AppRoutes.HOME,
+    title: 'Home',
+  },
+  icon = <ThemaIcon />,
   pageContentTop,
   linkListItems = [],
   pageContentTables,
   pageContentBottom,
-  errorAlertContent = 'We kunnen op dit moment niet alle gegevens tonen.',
+  errorAlertContent,
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
   isError,
+  isPartialError,
   isLoading,
 }: ThemaPaginaProps) {
+  const showError = (!isError && isPartialError) || isError;
   return (
     <OverviewPage>
       <PageHeading backLink={backLink} icon={icon}>
@@ -66,9 +76,12 @@ export default function ThemaPagina({
             </Grid.Cell>
           )}
 
-          {isError && (
+          {showError && (
             <Grid.Cell span="all">
-              <ErrorAlert>{errorAlertContent}</ErrorAlert>
+              <ErrorAlert>
+                {errorAlertContent || ERROR_ALERT_DEFAULT}
+                {/* errorAlertContent could be an emty string, force to show an error. **/}
+              </ErrorAlert>
             </Grid.Cell>
           )}
 

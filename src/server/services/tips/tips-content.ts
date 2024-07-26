@@ -12,7 +12,7 @@ import {
   hasTozo,
   hasValidId,
   hasValidIdForVoting,
-  hasValidStadspasRequest,
+  hasValidRecentStadspasRequest,
   hasVerhuurRegistrations,
   is18OrOlder,
   isBetween4and12,
@@ -58,7 +58,7 @@ export const tips: Tip[] = [
     thema: Themas.HLI,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een stadspas hebt aangevraagd.',
-    predicates: [hasValidStadspasRequest],
+    predicates: [hasValidRecentStadspasRequest],
     link: {
       title: 'Bekijk de aanbiedingen',
       to: 'https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/',
@@ -100,7 +100,9 @@ export const tips: Tip[] = [
     profileTypes: ['private', 'commercial'],
     description:
       'Via de 020werkt-app krijgt u informatie  over werk, inkomen en meedoen in de wijk. De app is gratis, anoniem en makkelijk in gebruik.',
-    predicates: [or([hasValidStadspasRequest, hasTozo, hasBijstandsuitkering])],
+    predicates: [
+      or([hasValidRecentStadspasRequest, hasTozo, hasBijstandsuitkering]),
+    ],
     reason: 'U ziet deze tip omdat u TOZO, stadspas of bijstandsuitkering hebt',
     link: {
       title: 'Bekijk het filmpje',
@@ -120,7 +122,7 @@ export const tips: Tip[] = [
     profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
-    predicates: [hasValidStadspasRequest, hasKidsBetweenAges2And18],
+    predicates: [hasValidRecentStadspasRequest, hasKidsBetweenAges2And18],
 
     reason:
       'U ziet deze tip omdat u een Stadspas hebt en u een kind tussen de 2 en 18 hebt.',
@@ -142,7 +144,9 @@ export const tips: Tip[] = [
     profileTypes: ['private', 'commercial'],
     description:
       'Is uw inkomen te laag om alle rekeningen te betalen of hebt u schulden? Meld u aan voor gratis hulp',
-    predicates: [or([hasValidStadspasRequest, hasTozo, hasBijstandsuitkering])],
+    predicates: [
+      or([hasValidRecentStadspasRequest, hasTozo, hasBijstandsuitkering]),
+    ],
     reason: 'U ziet deze tip omdat u TOZO, stadspas of bijstandsuitkering hebt',
     link: {
       title: 'Vind hulp bij u in de buurt',
