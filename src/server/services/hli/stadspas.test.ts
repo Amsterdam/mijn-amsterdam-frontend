@@ -423,4 +423,22 @@ describe('stadspas services', () => {
       }
     `);
   });
+
+  test('stadspas transacties bad encrypted key', async () => {
+    const response = await fetchStadspasTransactions(
+      'xyz098',
+      'FOO.BAR.XYZ',
+      undefined,
+      'foo-bar'
+    );
+
+    expect(response).toMatchInlineSnapshot(`
+      {
+        "code": 401,
+        "content": null,
+        "message": "Not authorized",
+        "status": "ERROR",
+      }
+    `);
+  });
 });
