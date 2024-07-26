@@ -50,7 +50,7 @@ export interface ZorgnedStatusLineItemsConfig {
   filter?: ZorgnedLineItemsFilter;
 }
 
-export type LeveringsVorm = 'ZIN' | 'PGB' | '';
+export type LeveringsVorm = 'ZIN' | 'PGB' | '' | string;
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
 

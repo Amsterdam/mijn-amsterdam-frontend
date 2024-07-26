@@ -118,3 +118,7 @@ export function getStatusLineItems(
 
   return statusLineItems;
 }
+
+export const forTesting = {
+  getStatusLineItemTransformers,
+};
