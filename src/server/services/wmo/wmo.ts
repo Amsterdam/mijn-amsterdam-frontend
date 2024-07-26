@@ -119,6 +119,7 @@ function transformVoorzieningenForFrontend(
         steps: statusLineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
+        decision: capitalizeFirstLetter(aanvraag.resultaat),
         dateDescision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
