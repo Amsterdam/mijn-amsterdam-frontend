@@ -62,7 +62,7 @@ describe('Transform api items', () => {
       },
     ];
 
-    test('Assign documents after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
+    test('Assign 1 altDocumentContent after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
       expect(
         forTesting.addAltDocumentContentToLineItems(
           jsonCopy(aanvraag),
@@ -82,7 +82,7 @@ describe('Transform api items', () => {
       `);
     });
 
-    test('Assign documents before MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
+    test('Assign altDocumentContent before MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
       expect(
         forTesting.addAltDocumentContentToLineItems(
           jsonCopy({ ...aanvraag, datumAanvraag: '2017-04-12' }),
@@ -102,27 +102,18 @@ describe('Transform api items', () => {
       `);
     });
 
-    test('Assign documents with multiple docs after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
+    test('Assign altDocumentContent after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
       const lineItems2: StatusLineItem[] = jsonCopy(lineItems);
       const aanvraag2: ZorgnedAanvraagTransformed = jsonCopy(aanvraag);
 
       aanvraag2.documenten[1] = aanvraag2.documenten[0];
 
       expect(aanvraag2.documenten.length).toBe(2);
-
-      expect(forTesting.addAltDocumentContentToLineItems(aanvraag2, lineItems2))
-        .toMatchInlineSnapshot(`
-          [
-            {
-              "altDocumentContent": "<p><strong>Verstuurd per post</strong></p>",
-              "datePublished": "2024-06-24",
-              "id": "step-1",
-              "isActive": true,
-              "isChecked": true,
-              "status": "Besluit",
-            },
-          ]
-        `);
+      const [step] = forTesting.addAltDocumentContentToLineItems(
+        aanvraag2,
+        lineItems2
+      );
+      expect('altDocumentContent' in step).toBe(false);
     });
   });
 
@@ -146,7 +137,7 @@ describe('Transform api items', () => {
             {
               "datePublished": "2024-06-24",
               "id": "document-1",
-              "title": "Brief",
+              "title": "Document 1",
               "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
             },
           ]
@@ -170,7 +161,22 @@ describe('Transform api items', () => {
       expect(aanvraag2.documenten.length).toBe(2);
 
       expect(forTesting.getDocuments('xxx-222', aanvraag2))
-        .toMatchInlineSnapshot(`[]`);
+        .toMatchInlineSnapshot(`
+        [
+          {
+            "datePublished": "2024-06-24",
+            "id": "document-1",
+            "title": "Document 1",
+            "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+          },
+          {
+            "datePublished": "2024-06-24",
+            "id": "document-1",
+            "title": "Document 1",
+            "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+          },
+        ]
+      `);
     });
   });
 });

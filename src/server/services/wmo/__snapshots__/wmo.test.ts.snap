@@ -4,14 +4,15 @@ exports[`Transform api items > fetchWmo 1`] = `
 {
   "content": [
     {
-      "dateDecision": "2023-03-16",
+      "dateDescision": "2023-03-16",
       "dateEnd": "2024-03-11",
       "dateStart": "2023-03-12",
+      "decision": "Toegewezen",
       "documents": [
         {
           "datePublished": "2023-03-16T15:56:11.41",
           "id": "B2516440",
-          "title": "Brief",
+          "title": "Opstellen beschikking wijkzorg Hbh",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -22,7 +23,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1986585525",
       },
-      "resultaat": "toegewezen",
       "status": "Levering gestart",
       "steps": [
         {
@@ -87,14 +87,15 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2023-03-01",
+      "dateDescision": "2023-03-01",
       "dateEnd": null,
       "dateStart": "2022-12-21",
+      "decision": "Toegewezen",
       "documents": [
         {
           "datePublished": "2023-03-02T11:17:08.293",
           "id": "B2510020",
-          "title": "Brief",
+          "title": "New Toekenning hulpmiddel zonder keuze",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -105,7 +106,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/890306301",
       },
-      "resultaat": "toegewezen",
       "status": "Product geleverd",
       "steps": [
         {
@@ -168,14 +168,15 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Elektrische rolstoel voor binnen en buiten",
     },
     {
-      "dateDecision": "2022-10-20",
+      "dateDescision": "2022-10-20",
       "dateEnd": null,
       "dateStart": "2022-10-19",
+      "decision": "Toegewezen",
       "documents": [
         {
           "datePublished": "2022-10-19T14:27:42.643",
           "id": "B2391009",
-          "title": "Brief",
+          "title": "AOV Beschikking positief",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -186,7 +187,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2941866748",
       },
-      "resultaat": "toegewezen",
       "status": "Besluit",
       "steps": [
         {
@@ -225,14 +225,15 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Kamer tot kamer vervoer",
     },
     {
-      "dateDecision": "2022-04-15",
+      "dateDescision": "2022-04-15",
       "dateEnd": null,
       "dateStart": "2022-03-24",
+      "decision": "Toegewezen",
       "documents": [
         {
           "datePublished": "2022-04-19T13:16:44",
           "id": "B2268406",
-          "title": "Brief",
+          "title": "Opstellen beschikking grote WRA",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -243,7 +244,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3476086687",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -308,14 +308,15 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Niet standaard opdracht natte cel en toilet",
     },
     {
-      "dateDecision": "2022-03-14",
+      "dateDescision": "2022-03-14",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
+      "decision": "Toegewezen",
       "documents": [
         {
           "datePublished": "2022-03-14T16:12:12",
           "id": "B2258816",
-          "title": "Brief",
+          "title": "Opstellen beschikking wijkzorg AO/DB/LO",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -326,7 +327,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/955409908",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -390,14 +390,15 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2022-03-14",
+      "dateDescision": "2022-03-14",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
+      "decision": "Toegewezen",
       "documents": [
         {
           "datePublished": "2022-03-14T16:11:29",
           "id": "B2258817",
-          "title": "Brief",
+          "title": "Opstellen beschikking wijkzorg Hbh",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -408,7 +409,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1811284656",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -472,9 +472,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2021-12-08",
+      "dateDescision": "2021-12-08",
       "dateEnd": null,
       "dateStart": "2021-12-20",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1035945789",
       "isActual": true,
@@ -483,7 +484,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1035945789",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -548,9 +548,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Handzender(s) voor deurautomaat",
     },
     {
-      "dateDecision": "2021-12-08",
+      "dateDescision": "2021-12-08",
       "dateEnd": null,
       "dateStart": "2021-12-08",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1035945788",
       "isActual": true,
@@ -559,7 +560,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1035945788",
       },
-      "resultaat": "toegewezen",
       "status": "Opdracht gegeven",
       "steps": [
         {
@@ -624,9 +624,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht toegang",
     },
     {
-      "dateDecision": "2021-12-06",
+      "dateDescision": "2021-12-06",
       "dateEnd": "2022-02-06",
       "dateStart": "2021-12-06",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "2248022546",
       "isActual": false,
@@ -635,7 +636,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2248022546",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -700,9 +700,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht toegang",
     },
     {
-      "dateDecision": "2021-10-22",
+      "dateDescision": "2021-10-22",
       "dateEnd": null,
       "dateStart": "2021-10-13",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "3645917971",
       "isActual": true,
@@ -711,7 +712,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3645917971",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -776,9 +776,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Niet standaard opdracht natte cel en toilet",
     },
     {
-      "dateDecision": "2021-03-11",
+      "dateDescision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "3608314454",
       "isActual": false,
@@ -787,7 +788,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3608314454",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -851,9 +851,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2021-03-11",
+      "dateDescision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "2624361688",
       "isActual": false,
@@ -862,7 +863,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2624361688",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -926,9 +926,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDecision": "2021-03-11",
+      "dateDescision": "2021-03-11",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "2758572638",
       "isActual": false,
@@ -937,7 +938,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2758572638",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1001,9 +1001,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2021-01-09",
+      "dateDescision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "226616664",
       "isActual": false,
@@ -1012,7 +1013,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/226616664",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1076,9 +1076,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDecision": "2021-01-09",
+      "dateDescision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1855927508",
       "isActual": false,
@@ -1087,7 +1088,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1855927508",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1151,9 +1151,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2021-01-09",
+      "dateDescision": "2021-01-09",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1499176916",
       "isActual": false,
@@ -1162,7 +1163,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1499176916",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1226,9 +1226,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2020-12-04",
+      "dateDescision": "2020-12-04",
       "dateEnd": null,
       "dateStart": "2020-11-13",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "4005950334",
       "isActual": true,
@@ -1237,7 +1238,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4005950334",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -1302,9 +1302,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Antislipvloer/behandeling badkamer",
     },
     {
-      "dateDecision": "2020-06-16",
+      "dateDescision": "2020-06-16",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-06-15",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "3303327448",
       "isActual": false,
@@ -1313,7 +1314,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3303327448",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1377,9 +1377,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2020-06-18",
+      "dateDescision": "2020-06-18",
       "dateEnd": null,
       "dateStart": "2020-06-10",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "134062321",
       "isActual": true,
@@ -1388,7 +1389,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/134062321",
       },
-      "resultaat": "toegewezen",
       "status": "Product geleverd",
       "steps": [
         {
@@ -1451,9 +1451,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Douche-/toiletstoel zelfrijder",
     },
     {
-      "dateDecision": "2020-06-05",
+      "dateDescision": "2020-06-05",
       "dateEnd": "2020-08-05",
       "dateStart": "2020-06-05",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1809360062",
       "isActual": false,
@@ -1462,7 +1463,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1809360062",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1514,9 +1514,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht natte cel en toilet",
     },
     {
-      "dateDecision": "2020-03-12",
+      "dateDescision": "2020-03-12",
       "dateEnd": "2020-06-14",
       "dateStart": "2020-03-09",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "3441632088",
       "isActual": false,
@@ -1525,7 +1526,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3441632088",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1589,9 +1589,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2020-03-12",
+      "dateDescision": "2020-03-12",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "636127578",
       "isActual": false,
@@ -1600,7 +1601,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/636127578",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1664,9 +1664,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDecision": "2020-03-12",
+      "dateDescision": "2020-03-12",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1926069212",
       "isActual": false,
@@ -1675,7 +1676,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1926069212",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1739,9 +1739,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2019-10-09",
+      "dateDescision": "2019-10-09",
       "dateEnd": "2019-12-09",
       "dateStart": "2019-10-09",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "954761814",
       "isActual": false,
@@ -1750,7 +1751,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/954761814",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1815,9 +1815,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Reparatie-/verwijderopdracht natte cel en toilet",
     },
     {
-      "dateDecision": "2019-04-15",
+      "dateDescision": "2019-04-15",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-04-14",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "446200219",
       "isActual": false,
@@ -1826,7 +1827,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/446200219",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1890,9 +1890,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2019-03-11",
+      "dateDescision": "2019-03-11",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "938485502",
       "isActual": false,
@@ -1901,7 +1902,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/938485502",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -1965,9 +1965,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2019-03-11",
+      "dateDescision": "2019-03-11",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1175100182",
       "isActual": false,
@@ -1976,7 +1977,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1175100182",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2040,9 +2040,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDecision": "2018-11-29",
+      "dateDescision": "2018-11-29",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-11-28",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "300203506",
       "isActual": false,
@@ -2051,7 +2052,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/300203506",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2115,9 +2115,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDecision": "2018-12-27",
+      "dateDescision": "2018-12-27",
       "dateEnd": null,
       "dateStart": "2018-10-24",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "2889701237",
       "isActual": true,
@@ -2126,7 +2127,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2889701237",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -2191,9 +2191,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing met doc 4",
     },
     {
-      "dateDecision": "2018-04-25",
+      "dateDescision": "2018-04-25",
       "dateEnd": "2019-04-13",
       "dateStart": "2018-04-14",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "4058168346",
       "isActual": false,
@@ -2202,7 +2203,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4058168346",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2266,9 +2266,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2018-04-19",
+      "dateDescision": "2018-04-19",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-03-09",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "2707273693",
       "isActual": false,
@@ -2277,7 +2278,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2707273693",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2341,9 +2341,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2017-11-24",
+      "dateDescision": "2017-11-24",
       "dateEnd": "2018-11-23",
       "dateStart": "2017-11-24",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "3209335922",
       "isActual": false,
@@ -2352,7 +2353,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3209335922",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2416,9 +2416,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning",
     },
     {
-      "dateDecision": "2017-06-01",
+      "dateDescision": "2017-06-01",
       "dateEnd": "2018-04-13",
       "dateStart": "2017-06-01",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "3783046999",
       "isActual": false,
@@ -2427,7 +2428,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/3783046999",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2491,9 +2491,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2017-06-01",
+      "dateDescision": "2017-06-01",
       "dateEnd": "2018-03-08",
       "dateStart": "2017-06-01",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "477515900",
       "isActual": false,
@@ -2502,7 +2503,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/477515900",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2566,9 +2566,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Dagbesteding",
     },
     {
-      "dateDecision": "2014-09-09",
+      "dateDescision": "2014-09-09",
       "dateEnd": "2022-12-20",
       "dateStart": "2014-09-08",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "2067143485",
       "isActual": false,
@@ -2577,7 +2578,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2067143485",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2640,9 +2640,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Elektrische hulpaandrijving voor rolstoel",
     },
     {
-      "dateDecision": "2014-09-11",
+      "dateDescision": "2014-09-11",
       "dateEnd": null,
       "dateStart": "2014-09-08",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "4216491004",
       "isActual": true,
@@ -2651,7 +2652,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4216491004",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -2716,9 +2716,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing 3",
     },
     {
-      "dateDecision": "2013-12-09",
+      "dateDescision": "2013-12-09",
       "dateEnd": null,
       "dateStart": "2013-12-05",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "2730893522",
       "isActual": true,
@@ -2727,7 +2728,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/2730893522",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -2792,9 +2792,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing met doc 2",
     },
     {
-      "dateDecision": "2013-05-17",
+      "dateDescision": "2013-05-17",
       "dateEnd": null,
       "dateStart": "2013-05-06",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1672363416",
       "isActual": true,
@@ -2803,7 +2804,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1672363416",
       },
-      "resultaat": "toegewezen",
       "status": "Aanpassing uitgevoerd",
       "steps": [
         {
@@ -2868,9 +2868,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Woonruimteaanpassing met doc 1",
     },
     {
-      "dateDecision": "2012-10-05",
+      "dateDescision": "2012-10-05",
       "dateEnd": "2020-06-09",
       "dateStart": "2012-10-05",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "1703298224",
       "isActual": false,
@@ -2879,7 +2880,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/1703298224",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {
@@ -2942,9 +2942,10 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Douche-/toiletstoel (verrijdb/kantelb/ind aangep.)",
     },
     {
-      "dateDecision": "2012-08-07",
+      "dateDescision": "2012-08-07",
       "dateEnd": "2022-07-31",
       "dateStart": "2012-08-07",
+      "decision": "Toegewezen",
       "documents": [],
       "id": "4046397887",
       "isActual": false,
@@ -2953,7 +2954,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorzieningen/4046397887",
       },
-      "resultaat": "toegewezen",
       "status": "Einde recht",
       "steps": [
         {

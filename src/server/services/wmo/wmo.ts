@@ -20,18 +20,22 @@ import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import { isAfter } from 'date-fns';
 
+function isAfterWCAGValidDocumentsDate(date: string) {
+  return isAfter(parseISO(date), MINIMUM_REQUEST_DATE_FOR_DOCUMENTS);
+}
+
 function getDocuments(
   sessionID: AuthProfileAndToken['profile']['sid'],
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
-  let documents: GenericDocument[] = [];
-
-  function getAanvraagDocumentenFrontend() {
+  if (
+    FeatureToggle.zorgnedDocumentAttachmentsActive &&
+    isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
+  ) {
     return aanvraagTransformed.documenten.map((document) => {
       const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
       return {
         ...document,
-        title: SINGLE_DOC_TITLE_BESLUIT, // TODO: Change if we get proper document names from Zorgned api
         url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
           id: idEncrypted,
         }),
@@ -39,32 +43,27 @@ function getDocuments(
     });
   }
 
-  if (
-    FeatureToggle.zorgnedDocumentAttachmentsActive &&
-    aanvraagTransformed.documenten.length === 1 &&
-    parseISO(aanvraagTransformed.datumAanvraag) >=
-      MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-  ) {
-    documents = getAanvraagDocumentenFrontend();
-  }
-
-  return documents;
+  return [];
 }
 
 function addAltDocumentContentToLineItems(
   aanvraagTransformed: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
 ) {
+  if (!FeatureToggle.zorgnedDocumentAttachmentsActive) {
+    return statusLineItems;
+  }
+
   return statusLineItems.map((lineItem) => {
     if (lineItem.status === 'Besluit') {
       if (
-        FeatureToggle.zorgnedDocumentAttachmentsActive &&
         aanvraagTransformed.documenten.length === 1 &&
-        parseISO(aanvraagTransformed.datumAanvraag) >=
-          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
+        isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
       ) {
         lineItem.altDocumentContent = `<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>`;
-      } else {
+      } else if (
+        !isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
+      ) {
         lineItem.altDocumentContent = `<p><strong>Verstuurd per post</strong></p>`;
       }
     }
