@@ -59,8 +59,8 @@ function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
 
 export default function ThemaPaginaHLI() {
   const { HLI } = useAppStateGetter();
-  const hasStadspas = !!HLI.content?.stadspas?.stadspassen?.length;
-  const stadspassen = HLI.content?.stadspas?.stadspassen;
+  const stadspassen = HLI.content?.stadspas ?? [];
+  const hasStadspas = !!stadspassen?.length;
   const regelingen = addLinkElementToProperty<HLIRegeling>(
     HLI.content?.regelingen ?? [],
     'title'

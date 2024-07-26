@@ -404,6 +404,7 @@ export const BFF_OIDC_BASE_URL = `${
 export const BFF_OIDC_ISSUER_BASE_URL = `${getFromEnv('BFF_OIDC_ISSUER_BASE_URL')}`;
 
 export const STADSPASSEN_ENDPOINT_PARAMETER = 'administratienummerEncrypted';
+
 export const ExternalConsumerEndpoints = {
   // Publicly accessible
   public: {
@@ -413,6 +414,7 @@ export const ExternalConsumerEndpoints = {
   // Privately accessible
   private: {
     STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
+    STADPAS_BUDGET_TRANSACTIES: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
   },
 };
 
@@ -436,7 +438,8 @@ export const BffEndpoints = {
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // Stadspas
-  STADSPAS_TRANSACTIONS: '/services/stadspas/transactions/:transactionsKey?',
+  STADSPAS_TRANSACTIONS:
+    '/services/stadspas/transactions/:transactionsKeyEncrypted?',
 
   // Vergunningen V2
   VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',

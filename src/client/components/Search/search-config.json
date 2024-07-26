@@ -742,17 +742,6 @@
         "voorzieningsoortcode"
       ]
     },
-    "WPI_STADSPAS": {
-      "keywords": [
-        "saldo",
-        "kind",
-        "budget",
-        "tegoed",
-        "stadspas",
-        "stad",
-        "pas"
-      ]
-    },
     "KREFIA": {
       "keywords": [
         "lening",

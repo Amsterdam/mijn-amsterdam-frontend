@@ -8,14 +8,6 @@ export const AppRoutesRedirect = [
     to: AppRoutes['BURGERZAKEN/ID-KAART'],
   },
   {
-    from: '/inkomen-en-stadspas/stadspas/aanvraag/:id',
-    to: AppRoutes['STADSPAS/AANVRAAG'],
-  },
-  {
-    from: '/inkomen-en-stadspas/stadspas/saldo/:id',
-    to: AppRoutes['STADSPAS/SALDO'],
-  },
-  {
     from: '/inkomen-en-stadspas/bijstandsuitkering/:id',
     to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
   },
@@ -90,9 +82,6 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
   [AppRoutes['INKOMEN/TONK']]: () => `/inkomen/tonk`,
 
   [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
-
-  [AppRoutes['STADSPAS/AANVRAAG']]: () => '/stadspas/aavraag',
-  [AppRoutes['STADSPAS/SALDO']]: () => '/stadspas/saldo',
 
   [AppRoutes['ZORG/VOORZIENINGEN']]: () => '/zorg-en-ondersteuning/voorziening',
 
