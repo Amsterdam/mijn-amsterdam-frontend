@@ -1,11 +1,9 @@
-import { parseISO } from 'date-fns';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
 } from './zorgned-config-and-types';
 import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
-import { jsonCopy } from '../../../universal/helpers/utils';
 
 function getTransformerConfig() {
   const transformerConfig: ZorgnedStatusLineItemTransformerConfig = {
