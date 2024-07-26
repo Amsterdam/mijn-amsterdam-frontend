@@ -5,6 +5,7 @@ import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 import type { TipsPredicateFN } from './tip-types';
 import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
+import { HLIRegeling } from '../hli/hli-regelingen-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
@@ -53,9 +54,11 @@ export const hasValidStadspasRequest: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  // TODO: Replace with implementation from https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1370
   if (appState.HLI?.status === 'OK') {
-    return !!appState.HLI?.content?.stadspas?.length;
+    return appState.HLI?.content?.regelingen.some(
+      (aanvraag: HLIRegeling) =>
+        differenceInYears(today, new Date(aanvraag.dateDescision)) <= 1
+    );
   }
   return false;
 };
