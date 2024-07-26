@@ -204,6 +204,7 @@ describe('hli-zorgned-service', () => {
           {
             isActueel: false,
             datumEindeGeldigheid: '2032-01-01',
+            datumIngangGeldigheid: '2024-08-01',
           } as ZorgnedAanvraagTransformed,
         ],
         status: 'OK',
@@ -220,7 +221,8 @@ describe('hli-zorgned-service', () => {
         "content": [
           {
             "datumEindeGeldigheid": "2032-01-01",
-            "isActueel": false,
+            "datumIngangGeldigheid": "2024-08-01",
+            "isActueel": true,
           },
         ],
         "status": "OK",
