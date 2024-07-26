@@ -63,7 +63,9 @@ describe('hli/router-external-consumer', async () => {
           clientidentificatie: '123-123',
         },
       });
-      remoteApi.post('/amsapp/administratienummer').reply(200, 'ok');
+      remoteApi
+        .post('/amsapp/session/credentials')
+        .reply(200, { result: 'success' });
 
       await forTesting.sendAdministratienummerResponse(
         await getReqMock(),
