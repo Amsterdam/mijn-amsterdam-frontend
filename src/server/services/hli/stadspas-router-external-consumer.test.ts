@@ -7,6 +7,9 @@ import {
 } from '../../config';
 import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { forTesting } from './stadspas-router-external-consumer';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import * as stadspas from './stadspas';
+// import * as appHelpers from '../../helpers/app';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -23,6 +26,8 @@ describe('hli/router-external-consumer', async () => {
   const statusMock = vi.fn();
   const renderMock = vi.fn();
   const redirectMock = vi.fn();
+
+  const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
 
   async function getReqMock(useCookie: boolean = true) {
     const cookieValue = useCookie
@@ -212,9 +217,44 @@ describe('hli/router-external-consumer', async () => {
       expect(resMock.send).toHaveBeenCalledWith({
         status: 'OK',
         content: [
-          { foo: 'bar', transactionsKeyEncrypted: 'test-encrypted-id' },
+          { foo: 'bar', transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
         ],
       });
+    });
+  });
+
+  describe('Budget transactions endpoint', async () => {
+    it('Happy path without budgetcode filter', async () => {
+      const fetchStadspasTransactionsSpy = vi
+        .spyOn(stadspas, 'fetchStadspasTransactions')
+        .mockResolvedValueOnce(apiSuccessResult([]));
+
+      const reqMock = {
+        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
+      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+
+      await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
+
+      expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
+      expect(sendMock).toHaveBeenCalledOnce();
+    });
+
+    it('Happy path with budgetcode filter.', async () => {
+      const fetchStadspasTransactionsSpy = vi
+        .spyOn(stadspas, 'fetchStadspasTransactions')
+        .mockResolvedValueOnce(apiSuccessResult([]));
+
+      const reqMock = {
+        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
+        query: {
+          budgetCode: 'GPAS05_19',
+        },
+      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+
+      await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
+
+      expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
+      expect(sendMock).toHaveBeenCalledOnce();
     });
   });
 });

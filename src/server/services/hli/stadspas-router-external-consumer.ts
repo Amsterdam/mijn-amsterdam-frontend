@@ -1,5 +1,8 @@
 import express, { Request, Response } from 'express';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import {
   BffEndpoints,
   ExternalConsumerEndpoints,
@@ -10,6 +13,7 @@ import {
   AuthProfileAndToken,
   getAuth,
   sendBadRequest,
+  sendResponse,
   sendUnauthorized,
 } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
@@ -215,10 +219,10 @@ async function sendBudgetTransactionsResponse(
   const response = await fetchStadspasTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
-    req.query.budgetCode as StadspasBudget['code']
+    req.query?.budgetCode as StadspasBudget['code']
   );
 
-  return res.send(response);
+  sendResponse(res, response);
 }
 
 router.get(
@@ -232,4 +236,5 @@ export const stadspasExternalConsumerRouter = router;
 export const forTesting = {
   sendAdministratienummerResponse,
   sendStadspassenResponse,
+  sendBudgetTransactionsResponse,
 };
