@@ -1,7 +1,7 @@
 import { Grid, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
-import { Stadspas } from '../../../server/services/hli/stadspas-types';
+import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -9,7 +9,7 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 
-function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
+function StadspasListItem({ stadspas }: { stadspas: StadspasFrontend }) {
   return (
     <UnorderedList.Item>
       <MaRouterLink maVariant="fatNoUnderline" href={stadspas.link?.to}>
@@ -25,7 +25,7 @@ function StadspasListItem({ stadspas }: { stadspas: Stadspas }) {
 }
 
 type StadspassenProps = {
-  stadspassen: Stadspas[];
+  stadspassen: StadspasFrontend[];
 };
 
 function Stadspassen({ stadspassen }: StadspassenProps) {
