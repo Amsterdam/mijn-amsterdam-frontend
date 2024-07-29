@@ -100,24 +100,30 @@ async function sendAdministratienummerResponse(
 
       const requestConfig = getApiConfig('AMSAPP', {
         data: {
-          administratienummerEncrypted,
-          token: req.params.token,
+          encrypted_administration_no: administratienummerEncrypted,
+          session_token: req.params.token,
         },
       });
 
       // Deliver the token with administratienummer to app.amsterdam.nl
-      const deliveryResponse = await requestData(
+      const deliveryResponse = await requestData<{ result: 'success' }>(
         requestConfig,
         res.locals.requestID
       );
 
-      if (deliveryResponse.status === 'OK') {
+      if (
+        deliveryResponse.status === 'OK' &&
+        deliveryResponse.content.result === 'success'
+      ) {
         return res.render('amsapp-stadspas-administratienummer', {
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
         });
       }
 
-      if (deliveryResponse.status === 'ERROR') {
+      if (
+        deliveryResponse.status === 'ERROR' ||
+        deliveryResponse.content?.result !== 'success'
+      ) {
         // Delivery response error
         error = errors.AMSAPP_DELIVERY_FAILED;
       }
