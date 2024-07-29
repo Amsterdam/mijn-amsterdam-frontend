@@ -16,8 +16,8 @@ import {
 
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();
-  const stadspassen = HLI.content?.stadspas?.stadspassen;
-  const hasStadspas = !!HLI.content?.stadspas?.stadspassen?.length;
+  const stadspassen = HLI.content?.stadspas;
+  const hasStadspas = !!HLI.content?.stadspas?.length;
   const regelingen = addLinkElementToProperty<HLIRegeling>(
     HLI.content?.regelingen ?? [],
     'title',
