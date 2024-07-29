@@ -1,60 +1,7 @@
 import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-config-and-types';
-import {
-  AV_PCVZIL,
-  AV_UPCC,
-  AV_UPCZIL,
-  shouldIncludePcvcUpcc,
-  forTesting,
-} from './pcvergoeding';
+import { AV_PCVZIL, AV_UPCC, AV_UPCZIL, forTesting } from './pcvergoeding';
 
 describe('pcvergoeding', () => {
-  describe('shouldIncludePcvcUpcc', () => {
-    test('Does not exclude on base of betrokkenen', () => {
-      const testData = [
-        {
-          productIdentificatie: AV_UPCC,
-          betrokkenen: ['A'],
-        },
-        {
-          productIdentificatie: AV_UPCZIL,
-          betrokkenen: ['B'],
-        },
-      ] as unknown as ZorgnedAanvraagTransformed[];
-
-      expect(shouldIncludePcvcUpcc(testData[0], testData)).toBe(true);
-    });
-
-    test('Excludes on base of betrokkenen', () => {
-      const testData = [
-        {
-          productIdentificatie: AV_UPCC,
-          betrokkenen: ['A'],
-        },
-        {
-          productIdentificatie: AV_UPCZIL,
-          betrokkenen: ['A'],
-        },
-      ] as unknown as ZorgnedAanvraagTransformed[];
-
-      expect(shouldIncludePcvcUpcc(testData[0], testData)).toBe(false);
-    });
-
-    test('Does not exclude on base of other AV code', () => {
-      const testData = [
-        {
-          productIdentificatie: AV_UPCC,
-          betrokkenen: ['A'],
-        },
-        {
-          productIdentificatie: AV_PCVZIL,
-          betrokkenen: ['A'],
-        },
-      ] as unknown as ZorgnedAanvraagTransformed[];
-
-      expect(shouldIncludePcvcUpcc(testData[0], testData)).toBe(true);
-    });
-  });
-
   describe('isVerzilveringVanRegeling', () => {
     const testData = [
       {

@@ -5,7 +5,6 @@ import {
   AV_PCVZIL,
   AV_UPCC,
   AV_UPCZIL,
-  shouldIncludePcvcUpcc,
   PCVERGOEDING,
 } from './status-line-items/pcvergoeding';
 import { REGELING } from './status-line-items/regeling';
@@ -15,7 +14,6 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   {
     productIdentificatie: [AV_UPCC, AV_UPCZIL, AV_PCVC, AV_PCVZIL],
     lineItemTransformers: PCVERGOEDING,
-    filter: shouldIncludePcvcUpcc,
   },
   {
     productIdentificatie: ['AV-GOV', 'AV-OVM'],
