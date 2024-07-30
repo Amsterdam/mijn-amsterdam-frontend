@@ -79,6 +79,7 @@ describe('hli/router-external-consumer', async () => {
       expect(renderMock).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
+          administratienummerEncrypted: 'test-encrypted-id',
           appHref: 'amsterdam://stadspas',
         }
       );
