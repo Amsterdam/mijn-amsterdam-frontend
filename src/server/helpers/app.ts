@@ -9,7 +9,10 @@ import uid from 'uid-safe';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { IS_AP } from '../../universal/config/env';
 import {
+  ApiErrorResponse,
+  ApiPostponeResponse,
   ApiResponse,
+  ApiSuccessResponse,
   apiErrorResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
@@ -118,17 +121,13 @@ export function requestID(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-export function send404(res: Response) {
-  res.status(404);
-  return res.send(apiErrorResult('Not Found', null));
-}
+/** Sets the right statuscode and sends a response. */
+export function sendResponse(res: Response, apiResponse: ApiResponse) {
+  if (apiResponse.status === 'ERROR') {
+    res.status(typeof apiResponse.code === 'number' ? apiResponse.code : 500);
+  }
 
-export function sendUnauthorized(
-  res: Response,
-  message: string = 'Unauthorized'
-) {
-  res.status(401);
-  return res.send(apiErrorResult(message, null));
+  res.send(apiResponse);
 }
 
 export function sendBadRequest(
@@ -139,6 +138,19 @@ export function sendBadRequest(
   return res
     .status(400)
     .send(apiErrorResult(`Bad request: ${reason}`, content));
+}
+
+export function sendUnauthorized(
+  res: Response,
+  message: string = 'Unauthorized'
+) {
+  res.status(401);
+  return res.send(apiErrorResult(message, null));
+}
+
+export function send404(res: Response) {
+  res.status(404);
+  return res.send(apiErrorResult('Not Found', null));
 }
 
 export function clearRequestCache(req: Request, res: Response) {
@@ -420,11 +432,4 @@ export function generateFullApiUrlBFF(
   baseUrl: string = BFF_API_BASE_URL
 ) {
   return `${baseUrl}${generatePath(path, params)}`;
-}
-
-export function sendResponseContent(res: Response, apiResponse: ApiResponse) {
-  if (apiResponse.status === 'ERROR' && apiResponse.code) {
-    res.status(apiResponse.code);
-  }
-  return res.send(apiResponse);
 }

@@ -8,10 +8,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'text',
+        type: 'json',
         options: {
           status: 200,
-          body: 'ok',
+          body: { detail: 'Success' },
         },
       },
     ],

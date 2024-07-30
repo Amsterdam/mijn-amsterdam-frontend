@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { bffApiHost, remoteApiHost } from './setupTests';
 import { AuthProfileAndToken } from './server/helpers/app';
+import express, { Response } from 'express';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',
@@ -39,4 +40,27 @@ export function authProfileAndToken(
   }
 
   return authProfileAndToken;
+}
+
+export class ResponseMock {
+  statusCode: number;
+  locals: { requestID: string };
+
+  static new() {
+    return new ResponseMock() as unknown as Response;
+  }
+
+  private constructor() {
+    this.statusCode = 200;
+    this.locals = {
+      requestID: '123',
+    };
+  }
+
+  send = vi.fn().mockImplementation((content) => content);
+  status = vi.fn().mockImplementation((statusCode) => {
+    this.statusCode = statusCode;
+  });
+  write = vi.fn();
+  clearCookie = vi.fn();
 }
