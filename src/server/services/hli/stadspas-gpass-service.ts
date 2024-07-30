@@ -68,7 +68,6 @@ function transformStadspasResponse(
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource
 ) {
-  const passNumber = gpassStadspasResonseData.pasnummer_volledig;
   const budgets = gpassStadspasResonseData.budgetten.map(transformBudget);
 
   const stadspasTransformed: Stadspas = {
@@ -80,9 +79,8 @@ function transformStadspasResponse(
     balanceFormatted: `€${displayAmount(
       budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
     )}`,
-    passNumber,
-    passType:
-      budgets.length && GPASS_BUDGET_ONLY_FOR_CHILDREN ? 'kind' : 'ouder', // TODO: Uitzoeken of we pas kunnen koppelen aan type
+    passNumber: gpassStadspasResonseData.pasnummer,
+    passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
   };
 
   return stadspasTransformed;

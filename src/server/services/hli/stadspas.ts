@@ -90,7 +90,7 @@ export async function fetchStadspasTransactions(
   return fetchStadspasBudgetTransactions(
     requestID,
     administratienummer,
-    passNumber,
+    parseInt(passNumber, 10),
     budgetCode
   );
 }
