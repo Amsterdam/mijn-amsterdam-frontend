@@ -354,7 +354,7 @@ describe('stadspas services', () => {
   test('stadspas transacties Happy!', async () => {
     remoteApi
       .get(
-        '/stadspas/rest/transacties/v1/budget?pasnummer=xxx567&sub_transactions=true'
+        '/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true'
       )
       .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
       .reply(200, {
@@ -373,7 +373,7 @@ describe('stadspas services', () => {
       });
 
     const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
-      `my-unique-session-id:0363000123-123:xxx567`
+      `my-unique-session-id:0363000123-123:123123123`
     );
 
     const response = await fetchStadspasTransactions(
@@ -404,7 +404,7 @@ describe('stadspas services', () => {
 
   test('stadspas transacties unmatched session id', async () => {
     const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
-      `another-session-id:0363000123-123:xxx567`
+      `another-session-id:0363000123-123:123123123`
     );
 
     const response = await fetchStadspasTransactions(
