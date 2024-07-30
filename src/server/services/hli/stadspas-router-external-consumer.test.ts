@@ -112,11 +112,14 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(sendMock).toHaveBeenCalledWith({
-        status: 'ERROR',
-        message: 'Unauthorized',
-        content: null,
-      });
+      expect(renderMock).toHaveBeenCalledWith(
+        'amsapp-stadspas-administratienummer',
+        {
+          error: { code: '001', message: 'Niet ingelogd met Digid' },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Niet ingelogd met Digid&errorCode=001',
+        }
+      );
     });
 
     test('NO Administratienummer', async () => {
@@ -169,7 +172,14 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(statusMock).toHaveBeenCalledWith(401);
+      expect(renderMock).toHaveBeenCalledWith(
+        'amsapp-stadspas-administratienummer',
+        {
+          error: { code: '001', message: 'Niet ingelogd met Digid' },
+          appHref:
+            'amsterdam://stadspas?errorMessage=Niet ingelogd met Digid&errorCode=001',
+        }
+      );
     });
   });
 
