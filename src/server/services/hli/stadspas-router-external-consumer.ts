@@ -10,6 +10,7 @@ import {
   AuthProfileAndToken,
   getAuth,
   sendBadRequest,
+  sendResponse,
 } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
@@ -216,10 +217,10 @@ async function sendBudgetTransactionsResponse(
   const response = await fetchStadspasTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
-    req.query.budgetCode as StadspasBudget['code']
+    req.query?.budgetCode as StadspasBudget['code']
   );
 
-  return res.send(response);
+  sendResponse(res, response);
 }
 
 router.get(
@@ -233,4 +234,5 @@ export const stadspasExternalConsumerRouter = router;
 export const forTesting = {
   sendAdministratienummerResponse,
   sendStadspassenResponse,
+  sendBudgetTransactionsResponse,
 };

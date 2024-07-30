@@ -41,6 +41,7 @@
       "get-powerbrowser-bb-vergunning-attachments:standard",
       "get-subsidie:standard",
       "get-svwi-tegel:standard",
+      "get-patroon-c:standard",
       "get-toeristische-verhuur-with-a-number:standard",
       "get-toeristische-verhuur-with-b-number:standard",
       "post-toeristische-verhuur-with-bsn:standard",

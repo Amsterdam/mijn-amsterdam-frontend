@@ -2,8 +2,12 @@ import express, { NextFunction, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import Mockdate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { bffApi } from '../../test-utils';
-import { apiErrorResult } from '../../universal/helpers/api';
+import { bffApi, ResponseMock } from '../../test-utils';
+import {
+  ApiErrorResponse,
+  apiErrorResult,
+  ApiResponse,
+} from '../../universal/helpers/api';
 import * as config from '../config';
 import {
   addServiceResultHandler,
@@ -23,6 +27,7 @@ import {
   requestID,
   send404,
   sendMessage,
+  sendResponse,
   sendUnauthorized,
   verifyAuthenticated,
   verifyUserIdWithRemoteUserinfo,
@@ -55,6 +60,7 @@ vi.mock('../config', async (requireOriginal) => {
 describe('server/helpers/app', () => {
   const digidClientId = oidcConfigDigid.clientID;
   const eherkenningClientId = oidcConfigEherkenning.clientID;
+  let resMock = ResponseMock.new();
 
   function getEncryptionHeaders() {
     const uat = (Date.now() / 1000) | 0;
@@ -80,6 +86,10 @@ describe('server/helpers/app', () => {
     oidcConfigDigid.clientID = eherkenningClientId;
 
     Mockdate.reset();
+  });
+
+  beforeEach(() => {
+    resMock = ResponseMock.new();
   });
 
   test('enc-dec', async () => {
@@ -257,40 +267,55 @@ describe('server/helpers/app', () => {
     const mockNext = vi.fn();
 
     const req = {} as any;
-    const res = {
-      locals: {},
-    } as any;
 
-    requestID(req, res, mockNext);
-    expect(res.locals.requestID).toBeDefined();
-    expect(typeof res.locals.requestID).toBe('string');
+    requestID(req, resMock, mockNext);
+    expect(resMock.locals.requestID).toBeDefined();
+    expect(typeof resMock.locals.requestID).toBe('string');
     expect(mockNext).toHaveBeenCalled();
   });
 
+  describe('sendResponse tests', async () => {
+    test('Sends 200 when status OK', () => {
+      const response: ApiResponse = {
+        status: 'OK',
+        content: null,
+      };
+
+      sendResponse(resMock, response);
+      expect(resMock.send).toHaveBeenCalledWith(response);
+    });
+
+    test('Sends the correct status code in Error status', () => {
+      const response = apiErrorResult('Bad request', null, 400);
+
+      sendResponse(resMock as Response, response);
+      expect(resMock.statusCode).toBe(400);
+      expect(resMock.send).toHaveBeenCalledWith(response);
+    });
+
+    test('Sends status code 500 when error and no code specified', () => {
+      const response = apiErrorResult('Unknown error', null);
+
+      sendResponse(resMock, response);
+      expect(resMock.statusCode).toBe(500);
+      expect(resMock.send).toHaveBeenCalledWith(response);
+    });
+  });
+
   test('send404', () => {
-    const mockRes = {
-      status: vi.fn(),
-      send: vi.fn(),
-    };
+    send404(resMock);
 
-    send404(mockRes as any);
-
-    expect(mockRes.status).toHaveBeenCalledWith(404);
-    expect(mockRes.send).toHaveBeenCalledWith(
+    expect(resMock.status).toHaveBeenCalledWith(404);
+    expect(resMock.send).toHaveBeenCalledWith(
       apiErrorResult('Not Found', null)
     );
   });
 
   test('sendUnauthorized', () => {
-    const mockRes = {
-      status: vi.fn(),
-      send: vi.fn(),
-    };
+    sendUnauthorized(resMock as any);
 
-    sendUnauthorized(mockRes as any);
-
-    expect(mockRes.status).toHaveBeenCalledWith(401);
-    expect(mockRes.send).toHaveBeenCalledWith(
+    expect(resMock.status).toHaveBeenCalledWith(401);
+    expect(resMock.send).toHaveBeenCalledWith(
       apiErrorResult('Unauthorized', null)
     );
   });
@@ -324,12 +349,9 @@ describe('server/helpers/app', () => {
   });
 
   test('sendMessage', () => {
-    const res = {
-      write: vi.fn(),
-    };
-    sendMessage(res as any, 'test', 'data-message', { foo: 'bar' });
+    sendMessage(resMock, 'test', 'data-message', { foo: 'bar' });
 
-    expect(res.write).toHaveBeenCalledWith(
+    expect(resMock.write).toHaveBeenCalledWith(
       `event: data-message\nid: test\ndata: {"foo":"bar"}\n\n`
     );
   });
@@ -337,15 +359,12 @@ describe('server/helpers/app', () => {
   test('addServiceResultHandler', async () => {
     const data = { foo: 'bar' };
     const servicePromise = Promise.resolve(data);
-    const res = {
-      write: vi.fn(),
-    };
     const result = await addServiceResultHandler(
-      res as any,
+      resMock,
       servicePromise,
       'test-service'
     );
-    expect(res.write).toHaveBeenCalledWith(
+    expect(resMock.write).toHaveBeenCalledWith(
       `event: message\nid: test-service\ndata: {"foo":"bar"}\n\n`
     );
     expect(result).toEqual(data);
@@ -536,22 +555,15 @@ describe('server/helpers/app', () => {
       },
     } as unknown as Request;
 
-    const res = {
-      send: vi.fn().mockImplementation((responseContent: any) => {
-        return responseContent;
-      }),
-      status: vi.fn(),
-    } as unknown as Response;
-
     expect(
-      await isAuthenticated(req, res, vi.fn() as unknown as NextFunction)
+      await isAuthenticated(req, resMock, vi.fn() as unknown as NextFunction)
     ).toStrictEqual({
       content: null,
       message: 'Unauthorized',
       status: 'ERROR',
     });
 
-    expect(res.status).toHaveBeenCalledWith(401);
+    expect(resMock.status).toHaveBeenCalledWith(401);
   });
 
   test('isAuthenticated.true', async () => {
@@ -572,16 +584,9 @@ describe('server/helpers/app', () => {
       },
     } as unknown as Request;
 
-    const res = {
-      send: vi.fn().mockImplementation((responseContent: any) => {
-        return responseContent;
-      }),
-      status: vi.fn(),
-    } as unknown as Response;
-
     const nextFn = vi.fn();
 
-    await isAuthenticated(req, res, nextFn);
+    await isAuthenticated(req, resMock, nextFn);
 
     expect(nextFn).toHaveBeenCalled();
   });
@@ -611,14 +616,6 @@ describe('server/helpers/app', () => {
       },
     } as unknown as Request;
 
-    const res = {
-      send: vi.fn().mockImplementation((responseContent: any) => {
-        return responseContent;
-      }),
-      status: vi.fn(),
-      clearCookie: vi.fn(),
-    } as unknown as Response;
-
     const responseUnauthorized = {
       content: null,
       message: 'Unauthorized',
@@ -629,20 +626,20 @@ describe('server/helpers/app', () => {
     // ////
     bffApi.get('/oidc/userinfo').times(1).reply(401, '');
 
-    expect(await verify(req, res)).toStrictEqual(responseUnauthorized);
+    expect(await verify(req, resMock)).toStrictEqual(responseUnauthorized);
 
-    expect(res.clearCookie).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(401);
+    expect(resMock.clearCookie).toHaveBeenCalled();
+    expect(resMock.status).toHaveBeenCalledWith(401);
 
     ////
     req.oidc.isAuthenticated = vi.fn().mockReturnValueOnce(false);
-    expect(await verify(req, res)).toStrictEqual(responseUnauthorized);
+    expect(await verify(req, resMock)).toStrictEqual(responseUnauthorized);
 
     ////
     req.oidc.isAuthenticated = vi.fn().mockReturnValueOnce(true);
     bffApi.get('/oidc/userinfo').times(1).reply(200, config.DEV_JWT);
 
-    expect(await verify(req, res)).toStrictEqual({
+    expect(await verify(req, resMock)).toStrictEqual({
       content: {
         isAuthenticated: true,
         profileType: 'private',
