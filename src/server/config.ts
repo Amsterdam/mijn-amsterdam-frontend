@@ -341,6 +341,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     method: 'POST',
     headers: {
       'X-Api-Key': process.env.BFF_AMSAPP_API_KEY,
+      Accept: 'application/json',
     },
   },
 };
