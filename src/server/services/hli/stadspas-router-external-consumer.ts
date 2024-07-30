@@ -10,13 +10,12 @@ import {
   AuthProfileAndToken,
   getAuth,
   sendBadRequest,
-  sendUnauthorized,
 } from '../../helpers/app';
 import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import { apiKeyVerificationHandler } from '../../middleware';
-import { captureException } from '../monitoring';
+import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasTransactions } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
@@ -30,7 +29,7 @@ type ApiError = {
   message: string;
 };
 
-const errors: Record<string, ApiError> = {
+const apiResponseErrors: Record<string, ApiError> = {
   DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },
   ADMINISTRATIENUMMER_RESPONSE_ERROR: {
     code: '002',
@@ -72,12 +71,12 @@ async function sendAdministratienummerResponse(
   res: Response
 ) {
   let authProfileAndToken: AuthProfileAndToken | null = null;
-  let error: ApiError = errors.UNKNOWN;
+  let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
 
   try {
     authProfileAndToken = await getAuth(req);
   } catch (error) {
-    error = errors.DIGID_AUTH;
+    apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
 
   if (
@@ -100,48 +99,52 @@ async function sendAdministratienummerResponse(
 
       const requestConfig = getApiConfig('AMSAPP', {
         data: {
-          administratienummerEncrypted,
-          token: req.params.token,
+          encrypted_administration_no: administratienummerEncrypted,
+          session_token: req.params.token,
         },
       });
 
       // Deliver the token with administratienummer to app.amsterdam.nl
-      const deliveryResponse = await requestData(
+      const deliveryResponse = await requestData<{ detail: 'Success' }>(
         requestConfig,
         res.locals.requestID
       );
 
-      if (deliveryResponse.status === 'OK') {
+      if (
+        deliveryResponse.status === 'OK' &&
+        deliveryResponse.content.detail === 'Success'
+      ) {
         return res.render('amsapp-stadspas-administratienummer', {
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
         });
       }
 
-      if (deliveryResponse.status === 'ERROR') {
+      if (
+        deliveryResponse.status === 'ERROR' ||
+        deliveryResponse.content?.detail !== 'Success'
+      ) {
         // Delivery response error
-        error = errors.AMSAPP_DELIVERY_FAILED;
+        apiResponseError = apiResponseErrors.AMSAPP_DELIVERY_FAILED;
       }
     }
 
     // administratienummer not found in Zorgned
     if (!administratienummerResponse.content) {
-      error = errors.ADMINISTRATIENUMMER_NOT_FOUND;
+      apiResponseError = apiResponseErrors.ADMINISTRATIENUMMER_NOT_FOUND;
     }
 
     // administratienummer error Response
     if (administratienummerResponse.status === 'ERROR') {
-      error = errors.ADMINISTRATIENUMMER_RESPONSE_ERROR;
-    }
-
-    if (error) {
-      return res.render('amsapp-stadspas-administratienummer', {
-        error: error,
-        appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${error.message}&errorCode=${error.code}`,
-      });
+      apiResponseError = apiResponseErrors.ADMINISTRATIENUMMER_RESPONSE_ERROR;
     }
   }
 
-  return sendUnauthorized(res);
+  captureMessage(`AMSAPP Stadspas: ${apiResponseError.message}`);
+
+  return res.render('amsapp-stadspas-administratienummer', {
+    error: apiResponseError,
+    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+  });
 }
 
 router.get(
@@ -153,13 +156,20 @@ async function sendStadspassenResponse(
   req: Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>,
   res: Response
 ) {
-  let error: ApiError = errors.UNKNOWN;
+  let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
+  let administratienummer: string | undefined = undefined;
 
   try {
     const administratienummerEncrypted =
       req.params[STADSPASSEN_ENDPOINT_PARAMETER];
 
-    const administratienummer = decrypt(administratienummerEncrypted);
+    administratienummer = decrypt(administratienummerEncrypted);
+  } catch (error) {
+    apiResponseError = apiResponseErrors.ADMINISTRATIENUMMER_FAILED_TO_DECRYPT;
+    captureException(error);
+  }
+
+  if (administratienummer !== undefined) {
     const stadspassenResponse = await fetchStadspassenByAdministratienummer(
       res.locals.requestID,
       administratienummer
@@ -182,12 +192,9 @@ async function sendStadspassenResponse(
 
     // Return the error response
     return res.send(stadspassenResponse);
-  } catch (error) {
-    error = errors.ADMINISTRATIENUMMER_FAILED_TO_DECRYPT;
-    captureException(error);
   }
 
-  return sendBadRequest(res, error.message, error);
+  return sendBadRequest(res, apiResponseError.message, apiResponseError);
 }
 
 router.get(

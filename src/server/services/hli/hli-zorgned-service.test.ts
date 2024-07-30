@@ -175,6 +175,16 @@ describe('hli-zorgned-service', () => {
     forTesting.isActueel(aanvraag2);
 
     expect(forTesting.isActueel(aanvraag2)).toBe(false);
+
+    const aanvraag5 = {
+      isActueel: true,
+      datumIngangGeldigheid: '2024-06-01',
+      resultaat: 'toegewezen',
+    } as ZorgnedAanvraagTransformed;
+
+    forTesting.isActueel(aanvraag5);
+
+    expect(forTesting.isActueel(aanvraag5)).toBe(true);
   });
 
   test('fetchZorgnedAanvragenHLI no content', async () => {

@@ -340,7 +340,8 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,
     method: 'POST',
     headers: {
-      'X-Api-Key': process.env.BFF_AMSAPP_API_KEY,
+      'X-Api-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
+      Accept: 'application/json',
     },
   },
 };

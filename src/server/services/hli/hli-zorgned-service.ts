@@ -19,13 +19,6 @@ import { getFullName } from '../../../universal/helpers/brp';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { ONE_SECOND_MS } from '../../config';
 
-function isEindeGeldigheidVerstreken(aanvraag: ZorgnedAanvraagTransformed) {
-  return (
-    !!aanvraag.datumEindeGeldigheid &&
-    isDateInPast(aanvraag.datumEindeGeldigheid)
-  );
-}
-
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
   const administratienummer = `${ZORGNED_GEMEENTE_CODE}${clientnummerPadded}`;
@@ -124,12 +117,15 @@ export const fetchNamenBetrokkenen = memoizee(fetchNamenBetrokkenen_, {
 });
 
 function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
-  const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);
+  const isEOG = aanvraagTransformed.datumEindeGeldigheid
+    ? isDateInPast(aanvraagTransformed.datumEindeGeldigheid)
+    : false;
   const isActueel = aanvraagTransformed.isActueel;
 
   switch (true) {
     case aanvraagTransformed.resultaat === 'afgewezen':
       return false;
+    // We can't show the datumIngangGeldigheid of the right to this regeling, move it to non-actual.
     case !aanvraagTransformed.datumIngangGeldigheid:
       return false;
     // Override actueel indien de einde geldigheid is verlopen
@@ -139,7 +135,7 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
       return true;
   }
 
-  return false;
+  return isActueel;
 }
 
 export async function fetchZorgnedAanvragenHLI(

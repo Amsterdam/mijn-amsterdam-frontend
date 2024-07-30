@@ -100,8 +100,8 @@ export interface StadspasOwner {
 
 export interface Stadspas {
   id: string;
-  passNumber: string;
-  passType: 'kind' | 'ouder';
+  passNumber: number;
+  passNumberComplete: string;
   owner: StadspasOwner;
   dateEnd: string;
   dateEndFormatted: string;

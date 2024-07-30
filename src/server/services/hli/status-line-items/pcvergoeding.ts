@@ -10,25 +10,6 @@ export const AV_UPCZIL = 'AV-UPCZIL';
 export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 
-// Excludes AV_UPCC if AV_UPCZIL is found
-// Excludes AV_PCVC if AV_PCVZIL is found
-export function shouldIncludePcvcUpcc(
-  aanvraag: ZorgnedAanvraagTransformed,
-  allAanvragen: ZorgnedAanvraagTransformed[]
-) {
-  const productIdentificatie = aanvraag.productIdentificatie;
-
-  // Excludes aanvragen that have a verzilvering
-  if (productIdentificatie === AV_UPCC || productIdentificatie === AV_PCVC) {
-    const hasVerzilvering = allAanvragen.some((compareAanvraag) =>
-      isVerzilveringVanRegeling(aanvraag, compareAanvraag)
-    );
-    return !hasVerzilvering;
-  }
-
-  return true;
-}
-
 // TODO: implement, kunnen er meerdere verzilveringen zijn voor één regeling
 // die afgewezen worden. Adhv welke data kunnen we dan zien of een verzilvering wel/niet gebruikt moet worden.
 function excludeRedundantVerzilveringen(
@@ -39,24 +20,11 @@ function excludeRedundantVerzilveringen(
   return aanvragenFiltered;
 }
 
-export function shouldExcludePcvZilUpcZil(
-  aanvraag: ZorgnedAanvraagTransformed,
-  allAanvragen: ZorgnedAanvraagTransformed[]
-) {
-  const productIdentificatie = aanvraag.productIdentificatie;
-
-  // Excludes aanvragen that have a verzilvering
-  if (
-    productIdentificatie === AV_UPCZIL ||
-    productIdentificatie === AV_PCVZIL
-  ) {
-    const hasVerzilvering = allAanvragen.some((compareAanvraag) =>
-      isVerzilveringVanRegeling(aanvraag, compareAanvraag)
-    );
-    return !hasVerzilvering;
-  }
-
-  return true;
+function isPcVergoeding(aanvraag: ZorgnedAanvraagTransformed) {
+  return (
+    !!aanvraag.productIdentificatie &&
+    [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
+  );
 }
 
 function isVerzilvering(aanvraag: ZorgnedAanvraagTransformed) {
@@ -76,6 +44,7 @@ function isVerzilveringVanRegeling(
   if (aanvraagProductId === AV_PCVC) {
     avCode = AV_PCVZIL;
   }
+
   if (aanvraagProductId === AV_UPCC) {
     avCode = AV_UPCZIL;
   }
@@ -123,7 +92,9 @@ function getUpcPcvDecisionDate(
   return aanvraag.datumBesluit;
 }
 
-export function combineUpcPcvData(aanvragen: ZorgnedAanvraagTransformed[]) {
+export function filterCombineUpcPcvData(
+  aanvragen: ZorgnedAanvraagTransformed[]
+) {
   // Add AV_PCVC / AV_UPCC documenten to AV_PCVZIL / AV_UPCZIL
   const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
     if (isVerzilvering(aanvraag)) {
@@ -131,6 +102,7 @@ export function combineUpcPcvData(aanvragen: ZorgnedAanvraagTransformed[]) {
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
       const addedDocs = baseRegeling?.documenten ?? [];
+
       return {
         ...aanvraag,
         // Use Basis regeling om actualiteit en einde geldigheid te bepalen
@@ -138,11 +110,23 @@ export function combineUpcPcvData(aanvragen: ZorgnedAanvraagTransformed[]) {
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
       };
+    } else if (
+      // Exclude the aanvraag if it's a PcVergoeding that also has a Verzilvering.
+      // Data of this aanvraag will be added to the corresponding vergoeding
+      isPcVergoeding(aanvraag) &&
+      aanvragen.some((compareAanvraag) =>
+        isVerzilveringVanRegeling(aanvraag, compareAanvraag)
+      )
+    ) {
+      return null;
     }
+
     return aanvraag;
   });
 
-  return aanvragenWithDocumentsCombined;
+  return aanvragenWithDocumentsCombined.filter(
+    (aanvraag: ZorgnedAanvraagTransformed | null) => aanvraag !== null
+  );
 }
 
 export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
