@@ -1,9 +1,11 @@
+import memoizee from 'memoizee';
+
 /** Retrieve an environment variable.
  *
  * - Will never return undefined when `isRequired` (defaults `true`).
  * - Throws an error when a variable doesn't exist and it `isRequired`.
  */
-export function getFromEnv(
+function getFromEnv_(
   key: string,
   isRequired: boolean = true
 ): string | undefined {
@@ -15,3 +17,6 @@ export function getFromEnv(
   }
   console.warn(`ENV undefined, but not required: ${key}`);
 }
+
+// Prevents spamming the console with duplicate missing env messages
+export const getFromEnv = memoizee(getFromEnv_);

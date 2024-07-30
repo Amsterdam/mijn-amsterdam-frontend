@@ -15,6 +15,7 @@ const testState: any = {
         title: 'Wmo item 1',
         supplier: 'Mantelzorg B.V',
         isActual: true,
+        documents: [],
         link: {
           to: 'http://example.org/ding',
           title: 'Linkje!! naar wmo item 1',
@@ -25,7 +26,6 @@ const testState: any = {
             status: 'Levering gestart',
             datePublished: '2020-07-24',
             description: 'De levering van uw thuizorg is gestart',
-            documents: [],
             isActive: true,
             isChecked: true,
           },
@@ -38,6 +38,7 @@ const testState: any = {
         dateEnd: '',
         supplier: 'Emile Thuiszorg',
         isActual: true,
+        documents: [],
         link: {
           title: 'Meer informatie',
           to: '/zorg-en-ondersteuning/voorzieningen/102996420',
@@ -51,7 +52,6 @@ const testState: any = {
             datePublished: '2022-01-15',
             isActive: true,
             isChecked: true,
-            documents: [],
             altDocumentContent:
               '<p>\n            <strong>\n              U krijgt dit besluit per post.\n            </strong>\n          </p>',
           },
@@ -63,7 +63,6 @@ const testState: any = {
             datePublished: '',
             isActive: false,
             isChecked: false,
-            documents: [],
           },
           {
             id: 'status-step-2',
@@ -73,7 +72,6 @@ const testState: any = {
             datePublished: '',
             isActive: false,
             isChecked: false,
-            documents: [],
           },
           {
             id: 'status-step-3',
@@ -83,7 +81,6 @@ const testState: any = {
             datePublished: null,
             isActive: false,
             isChecked: false,
-            documents: [],
           },
         ],
         voorzieningsoortcode: 'WMH',
@@ -95,6 +92,7 @@ const testState: any = {
         dateEnd: '',
         supplier: 'Emile Thuiszorg',
         isActual: true,
+        documents: [],
         link: {
           title: 'Meer informatie',
           to: '/zorg-en-ondersteuning/voorzieningen/3917854581',
@@ -108,7 +106,6 @@ const testState: any = {
             datePublished: '2022-01-15',
             isActive: false,
             isChecked: true,
-            documents: [],
             altDocumentContent:
               '<p>\n            <strong>\n              U krijgt dit besluit per post.\n            </strong>\n          </p>',
           },
@@ -120,7 +117,6 @@ const testState: any = {
             datePublished: '',
             isActive: true,
             isChecked: true,
-            documents: [],
           },
           {
             id: 'status-step-2',
@@ -130,7 +126,6 @@ const testState: any = {
             datePublished: '',
             isActive: false,
             isChecked: false,
-            documents: [],
           },
           {
             id: 'status-step-3',
@@ -140,7 +135,6 @@ const testState: any = {
             datePublished: null,
             isActive: false,
             isChecked: false,
-            documents: [],
           },
         ],
         voorzieningsoortcode: 'WMH',
@@ -152,6 +146,7 @@ const testState: any = {
         dateEnd: '',
         supplier: 'Emile Thuiszorg',
         isActual: true,
+        documents: [],
         link: {
           title: 'Meer informatie',
           to: '/zorg-en-ondersteuning/voorzieningen/879359140',
@@ -165,7 +160,6 @@ const testState: any = {
             datePublished: '2022-01-15',
             isActive: false,
             isChecked: true,
-            documents: [],
             altDocumentContent:
               '<p>\n            <strong>\n              U krijgt dit besluit per post.\n            </strong>\n          </p>',
           },
@@ -177,7 +171,6 @@ const testState: any = {
             datePublished: '',
             isActive: false,
             isChecked: true,
-            documents: [],
           },
           {
             id: 'status-step-2',
@@ -187,7 +180,6 @@ const testState: any = {
             datePublished: '',
             isActive: true,
             isChecked: true,
-            documents: [],
           },
           {
             id: 'status-step-3',
@@ -197,7 +189,6 @@ const testState: any = {
             datePublished: null,
             isActive: false,
             isChecked: false,
-            documents: [],
           },
         ],
         voorzieningsoortcode: 'WMH',
@@ -209,6 +200,7 @@ const testState: any = {
         dateEnd: '22 januari 2022',
         supplier: 'Emile Thuiszorg',
         isActual: false,
+        documents: [],
         link: {
           title: 'Meer informatie',
           to: '/zorg-en-ondersteuning/voorzieningen/8927959',
@@ -222,7 +214,6 @@ const testState: any = {
             datePublished: '2022-01-15',
             isActive: false,
             isChecked: true,
-            documents: [],
             altDocumentContent:
               '<p>\n            <strong>\n              U heeft dit besluit per post ontvangen.\n            </strong>\n          </p>',
           },
@@ -234,7 +225,6 @@ const testState: any = {
             datePublished: '',
             isActive: false,
             isChecked: true,
-            documents: [],
           },
           {
             id: 'status-step-2',
@@ -244,7 +234,6 @@ const testState: any = {
             datePublished: '',
             isActive: false,
             isChecked: true,
-            documents: [],
           },
           {
             id: 'status-step-3',
@@ -254,7 +243,6 @@ const testState: any = {
             datePublished: '2022-01-22',
             isActive: true,
             isChecked: false,
-            documents: [],
           },
         ],
         voorzieningsoortcode: 'WMH',

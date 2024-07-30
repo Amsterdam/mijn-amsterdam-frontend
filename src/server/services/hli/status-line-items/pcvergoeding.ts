@@ -3,6 +3,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-config-and-types';
+import { EINDE_RECHT } from './generic';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -183,27 +184,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
         </p>
       `,
   },
-  {
-    status: 'Einde recht',
-    isVisible: (i, regeling) => !!regeling.datumEindeGeldigheid,
-    datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
-    isChecked: (stepIndex, regeling) => regeling.isActueel === false,
-    isActive: (stepIndex, regeling) => regeling.isActueel === false,
-    description: (regeling) =>
-      `
-        <p>
-          ${
-            regeling.isActueel
-              ? `Uw recht op ${regeling.titel} stopt per ${regeling.datumEindeGeldigheid ? defaultDateFormat(regeling.datumEindeGeldigheid) : ''}.`
-              : `Uw recht op ${regeling.titel} is beëindigd ${
-                  regeling.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(regeling.datumEindeGeldigheid)}`
-                    : ''
-                }`
-          }
-        </p>
-      `,
-  },
+  EINDE_RECHT,
 ];
 
 export const forTesting = {
