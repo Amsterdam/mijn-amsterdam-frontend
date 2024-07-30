@@ -40,3 +40,27 @@ export function authProfileAndToken(
 
   return authProfileAndToken;
 }
+
+/** Mocking class to instantiate response objects quikly.
+ *
+ *  Set `as unknnown as Response` after the instance to use.
+ *  ex. `const res = new ResponseMock() as unknown as Response`.
+ * */
+export class ResponseMock {
+  statusCode: number;
+  locals: { requestID: string };
+
+  constructor() {
+    this.statusCode = 200;
+    this.locals = {
+      requestID: '123',
+    };
+  }
+
+  send = vi.fn().mockImplementation((content) => content);
+  status = vi.fn().mockImplementation((statusCode) => {
+    this.statusCode = statusCode;
+  });
+  write = vi.fn();
+  clearCookie = vi.fn();
+}

@@ -33,7 +33,6 @@ import {
 import { captureException, captureMessage } from '../services/monitoring';
 import { getPublicKeyForDevelopment } from './app.development';
 import { axiosRequest, clearSessionCache } from './source-api-request';
-import { StadspasTransaction } from '/home/roan/repos/mijn-amsterdam-frontend/src/server/services/hli/stadspas-types';
 
 // const { encryption: deriveKey } = require('express-openid-connect/lib/crypto');
 
