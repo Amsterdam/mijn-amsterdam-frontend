@@ -6,14 +6,10 @@ export const AppRoutes = {
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
-  'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
-  'STADSPAS/SALDO': '/stadspas/saldo-en-transacties/:id',
-
   HLI: '/regelingen-bij-laag-inkomen',
   'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
   'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-  'HLI/REGELINGEN_LIJST':
-    '/regelingen-bij-laag-inkomen/eerdere-en-afgewezen-regelingen/:page?',
+  'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/:kind/:page?',
 
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
@@ -21,7 +17,6 @@ export const AppRoutes = {
   'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
   'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
   INKOMEN: '/inkomen',
-  STADSPAS: '/stadspas',
   AFIS: '/afis',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',

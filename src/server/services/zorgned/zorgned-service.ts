@@ -4,6 +4,8 @@ import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
   ZorgnedDocument,
+  ZorgnedDocumentResponseSource,
+  ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
 } from './zorgned-config-and-types';
 
@@ -14,7 +16,6 @@ import memoizee from 'memoizee';
 import { hash } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
-import { ZorgnedPersoonsgegevensNAWResponse } from '../hli/regelingen-types';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
@@ -43,11 +44,6 @@ function transformZorgnedAanvraag(
   documenten: ZorgnedDocument[]
 ) {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
-
-  if (!toegewezenProduct) {
-    return null;
-  }
-
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
   const leveringen = toewijzing?.leveringen ?? [];
@@ -69,14 +65,14 @@ function transformZorgnedAanvraag(
   const aanvraagTransformed: ZorgnedAanvraagTransformed = {
     id,
     datumAanvraag: datumAanvraag,
-    datumBeginLevering: levering?.begindatum ?? '',
+    datumBeginLevering: levering?.begindatum ?? null,
     datumBesluit: datumBesluit,
-    datumEindeGeldigheid: toegewezenProduct.datumEindeGeldigheid,
-    datumEindeLevering: levering?.einddatum ?? '',
-    datumIngangGeldigheid: toegewezenProduct.datumIngangGeldigheid,
-    datumOpdrachtLevering: toewijzing?.datumOpdracht ?? '',
+    datumEindeGeldigheid: toegewezenProduct?.datumEindeGeldigheid ?? null,
+    datumEindeLevering: levering?.einddatum ?? null,
+    datumIngangGeldigheid: toegewezenProduct?.datumIngangGeldigheid ?? null,
+    datumOpdrachtLevering: toewijzing?.datumOpdracht ?? null,
     documenten: transformDocumenten(documenten),
-    isActueel: toegewezenProduct.actueel,
+    isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',
     leveringsVorm,
     productsoortCode: productsoortCode,
@@ -187,12 +183,23 @@ export async function fetchDocument(
       ...dataRequestConfig,
       url,
       data: postBody,
-      transformResponse: (documentResponseData) => {
+      transformResponse: (
+        documentResponseData: ZorgnedDocumentResponseSource
+      ) => {
+        if (
+          !documentResponseData ||
+          typeof documentResponseData !== 'object' ||
+          !('inhoud' in documentResponseData)
+        ) {
+          throw new Error(
+            'Zorgned document download - no valid response data provided'
+          );
+        }
         const data = Buffer.from(documentResponseData.inhoud, 'base64');
         return {
-          filename: documentResponseData.omschrijving ?? 'Besluit.pdf',
-          mimetype: documentResponseData.mimetype,
           data,
+          mimetype: documentResponseData.mimetype,
+          filename: documentResponseData.omschrijving,
         };
       },
     },
@@ -202,7 +209,6 @@ export async function fetchDocument(
 }
 
 function transformZorgnedRelaties(responseData: any) {
-  console.dir(responseData);
   return responseData;
 }
 

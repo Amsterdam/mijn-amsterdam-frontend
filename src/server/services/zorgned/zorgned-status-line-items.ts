@@ -5,21 +5,47 @@ import {
 } from './zorgned-config-and-types';
 import { parseLabelContent } from './zorgned-helpers';
 
+// If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
+// we set the match to true so the check doesn't influence the selection criteria and returns items by default.
+const PASS_MATCH_DEFAULT = true;
+
 function getStatusLineItemTransformers(
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig[],
-  aanvraagTransformed: ZorgnedAanvraagTransformed
+  aanvraagTransformed: ZorgnedAanvraagTransformed,
+  allAanvragenTransformed: ZorgnedAanvraagTransformed[]
 ) {
   return statusLineItemsConfig.find((config) => {
-    return (
-      aanvraagTransformed.leveringsVorm === config.leveringsVorm &&
-      config.productsoortCodes.includes(aanvraagTransformed.productsoortCode) &&
-      (typeof config.productIdentificatie !== 'undefined'
+    const hasRegelingsVormMatch =
+      typeof config.leveringsVorm !== 'undefined'
+        ? aanvraagTransformed.leveringsVorm === config.leveringsVorm
+        : PASS_MATCH_DEFAULT;
+
+    const hasProductSoortCodeMatch =
+      typeof config.productsoortCodes !== 'undefined'
+        ? config.productsoortCodes.includes(
+            aanvraagTransformed.productsoortCode
+          )
+        : PASS_MATCH_DEFAULT;
+
+    const hasProductIdentificatieMatch =
+      typeof config.productIdentificatie !== 'undefined'
         ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
           ? config.productIdentificatie.includes(
               aanvraagTransformed.productIdentificatie
             )
           : false
-        : true)
+        : PASS_MATCH_DEFAULT;
+
+    const isFilterMatch =
+      typeof config.filter !== 'undefined'
+        ? config.filter(aanvraagTransformed, allAanvragenTransformed)
+        : PASS_MATCH_DEFAULT;
+
+    return (
+      isFilterMatch &&
+      hasRegelingsVormMatch &&
+      hasProductSoortCodeMatch &&
+      hasProductIdentificatieMatch
     );
   })?.lineItemTransformers;
 }
@@ -28,11 +54,13 @@ export function getStatusLineItems(
   serviceName: 'WMO' | 'HLI',
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig[],
   aanvraagTransformed: ZorgnedAanvraagTransformed,
+  allAanvragenTransformed: ZorgnedAanvraagTransformed[],
   today: Date
 ) {
   const lineItemTransformer = getStatusLineItemTransformers(
     statusLineItemsConfig,
-    aanvraagTransformed
+    aanvraagTransformed,
+    allAanvragenTransformed
   );
 
   if (!lineItemTransformer) {
@@ -47,7 +75,8 @@ export function getStatusLineItems(
       const datePublished = parseLabelContent(
         statusItem.datePublished,
         aanvraagTransformed,
-        today
+        today,
+        allAanvragenTransformed
       ) as string;
 
       const stepData: StatusLineItem = {
@@ -56,13 +85,29 @@ export function getStatusLineItems(
         description: parseLabelContent(
           statusItem.description,
           aanvraagTransformed,
-          today
+          today,
+          allAanvragenTransformed
         ),
         datePublished,
-        isActive: statusItem.isActive(index, aanvraagTransformed, today),
-        isChecked: statusItem.isChecked(index, aanvraagTransformed, today),
+        isActive: statusItem.isActive(
+          index,
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        ),
+        isChecked: statusItem.isChecked(
+          index,
+          aanvraagTransformed,
+          today,
+          allAanvragenTransformed
+        ),
         isVisible: statusItem.isVisible
-          ? statusItem.isVisible(index, aanvraagTransformed, today)
+          ? statusItem.isVisible(
+              index,
+              aanvraagTransformed,
+              today,
+              allAanvragenTransformed
+            )
           : true,
         documents: [], // NOTE: Assigned in specific service transformers.
       };
@@ -73,3 +118,7 @@ export function getStatusLineItems(
 
   return statusLineItems;
 }
+
+export const forTesting = {
+  getStatusLineItemTransformers,
+};

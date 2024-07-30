@@ -25,7 +25,7 @@ export const axiosRequest = axios.create({
 
 function debugResponseData(responseData: any) {
   console.debug('\n\nResponse:\n');
-  console.debug(responseData);
+  console.debug(responseData || '<== NO RESPONSE DATA ==>');
   console.debug('\nEnd response from');
   return responseData;
 }
@@ -41,7 +41,11 @@ if (debugResponseDataTerms?.length) {
         return !!term && response.config.url?.includes(term.trim());
       })
     ) {
-      console.debug(response.config.url, '\n\n');
+      console.debug(
+        'url:',
+        response.request?.res?.responseUrl ?? response.config.url,
+        '\n\n'
+      );
     }
     return response;
   });

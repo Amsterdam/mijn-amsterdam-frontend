@@ -139,83 +139,97 @@ function StatusLineConnection({
       break;
   }
 
-  if (index === 0) {
+  if (total === 1) {
     status = (
-      <>
-        <span
-          className={classnames(
-            styles.ConnectLine,
-            isChecked && !isActive && total > 1
-              ? styles['ConnectLine--start-checked']
-              : styles['ConnectLine--start']
-          )}
-        />
-        <span
-          className={classnames(
-            styles.Checkmark,
-            isActive && styles['Checkmark--active'],
-            isChecked && styles['Checkmark--checked']
-          )}
-        />
-      </>
+      <span
+        className={classnames(
+          styles.Checkmark,
+          isActive && styles['Checkmark--active'],
+          isChecked && styles['Checkmark--checked']
+        )}
+      />
     );
-  } else if (!isEnd && isActive) {
-    status = (
-      <>
-        <span
-          className={classnames(
-            styles.ConnectLine,
-            styles['ConnectLine--middle-checked-next']
-          )}
-        />
-        <span
-          className={classnames(
-            styles.Checkmark,
-            isActive && styles['Checkmark--active'],
-            isChecked && styles['Checkmark--checked']
-          )}
-        />
-      </>
-    );
-  } else if (isEnd) {
-    status = (
-      <>
-        <span
-          className={classnames(
-            styles.ConnectLine,
-            isActive && styles['ConnectLine--end-active'],
-            isChecked
-              ? styles['ConnectLine--end-checked']
-              : styles['ConnectLine--end']
-          )}
-        />
-        <span
-          className={classnames(
-            styles.Checkmark,
-            isActive && styles['Checkmark--active'],
-            isChecked && styles['Checkmark--checked']
-          )}
-        />
-      </>
-    );
-  } else {
-    status = (
-      <>
-        <span
-          className={classnames(
-            styles.ConnectLine,
-            isChecked && styles['ConnectLine--checked']
-          )}
-        />
-        <span
-          className={classnames(
-            styles.Checkmark,
-            isActive && styles['Checkmark--active'],
-            isChecked && styles['Checkmark--checked']
-          )}
-        />
-      </>
-    );
+  }
+
+  if (total > 1) {
+    if (index === 0) {
+      status = (
+        <>
+          <span
+            className={classnames(
+              styles.ConnectLine,
+              isChecked && !isActive && total > 1
+                ? styles['ConnectLine--start-checked']
+                : styles['ConnectLine--start']
+            )}
+          />
+          <span
+            className={classnames(
+              styles.Checkmark,
+              isActive && styles['Checkmark--active'],
+              isChecked && styles['Checkmark--checked']
+            )}
+          />
+        </>
+      );
+    } else if (!isEnd && isActive) {
+      status = (
+        <>
+          <span
+            className={classnames(
+              styles.ConnectLine,
+              styles['ConnectLine--middle-checked-next']
+            )}
+          />
+          <span
+            className={classnames(
+              styles.Checkmark,
+              isActive && styles['Checkmark--active'],
+              isChecked && styles['Checkmark--checked']
+            )}
+          />
+        </>
+      );
+    } else if (isEnd) {
+      status = (
+        <>
+          <span
+            className={classnames(
+              styles.ConnectLine,
+              isActive && styles['ConnectLine--end-active'],
+              isChecked
+                ? styles['ConnectLine--end-checked']
+                : styles['ConnectLine--end']
+            )}
+          />
+          <span
+            className={classnames(
+              styles.Checkmark,
+              isActive && styles['Checkmark--active'],
+              isChecked && styles['Checkmark--checked']
+            )}
+          />
+        </>
+      );
+    } else {
+      status = (
+        <>
+          <span
+            className={classnames(
+              styles.ConnectLine,
+              isChecked && styles['ConnectLine--checked']
+            )}
+          />
+          <span
+            className={classnames(
+              styles.Checkmark,
+              isActive && styles['Checkmark--active'],
+              isChecked && styles['Checkmark--checked']
+            )}
+          />
+        </>
+      );
+    }
   }
   return (
     <div aria-label={ariaLabel} className={styles.StatusConnection}>
@@ -264,7 +278,9 @@ export default function StatusLine({
                   isChecked={item.isChecked}
                 />
               ) : (
-                <StatusLineConnectionPlaceholder />
+                <>
+                  <StatusLineConnectionPlaceholder />
+                </>
               )}
 
               <StatusLinePanelStatus

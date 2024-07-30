@@ -39,47 +39,44 @@ export const ExcludePageViewTrackingUrls = [
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   AFIS: 'Facturen en betalen',
+  AFVAL: 'Afvalgegevens rond uw adres',
+  AFVALPUNTEN: 'Afvalpunten',
+  ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
+  AVG: 'Ingediende AVG verzoeken',
+  BELASTINGEN: 'Actuele updates over uw belastingen',
+  BEZWAREN: 'Ingediende bezwaren',
+  BODEM: 'Bodem: loodmetingen',
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
-  NOTIFICATIONS: 'Actuele updates',
-  WMO: 'Zorg en ondersteuning',
-  WPI_AANVRAGEN: 'Uitkeringaanvragen',
-  WPI_TOZO: 'Aanvraag Tozo',
-  WPI_TONK: 'Aanvraag TONK',
-  WPI_BBZ: 'Aanvraag Bbz',
-  WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
-  STADSPAS_stadspas: 'Informatie over uw stadspassen',
+  BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
+  CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Erfpacht',
   ERFPACHTv2: 'Erfpacht',
-  SUBSIDIE: 'Subsidies',
-  AFVAL: 'Afvalgegevens rond uw adres',
-  BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
-  BELASTINGEN: 'Actuele updates over uw belastingen',
-  MILIEUZONE: 'Milieuzone',
-  OVERTREDINGEN: 'Overtredingen voertuigen',
-  MY_LOCATION: 'Uw locatie op de kaart',
-  VERGUNNINGEN: 'Vergunningen en ontheffingen',
-  ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
-  CMS_CONTENT: 'Uitleg Mijn Amsterdam',
-  AFVALPUNTEN: 'Afvalpunten',
-  SVWI: 'Werk & Inkomen portaal',
+  HLI_regelingen: 'Regelingen bij laag inkomen',
+  HLI_stadspas: 'Stadspas, saldo en transacties',
+  HORECA: 'Horeca vergunningen',
+  KLACHTEN: 'Ingediende klachten',
+  KREFIA: 'Kredietbank & FIBU',
   KVK: 'Mijn onderneming',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
+  MILIEUZONE: 'Milieuzone',
+  MY_LOCATION: 'Uw locatie op de kaart',
+  NOTIFICATIONS: 'Actuele updates',
+  OVERTREDINGEN: 'Overtredingen voertuigen',
+  SUBSIDIE: 'Subsidies',
+  SVWI: 'Werk & Inkomen portaal',
+  TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',
   TOERISTISCHE_VERHUUR_lvvRegistraties:
     'Toeristische verhuur: Registratienummers + meldingen',
-  TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',
   TOERISTISCHE_VERHUUR_vakantieverhuurVergunningen:
     'Uw vergunning vakantieverhuur',
-  KREFIA: 'Kredietbank & FIBU',
-  KLACHTEN: 'Ingediende klachten',
-  BEZWAREN: 'Ingediende bezwaren',
-  HORECA: 'Horeca vergunningen',
-  AVG: 'Ingediende AVG verzoeken',
-  BODEM: 'Bodem: loodmetingen',
+  TOERISTISCHE_VERHUUR: 'Toeristische verhuur + meldingen',
+  VERGUNNINGEN: 'Vergunningen en ontheffingen',
+  WMO: 'Zorg en ondersteuning',
+  WPI_AANVRAGEN: 'Uitkeringaanvragen',
+  WPI_BBZ: 'Aanvraag Bbz',
+  WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
+  WPI_TONK: 'Aanvraag TONK',
+  WPI_TOZO: 'Aanvraag Tozo',
 };
-
-if (FeatureToggle.stadspasRequestsActive) {
-  ErrorNames['STADSPAS_aanvragen'] = 'Stadspasaanvragen';
-}
 
 export function createErrorDisplayData(
   stateKey: string,
@@ -120,7 +117,7 @@ export function createFailedDependenciesError(
 export function getApiErrors(appState: AppState): ApiError[] {
   if (!!appState) {
     const filteredResponses = Object.entries(appState).filter(
-      ([, apiResponseData]: [string, ApiResponse<any> | string | null]) => {
+      ([, apiResponseData]: [string, any]) => {
         return (
           typeof apiResponseData !== 'object' ||
           apiResponseData == null ||
@@ -137,6 +134,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
     for (const [stateKey, apiResponseData] of filteredResponses) {
       if (
         apiResponseData?.status === 'OK' &&
+        'failedDependencies' in apiResponseData &&
         apiResponseData?.failedDependencies
       ) {
         apiErrors.push(
@@ -146,7 +144,12 @@ export function getApiErrors(appState: AppState): ApiError[] {
           )
         );
       } else {
-        apiErrors.push(createErrorDisplayData(stateKey, apiResponseData));
+        apiErrors.push(
+          createErrorDisplayData(
+            stateKey,
+            apiResponseData as ApiResponse<any> | null | string
+          )
+        );
       }
     }
 

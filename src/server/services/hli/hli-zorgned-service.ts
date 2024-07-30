@@ -2,22 +2,21 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
+  ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-config-and-types';
 import {
   fetchAanvragen,
   fetchPersoonsgegevensNAW,
 } from '../zorgned/zorgned-service';
 
+import memoizee from 'memoizee';
 import {
   apiErrorResult,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
-import { jsonCopy } from '../../../universal/helpers/utils';
-import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
-import { isEindeGeldigheidVerstreken } from './status-line-items/pcvergoeding';
-import memoizee from 'memoizee';
+import { isDateInPast } from '../../../universal/helpers/date';
 import { ONE_SECOND_MS } from '../../config';
 
 function transformToAdministratienummer(identificatie: number): string {
@@ -70,22 +69,23 @@ function transformZorgnedBetrokkeneNaamResponse(
   zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
 ) {
   if (zorgnedResponseData?.persoon) {
-    return getFullName({
-      voornamen: zorgnedResponseData?.persoon?.voornamen,
-      geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
-      voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
-    });
+    return (
+      zorgnedResponseData?.persoon?.voornamen ??
+      getFullName({
+        voornamen: zorgnedResponseData?.persoon?.voornamen,
+        geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
+        voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
+      })
+    );
   }
   return null;
 }
 
 export async function fetchNamenBetrokkenen_(
   requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
   userIDs: string[]
 ) {
   const requests = userIDs.map((userID) => {
-    authProfileAndToken.token = ''; // Token is bound to another ID, we don't need it and don't want to mistakenly use it anyway.
     return fetchPersoonsgegevensNAW(requestID, userID, 'ZORGNED_AV');
   });
 
@@ -116,19 +116,26 @@ export const fetchNamenBetrokkenen = memoizee(fetchNamenBetrokkenen_, {
   maxAge: 45 * ONE_SECOND_MS,
 });
 
-function assignIsActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
-  const isEOG = isEindeGeldigheidVerstreken(aanvraagTransformed);
-  let isActueel = aanvraagTransformed.isActueel;
+function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
+  const isEOG = aanvraagTransformed.datumEindeGeldigheid
+    ? isDateInPast(aanvraagTransformed.datumEindeGeldigheid)
+    : false;
+  const isActueel = aanvraagTransformed.isActueel;
 
-  // Override actueel indien de einde geldigheid is verlopen
-  if (isActueel && isEOG) {
-    isActueel = false;
-  }
-  if (!isActueel && !isEOG) {
-    isActueel = true;
+  switch (true) {
+    case aanvraagTransformed.resultaat === 'afgewezen':
+      return false;
+    // We can't show the datumIngangGeldigheid of the right to this regeling, move it to non-actual.
+    case !aanvraagTransformed.datumIngangGeldigheid:
+      return false;
+    // Override actueel indien de einde geldigheid is verlopen
+    case isActueel && (isEOG || aanvraagTransformed.resultaat === 'afgewezen'):
+      return false;
+    case !isActueel && !isEOG:
+      return true;
   }
 
-  aanvraagTransformed.isActueel = isActueel;
+  return isActueel;
 }
 
 export async function fetchZorgnedAanvragenHLI(
@@ -145,8 +152,10 @@ export async function fetchZorgnedAanvragenHLI(
     const aanvragenTransformed = aanvragenResponse.content.map(
       (aanvraagTransformed) => {
         // Override isActueel for front-end.
-        assignIsActueel(aanvraagTransformed);
-        return aanvraagTransformed;
+        return {
+          ...aanvraagTransformed,
+          isActueel: isActueel(aanvraagTransformed),
+        };
       }
     );
     return apiSuccessResult(aanvragenTransformed);
@@ -156,7 +165,7 @@ export async function fetchZorgnedAanvragenHLI(
 }
 
 export const forTesting = {
-  assignIsActueel,
+  isActueel,
   transformZorgnedBetrokkeneNaamResponse,
   transformToAdministratienummer,
   transformZorgnedClientNummerResponse,

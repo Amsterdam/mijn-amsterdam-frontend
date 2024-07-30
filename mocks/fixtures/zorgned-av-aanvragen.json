@@ -442,6 +442,79 @@
         }
       },
       {
+        "identificatie": "992707685",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2023-11-06",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2023-11-06",
+        "datumAanvraag": "2023-11-06",
+        "beschikking": {
+          "beschikkingNummer": 300985080,
+          "datumAfgifte": "2023-11-06",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204597",
+              "product": {
+                "identificatie": "AV-UPCC",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "[2] Gratis laptop of tablet basisschool"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-11-06",
+                "datumEindeGeldigheid": "2027-02-16",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leverancier": {
+                  "identificatie": "AV02",
+                  "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                },
+                "toelichting": "BO",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1970057",
+                    "toewijzingsDatumTijd": "2024-01-06T17:16:00.7133333",
+                    "ingangsdatum": "2024-01-06",
+                    "einddatum": "2028-07-31",
+                    "datumOpdracht": "2024-01-06T17:16:00.7133333",
+                    "leverancier": {
+                      "identificatie": "AV02",
+                      "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["123123"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806781",
+            "omschrijving": "[1] AV-UPC aanmelden workshop",
+            "datumDefinitief": "2024-01-06T17:15:28.313"
+          }
+        ]
+      },
+      {
         "identificatie": "2701485",
         "regeling": {
           "identificatie": "Armoedevrz",
@@ -522,21 +595,90 @@
         "datumAanvraag": "2024-06-04"
       },
       {
-        "identificatie": "2707686",
+        "identificatie": "2707685",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-01-06",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2024-01-06",
+        "datumAanvraag": "2024-01-06",
+        "beschikking": {
+          "beschikkingNummer": 300985080,
+          "datumAfgifte": "2024-01-06",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204597",
+              "product": {
+                "identificatie": "AV-UPCC",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Gratis laptop of tablet basisschool [:-)"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-01-06",
+                "datumEindeGeldigheid": "2028-07-31",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leverancier": {
+                  "identificatie": "AV02",
+                  "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                },
+                "toelichting": "BO",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1970057",
+                    "toewijzingsDatumTijd": "2024-01-06T17:16:00.7133333",
+                    "ingangsdatum": "2024-01-06",
+                    "einddatum": "2028-07-31",
+                    "datumOpdracht": "2024-01-06T17:16:00.7133333",
+                    "leverancier": {
+                      "identificatie": "AV02",
+                      "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["999990512"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806781",
+            "omschrijving": "[1] AV-UPC aanmelden workshop",
+            "datumDefinitief": "2024-01-06T17:15:28.313"
+          }
+        ]
+      },
+
+      {
+        "identificatie": "992707686",
         "regeling": {
           "identificatie": "Armoedevrz",
           "omschrijving": "Armoedevoorzieningen"
         },
         "hulpvraag": {
           "datumRegistratie": "2024-06-17",
-          "aanmeldwijze": {
-            "omschrijving": "AV-Papier"
-          },
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
           "verwijzer": {
-            "soort": {
-              "identificatie": "3AV",
-              "omschrijving": "AV-Cliënt"
-            }
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
           }
         },
         "datumAanmelding": "2024-06-17",
@@ -550,20 +692,17 @@
               "product": {
                 "identificatie": "AV-UPCZIL",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Gratis laptop of tablet"
+                "omschrijving": "[3] Gratis laptop of tablet"
               },
               "productCategorie": {},
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2023-08-01",
-                "datumEindeGeldigheid": "2028-07-31",
+                "datumEindeGeldigheid": "2029-07-31",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": {
-                    "code": "82",
-                    "omschrijving": "Stuks (output)"
-                  },
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -572,7 +711,7 @@
                 },
                 "toelichting": "BO",
                 "toewijzingen": [],
-                "betrokkenen": ["999990512"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -580,8 +719,332 @@
         "documenten": [
           {
             "documentidentificatie": "B2806782",
-            "omschrijving": "AV-PCV UPC Toekenning + Verzilvering device",
+            "omschrijving": "[2] AV-PCV UPC Toekenning + Verzilvering device",
             "datumDefinitief": "2024-06-17T17:17:09.75"
+          }
+        ]
+      },
+
+      {
+        "identificatie": "002707686",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-06-17",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2024-06-17",
+        "datumAanvraag": "2024-06-17",
+        "beschikking": {
+          "beschikkingNummer": 300985081,
+          "datumAfgifte": "2024-06-17",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204598",
+              "product": {
+                "identificatie": "AV-UPCZIL",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "[2.b] Gratis laptop of tablet"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-08-01",
+                "datumEindeGeldigheid": "2029-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toelichting": "BO",
+                "toewijzingen": [],
+                "betrokkenen": ["123123"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806782",
+            "omschrijving": "[X] AV-PCV UPC Toekenning + Verzilvering device",
+            "datumDefinitief": "2024-06-17T17:17:09.75"
+          }
+        ]
+      },
+
+      {
+        "identificatie": "2158454",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-02-18",
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2022-02-18",
+        "datumAanvraag": "2022-02-18",
+        "beschikking": {
+          "beschikkingNummer": 1665,
+          "datumAfgifte": "2022-02-18",
+          "beschikteProducten": [
+            {
+              "identificatie": "790864",
+              "product": {
+                "identificatie": "AV-IIT",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Individuele inkomenstoeslag"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-01-01",
+                "datumEindeGeldigheid": "2022-12-31",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "toewijzingen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2223473",
+            "omschrijving": "AV-IIT AUT. Toekenning",
+            "datumDefinitief": "2022-02-19T16:02:44"
+          },
+          {
+            "documentidentificatie": "B2446119",
+            "omschrijving": "AV-IIT AUT. Toekenning",
+            "datumDefinitief": "2022-12-10T13:47:31.933"
+          }
+        ]
+      },
+      {
+        "identificatie": "2304373",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-06-07",
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2022-06-07",
+        "datumAanvraag": "2022-06-07",
+        "beschikking": {
+          "beschikkingNummer": 72,
+          "datumAfgifte": "2022-06-15",
+          "beschikteProducten": [
+            {
+              "identificatie": "901936",
+              "product": {
+                "identificatie": "AV-GOV",
+                "productsoortCode": "AV-ALG_E",
+                "omschrijving": "Gratis openbaar vervoer voor AOW-ers"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-06-15",
+                "datumEindeGeldigheid": "2022-10-20",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "toewijzingen": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "2344549",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-10-25",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" },
+            "naam": "Butter"
+          }
+        },
+        "datumAanmelding": "2022-10-25",
+        "datumAanvraag": "2022-10-25",
+        "beschikking": {
+          "beschikkingNummer": 300828419,
+          "datumAfgifte": "2023-01-10",
+          "toelichting": "geanonimiseerd",
+          "beschikteProducten": [
+            {
+              "identificatie": "268105",
+              "product": {
+                "identificatie": "AV-TAOV",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "[AFGEWEZEN] Tegemoetkoming Aanvullend Openbaar Vervoer voor ouderen"
+              },
+              "productCategorie": {},
+              "resultaat": "afgewezen"
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "E610019",
+            "omschrijving": "aanvraagformulier TAOV",
+            "datumDefinitief": "2022-10-25T15:02:00"
+          },
+          {
+            "documentidentificatie": "B2460182",
+            "omschrijving": "AV-TAOV Rapportage",
+            "datumDefinitief": "2023-01-25T14:26:41.41"
+          },
+          {
+            "documentidentificatie": "B2460185",
+            "omschrijving": "AV-ALG Besluit Afwijzing",
+            "datumDefinitief": "2023-01-25T14:26:41.277"
+          }
+        ]
+      },
+      {
+        "identificatie": "2359456",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2022-11-30",
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2022-11-30",
+        "datumAanvraag": "2022-11-30",
+        "beschikking": {
+          "beschikkingNummer": 314,
+          "datumAfgifte": "2022-11-30",
+          "beschikteProducten": [
+            {
+              "identificatie": "944172",
+              "product": {
+                "identificatie": "AV-TAOV",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming Aanvullend Openbaar Vervoer voor ouderen"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-01-01",
+                "datumEindeGeldigheid": "2022-12-31",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "toewijzingen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2412503",
+            "omschrijving": "AV-TAOV Brief voor ouderen toekennen via batch",
+            "datumDefinitief": "2022-12-01T07:50:11.267"
+          }
+        ]
+      },
+      {
+        "identificatie": "2480260",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2023-06-01",
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2023-06-01",
+        "datumAanvraag": "2023-06-01",
+        "beschikking": {
+          "beschikkingNummer": 318,
+          "datumAfgifte": "2023-06-01",
+          "beschikteProducten": [
+            {
+              "identificatie": "1039229",
+              "product": {
+                "identificatie": "AV-SPM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Stadspas"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-08-01",
+                "datumEindeGeldigheid": "2024-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "toewijzingen": [],
+                "betrokkenen": ["123459916"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2563760",
+            "omschrijving": "AV-SP Vooraankondiging Verlenging",
+            "datumDefinitief": "2023-06-03T18:39:05.813"
           }
         ]
       },

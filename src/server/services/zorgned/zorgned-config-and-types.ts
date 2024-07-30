@@ -5,7 +5,8 @@ export const ZORGNED_GEMEENTE_CODE = '0363';
 export type TextPartContent = string;
 export type TextPartContentTransformer = (
   data: ZorgnedAanvraagTransformed,
-  today: Date
+  today: Date,
+  allAanvragen: ZorgnedAanvraagTransformed[]
 ) => TextPartContent;
 
 export type TextPartContents = TextPartContent | TextPartContentTransformer;
@@ -18,29 +19,38 @@ export type ZorgnedStatusLineItemTransformerConfig = {
   description: TextPartContents;
   isChecked: (
     stepIndex: number,
-    data: ZorgnedAanvraagTransformed,
-    today: Date
+    aanvraag: ZorgnedAanvraagTransformed,
+    today: Date,
+    allAanvragen: ZorgnedAanvraagTransformed[]
   ) => boolean;
   isActive: (
     stepIndex: number,
-    data: ZorgnedAanvraagTransformed,
-    today: Date
+    aanvraag: ZorgnedAanvraagTransformed,
+    today: Date,
+    allAanvragen: ZorgnedAanvraagTransformed[]
   ) => boolean;
   isVisible?: (
     stepIndex: number,
-    data: ZorgnedAanvraagTransformed,
-    today: Date
+    aanvraag: ZorgnedAanvraagTransformed,
+    today: Date,
+    allAanvragen: ZorgnedAanvraagTransformed[]
   ) => boolean;
 };
 
+type ZorgnedLineItemsFilter = (
+  aanvraag: ZorgnedAanvraagTransformed,
+  allAanvragen: ZorgnedAanvraagTransformed[]
+) => boolean;
+
 export interface ZorgnedStatusLineItemsConfig {
-  leveringsVorm: LeveringsVorm;
+  leveringsVorm?: LeveringsVorm;
   lineItemTransformers: ZorgnedStatusLineItemTransformerConfig[];
-  productsoortCodes: ProductSoortCode[];
+  productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
+  filter?: ZorgnedLineItemsFilter;
 }
 
-export type LeveringsVorm = 'ZIN' | 'PGB' | '';
+export type LeveringsVorm = 'ZIN' | 'PGB' | '' | string;
 export type ProductSoortCode = string;
 export type ProductIdentificatie = string;
 
@@ -58,7 +68,7 @@ interface Leverancier {
   omschrijving: string;
 }
 
-export type BeschikkingsResultaat = 'toegewezen' | string;
+export type BeschikkingsResultaat = 'toegewezen' | 'afgewezen' | null;
 
 export interface ToegewezenProduct {
   actueel: boolean;
@@ -76,7 +86,7 @@ export interface BeschiktProduct {
     productsoortCode: ProductSoortCode;
     identificatie?: ProductIdentificatie;
   };
-  resultaat: BeschikkingsResultaat;
+  resultaat: BeschikkingsResultaat | null;
   toegewezenProduct: ToegewezenProduct | null;
 }
 
@@ -115,9 +125,9 @@ export interface ZorgnedAanvraagTransformed {
   datumAanvraag: string;
   datumBeginLevering: string | null;
   datumBesluit: string;
-  datumEindeGeldigheid: string;
+  datumEindeGeldigheid: string | null;
   datumEindeLevering: string | null;
-  datumIngangGeldigheid: string;
+  datumIngangGeldigheid: string | null;
   datumOpdrachtLevering: string | null;
   documenten: GenericDocument[];
   id: string;
@@ -128,4 +138,21 @@ export interface ZorgnedAanvraagTransformed {
   productIdentificatie?: ProductIdentificatie;
   resultaat: BeschikkingsResultaat;
   titel: string;
+}
+
+export interface ZorgnedDocumentResponseSource {
+  inhoud: string;
+  omschrijving: string;
+  mimetype: string;
+}
+
+export interface ZorgnedPersoonsgegevensNAWResponse {
+  persoon: {
+    clientidentificatie: number | null;
+    geboortenaam: string;
+    roepnaam: string | null;
+    voorletters: string;
+    voornamen: string;
+    voorvoegsel: string | null;
+  };
 }

@@ -1443,9 +1443,6 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
                   class="_StatusConnection_a12ff2"
                 >
                   <span
-                    class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
-                  />
-                  <span
                     class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
                   />
                 </div>

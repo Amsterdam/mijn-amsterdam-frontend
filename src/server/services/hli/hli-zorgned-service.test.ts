@@ -1,13 +1,15 @@
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import {
+  ZorgnedAanvraagTransformed,
+  ZorgnedPersoonsgegevensNAWResponse,
+} from '../zorgned/zorgned-config-and-types';
 import {
   fetchAdministratienummer,
   fetchNamenBetrokkenen,
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
-import { ZorgnedPersoonsgegevensNAWResponse } from './regelingen-types';
 
 import * as zorgnedService from '../zorgned/zorgned-service';
 
@@ -93,7 +95,7 @@ describe('hli-zorgned-service', () => {
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
-    expect(naam).toMatchInlineSnapshot(`"Flex Alex"`);
+    expect(naam).toMatchInlineSnapshot(`"Flex"`);
 
     const naam2 = forTesting.transformZorgnedBetrokkeneNaamResponse({
       persoon: {
@@ -103,7 +105,7 @@ describe('hli-zorgned-service', () => {
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
-    expect(naam2).toMatchInlineSnapshot(`"Baron de Jarvis"`);
+    expect(naam2).toMatchInlineSnapshot(`"Baron"`);
 
     const naam3 = forTesting.transformZorgnedBetrokkeneNaamResponse({
       persoon: null,
@@ -129,49 +131,60 @@ describe('hli-zorgned-service', () => {
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
-    const response = await fetchNamenBetrokkenen(
-      'xx2xxx',
-      authProfileAndToken,
-      ['1', '2']
-    );
+    const response = await fetchNamenBetrokkenen('xx2xxx', ['1', '2']);
 
     expect(response).toMatchInlineSnapshot(`
       {
         "content": [
-          "Baron de Jarvis",
-          "Flex Alex",
+          "Baron",
+          "Flex",
         ],
         "status": "OK",
       }
     `);
   });
 
-  test('assignIsActueel', () => {
+  test('isActueel', () => {
     const aanvraag = {
       isActueel: false,
     } as ZorgnedAanvraagTransformed;
 
-    forTesting.assignIsActueel(aanvraag);
+    expect(forTesting.isActueel(aanvraag)).toBe(false);
 
-    expect(aanvraag).toMatchInlineSnapshot(`
-      {
-        "isActueel": true,
-      }
-    `);
+    const aanvraag3 = {
+      isActueel: false,
+      datumIngangGeldigheid: '2022-01-12',
+      datumEindeGeldigheid: '2082-01-12',
+    } as ZorgnedAanvraagTransformed;
+
+    expect(forTesting.isActueel(aanvraag3)).toBe(true);
+
+    const aanvraag4 = {
+      isActueel: true,
+      datumEindeGeldigheid: '2082-01-12',
+    } as ZorgnedAanvraagTransformed;
+
+    expect(forTesting.isActueel(aanvraag4)).toBe(false);
 
     const aanvraag2 = {
       isActueel: true,
+      datumIngangGeldigheid: '2021-01-12',
       datumEindeGeldigheid: '2022-01-12',
     } as ZorgnedAanvraagTransformed;
 
-    forTesting.assignIsActueel(aanvraag2);
+    forTesting.isActueel(aanvraag2);
 
-    expect(aanvraag2).toMatchInlineSnapshot(`
-      {
-        "datumEindeGeldigheid": "2022-01-12",
-        "isActueel": false,
-      }
-    `);
+    expect(forTesting.isActueel(aanvraag2)).toBe(false);
+
+    const aanvraag5 = {
+      isActueel: true,
+      datumIngangGeldigheid: '2024-06-01',
+      resultaat: 'toegewezen',
+    } as ZorgnedAanvraagTransformed;
+
+    forTesting.isActueel(aanvraag5);
+
+    expect(forTesting.isActueel(aanvraag5)).toBe(true);
   });
 
   test('fetchZorgnedAanvragenHLI no content', async () => {
@@ -201,6 +214,7 @@ describe('hli-zorgned-service', () => {
           {
             isActueel: false,
             datumEindeGeldigheid: '2032-01-01',
+            datumIngangGeldigheid: '2024-08-01',
           } as ZorgnedAanvraagTransformed,
         ],
         status: 'OK',
@@ -217,6 +231,7 @@ describe('hli-zorgned-service', () => {
         "content": [
           {
             "datumEindeGeldigheid": "2032-01-01",
+            "datumIngangGeldigheid": "2024-08-01",
             "isActueel": true,
           },
         ],

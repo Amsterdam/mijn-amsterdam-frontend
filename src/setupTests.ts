@@ -4,6 +4,15 @@ import { cleanup } from '@testing-library/react';
 import nock from 'nock';
 import { vi, afterEach, expect, afterAll } from 'vitest';
 
+vi.mock('./server/helpers/env.ts', async (importOriginal) => {
+  const envModule = (await importOriginal()) as any;
+  return {
+    ...envModule,
+    // Prevent isRequired from spamming logs or throwing errors by ignoring it.
+    getFromEnv: (key: string) => process.env[key],
+  };
+});
+
 global.matchMedia =
   global.matchMedia ||
   function () {
@@ -114,4 +123,4 @@ process.env.REACT_APP_SSO_URL_BELASTINGEN = `${remoteApiHost}/sso/portaal/belast
 process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuzone`;
 process.env.REACT_APP_SSO_URL_PARKEREN = `${remoteApiHost}/sso/portaal/parkeren`;
 
-process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/administratienummer`;
+process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;

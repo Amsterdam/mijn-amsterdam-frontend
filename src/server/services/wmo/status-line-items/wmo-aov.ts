@@ -10,14 +10,15 @@ export const AOV: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (data) =>
       `
             <p>
-              U heeft recht op een ${data.titel} per ${defaultDateFormat(
+              U heeft recht op een ${data.titel} per ${
                 data.datumIngangGeldigheid
-              )}. De vervoerspas ontvangt u per
+                  ? defaultDateFormat(data.datumIngangGeldigheid)
+                  : ''
+              }. De vervoerspas ontvangt u per
               post.
             </p>
             <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+             In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
             </p>
           `,
   },

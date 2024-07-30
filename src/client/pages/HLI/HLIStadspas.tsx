@@ -6,7 +6,10 @@ import {
 } from '@amsterdam/design-system-react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { StadspasTransaction } from '../../../server/services/hli/stadspas-types';
+import {
+  StadspasBudget,
+  StadspasTransaction,
+} from '../../../server/services/hli/stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse,
@@ -69,42 +72,33 @@ export default function HLIStadspas() {
   const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
   const stadspas = id
-    ? HLI?.content?.stadspas?.stadspassen?.find((pass) => pass.id === id)
+    ? HLI?.content?.stadspas?.find((pass) => pass.id === id)
     : null;
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
 
-  const rowsNaam = stadspas
-    ? [
-        {
-          label: 'Naam',
-          content: stadspas.owner.firstname,
-        },
-      ]
-    : [];
-  const rowsNummerSaldo = stadspas
-    ? [
-        {
-          label: 'Stadspasnummer',
-          content: stadspas.passNumber,
-        },
-        {
-          label: 'Saldo',
-          content: `${stadspas.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
-        },
-      ]
-    : [];
+  const NAME = {
+    label: 'Naam',
+    content: stadspas?.owner.firstname,
+  };
 
-  const transactionKeys = stadspas?.budgets.map(
-    (budget) => budget.transactionsKey
-  );
+  const NUMBER = {
+    label: 'Stadspasnummer',
+    content: stadspas?.passNumberComplete,
+  };
+
+  const BALANCE = {
+    label: 'Saldo',
+    content: `${stadspas?.balanceFormatted} (Dit is het bedrag dat u nog kunt uitgeven)`,
+  };
+
   const requestOptions = {
-    method: 'post',
+    method: 'get',
     url: stadspas?.urlTransactions,
-    data: transactionKeys,
     postpone: true,
   };
+
   const [transactionsApi, fetchTransactions] = useDataApi<
     ApiResponse<StadspasTransaction[]>
   >(requestOptions, apiPristineResult([]));
@@ -112,7 +106,7 @@ export default function HLIStadspas() {
   const isLoadingTransacties = transactionsApi.isLoading;
 
   useEffect(() => {
-    if (!!transactionKeys?.length && stadspas?.urlTransactions) {
+    if (stadspas?.urlTransactions) {
       fetchTransactions({ ...requestOptions, postpone: false });
     }
   }, [fetchTransactions, stadspas?.urlTransactions]);
@@ -147,7 +141,7 @@ export default function HLIStadspas() {
               {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
                 <ErrorAlert>
                   We kunnen op dit moment geen gegevens tonen.{' '}
-                  <MaRouterLink href={AppRoutes.STADSPAS}>
+                  <MaRouterLink href={AppRoutes.HLI}>
                     Naar het overzicht
                   </MaRouterLink>
                 </ErrorAlert>
@@ -156,12 +150,13 @@ export default function HLIStadspas() {
           )}
           {!!stadspas && (
             <Grid.Cell span="all">
-              <Datalist rows={rowsNaam} />
+              <Datalist rows={[NAME]} />
               <Paragraph className={styles.StadspasNummerInfo}>
                 Hieronder staat het Stadspasnummer van uw actieve pas.
                 <br /> Dit pasnummer staat ook op de achterkant van uw pas.
               </Paragraph>
-              {!!stadspas.budgets.length && <Datalist rows={rowsNummerSaldo} />}
+              <Datalist rows={[NUMBER]} />
+              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             </Grid.Cell>
           )}
 
@@ -174,7 +169,7 @@ export default function HLIStadspas() {
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}
               {!isLoadingStadspas && !!stadspas?.budgets.length && (
-                <TableV2
+                <TableV2<StadspasBudget>
                   className={styles.Table_budgets}
                   items={stadspas.budgets}
                   displayProps={displayPropsBudgets}
@@ -203,7 +198,7 @@ export default function HLIStadspas() {
               !!transactionsApi.data.content?.length && (
                 <>
                   <Grid.Cell span="all">
-                    <TableV2
+                    <TableV2<StadspasTransaction>
                       className={
                         showMultiBudgetTransactions
                           ? styles.Table_transactions__withBudget

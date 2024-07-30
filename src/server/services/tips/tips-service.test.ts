@@ -93,10 +93,10 @@ describe('createTipsFromServiceResults', () => {
     const tips = await createTipsFromServiceResults('private', {
       serviceResults: {
         BRP: BRPCopy as ApiSuccessResponse<any>,
-        STADSPAS: {
+        HLI: {
           content: {
-            aanvragen: [],
-            stadspassen: [{ foo: 'bar' }],
+            regelingen: [],
+            stadspas: [{ foo: 'bar' }],
           },
           status: 'OK',
         },

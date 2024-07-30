@@ -39,31 +39,6 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
-export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
-  items: T[],
-  propertyName: keyof T = 'title'
-) {
-  return items.map((item) => {
-    if (!item.link?.to) {
-      return item;
-    }
-
-    let label: string = item[propertyName];
-    if (typeof label !== 'string') {
-      label = 'Onbekend item';
-    }
-
-    return {
-      ...item,
-      [propertyName]: (
-        <MaRouterLink maVariant="fatNoUnderline" href={item.link.to}>
-          {capitalizeFirstLetter(label)}
-        </MaRouterLink>
-      ),
-    };
-  });
-}
-
 type DisplayProps<T> = { [Property in keyof T]+?: string | number | ReactNode };
 
 export interface TableProps<T> {

@@ -39,7 +39,6 @@ export const ExternalUrls = {
   AFVAL_MELDING:
     'https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609',
   STADSBANK_VAN_LENING: 'https://www.amsterdam.nl/sbl/',
-  STADSPAS: 'https://www.amsterdam.nl/stadspas',
   DIGID_AANVRAGEN:
     'https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen',
 };

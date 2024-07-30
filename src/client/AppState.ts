@@ -39,12 +39,9 @@ export const PRISTINE_APPSTATE: AppState = {
   WPI_BBZ: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  STADSPAS: apiPristineResult(null, {
-    profileTypes: ['private'],
-  }),
   HLI: apiPristineResult(
     {
-      stadspas: null,
+      stadspas: [],
       regelingen: [],
     },
     {
