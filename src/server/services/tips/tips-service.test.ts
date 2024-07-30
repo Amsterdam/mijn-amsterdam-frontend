@@ -83,30 +83,29 @@ describe('createTipsFromServiceResults', () => {
     ).toBe(2);
   });
 
-  // TODO: Fix  if https://github.com/Amsterdam/mijn-amsterdam-frontend/pull/1370 is implemented
-  // it("should return tip mijn-43 when user has only expired id's", async () => {
-  //   vi.setSystemTime(new Date('2023-11-25'));
+  it("should return tip mijn-43 when user has only expired id's", async () => {
+    vi.setSystemTime(new Date('2023-11-25'));
 
-  //   const BRPCopy = { ...BRP };
+    const BRPCopy = { ...BRP };
 
-  //   BRPCopy.content.identiteitsbewijzen[0].datumAfloop = '2020-07-24';
+    BRPCopy.content.identiteitsbewijzen[0].datumAfloop = '2020-07-24';
 
-  // const tips = await createTipsFromServiceResults('private', {
-  //   serviceResults: {
-  //     BRP: BRPCopy as ApiSuccessResponse<any>,
-  //     HLI: {
-  //       content: {
-  //         regelingen: [],
-  //         stadspas: [{ foo: 'bar' }],
-  //       },
-  //       status: 'OK',
-  //     },
-  //   },
-  //   tipsDirectlyFromServices: [],
-  // });
+    const tips = await createTipsFromServiceResults('private', {
+      serviceResults: {
+        BRP: BRPCopy as ApiSuccessResponse<any>,
+        HLI: {
+          content: {
+            regelingen: [],
+            stadspas: [{ foo: 'bar' }],
+          },
+          status: 'OK',
+        },
+      },
+      tipsDirectlyFromServices: [],
+    });
 
-  //   expect(tips.content?.find((t) => t.id === 'mijn-43')).toBeTruthy();
-  // });
+    expect(tips.content?.find((t) => t.id === 'mijn-43')).toBeTruthy();
+  });
 
   describe('prefixTipNotification', () => {
     const tip = {
