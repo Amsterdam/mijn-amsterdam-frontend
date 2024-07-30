@@ -68,7 +68,7 @@ function transformStadspasResponse(
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource
 ) {
-  const passNumber = gpassStadspasResonseData.pasnummer_volledig;
+  const passNumber = `${gpassStadspasResonseData.pasnummer}`;
   const budgets = gpassStadspasResonseData.budgetten.map(transformBudget);
 
   const stadspasTransformed: Stadspas = {
