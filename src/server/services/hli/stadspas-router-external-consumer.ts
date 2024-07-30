@@ -21,6 +21,7 @@ import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasTransactions } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -80,6 +81,8 @@ async function sendAdministratienummerResponse(
     apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
 
+  console.log(authProfileAndToken);
+
   if (
     authProfileAndToken?.profile.id &&
     authProfileAndToken.profile.profileType === 'private'
@@ -88,6 +91,8 @@ async function sendAdministratienummerResponse(
       res.locals.requestID,
       authProfileAndToken
     );
+
+    console.log(administratienummerResponse);
 
     // Administratienummer found, encrypt and send
     if (
@@ -105,11 +110,15 @@ async function sendAdministratienummerResponse(
         },
       });
 
+      console.log(requestConfig);
+
       // Deliver the token with administratienummer to app.amsterdam.nl
       const deliveryResponse = await requestData<{ detail: 'Success' }>(
         requestConfig,
         res.locals.requestID
       );
+
+      console.log('deliveryResponse', deliveryResponse);
 
       if (
         deliveryResponse.status === 'OK' &&
@@ -117,6 +126,9 @@ async function sendAdministratienummerResponse(
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
+          administratienummerEncrypted: !IS_PRODUCTION
+            ? administratienummerEncrypted
+            : '',
         });
       }
 

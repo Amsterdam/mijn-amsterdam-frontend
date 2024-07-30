@@ -3,7 +3,7 @@ const settings = require('../settings');
 module.exports = [
   {
     id: 'post-amsapp-administratienummer',
-    url: `${settings.MOCK_BASE_PATH}/amsapp/administratienummer`,
+    url: `${settings.MOCK_BASE_PATH}/amsapp/session/credentials`,
     method: 'POST',
     variants: [
       {
