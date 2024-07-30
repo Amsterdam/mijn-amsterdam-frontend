@@ -692,7 +692,7 @@
               "product": {
                 "identificatie": "AV-UPCZIL",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "[2] Gratis laptop of tablet"
+                "omschrijving": "[3] Gratis laptop of tablet"
               },
               "productCategorie": {},
               "resultaat": "toegewezen",
@@ -752,7 +752,7 @@
                 "omschrijving": "[2.b] Gratis laptop of tablet"
               },
               "productCategorie": {},
-              "resultaat": "afgewezen",
+              "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2023-08-01",
                 "datumEindeGeldigheid": "2029-07-31",
@@ -776,7 +776,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2806782",
-            "omschrijving": "[2] AV-PCV UPC Toekenning + Verzilvering device",
+            "omschrijving": "[X] AV-PCV UPC Toekenning + Verzilvering device",
             "datumDefinitief": "2024-06-17T17:17:09.75"
           }
         ]
