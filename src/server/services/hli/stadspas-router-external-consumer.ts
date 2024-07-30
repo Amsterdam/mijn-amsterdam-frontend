@@ -81,8 +81,6 @@ async function sendAdministratienummerResponse(
     apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
 
-  console.log(authProfileAndToken);
-
   if (
     authProfileAndToken?.profile.id &&
     authProfileAndToken.profile.profileType === 'private'
@@ -91,8 +89,6 @@ async function sendAdministratienummerResponse(
       res.locals.requestID,
       authProfileAndToken
     );
-
-    console.log(administratienummerResponse);
 
     // Administratienummer found, encrypt and send
     if (
@@ -110,15 +106,11 @@ async function sendAdministratienummerResponse(
         },
       });
 
-      console.log(requestConfig);
-
       // Deliver the token with administratienummer to app.amsterdam.nl
       const deliveryResponse = await requestData<{ detail: 'Success' }>(
         requestConfig,
         res.locals.requestID
       );
-
-      console.log('deliveryResponse', deliveryResponse);
 
       if (
         deliveryResponse.status === 'OK' &&
