@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { bffApiHost, remoteApiHost } from './setupTests';
 import { AuthProfileAndToken } from './server/helpers/app';
+import express, { Response } from 'express';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',
@@ -41,16 +42,15 @@ export function authProfileAndToken(
   return authProfileAndToken;
 }
 
-/** Mocking class to instantiate response objects quikly.
- *
- *  Set `as unknnown as Response` after the instance to use.
- *  ex. `const res = new ResponseMock() as unknown as Response`.
- * */
 export class ResponseMock {
   statusCode: number;
   locals: { requestID: string };
 
-  constructor() {
+  static new() {
+    return new ResponseMock() as unknown as Response;
+  }
+
+  private constructor() {
     this.statusCode = 200;
     this.locals = {
       requestID: '123',

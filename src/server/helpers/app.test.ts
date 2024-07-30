@@ -60,7 +60,7 @@ vi.mock('../config', async (requireOriginal) => {
 describe('server/helpers/app', () => {
   const digidClientId = oidcConfigDigid.clientID;
   const eherkenningClientId = oidcConfigEherkenning.clientID;
-  let resMock = new ResponseMock() as unknown as Response;
+  let resMock = ResponseMock.new();
 
   function getEncryptionHeaders() {
     const uat = (Date.now() / 1000) | 0;
@@ -89,7 +89,7 @@ describe('server/helpers/app', () => {
   });
 
   beforeEach(() => {
-    resMock = new ResponseMock() as unknown as Response;
+    resMock = ResponseMock.new();
   });
 
   test('enc-dec', async () => {
@@ -286,11 +286,7 @@ describe('server/helpers/app', () => {
     });
 
     test('Sends the correct status code in Error status', () => {
-      const response: ApiErrorResponse<null> = apiErrorResult(
-        'Bad request',
-        null,
-        400
-      );
+      const response = apiErrorResult('Bad request', null, 400);
 
       sendResponse(resMock as Response, response);
       expect(resMock.statusCode).toBe(400);
@@ -298,10 +294,7 @@ describe('server/helpers/app', () => {
     });
 
     test('Sends status code 500 when error and no code specified', () => {
-      const response = apiErrorResult(
-        'Unknown error',
-        null
-      );
+      const response = apiErrorResult('Unknown error', null);
 
       sendResponse(resMock, response);
       expect(resMock.statusCode).toBe(500);
@@ -310,7 +303,6 @@ describe('server/helpers/app', () => {
   });
 
   test('send404', () => {
-    const resMock = new ResponseMock() as unknown as Response;
     send404(resMock);
 
     expect(resMock.status).toHaveBeenCalledWith(404);
