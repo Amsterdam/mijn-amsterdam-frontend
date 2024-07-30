@@ -303,7 +303,7 @@ describe('server/helpers/app', () => {
         null
       );
 
-      sendResponse(resMock as Response, response);
+      sendResponse(resMock, response);
       expect(resMock.statusCode).toBe(500);
       expect(resMock.send).toHaveBeenCalledWith(response);
     });
