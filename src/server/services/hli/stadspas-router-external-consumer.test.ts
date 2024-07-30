@@ -9,7 +9,6 @@ import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { forTesting } from './stadspas-router-external-consumer';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import * as stadspas from './stadspas';
-// import * as appHelpers from '../../helpers/app';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
