@@ -106,14 +106,14 @@ async function sendAdministratienummerResponse(
       });
 
       // Deliver the token with administratienummer to app.amsterdam.nl
-      const deliveryResponse = await requestData<{ result: 'success' }>(
+      const deliveryResponse = await requestData<{ detail: 'success' }>(
         requestConfig,
         res.locals.requestID
       );
 
       if (
         deliveryResponse.status === 'OK' &&
-        deliveryResponse.content.result === 'success'
+        deliveryResponse.content.detail === 'success'
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
@@ -122,7 +122,7 @@ async function sendAdministratienummerResponse(
 
       if (
         deliveryResponse.status === 'ERROR' ||
-        deliveryResponse.content?.result !== 'success'
+        deliveryResponse.content?.detail !== 'success'
       ) {
         // Delivery response error
         error = errors.AMSAPP_DELIVERY_FAILED;

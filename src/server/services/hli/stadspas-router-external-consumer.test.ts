@@ -65,7 +65,7 @@ describe('hli/router-external-consumer', async () => {
       });
       remoteApi
         .post('/amsapp/session/credentials')
-        .reply(200, { result: 'success' });
+        .reply(200, { detail: 'success' });
 
       await forTesting.sendAdministratienummerResponse(
         await getReqMock(),
