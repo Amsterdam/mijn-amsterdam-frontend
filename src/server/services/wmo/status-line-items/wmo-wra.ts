@@ -11,7 +11,7 @@ import {
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isActive2,
+  isServiceDeliveryDecisionActive,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -19,7 +19,7 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  getTransformerConfigBesluit(isActive2, true),
+  getTransformerConfigBesluit(isServiceDeliveryDecisionActive, true),
   {
     status: 'Opdracht gegeven',
     datePublished: () => '',

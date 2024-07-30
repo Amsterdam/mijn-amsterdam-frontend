@@ -5,7 +5,7 @@ import {
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isActive1,
+  isDecisionActive,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -13,6 +13,6 @@ export const PGB: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  getTransformerConfigBesluit(isActive1, false),
+  getTransformerConfigBesluit(isDecisionActive, false),
   EINDE_RECHT,
 ];

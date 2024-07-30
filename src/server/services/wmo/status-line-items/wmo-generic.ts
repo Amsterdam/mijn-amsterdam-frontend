@@ -131,14 +131,14 @@ export function getTransformerConfigBesluit(
   };
 }
 
-export function isActive1(
+export function isDecisionActive(
   stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed
 ) {
   return !!aanvraag.datumBesluit && aanvraag.isActueel === true;
 }
 
-export function isActive2(
+export function isServiceDeliveryDecisionActive(
   stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date

@@ -5,7 +5,7 @@ import {
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isActive1,
+  isDecisionActive,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -13,6 +13,6 @@ export const vergoeding: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  getTransformerConfigBesluit(isActive1, true),
+  getTransformerConfigBesluit(isDecisionActive, true),
   EINDE_RECHT,
 ];
