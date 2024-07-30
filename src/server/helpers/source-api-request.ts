@@ -41,7 +41,11 @@ if (debugResponseDataTerms?.length) {
         return !!term && response.config.url?.includes(term.trim());
       })
     ) {
-      console.debug('url:', response.config.url, '\n\n');
+      console.debug(
+        'url:',
+        response.request?.res?.responseUrl ?? response.config.url,
+        '\n\n'
+      );
     }
     return response;
   });
