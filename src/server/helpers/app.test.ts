@@ -298,7 +298,7 @@ describe('server/helpers/app', () => {
     });
 
     test('Sends status code 500 when error and no code specified', () => {
-      const response: ApiErrorResponse<null> = apiErrorResult(
+      const response = apiErrorResult(
         'Unknown error',
         null
       );
