@@ -85,7 +85,7 @@ export default function HLIStadspas() {
 
   const NUMBER = {
     label: 'Stadspasnummer',
-    content: stadspas?.passNumber,
+    content: stadspas?.passNumberComplete,
   };
 
   const BALANCE = {
