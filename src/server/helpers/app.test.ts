@@ -357,7 +357,7 @@ describe('server/helpers/app', () => {
   });
 
   test('sendMessage', () => {
-    sendMessage(resMock as any, 'test', 'data-message', { foo: 'bar' });
+    sendMessage(resMock, 'test', 'data-message', { foo: 'bar' });
 
     expect(resMock.write).toHaveBeenCalledWith(
       `event: data-message\nid: test\ndata: {"foo":"bar"}\n\n`
