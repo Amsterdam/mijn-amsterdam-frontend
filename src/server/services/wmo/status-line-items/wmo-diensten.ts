@@ -1,5 +1,8 @@
 import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
+import {
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../zorgned/zorgned-config-and-types';
 
 import {
   hasFutureDate,
@@ -8,58 +11,28 @@ import {
   isServiceDeliveryStarted,
   isServiceDeliveryStopped,
 } from '../../zorgned/zorgned-helpers';
-import { AANVRAAG, IN_BEHANDELING, MEER_INFORMATIE } from './wmo-generic';
+import {
+  AANVRAAG,
+  decisionParagraph,
+  EINDE_RECHT,
+  getTransformerConfigBesluit,
+  IN_BEHANDELING,
+  MEER_INFORMATIE,
+} from './wmo-generic';
+
+function isActive(
+  stepIndex: number,
+  aanvraag: ZorgnedAanvraagTransformed,
+  today: Date
+) {
+  return !!aanvraag.datumBesluit && !isServiceDeliveryStarted(aanvraag, today);
+}
 
 export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  {
-    status: 'Besluit',
-    datePublished: (aanvraag) => aanvraag.datumBesluit,
-    isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
-    isActive: (stepIndex, aanvraag, today) =>
-      !!aanvraag.datumBesluit && !isServiceDeliveryStarted(aanvraag, today),
-    description: (aanvraag) => {
-      return `
-              <p>
-                U heeft recht op ${aanvraag.titel} per ${
-                  aanvraag.datumIngangGeldigheid
-                    ? defaultDateFormat(aanvraag.datumIngangGeldigheid)
-                    : ''
-                }.
-              </p>
-              <p>
-                ${
-                  aanvraag.isActueel &&
-                  [
-                    'AWBG',
-                    'WMH',
-                    'AO1',
-                    'AO2',
-                    'AO3',
-                    'AO4',
-                    'AO5',
-                    'AO6',
-                    'AO7',
-                    'AO8',
-                    'DBA',
-                    'DBH',
-                    'DBL',
-                    'DBS',
-                    'KVB',
-                  ].includes(aanvraag.productsoortCode)
-                    ? `
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
-                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
-                  `
-                    : `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.`
-                }
-              </p>
-            `;
-    },
-  },
+  getTransformerConfigBesluit(isActive, false),
   {
     status: 'Levering gestart',
     datePublished: () => '',
@@ -69,8 +42,9 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
       aanvraag.isActueel && isServiceDeliveryActive(aanvraag, today),
     description: (aanvraag) =>
       `<p>
-            ${aanvraag.leverancier} is gestart met het leveren van ${aanvraag.titel}.
-          </p>`,
+        ${aanvraag.leverancier} is gestart met het leveren van ${aanvraag.titel}.
+      </p>
+      `,
   },
   {
     status: 'Levering gestopt',
@@ -88,36 +62,12 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
               aanvraag.isActueel
                 ? 'Niet van toepassing.'
                 : `${aanvraag.leverancier} heeft aan ons doorgegeven dat u geen ${aanvraag.titel}
-            meer krijgt.`
+        meer krijgt.`
             }
-          </p>`,
+      </p>`,
     isVisible: (stepIndex, aanvraag, today) => {
       return !!aanvraag.datumBeginLevering || aanvraag.isActueel;
     },
   },
-  {
-    status: 'Einde recht',
-    datePublished: (aanvraag, today) =>
-      (hasFutureDate(aanvraag.datumEindeGeldigheid, today)
-        ? ''
-        : aanvraag.datumEindeGeldigheid) || '',
-    isChecked: (stepIndex, aanvraag, today) =>
-      hasHistoricDate(aanvraag.datumEindeGeldigheid, today),
-    isActive: (stepIndex, aanvraag, today) =>
-      hasHistoricDate(aanvraag.datumEindeGeldigheid, today),
-    description: (aanvraag, today) =>
-      `<p>
-            ${
-              hasFutureDate(aanvraag.datumEindeGeldigheid, today)
-                ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${aanvraag.titel} is beëindigd ${
-                    aanvraag.datumEindeGeldigheid
-                      ? `per ${defaultDateFormat(
-                          aanvraag.datumEindeGeldigheid
-                        )}`
-                      : ''
-                  }`
-            }
-          </p>`,
-  },
+  EINDE_RECHT,
 ];

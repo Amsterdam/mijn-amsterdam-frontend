@@ -1,5 +1,3 @@
-import { isAfter } from 'date-fns';
-import parseISO from 'date-fns/parseISO';
 import { generatePath } from 'react-router-dom';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -12,16 +10,10 @@ import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import {
-  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-  WMOVoorzieningFrontend,
-} from './wmo-config-and-types';
+import { isAfterWCAGValidDocumentsDate } from './status-line-items/wmo-generic';
+import { WMOVoorzieningFrontend } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
-
-function isAfterWCAGValidDocumentsDate(date: string) {
-  return isAfter(parseISO(date), MINIMUM_REQUEST_DATE_FOR_DOCUMENTS);
-}
 
 function getDocuments(
   sessionID: AuthProfileAndToken['profile']['sid'],
@@ -43,31 +35,6 @@ function getDocuments(
   }
 
   return [];
-}
-
-function addAltDocumentContentToLineItems(
-  aanvraagTransformed: ZorgnedAanvraagTransformed,
-  statusLineItems: StatusLineItem[]
-) {
-  if (!FeatureToggle.zorgnedDocumentAttachmentsActive) {
-    return statusLineItems;
-  }
-
-  return statusLineItems.map((lineItem) => {
-    if (lineItem.status === 'Besluit') {
-      if (
-        aanvraagTransformed.documenten.length === 1 &&
-        isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
-      ) {
-        lineItem.altDocumentContent = `<p><strong>Dit document staat bij documenten bovenaan deze pagina</strong></p>`;
-      } else if (
-        !isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
-      ) {
-        lineItem.altDocumentContent = `<p><strong>Verstuurd per post</strong></p>`;
-      }
-    }
-    return lineItem;
-  });
 }
 
 function getLatestStatus(steps: StatusLineItem[]) {
@@ -96,14 +63,10 @@ function transformVoorzieningenForFrontend(
       continue;
     }
 
-    const statusLineItems = Array.isArray(lineItems)
-      ? addAltDocumentContentToLineItems(aanvraag, lineItems)
-      : [];
-
     const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
       id,
     });
-    if (statusLineItems) {
+    if (lineItems) {
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
@@ -114,7 +77,7 @@ function transformVoorzieningenForFrontend(
           to: route,
         },
         documents: getDocuments(sessionID, aanvraag),
-        steps: statusLineItems,
+        steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
         decision: aanvraag.resultaat
@@ -123,7 +86,7 @@ function transformVoorzieningenForFrontend(
         dateDescision: aanvraag.datumBesluit,
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
-        status: getLatestStatus(statusLineItems),
+        status: getLatestStatus(lineItems),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
@@ -159,5 +122,4 @@ export async function fetchWmo(
 export const forTesting = {
   transformVoorzieningenForFrontend,
   getDocuments,
-  addAltDocumentContentToLineItems,
 };

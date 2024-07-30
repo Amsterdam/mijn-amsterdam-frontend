@@ -3,38 +3,23 @@ import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-co
 
 import {
   hasHistoricDate,
-  isServiceDeliveryStarted,
   isServiceDeliveryActive,
+  isServiceDeliveryStarted,
 } from '../../zorgned/zorgned-helpers';
-import { AANVRAAG, IN_BEHANDELING, MEER_INFORMATIE } from './wmo-generic';
+import {
+  AANVRAAG,
+  EINDE_RECHT,
+  getTransformerConfigBesluit,
+  IN_BEHANDELING,
+  isActive2,
+  MEER_INFORMATIE,
+} from './wmo-generic';
 
 export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  {
-    status: 'Besluit',
-    datePublished: (aanvraag) => aanvraag.datumBesluit,
-    isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
-    isActive: (stepIndex, aanvraag, today) =>
-      !!aanvraag.datumBesluit &&
-      !hasHistoricDate(aanvraag.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(aanvraag, today),
-    description: (data) =>
-      `
-            <p>
-              U heeft recht op een ${data.titel} per ${
-                data.datumIngangGeldigheid
-                  ? defaultDateFormat(data.datumIngangGeldigheid)
-                  : ''
-              }.
-            </p>
-            <p>
-              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
-            </p>
-          `,
-  },
+  getTransformerConfigBesluit(isActive2, true),
   {
     status: 'Opdracht gegeven',
     datePublished: () => '',
@@ -44,11 +29,11 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
       aanvraag.isActueel &&
       hasHistoricDate(aanvraag.datumOpdrachtLevering, today) &&
       !isServiceDeliveryStarted(aanvraag, today),
-    description: (data) =>
+    description: (aanvraag) =>
       `<p>
-            De gemeente heeft opdracht gegeven aan ${data.leverancier} om de aanpassingen aan uw woning uit
-            te voeren.
-          </p>`,
+        De gemeente heeft opdracht gegeven aan ${aanvraag.leverancier} om de aanpassingen aan uw woning uit
+        te voeren.
+      </p>`,
   },
   {
     status: 'Aanpassing uitgevoerd',
@@ -60,29 +45,11 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     isVisible: (stepIndex, aanvraag, today) => {
       return !!aanvraag.datumBeginLevering || aanvraag.isActueel;
     },
-    description: (data) =>
+    description: (aanvraag) =>
       `<p>
-            ${data.leverancier} heeft aan ons doorgegeven dat de
-            aanpassing aan uw woning is uitgevoerd.
-          </p>`,
+        ${aanvraag.leverancier} heeft aan ons doorgegeven dat de
+        aanpassing aan uw woning is uitgevoerd.
+      </p>`,
   },
-  {
-    status: 'Einde recht',
-    datePublished: (data) =>
-      (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
-    isChecked: (stepIndex, aanvraag) => aanvraag.isActueel === false,
-    isActive: (stepIndex, aanvraag, today) => aanvraag.isActueel === false,
-    description: (data) =>
-      `<p>
-            ${
-              data.isActueel
-                ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
-                : `Uw recht op ${data.titel} is beëindigd ${
-                    data.datumEindeGeldigheid
-                      ? `per ${defaultDateFormat(data.datumEindeGeldigheid)}`
-                      : ''
-                  }`
-            }
-          </p>`,
-  },
+  EINDE_RECHT,
 ];

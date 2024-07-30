@@ -32,9 +32,9 @@ function isProductWithDelivery(
 export function assignIsActueel(
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
-  const isEOG =
-    !!aanvraagTransformed.datumEindeGeldigheid &&
-    isDateInPast(aanvraagTransformed.datumEindeGeldigheid); // is Einde Of Geldighed
+  const isEOG = !!aanvraagTransformed.datumEindeGeldigheid
+    ? isDateInPast(aanvraagTransformed.datumEindeGeldigheid)
+    : false; // is Einde Of Geldighed
 
   let isActueel = !!aanvraagTransformed.isActueel;
 
