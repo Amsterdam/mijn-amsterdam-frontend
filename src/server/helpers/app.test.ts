@@ -368,7 +368,7 @@ describe('server/helpers/app', () => {
     const data = { foo: 'bar' };
     const servicePromise = Promise.resolve(data);
     const result = await addServiceResultHandler(
-      resMock as any,
+      resMock,
       servicePromise,
       'test-service'
     );
