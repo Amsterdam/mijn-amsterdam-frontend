@@ -255,8 +255,6 @@ export async function fetchPersoonsgegevensNAW_(
     },
   });
 
-  console.log('dataRequestConfig:::', dataRequestConfig);
-
   const response = requestData<ZorgnedPersoonsgegevensNAWResponse>(
     dataRequestConfig,
     requestID
