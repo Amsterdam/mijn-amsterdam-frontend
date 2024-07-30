@@ -143,7 +143,7 @@ async function sendAdministratienummerResponse(
 
   return res.render('amsapp-stadspas-administratienummer', {
     error: apiResponseError,
-    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${apiResponseError.message}&errorCode=${apiResponseError.code}`,
+    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
   });
 }
 

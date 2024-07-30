@@ -101,7 +101,7 @@ describe('hli/router-external-consumer', async () => {
               'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
           },
           appHref:
-            'amsterdam://stadspas?errorMessage=Verzenden van administratienummer naar de Amsterdam app niet gelukt&errorCode=004',
+            'amsterdam://stadspas?errorMessage=Verzenden%20van%20administratienummer%20naar%20de%20Amsterdam%20app%20niet%20gelukt&errorCode=004',
         }
       );
     });
@@ -117,7 +117,7 @@ describe('hli/router-external-consumer', async () => {
         {
           error: { code: '001', message: 'Niet ingelogd met Digid' },
           appHref:
-            'amsterdam://stadspas?errorMessage=Niet ingelogd met Digid&errorCode=001',
+            'amsterdam://stadspas?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
         }
       );
     });
@@ -138,7 +138,7 @@ describe('hli/router-external-consumer', async () => {
             message: 'Geen administratienummer gevonden',
           },
           appHref:
-            'amsterdam://stadspas?errorMessage=Geen administratienummer gevonden&errorCode=003',
+            'amsterdam://stadspas?errorMessage=Geen%20administratienummer%20gevonden&errorCode=003',
         }
       );
     });
@@ -159,7 +159,7 @@ describe('hli/router-external-consumer', async () => {
             code: '002',
           },
           appHref:
-            'amsterdam://stadspas?errorMessage=Kon het administratienummer niet ophalen&errorCode=002',
+            'amsterdam://stadspas?errorMessage=Kon%20het%20administratienummer%20niet%20ophalen&errorCode=002',
         }
       );
     });
@@ -177,7 +177,7 @@ describe('hli/router-external-consumer', async () => {
         {
           error: { code: '001', message: 'Niet ingelogd met Digid' },
           appHref:
-            'amsterdam://stadspas?errorMessage=Niet ingelogd met Digid&errorCode=001',
+            'amsterdam://stadspas?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
         }
       );
     });
