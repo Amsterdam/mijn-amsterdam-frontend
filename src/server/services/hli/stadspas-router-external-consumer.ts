@@ -229,7 +229,7 @@ async function sendBudgetTransactionsResponse(
     req.query?.budgetCode as StadspasBudget['code']
   );
 
-  sendResponse(res, response);
+  return sendResponse(res, response);
 }
 
 routerPrivateNetwork.get(

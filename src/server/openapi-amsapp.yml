@@ -84,7 +84,7 @@ paths:
                   - $ref: '#/components/schemas/ErrorBadRequest'
                   - $ref: '#/components/schemas/StadspassenResponse'
 
-  /private/api/v1/services/amsapp/stadspas/passen/{transactionsKeyEncrypted}:
+  /private/api/v1/services/amsapp/stadspas/budget/transactions/{transactionsKeyEncrypted}:
     get:
       security:
         - ApiKeyAuth: []
@@ -107,6 +107,7 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/ApplicationError'
                   - $ref: '#/components/schemas/ErrorUnauthorized'
+                  - $ref: '#/components/schemas/ErrorBadRequest'
                   - $ref: '#/components/schemas/StadsTransactionsResponse'
 
 components:
@@ -292,9 +293,6 @@ components:
             - 'Api key ongeldig'
     ErrorBadRequest:
       type: object
-      description: |
-        * 005: Could not decrypt url parameter: administratienummerEncrypted
-        * 000: Onbekende error
       properties:
         content:
           nullable: true
@@ -311,4 +309,5 @@ components:
           enum:
             - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
             - 'Bad request: ApiError 000 - Onbekende fout'
+            - 'Bad request: Bad request: Failed to decrypt transactions key'
 

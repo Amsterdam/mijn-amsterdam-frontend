@@ -127,7 +127,7 @@ export function sendResponse(res: Response, apiResponse: ApiResponse) {
     res.status(typeof apiResponse.code === 'number' ? apiResponse.code : 500);
   }
 
-  res.send(apiResponse);
+  return res.send(apiResponse);
 }
 
 export function sendBadRequest(

@@ -77,6 +77,11 @@ export async function fetchStadspasTransactions(
     }
   } catch (error) {
     captureException(error);
+    return apiErrorResult(
+      'Bad request: Failed to decrypt transactions key',
+      null,
+      400
+    );
   }
 
   if (
