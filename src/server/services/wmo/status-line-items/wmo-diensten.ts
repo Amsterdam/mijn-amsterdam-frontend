@@ -14,6 +14,7 @@ import {
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
+  isDecisionActive,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -22,7 +23,10 @@ function isActive(
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ) {
-  return !!aanvraag.datumBesluit && !isServiceDeliveryStarted(aanvraag, today);
+  return (
+    isDecisionActive(stepIndex, aanvraag) &&
+    !isServiceDeliveryStarted(aanvraag, today)
+  );
 }
 
 export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [

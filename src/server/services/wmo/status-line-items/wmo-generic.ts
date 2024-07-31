@@ -70,7 +70,7 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   datePublished: (aanvraag) => aanvraag.datumAanvraag,
   isChecked: () => true,
   isActive: (stepIndex, aanvraag) =>
-    !aanvraag.datumBesluit && !hasMeerInformatieNodig(aanvraag),
+    !aanvraag.resultaat && !hasMeerInformatieNodig(aanvraag),
   description: () => {
     return '<p>Uw aanvraag is in behandeling genomen</p>';
   },
@@ -83,7 +83,7 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
     getDocumentMeerInformatieDate(aanvraag.documenten) ?? '',
   isChecked: (stepIndex, aanvraag) => hasMeerInformatieNodig(aanvraag),
   isActive: (stepIndex, aanvraag) =>
-    !aanvraag.datumBesluit && hasMeerInformatieNodig(aanvraag),
+    !aanvraag.resultaat && hasMeerInformatieNodig(aanvraag),
   description: () => {
     return `<p>
       Om uw aanvraag te kunnen beoordelen hebben wij meer informatie nodig.
@@ -128,10 +128,10 @@ export function getTransformerConfigBesluit(
   return {
     status: 'Besluit',
     datePublished: (aanvraag) =>
-      getDocumentDecisionDate(aanvraag.documenten) ??
-      aanvraag.datumBesluit ??
-      '',
-    isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
+      (isAfterWCAGValidDocumentsDate(aanvraag.datumAanvraag)
+        ? getDocumentDecisionDate(aanvraag.documenten)
+        : aanvraag.datumBesluit) ?? '',
+    isChecked: (stepIndex, aanvraag) => !!aanvraag.resultaat,
     isActive: isActive,
     description: (aanvraag) =>
       `<p>
@@ -150,7 +150,16 @@ export function isDecisionActive(
   stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed
 ) {
-  return !!aanvraag.datumBesluit && aanvraag.isActueel === true;
+  const besluitDocDate = getDocumentDecisionDate(aanvraag.documenten);
+
+  if (aanvraag.resultaat === 'toegewezen') {
+    return !!(isAfterWCAGValidDocumentsDate(aanvraag.datumAanvraag)
+      ? besluitDocDate
+      : aanvraag.resultaat);
+  } else if (aanvraag.resultaat === 'afgewezen') {
+    return true;
+  }
+  return false;
 }
 
 export function isServiceDeliveryDecisionActive(
@@ -159,7 +168,7 @@ export function isServiceDeliveryDecisionActive(
   today: Date
 ) {
   return (
-    !!aanvraag.datumBesluit &&
+    isDecisionActive(stepIndex, aanvraag) &&
     !isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
     !isServiceDeliveryStarted(aanvraag, today)
   );
