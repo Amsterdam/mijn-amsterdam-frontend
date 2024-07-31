@@ -5,6 +5,7 @@ exports[`Transform api items > fetchWmo 1`] = `
   "content": [
     {
       "dateDescision": "2023-05-17",
+      "dateDescisionFormatted": "17 mei 2023",
       "dateEnd": null,
       "dateStart": "2023-05-06",
       "decision": "Toegewezen",
@@ -27,7 +28,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1692040411",
+        "to": "/zorg-en-ondersteuning/voorziening/1692040411",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -124,6 +125,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2023-03-16",
+      "dateDescisionFormatted": "16 maart 2023",
       "dateEnd": "2024-03-11",
       "dateStart": "2023-03-12",
       "decision": "Toegewezen",
@@ -140,7 +142,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1986585525",
+        "to": "/zorg-en-ondersteuning/voorziening/1986585525",
       },
       "status": "Levering gestart",
       "steps": [
@@ -223,6 +225,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2023-03-01",
+      "dateDescisionFormatted": "01 maart 2023",
       "dateEnd": null,
       "dateStart": "2022-12-21",
       "decision": "Toegewezen",
@@ -239,7 +242,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "ROL",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/890306301",
+        "to": "/zorg-en-ondersteuning/voorziening/890306301",
       },
       "status": "Product geleverd",
       "steps": [
@@ -322,6 +325,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2022-10-20",
+      "dateDescisionFormatted": "20 oktober 2022",
       "dateEnd": null,
       "dateStart": "2022-10-19",
       "decision": "Toegewezen",
@@ -338,7 +342,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AOV",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2941866748",
+        "to": "/zorg-en-ondersteuning/voorziening/2941866748",
       },
       "status": "Besluit",
       "steps": [
@@ -396,6 +400,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2022-04-15",
+      "dateDescisionFormatted": "15 april 2022",
       "dateEnd": null,
       "dateStart": "2022-03-24",
       "decision": "Toegewezen",
@@ -412,7 +417,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3476086687",
+        "to": "/zorg-en-ondersteuning/voorziening/3476086687",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -496,6 +501,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2022-03-14",
+      "dateDescisionFormatted": "14 maart 2022",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
       "decision": "Toegewezen",
@@ -512,7 +518,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/955409908",
+        "to": "/zorg-en-ondersteuning/voorziening/955409908",
       },
       "status": "Einde recht",
       "steps": [
@@ -596,6 +602,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2022-03-14",
+      "dateDescisionFormatted": "14 maart 2022",
       "dateEnd": "2023-03-11",
       "dateStart": "2022-03-11",
       "decision": "Toegewezen",
@@ -612,7 +619,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1811284656",
+        "to": "/zorg-en-ondersteuning/voorziening/1811284656",
       },
       "status": "Einde recht",
       "steps": [
@@ -696,6 +703,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-12-08",
+      "dateDescisionFormatted": "08 december 2021",
       "dateEnd": null,
       "dateStart": "2021-12-20",
       "decision": "Toegewezen",
@@ -705,7 +713,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA2",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1035945789",
+        "to": "/zorg-en-ondersteuning/voorziening/1035945789",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -789,6 +797,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-12-08",
+      "dateDescisionFormatted": "08 december 2021",
       "dateEnd": null,
       "dateStart": "2021-12-08",
       "decision": "Toegewezen",
@@ -798,7 +807,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA2",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1035945788",
+        "to": "/zorg-en-ondersteuning/voorziening/1035945788",
       },
       "status": "Opdracht gegeven",
       "steps": [
@@ -882,6 +891,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-12-06",
+      "dateDescisionFormatted": "06 december 2021",
       "dateEnd": "2022-02-06",
       "dateStart": "2021-12-06",
       "decision": "Toegewezen",
@@ -891,7 +901,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA2",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2248022546",
+        "to": "/zorg-en-ondersteuning/voorziening/2248022546",
       },
       "status": "Einde recht",
       "steps": [
@@ -975,6 +985,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-10-22",
+      "dateDescisionFormatted": "22 oktober 2021",
       "dateEnd": null,
       "dateStart": "2021-10-13",
       "decision": "Toegewezen",
@@ -984,7 +995,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3645917971",
+        "to": "/zorg-en-ondersteuning/voorziening/3645917971",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -1068,6 +1079,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-03-11",
+      "dateDescisionFormatted": "11 maart 2021",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
       "decision": "Toegewezen",
@@ -1077,7 +1089,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3608314454",
+        "to": "/zorg-en-ondersteuning/voorziening/3608314454",
       },
       "status": "Einde recht",
       "steps": [
@@ -1161,6 +1173,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-03-11",
+      "dateDescisionFormatted": "11 maart 2021",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
       "decision": "Toegewezen",
@@ -1170,7 +1183,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2624361688",
+        "to": "/zorg-en-ondersteuning/voorziening/2624361688",
       },
       "status": "Einde recht",
       "steps": [
@@ -1254,6 +1267,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-03-11",
+      "dateDescisionFormatted": "11 maart 2021",
       "dateEnd": "2022-03-10",
       "dateStart": "2021-03-10",
       "decision": "Toegewezen",
@@ -1263,7 +1277,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2758572638",
+        "to": "/zorg-en-ondersteuning/voorziening/2758572638",
       },
       "status": "Einde recht",
       "steps": [
@@ -1347,6 +1361,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-01-09",
+      "dateDescisionFormatted": "09 januari 2021",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
       "decision": "Toegewezen",
@@ -1356,7 +1371,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/226616664",
+        "to": "/zorg-en-ondersteuning/voorziening/226616664",
       },
       "status": "Einde recht",
       "steps": [
@@ -1440,6 +1455,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-01-09",
+      "dateDescisionFormatted": "09 januari 2021",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
       "decision": "Toegewezen",
@@ -1449,7 +1465,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1855927508",
+        "to": "/zorg-en-ondersteuning/voorziening/1855927508",
       },
       "status": "Einde recht",
       "steps": [
@@ -1533,6 +1549,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2021-01-09",
+      "dateDescisionFormatted": "09 januari 2021",
       "dateEnd": "2021-03-09",
       "dateStart": "2021-01-01",
       "decision": "Toegewezen",
@@ -1542,7 +1559,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1499176916",
+        "to": "/zorg-en-ondersteuning/voorziening/1499176916",
       },
       "status": "Einde recht",
       "steps": [
@@ -1626,6 +1643,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2020-12-04",
+      "dateDescisionFormatted": "04 december 2020",
       "dateEnd": null,
       "dateStart": "2020-11-13",
       "decision": "Toegewezen",
@@ -1635,7 +1653,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/4005950334",
+        "to": "/zorg-en-ondersteuning/voorziening/4005950334",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -1719,6 +1737,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2020-06-16",
+      "dateDescisionFormatted": "16 juni 2020",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-06-15",
       "decision": "Toegewezen",
@@ -1728,7 +1747,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3303327448",
+        "to": "/zorg-en-ondersteuning/voorziening/3303327448",
       },
       "status": "Einde recht",
       "steps": [
@@ -1812,6 +1831,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2020-06-18",
+      "dateDescisionFormatted": "18 juni 2020",
       "dateEnd": null,
       "dateStart": "2020-06-10",
       "decision": "Toegewezen",
@@ -1821,7 +1841,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "RWD",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/134062321",
+        "to": "/zorg-en-ondersteuning/voorziening/134062321",
       },
       "status": "Product geleverd",
       "steps": [
@@ -1904,6 +1924,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2020-06-05",
+      "dateDescisionFormatted": "05 juni 2020",
       "dateEnd": "2020-08-05",
       "dateStart": "2020-06-05",
       "decision": "Toegewezen",
@@ -1913,7 +1934,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1809360062",
+        "to": "/zorg-en-ondersteuning/voorziening/1809360062",
       },
       "status": "Einde recht",
       "steps": [
@@ -1984,6 +2005,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2020-03-12",
+      "dateDescisionFormatted": "12 maart 2020",
       "dateEnd": "2020-06-14",
       "dateStart": "2020-03-09",
       "decision": "Toegewezen",
@@ -1993,7 +2015,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3441632088",
+        "to": "/zorg-en-ondersteuning/voorziening/3441632088",
       },
       "status": "Einde recht",
       "steps": [
@@ -2077,6 +2099,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2020-03-12",
+      "dateDescisionFormatted": "12 maart 2020",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
       "decision": "Toegewezen",
@@ -2086,7 +2109,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/636127578",
+        "to": "/zorg-en-ondersteuning/voorziening/636127578",
       },
       "status": "Einde recht",
       "steps": [
@@ -2170,6 +2193,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2020-03-12",
+      "dateDescisionFormatted": "12 maart 2020",
       "dateEnd": "2020-12-31",
       "dateStart": "2020-03-09",
       "decision": "Toegewezen",
@@ -2179,7 +2203,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1926069212",
+        "to": "/zorg-en-ondersteuning/voorziening/1926069212",
       },
       "status": "Einde recht",
       "steps": [
@@ -2263,6 +2287,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2019-10-09",
+      "dateDescisionFormatted": "09 oktober 2019",
       "dateEnd": "2019-12-09",
       "dateStart": "2019-10-09",
       "decision": "Toegewezen",
@@ -2272,7 +2297,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA3",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/954761814",
+        "to": "/zorg-en-ondersteuning/voorziening/954761814",
       },
       "status": "Einde recht",
       "steps": [
@@ -2356,6 +2381,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2019-04-15",
+      "dateDescisionFormatted": "15 april 2019",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-04-14",
       "decision": "Toegewezen",
@@ -2365,7 +2391,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/446200219",
+        "to": "/zorg-en-ondersteuning/voorziening/446200219",
       },
       "status": "Einde recht",
       "steps": [
@@ -2449,6 +2475,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2019-03-11",
+      "dateDescisionFormatted": "11 maart 2019",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
       "decision": "Toegewezen",
@@ -2458,7 +2485,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/938485502",
+        "to": "/zorg-en-ondersteuning/voorziening/938485502",
       },
       "status": "Einde recht",
       "steps": [
@@ -2542,6 +2569,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2019-03-11",
+      "dateDescisionFormatted": "11 maart 2019",
       "dateEnd": "2020-03-08",
       "dateStart": "2019-03-09",
       "decision": "Toegewezen",
@@ -2551,7 +2579,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1175100182",
+        "to": "/zorg-en-ondersteuning/voorziening/1175100182",
       },
       "status": "Einde recht",
       "steps": [
@@ -2635,6 +2663,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2018-11-29",
+      "dateDescisionFormatted": "29 november 2018",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-11-28",
       "decision": "Toegewezen",
@@ -2644,7 +2673,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/300203506",
+        "to": "/zorg-en-ondersteuning/voorziening/300203506",
       },
       "status": "Einde recht",
       "steps": [
@@ -2728,6 +2757,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2018-12-27",
+      "dateDescisionFormatted": "27 december 2018",
       "dateEnd": null,
       "dateStart": "2018-10-24",
       "decision": "Toegewezen",
@@ -2737,7 +2767,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2889701237",
+        "to": "/zorg-en-ondersteuning/voorziening/2889701237",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -2821,6 +2851,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2018-04-25",
+      "dateDescisionFormatted": "25 april 2018",
       "dateEnd": "2019-04-13",
       "dateStart": "2018-04-14",
       "decision": "Toegewezen",
@@ -2830,7 +2861,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/4058168346",
+        "to": "/zorg-en-ondersteuning/voorziening/4058168346",
       },
       "status": "Einde recht",
       "steps": [
@@ -2914,6 +2945,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2018-04-19",
+      "dateDescisionFormatted": "19 april 2018",
       "dateEnd": "2019-03-08",
       "dateStart": "2018-03-09",
       "decision": "Toegewezen",
@@ -2923,7 +2955,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2707273693",
+        "to": "/zorg-en-ondersteuning/voorziening/2707273693",
       },
       "status": "Einde recht",
       "steps": [
@@ -3007,6 +3039,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2017-11-24",
+      "dateDescisionFormatted": "24 november 2017",
       "dateEnd": "2018-11-23",
       "dateStart": "2017-11-24",
       "decision": "Toegewezen",
@@ -3016,7 +3049,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AWBG",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3209335922",
+        "to": "/zorg-en-ondersteuning/voorziening/3209335922",
       },
       "status": "Einde recht",
       "steps": [
@@ -3100,6 +3133,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2017-06-01",
+      "dateDescisionFormatted": "01 juni 2017",
       "dateEnd": "2018-04-13",
       "dateStart": "2017-06-01",
       "decision": "Toegewezen",
@@ -3109,7 +3143,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WMH",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/3783046999",
+        "to": "/zorg-en-ondersteuning/voorziening/3783046999",
       },
       "status": "Einde recht",
       "steps": [
@@ -3193,6 +3227,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2017-06-01",
+      "dateDescisionFormatted": "01 juni 2017",
       "dateEnd": "2018-03-08",
       "dateStart": "2017-06-01",
       "decision": "Toegewezen",
@@ -3202,7 +3237,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "DBS",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/477515900",
+        "to": "/zorg-en-ondersteuning/voorziening/477515900",
       },
       "status": "Einde recht",
       "steps": [
@@ -3286,6 +3321,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2014-09-09",
+      "dateDescisionFormatted": "09 september 2014",
       "dateEnd": "2022-12-20",
       "dateStart": "2014-09-08",
       "decision": "Toegewezen",
@@ -3295,7 +3331,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "OVE",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2067143485",
+        "to": "/zorg-en-ondersteuning/voorziening/2067143485",
       },
       "status": "Einde recht",
       "steps": [
@@ -3378,6 +3414,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2014-09-11",
+      "dateDescisionFormatted": "11 september 2014",
       "dateEnd": null,
       "dateStart": "2014-09-08",
       "decision": "Toegewezen",
@@ -3387,7 +3424,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/4216491004",
+        "to": "/zorg-en-ondersteuning/voorziening/4216491004",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -3471,6 +3508,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2013-12-09",
+      "dateDescisionFormatted": "09 december 2013",
       "dateEnd": null,
       "dateStart": "2013-12-05",
       "decision": "Toegewezen",
@@ -3480,7 +3518,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "WRA",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/2730893522",
+        "to": "/zorg-en-ondersteuning/voorziening/2730893522",
       },
       "status": "Aanpassing uitgevoerd",
       "steps": [
@@ -3564,6 +3602,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2012-10-05",
+      "dateDescisionFormatted": "05 oktober 2012",
       "dateEnd": "2020-06-09",
       "dateStart": "2012-10-05",
       "decision": "Toegewezen",
@@ -3573,7 +3612,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "RWD",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/1703298224",
+        "to": "/zorg-en-ondersteuning/voorziening/1703298224",
       },
       "status": "Einde recht",
       "steps": [
@@ -3656,6 +3695,7 @@ exports[`Transform api items > fetchWmo 1`] = `
     },
     {
       "dateDescision": "2012-08-07",
+      "dateDescisionFormatted": "07 augustus 2012",
       "dateEnd": "2022-07-31",
       "dateStart": "2012-08-07",
       "decision": "Toegewezen",
@@ -3665,7 +3705,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "itemTypeCode": "AOV",
       "link": {
         "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorzieningen/4046397887",
+        "to": "/zorg-en-ondersteuning/voorziening/4046397887",
       },
       "status": "Einde recht",
       "steps": [

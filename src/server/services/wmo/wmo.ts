@@ -2,7 +2,7 @@ import { generatePath } from 'react-router-dom';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
 import { BffEndpoints } from '../../config';
@@ -84,6 +84,7 @@ function transformVoorzieningenForFrontend(
           ? capitalizeFirstLetter(aanvraag.resultaat)
           : '',
         dateDescision: aanvraag.datumBesluit,
+        dateDescisionFormatted: defaultDateFormat(aanvraag.datumBesluit),
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
         status: getLatestStatus(lineItems),

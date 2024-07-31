@@ -61,8 +61,8 @@ export default function ThemaPaginaHLI() {
 
   const pageContentTop = (
     <Paragraph>
-      Hieronder ziet u al uw voorzieningen. Indien u of uw kinderen in bezit
-      zijn van een Stadspas ziet u ook de stadspasgegevens.
+      Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
+      van een Stadspas ziet u ook de stadspasgegevens.
     </Paragraph>
   );
 
