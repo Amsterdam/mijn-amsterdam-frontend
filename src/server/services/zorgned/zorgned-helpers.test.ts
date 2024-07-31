@@ -26,7 +26,7 @@ describe('zorgned helpers', () => {
     ).toBe(true);
 
     expect(
-      isFutureDate('2024-07-31T09:05:00', parseISO('2024-07-31T09:06:00'))
+      isFutureDate('2024-07-31T09:05:00', parseISO('2024-07-31T09:02:00'))
     ).toBe(false);
 
     expect(
