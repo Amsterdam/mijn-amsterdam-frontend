@@ -1,3 +1,4 @@
+import { isSameDay, parseISO } from 'date-fns';
 import { isDateInPast } from '../../../universal/helpers/date';
 import {
   TextPartContents,
@@ -19,32 +20,27 @@ export function parseLabelContent(
   return rText;
 }
 
-export function hasFutureDate(dateStr: string | null, compareDate: Date) {
+export function isBeforeToday(dateStr: string | null, compareDate: Date) {
   if (!dateStr) {
     return false;
   }
-  return !isDateInPast(dateStr, compareDate);
-}
-
-export function hasHistoricDate(dateStr: string | null, compareDate: Date) {
-  if (!dateStr) {
-    return false;
-  }
-  return isDateInPast(dateStr, compareDate);
+  return isSameDay(parseISO(dateStr), compareDate)
+    ? false
+    : isDateInPast(dateStr, compareDate);
 }
 
 export function isServiceDeliveryStarted(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return hasHistoricDate(sourceData.datumBeginLevering, compareDate);
+  return isBeforeToday(sourceData.datumBeginLevering, compareDate);
 }
 
 export function isServiceDeliveryStopped(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return hasHistoricDate(sourceData.datumEindeLevering, compareDate);
+  return isBeforeToday(sourceData.datumEindeLevering, compareDate);
 }
 
 export function isServiceDeliveryActive(
@@ -55,6 +51,6 @@ export function isServiceDeliveryActive(
     sourceData.isActueel &&
     isServiceDeliveryStarted(sourceData, compareDate) &&
     !isServiceDeliveryStopped(sourceData, compareDate) &&
-    !hasHistoricDate(sourceData.datumEindeGeldigheid, compareDate)
+    !isBeforeToday(sourceData.datumEindeGeldigheid, compareDate)
   );
 }

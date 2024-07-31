@@ -18,6 +18,8 @@ import {
 import { getFullName } from '../../../universal/helpers/brp';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { ONE_SECOND_MS } from '../../config';
+import { isSameDay, parseISO } from 'date-fns';
+import { isBeforeToday } from '../zorgned/zorgned-helpers';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -117,9 +119,10 @@ export const fetchNamenBetrokkenen = memoizee(fetchNamenBetrokkenen_, {
 });
 
 function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
-  const isEOG = aanvraagTransformed.datumEindeGeldigheid
-    ? isDateInPast(aanvraagTransformed.datumEindeGeldigheid)
-    : false;
+  const isEOG = isBeforeToday(
+    aanvraagTransformed.datumEindeGeldigheid,
+    new Date()
+  );
   const isActueel = aanvraagTransformed.isActueel;
 
   switch (true) {
