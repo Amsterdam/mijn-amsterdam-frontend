@@ -3,6 +3,7 @@ import {
   differenceInMonths,
   format,
   formatDistanceToNow,
+  isSameDay,
   isThisYear,
   parseISO,
 } from 'date-fns';
@@ -75,7 +76,8 @@ export function isDateInPast(
   if (typeof dateNow === 'string') {
     dateNow = parseISO(dateNow);
   }
-  return parseISO(date).getTime() <= dateNow.getTime();
+  const date_ = parseISO(date);
+  return date_.getTime() <= dateNow.getTime();
 }
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {

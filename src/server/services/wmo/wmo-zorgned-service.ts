@@ -11,6 +11,7 @@ import {
   PRODUCTS_WITH_DELIVERY,
   REGELING_IDENTIFICATIE,
 } from './wmo-config-and-types';
+import { isHistoricDate } from '../zorgned/zorgned-helpers';
 
 function isProductWithDelivery(
   wmoProduct: Pick<
@@ -32,9 +33,10 @@ function isProductWithDelivery(
 export function assignIsActueel(
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
-  const isEOG = !!aanvraagTransformed.datumEindeGeldigheid
-    ? isDateInPast(aanvraagTransformed.datumEindeGeldigheid)
-    : false; // is Einde Of Geldighed
+  const isEOG = isHistoricDate(
+    aanvraagTransformed.datumEindeGeldigheid,
+    new Date()
+  );
 
   let isActueel = !!aanvraagTransformed.isActueel;
 

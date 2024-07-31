@@ -5,8 +5,8 @@ import {
 } from '../../zorgned/zorgned-config-and-types';
 
 import {
-  hasFutureDate,
-  hasHistoricDate,
+  isFutureDate,
+  isHistoricDate,
   isServiceDeliveryActive,
   isServiceDeliveryStarted,
   isServiceDeliveryStopped,
@@ -51,7 +51,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     datePublished: () => '',
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStopped(aanvraag, today) ||
-      hasHistoricDate(aanvraag.datumEindeGeldigheid, today),
+      isHistoricDate(aanvraag.datumEindeGeldigheid, today),
     isActive: (stepIndex, aanvraag, today) =>
       aanvraag.isActueel &&
       isServiceDeliveryStopped(aanvraag, today) &&
