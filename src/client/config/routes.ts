@@ -83,7 +83,7 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['BURGERZAKEN/ID-KAART']]: () => '/burgerzaken/id-kaart',
 
-  [AppRoutes['ZORG/VOORZIENINGEN']]: () => '/zorg-en-ondersteuning/voorziening',
+  [AppRoutes['ZORG/VOORZIENING']]: () => '/zorg-en-ondersteuning/voorziening',
 
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]: () =>
     '/toeristische-verhuur/vergunning/bed-and-breakfast',

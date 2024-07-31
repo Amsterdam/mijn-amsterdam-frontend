@@ -209,10 +209,7 @@ function AppAuthenticated() {
             />
           )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
-          <Route
-            path={AppRoutes['ZORG/VOORZIENINGEN']}
-            component={ZorgDetail}
-          />
+          <Route path={AppRoutes['ZORG/VOORZIENING']} component={ZorgDetail} />
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route
             path={AppRoutes['BURGERZAKEN/ID-KAART']}

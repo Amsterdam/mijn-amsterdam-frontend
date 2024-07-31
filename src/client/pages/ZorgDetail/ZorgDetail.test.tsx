@@ -256,10 +256,10 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 function testDetailPage(id: string, title: string) {
-  const routeEntry = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
+  const routeEntry = generatePath(AppRoutes['ZORG/VOORZIENING'], {
     id,
   });
-  const routePath = AppRoutes['ZORG/VOORZIENINGEN'];
+  const routePath = AppRoutes['ZORG/VOORZIENING'];
 
   const Component = () => (
     <MockApp

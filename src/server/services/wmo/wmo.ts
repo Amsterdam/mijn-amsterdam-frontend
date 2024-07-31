@@ -63,7 +63,7 @@ function transformVoorzieningenForFrontend(
       continue;
     }
 
-    const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
+    const route = generatePath(AppRoutes['ZORG/VOORZIENING'], {
       id,
     });
     if (lineItems) {
