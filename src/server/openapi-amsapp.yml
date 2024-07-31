@@ -80,11 +80,27 @@ paths:
           content:
             'application/json':
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/ApplicationError'
-                  - $ref: '#/components/schemas/ErrorUnauthorized'
-                  - $ref: '#/components/schemas/ErrorBadRequest'
-                  - $ref: '#/components/schemas/StadspassenResponse'
+                $ref: '#/components/schemas/StadspassenResponse'
+        '400':
+          description: Returns bad request error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+
+        '401':
+          description: Returns unauthorized error (invalid api key)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '500':
+          description: |
+            Returns Application error, any error in code or from failed requests.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
 
   /private/api/v1/services/amsapp/stadspas/budget/transactions/{transactionsKeyEncrypted}:
     get:
@@ -100,17 +116,38 @@ paths:
           required: true
           schema:
             type: string
+        - name: budgetCode
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Returns transactions data
           content:
             'application/json':
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/ApplicationError'
-                  - $ref: '#/components/schemas/ErrorUnauthorized'
-                  - $ref: '#/components/schemas/ErrorBadRequest'
-                  - $ref: '#/components/schemas/StadsTransactionsResponse'
+                $ref: '#/components/schemas/StadsTransactionsResponse'
+        '400':
+          description: Returns bad request error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+
+        '401':
+          description: Returns unauthorized error (invalid api key)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '500':
+          description: |
+            Returns Application error, any error in code or from failed requests.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
 
 components:
   securitySchemes:
@@ -231,6 +268,8 @@ components:
           nullable: true
         code:
           type: number
+          enum:
+            - 500
         status:
           type: string
           enum:
