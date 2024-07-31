@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  version: '1.0'
+  title: Mijn Amsterdam api spec for external consumers (Amsterdam App)
+  description: We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
+  contact:
+    name: Mijn Amsterdam
+    url: https://mijn.amsterdam.nl/
+    email: mijnAmsterdam@amsterdam.nl
+servers:
+  - url: https://mijn.amsterdam.nl
+  - url: https://az-acc.mijn.amsterdam.nl
+  - url: https://test.mijn.amsterdam.nl
+  - url: http://localhost:5000
+
+paths:
+  /api/v1/services/amsapp/stadspas/login/{sessionToken}:
+    get:
+      description: Redirects to Digid login, initiates as OIDC session on callback.
+      parameters:
+        - name: sessionToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Found. Valid redirect to Digid login
+        '404':
+          description: Not Found. (Missing path parameter)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /api/v1/services/amsapp/stadspas/administratienummer/{sessionToken}:
+    get:
+      description: Retrieves administratienummer based on BSN found in OIDC session.
+      parameters:
+        - name: sessionToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            Always returns html page with link that opens Stadspas App automatically with Javascript.
+            If the administratienummer is retrieved succesfully, no query parameters are passed to the app link.
+            If an error occurred an ApiErrorAdministratieNummer will be passed as query parameters to the app link.
+          content:
+            'text/html':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ApiErrorAdministratieNummer'
+                  - type: string
+        '404':
+          description: Missing path parameter
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /private/api/v1/services/amsapp/stadspas/passen/{administratienummerEncrypted}:
+    get:
+      security:
+        - ApiKeyAuth: []
+      description: Retrieves stadspas data related to the provided administratienummer
+      parameters:
+        - name: administratienummerEncrypted
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns stadspas data
+          content:
+            'application/json':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ApplicationError'
+                  - $ref: '#/components/schemas/ErrorUnauthorized'
+                  - $ref: '#/components/schemas/ErrorBadRequest'
+                  - $ref: '#/components/schemas/StadspassenResponse'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  schemas:
+    StadspasBudget:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        budgetAssigned:
+          type: number
+        budgetAssignedFormatted:
+          type: string
+        budgetBalance:
+          type: number
+        budgetBalanceFormatted:
+          type: string
+        dateEnd:
+          type: string
+        dateEndFormatted:
+          type: string
+
+    StadspasOwner:
+      type: object
+      properties:
+        initials:
+          type: string
+        firstname:
+          type: string
+        infix:
+          type: string
+        lastname:
+          type: string
+
+    Stadspas:
+      type: object
+      properties:
+        id:
+          type: string
+        passNumber:
+          type: number
+        passNumberComplete:
+          type: string
+        owner:
+          type: object
+          $ref: '#/components/schemas/StadspasOwner'
+        dateEnd:
+          type: string
+        dateEndFormatted:
+          type: string
+        budgets:
+          type: array
+          items:
+            $ref: '#/components/schemas/StadspasBudget'
+        balanceFormatted:
+          type: string
+
+    StadspassenResponse:
+      type: object
+      properties:
+        content:
+          type: object
+          $ref: '#/components/schemas/Stadspas'
+
+    ApplicationError:
+      type: object
+      description: |
+        Error if a part of the application returns an error, mostly dependency errors to remote systems.
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+
+    ApiErrorAdministratieNummer:
+      type: object
+      description: |
+        * 001: Niet ingelogd met Digid
+        * 002: Kon het administratienummer niet ophalen
+        * 003: Geen administratienummer gevonden
+        * 004: Verzenden van administratienummer naar de Amsterdam app niet gelukt
+        * 000: Onbekende error
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+          enum:
+            - '000'
+            - '001'
+            - '002'
+            - '003'
+            - '004'
+            - '005'
+    ErrorNotFound:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 404
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Not Found'
+    ErrorUnauthorized:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 401
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Api key ongeldig'
+    ErrorBadRequest:
+      type: object
+      description: |
+        * 005: Could not decrypt url parameter: administratienummerEncrypted
+        * 000: Onbekende error
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 400
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - "Bad request: ApiError 005 - Could not decrypt url parameter 'administratienummerEncrypted'"
+            - 'Bad request: ApiError 000 - Onbekende fout'
+

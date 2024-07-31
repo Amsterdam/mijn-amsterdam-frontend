@@ -137,7 +137,7 @@ export function sendBadRequest(
 ) {
   return res
     .status(400)
-    .send(apiErrorResult(`Bad request: ${reason}`, content));
+    .send(apiErrorResult(`Bad request: ${reason}`, content, 400));
 }
 
 export function sendUnauthorized(
@@ -145,12 +145,12 @@ export function sendUnauthorized(
   message: string = 'Unauthorized'
 ) {
   res.status(401);
-  return res.send(apiErrorResult(message, null));
+  return res.send(apiErrorResult(message, null, 401));
 }
 
 export function send404(res: Response) {
   res.status(404);
-  return res.send(apiErrorResult('Not Found', null));
+  return res.send(apiErrorResult('Not Found', null, 404));
 }
 
 export function clearRequestCache(req: Request, res: Response) {
@@ -302,15 +302,17 @@ export async function decodeOIDCToken(token: string): Promise<TokenData> {
   return verified.payload as unknown as TokenData;
 }
 
-export function isProtectedRoute(pathRequested: string) {
-  // NOT A PUBLIC ENDPOINT
-  return !PUBLIC_BFF_ENDPOINTS.some((pathPublic) => {
-    return matchPath(pathRequested, {
-      path: pathPublic,
-      exact: true,
-      strict: false,
+export function isPublicEndpoint(pathRequested: string) {
+  return PUBLIC_BFF_ENDPOINTS.some((pathPublic) => {
+    return !!matchPath(pathPublic, {
+      path: pathRequested,
     });
   });
+}
+
+export function isProtectedRoute(pathRequested: string) {
+  // NOT A PUBLIC ENDPOINT
+  return !isPublicEndpoint(pathRequested);
 }
 
 export async function verifyUserIdWithRemoteUserinfo(
