@@ -434,9 +434,9 @@ describe('stadspas services', () => {
 
     expect(response).toMatchInlineSnapshot(`
       {
-        "code": 401,
+        "code": 400,
         "content": null,
-        "message": "Not authorized",
+        "message": "Bad request: Failed to decrypt transactions key",
         "status": "ERROR",
       }
     `);

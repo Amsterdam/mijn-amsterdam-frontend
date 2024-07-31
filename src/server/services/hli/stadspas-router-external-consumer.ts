@@ -48,17 +48,18 @@ const apiResponseErrors: Record<string, ApiError> = {
   },
   ADMINISTRATIENUMMER_FAILED_TO_DECRYPT: {
     code: '005',
-    message: `Could not decrypt url parameter: '${STADSPASSEN_ENDPOINT_PARAMETER}'.`,
+    message: `Could not decrypt url parameter '${STADSPASSEN_ENDPOINT_PARAMETER}'.`,
   },
   UNKNOWN: {
     code: '000',
-    message: 'Onbekende error',
+    message: 'Onbekende fout',
   },
 } as const;
 
-export const router = express.Router();
+export const routerInternet = express.Router();
+export const routerPrivateNetwork = express.Router();
 
-router.get(
+routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
   async (req: Request<{ token: string }>, res: Response) => {
     return res.redirect(
@@ -152,7 +153,7 @@ async function sendAdministratienummerResponse(
   });
 }
 
-router.get(
+routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   sendAdministratienummerResponse
 );
@@ -199,10 +200,14 @@ async function sendStadspassenResponse(
     return res.send(stadspassenResponse);
   }
 
-  return sendBadRequest(res, apiResponseError.message, apiResponseError);
+  return sendBadRequest(
+    res,
+    `ApiError ${apiResponseError.code} - ${apiResponseError.message}`,
+    null
+  );
 }
 
-router.get(
+routerPrivateNetwork.get(
   ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
   apiKeyVerificationHandler,
   sendStadspassenResponse
@@ -224,16 +229,19 @@ async function sendBudgetTransactionsResponse(
     req.query?.budgetCode as StadspasBudget['code']
   );
 
-  sendResponse(res, response);
+  return sendResponse(res, response);
 }
 
-router.get(
+routerPrivateNetwork.get(
   ExternalConsumerEndpoints.private.STADPAS_BUDGET_TRANSACTIES,
   apiKeyVerificationHandler,
   sendBudgetTransactionsResponse
 );
 
-export const stadspasExternalConsumerRouter = router;
+export const stadspasExternalConsumerRouter = {
+  internet: routerInternet,
+  privateNetwork: routerPrivateNetwork,
+};
 
 export const forTesting = {
   sendAdministratienummerResponse,
