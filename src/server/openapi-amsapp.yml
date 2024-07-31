@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   version: '1.0'
   title: Mijn Amsterdam api spec for external consumers (Amsterdam App)
-  description: We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
+  description: |
+    We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
+    Note: the paths that start with /private are only accessible in development mode (localhost) or via our private-network resources.
   contact:
     name: Mijn Amsterdam
     url: https://mijn.amsterdam.nl/
