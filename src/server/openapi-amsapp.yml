@@ -63,7 +63,9 @@ paths:
     get:
       security:
         - ApiKeyAuth: []
-      description: Retrieves stadspas data related to the provided administratienummer
+      description: |
+        Retrieves stadspas data related to the provided administratienummer \
+        Note: If administratienummer doesn't have any active passes, an empty array is returned.
       parameters:
         - name: administratienummerEncrypted
           in: path
@@ -82,6 +84,31 @@ paths:
                   - $ref: '#/components/schemas/ErrorBadRequest'
                   - $ref: '#/components/schemas/StadspassenResponse'
 
+  /private/api/v1/services/amsapp/stadspas/passen/{transactionsKeyEncrypted}:
+    get:
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Retrieves transaction data data related to the provided transactionKey. \
+        Note: If no transactions are made, an empty array is returned. \
+        Note: If a non-valid transactionsKey is provided, ErrorUnauthorized is returned.
+      parameters:
+        - name: transactionsKeyEncrypted
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns transactions data
+          content:
+            'application/json':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ApplicationError'
+                  - $ref: '#/components/schemas/ErrorUnauthorized'
+                  - $ref: '#/components/schemas/StadsTransactionsResponse'
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -89,6 +116,41 @@ components:
       in: header
       name: X-API-Key
   schemas:
+    StadsTransactionsResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/StadspasTransaction'
+        status:
+          type: string
+          enum:
+            - 'SUCCESS'
+
+    StadspasTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        amount:
+          type: number
+        amountFormatted:
+          type: string
+          description: 'For example: - €12,45'
+        datePublished:
+          type: string
+        datePublishedFormatted:
+          type: string
+        budget:
+          type: string
+          description: Name of the budget
+        budgetCode:
+          type: string
+          description: Same as 'StadspasBudget.code'
+
     StadspasBudget:
       type: object
       properties:
@@ -150,8 +212,13 @@ components:
       type: object
       properties:
         content:
-          type: object
-          $ref: '#/components/schemas/Stadspas'
+          type: array
+          items:
+            $ref: '#/components/schemas/Stadspas'
+        status:
+          type: string
+          enum:
+            - 'SUCCESS'
 
     ApplicationError:
       type: object
@@ -242,6 +309,6 @@ components:
         message:
           type: string
           enum:
-            - "Bad request: ApiError 005 - Could not decrypt url parameter 'administratienummerEncrypted'"
+            - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
             - 'Bad request: ApiError 000 - Onbekende fout'
 
