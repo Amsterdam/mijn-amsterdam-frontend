@@ -128,7 +128,9 @@ export function getTransformerConfigBesluit(
   return {
     status: 'Besluit',
     datePublished: (aanvraag) =>
-      getDocumentDecisionDate(aanvraag.documenten) ?? '',
+      getDocumentDecisionDate(aanvraag.documenten) ??
+      aanvraag.datumBesluit ??
+      '',
     isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
     isActive: isActive,
     description: (aanvraag) =>
