@@ -11,8 +11,7 @@ import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
 } from '../wmo-config-and-types';
 import {
-  hasFutureDate,
-  hasHistoricDate,
+  isBeforeToday,
   isServiceDeliveryStarted,
 } from '../../zorgned/zorgned-helpers';
 
@@ -145,7 +144,7 @@ export function isServiceDeliveryDecisionActive(
 ) {
   return (
     !!aanvraag.datumBesluit &&
-    !hasHistoricDate(aanvraag.datumOpdrachtLevering, today) &&
+    !isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
     !isServiceDeliveryStarted(aanvraag, today)
   );
 }

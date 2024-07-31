@@ -2,7 +2,7 @@ import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 
 import {
-  hasHistoricDate,
+  isBeforeToday,
   isServiceDeliveryActive,
   isServiceDeliveryStarted,
 } from '../../zorgned/zorgned-helpers';
@@ -24,10 +24,10 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Opdracht gegeven',
     datePublished: () => '',
     isChecked: (stepIndex, aanvraag, today: Date) =>
-      hasHistoricDate(aanvraag.datumOpdrachtLevering, today),
+      isBeforeToday(aanvraag.datumOpdrachtLevering, today),
     isActive: (stepIndex, aanvraag, today) =>
       aanvraag.isActueel &&
-      hasHistoricDate(aanvraag.datumOpdrachtLevering, today) &&
+      isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
       !isServiceDeliveryStarted(aanvraag, today),
     description: (aanvraag) =>
       `<p>

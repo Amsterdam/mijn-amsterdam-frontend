@@ -307,7 +307,7 @@ describe('server/helpers/app', () => {
 
     expect(resMock.status).toHaveBeenCalledWith(404);
     expect(resMock.send).toHaveBeenCalledWith(
-      apiErrorResult('Not Found', null)
+      apiErrorResult('Not Found', null, 404)
     );
   });
 
@@ -316,7 +316,7 @@ describe('server/helpers/app', () => {
 
     expect(resMock.status).toHaveBeenCalledWith(401);
     expect(resMock.send).toHaveBeenCalledWith(
-      apiErrorResult('Unauthorized', null)
+      apiErrorResult('Unauthorized', null, 401)
     );
   });
 
@@ -558,6 +558,7 @@ describe('server/helpers/app', () => {
     expect(
       await isAuthenticated(req, resMock, vi.fn() as unknown as NextFunction)
     ).toStrictEqual({
+      code: 401,
       content: null,
       message: 'Unauthorized',
       status: 'ERROR',
@@ -617,6 +618,7 @@ describe('server/helpers/app', () => {
     } as unknown as Request;
 
     const responseUnauthorized = {
+      code: 401,
       content: null,
       message: 'Unauthorized',
       status: 'ERROR',
