@@ -1,36 +1,22 @@
 import { parseISO } from 'date-fns';
-import { isHistoricDate, isFutureDate } from './zorgned-helpers';
+import { isBeforeToday } from './zorgned-helpers';
 
 describe('zorgned helpers', () => {
-  test('isHistoricDate', () => {
+  test('isBeforeToday', () => {
     expect(
-      isHistoricDate('2024-07-31T09:05:00', parseISO('2024-07-31T23:05:00'))
+      isBeforeToday('2024-07-31T09:05:00', parseISO('2024-07-31T23:05:00'))
     ).toBe(false);
 
     expect(
-      isHistoricDate('2024-07-31T09:05:00', parseISO('2024-07-31T09:05:00'))
+      isBeforeToday('2024-07-31T09:05:00', parseISO('2024-07-31T09:05:00'))
     ).toBe(false);
 
     expect(
-      isHistoricDate('2024-07-31T09:05:00', parseISO('2024-07-31T08:05:00'))
+      isBeforeToday('2024-07-31T09:05:00', parseISO('2024-07-31T08:05:00'))
     ).toBe(false);
 
     expect(
-      isHistoricDate('2024-07-31T09:05:00', parseISO('2024-08-31T08:05:00'))
+      isBeforeToday('2024-07-31T09:05:00', parseISO('2024-08-31T08:05:00'))
     ).toBe(true);
-  });
-
-  test('isFutureDate', () => {
-    expect(
-      isFutureDate('2024-08-31T09:05:00', parseISO('2024-07-31T23:05:00'))
-    ).toBe(true);
-
-    expect(
-      isFutureDate('2024-07-31T09:05:00', parseISO('2024-07-31T09:02:00'))
-    ).toBe(false);
-
-    expect(
-      isFutureDate('2024-07-31T09:05:00', parseISO('2024-08-31T08:05:00'))
-    ).toBe(false);
   });
 });

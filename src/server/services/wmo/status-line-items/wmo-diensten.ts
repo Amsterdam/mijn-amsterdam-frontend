@@ -1,19 +1,16 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-config-and-types';
 
 import {
-  isFutureDate,
-  isHistoricDate,
+  isBeforeToday,
   isServiceDeliveryActive,
   isServiceDeliveryStarted,
   isServiceDeliveryStopped,
 } from '../../zorgned/zorgned-helpers';
 import {
   AANVRAAG,
-  decisionParagraph,
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
@@ -51,7 +48,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     datePublished: () => '',
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStopped(aanvraag, today) ||
-      isHistoricDate(aanvraag.datumEindeGeldigheid, today),
+      isBeforeToday(aanvraag.datumEindeGeldigheid, today),
     isActive: (stepIndex, aanvraag, today) =>
       aanvraag.isActueel &&
       isServiceDeliveryStopped(aanvraag, today) &&

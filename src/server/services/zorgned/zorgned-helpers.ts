@@ -20,16 +20,7 @@ export function parseLabelContent(
   return rText;
 }
 
-export function isFutureDate(dateStr: string | null, compareDate: Date) {
-  if (!dateStr) {
-    return false;
-  }
-  return isSameDay(parseISO(dateStr), compareDate)
-    ? false
-    : !isDateInPast(dateStr, compareDate);
-}
-
-export function isHistoricDate(dateStr: string | null, compareDate: Date) {
+export function isBeforeToday(dateStr: string | null, compareDate: Date) {
   if (!dateStr) {
     return false;
   }
@@ -42,14 +33,14 @@ export function isServiceDeliveryStarted(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return isHistoricDate(sourceData.datumBeginLevering, compareDate);
+  return isBeforeToday(sourceData.datumBeginLevering, compareDate);
 }
 
 export function isServiceDeliveryStopped(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return isHistoricDate(sourceData.datumEindeLevering, compareDate);
+  return isBeforeToday(sourceData.datumEindeLevering, compareDate);
 }
 
 export function isServiceDeliveryActive(
@@ -60,6 +51,6 @@ export function isServiceDeliveryActive(
     sourceData.isActueel &&
     isServiceDeliveryStarted(sourceData, compareDate) &&
     !isServiceDeliveryStopped(sourceData, compareDate) &&
-    !isHistoricDate(sourceData.datumEindeGeldigheid, compareDate)
+    !isBeforeToday(sourceData.datumEindeGeldigheid, compareDate)
   );
 }
