@@ -108,8 +108,7 @@ paths:
         - ApiKeyAuth: []
       description: |
         Retrieves transaction data data related to the provided transactionKey. \
-        Note: If no transactions are made, an empty array is returned. \
-        Note: If a non-valid transactionsKey is provided, ErrorUnauthorized is returned.
+        Note: If no transactions are made, an empty array is returned.
       parameters:
         - name: transactionsKeyEncrypted
           in: path
