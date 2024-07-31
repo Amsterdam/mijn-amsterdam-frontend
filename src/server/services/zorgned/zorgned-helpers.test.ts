@@ -18,5 +18,7 @@ describe('zorgned helpers', () => {
     expect(
       isBeforeToday('2024-07-31T09:05:00', parseISO('2024-08-31T08:05:00'))
     ).toBe(true);
+
+    expect(isBeforeToday(null, parseISO('2024-08-31T08:05:00'))).toBe(false);
   });
 });
