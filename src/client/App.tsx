@@ -79,6 +79,8 @@ import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
 import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import Zorg from './pages/Zorg/Zorg';
+import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
+import ZorgV2 from './pages/Zorg/ZorgV2';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import { useMonitoring } from './utils/monitoring';
 
@@ -209,11 +211,18 @@ function AppAuthenticated() {
             />
           )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route path={AppRoutes['ZORG/VOORZIENING']} component={ZorgDetail} />
+          {FeatureToggle.zorgv2ThemapaginaActive && (
+            <Route
+              path={AppRoutes['ZORG/VOORZIENINGEN_LIST']}
+              component={ZorgVoorzieningen}
+            />
+          )}
           <Route
-            path={AppRoutes['ZORG/VOORZIENINGEN']}
-            component={ZorgDetail}
+            path={AppRoutes.ZORG}
+            component={FeatureToggle.zorgv2ThemapaginaActive ? ZorgV2 : Zorg}
           />
-          <Route path={AppRoutes.ZORG} component={Zorg} />
+
           <Route
             path={AppRoutes['BURGERZAKEN/ID-KAART']}
             component={BurgerzakenIDKaart}

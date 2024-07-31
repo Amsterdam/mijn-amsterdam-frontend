@@ -3,8 +3,10 @@ export const AppRoutes = {
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',
   'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
+
   ZORG: '/zorg-en-ondersteuning',
-  'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
+  'ZORG/VOORZIENING': '/zorg-en-ondersteuning/voorziening/:id',
+  'ZORG/VOORZIENINGEN_LIST': '/zorg-en-ondersteuning/:kind/:page?',
 
   HLI: '/regelingen-bij-laag-inkomen',
   'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',

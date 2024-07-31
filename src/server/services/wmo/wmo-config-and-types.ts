@@ -60,6 +60,7 @@ export interface WMOVoorzieningFrontend extends ZaakDetail {
   isActual: boolean; // Indicates if this item is designated Current or Previous
   itemTypeCode: ProductSoortCode;
   dateDescision: string;
+  dateDescisionFormatted: string;
   decision: string;
   documents: GenericDocument[];
   dateStart: string | null;
