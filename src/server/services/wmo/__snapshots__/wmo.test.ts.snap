@@ -43,7 +43,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2023-05-17",
+          "datePublished": "2023-04-25",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -80,7 +80,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2023-05-17T00:00:00",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
         te voeren.
@@ -93,7 +93,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2013-06-17",
           "description": "<p>
         Gebr Koenen B.V. heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -181,7 +181,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2023-03-12",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -257,7 +257,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2023-03-01",
+          "datePublished": "2022-12-21",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -281,7 +281,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2023-03-02T11:17:35.4",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Medipoint om een elektrische rolstoel voor binnen en buiten aan u te leveren.
       </p>",
@@ -293,7 +293,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2023-05-15",
           "description": "<p>
         Medipoint heeft aan ons doorgegeven dat een elektrische rolstoel voor binnen en buiten bij u is afgeleverd.
       </p>
@@ -357,7 +357,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2022-10-20",
+          "datePublished": "2022-09-07",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -432,7 +432,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2022-04-15",
+          "datePublished": "2022-02-16",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -456,7 +456,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2022-04-19T13:16:57",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
         te voeren.
@@ -469,7 +469,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2022-06-07",
           "description": "<p>
         Welzorg heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -557,7 +557,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2022-03-11",
           "description": "<p>
         Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
       </p>
@@ -570,7 +570,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2023-03-11",
           "description": "<p>
             Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -658,7 +658,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2022-03-11",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -671,7 +671,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2023-03-11",
           "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
         meer krijgt.
@@ -752,7 +752,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-12-20T14:05:02",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
         te voeren.
@@ -765,7 +765,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-12-20",
           "description": "<p>
         Van der Leij Bouwbedrijven B.V heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -846,7 +846,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-12-08T10:54:18",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
         te voeren.
@@ -940,7 +940,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-12-06T16:01:09",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Van der Leij Bouwbedrijven B.V om de aanpassingen aan uw woning uit
         te voeren.
@@ -953,7 +953,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-12-17",
           "description": "<p>
         Van der Leij Bouwbedrijven B.V heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -1010,7 +1010,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2021-10-22",
+          "datePublished": "2021-10-13",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -1034,7 +1034,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-10-22T16:51:15",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
         te voeren.
@@ -1047,7 +1047,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-10-13",
           "description": "<p>
         Welzorg heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -1128,7 +1128,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-03-10",
           "description": "<p>
         Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
       </p>
@@ -1141,7 +1141,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2022-03-10",
           "description": "<p>
             Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -1222,7 +1222,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-03-10",
           "description": "<p>
         Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
       </p>
@@ -1235,7 +1235,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-04-01",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
         meer krijgt.
@@ -1316,7 +1316,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-03-10",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -1329,7 +1329,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2022-03-10",
           "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
         meer krijgt.
@@ -1410,7 +1410,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-01-01",
           "description": "<p>
         Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
       </p>
@@ -1423,7 +1423,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-03-09",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
         meer krijgt.
@@ -1504,7 +1504,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-01-01",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -1517,7 +1517,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-03-09",
           "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
         meer krijgt.
@@ -1598,7 +1598,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-01-01",
           "description": "<p>
         Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
       </p>
@@ -1611,7 +1611,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-03-09",
           "description": "<p>
             Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -1668,7 +1668,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2020-12-04",
+          "datePublished": "2020-08-10",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -1692,7 +1692,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-12-07T07:01:20",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Meyra Wooncare B.V. om de aanpassingen aan uw woning uit
         te voeren.
@@ -1705,7 +1705,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2021-01-13",
           "description": "<p>
         Meyra Wooncare B.V. heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -1786,7 +1786,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-06-15",
           "description": "<p>
         Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
       </p>
@@ -1799,7 +1799,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-12-31",
           "description": "<p>
             Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -1856,7 +1856,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2020-06-18",
+          "datePublished": "2020-05-13",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -1880,7 +1880,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-06-18T14:21:01",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Medipoint om een douche-/toiletstoel zelfrijder aan u te leveren.
       </p>",
@@ -1892,7 +1892,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-09-10",
           "description": "<p>
         Medipoint heeft aan ons doorgegeven dat een douche-/toiletstoel zelfrijder bij u is afgeleverd.
       </p>
@@ -1973,7 +1973,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-06-05T09:22:46",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
         te voeren.
@@ -2054,7 +2054,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-03-09",
           "description": "<p>
         Amstelring is gestart met het leveren van dagbesteding.
       </p>
@@ -2067,7 +2067,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-06-14",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -2148,7 +2148,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-03-09",
           "description": "<p>
         Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
       </p>
@@ -2161,7 +2161,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-12-31",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
         meer krijgt.
@@ -2242,7 +2242,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-03-09",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -2255,7 +2255,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-12-31",
           "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
         meer krijgt.
@@ -2336,7 +2336,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-10-09T11:19:30",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
         te voeren.
@@ -2349,7 +2349,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-10-17",
           "description": "<p>
         Welzorg heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -2406,7 +2406,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2019-04-15",
+          "datePublished": "2019-04-14",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -2430,7 +2430,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-04-14",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -2443,7 +2443,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-03-08",
           "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
         meer krijgt.
@@ -2500,7 +2500,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2019-03-11",
+          "datePublished": "2019-03-09",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -2524,7 +2524,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-03-09",
           "description": "<p>
         Amstelring is gestart met het leveren van dagbesteding.
       </p>
@@ -2537,7 +2537,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-03-08",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -2594,7 +2594,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2019-03-11",
+          "datePublished": "2019-03-09",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -2618,7 +2618,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-03-09",
           "description": "<p>
         Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
       </p>
@@ -2631,7 +2631,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2020-03-08",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
         meer krijgt.
@@ -2688,7 +2688,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2018-11-29",
+          "datePublished": "2018-11-28",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -2712,7 +2712,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2018-11-28",
           "description": "<p>
         Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
       </p>
@@ -2725,7 +2725,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-03-08",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
         meer krijgt.
@@ -2782,7 +2782,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2018-12-27",
+          "datePublished": "2018-10-10",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -2806,7 +2806,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-02-15T13:45:36",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Welzorg om de aanpassingen aan uw woning uit
         te voeren.
@@ -2819,7 +2819,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-03-25",
           "description": "<p>
         Welzorg heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -2876,7 +2876,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2018-04-25",
+          "datePublished": "2018-04-14",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -2900,7 +2900,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2018-04-14",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -2913,7 +2913,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-04-13",
           "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
         meer krijgt.
@@ -2970,7 +2970,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2018-04-19",
+          "datePublished": "2018-03-09",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -2994,7 +2994,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2018-03-09",
           "description": "<p>
         Amstelring is gestart met het leveren van dagbesteding.
       </p>
@@ -3007,7 +3007,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2019-03-08",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -3088,7 +3088,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2017-11-24",
           "description": "<p>
         Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
       </p>
@@ -3101,7 +3101,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2018-11-23",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
         meer krijgt.
@@ -3182,7 +3182,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2017-06-01",
           "description": "<p>
         Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
       </p>
@@ -3195,7 +3195,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2018-04-13",
           "description": "<p>
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
         meer krijgt.
@@ -3276,7 +3276,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2017-06-01",
           "description": "<p>
         Amstelring is gestart met het leveren van dagbesteding.
       </p>
@@ -3289,7 +3289,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Levering gestart",
         },
         {
-          "datePublished": "",
+          "datePublished": "2018-03-08",
           "description": "<p>
             Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
         meer krijgt.
@@ -3346,7 +3346,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2014-09-09",
+          "datePublished": "2014-07-25",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -3370,7 +3370,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2017-06-01T00:00:00",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Harting-Bank om een elektrische hulpaandrijving voor rolstoel aan u te leveren.
       </p>",
@@ -3382,7 +3382,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2017-06-01",
           "description": "<p>
         Harting-Bank heeft aan ons doorgegeven dat een elektrische hulpaandrijving voor rolstoel bij u is afgeleverd.
       </p>
@@ -3439,7 +3439,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2014-09-11",
+          "datePublished": "2014-07-25",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -3463,7 +3463,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2014-09-11T00:00:00",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
         te voeren.
@@ -3476,7 +3476,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2014-11-07",
           "description": "<p>
         Gebr Koenen B.V. heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -3533,7 +3533,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2013-12-09",
+          "datePublished": "2013-11-12",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -3557,7 +3557,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2013-12-09T00:00:00",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
         te voeren.
@@ -3570,7 +3570,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2014-01-28",
           "description": "<p>
         Gebr Koenen B.V. heeft aan ons doorgegeven dat de
         aanpassing aan uw woning is uitgevoerd.
@@ -3627,7 +3627,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Aanvraag ontvangen",
         },
         {
-          "datePublished": "2012-10-05",
+          "datePublished": "2012-08-08",
           "description": "<p>Uw aanvraag is in behandeling genomen</p>",
           "documents": [],
           "id": "status-step-1",
@@ -3651,7 +3651,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Besluit",
         },
         {
-          "datePublished": "",
+          "datePublished": "2017-06-01T00:00:00",
           "description": "<p>
         De gemeente heeft opdracht gegeven aan Harting-Bank om een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) aan u te leveren.
       </p>",
@@ -3663,7 +3663,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
-          "datePublished": "",
+          "datePublished": "2017-06-01",
           "description": "<p>
         Harting-Bank heeft aan ons doorgegeven dat een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) bij u is afgeleverd.
       </p>

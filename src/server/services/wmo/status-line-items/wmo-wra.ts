@@ -22,7 +22,7 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   getTransformerConfigBesluit(isServiceDeliveryDecisionActive, true),
   {
     status: 'Opdracht gegeven',
-    datePublished: () => '',
+    datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isBeforeToday(aanvraag.datumOpdrachtLevering, today),
     isActive: (stepIndex, aanvraag, today) =>
@@ -37,7 +37,7 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Aanpassing uitgevoerd',
-    datePublished: () => '',
+    datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
     isChecked: (stepIndex, aanvraag, today) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today) =>

@@ -17,12 +17,14 @@ import { hash } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+import { dateSort } from '../../../universal/helpers/date';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
-  const definitieveDocumenten = documenten.filter(
-    (document) => !!document.datumDefinitief
-  );
+  const definitieveDocumenten = documenten
+    .filter((document) => !!document.datumDefinitief)
+    .sort(dateSort('datumDefinitief', 'desc'));
+
   for (const document of definitieveDocumenten) {
     const doc: GenericDocument = {
       id: document.documentidentificatie,
@@ -71,6 +73,7 @@ function transformZorgnedAanvraag(
     datumEindeLevering: levering?.einddatum ?? null,
     datumIngangGeldigheid: toegewezenProduct?.datumIngangGeldigheid ?? null,
     datumOpdrachtLevering: toewijzing?.datumOpdracht ?? null,
+    datumToewijzing: toewijzing?.toewijzingsDatumTijd ?? null,
     documenten: transformDocumenten(documenten),
     isActueel: toegewezenProduct?.actueel ?? false,
     leverancier: toegewezenProduct?.leverancier?.omschrijving ?? '',

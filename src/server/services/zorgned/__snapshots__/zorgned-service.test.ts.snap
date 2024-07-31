@@ -11,6 +11,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2023-05-06",
     "datumOpdrachtLevering": "2023-05-17T00:00:00",
+    "datumToewijzing": "2023-05-17T00:00:00",
     "documenten": [
       {
         "datePublished": "2023-05-17T00:00:00",
@@ -43,6 +44,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2012-08-07",
     "datumOpdrachtLevering": null,
+    "datumToewijzing": null,
     "documenten": [],
     "id": "4046397887",
     "isActueel": false,
@@ -62,6 +64,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2013-12-05",
     "datumOpdrachtLevering": "2013-12-09T00:00:00",
+    "datumToewijzing": "2013-12-09T00:00:00",
     "documenten": [
       {
         "datePublished": "2013-12-09T00:00:00",
@@ -88,6 +91,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2023-03-30",
     "datumIngangGeldigheid": "2014-09-08",
     "datumOpdrachtLevering": "2017-06-01T00:00:00",
+    "datumToewijzing": "2017-06-01T00:00:00",
     "documenten": [
       {
         "datePublished": "2014-09-10T00:00:00",
@@ -114,6 +118,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2014-09-08",
     "datumOpdrachtLevering": "2014-09-11T00:00:00",
+    "datumToewijzing": "2014-09-11T00:00:00",
     "documenten": [
       {
         "datePublished": "2014-09-11T00:00:00",
@@ -140,6 +145,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-09-09",
     "datumIngangGeldigheid": "2012-10-05",
     "datumOpdrachtLevering": "2017-06-01T00:00:00",
+    "datumToewijzing": "2017-06-01T00:00:00",
     "documenten": [],
     "id": "1703298224",
     "isActueel": false,
@@ -159,6 +165,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2018-04-13",
     "datumIngangGeldigheid": "2017-06-01",
     "datumOpdrachtLevering": "2017-06-01T00:00:00",
+    "datumToewijzing": "2017-06-01T00:00:00",
     "documenten": [],
     "id": "3783046999",
     "isActueel": false,
@@ -178,6 +185,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2018-03-08",
     "datumIngangGeldigheid": "2017-06-01",
     "datumOpdrachtLevering": "2017-06-01T00:00:00",
+    "datumToewijzing": "2017-06-01T00:00:00",
     "documenten": [],
     "id": "477515900",
     "isActueel": false,
@@ -197,6 +205,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2018-11-23",
     "datumIngangGeldigheid": "2017-11-24",
     "datumOpdrachtLevering": "2017-11-24T00:00:00",
+    "datumToewijzing": "2017-11-24T00:00:00",
     "documenten": [],
     "id": "3209335922",
     "isActueel": false,
@@ -216,6 +225,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2019-03-08",
     "datumIngangGeldigheid": "2018-03-09",
     "datumOpdrachtLevering": "2018-04-19T00:00:00",
+    "datumToewijzing": "2018-04-19T00:00:00",
     "documenten": [],
     "id": "2707273693",
     "isActueel": false,
@@ -235,6 +245,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2019-04-13",
     "datumIngangGeldigheid": "2018-04-14",
     "datumOpdrachtLevering": "2018-04-25T00:00:00",
+    "datumToewijzing": "2018-04-25T00:00:00",
     "documenten": [],
     "id": "4058168346",
     "isActueel": false,
@@ -254,6 +265,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2018-10-24",
     "datumOpdrachtLevering": "2019-02-15T13:45:36",
+    "datumToewijzing": "2019-02-15T13:45:36",
     "documenten": [
       {
         "datePublished": "2018-12-27T00:00:00",
@@ -280,6 +292,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2019-03-08",
     "datumIngangGeldigheid": "2018-11-28",
     "datumOpdrachtLevering": "2018-11-29T00:00:00",
+    "datumToewijzing": "2018-11-29T00:00:00",
     "documenten": [],
     "id": "300203506",
     "isActueel": false,
@@ -299,6 +312,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-03-08",
     "datumIngangGeldigheid": "2019-03-09",
     "datumOpdrachtLevering": "2019-03-11T00:00:00",
+    "datumToewijzing": "2019-03-11T00:00:00",
     "documenten": [],
     "id": "938485502",
     "isActueel": false,
@@ -318,6 +332,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-03-08",
     "datumIngangGeldigheid": "2019-03-09",
     "datumOpdrachtLevering": "2019-03-11T00:00:00",
+    "datumToewijzing": "2019-03-11T00:00:00",
     "documenten": [],
     "id": "1175100182",
     "isActueel": false,
@@ -337,6 +352,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-03-08",
     "datumIngangGeldigheid": "2019-04-14",
     "datumOpdrachtLevering": "2019-04-15T00:00:00",
+    "datumToewijzing": "2019-04-15T00:00:00",
     "documenten": [],
     "id": "446200219",
     "isActueel": false,
@@ -356,6 +372,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2019-12-09",
     "datumIngangGeldigheid": "2019-10-09",
     "datumOpdrachtLevering": "2019-10-09T11:19:30",
+    "datumToewijzing": "2019-10-09T11:19:30",
     "documenten": [],
     "id": "954761814",
     "isActueel": false,
@@ -375,6 +392,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-06-14",
     "datumIngangGeldigheid": "2020-03-09",
     "datumOpdrachtLevering": "2020-03-12T00:00:00",
+    "datumToewijzing": "2020-03-12T00:00:00",
     "documenten": [
       {
         "datePublished": "2020-03-12T16:12:23",
@@ -401,6 +419,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-12-31",
     "datumIngangGeldigheid": "2020-03-09",
     "datumOpdrachtLevering": "2020-03-12T00:00:00",
+    "datumToewijzing": "2020-03-12T00:00:00",
     "documenten": [
       {
         "datePublished": "2020-03-12T16:17:07",
@@ -427,6 +446,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-12-31",
     "datumIngangGeldigheid": "2020-03-09",
     "datumOpdrachtLevering": "2020-03-12T00:00:00",
+    "datumToewijzing": "2020-03-12T00:00:00",
     "documenten": [
       {
         "datePublished": "2020-03-12T16:16:35",
@@ -453,6 +473,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2020-06-05",
     "datumOpdrachtLevering": "2020-06-05T09:22:46",
+    "datumToewijzing": "2020-06-05T09:22:46",
     "documenten": [],
     "id": "1809360062",
     "isActueel": false,
@@ -472,6 +493,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2020-06-10",
     "datumOpdrachtLevering": "2020-06-18T14:21:01",
+    "datumToewijzing": "2020-06-18T14:21:01",
     "documenten": [
       {
         "datePublished": "2020-06-18T14:20:12",
@@ -498,6 +520,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2020-12-31",
     "datumIngangGeldigheid": "2020-06-15",
     "datumOpdrachtLevering": "2020-06-16T00:00:00",
+    "datumToewijzing": "2020-06-16T00:00:00",
     "documenten": [
       {
         "datePublished": "2020-06-16T15:20:47",
@@ -524,6 +547,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2020-11-13",
     "datumOpdrachtLevering": "2020-12-07T07:01:20",
+    "datumToewijzing": "2020-12-07T07:01:20",
     "documenten": [
       {
         "datePublished": "2020-12-07T07:01:05",
@@ -550,6 +574,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2021-03-09",
     "datumIngangGeldigheid": "2021-01-01",
     "datumOpdrachtLevering": "2021-01-09T00:00:00",
+    "datumToewijzing": "2021-01-09T00:00:00",
     "documenten": [
       {
         "datePublished": "2021-01-09T17:26:23",
@@ -576,6 +601,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2021-03-09",
     "datumIngangGeldigheid": "2021-01-01",
     "datumOpdrachtLevering": "2021-01-09T00:00:00",
+    "datumToewijzing": "2021-01-09T00:00:00",
     "documenten": [
       {
         "datePublished": "2021-01-10T01:50:21",
@@ -602,6 +628,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2021-03-09",
     "datumIngangGeldigheid": "2021-01-01",
     "datumOpdrachtLevering": "2021-01-09T00:00:00",
+    "datumToewijzing": "2021-01-09T00:00:00",
     "documenten": [
       {
         "datePublished": "2021-01-09T23:06:12",
@@ -628,6 +655,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2022-03-10",
     "datumIngangGeldigheid": "2021-03-10",
     "datumOpdrachtLevering": "2021-03-11T00:00:00",
+    "datumToewijzing": "2021-03-11T00:00:00",
     "documenten": [
       {
         "datePublished": "2021-03-11T15:26:28",
@@ -654,6 +682,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2021-04-01",
     "datumIngangGeldigheid": "2021-03-10",
     "datumOpdrachtLevering": "2021-03-11T00:00:00",
+    "datumToewijzing": "2021-03-11T00:00:00",
     "documenten": [
       {
         "datePublished": "2021-03-11T15:29:20",
@@ -680,6 +709,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2022-03-10",
     "datumIngangGeldigheid": "2021-03-10",
     "datumOpdrachtLevering": "2021-03-11T00:00:00",
+    "datumToewijzing": "2021-03-11T00:00:00",
     "documenten": [
       {
         "datePublished": "2021-03-11T15:24:06",
@@ -706,6 +736,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2021-10-13",
     "datumOpdrachtLevering": "2021-10-22T16:51:15",
+    "datumToewijzing": "2021-10-22T16:51:15",
     "documenten": [
       {
         "datePublished": "2021-10-22T16:50:57",
@@ -732,6 +763,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2022-02-06",
     "datumIngangGeldigheid": "2021-12-06",
     "datumOpdrachtLevering": "2021-12-06T16:01:09",
+    "datumToewijzing": "2021-12-06T16:01:09",
     "documenten": [],
     "id": "2248022546",
     "isActueel": false,
@@ -751,6 +783,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2021-12-20",
     "datumOpdrachtLevering": "2021-12-20T14:05:02",
+    "datumToewijzing": "2021-12-20T14:05:02",
     "documenten": [
       {
         "datePublished": "2021-12-20T14:08:20",
@@ -777,6 +810,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2021-12-08",
     "datumOpdrachtLevering": "2021-12-08T10:54:18",
+    "datumToewijzing": "2021-12-08T10:54:18",
     "documenten": [
       {
         "datePublished": "2021-12-20T14:08:20",
@@ -803,6 +837,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2023-03-11",
     "datumIngangGeldigheid": "2022-03-11",
     "datumOpdrachtLevering": "2022-03-14T15:42:25",
+    "datumToewijzing": "2022-03-14T15:42:25",
     "documenten": [
       {
         "datePublished": "2022-03-14T16:12:12",
@@ -829,6 +864,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": "2023-03-11",
     "datumIngangGeldigheid": "2022-03-11",
     "datumOpdrachtLevering": "2022-03-14T15:42:25",
+    "datumToewijzing": "2022-03-14T15:42:25",
     "documenten": [
       {
         "datePublished": "2022-03-14T16:11:29",
@@ -855,6 +891,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2022-03-24",
     "datumOpdrachtLevering": "2022-04-19T13:16:57",
+    "datumToewijzing": "2022-04-19T13:16:57",
     "documenten": [
       {
         "datePublished": "2022-04-19T13:16:44",
@@ -881,6 +918,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2022-08-01",
     "datumOpdrachtLevering": null,
+    "datumToewijzing": null,
     "documenten": [],
     "id": "1293703646",
     "isActueel": false,
@@ -900,6 +938,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2022-10-19",
     "datumOpdrachtLevering": null,
+    "datumToewijzing": null,
     "documenten": [
       {
         "datePublished": "2022-10-19T14:27:42.643",
@@ -926,6 +965,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2022-12-21",
     "datumOpdrachtLevering": "2023-03-02T11:17:35.4",
+    "datumToewijzing": "2023-03-02T11:17:35.4",
     "documenten": [
       {
         "datePublished": "2023-03-02T11:17:08.293",
@@ -952,6 +992,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2022-12-22",
     "datumOpdrachtLevering": "2022-12-22T14:41:00.9833333",
+    "datumToewijzing": "2022-12-22T14:41:00.9833333",
     "documenten": [],
     "id": "3042411901",
     "isActueel": true,
@@ -971,6 +1012,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2023-03-12",
     "datumOpdrachtLevering": "2023-03-16T15:50:50.4233333",
+    "datumToewijzing": "2023-03-16T15:50:50.4233333",
     "documenten": [
       {
         "datePublished": "2023-03-16T15:56:11.41",
@@ -997,6 +1039,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "datumEindeLevering": null,
     "datumIngangGeldigheid": "2023-06-08",
     "datumOpdrachtLevering": "2023-06-08T15:10:49.42",
+    "datumToewijzing": "2023-06-08T15:10:49.42",
     "documenten": [],
     "id": "1947071120",
     "isActueel": true,

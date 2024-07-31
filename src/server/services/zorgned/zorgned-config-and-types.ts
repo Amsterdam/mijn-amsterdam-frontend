@@ -62,6 +62,7 @@ export interface Levering {
 interface Toewijzing {
   datumOpdracht: string;
   leveringen: Levering[];
+  toewijzingsDatumTijd: string | null;
 }
 
 interface Leverancier {
@@ -129,6 +130,7 @@ export interface ZorgnedAanvraagTransformed {
   datumEindeLevering: string | null;
   datumIngangGeldigheid: string | null;
   datumOpdrachtLevering: string | null;
+  datumToewijzing: string | null;
   documenten: GenericDocument[];
   id: string;
   isActueel: boolean;
