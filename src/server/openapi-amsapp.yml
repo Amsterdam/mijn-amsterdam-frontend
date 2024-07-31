@@ -196,7 +196,6 @@ components:
         passNumberComplete:
           type: string
         owner:
-          type: object
           $ref: '#/components/schemas/StadspasOwner'
         dateEnd:
           type: string
