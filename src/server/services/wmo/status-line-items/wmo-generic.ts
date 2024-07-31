@@ -1,19 +1,37 @@
 import isAfter from 'date-fns/isAfter';
 import parseISO from 'date-fns/parseISO';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { GenericDocument } from '../../../../universal/types';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-config-and-types';
 import {
+  isBeforeToday,
+  isServiceDeliveryStarted,
+} from '../../zorgned/zorgned-helpers';
+import {
+  DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
   DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE,
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
 } from '../wmo-config-and-types';
-import {
-  isBeforeToday,
-  isServiceDeliveryStarted,
-} from '../../zorgned/zorgned-helpers';
+
+export function getDocumentDecisionDate(documents: GenericDocument[]) {
+  return (
+    documents.find((document) =>
+      document.title.startsWith(DOCUMENT_TITLE_BESLUIT_STARTS_WITH)
+    )?.datePublished ?? null
+  );
+}
+
+export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
+  return (
+    documents.find((document) =>
+      document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+    )?.datePublished ?? null
+  );
+}
 
 export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
   return aanvraag.documenten.some((document) =>
@@ -49,7 +67,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
 
 export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   status: 'In behandeling',
-  datePublished: (aanvraag) => aanvraag.datumBesluit,
+  datePublished: (aanvraag) => aanvraag.datumAanvraag,
   isChecked: () => true,
   isActive: (stepIndex, aanvraag) =>
     !aanvraag.datumBesluit && !hasMeerInformatieNodig(aanvraag),
@@ -61,13 +79,8 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
 export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Meer informatie nodig',
   isVisible: (stepIndex, aanvraag) => hasMeerInformatieNodig(aanvraag),
-  datePublished: (aanvraag) => {
-    return (
-      aanvraag.documenten.find((document) =>
-        document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
-      )?.datePublished ?? ''
-    );
-  },
+  datePublished: (aanvraag) =>
+    getDocumentMeerInformatieDate(aanvraag.documenten) ?? '',
   isChecked: (stepIndex, aanvraag) => hasMeerInformatieNodig(aanvraag),
   isActive: (stepIndex, aanvraag) =>
     !aanvraag.datumBesluit && hasMeerInformatieNodig(aanvraag),
@@ -114,7 +127,8 @@ export function getTransformerConfigBesluit(
 ): ZorgnedStatusLineItemTransformerConfig {
   return {
     status: 'Besluit',
-    datePublished: (aanvraag) => aanvraag.datumBesluit,
+    datePublished: (aanvraag) =>
+      getDocumentDecisionDate(aanvraag.documenten) ?? '',
     isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
     isActive: isActive,
     description: (aanvraag) =>
