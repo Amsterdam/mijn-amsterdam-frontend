@@ -21,6 +21,7 @@ import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasTransactions } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -117,6 +118,9 @@ async function sendAdministratienummerResponse(
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
+          administratienummerEncrypted: !IS_PRODUCTION
+            ? administratienummerEncrypted
+            : '',
         });
       }
 

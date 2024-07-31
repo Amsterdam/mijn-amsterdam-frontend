@@ -245,18 +245,18 @@ export async function fetchPersoonsgegevensNAW_(
   userID: AuthProfileAndToken['profile']['id'],
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
-  const url = `${dataRequestConfig.url}/persoonsgegevensNAW`;
-  const postData = {
-    burgerservicenummer: userID,
-    gemeentecode: ZORGNED_GEMEENTE_CODE,
-  };
-  const response = requestData<ZorgnedPersoonsgegevensNAWResponse>(
-    {
-      ...dataRequestConfig,
-      data: postData,
-      url,
+  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey, {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/persoonsgegevensNAW`;
     },
+    data: {
+      burgerservicenummer: userID,
+      gemeentecode: ZORGNED_GEMEENTE_CODE,
+    },
+  });
+
+  const response = requestData<ZorgnedPersoonsgegevensNAWResponse>(
+    dataRequestConfig,
     requestID
   );
 

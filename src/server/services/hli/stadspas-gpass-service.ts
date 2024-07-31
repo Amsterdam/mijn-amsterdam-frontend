@@ -49,41 +49,52 @@ function getOwner(pashouder: StadspasHouderSource): StadspasOwner {
 }
 
 function transformBudget(budget: StadspasDetailBudgetSource) {
-  const stadspasBudget: StadspasBudget = {
-    title: budget.naam,
-    description: budget.omschrijving,
-    code: budget.code,
-    budgetAssigned: budget.budget_assigned,
-    budgetAssignedFormatted: `€${displayAmount(budget.budget_assigned)}`,
-    budgetBalance: budget.budget_balance,
-    budgetBalanceFormatted: `€${displayAmount(budget.budget_balance)}`,
-    dateEnd: budget.expiry_date,
-    dateEndFormatted: defaultDateFormat(budget.expiry_date),
-  };
+  if (typeof budget === 'object' && 'naam' in budget) {
+    const stadspasBudget: StadspasBudget = {
+      title: budget.naam,
+      description: budget.omschrijving,
+      code: budget.code,
+      budgetAssigned: budget.budget_assigned,
+      budgetAssignedFormatted: `€${displayAmount(budget.budget_assigned)}`,
+      budgetBalance: budget.budget_balance,
+      budgetBalanceFormatted: `€${displayAmount(budget.budget_balance)}`,
+      dateEnd: budget.expiry_date,
+      dateEndFormatted: defaultDateFormat(budget.expiry_date),
+    };
 
-  return stadspasBudget;
+    return stadspasBudget;
+  }
+  return budget;
 }
 
 function transformStadspasResponse(
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource
 ) {
-  const budgets = gpassStadspasResonseData.budgetten.map(transformBudget);
+  if (
+    typeof gpassStadspasResonseData === 'object' &&
+    'pasnummer' in gpassStadspasResonseData
+  ) {
+    const budgets =
+      gpassStadspasResonseData.budgetten?.map(transformBudget) ?? [];
 
-  const stadspasTransformed: Stadspas = {
-    id: String(gpassStadspasResonseData.id),
-    owner: getOwner(pashouder),
-    dateEnd: gpassStadspasResonseData.expiry_date,
-    dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
-    budgets: budgets,
-    balanceFormatted: `€${displayAmount(
-      budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
-    )}`,
-    passNumber: gpassStadspasResonseData.pasnummer,
-    passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
-  };
+    const stadspasTransformed: Stadspas = {
+      id: String(gpassStadspasResonseData.id),
+      owner: getOwner(pashouder),
+      dateEnd: gpassStadspasResonseData.expiry_date,
+      dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
+      budgets: budgets,
+      balanceFormatted: `€${displayAmount(
+        budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
+      )}`,
+      passNumber: gpassStadspasResonseData.pasnummer,
+      passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
+    };
 
-  return stadspasTransformed;
+    return stadspasTransformed;
+  }
+
+  return gpassStadspasResonseData;
 }
 
 export async function fetchStadspassenByAdministratienummer(
@@ -191,21 +202,24 @@ export const fetchStadspassen = memoizee(fetchStadspassen_, {
 function transformGpassTransactionsResponse(
   gpassTransactionsResponseData: StadspasTransactiesResponseSource
 ) {
-  return gpassTransactionsResponseData.transacties.map(
-    (transactie: StadspasTransactieSource) => {
-      const transaction: StadspasTransaction = {
-        id: String(transactie.id),
-        title: transactie.budget.aanbieder.naam,
-        amount: transactie.bedrag,
-        amountFormatted: `- €${displayAmount(Math.abs(transactie.bedrag))}`,
-        datePublished: transactie.transactiedatum,
-        datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
-        budget: transactie.budget.naam,
-        budgetCode: transactie.budget.code,
-      };
-      return transaction;
-    }
-  );
+  if (Array.isArray(gpassTransactionsResponseData.transacties)) {
+    return gpassTransactionsResponseData.transacties.map(
+      (transactie: StadspasTransactieSource) => {
+        const transaction: StadspasTransaction = {
+          id: String(transactie.id),
+          title: transactie.budget.aanbieder.naam,
+          amount: transactie.bedrag,
+          amountFormatted: `- €${displayAmount(Math.abs(transactie.bedrag))}`,
+          datePublished: transactie.transactiedatum,
+          datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
+          budget: transactie.budget.naam,
+          budgetCode: transactie.budget.code,
+        };
+        return transaction;
+      }
+    );
+  }
+  return gpassTransactionsResponseData;
 }
 
 export async function fetchStadspasBudgetTransactions(
