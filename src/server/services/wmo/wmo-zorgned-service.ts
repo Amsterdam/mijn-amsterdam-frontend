@@ -93,8 +93,7 @@ export async function fetchZorgnedAanvragenWMO(
       ?.filter((aanvraagTransformed) => {
         return (
           aanvraagTransformed.datumBesluit &&
-          shouldBeVisibleToUser(aanvraagTransformed) &&
-          BESCHIKTPRODUCT_RESULTAAT.includes(aanvraagTransformed.resultaat)
+          shouldBeVisibleToUser(aanvraagTransformed)
         );
       })
       .map((aanvraagTransformed) => {

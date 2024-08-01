@@ -51,6 +51,8 @@ function transformVoorzieningenForFrontend(
   for (const aanvraag of aanvragen) {
     const id = aanvraag.id;
 
+    if (aanvraag.id.includes('1294388')) console.log(aanvraag);
+
     const lineItems = getStatusLineItems(
       'WMO',
       wmoStatusLineItemsConfig,

@@ -35,6 +35,9 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Levering gestart',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
+    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+      return aanvraag.resultaat !== 'afgewezen';
+    },
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>
@@ -64,8 +67,8 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
         meer krijgt.`
             }
       </p>`,
-    isVisible: (stepIndex, aanvraag, today) => {
-      return !!aanvraag.datumBeginLevering || aanvraag.isActueel;
+    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+      return aanvraag.resultaat !== 'afgewezen';
     },
   },
   EINDE_RECHT,

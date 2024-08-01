@@ -136,7 +136,7 @@
                 "code": "12",
                 "omschrijving": "Vervoervoorzieningen"
               },
-              "resultaat": "toegewezen",
+              "resultaat": "afgewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2012-08-07",
                 "datumEindeGeldigheid": "2022-07-31",
@@ -202,7 +202,7 @@
                 "code": "13",
                 "omschrijving": "Woonvoorzieningen"
               },
-              "resultaat": "toegewezen",
+              "resultaat": "afgewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2013-12-05",
                 "datumEindeGeldigheid": null,

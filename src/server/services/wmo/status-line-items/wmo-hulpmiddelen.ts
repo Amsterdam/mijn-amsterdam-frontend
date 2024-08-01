@@ -20,6 +20,9 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
+    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+      return aanvraag.resultaat !== 'afgewezen';
+    },
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isBeforeToday(aanvraag.datumOpdrachtLevering, today),
     isActive: (stepIndex, aanvraag, today) =>
@@ -34,6 +37,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Product geleverd',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
+
     isChecked: (stepIndex, aanvraag, today) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>
@@ -43,8 +47,8 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
         ${aanvraag.leverancier} heeft aan ons doorgegeven dat een ${aanvraag.titel} bij u is afgeleverd.
       </p>
       `,
-    isVisible: (stepIndex, aanvraag, today) => {
-      return !!aanvraag.datumBeginLevering || aanvraag.isActueel;
+    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+      return aanvraag.resultaat !== 'afgewezen';
     },
   },
   EINDE_RECHT,

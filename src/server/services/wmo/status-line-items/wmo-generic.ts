@@ -126,6 +126,9 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Einde recht',
   datePublished: (aanvraag) =>
     (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
+  isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+    return aanvraag.resultaat !== 'afgewezen';
+  },
   isChecked: (stepIndex, aanvraag) => aanvraag.isActueel === false,
   isActive: (stepIndex, aanvraag, today) => aanvraag.isActueel === false,
   description: (aanvraag) =>
