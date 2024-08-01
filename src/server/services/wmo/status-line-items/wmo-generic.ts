@@ -26,12 +26,23 @@ export function getDocumentDecisionDate(documents: GenericDocument[]) {
   );
 }
 
-function getDecisionDate(aanvraag: ZorgnedAanvraagTransformed) {
-  const decisionDate = isDocumentDecisionDateActive(aanvraag.datumAanvraag)
+function getDecisionDate(
+  aanvraag: ZorgnedAanvraagTransformed,
+  doTransformDate: boolean = false
+) {
+  let decisionDate = isDocumentDecisionDateActive(aanvraag.datumAanvraag)
     ? getDocumentDecisionDate(aanvraag.documenten)
     : aanvraag.datumBesluit;
 
-  return decisionDate ? defaultDateFormat(decisionDate) : null;
+  if (doTransformDate && decisionDate) {
+    decisionDate = defaultDateFormat(decisionDate);
+  }
+  return decisionDate ?? null;
+}
+
+function getDecisionDateTransformed(aanvraag: ZorgnedAanvraagTransformed) {
+  const DO_TRANSFORM = true;
+  return getDecisionDate(aanvraag, DO_TRANSFORM);
 }
 
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
@@ -151,7 +162,7 @@ export function getTransformerConfigBesluit(
     isActive: isActive,
     description: (aanvraag) =>
       `<p>
-          U heeft recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDate(aanvraag)}.
+          U heeft recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}.
       </p>
       ${decisionParagraph(aanvraag)}
       `,

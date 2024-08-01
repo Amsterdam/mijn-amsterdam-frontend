@@ -19,7 +19,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2023-05-17T00:00:00",
           "id": "B73199",
-          "title": "WRA beschikking Definitief",
+          "title": "Besluit: WRA beschikking Definitief",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -66,11 +66,11 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Meer informatie nodig",
         },
         {
-          "datePublished": "2023-05-17",
+          "datePublished": "2023-05-17T00:00:00",
           "description": "<p>
-          U heeft recht op een woonruimteaanpassing met doc 2 / meer info per 06 mei 2023.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
+          U heeft recht op een woonruimteaanpassing met doc 2 / meer info per 17 mei 2023.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -133,7 +133,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2023-03-16T15:56:11.41",
           "id": "B2516440",
-          "title": "Opstellen beschikking wijkzorg Hbh",
+          "title": "Besluit: Opstellen beschikking wijkzorg Hbh",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -167,11 +167,11 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2023-03-16",
+          "datePublished": "2023-03-16T15:56:11.41",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 12 maart 2023.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
+          U heeft recht op hulp bij het huishouden per 16 maart 2023.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -233,7 +233,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2023-03-02T11:17:08.293",
           "id": "B2510020",
-          "title": "New Toekenning hulpmiddel zonder keuze",
+          "title": "Besluit: New Toekenning hulpmiddel zonder keuze",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -267,11 +267,11 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2023-03-01",
+          "datePublished": "2023-03-02T11:17:08.293",
           "description": "<p>
-          U heeft recht op een elektrische rolstoel voor binnen en buiten per 21 december 2022.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
+          U heeft recht op een elektrische rolstoel voor binnen en buiten per 02 maart 2023.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -333,7 +333,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-10-19T14:27:42.643",
           "id": "B2391009",
-          "title": "AOV Beschikking positief",
+          "title": "Besluit: AOV Beschikking positief",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -367,11 +367,11 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2022-10-20",
+          "datePublished": "2022-10-19T14:27:42.643",
           "description": "<p>
-          U heeft recht op kamer tot kamer vervoer per 19 oktober 2022.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
+          U heeft recht op kamer tot kamer vervoer (ook iets?) per 19 oktober 2022.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -396,7 +396,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "RMC Amsterdam",
-      "title": "Kamer tot kamer vervoer",
+      "title": "Kamer tot kamer vervoer (ook iets?)",
     },
     {
       "dateDescision": "2022-04-15",
@@ -408,7 +408,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-04-19T13:16:44",
           "id": "B2268406",
-          "title": "Opstellen beschikking grote WRA",
+          "title": "Besluit: Opstellen beschikking grote WRA",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -442,11 +442,11 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2022-04-15",
+          "datePublished": "2022-04-19T13:16:44",
           "description": "<p>
-          U heeft recht op een niet standaard opdracht natte cel en toilet per 24 maart 2022.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
+          U heeft recht op een niet standaard opdracht natte cel en toilet per 19 april 2022.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -509,7 +509,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-03-14T16:12:12",
           "id": "B2258816",
-          "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+          "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -543,11 +543,11 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2022-03-14",
+          "datePublished": "2022-03-14T16:12:12",
           "description": "<p>
-          U heeft recht op dagbesteding per 11 maart 2022.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
+          U heeft recht op dagbesteding per 14 maart 2022.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -610,7 +610,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-03-14T16:11:29",
           "id": "B2258817",
-          "title": "Opstellen beschikking wijkzorg Hbh",
+          "title": "Besluit: Opstellen beschikking wijkzorg Hbh",
           "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
         },
       ],
@@ -644,11 +644,11 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2022-03-14",
+          "datePublished": "2022-03-14T16:11:29",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 11 maart 2022.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
+          U heeft recht op hulp bij het huishouden per 14 maart 2022.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document staat bij documenten bovenaan deze pagina.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -740,9 +740,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-12-08",
           "description": "<p>
-          U heeft recht op een handzender(s) voor deurautomaat per 20 december 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een handzender(s) voor deurautomaat (vóór 01-01-2022) per 08 december 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -793,7 +793,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Van der Leij Bouwbedrijven B.V",
-      "title": "Handzender(s) voor deurautomaat",
+      "title": "Handzender(s) voor deurautomaat (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-12-08",
@@ -835,8 +835,8 @@ exports[`Transform api items > fetchWmo 1`] = `
           "datePublished": "2021-12-08",
           "description": "<p>
           U heeft recht op een reparatie-/verwijderopdracht toegang per 08 december 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -928,9 +928,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-12-06",
           "description": "<p>
-          U heeft recht op een reparatie-/verwijderopdracht toegang per 06 december 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een reparatie-/verwijderopdracht toegang (vóór 01-01-2022) per 06 december 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -968,7 +968,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-02-06",
           "description": "<p>
-      Uw recht op reparatie-/verwijderopdracht toegang is beëindigd per 06 februari 2022
+      Uw recht op reparatie-/verwijderopdracht toegang (vóór 01-01-2022) is beëindigd per 06 februari 2022
     </p>
     
     ",
@@ -981,7 +981,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Van der Leij Bouwbedrijven B.V",
-      "title": "Reparatie-/verwijderopdracht toegang",
+      "title": "Reparatie-/verwijderopdracht toegang (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-10-22",
@@ -1022,9 +1022,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-10-22",
           "description": "<p>
-          U heeft recht op een niet standaard opdracht natte cel en toilet per 13 oktober 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een niet standaard opdracht natte cel en toilet (vóór 01-01-2022) per 22 oktober 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1075,7 +1075,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Welzorg",
-      "title": "Niet standaard opdracht natte cel en toilet",
+      "title": "Niet standaard opdracht natte cel en toilet (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-03-11",
@@ -1116,9 +1116,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-11",
           "description": "<p>
-          U heeft recht op dagbesteding per 10 maart 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op dagbesteding (vóór 01-01-2022) per 11 maart 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1130,7 +1130,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-10",
           "description": "<p>
-        Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
+        Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -1143,7 +1143,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-03-10",
           "description": "<p>
-            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -1156,7 +1156,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-03-10",
           "description": "<p>
-      Uw recht op dagbesteding is beëindigd per 10 maart 2022
+      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 10 maart 2022
     </p>
     
     ",
@@ -1169,7 +1169,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
-      "title": "Dagbesteding",
+      "title": "Dagbesteding (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-03-11",
@@ -1210,9 +1210,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-11",
           "description": "<p>
-          U heeft recht op aanvullende individuele ondersteuning per 10 maart 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op aanvullende individuele ondersteuning (vóór 01-01-2022) per 11 maart 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1224,7 +1224,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-10",
           "description": "<p>
-        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -1237,7 +1237,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-04-01",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -1250,7 +1250,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-03-10",
           "description": "<p>
-      Uw recht op aanvullende individuele ondersteuning is beëindigd per 10 maart 2022
+      Uw recht op aanvullende individuele ondersteuning (vóór 01-01-2022) is beëindigd per 10 maart 2022
     </p>
     
     ",
@@ -1263,7 +1263,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Aanvullende individuele ondersteuning",
+      "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-03-11",
@@ -1304,9 +1304,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-11",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 10 maart 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op hulp bij het huishouden (vóór 01-01-2022) per 11 maart 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1318,7 +1318,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-10",
           "description": "<p>
-        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -1331,7 +1331,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-03-10",
           "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -1344,7 +1344,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-03-10",
           "description": "<p>
-      Uw recht op hulp bij het huishouden is beëindigd per 10 maart 2022
+      Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 10 maart 2022
     </p>
     
     ",
@@ -1357,7 +1357,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Emile Thuiszorg",
-      "title": "Hulp bij het huishouden",
+      "title": "Hulp bij het huishouden (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-01-09",
@@ -1398,9 +1398,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-01-09",
           "description": "<p>
-          U heeft recht op aanvullende individuele ondersteuning per 01 januari 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op aanvullende individuele ondersteuning (vóór 01-01-2022) per 09 januari 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1412,7 +1412,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-01-01",
           "description": "<p>
-        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -1425,7 +1425,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-09",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -1438,7 +1438,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-09",
           "description": "<p>
-      Uw recht op aanvullende individuele ondersteuning is beëindigd per 09 maart 2021
+      Uw recht op aanvullende individuele ondersteuning (vóór 01-01-2022) is beëindigd per 09 maart 2021
     </p>
     
     ",
@@ -1451,7 +1451,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Aanvullende individuele ondersteuning",
+      "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-01-09",
@@ -1492,9 +1492,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-01-09",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 01 januari 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op hulp bij het huishouden (vóór 01-01-2022) per 09 januari 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1506,7 +1506,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-01-01",
           "description": "<p>
-        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -1519,7 +1519,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-09",
           "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -1532,7 +1532,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-09",
           "description": "<p>
-      Uw recht op hulp bij het huishouden is beëindigd per 09 maart 2021
+      Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 09 maart 2021
     </p>
     
     ",
@@ -1545,7 +1545,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Emile Thuiszorg",
-      "title": "Hulp bij het huishouden",
+      "title": "Hulp bij het huishouden (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2021-01-09",
@@ -1586,9 +1586,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-01-09",
           "description": "<p>
-          U heeft recht op dagbesteding per 01 januari 2021.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op dagbesteding (vóór 01-01-2022) per 09 januari 2021.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1600,7 +1600,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-01-01",
           "description": "<p>
-        Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
+        Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -1613,7 +1613,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-09",
           "description": "<p>
-            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -1626,7 +1626,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2021-03-09",
           "description": "<p>
-      Uw recht op dagbesteding is beëindigd per 09 maart 2021
+      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 09 maart 2021
     </p>
     
     ",
@@ -1639,7 +1639,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
-      "title": "Dagbesteding",
+      "title": "Dagbesteding (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2020-12-04",
@@ -1680,9 +1680,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-12-04",
           "description": "<p>
-          U heeft recht op een antislipvloer/behandeling badkamer per 13 november 2020.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een antislipvloer/behandeling badkamer  (vóór 01-01-2022) per 04 december 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1733,7 +1733,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Meyra Wooncare B.V.",
-      "title": "Antislipvloer/behandeling badkamer",
+      "title": "Antislipvloer/behandeling badkamer  (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2020-06-16",
@@ -1774,9 +1774,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-16",
           "description": "<p>
-          U heeft recht op dagbesteding per 15 juni 2020.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op dagbesteding  (vóór 01-01-2022) per 16 juni 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1788,7 +1788,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-15",
           "description": "<p>
-        Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding.
+        Ons Tweede Thuis NA (vh Nieuw Amstelraede) is gestart met het leveren van dagbesteding  (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -1801,7 +1801,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-12-31",
           "description": "<p>
-            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft aan ons doorgegeven dat u geen dagbesteding  (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -1814,7 +1814,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-12-31",
           "description": "<p>
-      Uw recht op dagbesteding is beëindigd per 31 december 2020
+      Uw recht op dagbesteding  (vóór 01-01-2022) is beëindigd per 31 december 2020
     </p>
     
     ",
@@ -1827,7 +1827,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
-      "title": "Dagbesteding",
+      "title": "Dagbesteding  (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2020-06-18",
@@ -1868,9 +1868,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-18",
           "description": "<p>
-          U heeft recht op een douche-/toiletstoel zelfrijder per 10 juni 2020.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) per 18 juni 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1882,7 +1882,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-18T14:21:01",
           "description": "<p>
-        De gemeente heeft opdracht gegeven aan Medipoint om een douche-/toiletstoel zelfrijder aan u te leveren.
+        De gemeente heeft opdracht gegeven aan Medipoint om een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) aan u te leveren.
       </p>",
           "documents": [],
           "id": "status-step-4",
@@ -1894,7 +1894,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-09-10",
           "description": "<p>
-        Medipoint heeft aan ons doorgegeven dat een douche-/toiletstoel zelfrijder bij u is afgeleverd.
+        Medipoint heeft aan ons doorgegeven dat een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.
       </p>
       ",
           "documents": [],
@@ -1920,7 +1920,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Medipoint",
-      "title": "Douche-/toiletstoel zelfrijder",
+      "title": "Douche-/toiletstoel zelfrijder  (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2020-06-05",
@@ -1961,9 +1961,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-05",
           "description": "<p>
-          U heeft recht op een reparatie-/verwijderopdracht natte cel en toilet per 05 juni 2020.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022) per 05 juni 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -1988,7 +1988,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-08-05",
           "description": "<p>
-      Uw recht op reparatie-/verwijderopdracht natte cel en toilet is beëindigd per 05 augustus 2020
+      Uw recht op reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022) is beëindigd per 05 augustus 2020
     </p>
     
     ",
@@ -2001,7 +2001,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Welzorg",
-      "title": "Reparatie-/verwijderopdracht natte cel en toilet",
+      "title": "Reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2020-03-12",
@@ -2042,9 +2042,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-12",
           "description": "<p>
-          U heeft recht op dagbesteding per 09 maart 2020.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op dagbesteding (vóór 01-01-2022) per 12 maart 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2056,7 +2056,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-09",
           "description": "<p>
-        Amstelring is gestart met het leveren van dagbesteding.
+        Amstelring is gestart met het leveren van dagbesteding (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2069,7 +2069,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-14",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2082,7 +2082,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-14",
           "description": "<p>
-      Uw recht op dagbesteding is beëindigd per 14 juni 2020
+      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 14 juni 2020
     </p>
     
     ",
@@ -2095,7 +2095,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Dagbesteding",
+      "title": "Dagbesteding (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2020-03-12",
@@ -2136,9 +2136,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-12",
           "description": "<p>
-          U heeft recht op aanvullende individuele ondersteuning per 09 maart 2020.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op aanvullende individuele ondersteuning (vóór 01-01-2022) per 12 maart 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2150,7 +2150,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-09",
           "description": "<p>
-        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2163,7 +2163,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-12-31",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2176,7 +2176,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-12-31",
           "description": "<p>
-      Uw recht op aanvullende individuele ondersteuning is beëindigd per 31 december 2020
+      Uw recht op aanvullende individuele ondersteuning (vóór 01-01-2022) is beëindigd per 31 december 2020
     </p>
     
     ",
@@ -2189,7 +2189,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Aanvullende individuele ondersteuning",
+      "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2020-03-12",
@@ -2230,9 +2230,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-12",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 09 maart 2020.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op hulp bij het huishouden  (vóór 01-01-2022) per 12 maart 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2244,7 +2244,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-09",
           "description": "<p>
-        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden  (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2257,7 +2257,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-12-31",
           "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden  (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2270,7 +2270,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-12-31",
           "description": "<p>
-      Uw recht op hulp bij het huishouden is beëindigd per 31 december 2020
+      Uw recht op hulp bij het huishouden  (vóór 01-01-2022) is beëindigd per 31 december 2020
     </p>
     
     ",
@@ -2283,7 +2283,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Emile Thuiszorg",
-      "title": "Hulp bij het huishouden",
+      "title": "Hulp bij het huishouden  (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2019-10-09",
@@ -2324,9 +2324,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-10-09",
           "description": "<p>
-          U heeft recht op een reparatie-/verwijderopdracht natte cel en toilet per 09 oktober 2019.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een reparatie-/verwijderopdracht natte cel en toilet (vóór 01-01-2022) per 09 oktober 2019.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2364,7 +2364,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-12-09",
           "description": "<p>
-      Uw recht op reparatie-/verwijderopdracht natte cel en toilet is beëindigd per 09 december 2019
+      Uw recht op reparatie-/verwijderopdracht natte cel en toilet (vóór 01-01-2022) is beëindigd per 09 december 2019
     </p>
     
     ",
@@ -2377,7 +2377,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Welzorg",
-      "title": "Reparatie-/verwijderopdracht natte cel en toilet",
+      "title": "Reparatie-/verwijderopdracht natte cel en toilet (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2019-04-15",
@@ -2418,9 +2418,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-04-15",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 14 april 2019.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op hulp bij het huishouden (vóór 01-01-2022) per 15 april 2019.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2432,7 +2432,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-04-14",
           "description": "<p>
-        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2445,7 +2445,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-08",
           "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2458,7 +2458,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-08",
           "description": "<p>
-      Uw recht op hulp bij het huishouden is beëindigd per 08 maart 2020
+      Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 08 maart 2020
     </p>
     
     ",
@@ -2471,7 +2471,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Emile Thuiszorg",
-      "title": "Hulp bij het huishouden",
+      "title": "Hulp bij het huishouden (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2019-03-11",
@@ -2512,9 +2512,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-11",
           "description": "<p>
-          U heeft recht op dagbesteding per 09 maart 2019.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op dagbesteding (vóór 01-01-2022) per 11 maart 2019.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2526,7 +2526,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-09",
           "description": "<p>
-        Amstelring is gestart met het leveren van dagbesteding.
+        Amstelring is gestart met het leveren van dagbesteding (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2539,7 +2539,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-08",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2552,7 +2552,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-08",
           "description": "<p>
-      Uw recht op dagbesteding is beëindigd per 08 maart 2020
+      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 08 maart 2020
     </p>
     
     ",
@@ -2565,7 +2565,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Dagbesteding",
+      "title": "Dagbesteding (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2019-03-11",
@@ -2606,9 +2606,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-11",
           "description": "<p>
-          U heeft recht op aanvullende individuele ondersteuning per 09 maart 2019.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op aanvullende individuele ondersteuning (vóór 01-01-2022) per 11 maart 2019.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2620,7 +2620,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-09",
           "description": "<p>
-        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2633,7 +2633,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-08",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2646,7 +2646,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-03-08",
           "description": "<p>
-      Uw recht op aanvullende individuele ondersteuning is beëindigd per 08 maart 2020
+      Uw recht op aanvullende individuele ondersteuning (vóór 01-01-2022) is beëindigd per 08 maart 2020
     </p>
     
     ",
@@ -2659,7 +2659,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Aanvullende individuele ondersteuning",
+      "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2018-11-29",
@@ -2700,9 +2700,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-11-29",
           "description": "<p>
-          U heeft recht op aanvullende individuele ondersteuning per 28 november 2018.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op aanvullende individuele ondersteuning (vóór 01-01-2022) per 29 november 2018.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2714,7 +2714,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-11-28",
           "description": "<p>
-        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2727,7 +2727,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-08",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2740,7 +2740,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-08",
           "description": "<p>
-      Uw recht op aanvullende individuele ondersteuning is beëindigd per 08 maart 2019
+      Uw recht op aanvullende individuele ondersteuning (vóór 01-01-2022) is beëindigd per 08 maart 2019
     </p>
     
     ",
@@ -2753,7 +2753,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Aanvullende individuele ondersteuning",
+      "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2018-12-27",
@@ -2794,9 +2794,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-12-27",
           "description": "<p>
-          U heeft recht op een woonruimteaanpassing met doc 4 per 24 oktober 2018.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een woonruimteaanpassing met doc 4 (vóór 01-01-2022) per 27 december 2018.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2847,7 +2847,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Welzorg",
-      "title": "Woonruimteaanpassing met doc 4",
+      "title": "Woonruimteaanpassing met doc 4 (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2018-04-25",
@@ -2888,9 +2888,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-04-25",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 14 april 2018.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op hulp bij het huishouden (vóór 01-01-2022) per 25 april 2018.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2902,7 +2902,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-04-14",
           "description": "<p>
-        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -2915,7 +2915,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-04-13",
           "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -2928,7 +2928,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-04-13",
           "description": "<p>
-      Uw recht op hulp bij het huishouden is beëindigd per 13 april 2019
+      Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 13 april 2019
     </p>
     
     ",
@@ -2941,7 +2941,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Emile Thuiszorg",
-      "title": "Hulp bij het huishouden",
+      "title": "Hulp bij het huishouden (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2018-04-19",
@@ -2982,9 +2982,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-04-19",
           "description": "<p>
-          U heeft recht op dagbesteding per 09 maart 2018.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op dagbesteding (vóór 01-01-2022) per 19 april 2018.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -2996,7 +2996,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-03-09",
           "description": "<p>
-        Amstelring is gestart met het leveren van dagbesteding.
+        Amstelring is gestart met het leveren van dagbesteding (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -3009,7 +3009,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-08",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -3022,7 +3022,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2019-03-08",
           "description": "<p>
-      Uw recht op dagbesteding is beëindigd per 08 maart 2019
+      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 08 maart 2019
     </p>
     
     ",
@@ -3035,7 +3035,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Dagbesteding",
+      "title": "Dagbesteding (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2017-11-24",
@@ -3076,9 +3076,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-11-24",
           "description": "<p>
-          U heeft recht op aanvullende individuele ondersteuning per 24 november 2017.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op aanvullende individuele ondersteuning (vóór 01-01-2022) per 24 november 2017.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3090,7 +3090,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-11-24",
           "description": "<p>
-        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning.
+        Amstelring is gestart met het leveren van aanvullende individuele ondersteuning (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -3103,7 +3103,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-11-23",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning
+            Amstelring heeft aan ons doorgegeven dat u geen aanvullende individuele ondersteuning (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -3116,7 +3116,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-11-23",
           "description": "<p>
-      Uw recht op aanvullende individuele ondersteuning is beëindigd per 23 november 2018
+      Uw recht op aanvullende individuele ondersteuning (vóór 01-01-2022) is beëindigd per 23 november 2018
     </p>
     
     ",
@@ -3129,7 +3129,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Aanvullende individuele ondersteuning",
+      "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2017-06-01",
@@ -3170,9 +3170,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01",
           "description": "<p>
-          U heeft recht op hulp bij het huishouden per 01 juni 2017.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op hulp bij het huishouden (vóór 01-01-2022) per 01 juni 2017.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3184,7 +3184,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01",
           "description": "<p>
-        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden.
+        Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -3197,7 +3197,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-04-13",
           "description": "<p>
-            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden
+            Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -3210,7 +3210,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-04-13",
           "description": "<p>
-      Uw recht op hulp bij het huishouden is beëindigd per 13 april 2018
+      Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 13 april 2018
     </p>
     
     ",
@@ -3223,7 +3223,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Emile Thuiszorg",
-      "title": "Hulp bij het huishouden",
+      "title": "Hulp bij het huishouden (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2017-06-01",
@@ -3264,9 +3264,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01",
           "description": "<p>
-          U heeft recht op dagbesteding per 01 juni 2017.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op dagbesteding (vóór 01-01-2022) per 01 juni 2017.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3278,7 +3278,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01",
           "description": "<p>
-        Amstelring is gestart met het leveren van dagbesteding.
+        Amstelring is gestart met het leveren van dagbesteding (vóór 01-01-2022).
       </p>
       ",
           "documents": [],
@@ -3291,7 +3291,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-03-08",
           "description": "<p>
-            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding
+            Amstelring heeft aan ons doorgegeven dat u geen dagbesteding (vóór 01-01-2022)
         meer krijgt.
       </p>",
           "documents": [],
@@ -3304,7 +3304,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2018-03-08",
           "description": "<p>
-      Uw recht op dagbesteding is beëindigd per 08 maart 2018
+      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 08 maart 2018
     </p>
     
     ",
@@ -3317,7 +3317,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Amstelring",
-      "title": "Dagbesteding",
+      "title": "Dagbesteding (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2014-09-09",
@@ -3358,9 +3358,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2014-09-09",
           "description": "<p>
-          U heeft recht op een elektrische hulpaandrijving voor rolstoel per 08 september 2014.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) per 09 september 2014.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3372,7 +3372,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01T00:00:00",
           "description": "<p>
-        De gemeente heeft opdracht gegeven aan Harting-Bank om een elektrische hulpaandrijving voor rolstoel aan u te leveren.
+        De gemeente heeft opdracht gegeven aan Harting-Bank om een elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) aan u te leveren.
       </p>",
           "documents": [],
           "id": "status-step-4",
@@ -3384,7 +3384,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01",
           "description": "<p>
-        Harting-Bank heeft aan ons doorgegeven dat een elektrische hulpaandrijving voor rolstoel bij u is afgeleverd.
+        Harting-Bank heeft aan ons doorgegeven dat een elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) bij u is afgeleverd.
       </p>
       ",
           "documents": [],
@@ -3397,7 +3397,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-12-20",
           "description": "<p>
-      Uw recht op elektrische hulpaandrijving voor rolstoel is beëindigd per 20 december 2022
+      Uw recht op elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) is beëindigd per 20 december 2022
     </p>
     
     ",
@@ -3410,7 +3410,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Harting-Bank",
-      "title": "Elektrische hulpaandrijving voor rolstoel",
+      "title": "Elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2014-09-11",
@@ -3451,9 +3451,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2014-09-11",
           "description": "<p>
-          U heeft recht op een woonruimteaanpassing 3 per 08 september 2014.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een woonruimteaanpassing 3 (vóór 01-01-2022) per 11 september 2014.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3504,7 +3504,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Gebr Koenen B.V.",
-      "title": "Woonruimteaanpassing 3",
+      "title": "Woonruimteaanpassing 3 (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2013-12-09",
@@ -3545,9 +3545,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2013-12-09",
           "description": "<p>
-          U heeft recht op een woonruimteaanpassing met doc 2 per 05 december 2013.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een woonruimteaanpassing met doc 2 (vóór 01-01-2022) per 09 december 2013.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3598,7 +3598,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Gebr Koenen B.V.",
-      "title": "Woonruimteaanpassing met doc 2",
+      "title": "Woonruimteaanpassing met doc 2 (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2012-10-05",
@@ -3639,9 +3639,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2012-10-05",
           "description": "<p>
-          U heeft recht op een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) per 05 oktober 2012.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) per 05 oktober 2012.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3653,7 +3653,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01T00:00:00",
           "description": "<p>
-        De gemeente heeft opdracht gegeven aan Harting-Bank om een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) aan u te leveren.
+        De gemeente heeft opdracht gegeven aan Harting-Bank om een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) aan u te leveren.
       </p>",
           "documents": [],
           "id": "status-step-4",
@@ -3665,7 +3665,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2017-06-01",
           "description": "<p>
-        Harting-Bank heeft aan ons doorgegeven dat een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) bij u is afgeleverd.
+        Harting-Bank heeft aan ons doorgegeven dat een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) bij u is afgeleverd.
       </p>
       ",
           "documents": [],
@@ -3678,7 +3678,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2020-06-09",
           "description": "<p>
-      Uw recht op douche-/toiletstoel (verrijdb/kantelb/ind aangep.) is beëindigd per 09 juni 2020
+      Uw recht op douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) is beëindigd per 09 juni 2020
     </p>
     
     ",
@@ -3691,7 +3691,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Harting-Bank",
-      "title": "Douche-/toiletstoel (verrijdb/kantelb/ind aangep.)",
+      "title": "Douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022)",
     },
     {
       "dateDescision": "2012-08-07",
@@ -3732,9 +3732,9 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2012-08-07",
           "description": "<p>
-          U heeft recht op kamer tot kamer vervoer per 07 augustus 2012.
-        </p>
-        <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
+          U heeft recht op kamer tot kamer vervoer (nog iets) (vóór 01-01-2022) per 07 augustus 2012.
+      </p>
+      <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
@@ -3746,7 +3746,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2022-07-31",
           "description": "<p>
-      Uw recht op kamer tot kamer vervoer is beëindigd per 31 juli 2022
+      Uw recht op kamer tot kamer vervoer (nog iets) (vóór 01-01-2022) is beëindigd per 31 juli 2022
     </p>
     
     ",
@@ -3759,7 +3759,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Transvision",
-      "title": "Kamer tot kamer vervoer",
+      "title": "Kamer tot kamer vervoer (nog iets) (vóór 01-01-2022)",
     },
   ],
   "status": "OK",
