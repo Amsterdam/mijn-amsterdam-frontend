@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { isBeforeToday } from './zorgned-helpers';
+import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 
 describe('zorgned helpers', () => {
   test('isBeforeToday', () => {

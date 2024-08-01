@@ -1,9 +1,9 @@
 import { parseISO } from 'date-fns';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
+import { isBeforeToday } from './status-line-items/wmo-generic';
 import {
   BESCHIKTPRODUCT_RESULTAAT,
   DATE_END_NOT_OLDER_THAN,
@@ -11,7 +11,6 @@ import {
   PRODUCTS_WITH_DELIVERY,
   REGELING_IDENTIFICATIE,
 } from './wmo-config-and-types';
-import { isBeforeToday } from '../zorgned/zorgned-helpers';
 
 function isProductWithDelivery(
   wmoProduct: Pick<

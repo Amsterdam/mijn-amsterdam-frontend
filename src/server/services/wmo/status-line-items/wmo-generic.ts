@@ -1,15 +1,16 @@
 import isAfter from 'date-fns/isAfter';
+import isSameDay from 'date-fns/isSameDay';
 import parseISO from 'date-fns/parseISO';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import {
+  defaultDateFormat,
+  isDateInPast,
+} from '../../../../universal/helpers/date';
 import { GenericDocument } from '../../../../universal/types';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-config-and-types';
-import {
-  isBeforeToday,
-  isServiceDeliveryStarted,
-} from '../../zorgned/zorgned-helpers';
 import {
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
@@ -23,6 +24,14 @@ export function getDocumentDecisionDate(documents: GenericDocument[]) {
       document.title.startsWith(DOCUMENT_TITLE_BESLUIT_STARTS_WITH)
     )?.datePublished ?? null
   );
+}
+
+function getDecisionDate(aanvraag: ZorgnedAanvraagTransformed) {
+  const decisionDate = isDocumentDecisionDateActive(aanvraag.datumAanvraag)
+    ? getDocumentDecisionDate(aanvraag.documenten)
+    : aanvraag.datumBesluit;
+
+  return decisionDate ? defaultDateFormat(decisionDate) : null;
 }
 
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
@@ -41,6 +50,16 @@ export function hasMeerInformatieNodig(aanvraag: ZorgnedAanvraagTransformed) {
 
 export function isAfterWCAGValidDocumentsDate(date: string) {
   return isAfter(parseISO(date), MINIMUM_REQUEST_DATE_FOR_DOCUMENTS);
+}
+
+// TODO: Determine if there are any other conditions that can be used.
+// For example we might want to enable the document decision date based on a fixed date.
+// It's unknown right now if all the existing data (documents) adhere to the updated document names.
+function isDocumentDecisionDateActive(datumAanvraag: string) {
+  return (
+    isAfterWCAGValidDocumentsDate(datumAanvraag) &&
+    FeatureToggle.zorgnedDocumentDecisionDateActive
+  );
 }
 
 export function decisionParagraph(aanvraag: ZorgnedAanvraagTransformed) {
@@ -127,42 +146,71 @@ export function getTransformerConfigBesluit(
 ): ZorgnedStatusLineItemTransformerConfig {
   return {
     status: 'Besluit',
-    datePublished: (aanvraag) =>
-      (isAfterWCAGValidDocumentsDate(aanvraag.datumAanvraag)
-        ? getDocumentDecisionDate(aanvraag.documenten)
-        : aanvraag.datumBesluit) ?? '',
+    datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
     isChecked: (stepIndex, aanvraag) => !!aanvraag.resultaat,
     isActive: isActive,
     description: (aanvraag) =>
       `<p>
-          U heeft recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${
-            aanvraag.datumIngangGeldigheid
-              ? defaultDateFormat(aanvraag.datumIngangGeldigheid)
-              : ''
-          }.
-        </p>
-        ${decisionParagraph(aanvraag)}
+          U heeft recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDate(aanvraag)}.
+      </p>
+      ${decisionParagraph(aanvraag)}
       `,
   };
+}
+
+export function isBeforeToday(dateStr: string | null, compareDate: Date) {
+  if (!dateStr) {
+    return false;
+  }
+  return isSameDay(parseISO(dateStr), compareDate)
+    ? false
+    : isDateInPast(dateStr, compareDate);
+}
+
+export function isServiceDeliveryStarted(
+  sourceData: ZorgnedAanvraagTransformed,
+  compareDate: Date
+) {
+  return isBeforeToday(sourceData.datumBeginLevering, compareDate);
+}
+
+export function isServiceDeliveryStopped(
+  sourceData: ZorgnedAanvraagTransformed,
+  compareDate: Date
+) {
+  return isBeforeToday(sourceData.datumEindeLevering, compareDate);
+}
+
+export function isServiceDeliveryActive(
+  sourceData: ZorgnedAanvraagTransformed,
+  compareDate: Date
+) {
+  return (
+    sourceData.isActueel &&
+    isServiceDeliveryStarted(sourceData, compareDate) &&
+    !isServiceDeliveryStopped(sourceData, compareDate) &&
+    !isBeforeToday(sourceData.datumEindeGeldigheid, compareDate)
+  );
 }
 
 export function isDecisionActive(
   stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed
 ) {
-  const besluitDocDate = getDocumentDecisionDate(aanvraag.documenten);
-
   if (aanvraag.resultaat === 'toegewezen') {
-    return !!(isAfterWCAGValidDocumentsDate(aanvraag.datumAanvraag)
-      ? besluitDocDate
-      : aanvraag.resultaat);
+    return (
+      !!(isDocumentDecisionDateActive(aanvraag.datumAanvraag)
+        ? getDocumentDecisionDate(aanvraag.documenten)
+        : aanvraag.resultaat) &&
+      !isBeforeToday(aanvraag.datumEindeGeldigheid, new Date())
+    );
   } else if (aanvraag.resultaat === 'afgewezen') {
     return true;
   }
   return false;
 }
 
-export function isServiceDeliveryDecisionActive(
+export function isDecisionWithDeliveryActive(
   stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date

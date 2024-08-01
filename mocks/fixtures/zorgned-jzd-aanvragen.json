@@ -98,7 +98,7 @@
           },
           {
             "documentidentificatie": "B73199",
-            "omschrijving": "WRA beschikking Definitief",
+            "omschrijving": "Besluit: WRA beschikking Definitief",
             "datumDefinitief": "2023-05-17T00:00:00",
             "zaakidentificatie": null
           }
@@ -130,7 +130,7 @@
                 "identificatie": "740",
                 "productCode": null,
                 "productsoortCode": "AOV",
-                "omschrijving": "kamer tot kamer vervoer"
+                "omschrijving": "kamer tot kamer vervoer (nog iets) (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "12",
@@ -196,7 +196,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing met doc 2"
+                "omschrijving": "woonruimteaanpassing met doc 2 (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -260,7 +260,7 @@
         "documenten": [
           {
             "documentidentificatie": "B137364",
-            "omschrijving": "WRA beschikking Definitief",
+            "omschrijving": "Besluit: WRA beschikking Definitief",
             "datumDefinitief": "2013-12-09T00:00:00",
             "zaakidentificatie": null
           }
@@ -292,7 +292,7 @@
                 "identificatie": "12545",
                 "productCode": "12545",
                 "productsoortCode": "OVE",
-                "omschrijving": "elektrische hulpaandrijving voor rolstoel"
+                "omschrijving": "elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "12",
@@ -387,7 +387,7 @@
         "documenten": [
           {
             "documentidentificatie": "B195848",
-            "omschrijving": "New Toekenning hulpmiddel zonder keuze",
+            "omschrijving": "Besluit: New Toekenning hulpmiddel zonder keuze",
             "datumDefinitief": "2014-09-10T00:00:00",
             "zaakidentificatie": null
           }
@@ -419,7 +419,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing 3"
+                "omschrijving": "woonruimteaanpassing 3 (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -483,7 +483,7 @@
         "documenten": [
           {
             "documentidentificatie": "B196206",
-            "omschrijving": "WRA beschikking Definitief",
+            "omschrijving": "Besluit: WRA beschikking Definitief",
             "datumDefinitief": "2014-09-11T00:00:00",
             "zaakidentificatie": null
           }
@@ -515,7 +515,7 @@
                 "identificatie": "13929",
                 "productCode": "13929",
                 "productsoortCode": "RWD",
-                "omschrijving": "douche-/toiletstoel (verrijdb/kantelb/ind aangep.)"
+                "omschrijving": "douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -638,7 +638,7 @@
                 "identificatie": "01A01",
                 "productCode": "01A01",
                 "productsoortCode": "WMH",
-                "omschrijving": "hulp bij het huishouden"
+                "omschrijving": "hulp bij het huishouden (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "01",
@@ -733,7 +733,7 @@
                 "identificatie": "07A02",
                 "productCode": "07A02",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding"
+                "omschrijving": "dagbesteding (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "07",
@@ -825,7 +825,7 @@
                 "identificatie": "02A02",
                 "productCode": "02A02",
                 "productsoortCode": "AWBG",
-                "omschrijving": "aanvullende individuele ondersteuning"
+                "omschrijving": "aanvullende individuele ondersteuning (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "02",
@@ -917,7 +917,7 @@
                 "identificatie": "07A02",
                 "productCode": "07A02",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding"
+                "omschrijving": "dagbesteding (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "07",
@@ -1009,7 +1009,7 @@
                 "identificatie": "01A01",
                 "productCode": "01A01",
                 "productsoortCode": "WMH",
-                "omschrijving": "hulp bij het huishouden"
+                "omschrijving": "hulp bij het huishouden (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "01",
@@ -1101,7 +1101,7 @@
                 "identificatie": "WRA",
                 "productCode": null,
                 "productsoortCode": "WRA",
-                "omschrijving": "woonruimteaanpassing met doc 4"
+                "omschrijving": "woonruimteaanpassing met doc 4 (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -1165,7 +1165,7 @@
         "documenten": [
           {
             "documentidentificatie": "B538689",
-            "omschrijving": "WRA beschikking Definitief",
+            "omschrijving": "Besluit: WRA beschikking Definitief",
             "datumDefinitief": "2018-12-27T00:00:00",
             "zaakidentificatie": null
           }
@@ -1197,7 +1197,7 @@
                 "identificatie": "02A02",
                 "productCode": "02A02",
                 "productsoortCode": "AWBG",
-                "omschrijving": "aanvullende individuele ondersteuning"
+                "omschrijving": "aanvullende individuele ondersteuning (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "02",
@@ -1289,7 +1289,7 @@
                 "identificatie": "07A02",
                 "productCode": "07A02",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding"
+                "omschrijving": "dagbesteding (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "07",
@@ -1381,7 +1381,7 @@
                 "identificatie": "02A02",
                 "productCode": "02A02",
                 "productsoortCode": "AWBG",
-                "omschrijving": "aanvullende individuele ondersteuning"
+                "omschrijving": "aanvullende individuele ondersteuning (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "02",
@@ -1473,7 +1473,7 @@
                 "identificatie": "01A01",
                 "productCode": "01A01",
                 "productsoortCode": "WMH",
-                "omschrijving": "hulp bij het huishouden"
+                "omschrijving": "hulp bij het huishouden (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "01",
@@ -1565,7 +1565,7 @@
                 "identificatie": "13W82",
                 "productCode": "13W82",
                 "productsoortCode": "WRA3",
-                "omschrijving": "reparatie-/verwijderopdracht natte cel en toilet"
+                "omschrijving": "reparatie-/verwijderopdracht natte cel en toilet (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -1660,7 +1660,7 @@
                 "identificatie": "07A02",
                 "productCode": "07A02",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding"
+                "omschrijving": "dagbesteding (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "07",
@@ -1730,7 +1730,7 @@
         "documenten": [
           {
             "documentidentificatie": "B628498",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2020-03-12T16:12:23",
             "zaakidentificatie": null
           }
@@ -1762,7 +1762,7 @@
                 "identificatie": "02A02",
                 "productCode": "02A02",
                 "productsoortCode": "AWBG",
-                "omschrijving": "aanvullende individuele ondersteuning"
+                "omschrijving": "aanvullende individuele ondersteuning (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "02",
@@ -1832,7 +1832,7 @@
         "documenten": [
           {
             "documentidentificatie": "B628499",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2020-03-12T16:17:07",
             "zaakidentificatie": null
           }
@@ -1864,7 +1864,7 @@
                 "identificatie": "01A01",
                 "productCode": "01A01",
                 "productsoortCode": "WMH",
-                "omschrijving": "hulp bij het huishouden"
+                "omschrijving": "hulp bij het huishouden  (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "01",
@@ -1934,7 +1934,7 @@
         "documenten": [
           {
             "documentidentificatie": "B628500",
-            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2020-03-12T16:16:35",
             "zaakidentificatie": null
           }
@@ -1966,7 +1966,7 @@
                 "identificatie": "13W82",
                 "productCode": "13W82",
                 "productsoortCode": "WRA3",
-                "omschrijving": "reparatie-/verwijderopdracht natte cel en toilet"
+                "omschrijving": "reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -2052,7 +2052,7 @@
                 "identificatie": "13928",
                 "productCode": "13928",
                 "productsoortCode": "RWD",
-                "omschrijving": "douche-/toiletstoel zelfrijder"
+                "omschrijving": "douche-/toiletstoel zelfrijder  (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -2116,7 +2116,7 @@
         "documenten": [
           {
             "documentidentificatie": "B650917",
-            "omschrijving": "New Toekenning hulpmiddel zonder keuze",
+            "omschrijving": "Besluit: New Toekenning hulpmiddel zonder keuze",
             "datumDefinitief": "2020-06-18T14:20:12",
             "zaakidentificatie": null
           }
@@ -2148,7 +2148,7 @@
                 "identificatie": "07A02",
                 "productCode": "07A02",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding"
+                "omschrijving": "dagbesteding  (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "07",
@@ -2218,7 +2218,7 @@
         "documenten": [
           {
             "documentidentificatie": "B648401",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2020-06-16T15:20:47",
             "zaakidentificatie": null
           }
@@ -2250,7 +2250,7 @@
                 "identificatie": "13W71",
                 "productCode": "13W71",
                 "productsoortCode": "WRA3",
-                "omschrijving": "antislipvloer/behandeling badkamer"
+                "omschrijving": "antislipvloer/behandeling badkamer  (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -2314,7 +2314,7 @@
         "documenten": [
           {
             "documentidentificatie": "B691905",
-            "omschrijving": "Opstellen beschikking grote WRA",
+            "omschrijving": "Besluit: Opstellen beschikking grote WRA",
             "datumDefinitief": "2020-12-07T07:01:05",
             "zaakidentificatie": null
           }
@@ -2346,7 +2346,7 @@
                 "identificatie": "02A02",
                 "productCode": "02A02",
                 "productsoortCode": "AWBG",
-                "omschrijving": "aanvullende individuele ondersteuning"
+                "omschrijving": "aanvullende individuele ondersteuning (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "02",
@@ -2413,7 +2413,7 @@
         "documenten": [
           {
             "documentidentificatie": "B700835",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-01-09T17:26:23",
             "zaakidentificatie": null
           }
@@ -2445,7 +2445,7 @@
                 "identificatie": "01A01",
                 "productCode": "01A01",
                 "productsoortCode": "WMH",
-                "omschrijving": "hulp bij het huishouden"
+                "omschrijving": "hulp bij het huishouden (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "01",
@@ -2512,7 +2512,7 @@
         "documenten": [
           {
             "documentidentificatie": "B700836",
-            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2021-01-10T01:50:21",
             "zaakidentificatie": null
           }
@@ -2544,7 +2544,7 @@
                 "identificatie": "07A02",
                 "productCode": "07A02",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding"
+                "omschrijving": "dagbesteding (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "07",
@@ -2611,7 +2611,7 @@
         "documenten": [
           {
             "documentidentificatie": "B700837",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-01-09T23:06:12",
             "zaakidentificatie": null
           }
@@ -2643,7 +2643,7 @@
                 "identificatie": "07A02",
                 "productCode": "07A02",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding"
+                "omschrijving": "dagbesteding (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "07",
@@ -2710,7 +2710,7 @@
         "documenten": [
           {
             "documentidentificatie": "B739256",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-03-11T15:26:28",
             "zaakidentificatie": null
           }
@@ -2742,7 +2742,7 @@
                 "identificatie": "02A02",
                 "productCode": "02A02",
                 "productsoortCode": "AWBG",
-                "omschrijving": "aanvullende individuele ondersteuning"
+                "omschrijving": "aanvullende individuele ondersteuning (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "02",
@@ -2809,7 +2809,7 @@
         "documenten": [
           {
             "documentidentificatie": "B739257",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-03-11T15:29:20",
             "zaakidentificatie": null
           }
@@ -2841,7 +2841,7 @@
                 "identificatie": "01A01",
                 "productCode": "01A01",
                 "productsoortCode": "WMH",
-                "omschrijving": "hulp bij het huishouden"
+                "omschrijving": "hulp bij het huishouden (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "01",
@@ -2908,7 +2908,7 @@
         "documenten": [
           {
             "documentidentificatie": "B739258",
-            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2021-03-11T15:24:06",
             "zaakidentificatie": null
           }
@@ -2940,7 +2940,7 @@
                 "identificatie": "13W84",
                 "productCode": "13W84",
                 "productsoortCode": "WRA3",
-                "omschrijving": "niet standaard opdracht natte cel en toilet"
+                "omschrijving": "niet standaard opdracht natte cel en toilet (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -3004,7 +3004,7 @@
         "documenten": [
           {
             "documentidentificatie": "B792435",
-            "omschrijving": "Opstellen beschikking grote WRA",
+            "omschrijving": "Besluit: Opstellen beschikking grote WRA",
             "datumDefinitief": "2021-10-22T16:50:57",
             "zaakidentificatie": null
           }
@@ -3036,7 +3036,7 @@
                 "identificatie": "13W32",
                 "productCode": "13W32",
                 "productsoortCode": "WRA2",
-                "omschrijving": "reparatie-/verwijderopdracht toegang"
+                "omschrijving": "reparatie-/verwijderopdracht toegang (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -3128,7 +3128,7 @@
                 "identificatie": "13W20",
                 "productCode": "13W20",
                 "productsoortCode": "WRA2",
-                "omschrijving": "handzender(s) voor deurautomaat"
+                "omschrijving": "handzender(s) voor deurautomaat (vóór 01-01-2022)"
               },
               "productCategorie": {
                 "code": "13",
@@ -3351,7 +3351,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2258816",
-            "omschrijving": "Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2022-03-14T16:12:12",
             "zaakidentificatie": null
           }
@@ -3450,7 +3450,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2258817",
-            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2022-03-14T16:11:29",
             "zaakidentificatie": null
           }
@@ -3546,7 +3546,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2268406",
-            "omschrijving": "Opstellen beschikking grote WRA",
+            "omschrijving": "Besluit: Opstellen beschikking grote WRA",
             "datumDefinitief": "2022-04-19T13:16:44",
             "zaakidentificatie": null
           }
@@ -3578,7 +3578,7 @@
                 "identificatie": "740",
                 "productCode": null,
                 "productsoortCode": "AOV",
-                "omschrijving": "kamer tot kamer vervoer"
+                "omschrijving": "kamer tot kamer vervoer (iets?)"
               },
               "productCategorie": {
                 "code": "12",
@@ -3644,7 +3644,7 @@
                 "identificatie": "740",
                 "productCode": null,
                 "productsoortCode": "AOV",
-                "omschrijving": "kamer tot kamer vervoer"
+                "omschrijving": "kamer tot kamer vervoer (ook iets?)"
               },
               "productCategorie": {
                 "code": "12",
@@ -3685,7 +3685,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2391009",
-            "omschrijving": "AOV Beschikking positief",
+            "omschrijving": "Besluit: AOV Beschikking positief",
             "datumDefinitief": "2022-10-19T14:27:42.643",
             "zaakidentificatie": null
           }
@@ -3784,7 +3784,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2510020",
-            "omschrijving": "New Toekenning hulpmiddel zonder keuze",
+            "omschrijving": "Besluit: New Toekenning hulpmiddel zonder keuze",
             "datumDefinitief": "2023-03-02T11:17:08.293",
             "zaakidentificatie": null
           }
@@ -3969,7 +3969,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2516440",
-            "omschrijving": "Opstellen beschikking wijkzorg Hbh",
+            "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2023-03-16T15:56:11.41",
             "zaakidentificatie": null
           }

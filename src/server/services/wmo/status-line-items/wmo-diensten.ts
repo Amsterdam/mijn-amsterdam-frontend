@@ -4,17 +4,15 @@ import {
 } from '../../zorgned/zorgned-config-and-types';
 
 import {
-  isBeforeToday,
-  isServiceDeliveryActive,
-  isServiceDeliveryStarted,
-  isServiceDeliveryStopped,
-} from '../../zorgned/zorgned-helpers';
-import {
   AANVRAAG,
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
+  isBeforeToday,
   isDecisionActive,
+  isServiceDeliveryActive,
+  isServiceDeliveryStarted,
+  isServiceDeliveryStopped,
   MEER_INFORMATIE,
 } from './wmo-generic';
 

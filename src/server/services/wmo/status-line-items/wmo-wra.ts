@@ -1,17 +1,13 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
-
-import {
-  isBeforeToday,
-  isServiceDeliveryActive,
-  isServiceDeliveryStarted,
-} from '../../zorgned/zorgned-helpers';
 import {
   AANVRAAG,
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isServiceDeliveryDecisionActive,
+  isBeforeToday,
+  isDecisionWithDeliveryActive,
+  isServiceDeliveryActive,
+  isServiceDeliveryStarted,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -19,7 +15,7 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  getTransformerConfigBesluit(isServiceDeliveryDecisionActive, true),
+  getTransformerConfigBesluit(isDecisionWithDeliveryActive, true),
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
