@@ -22,8 +22,9 @@ function isActive(
   today: Date
 ) {
   return (
-    isDecisionActive(stepIndex, aanvraag) &&
-    !isServiceDeliveryStarted(aanvraag, today)
+    aanvraag.resultaat === 'afgewezen' ||
+    (isDecisionActive(stepIndex, aanvraag) &&
+      !isServiceDeliveryStarted(aanvraag, today))
   );
 }
 

@@ -51,8 +51,6 @@ function transformVoorzieningenForFrontend(
   for (const aanvraag of aanvragen) {
     const id = aanvraag.id;
 
-    if (aanvraag.id.includes('1294388')) console.log(aanvraag);
-
     const lineItems = getStatusLineItems(
       'WMO',
       wmoStatusLineItemsConfig,
@@ -61,14 +59,11 @@ function transformVoorzieningenForFrontend(
       today
     );
 
-    if (!Array.isArray(lineItems) || !lineItems.length) {
-      continue;
-    }
+    if (lineItems?.length) {
+      const route = generatePath(AppRoutes['ZORG/VOORZIENING'], {
+        id,
+      });
 
-    const route = generatePath(AppRoutes['ZORG/VOORZIENING'], {
-      id,
-    });
-    if (lineItems) {
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),

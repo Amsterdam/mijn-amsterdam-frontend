@@ -52,7 +52,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "leveringsVorm": "",
     "productIdentificatie": "740",
     "productsoortCode": "AOV",
-    "resultaat": "toegewezen",
+    "resultaat": "afgewezen",
     "titel": "kamer tot kamer vervoer (nog iets) (vóór 01-01-2022)",
   },
   {
@@ -79,7 +79,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "leveringsVorm": "ZIN",
     "productIdentificatie": "WRA",
     "productsoortCode": "WRA",
-    "resultaat": "toegewezen",
+    "resultaat": "afgewezen",
     "titel": "woonruimteaanpassing met doc 2 (vóór 01-01-2022)",
   },
   {

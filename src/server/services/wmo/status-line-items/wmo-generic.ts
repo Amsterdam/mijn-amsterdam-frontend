@@ -165,7 +165,7 @@ export function getTransformerConfigBesluit(
     isActive: isActive,
     description: (aanvraag) =>
       `<p>
-          U heeft recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}.
+          ${aanvraag.resultaat === 'toegewezen' ? `U heeft recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}` : `U heeft geen recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel}`}.
       </p>
       ${decisionParagraph(aanvraag)}
       `,
@@ -230,8 +230,9 @@ export function isDecisionWithDeliveryActive(
   today: Date
 ) {
   return (
-    isDecisionActive(stepIndex, aanvraag) &&
-    !isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
-    !isServiceDeliveryStarted(aanvraag, today)
+    aanvraag.resultaat === 'afgewezen' ||
+    (isDecisionActive(stepIndex, aanvraag) &&
+      !isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
+      !isServiceDeliveryStarted(aanvraag, today))
   );
 }

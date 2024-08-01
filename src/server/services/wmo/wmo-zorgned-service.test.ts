@@ -74,10 +74,9 @@ describe('wmo-zorgned-service', () => {
       datumBeginLevering: '',
       productsoortCode: 'WRA',
       leveringsVorm: 'ZIN',
-    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
+    } as unknown as Parameters<typeof forTesting.isActueel>[0];
 
-    forTesting.assignIsActueel(aanvraag1);
-    expect(aanvraag1.isActueel).toBe(true);
+    expect(forTesting.isActueel(aanvraag1)).toBe(true);
 
     const aanvraag2 = {
       isActueel: false,
@@ -86,28 +85,23 @@ describe('wmo-zorgned-service', () => {
       datumBeginLevering: '2022-12-12',
       productsoortCode: 'WRA',
       leveringsVorm: 'ZIN',
-    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
+    } as unknown as Parameters<typeof forTesting.isActueel>[0];
 
-    forTesting.assignIsActueel(aanvraag2);
-    expect(aanvraag2.isActueel).toBe(false);
+    expect(forTesting.isActueel(aanvraag2)).toBe(false);
 
     const aanvraag3 = {
       isActueel: true,
       datumEindeGeldigheid: '2024-01-01',
-    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
+    } as unknown as Parameters<typeof forTesting.isActueel>[0];
 
-    forTesting.assignIsActueel(aanvraag3);
-
-    expect(aanvraag3.isActueel).toBe(true);
+    expect(forTesting.isActueel(aanvraag3)).toBe(true);
 
     const aanvraag4 = {
       productsoortCode: 'BLA',
       leveringsVorm: 'BLO',
-    } as unknown as Parameters<typeof forTesting.assignIsActueel>[0];
+    } as unknown as Parameters<typeof forTesting.isActueel>[0];
 
-    forTesting.assignIsActueel(aanvraag4);
-
-    expect(aanvraag4.isActueel).toBe(false);
+    expect(forTesting.isActueel(aanvraag4)).toBe(false);
   });
 
   it('should fetch voorzieningen', async () => {

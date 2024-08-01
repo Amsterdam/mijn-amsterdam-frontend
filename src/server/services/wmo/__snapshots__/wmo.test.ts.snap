@@ -1986,6 +1986,19 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "Opdracht gegeven",
         },
         {
+          "datePublished": "",
+          "description": "<p>
+        Welzorg heeft aan ons doorgegeven dat de
+        aanpassing aan uw woning is uitgevoerd.
+      </p>",
+          "documents": [],
+          "id": "status-step-5",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Aanpassing uitgevoerd",
+        },
+        {
           "datePublished": "2020-08-05",
           "description": "<p>
       Uw recht op reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022) is beëindigd per 05 augustus 2020
@@ -3511,7 +3524,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescisionFormatted": "09 december 2013",
       "dateEnd": null,
       "dateStart": "2013-12-05",
-      "decision": "Toegewezen",
+      "decision": "Afgewezen",
       "documents": [],
       "id": "2730893522",
       "isActual": true,
@@ -3520,7 +3533,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2730893522",
       },
-      "status": "Aanpassing uitgevoerd",
+      "status": "Besluit",
       "steps": [
         {
           "datePublished": "",
@@ -3545,56 +3558,16 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2013-12-09",
           "description": "<p>
-          U heeft recht op een woonruimteaanpassing met doc 2 (vóór 01-01-2022) per 09 december 2013.
+          U heeft geen recht op een woonruimteaanpassing met doc 2 (vóór 01-01-2022).
       </p>
       <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit",
-        },
-        {
-          "datePublished": "2013-12-09T00:00:00",
-          "description": "<p>
-        De gemeente heeft opdracht gegeven aan Gebr Koenen B.V. om de aanpassingen aan uw woning uit
-        te voeren.
-      </p>",
-          "documents": [],
-          "id": "status-step-4",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Opdracht gegeven",
-        },
-        {
-          "datePublished": "2014-01-28",
-          "description": "<p>
-        Gebr Koenen B.V. heeft aan ons doorgegeven dat de
-        aanpassing aan uw woning is uitgevoerd.
-      </p>",
-          "documents": [],
-          "id": "status-step-5",
           "isActive": true,
           "isChecked": true,
           "isVisible": true,
-          "status": "Aanpassing uitgevoerd",
-        },
-        {
-          "datePublished": "",
-          "description": "<p>
-      Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-    </p>
-    
-    ",
-          "documents": [],
-          "id": "status-step-6",
-          "isActive": false,
-          "isChecked": false,
-          "isVisible": true,
-          "status": "Einde recht",
+          "status": "Besluit",
         },
       ],
       "supplier": "Gebr Koenen B.V.",
@@ -3698,7 +3671,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDescisionFormatted": "07 augustus 2012",
       "dateEnd": "2022-07-31",
       "dateStart": "2012-08-07",
-      "decision": "Toegewezen",
+      "decision": "Afgewezen",
       "documents": [],
       "id": "4046397887",
       "isActual": false,
@@ -3707,7 +3680,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/4046397887",
       },
-      "status": "Einde recht",
+      "status": "Besluit",
       "steps": [
         {
           "datePublished": "",
@@ -3732,30 +3705,16 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "2012-08-07",
           "description": "<p>
-          U heeft recht op kamer tot kamer vervoer (nog iets) (vóór 01-01-2022) per 07 augustus 2012.
+          U heeft geen recht op kamer tot kamer vervoer (nog iets) (vóór 01-01-2022).
       </p>
       <p>In de brief leest u meer over dit besluit. Dit document is verstuurd per post.</p>
       ",
           "documents": [],
           "id": "status-step-3",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit",
-        },
-        {
-          "datePublished": "2022-07-31",
-          "description": "<p>
-      Uw recht op kamer tot kamer vervoer (nog iets) (vóór 01-01-2022) is beëindigd per 31 juli 2022
-    </p>
-    
-    ",
-          "documents": [],
-          "id": "status-step-4",
           "isActive": true,
           "isChecked": true,
           "isVisible": true,
-          "status": "Einde recht",
+          "status": "Besluit",
         },
       ],
       "supplier": "Transvision",

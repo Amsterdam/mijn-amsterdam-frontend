@@ -29,9 +29,7 @@ function isProductWithDelivery(
   return false;
 }
 
-export function assignIsActueel(
-  aanvraagTransformed: ZorgnedAanvraagTransformed
-) {
+export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   const isEOG = isBeforeToday(
     aanvraagTransformed.datumEindeGeldigheid,
     new Date()
@@ -55,7 +53,7 @@ export function assignIsActueel(
     isActueel = false;
   }
 
-  aanvraagTransformed.isActueel = isActueel;
+  return isActueel;
 }
 
 // If aanvraag was requested after a specific date we should only show them to the user if there are documents attached.
@@ -98,8 +96,10 @@ export async function fetchZorgnedAanvragenWMO(
       })
       .map((aanvraagTransformed) => {
         // Override isActueel for front-end.
-        assignIsActueel(aanvraagTransformed);
-        return aanvraagTransformed;
+        return {
+          ...aanvraagTransformed,
+          isActueel: isActueel(aanvraagTransformed),
+        };
       });
 
     return apiSuccessResult(aanvragenFiltered);
@@ -108,7 +108,7 @@ export async function fetchZorgnedAanvragenWMO(
 }
 
 export const forTesting = {
-  assignIsActueel,
+  isActueel,
   fetchZorgnedAanvragenWMO,
   isProductWithDelivery,
   shouldBeVisibleToUser,
