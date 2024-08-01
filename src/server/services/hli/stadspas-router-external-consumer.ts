@@ -18,10 +18,20 @@ import { requestData } from '../../helpers/source-api-request';
 import { apiKeyVerificationHandler } from '../../middleware';
 import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspasTransactions } from './stadspas';
-import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
-import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
+import {
+  fetchStadspasAanbiedingenTransactionsWithVerify,
+  fetchStadspasTransactions,
+} from './stadspas';
+import {
+  fetchStadspasAanbiedingenTransactions,
+  fetchStadspassenByAdministratienummer,
+} from './stadspas-gpass-service';
+import {
+  Stadspas,
+  StadspasAMSAPPFrontend,
+  StadspasBudget,
+} from './stadspas-types';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -211,6 +221,24 @@ routerPrivateNetwork.get(
   ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
   apiKeyVerificationHandler,
   sendStadspassenResponse
+);
+
+async function sendAanbiedingenTransactionsResponse(
+  req: Request<{ transactionsKeyEncrypted: string }>,
+  res: Response
+) {
+  const response = await fetchStadspasAanbiedingenTransactionsWithVerify(
+    res.locals.requestID,
+    req.params.transactionsKeyEncrypted
+  );
+
+  sendResponse(res, response);
+}
+
+routerPrivateNetwork.get(
+  ExternalConsumerEndpoints.private.STADSPAS_AANBIEDINGEN_TRANSACTIES,
+  apiKeyVerificationHandler,
+  sendAanbiedingenTransactionsResponse
 );
 
 /** Sends transformed budget transactions.

@@ -10,10 +10,17 @@ import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
+  fetchStadspasAanbiedingenTransactions,
   fetchStadspasBudgetTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
-import { StadspasBudget, StadspasFrontend } from './stadspas-types';
+import {
+  StadspasBudget,
+  StadspasFrontend,
+  StadspasBudgetTransaction,
+  StadspasAanbiedingenTransaction,
+  FetchStadspasTransactionsFn,
+} from './stadspas-types';
 
 export async function fetchStadspas(
   requestID: requestID,
@@ -57,47 +64,62 @@ export async function fetchStadspas(
   return stadspasResponse;
 }
 
-export async function fetchStadspasTransactions(
-  requestID: requestID,
-  transactionsKeyEncrypted: string,
-  budgetCode?: StadspasBudget['code'],
-  verifySessionId?: AuthProfileAndToken['profile']['sid']
-) {
-  let sessionID: string = '';
-  let administratienummer: string = '';
-  let passNumber: string = '';
+export const fetchStadspasTransactions = createTransactionFetchFn<
+  StadspasBudgetTransaction[]
+>(fetchStadspasBudgetTransactions);
 
-  try {
-    const payload = decrypt(transactionsKeyEncrypted).split(':');
+// RP TODO: Will this be the right type?
+export const fetchStadspasAanbiedingenTransactionsWithVerify =
+  createTransactionFetchFn<StadspasAanbiedingenTransaction[]>(
+    fetchStadspasAanbiedingenTransactions
+  );
+
+function createTransactionFetchFn<T>(
+  fetchTransactionFn: FetchStadspasTransactionsFn<T>
+) {
+  async function inner(
+    requestID: requestID,
+    transactionsKeyEncrypted: string,
+    budgetCode?: StadspasBudget['code'],
+    verifySessionId?: AuthProfileAndToken['profile']['sid']
+  ) {
+    let payload: string[];
+    try {
+      payload = decrypt(transactionsKeyEncrypted).split(':');
+    } catch (error) {
+      captureException(error);
+      return apiErrorResult(
+        'Bad request: Failed to decrypt transactions key',
+        null,
+        400
+      );
+    }
+
+    let sessionID = '';
+    let administratienummer = '';
+    let passNumber = '';
 
     if (verifySessionId) {
       [sessionID, administratienummer, passNumber] = payload;
+      if (sessionID !== verifySessionId) {
+        return apiErrorResult('Not authorized', null, 401);
+      }
     } else {
       [administratienummer, passNumber] = payload;
     }
-  } catch (error) {
-    captureException(error);
-    return apiErrorResult(
-      'Bad request: Failed to decrypt transactions key',
-      null,
-      400
+
+    if (!administratienummer || !passNumber) {
+      return apiErrorResult('Not authorized', null, 401);
+    }
+
+    return fetchTransactionFn(
+      requestID,
+      administratienummer,
+      parseInt(passNumber, 10),
+      budgetCode
     );
   }
-
-  if (
-    !administratienummer ||
-    !passNumber ||
-    (verifySessionId && sessionID !== verifySessionId)
-  ) {
-    return apiErrorResult('Not authorized', null, 401);
-  }
-
-  return fetchStadspasBudgetTransactions(
-    requestID,
-    administratienummer,
-    parseInt(passNumber, 10),
-    budgetCode
-  );
+  return inner;
 }
 
 export async function fetchStadspasNotifications(
