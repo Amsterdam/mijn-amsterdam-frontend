@@ -3,7 +3,7 @@ import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspassen } from './stadspas-gpass-service';
-import { fetchStadspasTransactions } from './stadspas';
+import { fetchStadspasBudgetTransactionsWithVerify } from './stadspas';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -376,7 +376,7 @@ describe('stadspas services', () => {
       `my-unique-session-id:0363000123-123:123123123`
     );
 
-    const response = await fetchStadspasTransactions(
+    const response = await fetchStadspasBudgetTransactionsWithVerify(
       'abc123',
       transactionsKeyEncrypted,
       undefined,
@@ -407,7 +407,7 @@ describe('stadspas services', () => {
       `another-session-id:0363000123-123:123123123`
     );
 
-    const response = await fetchStadspasTransactions(
+    const response = await fetchStadspasBudgetTransactionsWithVerify(
       'xyz098',
       transactionsKeyEncrypted,
       undefined,
@@ -425,7 +425,7 @@ describe('stadspas services', () => {
   });
 
   test('stadspas transacties bad encrypted key', async () => {
-    const response = await fetchStadspasTransactions(
+    const response = await fetchStadspasBudgetTransactionsWithVerify(
       'xyz098',
       'FOO.BAR.XYZ',
       undefined,

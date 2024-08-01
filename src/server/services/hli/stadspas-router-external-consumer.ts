@@ -21,7 +21,7 @@ import { fetchAdministratienummer } from './hli-zorgned-service';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   fetchStadspasAanbiedingenTransactionsWithVerify,
-  fetchStadspasTransactions,
+  fetchStadspasBudgetTransactionsWithVerify,
 } from './stadspas';
 import {
   fetchStadspasAanbiedingenTransactions,
@@ -251,7 +251,7 @@ async function sendBudgetTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasTransactions(
+  const response = await fetchStadspasBudgetTransactionsWithVerify(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     req.query?.budgetCode as StadspasBudget['code']
