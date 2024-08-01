@@ -64,9 +64,10 @@ export async function fetchStadspas(
   return stadspasResponse;
 }
 
-export const fetchStadspasTransactions = createTransactionFetchFn<
-  StadspasBudgetTransaction[]
->(fetchStadspasBudgetTransactions);
+export const fetchStadspasBudgetTransactionsWithVerify =
+  createTransactionFetchFn<StadspasBudgetTransaction[]>(
+    fetchStadspasBudgetTransactions
+  );
 
 // RP TODO: Will this be the right type?
 export const fetchStadspasAanbiedingenTransactionsWithVerify =
