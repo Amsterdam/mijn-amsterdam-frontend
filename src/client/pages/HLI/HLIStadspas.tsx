@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   StadspasBudget,
-  StadspasTransaction,
+  StadspasBudgetTransaction,
 } from '../../../server/services/hli/stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -100,7 +100,7 @@ export default function HLIStadspas() {
   };
 
   const [transactionsApi, fetchTransactions] = useDataApi<
-    ApiResponse<StadspasTransaction[]>
+    ApiResponse<StadspasBudgetTransaction[]>
   >(requestOptions, apiPristineResult([]));
 
   const isLoadingTransacties = transactionsApi.isLoading;
@@ -198,7 +198,7 @@ export default function HLIStadspas() {
               !!transactionsApi.data.content?.length && (
                 <>
                   <Grid.Cell span="all">
-                    <TableV2<StadspasTransaction>
+                    <TableV2<StadspasBudgetTransaction>
                       className={
                         showMultiBudgetTransactions
                           ? styles.Table_transactions__withBudget

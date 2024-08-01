@@ -1,3 +1,8 @@
+import {
+  ApiErrorResponse,
+  ApiPostponeResponse,
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types/App.types';
 
 export interface StadspasTransactieSource {
@@ -125,7 +130,11 @@ export interface StadspasTransactionQueryParams {
   budgetCode?: string;
 }
 
-export interface StadspasTransaction {
+export interface StadspasAanbiedingenTransaction {
+  // RP TODO: Test then implement what is inside the body.
+}
+
+export interface StadspasBudgetTransaction {
   id: string;
   title: string;
   amount: number;
@@ -135,5 +144,14 @@ export interface StadspasTransaction {
   budget: StadspasBudget['description'];
   budgetCode: StadspasBudget['code'];
 }
+
+export type FetchStadspasTransactionsFn<TContent> = (
+  requestID: requestID,
+  administratienummer: string,
+  passNumber: Stadspas['passNumber'],
+  budgetCode?: StadspasBudget['code']
+) => Promise<
+  ApiPostponeResponse | ApiErrorResponse<null> | ApiSuccessResponse<TContent>
+>;
 
 export type StadspasAdministratieNummer = string;
