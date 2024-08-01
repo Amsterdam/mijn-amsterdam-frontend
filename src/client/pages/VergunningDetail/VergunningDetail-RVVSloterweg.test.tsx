@@ -1,22 +1,11 @@
-import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
-import { MutableSnapshot } from 'recoil';
-import slug from 'slugme';
-
-import { describe, expect, it, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
   RVVSloterweg,
   transformVergunningenData,
 } from '../../../server/services/vergunningen/vergunningen';
-import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
-import VergunningDetail from './VergunningDetail';
-import { bffApi } from '../../../test-utils';
 import { getRVVSloterwegLineItems } from './RvvSloterweg';
-
-const content = transformVergunningenData(vergunningenData as any);
+import Mockdate from 'mockdate';
 
 describe('RVV Sloterweg status line items', () => {
   const zaken: Array<{ title: string; identifier: string }> = [
@@ -89,6 +78,10 @@ describe('RVV Sloterweg status line items', () => {
       title: 'RVV ontheffing Laan van Vlaanderen (AAYYAA) (Verleend)',
     },
   ];
+
+  beforeAll(() => {
+    Mockdate.set('2024-07-31');
+  });
 
   for (const zaak of zaken) {
     test(`${zaak.title}`, () => {

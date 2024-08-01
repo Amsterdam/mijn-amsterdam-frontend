@@ -16,10 +16,8 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
-import { isDateInPast } from '../../../universal/helpers/date';
 import { ONE_SECOND_MS } from '../../config';
-import { isSameDay, parseISO } from 'date-fns';
-import { isBeforeToday } from '../zorgned/zorgned-helpers';
+import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');

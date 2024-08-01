@@ -1,17 +1,13 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
-
-import {
-  isBeforeToday,
-  isServiceDeliveryActive,
-  isServiceDeliveryStarted,
-} from '../../zorgned/zorgned-helpers';
 import {
   AANVRAAG,
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isServiceDeliveryDecisionActive,
+  isBeforeToday,
+  isDecisionWithDeliveryActive,
+  isServiceDeliveryActive,
+  isServiceDeliveryStarted,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -19,10 +15,13 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  getTransformerConfigBesluit(isServiceDeliveryDecisionActive, true),
+  getTransformerConfigBesluit(isDecisionWithDeliveryActive, true),
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
+    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+      return aanvraag.resultaat !== 'afgewezen';
+    },
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isBeforeToday(aanvraag.datumOpdrachtLevering, today),
     isActive: (stepIndex, aanvraag, today) =>
@@ -42,8 +41,8 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today) =>
       isServiceDeliveryActive(aanvraag, today),
-    isVisible: (stepIndex, aanvraag, today) => {
-      return !!aanvraag.datumBeginLevering || aanvraag.isActueel;
+    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+      return aanvraag.resultaat !== 'afgewezen';
     },
     description: (aanvraag) =>
       `<p>

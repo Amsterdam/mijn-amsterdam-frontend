@@ -22,7 +22,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2023-05-17T00:00:00",
         "id": "B73199",
-        "title": "WRA beschikking Definitief",
+        "title": "Besluit: WRA beschikking Definitief",
         "url": "",
       },
     ],
@@ -52,8 +52,8 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "leveringsVorm": "",
     "productIdentificatie": "740",
     "productsoortCode": "AOV",
-    "resultaat": "toegewezen",
-    "titel": "kamer tot kamer vervoer",
+    "resultaat": "afgewezen",
+    "titel": "kamer tot kamer vervoer (nog iets) (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -69,7 +69,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2013-12-09T00:00:00",
         "id": "B137364",
-        "title": "WRA beschikking Definitief",
+        "title": "Besluit: WRA beschikking Definitief",
         "url": "",
       },
     ],
@@ -79,8 +79,8 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "leveringsVorm": "ZIN",
     "productIdentificatie": "WRA",
     "productsoortCode": "WRA",
-    "resultaat": "toegewezen",
-    "titel": "woonruimteaanpassing met doc 2",
+    "resultaat": "afgewezen",
+    "titel": "woonruimteaanpassing met doc 2 (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -96,7 +96,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2014-09-10T00:00:00",
         "id": "B195848",
-        "title": "New Toekenning hulpmiddel zonder keuze",
+        "title": "Besluit: New Toekenning hulpmiddel zonder keuze",
         "url": "",
       },
     ],
@@ -107,7 +107,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "12545",
     "productsoortCode": "OVE",
     "resultaat": "toegewezen",
-    "titel": "elektrische hulpaandrijving voor rolstoel",
+    "titel": "elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -123,7 +123,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2014-09-11T00:00:00",
         "id": "B196206",
-        "title": "WRA beschikking Definitief",
+        "title": "Besluit: WRA beschikking Definitief",
         "url": "",
       },
     ],
@@ -134,7 +134,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "WRA",
     "productsoortCode": "WRA",
     "resultaat": "toegewezen",
-    "titel": "woonruimteaanpassing 3",
+    "titel": "woonruimteaanpassing 3 (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -154,7 +154,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13929",
     "productsoortCode": "RWD",
     "resultaat": "toegewezen",
-    "titel": "douche-/toiletstoel (verrijdb/kantelb/ind aangep.)",
+    "titel": "douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -174,7 +174,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "01A01",
     "productsoortCode": "WMH",
     "resultaat": "toegewezen",
-    "titel": "hulp bij het huishouden",
+    "titel": "hulp bij het huishouden (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -194,7 +194,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "07A02",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding",
+    "titel": "dagbesteding (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -214,7 +214,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "02A02",
     "productsoortCode": "AWBG",
     "resultaat": "toegewezen",
-    "titel": "aanvullende individuele ondersteuning",
+    "titel": "aanvullende individuele ondersteuning (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -234,7 +234,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "07A02",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding",
+    "titel": "dagbesteding (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -254,7 +254,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "01A01",
     "productsoortCode": "WMH",
     "resultaat": "toegewezen",
-    "titel": "hulp bij het huishouden",
+    "titel": "hulp bij het huishouden (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -270,7 +270,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2018-12-27T00:00:00",
         "id": "B538689",
-        "title": "WRA beschikking Definitief",
+        "title": "Besluit: WRA beschikking Definitief",
         "url": "",
       },
     ],
@@ -281,7 +281,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "WRA",
     "productsoortCode": "WRA",
     "resultaat": "toegewezen",
-    "titel": "woonruimteaanpassing met doc 4",
+    "titel": "woonruimteaanpassing met doc 4 (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -301,7 +301,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "02A02",
     "productsoortCode": "AWBG",
     "resultaat": "toegewezen",
-    "titel": "aanvullende individuele ondersteuning",
+    "titel": "aanvullende individuele ondersteuning (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -321,7 +321,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "07A02",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding",
+    "titel": "dagbesteding (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -341,7 +341,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "02A02",
     "productsoortCode": "AWBG",
     "resultaat": "toegewezen",
-    "titel": "aanvullende individuele ondersteuning",
+    "titel": "aanvullende individuele ondersteuning (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -361,7 +361,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "01A01",
     "productsoortCode": "WMH",
     "resultaat": "toegewezen",
-    "titel": "hulp bij het huishouden",
+    "titel": "hulp bij het huishouden (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -381,7 +381,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13W82",
     "productsoortCode": "WRA3",
     "resultaat": "toegewezen",
-    "titel": "reparatie-/verwijderopdracht natte cel en toilet",
+    "titel": "reparatie-/verwijderopdracht natte cel en toilet (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -397,7 +397,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2020-03-12T16:12:23",
         "id": "B628498",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -408,7 +408,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "07A02",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding",
+    "titel": "dagbesteding (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -424,7 +424,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2020-03-12T16:17:07",
         "id": "B628499",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -435,7 +435,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "02A02",
     "productsoortCode": "AWBG",
     "resultaat": "toegewezen",
-    "titel": "aanvullende individuele ondersteuning",
+    "titel": "aanvullende individuele ondersteuning (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -451,7 +451,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2020-03-12T16:16:35",
         "id": "B628500",
-        "title": "Opstellen beschikking wijkzorg Hbh",
+        "title": "Besluit: Opstellen beschikking wijkzorg Hbh",
         "url": "",
       },
     ],
@@ -462,7 +462,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "01A01",
     "productsoortCode": "WMH",
     "resultaat": "toegewezen",
-    "titel": "hulp bij het huishouden",
+    "titel": "hulp bij het huishouden  (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -482,7 +482,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13W82",
     "productsoortCode": "WRA3",
     "resultaat": "toegewezen",
-    "titel": "reparatie-/verwijderopdracht natte cel en toilet",
+    "titel": "reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -498,7 +498,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2020-06-18T14:20:12",
         "id": "B650917",
-        "title": "New Toekenning hulpmiddel zonder keuze",
+        "title": "Besluit: New Toekenning hulpmiddel zonder keuze",
         "url": "",
       },
     ],
@@ -509,7 +509,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13928",
     "productsoortCode": "RWD",
     "resultaat": "toegewezen",
-    "titel": "douche-/toiletstoel zelfrijder",
+    "titel": "douche-/toiletstoel zelfrijder  (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -525,7 +525,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2020-06-16T15:20:47",
         "id": "B648401",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -536,7 +536,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "07A02",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding",
+    "titel": "dagbesteding  (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -552,7 +552,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2020-12-07T07:01:05",
         "id": "B691905",
-        "title": "Opstellen beschikking grote WRA",
+        "title": "Besluit: Opstellen beschikking grote WRA",
         "url": "",
       },
     ],
@@ -563,7 +563,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13W71",
     "productsoortCode": "WRA3",
     "resultaat": "toegewezen",
-    "titel": "antislipvloer/behandeling badkamer",
+    "titel": "antislipvloer/behandeling badkamer  (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -579,7 +579,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2021-01-09T17:26:23",
         "id": "B700835",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -590,7 +590,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "02A02",
     "productsoortCode": "AWBG",
     "resultaat": "toegewezen",
-    "titel": "aanvullende individuele ondersteuning",
+    "titel": "aanvullende individuele ondersteuning (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -606,7 +606,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2021-01-10T01:50:21",
         "id": "B700836",
-        "title": "Opstellen beschikking wijkzorg Hbh",
+        "title": "Besluit: Opstellen beschikking wijkzorg Hbh",
         "url": "",
       },
     ],
@@ -617,7 +617,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "01A01",
     "productsoortCode": "WMH",
     "resultaat": "toegewezen",
-    "titel": "hulp bij het huishouden",
+    "titel": "hulp bij het huishouden (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -633,7 +633,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2021-01-09T23:06:12",
         "id": "B700837",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -644,7 +644,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "07A02",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding",
+    "titel": "dagbesteding (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -660,7 +660,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2021-03-11T15:26:28",
         "id": "B739256",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -671,7 +671,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "07A02",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding",
+    "titel": "dagbesteding (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -687,7 +687,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2021-03-11T15:29:20",
         "id": "B739257",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -698,7 +698,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "02A02",
     "productsoortCode": "AWBG",
     "resultaat": "toegewezen",
-    "titel": "aanvullende individuele ondersteuning",
+    "titel": "aanvullende individuele ondersteuning (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -714,7 +714,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2021-03-11T15:24:06",
         "id": "B739258",
-        "title": "Opstellen beschikking wijkzorg Hbh",
+        "title": "Besluit: Opstellen beschikking wijkzorg Hbh",
         "url": "",
       },
     ],
@@ -725,7 +725,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "01A01",
     "productsoortCode": "WMH",
     "resultaat": "toegewezen",
-    "titel": "hulp bij het huishouden",
+    "titel": "hulp bij het huishouden (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -741,7 +741,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2021-10-22T16:50:57",
         "id": "B792435",
-        "title": "Opstellen beschikking grote WRA",
+        "title": "Besluit: Opstellen beschikking grote WRA",
         "url": "",
       },
     ],
@@ -752,7 +752,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13W84",
     "productsoortCode": "WRA3",
     "resultaat": "toegewezen",
-    "titel": "niet standaard opdracht natte cel en toilet",
+    "titel": "niet standaard opdracht natte cel en toilet (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -772,7 +772,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13W32",
     "productsoortCode": "WRA2",
     "resultaat": "toegewezen",
-    "titel": "reparatie-/verwijderopdracht toegang",
+    "titel": "reparatie-/verwijderopdracht toegang (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -799,7 +799,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "13W20",
     "productsoortCode": "WRA2",
     "resultaat": "toegewezen",
-    "titel": "handzender(s) voor deurautomaat",
+    "titel": "handzender(s) voor deurautomaat (vóór 01-01-2022)",
   },
   {
     "betrokkenen": [],
@@ -842,7 +842,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2022-03-14T16:12:12",
         "id": "B2258816",
-        "title": "Opstellen beschikking wijkzorg AO/DB/LO",
+        "title": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
         "url": "",
       },
     ],
@@ -869,7 +869,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2022-03-14T16:11:29",
         "id": "B2258817",
-        "title": "Opstellen beschikking wijkzorg Hbh",
+        "title": "Besluit: Opstellen beschikking wijkzorg Hbh",
         "url": "",
       },
     ],
@@ -896,7 +896,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2022-04-19T13:16:44",
         "id": "B2268406",
-        "title": "Opstellen beschikking grote WRA",
+        "title": "Besluit: Opstellen beschikking grote WRA",
         "url": "",
       },
     ],
@@ -927,7 +927,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "740",
     "productsoortCode": "AOV",
     "resultaat": "toegewezen",
-    "titel": "kamer tot kamer vervoer",
+    "titel": "kamer tot kamer vervoer (iets?)",
   },
   {
     "betrokkenen": [],
@@ -943,7 +943,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2022-10-19T14:27:42.643",
         "id": "B2391009",
-        "title": "AOV Beschikking positief",
+        "title": "Besluit: AOV Beschikking positief",
         "url": "",
       },
     ],
@@ -954,7 +954,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productIdentificatie": "740",
     "productsoortCode": "AOV",
     "resultaat": "toegewezen",
-    "titel": "kamer tot kamer vervoer",
+    "titel": "kamer tot kamer vervoer (ook iets?)",
   },
   {
     "betrokkenen": [],
@@ -970,7 +970,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2023-03-02T11:17:08.293",
         "id": "B2510020",
-        "title": "New Toekenning hulpmiddel zonder keuze",
+        "title": "Besluit: New Toekenning hulpmiddel zonder keuze",
         "url": "",
       },
     ],
@@ -1017,7 +1017,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2023-03-16T15:56:11.41",
         "id": "B2516440",
-        "title": "Opstellen beschikking wijkzorg Hbh",
+        "title": "Besluit: Opstellen beschikking wijkzorg Hbh",
         "url": "",
       },
     ],
