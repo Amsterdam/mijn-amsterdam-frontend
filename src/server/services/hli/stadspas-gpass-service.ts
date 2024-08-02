@@ -52,7 +52,7 @@ function transformBudget(budget: StadspasDetailBudgetSource) {
   if (typeof budget === 'object' && 'naam' in budget) {
     const stadspasBudget: StadspasBudget = {
       title: budget.naam,
-      description: budget.omschrijving,
+      description: budget.omschrijving ?? '',
       code: budget.code,
       budgetAssigned: budget.budget_assigned,
       budgetAssignedFormatted: `€${displayAmount(budget.budget_assigned)}`,

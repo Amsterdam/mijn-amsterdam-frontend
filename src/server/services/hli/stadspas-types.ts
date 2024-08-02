@@ -50,7 +50,7 @@ export interface StadspasPasHouderResponse extends StadspasHouderSource {
 export interface StadspasDetailBudgetSource {
   code: string;
   naam: string;
-  omschrijving: string;
+  omschrijving?: string;
   expiry_date: string;
   budget_assigned: number;
   budget_balance: number;
