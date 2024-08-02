@@ -28,7 +28,7 @@ export function useHliThemaData() {
   const title = getThemaTitle(hasStadspas, hasRegelingen);
   const hasKindtegoed = stadspassen?.some((stadspas) =>
     stadspas.budgets.some((budget) =>
-      budget.description.toLowerCase().includes('kind')
+      budget.title.toLowerCase().includes('kind')
     )
   );
 
