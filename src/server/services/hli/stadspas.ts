@@ -18,7 +18,7 @@ import {
   StadspasBudget,
   StadspasFrontend,
   StadspasBudgetTransaction,
-  StadspasAanbiedingenTransaction,
+  StadspasAanbiedingenTransactionResponse,
   FetchStadspasTransactionsFn,
 } from './stadspas-types';
 
@@ -69,9 +69,8 @@ export const fetchStadspasBudgetTransactionsWithVerify =
     fetchStadspasBudgetTransactions
   );
 
-// RP TODO: Will this be the right type?
 export const fetchStadspasAanbiedingenTransactionsWithVerify =
-  createTransactionFetchFn<StadspasAanbiedingenTransaction[]>(
+  createTransactionFetchFn<StadspasAanbiedingenTransactionResponse>(
     fetchStadspasAanbiedingenTransactions
   );
 

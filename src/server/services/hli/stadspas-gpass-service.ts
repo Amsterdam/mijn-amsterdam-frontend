@@ -22,7 +22,7 @@ import {
   StadspasTransactiesResponseSource,
   StadspasBudgetTransaction,
   StadspasTransactionQueryParams,
-  StadspasAanbiedingenTransaction,
+  StadspasAanbiedingenTransactionResponse,
 } from './stadspas-types';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
@@ -236,8 +236,7 @@ export async function fetchStadspasAanbiedingenTransactions(
     params: requestParams,
   });
 
-  // RP TODO: Will this be the right type?
-  return requestData<StadspasAanbiedingenTransaction[]>(
+  return requestData<StadspasAanbiedingenTransactionResponse>(
     dataRequestConfig,
     requestID
   );
