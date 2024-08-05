@@ -130,8 +130,13 @@ export interface StadspasTransactionQueryParams {
   budgetCode?: string;
 }
 
-export interface StadspasAanbiedingenTransaction {
-  // RP TODO: Test then implement what is inside the body.
+export interface StadspasAanbiedingenTransactionResponse {
+  number_of_items: number;
+  transacties: AanbiedingTransactie[];
+}
+
+interface AanbiedingTransactie {
+  // RP TODO: What zit hierin???
 }
 
 export interface StadspasBudgetTransaction {

@@ -274,5 +274,6 @@ export const stadspasExternalConsumerRouter = {
 export const forTesting = {
   sendAdministratienummerResponse,
   sendStadspassenResponse,
+  sendAanbiedingenTransactionsResponse,
   sendBudgetTransactionsResponse,
 };

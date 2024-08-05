@@ -9,6 +9,7 @@ import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { forTesting } from './stadspas-router-external-consumer';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import * as stadspas from './stadspas';
+import { StadspasAanbiedingenTransactionResponse } from './stadspas-types';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -265,6 +266,36 @@ describe('hli/router-external-consumer', async () => {
 
       expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
       expect(sendMock).toHaveBeenCalledOnce();
+    });
+  });
+
+  describe('Aanbieding transactions endpoint', async () => {
+    function buildStadspasAanbiedingTransactionResponse(): StadspasAanbiedingenTransactionResponse {
+      return {
+        number_of_items: 0,
+        transacties: [],
+      };
+    }
+
+    it('Happy path', async () => {
+      const fetchStadspasAanbiedingenTransactionsWithVerifySpy = vi
+        .spyOn(stadspas, 'fetchStadspasAanbiedingenTransactionsWithVerify')
+        .mockResolvedValueOnce(
+          apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
+        );
+
+      const reqMock = {
+        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
+      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+
+      forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
+
+      expect(
+        fetchStadspasAanbiedingenTransactionsWithVerifySpy
+      ).toHaveBeenCalledWith(
+        resMock.locals.requestID,
+        TRANSACTIONS_KEY_ENCRYPTED
+      );
     });
   });
 });
