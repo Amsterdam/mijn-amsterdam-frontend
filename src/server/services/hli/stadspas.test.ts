@@ -2,8 +2,12 @@ import { remoteApi } from '../../../test-utils';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspassen } from './stadspas-gpass-service';
+import {
+  fetchStadspasAanbiedingenTransactions,
+  fetchStadspassen,
+} from './stadspas-gpass-service';
 import { fetchStadspasBudgetTransactionsWithVerify } from './stadspas';
+import { StadspasAanbiedingenTransactionResponse } from './stadspas-types';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -95,6 +99,8 @@ const authProfileAndToken: AuthProfileAndToken = {
 };
 
 describe('stadspas services', () => {
+  const FAKE_API_KEY = '22222xx22222';
+
   afterAll(() => {
     vi.restoreAllMocks();
   });
@@ -245,12 +251,12 @@ describe('stadspas services', () => {
     });
     remoteApi
       .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
-      .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
+      .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
       .reply(200, pashouderResponse);
     remoteApi
       .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
       .times(3)
-      .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
+      .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
       .reply(200, pasResponse);
 
     const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
@@ -356,7 +362,7 @@ describe('stadspas services', () => {
       .get(
         '/stadspas/rest/transacties/v1/budget?pasnummer=123123123&sub_transactions=true'
       )
-      .matchHeader('authorization', 'AppBearer 22222xx22222,0363000123-123')
+      .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
       .reply(200, {
         transacties: [
           {
@@ -440,5 +446,39 @@ describe('stadspas services', () => {
         "status": "ERROR",
       }
     `);
+  });
+
+  describe('fetchStadspasAanbiedingenTransactions', async () => {
+    const requestID = 'xyz098';
+    const administratienummer = 'administratienummer123';
+    const passNumber = 123456789;
+
+    test('Get success response', async () => {
+      const expectedResponse: StadspasAanbiedingenTransactionResponse = {
+        number_of_items: 0,
+        transacties: [],
+      };
+
+      remoteApi
+        .get(
+          `/stadspas/rest/transacties/v1/aanbiedingen?pasnummer=${passNumber}&sub_transactions=true`
+        )
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},${administratienummer}`
+        )
+        .reply(200, expectedResponse);
+
+      const response = await fetchStadspasAanbiedingenTransactions(
+        requestID,
+        administratienummer,
+        passNumber
+      );
+
+      expect(response).toStrictEqual({
+        content: expectedResponse,
+        status: 'OK',
+      });
+    });
   });
 });
