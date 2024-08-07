@@ -130,14 +130,65 @@ export interface StadspasTransactionQueryParams {
   budgetCode?: string;
 }
 
+// NOTE: The optional properties are not yet tested to be present in a response with transacties of `length > 0`.
+// This is only send raw to the AmsApp at the moment, so knowing the exact shape might not be that important yet.
 export interface StadspasAanbiedingenTransactionResponse {
   number_of_items: number;
+  'total_items:'?: number;
+  totale_aantal?: number;
+  totale_korting?: number;
   transacties: AanbiedingTransactie[];
 }
 
-interface AanbiedingTransactie {
-  // RP TODO: What zit hierin???
-}
+// NOTE: Taken straight from the documentation, not tested for variations
+type AanbiedingTransactie = {
+  id: number;
+  transactiedatum: string;
+  verleende_korting: number;
+  annulering: boolean;
+  geannuleerd: boolean;
+  pashouder: {
+    id: number;
+    hoofd_pashouder_id: number;
+  };
+  leeftijd_pashouder: number;
+  pas: {
+    id: number;
+    pasnummer: number;
+    pasnummer_volledig: string;
+    originele_pas: {
+      id: number;
+      pasnummer: number;
+      pasnummer_volledig: string;
+    };
+  };
+  aanbieding: {
+    id: number;
+    aanbiedingnummer: number;
+    publicatienummer: number;
+    kortingzin: string;
+    omschrijving: string;
+    communicatienaam: string;
+    pijler: string;
+    aanbieder: {
+      id: number;
+    };
+    afbeeldingen: [
+      {
+        id: number;
+        cdn_url: string;
+        medium: string;
+        size: string;
+      },
+      {
+        id: number;
+        cdn_url: string;
+        medium: string;
+        size: string;
+      },
+    ];
+  };
+};
 
 export interface StadspasBudgetTransaction {
   id: string;
