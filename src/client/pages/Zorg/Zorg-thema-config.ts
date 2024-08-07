@@ -8,7 +8,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayProps = {
-  detailLinkComponent: '',
+  detailLinkComponent: 'Voorzieningen',
   status: 'Status',
   dateDescisionFormatted: 'Datum',
 };
