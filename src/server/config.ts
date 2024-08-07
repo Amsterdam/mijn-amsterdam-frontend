@@ -438,6 +438,9 @@ export const BffEndpoints = {
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
+  // AFIS
+  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner/:businessPartnerId',
+
   // Stadspas
   STADSPAS_TRANSACTIONS:
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
