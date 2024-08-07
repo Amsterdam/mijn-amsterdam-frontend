@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import UID from 'uid-safe';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi, ResponseMock } from '../../../test-utils';
 import {
   OIDC_SESSION_COOKIE_NAME,
   STADSPASSEN_ENDPOINT_PARAMETER,
@@ -21,13 +21,13 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   };
 });
 
+const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
+
 describe('hli/router-external-consumer', async () => {
   const sendMock = vi.fn();
   const statusMock = vi.fn();
   const renderMock = vi.fn();
   const redirectMock = vi.fn();
-
-  const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
 
   async function getReqMock(useCookie: boolean = true) {
     const cookieValue = useCookie
@@ -268,34 +268,37 @@ describe('hli/router-external-consumer', async () => {
       expect(sendMock).toHaveBeenCalledOnce();
     });
   });
+});
 
-  describe('Aanbieding transactions endpoint', async () => {
-    function buildStadspasAanbiedingTransactionResponse(): StadspasAanbiedingenTransactionResponse {
-      return {
-        number_of_items: 0,
-        transacties: [],
-      };
-    }
+// This block is outside of the enveloping describe block above, because
+// the global request and resposne mocks do not play nicely with this test.
+describe('Aanbieding transactions endpoint', async () => {
+  function buildStadspasAanbiedingTransactionResponse(): StadspasAanbiedingenTransactionResponse {
+    return {
+      number_of_items: 0,
+      transacties: [],
+    };
+  }
 
-    it('Happy path', async () => {
-      const fetchStadspasAanbiedingenTransactionsWithVerifySpy = vi
-        .spyOn(stadspas, 'fetchStadspasAanbiedingenTransactionsWithVerify')
-        .mockResolvedValueOnce(
-          apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
-        );
-
-      const reqMock = {
-        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
-      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
-
-      forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
-
-      expect(
-        fetchStadspasAanbiedingenTransactionsWithVerifySpy
-      ).toHaveBeenCalledWith(
-        resMock.locals.requestID,
-        TRANSACTIONS_KEY_ENCRYPTED
+  it('Happy path', async () => {
+    const fetchStadspasAanbiedingenTransactionsWithVerifySpy = vi
+      .spyOn(stadspas, 'fetchStadspasAanbiedingenTransactionsWithVerify')
+      .mockResolvedValueOnce(
+        apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
       );
-    });
+
+    const reqMock = {
+      params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
+    } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+    const resMock = ResponseMock.new();
+
+    forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
+
+    expect(
+      fetchStadspasAanbiedingenTransactionsWithVerifySpy
+    ).toHaveBeenCalledWith(
+      resMock.locals.requestID,
+      TRANSACTIONS_KEY_ENCRYPTED
+    );
   });
 });
