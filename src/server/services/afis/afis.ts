@@ -65,3 +65,22 @@ function transformBusinessPartnerisKnown(
 
   return transformedResponse;
 }
+
+export async function fetchAfisBusinessPartner(
+  requestId: requestID,
+  businessPartnerId: string
+) {
+  const additionalConfig: DataRequestConfig = {
+    formatUrl(config) {
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner/?$filter=BusinessPartner eq '${businessPartnerId}'`;
+    },
+  };
+
+  const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
+
+  // todo check of deze null geeft als er geen resultaat is
+  return requestData<AFISBusinessPartnerCommercialSourceResponse | null>(
+    dataRequestConfig,
+    requestId
+  );
+}

@@ -58,7 +58,7 @@ describe('fetchIsKnownInAFIS ', () => {
   };
 
   describe('BSN Businesspartner ', async () => {
-    it('Does a request with BSN and transforms the response', async () => {
+    it.only('Does a request with BSN and transforms the response', async () => {
       remoteApi
         .post(ROUTES.businesspartnerBSN)
         .reply(200, RESPONSE_BODIES.BSNFound);
@@ -67,6 +67,7 @@ describe('fetchIsKnownInAFIS ', () => {
         REQUEST_ID,
         authProfileAndToken('private')
       );
+      console.log('=>(afis.test.ts:70) response', response);
 
       expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isKnown);
     });
