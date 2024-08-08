@@ -23,15 +23,8 @@ import {
   fetchStadspasAanbiedingenTransactionsWithVerify,
   fetchStadspasBudgetTransactionsWithVerify,
 } from './stadspas';
-import {
-  fetchStadspasAanbiedingenTransactions,
-  fetchStadspassenByAdministratienummer,
-} from './stadspas-gpass-service';
-import {
-  Stadspas,
-  StadspasAMSAPPFrontend,
-  StadspasBudget,
-} from './stadspas-types';
+import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
+import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
