@@ -244,79 +244,81 @@ components:
           type: number
         transacties:
           type: array
-          properties:
-            id:
-              type: number
-            transactiedatum:
-              type: string
-            verleende_korting:
-              type: number
-            annulering:
-              type: boolean
-            geannuleerd:
-              type: boolean
-            pashouder:
-              type: object
-              properties:
-                id:
-                  type: number
-                hoofd_pashouder_id:
-                  type: number
-            leeftijd_pashouder:
-              type: number
-            pas:
-              type: object
-              properties:
-                id:
-                  type: number
-                pasnummer:
-                  type: number
-                pasnummer_volledig:
-                  type: string
-                originele_pas:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                    pasnummer:
-                      type: number
-                    pasnummer_volledig:
-                      type: string
-            aanbieding:
-              type: object
-              properties:
-                id:
-                  type: number
-                aanbiedingnummer:
-                  type: number
-                publicatienummer:
-                  type: number
-                kortingzin:
-                  type: string
-                omschrijving:
-                  type: string
-                communicatienaam:
-                  type: string
-                pijler:
-                  type: string
-                aanbieder:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                afbeeldingen:
-                  type: array
-                  items:
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+              transactiedatum:
+                type: string
+              verleende_korting:
+                type: number
+              annulering:
+                type: boolean
+              geannuleerd:
+                type: boolean
+              pashouder:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  hoofd_pashouder_id:
+                    type: number
+              leeftijd_pashouder:
+                type: number
+              pas:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  pasnummer:
+                    type: number
+                  pasnummer_volledig:
+                    type: string
+                  originele_pas:
                     type: object
                     properties:
                       id:
                         type: number
-                      cdn_url:
+                      pasnummer:
+                        type: number
+                      pasnummer_volledig:
                         type: string
-                      medium:
-                        type: string
-                      size:
-                        type: string
+              aanbieding:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  aanbiedingnummer:
+                    type: number
+                  publicatienummer:
+                    type: number
+                  kortingzin:
+                    type: string
+                  omschrijving:
+                    type: string
+                  communicatienaam:
+                    type: string
+                  pijler:
+                    type: string
+                  aanbieder:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                  afbeeldingen:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        cdn_url:
+                          type: string
+                        medium:
+                          type: string
+                        size:
+                          type: string
 
     StadspasBudget:
       type: object
