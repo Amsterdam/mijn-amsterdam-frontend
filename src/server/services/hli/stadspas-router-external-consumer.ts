@@ -18,10 +18,13 @@ import { requestData } from '../../helpers/source-api-request';
 import { apiKeyVerificationHandler } from '../../middleware';
 import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspasTransactions } from './stadspas';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import {
+  fetchStadspasAanbiedingenTransactionsWithVerify,
+  fetchStadspasBudgetTransactionsWithVerify,
+} from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -213,6 +216,24 @@ routerPrivateNetwork.get(
   sendStadspassenResponse
 );
 
+async function sendAanbiedingenTransactionsResponse(
+  req: Request<{ transactionsKeyEncrypted: string }>,
+  res: Response
+) {
+  const response = await fetchStadspasAanbiedingenTransactionsWithVerify(
+    res.locals.requestID,
+    req.params.transactionsKeyEncrypted
+  );
+
+  sendResponse(res, response);
+}
+
+routerPrivateNetwork.get(
+  ExternalConsumerEndpoints.private.STADSPAS_AANBIEDINGEN_TRANSACTIES,
+  apiKeyVerificationHandler,
+  sendAanbiedingenTransactionsResponse
+);
+
 /** Sends transformed budget transactions.
  *
  * # Url Params
@@ -223,7 +244,7 @@ async function sendBudgetTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasTransactions(
+  const response = await fetchStadspasBudgetTransactionsWithVerify(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     req.query?.budgetCode as StadspasBudget['code']
@@ -246,5 +267,6 @@ export const stadspasExternalConsumerRouter = {
 export const forTesting = {
   sendAdministratienummerResponse,
   sendStadspassenResponse,
+  sendAanbiedingenTransactionsResponse,
   sendBudgetTransactionsResponse,
 };
