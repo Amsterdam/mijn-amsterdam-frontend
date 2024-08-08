@@ -31,7 +31,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
       !isServiceDeliveryStarted(aanvraag, today),
     description: (aanvraag) =>
       `<p>
-        De gemeente heeft opdracht gegeven aan ${aanvraag.leverancier} om een ${aanvraag.titel} aan u te leveren.
+        Wij hebben ${aanvraag.leverancier} gevraagd om een ${aanvraag.titel} aan u te leveren.
       </p>`,
   },
   {
@@ -44,7 +44,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
       isServiceDeliveryActive(aanvraag, today),
     description: (aanvraag) =>
       `<p>
-        ${aanvraag.leverancier} heeft aan ons doorgegeven dat een ${aanvraag.titel} bij u is afgeleverd.
+        ${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.
       </p>
       `,
     isVisible: (stepIndex, aanvraag, today, allAanvragen) => {

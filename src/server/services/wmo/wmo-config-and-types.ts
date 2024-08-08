@@ -71,4 +71,6 @@ export interface WMOVoorzieningFrontend extends ZaakDetail {
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:'; // Documents starting with this token correspond to the 'meer informatie' step.
 export const DOCUMENT_TITLE_BESLUIT_STARTS_WITH = 'Besluit:'; // Documents starting with this token correspond to the 'besluit' step.
 export const DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE =
-  'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/OJZDUploadBijlagen.aspx/Inleiding';
+  'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/OJZDUploadBijlagen.aspx';
+export const DOCUMENT_PGB_BESLUIT =
+  'https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb';
