@@ -31,6 +31,14 @@ Please also create a way to hit this endpoint in `CUSTOM_REQUESTS` which is foun
 This is because it cannot automatically figure out how to hit this, like with a simple 'get json in all cases' endpoint.
 
 
+# Testing your route
+
+1. Turn on the mocks server.
+2. Look inside the logging, that is the `Display logs` option in the TUI.
+2. Run `node mocks/hit-endpoints.js` (if in project root directory).
+3. No errors? All is good.
+
+
 # Structure
 
 /routes   | Define your routes here. This is also a good place to look for examples.<br>
