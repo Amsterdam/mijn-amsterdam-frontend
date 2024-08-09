@@ -73,4 +73,27 @@ const CUSTOM_REQUESTS = {
     readThemaPerAVGVerzoekForm.append('function', 'readthemaperavgverzoek');
     axios.post(`${ORIGIN}/smile`, readThemaPerAVGVerzoekForm);
   },
+  'post-zorgned-aanvragen': () => {
+    const url = `${ORIGIN}/zorgned/aanvragen`;
+    const data = undefined;
+
+    axios.post(url, data, {
+      headers: {
+        'x-mams-api-user': 'FakerwhFASHFASFAKEEEEFAKEhfdashjashf',
+      },
+    });
+
+    axios
+      .post(url, data, {})
+      .then(() => {
+        console.error(
+          `Succes response from ${url}, this should be an error response`
+        );
+      })
+      .catch((e) => {
+        console.info(
+          `Expected error response code: ${e.code} from ${e.config.url}`
+        );
+      });
+  },
 };
