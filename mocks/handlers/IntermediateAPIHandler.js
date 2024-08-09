@@ -55,7 +55,10 @@ class IntermediateAPIHandler {
       }
 
       for (let endpoint of Object.values(this._options)) {
-        if (endpoint.identifier === endpoint.getFieldWithIdentifier(fields)) {
+        if (
+          endpoint.identifier ===
+          endpoint.getFieldWithIdentifier(fields, this._core)
+        ) {
           res.status(200);
           res.send(endpoint.body);
           this._core.logger.debug(
