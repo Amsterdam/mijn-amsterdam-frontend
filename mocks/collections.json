@@ -53,6 +53,7 @@
       "get-wpi-specificaties:standard",
       "post-afis-businesspartner-bsn:standard",
       "post-afis-businesspartner-kvk:standard",
+      "get-powerbrowser-bb-vergunning-attachments:standard",
       "post-powerbrowser-bb-vergunning-attachments:standard",
       "post-powerbrowser-token:standard",
       "post-powerbrowser-vergunningen:standard",
