@@ -3,7 +3,14 @@ const AVG_THEMAS_RESPONSE = require('../fixtures/avg-themas.json');
 const KLACHTEN_RESPONSE = require('../fixtures/klachten.json');
 const settings = require('../settings');
 
-function getSmileIdentifyingField(fields) {
+function getSmileIdentifyingField(fields, core) {
+  if (!fields?.function) {
+    core.logger.error(
+      "No 'function' property on 'fields'. \
+      Make sure the multipart-form being send contains this."
+    );
+    return undefined;
+  }
   return fields.function[0];
 }
 
