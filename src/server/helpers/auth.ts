@@ -18,8 +18,7 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
         ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
         {
           token: queryParams['amsapp-session-token'] as string,
-        },
-        BFF_API_BASE_URL.replace(BFF_BASE_PATH, '') // The STADSPAS_ADMINISTRATIENUMMER path already has /api/v1 in it
+        }
       );
     default:
     case RETURNTO_MAMS_LANDING:
