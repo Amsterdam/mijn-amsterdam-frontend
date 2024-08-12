@@ -77,9 +77,9 @@ function isDocumentDecisionDateActive(datumAanvraag: string) {
 export function decisionParagraph(aanvraag: ZorgnedAanvraagTransformed) {
   let paragraph = '<p>In de brief leest u meer over dit besluit. ';
   if (isAfterWCAGValidDocumentsDate(aanvraag.datumAanvraag)) {
-    paragraph += 'De brief staat bij brieven bovenaan deze pagina.';
+    paragraph += 'Dit document staat bij documenten bovenaan deze pagina.';
   } else {
-    paragraph += 'De brief is per post naar u verstuurd.';
+    paragraph += 'Dit document is verstuurd per post.';
   }
   paragraph += '</p>';
 
@@ -92,7 +92,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: () => true,
   isActive: () => false,
   description: () => {
-    return '<p>Uw aanvraag is ontvangen.</p>';
+    return '<p>Wij hebben uw aanvraag ontvangen</p>';
   },
 };
 
@@ -103,7 +103,7 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   isActive: (stepIndex, aanvraag) =>
     !aanvraag.resultaat && !hasMeerInformatieNodig(aanvraag),
   description: () => {
-    return '<p>Uw aanvraag is in behandeling.</p>';
+    return '<p>Uw aanvraag is in behandeling genomen</p>';
   },
 };
 
@@ -117,13 +117,8 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
     !aanvraag.resultaat && hasMeerInformatieNodig(aanvraag),
   description: () => {
     return `<p>
-      Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:<br />
-      Uploaden via <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE}">amsterdam.nl/zorgdocumenten</a> of opsturen naar ons gratis antwoordnummer:<br />
-Gemeente Amsterdam <br />
-Services & Data <br />
-Antwoordnummer 9087 <br />
-1000 VV Amsterdam
-
+      Om uw aanvraag te kunnen beoordelen hebben wij meer informatie nodig.
+      U kunt de informatie aanleveren via dit <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE}">formulier</a>.
     </p>`;
   },
 };
@@ -140,28 +135,25 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   description: (aanvraag) =>
     `<p>
       ${
-        aanvraag.isActueel && aanvraag.leveringsVorm !== 'PGB'
+        aanvraag.isActueel
           ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
-          : `Uw recht op ${aanvraag.titel} is beëindigd ${
-              aanvraag.datumEindeGeldigheid
-                ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
-                : ''
-            }`
-      }
-    </p>
-<p>
-    ${
-      aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
-        ? ` Uw recht op ${aanvraag.titel} stopt op ${aanvraag.datumEindeGeldigheid}.
-            Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid} doen.
-            verlenging aanvragen. Kijk in uw besluit op
-            <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.`
-        : `Uw recht op ${aanvraag.titel} is beëindigd ${
+          : `Uw recht op ${aanvraag.titel} is beëindigd
+          ${
             aanvraag.datumEindeGeldigheid
               ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
               : ''
           }`
-    }`,
+      }
+    </p>
+    ${
+      aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
+        ? `<p>
+           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid} doen. Kijk in uw besluit op
+            <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.
+          </p>`
+        : ''
+    }
+    `,
 };
 
 export function getTransformerConfigBesluit(
@@ -175,7 +167,7 @@ export function getTransformerConfigBesluit(
     isActive: isActive,
     description: (aanvraag) =>
       `<p>
-          ${aanvraag.resultaat === 'toegewezen' ? `U krijgt  ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}` : `U krijgt geen ${aanvraag.titel}`}.
+          ${aanvraag.resultaat === 'toegewezen' ? `U heeft recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}` : `U heeft geen recht op ${useAsProduct ? 'een ' : ''}${aanvraag.titel}`}.
       </p>
       ${decisionParagraph(aanvraag)}
       `,
