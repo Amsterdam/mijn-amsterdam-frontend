@@ -155,7 +155,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
         ? ` Uw recht op ${aanvraag.titel} stopt op ${aanvraag.datumEindeGeldigheid}.
             Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid} doen.
             verlenging aanvragen. Kijk in uw besluit op
-            <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb</a>voor meer informatie.`
+            <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.`
         : `Uw recht op ${aanvraag.titel} is beëindigd ${
             aanvraag.datumEindeGeldigheid
               ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`

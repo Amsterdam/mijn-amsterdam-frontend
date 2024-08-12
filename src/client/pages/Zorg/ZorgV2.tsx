@@ -6,6 +6,7 @@ import { ExternalUrls } from '../../config/external-urls';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { useZorgThemaData } from './useZorgThemaData';
+import styles from './Zorg.module.scss';
 
 export default function ThemaPaginaZorg() {
   const { isError, isLoading, regelingen, title, routes, tableConfig } =
@@ -53,13 +54,19 @@ export default function ThemaPaginaZorg() {
   );
 
   return (
-    <ThemaPagina
-      title={title}
-      pageContentTop={pageContentTop}
-      linkListItems={linkListItems}
-      pageContentTables={tables}
-      isError={isError}
-      isLoading={isLoading}
-    />
+    <>
+      <ThemaPagina
+        title={title}
+        pageContentTop={pageContentTop}
+        linkListItems={linkListItems}
+        pageContentTables={tables}
+        isError={isError}
+        isLoading={isLoading}
+      />
+      <p className={styles.HistoricItemsMention}>
+        U ziet hier alleen informatie vanaf 1 januari 2018. Bel voor informatie
+        van eerdere jaren de Wmo Helpdesk: 0800 0643.
+      </p>
+    </>
   );
 }
