@@ -28,7 +28,7 @@
 When adding a route with custom logic like with [Middlware][1] or with a your own [Variant Handler][2]...<br>
 Or a complex route containing something like `/:profile(user|company)`.
 Please also create a way to hit this endpoint in `CUSTOM_REQUESTS` which is found in the `hit-all-endpoints.js` script.<br>
-This is because it cannot automatically figure out how to hit this, like with a simple 'get json in all cases' endpoint.
+This is necessary because the script cannot automatically determine how to interact with such endpoints, unlike simpler 'GET JSON in all cases' endpoints.
 
 
 # Testing your route
