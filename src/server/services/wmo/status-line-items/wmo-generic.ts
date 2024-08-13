@@ -153,7 +153,11 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
         ? `<p>
-           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid} doen. Kijk in uw besluit op
+           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor  ${
+             aanvraag.datumEindeGeldigheid
+               ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
+               : ''
+           }} doen. Kijk in uw besluit op
             <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.
           </p>`
         : ''
@@ -172,7 +176,15 @@ export function getTransformerConfigBesluit(
     isActive: isActive,
     description: (aanvraag) =>
       `<p>
-          ${aanvraag.resultaat === 'toegewezen' ? `U krijgt  ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}` : `U krijgt geen ${aanvraag.titel}`}.
+          ${
+            aanvraag.resultaat === 'toegewezen'
+              ? `U krijgt  ${useAsProduct ? 'een ' : ''}${aanvraag.titel}  ${
+                  aanvraag.datumEindeGeldigheid
+                    ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
+                    : ''
+                }.`
+              : `U krijgt geen ${aanvraag.titel}`
+          }.
       </p>
       ${decisionParagraph(aanvraag)}
       `,
