@@ -52,7 +52,7 @@ function AfisBusinessPartner({
       key: businessPartnerIdEncrypted || '',
     });
 
-  if (api.isDirty && !api.isError && businesspartner) {
+  if (!api.isError && businesspartner) {
     const labels: Record<string, string> = {
       BusinessPartner: 'Debiteurnummer',
       BusinessPartnerFullName: 'Naam',
