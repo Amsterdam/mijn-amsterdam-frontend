@@ -38,6 +38,7 @@ module.exports = [
   {
     id: 'get-bezwaren-download-document',
     url: `${settings.MOCK_BASE_PATH}/bezwaren/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
+    method: 'GET',
     variants: [
       {
         id: 'standard',
