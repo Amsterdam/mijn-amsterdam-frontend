@@ -9,10 +9,7 @@ import { getApiConfig, ONE_SECOND_MS } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import {
-  GPASS_API_TOKEN,
-  GPASS_BUDGET_ONLY_FOR_CHILDREN,
-} from './stadspas-config-and-content';
+import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   Stadspas,
   StadspasBudget,
@@ -23,8 +20,9 @@ import {
   StadspasPasHouderResponse,
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
-  StadspasTransaction,
+  StadspasBudgetTransaction,
   StadspasTransactionQueryParams,
+  StadspasAanbiedingenTransactionResponse,
 } from './stadspas-types';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
@@ -205,7 +203,7 @@ function transformGpassTransactionsResponse(
   if (Array.isArray(gpassTransactionsResponseData.transacties)) {
     return gpassTransactionsResponseData.transacties.map(
       (transactie: StadspasTransactieSource) => {
-        const transaction: StadspasTransaction = {
+        const transaction: StadspasBudgetTransaction = {
           id: String(transactie.id),
           title: transactie.budget.aanbieder.naam,
           amount: transactie.bedrag,
@@ -222,14 +220,36 @@ function transformGpassTransactionsResponse(
   return gpassTransactionsResponseData;
 }
 
+export async function fetchStadspasAanbiedingenTransactions(
+  requestID: requestID,
+  administratienummer: string,
+  pasnummer: Stadspas['passNumber']
+) {
+  const requestParams: StadspasTransactionQueryParams = {
+    pasnummer,
+    sub_transactions: true,
+  };
+
+  const dataRequestConfig = getApiConfig('GPASS', {
+    formatUrl: ({ url }) => `${url}/rest/transacties/v1/aanbiedingen`,
+    headers: getHeaders(administratienummer),
+    params: requestParams,
+  });
+
+  return requestData<StadspasAanbiedingenTransactionResponse>(
+    dataRequestConfig,
+    requestID
+  );
+}
+
 export async function fetchStadspasBudgetTransactions(
   requestID: requestID,
   administratienummer: string,
-  passNumber: Stadspas['passNumber'],
+  pasnummer: Stadspas['passNumber'],
   budgetCode?: StadspasBudget['code']
 ) {
   const requestParams: StadspasTransactionQueryParams = {
-    pasnummer: passNumber,
+    pasnummer,
     sub_transactions: true,
   };
 
@@ -244,5 +264,5 @@ export async function fetchStadspasBudgetTransactions(
     params: requestParams,
   });
 
-  return requestData<StadspasTransaction[]>(dataRequestConfig, requestID);
+  return requestData<StadspasBudgetTransaction[]>(dataRequestConfig, requestID);
 }

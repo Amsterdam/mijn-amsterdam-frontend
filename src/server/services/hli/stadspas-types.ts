@@ -1,3 +1,8 @@
+import {
+  ApiErrorResponse,
+  ApiPostponeResponse,
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types/App.types';
 
 export interface StadspasTransactieSource {
@@ -125,7 +130,67 @@ export interface StadspasTransactionQueryParams {
   budgetCode?: string;
 }
 
-export interface StadspasTransaction {
+// NOTE: Optional properties unconfirmed for non-empty transaction lists.
+// Currently sent raw to AmsApp; exact shape is yet to be determined.
+export interface StadspasAanbiedingenTransactionResponse {
+  number_of_items: number;
+  'total_items:'?: number;
+  totale_aantal?: number;
+  totale_korting?: number;
+  transacties: AanbiedingTransactie[];
+}
+
+// NOTE: Taken straight from the documentation; not tested for variations
+type AanbiedingTransactie = {
+  id: number;
+  transactiedatum: string;
+  verleende_korting: number;
+  annulering: boolean;
+  geannuleerd: boolean;
+  pashouder: {
+    id: number;
+    hoofd_pashouder_id: number;
+  };
+  leeftijd_pashouder: number;
+  pas: {
+    id: number;
+    pasnummer: number;
+    pasnummer_volledig: string;
+    originele_pas: {
+      id: number;
+      pasnummer: number;
+      pasnummer_volledig: string;
+    };
+  };
+  aanbieding: {
+    id: number;
+    aanbiedingnummer: number;
+    publicatienummer: number;
+    kortingzin: string;
+    omschrijving: string;
+    communicatienaam: string;
+    pijler: string;
+    aanbieder: {
+      id: number;
+    };
+    afbeeldingen: [
+      {
+        id: number;
+        cdn_url: string;
+        medium: string;
+        size: string;
+      },
+      {
+        id: number;
+        cdn_url: string;
+        medium: string;
+        size: string;
+      },
+    ];
+  };
+};
+
+export interface StadspasBudgetTransaction {
   id: string;
   title: string;
   amount: number;
@@ -135,5 +200,14 @@ export interface StadspasTransaction {
   budget: StadspasBudget['description'];
   budgetCode: StadspasBudget['code'];
 }
+
+export type FetchStadspasTransactionsFn<TContent> = (
+  requestID: requestID,
+  administratienummer: string,
+  passNumber: Stadspas['passNumber'],
+  budgetCode?: StadspasBudget['code']
+) => Promise<
+  ApiPostponeResponse | ApiErrorResponse<null> | ApiSuccessResponse<TContent>
+>;
 
 export type StadspasAdministratieNummer = string;
