@@ -465,9 +465,6 @@ export const BffEndpoints = {
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
 
-  // Parkeren
-  PARKEREN_SSO_REDIRECT: 'services/parkeren/sso-url',
-
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document/:id',
 

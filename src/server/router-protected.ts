@@ -119,8 +119,6 @@ router.get(
   }
 );
 
-router.get(BffEndpoints.PARKEREN_SSO_REDIRECT, fetchSSOParkerenURL);
-
 // Deprecated, will be removed in MIJN-8916
 router.get(
   BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,

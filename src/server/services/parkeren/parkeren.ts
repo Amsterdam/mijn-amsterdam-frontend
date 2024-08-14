@@ -1,16 +1,20 @@
-import { Request, Response } from 'express';
 import { getApiConfig } from '../../config';
-import { getProfileType } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
 
 type ParkerenUrlResponse = {
   url: string;
 };
 
-export async function fetchSSOParkerenURL(req: Request, res: Response) {
-  const profileType = await getProfileType(req);
+export async function fetchSSOParkerenURL(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const profileType = authProfileAndToken.profile.profileType;
   const config = getApiConfig('PARKEREN', {
-    transformResponse: (response: ParkerenUrlResponse) => response.url,
+    transformResponse: (response: ParkerenUrlResponse) => {
+      return response.url;
+    },
   });
   const base_route = '/sso/get_authentication_url?service=';
 
@@ -29,10 +33,6 @@ export async function fetchSSOParkerenURL(req: Request, res: Response) {
     }
   }
 
-  const response = await requestData<ParkerenUrlResponse>(
-    config,
-    res.locals.requestID
-  );
-
+  const response = await requestData<ParkerenUrlResponse>(config, requestID);
   return response;
 }
