@@ -16,6 +16,7 @@ export const themasByProfileType: (
             'private',
             typeof item.title === 'function' ? item.title(appState) : item.title
           ),
+          to: typeof item.to === 'function' ? item.to(appState) : item.to,
         };
       }),
     'private-attributes': myThemasMenuItems

@@ -1,21 +1,11 @@
 import { Request, Response } from 'express';
-import { AuthProfileAndToken, getProfileType } from '../../helpers/app';
-import { requestData } from '../../helpers/source-api-request';
 import { getApiConfig } from '../../config';
-import { fetchService } from '../simple-connect/api-service';
+import { getProfileType } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
 
 type ParkerenUrlResponse = {
   url: string;
 };
-
-export async function fetchParkeren(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
-)
-{
-  fetchService(requestID
-}
-
 
 export async function fetchSSOParkerenURL(req: Request, res: Response) {
   const profileType = await getProfileType(req);
@@ -27,11 +17,22 @@ export async function fetchSSOParkerenURL(req: Request, res: Response) {
   switch (profileType) {
     case 'private': {
       config.url = `${config.url}${base_route}digid`;
-      return requestData<ParkerenUrlResponse>(config, res.locals.requestID);
+      break;
     }
     case 'commercial': {
       config.url = `${config.url}${base_route}eherkenning`;
-      return requestData<ParkerenUrlResponse>(config, res.locals.requestID);
+      break;
+    }
+    default: {
+      console.error('No profile type found for Parkeren.');
+      return null;
     }
   }
+
+  const response = await requestData<ParkerenUrlResponse>(
+    config,
+    res.locals.requestID
+  );
+
+  return response;
 }
