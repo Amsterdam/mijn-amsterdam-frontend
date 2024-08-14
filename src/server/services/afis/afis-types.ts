@@ -32,4 +32,35 @@ export type AFISBusinessPartnerCommercialSourceResponse = {
   Record: AFISBusinessPartnerRecord | AFISBusinessPartnerRecord[];
 };
 
-export type BusinessPartnerKnownResponse = { isKnown: boolean };
+export type BusinessPartnerKnownResponse = {
+  isKnown: boolean;
+  businessPartnerIdEncrypted: string | null;
+};
+
+export type AfisBusinessPartnerResponse<T> = {
+  feed: {
+    entry: [
+      {
+        content: {
+          properties: T;
+        };
+      },
+    ];
+  };
+};
+
+export type AfisBusinessPartnerDetailsTransformedResponse = {
+  BusinessPartner: string;
+  BusinessPartnerFullName: string;
+  BusinessPartnerAddress: string;
+  AddressID?: string;
+};
+
+export type AfisBusinessPartnerPhoneTransformedResponse = {
+  PhoneNumber: string;
+  EmailAddress?: string; // dit” komt nog niet uit de api, bespreken met afis
+};
+
+export type AfisBusinessPartnerCombinedResponse =
+  AfisBusinessPartnerDetailsTransformedResponse &
+    AfisBusinessPartnerPhoneTransformedResponse;
