@@ -130,8 +130,8 @@ export interface StadspasTransactionQueryParams {
   budgetCode?: string;
 }
 
-// NOTE: The optional properties are not yet tested to be present in a response with transacties of `length > 0`.
-// This is only send raw to the AmsApp at the moment, so knowing the exact shape might not be that important yet.
+// NOTE: Optional properties unconfirmed for non-empty transaction lists.
+// Currently sent raw to AmsApp; exact shape is yet to be determined.
 export interface StadspasAanbiedingenTransactionResponse {
   number_of_items: number;
   'total_items:'?: number;
@@ -140,7 +140,7 @@ export interface StadspasAanbiedingenTransactionResponse {
   transacties: AanbiedingTransactie[];
 }
 
-// NOTE: Taken straight from the documentation, not tested for variations
+// NOTE: Taken straight from the documentation; not tested for variations
 type AanbiedingTransactie = {
   id: number;
   transactiedatum: string;

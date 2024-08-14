@@ -223,10 +223,10 @@ function transformGpassTransactionsResponse(
 export async function fetchStadspasAanbiedingenTransactions(
   requestID: requestID,
   administratienummer: string,
-  passNumber: Stadspas['passNumber']
+  pasnummer: Stadspas['passNumber']
 ) {
   const requestParams: StadspasTransactionQueryParams = {
-    pasnummer: passNumber,
+    pasnummer,
     sub_transactions: true,
   };
 
@@ -245,11 +245,11 @@ export async function fetchStadspasAanbiedingenTransactions(
 export async function fetchStadspasBudgetTransactions(
   requestID: requestID,
   administratienummer: string,
-  passNumber: Stadspas['passNumber'],
+  pasnummer: Stadspas['passNumber'],
   budgetCode?: StadspasBudget['code']
 ) {
   const requestParams: StadspasTransactionQueryParams = {
-    pasnummer: passNumber,
+    pasnummer,
     sub_transactions: true,
   };
 

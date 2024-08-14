@@ -271,7 +271,7 @@ describe('hli/router-external-consumer', async () => {
 });
 
 // This block is outside of the enveloping describe block above, because
-// the global request and resposne mocks do not play nicely with this test.
+// the global request and response mocks do not play nicely with this test.
 describe('Aanbieding transactions endpoint', async () => {
   function buildStadspasAanbiedingTransactionResponse(): StadspasAanbiedingenTransactionResponse {
     return {
@@ -292,7 +292,7 @@ describe('Aanbieding transactions endpoint', async () => {
     } as unknown as Request<{ transactionsKeyEncrypted: string }>;
     const resMock = ResponseMock.new();
 
-    forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
+    await forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
 
     expect(
       fetchStadspasAanbiedingenTransactionsWithVerifySpy
