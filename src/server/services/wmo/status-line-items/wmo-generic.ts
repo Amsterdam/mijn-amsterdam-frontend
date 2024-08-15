@@ -145,7 +145,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
           : `Uw recht op ${aanvraag.titel} is beëindigd
           ${
             aanvraag.datumEindeGeldigheid
-              ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
+              ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
               : ''
           }`
       }
@@ -157,7 +157,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
              aanvraag.datumEindeGeldigheid
                ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                : ''
-           }} doen. Kijk in uw besluit op
+           } doen. Kijk in uw besluit op
             <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.
           </p>`
         : ''
@@ -182,7 +182,7 @@ export function getTransformerConfigBesluit(
                   aanvraag.datumEindeGeldigheid
                     ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                     : ''
-                }.`
+                }`
               : `U krijgt geen ${aanvraag.titel}`
           }.
       </p>
