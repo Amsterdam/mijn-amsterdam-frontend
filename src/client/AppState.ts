@@ -78,6 +78,13 @@ export const PRISTINE_APPSTATE: AppState = {
     { isKnown: false },
     { isActive: FeatureToggle.overtredingenActive }
   ),
+  PARKEREN: apiPristineResult(
+    { url: '' },
+    {
+      isActive: FeatureToggle.parkerenPatroonC,
+      profileTypes: ['private', 'commercial'],
+    }
+  ),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vakantieverhuurVergunningen: [],
     lvvRegistraties: [],

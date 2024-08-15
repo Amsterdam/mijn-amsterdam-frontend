@@ -275,7 +275,11 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     ? {
         title: ThemaTitles.PARKEREN,
         id: Themas.PARKEREN,
-        to: import.meta.env.REACT_APP_SSO_URL_PARKEREN,
+        // TODO: wanneer sso url in productie werkt onderstaande aanzetten.
+        // to: import.meta.env.REACT_APP_SSO_URL_PARKEREN,
+        to: (appState: AppState) => {
+          return appState.PARKEREN.content.url;
+        },
         rel: 'external',
         profileTypes: ['private', 'commercial'],
       }

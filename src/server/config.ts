@@ -125,6 +125,7 @@ export type SourceApiKey =
   | 'KVK'
   | 'LOOD_365'
   | 'LOOD_365_OAUTH'
+  | 'PARKEREN'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
@@ -298,6 +299,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/hr`,
     passthroughOIDCToken: true,
   },
+  PARKEREN: {
+    url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
+  },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${getFromEnv('BFF_LVV_API_URL')}`,
     headers: {
@@ -460,6 +464,9 @@ export const BffEndpoints = {
 
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
+
+  // Parkeren
+  PARKEREN_SSO_REDIRECT: 'services/parkeren/sso-url',
 
   // WPI Document download
   WPI_DOCUMENT_DOWNLOAD: '/services/wpi/document/:id',

@@ -33,6 +33,7 @@ import {
 import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { handleFetchAfisBusinessPartner } from './services/afis/afis-route-handlers';
+import { fetchSSOParkerenURL } from './services/parkeren/parkeren';
 
 export const router = express.Router();
 
@@ -117,6 +118,8 @@ router.get(
     return res.send(bewonersResponse);
   }
 );
+
+router.get(BffEndpoints.PARKEREN_SSO_REDIRECT, fetchSSOParkerenURL);
 
 // Deprecated, will be removed in MIJN-8916
 router.get(

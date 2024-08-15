@@ -30,7 +30,7 @@ export const FeatureToggle = {
   meldingenBuurtActive: true,
   oidcLogoutHintActive: true,
   overtredingenActive: !IS_PRODUCTION,
-  parkerenActive: IS_PRODUCTION,
+  parkerenActive: IS_PRODUCTION, // Two parkeren toggles because in the middle of implementing MIJN-9097.
   parkerenPatroonC: !IS_PRODUCTION,
   passQueryParamsToStreamUrl: !IS_AP,
   powerbrowserActive: !IS_PRODUCTION,
