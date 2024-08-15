@@ -1,3 +1,4 @@
+import { apiErrorResult } from '../../../universal/helpers/api';
 import { getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
@@ -28,8 +29,9 @@ export async function fetchSSOParkerenURL(
       break;
     }
     default: {
-      console.error('No profile type found for Parkeren.');
-      return null;
+      const errorMessage = 'No profile type found for Parkeren.';
+      console.error(errorMessage);
+      return apiErrorResult(errorMessage, null, 400);
     }
   }
 

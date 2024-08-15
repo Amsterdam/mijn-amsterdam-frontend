@@ -68,6 +68,9 @@ const testState: any = {
       isKnown: true,
     },
   },
+  PARKEREN: {
+    content: 'http://remote-api-host/sso/portaal/parkeren',
+  },
   WPI_TOZO: {
     content: [{}],
   },

@@ -276,7 +276,9 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     ? {
         title: ThemaTitles.PARKEREN,
         id: Themas.PARKEREN,
-        to: (appState: AppState) => appState.PARKEREN.content,
+        to: (appState: AppState) => {
+          return appState.PARKEREN.content;
+        },
         rel: 'external',
         profileTypes: ['private', 'commercial'],
       }

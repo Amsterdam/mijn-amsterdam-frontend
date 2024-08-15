@@ -11,7 +11,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: { url: process.env.REACT_APP_SSO_URL_PARKEREN },
+          body: { url: `${settings.MOCK_API_BASE_URL}/sso/portaal/parkeren` },
         },
       },
     ],
