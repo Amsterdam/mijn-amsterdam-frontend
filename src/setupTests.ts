@@ -35,7 +35,6 @@ afterAll(() => {
   nock.enableNetConnect();
 });
 
-// Hostnames
 export const bffApiHost = 'http://bff-api-host';
 export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';

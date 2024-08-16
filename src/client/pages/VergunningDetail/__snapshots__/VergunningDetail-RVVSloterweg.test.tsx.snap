@@ -166,6 +166,15 @@ exports[`RVV Sloterweg status line items > RVV ontheffing Sloterweg (Nieuw/Verle
     "isChecked": true,
     "status": "Afgehandeld",
   },
+  {
+    "datePublished": "2024-08-01T00:00:00",
+    "description": "Uw RVV ontheffing Vaan van Laanderen voor kenteken YY-123-A, ZZ-122-A is verlopen.",
+    "documents": [],
+    "id": "status-gewijzigd",
+    "isActive": true,
+    "isChecked": true,
+    "status": "Gewijzigd",
+  },
 ]
 `;
 
@@ -270,6 +279,15 @@ exports[`RVV Sloterweg status line items > RVV ontheffing Sloterweg (Wijziging/V
     "isActive": true,
     "isChecked": true,
     "status": "Afgehandeld",
+  },
+  {
+    "datePublished": "2024-08-02T00:00:00",
+    "description": "Uw RVV ontheffing Sloterweg voor kenteken BB-344-E is verlopen.",
+    "documents": [],
+    "id": "status-gewijzigd",
+    "isActive": true,
+    "isChecked": true,
+    "status": "Gewijzigd",
   },
 ]
 `;
