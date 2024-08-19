@@ -8,7 +8,7 @@ export const PRISTINE_APPSTATE: AppState = {
   NOTIFICATIONS: apiPristineResult([]),
 
   AFIS: apiPristineResult(
-    { isKnown: false },
+    { isKnown: false, businessPartnerIdEncrypted: null },
     {
       isActive: FeatureToggle.afisActive,
       profileTypes: ['private', 'commercial'],
