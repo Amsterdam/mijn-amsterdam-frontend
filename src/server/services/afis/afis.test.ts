@@ -6,7 +6,7 @@ const mockEncrypt = (text: string): string => `encrypted-${text}`;
 const mockDecrypt = (text: string): string => text.replace('encrypted-', '');
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
-  const original = await importOriginal();
+  const original: object = await importOriginal();
   return {
     ...original,
     encrypt: vi.fn((text: string) => [mockEncrypt(text)]),
@@ -397,7 +397,6 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerAddress)
         .reply(200, responseWithoutAddress);
 
-    
       const encryptedRequestId = encrypt('213423')[0];
       const response = await fetchAfisBusinessPartner(
         REQUEST_ID,
