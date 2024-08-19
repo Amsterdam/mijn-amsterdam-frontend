@@ -16,9 +16,10 @@ jobs:
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Create Release
+        id: create_release
         run: |
             gh release create ${{ env.TAG_NAME }} --generate-notes
-            RELEASE_NOTES=$(gh release view ${{ github.ref }} --json body -q .body)
+            RELEASE_NOTES=$(gh release view ${{ github.ref_name }} --json body -q .body)
             echo "release_notes=$RELEASE_NOTES" >> $GITHUB_OUTPUT
 
       - name: Divide Notes into Chores, Stories, and Bugs

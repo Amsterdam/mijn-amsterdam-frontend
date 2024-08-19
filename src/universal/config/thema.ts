@@ -1,5 +1,6 @@
 // Within the team we call these Themes / Thema's
 export type Thema =
+  | 'AFIS'
   | 'AFVAL'
   | 'BELASTINGEN'
   | 'BURGERZAKEN'
