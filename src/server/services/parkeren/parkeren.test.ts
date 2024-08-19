@@ -5,12 +5,29 @@ import {
 import { ApiErrorResponse } from '../../../universal/helpers/api';
 import { fetchSSOParkerenURL } from './parkeren';
 
+const requestData = vi.hoisted(() => {
+  return vi.fn();
+});
+
+vi.mock('../../helpers/source-api-request.ts', async () => {
+  const module: object = await vi.importActual(
+    '../../helpers/source-api-request.ts'
+  );
+  return {
+    ...module,
+    requestData,
+  };
+});
+
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
 const url = 'https://parkeren.nl/sso-login';
-const expectedSuccessResponse = { content: url, status: 'OK' };
 
-test('success digid response', async () => {
+beforeEach(() => {
+  vi.clearAllMocks();
+});
+
+test('Calls with digid', async () => {
   const authProfileAndToken = authProfileAndToken_('private');
 
   remoteApi
@@ -19,11 +36,16 @@ test('success digid response', async () => {
       url,
     });
 
-  const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
-  expect(response).toStrictEqual(expectedSuccessResponse);
+  await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
+
+  const requestConfigURL = requestData.mock.calls[0][0].url;
+
+  expect(requestConfigURL).toBe(
+    'http://remote-api-host/parkeren/sso/get_authentication_url?service=digid'
+  );
 });
 
-test('success eherkenning response', async () => {
+test('Calls with eherkenning', async () => {
   let authProfileAndToken = authProfileAndToken_('commercial');
 
   remoteApi
@@ -32,8 +54,13 @@ test('success eherkenning response', async () => {
       url,
     });
 
-  const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
-  expect(response).toStrictEqual(expectedSuccessResponse);
+  await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
+
+  const requestConfigURL = requestData.mock.calls[0][0].url;
+
+  expect(requestConfigURL).toBe(
+    'http://remote-api-host/parkeren/sso/get_authentication_url?service=eherkenning'
+  );
 });
 
 test('returns apiError with unknown profile type', async () => {
@@ -46,4 +73,15 @@ test('returns apiError with unknown profile type', async () => {
   expect(response.code).toBe(400);
   expect(response.content).toBe(null);
   expect(response.status).toBe('ERROR');
+});
+
+test('requestData is called for correct errorhandling etc...', async () => {
+  let authProfileAndToken = authProfileAndToken_('private');
+
+  (await fetchSSOParkerenURL(
+    REQUEST_ID,
+    authProfileAndToken
+  )) as ApiErrorResponse<null>;
+
+  expect(requestData).toHaveBeenCalled();
 });
