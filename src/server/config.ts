@@ -342,6 +342,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       'X-Api-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
       Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   },
 };
