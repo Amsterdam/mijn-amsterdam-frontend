@@ -56,11 +56,14 @@ export type AfisBusinessPartnerDetailsTransformedResponse = {
   AddressID?: string;
 };
 
-export type AfisBusinessPartnerPhoneTransformedResponse = {
+export type AfisBusinessPartnerPhoneNumberTransformedResponse = {
   PhoneNumber: string;
-  EmailAddress?: string; // dit” komt nog niet uit de api, bespreken met afis
+};
+
+export type AfisBusinessPartnerEmailAddressTransformedResponse = {
+  EmailAddress: string;
 };
 
 export type AfisBusinessPartnerCombinedResponse =
   AfisBusinessPartnerDetailsTransformedResponse &
-    AfisBusinessPartnerPhoneTransformedResponse;
+    AfisBusinessPartnerPhoneNumberTransformedResponse;

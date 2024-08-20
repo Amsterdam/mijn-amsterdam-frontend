@@ -5,7 +5,8 @@ import {
   AfisBusinessPartnerCombinedResponse,
   AFISBusinessPartnerCommercialSourceResponse,
   AfisBusinessPartnerDetailsTransformedResponse,
-  AfisBusinessPartnerPhoneTransformedResponse,
+  AfisBusinessPartnerPhoneNumberTransformedResponse,
+  AfisBusinessPartnerEmailAddressTransformedResponse,
   AFISBusinessPartnerPrivateSourceResponse,
   AfisBusinessPartnerResponse,
   BusinessPartnerKnownResponse,
@@ -123,7 +124,8 @@ async function requestHandler<T>(
 
   if (addressID) {
     const urlPhonenumber = `${requestConfig.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressID}'`;
-
+    const urlEmailAddress = `${requestConfig.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressID}'`;
+    
     const responsePhonenumber =
       await axiosRequest.request<AfisBusinessPartnerResponse<AfisBusinessPartnerCombinedResponse> | null>(
         {
@@ -131,6 +133,15 @@ async function requestHandler<T>(
           url: urlPhonenumber,
         }
       );
+    
+      const responseEmailAddress =
+      await axiosRequest.request<AfisBusinessPartnerResponse<AfisBusinessPartnerCombinedResponse> | null>(
+        {
+          ...requestConfig,
+          url: urlEmailAddress,
+        }
+      );
+    
 
     const transformedResponseDetails = transformRequestDetails(
       responseBusinessDetailsResponse.data
@@ -140,10 +151,15 @@ async function requestHandler<T>(
       responsePhonenumber.data
     );
 
+    const transformedResponseEmailAddress = transformRequestEmailAddress(
+      responseEmailAddress.data
+    );
+
     if (transformedResponseDetails && transformedResponsePhonenumber) {
       const combinedResponse: AfisBusinessPartnerCombinedResponse = {
         ...transformedResponseDetails,
         ...transformedResponsePhonenumber,
+        ...transformedResponseEmailAddress,
       };
 
       (responseBusinessDetailsResponse as AxiosResponse).data =
@@ -191,12 +207,28 @@ function transformRequestDetails(
 function transformRequestPhonenumber(
   response: AfisBusinessPartnerResponse<any> | null
 ) {
-  let transformedResponse: AfisBusinessPartnerPhoneTransformedResponse | null;
+  let transformedResponse: AfisBusinessPartnerPhoneNumberTransformedResponse | null;
 
   const properties = response?.feed?.entry[0]?.content?.properties;
   if (properties) {
     transformedResponse = {
       PhoneNumber: properties.InternationalPhoneNumber,
+    };
+  } else {
+    transformedResponse = null;
+  }
+  return transformedResponse;
+}
+
+function transformRequestEmailAddress(
+  response: AfisBusinessPartnerResponse<any> | null
+) {
+  let transformedResponse: AfisBusinessPartnerEmailAddressTransformedResponse | null;
+
+  const properties = response?.feed?.entry[0]?.content?.properties;
+  if (properties) {
+    transformedResponse = {
+      EmailAddress: properties.SearchEmailAddress,
     };
   } else {
     transformedResponse = null;

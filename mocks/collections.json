@@ -57,6 +57,7 @@
       "post-afis-businesspartner-kvk:standard",
       "get-afis-businesspartner-details:standard",
       "get-afis-businesspartner-phonenumber:standard",
+      "get-afis-businesspartner-emailaddress:standard",
       "get-powerbrowser-bb-vergunning-attachments:standard",
       "post-powerbrowser-bb-vergunning-attachments:standard",
       "post-powerbrowser-token:standard",
