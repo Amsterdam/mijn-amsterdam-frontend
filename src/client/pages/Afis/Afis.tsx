@@ -22,7 +22,7 @@ export default function AfisThemaPagina() {
       isError={false}
       isLoading={false}
       linkListItems={[]}
-      pageContentTop={pageContentTop}
+      pageContentTop={pageContentTop ? pageContentTop : null}
       pageContentTables={
         <>
           {AFIS.content?.businessPartnerIdEncrypted && (
@@ -58,6 +58,7 @@ function AfisBusinessPartner({
       BusinessPartnerFullName: 'Naam',
       BusinessPartnerAddress: 'Adres',
       PhoneNumber: 'Telefoonnummer',
+      EmailAddress: 'E-mailadres',
     };
 
     const rows = Object.entries(businesspartner).map(([key, value]) => {

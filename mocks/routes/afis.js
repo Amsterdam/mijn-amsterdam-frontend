@@ -114,4 +114,32 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'get-afis-businesspartner-emailaddress',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            feed: {
+              entry: [
+                {
+                  content: {
+                    '@type': 'application/xml',
+                    properties: {
+                      SearchEmailAddress: 'xxmail@arjanappel.nl',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+  },
 ];

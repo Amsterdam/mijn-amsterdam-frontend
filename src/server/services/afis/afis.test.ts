@@ -22,7 +22,8 @@ const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
   businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27213423%27`,
-  businesspartnerAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27430844%27`,
+  businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27430844%27`,
+  businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27430844%27`,
 };
 
 const REQUEST_ID = '456';
@@ -299,14 +300,33 @@ describe('Afis', () => {
       },
     };
 
+    const responseBodyBusinessEmailAddress = {
+      feed: {
+        entry: [
+          {
+            content: {
+              '@type': 'application/xml',
+              properties: {
+                SearchEmailAddress: 'xxmail@arjanappel.nl',
+              },
+            },
+          },
+        ],
+      },
+    };
+
     it('fetches and transforms business partner details correctly', async () => {
       remoteApi
         .get(ROUTES.businesspartnerDetails)
         .reply(200, responseBodyBusinessDetails);
 
       remoteApi
-        .get(ROUTES.businesspartnerAddress)
+        .get(ROUTES.businesspartnerPhonenumber)
         .reply(200, responseBodyBusinessPhonenumber);
+
+      remoteApi
+        .get(ROUTES.businesspartnerEmailAddress)
+        .reply(200, responseBodyBusinessEmailAddress);
 
       const encryptedRequestId = encrypt('213423')[0];
       const response = await fetchAfisBusinessPartner(
@@ -320,6 +340,7 @@ describe('Afis', () => {
             "BusinessPartner": 515177,
             "BusinessPartnerAddress": "Rembrandtstraat 202311 VW Leiden",
             "BusinessPartnerFullName": "Taxon Expeditions BV",
+            "EmailAddress": "xxmail@arjanappel.nl",
             "PhoneNumber": "+31622030313",
           },
           "status": "OK",
@@ -332,7 +353,11 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerDetails)
         .reply(200, responseBodyBusinessDetails);
 
-      remoteApi.get(ROUTES.businesspartnerAddress).reply(200, {});
+      remoteApi.get(ROUTES.businesspartnerPhonenumber).reply(200, {});
+
+      remoteApi
+        .get(ROUTES.businesspartnerEmailAddress)
+        .reply(200, {});
 
       const encryptedRequestId = encrypt('213423')[0];
       const response = await fetchAfisBusinessPartner(
@@ -360,8 +385,12 @@ describe('Afis', () => {
         .reply(200, responseBodyBusinessDetailsWithoutAddressID);
 
       remoteApi
-        .get(ROUTES.businesspartnerAddress)
+        .get(ROUTES.businesspartnerPhonenumber)
         .reply(200, responseBodyBusinessPhonenumber);
+
+      remoteApi
+        .get(ROUTES.businesspartnerEmailAddress)
+        .reply(200, responseBodyBusinessEmailAddress);
 
       const response = await fetchAfisBusinessPartner(REQUEST_ID, '213423');
 
@@ -394,10 +423,13 @@ describe('Afis', () => {
         .reply(200, responseBodyBusinessDetails);
 
       remoteApi
-        .get(ROUTES.businesspartnerAddress)
+        .get(ROUTES.businesspartnerPhonenumber)
         .reply(200, responseWithoutAddress);
 
-    
+      remoteApi
+        .get(ROUTES.businesspartnerEmailAddress)
+        .reply(200, responseWithoutAddress);
+
       const encryptedRequestId = encrypt('213423')[0];
       const response = await fetchAfisBusinessPartner(
         REQUEST_ID,
