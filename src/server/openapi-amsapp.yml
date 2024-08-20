@@ -234,6 +234,17 @@ components:
     StadspasAanbiedingen:
       type: object
       properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/StadspasAanbieding'
+        status:
+          enum:
+          - 'SUCCESS'
+
+    StadspasAanbieding:
+      type: object
+      properties:
         number_of_items:
           type: number
         'total_items:':
@@ -320,6 +331,7 @@ components:
                         size:
                           type: string
 
+
     StadspasBudget:
       type: object
       properties:
@@ -359,10 +371,6 @@ components:
       properties:
         id:
           type: string
-        passNumber:
-          type: number
-        passNumberComplete:
-          type: string
         owner:
           $ref: '#/components/schemas/StadspasOwner'
         dateEnd:
@@ -374,6 +382,17 @@ components:
           items:
             $ref: '#/components/schemas/StadspasBudget'
         balanceFormatted:
+          type: string
+        passNumber:
+          type: number
+        passNumberComplete:
+          type: string
+        securityCode:
+          type: string
+        transactionsKeyEncrypted:
+          description: |
+            Used in subsequent requests to other endpoints requiring this.
+            This contains the passNumber and administrationNumber in an encrypted format.
           type: string
 
     StadspassenResponse:
