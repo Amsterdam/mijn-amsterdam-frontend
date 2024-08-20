@@ -355,9 +355,7 @@ describe('Afis', () => {
 
       remoteApi.get(ROUTES.businesspartnerPhonenumber).reply(200, {});
 
-      remoteApi
-        .get(ROUTES.businesspartnerEmailAddress)
-        .reply(200, {});
+      remoteApi.get(ROUTES.businesspartnerEmailAddress).reply(200, {});
 
       const encryptedRequestId = encrypt('213423')[0];
       const response = await fetchAfisBusinessPartner(
@@ -402,16 +400,13 @@ describe('Afis', () => {
       `);
     });
 
-    it('handles missing address data', async () => {
-      const responseWithoutAddress = {
+    it('handles missing phonenumber', async () => {
+      const responseWithoutPhonenumber = {
         feed: {
           entry: [
             {
               content: {
-                properties: {
-                  BusinessPartner: '213423',
-                  FullName: 'Test Company',
-                },
+                properties: {},
               },
             },
           ],
@@ -424,14 +419,14 @@ describe('Afis', () => {
 
       remoteApi
         .get(ROUTES.businesspartnerPhonenumber)
-        .reply(200, responseWithoutAddress);
+        .reply(200, responseWithoutPhonenumber);
 
       remoteApi
         .get(ROUTES.businesspartnerEmailAddress)
-        .reply(200, responseWithoutAddress);
+        .reply(200, responseBodyBusinessEmailAddress);
 
       const encryptedRequestId = encrypt('213423')[0];
-      const response = await fetchAfisBusinessPartner(
+      let response = await fetchAfisBusinessPartner(
         REQUEST_ID,
         encryptedRequestId
       );
@@ -441,7 +436,42 @@ describe('Afis', () => {
         status: 'OK',
       });
     });
+    it('handles missing emailaddress', async () => {
+      const responseWithoutEmailAddress = {
+        feed: {
+          entry: [
+            {
+              content: {
+                properties: {},
+              },
+            },
+          ],
+        },
+      };
 
+      remoteApi
+        .get(ROUTES.businesspartnerDetails)
+        .reply(200, responseBodyBusinessDetails);
+
+      remoteApi
+        .get(ROUTES.businesspartnerPhonenumber)
+        .reply(200, responseBodyBusinessPhonenumber);
+
+      remoteApi
+        .get(ROUTES.businesspartnerEmailAddress)
+        .reply(200, responseWithoutEmailAddress);
+
+      const encryptedRequestId = encrypt('213423')[0];
+      let response = await fetchAfisBusinessPartner(
+        REQUEST_ID,
+        encryptedRequestId
+      );
+
+      expect(response).toMatchObject({
+        content: null,
+        status: 'OK',
+      });
+    });
     it('handles server error as expected', async () => {
       remoteApi
         .get(ROUTES.businesspartnerDetails)
