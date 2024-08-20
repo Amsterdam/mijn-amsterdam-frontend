@@ -60,7 +60,7 @@ export default function Burgerzaken() {
         <MaintenanceNotifications page="burgerzaken" />
         {isError(BRP) && (
           <ErrorAlert>
-            We kunnen op dit moment geen ID-kaarten tonen.
+            We kunnen op dit moment geen paspoort en/of ID-kaart tonen.
           </ErrorAlert>
         )}
       </PageContent>
@@ -68,7 +68,7 @@ export default function Burgerzaken() {
         id="SectionCollapsible-offical-documents"
         title="Mijn reisdocumenten"
         className={styles.SectionCollapsibleIdKaarten}
-        noItemsMessage="Wij kunnen nog geen ID-kaarten tonen."
+        noItemsMessage="Wij kunnen nog geen paspoort en/of ID-kaart tonen."
         startCollapsed={false}
         hasItems={!!documentItems.length}
         isLoading={isLoading(BRP)}

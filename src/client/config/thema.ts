@@ -17,7 +17,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
-  BURGERZAKEN: 'Burgerzaken',
+  BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
   BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
@@ -69,11 +69,14 @@ export const DocumentTitles: DocumentTitlesConfig = {
   },
   [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
   [AppRoutes['BURGERZAKEN/ID-KAART']]: `ID-Kaart | ${ThemaTitles.BURGERZAKEN}`,
+  [AppRoutes['BURGERZAKEN/PASPOORT']]: `Paspoort | ${ThemaTitles.BURGERZAKEN}`,
+
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
     `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
+
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
   [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
   [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
@@ -128,6 +131,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
   [AppRoutes.AFIS]: 'Facturen en betalen | Mijn Amsterdam',
+  '/zorg-en-ondersteuning/:kind/:page?': '',
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
@@ -184,6 +188,16 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: AppRoutes.BURGERZAKEN,
     profileTypes: ['private'],
   },
+
+  // {
+  //   title: (appState: AppState) => {
+  //     return getThemaTitleWithAppState(appState);
+  //   },
+  //   id: Themas.HLI,
+  //   to: AppRoutes.HLI,
+  //   profileTypes: ['private'],
+  // },
+
   {
     title: ThemaTitles.ERFPACHT,
     id: Themas.ERFPACHT,

@@ -13,7 +13,7 @@ exports[`<BurgerzakenIDKaart /> > Matches the Full Page snapshot 1`] = `
         class="_Icon_3b337d"
       >
         <svg
-          aria-label="Burgerzaken"
+          aria-label="Paspoort en ID-kaart"
           class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
@@ -54,7 +54,7 @@ exports[`<BurgerzakenIDKaart /> > Matches the Full Page snapshot 1`] = `
               points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
             />
           </svg>
-          Burgerzaken
+          Paspoort en ID-kaart
         </a>
         <h2
           class="ams-heading ams-heading--1"
