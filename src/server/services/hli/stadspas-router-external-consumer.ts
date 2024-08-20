@@ -121,7 +121,7 @@ async function sendAdministratienummerResponse(
         deliveryResponse.content.detail === 'Success'
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
-          appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
+          appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
             : '',
@@ -152,7 +152,7 @@ async function sendAdministratienummerResponse(
 
   return res.render('amsapp-stadspas-administratienummer', {
     error: apiResponseError,
-    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
   });
 }
 

@@ -57,4 +57,19 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'get-gpass-aanbiedingen-transacties',
+    url: `${settings.MOCK_BASE_PATH}/gpass/rest/transacties/v1/aanbiedingen*`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: [{ toBeDeterminedFields: 'Unknown' }],
+        },
+      },
+    ],
+  },
 ];
