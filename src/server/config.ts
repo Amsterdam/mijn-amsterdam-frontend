@@ -342,6 +342,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       'X-Api-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
       Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   },
 };
@@ -415,7 +416,7 @@ export const ExternalConsumerEndpoints = {
   // Privately accessible
   private: {
     STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
-    STADSPAS_AANBIEDINGEN_TRANSACTIES: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:pasNummer`,
+    STADSPAS_AANBIEDINGEN_TRANSACTIES: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
     STADPAS_BUDGET_TRANSACTIES: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
   },
 };
