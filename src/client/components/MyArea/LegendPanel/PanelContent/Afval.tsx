@@ -2,12 +2,12 @@ import { LinkdInline } from '../../../Button/Button';
 import GenericBase from './GenericBase';
 
 const afvalUrls: Record<string, string> = {
-  rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval/',
-  glas: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/glas-potten-flessen-en-ander-glas/',
+  rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval',
+  glas: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/glas-potten-flessen-en-ander-glas',
   papier:
-    'https://www.milieucentraal.nl/minder-afval/afval-scheiden/papier-en-karton/',
+    'https://www.milieucentraal.nl/minder-afval/afval-scheiden/papier-en-karton',
   textiel:
-    'https://www.milieucentraal.nl/minder-afval/afval-scheiden/kleding-textiel-en-schoenen/',
+    'https://www.milieucentraal.nl/minder-afval/afval-scheiden/kleding-textiel-en-schoenen',
   gft: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/groente-fruit-en-tuinafval-gft/#uitgebreide-gft-lijst-per-categorie',
 };
 
