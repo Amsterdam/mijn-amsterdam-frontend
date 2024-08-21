@@ -20,7 +20,7 @@ import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  fetchStadspasAanbiedingenTransactionsWithVerify,
+  fetchStadspasAanbiedingenWithVerify,
   fetchStadspasBudgetTransactionsWithVerify,
 } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
@@ -220,7 +220,7 @@ async function sendAanbiedingenTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasAanbiedingenTransactionsWithVerify(
+  const response = await fetchStadspasAanbiedingenWithVerify(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted
   );

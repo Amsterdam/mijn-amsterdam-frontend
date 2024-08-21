@@ -281,8 +281,8 @@ describe('Aanbieding transactions endpoint', async () => {
   }
 
   it('Happy path', async () => {
-    const fetchStadspasAanbiedingenTransactionsWithVerifySpy = vi
-      .spyOn(stadspas, 'fetchStadspasAanbiedingenTransactionsWithVerify')
+    const fetchStadspasAanbiedingenWithVerifySpy = vi
+      .spyOn(stadspas, 'fetchStadspasAanbiedingenWithVerify')
       .mockResolvedValueOnce(
         apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
       );
@@ -294,9 +294,7 @@ describe('Aanbieding transactions endpoint', async () => {
 
     await forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
 
-    expect(
-      fetchStadspasAanbiedingenTransactionsWithVerifySpy
-    ).toHaveBeenCalledWith(
+    expect(fetchStadspasAanbiedingenWithVerifySpy).toHaveBeenCalledWith(
       resMock.locals.requestID,
       TRANSACTIONS_KEY_ENCRYPTED
     );

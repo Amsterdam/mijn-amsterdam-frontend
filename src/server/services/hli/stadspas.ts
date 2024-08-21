@@ -10,16 +10,14 @@ import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
-  fetchStadspasAanbiedingenTransactions,
+  fetchStadspasAanbiedingen,
   fetchStadspasBudgetTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import {
+  StadspasAdministratieNummer,
   StadspasBudget,
   StadspasFrontend,
-  StadspasBudgetTransaction,
-  StadspasAanbiedingenTransactionResponse,
-  FetchStadspasTransactionsFn,
 } from './stadspas-types';
 
 export async function fetchStadspas(
@@ -64,62 +62,98 @@ export async function fetchStadspas(
   return stadspasResponse;
 }
 
-export const fetchStadspasBudgetTransactionsWithVerify =
-  createTransactionFetchFn<StadspasBudgetTransaction[]>(
-    fetchStadspasBudgetTransactions
-  );
-
-export const fetchStadspasAanbiedingenTransactionsWithVerify =
-  createTransactionFetchFn<StadspasAanbiedingenTransactionResponse>(
-    fetchStadspasAanbiedingenTransactions
-  );
-
-function createTransactionFetchFn<T>(
-  fetchTransactionFn: FetchStadspasTransactionsFn<T>
+export async function decryptAndValidateStadspasTransactionsKey(
+  transactionsKeyEncrypted: string,
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  async function inner(
-    requestID: requestID,
-    transactionsKeyEncrypted: string,
-    budgetCode?: StadspasBudget['code'],
-    verifySessionId?: AuthProfileAndToken['profile']['sid']
-  ) {
-    let payload: string[];
-    try {
-      payload = decrypt(transactionsKeyEncrypted).split(':');
-    } catch (error) {
-      captureException(error);
-      return apiErrorResult(
-        'Bad request: Failed to decrypt transactions key',
-        null,
-        400
-      );
-    }
-
-    let sessionID = '';
-    let administratienummer = '';
-    let passNumber = '';
-
-    if (verifySessionId) {
-      [sessionID, administratienummer, passNumber] = payload;
-      if (sessionID !== verifySessionId) {
-        return apiErrorResult('Not authorized', null, 401);
-      }
-    } else {
-      [administratienummer, passNumber] = payload;
-    }
-
-    if (!administratienummer || !passNumber) {
-      return apiErrorResult('Not authorized', null, 401);
-    }
-
-    return fetchTransactionFn(
-      requestID,
-      administratienummer,
-      parseInt(passNumber, 10),
-      budgetCode
+  let payload: string[];
+  try {
+    payload = decrypt(transactionsKeyEncrypted).split(':');
+  } catch (error) {
+    captureException(error);
+    return apiErrorResult(
+      'Bad request: Failed to decrypt transactions key',
+      null,
+      400
     );
   }
-  return inner;
+
+  let sessionID: AuthProfileAndToken['profile']['sid'];
+  let administratienummer: StadspasAdministratieNummer;
+  let pasnummer: string;
+
+  if (verifySessionId) {
+    [sessionID, administratienummer, pasnummer] = payload;
+    if (sessionID !== verifySessionId) {
+      return apiErrorResult('Not authorized', null, 401);
+    }
+  } else {
+    [administratienummer, pasnummer] = payload;
+  }
+
+  if (!administratienummer || !pasnummer) {
+    return apiErrorResult('Not authorized', null, 401);
+  }
+
+  return apiSuccessResult({
+    administratienummer,
+    pasnummer: parseInt(pasnummer, 10) as StadspasFrontend['passNumber'],
+  });
+}
+
+export async function decryptAndFetch<T>(
+  fetchTransactionFn: (
+    administratienummer: StadspasAdministratieNummer,
+    pasnummer: StadspasFrontend['passNumber']
+  ) => T,
+  transactionsKeyEncrypted: string,
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
+) {
+  const decryptResult = await decryptAndValidateStadspasTransactionsKey(
+    transactionsKeyEncrypted,
+    verifySessionId
+  );
+
+  if (decryptResult.status === 'OK') {
+    return fetchTransactionFn(
+      decryptResult.content.administratienummer,
+      decryptResult.content.pasnummer
+    );
+  }
+
+  return decryptResult;
+}
+
+export async function fetchStadspasAanbiedingenWithVerify(
+  requestID: requestID,
+  transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
+  budgetCode?: StadspasBudget['code']
+) {
+  return decryptAndFetch(
+    (administratienummer, pasnummer) =>
+      fetchStadspasAanbiedingen(requestID, administratienummer, pasnummer),
+    transactionsKeyEncrypted,
+    budgetCode
+  );
+}
+
+export async function fetchStadspasBudgetTransactionsWithVerify(
+  requestID: requestID,
+  transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
+  budgetCode?: StadspasBudget['code'],
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
+) {
+  return decryptAndFetch(
+    (administratienummer, pasnummer) =>
+      fetchStadspasBudgetTransactions(
+        requestID,
+        administratienummer,
+        pasnummer,
+        budgetCode
+      ),
+    transactionsKeyEncrypted,
+    verifySessionId
+  );
 }
 
 export async function fetchStadspasNotifications(
@@ -132,3 +166,7 @@ export async function fetchStadspasNotifications(
     ? getBudgetNotifications(stadspasResponse.content)
     : [];
 }
+
+export const forTesting = {
+  decryptAndValidateStadspasTransactionsKey,
+};

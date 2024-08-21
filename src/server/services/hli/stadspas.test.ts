@@ -3,7 +3,7 @@ import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
-  fetchStadspasAanbiedingenTransactions,
+  fetchStadspasAanbiedingen,
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import { fetchStadspasBudgetTransactionsWithVerify } from './stadspas';
@@ -448,7 +448,7 @@ describe('stadspas services', () => {
     `);
   });
 
-  describe('fetchStadspasAanbiedingenTransactions', async () => {
+  describe('fetchStadspasAanbiedingen', async () => {
     const requestID = 'xyz098';
     const administratienummer = 'administratienummer123';
     const passNumber = 123456789;
@@ -469,7 +469,7 @@ describe('stadspas services', () => {
         )
         .reply(200, expectedResponse);
 
-      const response = await fetchStadspasAanbiedingenTransactions(
+      const response = await fetchStadspasAanbiedingen(
         requestID,
         administratienummer,
         passNumber
