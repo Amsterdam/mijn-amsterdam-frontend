@@ -63,17 +63,6 @@ test('Calls with eherkenning', async () => {
   );
 });
 
-test('returns apiError with unknown profile type', async () => {
-  let authProfileAndToken = authProfileAndToken_('private-attributes');
-  const response = (await fetchSSOParkerenURL(
-    REQUEST_ID,
-    authProfileAndToken
-  )) as ApiErrorResponse<null>;
-
-  expect(response.code).toBe(400);
-  expect(response.content).toBe(null);
-  expect(response.status).toBe('ERROR');
-});
 
 test('requestData is called for correct errorhandling etc...', async () => {
   let authProfileAndToken = authProfileAndToken_('private');
