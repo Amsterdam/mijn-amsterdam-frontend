@@ -1,9 +1,13 @@
 name: 'Release notification'
 on: create
+
+permissions:
+  contents: write
 jobs:
   create-notification:
-    if: ${{ contains(github.ref, 'release-v') }}
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -11,49 +15,86 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Extract tag name
-        id: extract_tag
-        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-
-      - name: Create Release
-        id: create_release
+      - name: Fetch all tags
+        run: git fetch --tags
+  
+      - name: Get latest and previous tags
+        id: tags
         run: |
-            gh release create ${{ env.TAG_NAME }} --generate-notes
-            RELEASE_NOTES=$(gh release view ${{ github.ref_name }} --json body -q .body)
-            echo "release_notes=$RELEASE_NOTES" >> $GITHUB_OUTPUT
+          all_tags=$(git tag -l --sort=-v:refname)
+          latest_tag=$(echo "$all_tags" | sed -n '1p')
+          previous_tag=$(echo "$all_tags" | sed -n '2p')
+          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
+          echo "previous_tag=$previous_tag" >> $GITHUB_OUTPUT
+          
+          # Debug output
+          echo "Latest tag: $latest_tag"
+          echo "Previous tag: $previous_tag"
+  
+      - name: Generate Release Notes
+        run: |
+          echo "Changes between ${{ steps.tags.outputs.previous_tag }} and ${{ steps.tags.outputs.latest_tag }}:" > release-notes.txt
+            git log ${{ steps.tags.outputs.previous_tag }}..${{ steps.tags.outputs.latest_tag }} --oneline >> release-notes.txt
+            RELEASE_NOTES=$(cat release-notes.txt)
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+            echo "$RELEASE_NOTES" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+  
+      - name: Create or Update Release
+        run: |
+          if gh release view ${{ steps.tags.outputs.latest_tag }} &>/dev/null; then
+            echo "Release exists. Updating..."
+              gh release edit ${{ steps.tags.outputs.latest_tag }} --notes "$RELEASE_NOTES"
+            else
+              echo "Creating new release..."
+              gh release create ${{ steps.tags.outputs.latest_tag }} --notes "$RELEASE_NOTES"
+            fi
 
-      - name: Divide Notes into Chores, Stories, and Bugs
+      - name: Divide Notes into Chores, Features, and Bugs
         id: categorize_notes
         run: |
-          echo "${{ steps.create_release.outputs.release_notes }}" > release_notes.txt
-          grep -i 'CHORE:' release_notes.txt > chores.txt || true
-          grep -i 'STORY:' release_notes.txt > stories.txt || true
-          grep -i 'FIX\|BUG:' release_notes.txt > bugs.txt || true
-# todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
-          grep -i 'MIJN:' release_notes.txt > mijn.txt || true
-          echo "chores=$(cat chores.txt)" >> $GITHUB_OUTPUT
-          echo "stories=$(cat stories.txt)" >> $GITHUB_OUTPUT
-          echo "bugs=$(cat bugs.txt)" >> $GITHUB_OUTPUT
-# todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
-          echo "mijn=$(cat mijn.txt)" >> $GITHUB_OUTPUT
+          echo "${{ env.RELEASE_NOTES }}" > release_notes.txt
+          grep -iE 'CHORE|MIJN-[0-9]+-CHORE' release_notes.txt | sort -u > chores.txt || true
+          grep -iE 'FEATURE:|MIJN-[0-9]+-FEATURE' release_notes.txt > features.txt || true
+          grep -iE 'BUG:|MIJN-[0-9]+-BUG' release_notes.txt > bugs.txt || true
+          grep -iE 'MIJN-[0-9]+($|[^-])' release_notes.txt > mijn.txt || true
+          
+          echo "chores<<EOF" >> $GITHUB_OUTPUT
+          cat chores.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+          echo "features<<EOF" >> $GITHUB_OUTPUT
+          cat features.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+          echo "bugs<<EOF" >> $GITHUB_OUTPUT
+          cat bugs.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+          echo "mijn<<EOF" >> $GITHUB_OUTPUT
+          cat mijn.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Create Customized Release Notes
         id: custom_release_notes
         run: |
-          echo "## Release Notes" > custom_release_notes.md
-          echo "### Chores" >> custom_release_notes.md
-          cat chores.txt >> custom_release_notes.md
-          echo "### Stories" >> custom_release_notes.md
-          cat stories.txt >> custom_release_notes.md
-          echo "### Bugs" >> custom_release_notes.md
-          cat bugs.txt >> custom_release_notes.md
-# todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
-          echo "### Mijn" >> custom_release_notes.md
-          cat mijn.txt >> custom_release_notes.md
-          CUSTOM_NOTES=$(cat custom_release_notes.md)
-          echo "custom_notes=$CUSTOM_NOTES" >> $GITHUB_OUTPUT
+          {
+            echo "## Release Notes"
+            echo "### Chores"
+            echo "${{ steps.categorize_notes.outputs.chores }}"
+            echo "### Features"
+            echo "${{ steps.categorize_notes.outputs.features }}"
+            echo "### Bugs"
+            echo "${{ steps.categorize_notes.outputs.bugs }}"
+            echo "### Mijn"
+            echo "${{ steps.categorize_notes.outputs.mijn }}"
+          } > custom_release_notes.txt
+          CUSTOM_NOTES=$(cat custom_release_notes.txt)
+          echo "CUSTOM_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$CUSTOM_NOTES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Update Release with Custom Notes
         run: |
-          gh release edit ${{ github.ref }} --notes "${{ steps.custom_release_notes.outputs.custom_notes }}"
+          gh release edit ${{ steps.tags.outputs.latest_tag }} --notes "${{ env.CUSTOM_NOTES }}"

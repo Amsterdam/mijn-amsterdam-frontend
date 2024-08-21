@@ -15,8 +15,8 @@ jobs:
             const payload = context.payload
             const prTitle = payload.pull_request.title
 
-            // Titel moet beginnen met mijn-xxxx of Bump! todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
-            const jiraPattern = /(mijn-\d+|chore-\d+|bug-\d+|feature-\d+|bump!)/gi
+            // Titel moet beginnen met mijn-xxxx-chore/feature/bug! todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
+            const jiraPattern = /^MIJN-\d+-(CHORE|FEATURE|BUG)/i
             if (!jiraPattern.test(prTitle)) {
               console.log('The PR title does not match JIRA ticket format!')
               // Fails the workflow
