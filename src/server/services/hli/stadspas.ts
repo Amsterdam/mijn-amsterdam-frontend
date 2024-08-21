@@ -10,8 +10,8 @@ import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
-  fetchStadspasAanbiedingen,
-  fetchStadspasBudgetTransactions,
+  fetchGpassAanbiedingen,
+  fetchGpassBudgetTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import {
@@ -124,20 +124,20 @@ export async function decryptAndFetch<T>(
   return decryptResult;
 }
 
-export async function fetchStadspasAanbiedingenWithVerify(
+export async function fetchStadspasAanbiedingen(
   requestID: requestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
   budgetCode?: StadspasBudget['code']
 ) {
   return decryptAndFetch(
     (administratienummer, pasnummer) =>
-      fetchStadspasAanbiedingen(requestID, administratienummer, pasnummer),
+      fetchGpassAanbiedingen(requestID, administratienummer, pasnummer),
     transactionsKeyEncrypted,
     budgetCode
   );
 }
 
-export async function fetchStadspasBudgetTransactionsWithVerify(
+export async function fetchStadspasBudgetTransactions(
   requestID: requestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
   budgetCode?: StadspasBudget['code'],
@@ -145,7 +145,7 @@ export async function fetchStadspasBudgetTransactionsWithVerify(
 ) {
   return decryptAndFetch(
     (administratienummer, pasnummer) =>
-      fetchStadspasBudgetTransactions(
+      fetchGpassBudgetTransactions(
         requestID,
         administratienummer,
         pasnummer,

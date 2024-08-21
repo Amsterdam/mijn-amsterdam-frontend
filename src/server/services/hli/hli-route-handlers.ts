@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthProfileAndToken, getAuth, sendResponse } from '../../helpers/app';
 import { fetchDocument } from '../zorgned/zorgned-service';
-import { fetchStadspasBudgetTransactionsWithVerify } from './stadspas';
+import { fetchStadspasBudgetTransactions } from './stadspas';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';
 
 export async function handleFetchTransactionsRequest(
@@ -11,7 +11,7 @@ export async function handleFetchTransactionsRequest(
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  const response = await fetchStadspasBudgetTransactionsWithVerify(
+  const response = await fetchStadspasBudgetTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     req.query?.budgetCode as StadspasBudget['code'],

@@ -221,7 +221,7 @@ function transformGpassTransactionsResponse(
   return responseSource;
 }
 
-export async function fetchStadspasBudgetTransactions(
+export async function fetchGpassBudgetTransactions(
   requestID: requestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber'],
@@ -267,7 +267,7 @@ function transformGpassAanbiedingenResponse(
   return responseSource;
 }
 
-export async function fetchStadspasAanbiedingen(
+export async function fetchGpassAanbiedingen(
   requestID: requestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber']

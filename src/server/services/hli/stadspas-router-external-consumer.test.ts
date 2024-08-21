@@ -237,7 +237,7 @@ describe('hli/router-external-consumer', async () => {
   describe('Budget transactions endpoint', async () => {
     it('Happy path without budgetcode filter', async () => {
       const fetchStadspasTransactionsSpy = vi
-        .spyOn(stadspas, 'fetchStadspasBudgetTransactionsWithVerify')
+        .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
         .mockResolvedValueOnce(apiSuccessResult([]));
 
       const reqMock = {
@@ -252,7 +252,7 @@ describe('hli/router-external-consumer', async () => {
 
     it('Happy path with budgetcode filter.', async () => {
       const fetchStadspasTransactionsSpy = vi
-        .spyOn(stadspas, 'fetchStadspasBudgetTransactionsWithVerify')
+        .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
         .mockResolvedValueOnce(apiSuccessResult([]));
 
       const reqMock = {
@@ -281,8 +281,8 @@ describe('Aanbieding transactions endpoint', async () => {
   }
 
   it('Happy path', async () => {
-    const fetchStadspasAanbiedingenWithVerifySpy = vi
-      .spyOn(stadspas, 'fetchStadspasAanbiedingenWithVerify')
+    const fetchStadspasAanbiedingenSpy = vi
+      .spyOn(stadspas, 'fetchStadspasAanbiedingen')
       .mockResolvedValueOnce(
         apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
       );
@@ -294,7 +294,7 @@ describe('Aanbieding transactions endpoint', async () => {
 
     await forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
 
-    expect(fetchStadspasAanbiedingenWithVerifySpy).toHaveBeenCalledWith(
+    expect(fetchStadspasAanbiedingenSpy).toHaveBeenCalledWith(
       resMock.locals.requestID,
       TRANSACTIONS_KEY_ENCRYPTED
     );

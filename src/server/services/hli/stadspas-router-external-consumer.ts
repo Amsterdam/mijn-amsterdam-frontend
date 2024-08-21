@@ -20,8 +20,8 @@ import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  fetchStadspasAanbiedingenWithVerify,
-  fetchStadspasBudgetTransactionsWithVerify,
+  fetchStadspasAanbiedingen,
+  fetchStadspasBudgetTransactions,
 } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
@@ -220,7 +220,7 @@ async function sendAanbiedingenTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasAanbiedingenWithVerify(
+  const response = await fetchStadspasAanbiedingen(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted
   );
@@ -244,7 +244,7 @@ async function sendBudgetTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasBudgetTransactionsWithVerify(
+  const response = await fetchStadspasBudgetTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     req.query?.budgetCode as StadspasBudget['code']

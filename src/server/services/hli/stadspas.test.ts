@@ -1,13 +1,13 @@
 import { remoteApi } from '../../../test-utils';
-import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { AuthProfileAndToken } from '../../helpers/app';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { fetchAdministratienummer } from './hli-zorgned-service';
+import { fetchStadspasBudgetTransactions } from './stadspas';
 import {
-  fetchStadspasAanbiedingen,
+  fetchGpassAanbiedingen,
   fetchStadspassen,
 } from './stadspas-gpass-service';
-import { fetchStadspasBudgetTransactionsWithVerify } from './stadspas';
-import { StadspasAanbiedingenTransactionResponse } from './stadspas-types';
+import { StadspasAanbieding } from './stadspas-types';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -382,7 +382,7 @@ describe('stadspas services', () => {
       `my-unique-session-id:0363000123-123:123123123`
     );
 
-    const response = await fetchStadspasBudgetTransactionsWithVerify(
+    const response = await fetchStadspasBudgetTransactions(
       'abc123',
       transactionsKeyEncrypted,
       undefined,
@@ -413,7 +413,7 @@ describe('stadspas services', () => {
       `another-session-id:0363000123-123:123123123`
     );
 
-    const response = await fetchStadspasBudgetTransactionsWithVerify(
+    const response = await fetchStadspasBudgetTransactions(
       'xyz098',
       transactionsKeyEncrypted,
       undefined,
@@ -431,7 +431,7 @@ describe('stadspas services', () => {
   });
 
   test('stadspas transacties bad encrypted key', async () => {
-    const response = await fetchStadspasBudgetTransactionsWithVerify(
+    const response = await fetchStadspasBudgetTransactions(
       'xyz098',
       'FOO.BAR.XYZ',
       undefined,
@@ -454,10 +454,7 @@ describe('stadspas services', () => {
     const passNumber = 123456789;
 
     test('Get success response', async () => {
-      const expectedResponse: StadspasAanbiedingenTransactionResponse = {
-        number_of_items: 0,
-        transacties: [],
-      };
+      const expectedResponse: StadspasAanbieding[] = [];
 
       remoteApi
         .get(
@@ -469,7 +466,7 @@ describe('stadspas services', () => {
         )
         .reply(200, expectedResponse);
 
-      const response = await fetchStadspasAanbiedingen(
+      const response = await fetchGpassAanbiedingen(
         requestID,
         administratienummer,
         passNumber
