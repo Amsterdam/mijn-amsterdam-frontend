@@ -84,7 +84,7 @@ export default function ThemaPaginaHLI() {
     });
   }
 
-  const tables = Object.entries(tableConfig).map(
+  const regelingenTables = Object.entries(tableConfig).map(
     ([
       kind,
       {
@@ -123,7 +123,7 @@ export default function ThemaPaginaHLI() {
       pageContentTables={
         <>
           {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
-          {tables}
+          {!!regelingen?.length && regelingenTables}
         </>
       }
       isError={isError}
