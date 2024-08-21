@@ -36,7 +36,6 @@ describe('Afis', () => {
         BSN: 111111111,
         Zakenpartnernummer: '3333333333',
         Blokkade: 'Nee',
-        Afnemers_indicatie: 'Nee',
         Gevonden: 'Ja',
       },
       KVKFound: {
