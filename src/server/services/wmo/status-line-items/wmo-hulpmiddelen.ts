@@ -5,7 +5,7 @@ import {
   hasHistoricDate,
   isServiceDeliveryActive,
   isServiceDeliveryStarted,
-} from '../../zorgned/zorgned-helpers';
+} from './zorgned-helpers';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   {
