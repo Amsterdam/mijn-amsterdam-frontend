@@ -1,7 +1,7 @@
+import { Response } from 'express';
 import nock from 'nock';
-import { bffApiHost, remoteApiHost } from './setupTests';
 import { AuthProfileAndToken } from './server/helpers/app';
-import express, { Response } from 'express';
+import { bffApiHost, remoteApiHost } from './setupTests';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',

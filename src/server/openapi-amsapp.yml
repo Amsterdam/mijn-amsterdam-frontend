@@ -121,7 +121,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/StadspasAanbiedingen'
+                $ref: '#/components/schemas/StadsDiscountTransactionsResponse'
         '400':
           description: Returns bad request error
           content:
@@ -231,94 +231,38 @@ components:
           type: string
           description: Same as 'StadspasBudget.code'
 
-    StadspasAanbiedingen:
+    StadsDiscountTransactionsResponse:
       type: object
       properties:
-        number_of_items:
-          type: number
-        'total_items:':
-          type: number
-        totale_aantal:
-          type: number
-        totale_korting:
-          type: number
-        transacties:
+        content:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: number
-              transactiedatum:
-                type: string
-              verleende_korting:
-                type: number
-              annulering:
-                type: boolean
-              geannuleerd:
-                type: boolean
-              pashouder:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  hoofd_pashouder_id:
-                    type: number
-              leeftijd_pashouder:
-                type: number
-              pas:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  pasnummer:
-                    type: number
-                  pasnummer_volledig:
-                    type: string
-                  originele_pas:
-                    type: object
-                    properties:
-                      id:
-                        type: number
-                      pasnummer:
-                        type: number
-                      pasnummer_volledig:
-                        type: string
-              aanbieding:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  aanbiedingnummer:
-                    type: number
-                  publicatienummer:
-                    type: number
-                  kortingzin:
-                    type: string
-                  omschrijving:
-                    type: string
-                  communicatienaam:
-                    type: string
-                  pijler:
-                    type: string
-                  aanbieder:
-                    type: object
-                    properties:
-                      id:
-                        type: number
-                  afbeeldingen:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                        cdn_url:
-                          type: string
-                        medium:
-                          type: string
-                        size:
-                          type: string
+            $ref: '#/components/schemas/StadspasDiscountTransaction'
+        status:
+          type: string
+          enum:
+            - 'SUCCESS'
+
+    StadspasDiscountTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        discountTitle:
+          type: string
+        discountAmount:
+          type: number
+        discountAmountFormatted:
+          type: string
+          description: 'For example: - €12,45'
+        datePublished:
+          type: string
+        datePublishedFormatted:
+          type: string
 
     StadspasBudget:
       type: object
@@ -479,4 +423,3 @@ components:
             - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
             - 'Bad request: ApiError 000 - Onbekende fout'
             - 'Bad request: Bad request: Failed to decrypt transactions key'
-

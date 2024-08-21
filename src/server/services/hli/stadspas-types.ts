@@ -34,6 +34,64 @@ export interface StadspasTransactiesResponseSource {
   transacties: StadspasTransactieSource[];
 }
 
+// NOTE: Taken straight from the documentation; not tested for variations
+type StadspasAanbiedingSource = {
+  id: number;
+  transactiedatum: string;
+  verleende_korting: number;
+  annulering: boolean;
+  geannuleerd: boolean;
+  pashouder: {
+    id: number;
+    hoofd_pashouder_id: number;
+  };
+  leeftijd_pashouder: number;
+  pas: {
+    id: number;
+    pasnummer: number;
+    pasnummer_volledig: string;
+    originele_pas: {
+      id: number;
+      pasnummer: number;
+      pasnummer_volledig: string;
+    };
+  };
+  aanbieding: {
+    id: number;
+    aanbiedingnummer: number;
+    publicatienummer: number;
+    kortingzin: string;
+    omschrijving: string;
+    communicatienaam: string;
+    pijler: string;
+    aanbieder: {
+      id: number;
+    };
+    afbeeldingen: [
+      {
+        id: number;
+        cdn_url: string;
+        medium: string;
+        size: string;
+      },
+      {
+        id: number;
+        cdn_url: string;
+        medium: string;
+        size: string;
+      },
+    ];
+  };
+};
+
+export interface StadspasDiscountTransactionsResponseSource {
+  number_of_items: number;
+  total_items?: number;
+  totale_aantal?: number;
+  totale_korting?: number;
+  transacties: StadspasAanbiedingSource[];
+}
+
 export interface StadspasHouderPasSource {
   actief: boolean;
   pasnummer: number;
@@ -130,66 +188,6 @@ export interface StadspasTransactionQueryParams {
   budgetCode?: string;
 }
 
-// NOTE: Optional properties unconfirmed for non-empty transaction lists.
-// Currently sent raw to AmsApp; exact shape is yet to be determined.
-export interface StadspasAanbiedingenTransactionResponse {
-  number_of_items: number;
-  'total_items:'?: number;
-  totale_aantal?: number;
-  totale_korting?: number;
-  transacties: AanbiedingTransactie[];
-}
-
-// NOTE: Taken straight from the documentation; not tested for variations
-type AanbiedingTransactie = {
-  id: number;
-  transactiedatum: string;
-  verleende_korting: number;
-  annulering: boolean;
-  geannuleerd: boolean;
-  pashouder: {
-    id: number;
-    hoofd_pashouder_id: number;
-  };
-  leeftijd_pashouder: number;
-  pas: {
-    id: number;
-    pasnummer: number;
-    pasnummer_volledig: string;
-    originele_pas: {
-      id: number;
-      pasnummer: number;
-      pasnummer_volledig: string;
-    };
-  };
-  aanbieding: {
-    id: number;
-    aanbiedingnummer: number;
-    publicatienummer: number;
-    kortingzin: string;
-    omschrijving: string;
-    communicatienaam: string;
-    pijler: string;
-    aanbieder: {
-      id: number;
-    };
-    afbeeldingen: [
-      {
-        id: number;
-        cdn_url: string;
-        medium: string;
-        size: string;
-      },
-      {
-        id: number;
-        cdn_url: string;
-        medium: string;
-        size: string;
-      },
-    ];
-  };
-};
-
 export interface StadspasBudgetTransaction {
   id: string;
   title: string;
@@ -201,13 +199,16 @@ export interface StadspasBudgetTransaction {
   budgetCode: StadspasBudget['code'];
 }
 
-export type FetchStadspasTransactionsFn<TContent> = (
-  requestID: requestID,
-  administratienummer: string,
-  passNumber: Stadspas['passNumber'],
-  budgetCode?: StadspasBudget['code']
-) => Promise<
-  ApiPostponeResponse | ApiErrorResponse<null> | ApiSuccessResponse<TContent>
->;
+// TODO: Determine which props are needed for this type
+export interface StadspasDiscountTransaction {
+  id: string;
+  title: StadspasAanbiedingSource['aanbieding']['communicatienaam'];
+  discountTitle: StadspasAanbiedingSource['aanbieding']['kortingzin'];
+  discountAmount: StadspasAanbiedingSource['verleende_korting'];
+  discountAmountFormatted: string;
+  datePublished: StadspasAanbiedingSource['transactiedatum'];
+  datePublishedFormatted: string;
+  description: StadspasAanbiedingSource['aanbieding']['omschrijving'];
+}
 
 export type StadspasAdministratieNummer = string;
