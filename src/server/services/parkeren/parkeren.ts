@@ -30,7 +30,6 @@ export async function fetchSSOParkerenURL(
         );
         response.url = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL')!;
       }
-      // Parkeren tile is always shown.
       return { isKnown: true, url: response.url };
     },
   });
