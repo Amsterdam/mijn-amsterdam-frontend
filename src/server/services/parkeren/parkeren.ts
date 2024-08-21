@@ -3,7 +3,7 @@ import { getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
 
-type ParkerenUrlResponse = {
+type ParkerenUrlResponseSource = {
   url: string;
 };
 
