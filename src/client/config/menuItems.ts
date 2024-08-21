@@ -8,21 +8,21 @@ export const themasByProfileType: (
   ({
     private: myThemasMenuItems
       .filter((item) => item.profileTypes.includes('private'))
-      .map(buildThemaMenuItem),
+      .map((item) => buildThemaMenuItem(item, 'private')),
     'private-attributes': myThemasMenuItems
       .filter((item) => item.profileTypes.includes('private-attributes'))
-      .map(buildThemaMenuItem),
+      .map((item) => buildThemaMenuItem(item, 'private-attributes')),
     commercial: myThemasMenuItems
       .filter((item) => item.profileTypes.includes('commercial'))
-      .map(buildThemaMenuItem),
+      .map((item) => buildThemaMenuItem(item, 'commercial')),
   })[profileType];
 
-function buildThemaMenuItem(item: ThemaMenuItem) {
+function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
   const appState = useAppStateGetter();
   return {
     ...item,
     title: termReplace(
-      'commercial',
+      profileType,
       typeof item.title === 'function' ? item.title(appState) : item.title
     ),
     to: typeof item.to === 'function' ? item.to(appState) : item.to,
