@@ -142,7 +142,6 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
-    method: 'post',
     postponeFetch: !FeatureToggle.afisActive,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
     headers: {
@@ -449,7 +448,8 @@ export const BffEndpoints = {
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // AFIS
-  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner/:businessPartnerId',
+  AFIS_BUSINESSPARTNER:
+    '/services/afis/businesspartner/:businessPartnerIdEncrypted',
 
   // Stadspas
   STADSPAS_TRANSACTIONS:
