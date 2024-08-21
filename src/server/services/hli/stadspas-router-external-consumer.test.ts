@@ -270,8 +270,6 @@ describe('hli/router-external-consumer', async () => {
     });
   });
 
-  // This block is outside of the enveloping describe block above, because
-  // the global request and response mocks do not play nicely with this test.
   describe('Aanbieding transactions endpoint', async () => {
     function buildStadspasAanbiedingTransactionResponse(): StadspasDiscountTransaction[] {
       return [];
@@ -289,10 +287,7 @@ describe('hli/router-external-consumer', async () => {
       } as unknown as Request<{ transactionsKeyEncrypted: string }>;
       const resMock = ResponseMock.new();
 
-      const response = await forTesting.sendDiscountTransactionsResponse(
-        reqMock,
-        resMock
-      );
+      await forTesting.sendDiscountTransactionsResponse(reqMock, resMock);
 
       expect(fetchStadspasDiscountTransactionsSpy).toHaveBeenCalledWith(
         resMock.locals.requestID,
