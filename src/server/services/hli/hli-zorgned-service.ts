@@ -17,7 +17,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { ONE_SECOND_MS } from '../../config';
-import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
+import { isBeforeToday } from '../wmo-v2/status-line-items/wmo-generic';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');

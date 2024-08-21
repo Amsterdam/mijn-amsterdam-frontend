@@ -1,18 +1,54 @@
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
-import {
-  AANVRAAG,
-  EINDE_RECHT,
-  getTransformerConfigBesluit,
-  IN_BEHANDELING,
-  isDecisionActive,
-  MEER_INFORMATIE,
-} from './wmo-generic';
 
 export const vergoeding: ZorgnedStatusLineItemTransformerConfig[] = [
-  AANVRAAG,
-  IN_BEHANDELING,
-  MEER_INFORMATIE,
-  getTransformerConfigBesluit(isDecisionActive, true),
-  EINDE_RECHT,
+  {
+    status: 'Besluit',
+    datePublished: (data) => data.datumBesluit,
+    isChecked: (stepIndex, data) => true,
+    isActive: (stepIndex, data) => data.isActueel === true,
+    description: (data) =>
+      `
+            <p>
+              U heeft recht op een ${data.titel} per ${
+                data.datumIngangGeldigheid
+                  ? defaultDateFormat(data.datumIngangGeldigheid)
+                  : ''
+              }.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          `,
+  },
+  {
+    status: 'Einde recht',
+    datePublished: (data) =>
+      (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
+    isChecked: () => false,
+    isActive: (stepIndex, data) => data.isActueel === false,
+    description: (data) =>
+      `
+            <p>
+              ${
+                data.isActueel
+                  ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
+                  : `Uw recht op ${data.titel} is beëindigd ${
+                      data.datumEindeGeldigheid
+                        ? `per ${defaultDateFormat(data.datumEindeGeldigheid)}`
+                        : ''
+                    }`
+              }
+            </p>
+            ${
+              data.isActueel && data.leveringsVorm === 'PGB'
+                ? `<p>
+                Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
+                verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
+              </p>`
+                : ''
+            }
+          `,
+  },
 ];

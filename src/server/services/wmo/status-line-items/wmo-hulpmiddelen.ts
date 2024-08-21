@@ -1,55 +1,81 @@
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 
 import {
-  AANVRAAG,
-  EINDE_RECHT,
-  getTransformerConfigBesluit,
-  IN_BEHANDELING,
-  isBeforeToday,
-  isDecisionWithDeliveryActive,
+  hasHistoricDate,
   isServiceDeliveryActive,
   isServiceDeliveryStarted,
-  MEER_INFORMATIE,
-} from './wmo-generic';
+} from '../../zorgned/zorgned-helpers';
 
 export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
-  AANVRAAG,
-  IN_BEHANDELING,
-  MEER_INFORMATIE,
-  getTransformerConfigBesluit(isDecisionWithDeliveryActive, true),
+  {
+    status: 'Besluit',
+    datePublished: (data) => data.datumBesluit,
+    isChecked: () => true,
+    isActive: (stepIndex, sourceData, today) =>
+      !hasHistoricDate(sourceData.datumOpdrachtLevering, today) &&
+      !isServiceDeliveryStarted(sourceData, today),
+    description: (data) =>
+      `
+            <p>
+              U heeft recht op een ${data.titel} per ${
+                data.datumIngangGeldigheid
+                  ? defaultDateFormat(data.datumIngangGeldigheid)
+                  : ''
+              }.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          `,
+  },
   {
     status: 'Opdracht gegeven',
-    datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
-    },
-    isChecked: (stepIndex, aanvraag, today: Date) =>
-      isBeforeToday(aanvraag.datumOpdrachtLevering, today),
-    isActive: (stepIndex, aanvraag, today) =>
-      aanvraag.isActueel &&
-      isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(aanvraag, today),
-    description: (aanvraag) =>
+    datePublished: () => '',
+    isChecked: (stepIndex, sourceData, today: Date) =>
+      hasHistoricDate(sourceData.datumOpdrachtLevering, today),
+    isActive: (stepIndex, sourceData, today) =>
+      sourceData.isActueel &&
+      hasHistoricDate(sourceData.datumOpdrachtLevering, today) &&
+      !isServiceDeliveryStarted(sourceData, today),
+    description: (data) =>
       `<p>
-        Wij hebben ${aanvraag.leverancier} gevraagd om een ${aanvraag.titel} aan u te leveren.
-      </p>`,
+            De gemeente heeft opdracht gegeven aan ${data.leverancier} om een ${data.titel} aan u te leveren.
+          </p>`,
   },
   {
     status: 'Product geleverd',
-    datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
-
-    isChecked: (stepIndex, aanvraag, today) =>
-      isServiceDeliveryStarted(aanvraag, today),
-    isActive: (stepIndex, aanvraag, today: Date) =>
-      isServiceDeliveryActive(aanvraag, today),
-    description: (aanvraag) =>
+    datePublished: () => '',
+    isChecked: (stepIndex, sourceData, today) =>
+      isServiceDeliveryStarted(sourceData, today),
+    isActive: (stepIndex, sourceData, today: Date) =>
+      isServiceDeliveryActive(sourceData, today),
+    description: (data) =>
       `<p>
-        ${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.
-      </p>
-      `,
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
+            ${data.leverancier} heeft aan ons doorgegeven dat een ${data.titel} bij u is afgeleverd.
+          </p>`,
+    isVisible: (stepIndex, sourceData, today) => {
+      return !!sourceData.datumBeginLevering || sourceData.isActueel;
     },
   },
-  EINDE_RECHT,
+  {
+    status: 'Einde recht',
+    datePublished: (data) =>
+      (data.isActueel ? '' : data.datumEindeGeldigheid) || '',
+    isChecked: (stepIndex, sourceData) => sourceData.isActueel === false,
+    isActive: (stepIndex, sourceData) => sourceData.isActueel === false,
+    description: (data) =>
+      `<p>
+            ${
+              data.isActueel
+                ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
+                : `Uw recht op ${data.titel} is beëindigd${
+                    data.datumEindeGeldigheid
+                      ? ` per ${defaultDateFormat(data.datumEindeGeldigheid)}`
+                      : ''
+                  }.`
+            }
+          </p>`,
+  },
 ];

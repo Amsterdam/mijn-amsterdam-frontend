@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { LinkProps, StatusLineItem } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import {
   BeschikkingsResultaat,
   LeveringsVorm,
@@ -55,15 +55,22 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
     PGB: [],
   };
 
-export interface WMOVoorzieningFrontend {
-  id: string;
-  title: string; // Omschrijving
+export interface WMOVoorzieningFrontend extends ZaakDetail {
   supplier: string | null; // Leverancier
   isActual: boolean; // Indicates if this item is designated Current or Previous
-  link: LinkProps;
-  steps: StatusLineItem[];
   itemTypeCode: ProductSoortCode;
-  dateDecision: string;
+  dateDescision: string;
+  dateDescisionFormatted: string;
+  decision: string;
+  documents: GenericDocument[];
   dateStart: string | null;
   dateEnd: string | null;
+  status: string;
 }
+
+export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:'; // Documents starting with this token correspond to the 'meer informatie' step.
+export const DOCUMENT_TITLE_BESLUIT_STARTS_WITH = 'Besluit:'; // Documents starting with this token correspond to the 'besluit' step.
+export const DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE =
+  'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/OJZDUploadBijlagen.aspx';
+export const DOCUMENT_PGB_BESLUIT =
+  'https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb';

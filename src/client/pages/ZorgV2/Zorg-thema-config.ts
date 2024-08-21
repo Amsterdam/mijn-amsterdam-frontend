@@ -1,4 +1,4 @@
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo-v2/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';

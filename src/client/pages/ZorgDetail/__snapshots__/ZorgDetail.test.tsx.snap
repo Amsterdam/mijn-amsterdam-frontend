@@ -3,7 +3,7 @@
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (geleverd) 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -66,7 +66,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       </div>
     </header>
     <div
-      class="ams-screen ams-screen--wide ams-mb--lg"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
       <div
         class="ams-grid"
@@ -334,7 +334,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (gestopt) 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -397,7 +397,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       </div>
     </header>
     <div
-      class="ams-screen ams-screen--wide ams-mb--lg"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
       <div
         class="ams-grid"
@@ -665,7 +665,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (nog niet geleverd) 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -728,7 +728,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       </div>
     </header>
     <div
-      class="ams-screen ams-screen--wide ams-mb--lg"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
       <div
         class="ams-grid"
@@ -996,7 +996,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (tijdelijk gestopt) 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -1059,7 +1059,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       </div>
     </header>
     <div
-      class="ams-screen ams-screen--wide ams-mb--lg"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
       <div
         class="ams-grid"
@@ -1327,7 +1327,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
 exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="_Page_47d7c0 _DetailPage_47d7c0 _StatusDetail_3aea40"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -1390,7 +1390,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
       </div>
     </header>
     <div
-      class="ams-screen ams-screen--wide ams-mb--lg"
+      class="ams-screen ams-screen--wide _DetailPageContent_3aea40"
     >
       <div
         class="ams-grid"

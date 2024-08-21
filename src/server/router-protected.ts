@@ -30,7 +30,7 @@ import {
   fetchVergunningDetail,
   fetchZakenFromSource,
 } from './services/vergunningen-v2/vergunningen-route-handlers';
-import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
+import { fetchZorgnedJZDDocument } from './services/wmo-v2/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { handleFetchAfisBusinessPartner } from './services/afis/afis-route-handlers';
 import { fetchSSOParkerenURL } from './services/parkeren/parkeren';

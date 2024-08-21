@@ -1,9 +1,9 @@
 import { parseISO } from 'date-fns';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
+import { isBeforeToday } from './status-line-items/wmo-generic';
 import {
   BESCHIKTPRODUCT_RESULTAAT,
   DATE_END_NOT_OLDER_THAN,
@@ -29,12 +29,11 @@ function isProductWithDelivery(
   return false;
 }
 
-export function assignIsActueel(
-  aanvraagTransformed: ZorgnedAanvraagTransformed
-) {
-  const isEOG =
-    !!aanvraagTransformed.datumEindeGeldigheid &&
-    isDateInPast(aanvraagTransformed.datumEindeGeldigheid); // is Einde Of Geldighed
+export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
+  const isEOG = isBeforeToday(
+    aanvraagTransformed.datumEindeGeldigheid,
+    new Date()
+  );
 
   let isActueel = !!aanvraagTransformed.isActueel;
 
@@ -54,7 +53,7 @@ export function assignIsActueel(
     isActueel = false;
   }
 
-  aanvraagTransformed.isActueel = isActueel;
+  return isActueel;
 }
 
 // If aanvraag was requested after a specific date we should only show them to the user if there are documents attached.
@@ -92,14 +91,15 @@ export async function fetchZorgnedAanvragenWMO(
       ?.filter((aanvraagTransformed) => {
         return (
           aanvraagTransformed.datumBesluit &&
-          shouldBeVisibleToUser(aanvraagTransformed) &&
-          BESCHIKTPRODUCT_RESULTAAT.includes(aanvraagTransformed.resultaat)
+          shouldBeVisibleToUser(aanvraagTransformed)
         );
       })
       .map((aanvraagTransformed) => {
         // Override isActueel for front-end.
-        assignIsActueel(aanvraagTransformed);
-        return aanvraagTransformed;
+        return {
+          ...aanvraagTransformed,
+          isActueel: isActueel(aanvraagTransformed),
+        };
       });
 
     return apiSuccessResult(aanvragenFiltered);
@@ -108,7 +108,7 @@ export async function fetchZorgnedAanvragenWMO(
 }
 
 export const forTesting = {
-  assignIsActueel,
+  isActueel,
   fetchZorgnedAanvragenWMO,
   isProductWithDelivery,
   shouldBeVisibleToUser,

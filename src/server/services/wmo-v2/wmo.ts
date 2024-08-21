@@ -1,9 +1,8 @@
-import parseISO from 'date-fns/parseISO';
 import { generatePath } from 'react-router-dom';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
 import { BffEndpoints } from '../../config';
@@ -11,25 +10,23 @@ import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import {
-  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-  SINGLE_DOC_TITLE_BESLUIT,
-  WMOVoorzieningFrontend,
-} from './wmo-config-and-types';
+import { isAfterWCAGValidDocumentsDate } from './status-line-items/wmo-generic';
+import { WMOVoorzieningFrontend } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 
-function addDocumentLinksToLineItems(
+function getDocuments(
   sessionID: AuthProfileAndToken['profile']['sid'],
-  aanvraagTransformed: ZorgnedAanvraagTransformed,
-  statusLineItems: StatusLineItem[]
+  aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
-  function getAanvraagDocumentenFrontend() {
+  if (
+    FeatureToggle.zorgnedDocumentAttachmentsActive &&
+    isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
+  ) {
     return aanvraagTransformed.documenten.map((document) => {
       const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
       return {
         ...document,
-        title: SINGLE_DOC_TITLE_BESLUIT, // TODO: Change if we get proper document names from Zorgned api
         url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
           id: idEncrypted,
         }),
@@ -37,27 +34,11 @@ function addDocumentLinksToLineItems(
     });
   }
 
-  return statusLineItems.map((lineItem) => {
-    // NOTE: We only show a single document for now. If document management and processing policy is implemented in Zorgned/WMO we'll show more documents.
-    if (lineItem.status === 'Besluit') {
-      if (
-        FeatureToggle.zorgnedDocumentAttachmentsActive &&
-        aanvraagTransformed.documenten.length === 1 &&
-        parseISO(aanvraagTransformed.datumAanvraag) >=
-          MINIMUM_REQUEST_DATE_FOR_DOCUMENTS
-      ) {
-        lineItem.documents = getAanvraagDocumentenFrontend();
-      } else {
-        lineItem.altDocumentContent = `<p>
-              <strong>
-                Verstuurd per post
-              </strong>
-            </p>`;
-      }
-    }
+  return [];
+}
 
-    return lineItem;
-  });
+function getLatestStatus(steps: StatusLineItem[]) {
+  return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
 }
 
 function transformVoorzieningenForFrontend(
@@ -78,19 +59,11 @@ function transformVoorzieningenForFrontend(
       today
     );
 
-    if (!Array.isArray(lineItems) || !lineItems.length) {
-      continue;
-    }
+    if (lineItems?.length) {
+      const route = generatePath(AppRoutes['ZORG/VOORZIENING'], {
+        id,
+      });
 
-    const statusLineItems = Array.isArray(lineItems)
-      ? addDocumentLinksToLineItems(sessionID, aanvraag, lineItems)
-      : [];
-
-    const route = generatePath(AppRoutes['ZORG/VOORZIENING'], {
-      id,
-    });
-
-    if (statusLineItems) {
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
@@ -100,12 +73,18 @@ function transformVoorzieningenForFrontend(
           title: 'Meer informatie',
           to: route,
         },
-        steps: statusLineItems,
+        documents: getDocuments(sessionID, aanvraag),
+        steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
-        dateDecision: aanvraag.datumBesluit,
+        decision: aanvraag.resultaat
+          ? capitalizeFirstLetter(aanvraag.resultaat)
+          : '',
+        dateDescision: aanvraag.datumBesluit,
+        dateDescisionFormatted: defaultDateFormat(aanvraag.datumBesluit),
         dateStart: aanvraag.datumIngangGeldigheid,
         dateEnd: aanvraag.datumEindeGeldigheid,
+        status: getLatestStatus(lineItems),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
@@ -140,5 +119,5 @@ export async function fetchWmo(
 
 export const forTesting = {
   transformVoorzieningenForFrontend,
-  addDocumentLinksToLineItems,
+  getDocuments,
 };

@@ -51,6 +51,7 @@ import {
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
+import { fetchWmo as fetchWmoV2 } from './wmo-v2/wmo';
 import { fetchWmo } from './wmo/wmo';
 import {
   fetchBbz,
@@ -103,7 +104,9 @@ const WPI_SPECIFICATIES = callService(fetchSpecificaties);
 const WPI_TONK = callService(fetchTonk);
 const WPI_TOZO = callService(fetchTozo);
 
-const WMO = callService(fetchWmo);
+const WMO = FeatureToggle.zorgv2ThemapaginaActive
+  ? callService(fetchWmoV2)
+  : callService(fetchWmo);
 
 const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
   fetchToeristischeVerhuur(
