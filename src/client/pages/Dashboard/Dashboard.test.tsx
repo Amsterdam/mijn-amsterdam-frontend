@@ -8,6 +8,7 @@ import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
+import { remoteApiHost } from '../../../setupTests';
 
 const testState: any = {
   BRP: {
@@ -69,7 +70,10 @@ const testState: any = {
     },
   },
   PARKEREN: {
-    content: 'http://remote-api-host/sso/portaal/parkeren',
+    content: {
+      isKnown: true,
+      url: `${remoteApiHost}/sso/portaal/parkeren`,
+    },
   },
   WPI_TOZO: {
     content: [{}],
