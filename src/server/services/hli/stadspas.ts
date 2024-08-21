@@ -126,14 +126,12 @@ export async function decryptAndFetch<T>(
 
 export async function fetchStadspasDiscountTransactions(
   requestID: requestID,
-  transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
-  budgetCode?: StadspasBudget['code']
+  transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted']
 ) {
   return decryptAndFetch(
     (administratienummer, pasnummer) =>
       fetchGpassDiscountTransactions(requestID, administratienummer, pasnummer),
-    transactionsKeyEncrypted,
-    budgetCode
+    transactionsKeyEncrypted
   );
 }
 

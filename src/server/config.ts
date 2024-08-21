@@ -417,7 +417,7 @@ export const ExternalConsumerEndpoints = {
   private: {
     STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
     STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
   },
 };
 

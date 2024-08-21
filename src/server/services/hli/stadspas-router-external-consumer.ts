@@ -254,7 +254,7 @@ async function sendBudgetTransactionsResponse(
 }
 
 routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADPAS_BUDGET_TRANSACTIONS,
+  ExternalConsumerEndpoints.private.STADSPAS_BUDGET_TRANSACTIONS,
   apiKeyVerificationHandler,
   sendBudgetTransactionsResponse
 );
