@@ -135,7 +135,8 @@ function transformPhoneResponse(
 ) {
   const transformedResponse: AfisBusinessPartnerPhone = {
     phone:
-      response?.feed?.entry[0]?.content?.properties?.InternationalPhoneNumber,
+      response?.feed?.entry[0]?.content?.properties?.InternationalPhoneNumber ??
+      null,
   };
 
   return transformedResponse;
@@ -164,7 +165,8 @@ function transformEmailResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerEmailSource>
 ) {
   const transformedResponse: AfisBusinessPartnerEmail = {
-    email: response?.feed?.entry[0]?.content?.properties?.EmailAddress,
+    email:
+      response?.feed?.entry[0]?.content?.properties?.SearchEmailAddress ?? null,
   };
 
   return transformedResponse;

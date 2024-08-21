@@ -70,7 +70,7 @@ export type AfisBusinessPartnerPhoneSource = {
 };
 
 export type AfisBusinessPartnerEmailSource = {
-  EmailAddress: string;
+  SearchEmailAddress: string;
 };
 
 export type AfisBusinessPartnerDetails = {
@@ -81,11 +81,11 @@ export type AfisBusinessPartnerDetails = {
 };
 
 export type AfisBusinessPartnerPhone = {
-  phone: string;
+  phone: string | null;
 };
 
 export type AfisBusinessPartnerEmail = {
-  email: string;
+  email: string | null;
 };
 
 export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
