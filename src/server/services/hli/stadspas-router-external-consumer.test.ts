@@ -82,6 +82,7 @@ describe('hli/router-external-consumer', async () => {
         {
           administratienummerEncrypted: 'test-encrypted-id',
           appHref: 'amsterdam://stadspas/gelukt',
+          nonce: 'h70yjZuEZl',
         }
       );
     });

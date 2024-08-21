@@ -28,6 +28,7 @@ import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
+const AMSAPP_LINK_NONCE = 'h70yjZuEZl';
 
 type ApiError = {
   code: string;
@@ -122,6 +123,7 @@ async function sendAdministratienummerResponse(
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
+          nonce: AMSAPP_LINK_NONCE,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
             : '',
