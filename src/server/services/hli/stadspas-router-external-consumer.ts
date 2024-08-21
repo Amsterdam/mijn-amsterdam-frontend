@@ -20,7 +20,7 @@ import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  fetchStadspasAanbiedingen,
+  fetchStadspasDiscountTransactions,
   fetchStadspasBudgetTransactions,
 } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
@@ -216,11 +216,11 @@ routerPrivateNetwork.get(
   sendStadspassenResponse
 );
 
-async function sendAanbiedingenTransactionsResponse(
+async function sendDiscountTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasAanbiedingen(
+  const response = await fetchStadspasDiscountTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted
   );
@@ -229,9 +229,9 @@ async function sendAanbiedingenTransactionsResponse(
 }
 
 routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_AANBIEDINGEN_TRANSACTIES,
+  ExternalConsumerEndpoints.private.STADSPAS_DISCOUNT_TRANSACTIONS,
   apiKeyVerificationHandler,
-  sendAanbiedingenTransactionsResponse
+  sendDiscountTransactionsResponse
 );
 
 /** Sends transformed budget transactions.
@@ -254,7 +254,7 @@ async function sendBudgetTransactionsResponse(
 }
 
 routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADPAS_BUDGET_TRANSACTIES,
+  ExternalConsumerEndpoints.private.STADPAS_BUDGET_TRANSACTIONS,
   apiKeyVerificationHandler,
   sendBudgetTransactionsResponse
 );
@@ -267,6 +267,6 @@ export const stadspasExternalConsumerRouter = {
 export const forTesting = {
   sendAdministratienummerResponse,
   sendStadspassenResponse,
-  sendAanbiedingenTransactionsResponse,
+  sendDiscountTransactionsResponse,
   sendBudgetTransactionsResponse,
 };

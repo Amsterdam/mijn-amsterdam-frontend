@@ -121,7 +121,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/StadsAanbiedingenResponse'
+                $ref: '#/components/schemas/StadsDiscountTransactionsResponse'
         '400':
           description: Returns bad request error
           content:
@@ -231,19 +231,19 @@ components:
           type: string
           description: Same as 'StadspasBudget.code'
 
-    StadsAanbiedingenResponse:
+    StadsDiscountTransactionsResponse:
       type: object
       properties:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/StadspasAanbieding'
+            $ref: '#/components/schemas/StadspasDiscountTransaction'
         status:
           type: string
           enum:
             - 'SUCCESS'
 
-    StadspasAanbieding:
+    StadspasDiscountTransaction:
       type: object
       properties:
         id:

@@ -12,8 +12,8 @@ import { fetchAdministratienummer } from './hli-zorgned-service';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   Stadspas,
-  StadspasAanbieding,
-  StadspasAanbiedingenResponseSource,
+  StadspasDiscountTransaction,
+  StadspasDiscountTransactionsResponseSource,
   StadspasBudget,
   StadspasBudgetTransaction,
   StadspasDetailBudgetSource,
@@ -247,11 +247,11 @@ export async function fetchGpassBudgetTransactions(
 }
 
 function transformGpassAanbiedingenResponse(
-  responseSource: StadspasAanbiedingenResponseSource
+  responseSource: StadspasDiscountTransactionsResponseSource
 ) {
   if (Array.isArray(responseSource.transacties)) {
     return responseSource.transacties.map((transactie) => {
-      const aanbieding: StadspasAanbieding = {
+      const discountTransaction: StadspasDiscountTransaction = {
         id: String(transactie.id),
         title: transactie.aanbieding.communicatienaam,
         discountAmount: transactie.verleende_korting,
@@ -261,13 +261,13 @@ function transformGpassAanbiedingenResponse(
         discountTitle: transactie.aanbieding.kortingzin,
         description: transactie.aanbieding.omschrijving,
       };
-      return aanbieding;
+      return discountTransaction;
     });
   }
   return responseSource;
 }
 
-export async function fetchGpassAanbiedingen(
+export async function fetchGpassDiscountTransactions(
   requestID: requestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber']
@@ -284,5 +284,8 @@ export async function fetchGpassAanbiedingen(
     params: requestParams,
   });
 
-  return requestData<StadspasAanbieding[]>(dataRequestConfig, requestID);
+  return requestData<StadspasDiscountTransaction[]>(
+    dataRequestConfig,
+    requestID
+  );
 }

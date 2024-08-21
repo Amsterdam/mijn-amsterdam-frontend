@@ -84,7 +84,7 @@ type StadspasAanbiedingSource = {
   };
 };
 
-export interface StadspasAanbiedingenResponseSource {
+export interface StadspasDiscountTransactionsResponseSource {
   number_of_items: number;
   total_items?: number;
   totale_aantal?: number;
@@ -200,7 +200,7 @@ export interface StadspasBudgetTransaction {
 }
 
 // TODO: Determine which props are needed for this type
-export interface StadspasAanbieding {
+export interface StadspasDiscountTransaction {
   id: string;
   title: StadspasAanbiedingSource['aanbieding']['communicatienaam'];
   discountTitle: StadspasAanbiedingSource['aanbieding']['kortingzin'];

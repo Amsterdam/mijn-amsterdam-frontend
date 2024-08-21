@@ -4,10 +4,10 @@ import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import {
-  fetchGpassAanbiedingen,
+  fetchGpassDiscountTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
-import { StadspasAanbieding } from './stadspas-types';
+import { StadspasDiscountTransaction } from './stadspas-types';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -448,13 +448,13 @@ describe('stadspas services', () => {
     `);
   });
 
-  describe('fetchStadspasAanbiedingen', async () => {
+  describe('fetchStadspasDiscountTransactions', async () => {
     const requestID = 'xyz098';
     const administratienummer = 'administratienummer123';
     const passNumber = 123456789;
 
     test('Get success response', async () => {
-      const expectedResponse: StadspasAanbieding[] = [];
+      const expectedResponse: StadspasDiscountTransaction[] = [];
 
       remoteApi
         .get(
@@ -466,7 +466,7 @@ describe('stadspas services', () => {
         )
         .reply(200, expectedResponse);
 
-      const response = await fetchGpassAanbiedingen(
+      const response = await fetchGpassDiscountTransactions(
         requestID,
         administratienummer,
         passNumber
