@@ -1,10 +1,14 @@
-import { apiErrorResult } from '../../../universal/helpers/api';
 import { getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
 
-type ParkerenUrlResponseSource = {
+type ParkerenUrlSourceResponse = {
   url: string;
+};
+
+type ParkerenUrlTransformedResponse = {
+  isKnown: boolean;
+  url: string | null;
 };
 
 export async function fetchSSOParkerenURL(
@@ -15,10 +19,12 @@ export async function fetchSSOParkerenURL(
     formatUrl(requestConfig) {
       return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
     },
-    transformResponse: (response: ParkerenUrlResponseSource) => {
-      return response.url;
+    transformResponse: (
+      response: ParkerenUrlSourceResponse
+    ): ParkerenUrlTransformedResponse => {
+      return { isKnown: !!response.url, url: response.url };
     },
   });
 
-  return requestData<ParkerenUrlResponse>(config, requestID);
+  return await requestData<ParkerenUrlTransformedResponse>(config, requestID);
 }

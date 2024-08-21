@@ -1,21 +1,6 @@
 import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 import { remoteApiHost } from '../../../setupTests';
-import { ApiErrorResponse } from '../../../universal/helpers/api';
 import { fetchSSOParkerenURL } from './parkeren';
-
-const requestData = vi.hoisted(() => {
-  return vi.fn();
-});
-
-vi.mock('../../helpers/source-api-request.ts', async () => {
-  const module: object = await vi.importActual(
-    '../../helpers/source-api-request.ts'
-  );
-  return {
-    ...module,
-    requestData,
-  };
-});
 
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
@@ -34,13 +19,15 @@ test('Calls with digid', async () => {
       url,
     });
 
-  await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
+  const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
 
-  const requestConfigURL = requestData.mock.calls[0][0].url;
-
-  expect(requestConfigURL).toBe(
-    `${remoteApiHost}/parkeren/sso/get_authentication_url?service=digid`
-  );
+  expect(response).toStrictEqual({
+    content: {
+      isKnown: true,
+      url,
+    },
+    status: 'OK',
+  });
 });
 
 test('Calls with eherkenning', async () => {
@@ -52,22 +39,53 @@ test('Calls with eherkenning', async () => {
       url,
     });
 
-  await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
+  const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
 
-  const requestConfigURL = requestData.mock.calls[0][0].url;
-
-  expect(requestConfigURL).toBe(
-    'http://remote-api-host/parkeren/sso/get_authentication_url?service=eherkenning'
-  );
+  expect(response).toStrictEqual({
+    content: {
+      isKnown: true,
+      url,
+    },
+    status: 'OK',
+  });
 });
 
-test('requestData is called for correct errorhandling etc...', async () => {
-  let authProfileAndToken = getAuthProfileAndToken('private');
+describe('Sets isKnown to false when url is invalid', async () => {
+  test('URL is null', async () => {
+    let authProfileAndToken = getAuthProfileAndToken('private');
 
-  (await fetchSSOParkerenURL(
-    REQUEST_ID,
-    authProfileAndToken
-  )) as ApiErrorResponse<null>;
+    remoteApi
+      .get('/parkeren/sso/get_authentication_url?service=digid')
+      .reply(STATUS_OK_200, {
+        url: null,
+      });
 
-  expect(requestData).toHaveBeenCalled();
+    const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
+
+    expect(response).toStrictEqual({
+      content: {
+        isKnown: false,
+        url: null,
+      },
+      status: 'OK',
+    });
+  });
+
+  test('Unexpected body in 200 response', async () => {
+    let authProfileAndToken = getAuthProfileAndToken('private');
+
+    remoteApi
+      .get('/parkeren/sso/get_authentication_url?service=digid')
+      .reply(200, { noUrl: 'Invalid response' });
+
+    const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
+
+    expect(response).toStrictEqual({
+      content: {
+        isKnown: false,
+        url: undefined,
+      },
+      status: 'OK',
+    });
+  });
 });
