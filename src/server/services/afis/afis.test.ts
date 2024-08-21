@@ -14,8 +14,7 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
-import { fetchAfisBusinessPartner, fetchIsKnownInAFIS } from './afis';
-import { JWA } from 'node-jose';
+import { fetchAfisBusinessPartnerDetails, fetchIsKnownInAFIS } from './afis';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
 const ROUTES = {
@@ -118,7 +117,7 @@ describe('Afis', () => {
           ...TRANSFORMED_RESPONSES.isNotKnown,
           content: {
             ...TRANSFORMED_RESPONSES.isNotKnown.content,
-            businessPartnerIdEncrypted: 'encrypted-',
+            businessPartnerIdEncrypted: null,
           },
         });
       });
@@ -162,7 +161,7 @@ describe('Afis', () => {
           ...TRANSFORMED_RESPONSES.isNotKnown,
           content: {
             ...TRANSFORMED_RESPONSES.isNotKnown.content,
-            businessPartnerIdEncrypted: 'encrypted-',
+            businessPartnerIdEncrypted: null,
           },
         });
       });
@@ -249,7 +248,7 @@ describe('Afis', () => {
 
       expect(response.content).toMatchInlineSnapshot(`
         {
-          "businessPartnerIdEncrypted": "encrypted-",
+          "businessPartnerIdEncrypted": null,
           "isKnown": false,
         }
       `);
@@ -327,55 +326,30 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerEmailAddress)
         .reply(200, responseBodyBusinessEmailAddress);
 
-      const encryptedRequestId = encrypt('213423')[0];
-      const response = await fetchAfisBusinessPartner(
-        REQUEST_ID,
-        encryptedRequestId
-      );
+      const businessPartnerId = 213423;
+      const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
 
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "BusinessPartner": 515177,
-            "BusinessPartnerAddress": "Rembrandtstraat 20 2311 VW Leiden",
-            "BusinessPartnerFullName": "Taxon Expeditions BV",
-            "EmailAddress": "xxmail@arjanappel.nl",
-            "PhoneNumber": "+31622030313",
+            "address": "Rembrandtstraat 20 2311 VW Leiden",
+            "addressId": 430844,
+            "businessPartnerId": 515177,
+            "email": "xxmail@arjanappel.nl",
+            "fullName": "Taxon Expeditions BV",
+            "phone": "+31622030313",
           },
           "status": "OK",
         }
       `);
     });
 
-    it('transforms content to null, when not both endpoints retrieve data', async () => {
-      remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetails);
-
-      remoteApi.get(ROUTES.businesspartnerPhonenumber).reply(200, {});
-
-      remoteApi.get(ROUTES.businesspartnerEmailAddress).reply(200, {});
-
-      const encryptedRequestId = encrypt('213423')[0];
-      const response = await fetchAfisBusinessPartner(
-        REQUEST_ID,
-        encryptedRequestId
-      );
-
-      expect(response).toMatchInlineSnapshot(`
-        {
-          "content": null,
-          "status": "OK",
-        }
-      `);
-    });
-
     it('transforms content to null when there is no AddressID', async () => {
-      const responseBodyBusinessDetailsWithoutAddressID =
-        responseBodyBusinessDetails;
-
-      delete responseBodyBusinessDetailsWithoutAddressID?.feed?.entry[0]
-        ?.content?.properties?.AddressID;
+      const responseBodyBusinessDetailsWithoutAddressID = JSON.parse(
+        JSON.stringify(responseBodyBusinessDetails)
+      );
+      delete responseBodyBusinessDetailsWithoutAddressID.feed.entry[0].content
+        .properties.AddressID;
 
       remoteApi
         .get(ROUTES.businesspartnerDetails)
@@ -389,86 +363,57 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerEmailAddress)
         .reply(200, responseBodyBusinessEmailAddress);
 
-      const response = await fetchAfisBusinessPartner(REQUEST_ID, '213423');
+      const response = await fetchAfisBusinessPartnerDetails(213423);
 
       expect(response).toMatchInlineSnapshot(`
         {
-          "content": null,
+          "content": {
+            "address": "Rembrandtstraat 20 2311 VW Leiden",
+            "addressId": undefined,
+            "businessPartnerId": 515177,
+            "fullName": "Taxon Expeditions BV",
+          },
           "status": "OK",
         }
       `);
     });
 
-    it('handles missing phonenumber', async () => {
-      const responseWithoutPhonenumber = {
-        feed: {
-          entry: [
-            {
-              content: {
-                properties: {},
-              },
-            },
-          ],
-        },
-      };
-
+    it('handles Error in one of the endpoints', async () => {
       remoteApi
         .get(ROUTES.businesspartnerDetails)
         .reply(200, responseBodyBusinessDetails);
 
       remoteApi
         .get(ROUTES.businesspartnerPhonenumber)
-        .reply(200, responseWithoutPhonenumber);
+        .replyWithError('error retrieving doc');
 
       remoteApi
         .get(ROUTES.businesspartnerEmailAddress)
-        .reply(200, responseBodyBusinessEmailAddress);
+        .replyWithError('error retrieving doc');
 
-      const encryptedRequestId = encrypt('213423')[0];
-      let response = await fetchAfisBusinessPartner(
-        REQUEST_ID,
-        encryptedRequestId
-      );
+      const businessPartnerId = 213423;
+      let response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
 
       expect(response).toMatchObject({
-        content: null,
-        status: 'OK',
-      });
-    });
-    it('handles missing emailaddress', async () => {
-      const responseWithoutEmailAddress = {
-        feed: {
-          entry: [
-            {
-              content: {
-                properties: {},
-              },
-            },
-          ],
+        content: {
+          businessPartnerId: 515177,
+          fullName: 'Taxon Expeditions BV',
+          address: 'Rembrandtstraat 20 2311 VW Leiden',
+          addressId: 430844,
         },
-      };
-
-      remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetails);
-
-      remoteApi
-        .get(ROUTES.businesspartnerPhonenumber)
-        .reply(200, responseBodyBusinessPhonenumber);
-
-      remoteApi
-        .get(ROUTES.businesspartnerEmailAddress)
-        .reply(200, responseWithoutEmailAddress);
-
-      const encryptedRequestId = encrypt('213423')[0];
-      let response = await fetchAfisBusinessPartner(
-        REQUEST_ID,
-        encryptedRequestId
-      );
-
-      expect(response).toMatchObject({
-        content: null,
         status: 'OK',
+        failedDependencies: {
+          phone: {
+            content: null,
+            message: 'error retrieving doc',
+            status: 'ERROR',
+          },
+          email: {
+            content: null,
+            message: 'error retrieving doc',
+            status: 'ERROR',
+          },
+        },
       });
     });
     it('handles server error as expected', async () => {
@@ -476,11 +421,8 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerDetails)
         .replyWithError('error retrieving doc');
 
-      const encryptedRequestId = encrypt('213423')[0];
-      const response = await fetchAfisBusinessPartner(
-        REQUEST_ID,
-        encryptedRequestId
-      );
+      const businessPartnerId = 213423;
+      const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
 
       expect(response).toMatchInlineSnapshot(`
         {

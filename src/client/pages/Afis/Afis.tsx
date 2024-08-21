@@ -1,10 +1,15 @@
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import { BFFApiUrls } from '../../config/api';
-import { BusinessPartnerKnownResponse } from '../../../server/services/afis/afis-types';
+import { AfisBusinessPartnerKnownResponse } from '../../../server/services/afis/afis-types';
 import { BagThemas } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 import { Datalist } from '../../components/Datalist/Datalist';
+import {
+  ApiResponse,
+  hasFailedDependency,
+} from '../../../universal/helpers/api';
+import { ApiState } from '../../hooks/api/useDataApi';
 
 const pageContentTop = (
   <Paragraph>
@@ -13,24 +18,64 @@ const pageContentTop = (
   </Paragraph>
 );
 
+const labels: Record<string, string> = {
+  businessPartnerId: 'Debiteurnummer',
+  fullName: 'Naam',
+  address: 'Adres',
+  phone: 'Telefoonnummer',
+  email: 'E-mailadres',
+};
+
 export default function AfisThemaPagina() {
   const { AFIS } = useAppStateGetter();
+  const businessPartnerIdEncrypted = AFIS?.content?.businessPartnerIdEncrypted;
+  return businessPartnerIdEncrypted ? (
+    <AfisBusinessPaginaContent
+      businessPartnerIdEncrypted={businessPartnerIdEncrypted}
+    />
+  ) : null;
+}
+
+function AfisBusinessPaginaContent({
+  businessPartnerIdEncrypted,
+}: {
+  businessPartnerIdEncrypted: string;
+}) {
+  const [businesspartner, api] =
+    useAppStateBagApi<AfisBusinessPartnerKnownResponse>({
+      url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
+      bagThema: BagThemas.AFIS,
+      key: businessPartnerIdEncrypted,
+    });
+
+  const failedEmail = hasFailedDependency(api.data, 'email');
+  const failedPhone = hasFailedDependency(api.data, 'phone');
 
   return (
     <ThemaPagina
       title="AFIS"
       isError={false}
+      isPartialError={failedEmail || failedPhone}
+      errorAlertContent={
+        <>
+          De volgende gegevens konden niet worden opgehaald:
+          <UnorderedList>
+            {failedEmail && (
+              <UnorderedList.Item>E-mailadres</UnorderedList.Item>
+            )}
+            {failedPhone && (
+              <UnorderedList.Item>Telefoonnummer</UnorderedList.Item>
+            )}
+          </UnorderedList>
+        </>
+      }
       isLoading={false}
       linkListItems={[]}
       pageContentTop={pageContentTop ? pageContentTop : null}
       pageContentTables={
         <>
-          {AFIS.content?.businessPartnerIdEncrypted && (
-            <AfisBusinessPartner
-              businessPartnerIdEncrypted={
-                AFIS.content.businessPartnerIdEncrypted
-              }
-            />
+          {businesspartner && api && (
+            <AfisBusinessPartner api={api} businesspartner={businesspartner} />
           )}
         </>
       }
@@ -39,32 +84,22 @@ export default function AfisThemaPagina() {
 }
 
 type AfisBusinessPartnerProps = {
-  businessPartnerIdEncrypted: BusinessPartnerKnownResponse['businessPartnerIdEncrypted'];
+  api: ApiState<ApiResponse<AfisBusinessPartnerKnownResponse | null>>;
+  businesspartner: AfisBusinessPartnerKnownResponse;
 };
 
 function AfisBusinessPartner({
-  businessPartnerIdEncrypted,
+  api,
+  businesspartner,
 }: AfisBusinessPartnerProps) {
-  const [businesspartner, api] =
-    useAppStateBagApi<BusinessPartnerKnownResponse>({
-      url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
-      bagThema: BagThemas.AFIS,
-      key: businessPartnerIdEncrypted || '',
-    });
-
   if (!api.isError && businesspartner) {
-    const labels: Record<string, string> = {
-      BusinessPartner: 'Debiteurnummer',
-      BusinessPartnerFullName: 'Naam',
-      BusinessPartnerAddress: 'Adres',
-      PhoneNumber: 'Telefoonnummer',
-      EmailAddress: 'E-mailadres',
-    };
-
     const rows = Object.entries(businesspartner).map(([key, value]) => {
-      return { label: labels[key], content: value };
+      if (key !== 'addressId') {
+        return { label: labels[key], content: value };
+      }
     });
 
     return <Datalist rows={rows} />;
   }
+  return <></>;
 }

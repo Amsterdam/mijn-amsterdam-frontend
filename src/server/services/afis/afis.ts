@@ -97,11 +97,20 @@ function transformBusinessPartnerDetailsResponse(
   const properties = response?.feed?.entry?.[0]?.content?.properties;
 
   if (properties) {
+    const address = [
+      properties.StreetName,
+      properties.HouseNumber,
+      properties.HouseNumberSupplementText,
+      properties.PostalCode,
+      properties.CityName,
+    ]
+      .filter(Boolean)
+      .join(' ');
+
     const transformedResponse: AfisBusinessPartnerDetails = {
       businessPartnerId: properties.BusinessPartner,
       fullName: properties.FullName,
-      // TODO: Hebben we deze data hier nodig? Kun je dit niet beter in een object meegeven zodat we hier in de FE wat flexibeler mee om kunnen gaan?
-      address: `${properties.StreetName} ${properties.HouseNumber}${properties.HouseNumberSupplementText ? ' ' + properties.HouseNumberSupplementText + ' ' : ''}${properties.PostalCode} ${properties.CityName}`,
+      address,
       addressId: properties.AddressID,
     };
 

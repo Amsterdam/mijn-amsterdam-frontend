@@ -5,6 +5,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   ApiPristineResponse,
   ApiResponse,
+  ApiSuccessResponse,
   apiPristineResult,
 } from '../../universal/helpers/api';
 import {
@@ -267,10 +268,20 @@ export function useAppStateBagApi<T extends unknown>({
         if (!localState) {
           localState = {};
         }
+
         localState = {
           ...localState,
           [key]: api.data.content as T,
         };
+
+        if ((api.data as ApiSuccessResponse<T>).failedDependencies) {
+          localState = {
+            ...localState,
+            failedDependencies: (api.data as ApiSuccessResponse<T>)
+              .failedDependencies,
+          };
+        }
+
         return {
           ...state,
           [bagThema]: localState,
