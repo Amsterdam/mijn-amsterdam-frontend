@@ -3,7 +3,7 @@
 exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0 _ZorgOverviewPage_14a7ab"
+    class="_Page_47d7c0 _OverviewPage_47d7c0 _ZorgOverviewPage_a784c7"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -131,7 +131,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
       </p>
     </div>
     <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleCurrent_14a7ab"
+      class="_SectionCollapsible_b93dc7 _SectionCollapsibleCurrent_a784c7"
     >
       <h3
         class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
@@ -293,7 +293,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
       </div>
     </section>
     <p
-      class="_HistoricItemsMention_14a7ab"
+      class="_HistoricItemsMention_a784c7"
     >
       U ziet hier alleen informatie vanaf 1 januari 2018. Bel voor informatie van eerdere jaren de Wmo Helpdesk: 0800 0643.
     </p>
