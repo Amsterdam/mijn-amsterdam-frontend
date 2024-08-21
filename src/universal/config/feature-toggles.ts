@@ -47,5 +47,5 @@ export const FeatureToggle = {
   wiorMeldingen: true,
   zorgnedDocumentAttachmentsActive: true,
   zorgnedDocumentDecisionDateActive: !IS_PRODUCTION,
-  zorgv2ThemapaginaActive: !IS_PRODUCTION,
+  zorgv2ThemapaginaActive: false,
 };
