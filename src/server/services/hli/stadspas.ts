@@ -62,7 +62,7 @@ export async function fetchStadspas(
   return stadspasResponse;
 }
 
-export async function decryptAndValidateStadspasTransactionsKey(
+async function decryptAndValidateStadspasTransactionsKey(
   transactionsKeyEncrypted: string,
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
@@ -101,7 +101,7 @@ export async function decryptAndValidateStadspasTransactionsKey(
   });
 }
 
-export async function decryptAndFetch<T>(
+async function decryptAndFetch<T>(
   fetchTransactionFn: (
     administratienummer: StadspasAdministratieNummer,
     pasnummer: StadspasFrontend['passNumber']
@@ -167,4 +167,5 @@ export async function fetchStadspasNotifications(
 
 export const forTesting = {
   decryptAndValidateStadspasTransactionsKey,
+  decryptAndFetch,
 };
