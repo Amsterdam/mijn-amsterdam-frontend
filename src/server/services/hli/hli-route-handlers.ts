@@ -14,7 +14,7 @@ export async function handleFetchTransactionsRequest(
   const response = await fetchStadspasBudgetTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
-    req.query?.budgetCode as StadspasBudget['code'],
+    req.query.budgetCode as StadspasBudget['code'],
     authProfileAndToken.profile.sid
   );
 
