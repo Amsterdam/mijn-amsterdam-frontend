@@ -24,7 +24,7 @@ export interface VakantieverhuurVergunning {
   id: string;
   zaaknummer: string;
   link: LinkProps;
-  titel: 'Vergunning vakantieverhuur';
+  titel: string;
   statussen: StatusLineItem[];
   isActief: boolean;
   adres: string;
@@ -108,9 +108,11 @@ export function transformVakantieverhuurVergunningen(
       vergunning.status === 'Verlopen' ||
       (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());
 
+    const title = `${vergunning.identifier} vakantieverhuur`;
+
     const vergunningTransformed: VakantieverhuurVergunning = {
       id: idTransformed,
-      titel: 'Vergunning vakantieverhuur',
+      titel: title,
       datumAfhandeling: vergunning.dateDecision
         ? defaultDateFormat(vergunning.dateDecision)
         : null,
