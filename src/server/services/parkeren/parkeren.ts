@@ -1,6 +1,8 @@
 import { getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
+import { getFromEnv } from '../../helpers/env';
 import { requestData } from '../../helpers/source-api-request';
+import { captureMessage } from '../monitoring';
 
 type ParkerenUrlSourceResponse = {
   url: string;
@@ -22,7 +24,14 @@ export async function fetchSSOParkerenURL(
     transformResponse: (
       response: ParkerenUrlSourceResponse
     ): ParkerenUrlTransformedResponse => {
-      return { isKnown: !!response.url, url: response.url };
+      if (!response.url) {
+        captureMessage(
+          'Recieved invalid SSO url response; using fallback URL.'
+        );
+        response.url = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL')!;
+      }
+      // Parkeren tile is always shown.
+      return { isKnown: true, url: response.url };
     },
   });
 

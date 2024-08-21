@@ -1,5 +1,5 @@
 import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
-import { remoteApiHost } from '../../../setupTests';
+import { getFromEnv } from '../../helpers/env';
 import { fetchSSOParkerenURL } from './parkeren';
 
 const REQUEST_ID = '123';
@@ -51,6 +51,14 @@ test('Calls with eherkenning', async () => {
 });
 
 describe('Sets isKnown to false when url is invalid', async () => {
+  const FALLBACK_URL_RESPONSE = {
+    content: {
+      isKnown: true,
+      url: getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL'),
+    },
+    status: 'OK',
+  };
+
   test('URL is null', async () => {
     let authProfileAndToken = getAuthProfileAndToken('private');
 
@@ -62,13 +70,7 @@ describe('Sets isKnown to false when url is invalid', async () => {
 
     const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
 
-    expect(response).toStrictEqual({
-      content: {
-        isKnown: false,
-        url: null,
-      },
-      status: 'OK',
-    });
+    expect(response).toStrictEqual(FALLBACK_URL_RESPONSE);
   });
 
   test('Unexpected body in 200 response', async () => {
@@ -80,12 +82,6 @@ describe('Sets isKnown to false when url is invalid', async () => {
 
     const response = await fetchSSOParkerenURL(REQUEST_ID, authProfileAndToken);
 
-    expect(response).toStrictEqual({
-      content: {
-        isKnown: false,
-        url: undefined,
-      },
-      status: 'OK',
-    });
+    expect(response).toStrictEqual(FALLBACK_URL_RESPONSE);
   });
 });

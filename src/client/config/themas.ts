@@ -24,6 +24,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     MILIEUZONE,
     MY_LOCATION,
     OVERTREDINGEN,
+    PARKEREN,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -172,7 +173,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.PARKEREN:
       return (
         (isAmsterdam && FeatureToggle.parkerenActive) ||
-        FeatureToggle.parkerenPatroonC
+        (!isLoading(PARKEREN) && FeatureToggle.parkerenPatroonC)
       );
 
     case Themas.KLACHTEN:
