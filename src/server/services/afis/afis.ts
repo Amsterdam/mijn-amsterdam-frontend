@@ -125,7 +125,7 @@ async function requestHandler<T>(
   if (addressID) {
     const urlPhonenumber = `${requestConfig.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressID}'`;
     const urlEmailAddress = `${requestConfig.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressID}'`;
-    
+
     const responsePhonenumber =
       await axiosRequest.request<AfisBusinessPartnerResponse<AfisBusinessPartnerCombinedResponse> | null>(
         {
@@ -133,15 +133,14 @@ async function requestHandler<T>(
           url: urlPhonenumber,
         }
       );
-    
-      const responseEmailAddress =
+
+    const responseEmailAddress =
       await axiosRequest.request<AfisBusinessPartnerResponse<AfisBusinessPartnerCombinedResponse> | null>(
         {
           ...requestConfig,
           url: urlEmailAddress,
         }
       );
-    
 
     const transformedResponseDetails = transformRequestDetails(
       responseBusinessDetailsResponse.data
@@ -187,51 +186,90 @@ function getBusinessDetailsRequestConfig(businessPartnerId: string) {
 
 function transformRequestDetails(
   response: AfisBusinessPartnerResponse<any> | null
-) {
-  let transformedResponse: AfisBusinessPartnerDetailsTransformedResponse | null;
-
+): AfisBusinessPartnerDetailsTransformedResponse | null {
   const properties = response?.feed?.entry[0]?.content?.properties;
-  if (properties && properties.AddressID) {
-    transformedResponse = {
-      BusinessPartner: properties.BusinessPartner,
-      BusinessPartnerFullName: properties.FullName,
-      BusinessPartnerAddress: `${properties.StreetName} ${properties.HouseNumber}${properties.HouseNumberSupplementText ? ' ' + properties.HouseNumberSupplementText + ' ' : ''}${properties.PostalCode} ${properties.CityName}`,
-      AddressID: properties.AddressID,
-    };
-  } else {
-    transformedResponse = null;
+
+  if (!properties || !properties.AddressID) return null;
+
+  const {
+    BusinessPartner,
+    FullName: BusinessPartnerFullName,
+    StreetName,
+    HouseNumber,
+    HouseNumberSupplementText,
+    PostalCode,
+    CityName,
+    AddressID,
+  } = properties;
+
+  // Check if all required properties are defined
+  if (
+    !BusinessPartner ||
+    !BusinessPartnerFullName ||
+    !StreetName ||
+    !HouseNumber ||
+    !PostalCode ||
+    !CityName ||
+    !AddressID
+  ) {
+    console.warn('Missing required properties in AFIS response');
+    return null;
   }
-  return transformedResponse;
+
+  const BusinessPartnerAddress = [
+    StreetName,
+    HouseNumber,
+    HouseNumberSupplementText,
+    PostalCode,
+    CityName,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  return {
+    BusinessPartner,
+    BusinessPartnerFullName,
+    BusinessPartnerAddress,
+    AddressID,
+  };
 }
 
 function transformRequestPhonenumber(
   response: AfisBusinessPartnerResponse<any> | null
-) {
-  let transformedResponse: AfisBusinessPartnerPhoneNumberTransformedResponse | null;
-
+): AfisBusinessPartnerPhoneNumberTransformedResponse | null {
   const properties = response?.feed?.entry[0]?.content?.properties;
-  if (properties) {
-    transformedResponse = {
-      PhoneNumber: properties.InternationalPhoneNumber,
-    };
-  } else {
-    transformedResponse = null;
+
+  if (!properties) {
+    console.warn('Missing properties in AFIS phone number response');
+    return null;
   }
-  return transformedResponse;
+
+  if (!properties.InternationalPhoneNumber) {
+    console.warn('Missing InternationalPhoneNumber in AFIS response');
+    return null;
+  }
+
+  return {
+    PhoneNumber: properties.InternationalPhoneNumber,
+  };
 }
 
 function transformRequestEmailAddress(
   response: AfisBusinessPartnerResponse<any> | null
-) {
-  let transformedResponse: AfisBusinessPartnerEmailAddressTransformedResponse | null;
-
+): AfisBusinessPartnerEmailAddressTransformedResponse | null {
   const properties = response?.feed?.entry[0]?.content?.properties;
-  if (properties) {
-    transformedResponse = {
-      EmailAddress: properties.SearchEmailAddress,
-    };
-  } else {
-    transformedResponse = null;
+
+  if (!properties) {
+    console.warn('Missing properties in AFIS email address response');
+    return null;
   }
-  return transformedResponse;
+
+  if (!properties.SearchEmailAddress) {
+    console.warn('Missing SearchEmailAddress in AFIS response');
+    return null;
+  }
+
+  return {
+    EmailAddress: properties.SearchEmailAddress,
+  };
 }
