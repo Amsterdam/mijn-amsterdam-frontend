@@ -7,7 +7,7 @@ import {
   isServiceDeliveryActive,
   isServiceDeliveryStarted,
   isServiceDeliveryStopped,
-} from '../../zorgned/zorgned-helpers';
+} from './zorgned-helpers';
 
 export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {

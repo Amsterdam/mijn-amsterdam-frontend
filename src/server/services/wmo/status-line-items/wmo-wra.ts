@@ -5,7 +5,7 @@ import {
   hasHistoricDate,
   isServiceDeliveryStarted,
   isServiceDeliveryActive,
-} from '../../zorgned/zorgned-helpers';
+} from './zorgned-helpers';
 
 export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   {
