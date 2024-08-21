@@ -338,7 +338,7 @@ describe('Afis', () => {
         {
           "content": {
             "BusinessPartner": 515177,
-            "BusinessPartnerAddress": "Rembrandtstraat 202311 VW Leiden",
+            "BusinessPartnerAddress": "Rembrandtstraat 20 2311 VW Leiden",
             "BusinessPartnerFullName": "Taxon Expeditions BV",
             "EmailAddress": "xxmail@arjanappel.nl",
             "PhoneNumber": "+31622030313",
