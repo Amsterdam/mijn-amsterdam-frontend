@@ -1,7 +1,5 @@
-import {
-  authProfileAndToken as authProfileAndToken_,
-  remoteApi,
-} from '../../../test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
+import { remoteApiHost } from '../../../setupTests';
 import { ApiErrorResponse } from '../../../universal/helpers/api';
 import { fetchSSOParkerenURL } from './parkeren';
 
@@ -28,7 +26,7 @@ beforeEach(() => {
 });
 
 test('Calls with digid', async () => {
-  const authProfileAndToken = authProfileAndToken_('private');
+  const authProfileAndToken = getAuthProfileAndToken('private');
 
   remoteApi
     .get('/parkeren/sso/get_authentication_url?service=digid')
@@ -46,7 +44,7 @@ test('Calls with digid', async () => {
 });
 
 test('Calls with eherkenning', async () => {
-  let authProfileAndToken = authProfileAndToken_('commercial');
+  let authProfileAndToken = getAuthProfileAndToken('commercial');
 
   remoteApi
     .get('/parkeren/sso/get_authentication_url?service=eherkenning')
@@ -63,9 +61,8 @@ test('Calls with eherkenning', async () => {
   );
 });
 
-
 test('requestData is called for correct errorhandling etc...', async () => {
-  let authProfileAndToken = authProfileAndToken_('private');
+  let authProfileAndToken = getAuthProfileAndToken('private');
 
   (await fetchSSOParkerenURL(
     REQUEST_ID,
