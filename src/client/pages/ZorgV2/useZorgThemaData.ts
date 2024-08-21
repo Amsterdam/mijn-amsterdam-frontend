@@ -1,4 +1,4 @@
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo-v2/wmo-config-and-types';
 import {
   hasFailedDependency,
   isError,

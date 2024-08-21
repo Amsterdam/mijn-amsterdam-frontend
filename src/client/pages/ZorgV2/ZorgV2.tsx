@@ -1,6 +1,6 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo-v2/wmo-config-and-types';
 import { LinkProps } from '../../../universal/types/App.types';
 import { ExternalUrls } from '../../config/external-urls';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';

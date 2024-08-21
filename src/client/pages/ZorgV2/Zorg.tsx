@@ -21,6 +21,8 @@ import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
   title: '',
+  status: 'Status',
+  dateDescision: 'Datum',
 };
 
 export default function Zorg() {
@@ -64,6 +66,11 @@ export default function Zorg() {
         <p>
           <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>
             Lees hier meer over zorg en ondersteuning
+          </Linkd>
+        </p>
+        <p>
+          <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>
+            Documenten uploaden voor de Wmo
           </Linkd>
         </p>
         <MaintenanceNotifications page="zorg" />

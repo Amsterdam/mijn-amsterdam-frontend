@@ -5,7 +5,7 @@ import {
 } from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
+import { WMOVoorzieningFrontend } from '../wmo-v2/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 import type { TipsPredicateFN } from './tip-types';
 import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
@@ -113,7 +113,7 @@ export const hasBijstandsuitkering: TipsPredicateFN = (
 
 export const hasAOV: TipsPredicateFN = (appState) => {
   return !!appState.WMO?.content?.some(
-    (wmo: WMOVoorzieningFrontend) => wmo.isActual && wmo.itemTypeCode === 'AOV'
+    (wmo) => wmo.isActual && wmo.itemTypeCode === 'AOV'
   );
 };
 

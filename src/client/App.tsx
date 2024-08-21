@@ -79,8 +79,9 @@ import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
 import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import Zorg from './pages/Zorg/Zorg';
-import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
-import ZorgV2 from './pages/Zorg/ZorgV2';
+import ZorgVoorzieningen from './pages/ZorgV2/ZorgRegelingen';
+import ZorgV2 from './pages/ZorgV2/ZorgV2';
+import ZorgDetailV2 from './pages/ZorgV2/ZorgDetail';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import { useMonitoring } from './utils/monitoring';
 import AfisThemaPagina from './pages/Afis/Afis';
@@ -212,7 +213,12 @@ function AppAuthenticated() {
             />
           )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
-          <Route path={AppRoutes['ZORG/VOORZIENING']} component={ZorgDetail} />
+          <Route
+            path={AppRoutes['ZORG/VOORZIENING']}
+            component={
+              FeatureToggle.zorgv2ThemapaginaActive ? ZorgDetailV2 : ZorgDetail
+            }
+          />
           {FeatureToggle.zorgv2ThemapaginaActive && (
             <Route
               path={AppRoutes['ZORG/VOORZIENINGEN_LIST']}
