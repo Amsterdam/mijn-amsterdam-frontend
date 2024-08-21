@@ -34,14 +34,14 @@ export default function ToeristischeVerhuur() {
   const { content } = TOERISTISCHE_VERHUUR;
 
   const hasVergunningenVakantieVerhuur =
-    content?.vakantieverhuurVergunningen?.some(
-      (vergunning) => vergunning.titel === 'Vergunning vakantieverhuur'
+    content?.vakantieverhuurVergunningen?.some((vergunning) =>
+      vergunning.titel.endsWith('vakantieverhuur')
     );
 
   const hasVergunningenVakantieVerhuurVerleend =
     content?.vakantieverhuurVergunningen?.some(
       (vergunning) =>
-        vergunning.titel === 'Vergunning vakantieverhuur' &&
+        vergunning.titel.endsWith('vakantieverhuur') &&
         vergunning.resultaat === 'Verleend'
     );
 
@@ -49,7 +49,7 @@ export default function ToeristischeVerhuur() {
 
   const hasVergunningBBVerleend = content?.bbVergunningen?.some(
     (vergunning) =>
-      vergunning.titel === 'Vergunning bed & breakfast' &&
+      vergunning.titel.endsWith('bed & breakfast') &&
       vergunning.resultaat === 'Verleend'
   );
 
