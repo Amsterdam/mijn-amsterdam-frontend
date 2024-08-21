@@ -2,14 +2,13 @@ import { LinkdInline } from '../../../Button/Button';
 import GenericBase from './GenericBase';
 
 const afvalUrls: Record<string, string> = {
-  rest: 'https://www.amsterdam.nl/veelgevraagd/huisvuil-279fd',
-  glas: 'https://www.amsterdam.nl/veelgevraagd/glas-inleveren-in-de-glasbak-91080',
+  rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval',
+  glas: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/glas-potten-flessen-en-ander-glas',
   papier:
-    'https://www.amsterdam.nl/veelgevraagd/dit-mag-wel-en-niet-in-de-papiercontainer-944aa-kp',
-  textiel: 'https://www.amsterdam.nl/veelgevraagd/textielcontainers-431a2-kp',
-  gft: 'https://www.amsterdam.nl/veelgevraagd/dit-mag-wel-en-niet-bij-het-groente-fruit-etensresten-en-tuinafval-gfe-t-78cf5-kp',
-  brood:
-    'https://www.amsterdam.nl/veelgevraagd/wat-mag-er-in-de-broodcontainer-256e1-kp',
+    'https://www.milieucentraal.nl/minder-afval/afval-scheiden/papier-en-karton',
+  textiel:
+    'https://www.milieucentraal.nl/minder-afval/afval-scheiden/kleding-textiel-en-schoenen',
+  gft: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/groente-fruit-en-tuinafval-gft/#uitgebreide-gft-lijst-per-categorie',
 };
 
 interface MyArePanelContentAfvalProps {
