@@ -41,7 +41,7 @@ test('Calls with digid', async () => {
   const requestConfigURL = requestData.mock.calls[0][0].url;
 
   expect(requestConfigURL).toBe(
-    'http://remote-api-host/parkeren/sso/get_authentication_url?service=digid'
+    `${remoteApiHost}/parkeren/sso/get_authentication_url?service=digid`
   );
 });
 
