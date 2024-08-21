@@ -272,6 +272,10 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   ERFPACHT: {
     url: `${getFromEnv('BFF_MIJN_ERFPACHT_API_URL')}`,
+    // NOTE: Temporarily disable https validation until we solve the cert verification error. See also: MIJN-9122
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false,
+    }),
   },
   BAG: {
     url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
