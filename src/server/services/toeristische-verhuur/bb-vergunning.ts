@@ -479,6 +479,8 @@ export async function fetchBBVergunning(
 
       return apiSuccessResult(zaken);
     }
+  } else if (tokenResponse.status === 'POSTPONE') {
+    return tokenResponse;
   }
 
   return apiErrorResult('Kan geen Bed & Breakfast vergunningen ophalen', null);
