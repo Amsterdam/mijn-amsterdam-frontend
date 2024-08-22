@@ -53,9 +53,7 @@ export default function ToeristischVerhuurDetail() {
           )}
         </PageContent>
       )}
-      {vergunning?.titel.startsWith('Vergunning') && (
-        <VergunningVerhuur vergunning={vergunning} />
-      )}
+      {!!vergunning && <VergunningVerhuur vergunning={vergunning} />}
     </DetailPage>
   );
 }
