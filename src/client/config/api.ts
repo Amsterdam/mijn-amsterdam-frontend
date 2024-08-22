@@ -62,6 +62,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   MY_LOCATION: 'Uw locatie op de kaart',
   NOTIFICATIONS: 'Actuele updates',
   OVERTREDINGEN: 'Overtredingen voertuigen',
+  PARKEREN: 'Parkeren',
   SUBSIDIE: 'Subsidies',
   SVWI: 'Werk & Inkomen portaal',
   TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',

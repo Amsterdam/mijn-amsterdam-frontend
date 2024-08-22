@@ -21,7 +21,7 @@ export const EMPTY_OKAY_RESPONSE = {
 };
 
 /** Quikly create an AuthProfileAndToken object */
-export function authProfileAndToken(
+export function getAuthProfileAndToken(
   profileType: ProfileType = 'private'
 ): AuthProfileAndToken {
   const authProfileAndToken: AuthProfileAndToken = {

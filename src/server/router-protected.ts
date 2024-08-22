@@ -33,6 +33,7 @@ import {
 import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import { handleFetchAfisBusinessPartner } from './services/afis/afis-route-handlers';
+import { fetchSSOParkerenURL } from './services/parkeren/parkeren';
 
 export const router = express.Router();
 

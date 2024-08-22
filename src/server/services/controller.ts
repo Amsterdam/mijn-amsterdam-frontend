@@ -59,6 +59,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import { fetchSSOParkerenURL } from './parkeren/parkeren';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -91,15 +92,16 @@ const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
 // Protected services
 const AFIS = callService(fetchIsKnownInAFIS);
 const BRP = callService(fetchBRP);
-const KVK = callService(fetchKVK);
-const KREFIA = callService(fetchKrefia);
-const WPI_AANVRAGEN = callService(fetchBijstandsuitkering);
-const WPI_SPECIFICATIES = callService(fetchSpecificaties);
-const WPI_TOZO = callService(fetchTozo);
-const WPI_TONK = callService(fetchTonk);
-const WPI_BBZ = callService(fetchBbz);
 const HLI = callService(fetchHLI);
+const KREFIA = callService(fetchKrefia);
+const KVK = callService(fetchKVK);
+const PARKEREN = callService(fetchSSOParkerenURL);
 const SVWI = callService(fetchSVWI);
+const WPI_AANVRAGEN = callService(fetchBijstandsuitkering);
+const WPI_BBZ = callService(fetchBbz);
+const WPI_SPECIFICATIES = callService(fetchSpecificaties);
+const WPI_TONK = callService(fetchTonk);
+const WPI_TOZO = callService(fetchTozo);
 
 const WMO = callService(fetchWmo);
 
@@ -194,6 +196,7 @@ const SERVICES_INDEX = {
   MY_LOCATION,
   NOTIFICATIONS,
   OVERTREDINGEN,
+  PARKEREN,
   PROFILE,
   SUBSIDIE,
   SVWI,
@@ -236,6 +239,7 @@ type CommercialServices = Pick<
   | 'MY_LOCATION'
   | 'NOTIFICATIONS'
   | 'OVERTREDINGEN'
+  | 'PARKEREN'
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
   | 'VERGUNNINGEN'
@@ -271,6 +275,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     MY_LOCATION,
     NOTIFICATIONS,
     OVERTREDINGEN,
+    PARKEREN,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -305,6 +310,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     MY_LOCATION,
     NOTIFICATIONS,
     OVERTREDINGEN,
+    PARKEREN,
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
