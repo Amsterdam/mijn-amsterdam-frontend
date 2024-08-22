@@ -10,7 +10,7 @@ export const FeatureToggle = {
   bodemActive: !IS_PRODUCTION, // NOTE: Temporarily disabled
   cleopatraApiActive: true,
   cmsFooterActive: true,
-  dbDisabled: false,
+  dbDisabled: true,
   decosServiceActive: IS_OT,
   ehKetenmachtigingActive: !IS_PRODUCTION,
   eherkenningActive: true,
