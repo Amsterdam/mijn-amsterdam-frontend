@@ -14,7 +14,7 @@ export interface ThemasState {
 export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
-  const themaItems = themasByProfileType(profileType, appState);
+  const themaItems = themasByProfileType(profileType);
 
   const items = themaItems.filter((item) => {
     // Check to see if Thema has been loaded or if it is directly available

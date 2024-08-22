@@ -1,4 +1,4 @@
-import { authProfileAndToken, remoteApi } from '../../../test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 import { describe } from 'vitest';
 import { encrypt } from '../../../server/helpers/encrypt-decrypt';
 
@@ -6,7 +6,7 @@ const mockEncrypt = (text: string): string => `encrypted-${text}`;
 const mockDecrypt = (text: string): string => text.replace('encrypted-', '');
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
-  const original = await importOriginal();
+  const original: object = await importOriginal();
   return {
     ...original,
     encrypt: vi.fn((text: string) => [mockEncrypt(text)]),
@@ -90,7 +90,7 @@ describe('Afis', () => {
 
         const response = await fetchIsKnownInAFIS(
           REQUEST_ID,
-          authProfileAndToken('private')
+          getAuthProfileAndToken('private')
         );
 
         expect(response).toStrictEqual({
@@ -111,7 +111,7 @@ describe('Afis', () => {
 
         const response = await fetchIsKnownInAFIS(
           REQUEST_ID,
-          authProfileAndToken('private')
+          getAuthProfileAndToken('private')
         );
 
         expect(response).toStrictEqual({
@@ -132,7 +132,7 @@ describe('Afis', () => {
 
         const response = await fetchIsKnownInAFIS(
           REQUEST_ID,
-          authProfileAndToken('commercial')
+          getAuthProfileAndToken('commercial')
         );
 
         expect(response).toStrictEqual({
@@ -155,7 +155,7 @@ describe('Afis', () => {
 
         const response = await fetchIsKnownInAFIS(
           REQUEST_ID,
-          authProfileAndToken('commercial')
+          getAuthProfileAndToken('commercial')
         );
 
         expect(response).toStrictEqual({
@@ -188,7 +188,7 @@ describe('Afis', () => {
 
         const response = await fetchIsKnownInAFIS(
           REQUEST_ID,
-          authProfileAndToken('commercial')
+          getAuthProfileAndToken('commercial')
         );
 
         expect(response).toStrictEqual(TRANSFORMED_RESPONSES.isKnown);
@@ -206,7 +206,7 @@ describe('Afis', () => {
         });
         const response = await fetchIsKnownInAFIS(
           REQUEST_ID,
-          authProfileAndToken('private')
+          getAuthProfileAndToken('private')
         );
 
         expect(response).toMatchInlineSnapshot(`
@@ -226,7 +226,7 @@ describe('Afis', () => {
 
         const response = await fetchIsKnownInAFIS(
           REQUEST_ID,
-          authProfileAndToken('private')
+          getAuthProfileAndToken('private')
         );
 
         expect(response).toMatchInlineSnapshot(`
@@ -244,7 +244,7 @@ describe('Afis', () => {
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
-        authProfileAndToken('private')
+        getAuthProfileAndToken('private')
       );
 
       expect(response.content).toMatchInlineSnapshot(`
@@ -397,7 +397,6 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerAddress)
         .reply(200, responseWithoutAddress);
 
-    
       const encryptedRequestId = encrypt('213423')[0];
       const response = await fetchAfisBusinessPartner(
         REQUEST_ID,

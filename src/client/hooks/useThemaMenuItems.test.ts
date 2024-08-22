@@ -1,14 +1,15 @@
-import { ThemaMenuItem } from '../config/thema';
+import { Themas } from '../../universal/config/thema';
+import { ThemaMenuItem, ThemaTitles } from '../config/thema';
 import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
 
 describe('useThemaMenuItems', () => {
-  test('isThemaActive (No AppState Value)', () => {
+  test('Parkeren is not active without an Appstate entry.', () => {
     const item: ThemaMenuItem = {
-      id: 'PARKEREN',
-      hasAppStateValue: false,
-      profileTypes: ['private'],
+      title: ThemaTitles.Parkeren,
+      id: Themas.PARKEREN,
       to: 'http://test',
-      title: 'Testje!',
+      rel: 'external',
+      profileTypes: ['private', 'commercial'],
     };
 
     const isActive = isThemaActive(item, {
@@ -16,7 +17,7 @@ describe('useThemaMenuItems', () => {
       BRP: { content: { persoon: { mokum: true } } },
     } as any);
 
-    expect(isActive).toBe(true);
+    expect(isActive).toBe(false);
   });
 
   test('isThemaActive', () => {
