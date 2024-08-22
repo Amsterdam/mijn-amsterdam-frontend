@@ -13,7 +13,7 @@ function getFromEnv_(
     return process.env[key];
   }
   if (isRequired) {
-    throw new Error(`ENV undefined key: ${key}.`);
+    console.error(`ERROR: REQUIRED ENV key: ${key} is undefined.`);
   }
   console.warn(`ENV undefined, but not required: ${key}`);
 }
