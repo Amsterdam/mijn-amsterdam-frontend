@@ -5,6 +5,7 @@ import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { TrackingConfig } from './routes';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+//import { getThemaTitleBurgerzakenWithAppState } from '../pages/Burgerzaken/helpers';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -18,8 +19,6 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Paspoort en ID-kaart',
-  BUURT: 'Mijn buurt',
-  BEZWAREN: 'Bezwaren',
   INKOMEN: 'Inkomen',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   BRP: 'Mijn gegevens',
@@ -191,10 +190,10 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
 
   // {
   //   title: (appState: AppState) => {
-  //     return getThemaTitleWithAppState(appState);
+  //     return getThemaTitleBurgerzakenWithAppState(appState);
   //   },
-  //   id: Themas.HLI,
-  //   to: AppRoutes.HLI,
+  //   id: Themas.BURGERZAKEN,
+  //   to: AppRoutes.BURGERZAKEN,
   //   profileTypes: ['private'],
   // },
 
