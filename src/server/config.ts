@@ -305,7 +305,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   PARKEREN: {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
-    postponeFetch: !FeatureToggle.parkerenActive,
+    postponeFetch: !FeatureToggle.parkerenPatroonC,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${getFromEnv('BFF_LVV_API_URL')}`,
