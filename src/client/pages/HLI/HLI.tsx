@@ -60,10 +60,9 @@ export default function ThemaPaginaHLI() {
   } = useHliThemaData();
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
-      van een Stadspas ziet u ook de stadspasgegevens.
-    </Paragraph>
+    <>
+      <Paragraph>Hieronder ziet u stadspasgegevens.</Paragraph>
+    </>
   );
 
   const linkListItems: LinkProps[] = [
@@ -123,7 +122,7 @@ export default function ThemaPaginaHLI() {
       pageContentTables={
         <>
           {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
-          {tables}
+          {!!regelingen.length && tables}
         </>
       }
       isError={isError}

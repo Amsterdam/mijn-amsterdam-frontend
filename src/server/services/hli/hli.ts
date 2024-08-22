@@ -165,23 +165,22 @@ export async function fetchHLI(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const [stadspasResult, regelingenResult] = await Promise.allSettled([
+  const [stadspasResult] = await Promise.allSettled([
     fetchStadspas(requestID, authProfileAndToken),
-    fetchRegelingen(requestID, authProfileAndToken),
+    // fetchRegelingen(requestID, authProfileAndToken),
   ]);
 
-  const regelingenResponseData = getSettledResult(regelingenResult);
+  // const regelingenResponseData = getSettledResult(regelingenResult);
   const stadspasResponseData = getSettledResult(stadspasResult);
 
   const HLIResponseData: HLIresponseData = {
-    regelingen: regelingenResponseData.content ?? [],
+    regelingen: [],
     stadspas: stadspasResponseData.content,
   };
 
   return apiSuccessResult(
     HLIResponseData,
     getFailedDependencies({
-      regelingen: regelingenResponseData,
       stadspas: stadspasResponseData,
     })
   );
