@@ -247,7 +247,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   },
   {
     title: (appState: AppState) => {
-      return getThemaTitleWithAppState(appState);
+      return 'Stadspas';
     },
     id: Themas.HLI,
     to: AppRoutes.HLI,
