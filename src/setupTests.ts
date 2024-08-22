@@ -71,6 +71,8 @@ process.env.BFF_AFIS_OAUTH_CLIENT_ID = 'mijnamsterdam';
 process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
+process.env.BFF_PARKEREN_API_BASE_URL = `${remoteApiHost}/parkeren`;
+
 // V2
 process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;
 process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN =

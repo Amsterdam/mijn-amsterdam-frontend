@@ -125,6 +125,7 @@ export type SourceApiKey =
   | 'KVK'
   | 'LOOD_365'
   | 'LOOD_365_OAUTH'
+  | 'PARKEREN'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
@@ -272,6 +273,10 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   ERFPACHT: {
     url: `${getFromEnv('BFF_MIJN_ERFPACHT_API_URL')}`,
+    // NOTE: Temporarily disable https validation until we solve the cert verification error. See also: MIJN-9122
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false,
+    }),
   },
   BAG: {
     url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
@@ -297,6 +302,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   KVK: {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/hr`,
     passthroughOIDCToken: true,
+  },
+  PARKEREN: {
+    url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${getFromEnv('BFF_LVV_API_URL')}`,

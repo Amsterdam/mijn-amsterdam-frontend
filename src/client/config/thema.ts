@@ -130,12 +130,13 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.AFIS]: 'Facturen en betalen | Mijn Amsterdam',
 };
 
-export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
+export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
   id: Thema;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
   title: LinkProps['title'] | ((appState: AppState) => string);
+  to: LinkProps['to'] | ((appState: AppState) => string);
 }
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
@@ -275,7 +276,9 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     ? {
         title: ThemaTitles.PARKEREN,
         id: Themas.PARKEREN,
-        to: import.meta.env.REACT_APP_SSO_URL_PARKEREN,
+        to: (appState: AppState) => {
+          return appState.PARKEREN.content?.url;
+        },
         rel: 'external',
         profileTypes: ['private', 'commercial'],
       }
