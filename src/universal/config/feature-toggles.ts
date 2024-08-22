@@ -7,7 +7,7 @@ export const FeatureToggle = {
   bekendmakingenDatasetActive: false,
   belastingApiActive: true,
   bezwarenActive: true,
-  bodemActive: true,
+  bodemActive: false, // NOTE: Temporarily disabled
   cleopatraApiActive: true,
   cmsFooterActive: true,
   dbDisabled: false,
