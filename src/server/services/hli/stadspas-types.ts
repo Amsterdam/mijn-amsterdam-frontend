@@ -35,7 +35,7 @@ export interface StadspasTransactiesResponseSource {
 }
 
 // NOTE: Taken straight from the documentation; not tested for variations
-type StadspasAanbiedingSource = {
+export type StadspasAanbiedingSource = {
   id: number;
   transactiedatum: string;
   verleende_korting: number;
@@ -198,6 +198,12 @@ export interface StadspasBudgetTransaction {
   budget: StadspasBudget['description'];
   budgetCode: StadspasBudget['code'];
 }
+
+export type StadspasDiscountTransactions = {
+  discountAmountTotal: number;
+  discountAmountTotalFormatted: string;
+  transactions: StadspasDiscountTransaction[];
+};
 
 // TODO: Determine which props are needed for this type
 export interface StadspasDiscountTransaction {

@@ -24,6 +24,8 @@ import {
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
+  StadspasDiscountTransactions,
+  StadspasAanbiedingSource,
 } from './stadspas-types';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
@@ -248,23 +250,33 @@ export async function fetchGpassBudgetTransactions(
 
 function transformGpassAanbiedingenResponse(
   responseSource: StadspasDiscountTransactionsResponseSource
-) {
-  if (Array.isArray(responseSource.transacties)) {
-    return responseSource.transacties.map((transactie) => {
-      const discountTransaction: StadspasDiscountTransaction = {
-        id: String(transactie.id),
-        title: transactie.aanbieding.communicatienaam,
-        discountAmount: transactie.verleende_korting,
-        discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
-        datePublished: transactie.transactiedatum,
-        datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
-        discountTitle: transactie.aanbieding.kortingzin,
-        description: transactie.aanbieding.omschrijving,
-      };
-      return discountTransaction;
-    });
+): StadspasDiscountTransactions {
+  const discountAmountTotal = responseSource.totale_korting ?? 0;
+  return {
+    discountAmountTotal,
+    discountAmountTotalFormatted: `€${displayAmount(discountAmountTotal)}`,
+    transactions: parseTransactions(responseSource.transacties),
+  };
+}
+
+function parseTransactions(
+  transactions: StadspasAanbiedingSource[]
+): StadspasDiscountTransaction[] {
+  if (Array.isArray(transactions)) {
+    return transactions.map((transactie) => ({
+      id: String(transactie.id),
+      title: transactie.aanbieding.communicatienaam,
+      discountAmount: transactie.verleende_korting,
+      discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
+      datePublished: transactie.transactiedatum,
+      datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
+      discountTitle: transactie.aanbieding.kortingzin,
+      description: transactie.aanbieding.omschrijving,
+    }));
   }
-  return responseSource;
+  // Code that should not be reached if the Api gives consistent responses.
+  console.error('Transactions is not an array; defaulting to an empty array.');
+  return [];
 }
 
 export async function fetchGpassDiscountTransactions(
