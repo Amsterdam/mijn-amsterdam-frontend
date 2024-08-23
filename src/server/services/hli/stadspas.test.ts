@@ -10,6 +10,7 @@ import {
 import {
   StadspasDiscountTransaction,
   StadspasDiscountTransactions,
+  StadspasDiscountTransactionsResponseSource,
 } from './stadspas-types';
 
 const pashouderResponse = {
@@ -457,9 +458,14 @@ describe('stadspas services', () => {
     const passNumber = 123456789;
 
     test('Get success response', async () => {
+      const apiResponse: StadspasDiscountTransactionsResponseSource = {
+        number_of_items: 0,
+        transacties: [],
+      };
+
       const expectedResponse: StadspasDiscountTransactions = {
         discountAmountTotal: 0,
-        discountAmountTotalFormatted: '0',
+        discountAmountTotalFormatted: '€0,00',
         transactions: [],
       };
 
@@ -471,7 +477,7 @@ describe('stadspas services', () => {
           'authorization',
           `AppBearer ${FAKE_API_KEY},${administratienummer}`
         )
-        .reply(200, expectedResponse);
+        .reply(200, apiResponse);
 
       const response = await fetchGpassDiscountTransactions(
         requestID,

@@ -254,7 +254,7 @@ function transformGpassAanbiedingenResponse(
   const discountAmountTotal = responseSource.totale_korting ?? 0;
   return {
     discountAmountTotal,
-    discountAmountTotalFormatted: `€${displayAmount(discountAmountTotal)}`,
+    discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
     transactions: parseTransactions(responseSource.transacties),
   };
 }
