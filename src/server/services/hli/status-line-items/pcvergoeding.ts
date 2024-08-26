@@ -103,8 +103,12 @@ export function filterCombineUpcPcvData(
 
       return {
         ...aanvraag,
-        // Use Basis regeling om actualiteit en einde geldigheid te bepalen
-        isActueel: baseRegeling?.isActueel ?? aanvraag.isActueel,
+        // Use Basis regeling to determine actualiteit en einde geldigheid.
+        // If verzilvering is denied we treat regeling as "niet actueel"
+        isActueel:
+          aanvraag.resultaat === 'toegewezen'
+            ? baseRegeling?.isActueel ?? aanvraag.isActueel
+            : false,
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
       };
@@ -149,9 +153,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Cursus',
-    isVisible: (stepIndex, regeling) =>
-      (!isVerzilvering(regeling) && regeling.resultaat !== 'afgewezen') ||
-      (isVerzilvering(regeling) && regeling.resultaat !== 'toegewezen'),
+    isVisible: (stepIndex, regeling) => !isVerzilvering(regeling),
     datePublished: '',
     isChecked: (stepIndex, regeling) => true,
     isActive: (stepIndex, regeling) => true,
