@@ -7,7 +7,11 @@ import {
   fetchGpassDiscountTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
-import { StadspasDiscountTransaction } from './stadspas-types';
+import {
+  StadspasDiscountTransaction,
+  StadspasDiscountTransactions,
+  StadspasDiscountTransactionsResponseSource,
+} from './stadspas-types';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -454,7 +458,16 @@ describe('stadspas services', () => {
     const passNumber = 123456789;
 
     test('Get success response', async () => {
-      const expectedResponse: StadspasDiscountTransaction[] = [];
+      const apiResponse: StadspasDiscountTransactionsResponseSource = {
+        number_of_items: 0,
+        transacties: [],
+      };
+
+      const expectedResponse: StadspasDiscountTransactions = {
+        discountAmountTotal: 0,
+        discountAmountTotalFormatted: '€0,00',
+        transactions: [],
+      };
 
       remoteApi
         .get(
@@ -464,7 +477,7 @@ describe('stadspas services', () => {
           'authorization',
           `AppBearer ${FAKE_API_KEY},${administratienummer}`
         )
-        .reply(200, expectedResponse);
+        .reply(200, apiResponse);
 
       const response = await fetchGpassDiscountTransactions(
         requestID,

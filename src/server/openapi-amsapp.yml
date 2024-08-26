@@ -235,9 +235,17 @@ components:
       type: object
       properties:
         content:
-          type: array
-          items:
-            $ref: '#/components/schemas/StadspasDiscountTransaction'
+          type: object
+          properties:
+            discountAmountTotal:
+              type: number
+            discountAmountTotalFormatted:
+              description: 'For example: "€12,45"'
+              type: string
+            transactions:
+              type: array
+              items:
+                $ref: '#/components/schemas/StadspasDiscountTransaction'
         status:
           type: string
           enum:
@@ -258,7 +266,7 @@ components:
           type: number
         discountAmountFormatted:
           type: string
-          description: 'For example: - €12,45'
+          description: 'For example: "€12,45"'
         datePublished:
           type: string
         datePublishedFormatted:

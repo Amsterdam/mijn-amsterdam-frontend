@@ -24,6 +24,8 @@ import {
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
+  StadspasDiscountTransactions,
+  StadspasAanbiedingSource,
 } from './stadspas-types';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
@@ -248,23 +250,31 @@ export async function fetchGpassBudgetTransactions(
 
 function transformGpassAanbiedingenResponse(
   responseSource: StadspasDiscountTransactionsResponseSource
-) {
-  if (Array.isArray(responseSource.transacties)) {
-    return responseSource.transacties.map((transactie) => {
-      const discountTransaction: StadspasDiscountTransaction = {
-        id: String(transactie.id),
-        title: transactie.aanbieding.communicatienaam,
-        discountAmount: transactie.verleende_korting,
-        discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
-        datePublished: transactie.transactiedatum,
-        datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
-        discountTitle: transactie.aanbieding.kortingzin,
-        description: transactie.aanbieding.omschrijving,
-      };
-      return discountTransaction;
-    });
+): StadspasDiscountTransactions | StadspasDiscountTransactionsResponseSource {
+  if (Array.isArray(responseSource?.transacties)) {
+    const discountAmountTotal = responseSource.totale_korting ?? 0;
+    return {
+      discountAmountTotal,
+      discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
+      transactions: transformTransactions(responseSource.transacties),
+    };
   }
   return responseSource;
+}
+
+function transformTransactions(
+  transactions: StadspasAanbiedingSource[]
+): StadspasDiscountTransaction[] {
+  return transactions.map((transactie) => ({
+    id: String(transactie.id),
+    title: transactie.aanbieding.communicatienaam,
+    discountAmount: transactie.verleende_korting,
+    discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
+    datePublished: transactie.transactiedatum,
+    datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
+    discountTitle: transactie.aanbieding.kortingzin,
+    description: transactie.aanbieding.omschrijving,
+  }));
 }
 
 export async function fetchGpassDiscountTransactions(
