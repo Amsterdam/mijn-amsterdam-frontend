@@ -250,33 +250,31 @@ export async function fetchGpassBudgetTransactions(
 
 function transformGpassAanbiedingenResponse(
   responseSource: StadspasDiscountTransactionsResponseSource
-): StadspasDiscountTransactions {
-  const discountAmountTotal = responseSource.totale_korting ?? 0;
-  return {
-    discountAmountTotal,
-    discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
-    transactions: parseTransactions(responseSource.transacties),
-  };
+): StadspasDiscountTransactions | StadspasDiscountTransactionsResponseSource {
+  if (Array.isArray(responseSource?.transacties)) {
+    const discountAmountTotal = responseSource.totale_korting ?? 0;
+    return {
+      discountAmountTotal,
+      discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
+      transactions: transformTransactions(responseSource.transacties),
+    };
+  }
+  return responseSource;
 }
 
-function parseTransactions(
+function transformTransactions(
   transactions: StadspasAanbiedingSource[]
 ): StadspasDiscountTransaction[] {
-  if (Array.isArray(transactions)) {
-    return transactions.map((transactie) => ({
-      id: String(transactie.id),
-      title: transactie.aanbieding.communicatienaam,
-      discountAmount: transactie.verleende_korting,
-      discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
-      datePublished: transactie.transactiedatum,
-      datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
-      discountTitle: transactie.aanbieding.kortingzin,
-      description: transactie.aanbieding.omschrijving,
-    }));
-  }
-  // Code that should not be reached if the Api gives consistent responses.
-  console.error('Transactions is not an array; defaulting to an empty array.');
-  return [];
+  return transactions.map((transactie) => ({
+    id: String(transactie.id),
+    title: transactie.aanbieding.communicatienaam,
+    discountAmount: transactie.verleende_korting,
+    discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
+    datePublished: transactie.transactiedatum,
+    datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
+    discountTitle: transactie.aanbieding.kortingzin,
+    description: transactie.aanbieding.omschrijving,
+  }));
 }
 
 export async function fetchGpassDiscountTransactions(
