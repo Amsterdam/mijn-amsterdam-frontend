@@ -145,7 +145,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
           : `Uw recht op ${aanvraag.titel} is beëindigd
           ${
             aanvraag.datumEindeGeldigheid
-              ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+              ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
               : ''
           }`
       }
@@ -153,7 +153,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
         ? `<p>
-           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor  ${
+           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${
              aanvraag.datumEindeGeldigheid
                ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                : ''
@@ -178,12 +178,12 @@ export function getTransformerConfigBesluit(
       `<p>
           ${
             aanvraag.resultaat === 'toegewezen'
-              ? `U krijgt  ${useAsProduct ? 'een ' : ''}${aanvraag.titel}  ${
+              ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel}${
                   aanvraag.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
+                    ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                     : ''
-                }`
-              : `U krijgt geen ${aanvraag.titel}`
+                }.`
+              : `U krijgt geen ${aanvraag.titel}.`
           }.
       </p>
       ${decisionParagraph(aanvraag)}
