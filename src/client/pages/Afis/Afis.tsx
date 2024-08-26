@@ -63,9 +63,8 @@ function AfisBusinessPaginaContent({
       errorAlertContent={
         <>
           De volgende gegevens konden niet worden opgehaald:
-          <br />
-          - Email
-          <br />- Telefoonnummer
+          {failedEmail && <><br>- Email</>}
+          {failedPhone && <><br>- Telefoonnummer</>}
         </>
       }
       isLoading={false}
