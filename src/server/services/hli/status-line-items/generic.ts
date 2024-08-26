@@ -35,13 +35,13 @@ function getEindeRechtDescription(regeling: ZorgnedAanvraagTransformed) {
     case isActueel && !hasDatumEindeGeldigheid:
       return `Als uw recht op ${regeling.titel} stopt, krijgt u hiervan bericht.`;
     case !isActueel && !hasDatumEindeGeldigheid:
-      return `Uw recht op ${regeling.titel} is beëindigd`;
+      return `Uw recht op ${regeling.titel} is beëindigd.`;
     case !isActueel && hasDatumEindeGeldigheid:
       return `Uw recht op ${regeling.titel} is beëindigd ${
         regeling.datumEindeGeldigheid
           ? `per ${defaultDateFormat(regeling.datumEindeGeldigheid)}`
           : ''
-      }`;
+      }.`;
   }
 }
 
@@ -56,4 +56,8 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
       ${getEindeRechtDescription(regeling)}
     </p>
     `,
+};
+
+export const forTesting = {
+  getEindeRechtDescription,
 };
