@@ -8,6 +8,14 @@ export const AppRoutesRedirect = [
     to: AppRoutes['BURGERZAKEN/ID-KAART'],
   },
   {
+    from: '/stadspas',
+    to: AppRoutes['HLI'],
+  },
+  {
+    from: '/stadspas/saldo/:pasnummer',
+    to: AppRoutes['HLI'],
+  },
+  {
     from: '/inkomen-en-stadspas/bijstandsuitkering/:id',
     to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
   },
