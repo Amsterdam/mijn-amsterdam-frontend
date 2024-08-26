@@ -1,17 +1,65 @@
+import {
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../../universal/helpers/api';
 import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
-import { axiosRequest, requestData } from '../../helpers/source-api-request';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { requestData } from '../../helpers/source-api-request';
 import {
-  AfisBusinessPartnerCombinedResponse,
-  AFISBusinessPartnerCommercialSourceResponse,
-  AfisBusinessPartnerDetailsTransformedResponse,
-  AfisBusinessPartnerPhoneTransformedResponse,
-  AFISBusinessPartnerPrivateSourceResponse,
-  AfisBusinessPartnerResponse,
-  BusinessPartnerKnownResponse,
+  AfisApiFeedResponseSource,
+  AfisBusinessPartnerCommercialResponseSource,
+  AfisBusinessPartnerDetails,
+  AfisBusinessPartnerDetailsSource,
+  AfisBusinessPartnerEmail,
+  AfisBusinessPartnerEmailSource,
+  AfisBusinessPartnerKnownResponse,
+  AfisBusinessPartnerPhone,
+  AfisBusinessPartnerPhoneSource,
+  AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
-import { AxiosResponse } from 'axios';
-import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+
+function transformBusinessPartnerisKnownResponse(
+  response:
+    | AfisBusinessPartnerPrivateResponseSource
+    | AfisBusinessPartnerCommercialResponseSource
+    | string
+) {
+  if (!response || typeof response === 'string') {
+    return null;
+  }
+
+  let isKnown: boolean = false;
+  let businessPartnerId: string | null = null;
+  let businessPartnerIdEncrypted: string | null = null;
+
+  if ('Record' in response) {
+    // Responses can include multiple records or just one, for clarity we treat the response as always having an array of Records here.
+    const records = !Array.isArray(response.Record)
+      ? [response.Record]
+      : response.Record;
+
+    const record = records.find((record) => record.Gevonden === 'Ja');
+
+    if (record) {
+      isKnown = true;
+      businessPartnerId = record.Zakenpartnernummer ?? null;
+    }
+  } else if ('BSN' in response) {
+    isKnown = response.Gevonden === 'Ja';
+    businessPartnerId = response.Zakenpartnernummer ?? null;
+  }
+
+  if (businessPartnerId) {
+    [businessPartnerIdEncrypted] = encrypt(businessPartnerId);
+  }
+
+  return {
+    isKnown,
+    businessPartnerIdEncrypted,
+  };
+}
 
 /** Returns if the person logging in is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
@@ -22,10 +70,11 @@ export async function fetchIsKnownInAFIS(
     authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
 
   const additionalConfig: DataRequestConfig = {
+    method: 'post',
     data: {
       [profileIdentifierType]: authProfileAndToken.profile.id,
     },
-    transformResponse: transformBusinessPartnerisKnown,
+    transformResponse: transformBusinessPartnerisKnownResponse,
     formatUrl(config) {
       return `${config.url}/businesspartner/${profileIdentifierType}/`;
     },
@@ -33,7 +82,7 @@ export async function fetchIsKnownInAFIS(
 
   const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
 
-  const response = await requestData<BusinessPartnerKnownResponse | null>(
+  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
     dataRequestConfig,
     requestID,
     authProfileAndToken
@@ -42,164 +91,147 @@ export async function fetchIsKnownInAFIS(
   return response;
 }
 
-function transformBusinessPartnerisKnown(
-  response:
-    | AFISBusinessPartnerPrivateSourceResponse
-    | AFISBusinessPartnerCommercialSourceResponse
-    | string
-): BusinessPartnerKnownResponse | null {
-  if (!response || typeof response === 'string') {
-    return null;
-  }
-
-  let transformedResponse: BusinessPartnerKnownResponse = {
-    isKnown: false,
-    businessPartnerIdEncrypted: null,
-  };
-
-  if ('Record' in response) {
-    if (Array.isArray(response.Record)) {
-      transformedResponse.isKnown = response.Record.some(
-        (record) => record.Gevonden === 'Ja'
-      );
-      transformedResponse.businessPartnerIdEncrypted =
-        response.Record.find((record) => record.Gevonden === 'Ja')
-          ?.Zakenpartnernummer || null;
-    } else {
-      transformedResponse.isKnown = response.Record.Gevonden === 'Ja';
-      transformedResponse.businessPartnerIdEncrypted =
-        response.Record.Zakenpartnernummer || null;
-    }
-  } else if ('BSN' in response) {
-    transformedResponse.isKnown = response.Gevonden === 'Ja';
-    transformedResponse.businessPartnerIdEncrypted =
-      response.Zakenpartnernummer || null;
-  } else {
-    console.debug("Known keys 'Record' or 'BSN' not found in API response");
-    transformedResponse.isKnown = false;
-    transformedResponse.businessPartnerIdEncrypted = null;
-  }
-
-  const [encryptedId] = encrypt(
-    transformedResponse.businessPartnerIdEncrypted || ''
-  );
-
-  transformedResponse.businessPartnerIdEncrypted = encryptedId;
-
-  return transformedResponse;
-}
-
-/** Fetches the business partner details and phonenumber from the AFIS source API and combines then into a single response */
-export async function fetchAfisBusinessPartner(
-  requestId: requestID,
-  businessPartnerId: string
+function transformBusinessPartnerDetailsResponse(
+  response: AfisApiFeedResponseSource<AfisBusinessPartnerDetailsSource>
 ) {
-  const decryptedId = decrypt(businessPartnerId);
-  const response =
-    await requestData<AfisBusinessPartnerDetailsTransformedResponse>(
-      getBusinessDetailsRequestConfig(decryptedId),
-      requestId
-    );
-  return response;
-}
+  const properties = response?.feed?.entry?.[0]?.content?.properties;
+  if (
+    properties &&
+    typeof properties === 'object' &&
+    !Array.isArray(properties)
+  ) {
+    const address = [
+      properties.StreetName,
+      properties.HouseNumber,
+      properties.HouseNumberSupplementText,
+      properties.PostalCode,
+      properties.CityName,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-async function requestHandler<T>(
-  requestConfig: DataRequestConfig,
-  businessPartnerId: string
-) {
-  const urlBusinessPartner = `${requestConfig.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'`;
-  let responseBusinessDetailsResponse =
-    await axiosRequest.request<AfisBusinessPartnerResponse<AfisBusinessPartnerCombinedResponse> | null>(
-      {
-        ...requestConfig,
-        url: urlBusinessPartner,
-      }
-    );
+    const transformedResponse: AfisBusinessPartnerDetails = {
+      businessPartnerId: properties.BusinessPartner,
+      fullName: properties.FullName,
+      address,
+      addressId: properties.AddressID,
+    };
 
-  const properties =
-    responseBusinessDetailsResponse.data?.feed?.entry[0]?.content?.properties;
-
-  const addressID = properties?.AddressID;
-
-  if (addressID) {
-    const urlPhonenumber = `${requestConfig.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressID}'`;
-
-    const responsePhonenumber =
-      await axiosRequest.request<AfisBusinessPartnerResponse<AfisBusinessPartnerCombinedResponse> | null>(
-        {
-          ...requestConfig,
-          url: urlPhonenumber,
-        }
-      );
-
-    const transformedResponseDetails = transformRequestDetails(
-      responseBusinessDetailsResponse.data
-    );
-
-    const transformedResponsePhonenumber = transformRequestPhonenumber(
-      responsePhonenumber.data
-    );
-
-    if (transformedResponseDetails && transformedResponsePhonenumber) {
-      const combinedResponse: AfisBusinessPartnerCombinedResponse = {
-        ...transformedResponseDetails,
-        ...transformedResponsePhonenumber,
-      };
-
-      (responseBusinessDetailsResponse as AxiosResponse).data =
-        combinedResponse as any;
-    } else {
-      responseBusinessDetailsResponse.data = null;
-    }
-  } else {
-    responseBusinessDetailsResponse.data = null;
+    return transformedResponse;
   }
 
-  delete (responseBusinessDetailsResponse as AxiosResponse).data?.AddressID;
-
-  return <AxiosResponse<T>>responseBusinessDetailsResponse;
+  return null;
 }
 
-function getBusinessDetailsRequestConfig(businessPartnerId: string) {
+async function fetchBusinessPartner(
+  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
+) {
   const additionalConfig: DataRequestConfig = {
-    request: (config) => requestHandler(config, businessPartnerId),
-    method: 'GET',
+    transformResponse: transformBusinessPartnerDetailsResponse,
+    formatUrl(config) {
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`;
+    },
   };
 
-  return getApiConfig('AFIS', additionalConfig);
+  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const requestId = businessPartnerId.toString();
+
+  return requestData<AfisBusinessPartnerDetails>(
+    businessPartnerRequestConfig,
+    requestId
+  );
 }
 
-function transformRequestDetails(
-  response: AfisBusinessPartnerResponse<any> | null
+function transformPhoneResponse(
+  response: AfisApiFeedResponseSource<AfisBusinessPartnerPhoneSource>
 ) {
-  let transformedResponse: AfisBusinessPartnerDetailsTransformedResponse | null;
+  const transformedResponse: AfisBusinessPartnerPhone = {
+    phone:
+      response?.feed?.entry[0]?.content?.properties?.InternationalPhoneNumber ??
+      null,
+  };
 
-  const properties = response?.feed?.entry[0]?.content?.properties;
-  if (properties && properties.AddressID) {
-    transformedResponse = {
-      BusinessPartner: properties.BusinessPartner,
-      BusinessPartnerFullName: properties.FullName,
-      BusinessPartnerAddress: `${properties.StreetName} ${properties.HouseNumber}${properties.HouseNumberSupplementText ? ' ' + properties.HouseNumberSupplementText + ' ' : ''}${properties.PostalCode} ${properties.CityName}`,
-      AddressID: properties.AddressID,
-    };
-  } else {
-    transformedResponse = null;
-  }
   return transformedResponse;
 }
 
-function transformRequestPhonenumber(
-  response: AfisBusinessPartnerResponse<any> | null
+async function fetchPhoneNumber(
+  addressId: AfisBusinessPartnerDetails['addressId']
 ) {
-  let transformedResponse: AfisBusinessPartnerPhoneTransformedResponse | null;
+  const additionalConfig: DataRequestConfig = {
+    transformResponse: transformPhoneResponse,
+    formatUrl(config) {
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressId}'`;
+    },
+  };
 
-  const properties = response?.feed?.entry[0]?.content?.properties;
-  if (properties) {
-    transformedResponse = {
-      PhoneNumber: properties.InternationalPhoneNumber,
-    };
-  } else {
-    transformedResponse = null;
-  }
+  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const requestId = addressId.toString();
+
+  return requestData<AfisBusinessPartnerPhone>(
+    businessPartnerRequestConfig,
+    requestId
+  );
+}
+
+function transformEmailResponse(
+  response: AfisApiFeedResponseSource<AfisBusinessPartnerEmailSource>
+) {
+  const transformedResponse: AfisBusinessPartnerEmail = {
+    email:
+      response?.feed?.entry[0]?.content?.properties?.SearchEmailAddress ?? null,
+  };
+
   return transformedResponse;
+}
+
+async function fetchEmail(addressId: AfisBusinessPartnerDetails['addressId']) {
+  const additionalConfig: DataRequestConfig = {
+    transformResponse: transformEmailResponse,
+    formatUrl(config) {
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressId}'`;
+    },
+  };
+
+  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const requestId = addressId.toString();
+
+  return requestData<AfisBusinessPartnerEmail>(
+    businessPartnerRequestConfig,
+    requestId
+  );
+}
+
+/** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
+export async function fetchAfisBusinessPartnerDetails(
+  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
+) {
+  const detailsResponse = await fetchBusinessPartner(businessPartnerId);
+
+  if (detailsResponse.status === 'OK' && detailsResponse.content?.addressId) {
+    const phoneRequest = fetchPhoneNumber(detailsResponse.content.addressId);
+    const emailRequest = fetchEmail(detailsResponse.content.addressId);
+
+    const [phoneResponseSettled, emailResponseSettled] =
+      await Promise.allSettled([phoneRequest, emailRequest]);
+
+    const phoneResponse = getSettledResult(phoneResponseSettled);
+    const emailResponse = getSettledResult(emailResponseSettled);
+
+    // Returns combined response
+    if (phoneResponse.status === 'OK' && emailResponse.status === 'OK') {
+      const detailsCombined: AfisBusinessPartnerDetails = {
+        ...detailsResponse.content,
+        ...phoneResponse.content,
+        ...emailResponse.content,
+      };
+      return apiSuccessResult(detailsCombined);
+    }
+    return apiSuccessResult(
+      detailsResponse.content,
+      getFailedDependencies({ phone: phoneResponse, email: emailResponse })
+    );
+  }
+
+  // Returns error response or (partial) success response without phone/email.
+  return detailsResponse;
 }
