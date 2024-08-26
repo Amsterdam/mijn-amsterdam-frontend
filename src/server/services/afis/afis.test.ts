@@ -326,7 +326,7 @@ describe('Afis', () => {
       `);
     });
 
-    it('transforms content to null when there is no AddressID', async () => {
+    it('returns just the business partner details when there is no AddressID', async () => {
       const responseBodyBusinessDetailsWithoutAddressID = jsonCopy(
         responseBodyBusinessDetails
       );
@@ -337,14 +337,6 @@ describe('Afis', () => {
       remoteApi
         .get(ROUTES.businesspartnerDetails)
         .reply(200, responseBodyBusinessDetailsWithoutAddressID);
-
-      remoteApi
-        .get(ROUTES.businesspartnerPhonenumber)
-        .reply(200, responseBodyBusinessPhonenumber);
-
-      remoteApi
-        .get(ROUTES.businesspartnerEmailAddress)
-        .reply(200, responseBodyBusinessEmailAddress);
 
       const response = await fetchAfisBusinessPartnerDetails(213423);
 
@@ -361,7 +353,7 @@ describe('Afis', () => {
       `);
     });
 
-    it('handles Error in one of the endpoints', async () => {
+    it('returns a partial error when there is an error fetching the phone number or email address', async () => {
       remoteApi
         .get(ROUTES.businesspartnerDetails)
         .reply(200, responseBodyBusinessDetails);
@@ -400,7 +392,7 @@ describe('Afis', () => {
       });
     });
 
-    it('handles server error as expected', async () => {
+    it('returns an error when there is an error fetching the business partner details', async () => {
       remoteApi
         .get(ROUTES.businesspartnerDetails)
         .replyWithError('error retrieving doc');
@@ -416,5 +408,50 @@ describe('Afis', () => {
         }
       `);
     });
+  });
+
+  it('returns null when the business partner details is not of type object', async () => {
+    remoteApi.get(ROUTES.businesspartnerDetails).reply(200, {
+      feed: {
+        entry: [
+          {
+            content: {
+              properties: 'not an object',
+            },
+          },
+        ],
+      },
+    });
+
+    const response = await fetchAfisBusinessPartnerDetails(213423);
+
+    expect(response).toMatchInlineSnapshot(`
+      {
+        "content": null,
+        "status": "OK",
+      }
+    `);
+
+    // also test when the response is an array
+    remoteApi.get(ROUTES.businesspartnerDetails).reply(200, {
+      feed: {
+        entry: [
+          {
+            content: {
+              properties: [],
+            },
+          },
+        ],
+      },
+    });
+
+    const response2 = await fetchAfisBusinessPartnerDetails(213423);
+
+    expect(response2).toMatchInlineSnapshot(`
+      {
+        "content": null,
+        "status": "OK",
+      }
+    `);
   });
 });

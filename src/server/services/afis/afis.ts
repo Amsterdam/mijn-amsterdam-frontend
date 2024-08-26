@@ -1,6 +1,6 @@
 import {
-  ApiErrorResponse,
   apiSuccessResult,
+  getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { DataRequestConfig, getApiConfig } from '../../config';
@@ -95,8 +95,11 @@ function transformBusinessPartnerDetailsResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerDetailsSource>
 ) {
   const properties = response?.feed?.entry?.[0]?.content?.properties;
-
-  if (properties) {
+  if (
+    properties &&
+    typeof properties === 'object' &&
+    !Array.isArray(properties)
+  ) {
     const address = [
       properties.StreetName,
       properties.HouseNumber,
@@ -204,7 +207,7 @@ export async function fetchAfisBusinessPartnerDetails(
 ) {
   const detailsResponse = await fetchBusinessPartner(businessPartnerId);
 
-  if (detailsResponse.status === 'OK' && detailsResponse.content.addressId) {
+  if (detailsResponse.status === 'OK' && detailsResponse.content?.addressId) {
     const phoneRequest = fetchPhoneNumber(detailsResponse.content.addressId);
     const emailRequest = fetchEmail(detailsResponse.content.addressId);
 
@@ -223,19 +226,10 @@ export async function fetchAfisBusinessPartnerDetails(
       };
       return apiSuccessResult(detailsCombined);
     }
-
-    const failedDependencies: Record<string, ApiErrorResponse<null>> = {};
-
-    if (phoneResponse.status === 'ERROR') {
-      failedDependencies.phone = phoneResponse;
-    }
-
-    if (emailResponse.status === 'ERROR') {
-      failedDependencies.email = emailResponse;
-    }
-
-    // Returns (partial) success response with failed dependency
-    return apiSuccessResult(detailsResponse.content, failedDependencies);
+    return apiSuccessResult(
+      detailsResponse.content,
+      getFailedDependencies({ phone: phoneResponse, email: emailResponse })
+    );
   }
 
   // Returns error response or (partial) success response without phone/email.

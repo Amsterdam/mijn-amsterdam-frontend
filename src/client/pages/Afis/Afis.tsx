@@ -1,15 +1,11 @@
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import { BFFApiUrls } from '../../config/api';
-import { AfisBusinessPartnerKnownResponse } from '../../../server/services/afis/afis-types';
+import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
 import { BagThemas } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import { Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 import { Datalist } from '../../components/Datalist/Datalist';
-import {
-  ApiResponse,
-  hasFailedDependency,
-} from '../../../universal/helpers/api';
-import { ApiState } from '../../hooks/api/useDataApi';
+import { hasFailedDependency } from '../../../universal/helpers/api';
 
 const pageContentTop = (
   <Paragraph>
@@ -18,7 +14,12 @@ const pageContentTop = (
   </Paragraph>
 );
 
-const labels: Record<string, string> = {
+type BusinessPartnerKey = keyof Omit<
+  AfisBusinessPartnerDetailsTransformed,
+  'addressId'
+>;
+
+const labels: Record<BusinessPartnerKey, string> = {
   businessPartnerId: 'Debiteurnummer',
   fullName: 'Naam',
   address: 'Adres',
@@ -29,11 +30,14 @@ const labels: Record<string, string> = {
 export default function AfisThemaPagina() {
   const { AFIS } = useAppStateGetter();
   const businessPartnerIdEncrypted = AFIS?.content?.businessPartnerIdEncrypted;
-  return businessPartnerIdEncrypted ? (
-    <AfisBusinessPaginaContent
-      businessPartnerIdEncrypted={businessPartnerIdEncrypted}
-    />
-  ) : null;
+
+  return (
+    businessPartnerIdEncrypted && (
+      <AfisBusinessPaginaContent
+        businessPartnerIdEncrypted={businessPartnerIdEncrypted}
+      />
+    )
+  );
 }
 
 function AfisBusinessPaginaContent({
@@ -42,7 +46,7 @@ function AfisBusinessPaginaContent({
   businessPartnerIdEncrypted: string;
 }) {
   const [businesspartner, api] =
-    useAppStateBagApi<AfisBusinessPartnerKnownResponse>({
+    useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
       url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
       bagThema: BagThemas.AFIS,
       key: businessPartnerIdEncrypted,
@@ -59,23 +63,18 @@ function AfisBusinessPaginaContent({
       errorAlertContent={
         <>
           De volgende gegevens konden niet worden opgehaald:
-          <UnorderedList>
-            {failedEmail && (
-              <UnorderedList.Item>E-mailadres</UnorderedList.Item>
-            )}
-            {failedPhone && (
-              <UnorderedList.Item>Telefoonnummer</UnorderedList.Item>
-            )}
-          </UnorderedList>
+          <br />
+          - Email
+          <br />- Telefoonnummer
         </>
       }
       isLoading={false}
       linkListItems={[]}
-      pageContentTop={pageContentTop ? pageContentTop : null}
+      pageContentTop={pageContentTop}
       pageContentTables={
         <>
-          {businesspartner && api && (
-            <AfisBusinessPartner api={api} businesspartner={businesspartner} />
+          {!!businesspartner && (
+            <AfisBusinessPartner businesspartner={businesspartner} />
           )}
         </>
       }
@@ -84,22 +83,16 @@ function AfisBusinessPaginaContent({
 }
 
 type AfisBusinessPartnerProps = {
-  api: ApiState<ApiResponse<AfisBusinessPartnerKnownResponse | null>>;
-  businesspartner: AfisBusinessPartnerKnownResponse;
+  businesspartner: AfisBusinessPartnerDetailsTransformed;
 };
 
-function AfisBusinessPartner({
-  api,
-  businesspartner,
-}: AfisBusinessPartnerProps) {
-  if (!api.isError && businesspartner) {
-    const rows = Object.entries(businesspartner).map(([key, value]) => {
-      if (key !== 'addressId') {
-        return { label: labels[key], content: value };
-      }
-    });
+function AfisBusinessPartner({ businesspartner }: AfisBusinessPartnerProps) {
+  const rows = Object.entries(labels).map(([key, label]) => {
+    return {
+      label,
+      content: businesspartner[key as BusinessPartnerKey],
+    };
+  });
 
-    return <Datalist rows={rows} />;
-  }
-  return <></>;
+  return <Datalist rows={rows} />;
 }
