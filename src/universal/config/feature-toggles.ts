@@ -18,7 +18,7 @@ export const FeatureToggle = {
   erfpachtV2EndpointActive: !IS_PRODUCTION,
   evenementenDatasetActive: false,
   garbageInformationPage: true,
-  hliThemaActive: !IS_PRODUCTION,
+  hliThemaActive: true,
   horecaActive: true,
   identiteitsbewijzenActive: true,
   inkomenBBZActive: true,
