@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi, getAuthProfileAndToken } from '../../../test-utils';
 
 const mocks = vi.hoisted(() => {
   const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';
