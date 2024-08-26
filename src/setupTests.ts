@@ -23,7 +23,7 @@ vi.mock('./universal/config/feature-toggles.ts', async (importOriginal) => {
   const featureToggleModule = (await importOriginal()) as any;
 
   let featureTogglesOn = Object.entries(featureToggleModule.FeatureToggle).map(
-    ([keyName, _]) => {
+    ([keyName]) => {
       return [keyName, true];
     }
   );
