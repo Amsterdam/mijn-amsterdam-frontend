@@ -3,6 +3,12 @@ import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/react';
 import nock from 'nock';
 import { vi, afterEach, expect, afterAll } from 'vitest';
+import {
+  IS_AP,
+  IS_DEVELOPMENT,
+  IS_OT,
+  IS_PRODUCTION,
+} from './universal/config/env';
 
 vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   const envModule = (await importOriginal()) as any;
@@ -10,6 +16,22 @@ vi.mock('./server/helpers/env.ts', async (importOriginal) => {
     ...envModule,
     // Prevent isRequired from spamming logs or throwing errors by ignoring it.
     getFromEnv: (key: string) => process.env[key],
+  };
+});
+
+vi.mock('./universal/config/feature-toggles.ts', async (importOriginal) => {
+  const featureToggleModule = (await importOriginal()) as any;
+
+  let featureTogglesOn = Object.entries(featureToggleModule.FeatureToggle).map(
+    ([keyName, _]) => {
+      return [keyName, true];
+    }
+  );
+  featureTogglesOn = Object.fromEntries(featureTogglesOn);
+
+  return {
+    ...featureToggleModule,
+    featureTogglesOn,
   };
 });
 
