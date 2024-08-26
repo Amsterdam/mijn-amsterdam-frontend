@@ -153,7 +153,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Cursus',
-    isVisible: (stepIndex, regeling) => !isVerzilvering(regeling),
+    isVisible: (stepIndex, regeling) =>
+      !isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
     datePublished: '',
     isChecked: (stepIndex, regeling) => true,
     isActive: (stepIndex, regeling) => true,
