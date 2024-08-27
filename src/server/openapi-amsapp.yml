@@ -235,9 +235,17 @@ components:
       type: object
       properties:
         content:
-          type: array
-          items:
-            $ref: '#/components/schemas/StadspasDiscountTransaction'
+          type: object
+          properties:
+            discountAmountTotal:
+              type: number
+            discountAmountTotalFormatted:
+              description: 'For example: "€12,45"'
+              type: string
+            transactions:
+              type: array
+              items:
+                $ref: '#/components/schemas/StadspasDiscountTransaction'
         status:
           type: string
           enum:
@@ -258,11 +266,12 @@ components:
           type: number
         discountAmountFormatted:
           type: string
-          description: 'For example: - €12,45'
+          description: 'For example: "€12,45"'
         datePublished:
           type: string
         datePublishedFormatted:
           type: string
+
 
     StadspasBudget:
       type: object
@@ -303,10 +312,6 @@ components:
       properties:
         id:
           type: string
-        passNumber:
-          type: number
-        passNumberComplete:
-          type: string
         owner:
           $ref: '#/components/schemas/StadspasOwner'
         dateEnd:
@@ -318,6 +323,20 @@ components:
           items:
             $ref: '#/components/schemas/StadspasBudget'
         balanceFormatted:
+          type: string
+        passNumber:
+          type: number
+        passNumberComplete:
+          type: string
+        securityCode:
+          description: |
+            Untill a new GPASS release in the fourth quarter (Q4) this value will always be null.
+          nullable: true
+          type: string
+        transactionsKeyEncrypted:
+          description: |
+            Used in subsequent requests to other endpoints requiring this.
+            This contains the passNumber and administrationNumber in an encrypted format.
           type: string
 
     StadspassenResponse:

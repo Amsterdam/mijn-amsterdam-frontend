@@ -119,11 +119,10 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
     return `<p>
       Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:<br />
       Uploaden via <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE}">amsterdam.nl/zorgdocumenten</a> of opsturen naar ons gratis antwoordnummer:<br />
-Gemeente Amsterdam <br />
-Services & Data <br />
-Antwoordnummer 9087 <br />
-1000 VV Amsterdam
-
+      Gemeente Amsterdam <br />
+      Services & Data <br />
+      Antwoordnummer 9087 <br />
+      1000 VV Amsterdam
     </p>`;
   },
 };
@@ -145,7 +144,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
           : `Uw recht op ${aanvraag.titel} is beëindigd
           ${
             aanvraag.datumEindeGeldigheid
-              ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+              ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
               : ''
           }`
       }
@@ -153,7 +152,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
         ? `<p>
-           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor  ${
+           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${
              aanvraag.datumEindeGeldigheid
                ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                : ''
@@ -178,13 +177,13 @@ export function getTransformerConfigBesluit(
       `<p>
           ${
             aanvraag.resultaat === 'toegewezen'
-              ? `U krijgt  ${useAsProduct ? 'een ' : ''}${aanvraag.titel}  ${
+              ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel}${
                   aanvraag.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
+                    ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                     : ''
-                }`
-              : `U krijgt geen ${aanvraag.titel}`
-          }.
+                }.`
+              : `U krijgt geen ${aanvraag.titel}.`
+          }
       </p>
       ${decisionParagraph(aanvraag)}
       `,

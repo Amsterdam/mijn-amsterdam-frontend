@@ -6,12 +6,11 @@ type JaOfNee = 'Ja' | 'Nee';
  *
  *  Record.BSN - Is a string when there is a leading zero present, otherwise a number.
  */
-export type AFISBusinessPartnerPrivateSourceResponse = {
+export type AfisBusinessPartnerPrivateResponseSource = {
   BSN: number | string;
   Gevonden: JaOfNee;
   Zakenpartnernummer?: string;
   Blokkade?: JaOfNee;
-  Afnemers_indicatie?: JaOfNee;
 };
 
 /** Business partner commercial response from external AFIS API.
@@ -20,47 +19,75 @@ export type AFISBusinessPartnerPrivateSourceResponse = {
  *
  *  Record.KVK - Is a string when there is a leading zero present, otherwise a number.
  */
-type AFISBusinessPartnerRecord = {
+type AfisBusinessPartnerRecordCommercial = {
   KVK: number | string;
-  Zakenpartnernummer: string;
+  Zakenpartnernummer?: string;
   Vestigingsnummer?: string;
   Blokkade: JaOfNee;
   Gevonden: JaOfNee;
 };
 
-export type AFISBusinessPartnerCommercialSourceResponse = {
-  Record: AFISBusinessPartnerRecord | AFISBusinessPartnerRecord[];
+export type AfisBusinessPartnerCommercialResponseSource = {
+  Record:
+    | AfisBusinessPartnerRecordCommercial
+    | AfisBusinessPartnerRecordCommercial[];
 };
 
-export type BusinessPartnerKnownResponse = {
+export type AfisBusinessPartnerKnownResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
 };
 
-export type AfisBusinessPartnerResponse<T> = {
-  feed: {
-    entry: [
+export type AfisApiFeedResponseSource<T> = {
+  feed?: {
+    entry?: [
       {
-        content: {
-          properties: T;
+        content?: {
+          properties?: T;
         };
       },
     ];
   };
 };
 
-export type AfisBusinessPartnerDetailsTransformedResponse = {
-  BusinessPartner: string;
-  BusinessPartnerFullName: string;
-  BusinessPartnerAddress: string;
-  AddressID?: string;
+export type AfisBusinessPartnerDetailsSource = {
+  BusinessPartner: number;
+  FullName: string;
+  AddressID: number;
+  CityName: string;
+  Country: string;
+  HouseNumber: number;
+  HouseNumberSupplementText: string;
+  PostalCode: string;
+  Region: string;
+  StreetName: string;
+  StreetPrefixName: string;
+  StreetSuffixName: string;
 };
 
-export type AfisBusinessPartnerPhoneTransformedResponse = {
-  PhoneNumber: string;
-  EmailAddress?: string; // dit” komt nog niet uit de api, bespreken met afis
+export type AfisBusinessPartnerPhoneSource = {
+  InternationalPhoneNumber: string;
 };
 
-export type AfisBusinessPartnerCombinedResponse =
-  AfisBusinessPartnerDetailsTransformedResponse &
-    AfisBusinessPartnerPhoneTransformedResponse;
+export type AfisBusinessPartnerEmailSource = {
+  SearchEmailAddress: string;
+};
+
+export type AfisBusinessPartnerDetails = {
+  businessPartnerId: number;
+  fullName: string;
+  address: string;
+  addressId: number;
+};
+
+export type AfisBusinessPartnerPhone = {
+  phone: string | null;
+};
+
+export type AfisBusinessPartnerEmail = {
+  email: string | null;
+};
+
+export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
+  AfisBusinessPartnerPhone &
+  AfisBusinessPartnerEmail;

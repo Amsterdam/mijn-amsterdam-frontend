@@ -15,14 +15,15 @@ export const WelcomeNotification: MyNotification = {
         plek:
       </p>
       <ul>
-        <li>welke gegevens de gemeente van u heeft vastgelegd. </li>
-        <li>welke producten en diensten U heeft bij de gemeente Amsterdam. </li>
+        <li>welke gegevens de gemeente van u heeft vastgelegd; </li>
+        <li>hoe het met uw aanvraag staat; </li>
         <li>
-          wat de status is en hoe u het kunt doorgeven als er iets niet klopt.
+          hoe u wijzigingen kunt doorgeven als er iets niet klopt;
         </li>
+        <li> informatie over uw buurt op een overzichtelijke <a href="https://mijn.amsterdam.nl/buurt"> kaart </a>.</li>
       </ul>
       <p>
-      Mijn Amsterdam wordt nog steeds verder ontwikkeld. Er komt steeds meer informatie bij.
+      <a href="https://mijn.amsterdam.nl/uitleg">Hier</a> kunt u zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
       </p>
 
     `,

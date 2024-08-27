@@ -229,7 +229,11 @@ describe('hli/router-external-consumer', async () => {
       expect(resMock.send).toHaveBeenCalledWith({
         status: 'OK',
         content: [
-          { foo: 'bar', transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
+          {
+            foo: 'bar',
+            securityCode: null,
+            transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+          },
         ],
       });
     });
