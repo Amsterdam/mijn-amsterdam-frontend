@@ -7,6 +7,7 @@ import { DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
+import { getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
   AfisBusinessPartnerCommercialResponseSource,
@@ -94,27 +95,24 @@ export async function fetchIsKnownInAFIS(
 function transformBusinessPartnerDetailsResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerDetailsSource>
 ) {
-  const properties = response?.feed?.entry?.[0]?.content?.properties;
-  if (
-    properties &&
-    typeof properties === 'object' &&
-    !Array.isArray(properties)
-  ) {
+  const [businessPartnerEntry] = getFeedEntryProperties(response);
+
+  if (businessPartnerEntry) {
     const address = [
-      properties.StreetName,
-      properties.HouseNumber,
-      properties.HouseNumberSupplementText,
-      properties.PostalCode,
-      properties.CityName,
+      businessPartnerEntry.StreetName,
+      businessPartnerEntry.HouseNumber,
+      businessPartnerEntry.HouseNumberSupplementText,
+      businessPartnerEntry.PostalCode,
+      businessPartnerEntry.CityName,
     ]
       .filter(Boolean)
       .join(' ');
 
     const transformedResponse: AfisBusinessPartnerDetails = {
-      businessPartnerId: properties.BusinessPartner,
-      fullName: properties.FullName,
+      businessPartnerId: businessPartnerEntry.BusinessPartner ?? null,
+      fullName: businessPartnerEntry.FullName ?? null,
       address,
-      addressId: properties.AddressID,
+      addressId: businessPartnerEntry.AddressID ?? null,
     };
 
     return transformedResponse;
@@ -145,10 +143,10 @@ async function fetchBusinessPartner(
 function transformPhoneResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerPhoneSource>
 ) {
+  const [phoneNumberEntry] = getFeedEntryProperties(response);
+
   const transformedResponse: AfisBusinessPartnerPhone = {
-    phone:
-      response?.feed?.entry[0]?.content?.properties?.InternationalPhoneNumber ??
-      null,
+    phone: phoneNumberEntry?.InternationalPhoneNumber ?? null,
   };
 
   return transformedResponse;
@@ -176,9 +174,10 @@ async function fetchPhoneNumber(
 function transformEmailResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerEmailSource>
 ) {
+  const [emailAddressEntry] = getFeedEntryProperties(response);
+
   const transformedResponse: AfisBusinessPartnerEmail = {
-    email:
-      response?.feed?.entry[0]?.content?.properties?.SearchEmailAddress ?? null,
+    email: emailAddressEntry?.SearchEmailAddress ?? null,
   };
 
   return transformedResponse;

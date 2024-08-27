@@ -344,7 +344,7 @@ describe('Afis', () => {
         {
           "content": {
             "address": "Rembrandtstraat 20 2311 VW Leiden",
-            "addressId": undefined,
+            "addressId": null,
             "businessPartnerId": 515177,
             "fullName": "Taxon Expeditions BV",
           },
@@ -427,7 +427,12 @@ describe('Afis', () => {
 
     expect(response).toMatchInlineSnapshot(`
       {
-        "content": null,
+        "content": {
+          "address": "",
+          "addressId": null,
+          "businessPartnerId": null,
+          "fullName": null,
+        },
         "status": "OK",
       }
     `);
@@ -449,7 +454,12 @@ describe('Afis', () => {
 
     expect(response2).toMatchInlineSnapshot(`
       {
-        "content": null,
+        "content": {
+          "address": "",
+          "addressId": null,
+          "businessPartnerId": null,
+          "fullName": null,
+        },
         "status": "OK",
       }
     `);
