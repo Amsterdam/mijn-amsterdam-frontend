@@ -39,11 +39,11 @@ export type AfisBusinessPartnerKnownResponse = {
 };
 
 export type AfisApiFeedResponseSource<T> = {
-  feed: {
-    entry: [
+  feed?: {
+    entry?: [
       {
-        content: {
-          properties: T;
+        content?: {
+          properties?: T;
         };
       },
     ];

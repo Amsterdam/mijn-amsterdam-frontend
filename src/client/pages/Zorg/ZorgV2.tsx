@@ -28,10 +28,6 @@ export default function ThemaPaginaZorg() {
       to: ExternalUrls.ZORG_LEES_MEER,
       title: 'Lees hier meer over zorg en ondersteuning',
     },
-    {
-      to: ExternalUrls.ZORG_LEES_MEER,
-      title: 'Documenten uploaden voor de Wmo',
-    },
   ];
 
   const tables = Object.entries(tableConfig).map(
