@@ -8,7 +8,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayProps = {
-  detailLinkComponent: '',
+  detailLinkComponent: 'Voorzieningen',
   status: 'Status',
   dateDescisionFormatted: 'Datum',
 };
@@ -22,8 +22,8 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
-  [listPageParamKind.actual]: 'Huidige regelingen',
-  [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
+  [listPageParamKind.actual]: 'Regelingen en hulpmiddelen',
+  [listPageParamKind.historic]: 'Afgelopen regelingen en hulpmiddelen',
 } as const;
 
 export const tableConfig = {

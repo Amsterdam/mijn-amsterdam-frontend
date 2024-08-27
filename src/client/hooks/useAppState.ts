@@ -267,10 +267,12 @@ export function useAppStateBagApi<T extends unknown>({
         if (!localState) {
           localState = {};
         }
+
         localState = {
           ...localState,
           [key]: api.data.content as T,
         };
+
         return {
           ...state,
           [bagThema]: localState,

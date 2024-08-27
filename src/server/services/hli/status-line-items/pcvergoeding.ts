@@ -1,9 +1,7 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-config-and-types';
-import { EINDE_RECHT } from './generic';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -105,8 +103,12 @@ export function filterCombineUpcPcvData(
 
       return {
         ...aanvraag,
-        // Use Basis regeling om actualiteit en einde geldigheid te bepalen
-        isActueel: baseRegeling?.isActueel ?? aanvraag.isActueel,
+        // Use Basis regeling to determine actualiteit en einde geldigheid.
+        // If verzilvering is denied we treat regeling as "niet actueel"
+        isActueel:
+          aanvraag.resultaat === 'toegewezen'
+            ? baseRegeling?.isActueel ?? aanvraag.isActueel
+            : false,
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
       };
@@ -152,8 +154,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Cursus',
     isVisible: (stepIndex, regeling) =>
-      (!isVerzilvering(regeling) && regeling.resultaat !== 'afgewezen') ||
-      (isVerzilvering(regeling) && regeling.resultaat !== 'toegewezen'),
+      !isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
     datePublished: '',
     isChecked: (stepIndex, regeling) => true,
     isActive: (stepIndex, regeling) => true,
@@ -172,8 +173,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     isVisible: (stepIndex, regeling) =>
       isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
     datePublished: (regeling) => regeling.datumBesluit,
-    isChecked: (stepIndex, regeling) => true,
-    isActive: (stepIndex, regeling) => regeling.isActueel,
+    isChecked: () => true,
+    isActive: () => true,
     description: (regeling) =>
       `
         <p>
@@ -184,7 +185,23 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
         </p>
       `,
   },
-  EINDE_RECHT,
+  {
+    status: 'Cursus niet voldaan',
+    isVisible: (stepIndex, regeling) =>
+      isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
+    datePublished: (regeling) => regeling.datumBesluit,
+    isChecked: () => true,
+    isActive: () => true,
+    description: (regeling) =>
+      `
+        <p>
+         U heeft voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}.
+        </p>
+        <p>
+          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+        </p>
+      `,
+  },
 ];
 
 export const forTesting = {

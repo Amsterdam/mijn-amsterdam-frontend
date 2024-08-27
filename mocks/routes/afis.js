@@ -47,4 +47,99 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'get-afis-businesspartner-details',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            feed: {
+              entry: [
+                {
+                  content: {
+                    '@type': 'application/xml',
+                    properties: {
+                      BusinessPartner: 515177,
+                      FullName: 'Taxon Expeditions BV',
+                      AddressID: 430844,
+                      CityName: 'Leiden',
+                      Country: 'NL',
+                      HouseNumber: 20,
+                      HouseNumberSupplementText: '',
+                      PostalCode: '2311 VW',
+                      Region: '',
+                      StreetName: 'Rembrandtstraat',
+                      StreetPrefixName: '',
+                      StreetSuffixName: '',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-businesspartner-phonenumber',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            feed: {
+              entry: [
+                {
+                  content: {
+                    '@type': 'application/xml',
+                    properties: {
+                      InternationalPhoneNumber: '+31622030313',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-businesspartner-emailaddress',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            feed: {
+              entry: [
+                {
+                  content: {
+                    '@type': 'application/xml',
+                    properties: {
+                      SearchEmailAddress: 'xxmail@arjanappel.nl',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+  },
 ];

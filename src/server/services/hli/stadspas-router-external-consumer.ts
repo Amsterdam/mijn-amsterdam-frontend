@@ -20,14 +20,15 @@ import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  fetchStadspasAanbiedingenTransactionsWithVerify,
-  fetchStadspasBudgetTransactionsWithVerify,
+  fetchStadspasDiscountTransactions,
+  fetchStadspasBudgetTransactions,
 } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
+const AMSAPP_LINK_NONCE = 'h70yjZuEZl';
 
 type ApiError = {
   code: string;
@@ -121,7 +122,8 @@ async function sendAdministratienummerResponse(
         deliveryResponse.content.detail === 'Success'
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
-          appHref: `${AMSAPP_STADSPAS_DEEP_LINK}`,
+          appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
+          nonce: AMSAPP_LINK_NONCE,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
             : '',
@@ -152,7 +154,7 @@ async function sendAdministratienummerResponse(
 
   return res.render('amsapp-stadspas-administratienummer', {
     error: apiResponseError,
-    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
   });
 }
 
@@ -193,6 +195,8 @@ async function sendStadspassenResponse(
           );
           return {
             ...stadspas,
+            // AMSAPP wants this extra field because GPASS promises to deliver this in the fourth quarter (Q4).
+            securityCode: null,
             transactionsKeyEncrypted,
           };
         });
@@ -216,11 +220,11 @@ routerPrivateNetwork.get(
   sendStadspassenResponse
 );
 
-async function sendAanbiedingenTransactionsResponse(
+async function sendDiscountTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasAanbiedingenTransactionsWithVerify(
+  const response = await fetchStadspasDiscountTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted
   );
@@ -229,9 +233,9 @@ async function sendAanbiedingenTransactionsResponse(
 }
 
 routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_AANBIEDINGEN_TRANSACTIES,
+  ExternalConsumerEndpoints.private.STADSPAS_DISCOUNT_TRANSACTIONS,
   apiKeyVerificationHandler,
-  sendAanbiedingenTransactionsResponse
+  sendDiscountTransactionsResponse
 );
 
 /** Sends transformed budget transactions.
@@ -244,7 +248,7 @@ async function sendBudgetTransactionsResponse(
   req: Request<{ transactionsKeyEncrypted: string }>,
   res: Response
 ) {
-  const response = await fetchStadspasBudgetTransactionsWithVerify(
+  const response = await fetchStadspasBudgetTransactions(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     req.query?.budgetCode as StadspasBudget['code']
@@ -254,7 +258,7 @@ async function sendBudgetTransactionsResponse(
 }
 
 routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADPAS_BUDGET_TRANSACTIES,
+  ExternalConsumerEndpoints.private.STADSPAS_BUDGET_TRANSACTIONS,
   apiKeyVerificationHandler,
   sendBudgetTransactionsResponse
 );
@@ -267,6 +271,6 @@ export const stadspasExternalConsumerRouter = {
 export const forTesting = {
   sendAdministratienummerResponse,
   sendStadspassenResponse,
-  sendAanbiedingenTransactionsResponse,
+  sendDiscountTransactionsResponse,
   sendBudgetTransactionsResponse,
 };

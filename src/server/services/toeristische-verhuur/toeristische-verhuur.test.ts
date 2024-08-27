@@ -99,8 +99,8 @@ describe('Toeristische verhuur service', () => {
     }
 
     expect(
-      response.content.vakantieverhuurVergunningen.every(
-        (vergunning) => vergunning.titel === 'Vergunning vakantieverhuur'
+      response.content.vakantieverhuurVergunningen.every((vergunning) =>
+        vergunning.titel.endsWith('vakantieverhuur')
       )
     ).toBe(true);
   });

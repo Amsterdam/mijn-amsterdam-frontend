@@ -44,8 +44,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     isActive: (stepIndex, aanvraag, today: Date) =>
       aanvraag.isActueel && isServiceDeliveryActive(aanvraag, today),
     description: (aanvraag) =>
-      `<p>
-        ${aanvraag.leverancier} is gestart met het leveren van ${aanvraag.titel}.
+      `<p> U krijgt nu ${aanvraag.titel} van ${aanvraag.leverancier}.
       </p>
       `,
   },
@@ -64,8 +63,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
             ${
               aanvraag.isActueel
                 ? 'Niet van toepassing.'
-                : `${aanvraag.leverancier} heeft aan ons doorgegeven dat u geen ${aanvraag.titel}
-        meer krijgt.`
+                : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`
             }
       </p>`,
     isVisible: (stepIndex, aanvraag, today, allAanvragen) => {

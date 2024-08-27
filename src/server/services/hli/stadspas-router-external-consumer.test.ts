@@ -9,7 +9,7 @@ import { generateDevSessionCookieValue } from '../../helpers/app.development';
 import { forTesting } from './stadspas-router-external-consumer';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import * as stadspas from './stadspas';
-import { StadspasAanbiedingenTransactionResponse } from './stadspas-types';
+import { StadspasDiscountTransaction } from './stadspas-types';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -81,7 +81,8 @@ describe('hli/router-external-consumer', async () => {
         'amsapp-stadspas-administratienummer',
         {
           administratienummerEncrypted: 'test-encrypted-id',
-          appHref: 'amsterdam://stadspas',
+          appHref: 'amsterdam://stadspas/gelukt',
+          nonce: 'h70yjZuEZl',
         }
       );
     });
@@ -107,7 +108,7 @@ describe('hli/router-external-consumer', async () => {
               'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
           },
           appHref:
-            'amsterdam://stadspas?errorMessage=Verzenden%20van%20administratienummer%20naar%20de%20Amsterdam%20app%20niet%20gelukt&errorCode=004',
+            'amsterdam://stadspas/mislukt?errorMessage=Verzenden%20van%20administratienummer%20naar%20de%20Amsterdam%20app%20niet%20gelukt&errorCode=004',
         }
       );
     });
@@ -123,7 +124,7 @@ describe('hli/router-external-consumer', async () => {
         {
           error: { code: '001', message: 'Niet ingelogd met Digid' },
           appHref:
-            'amsterdam://stadspas?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
+            'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
         }
       );
     });
@@ -144,7 +145,7 @@ describe('hli/router-external-consumer', async () => {
             message: 'Geen administratienummer gevonden',
           },
           appHref:
-            'amsterdam://stadspas?errorMessage=Geen%20administratienummer%20gevonden&errorCode=003',
+            'amsterdam://stadspas/mislukt?errorMessage=Geen%20administratienummer%20gevonden&errorCode=003',
         }
       );
     });
@@ -165,7 +166,7 @@ describe('hli/router-external-consumer', async () => {
             code: '002',
           },
           appHref:
-            'amsterdam://stadspas?errorMessage=Kon%20het%20administratienummer%20niet%20ophalen&errorCode=002',
+            'amsterdam://stadspas/mislukt?errorMessage=Kon%20het%20administratienummer%20niet%20ophalen&errorCode=002',
         }
       );
     });
@@ -183,7 +184,7 @@ describe('hli/router-external-consumer', async () => {
         {
           error: { code: '001', message: 'Niet ingelogd met Digid' },
           appHref:
-            'amsterdam://stadspas?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
+            'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
         }
       );
     });
@@ -217,7 +218,7 @@ describe('hli/router-external-consumer', async () => {
       render: renderMock,
     } as unknown as Response;
 
-    it('Returns stadpassen when supplied with encrypted administratieNummer', async () => {
+    test('Returns stadpassen when supplied with encrypted administratieNummer', async () => {
       const reqMock = {
         params: { [STADSPASSEN_ENDPOINT_PARAMETER]: 'ADMINISTRATIENUMMER' },
       } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
@@ -228,16 +229,20 @@ describe('hli/router-external-consumer', async () => {
       expect(resMock.send).toHaveBeenCalledWith({
         status: 'OK',
         content: [
-          { foo: 'bar', transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
+          {
+            foo: 'bar',
+            securityCode: null,
+            transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+          },
         ],
       });
     });
   });
 
   describe('Budget transactions endpoint', async () => {
-    it('Happy path without budgetcode filter', async () => {
+    test('Happy path without budgetcode filter', async () => {
       const fetchStadspasTransactionsSpy = vi
-        .spyOn(stadspas, 'fetchStadspasBudgetTransactionsWithVerify')
+        .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
         .mockResolvedValueOnce(apiSuccessResult([]));
 
       const reqMock = {
@@ -250,9 +255,9 @@ describe('hli/router-external-consumer', async () => {
       expect(sendMock).toHaveBeenCalledOnce();
     });
 
-    it('Happy path with budgetcode filter.', async () => {
+    test('Happy path with budgetcode filter.', async () => {
       const fetchStadspasTransactionsSpy = vi
-        .spyOn(stadspas, 'fetchStadspasBudgetTransactionsWithVerify')
+        .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
         .mockResolvedValueOnce(apiSuccessResult([]));
 
       const reqMock = {
@@ -266,39 +271,35 @@ describe('hli/router-external-consumer', async () => {
 
       expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
       expect(sendMock).toHaveBeenCalledOnce();
+      expect(sendMock).toHaveBeenCalledWith({ content: [], status: 'OK' });
     });
   });
-});
 
-// This block is outside of the enveloping describe block above, because
-// the global request and response mocks do not play nicely with this test.
-describe('Aanbieding transactions endpoint', async () => {
-  function buildStadspasAanbiedingTransactionResponse(): StadspasAanbiedingenTransactionResponse {
-    return {
-      number_of_items: 0,
-      transacties: [],
-    };
-  }
+  describe('Aanbieding transactions endpoint', async () => {
+    function buildStadspasAanbiedingTransactionResponse(): StadspasDiscountTransaction[] {
+      return [];
+    }
 
-  it('Happy path', async () => {
-    const fetchStadspasAanbiedingenTransactionsWithVerifySpy = vi
-      .spyOn(stadspas, 'fetchStadspasAanbiedingenTransactionsWithVerify')
-      .mockResolvedValueOnce(
-        apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
+    test('Happy path', async () => {
+      const fetchStadspasDiscountTransactionsSpy = vi
+        .spyOn(stadspas, 'fetchStadspasDiscountTransactions')
+        .mockResolvedValueOnce(
+          apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
+        );
+
+      const reqMock = {
+        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
+      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+      const resMock = ResponseMock.new();
+
+      await forTesting.sendDiscountTransactionsResponse(reqMock, resMock);
+
+      expect(fetchStadspasDiscountTransactionsSpy).toHaveBeenCalledWith(
+        resMock.locals.requestID,
+        TRANSACTIONS_KEY_ENCRYPTED
       );
 
-    const reqMock = {
-      params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
-    } as unknown as Request<{ transactionsKeyEncrypted: string }>;
-    const resMock = ResponseMock.new();
-
-    await forTesting.sendAanbiedingenTransactionsResponse(reqMock, resMock);
-
-    expect(
-      fetchStadspasAanbiedingenTransactionsWithVerifySpy
-    ).toHaveBeenCalledWith(
-      resMock.locals.requestID,
-      TRANSACTIONS_KEY_ENCRYPTED
-    );
+      expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
+    });
   });
 });

@@ -125,6 +125,7 @@ export type SourceApiKey =
   | 'KVK'
   | 'LOOD_365'
   | 'LOOD_365_OAUTH'
+  | 'PARKEREN'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
@@ -141,7 +142,6 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
-    method: 'post',
     postponeFetch: !FeatureToggle.afisActive,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
     headers: {
@@ -272,6 +272,10 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   ERFPACHT: {
     url: `${getFromEnv('BFF_MIJN_ERFPACHT_API_URL')}`,
+    // NOTE: Temporarily disable https validation until we solve the cert verification error. See also: MIJN-9122
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false,
+    }),
   },
   BAG: {
     url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
@@ -297,6 +301,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   KVK: {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/hr`,
     passthroughOIDCToken: true,
+  },
+  PARKEREN: {
+    url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${getFromEnv('BFF_LVV_API_URL')}`,
@@ -340,8 +347,9 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,
     method: 'POST',
     headers: {
-      'X-Api-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
+      'X-Session-Credentials-Key': getFromEnv('BFF_AMSAPP_API_KEY'),
       Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   },
 };
@@ -415,8 +423,8 @@ export const ExternalConsumerEndpoints = {
   // Privately accessible
   private: {
     STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
-    STADSPAS_AANBIEDINGEN_TRANSACTIES: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:pasNummer`,
-    STADPAS_BUDGET_TRANSACTIES: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
   },
 };
 
@@ -438,6 +446,10 @@ export const BffEndpoints = {
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
+
+  // AFIS
+  AFIS_BUSINESSPARTNER:
+    '/services/afis/businesspartner/:businessPartnerIdEncrypted',
 
   // Stadspas
   STADSPAS_TRANSACTIONS:

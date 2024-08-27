@@ -12,7 +12,10 @@ import { fetchAdministratienummer } from './hli-zorgned-service';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   Stadspas,
+  StadspasDiscountTransaction,
+  StadspasDiscountTransactionsResponseSource,
   StadspasBudget,
+  StadspasBudgetTransaction,
   StadspasDetailBudgetSource,
   StadspasDetailSource,
   StadspasHouderSource,
@@ -20,9 +23,9 @@ import {
   StadspasPasHouderResponse,
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
-  StadspasBudgetTransaction,
   StadspasTransactionQueryParams,
-  StadspasAanbiedingenTransactionResponse,
+  StadspasDiscountTransactions,
+  StadspasAanbiedingSource,
 } from './stadspas-types';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
@@ -198,10 +201,10 @@ export const fetchStadspassen = memoizee(fetchStadspassen_, {
 });
 
 function transformGpassTransactionsResponse(
-  gpassTransactionsResponseData: StadspasTransactiesResponseSource
+  responseSource: StadspasTransactiesResponseSource
 ) {
-  if (Array.isArray(gpassTransactionsResponseData.transacties)) {
-    return gpassTransactionsResponseData.transacties.map(
+  if (Array.isArray(responseSource.transacties)) {
+    return responseSource.transacties.map(
       (transactie: StadspasTransactieSource) => {
         const transaction: StadspasBudgetTransaction = {
           id: String(transactie.id),
@@ -217,32 +220,10 @@ function transformGpassTransactionsResponse(
       }
     );
   }
-  return gpassTransactionsResponseData;
+  return responseSource;
 }
 
-export async function fetchStadspasAanbiedingenTransactions(
-  requestID: requestID,
-  administratienummer: string,
-  pasnummer: Stadspas['passNumber']
-) {
-  const requestParams: StadspasTransactionQueryParams = {
-    pasnummer,
-    sub_transactions: true,
-  };
-
-  const dataRequestConfig = getApiConfig('GPASS', {
-    formatUrl: ({ url }) => `${url}/rest/transacties/v1/aanbiedingen`,
-    headers: getHeaders(administratienummer),
-    params: requestParams,
-  });
-
-  return requestData<StadspasAanbiedingenTransactionResponse>(
-    dataRequestConfig,
-    requestID
-  );
-}
-
-export async function fetchStadspasBudgetTransactions(
+export async function fetchGpassBudgetTransactions(
   requestID: requestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber'],
@@ -265,4 +246,56 @@ export async function fetchStadspasBudgetTransactions(
   });
 
   return requestData<StadspasBudgetTransaction[]>(dataRequestConfig, requestID);
+}
+
+function transformGpassAanbiedingenResponse(
+  responseSource: StadspasDiscountTransactionsResponseSource
+): StadspasDiscountTransactions | StadspasDiscountTransactionsResponseSource {
+  if (Array.isArray(responseSource?.transacties)) {
+    const discountAmountTotal = responseSource.totale_korting ?? 0;
+    return {
+      discountAmountTotal,
+      discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
+      transactions: transformTransactions(responseSource.transacties),
+    };
+  }
+  return responseSource;
+}
+
+function transformTransactions(
+  transactions: StadspasAanbiedingSource[]
+): StadspasDiscountTransaction[] {
+  return transactions.map((transactie) => ({
+    id: String(transactie.id),
+    title: transactie.aanbieding.communicatienaam,
+    discountAmount: transactie.verleende_korting,
+    discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
+    datePublished: transactie.transactiedatum,
+    datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
+    discountTitle: transactie.aanbieding.kortingzin,
+    description: transactie.aanbieding.omschrijving,
+  }));
+}
+
+export async function fetchGpassDiscountTransactions(
+  requestID: requestID,
+  administratienummer: string,
+  pasnummer: Stadspas['passNumber']
+) {
+  const requestParams: StadspasTransactionQueryParams = {
+    pasnummer,
+    sub_transactions: true,
+  };
+
+  const dataRequestConfig = getApiConfig('GPASS', {
+    formatUrl: ({ url }) => `${url}/rest/transacties/v1/aanbiedingen`,
+    transformResponse: transformGpassAanbiedingenResponse,
+    headers: getHeaders(administratienummer),
+    params: requestParams,
+  });
+
+  return requestData<StadspasDiscountTransaction[]>(
+    dataRequestConfig,
+    requestID
+  );
 }

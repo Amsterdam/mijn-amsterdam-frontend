@@ -8,7 +8,7 @@ export const PRISTINE_APPSTATE: AppState = {
   NOTIFICATIONS: apiPristineResult([]),
 
   AFIS: apiPristineResult(
-    { isKnown: false },
+    { isKnown: false, businessPartnerIdEncrypted: null },
     {
       isActive: FeatureToggle.afisActive,
       profileTypes: ['private', 'commercial'],
@@ -77,6 +77,13 @@ export const PRISTINE_APPSTATE: AppState = {
   OVERTREDINGEN: apiPristineResult(
     { isKnown: false },
     { isActive: FeatureToggle.overtredingenActive }
+  ),
+  PARKEREN: apiPristineResult(
+    { isKnown: true, url: null },
+    {
+      isActive: FeatureToggle.parkerenPatroonC,
+      profileTypes: ['private', 'commercial'],
+    }
   ),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vakantieverhuurVergunningen: [],

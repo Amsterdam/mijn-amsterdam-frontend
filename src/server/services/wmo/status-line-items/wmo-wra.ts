@@ -30,8 +30,7 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
       !isServiceDeliveryStarted(aanvraag, today),
     description: (aanvraag) =>
       `<p>
-        De gemeente heeft opdracht gegeven aan ${aanvraag.leverancier} om de aanpassingen aan uw woning uit
-        te voeren.
+       We hebben ${aanvraag.leverancier} gevraagd om de aanpassing(en) aan uw woning uit te voeren.
       </p>`,
   },
   {
@@ -46,8 +45,7 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     },
     description: (aanvraag) =>
       `<p>
-        ${aanvraag.leverancier} heeft aan ons doorgegeven dat de
-        aanpassing aan uw woning is uitgevoerd.
+        ${aanvraag.leverancier} heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
       </p>`,
   },
   EINDE_RECHT,

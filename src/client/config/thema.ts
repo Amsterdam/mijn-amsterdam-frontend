@@ -16,34 +16,34 @@ export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
 export const ThemaTitles: { [thema in Thema]: string } = {
   AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
+  AVG: 'AVG persoonsgegevens',
   BELASTINGEN: 'Belastingen',
+  BEZWAREN: 'Bezwaren',
+  BODEM: 'Bodem',
+  BRP: 'Mijn gegevens',
   BURGERZAKEN: 'Burgerzaken',
   BUURT: 'Mijn buurt',
-  BEZWAREN: 'Bezwaren',
-  INKOMEN: 'Inkomen',
-  HLI: 'Stadspas en regelingen bij laag inkomen',
-  BRP: 'Mijn gegevens',
-  MILIEUZONE: 'Milieuzone',
-  OVERTREDINGEN: 'Overtredingen voertuigen',
-  NOTIFICATIONS: 'Actueel',
-  ROOT: 'Home',
   ERFPACHT: 'Erfpacht',
   ERFPACHTv2: 'Erfpacht V2',
-  SUBSIDIE: 'Subsidies',
-  ZORG: 'Zorg en ondersteuning',
-  VERGUNNINGEN: 'Vergunningen en ontheffingen',
-  VERGUNNINGEN_LOPEND: 'Vergunningen',
-  VERGUNNINGEN_EERDER: 'Vergunningen',
-  KVK: 'Mijn onderneming',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  KREFIA: 'Kredietbank & FIBU',
-  SEARCH: 'Zoeken',
-  PARKEREN: 'Parkeren',
-  KLACHTEN: 'Klachten',
+  HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
-  AVG: 'AVG persoonsgegevens',
-  BODEM: 'Bodem',
+  INKOMEN: 'Inkomen',
+  KLACHTEN: 'Klachten',
+  KREFIA: 'Kredietbank & FIBU',
+  KVK: 'Mijn onderneming',
+  MILIEUZONE: 'Milieuzone',
+  NOTIFICATIONS: 'Actueel',
+  OVERTREDINGEN: 'Overtredingen voertuigen',
+  PARKEREN: 'Parkeren',
+  ROOT: 'Home',
+  SEARCH: 'Zoeken',
+  SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
+  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
+  VERGUNNINGEN_EERDER: 'Vergunningen',
+  VERGUNNINGEN_LOPEND: 'Vergunningen',
+  VERGUNNINGEN: 'Vergunningen en ontheffingen',
+  ZORG: 'Zorg en ondersteuning',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
@@ -130,12 +130,13 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.AFIS]: 'Facturen en betalen | Mijn Amsterdam',
 };
 
-export interface ThemaMenuItem extends Omit<LinkProps, 'title'> {
+export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
   id: Thema;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
   title: LinkProps['title'] | ((appState: AppState) => string);
+  to: LinkProps['to'] | ((appState: AppState) => string);
 }
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
@@ -275,7 +276,9 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     ? {
         title: ThemaTitles.PARKEREN,
         id: Themas.PARKEREN,
-        to: import.meta.env.REACT_APP_SSO_URL_PARKEREN,
+        to: (appState: AppState) => {
+          return appState.PARKEREN.content?.url;
+        },
         rel: 'external',
         profileTypes: ['private', 'commercial'],
       }

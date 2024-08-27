@@ -86,7 +86,7 @@ export interface BBVergunning {
   link: LinkProps;
   eigenaar: string | null;
   aanvrager: string | null;
-  titel: 'Vergunning bed & breakfast';
+  titel: string;
   statussen: StatusLineItem[];
   isActief: boolean;
   adres: string;
@@ -160,6 +160,8 @@ export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
       datumTot && parseISO(datumTot) < new Date() ? true : false;
     const isVerleend = !!zaak.resultaat?.toLowerCase().includes('verleend');
 
+    const title = `${zaak.zaaK_IDENTIFICATIE} bed & breakfast`;
+
     const bbVergunnig: BBVergunning = {
       datumAfhandeling: defaultDateFormat(zaak.einddatum),
       datumAanvraag: defaultDateFormat(zaak.startdatum),
@@ -176,12 +178,12 @@ export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
         to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'], {
           id: idTransformed,
         }),
-        title: 'Vergunning bed & breakfast',
+        title: title,
       },
       adres: zaak.adres,
       eigenaar: '', // ??
       aanvrager: '', // ??
-      titel: 'Vergunning bed & breakfast',
+      titel: title,
       statussen: [],
       status: transformStatus(zaak.status),
       isActief:

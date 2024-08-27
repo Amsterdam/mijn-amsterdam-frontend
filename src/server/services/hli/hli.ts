@@ -27,8 +27,12 @@ function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
 ) {
+  const hasEindeRecht = statusLineItems.some(
+    (regeling) => regeling.status === 'Einde recht'
+  );
   switch (true) {
-    case aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
+    case (aanvraag.isActueel || !hasEindeRecht) &&
+      aanvraag.resultaat === 'toegewezen':
       return 'Toegewezen';
     case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
       return 'Einde recht';
