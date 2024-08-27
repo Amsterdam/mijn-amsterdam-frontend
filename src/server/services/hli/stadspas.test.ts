@@ -8,7 +8,6 @@ import {
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import {
-  StadspasDiscountTransaction,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
 } from './stadspas-types';
@@ -199,6 +198,7 @@ describe('stadspas services', () => {
           "administratienummer": "0363000123-123",
           "stadspassen": [
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
@@ -271,6 +271,7 @@ describe('stadspas services', () => {
           "administratienummer": "0363000123-123",
           "stadspassen": [
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
@@ -298,6 +299,7 @@ describe('stadspas services', () => {
               "passNumberComplete": "6666666666666666666",
             },
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
@@ -325,6 +327,7 @@ describe('stadspas services', () => {
               "passNumberComplete": "6666666666666666666",
             },
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
