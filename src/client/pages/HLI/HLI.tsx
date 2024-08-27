@@ -16,9 +16,11 @@ function StadspasListItem({ stadspas }: { stadspas: StadspasFrontend }) {
         <span className={styles.Stadspas_owner}>
           {stadspas.owner.firstname}
         </span>
-        <span className={styles.Stadspas_balance}>
-          Saldo {stadspas.balanceFormatted}
-        </span>
+        {!!stadspas.balance && (
+          <span className={styles.Stadspas_balance}>
+            Saldo {stadspas.balanceFormatted}
+          </span>
+        )}
       </MaRouterLink>
     </UnorderedList.Item>
   );
@@ -38,8 +40,17 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
       </UnorderedList>
       {!!stadspassen?.length && (
         <Paragraph size="small">
-          Voor alle stadspassen geldt de einddatum van{' '}
-          {stadspassen[0].dateEndFormatted}
+          {stadspassen.length > 1 ? (
+            <>
+              Voor alle stadspassen geldt de einddatum van{' '}
+              {stadspassen[0].dateEndFormatted}
+            </>
+          ) : (
+            <>
+              De stadspas heeft een einddatum van{' '}
+              {stadspassen[0].dateEndFormatted}
+            </>
+          )}
         </Paragraph>
       )}
     </Grid.Cell>

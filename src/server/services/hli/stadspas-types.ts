@@ -170,6 +170,7 @@ export interface Stadspas {
   dateEndFormatted: string;
   budgets: StadspasBudget[];
   balanceFormatted: string;
+  balance: number;
 }
 
 export interface StadspasFrontend extends Stadspas {

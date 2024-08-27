@@ -79,15 +79,19 @@ function transformStadspasResponse(
     const budgets =
       gpassStadspasResonseData.budgetten?.map(transformBudget) ?? [];
 
+    const balance = budgets.reduce(
+      (balance, budget) => balance + budget.budgetBalance,
+      0
+    );
+
     const stadspasTransformed: Stadspas = {
       id: String(gpassStadspasResonseData.id),
       owner: getOwner(pashouder),
       dateEnd: gpassStadspasResonseData.expiry_date,
       dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
       budgets: budgets,
-      balanceFormatted: `€${displayAmount(
-        budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
-      )}`,
+      balance,
+      balanceFormatted: `€${displayAmount(balance)}`,
       passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
     };
