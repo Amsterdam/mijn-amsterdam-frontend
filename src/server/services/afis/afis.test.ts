@@ -410,7 +410,7 @@ describe('Afis', () => {
     });
   });
 
-  it('returns null properties when the business partner details data quality is no sufficient', async () => {
+  it('returns null properties when the business partner details data quality is not sufficient', async () => {
     remoteApi.get(ROUTES.businesspartnerDetails).reply(200, {
       feed: {
         entry: [
