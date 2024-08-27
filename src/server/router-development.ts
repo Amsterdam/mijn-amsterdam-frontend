@@ -9,6 +9,7 @@ import { testAccounts } from '../universal/config/auth.development';
 import UID from 'uid-safe';
 import { apiSuccessResult } from '../universal/helpers/api';
 import {
+  BffEndpoints,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
 } from './config';
@@ -50,6 +51,18 @@ authRouterDevelopment.get(
       req.params.user && req.params.user in testAccounts
         ? req.params.user
         : Object.keys(testAccounts)[0];
+
+    if (!req.params.user) {
+      const list = Object.keys(testAccounts).map((userName) => {
+        const queryEntries = Object.entries(req.query);
+        const queryString = queryEntries.length
+          ? `?${queryEntries.map(([key, val]) => `${key}=${val}`).join('&')}`
+          : '';
+        return `<li><a href=${BffEndpoints.AUTH_LOGIN_DIGID}/${userName}${queryString}>${userName}</a>`;
+      });
+      return res.send(`<ul>${list}</ul>`);
+    }
+
     const userId = testAccounts[userName];
     const sessionID = UID.sync(18);
     const appSessionCookieValue = await generateDevSessionCookieValue(
