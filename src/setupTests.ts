@@ -94,6 +94,7 @@ process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 process.env.BFF_PARKEREN_API_BASE_URL = `${remoteApiHost}/parkeren`;
+process.env.BFF_PARKEREN_EXTERNAL_FALLBACK_URL = `${remoteApiHost}/parkeren/fallback`;
 
 // V2
 process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;

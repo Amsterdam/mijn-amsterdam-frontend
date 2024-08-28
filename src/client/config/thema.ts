@@ -5,6 +5,7 @@ import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { TrackingConfig } from './routes';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { captureMessage } from '../utils/monitoring';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -276,9 +277,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     ? {
         title: ThemaTitles.PARKEREN,
         id: Themas.PARKEREN,
-        to: (appState: AppState) => {
-          return appState.PARKEREN.content?.url;
-        },
+        to: (appState: AppState) => appState.PARKEREN.content?.url,
         rel: 'external',
         profileTypes: ['private', 'commercial'],
       }
