@@ -272,7 +272,6 @@ components:
         datePublishedFormatted:
           type: string
 
-
     StadspasBudget:
       type: object
       properties:
@@ -324,6 +323,8 @@ components:
             $ref: '#/components/schemas/StadspasBudget'
         balanceFormatted:
           type: string
+        balance:
+          type: number
         passNumber:
           type: number
         passNumberComplete:

@@ -1,3 +1,4 @@
+import { isSameDay, parseISO } from 'date-fns';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -188,14 +189,23 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Cursus niet voldaan',
     isVisible: (stepIndex, regeling) =>
-      isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
-    datePublished: (regeling) => regeling.datumBesluit,
+      !isVerzilvering(regeling) &&
+      !!(
+        regeling.datumEindeGeldigheid &&
+        regeling.datumIngangGeldigheid &&
+        isSameDay(
+          parseISO(regeling.datumEindeGeldigheid),
+          parseISO(regeling.datumIngangGeldigheid)
+        )
+      ) &&
+      regeling.resultaat == 'toegewezen',
+    datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
     isChecked: () => true,
     isActive: () => true,
     description: (regeling) =>
       `
         <p>
-         U heeft voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}.
+         U heeft niet voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
