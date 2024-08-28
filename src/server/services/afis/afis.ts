@@ -21,6 +21,36 @@ import {
   AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
 
+/** Returns if the person logging in, is known in the AFIS source API */
+export async function fetchIsKnownInAFIS(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const profileIdentifierType =
+    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
+
+  const additionalConfig: DataRequestConfig = {
+    method: 'post',
+    data: {
+      [profileIdentifierType]: authProfileAndToken.profile.id,
+    },
+    transformResponse: transformBusinessPartnerisKnownResponse,
+    formatUrl(config) {
+      return `${config.url}/businesspartner/${profileIdentifierType}/`;
+    },
+  };
+
+  const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
+
+  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
+    dataRequestConfig,
+    requestID,
+    authProfileAndToken
+  );
+
+  return response;
+}
+
 function transformBusinessPartnerisKnownResponse(
   response:
     | AfisBusinessPartnerPrivateResponseSource
@@ -62,34 +92,23 @@ function transformBusinessPartnerisKnownResponse(
   };
 }
 
-/** Returns if the person logging in is known in the AFIS source API */
-export async function fetchIsKnownInAFIS(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+async function fetchBusinessPartner(
+  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
 ) {
-  const profileIdentifierType =
-    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
-
   const additionalConfig: DataRequestConfig = {
-    method: 'post',
-    data: {
-      [profileIdentifierType]: authProfileAndToken.profile.id,
-    },
-    transformResponse: transformBusinessPartnerisKnownResponse,
+    transformResponse: transformBusinessPartnerDetailsResponse,
     formatUrl(config) {
-      return `${config.url}/businesspartner/${profileIdentifierType}/`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`;
     },
   };
 
-  const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const requestId = businessPartnerId.toString();
 
-  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
-    dataRequestConfig,
-    requestID,
-    authProfileAndToken
+  return requestData<AfisBusinessPartnerDetails>(
+    businessPartnerRequestConfig,
+    requestId
   );
-
-  return response;
 }
 
 function transformBusinessPartnerDetailsResponse(
@@ -121,37 +140,6 @@ function transformBusinessPartnerDetailsResponse(
   return null;
 }
 
-async function fetchBusinessPartner(
-  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
-) {
-  const additionalConfig: DataRequestConfig = {
-    transformResponse: transformBusinessPartnerDetailsResponse,
-    formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`;
-    },
-  };
-
-  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
-  const requestId = businessPartnerId.toString();
-
-  return requestData<AfisBusinessPartnerDetails>(
-    businessPartnerRequestConfig,
-    requestId
-  );
-}
-
-function transformPhoneResponse(
-  response: AfisApiFeedResponseSource<AfisBusinessPartnerPhoneSource>
-) {
-  const [phoneNumberEntry] = getFeedEntryProperties(response);
-
-  const transformedResponse: AfisBusinessPartnerPhone = {
-    phone: phoneNumberEntry?.InternationalPhoneNumber ?? null,
-  };
-
-  return transformedResponse;
-}
-
 async function fetchPhoneNumber(
   addressId: AfisBusinessPartnerDetails['addressId']
 ) {
@@ -171,13 +159,13 @@ async function fetchPhoneNumber(
   );
 }
 
-function transformEmailResponse(
-  response: AfisApiFeedResponseSource<AfisBusinessPartnerEmailSource>
+function transformPhoneResponse(
+  response: AfisApiFeedResponseSource<AfisBusinessPartnerPhoneSource>
 ) {
-  const [emailAddressEntry] = getFeedEntryProperties(response);
+  const [phoneNumberEntry] = getFeedEntryProperties(response);
 
-  const transformedResponse: AfisBusinessPartnerEmail = {
-    email: emailAddressEntry?.SearchEmailAddress ?? null,
+  const transformedResponse: AfisBusinessPartnerPhone = {
+    phone: phoneNumberEntry?.InternationalPhoneNumber ?? null,
   };
 
   return transformedResponse;
@@ -198,6 +186,18 @@ async function fetchEmail(addressId: AfisBusinessPartnerDetails['addressId']) {
     businessPartnerRequestConfig,
     requestId
   );
+}
+
+function transformEmailResponse(
+  response: AfisApiFeedResponseSource<AfisBusinessPartnerEmailSource>
+) {
+  const [emailAddressEntry] = getFeedEntryProperties(response);
+
+  const transformedResponse: AfisBusinessPartnerEmail = {
+    email: emailAddressEntry?.SearchEmailAddress ?? null,
+  };
+
+  return transformedResponse;
 }
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
