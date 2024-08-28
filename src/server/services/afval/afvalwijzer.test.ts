@@ -129,7 +129,6 @@ describe('Afvalwijzer service', () => {
         "kalendermelding": null,
         "ophaaldagen": "Maandag en donderdag",
         "opmerking": "Of breng het naar <a href="https://kaart.amsterdam.nl/afvalpunten">een Afvalpunt</a>",
-        "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.",
         "titel": "Grof afval",
         "waar": "Aan de rand van de stoep of op de vaste plek",
       }
@@ -185,7 +184,6 @@ describe('Afvalwijzer service', () => {
             "kalendermelding": null,
             "ophaaldagen": "",
             "opmerking": null,
-            "stadsdeelAanvulling": null,
             "titel": "Textiel",
             "waar": "Somewhere in a galaxy far away",
           },
@@ -201,7 +199,6 @@ describe('Afvalwijzer service', () => {
             "kalendermelding": null,
             "ophaaldagen": "Maandag en donderdag",
             "opmerking": "Of breng het naar <a href="https://kaart.amsterdam.nl/afvalpunten">een Afvalpunt</a>",
-            "stadsdeelAanvulling": "In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.",
             "titel": "Grof afval",
             "waar": "Aan de rand van de stoep of op de vaste plek",
           },
