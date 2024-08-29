@@ -82,7 +82,7 @@ function getDataForAvgThemas(avgIds: string[]) {
 }
 
 export async function enrichAvgResponse(
-  requestID: requestID,
+  requestID: RequestID,
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
   const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
@@ -167,7 +167,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
 }
 
 export async function fetchAVG(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const data = getDataForAVG(authProfileAndToken.profile.id!);
@@ -208,7 +208,7 @@ export function transformAVGThemeResponse(
 }
 
 export async function fetchAVGRequestThemes(
-  requestID: requestID,
+  requestID: RequestID,
   avgIds: string[]
 ) {
   const data = getDataForAvgThemas(avgIds);
@@ -230,7 +230,7 @@ export async function fetchAVGRequestThemes(
 
 // fetchNotificaties
 export async function fetchAVGNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const AVG = await fetchAVG(requestID, authProfileAndToken);

@@ -78,7 +78,7 @@ function transformVergunningFrontend(
 }
 
 async function fetchAndFilterVergunningenV2_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute,
   caseTypeFilter?: VergunningCaseTypeFilter
@@ -113,7 +113,7 @@ export const fetchAndFilterVergunningenV2 = memoizee(
 );
 
 export async function fetchVergunningenV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT
@@ -142,7 +142,7 @@ function addEncryptedDocumentIdToUrl(
 }
 
 export async function fetchVergunningV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   vergunningIdEncrypted: string
 ) {

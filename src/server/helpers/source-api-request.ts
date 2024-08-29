@@ -58,7 +58,7 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export function clearSessionCache(requestID: requestID) {
+export function clearSessionCache(requestID: RequestID) {
   for (const cacheKey of cache.keys()) {
     if (cacheKey.startsWith(requestID)) {
       cache.del(cacheKey);
@@ -84,7 +84,7 @@ export function getRequestConfigCacheKey(
 
 export async function requestData<T>(
   config: DataRequestConfig,
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken?: AuthProfileAndToken
 ) {
   if (!requestID) {

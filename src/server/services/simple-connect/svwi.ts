@@ -16,7 +16,7 @@ function transformSVWIResponse(response: SVWISourceResponseData | null) {
 }
 
 export function fetchSVWI(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchService(
@@ -30,7 +30,7 @@ export function fetchSVWI(
 }
 
 export async function fetchSVWINotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return await fetchTipsAndNotifications(

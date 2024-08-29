@@ -91,3 +91,47 @@ export type AfisBusinessPartnerEmail = {
 export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
   AfisBusinessPartnerPhone &
   AfisBusinessPartnerEmail;
+
+// RP TODO: Just camelcase it all, don't translate it to dutch, keep it in the original names.
+export type AfisFactuurOpen = {
+  factuurNummer: string;
+  factuurNummerEncrypted: string;
+  afzender: string;
+  vervalDatum: string;
+  netPaymentAmount: string;
+};
+
+export type AfisFactuurState = 'open' | 'closed';
+
+export type AfisFactuurOpenSource =
+  AfisApiFeedResponseSource<AfisFactuurOpenPropertiesSource>;
+
+export type AfisFactuurOpenPropertiesSource = {
+  DunningBlockingReason: string;
+  ProfitCenterName: string;
+  SEPAMandate: string;
+  PostingDate: string;
+  NetDueDate: string;
+  NetPaymentAmount: string;
+  AmountInBalanceTransacCrcy: string;
+  InvoiceNo: string;
+  Paylink: string;
+};
+
+export type AfisFactuurAfgehandeldSource =
+  AfisApiFeedResponseSource<AfisFactuurAfgehandeldPropertiesSource>;
+
+export type AfisFactuurAfgehandeldPropertiesSource = {
+  ProfitCenterName: string;
+  NetDueDate: string;
+  ReverseDocument: string;
+  InvoiceNo: string;
+};
+
+export type AfisFactuurAfgehandeld = {
+  factuurNummer: string;
+  factuurNummerEncrypted: string;
+  afzender: string;
+  vervalDatum: string;
+  reverseDocument: string;
+};

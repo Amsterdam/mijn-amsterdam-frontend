@@ -8,7 +8,7 @@ import { fetchAfvalpunten } from './afvalpunten';
 import { fetchAfvalwijzer } from './afvalwijzer';
 
 export async function fetchAfval(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {
@@ -33,7 +33,7 @@ export async function fetchAfval(
 }
 
 export async function fetchAfvalPunten(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {

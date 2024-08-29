@@ -44,7 +44,7 @@ function addAuthMethodToNotificationLinks(
 
 async function getConfig(
   authProfileAndToken: AuthProfileAndToken,
-  requestID: requestID
+  requestID: RequestID
 ) {
   const apiEndpointUrl =
     process.env.BFF_SISA_API_ENDPOINT +
@@ -70,7 +70,7 @@ async function getConfig(
 }
 
 export async function fetchSubsidie(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchService(
@@ -81,7 +81,7 @@ export async function fetchSubsidie(
 }
 
 export async function fetchSubsidieNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchTipsAndNotifications(

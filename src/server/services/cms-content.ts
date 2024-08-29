@@ -181,7 +181,7 @@ const fileCache = new FileCache({
 });
 
 async function getGeneralPage(
-  requestID: requestID,
+  requestID: RequestID,
   profileType: ProfileType = 'private',
   forceRenew: boolean = false
 ) {
@@ -228,7 +228,7 @@ async function getGeneralPage(
     });
 }
 
-async function getFooter(requestID: requestID, forceRenew: boolean = false) {
+async function getFooter(requestID: RequestID, forceRenew: boolean = false) {
   const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
   if (apiData && !forceRenew) {
     return Promise.resolve(apiData);
@@ -260,7 +260,7 @@ async function getFooter(requestID: requestID, forceRenew: boolean = false) {
 }
 
 async function fetchCmsBase(
-  requestID: requestID,
+  requestID: RequestID,
   query?: QueryParamsCMSFooter
 ) {
   const forceRenew = !!(query?.forceRenew === 'true');
@@ -294,7 +294,7 @@ export interface QueryParamsCMSFooter extends Record<string, string> {
 }
 
 export async function fetchCmsFooter(
-  requestID: requestID,
+  requestID: RequestID,
   query?: QueryParamsCMSFooter
 ) {
   const response = await fetchCmsBase(requestID, query);
@@ -302,7 +302,7 @@ export async function fetchCmsFooter(
 }
 
 export async function fetchCMSCONTENT(
-  requestID: requestID,
+  requestID: RequestID,
   query?: QueryParamsCMSFooter
 ) {
   const response = await fetchCmsBase(requestID, query);
@@ -315,7 +315,7 @@ const searchFileCache = new FileCache({
 });
 
 export async function fetchSearchConfig(
-  requestID: requestID,
+  requestID: RequestID,
   query?: Record<string, string>
 ) {
   const config = searchFileCache.getKey('CONFIG');

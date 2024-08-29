@@ -147,7 +147,7 @@ export function transformVakantieverhuurVergunningen(
 }
 
 export async function fetchVakantieverhuurVergunningen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const vakantieverhuurVergunningResponse = await fetchVergunningen(
@@ -179,7 +179,7 @@ export async function fetchVakantieverhuurVergunningen(
 }
 
 export async function fetchVakantieverhuurVergunningenV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const vergunningenResponse = await fetchVergunningenV2(

@@ -88,7 +88,7 @@ function getZaakUrl(zaakId: string) {
 }
 
 async function fetchMultiple<T>(
-  requestID: requestID,
+  requestID: RequestID,
   requestConfig: DataRequestConfig,
   maxPageCount: number = MAX_PAGE_COUNT
 ) {
@@ -148,7 +148,7 @@ function transformBezwaarStatus(
 }
 
 async function fetchBezwaarStatus(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: string
 ) {
@@ -202,7 +202,7 @@ function transformBezwarenDocumentsResults(
 }
 
 export async function fetchBezwarenDocuments(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: string
 ) {
@@ -321,7 +321,7 @@ function sortByBezwaarIdentificatie(item1: Bezwaar, item2: Bezwaar) {
 }
 
 export async function fetchBezwaren(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const requestBody = JSON.stringify({
@@ -390,7 +390,7 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
 }
 
 export async function fetchBezwarenNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
@@ -416,7 +416,7 @@ export type BezwaarDetail = {
 };
 
 export async function fetchBezwaarDetail(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
@@ -466,7 +466,7 @@ export async function fetchBezwaarDetail(
 }
 
 export async function fetchBezwaarDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {

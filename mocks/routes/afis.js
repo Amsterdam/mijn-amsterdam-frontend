@@ -1,7 +1,7 @@
 const settings = require('../settings');
 
 const BASE = '/afis';
-const REST_BASE = BASE + '/RESTAdapter';
+const REST_BASE = `${BASE}/RESTAdapter`;
 
 module.exports = [
   {
@@ -138,6 +138,21 @@ module.exports = [
               ],
             },
           },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-openstaande-facturen',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: require('../fixtures/afis/openstaande-facturen.json'),
         },
       },
     ],

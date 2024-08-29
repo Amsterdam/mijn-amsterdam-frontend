@@ -23,7 +23,7 @@ export type DocumentDownloadResponse =
   | ApiPostponeResponse;
 
 export type FetchDocumenDownloadService = (
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentIDEncrypted: string,
   queryParams?: Record<string, string>

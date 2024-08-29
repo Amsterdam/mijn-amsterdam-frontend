@@ -37,7 +37,7 @@ function transformZorgnedClientNummerResponse(
 }
 
 export async function fetchAdministratienummer(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchPersoonsgegevensNAW(
@@ -82,7 +82,7 @@ function transformZorgnedBetrokkeneNaamResponse(
 }
 
 export async function fetchNamenBetrokkenen_(
-  requestID: requestID,
+  requestID: RequestID,
   userIDs: string[]
 ) {
   const requests = userIDs.map((userID) => {
@@ -140,7 +140,7 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 }
 
 export async function fetchZorgnedAanvragenHLI(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchAanvragen(

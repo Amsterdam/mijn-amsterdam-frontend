@@ -19,11 +19,17 @@ import {
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
   AfisBusinessPartnerPrivateResponseSource,
+  AfisFactuurOpen,
+  AfisFactuurAfgehandeld,
+  AfisFactuurAfgehandeldPropertiesSource,
+  AfisFactuurOpenPropertiesSource,
+  AfisFactuurOpenSource,
+  AfisFactuurAfgehandeldSource,
 } from './afis-types';
 
 /** Returns if the person logging in, is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const profileIdentifierType =
@@ -233,4 +239,109 @@ export async function fetchAfisBusinessPartnerDetails(
 
   // Returns error response or (partial) success response without phone/email.
   return detailsResponse;
+}
+
+export async function fetchAfisOpenFacturen(
+  requestID: RequestID,
+  businessPartnerID: number,
+  top?: number
+) {
+  if (top && top < 1) {
+    throw Error(`Argument top has to be a positive integer; top: ${top}`);
+  }
+
+  const INVOICES_DETAIL_ROUTE =
+    '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
+
+  const config = getApiConfig('AFIS');
+
+  config.url = `${config.url}${INVOICES_DETAIL_ROUTE}`;
+
+  const filter = `$filter=Customer eq '${businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&`;
+  const select =
+    '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc';
+  const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
+
+  let openInvoicesQuery = `?${filter}&${select}&${orderBy}`;
+  if (top) {
+    openInvoicesQuery += `&${top.toString()}`;
+  }
+
+  config.url = `${config.url}${openInvoicesQuery}`;
+  config.transformResponse = (data: AfisFactuurOpenSource) =>
+    getFeedEntryProperties(data).map((invoiceProperties) =>
+      translateToOpenstaandeFacturen(businessPartnerID, invoiceProperties)
+    );
+
+  const response = await requestData<AfisFactuurOpen>(config, requestID);
+  console.dir(response);
+  return response;
+}
+
+function translateToOpenstaandeFacturen(
+  businessPartnerID: number,
+  fields: AfisFactuurOpenPropertiesSource
+): AfisFactuurOpen {
+  const [factuurNummerEncrypted] = encrypt(
+    `${businessPartnerID}:${fields.InvoiceNo}`
+  );
+  return {
+    factuurNummer: fields.InvoiceNo,
+    factuurNummerEncrypted,
+    afzender: fields.ProfitCenterName,
+    vervalDatum: fields.NetDueDate,
+    netPaymentAmount: fields.NetPaymentAmount,
+  };
+}
+
+export async function fetchAfisClosedFacturen(
+  requestID: RequestID,
+  businessPartnerID: number,
+  top?: number
+) {
+  if (top && top < 1) {
+    throw Error(`Argument top has to be a positive integer; top: ${top}`);
+  }
+
+  const config = getApiConfig('AFIS');
+
+  const invoicesDetailRoute =
+    '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
+  config.url = `${config.url}${invoicesDetailRoute}`;
+
+  const filter = `$filter=Customer eq '${businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`;
+  const select =
+    '$select=ReverseDocument,ProfitCenterName,InvoiceNo,NetDueDate';
+  const orderBy = '$orderBy=NetDueDate desc';
+
+  let openInvoicesQuery = `?${filter}&${select}&${orderBy}`;
+  if (top) {
+    openInvoicesQuery += `&${top.toString()}`;
+  }
+
+  config.url = `${config.url}${openInvoicesQuery}`;
+
+  config.transformResponse = (data: AfisFactuurAfgehandeldSource) =>
+    getFeedEntryProperties(data).map((invoiceProperties) =>
+      translateToAfgehandeldeFacturen(businessPartnerID, invoiceProperties)
+    );
+
+  const response = await requestData<AfisFactuurOpen>(config, requestID);
+  return response;
+}
+
+function translateToAfgehandeldeFacturen(
+  businessPartnerID: number,
+  fields: AfisFactuurAfgehandeldPropertiesSource
+): AfisFactuurAfgehandeld {
+  const [factuurNummerEncrypted] = encrypt(
+    `${businessPartnerID}:${fields.InvoiceNo}`
+  );
+  return {
+    factuurNummer: fields.InvoiceNo,
+    factuurNummerEncrypted,
+    afzender: fields.ProfitCenterName,
+    vervalDatum: fields.NetDueDate,
+    reverseDocument: fields.ReverseDocument,
+  };
 }

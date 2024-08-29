@@ -243,7 +243,7 @@ export function transformGarbageDataResponse(
 }
 
 export async function fetchAfvalwijzer(
-  requestID: requestID,
+  requestID: RequestID,
   bagID: string,
   latlng: LatLngLiteral | null
 ) {

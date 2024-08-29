@@ -94,14 +94,14 @@ function getConfig(bsnOrKvk: string = ''): DataRequestConfig {
 }
 
 export function fetchBelasting(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchService(requestID, getConfig(authProfileAndToken.profile.id));
 }
 
 export async function fetchBelastingNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchTipsAndNotifications(

@@ -118,7 +118,7 @@ function transformLood365Response(
   return { metingen };
 }
 
-export async function getLoodApiHeaders(requestID: requestID) {
+export async function getLoodApiHeaders(requestID: RequestID) {
   const url = `${process.env.BFF_LOOD_API_URL}`;
   const requestConfig = { ...getApiConfig('LOOD_365_OAUTH') };
 
@@ -151,7 +151,7 @@ export async function getLoodApiHeaders(requestID: requestID) {
 }
 
 export async function fetchLoodmetingen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const data = getDataForLood365(authProfileAndToken);
@@ -169,7 +169,7 @@ export async function fetchLoodmetingen(
 }
 
 export async function fetchLoodMetingDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
@@ -196,7 +196,7 @@ export async function fetchLoodMetingDocument(
 }
 
 export async function fetchLoodMetingNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const metingenResponse = await fetchLoodmetingen(

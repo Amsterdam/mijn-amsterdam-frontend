@@ -103,7 +103,7 @@ function transformStadspasResponse(
 }
 
 export async function fetchStadspassenByAdministratienummer(
-  requestID: requestID,
+  requestID: RequestID,
   administratienummer: string
 ) {
   const dataRequestConfig = getApiConfig('GPASS');
@@ -174,7 +174,7 @@ export async function fetchStadspassenByAdministratienummer(
 }
 
 export async function fetchStadspassen_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const administratienummerResponse = await fetchAdministratienummer(
@@ -228,7 +228,7 @@ function transformGpassTransactionsResponse(
 }
 
 export async function fetchGpassBudgetTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber'],
   budgetCode?: StadspasBudget['code']
@@ -282,7 +282,7 @@ function transformTransactions(
 }
 
 export async function fetchGpassDiscountTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber']
 ) {

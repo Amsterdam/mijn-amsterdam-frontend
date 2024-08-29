@@ -21,7 +21,7 @@ import {
 } from './stadspas-types';
 
 export async function fetchStadspas(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const stadspasResponse = await fetchStadspassen(
@@ -125,7 +125,7 @@ async function decryptAndFetch<T>(
 }
 
 export async function fetchStadspasDiscountTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted']
 ) {
   return decryptAndFetch(
@@ -136,7 +136,7 @@ export async function fetchStadspasDiscountTransactions(
 }
 
 export async function fetchStadspasBudgetTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
   budgetCode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
@@ -155,7 +155,7 @@ export async function fetchStadspasBudgetTransactions(
 }
 
 export async function fetchStadspasNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const stadspasResponse = await fetchStadspas(requestID, authProfileAndToken);
