@@ -226,4 +226,5 @@ export const forTesting = {
   isVerzilveringVanRegeling,
   isRegelingVanVerzilvering,
   getUpcPcvDecisionDate,
+  isCursusNietVoldaan,
 };

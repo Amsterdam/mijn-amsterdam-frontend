@@ -45,7 +45,7 @@ function getDisplayStatus(
     case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
       return 'Afgewezen';
   }
-  return statusLineItems[statusLineItems.length - 1].status ?? 'NNB';
+  return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
 }
 
 function getDocumentsFrontend(
@@ -196,3 +196,7 @@ export async function fetchHLI(
     })
   );
 }
+
+export const forTesting = {
+  getDisplayStatus,
+};
