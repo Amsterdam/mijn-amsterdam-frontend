@@ -177,10 +177,6 @@ function transformFractionData(
     ''
   );
 
-  const stadsdeelAanvulling = stadsdeelRegelsUrl
-    ? `In uw stadsdeel zijn mogelijk <a href="${stadsdeelRegelsUrl}" rel="noopener noreferrer">aanvullende regels</a> van kracht.`
-    : null;
-
   let titel = getText(fractionData.afvalwijzerFractieCode);
 
   if (
@@ -218,7 +214,6 @@ function transformFractionData(
     opmerking: formatKalenderOpmerking(fractionData),
     kalendermelding: formatKalenderMelding(fractionData),
     fractieCode: fractionData.afvalwijzerFractieCode,
-    stadsdeelAanvulling,
     gebruiksdoelWoonfunctie: fractionData.gebruiksdoelWoonfunctie,
   };
 }
