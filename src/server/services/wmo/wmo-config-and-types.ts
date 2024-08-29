@@ -63,6 +63,8 @@ export interface WMOVoorzieningFrontend extends ZaakDetail {
   isActual: boolean; // Indicates if this item is designated Current or Previous
   itemTypeCode: ProductSoortCode;
   status: string;
+  statusDate: string;
+  statusDateFormatted: string;
   supplier: string | null; // Leverancier
 }
 

@@ -10,7 +10,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const displayProps = {
   detailLinkComponent: '',
   status: 'Status',
-  dateDecisionFormatted: 'Datum',
+  statusDateFormatted: 'Datum',
 };
 
 export const listPageParamKind = {

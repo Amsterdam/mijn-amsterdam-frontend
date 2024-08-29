@@ -3,11 +3,12 @@ import {
   AANVRAAG,
   EINDE_RECHT,
   getTransformerConfigBesluit,
+  hasDecision,
   IN_BEHANDELING,
   isBeforeToday,
-  isDecisionWithDeliveryActive,
-  isServiceDeliveryActive,
+  isDecisionWithDeliveryStatusActive,
   isServiceDeliveryStarted,
+  isServiceDeliveryStatusActive,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -15,12 +16,12 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  getTransformerConfigBesluit(isDecisionWithDeliveryActive, true),
+  getTransformerConfigBesluit(isDecisionWithDeliveryStatusActive, true),
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
     isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
+      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
     },
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isBeforeToday(aanvraag.datumOpdrachtLevering, today),
@@ -39,9 +40,9 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     isChecked: (stepIndex, aanvraag, today) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today) =>
-      isServiceDeliveryActive(aanvraag, today),
+      isServiceDeliveryStatusActive(aanvraag, today),
     isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
+      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
     },
     description: (aanvraag) =>
       `<p>

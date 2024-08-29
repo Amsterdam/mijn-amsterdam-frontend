@@ -3,7 +3,10 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
-import { isBeforeToday } from './status-line-items/wmo-generic';
+import {
+  isAfterWCAGValidDocumentsDate,
+  isBeforeToday,
+} from './status-line-items/wmo-generic';
 import {
   BESCHIKTPRODUCT_RESULTAAT,
   DATE_END_NOT_OLDER_THAN,
@@ -56,18 +59,6 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
-// If aanvraag was requested after a specific date we should only show them to the user if there are documents attached.
-function shouldBeVisibleToUser(aanvraag: ZorgnedAanvraagTransformed) {
-  const datumAanvraag = parseISO(aanvraag.datumAanvraag);
-
-  const isRequestedAfterSpecificDate =
-    datumAanvraag >= MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
-
-  const hasDocuments = !!aanvraag.documenten?.length;
-
-  return isRequestedAfterSpecificDate ? hasDocuments : true;
-}
-
 export async function fetchZorgnedAanvragenWMO(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
@@ -86,13 +77,11 @@ export async function fetchZorgnedAanvragenWMO(
 
   if (aanvragenResponse.status === 'OK') {
     // Filter the aanvragen that we should show in frontend.
-    // After a specific date we only show aanvragen(voorziening) that have at least one document attached.
     const aanvragenFiltered = aanvragenResponse.content
       ?.filter((aanvraagTransformed) => {
-        return (
-          aanvraagTransformed.datumBesluit &&
-          shouldBeVisibleToUser(aanvraagTransformed)
-        );
+        return isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumBesluit)
+          ? !!aanvraagTransformed.resultaat
+          : true;
       })
       .map((aanvraagTransformed) => {
         // Override isActueel for front-end.
@@ -111,5 +100,4 @@ export const forTesting = {
   isActueel,
   fetchZorgnedAanvragenWMO,
   isProductWithDelivery,
-  shouldBeVisibleToUser,
 };

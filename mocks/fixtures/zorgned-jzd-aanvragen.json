@@ -4,6 +4,145 @@
     "aanvraag": [
       {
         "_links": null,
+        "identificatie": "912837sdfsdf198723",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2023-04-25",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2023-04-25",
+        "datumAanvraag": "2023-04-25",
+        "beschikking": {
+          "beschikkingNummer": 300111429,
+          "datumAfgifte": "2023-05-17",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "116841",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "WRA",
+                "productCode": null,
+                "productsoortCode": "WRA",
+                "omschrijving": "woonruimteaanpassing (in behandeling)"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-05-06",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0994",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Gebr Koenen B.V."
+                },
+                "toelichting": "quam erat posuere vel tristique nec lorem aliquam adipiscing ex sodales odio lacus est ",
+                "toewijzingen": []
+              }
+            }
+          ]
+        },
+        "documenten": []
+      },
+      {
+        "_links": null,
+        "identificatie": "912837198723",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2023-04-25",
+          "aanmeldwijze": null,
+          "verwijzer": null
+        },
+        "datumAanmelding": "2023-04-25",
+        "datumAanvraag": "2023-04-25",
+        "beschikking": {
+          "beschikkingNummer": 300111429,
+          "datumAfgifte": "2023-05-17",
+          "toelichting": null,
+          "beschikteProducten": [
+            {
+              "identificatie": "116841",
+              "externe_identificatie": null,
+              "product": {
+                "identificatie": "WRA",
+                "productCode": null,
+                "productsoortCode": "WRA",
+                "omschrijving": "woonruimteaanpassing (meer info)"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-05-06",
+                "datumEindeGeldigheid": null,
+                "datumCheck": null,
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "budget": null,
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0994",
+                  "agbcode": null,
+                  "kvk": null,
+                  "omschrijving": "Gebr Koenen B.V."
+                },
+                "toelichting": "quam erat posuere vel tristique nec lorem aliquam adipiscing ex sodales odio lacus est ",
+                "toewijzingen": []
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "ABCDEF",
+            "omschrijving": "Verzoek: om meer informatie",
+            "datumDefinitief": "2023-05-17T00:00:00",
+            "zaakidentificatie": null
+          }
+        ]
+      },
+      {
+        "_links": null,
         "identificatie": "1269156",
         "regeling": {
           "identificatie": "WMO",

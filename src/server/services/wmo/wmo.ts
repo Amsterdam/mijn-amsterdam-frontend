@@ -10,7 +10,10 @@ import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import { isAfterWCAGValidDocumentsDate } from './status-line-items/wmo-generic';
+import {
+  hasDecision,
+  isAfterWCAGValidDocumentsDate,
+} from './status-line-items/wmo-generic';
 import { WMOVoorzieningFrontend } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
@@ -39,6 +42,17 @@ function getDocuments(
 
 function getLatestStatus(steps: StatusLineItem[]) {
   return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
+}
+
+function getLatestStatusDate(
+  steps: StatusLineItem[],
+  doTransformDate: boolean = false
+) {
+  const date = steps.find((step) => step.isActive)?.datePublished;
+  if (date && doTransformDate) {
+    return defaultDateFormat(date);
+  }
+  return date || '-';
 }
 
 function transformVoorzieningenForFrontend(
@@ -81,14 +95,17 @@ function transformVoorzieningenForFrontend(
         steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
-        decision: aanvraag.resultaat
-          ? capitalizeFirstLetter(aanvraag.resultaat)
-          : '',
+        decision:
+          hasDecision(aanvraag) && aanvraag.resultaat
+            ? capitalizeFirstLetter(aanvraag.resultaat)
+            : '',
         dateDecision,
         dateDecisionFormatted: dateDecision
           ? defaultDateFormat(dateDecision)
           : '',
         status: getLatestStatus(lineItems),
+        statusDate: getLatestStatusDate(lineItems),
+        statusDateFormatted: getLatestStatusDate(lineItems, true),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);

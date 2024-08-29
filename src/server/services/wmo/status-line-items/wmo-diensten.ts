@@ -9,11 +9,12 @@ import {
   getTransformerConfigBesluit,
   IN_BEHANDELING,
   isBeforeToday,
-  isDecisionActive,
-  isServiceDeliveryActive,
+  isDecisionStatusActive,
+  isServiceDeliveryStatusActive,
   isServiceDeliveryStarted,
   isServiceDeliveryStopped,
   MEER_INFORMATIE,
+  hasDecision,
 } from './wmo-generic';
 
 function isActive(
@@ -23,7 +24,7 @@ function isActive(
 ) {
   return (
     aanvraag.resultaat === 'afgewezen' ||
-    (isDecisionActive(stepIndex, aanvraag) &&
+    (isDecisionStatusActive(stepIndex, aanvraag) &&
       !isServiceDeliveryStarted(aanvraag, today))
   );
 }
@@ -37,12 +38,12 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Levering gestart',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
     isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
+      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
     },
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>
-      aanvraag.isActueel && isServiceDeliveryActive(aanvraag, today),
+      aanvraag.isActueel && isServiceDeliveryStatusActive(aanvraag, today),
     description: (aanvraag) =>
       `<p> U krijgt nu ${aanvraag.titel} van ${aanvraag.leverancier}.
       </p>
@@ -51,6 +52,9 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Levering gestopt',
     datePublished: (aanvraag) => aanvraag.datumEindeLevering ?? '',
+    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
+    },
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStopped(aanvraag, today) ||
       isBeforeToday(aanvraag.datumEindeGeldigheid, today),
@@ -66,9 +70,6 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
                 : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`
             }
       </p>`,
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
-    },
   },
   EINDE_RECHT,
 ];
