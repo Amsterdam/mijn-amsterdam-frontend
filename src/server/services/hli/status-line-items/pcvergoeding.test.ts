@@ -110,8 +110,8 @@ describe('pcvergoeding', () => {
 
     const regeling4 = {
       productIdentificatie: 'AV-UPCC',
-      datumEindeGeldigheid: '2024-08-29',
-      datumIngangGeldigheid: '2024-08-29',
+      datumEindeGeldigheid: '2024-08-29T23:45:00',
+      datumIngangGeldigheid: '2024-08-29T11:32:00',
       resultaat: 'toegewezen',
     } as ZorgnedAanvraagTransformed;
 
