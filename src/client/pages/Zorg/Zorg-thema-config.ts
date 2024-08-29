@@ -22,8 +22,8 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
-  [listPageParamKind.actual]: 'Huidige regelingen',
-  [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
+  [listPageParamKind.actual]: 'Regelingen en hulpmiddelen',
+  [listPageParamKind.historic]: 'Afgelopen regelingen en hulpmiddelen',
 } as const;
 
 export const tableConfig = {

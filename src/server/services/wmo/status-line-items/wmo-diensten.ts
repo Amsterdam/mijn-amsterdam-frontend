@@ -63,8 +63,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
             ${
               aanvraag.isActueel
                 ? 'Niet van toepassing.'
-                : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel}
-        meer krijgt.`
+                : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`
             }
       </p>`,
     isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
