@@ -64,6 +64,10 @@ function transformVoorzieningenForFrontend(
         id,
       });
 
+      const dateDecision =
+        lineItems.find((step) => step.status === 'Besluit')?.datePublished ??
+        '';
+
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
@@ -80,10 +84,10 @@ function transformVoorzieningenForFrontend(
         decision: aanvraag.resultaat
           ? capitalizeFirstLetter(aanvraag.resultaat)
           : '',
-        dateDescision: aanvraag.datumBesluit,
-        dateDescisionFormatted: defaultDateFormat(aanvraag.datumBesluit),
-        dateStart: aanvraag.datumIngangGeldigheid,
-        dateEnd: aanvraag.datumEindeGeldigheid,
+        dateDecision,
+        dateDecisionFormatted: dateDecision
+          ? defaultDateFormat(dateDecision)
+          : '',
         status: getLatestStatus(lineItems),
       };
 

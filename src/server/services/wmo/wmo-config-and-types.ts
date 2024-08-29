@@ -56,16 +56,14 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
   };
 
 export interface WMOVoorzieningFrontend extends ZaakDetail {
-  supplier: string | null; // Leverancier
-  isActual: boolean; // Indicates if this item is designated Current or Previous
-  itemTypeCode: ProductSoortCode;
-  dateDescision: string;
-  dateDescisionFormatted: string;
+  dateDecision: string;
+  dateDecisionFormatted: string;
   decision: string;
   documents: GenericDocument[];
-  dateStart: string | null;
-  dateEnd: string | null;
+  isActual: boolean; // Indicates if this item is designated Current or Previous
+  itemTypeCode: ProductSoortCode;
   status: string;
+  supplier: string | null; // Leverancier
 }
 
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:'; // Documents starting with this token correspond to the 'meer informatie' step.

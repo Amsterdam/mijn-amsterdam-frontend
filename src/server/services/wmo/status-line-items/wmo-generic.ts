@@ -98,7 +98,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
 
 export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   status: 'In behandeling',
-  datePublished: (aanvraag) => aanvraag.datumAanvraag,
+  datePublished: (aanvraag) => aanvraag.datumBesluit, // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
   isChecked: () => true,
   isActive: (stepIndex, aanvraag) =>
     !aanvraag.resultaat && !hasMeerInformatieNodig(aanvraag),
@@ -171,19 +171,11 @@ export function getTransformerConfigBesluit(
   return {
     status: 'Besluit',
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
-    isChecked: (stepIndex, aanvraag) => !!aanvraag.resultaat,
+    isChecked: (stepIndex, aanvraag) => !!getDecisionDate(aanvraag),
     isActive: isActive,
     description: (aanvraag) =>
       `<p>
-          ${
-            aanvraag.resultaat === 'toegewezen'
-              ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel}${
-                  aanvraag.datumEindeGeldigheid
-                    ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
-                    : ''
-                }.`
-              : `U krijgt geen ${aanvraag.titel}.`
-          }
+         ${aanvraag.resultaat === 'toegewezen' ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}` : `U krijgt geen ${aanvraag.titel}`}.
       </p>
       ${decisionParagraph(aanvraag)}
       `,
