@@ -432,7 +432,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                   <li>
                      informatie over uw buurt op een overzichtelijke 
                     <a
-                      href="https://mijn.amsterdam.nl/buurt"
+                      href="/buurt"
                     >
                        kaart 
                     </a>
@@ -447,7 +447,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                   
       
                   <a
-                    href="https://mijn.amsterdam.nl/uitleg"
+                    href="/uitleg"
                   >
                     Hier
                   </a>
@@ -455,7 +455,6 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
       
                 </p>
                 
-
     
               </div>
               <p
