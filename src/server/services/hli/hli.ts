@@ -21,7 +21,10 @@ import {
   fetchZorgnedAanvragenHLI,
 } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
-import { filterCombineUpcPcvData } from './status-line-items/pcvergoeding';
+import {
+  filterCombineUpcPcvData,
+  isCursusNietVoldaan,
+} from './status-line-items/pcvergoeding';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,
@@ -31,6 +34,9 @@ function getDisplayStatus(
     (regeling) => regeling.status === 'Einde recht'
   );
   switch (true) {
+    // NOTE: Special status for PCVergoedingen.
+    case isCursusNietVoldaan(aanvraag):
+      return 'Afgewezen';
     case (aanvraag.isActueel || !hasEindeRecht) &&
       aanvraag.resultaat === 'toegewezen':
       return 'Toegewezen';
