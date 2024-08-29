@@ -20,12 +20,11 @@ export const WelcomeNotification: MyNotification = {
         <li>
           hoe u wijzigingen kunt doorgeven als er iets niet klopt;
         </li>
-        <li> informatie over uw buurt op een overzichtelijke <a href="https://mijn.amsterdam.nl/buurt"> kaart </a>.</li>
+        <li> informatie over uw buurt op een overzichtelijke <a href="/buurt"> kaart </a>.</li>
       </ul>
       <p>
-      <a href="https://mijn.amsterdam.nl/uitleg">Hier</a> kunt u zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
+      <a href="/uitleg">Hier</a> kunt u zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
       </p>
-
     `,
   customLink: {
     callback: () => {
