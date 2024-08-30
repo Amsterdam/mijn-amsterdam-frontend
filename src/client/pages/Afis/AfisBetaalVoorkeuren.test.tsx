@@ -8,7 +8,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import AfisBetaalVoorkeuren from './AfisBetaalVoorkeuren';
+import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 
@@ -27,8 +27,8 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<AfisBetaalVoorkeuren />', () => {
-  const routeEntry = generatePath(AppRoutes.AFIS_BETAALVOORKEUREN);
-  const routePath = AppRoutes.AFIS_BETAALVOORKEUREN;
+  const routeEntry = generatePath(AppRoutes['AFIS/BETAALVOORKEUREN']);
+  const routePath = AppRoutes['AFIS/BETAALVOORKEUREN'];
 
   const Component = () => (
     <MockApp
@@ -41,7 +41,6 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
   it('Matches the Full Page snapshot', async () => {
     const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
-      address: 'Rembrandtstraat 20 2311 VW Leiden',
       addressId: 999,
       businessPartnerId: 515177,
       fullName: 'Taxon Expeditions BV',

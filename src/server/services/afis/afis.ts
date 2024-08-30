@@ -139,20 +139,9 @@ function transformBusinessPartnerDetailsResponse(
   const [businessPartnerEntry] = getFeedEntryProperties(response);
 
   if (businessPartnerEntry) {
-    const address = [
-      businessPartnerEntry.StreetName,
-      businessPartnerEntry.HouseNumber,
-      businessPartnerEntry.HouseNumberSupplementText,
-      businessPartnerEntry.PostalCode,
-      businessPartnerEntry.CityName,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
     const transformedResponse: AfisBusinessPartnerDetails = {
       businessPartnerId: businessPartnerEntry.BusinessPartner ?? null,
       fullName: businessPartnerEntry.FullName ?? null,
-      address,
       addressId: businessPartnerEntry.AddressID ?? null,
     };
 
