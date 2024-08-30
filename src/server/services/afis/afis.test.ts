@@ -332,7 +332,6 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "address": "Rembrandtstraat 20 2311 VW Leiden",
             "addressId": 430844,
             "businessPartnerId": "12346789",
             "email": "xxmail@arjanappel.nl",
@@ -364,7 +363,6 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "address": "Rembrandtstraat 20 2311 VW Leiden",
             "addressId": null,
             "businessPartnerId": "12346789",
             "fullName": "Taxon Expeditions BV",
@@ -456,7 +454,6 @@ describe('Afis', () => {
     expect(response).toMatchInlineSnapshot(`
       {
         "content": {
-          "address": "",
           "addressId": null,
           "businessPartnerId": null,
           "fullName": null,
@@ -486,7 +483,6 @@ describe('Afis', () => {
     expect(response2).toMatchInlineSnapshot(`
       {
         "content": {
-          "address": "",
           "addressId": null,
           "businessPartnerId": null,
           "fullName": null,
