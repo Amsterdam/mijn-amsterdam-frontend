@@ -18,7 +18,7 @@ import {
   PageHeading,
   ThemaIcon,
 } from '../../components';
-import { hasFailedDependency, isError } from '../../../universal/helpers/api';
+import { isError } from '../../../universal/helpers/api';
 
 type BusinessPartnerKey = keyof Omit<
   AfisBusinessPartnerDetailsTransformed,
@@ -63,8 +63,6 @@ function AfisBetaalVoorkeurenContent({
     });
 
   const hasError = isError(api.data);
-  const failedEmail = hasFailedDependency(api.data, 'email');
-  const failedPhone = hasFailedDependency(api.data, 'phone');
 
   return (
     <OverviewPage>
@@ -100,23 +98,11 @@ function AfisBetaalVoorkeurenContent({
           {hasError && (
             <Grid.Cell span="all">
               <ErrorAlert>
-                <>
-                  De volgende gegevens konden niet worden opgehaald:
-                  {failedEmail && (
-                    <>
-                      <br />- Email
-                    </>
-                  )}
-                  {failedPhone && (
-                    <>
-                      <br />- Telefoonnummer
-                    </>
-                  )}
-                </>{' '}
+                We kunnen op dit moment niet alle gegevens tonen.
               </ErrorAlert>
             </Grid.Cell>
           )}
-          <Grid.Cell span="all">
+          <Grid.Cell as={'section'} span="all">
             <Heading level={3} size="level-3">
               Betaalgegevens
             </Heading>

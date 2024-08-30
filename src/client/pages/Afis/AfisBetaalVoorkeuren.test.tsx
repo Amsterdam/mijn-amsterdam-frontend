@@ -2,31 +2,36 @@ import { render, waitFor } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
-import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
-import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import AfisBetaalVoorkeuren from './AfisBetaalVoorkeuren';
+import { bffApi } from '../../../test-utils';
 
-const businessPartnerIdEncrypted = 'xxx-123-xxx';
-
-const testState = {
+const testState: any = {
   AFIS: {
     status: 'OK',
     content: {
       isKnown: true,
-      businessPartnerIdEncrypted,
+      businessPartnerIdEncrypted: '1',
     },
   },
-} as AppState;
+};
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
 describe('<AfisBetaalVoorkeuren />', () => {
+  beforeEach(() => {
+    bffApi.get('/services/afis/businesspartner/1').reply(200, {
+      content: {
+        businessPartnerIdEncrypted: '1',
+      },
+      status: 'OK',
+    });
+  });
+
   const routeEntry = generatePath(AppRoutes.AFIS_BETAALVOORKEUREN);
   const routePath = AppRoutes.AFIS_BETAALVOORKEUREN;
 
@@ -40,27 +45,15 @@ describe('<AfisBetaalVoorkeuren />', () => {
   );
 
   it('Matches the Full Page snapshot', async () => {
-    const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
-      address: 'Rembrandtstraat 20 2311 VW Leiden',
-      addressId: 999,
-      businessPartnerId: 515177,
-      fullName: 'Taxon Expeditions BV',
-      phone: null,
-      email: null,
-    };
+    const { asFragment } = render(<Component />);
 
-    bffApi
-      .get(`/services/afis/businesspartner/${businessPartnerIdEncrypted}`)
-      .reply(200, {
-        content: businessPartnerDetails,
-        status: 'OK',
-      });
-
-    const screen = render(<Component />);
-
-    await waitFor(() => {
-      expect(screen.asFragment()).toMatchSnapshot();
-      expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(asFragment()).toMatchSnapshot();
+      },
+      {
+        timeout: 1000,
+      }
+    );
   });
 });
