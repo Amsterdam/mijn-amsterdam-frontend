@@ -135,9 +135,7 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
     !hasDecision(aanvraag) &&
     !hasMeerInformatieNodig(aanvraag),
   description: (aanvraag) => {
-    return !!aanvraag.datumBesluit && !hasDecision(aanvraag)
-      ? '<p>Uw aanvraag is in behandeling.</p>'
-      : ''; // TODO: Do we need a text if no decision is made yet?
+    return '<p>Uw aanvraag is in behandeling.</p>'; // TODO: Do we need a text if no decision is made yet?
   },
 };
 
