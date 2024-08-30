@@ -76,8 +76,11 @@ function AfisBusinessPartnerDetails({
 }
 
 export function AfisBetaalVoorkeuren() {
-  const { businessPartnerIdEncrypted, isThemaPaginaLoading } =
-    useAfisThemaData();
+  const {
+    businessPartnerIdEncrypted,
+    isThemaPaginaLoading,
+    isThemaPaginaError,
+  } = useAfisThemaData();
   const {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
@@ -91,7 +94,7 @@ export function AfisBetaalVoorkeuren() {
     isLoadingEmandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  const isLoading =
+  const isLoadingAllAPis =
     isThemaPaginaLoading &&
     isLoadingBusinessPartnerDetails &&
     isLoadingEmandates;
@@ -150,7 +153,13 @@ export function AfisBetaalVoorkeuren() {
           </>
         )}
       {hasBusinessPartnerDetailsError && (
-        <>Wij kunnen nu geen betaalgegevens laten zien</>
+        <>
+          Wij kunnen nu geen betaalgegevens laten zien.
+          <br />
+        </>
+      )}
+      {hasEmandatesError && (
+        <>Wij kunnen nu geen automatische incasso's laten zien.</>
       )}
     </>
   );
@@ -158,14 +167,18 @@ export function AfisBetaalVoorkeuren() {
   return (
     <ThemaPagina
       title="Betaalvoorkeuren"
-      isError={hasBusinessPartnerDetailsError && hasEmandatesError}
+      isError={
+        isThemaPaginaError ||
+        (hasBusinessPartnerDetailsError && hasEmandatesError)
+      }
       isPartialError={
         hasFailedEmailDependency ||
         hasFailedPhoneDependency ||
-        hasBusinessPartnerDetailsError
+        hasBusinessPartnerDetailsError ||
+        hasEmandatesError
       }
       errorAlertContent={errorAlertContent}
-      isLoading={isLoading}
+      isLoading={isLoadingAllAPis}
       backLink={{ to: AppRoutes.AFIS, title: ThemaTitles.AFIS }}
       linkListItems={[
         {
