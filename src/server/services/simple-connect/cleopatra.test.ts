@@ -16,6 +16,21 @@ const authProfileAndToken: AuthProfileAndToken = {
 };
 
 describe('simple-connect/cleopatra', () => {
+  test('missing certificate', async () => {
+    const responseContent = await fetchMilieuzone(
+      REQUEST_ID,
+      authProfileAndToken
+    );
+
+    expect(responseContent).toMatchInlineSnapshot(`
+      {
+        "content": null,
+        "message": "Postdata could not be encrypted",
+        "status": "ERROR",
+      }
+    `);
+  });
+
   test('getJSONRequestPayload', () => {
     expect(
       getJSONRequestPayload({
