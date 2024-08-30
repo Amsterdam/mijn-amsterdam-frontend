@@ -1,44 +1,66 @@
-import { render, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
+import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
+import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Afis from './Afis';
+import AfisBetaalVoorkeuren from './AfisBetaalVoorkeuren';
 
-const testState: any = {
+const businessPartnerIdEncrypted = 'xxx-123-xxx';
+
+const testState = {
   AFIS: {
     status: 'OK',
     content: {
-      id: '1',
-      name: 'Afis',
-      description: 'Afis',
-      url: 'https://afis.nl',
-      businessPartnerIdEncrypted: '1',
+      isKnown: true,
+      businessPartnerIdEncrypted,
     },
   },
-};
+} as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
-describe('<Afis />', () => {
-  const routeEntry = generatePath(AppRoutes.AFIS);
-  const routePath = AppRoutes.AFIS;
+describe('<AfisBetaalVoorkeuren />', () => {
+  const routeEntry = generatePath(AppRoutes.AFIS_BETAALVOORKEUREN);
+  const routePath = AppRoutes.AFIS_BETAALVOORKEUREN;
 
   const Component = () => (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={Afis}
+      component={AfisBetaalVoorkeuren}
       initializeState={initializeState}
     />
   );
 
-  it('Matches the Full Page snapshot', () => {
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
+  it('Matches the Full Page snapshot', async () => {
+    const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
+      address: 'Rembrandtstraat 20 2311 VW Leiden',
+      addressId: 999,
+      businessPartnerId: 515177,
+      fullName: 'Taxon Expeditions BV',
+      phone: null,
+      email: null,
+    };
+
+    bffApi
+      .get(`/services/afis/businesspartner/${businessPartnerIdEncrypted}`)
+      .reply(200, {
+        content: businessPartnerDetails,
+        status: 'OK',
+      });
+
+    const screen = render(<Component />);
+
+    await waitFor(() => {
+      expect(screen.asFragment()).toMatchSnapshot();
+      expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();
+    });
   });
 });
