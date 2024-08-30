@@ -6,7 +6,6 @@ import {
   PageHeading,
   ThemaIcon,
 } from '../../components';
-import { useHistory } from 'react-router-dom';
 
 import { ReactElement, ReactNode } from 'react';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -57,7 +56,6 @@ export default function ThemaPagina({
   isLoading,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
-  const history = useHistory();
   return (
     <OverviewPage>
       <PageHeading backLink={backLink} icon={icon}>
