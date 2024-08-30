@@ -1,6 +1,9 @@
 import { Themas } from '../../universal/config/thema';
 import { MyNotification } from '../../universal/types';
 import { ExternalUrls } from './app';
+import { AppRoutes } from '../../universal/config/routes';
+import ReactDOMServer from 'react-dom/server';
+import { MaRouterLink } from '../components/MaLink/MaLink';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
@@ -10,22 +13,23 @@ export const WelcomeNotification: MyNotification = {
   hideDatePublished: true,
   description: `
       <p>
-        De persoonlijke digitale pagina voor burgers
-        en ondernemers bij de gemeente Amsterdam. Hier ziet u op 1 centrale
-        plek:
+        De persoonlijke digitale pagina voor burgers en ondernemers bij de
+        gemeente Amsterdam. Hier ziet u op 1 centrale plek:
       </p>
       <ul>
         <li>welke gegevens de gemeente van u heeft vastgelegd; </li>
         <li>hoe het met uw aanvraag staat; </li>
+        <li>hoe u wijzigingen kunt doorgeven als er iets niet klopt;</li>
         <li>
-          hoe u wijzigingen kunt doorgeven als er iets niet klopt;
+          informatie over uw buurt op een overzichtelijke{' '}
+          <a href=/buurt>kaart</a>.
         </li>
-        <li> informatie over uw buurt op een overzichtelijke <MaRouterLink href={AppRoutes.BUURT}>kaart</MaRouterLink>.</li>
       </ul>
       <p>
-      <MaRouterLink href={AppRoutes.GENERAL_INFO}>Hier</MaRouterLink> kunt u zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
-      </p>
-    `,
+        <a href=/uitleg>Hier</a> kunt u
+        zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam
+        wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
+      </p>`,
   customLink: {
     callback: () => {
       const usabilla = (window as any).usabilla_live;
