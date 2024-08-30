@@ -84,6 +84,7 @@ import ZorgV2 from './pages/Zorg/ZorgV2';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import { useMonitoring } from './utils/monitoring';
 import AfisThemaPagina from './pages/Afis/Afis';
+import AfisBetaalVoorkeuren from './pages/Afis/AfisBetaalVoorkeuren';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -282,6 +283,12 @@ function AppAuthenticated() {
             <Route
               path={AppRoutes.TOERISTISCHE_VERHUUR}
               component={ToeristischeVerhuur}
+            />
+          )}
+          {FeatureToggle.afisActive && (
+            <Route
+              path={AppRoutes.AFIS_BETAALVOORKEUREN}
+              component={AfisBetaalVoorkeuren}
             />
           )}
           {FeatureToggle.afisActive && (

@@ -1,105 +1,43 @@
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
-import { BFFApiUrls } from '../../config/api';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
-import { BagThemas } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import { Paragraph, UnorderedList } from '@amsterdam/design-system-react';
-import { Datalist } from '../../components/Datalist/Datalist';
-import { hasFailedDependency } from '../../../universal/helpers/api';
+import { Button, Paragraph } from '@amsterdam/design-system-react';
+import { AppRoutes } from '../../../universal/config/routes';
+import { useHistory } from 'react-router-dom';
 
-const pageContentTop = (
-  <Paragraph>
-    Hieronder kunt u uw facturatiegegevens inzien en een automatische incasso
-    instellen per afdeling van de gemeente.
-  </Paragraph>
-);
+export default function Afis() {
+  const history = useHistory();
 
-type BusinessPartnerKey = keyof Omit<
-  AfisBusinessPartnerDetailsTransformed,
-  'addressId'
->;
-
-const labels: Record<BusinessPartnerKey, string> = {
-  businessPartnerId: 'Debiteurnummer',
-  fullName: 'Naam',
-  address: 'Adres',
-  phone: 'Telefoonnummer',
-  email: 'E-mailadres',
-};
-
-export default function AfisThemaPagina() {
-  const { AFIS } = useAppStateGetter();
-  const businessPartnerIdEncrypted = AFIS?.content?.businessPartnerIdEncrypted;
-
-  return (
-    businessPartnerIdEncrypted && (
-      <AfisBusinessPaginaContent
-        businessPartnerIdEncrypted={businessPartnerIdEncrypted}
-      />
-    )
+  const pageContentTop = (
+    <>
+      <Paragraph className="ams-mb--sm">
+        Hieronder kunt u uw facturatiegegevens inzien en een automatische
+        incasso instellen per afdeling van de gemeente.
+      </Paragraph>
+      <Button
+        variant="secondary"
+        onClick={() => history.push(AppRoutes.AFIS_BETAALVOORKEUREN)}
+      >
+        Betaalvoorkeuren
+      </Button>
+    </>
   );
-}
-
-function AfisBusinessPaginaContent({
-  businessPartnerIdEncrypted,
-}: {
-  businessPartnerIdEncrypted: string;
-}) {
-  const [businesspartner, api] =
-    useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
-      url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
-      bagThema: BagThemas.AFIS,
-      key: businessPartnerIdEncrypted,
-    });
-
-  const failedEmail = hasFailedDependency(api.data, 'email');
-  const failedPhone = hasFailedDependency(api.data, 'phone');
 
   return (
     <ThemaPagina
       title="AFIS"
       isError={false}
-      isPartialError={failedEmail || failedPhone}
-      errorAlertContent={
-        <>
-          De volgende gegevens konden niet worden opgehaald:
-          {failedEmail && (
-            <>
-              <br />- Email
-            </>
-          )}
-          {failedPhone && (
-            <>
-              <br />- Telefoonnummer
-            </>
-          )}
-        </>
-      }
+      isPartialError={false}
       isLoading={false}
-      linkListItems={[]}
-      pageContentTop={pageContentTop}
-      pageContentTables={
-        <>
-          {!!businesspartner && (
-            <AfisBusinessPartner businesspartner={businesspartner} />
-          )}
-        </>
+      linkListItems={
+        [
+          // {
+          //   to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
+          //   title: 'Meer over facturen van de gemeente',
+          // },
+          // Deze pagina moet nog gemaakt worden
+        ]
       }
+      pageContentTop={pageContentTop}
+      pageContentTables={null}
     />
   );
-}
-
-type AfisBusinessPartnerProps = {
-  businesspartner: AfisBusinessPartnerDetailsTransformed;
-};
-
-function AfisBusinessPartner({ businesspartner }: AfisBusinessPartnerProps) {
-  const rows = Object.entries(labels).map(([key, label]) => {
-    return {
-      label,
-      content: businesspartner[key as BusinessPartnerKey],
-    };
-  });
-
-  return <Datalist rows={rows} />;
 }

@@ -20,6 +20,7 @@ export const AppRoutes = {
   'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
   INKOMEN: '/inkomen',
   AFIS: '/afis',
+  AFIS_BETAALVOORKEUREN: '/afis/betaalvoorkeuren',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
