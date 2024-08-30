@@ -83,8 +83,8 @@ import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgV2 from './pages/Zorg/ZorgV2';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import { useMonitoring } from './utils/monitoring';
-import AfisThemaPagina from './pages/Afis/Afis';
-import AfisBetaalVoorkeuren from './pages/Afis/AfisBetaalVoorkeuren';
+import { AfisThemaPagina } from './pages/Afis/Afis';
+import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -288,7 +288,7 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.afisActive && (
             <Route
-              path={AppRoutes.AFIS_BETAALVOORKEUREN}
+              path={AppRoutes['AFIS/BETAALVOORKEUREN']}
               component={AfisBetaalVoorkeuren}
             />
           )}
