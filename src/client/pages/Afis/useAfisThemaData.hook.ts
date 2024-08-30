@@ -13,6 +13,7 @@ import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import {
+  AfisFactuurStub,
   eMandateTableConfig,
   facturenTableConfig,
   listPageParamKind,
@@ -22,17 +23,35 @@ import {
 
 export function useAfisThemaData() {
   const { AFIS } = useAppStateGetter();
+  const businessPartnerIdEncrypted = AFIS.content?.businessPartnerIdEncrypted;
+
+  const [facturen = [], facturenApi, fetchBusinessPartner] = useAppStateBagApi<
+    AfisFactuurStub[] | null
+  >({
+    bagThema: BagThemas.AFIS,
+    key: `${businessPartnerIdEncrypted}-facturen`,
+  });
+
+  useEffect(() => {
+    if (businessPartnerIdEncrypted) {
+      // fetchBusinessPartner({
+      //   url: `${BFFApiUrls.AFIS_FACTUREN}/${businessPartnerIdEncrypted}`,
+      // });
+    }
+  }, [businessPartnerIdEncrypted, fetchBusinessPartner]);
 
   return {
     businessPartnerIdEncrypted:
       AFIS.content?.businessPartnerIdEncrypted ?? null,
     isThemaPaginaLoading: isLoading(AFIS),
     isThemaPaginaError: isError(AFIS, false),
-    isThemaPaginaPartialError: false, // TODO: Implement when we can use the /api/v1/services/afis/facturen/:kind endpoint
     routes,
     facturenTableConfig,
     listPageTitle,
     listPageParamKind,
+    isFacturenError: facturenApi.isError,
+    isFacturenLoading: facturenApi.isLoading,
+    facturen: facturen ?? [],
   };
 }
 
