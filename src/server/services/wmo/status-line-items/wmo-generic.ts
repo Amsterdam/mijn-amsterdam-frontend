@@ -188,7 +188,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
         ? `<p>
            Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${
              aanvraag.datumEindeGeldigheid
-               ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
+               ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
                : ''
            } doen. Kijk in uw besluit op
             <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.
