@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisBusinessPartnerKnownResponse,
@@ -23,7 +24,8 @@ export function useAfisThemaData() {
   const { AFIS } = useAppStateGetter();
 
   return {
-    businessPartnerIdEncrypted: AFIS.content?.businessPartnerIdEncrypted,
+    businessPartnerIdEncrypted:
+      AFIS.content?.businessPartnerIdEncrypted ?? null,
     isThemaPaginaLoading: isLoading(AFIS),
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaPartialError: false, // TODO: Implement when we can use the /api/v1/services/afis/facturen/:kind endpoint
@@ -36,9 +38,8 @@ export function useAfisThemaData() {
 
 const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
   {
-    businessPartnerId: 'Debiteurnummer',
     fullName: 'Debiteurnaam',
-    address: 'Adres',
+    businessPartnerId: 'Debiteurnummer',
     email: 'E-mailadres factuur',
     phone: 'Telefoonnummer',
   };
@@ -46,12 +47,22 @@ const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTrans
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
 ) {
-  const [businesspartnerDetails, businesspartnerDetailsApi] =
-    useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
-      url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
-      bagThema: BagThemas.AFIS,
-      key: `${businessPartnerIdEncrypted}-betaalvoorkeuren`,
-    });
+  const [
+    businesspartnerDetails,
+    businesspartnerDetailsApi,
+    fetchBusinessPartner,
+  ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
+    bagThema: BagThemas.AFIS,
+    key: `${businessPartnerIdEncrypted}-betaalvoorkeuren`,
+  });
+
+  useEffect(() => {
+    if (businessPartnerIdEncrypted) {
+      fetchBusinessPartner({
+        url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
+      });
+    }
+  }, [businessPartnerIdEncrypted, fetchBusinessPartner]);
 
   return {
     businesspartnerDetails,
@@ -72,5 +83,6 @@ export function useAfisBetaalVoorkeurenData(
     ),
     eMandateTableConfig,
     eMandates: [],
+    isLoadingEmandates: false,
   };
 }
