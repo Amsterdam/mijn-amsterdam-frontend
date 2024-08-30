@@ -73,11 +73,22 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
 export interface DatalistProps {
   rows: Array<Row | RowSet>;
   className?: string;
+  rowVariant: 'horizontal' | 'vertical';
 }
 
-export function Datalist({ className, rows }: DatalistProps) {
+export function Datalist({
+  className,
+  rowVariant = 'vertical',
+  rows,
+}: DatalistProps) {
   return (
-    <dl className={classNames(styles.Datalist, className)}>
+    <dl
+      className={classNames(
+        styles.Datalist,
+        rowVariant === 'horizontal' && styles['has-horizontal-rows'],
+        className
+      )}
+    >
       {rows
         .filter(Boolean)
         .map((row: Row | RowSet, index) =>

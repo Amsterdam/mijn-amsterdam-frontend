@@ -14,5 +14,16 @@
   &__description {
     padding: 0;
     margin: 0 0 2rem 0;
+
+    .has-horizontal-rows & {
+      margin: 0;
+    }
+  }
+
+  &.has-horizontal-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: var(--ams-grid-column-gap);
+    grid-row-gap: var(--ams-link-list-gap);
   }
 }
