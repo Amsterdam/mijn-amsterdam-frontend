@@ -20,7 +20,7 @@ export const WelcomeNotification: MyNotification = {
         <li>
           hoe u wijzigingen kunt doorgeven als er iets niet klopt;
         </li>
-        <li> informatie over uw buurt op een overzichtelijke <a href="/buurt"> kaart </a>.</li>
+        <li> informatie over uw buurt op een overzichtelijke <MaRouterLink href={AppRoutes.BUURT}>kaart</MaRouterLink>.</li>
       </ul>
       <p>
       <a href="/uitleg">Hier</a> kunt u zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
