@@ -132,6 +132,21 @@ export function filterCombineUpcPcvData(
   );
 }
 
+export function isCursusNietVoldaan(regeling: ZorgnedAanvraagTransformed) {
+  return (
+    !isVerzilvering(regeling) &&
+    !!(
+      regeling.datumEindeGeldigheid &&
+      regeling.datumIngangGeldigheid &&
+      isSameDay(
+        parseISO(regeling.datumEindeGeldigheid),
+        parseISO(regeling.datumIngangGeldigheid)
+      )
+    ) &&
+    regeling.resultaat == 'toegewezen'
+  );
+}
+
 export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
@@ -155,7 +170,9 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Cursus',
     isVisible: (stepIndex, regeling) =>
-      !isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
+      !isVerzilvering(regeling) &&
+      regeling.resultaat === 'toegewezen' &&
+      !isCursusNietVoldaan(regeling),
     datePublished: '',
     isChecked: (stepIndex, regeling) => true,
     isActive: (stepIndex, regeling) => true,
@@ -188,24 +205,14 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   },
   {
     status: 'Cursus niet voldaan',
-    isVisible: (stepIndex, regeling) =>
-      !isVerzilvering(regeling) &&
-      !!(
-        regeling.datumEindeGeldigheid &&
-        regeling.datumIngangGeldigheid &&
-        isSameDay(
-          parseISO(regeling.datumEindeGeldigheid),
-          parseISO(regeling.datumIngangGeldigheid)
-        )
-      ) &&
-      regeling.resultaat == 'toegewezen',
+    isVisible: (stepIndex, regeling) => isCursusNietVoldaan(regeling),
     datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
     isChecked: () => true,
     isActive: () => true,
     description: (regeling) =>
       `
         <p>
-         U heeft niet voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}.
+         U heeft niet voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
@@ -219,4 +226,5 @@ export const forTesting = {
   isVerzilveringVanRegeling,
   isRegelingVanVerzilvering,
   getUpcPcvDecisionDate,
+  isCursusNietVoldaan,
 };
