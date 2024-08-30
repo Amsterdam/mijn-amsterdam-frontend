@@ -1,24 +1,14 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
+import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Afis from './Afis';
+import { AfisThemaPagina } from './Afis';
 
-const testState: any = {
-  AFIS: {
-    status: 'OK',
-    content: {
-      id: '1',
-      name: 'Afis',
-      description: 'Afis',
-      url: 'https://afis.nl',
-      businessPartnerIdEncrypted: '1',
-    },
-  },
-};
+const testState = {} as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
@@ -32,7 +22,7 @@ describe('<Afis />', () => {
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={Afis}
+      component={AfisThemaPagina}
       initializeState={initializeState}
     />
   );
