@@ -79,8 +79,8 @@ function transformVoorzieningenForFrontend(
       });
 
       const dateDecision =
-        lineItems.find((step) => step.status === 'Besluit')?.datePublished ??
-        '';
+        lineItems.find((step) => step.status === 'Besluit genomen')
+          ?.datePublished ?? '';
 
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,

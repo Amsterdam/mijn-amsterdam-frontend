@@ -146,7 +146,7 @@ export function getTransformerConfigBesluit(
   useAsProduct: boolean
 ): ZorgnedStatusLineItemTransformerConfig {
   return {
-    status: 'Besluit',
+    status: 'Besluit genomen',
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
     isChecked: (stepIndex, aanvraag) => hasDecision(aanvraag),
     isActive: isActive,

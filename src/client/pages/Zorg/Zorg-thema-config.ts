@@ -1,6 +1,5 @@
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { dateSort } from '../../../universal/helpers/date';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import styles from './Zorg.module.scss';
 
@@ -22,8 +21,8 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
-  [listPageParamKind.actual]: 'Regelingen en hulpmiddelen',
-  [listPageParamKind.historic]: 'Afgelopen regelingen en hulpmiddelen',
+  [listPageParamKind.actual]: 'Huidige voorzieningen',
+  [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
 export const tableConfig = {
