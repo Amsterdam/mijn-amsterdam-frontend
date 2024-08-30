@@ -1,4 +1,4 @@
-import { Button, Grid, LinkList, Screen } from '@amsterdam/design-system-react';
+import { Grid, LinkList, Screen } from '@amsterdam/design-system-react';
 import {
   ErrorAlert,
   LoadingContent,
@@ -31,7 +31,6 @@ interface ThemaPaginaProps {
   pageContentTop: ReactNode;
   pageContentTables: ReactNode;
   linkListItems: LinkProps[];
-  buttonLinkItems?: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -49,7 +48,6 @@ export default function ThemaPagina({
   icon = <ThemaIcon />,
   pageContentTop,
   linkListItems = [],
-  buttonLinkItems,
   pageContentTables,
   pageContentBottom,
   errorAlertContent,
@@ -77,20 +75,6 @@ export default function ThemaPagina({
                   </LinkList.Link>
                 ))}
               </LinkList>
-            </Grid.Cell>
-          )}
-
-          {!!buttonLinkItems?.length && (
-            <Grid.Cell span="all">
-              {buttonLinkItems.map(({ to, title }) => (
-                <Button
-                  variant="secondary"
-                  key={to}
-                  onClick={() => history.push(to)}
-                >
-                  {title}
-                </Button>
-              ))}
             </Grid.Cell>
           )}
 
