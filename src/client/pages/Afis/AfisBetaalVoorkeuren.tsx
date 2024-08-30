@@ -128,7 +128,7 @@ export function AfisBetaalVoorkeuren() {
       <AfisBusinessPartnerDetails
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
-        isLoading={isLoadingBusinessPartnerDetails}
+        isLoading={isLoadingBusinessPartnerDetails || isThemaPaginaLoading}
       />
       {eMandateTables}
     </>

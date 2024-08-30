@@ -1,16 +1,21 @@
 import { Button, Paragraph } from '@amsterdam/design-system-react';
 import { useHistory } from 'react-router-dom';
+import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import { AfisFactuurStub } from './Afis-thema-config';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 
 export function AfisThemaPagina() {
   const history = useHistory();
   const {
-    routes,
+    facturen,
+    facturenTableConfig,
+    isFacturenError,
+    isFacturenLoading,
     isThemaPaginaError,
     isThemaPaginaLoading,
-    isThemaPaginaPartialError,
-    facturenTableConfig,
+    routes,
   } = useAfisThemaData();
 
   const pageContentTop = (
@@ -28,23 +33,36 @@ export function AfisThemaPagina() {
     </>
   );
 
+  const pageContentTables = Object.entries(facturenTableConfig).map(
+    ([kind, { title, displayProps, filter }]) => {
+      return (
+        <ThemaPaginaTable<AfisFactuurStub>
+          key={kind}
+          title={title}
+          zaken={facturen.filter(filter)}
+          displayProps={displayProps}
+          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          maxItems={-1}
+        />
+      );
+    }
+  );
+
   return (
     <ThemaPagina
-      title="AFIS"
-      isError={isThemaPaginaError}
-      isPartialError={isThemaPaginaPartialError}
-      isLoading={isThemaPaginaLoading}
-      linkListItems={
-        [
-          // {
-          //   to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
-          //   title: 'Meer over facturen van de gemeente',
-          // },
-          // Deze pagina moet nog gemaakt worden
-        ]
-      }
+      title={ThemaTitles.AFIS}
+      isError={isFacturenError && isThemaPaginaError}
+      isPartialError={isFacturenError}
+      isLoading={isThemaPaginaLoading || isFacturenLoading}
+      linkListItems={[
+        {
+          // TODO: Deze pagina moet nog gemaakt worden
+          to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
+          title: 'Meer over facturen van de gemeente',
+        },
+      ]}
       pageContentTop={pageContentTop}
-      pageContentTables={null}
+      pageContentTables={pageContentTables}
     />
   );
 }
