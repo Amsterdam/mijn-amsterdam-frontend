@@ -1,151 +1,181 @@
 import {
   Grid,
   Heading,
+  Link,
   LinkList,
   Paragraph,
-  Screen,
 } from '@amsterdam/design-system-react';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
-import { Datalist } from '../../components/Datalist/Datalist';
-import styles from './AfisBetaalVoorkeuren.module.scss';
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
-import { BFFApiUrls } from '../../config/api';
-import { BagThemas } from '../../config/thema';
-import { AppRoutes } from '../../../universal/config/routes';
 import {
-  ErrorAlert,
-  OverviewPage,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
-import { hasFailedDependency, isError } from '../../../universal/helpers/api';
-
-type BusinessPartnerKey = keyof Omit<
   AfisBusinessPartnerDetailsTransformed,
-  'addressId'
->;
+  AfisBusinessPartnerKnownResponse,
+} from '../../../server/services/afis/afis-types';
+import { Datalist } from '../../components/Datalist/Datalist';
+import { DisplayProps } from '../../components/Table/TableV2';
+import ThemaPagina from '../ThemaPagina/ThemaPagina';
+import styles from './AfisBetaalVoorkeuren.module.scss';
+import {
+  useAfisBetaalVoorkeurenData,
+  useAfisThemaData,
+} from './useAfisThemaData.hook';
+import { AppRoutes } from '../../../universal/config/routes';
+import { ThemaTitles } from '../../config/thema';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import { AfisEmandateStub } from './Afis-thema-config';
 
-const labels: Record<BusinessPartnerKey, string> = {
-  businessPartnerId: 'Debiteurnummer',
-  fullName: 'Debiteurnaam',
-  address: 'Adres',
-  email: 'E-mailadres factuur',
-  phone: 'Telefoonnummer',
-};
+export function AfisBetaalVoorkeuren() {
+  const { businessPartnerIdEncrypted } = useAfisThemaData();
+
+  return businessPartnerIdEncrypted ? (
+    <AfisBetaalVoorkeurenContent
+      businessPartnerIdEncrypted={businessPartnerIdEncrypted}
+    />
+  ) : (
+    'No can show?'
+  );
+}
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed;
+  labels: DisplayProps<AfisBusinessPartnerDetailsTransformed>;
 };
 
-export default function AfisBetaalVoorkeuren() {
-  const { AFIS } = useAppStateGetter();
-  const businessPartnerIdEncrypted = AFIS?.content?.businessPartnerIdEncrypted;
+function AfisBusinessPartnerDetails({
+  businesspartner,
+  labels,
+}: AfisBusinessPartnerProps) {
+  const rows = Object.entries(labels).map(([key, label]) => {
+    const value = businesspartner[key as keyof typeof businesspartner];
+    return {
+      label,
+      content:
+        key === 'email' || key === 'phone' ? (
+          <Link href={`${key === 'email' ? 'mailto' : 'tel'}:${value}`}>
+            {value}
+          </Link>
+        ) : (
+          value
+        ),
+    };
+  });
 
   return (
-    businessPartnerIdEncrypted && (
-      <AfisBetaalVoorkeurenContent
-        businessPartnerIdEncrypted={businessPartnerIdEncrypted}
-      />
-    )
+    <>
+      <Grid.Cell span="all">
+        <Heading level={3} size="level-2">
+          Betaalgegevens
+        </Heading>
+      </Grid.Cell>
+      <Grid.Cell span={6}>
+        <Datalist rows={rows} rowVariant="horizontal" />
+      </Grid.Cell>
+      <Grid.Cell span={6}>
+        <LinkList>
+          <LinkList.Link rel="noreferrer" href={'#'}>
+            Wijzigingen
+          </LinkList.Link>
+        </LinkList>
+      </Grid.Cell>
+    </>
   );
 }
 
 function AfisBetaalVoorkeurenContent({
   businessPartnerIdEncrypted,
 }: {
-  businessPartnerIdEncrypted: string;
+  businessPartnerIdEncrypted: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted'];
 }) {
-  const [businesspartner, api] =
-    useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
-      url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
-      bagThema: BagThemas.AFIS,
-      key: businessPartnerIdEncrypted,
-    });
+  const {
+    businesspartnerDetails,
+    businessPartnerDetailsLabels,
+    hasBusinessPartnerDetailsError,
+    hasEmandatesError,
+    hasFailedEmailDependency,
+    hasFailedPhoneDependency,
+    isLoadingBusinessPartnerDetails,
+    eMandateTableConfig,
+    eMandates,
+  } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  const hasError = isError(api.data);
-  const failedEmail = hasFailedDependency(api.data, 'email');
-  const failedPhone = hasFailedDependency(api.data, 'phone');
+  const eMandateTables = Object.entries(eMandateTableConfig).map(
+    ([kind, { title, displayProps, filter }]) => {
+      return (
+        <ThemaPaginaTable<AfisEmandateStub>
+          key={kind}
+          title={title}
+          zaken={eMandates.filter(filter)}
+          displayProps={displayProps}
+          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          maxItems={-1}
+        />
+      );
+    }
+  );
+
+  const pageContentTop = (
+    <>
+      <Paragraph>
+        Hier kunt u uw betaal gegevens inzien en automatische incasso gegevens
+        instellen.
+      </Paragraph>
+    </>
+  );
+
+  const pageContentTables = (
+    <>
+      {!!businesspartnerDetails && (
+        <AfisBusinessPartnerDetails
+          businesspartner={businesspartnerDetails}
+          labels={businessPartnerDetailsLabels}
+        />
+      )}
+      {eMandateTables}
+    </>
+  );
+
+  const errorAlertContent = (
+    <>
+      {!hasBusinessPartnerDetailsError &&
+        (hasFailedEmailDependency || hasFailedPhoneDependency) && (
+          <>
+            De volgende gegevens konden niet worden opgehaald:
+            {hasFailedEmailDependency && (
+              <>
+                <br />- Email
+              </>
+            )}
+            {hasFailedPhoneDependency && (
+              <>
+                <br />- Telefoonnummer
+              </>
+            )}
+          </>
+        )}
+      {hasBusinessPartnerDetailsError && (
+        <>Wij kunnen nu geen betaalgegevens laten zien</>
+      )}
+    </>
+  );
 
   return (
-    <OverviewPage>
-      <PageHeading
-        icon={<ThemaIcon />}
-        backLink={{
-          title: 'Terug naar Afis',
-          to: AppRoutes.AFIS,
-        }}
-      >
-        Betaalvoorkeuren
-      </PageHeading>
-      <Screen>
-        <Grid>
-          <Grid.Cell span="all">
-            <Paragraph>
-              Hier kunt u uw betaal gegevens inzien en automatische incasso
-              gegevens instellen.
-            </Paragraph>
-          </Grid.Cell>
-          <Grid.Cell span="all">
-            <LinkList>
-              <LinkList.Link
-                rel="noreferrer"
-                href={
-                  'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa'
-                }
-              >
-                Meer over betalen aan de gemeente
-              </LinkList.Link>
-            </LinkList>
-          </Grid.Cell>
-          {hasError && (
-            <Grid.Cell span="all">
-              <ErrorAlert>
-                <>
-                  De volgende gegevens konden niet worden opgehaald:
-                  {failedEmail && (
-                    <>
-                      <br />- Email
-                    </>
-                  )}
-                  {failedPhone && (
-                    <>
-                      <br />- Telefoonnummer
-                    </>
-                  )}
-                </>{' '}
-              </ErrorAlert>
-            </Grid.Cell>
-          )}
-          <Grid.Cell span="all">
-            <Heading level={3} size="level-3">
-              Betaalgegevens
-            </Heading>
-          </Grid.Cell>
-          <Grid.Cell span={6}>
-            {businesspartner && (
-              <AfisBusinessPartner businesspartner={businesspartner} />
-            )}
-          </Grid.Cell>
-          <Grid.Cell span={6}>
-            <LinkList>
-              <LinkList.Link rel="noreferrer" href={'#'}>
-                Wijzigingen
-              </LinkList.Link>
-            </LinkList>
-          </Grid.Cell>
-        </Grid>
-      </Screen>
-    </OverviewPage>
+    <ThemaPagina
+      title="Betaalvoorkeuren"
+      isError={hasBusinessPartnerDetailsError && hasEmandatesError}
+      isPartialError={
+        hasFailedEmailDependency ||
+        hasFailedPhoneDependency ||
+        hasBusinessPartnerDetailsError
+      }
+      errorAlertContent={errorAlertContent}
+      isLoading={isLoadingBusinessPartnerDetails}
+      backLink={{ to: AppRoutes.AFIS, title: ThemaTitles.AFIS }}
+      linkListItems={[
+        {
+          to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
+          title: 'Meer over betalen aan de gemeente',
+        },
+      ]}
+      pageContentTop={pageContentTop}
+      pageContentTables={pageContentTables}
+    />
   );
-}
-
-function AfisBusinessPartner({ businesspartner }: AfisBusinessPartnerProps) {
-  const rows = Object.entries(labels).map(([key, label]) => {
-    return {
-      label,
-      content: businesspartner[key as BusinessPartnerKey],
-    };
-  });
-
-  return <Datalist rows={rows} className={styles.DataList} />;
 }
