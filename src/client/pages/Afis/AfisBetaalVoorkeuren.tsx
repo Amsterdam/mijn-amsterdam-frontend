@@ -21,69 +21,63 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { AfisEmandateStub } from './Afis-thema-config';
-
-export function AfisBetaalVoorkeuren() {
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
-
-  return businessPartnerIdEncrypted ? (
-    <AfisBetaalVoorkeurenContent
-      businessPartnerIdEncrypted={businessPartnerIdEncrypted}
-    />
-  ) : (
-    'No can show?'
-  );
-}
+import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
+import { LoadingContent } from '../../components';
 
 type AfisBusinessPartnerProps = {
-  businesspartner: AfisBusinessPartnerDetailsTransformed;
+  businesspartner: AfisBusinessPartnerDetailsTransformed | null;
   labels: DisplayProps<AfisBusinessPartnerDetailsTransformed>;
+  isLoading: boolean;
 };
 
 function AfisBusinessPartnerDetails({
   businesspartner,
   labels,
+  isLoading,
 }: AfisBusinessPartnerProps) {
-  const rows = Object.entries(labels).map(([key, label]) => {
-    const value = businesspartner[key as keyof typeof businesspartner];
-    return {
-      label,
-      content:
-        key === 'email' || key === 'phone' ? (
-          <Link href={`${key === 'email' ? 'mailto' : 'tel'}:${value}`}>
-            {value}
-          </Link>
-        ) : (
-          value
-        ),
-    };
-  });
+  const rows = !!businesspartner
+    ? Object.entries(labels).map(([key, label]) => {
+        const value = businesspartner[key as keyof typeof businesspartner];
+        return {
+          label,
+          content:
+            key === 'email' || key === 'phone' ? (
+              <Link href={`${key === 'email' ? 'mailto' : 'tel'}:${value}`}>
+                {value}
+              </Link>
+            ) : (
+              value
+            ),
+        };
+      })
+    : [];
 
   return (
-    <>
-      <Grid.Cell span="all">
-        <Heading level={3} size="level-2">
-          Betaalgegevens
-        </Heading>
-      </Grid.Cell>
-      <Grid.Cell span={6}>
-        <Datalist rows={rows} rowVariant="horizontal" />
-      </Grid.Cell>
-      <Grid.Cell span={6}>
-        <LinkList>
-          <LinkList.Link rel="noreferrer" href={'#'}>
-            Wijzigingen
-          </LinkList.Link>
-        </LinkList>
-      </Grid.Cell>
-    </>
+    <Grid.Cell span="all">
+      <CollapsiblePanel title="Betaalgegevens">
+        {isLoading && <LoadingContent />}
+        {!isLoading && !!rows.length && (
+          <Grid>
+            <Grid.Cell span={6}>
+              <Datalist rows={rows} rowVariant="horizontal" />
+            </Grid.Cell>
+            <Grid.Cell start={7} span={3}>
+              <LinkList>
+                <LinkList.Link rel="noreferrer" href="#">
+                  Wijzigingen
+                </LinkList.Link>
+              </LinkList>
+            </Grid.Cell>
+          </Grid>
+        )}
+      </CollapsiblePanel>
+    </Grid.Cell>
   );
 }
 
-function AfisBetaalVoorkeurenContent({
-  businessPartnerIdEncrypted,
-}: {
-  businessPartnerIdEncrypted: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted'];
-}) {
+export function AfisBetaalVoorkeuren() {
+  const { businessPartnerIdEncrypted, isThemaPaginaLoading } =
+    useAfisThemaData();
   const {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
@@ -94,7 +88,13 @@ function AfisBetaalVoorkeurenContent({
     isLoadingBusinessPartnerDetails,
     eMandateTableConfig,
     eMandates,
+    isLoadingEmandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
+
+  const isLoading =
+    isThemaPaginaLoading &&
+    isLoadingBusinessPartnerDetails &&
+    isLoadingEmandates;
 
   const eMandateTables = Object.entries(eMandateTableConfig).map(
     ([kind, { title, displayProps, filter }]) => {
@@ -122,12 +122,11 @@ function AfisBetaalVoorkeurenContent({
 
   const pageContentTables = (
     <>
-      {!!businesspartnerDetails && (
-        <AfisBusinessPartnerDetails
-          businesspartner={businesspartnerDetails}
-          labels={businessPartnerDetailsLabels}
-        />
-      )}
+      <AfisBusinessPartnerDetails
+        businesspartner={businesspartnerDetails}
+        labels={businessPartnerDetailsLabels}
+        isLoading={isLoadingBusinessPartnerDetails}
+      />
       {eMandateTables}
     </>
   );
@@ -166,7 +165,7 @@ function AfisBetaalVoorkeurenContent({
         hasBusinessPartnerDetailsError
       }
       errorAlertContent={errorAlertContent}
-      isLoading={isLoadingBusinessPartnerDetails}
+      isLoading={isLoading}
       backLink={{ to: AppRoutes.AFIS, title: ThemaTitles.AFIS }}
       linkListItems={[
         {
