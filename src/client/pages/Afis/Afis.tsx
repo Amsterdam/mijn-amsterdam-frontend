@@ -1,10 +1,17 @@
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import { Button, Paragraph } from '@amsterdam/design-system-react';
-import { AppRoutes } from '../../../universal/config/routes';
 import { useHistory } from 'react-router-dom';
+import ThemaPagina from '../ThemaPagina/ThemaPagina';
+import { useAfisThemaData } from './useAfisThemaData.hook';
 
-export default function Afis() {
+export function AfisThemaPagina() {
   const history = useHistory();
+  const {
+    routes,
+    isThemaPaginaError,
+    isThemaPaginaLoading,
+    isThemaPaginaPartialError,
+    facturenTableConfig,
+  } = useAfisThemaData();
 
   const pageContentTop = (
     <>
@@ -14,7 +21,7 @@ export default function Afis() {
       </Paragraph>
       <Button
         variant="secondary"
-        onClick={() => history.push(AppRoutes.AFIS_BETAALVOORKEUREN)}
+        onClick={() => history.push(routes.betaalVoorkeuren)}
       >
         Betaalvoorkeuren
       </Button>
@@ -24,9 +31,9 @@ export default function Afis() {
   return (
     <ThemaPagina
       title="AFIS"
-      isError={false}
-      isPartialError={false}
-      isLoading={false}
+      isError={isThemaPaginaError}
+      isPartialError={isThemaPaginaPartialError}
+      isLoading={isThemaPaginaLoading}
       linkListItems={
         [
           // {
