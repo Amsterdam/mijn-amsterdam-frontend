@@ -1,4 +1,4 @@
-import { Grid, LinkList, Screen } from '@amsterdam/design-system-react';
+import { Button, Grid, LinkList, Screen } from '@amsterdam/design-system-react';
 import {
   ErrorAlert,
   LoadingContent,
@@ -6,6 +6,7 @@ import {
   PageHeading,
   ThemaIcon,
 } from '../../components';
+import { useHistory } from 'react-router-dom';
 
 import { ReactElement, ReactNode } from 'react';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -30,6 +31,7 @@ interface ThemaPaginaProps {
   pageContentTop: ReactNode;
   pageContentTables: ReactNode;
   linkListItems: LinkProps[];
+  buttonLinkItems?: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -47,6 +49,7 @@ export default function ThemaPagina({
   icon = <ThemaIcon />,
   pageContentTop,
   linkListItems = [],
+  buttonLinkItems,
   pageContentTables,
   pageContentBottom,
   errorAlertContent,
@@ -56,7 +59,7 @@ export default function ThemaPagina({
   isLoading,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
-
+  const history = useHistory();
   return (
     <OverviewPage>
       <PageHeading backLink={backLink} icon={icon}>
@@ -74,6 +77,20 @@ export default function ThemaPagina({
                   </LinkList.Link>
                 ))}
               </LinkList>
+            </Grid.Cell>
+          )}
+
+          {!!buttonLinkItems?.length && (
+            <Grid.Cell span="all">
+              {buttonLinkItems.map(({ to, title }) => (
+                <Button
+                  variant="secondary"
+                  key={to}
+                  onClick={() => history.push(to)}
+                >
+                  {title}
+                </Button>
+              ))}
             </Grid.Cell>
           )}
 
