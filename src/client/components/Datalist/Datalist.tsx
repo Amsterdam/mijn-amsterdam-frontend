@@ -73,7 +73,7 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
 export interface DatalistProps {
   rows: Array<Row | RowSet>;
   className?: string;
-  rowVariant: 'horizontal' | 'vertical';
+  rowVariant?: 'horizontal' | 'vertical';
 }
 
 export function Datalist({
