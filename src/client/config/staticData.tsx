@@ -23,7 +23,7 @@ export const WelcomeNotification: MyNotification = {
         <li> informatie over uw buurt op een overzichtelijke <MaRouterLink href={AppRoutes.BUURT}>kaart</MaRouterLink>.</li>
       </ul>
       <p>
-      <a href="/uitleg">Hier</a> kunt u zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
+      <MaRouterLink href={AppRoutes.GENERAL_INFO}>Hier</MaRouterLink> kunt u zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
       </p>
     `,
   customLink: {
