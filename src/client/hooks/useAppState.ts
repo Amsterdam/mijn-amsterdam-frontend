@@ -225,10 +225,9 @@ export function useAppStateReady() {
 }
 
 export interface AppStateBagApiParams {
-  url: string;
+  url?: string;
   bagThema: BagThema;
   key: string;
-  postponeFetch?: boolean;
 }
 
 // Use this hook for loading additional data that needs to be persisted in the state. For example additional data loaded if a user navigates to a detailpage
@@ -237,7 +236,6 @@ export function useAppStateBagApi<T extends unknown>({
   url,
   bagThema,
   key,
-  postponeFetch = false,
 }: AppStateBagApiParams) {
   const [appState, setAppState] = useRecoilState(appStateAtom);
   const isApiDataCached =
