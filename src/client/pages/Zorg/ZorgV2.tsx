@@ -31,13 +31,13 @@ export default function ThemaPaginaZorg() {
   ];
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, maxItems, className }]) => {
+    ([kind, { title, displayProps, filter, maxItems, className }]) => {
       return (
         <ThemaPaginaTable<WMOVoorzieningFrontend>
           key={kind}
           title={title}
           className={className}
-          zaken={regelingen.filter(filter).sort(sort)}
+          zaken={regelingen.filter(filter)}
           listPageRoute={generatePath(routes.listPage, {
             kind,
           })}

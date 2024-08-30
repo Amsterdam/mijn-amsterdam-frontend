@@ -112,7 +112,7 @@ function transformVoorzieningenForFrontend(
     }
   }
 
-  voorzieningenFrontend.sort(dateSort('dateStart', 'desc'));
+  voorzieningenFrontend.sort(dateSort('statusDate', 'desc'));
 
   return voorzieningenFrontend;
 }

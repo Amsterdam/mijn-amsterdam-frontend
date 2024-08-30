@@ -30,7 +30,6 @@ export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: WMOVoorzieningFrontend) => regeling.isActual,
-    sort: dateSort('dateDecision', 'desc'),
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.HuidigeRegelingen,
@@ -38,7 +37,6 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: WMOVoorzieningFrontend) => !regeling.isActual,
-    sort: dateSort('dateDecision', 'desc'),
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.EerdereRegelingen,
