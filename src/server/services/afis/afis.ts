@@ -217,7 +217,7 @@ export async function fetchAfisBusinessPartnerDetails(
     const emailResponse = getSettledResult(emailResponseSettled);
 
     // Returns combined response
-    if (phoneResponse.status === 'OK' && emailResponse.status === 'OK') {
+    if (phoneResponse.status === 'OK' || emailResponse.status === 'OK') {
       const detailsCombined: AfisBusinessPartnerDetails = {
         ...detailsResponse.content,
         ...phoneResponse.content,
