@@ -216,17 +216,18 @@ export async function fetchAfisBusinessPartnerDetails(
     const phoneResponse = getSettledResult(phoneResponseSettled);
     const emailResponse = getSettledResult(emailResponseSettled);
 
-    // Returns combined response
-    if (phoneResponse.status === 'OK' || emailResponse.status === 'OK') {
-      const detailsCombined: AfisBusinessPartnerDetails = {
-        ...detailsResponse.content,
-        ...phoneResponse.content,
-        ...emailResponse.content,
-      };
-      return apiSuccessResult(detailsCombined);
+    const content: AfisBusinessPartnerDetails = detailsResponse.content;
+
+    if (phoneResponse.status === 'OK') {
+      Object.assign(content, phoneResponse.content);
     }
+
+    if (emailResponse.status === 'OK') {
+      Object.assign(content, emailResponse.content);
+    }
+
     return apiSuccessResult(
-      detailsResponse.content,
+      content,
       getFailedDependencies({ phone: phoneResponse, email: emailResponse })
     );
   }
