@@ -19,20 +19,24 @@ const DEV_KEY = {
   e: 'AQAB',
 };
 
-const keystore = jose.JWK.createKeyStore();
-let certContent;
+function getPublicKey() {
+  const keystore = jose.JWK.createKeyStore();
+  let certContent;
 
-try {
-  if (IS_TAP) {
-    certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
-  }
-} catch (error) {}
+  try {
+    if (IS_TAP) {
+      certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
+    }
+  } catch (error) {}
 
-const pemPubKey = !IS_TAP
-  ? keystore.add(DEV_KEY, 'json')
-  : certContent
-    ? keystore.add(certContent, 'pem')
-    : Promise.resolve(undefined);
+  const pemPubKey = !IS_TAP
+    ? keystore.add(DEV_KEY, 'json')
+    : certContent
+      ? keystore.add(certContent, 'pem')
+      : Promise.resolve(undefined);
+
+  return pemPubKey;
+}
 
 export function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']
@@ -49,7 +53,7 @@ export function getJSONRequestPayload(
 }
 
 export async function encryptPayload(payload: CleopatraRequestPayloadString) {
-  const key = await pemPubKey;
+  const key = await getPublicKey();
 
   if (key) {
     return jose.JWE.createEncrypt(

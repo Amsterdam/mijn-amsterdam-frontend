@@ -9,6 +9,22 @@ import {
 } from './cleopatra';
 import { remoteApi } from '../../../test-utils';
 
+const mocks = vi.hoisted(() => {
+  return {
+    IS_TAP: false,
+  };
+});
+
+vi.mock('../../../universal/config/env', async (importOriginal) => {
+  const mod: object = await importOriginal();
+  return {
+    ...mod,
+    get IS_TAP() {
+      return mocks.IS_TAP;
+    },
+  };
+});
+
 const REQUEST_ID = 'test-x-123';
 const authProfileAndToken: AuthProfileAndToken = {
   profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
@@ -16,7 +32,13 @@ const authProfileAndToken: AuthProfileAndToken = {
 };
 
 describe('simple-connect/cleopatra', () => {
+  beforeEach(() => {
+    mocks.IS_TAP = false;
+  });
+
   test('missing certificate', async () => {
+    mocks.IS_TAP = true;
+
     const responseContent = await fetchMilieuzone(
       REQUEST_ID,
       authProfileAndToken
