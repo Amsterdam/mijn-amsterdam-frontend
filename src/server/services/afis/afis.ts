@@ -274,7 +274,6 @@ export async function fetchAfisOpenFacturen(
     );
 
   const response = await requestData<AfisFactuurOpen>(config, requestID);
-  console.dir(response);
   return response;
 }
 

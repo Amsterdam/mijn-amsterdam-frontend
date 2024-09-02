@@ -4,7 +4,7 @@ import {
   fetchAfisClosedFacturen,
   fetchAfisOpenFacturen,
 } from './afis';
-import { sendResponse, sendUnauthorized } from '../../helpers/app';
+import { send404, sendResponse, sendUnauthorized } from '../../helpers/app';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisFactuurState,
@@ -19,31 +19,66 @@ export async function handleFetchAfisBusinessPartner(
   req: Request<BaseParams>,
   res: Response
 ) {
-  let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  const handler = async (
+    _req: Request,
+    res: Response,
+    businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
+  ) => {
+    const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
 
-  try {
-    businessPartnerId = parseInt(
-      decrypt(req.params.businessPartnerIdEncrypted),
-      10
-    );
-  } catch (error) {
-    return sendUnauthorized(res);
-  }
+    return sendResponse(res, response);
+  };
 
-  const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
-
-  return sendResponse(res, response);
+  return fetchWithEncryptedBusinessPartnerID(handler, req, res);
 }
 
 export async function handleFetchAfisFacturen(
   req: Request<BaseParams & { state: AfisFactuurState }>,
   res: Response
 ) {
-  const state = req.params.state;
+  const handler = async (
+    req: Request,
+    res: Response,
+    businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
+  ) => {
+    const state = req.params.state;
 
-  // RP TODO: factor out (together with function above)
+    switch (state) {
+      case 'open': {
+        // Top is a maximum of thirty. Might need to make more requests to get all the facturen.
+        const response = await fetchAfisOpenFacturen(
+          res.locals.requestID,
+          businessPartnerID
+        );
+        return sendResponse(res, response);
+      }
+      case 'closed': {
+        const maximumTopForFrontend = 3;
+        const response = await fetchAfisClosedFacturen(
+          res.locals.requestID,
+          maximumTopForFrontend
+        );
+        return sendResponse(res, response);
+      }
+      default: {
+        return send404(res);
+      }
+    }
+  };
+
+  return await fetchWithEncryptedBusinessPartnerID(handler, req, res);
+}
+
+async function fetchWithEncryptedBusinessPartnerID<R>(
+  handleFetchFn: (
+    req: Request,
+    res: Response,
+    businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
+  ) => R,
+  req: Request,
+  res: Response
+) {
   let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
-
   try {
     businessPartnerId = parseInt(
       decrypt(req.params.businessPartnerIdEncrypted),
@@ -53,22 +88,5 @@ export async function handleFetchAfisFacturen(
     return sendUnauthorized(res);
   }
 
-  switch (state) {
-    case 'open': {
-      // Top is a maximum of thirty. Might need to make more requests to get all the facturen.
-      const response = await fetchAfisOpenFacturen(
-        res.locals.requestID,
-        businessPartnerId
-      );
-      return sendResponse(res, response);
-    }
-    case 'closed': {
-      const maximumTopForFrontend = 3;
-      const response = await fetchAfisClosedFacturen(
-        res.locals.requestID,
-        maximumTopForFrontend
-      );
-      return sendResponse(res, response);
-    }
-  }
+  return await handleFetchFn(req, res, businessPartnerId);
 }
