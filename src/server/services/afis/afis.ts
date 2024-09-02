@@ -1,4 +1,5 @@
 import {
+  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -247,7 +248,10 @@ export async function fetchAfisOpenFacturen(
   top?: number
 ) {
   if (top && top < 1) {
-    throw Error(`Argument top has to be a positive integer; top: ${top}`);
+    return apiErrorResult(
+      `Argument top has to be a positive integer; top: ${top}`,
+      null
+    );
   }
 
   const INVOICES_DETAIL_ROUTE =
@@ -303,7 +307,10 @@ export async function fetchAfisClosedFacturen(
   top?: number
 ) {
   if (top && top < 1) {
-    throw Error(`Argument top has to be a positive integer; top: ${top}`);
+    return apiErrorResult(
+      `Argument top has to be a positive integer; top: ${top}`,
+      null
+    );
   }
 
   const config = getApiConfig('AFIS');
