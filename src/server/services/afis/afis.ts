@@ -285,11 +285,15 @@ function translateToOpenstaandeFacturen(
     `${businessPartnerID}:${fields.InvoiceNo}`
   );
   return {
-    factuurNummer: fields.InvoiceNo,
-    factuurNummerEncrypted,
-    afzender: fields.ProfitCenterName,
-    vervalDatum: fields.NetDueDate,
+    dunningBlockingReason: fields.DunningBlockingReason,
+    profitCenterName: fields.ProfitCenterName,
+    sepaMandate: fields.SEPAMandate,
+    postingDate: fields.PostingDate,
+    netDueDate: fields.NetDueDate,
     netPaymentAmount: fields.NetPaymentAmount,
+    amountInBalanceTransacCrcy: fields.AmountInBalanceTransacCrcy,
+    invoiceNo: fields.InvoiceNo,
+    paylink: fields.Paylink,
   };
 }
 
@@ -333,14 +337,14 @@ function translateToAfgehandeldeFacturen(
   businessPartnerID: number,
   fields: AfisFactuurAfgehandeldPropertiesSource
 ): AfisFactuurAfgehandeld {
-  const [factuurNummerEncrypted] = encrypt(
+  const [invoiceNumberEncrypted] = encrypt(
     `${businessPartnerID}:${fields.InvoiceNo}`
   );
   return {
-    factuurNummer: fields.InvoiceNo,
-    factuurNummerEncrypted,
-    afzender: fields.ProfitCenterName,
-    vervalDatum: fields.NetDueDate,
+    profitCenterName: fields.ProfitCenterName,
+    netDueDate: fields.NetDueDate,
     reverseDocument: fields.ReverseDocument,
+    invoiceNo: fields.InvoiceNo,
+    invoiceNumberEncrypted,
   };
 }
