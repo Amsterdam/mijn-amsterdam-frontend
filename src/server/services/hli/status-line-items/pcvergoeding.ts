@@ -132,7 +132,7 @@ export function filterCombineUpcPcvData(
   );
 }
 
-export function isCursusNietVoldaan(regeling: ZorgnedAanvraagTransformed) {
+export function isWorkshopNietGevolgd(regeling: ZorgnedAanvraagTransformed) {
   return (
     !isVerzilvering(regeling) &&
     !!(
@@ -158,36 +158,36 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
-            ? `U heeft recht op een ${regeling.titel}. U moet hiervoor eerst een cursus volgen`
-            : `U heeft geen recht op een ${regeling.titel}`
+            ? `Uw kind krijgt een ${regeling.titel}`
+            : `Uw kind krijgt geen ${regeling.titel}`
         }.
         </p>
         <p>
-          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? 'Lees in de brief hoe u de laptop of tablet bestelt.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.'}
         </p>
       `,
   },
   {
-    status: 'Cursus',
+    status: 'Workshop',
     isVisible: (stepIndex, regeling) =>
       !isVerzilvering(regeling) &&
       regeling.resultaat === 'toegewezen' &&
-      !isCursusNietVoldaan(regeling),
+      !isWorkshopNietGevolgd(regeling),
     datePublished: '',
     isChecked: (stepIndex, regeling) => true,
     isActive: (stepIndex, regeling) => true,
     description: (regeling) =>
       `
         <p>
-         Wij wachten op de uitslag van uw te volgen cursus.
+         U moet eerst een afspraak maken voor de workshop.
         </p>
         <p>
-          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+         In de brief staat hoe u dat doet.
         </p>
       `,
   },
   {
-    status: 'Cursus voldaan',
+    status: 'Workshop gevolgd',
     isVisible: (stepIndex, regeling) =>
       isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
     datePublished: (regeling) => regeling.datumBesluit,
@@ -196,7 +196,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (regeling) =>
       `
         <p>
-         U heeft voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}.
+         U heeft de Workshop gevolgd. U hebt recht op een ${regeling.titel}.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
@@ -204,15 +204,15 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `,
   },
   {
-    status: 'Cursus niet voldaan',
-    isVisible: (stepIndex, regeling) => isCursusNietVoldaan(regeling),
+    status: 'Workshop niet gevolgd',
+    isVisible: (stepIndex, regeling) => isWorkshopNietGevolgd(regeling),
     datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
     isChecked: () => true,
     isActive: () => true,
     description: (regeling) =>
       `
         <p>
-         U heeft niet voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}. U kunt een nieuwe aanvraag doen.
+         U heeft de Workshop niet gevolgd. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
@@ -226,5 +226,5 @@ export const forTesting = {
   isVerzilveringVanRegeling,
   isRegelingVanVerzilvering,
   getUpcPcvDecisionDate,
-  isCursusNietVoldaan,
+  isWorkshopNietGevolgd,
 };

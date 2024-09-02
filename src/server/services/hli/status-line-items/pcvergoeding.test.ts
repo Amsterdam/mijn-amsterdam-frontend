@@ -85,12 +85,12 @@ describe('pcvergoeding', () => {
     ).toBe('2024-05-18');
   });
 
-  test('isCursusNietVoldaan', () => {
+  test('isWorkshopNietGevolgd', () => {
     const regeling1 = {
       productIdentificatie: 'AV-UPCZIL',
     } as ZorgnedAanvraagTransformed;
 
-    expect(forTesting.isCursusNietVoldaan(regeling1)).toBe(false);
+    expect(forTesting.isWorkshopNietGevolgd(regeling1)).toBe(false);
 
     const regeling2 = {
       productIdentificatie: 'AV-UPCC',
@@ -98,7 +98,7 @@ describe('pcvergoeding', () => {
       datumIngangGeldigheid: '2024-07-29',
     } as ZorgnedAanvraagTransformed;
 
-    expect(forTesting.isCursusNietVoldaan(regeling2)).toBe(false);
+    expect(forTesting.isWorkshopNietGevolgd(regeling2)).toBe(false);
 
     const regeling3 = {
       productIdentificatie: 'AV-UPCC',
@@ -106,7 +106,7 @@ describe('pcvergoeding', () => {
       datumIngangGeldigheid: '2024-08-29',
     } as ZorgnedAanvraagTransformed;
 
-    expect(forTesting.isCursusNietVoldaan(regeling3)).toBe(false);
+    expect(forTesting.isWorkshopNietGevolgd(regeling3)).toBe(false);
 
     const regeling4 = {
       productIdentificatie: 'AV-UPCC',
@@ -115,6 +115,6 @@ describe('pcvergoeding', () => {
       resultaat: 'toegewezen',
     } as ZorgnedAanvraagTransformed;
 
-    expect(forTesting.isCursusNietVoldaan(regeling4)).toBe(true);
+    expect(forTesting.isWorkshopNietGevolgd(regeling4)).toBe(true);
   });
 });
