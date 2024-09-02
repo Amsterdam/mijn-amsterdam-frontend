@@ -158,12 +158,12 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
-            ? `Uw kind krijgt een ${regeling.titel}`
-            : `Uw kind krijgt geen ${regeling.titel}`
+            ? `Uw kind heeft recht op een ${regeling.titel}`
+            : `Uw kind heeft geen recht op een ${regeling.titel}`
         }.
         </p>
         <p>
-          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? 'Lees in de brief hoe u de laptop of tablet bestelt.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.'}
+          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.'}
         </p>
       `,
   },
@@ -179,10 +179,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (regeling) =>
       `
         <p>
-         U moet eerst een afspraak maken voor de workshop.
-        </p>
-        <p>
-         In de brief staat hoe u dat doet.
+         U moet eerst een afspraak maken voor de workshop. In de brief staat hoe u dat doet.
         </p>
       `,
   },
@@ -196,10 +193,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (regeling) =>
       `
         <p>
-         U heeft de Workshop gevolgd. U hebt recht op een ${regeling.titel}.
-        </p>
-        <p>
-          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+         Uw kind krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.
         </p>
       `,
   },
@@ -212,7 +206,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
     description: (regeling) =>
       `
         <p>
-         U heeft de Workshop niet gevolgd. U kunt een nieuwe aanvraag doen.
+         Uw kind krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
