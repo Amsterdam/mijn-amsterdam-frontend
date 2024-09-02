@@ -2,13 +2,7 @@ import '@testing-library/jest-dom';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/react';
 import nock from 'nock';
-import { vi, afterEach, expect, afterAll } from 'vitest';
-import {
-  IS_AP,
-  IS_DEVELOPMENT,
-  IS_OT,
-  IS_PRODUCTION,
-} from './universal/config/env';
+import { afterAll, afterEach, expect, vi } from 'vitest';
 
 vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   const envModule = (await importOriginal()) as any;

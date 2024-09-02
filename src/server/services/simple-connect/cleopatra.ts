@@ -2,9 +2,12 @@ import jose from 'node-jose';
 import { IS_TAP } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { Themas } from '../../../universal/config/thema';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
-import { DataRequestConfig, getApiConfig, getCert } from '../../config';
+import { getApiConfig, getCert } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ApiPatternResponseA, fetchService } from './api-service';
 
@@ -16,19 +19,24 @@ const DEV_KEY = {
   e: 'AQAB',
 };
 
-const keystore = jose.JWK.createKeyStore();
-let certContent;
+function getPublicKey() {
+  const keystore = jose.JWK.createKeyStore();
+  let certContent;
 
-try {
-  if (IS_TAP) {
-    certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
-  }
-} catch (error) {}
+  try {
+    if (IS_TAP) {
+      certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
+    }
+  } catch (error) {}
 
-const pemPubKey =
-  !IS_TAP || !certContent
+  const pemPubKey = !IS_TAP
     ? keystore.add(DEV_KEY, 'json')
-    : keystore.add(certContent, 'pem');
+    : certContent
+      ? keystore.add(certContent, 'pem')
+      : Promise.resolve(undefined);
+
+  return pemPubKey;
+}
 
 export function getJSONRequestPayload(
   profile: AuthProfileAndToken['profile']
@@ -45,22 +53,26 @@ export function getJSONRequestPayload(
 }
 
 export async function encryptPayload(payload: CleopatraRequestPayloadString) {
-  const key = await pemPubKey;
+  const key = await getPublicKey();
 
-  return jose.JWE.createEncrypt(
-    {
-      format: 'flattened',
-      fields: {
-        alg: 'RSA-OAEP-256',
-        enc: 'A256CBC-HS512',
-        typ: 'JWE',
-        kid: key.kid,
+  if (key) {
+    return jose.JWE.createEncrypt(
+      {
+        format: 'flattened',
+        fields: {
+          alg: 'RSA-OAEP-256',
+          enc: 'A256CBC-HS512',
+          typ: 'JWE',
+          kid: key.kid,
+        },
       },
-    },
-    key
-  )
-    .update(payload)
-    .final();
+      key
+    )
+      .update(payload)
+      .final();
+  }
+
+  return null;
 }
 
 interface CleopatraMessage {
@@ -134,29 +146,29 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
   };
 }
 
-async function getConfig(
-  authProfileAndToken: AuthProfileAndToken,
-  requestID: requestID
-): Promise<DataRequestConfig> {
-  const postData = await encryptPayload(
-    getJSONRequestPayload(authProfileAndToken.profile)
-  );
-
-  return getApiConfig('CLEOPATRA', {
-    transformResponse: transformCleopatraResponse,
-    cacheKey: `cleopatra-${requestID}`,
-    data: postData,
-  });
-}
-
 async function fetchCleopatra(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const INCLUDE_TIPS_AND_NOTIFICATIONS = true;
+
+  const postData = await encryptPayload(
+    getJSONRequestPayload(authProfileAndToken.profile)
+  );
+
+  if (!postData) {
+    return apiErrorResult('Postdata could not be encrypted', null);
+  }
+
+  const requestConfig = getApiConfig('CLEOPATRA', {
+    transformResponse: transformCleopatraResponse,
+    cacheKey: `cleopatra-${requestID}`,
+    data: postData,
+  });
+
   return fetchService<CleoPatraPatternResponse>(
     requestID,
-    await getConfig(authProfileAndToken, requestID),
+    requestConfig,
     INCLUDE_TIPS_AND_NOTIFICATIONS
   );
 }
