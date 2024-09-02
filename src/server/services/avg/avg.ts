@@ -20,6 +20,8 @@ import {
   SmileAvgResponse,
   SmileAvgThemesResponse,
 } from './types';
+import notification from '../../../client/components/MyNotifications/Notification';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -237,7 +239,11 @@ export async function fetchAVGNotifications(
 
   if (AVG.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(AVG.content.verzoeken)
-      ? AVG.content.verzoeken.map(createAVGNotification)
+      ? AVG.content.verzoeken
+          .map(createAVGNotification)
+          .filter((notification) =>
+            isRecentNotification(notification.datePublished)
+          )
       : [];
 
     return apiSuccessResult({

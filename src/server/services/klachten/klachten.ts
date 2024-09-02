@@ -13,6 +13,7 @@ import { smileDateParser } from '../smile/smile-helpers';
 import { AppRoutes } from './../../../universal/config/routes';
 import { AuthProfileAndToken } from './../../auth/auth-types';
 import { Klacht, KlachtenResponse, SmileKlachtenReponse } from './types';
+import { isRecentNotification } from './path/to/isRecentNotification'; // Add this import
 
 const DEFAULT_PAGE_SIZE = 250;
 
@@ -194,8 +195,10 @@ export async function fetchKlachtenNotifications(
         )
       : [];
 
+    const recentNotifications = notifications.filter(isRecentNotification); // Filter notifications
+
     return apiSuccessResult({
-      notifications,
+      notifications: recentNotifications,
     });
   }
 
