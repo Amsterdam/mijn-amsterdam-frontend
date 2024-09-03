@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express';
-import { attemptSilentLogin, auth } from 'express-openid-connect';
+import express, { Request, RequestHandler, Response } from 'express';
+import { ConfigParams, requiresAuth } from 'express-openid-connect';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
@@ -7,196 +7,200 @@ import {
   oidcConfigDigid,
   oidcConfigEherkenning,
 } from '../auth/auth-config';
-import { AUTH_CALLBACK, authRoutes } from '../auth/auth-routes';
-
 import {
-  decodeOIDCToken,
+  createLogoutHandler,
   getAuth,
   getReturnToUrl,
   hasSessionCookie,
+  isRequestAuthenticated,
 } from '../auth/auth-helpers';
+import {
+  AUTH_BASE_EHERKENNING,
+  AUTH_CALLBACK,
+  authRoutes,
+} from '../auth/auth-routes';
 import { captureException } from '../services/monitoring';
-import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
-import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './helpers';
+import { nocache, verifyAuthenticated } from './route-handlers';
 
-export const router = express.Router();
+export const oidcRouter = express.Router();
 
-router.use(nocache);
+// Prevent caching the responses from this oidcRouter.
+oidcRouter.use(nocache);
 
 /**
  * DIGID Oidc config
  */
-router.use(authRoutes.AUTH_BASE_DIGID, auth(oidcConfigDigid));
 
-router.get(authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK, (req, res) =>
-  res.oidc.callback({
-    redirectUri: authRoutes.AUTH_CALLBACK_DIGID,
-  })
-);
+function getOidcConfigByRequest(req: Request) {
+  const isEherkenning = req.url.includes(AUTH_BASE_EHERKENNING);
 
-router.post(
-  authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK,
-  express.urlencoded({ extended: false }),
-  (req, res) =>
-    res.oidc.callback({
-      redirectUri: authRoutes.AUTH_CALLBACK_DIGID,
-    })
-);
+  let oidConfig: ConfigParams = oidcConfigDigid;
 
-router.use(
-  authRoutes.AUTH_BASE_SSO_DIGID,
-  attemptSilentLogin(),
-  (req, res, next) => {
-    return res.send(req.oidc.isAuthenticated());
+  if (isEherkenning) {
+    oidConfig = oidcConfigEherkenning;
   }
-);
 
-router.get(authRoutes.AUTH_LOGIN_DIGID, async (req, res) => {
-  return res.oidc.login({
-    returnTo: getReturnToUrl(req.query),
-    authorizationParams: {
-      redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
-    },
-  });
+  // Assign the store
+  if (oidConfig.session) {
+    oidConfig.session.store = sessionStore;
+  }
+
+  return oidConfig;
+}
+
+const authInstances = new Map();
+
+// Determine which OIDC config should be used.
+oidcRouter.use((req, res, next) => {
+  const config = getOidcConfigByRequest(req);
+
+  let authRequestHandler: RequestHandler;
+
+  if (!authInstances.has(config)) {
+    authRequestHandler = openIdAuth(config);
+    authInstances.set(config, authRequestHandler);
+  } else {
+    authRequestHandler = authInstances.get(config);
+  }
+
+  authRequestHandler(req, res, next);
 });
 
-router.get(
-  authRoutes.AUTH_CHECK_DIGID,
-  verifyAuthenticated('digid', 'private')
-);
-
-router.get(authRoutes.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
-  try {
-    const auth = await getAuth(req);
-    if (auth.profile.id) {
-      countLoggedInVisit(auth.profile.id);
-    }
-  } catch (error) {
-    captureException(error, {
-      properties: {
-        message: 'At Digid landing',
-      },
+oidcRouter.get(
+  authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK,
+  (req: Request, res: Response) => {
+    return res.oidc.callback({
+      redirectUri: authRoutes.AUTH_CALLBACK_DIGID,
     });
   }
-  return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
-});
+);
+
+oidcRouter.get(
+  authRoutes.AUTH_LOGIN_DIGID,
+  async (req: Request, res: Response) => {
+    const isAuthenticated = await isRequestAuthenticated(req, 'digid');
+
+    if (!isAuthenticated) {
+      return res.oidc.login({
+        returnTo: getReturnToUrl(req.query),
+        authorizationParams: {
+          redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
+        },
+      });
+    }
+
+    return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
+  }
+);
+
+oidcRouter.get(
+  authRoutes.AUTH_LOGIN_DIGID_LANDING,
+  async (req: Request, res: Response) => {
+    try {
+      const auth = await getAuth(req);
+      if (auth.profile.id) {
+        countLoggedInVisit(auth.profile.id);
+      }
+    } catch (error) {
+      captureException(error, {
+        properties: {
+          message: 'At Digid landing',
+        },
+      });
+    }
+    return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
+  }
+);
 
 /**
  * EHerkenning Oidc config
  */
 if (FeatureToggle.eherkenningActive) {
-  router.use(authRoutes.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
-
-  router.get(authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK, (req, res) =>
-    res.oidc.callback({
-      redirectUri: authRoutes.AUTH_CALLBACK_EHERKENNING,
-    })
-  );
-
-  router.post(
+  oidcRouter.get(
     authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
-    express.urlencoded({ extended: false }),
-    (req, res) =>
-      res.oidc.callback({
+    (req: Request, res: Response) => {
+      const callbackOptions = {
         redirectUri: authRoutes.AUTH_CALLBACK_EHERKENNING,
-      })
-  );
-
-  router.use(
-    authRoutes.AUTH_BASE_SSO_EHERKENNING,
-    attemptSilentLogin(),
-    (req, res, next) => {
-      return res.send(req.oidc.isAuthenticated());
+      };
+      return res.oidc.callback(callbackOptions);
     }
   );
 
-  router.get(authRoutes.AUTH_LOGIN_EHERKENNING, async (req, res) => {
-    return res.oidc.login({
-      returnTo: authRoutes.AUTH_LOGIN_EHERKENNING_LANDING,
-      authorizationParams: {
-        redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
-      },
-    });
-  });
-
-  router.get(authRoutes.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
-    const auth = await getAuth(req);
-    if (auth.profile.id) {
-      countLoggedInVisit(auth.profile.id, 'eherkenning');
+  oidcRouter.get(
+    authRoutes.AUTH_LOGIN_EHERKENNING,
+    async (req: Request, res: Response) => {
+      const isAuthenticated = await isRequestAuthenticated(req, 'eherkenning');
+      if (!isAuthenticated) {
+        return res.oidc.login({
+          returnTo: getReturnToUrl(req.query),
+          authorizationParams: {
+            redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
+          },
+        });
+      }
+      return res.redirect(
+        process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
+      );
     }
-    return res.redirect(
-      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
-    );
-  });
+  );
 
-  router.get(
-    authRoutes.AUTH_CHECK_EHERKENNING,
-    verifyAuthenticated('eherkenning', 'commercial')
+  oidcRouter.get(
+    authRoutes.AUTH_LOGIN_EHERKENNING_LANDING,
+    async (req: Request, res: Response) => {
+      const auth = await getAuth(req);
+      if (auth.profile.id) {
+        countLoggedInVisit(auth.profile.id, 'eherkenning');
+      }
+      return res.redirect(
+        process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
+      );
+    }
   );
 }
 
-router.use(authRoutes.AUTH_BASE_SSO, async (req, res) => {
-  const authMethod = req.query.authMethod;
-
-  switch (authMethod) {
-    case 'digid':
-      return res.redirect(authRoutes.AUTH_BASE_SSO_DIGID);
-    case 'eherkenning':
-      return res.redirect(authRoutes.AUTH_BASE_SSO_EHERKENNING);
-    default: {
-      // No sessions found at Identify provider, let the front-end decide which SSO attempt is made.
-      return res.redirect(`${process.env.MA_FRONTEND_URL}?sso=1`);
-    }
-  }
-});
-
 // AuthMethod agnostic endpoints
-router.get(authRoutes.AUTH_CHECK, async (req, res) => {
-  if (hasSessionCookie(req)) {
-    try {
-      const auth = await getAuth(req);
-      let redirectUrl = '';
-      switch (auth.profile.authMethod) {
-        case 'eherkenning':
-          redirectUrl = authRoutes.AUTH_CHECK_EHERKENNING;
-          break;
-        case 'digid':
-          redirectUrl = authRoutes.AUTH_CHECK_DIGID;
-          break;
+oidcRouter.get(authRoutes.AUTH_CHECK, async (req: Request, res: Response) => {
+  try {
+    const auth = await getAuth(req);
+    switch (auth.profile.authMethod) {
+      case 'eherkenning':
+        return verifyAuthenticated('eherkenning', 'commercial')(req, res);
+      case 'digid':
+        return verifyAuthenticated('digid', 'private')(req, res);
+    }
+  } catch (error) {
+    captureException(error);
+  }
+
+  return sendUnauthorized(res);
+});
+
+oidcRouter.get(
+  authRoutes.AUTH_TOKEN_DATA,
+  requiresAuth(),
+  async (req: Request, res: Response) => {
+    if (hasSessionCookie(req)) {
+      try {
+        const auth = await getAuth(req);
+        return res.send(
+          apiSuccessResult({
+            tokenData: (req as any)[OIDC_SESSION_COOKIE_NAME],
+            token: auth.token,
+            profile: auth.profile,
+          })
+        );
+      } catch (error) {
+        captureException(error);
       }
-
-      return res.redirect(redirectUrl);
-    } catch (error) {
-      captureException(error);
     }
+
+    return sendUnauthorized(res);
   }
+);
 
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-  return sendUnauthorized(res);
-});
-
-router.get(authRoutes.AUTH_TOKEN_DATA, async (req, res) => {
-  if (hasSessionCookie(req)) {
-    try {
-      const auth = await getAuth(req);
-      return res.send(
-        apiSuccessResult({
-          tokenData: await decodeOIDCToken(auth.token),
-          token: auth.token,
-          profile: auth.profile,
-        })
-      );
-    } catch (error) {
-      captureException(error);
-    }
-  }
-
-  return sendUnauthorized(res);
-});
-
-router.get(authRoutes.AUTH_LOGOUT, async (req, res) => {
+oidcRouter.get(authRoutes.AUTH_LOGOUT, async (req: Request, res: Response) => {
   let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
   let authMethodRequested = req.query.authMethod;
 
@@ -217,43 +221,17 @@ router.get(authRoutes.AUTH_LOGOUT, async (req, res) => {
   return res.redirect(redirectUrl);
 });
 
-function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
-  return async (req: Request, res: Response) => {
-    if (req.oidc.isAuthenticated() && doIDPLogout) {
-      const auth = await getAuth(req);
-      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
-      if (auth.profile.sid) {
-        await addToBlackList(auth.profile.sid);
-      }
-      return res.oidc.logout({
-        returnTo: postLogoutRedirectUrl,
-        logoutParams: {
-          id_token_hint: !FeatureToggle.oidcLogoutHintActive
-            ? auth.token
-            : null,
-          logout_hint: FeatureToggle.oidcLogoutHintActive
-            ? auth.profile.sid
-            : null,
-        },
-      });
-    }
-
-    // Destroy the session context
-    (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-
-    return res.redirect(postLogoutRedirectUrl);
-  };
-}
-
-router.get(authRoutes.AUTH_LOGOUT_DIGID, logout(process.env.MA_FRONTEND_URL!));
-
-router.get(
-  authRoutes.AUTH_LOGOUT_EHERKENNING,
-  logout(process.env.MA_FRONTEND_URL!)
+oidcRouter.get(
+  authRoutes.AUTH_LOGOUT_DIGID,
+  createLogoutHandler(process.env.MA_FRONTEND_URL!)
 );
 
-router.get(
+oidcRouter.get(
+  authRoutes.AUTH_LOGOUT_EHERKENNING,
+  createLogoutHandler(process.env.MA_FRONTEND_URL!)
+);
+
+oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING_LOCAL,
-  logout(process.env.MA_FRONTEND_URL!, false)
+  createLogoutHandler(process.env.MA_FRONTEND_URL!, false)
 );

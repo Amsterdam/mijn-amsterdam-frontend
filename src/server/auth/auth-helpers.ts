@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
@@ -7,10 +7,12 @@ import { createSecretKey, hkdfSync } from 'node:crypto';
 import { ParsedQs } from 'qs';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { IS_AP } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { axiosRequest } from '../helpers/source-api-request';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/helpers';
 import { captureException } from '../services/monitoring';
+import { addToBlackList } from '../services/session-blacklist';
 import {
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
@@ -269,4 +271,36 @@ export function decodeToken<T extends Record<string, string> = {}>(
   jwtToken: string
 ): T {
   return jose.decodeJwt(jwtToken) as unknown as T;
+}
+
+export function createLogoutHandler(
+  postLogoutRedirectUrl: string,
+  doIDPLogout: boolean = true
+) {
+  return async (req: Request, res: Response) => {
+    if (req.oidc.isAuthenticated() && doIDPLogout) {
+      const auth = await getAuth(req);
+      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
+      if (auth.profile.sid) {
+        await addToBlackList(auth.profile.sid);
+      }
+      return res.oidc.logout({
+        returnTo: postLogoutRedirectUrl,
+        logoutParams: {
+          id_token_hint: !FeatureToggle.oidcLogoutHintActive
+            ? auth.token
+            : null,
+          logout_hint: FeatureToggle.oidcLogoutHintActive
+            ? auth.profile.sid
+            : null,
+        },
+      });
+    }
+
+    // Destroy the session context
+    (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+
+    return res.redirect(postLogoutRedirectUrl);
+  };
 }
