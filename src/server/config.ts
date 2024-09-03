@@ -1,41 +1,13 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import fs from 'fs';
 import https from 'https';
-import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
+import { IS_OT, IS_TAP } from '../universal/config/env';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { jsonCopy } from '../universal/helpers/utils';
+import { getCert } from './helpers/cert';
 import { getFromEnv } from './helpers/env';
 import { BFF_BASE_PATH } from './routing/bff-routes';
 
 export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
-
-export function getCertificateSync(envVarName: string | undefined) {
-  const path = envVarName && getFromEnv(envVarName, false);
-  if (path) {
-    try {
-      const fileContents = fs.readFileSync(path).toString();
-      return fileContents;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  return undefined;
-}
-
-function decodeBase64EncodedCertificateFromEnv(name: string | undefined) {
-  const data = name && getFromEnv(name);
-  if (data) {
-    return Buffer.from(data, 'base64').toString('utf-8');
-  }
-  return undefined;
-}
-
-export function getCert(envVarName: string) {
-  return IS_DEVELOPMENT
-    ? getCertificateSync(envVarName)
-    : decodeBase64EncodedCertificateFromEnv(envVarName);
-}
 
 export const IS_DEBUG = process.env.DEBUG === '1';
 

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import type { NextFunction, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
@@ -268,41 +268,4 @@ export async function isRequestAuthenticated(
     captureException(error);
   }
   return false;
-}
-
-export function verifyAuthenticated(
-  authMethod: AuthMethod,
-  profileType: ProfileType
-) {
-  return async (req: Request, res: Response) => {
-    if (await isRequestAuthenticated(req, authMethod)) {
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType,
-          authMethod,
-        })
-      );
-    }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-    return sendUnauthorized(res);
-  };
-}
-
-export async function isAuthenticated(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  if (hasSessionCookie(req)) {
-    try {
-      await getAuth(req);
-      return next();
-    } catch (error) {
-      captureMessage('Not authenticated: Session cookie invalid', {
-        severity: 'warning',
-      });
-    }
-  }
-  return sendUnauthorized(res);
 }

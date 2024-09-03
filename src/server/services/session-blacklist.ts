@@ -1,8 +1,6 @@
 import { sub } from 'date-fns';
-import { NextFunction, Request, Response } from 'express';
-import { getAuth } from '../auth/auth-helpers';
+import { Request, Response } from 'express';
 import { OIDC_TOKEN_EXP, ONE_MINUTE_MS } from '../config';
-import { sendUnauthorized } from '../helpers/app';
 import { IS_PG, tableNameSessionBlacklist } from './db/config';
 import { db } from './db/db';
 import { execDB } from './db/sqlite3';
@@ -89,21 +87,6 @@ export async function isBlacklisted(sessionID: string) {
   };
 
   return result ? !!result.count : false;
-}
-
-export async function isBlacklistedHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const auth = await getAuth(req);
-  if (auth.profile.sid) {
-    const isOnList = await isBlacklisted(auth.profile.sid);
-    if (isOnList) {
-      return sendUnauthorized(res);
-    }
-  }
-  return next();
 }
 
 export async function sessionBlacklistTable(req: Request, res: Response) {

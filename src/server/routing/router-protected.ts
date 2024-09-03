@@ -1,8 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { IS_OT } from '../../universal/config/env';
-import { getAuth, isAuthenticated } from '../auth/auth-helpers';
+import { getAuth } from '../auth/auth-helpers';
 import { isProtectedRoute } from '../helpers/app';
-import { BffEndpoints } from './bff-routes';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
@@ -23,7 +22,6 @@ import {
   fetchZorgnedAVDocument,
   handleFetchTransactionsRequest,
 } from '../services/hli/hli-route-handlers';
-import { isBlacklistedHandler } from '../services/session-blacklist';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/bb-vergunning';
@@ -34,6 +32,8 @@ import {
 } from '../services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
+import { BffEndpoints } from './bff-routes';
+import { isAuthenticated, isBlacklistedHandler } from './middleware';
 
 export const router = express.Router();
 
