@@ -45,11 +45,12 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
-// Request logging
+// Add request logging attribute (:build)
 morgan.token('build', function (req, res) {
   return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
 });
 
+// Logs all Incoming requests
 app.use(
   morgan(
     '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
@@ -76,9 +77,8 @@ app.use(requestID);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(function (req, res, next) {
-  res.on('finish', function () {
+  res.on('end', function () {
     clearRequestCache(req, res);
-    console.log('the response has been sent');
   });
   next();
 });
