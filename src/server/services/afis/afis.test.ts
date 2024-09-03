@@ -37,12 +37,8 @@ const ROUTES = {
   businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27213423%27&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`,
   businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27430844%27`,
   businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27430844%27`,
-  openstaandeFacturen: new RegExp(
-    `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM.*Paylink.*`
-  ),
-  afgehandeldeFacturen: new RegExp(
-    `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM.*ReverseDocument.*`
-  ),
+  openstaandeFacturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$top=2&$inlinecount=allpages&$filter=Customer eq '123456789' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc&$orderBy=NetDueDate asc, PostingDate asc`,
+  afgehandeldeFacturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$inlinecount=allpages&$filter=Customer eq '123456789' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=ReverseDocument,ProfitCenterName,InvoiceNo,NetDueDate&$orderBy=NetDueDate desc`,
 };
 
 const REQUEST_ID = '456';
@@ -481,7 +477,7 @@ describe('Afis', () => {
   describe('fetchAfisOpenFacturen', async () => {
     test('data is transformed', async () => {
       remoteApi
-        .get(new RegExp(ROUTES.openstaandeFacturen))
+        .get(ROUTES.openstaandeFacturen)
         .reply(
           200,
           require('../../../../mocks/fixtures/afis/openstaande-facturen.json')
@@ -489,7 +485,8 @@ describe('Afis', () => {
 
       const response = (await fetchAfisOpenFacturen(
         REQUEST_ID,
-        123456789
+        123456789,
+        2
       )) as ApiSuccessResponse<AfisFactuurOpen[]>;
 
       expect(response.content[0]).toStrictEqual({
@@ -510,7 +507,7 @@ describe('Afis', () => {
   describe('fetchAfisClosedFacturen', async () => {
     test('data is transformed', async () => {
       remoteApi
-        .get(new RegExp(ROUTES.afgehandeldeFacturen))
+        .get(ROUTES.afgehandeldeFacturen)
         .reply(
           200,
           require('../../../../mocks/fixtures/afis/afgehandelde-facturen.json')

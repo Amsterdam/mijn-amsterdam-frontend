@@ -247,38 +247,25 @@ export async function fetchAfisOpenFacturen(
   businessPartnerID: number,
   top?: number
 ) {
-  if (top && top < 1) {
-    return apiErrorResult(
-      `Argument top has to be a positive integer; top: ${top}`,
-      null
-    );
-  }
+  const fetchOpen = async (requestID: RequestID, config: DataRequestConfig) => {
+    const filter = `$filter=Customer eq '${businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&`;
+    const select =
+      '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc';
+    const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
-  const INVOICES_DETAIL_ROUTE =
-    '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
+    let openInvoicesQuery = `${filter}&${select}&${orderBy}`;
 
-  const config = getApiConfig('AFIS');
+    config.url = `${config.url}&${openInvoicesQuery}`;
+    config.transformResponse = (data: AfisFactuurOpenSource) =>
+      getFeedEntryProperties(data).map((invoiceProperties) =>
+        transformToOpenstaandeFacturen(businessPartnerID, invoiceProperties)
+      );
 
-  config.url = `${config.url}${INVOICES_DETAIL_ROUTE}`;
+    const response = await requestData<AfisFactuurOpen[]>(config, requestID);
+    return response;
+  };
 
-  const filter = `$filter=Customer eq '${businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&`;
-  const select =
-    '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc';
-  const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
-
-  let openInvoicesQuery = `?${filter}&${select}&${orderBy}`;
-  if (top) {
-    openInvoicesQuery += `&${top.toString()}`;
-  }
-
-  config.url = `${config.url}${openInvoicesQuery}`;
-  config.transformResponse = (data: AfisFactuurOpenSource) =>
-    getFeedEntryProperties(data).map((invoiceProperties) =>
-      transformToOpenstaandeFacturen(businessPartnerID, invoiceProperties)
-    );
-
-  const response = await requestData<AfisFactuurOpen[]>(config, requestID);
-  return response;
+  return await fetchAfisFacturen(fetchOpen, requestID, businessPartnerID, top);
 }
 
 function transformToOpenstaandeFacturen(
@@ -307,41 +294,36 @@ export async function fetchAfisClosedFacturen(
   businessPartnerID: number,
   top?: number
 ) {
-  if (top && top < 1) {
-    return apiErrorResult(
-      `Argument top has to be a positive integer; top: ${top}`,
-      null
+  const fetchClosed = async (
+    requestID: RequestID,
+    config: DataRequestConfig
+  ) => {
+    const filter = `&$filter=Customer eq '${businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`;
+    const select =
+      '$select=ReverseDocument,ProfitCenterName,InvoiceNo,NetDueDate';
+    const orderBy = '$orderBy=NetDueDate desc';
+
+    let closedInvoicesQuery = `${filter}&${select}&${orderBy}`;
+    config.url = `${config.url}${closedInvoicesQuery}`;
+
+    config.transformResponse = (data: AfisFactuurAfgehandeldSource) =>
+      getFeedEntryProperties(data).map((invoiceProperties) =>
+        transformToAfgehandeldeFacturen(businessPartnerID, invoiceProperties)
+      );
+
+    const response = await requestData<AfisFactuurAfgehandeld[]>(
+      config,
+      requestID
     );
-  }
+    return response;
+  };
 
-  const config = getApiConfig('AFIS');
-
-  const invoicesDetailRoute =
-    '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
-  config.url = `${config.url}${invoicesDetailRoute}`;
-
-  const filter = `$filter=Customer eq '${businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`;
-  const select =
-    '$select=ReverseDocument,ProfitCenterName,InvoiceNo,NetDueDate';
-  const orderBy = '$orderBy=NetDueDate desc';
-
-  let closedInvoicesQuery = `?${filter}&${select}&${orderBy}`;
-  if (top) {
-    closedInvoicesQuery += `&${top.toString()}`;
-  }
-
-  config.url = `${config.url}${closedInvoicesQuery}`;
-
-  config.transformResponse = (data: AfisFactuurAfgehandeldSource) =>
-    getFeedEntryProperties(data).map((invoiceProperties) =>
-      transformToAfgehandeldeFacturen(businessPartnerID, invoiceProperties)
-    );
-
-  const response = await requestData<AfisFactuurAfgehandeld[]>(
-    config,
-    requestID
+  return await fetchAfisFacturen(
+    fetchClosed,
+    requestID,
+    businessPartnerID,
+    top
   );
-  return response;
 }
 
 function transformToAfgehandeldeFacturen(
@@ -358,4 +340,26 @@ function transformToAfgehandeldeFacturen(
     invoiceNo: fields.InvoiceNo,
     invoiceNoEncrypted,
   };
+}
+
+async function fetchAfisFacturen(
+  fetchSpecificFacturenFn: (
+    requestID: RequestID,
+    config: DataRequestConfig,
+    businessPartnerID: number
+  ) => any,
+  requestID: RequestID,
+  businessPartnerID: number,
+  top?: number
+) {
+  const invoices_detail_route =
+    '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
+  const config = getApiConfig('AFIS');
+
+  config.url = `${config.url}${invoices_detail_route}?$inlinecount=allpages`;
+  if (top) {
+    config.url += `&$top=${top.toString()}`;
+  }
+
+  return await fetchSpecificFacturenFn(requestID, config, businessPartnerID);
 }
