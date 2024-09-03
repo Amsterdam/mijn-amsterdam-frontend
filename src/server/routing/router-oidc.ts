@@ -6,6 +6,7 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
+  openIdAuth,
 } from '../auth/auth-config';
 import {
   createLogoutHandler,
@@ -19,6 +20,7 @@ import {
   AUTH_CALLBACK,
   authRoutes,
 } from '../auth/auth-routes';
+import { sessionStore } from '../auth/auth-session-store';
 import { captureException } from '../services/monitoring';
 import { countLoggedInVisit } from '../services/visitors';
 import { sendUnauthorized } from './helpers';

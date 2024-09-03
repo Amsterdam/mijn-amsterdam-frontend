@@ -21,15 +21,8 @@ import { authRoutes } from '../auth/auth-routes';
 import { AuthProfile } from '../auth/auth-types';
 import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
+import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
 import { sendUnauthorized } from './helpers';
-
-const DevelopmentRoutes = {
-  DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
-  DEV_LOGOUT: '/api/v1/auth/logout',
-  DEV_AUTH_CHECK: '/api/v1/auth/check',
-};
-
-const PREDEFINED_REDIRECT_URLS = ['noredirect', '/api/v1/services/all'];
 
 export const authRouterDevelopment = express.Router();
 

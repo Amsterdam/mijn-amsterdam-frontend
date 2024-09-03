@@ -1,5 +1,4 @@
-import { ConfigParams } from 'express-openid-connect';
-import * as jose from 'jose';
+import { auth, ConfigParams } from 'express-openid-connect';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ONE_HOUR_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
@@ -18,14 +17,18 @@ export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
 export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 24 * 3; // The TMA currently has a token expiration time of 3 hours
 
-const oidcConfigBase: ConfigParams = {
+export const openIdAuth = auth;
+
+export const oidcConfigBase: ConfigParams = {
   authRequired: false,
   auth0Logout: false,
+  // Tries to logout at the IDP's end_session endpoint.
   idpLogout: true,
   // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
-  clientSecret: getFromEnv('BFF_OIDC_SECRET'),
+  clientSecret: process.env.BFF_OIDC_SECRET,
+  clientID: 'x', // Set in configs for digid and eherkenning.
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
@@ -41,35 +44,31 @@ const oidcConfigBase: ConfigParams = {
     logout: false,
     callback: false,
   },
-  afterCallback: (req, res, session) => {
-    const claims = jose.decodeJwt(session.id_token) as {
-      nonce: string;
-    };
-
-    const authVerification = JSON.parse(
-      req.cookies.auth_verification.split('.')[0]
-    );
-
-    if (claims.nonce !== authVerification.nonce) {
-      throw new Error(`Nonce invalid`);
-    }
-
-    if (req.query.state !== authVerification.state) {
-      throw new Error(`State invalid`);
-    }
-
-    return session;
-  },
+  httpTimeout: 10000,
 };
 
 export const oidcConfigDigid: ConfigParams = {
   ...oidcConfigBase,
-  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_DIGID'),
+  clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
+  afterCallback: async (req, res, session) => {
+    return {
+      ...session,
+      profileType: 'private',
+      authMethod: 'digid',
+    };
+  },
 };
 
 export const oidcConfigEherkenning: ConfigParams = {
   ...oidcConfigBase,
-  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING'),
+  clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
+  afterCallback: async (req, res, session) => {
+    return {
+      ...session,
+      profileType: 'commercial',
+      authMethod: 'eherkenning',
+    };
+  },
 };
 
 // Op 1.13 met ketenmachtiging
