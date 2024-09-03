@@ -1,8 +1,6 @@
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useRef, useState } from 'react';
-import { testAccounts } from '../../../universal/config/auth.development';
-import { IS_TEST } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
@@ -16,25 +14,6 @@ import {
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 import styles from './Landing.module.scss';
-
-function TestAccountSelect({ onSelect }: { onSelect: (url: string) => void }) {
-  return (
-    <div className={styles.TestAccountSelect}>
-      <label>
-        <span>Login met account</span>{' '}
-        <select
-          onChange={(event) =>
-            onSelect(LOGIN_URL_DIGID + '/' + event.target.value)
-          }
-        >
-          {Object.keys(testAccounts).map((userName) => (
-            <option key={userName}>{userName}</option>
-          ))}
-        </select>
-      </label>
-    </div>
-  );
-}
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -63,9 +42,6 @@ export default function Landing() {
             >
               Voor particulieren en eenmanszaken
             </Heading>
-          )}
-          {IS_TEST && (
-            <TestAccountSelect onSelect={(url) => setLoginUrl(url)} />
           )}
           <p>
             <a
