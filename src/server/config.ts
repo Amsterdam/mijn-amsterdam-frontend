@@ -391,8 +391,6 @@ export function getApiConfig(
   );
 }
 
-export const STADSPASSEN_ENDPOINT_PARAMETER = 'administratienummerEncrypted';
-
 export const ExternalConsumerEndpoints = {
   // Publicly accessible
   public: {
@@ -401,7 +399,7 @@ export const ExternalConsumerEndpoints = {
   },
   // Privately accessible
   private: {
-    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:${STADSPASSEN_ENDPOINT_PARAMETER}`,
+    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:administratienummerEncrypted`,
     STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
     STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
   },

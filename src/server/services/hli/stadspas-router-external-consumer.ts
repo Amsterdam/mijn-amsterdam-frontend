@@ -5,11 +5,7 @@ import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../auth/auth-co
 import { getAuth } from '../../auth/auth-helpers';
 import { authRoutes } from '../../auth/auth-routes';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  ExternalConsumerEndpoints,
-  getApiConfig,
-  STADSPASSEN_ENDPOINT_PARAMETER,
-} from '../../config';
+import { ExternalConsumerEndpoints, getApiConfig } from '../../config';
 import { sendBadRequest, sendResponse } from '../../helpers/app';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
@@ -49,7 +45,7 @@ const apiResponseErrors: Record<string, ApiError> = {
   },
   ADMINISTRATIENUMMER_FAILED_TO_DECRYPT: {
     code: '005',
-    message: `Could not decrypt url parameter '${STADSPASSEN_ENDPOINT_PARAMETER}'.`,
+    message: `Could not decrypt url parameter 'administratienummerEncrypted'.`,
   },
   UNKNOWN: {
     code: '000',
@@ -161,7 +157,7 @@ routerInternet.get(
 );
 
 async function sendStadspassenResponse(
-  req: Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>,
+  req: Request<{ administratienummerEncrypted: string }>,
   res: Response
 ) {
   let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
@@ -169,7 +165,7 @@ async function sendStadspassenResponse(
 
   try {
     const administratienummerEncrypted =
-      req.params[STADSPASSEN_ENDPOINT_PARAMETER];
+      req.params.administratienummerEncrypted;
 
     administratienummer = decrypt(administratienummerEncrypted);
   } catch (error) {

@@ -1,14 +1,11 @@
 import { Request, Response } from 'express';
 import UID from 'uid-safe';
 import { remoteApi, ResponseMock } from '../../../test-utils';
-import {
-  OIDC_SESSION_COOKIE_NAME,
-  STADSPASSEN_ENDPOINT_PARAMETER,
-} from '../../config';
-import { generateDevSessionCookieValue } from '../../auth/auth-helpers-development';
-import { forTesting } from './stadspas-router-external-consumer';
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { OIDC_SESSION_COOKIE_NAME } from '../../auth/auth-config';
+import { generateDevSessionCookieValue } from '../../auth/auth-helpers-development';
 import * as stadspas from './stadspas';
+import { forTesting } from './stadspas-router-external-consumer';
 import { StadspasDiscountTransaction } from './stadspas-types';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
@@ -220,8 +217,8 @@ describe('hli/router-external-consumer', async () => {
 
     test('Returns stadpassen when supplied with encrypted administratieNummer', async () => {
       const reqMock = {
-        params: { [STADSPASSEN_ENDPOINT_PARAMETER]: 'ADMINISTRATIENUMMER' },
-      } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
+        params: { administratienummerEncrypted: 'ADMINISTRATIENUMMER' },
+      } as unknown as Request<{ administratienummerEncrypted: string }>;
 
       await forTesting.sendStadspassenResponse(reqMock, resMock);
 
