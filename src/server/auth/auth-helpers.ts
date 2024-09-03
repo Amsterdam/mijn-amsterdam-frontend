@@ -8,6 +8,7 @@ import { ParsedQs } from 'qs';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { IS_AP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { getFromEnv } from '../helpers/env';
 import { axiosRequest } from '../helpers/source-api-request';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
@@ -19,8 +20,6 @@ import {
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
-  oidcConfigDigid,
-  oidcConfigEherkenning,
   profileTypeByAuthMethod,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_MAMS_LANDING,
@@ -29,8 +28,12 @@ import {
 } from './auth-config';
 import { getPublicKeyForDevelopment } from './auth-helpers-development';
 import { authRoutes } from './auth-routes';
-import { AuthProfile, AuthProfileAndToken, TokenData } from './auth-types';
-import { getFromEnv } from '../helpers/env';
+import {
+  AuthProfile,
+  AuthProfileAndToken,
+  SessionData,
+  TokenData,
+} from './auth-types';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -91,6 +94,12 @@ export async function getAuthSessionStoreFromRequest(
 
 export const getAuth = memoizee(getAuthSessionStoreFromRequest);
 
+export async function getProfileType(req: Request): Promise<ProfileType> {
+  const auth = await getAuth(req);
+  const profileType = auth.profile.profileType;
+  return profileType || DEFAULT_PROFILE_TYPE;
+}
+
 // async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
 //   const combinedCookies = combineCookieChunks(req.cookies);
 //   const oidcToken = await getOIDCToken(combinedCookies);
@@ -131,12 +140,6 @@ export function hasSessionCookie(req: Request) {
     }
   }
   return false;
-}
-
-export async function getProfileType(req: Request): Promise<ProfileType> {
-  const auth = await getAuth(req);
-  const profileType = auth.profile.profileType;
-  return profileType || DEFAULT_PROFILE_TYPE;
 }
 
 export function createCookieEncriptionKey() {

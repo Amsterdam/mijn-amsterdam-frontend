@@ -5,6 +5,17 @@ export interface AuthProfile {
   sid: string; // TMA Session ID
 }
 
+export interface SessionData {
+  access_token: string;
+  id_token: string;
+  token_type: string;
+  expires_at: string;
+  client_id: string;
+  sid: string;
+  profileType: ProfileType;
+  authMethod: AuthMethod;
+}
+
 export interface AuthProfileAndToken {
   token: string;
   profile: AuthProfile;
