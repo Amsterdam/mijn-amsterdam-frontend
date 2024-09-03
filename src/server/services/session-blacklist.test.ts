@@ -6,7 +6,7 @@ import {
 import { generateDevSessionCookieValue } from '../auth/auth-helpers-development';
 import {
   addToBlackList,
-  isBlacklisted,
+  getIsBlackListed,
   cleanupSessionIds,
   isBlacklistedHandler,
 } from './session-blacklist';
@@ -23,7 +23,7 @@ describe('Session-blacklist', () => {
   const sessionID = 'test123';
 
   test('Is NOT blacklisted', async () => {
-    const rs = await isBlacklisted(sessionID);
+    const rs = await getIsBlackListed(sessionID);
 
     expect(rs).toBe(false);
   });
@@ -33,13 +33,13 @@ describe('Session-blacklist', () => {
   });
 
   test('Is blacklisted', async () => {
-    const rs = await isBlacklisted(sessionID);
+    const rs = await getIsBlackListed(sessionID);
     expect(rs).toBe(true);
   });
 
   test('Clean up session ids', async () => {
     await cleanupSessionIds(-1);
-    const rs = await isBlacklisted(sessionID);
+    const rs = await getIsBlackListed(sessionID);
     expect(rs).toBe(false);
   });
 

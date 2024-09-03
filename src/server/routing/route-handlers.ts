@@ -9,7 +9,7 @@ import {
 } from '../auth/auth-helpers';
 import { clearSessionCache } from '../helpers/source-api-request';
 import { captureMessage } from '../services/monitoring';
-import { isBlacklisted } from '../services/session-blacklist';
+import { getIsBlackListed } from '../services/session-blacklist';
 import { sendUnauthorized } from './helpers';
 
 export async function isBlacklistedHandler(
@@ -19,7 +19,7 @@ export async function isBlacklistedHandler(
 ) {
   const auth = await getAuth(req);
   if (auth.profile.sid) {
-    const isOnList = await isBlacklisted(auth.profile.sid);
+    const isOnList = await getIsBlackListed(auth.profile.sid);
     if (isOnList) {
       return sendUnauthorized(res);
     }

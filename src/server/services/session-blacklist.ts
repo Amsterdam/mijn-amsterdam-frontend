@@ -10,14 +10,14 @@ const MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED = OIDC_TOKEN_EXP + ONE_MINUTE_MS;
 
 export const queriesPG = (tableNameSessionBlacklist: string) => ({
   addToBlackList: `INSERT INTO ${tableNameSessionBlacklist} (session_id) VALUES ($1) RETURNING id`,
-  isBlacklisted: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = $1) AS count`,
+  getIsBlackListed: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = $1) AS count`,
   cleanupSessionIds: `DELETE FROM ${tableNameSessionBlacklist} WHERE date_created <= $1`,
   rawOverview: `SELECT * FROM ${tableNameSessionBlacklist} ORDER BY date_created ASC`,
 });
 
 export const queriesSQLITE = (tableNameSessionBlacklist: string) => ({
   addToBlackList: `INSERT INTO ${tableNameSessionBlacklist}  (session_id) VALUES (?)`,
-  isBlacklisted: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = ?) AS count`,
+  getIsBlackListed: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = ?) AS count`,
   cleanupSessionIds: `DELETE FROM ${tableNameSessionBlacklist} WHERE date_created <= ?`,
   rawOverview: `SELECT * FROM ${tableNameSessionBlacklist} ORDER BY date_created ASC`,
 });
@@ -81,9 +81,9 @@ export async function addToBlackList(sessionID: string) {
   return query(queries.addToBlackList, [sessionID]);
 }
 
-export async function isBlacklisted(sessionID: string) {
+export async function getIsBlacklisted(sessionID: string) {
   const { queryGET } = await db();
-  const result = (await queryGET(queries.isBlacklisted, [sessionID])) as {
+  const result = (await queryGET(queries.getIsBlackListed, [sessionID])) as {
     count: number;
   };
 
