@@ -39,7 +39,7 @@ export const oidcConfigBase: ConfigParams = {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
-    store: getSessionStore(openIdAuth),
+    store: getSessionStore(openIdAuth) as any,
   },
   routes: {
     login: false,

@@ -113,6 +113,7 @@
     "marked": "^9.1.6",
     "memoizee": "^0.4.15",
     "memory-cache": "^0.2.0",
+    "memorystore": "^1.6.7",
     "mockdate": "^3.0.5",
     "morgan": "^1.10.0",
     "nock": "^13.5.4",
