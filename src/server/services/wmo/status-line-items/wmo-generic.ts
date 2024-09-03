@@ -87,7 +87,7 @@ function isDocumentDecisionDateActive(datumAanvraag: string) {
 export function decisionParagraph(aanvraag: ZorgnedAanvraagTransformed) {
   let paragraph = '<p>In de brief leest u meer over dit besluit. ';
   if (isAfterWCAGValidDocumentsDate(aanvraag.datumAanvraag)) {
-    paragraph += 'De brief staat bij brieven bovenaan deze pagina.';
+    paragraph += 'De brief staat bovenaan deze pagina.';
   } else {
     paragraph += 'De brief is per post naar u verstuurd.';
   }
@@ -172,6 +172,27 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
     `<p>
       ${
         aanvraag.isActueel
+          ? `Uw recht op ${aanvraag.titel} stopt op ${
+              aanvraag.datumEindeGeldigheid
+                ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+                : ''
+            }`
+          : `Uw recht op ${aanvraag.titel} is beëindigd ${
+              aanvraag.datumEindeGeldigheid
+                ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+                : ''
+            }`
+      }
+    </p>
+    `,
+};
+
+export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
+  ...EINDE_RECHT,
+  description: (aanvraag) =>
+    `<p>
+      ${
+        aanvraag.isActueel
           ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
           : `Uw recht op ${aanvraag.titel} is beëindigd
           ${
@@ -184,12 +205,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
         ? `<p>
-           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${
-             aanvraag.datumEindeGeldigheid
-               ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
-               : ''
-           } doen. Kijk in uw besluit op
-            <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.
+           Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb</a> voor meer informatie.
           </p>`
         : ''
     }
