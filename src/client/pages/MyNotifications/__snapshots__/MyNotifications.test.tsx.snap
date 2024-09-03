@@ -428,7 +428,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
         
                   <li>
                     
-          informatie over uw buurt op een overzichtelijke{' '}
+          informatie over uw buurt op een overzichtelijke
           
                     <a
                       href="/buurt"
