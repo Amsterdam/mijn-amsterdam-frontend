@@ -19,7 +19,6 @@ export default function Landing() {
   const loginButton = useRef(null);
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
-  const [loginUrl, setLoginUrl] = useState(LOGIN_URL_DIGID);
   const isRedirectingAny = isRedirecting || isRedirectingEherkenning;
 
   return (
@@ -47,7 +46,7 @@ export default function Landing() {
             <a
               ref={loginButton}
               role="button"
-              href={loginUrl}
+              href={LOGIN_URL_DIGID}
               onClick={() => setRedirecting(true)}
               rel="noopener noreferrer"
               className={classnames(
