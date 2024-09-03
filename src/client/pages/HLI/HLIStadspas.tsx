@@ -116,6 +116,8 @@ export default function HLIStadspas() {
       ? transactionsApi.data.content
       : [];
 
+  const hasTransactions = !!transactionsApi.data.content?.length;
+
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
@@ -188,32 +190,41 @@ export default function HLIStadspas() {
               )}
               {!isLoadingStadspas && !isLoadingTransacties && (
                 <Paragraph>
-                  Hieronder ziet u bij welke winkels u het tegoed hebt
-                  uitgegeven. Deze informatie kan een dag achterlopen. Maar het
-                  bedrag dat u nog over heeft klopt altijd.
+                  {hasTransactions ? (
+                    <>
+                      Hieronder ziet u bij welke winkels u het tegoed hebt
+                      uitgegeven. Deze informatie kan een dag achterlopen. Maar
+                      het bedrag dat u nog over heeft klopt altijd.
+                    </>
+                  ) : (
+                    <>
+                      U heeft nog geen uitgaven. Deze informatie kan een dag
+                      achterlopen. Maar het bedrag dat u nog over heeft klopt
+                      altijd.
+                    </>
+                  )}
                 </Paragraph>
               )}
             </Grid.Cell>
-            {!isLoadingTransacties &&
-              !!transactionsApi.data.content?.length && (
-                <>
-                  <Grid.Cell span="all">
-                    <TableV2<StadspasBudgetTransaction>
-                      className={
-                        showMultiBudgetTransactions
-                          ? styles.Table_transactions__withBudget
-                          : styles.Table_transactions
-                      }
-                      items={transactions}
-                      displayProps={
-                        showMultiBudgetTransactions
-                          ? displayPropsTransactiesWithBudget
-                          : displayPropsTransacties
-                      }
-                    />
-                  </Grid.Cell>
-                </>
-              )}
+            {!isLoadingTransacties && hasTransactions && (
+              <>
+                <Grid.Cell span="all">
+                  <TableV2<StadspasBudgetTransaction>
+                    className={
+                      showMultiBudgetTransactions
+                        ? styles.Table_transactions__withBudget
+                        : styles.Table_transactions
+                    }
+                    items={transactions}
+                    displayProps={
+                      showMultiBudgetTransactions
+                        ? displayPropsTransactiesWithBudget
+                        : displayPropsTransacties
+                    }
+                  />
+                </Grid.Cell>
+              </>
+            )}
             {!isLoadingStadspas &&
               !isLoadingTransacties &&
               !transactionsApi.data.content?.length && (

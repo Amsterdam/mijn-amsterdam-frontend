@@ -23,7 +23,7 @@ import {
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineUpcPcvData,
-  isCursusNietVoldaan,
+  isWorkshopNietGevolgd,
 } from './status-line-items/pcvergoeding';
 
 function getDisplayStatus(
@@ -35,7 +35,7 @@ function getDisplayStatus(
   );
   switch (true) {
     // NOTE: Special status for PCVergoedingen.
-    case isCursusNietVoldaan(aanvraag):
+    case isWorkshopNietGevolgd(aanvraag):
       return 'Afgewezen';
     case (aanvraag.isActueel || !hasEindeRecht) &&
       aanvraag.resultaat === 'toegewezen':
