@@ -36,13 +36,4 @@ describe('db', () => {
     const result = await db();
     expect(result.id).toBe('postgres');
   });
-
-  it('should return sqlite3 id when db is sqlite3', async () => {
-    mocksDbConfig.IS_PG = false;
-    mocksDbConfig.IS_ENABLED = true;
-
-    const { db } = await import('./db');
-    const result = await db();
-    expect(result.id).toBe('sqlite3');
-  });
 });

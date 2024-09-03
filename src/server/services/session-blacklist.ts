@@ -4,7 +4,6 @@ import { OIDC_TOKEN_EXP } from '../auth/auth-config';
 import { ONE_MINUTE_MS } from '../config/app';
 import { IS_PG, tableNameSessionBlacklist } from './db/config';
 import { db } from './db/db';
-import { execDB } from './db/sqlite3';
 
 const MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED = OIDC_TOKEN_EXP + ONE_MINUTE_MS;
 
@@ -15,15 +14,8 @@ export const queriesPG = (tableNameSessionBlacklist: string) => ({
   rawOverview: `SELECT * FROM ${tableNameSessionBlacklist} ORDER BY date_created ASC`,
 });
 
-export const queriesSQLITE = (tableNameSessionBlacklist: string) => ({
-  addToBlackList: `INSERT INTO ${tableNameSessionBlacklist}  (session_id) VALUES (?)`,
-  getIsBlackListed: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = ?) AS count`,
-  cleanupSessionIds: `DELETE FROM ${tableNameSessionBlacklist} WHERE date_created <= ?`,
-  rawOverview: `SELECT * FROM ${tableNameSessionBlacklist} ORDER BY date_created ASC`,
-});
-
 function getQueries() {
-  return (IS_PG ? queriesPG : queriesSQLITE)(tableNameSessionBlacklist);
+  return queriesPG(tableNameSessionBlacklist);
 }
 
 const queries = getQueries();
@@ -31,8 +23,7 @@ const queries = getQueries();
 async function setupTables() {
   const { query } = await db();
 
-  if (IS_PG) {
-    const createTableQuery = `
+  const createTableQuery = `
     -- Sequence and defined type
     CREATE SEQUENCE IF NOT EXISTS ${tableNameSessionBlacklist}_id_seq;
 
@@ -45,21 +36,7 @@ async function setupTables() {
     );
     `;
 
-    await query(createTableQuery);
-  } else {
-    // Create the table
-    try {
-      execDB(`
-      CREATE TABLE IF NOT EXISTS "${tableNameSessionBlacklist}" (
-          "id" INTEGER PRIMARY KEY,
-          "session_id" VARCHAR(256) NOT NULL,
-          "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime'))
-      );
-    `);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  await query(createTableQuery);
 }
 
 setupTables();

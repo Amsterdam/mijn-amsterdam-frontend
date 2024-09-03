@@ -1,24 +1,13 @@
 import express, { Response, Request } from 'express';
-import {
-  OIDC_SESSION_COOKIE_NAME,
-  OIDC_SESSION_MAX_AGE_SECONDS,
-} from '../config/source-api';
+import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import { generateDevSessionCookieValue } from '../auth/auth-helpers-development';
+import { isBlacklistedHandler } from '../routing/route-handlers';
 import {
-  addToBlackList,
   getIsBlackListed,
+  addToBlackList,
   cleanupSessionIds,
-  isBlacklistedHandler,
 } from './session-blacklist';
-import { CompactEncrypt, DecryptOptions, compactDecrypt } from 'jose';
-import {
-  createCookieEncriptionKey,
-  decryptCookieValue,
-  encryptCookieValue,
-  encryptionKey,
-} from '../helpers/controller';
 
-// Uses SQLITE :memory:  database
 describe('Session-blacklist', () => {
   const sessionID = 'test123';
 
