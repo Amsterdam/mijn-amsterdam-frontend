@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
-import type { AuthProfile } from '../../../server/helpers/app';
+import { AuthProfile } from '../../../server/helpers/app';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
@@ -78,14 +78,16 @@ export function useSessionApi() {
     window.location.href = `${LOGOUT_URL}?authMethod=${sessionData.authMethod}`;
   }, [sessionData.authMethod]);
 
-  useEffect(() => {
-    const checkAuthentication = () => {
-      fetch({
-        url: AUTH_API_URL,
-        postpone: false,
-      });
-    };
+  const isAuthenticated = sessionData.isAuthenticated;
 
+  const checkAuthentication = useCallback(() => {
+    fetch({
+      url: AUTH_API_URL,
+      postpone: false,
+    });
+  }, [fetch]);
+
+  useEffect(() => {
     const checkAway = () => {
       if (document.body.classList.contains('is-away')) {
         document.body.classList.remove('is-away');
@@ -97,6 +99,16 @@ export function useSessionApi() {
       document.body.classList.add('is-away');
     };
 
+    window.addEventListener('focus', checkAway);
+    window.addEventListener('blur', addAway);
+
+    return () => {
+      window.removeEventListener('focus', checkAway);
+      window.removeEventListener('blur', addAway);
+    };
+  }, []);
+
+  useEffect(() => {
     setSession(() => ({
       ...sessionData,
       isLoading,
@@ -105,22 +117,15 @@ export function useSessionApi() {
       refetch: checkAuthentication,
       logout: () => logoutSession(),
     }));
-
-    window.addEventListener('focus', checkAway);
-    window.addEventListener('blur', addAway);
-
-    return () => {
-      window.removeEventListener('focus', checkAway);
-      window.removeEventListener('blur', addAway);
-    };
   }, [
-    sessionData,
+    isAuthenticated,
     isLoading,
     isDirty,
     isPristine,
     fetch,
     setSession,
     logoutSession,
+    checkAuthentication,
   ]);
 
   return session;
