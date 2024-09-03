@@ -9,7 +9,7 @@ import {
 import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
 import { getAuth, getProfileType } from '../auth/auth-helpers';
-import { addServiceResultHandler } from '../helpers/app';
+import { IS_DEBUG } from '../config/app';
 import { queryParams } from '../routing/helpers';
 import { sendMessage } from '../routing/middleware';
 import { fetchIsKnownInAFIS } from './afis/afis';
@@ -75,6 +75,29 @@ function getServiceMap(profileType: ProfileType) {
 
 function getServiceTipsMap(profileType: ProfileType) {
   return servicesTipsByProfileType[profileType] ?? {};
+}
+
+export function addServiceResultHandler(
+  res: Response,
+  servicePromise: Promise<any>,
+  serviceName: string
+) {
+  if (IS_DEBUG) {
+    console.log(
+      'Service-controller: adding service result handler for ',
+      serviceName
+    );
+  }
+  return servicePromise.then((data) => {
+    sendMessage(res, serviceName, 'message', data);
+    if (IS_DEBUG) {
+      console.log(
+        'Service-controller: service result message sent for',
+        serviceName
+      );
+    }
+    return data;
+  });
 }
 
 /**

@@ -36,17 +36,19 @@ import {
   verifyUserIdWithRemoteUserinfo,
 } from '../auth/auth-helpers';
 import { TokenData } from '../auth/auth-types';
-import { isAuthenticated, verifyAuthenticated } from '../routing/middleware';
 import {
-  addServiceResultHandler,
   clearRequestCache,
-  queryParams,
+  isAuthenticated,
   requestID,
   send404,
   sendMessage,
   sendResponse,
   sendUnauthorized,
-} from './app';
+  verifyAuthenticated,
+} from '../routing/middleware';
+
+import { queryParams } from '../routing/helpers';
+import { addServiceResultHandler } from '../services/controller';
 import { cache } from './source-api-request';
 
 describe('server/helpers/app', () => {

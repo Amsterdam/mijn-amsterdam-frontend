@@ -13,7 +13,7 @@ import {
   getTipNotifications,
   servicesTipsByProfileType,
 } from './controller';
-import * as helpers from '../helpers/app';
+import * as helpers from '../helpers/controller';
 
 const mocks = vi.hoisted(() => {
   return {

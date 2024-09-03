@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
-import { AuthProfile } from '../../../server/helpers/app';
+import { AuthProfile } from '../../../server/helpers/controller';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,

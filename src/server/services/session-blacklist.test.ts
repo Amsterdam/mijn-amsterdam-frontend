@@ -16,7 +16,7 @@ import {
   decryptCookieValue,
   encryptCookieValue,
   encryptionKey,
-} from '../helpers/app';
+} from '../helpers/controller';
 
 // Uses SQLITE :memory:  database
 describe('Session-blacklist', () => {
