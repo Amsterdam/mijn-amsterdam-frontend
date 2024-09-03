@@ -82,18 +82,12 @@ oidcRouter.get(
 oidcRouter.get(
   authRoutes.AUTH_LOGIN_DIGID,
   async (req: Request, res: Response) => {
-    const isAuthenticated = await isRequestAuthenticated(req, 'digid');
-
-    if (!isAuthenticated) {
-      return res.oidc.login({
-        returnTo: getReturnToUrl(req.query),
-        authorizationParams: {
-          redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
-        },
-      });
-    }
-
-    return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
+    return res.oidc.login({
+      returnTo: getReturnToUrl(req.query),
+      authorizationParams: {
+        redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
+      },
+    });
   }
 );
 
@@ -133,18 +127,12 @@ if (FeatureToggle.eherkenningActive) {
   oidcRouter.get(
     authRoutes.AUTH_LOGIN_EHERKENNING,
     async (req: Request, res: Response) => {
-      const isAuthenticated = await isRequestAuthenticated(req, 'eherkenning');
-      if (!isAuthenticated) {
-        return res.oidc.login({
-          returnTo: getReturnToUrl(req.query),
-          authorizationParams: {
-            redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
-          },
-        });
-      }
-      return res.redirect(
-        process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
-      );
+      return res.oidc.login({
+        returnTo: getReturnToUrl(req.query),
+        authorizationParams: {
+          redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
+        },
+      });
     }
   );
 
