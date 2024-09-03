@@ -1,6 +1,5 @@
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { dateSort } from '../../../universal/helpers/date';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import styles from './Zorg.module.scss';
 
@@ -8,9 +7,9 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayProps = {
-  detailLinkComponent: 'Voorzieningen',
+  detailLinkComponent: '',
   status: 'Status',
-  dateDescisionFormatted: 'Datum',
+  statusDateFormatted: 'Datum',
 };
 
 export const listPageParamKind = {
@@ -22,15 +21,14 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
-  [listPageParamKind.actual]: 'Regelingen en hulpmiddelen',
-  [listPageParamKind.historic]: 'Afgelopen regelingen en hulpmiddelen',
+  [listPageParamKind.actual]: 'Huidige voorzieningen',
+  [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
 } as const;
 
 export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: WMOVoorzieningFrontend) => regeling.isActual,
-    sort: dateSort('dateDecision', 'desc'),
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.HuidigeRegelingen,
@@ -38,7 +36,6 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: WMOVoorzieningFrontend) => !regeling.isActual,
-    sort: dateSort('dateDecision', 'desc'),
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.EerdereRegelingen,
