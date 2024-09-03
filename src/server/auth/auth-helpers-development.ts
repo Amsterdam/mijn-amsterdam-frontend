@@ -1,11 +1,9 @@
 import * as jose from 'jose';
-import { DEV_JWK_PRIVATE, DEV_JWK_PUBLIC } from '../config/development';
+import { DEV_JWK_PRIVATE } from '../config/development';
 import {
-  OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   TOKEN_ID_ATTRIBUTE,
 } from './auth-config';
-import { encryptCookieValue } from './auth-helpers';
 import { AuthProfile } from './auth-types';
 
 /**
@@ -15,10 +13,6 @@ import { AuthProfile } from './auth-types';
 
 export async function getPrivateKeyForDevelopment() {
   return jose.importJWK(DEV_JWK_PRIVATE);
-}
-
-export function getPublicKeyForDevelopment(): Promise<jose.KeyLike> {
-  return jose.importJWK(DEV_JWK_PUBLIC) as Promise<jose.KeyLike>;
 }
 
 export async function signDevelopmentToken(
@@ -42,27 +36,4 @@ export async function signDevelopmentToken(
   } catch (err) {
     console.error(err);
   }
-}
-
-export async function generateDevSessionCookieValue(
-  authMethod: AuthProfile['authMethod'],
-  userID: string,
-  sessionID: string
-) {
-  const uat = (Date.now() / 1000) | 0;
-  const iat = uat;
-  const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
-
-  const value = await encryptCookieValue(
-    JSON.stringify({
-      id_token: await signDevelopmentToken(authMethod, userID, sessionID),
-    }),
-    {
-      iat,
-      uat,
-      exp,
-    }
-  );
-
-  return value;
 }

@@ -10,13 +10,14 @@ import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
+  TOKEN_ID_ATTRIBUTE,
 } from '../auth/auth-config';
 import {
   getAuth,
   getReturnToUrl,
   hasSessionCookie,
 } from '../auth/auth-helpers';
-import { generateDevSessionCookieValue } from '../auth/auth-helpers-development';
+import { signDevelopmentToken } from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfile } from '../auth/auth-types';
 import { addToBlackList } from '../services/session-blacklist';
@@ -25,6 +26,39 @@ import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
 import { sendUnauthorized } from './route-helpers';
 
 export const authRouterDevelopment = express.Router();
+
+async function createOIDCStub(req: Request, authProfile: AuthProfile) {
+  const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
+
+  req.oidc = {
+    isAuthenticated() {
+      return true;
+    },
+    async fetchUserInfo() {
+      return {} as any; // UserInfoResponse
+    },
+    user: {
+      [idAttr]: authProfile.id,
+      sid: authProfile.sid,
+    },
+    idToken: await signDevelopmentToken(
+      authProfile.authMethod,
+      authProfile.id,
+      authProfile.sid
+    ),
+  };
+}
+
+authRouterDevelopment.use((req, res, next) => {
+  if (hasSessionCookie(req)) {
+    const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
+    createOIDCStub(
+      req,
+      JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
+    );
+  }
+  next();
+});
 
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_LOGIN,
@@ -56,14 +90,21 @@ authRouterDevelopment.get(
     }
 
     const userId = testAccounts[userName];
-    const sessionID = UID.sync(18);
-    const appSessionCookieValue = await generateDevSessionCookieValue(
-      authMethod,
-      userId,
-      sessionID
-    );
 
     countLoggedInVisit(userId, authMethod);
+
+    const sessionID = UID.sync(18);
+    const authProfile: AuthProfile = {
+      id: userId,
+      authMethod,
+      profileType: authMethod === 'digid' ? 'private' : 'commercial',
+      sid: sessionID,
+    };
+    createOIDCStub(req, authProfile);
+
+    const appSessionCookieValue = Buffer.from(
+      JSON.stringify(authProfile)
+    ).toString('base64');
 
     res.cookie(
       OIDC_SESSION_COOKIE_NAME,
