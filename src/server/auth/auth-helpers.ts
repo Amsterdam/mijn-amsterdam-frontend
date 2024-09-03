@@ -29,6 +29,7 @@ import {
 import { getPublicKeyForDevelopment } from './auth-helpers-development';
 import { authRoutes } from './auth-routes';
 import { AuthProfile, AuthProfileAndToken, TokenData } from './auth-types';
+import { getFromEnv } from '../helpers/env';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -180,13 +181,11 @@ export async function getOIDCToken(jweCookieString: string): Promise<string> {
 
 const getJWK = memoizee(async () => {
   if (IS_AP) {
-    const jwksUrl = process.env.BFF_OIDC_JWKS_URL;
-    if (!jwksUrl) {
-      throw new Error('BFF_OIDC_JWKS_URL env value not provided.');
-    }
+    const jwksUrl = getFromEnv('BFF_OIDC_JWKS_URL', true);
+
     return axiosRequest
       .request({
-        url: process.env.BFF_OIDC_JWKS_URL,
+        url: jwksUrl,
         responseType: 'json',
       })
       .then((response) => jose.importJWK(response.data.keys[0]));
