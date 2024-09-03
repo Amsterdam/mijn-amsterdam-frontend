@@ -192,7 +192,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
     postponeFetch: !FeatureToggle.powerbrowserActive,
     headers: {
-      apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'),
+      apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },
   },
   CMS_CONTENT_GENERAL_INFO: {
