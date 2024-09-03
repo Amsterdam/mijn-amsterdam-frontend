@@ -2,16 +2,27 @@ import express, { NextFunction, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import Mockdate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { bffApi, ResponseMock } from '../../test-utils';
+import { bffApi, DEV_JWT, ResponseMock } from '../../test-utils';
+import { apiErrorResult, ApiResponse } from '../../universal/helpers/api';
 import {
-  ApiErrorResponse,
-  apiErrorResult,
-  ApiResponse,
-} from '../../universal/helpers/api';
+  generateDevSessionCookieValue,
+  signDevelopmentToken,
+} from '../auth/auth-helpers-development';
 import * as config from '../config';
+
 import {
-  addServiceResultHandler,
-  clearRequestCache,
+  DIGID_ATTR_PRIMARY,
+  EH_ATTR_INTERMEDIATE_PRIMARY_ID,
+  EH_ATTR_INTERMEDIATE_SECONDARY_ID,
+  EH_ATTR_PRIMARY_ID,
+  EH_ATTR_PRIMARY_ID_LEGACY,
+  OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
+  OIDC_TOKEN_ID_ATTRIBUTE,
+  oidcConfigDigid,
+  oidcConfigEherkenning,
+} from '../auth/auth-config';
+import {
   combineCookieChunks,
   decodeOIDCToken,
   decryptCookieValue,
@@ -21,41 +32,22 @@ import {
   getOIDCToken,
   getProfileType,
   hasSessionCookie,
-  isAuthenticated,
   isSessionCookieName,
+  verifyUserIdWithRemoteUserinfo,
+} from '../auth/auth-helpers';
+import { TokenData } from '../auth/auth-types';
+import { isAuthenticated, verifyAuthenticated } from '../routing/middleware';
+import {
+  addServiceResultHandler,
+  clearRequestCache,
   queryParams,
   requestID,
   send404,
   sendMessage,
   sendResponse,
   sendUnauthorized,
-  verifyAuthenticated,
-  verifyUserIdWithRemoteUserinfo,
-  type TokenData,
 } from './app';
-import {
-  generateDevSessionCookieValue,
-  signDevelopmentToken,
-} from '../auth/auth-helpers-development';
 import { cache } from './source-api-request';
-
-const {
-  oidcConfigDigid,
-  oidcConfigEherkenning,
-  OIDC_SESSION_COOKIE_NAME,
-  EH_ATTR_PRIMARY_ID,
-  EH_ATTR_INTERMEDIATE_PRIMARY_ID,
-  EH_ATTR_INTERMEDIATE_SECONDARY_ID,
-  DIGID_ATTR_PRIMARY,
-  EH_ATTR_PRIMARY_ID_LEGACY,
-} = config;
-
-vi.mock('../config', async (requireOriginal) => {
-  const origModule = (await requireOriginal()) as object;
-  return {
-    ...origModule,
-  };
-});
 
 describe('server/helpers/app', () => {
   const digidClientId = oidcConfigDigid.clientID;
@@ -65,7 +57,7 @@ describe('server/helpers/app', () => {
   function getEncryptionHeaders() {
     const uat = (Date.now() / 1000) | 0;
     const iat = uat;
-    const exp = iat + config.OIDC_SESSION_MAX_AGE_SECONDS;
+    const exp = iat + OIDC_SESSION_MAX_AGE_SECONDS;
     return {
       uat,
       iat,
@@ -133,7 +125,7 @@ describe('server/helpers/app', () => {
     `);
 
     const tokenData = await decodeOIDCToken(result.token);
-    const attr = config.OIDC_TOKEN_ID_ATTRIBUTE.eherkenning(tokenData);
+    const attr = OIDC_TOKEN_ID_ATTRIBUTE.eherkenning(tokenData);
     expect(tokenData[attr]).toBe('eh1');
   });
 
@@ -495,7 +487,7 @@ describe('server/helpers/app', () => {
     bffApi
       .get('/oidc/userinfo')
       .times(2)
-      .reply(200, config.DEV_JWT)
+      .reply(200, DEV_JWT)
       .get('/oidc/userinfo')
       .times(1)
       .reply(401, '');
@@ -506,7 +498,7 @@ describe('server/helpers/app', () => {
         'digid',
         {
           token_type: 'Bearer',
-          access_token: config.DEV_JWT,
+          access_token: DEV_JWT,
         } as AccessToken,
         '1234567890'
       )
@@ -518,7 +510,7 @@ describe('server/helpers/app', () => {
         'digid',
         {
           token_type: 'Bearer',
-          access_token: config.DEV_JWT,
+          access_token: DEV_JWT,
         } as AccessToken,
         '908979'
       )
@@ -528,7 +520,7 @@ describe('server/helpers/app', () => {
     expect(
       await verifyUserIdWithRemoteUserinfo('digid', {
         token_type: 'Bearer',
-        access_token: config.DEV_JWT,
+        access_token: DEV_JWT,
       } as AccessToken)
     ).toBe(false);
 
@@ -541,7 +533,7 @@ describe('server/helpers/app', () => {
         'digid',
         {
           token_type: 'Bearer',
-          access_token: config.DEV_JWT,
+          access_token: DEV_JWT,
         } as AccessToken,
         '1234567890'
       )
@@ -639,7 +631,7 @@ describe('server/helpers/app', () => {
 
     ////
     req.oidc.isAuthenticated = vi.fn().mockReturnValueOnce(true);
-    bffApi.get('/oidc/userinfo').times(1).reply(200, config.DEV_JWT);
+    bffApi.get('/oidc/userinfo').times(1).reply(200, DEV_JWT);
 
     expect(await verify(req, resMock)).toStrictEqual({
       content: {
@@ -652,7 +644,7 @@ describe('server/helpers/app', () => {
 
     // ////
     // const req2 = jsonCopy(req);
-    // bffApi.get('/oidc/userinfo').times(1).reply(200, config.DEV_JWT);
+    // bffApi.get('/oidc/userinfo').times(1).reply(200, DEV_JWT);
     // req2.oidc.isAuthenticated = vi.fn().mockReturnValueOnce(true);
     // req2.cookies = {};
     // expect(await verify(req2, res)).toStrictEqual(responseUnauthorized);

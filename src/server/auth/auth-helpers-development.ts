@@ -1,5 +1,5 @@
 import * as jose from 'jose';
-import { DEV_JWK_PRIVATE, DEV_JWK_PUBLIC } from '../config';
+import { DEV_JWK_PRIVATE, DEV_JWK_PUBLIC } from '../config/development';
 import {
   OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,

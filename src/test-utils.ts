@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import nock from 'nock';
-import { AuthProfileAndToken } from './server/helpers/app';
+import { AuthProfileAndToken } from './server/auth/auth-types';
 import { bffApiHost, remoteApiHost } from './setupTests';
 
 const defaultReplyHeaders = {
@@ -64,3 +64,6 @@ export class ResponseMock {
   write = vi.fn();
   clearCookie = vi.fn();
 }
+
+export const DEV_JWT =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
