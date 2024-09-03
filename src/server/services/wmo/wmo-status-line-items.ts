@@ -140,7 +140,10 @@ export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
 
 for (const config of wmoStatusLineItemsConfig) {
   if ([diensten, WRA, hulpmiddelen].includes(config.lineItemTransformers)) {
-    if (config.leveringsVorm && config.productsoortCodes) {
+    if (
+      typeof config.leveringsVorm !== 'undefined' &&
+      config.productsoortCodes
+    ) {
       if (!PRODUCTS_WITH_DELIVERY[config.leveringsVorm]) {
         PRODUCTS_WITH_DELIVERY[config.leveringsVorm] = [
           ...config.productsoortCodes,
