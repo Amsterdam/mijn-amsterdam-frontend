@@ -1,4 +1,3 @@
-import { parseISO } from 'date-fns';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
@@ -8,12 +7,10 @@ import {
   isBeforeToday,
 } from './status-line-items/wmo-generic';
 import {
-  BESCHIKTPRODUCT_RESULTAAT,
   DATE_END_NOT_OLDER_THAN,
-  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-  PRODUCTS_WITH_DELIVERY,
   REGELING_IDENTIFICATIE,
 } from './wmo-config-and-types';
+import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items';
 
 function isProductWithDelivery(
   wmoProduct: Pick<

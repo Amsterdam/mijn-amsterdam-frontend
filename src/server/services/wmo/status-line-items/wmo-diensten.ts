@@ -10,11 +10,11 @@ import {
   IN_BEHANDELING,
   isBeforeToday,
   isDecisionStatusActive,
-  isServiceDeliveryStatusActive,
+  isDeliveryStepVisible,
   isServiceDeliveryStarted,
+  isServiceDeliveryStatusActive,
   isServiceDeliveryStopped,
   MEER_INFORMATIE,
-  hasDecision,
 } from './wmo-generic';
 
 function isActive(
@@ -37,9 +37,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Levering gestart',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
-    },
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>
@@ -52,12 +50,11 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Levering gestopt',
     datePublished: (aanvraag) => aanvraag.datumEindeLevering ?? '',
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
-    },
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today: Date) =>
-      isServiceDeliveryStopped(aanvraag, today) ||
-      isBeforeToday(aanvraag.datumEindeGeldigheid, today),
+      isServiceDeliveryStarted(aanvraag, today) &&
+      (isServiceDeliveryStopped(aanvraag, today) ||
+        isBeforeToday(aanvraag.datumEindeGeldigheid, today)),
     isActive: (stepIndex, aanvraag, today) =>
       aanvraag.isActueel &&
       isServiceDeliveryStopped(aanvraag, today) &&

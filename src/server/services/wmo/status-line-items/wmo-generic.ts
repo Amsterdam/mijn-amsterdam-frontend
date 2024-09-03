@@ -258,3 +258,18 @@ export function isDecisionWithDeliveryStatusActive(
       !isServiceDeliveryStarted(aanvraag, today))
   );
 }
+
+export function isDeliveryStepVisible(
+  stepIndex: number,
+  aanvraag: ZorgnedAanvraagTransformed,
+  today: Date
+) {
+  return (
+    hasDecision(aanvraag) &&
+    aanvraag.resultaat !== 'afgewezen' &&
+    (isServiceDeliveryStarted(aanvraag, today) ||
+      // Not yet delivered and not ended yet.
+      (!isServiceDeliveryStarted(aanvraag, today) &&
+        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+  );
+}
