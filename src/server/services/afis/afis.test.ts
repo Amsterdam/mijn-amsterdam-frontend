@@ -475,7 +475,7 @@ describe('Afis', () => {
   });
 
   describe('fetchAfisOpenFacturen', async () => {
-    test('data is transformed', async () => {
+    test('data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.openstaandeFacturen)
         .reply(
@@ -505,7 +505,7 @@ describe('Afis', () => {
   });
 
   describe('fetchAfisClosedFacturen', async () => {
-    test('data is transformed', async () => {
+    test('data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.afgehandeldeFacturen)
         .reply(
