@@ -3,6 +3,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ONE_HOUR_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
+import { getSessionStore } from './auth-session-store';
 import { TokenData } from './auth-types';
 
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
@@ -28,7 +29,7 @@ export const oidcConfigBase: ConfigParams = {
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
   clientSecret: process.env.BFF_OIDC_SECRET,
-  clientID: 'x', // Set in configs for digid and eherkenning.
+  clientID: 'x', // Set in configs for digid and eherkenning, required by ConfigParams type.
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
   attemptSilentLogin: false,
@@ -38,6 +39,7 @@ export const oidcConfigBase: ConfigParams = {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
+    store: getSessionStore(openIdAuth),
   },
   routes: {
     login: false,

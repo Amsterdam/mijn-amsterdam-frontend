@@ -13,18 +13,16 @@ import {
   getAuth,
   getReturnToUrl,
   hasSessionCookie,
-  isRequestAuthenticated,
 } from '../auth/auth-helpers';
 import {
   AUTH_BASE_EHERKENNING,
   AUTH_CALLBACK,
   authRoutes,
 } from '../auth/auth-routes';
-import { sessionStore } from '../auth/auth-session-store';
 import { captureException } from '../services/monitoring';
 import { countLoggedInVisit } from '../services/visitors';
-import { sendUnauthorized } from './route-helpers';
 import { nocache, verifyAuthenticated } from './route-handlers';
+import { sendUnauthorized } from './route-helpers';
 
 export const oidcRouter = express.Router();
 
@@ -44,11 +42,6 @@ function getOidcConfigByRequest(req: Request) {
     oidConfig = oidcConfigEherkenning;
   }
 
-  // Assign the store
-  if (oidConfig.session) {
-    oidConfig.session.store = sessionStore;
-  }
-
   return oidConfig;
 }
 
@@ -60,6 +53,7 @@ oidcRouter.use((req, res, next) => {
 
   let authRequestHandler: RequestHandler;
 
+  // Makes sure we only initialize Auth per authMethod once.
   if (!authInstances.has(config)) {
     authRequestHandler = openIdAuth(config);
     authInstances.set(config, authRequestHandler);
@@ -67,7 +61,7 @@ oidcRouter.use((req, res, next) => {
     authRequestHandler = authInstances.get(config);
   }
 
-  authRequestHandler(req, res, next);
+  return authRequestHandler(req, res, next);
 });
 
 oidcRouter.get(
