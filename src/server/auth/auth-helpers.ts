@@ -127,19 +127,13 @@ export function combineCookieChunks(cookies: Record<string, string>) {
 }
 
 export function isSessionCookieName(cookieName: string) {
-  return (
-    cookieName === OIDC_SESSION_COOKIE_NAME ||
-    !!cookieName.match(`^${OIDC_SESSION_COOKIE_NAME}\\.\\d$`)
-  );
+  return cookieName === OIDC_SESSION_COOKIE_NAME;
 }
 
 export function hasSessionCookie(req: Request) {
-  for (const cookieName of Object.keys(req.cookies)) {
-    if (isSessionCookieName(cookieName)) {
-      return true;
-    }
-  }
-  return false;
+  return Object.keys(req.cookies).some((cookieName) =>
+    isSessionCookieName(cookieName)
+  );
 }
 
 export function createCookieEncriptionKey() {
