@@ -21,6 +21,7 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   oidcConfigDigid,
   oidcConfigEherkenning,
+  profileTypeByAuthMethod,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_MAMS_LANDING,
   TOKEN_ID_ATTRIBUTE,
@@ -46,37 +47,41 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
   }
 }
 
-export function getAuthProfile(tokenData: TokenData): AuthProfile {
-  let authMethod: AuthProfile['authMethod'];
-  let profileType: AuthProfile['profileType'];
-
-  switch (tokenData.aud) {
-    case oidcConfigEherkenning.clientID:
-      authMethod = 'eherkenning';
-      profileType = 'commercial';
-      break;
-    case oidcConfigDigid.clientID:
-    default:
-      authMethod = 'digid';
-      profileType = 'private';
-      break;
-  }
-
+export function getAuthProfile(
+  authMethod: AuthMethod,
+  tokenData: TokenData
+): AuthProfile {
   const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[authMethod](tokenData);
-
   return {
     id: tokenData[idAttr],
     sid: tokenData.sid,
     authMethod,
-    profileType,
+    profileType: profileTypeByAuthMethod[authMethod],
   };
 }
 
-async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
-  const combinedCookies = combineCookieChunks(req.cookies);
-  const oidcToken = await getOIDCToken(combinedCookies);
-  const tokenData = await decodeOIDCToken(oidcToken);
-  const profile = getAuthProfile(tokenData);
+function getSessionData(req: Request) {
+  const reqWithSession = req as Request &
+    Record<typeof OIDC_SESSION_COOKIE_NAME, SessionData>;
+  return reqWithSession[OIDC_SESSION_COOKIE_NAME] ?? null;
+}
+
+export async function getAuthSessionStoreFromRequest(
+  req: Request
+): Promise<AuthProfileAndToken> {
+  const tokenData = req.oidc.user as TokenData;
+  const oidcToken = req.oidc.idToken ?? '';
+  const session = getSessionData(req);
+
+  if (!session) {
+    throw new Error('Could not get session data.');
+  }
+
+  if (!session.authMethod) {
+    throw new Error('Could not determine authentication method.');
+  }
+
+  const profile = getAuthProfile(session.authMethod, tokenData);
 
   return {
     token: oidcToken,
@@ -84,7 +89,21 @@ async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
   };
 }
 
-export const getAuth = memoizee(getAuth_);
+export const getAuth = memoizee(getAuthSessionStoreFromRequest);
+
+// async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
+//   const combinedCookies = combineCookieChunks(req.cookies);
+//   const oidcToken = await getOIDCToken(combinedCookies);
+//   const tokenData = await decodeOIDCToken(oidcToken);
+//   const profile = getAuthProfile(tokenData);
+
+//   return {
+//     token: oidcToken,
+//     profile,
+//   };
+// }
+
+// export const getAuth = memoizee(getAuth_);
 
 export function combineCookieChunks(cookies: Record<string, string>) {
   let unchunked = '';
