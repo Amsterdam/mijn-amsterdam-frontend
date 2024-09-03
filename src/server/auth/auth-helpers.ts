@@ -20,7 +20,6 @@ import {
   OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
-  profileTypeByAuthMethod,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_MAMS_LANDING,
   TOKEN_ID_ATTRIBUTE,
@@ -51,15 +50,15 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
 }
 
 export function getAuthProfile(
-  authMethod: AuthMethod,
+  sessionData: SessionData,
   tokenData: TokenData
 ): AuthProfile {
-  const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[authMethod](tokenData);
+  const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[sessionData.authMethod](tokenData);
   return {
     id: tokenData[idAttr],
     sid: tokenData.sid,
-    authMethod,
-    profileType: profileTypeByAuthMethod[authMethod],
+    authMethod: sessionData.authMethod,
+    profileType: sessionData.profileType,
   };
 }
 
@@ -74,17 +73,17 @@ export async function getAuthSessionStoreFromRequest(
 ): Promise<AuthProfileAndToken> {
   const tokenData = req.oidc.user as TokenData;
   const oidcToken = req.oidc.idToken ?? '';
-  const session = getSessionData(req);
+  const sessionData = getSessionData(req);
 
-  if (!session) {
+  if (!sessionData) {
     throw new Error('Could not get session data.');
   }
 
-  if (!session.authMethod) {
+  if (!sessionData.authMethod) {
     throw new Error('Could not determine authentication method.');
   }
 
-  const profile = getAuthProfile(session.authMethod, tokenData);
+  const profile = getAuthProfile(sessionData, tokenData);
 
   return {
     token: oidcToken,

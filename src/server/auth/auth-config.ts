@@ -118,11 +118,6 @@ export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
   digid: DIGID_ATTR_PRIMARY,
 };
 
-export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType> = {
-  digid: 'private',
-  eherkenning: 'commercial',
-};
-
 export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
   get eherkenning() {
     return oidcConfigEherkenning.clientID;
