@@ -1,7 +1,7 @@
 import { ConfigParams } from 'express-openid-connect';
 import * as jose from 'jose';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ONE_HOUR_MS } from '../config/source-api';
+import { ONE_HOUR_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
 import { TokenData } from './auth-types';

@@ -4,6 +4,7 @@ import { IS_OT, IS_TAP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
+import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -34,10 +35,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    */
   request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
 }
-
-export const ONE_SECOND_MS = 1000;
-export const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
-export const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
 
 export const DEFAULT_API_CACHE_TTL_MS = (IS_OT ? 65 : 45) * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
 export const DEFAULT_CANCEL_TIMEOUT_MS = (IS_OT ? 60 : 20) * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.

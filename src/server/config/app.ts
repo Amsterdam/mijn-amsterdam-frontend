@@ -15,3 +15,7 @@ export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSI
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
+
+export const ONE_SECOND_MS = 1000;
+export const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
+export const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;

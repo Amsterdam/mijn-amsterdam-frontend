@@ -5,7 +5,7 @@ import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/source-api';
+import { ONE_SECOND_MS } from '../../config/app';
 import { generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';

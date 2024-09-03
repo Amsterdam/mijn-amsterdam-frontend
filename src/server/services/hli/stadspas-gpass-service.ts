@@ -6,7 +6,7 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/source-api';
+import { ONE_SECOND_MS } from '../../config/app';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { fetchAdministratienummer } from './hli-zorgned-service';

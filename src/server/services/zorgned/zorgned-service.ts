@@ -10,7 +10,7 @@ import {
 } from './zorgned-config-and-types';
 
 import { GenericDocument } from '../../../universal/types';
-import { ONE_SECOND_MS } from '../../config/source-api';
+import { ONE_SECOND_MS } from '../../config/app';
 
 import memoizee from 'memoizee';
 import { dateSort } from '../../../universal/helpers/date';
