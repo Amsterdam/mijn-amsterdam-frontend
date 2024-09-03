@@ -37,7 +37,7 @@ export async function isAuthenticated(
       await getAuth(req);
       return next();
     } catch (error) {
-      captureMessage('Not authenticated: Session cookie invalid', {
+      captureMessage('Not authenticated: Session invalid', {
         severity: 'warning',
       });
     }
