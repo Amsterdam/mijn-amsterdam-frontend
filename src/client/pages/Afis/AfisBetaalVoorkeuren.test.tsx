@@ -59,8 +59,9 @@ describe('<AfisBetaalVoorkeuren />', () => {
     const screen = render(<Component />);
 
     await waitFor(() => {
-      expect(screen.asFragment()).toMatchSnapshot();
       expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();
     });
+
+    expect(screen.asFragment()).toMatchSnapshot();
   });
 });
