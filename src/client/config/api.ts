@@ -1,4 +1,3 @@
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types';
 
