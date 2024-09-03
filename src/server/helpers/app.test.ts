@@ -41,7 +41,7 @@ import {
   isAuthenticated,
   requestID,
   verifyAuthenticated,
-} from '../routing/middleware';
+} from '../routing/route-handlers';
 import { sendMessage } from '../routing/helpers';
 import { send404, sendResponse, sendUnauthorized } from '../routing/helpers';
 

@@ -18,7 +18,7 @@ import {
 import { captureException } from '../services/monitoring';
 import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
-import { nocache, verifyAuthenticated } from './middleware';
+import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './helpers';
 
 export const router = express.Router();

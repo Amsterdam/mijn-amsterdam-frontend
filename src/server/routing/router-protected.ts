@@ -33,7 +33,7 @@ import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 import { BffEndpoints } from './bff-routes';
 import { isProtectedRoute } from './helpers';
-import { isAuthenticated, isBlacklistedHandler } from './middleware';
+import { isAuthenticated, isBlacklistedHandler } from './route-handlers';
 
 export const router = express.Router();
 
