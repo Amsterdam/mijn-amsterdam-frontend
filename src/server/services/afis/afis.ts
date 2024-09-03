@@ -274,18 +274,18 @@ export async function fetchAfisOpenFacturen(
   config.url = `${config.url}${openInvoicesQuery}`;
   config.transformResponse = (data: AfisFactuurOpenSource) =>
     getFeedEntryProperties(data).map((invoiceProperties) =>
-      translateToOpenstaandeFacturen(businessPartnerID, invoiceProperties)
+      transformToOpenstaandeFacturen(businessPartnerID, invoiceProperties)
     );
 
-  const response = await requestData<AfisFactuurOpen>(config, requestID);
+  const response = await requestData<AfisFactuurOpen[]>(config, requestID);
   return response;
 }
 
-function translateToOpenstaandeFacturen(
+function transformToOpenstaandeFacturen(
   businessPartnerID: number,
   fields: AfisFactuurOpenPropertiesSource
 ): AfisFactuurOpen {
-  const [factuurNummerEncrypted] = encrypt(
+  const [invoiceNoEncrypted] = encrypt(
     `${businessPartnerID}:${fields.InvoiceNo}`
   );
   return {
@@ -297,6 +297,7 @@ function translateToOpenstaandeFacturen(
     netPaymentAmount: fields.NetPaymentAmount,
     amountInBalanceTransacCrcy: fields.AmountInBalanceTransacCrcy,
     invoiceNo: fields.InvoiceNo,
+    invoiceNoEncrypted,
     paylink: fields.Paylink,
   };
 }
@@ -324,27 +325,30 @@ export async function fetchAfisClosedFacturen(
     '$select=ReverseDocument,ProfitCenterName,InvoiceNo,NetDueDate';
   const orderBy = '$orderBy=NetDueDate desc';
 
-  let openInvoicesQuery = `?${filter}&${select}&${orderBy}`;
+  let closedInvoicesQuery = `?${filter}&${select}&${orderBy}`;
   if (top) {
-    openInvoicesQuery += `&${top.toString()}`;
+    closedInvoicesQuery += `&${top.toString()}`;
   }
 
-  config.url = `${config.url}${openInvoicesQuery}`;
+  config.url = `${config.url}${closedInvoicesQuery}`;
 
   config.transformResponse = (data: AfisFactuurAfgehandeldSource) =>
     getFeedEntryProperties(data).map((invoiceProperties) =>
-      translateToAfgehandeldeFacturen(businessPartnerID, invoiceProperties)
+      transformToAfgehandeldeFacturen(businessPartnerID, invoiceProperties)
     );
 
-  const response = await requestData<AfisFactuurOpen>(config, requestID);
+  const response = await requestData<AfisFactuurAfgehandeld[]>(
+    config,
+    requestID
+  );
   return response;
 }
 
-function translateToAfgehandeldeFacturen(
+function transformToAfgehandeldeFacturen(
   businessPartnerID: number,
   fields: AfisFactuurAfgehandeldPropertiesSource
 ): AfisFactuurAfgehandeld {
-  const [invoiceNumberEncrypted] = encrypt(
+  const [invoiceNoEncrypted] = encrypt(
     `${businessPartnerID}:${fields.InvoiceNo}`
   );
   return {
@@ -352,6 +356,6 @@ function translateToAfgehandeldeFacturen(
     netDueDate: fields.NetDueDate,
     reverseDocument: fields.ReverseDocument,
     invoiceNo: fields.InvoiceNo,
-    invoiceNumberEncrypted,
+    invoiceNoEncrypted,
   };
 }

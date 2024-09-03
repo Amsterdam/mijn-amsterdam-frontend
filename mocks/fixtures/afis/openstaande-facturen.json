@@ -1,36 +1,36 @@
 {
     "feed": {
-        "@base": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/",
-        "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM",
+        "@base": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/",
+        "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM",
         "title": {
             "@type": "text",
-            "$": "ZFI_OPERACCTGDOCITEM"
+            "$": "SomeITEM"
         },
         "updated": "2024-08-29T11:31:01Z",
         "author": {
             "name": ""
         },
         "link": {
-            "@href": "ZFI_OPERACCTGDOCITEM",
+            "@href": "SomeITEM",
             "@rel": "self",
-            "@title": "ZFI_OPERACCTGDOCITEM"
+            "@title": "SomeITEM"
         },
         "entry": [
             {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                 "title": {
                     "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                    "$": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
                 },
                 "updated": "2024-08-29T11:31:01Z",
                 "category": {
                     "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
                 },
                 "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@href": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                     "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
+                    "@title": "SomeITEMType"
                 },
                 "content": {
                     "@type": "application/xml",
@@ -48,20 +48,20 @@
                 }
             },
             {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                 "title": {
                     "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                    "$": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
                 },
                 "updated": "2024-08-29T11:31:01Z",
                 "category": {
                     "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
                 },
                 "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@href": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                     "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
+                    "@title": "SomeITEMType"
                 },
                 "content": {
                     "@type": "application/xml",
@@ -79,20 +79,20 @@
                 }
             },
             {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                 "title": {
                     "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                    "$": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
                 },
                 "updated": "2024-08-29T11:31:01Z",
                 "category": {
                     "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
                 },
                 "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@href": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                     "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
+                    "@title": "SomeITEMType"
                 },
                 "content": {
                     "@type": "application/xml",
@@ -110,20 +110,20 @@
                 }
             },
             {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                 "title": {
                     "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                    "$": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
                 },
                 "updated": "2024-08-29T11:31:01Z",
                 "category": {
                     "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
                 },
                 "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@href": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                     "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
+                    "@title": "SomeITEMType"
                 },
                 "content": {
                     "@type": "application/xml",
@@ -141,20 +141,20 @@
                 }
             },
             {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                 "title": {
                     "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                    "$": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
                 },
                 "updated": "2024-08-29T11:31:01Z",
                 "category": {
                     "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
                 },
                 "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@href": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                     "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
+                    "@title": "SomeITEMType"
                 },
                 "content": {
                     "@type": "application/xml",
@@ -172,20 +172,20 @@
                 }
             },
             {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                 "title": {
                     "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                    "$": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
                 },
                 "updated": "2024-08-29T11:31:01Z",
                 "category": {
                     "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
                 },
                 "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@href": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                     "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
+                    "@title": "SomeITEMType"
                 },
                 "content": {
                     "@type": "application/xml",
@@ -203,20 +203,20 @@
                 }
             },
             {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "id": "https://sap:8080/sap/opu/odata/sap/SomeITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                 "title": {
                     "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                    "$": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
                 },
                 "updated": "2024-08-29T11:31:01Z",
                 "category": {
                     "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
                 },
                 "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@href": "SomeITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
                     "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
+                    "@title": "SomeITEMType"
                 },
                 "content": {
                     "@type": "application/xml",
@@ -228,192 +228,6 @@
                         "NetDueDate": "2023-12-21T00:00:00",
                         "NetPaymentAmount": "0.00",
                         "AmountInBalanceTransacCrcy": "343.00",
-                        "InvoiceNo": "5555555",
-                        "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-                    }
-                }
-            },
-            {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
-                "title": {
-                    "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
-                },
-                "updated": "2024-08-29T11:31:01Z",
-                "category": {
-                    "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-                },
-                "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
-                    "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
-                },
-                "content": {
-                    "@type": "application/xml",
-                    "properties": {
-                        "DunningBlockingReason": "",
-                        "ProfitCenterName": "",
-                        "SEPAMandate": "",
-                        "PostingDate": "2023-12-28T00:00:00",
-                        "NetDueDate": "2023-12-28T00:00:00",
-                        "NetPaymentAmount": "0.00",
-                        "AmountInBalanceTransacCrcy": "-121.00",
-                        "InvoiceNo": "5555555",
-                        "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-                    }
-                }
-            },
-            {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2024',AccountingDocument='1234567890',AccountingDocumentItem='001')",
-                "title": {
-                    "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2024',AccountingDocument='1234567890',AccountingDocumentItem='001')"
-                },
-                "updated": "2024-08-29T11:31:01Z",
-                "category": {
-                    "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-                },
-                "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2024',AccountingDocument='1234567890',AccountingDocumentItem='001')",
-                    "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
-                },
-                "content": {
-                    "@type": "application/xml",
-                    "properties": {
-                        "DunningBlockingReason": "",
-                        "ProfitCenterName": "",
-                        "SEPAMandate": "",
-                        "PostingDate": "2024-01-15T00:00:00",
-                        "NetDueDate": "2024-01-15T00:00:00",
-                        "NetPaymentAmount": "0.00",
-                        "AmountInBalanceTransacCrcy": "41.00",
-                        "InvoiceNo": "5555555",
-                        "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-                    }
-                }
-            },
-            {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2024',AccountingDocument='1234567890',AccountingDocumentItem='001')",
-                "title": {
-                    "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2024',AccountingDocument='1234567890',AccountingDocumentItem='001')"
-                },
-                "updated": "2024-08-29T11:31:01Z",
-                "category": {
-                    "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-                },
-                "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2024',AccountingDocument='1234567890',AccountingDocumentItem='001')",
-                    "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
-                },
-                "content": {
-                    "@type": "application/xml",
-                    "properties": {
-                        "DunningBlockingReason": "",
-                        "ProfitCenterName": "",
-                        "SEPAMandate": "",
-                        "PostingDate": "2024-04-25T00:00:00",
-                        "NetDueDate": "2023-03-22T00:00:00",
-                        "NetPaymentAmount": "0.00",
-                        "AmountInBalanceTransacCrcy": "-100.00",
-                        "InvoiceNo": "5555555",
-                        "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-                    }
-                }
-            },
-            {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='003')",
-                "title": {
-                    "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='003')"
-                },
-                "updated": "2024-08-29T11:31:01Z",
-                "category": {
-                    "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-                },
-                "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='003')",
-                    "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
-                },
-                "content": {
-                    "@type": "application/xml",
-                    "properties": {
-                        "DunningBlockingReason": "",
-                        "ProfitCenterName": "",
-                        "SEPAMandate": 100000000042,
-                        "PostingDate": "2023-06-01T00:00:00",
-                        "NetDueDate": "2023-08-01T00:00:00",
-                        "NetPaymentAmount": "0.00",
-                        "AmountInBalanceTransacCrcy": "24.20",
-                        "InvoiceNo": "5555555",
-                        "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-                    }
-                }
-            },
-            {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='004')",
-                "title": {
-                    "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='004')"
-                },
-                "updated": "2024-08-29T11:31:01Z",
-                "category": {
-                    "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-                },
-                "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='004')",
-                    "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
-                },
-                "content": {
-                    "@type": "application/xml",
-                    "properties": {
-                        "DunningBlockingReason": "",
-                        "ProfitCenterName": "",
-                        "SEPAMandate": 100000000042,
-                        "PostingDate": "2023-06-01T00:00:00",
-                        "NetDueDate": "2023-09-01T00:00:00",
-                        "NetPaymentAmount": "0.00",
-                        "AmountInBalanceTransacCrcy": "24.20",
-                        "InvoiceNo": "5555555",
-                        "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-                    }
-                }
-            },
-            {
-                "id": "https://sap:8080/sap/opu/odata/sap/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='005')",
-                "title": {
-                    "@type": "text",
-                    "$": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='005')"
-                },
-                "updated": "2024-08-29T11:31:01Z",
-                "category": {
-                    "@scheme": "http://schemas.microsoft.com/sap",
-                    "@term": "ZFI_OPERACCTGDOCITEM_CDS.ZFI_OPERACCTGDOCITEMType"
-                },
-                "link": {
-                    "@href": "ZFI_OPERACCTGDOCITEM(CompanyCode='9999',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='005')",
-                    "@rel": "self",
-                    "@title": "ZFI_OPERACCTGDOCITEMType"
-                },
-                "content": {
-                    "@type": "application/xml",
-                    "properties": {
-                        "DunningBlockingReason": "",
-                        "ProfitCenterName": "",
-                        "SEPAMandate": 100000000042,
-                        "PostingDate": "2023-06-01T00:00:00",
-                        "NetDueDate": "2023-10-01T00:00:00",
-                        "NetPaymentAmount": "0.00",
-                        "AmountInBalanceTransacCrcy": "24.20",
                         "InvoiceNo": "5555555",
                         "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
                     }

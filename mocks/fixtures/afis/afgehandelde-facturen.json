@@ -1,0 +1,281 @@
+{
+    "feed": {
+        "@base": "https://sap:8080OPERACCTGDOCITEM_CDS/",
+        "id": "https://sap:8080OPERACCTGDOCITEM_CDS/SomeITEM",
+        "title": {
+            "@type": "text",
+            "$": "SomeITEM"
+        },
+        "updated": "2000-01-22T11:32:02Z",
+        "author": {
+            "name": ""
+        },
+        "link": {
+            "@href": "SomeITEM",
+            "@rel": "self",
+            "@title": "SomeITEM"
+        },
+        "entry": [
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-03-23T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-05-11T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-07-27T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-04-28T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-08-09T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-10-26T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-01-31T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-12-12T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "ITEMType"
+                },
+                "link": {
+                    "@href": "iscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-01-01T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            },
+            {
+                "id": "https://sap:8080/sap/opu/odata/sap/ITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                "title": {
+                    "@type": "text",
+                    "$": "SomeITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')"
+                },
+                "updated": "2024-09-03T07:51:05Z",
+                "category": {
+                    "@scheme": "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme",
+                    "@term": "SomeITEM_CDS.ZFI_OPERACCTGDOCITEMType"
+                },
+                "link": {
+                    "@href": "SomeITEM(CompanyCode='1000',FiscalYear='2023',AccountingDocument='1234567890',AccountingDocumentItem='001')",
+                    "@rel": "self",
+                    "@title": "SomeITEMType"
+                },
+                "content": {
+                    "@type": "application/xml",
+                    "properties": {
+                        "ProfitCenterName": "Lisan al Gaib inc.",
+                        "NetDueDate": "2023-12-21T00:00:00",
+                        "ReverseDocument": "someReverseDocument123",
+                        "InvoiceNo": "123456789"
+                    }
+                }
+            }
+        ]
+    }
+}

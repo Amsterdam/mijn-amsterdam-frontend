@@ -101,6 +101,7 @@ export type AfisFactuurOpen = {
   netPaymentAmount: string;
   amountInBalanceTransacCrcy: string;
   invoiceNo: string;
+  invoiceNoEncrypted: string;
   paylink: string;
 };
 
@@ -126,7 +127,7 @@ export type AfisFactuurAfgehandeld = {
   netDueDate: string;
   reverseDocument: string;
   invoiceNo: string;
-  invoiceNumberEncrypted: string;
+  invoiceNoEncrypted: string;
 };
 
 export type AfisFactuurAfgehandeldSource =
