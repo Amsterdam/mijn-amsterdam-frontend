@@ -1,6 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
 import type { Request, Response } from 'express';
-import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
 import { ParsedQs } from 'qs';
@@ -15,8 +13,6 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_MAMS_LANDING,
-  TOKEN_ID_ATTRIBUTE,
-  TokenIdAttribute,
 } from './auth-config';
 import { authRoutes } from './auth-routes';
 import {
@@ -101,39 +97,6 @@ export function hasSessionCookie(req: Request) {
   );
 }
 
-export async function verifyUserIdWithRemoteUserinfo(
-  authMethod: AuthMethod,
-  accessToken?: AccessToken,
-  userID?: string
-) {
-  if (!accessToken || !userID) {
-    return false;
-  }
-
-  const requestOptions: AxiosRequestConfig = {
-    method: 'get',
-    url: process.env.BFF_OIDC_USERINFO_ENDPOINT,
-    headers: {
-      Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
-      Accept: 'application/jwt',
-    },
-  };
-
-  try {
-    const response = await axios(requestOptions);
-    if (!response.data) {
-      return false;
-    }
-    const decoded: Record<TokenIdAttribute, string> = decodeToken(
-      response.data.toString()
-    );
-    return decoded[TOKEN_ID_ATTRIBUTE[authMethod]] === userID;
-  } catch (error) {
-    captureException(error);
-  }
-  return false;
-}
-
 export async function isRequestAuthenticated(
   req: Request,
   authMethod: AuthMethod
@@ -141,14 +104,7 @@ export async function isRequestAuthenticated(
   try {
     if (req.oidc.isAuthenticated()) {
       const auth = await getAuth(req);
-      return (
-        auth.profile.authMethod === authMethod &&
-        (await verifyUserIdWithRemoteUserinfo(
-          authMethod,
-          req.oidc.accessToken,
-          auth.profile.id
-        ))
-      );
+      return auth.profile.authMethod === authMethod;
     }
   } catch (error) {
     console.error(error);
