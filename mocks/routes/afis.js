@@ -143,16 +143,34 @@ module.exports = [
     ],
   },
   {
-    id: 'get-afis-openstaande-facturen',
+    id: 'get-afis-facturen',
     url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: require('../fixtures/afis/openstaande-facturen.json'),
+          middleware: (req, res, _next, core) => {
+            const select = req.query['$select'];
+            if (select) {
+              if (select.split(',').includes('ReverseDocument')) {
+                core.logger.info('Sending closed invoices');
+                return res.send(
+                  require('../fixtures/afis/afgehandelde-facturen.json')
+                );
+              }
+              core.logger.info('Sending open invoices');
+              return res.send(
+                require('../fixtures/afis/openstaande-facturen.json')
+              );
+            } else {
+              core.logger.error(
+                `No $select query, please add to the url query parameters: ${req.query}`
+              );
+              return;
+            }
+          },
         },
       },
     ],
