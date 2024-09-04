@@ -21,7 +21,7 @@ export const WelcomeNotification: MyNotification = {
         <li>hoe het met uw aanvraag staat; </li>
         <li>hoe u wijzigingen kunt doorgeven als er iets niet klopt;</li>
         <li>
-          informatie over uw buurt op een overzichtelijke{' '}
+          informatie over uw buurt op een overzichtelijke
           <a href=/buurt>kaart</a>.
         </li>
       </ul>
