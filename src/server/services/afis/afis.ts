@@ -421,7 +421,7 @@ async function fetchAfisFacturen(
   return await fetchSpecificFacturenFn(requestID, config, businessPartnerID);
 }
 
-export async function fetchAfisFactuurDocumentID(
+export async function fetchAfisInvoiceDocumentID(
   requestID: RequestID,
   businessPartnerID: number
 ) {
@@ -441,7 +441,26 @@ export async function fetchAfisFactuurDocumentID(
   const response = await requestData(config, requestID);
 }
 
-export async function fetchAfisFactuurDocumentContent(
+export async function fetchAfisInvoiceDocumentContent(
   requestID: RequestID,
   archiveDocumentID: string
-) {}
+) {
+  const config = getApiConfig('AFIS', {
+    method: 'post',
+    formatUrl: (url) => `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
+    transformResponse: (data) => {
+      return data.Record.attachment;
+    },
+    data: {
+      Record: {
+        // Optional but maybe handy for linking docs?
+        DocumentInfoRecordDocNumber: 'invoiceNo123456789',
+        // Good identifier, but keep in mind an invoice can have multiple of these pointing to it.
+        ArchiveDocumentID: '89FCDF05B51F1EEEA3BB8E189D924A45',
+        BusinessObjectTypeName: 'BKPF',
+      },
+    },
+  });
+
+  const response = await requestData(config, requestID);
+}

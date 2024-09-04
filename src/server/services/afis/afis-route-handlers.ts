@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import {
   fetchAfisBusinessPartnerDetails,
   fetchAfisOpenInvoices,
-  fetchAfisFactuurDocumentContent,
-  fetchAfisFactuurDocumentID,
+  fetchAfisInvoiceDocumentContent,
+  fetchAfisInvoiceDocumentID,
   fetchAfisClosedInvoices,
 } from './afis';
 import {
@@ -108,7 +108,7 @@ export async function handleFetchAfisDocument(
   req: Request<{ archiveDocumentId: string }>,
   res: Response
 ) {
-  const response = await fetchAfisFactuurDocumentContent(
+  const response = await fetchAfisInvoiceDocumentContent(
     res.locals.requestID,
     req.params.archiveDocumentId
   );
