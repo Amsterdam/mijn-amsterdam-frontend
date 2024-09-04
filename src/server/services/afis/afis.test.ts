@@ -22,12 +22,12 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
 
 import {
   fetchAfisBusinessPartnerDetails,
-  fetchAfisClosedFacturen,
-  fetchAfisOpenFacturen,
+  fetchAfisOpenInvoices,
+  fetchAfisClosedInvoices,
   fetchIsKnownInAFIS,
 } from './afis';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import { AfisFactuurAfgehandeld, AfisFactuurOpen } from './afis-types';
+import { AfisClosedInvoice, AfisOpenInvoice } from './afis-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
@@ -37,8 +37,8 @@ const ROUTES = {
   businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27213423%27&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`,
   businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27430844%27`,
   businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27430844%27`,
-  openstaandeFacturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$top=2&$inlinecount=allpages&$filter=Customer eq '123456789' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc&$orderBy=NetDueDate asc, PostingDate asc`,
-  afgehandeldeFacturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$inlinecount=allpages&$filter=Customer eq '123456789' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=ReverseDocument,ProfitCenterName,InvoiceNo,NetDueDate&$orderBy=NetDueDate desc`,
+  openstaandeFacturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$top=2&$inlinecount=allpages&$filter=Customer eq '123456789' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc&$orderBy=NetDueDate asc, PostingDate asc`,
+  afgehandeldeFacturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$inlinecount=allpages&$filter=Customer eq '123456789' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=ReverseDocument,ProfitCenterName,DunningLevel,InvoiceNo,NetDueDate&$orderBy=NetDueDate desc`,
 };
 
 const REQUEST_ID = '456';
@@ -483,24 +483,27 @@ describe('Afis', () => {
           require('../../../../mocks/fixtures/afis/openstaande-facturen.json')
         );
 
-      const response = (await fetchAfisOpenFacturen(
+      const response = (await fetchAfisOpenInvoices(
         REQUEST_ID,
         123456789,
         2
-      )) as ApiSuccessResponse<AfisFactuurOpen[]>;
+      )) as ApiSuccessResponse<AfisOpenInvoice[]>;
 
-      expect(response.content[0]).toStrictEqual({
-        amountInBalanceTransacCrcy: '1000.00',
-        dunningBlockingReason: '',
-        invoiceNo: '5555555',
+      const openFactuur = response.content[0];
+      expect(openFactuur).toStrictEqual({
+        amount: 1003,
+        amountFormatted: '€ 1.003,00',
         invoiceNoEncrypted: 'xx-encrypted-xx',
-        netDueDate: '2023-03-23T00:00:00',
-        netPaymentAmount: '0.00',
+        invoiceStatus: 'open',
+        dueDate: '2023-03-23T00:00:00',
+        dueDateFormatted: '23 maart 2023',
         paylink: 'http://localhost:3100/mocks-server/afis/paylink',
         postingDate: '2023-03-23T00:00:00',
         profitCenterName: 'Moneymakers inc.',
-        sepaMandate: '',
       });
+
+      // const automatischeIncassoFactuur = response.content[1];
+      // expect(automatischeIncassoFactuur);
     });
   });
 
@@ -513,17 +516,25 @@ describe('Afis', () => {
           require('../../../../mocks/fixtures/afis/afgehandelde-facturen.json')
         );
 
-      const response = (await fetchAfisClosedFacturen(
+      const response = (await fetchAfisClosedInvoices(
         REQUEST_ID,
         123456789
-      )) as ApiSuccessResponse<AfisFactuurAfgehandeld[]>;
+      )) as ApiSuccessResponse<AfisClosedInvoice[]>;
 
       expect(response.content[0]).toStrictEqual({
-        invoiceNo: '123456789',
         invoiceNoEncrypted: 'xx-encrypted-xx',
-        netDueDate: '2023-03-23T00:00:00',
+        invoiceStatus: 'geannuleerd',
+        dueDate: '2023-03-23T00:00:00',
+        dueDateFormatted: '23 maart 2023',
         profitCenterName: 'Lisan al Gaib inc.',
-        reverseDocument: 'someReverseDocument123',
+      });
+
+      expect(response.content[1]).toStrictEqual({
+        invoiceNoEncrypted: 'xx-encrypted-xx',
+        invoiceStatus: 'betaald',
+        dueDate: '2023-05-11T00:00:00',
+        dueDateFormatted: '11 mei 2023',
+        profitCenterName: 'Lisan al Gaib inc.',
       });
     });
   });

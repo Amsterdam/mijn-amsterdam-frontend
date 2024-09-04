@@ -35,12 +35,13 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningBlockingReason": "",
+                        "DunningLevel": 0,
+                        "DunningBlockingReason": "D",
                         "ProfitCenterName": "Moneymakers inc.",
                         "SEPAMandate": "",
                         "PostingDate": "2023-03-23T00:00:00",
                         "NetDueDate": "2023-03-23T00:00:00",
-                        "NetPaymentAmount": "0.00",
+                        "NetPaymentAmount": "3.00",
                         "AmountInBalanceTransacCrcy": "1000.00",
                         "InvoiceNo": "5555555",
                         "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
@@ -66,7 +67,8 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningBlockingReason": "K",
+                        "DunningLevel": 0,
+                        "DunningBlockingReason": "D",
                         "ProfitCenterName": "Tada Gochelaars",
                         "SEPAMandate": "",
                         "PostingDate": "2023-04-11T00:00:00",
@@ -97,7 +99,8 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningBlockingReason": "",
+                        "DunningLevel": 0,
+                        "DunningBlockingReason": "D",
                         "ProfitCenterName": "Bedrijfje",
                         "SEPAMandate": "",
                         "PostingDate": "2023-08-09T00:00:00",
@@ -128,7 +131,8 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningBlockingReason": "",
+                        "DunningLevel": 0,
+                        "DunningBlockingReason": "D",
                         "ProfitCenterName": "Nana Co",
                         "SEPAMandate": "",
                         "PostingDate": "2023-10-26T00:00:00",
@@ -159,7 +163,8 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningBlockingReason": "",
+                        "DunningLevel": 0,
+                        "DunningBlockingReason": "D",
                         "ProfitCenterName": "Trala",
                         "SEPAMandate": "",
                         "PostingDate": "2023-11-30T00:00:00",
@@ -190,7 +195,8 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningBlockingReason": "",
+                        "DunningLevel": 0,
+                        "DunningBlockingReason": "D",
                         "ProfitCenterName": "Foobaz",
                         "SEPAMandate": "",
                         "PostingDate": "2023-12-12T00:00:00",
@@ -221,7 +227,8 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningBlockingReason": "",
+                        "DunningLevel": 0,
+                        "DunningBlockingReason": "D",
                         "ProfitCenterName": "Bedrijf: Ok",
                         "SEPAMandate": "",
                         "PostingDate": "2023-11-21T00:00:00",

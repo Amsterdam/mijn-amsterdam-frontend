@@ -92,25 +92,25 @@ export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
   AfisBusinessPartnerPhone &
   AfisBusinessPartnerEmail;
 
-export type AfisFactuurOpen = {
-  dunningBlockingReason: string;
+export type AfisOpenInvoice = {
   profitCenterName: string;
-  sepaMandate: string;
   postingDate: string;
-  netDueDate: string;
-  netPaymentAmount: string;
-  amountInBalanceTransacCrcy: string;
-  invoiceNo: string;
+  dueDate: string;
+  dueDateFormatted: string;
+  amount: number;
+  amountFormatted: string;
   invoiceNoEncrypted: string;
-  paylink: string;
+  invoiceStatus: 'open' | 'automatische-incasso' | 'dispuut' | null;
+  paylink: string | null;
 };
 
-export type AfisFactuurState = 'open' | 'closed';
+export type AfisInvoiceState = 'open' | 'closed';
 
-export type AfisFactuurOpenSource =
-  AfisApiFeedResponseSource<AfisFactuurOpenPropertiesSource>;
+export type AfisOpenInvoiceSource =
+  AfisApiFeedResponseSource<AfisOpenInvoicePropertiesSource>;
 
-export type AfisFactuurOpenPropertiesSource = {
+export type AfisOpenInvoicePropertiesSource = {
+  DunningLevel: number;
   DunningBlockingReason: string;
   ProfitCenterName: string;
   SEPAMandate: string;
@@ -122,18 +122,19 @@ export type AfisFactuurOpenPropertiesSource = {
   Paylink: string;
 };
 
-export type AfisFactuurAfgehandeld = {
+export type AfisClosedInvoice = {
   profitCenterName: string;
-  netDueDate: string;
-  reverseDocument: string;
-  invoiceNo: string;
+  dueDate: string;
+  dueDateFormatted: string;
   invoiceNoEncrypted: string;
+  invoiceStatus: 'betaald' | 'geannuleerd' | null;
 };
 
-export type AfisFactuurAfgehandeldSource =
-  AfisApiFeedResponseSource<AfisFactuurAfgehandeldPropertiesSource>;
+export type AfisCloseInvoiceSource =
+  AfisApiFeedResponseSource<AfisClosedInvoicePropertiesSource>;
 
-export type AfisFactuurAfgehandeldPropertiesSource = {
+export type AfisClosedInvoicePropertiesSource = {
+  DunningLevel: number;
   ProfitCenterName: string;
   NetDueDate: string;
   ReverseDocument: string;

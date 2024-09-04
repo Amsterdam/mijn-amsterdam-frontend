@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import {
   fetchAfisBusinessPartnerDetails,
-  fetchAfisClosedFacturen,
-  fetchAfisOpenFacturen,
+  fetchAfisClosedInvoices,
+  fetchAfisFactuurDocumentContent,
+  fetchAfisFactuurDocumentID,
+  fetchAfisClosedInvoices,
 } from './afis';
 import {
   send404,
@@ -12,7 +14,7 @@ import {
 } from '../../helpers/app';
 import {
   AfisBusinessPartnerDetailsTransformed,
-  AfisFactuurState,
+  AfisInvoiceState,
 } from './afis-types';
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
@@ -46,7 +48,7 @@ export async function handleFetchAfisBusinessPartner(
  *    for example `$top=4` will get you four invoices out of potentially 200.
  */
 export async function handleFetchAfisFacturen(
-  req: Request<BaseParams & { state: AfisFactuurState }>,
+  req: Request<BaseParams & { state: AfisInvoiceState }>,
   res: Response
 ) {
   const handler = async (
@@ -78,7 +80,7 @@ export async function handleFetchAfisFacturen(
 
     switch (state) {
       case 'open': {
-        const response = await fetchAfisOpenFacturen(
+        const response = await fetchAfisClosedInvoices(
           res.locals.requestID,
           businessPartnerID,
           top
@@ -86,7 +88,7 @@ export async function handleFetchAfisFacturen(
         return sendResponse(res, response);
       }
       case 'closed': {
-        const response = await fetchAfisClosedFacturen(
+        const response = await fetchAfisClosedInvoices(
           res.locals.requestID,
           businessPartnerID,
           top
@@ -102,8 +104,35 @@ export async function handleFetchAfisFacturen(
   return await fetchWithEncryptedBusinessPartnerID(handler, req, res);
 }
 
+export async function handleFetchAfisDocument(
+  req: Request<BaseParams & { state: AfisInvoiceState }>,
+  res: Response
+) {
+  // businessPartnerId, factuurNummer
+  const handler = async (
+    req: Request,
+    res: Response,
+    businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
+  ) => {
+    const requestID = res.locals.requestID;
+
+    const documentIdResponse = await fetchAfisFactuurDocumentID(
+      requestID,
+      businessPartnerID
+    );
+    console.dir(documentIdResponse);
+    // Read atrributes for next out of documentIdResponse
+    // const documentContentResponse =
+    //   await fetchAfisFactuurDocumentContent(requestID);
+    //
+    // return sendResponse(res, documentContentResponse);
+  };
+
+  return await fetchWithEncryptedBusinessPartnerID(handler, req, res);
+}
+
 async function fetchWithEncryptedBusinessPartnerID<T>(
-  handleFetchFn: (
+  handler: (
     req: Request,
     res: Response,
     businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
@@ -121,5 +150,5 @@ async function fetchWithEncryptedBusinessPartnerID<T>(
     return sendUnauthorized(res);
   }
 
-  return await handleFetchFn(req, res, businessPartnerId);
+  return await handler(req, res, businessPartnerId);
 }
