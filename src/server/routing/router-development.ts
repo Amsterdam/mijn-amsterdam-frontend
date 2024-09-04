@@ -27,8 +27,13 @@ import { sendUnauthorized } from './route-helpers';
 
 export const authRouterDevelopment = express.Router();
 
-async function createOIDCStub(req: Request, authProfile: AuthProfile) {
+async function createOIDCStub(
+  req: Request,
+  res: Response,
+  authProfile: AuthProfile
+) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
+  (req as any)[OIDC_SESSION_COOKIE_NAME] = authProfile;
 
   req.oidc = {
     isAuthenticated() {
@@ -37,10 +42,7 @@ async function createOIDCStub(req: Request, authProfile: AuthProfile) {
     async fetchUserInfo() {
       return {} as any; // UserInfoResponse
     },
-    user: {
-      [idAttr]: authProfile.id,
-      sid: authProfile.sid,
-    },
+    user: { [idAttr]: authProfile.id, sid: authProfile.sid },
     idToken: await signDevelopmentToken(
       authProfile.authMethod,
       authProfile.id,
@@ -49,11 +51,12 @@ async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   };
 }
 
-authRouterDevelopment.use((req, res, next) => {
+authRouterDevelopment.use(async (req, res, next) => {
   if (hasSessionCookie(req)) {
     const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
-    createOIDCStub(
+    await createOIDCStub(
       req,
+      res,
       JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
     );
   }
@@ -100,7 +103,7 @@ authRouterDevelopment.get(
       profileType: authMethod === 'digid' ? 'private' : 'commercial',
       sid: sessionID,
     };
-    createOIDCStub(req, authProfile);
+    createOIDCStub(req, res, authProfile);
 
     const appSessionCookieValue = Buffer.from(
       JSON.stringify(authProfile)
@@ -111,6 +114,8 @@ authRouterDevelopment.get(
       appSessionCookieValue,
       appSessionCookieOptions
     );
+
+    console.log(OIDC_SESSION_COOKIE_NAME, 'xxx', appSessionCookieOptions);
 
     const isValidRedirectOption = PREDEFINED_REDIRECT_URLS.includes(
       String(req.query.redirectUrl)
@@ -146,7 +151,13 @@ authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_AUTH_CHECK,
   async (req, res) => {
+    console.log(
+      res.locals.requestID,
+      '\n===>>>>>>>\n auth check',
+      (req as any).oidc
+    );
     if (hasSessionCookie(req)) {
+      console.log('session req', req.cookies);
       try {
         const auth = await getAuth(req);
         return res.send(
@@ -156,7 +167,9 @@ authRouterDevelopment.get(
             authMethod: auth.profile.authMethod,
           })
         );
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
