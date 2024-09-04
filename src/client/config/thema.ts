@@ -72,6 +72,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['BURGERZAKEN/ID-KAART']]: `ID-Kaart | ${ThemaTitles.BURGERZAKEN}`,
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
+  [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
   [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
     `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,

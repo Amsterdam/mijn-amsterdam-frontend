@@ -4,10 +4,10 @@ import {
   AANVRAAG,
   EINDE_RECHT,
   getTransformerConfigBesluit,
-  hasDecision,
   IN_BEHANDELING,
   isBeforeToday,
   isDecisionWithDeliveryStatusActive,
+  isDeliveryStepVisible,
   isServiceDeliveryStarted,
   isServiceDeliveryStatusActive,
   MEER_INFORMATIE,
@@ -21,9 +21,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
-    },
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isBeforeToday(aanvraag.datumOpdrachtLevering, today),
     isActive: (stepIndex, aanvraag, today) =>
@@ -38,9 +36,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Product geleverd',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
-    },
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>

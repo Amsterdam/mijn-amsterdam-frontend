@@ -1,4 +1,8 @@
-import { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-config-and-types';
+import {
+  LeveringsVorm,
+  ProductSoortCode,
+  ZorgnedStatusLineItemsConfig,
+} from '../zorgned/zorgned-config-and-types';
 import { AOV } from './status-line-items/wmo-aov';
 import { diensten } from './status-line-items/wmo-diensten';
 import { hulpmiddelen } from './status-line-items/wmo-hulpmiddelen';
@@ -52,6 +56,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'MAO',
       'WMH',
       'AWBG',
+      'LGO',
     ],
     lineItemTransformers: diensten,
   },
@@ -129,3 +134,25 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
     lineItemTransformers: AOV,
   },
 ];
+
+export const PRODUCTS_WITH_DELIVERY: Record<LeveringsVorm, ProductSoortCode[]> =
+  {};
+
+for (const config of wmoStatusLineItemsConfig) {
+  if ([diensten, WRA, hulpmiddelen].includes(config.lineItemTransformers)) {
+    if (
+      typeof config.leveringsVorm !== 'undefined' &&
+      config.productsoortCodes
+    ) {
+      if (!PRODUCTS_WITH_DELIVERY[config.leveringsVorm]) {
+        PRODUCTS_WITH_DELIVERY[config.leveringsVorm] = [
+          ...config.productsoortCodes,
+        ];
+      } else {
+        PRODUCTS_WITH_DELIVERY[config.leveringsVorm].push(
+          ...config.productsoortCodes
+        );
+      }
+    }
+  }
+}
