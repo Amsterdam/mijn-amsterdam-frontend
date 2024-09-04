@@ -70,7 +70,7 @@
                         "DunningLevel": 0,
                         "DunningBlockingReason": "D",
                         "ProfitCenterName": "Tada Gochelaars",
-                        "SEPAMandate": "",
+                        "SEPAMandate": "EenGevuldeSepaMandate",
                         "PostingDate": "2023-04-11T00:00:00",
                         "NetDueDate": "2023-05-11T00:00:00",
                         "NetPaymentAmount": "0.00",
@@ -131,8 +131,8 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningLevel": 0,
-                        "DunningBlockingReason": "D",
+                        "DunningLevel": 5,
+                        "DunningBlockingReason": "Z",
                         "ProfitCenterName": "Nana Co",
                         "SEPAMandate": "",
                         "PostingDate": "2023-10-26T00:00:00",

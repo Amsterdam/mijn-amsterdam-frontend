@@ -29,6 +29,7 @@ import {
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { AfisClosedInvoice, AfisOpenInvoice } from './afis-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import be from 'date-fns/esm/locale/be/index.js';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
 const ROUTES = {
@@ -502,8 +503,44 @@ describe('Afis', () => {
         profitCenterName: 'Moneymakers inc.',
       });
 
-      // const automatischeIncassoFactuur = response.content[1];
-      // expect(automatischeIncassoFactuur);
+      const automatischeIncassoFactuur = response.content[1];
+      expect(automatischeIncassoFactuur).toStrictEqual({
+        amount: 230,
+        amountFormatted: '€ 230,00',
+        dueDate: '2023-05-11T00:00:00',
+        dueDateFormatted: '11 mei 2023',
+        invoiceNoEncrypted: 'xx-encrypted-xx',
+        invoiceStatus: 'automatische-incasso',
+        paylink: 'http://localhost:3100/mocks-server/afis/paylink',
+        postingDate: '2023-04-11T00:00:00',
+        profitCenterName: 'Tada Gochelaars',
+      });
+
+      const inDispuutInvoice = response.content[2];
+      expect(inDispuutInvoice).toStrictEqual({
+        amount: -16,
+        amountFormatted: '€ -16,00',
+        dueDate: '2023-08-09T00:00:00',
+        dueDateFormatted: '09 augustus 2023',
+        invoiceNoEncrypted: 'xx-encrypted-xx',
+        invoiceStatus: 'dispuut',
+        paylink: 'http://localhost:3100/mocks-server/afis/paylink',
+        postingDate: '2023-08-09T00:00:00',
+        profitCenterName: 'Bedrijfje',
+      });
+
+      const unknownStatusInvoice = response.content[3];
+      expect(unknownStatusInvoice).toStrictEqual({
+        amount: -12,
+        amountFormatted: '€ -12,00',
+        dueDate: '2023-10-26T00:00:00',
+        dueDateFormatted: '26 oktober 2023',
+        invoiceNoEncrypted: 'xx-encrypted-xx',
+        invoiceStatus: null,
+        paylink: 'http://localhost:3100/mocks-server/afis/paylink',
+        postingDate: '2023-10-26T00:00:00',
+        profitCenterName: 'Nana Co',
+      });
     });
   });
 
@@ -521,7 +558,8 @@ describe('Afis', () => {
         123456789
       )) as ApiSuccessResponse<AfisClosedInvoice[]>;
 
-      expect(response.content[0]).toStrictEqual({
+      const geannuleerdeInvoice = response.content[0];
+      expect(geannuleerdeInvoice).toStrictEqual({
         invoiceNoEncrypted: 'xx-encrypted-xx',
         invoiceStatus: 'geannuleerd',
         dueDate: '2023-03-23T00:00:00',
@@ -529,11 +567,21 @@ describe('Afis', () => {
         profitCenterName: 'Lisan al Gaib inc.',
       });
 
-      expect(response.content[1]).toStrictEqual({
+      const betaaldeInvoice = response.content[1];
+      expect(betaaldeInvoice).toStrictEqual({
         invoiceNoEncrypted: 'xx-encrypted-xx',
         invoiceStatus: 'betaald',
         dueDate: '2023-05-11T00:00:00',
         dueDateFormatted: '11 mei 2023',
+        profitCenterName: 'Lisan al Gaib inc.',
+      });
+
+      const unknownStatusInvoice = response.content[2];
+      expect(unknownStatusInvoice).toStrictEqual({
+        invoiceNoEncrypted: 'xx-encrypted-xx',
+        invoiceStatus: null,
+        dueDate: '2023-07-27T00:00:00',
+        dueDateFormatted: '27 juli 2023',
         profitCenterName: 'Lisan al Gaib inc.',
       });
     });

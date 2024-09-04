@@ -89,10 +89,10 @@
                 "content": {
                     "@type": "application/xml",
                     "properties": {
-                        "DunningLevel": 0,
+                        "DunningLevel": 2,
                         "ProfitCenterName": "Lisan al Gaib inc.",
                         "NetDueDate": "2023-07-27T00:00:00",
-                        "ReverseDocument": "someReverseDocument123",
+                        "ReverseDocument": "",
                         "InvoiceNo": "123456789"
                     }
                 }
