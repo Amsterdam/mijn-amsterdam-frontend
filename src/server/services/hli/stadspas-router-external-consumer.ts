@@ -73,11 +73,13 @@ async function sendAdministratienummerResponse(
 ) {
   let authProfileAndToken: AuthProfileAndToken | null = null;
   let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
-
+  console.log('send::');
   try {
     authProfileAndToken = await getAuth(req);
+    console.log('authProfileAndToken::', authProfileAndToken);
   } catch (error) {
     apiResponseError = apiResponseErrors.DIGID_AUTH;
+    console.log('apiResponseError::', apiResponseError);
   }
 
   if (

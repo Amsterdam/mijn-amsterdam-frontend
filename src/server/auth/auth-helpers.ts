@@ -53,22 +53,16 @@ export function getAuthProfile(
 function getSessionData(req: Request) {
   const reqWithSession = req as Request &
     Record<typeof OIDC_SESSION_COOKIE_NAME, SessionData>;
-  return reqWithSession[OIDC_SESSION_COOKIE_NAME] ?? null;
+  return reqWithSession?.[OIDC_SESSION_COOKIE_NAME] ?? null;
 }
 
-export async function getAuthSessionStoreFromRequest(
-  req: Request
-): Promise<AuthProfileAndToken> {
+export async function getAuth(req: Request) {
   const tokenData = req.oidc.user as TokenData;
   const oidcToken = req.oidc.idToken ?? '';
   const sessionData = getSessionData(req);
 
-  if (!sessionData) {
-    throw new Error('Could not get session data.');
-  }
-
-  if (!sessionData.authMethod) {
-    throw new Error('Could not determine authentication method.');
+  if (!sessionData?.authMethod) {
+    return null;
   }
 
   const profile = getAuthProfile(sessionData, tokenData);
@@ -78,8 +72,6 @@ export async function getAuthSessionStoreFromRequest(
     profile,
   };
 }
-
-export const getAuth = memoizee(getAuthSessionStoreFromRequest);
 
 export async function getProfileType(req: Request): Promise<ProfileType> {
   const auth = await getAuth(req);

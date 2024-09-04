@@ -8,12 +8,14 @@ import {
   test,
   vi,
 } from 'vitest';
+import { ResponseMock } from '../../test-utils';
+import * as helpers from '../auth/auth-helpers';
 import {
+  addServiceResultHandler,
   getServiceResultsForTips,
   getTipNotifications,
   servicesTipsByProfileType,
 } from './controller';
-import * as helpers from '../helpers/controller';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -189,5 +191,23 @@ describe('controller', () => {
     const result = await getTipNotifications('xx2xx', { cookies: '' } as any);
 
     expect(result).toMatchInlineSnapshot('[]');
+  });
+
+  test('addServiceResultHandler', async () => {
+    let resMock = ResponseMock.new();
+    const data = { foo: 'bar' };
+    const servicePromise = Promise.resolve(data);
+
+    const result = await addServiceResultHandler(
+      resMock,
+      servicePromise,
+      'test-service'
+    );
+
+    expect(resMock.write).toHaveBeenCalledWith(
+      `event: message\nid: test-service\ndata: {"foo":"bar"}\n\n`
+    );
+
+    expect(result).toEqual(data);
   });
 });

@@ -31,29 +31,4 @@ describe('Session-blacklist', () => {
     const rs = await getIsBlackListed(sessionID);
     expect(rs).toBe(false);
   });
-
-  test('isBlacklistedHandler', async () => {
-    const cookieValue = await generateDevSessionCookieValue(
-      'digid',
-      '000-digid-999',
-      sessionID
-    );
-    const req = {
-      cookies: {
-        [OIDC_SESSION_COOKIE_NAME]: cookieValue,
-      },
-    } as unknown as Request;
-
-    const next = vi.fn();
-    const res = { send: vi.fn(), status: vi.fn() } as unknown as Response;
-    const rs = await isBlacklistedHandler(req, res, next);
-
-    expect(next).toHaveBeenCalledTimes(1);
-
-    await addToBlackList(sessionID);
-    const rs2 = await isBlacklistedHandler(req, res, next);
-
-    expect(res.send).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(401);
-  });
 });

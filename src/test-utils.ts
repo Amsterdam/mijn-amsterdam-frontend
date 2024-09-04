@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import nock from 'nock';
 import { AuthProfileAndToken } from './server/auth/auth-types';
 import { bffApiHost, remoteApiHost } from './setupTests';
@@ -63,6 +63,36 @@ export class ResponseMock {
   });
   write = vi.fn();
   clearCookie = vi.fn();
+  render = vi.fn();
+}
+
+export class RequestMock {
+  cookies: Record<string, string> = {};
+  params: Record<string, string> = {};
+  query: Record<string, string> = {};
+
+  static new() {
+    return new RequestMock() as unknown as Request & RequestMock;
+  }
+
+  setCookies(cookies: typeof this.cookies) {
+    this.cookies = cookies;
+    return this;
+  }
+
+  setParams<T extends typeof this.params>(params: T) {
+    this.params = params;
+    return this;
+  }
+
+  setQuery(query: typeof this.query) {
+    this.query = query;
+    return this;
+  }
+
+  get<T extends typeof this.params>() {
+    return this as unknown as Request<T>;
+  }
 }
 
 export const DEV_JWT =
