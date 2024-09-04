@@ -424,7 +424,22 @@ async function fetchAfisFacturen(
 export async function fetchAfisFactuurDocumentID(
   requestID: RequestID,
   businessPartnerID: number
-) {}
+) {
+  const config = getApiConfig('AFIS', {
+    formatUrl: (url) =>
+      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
+      `?$filter=AccountNumber eq '${businessPartnerID}'&$select=ArcDocId`,
+    transformResponse: (data) => {
+      const entryProperties = getFeedEntryProperties(data);
+      // AccountNumber what is that?
+      // - Longer then the businessPartnerID I have in other request
+      // - Only get one item at the moment
+      // - Link together with factuurnummer?
+    },
+  });
+
+  const response = await requestData(config, requestID);
+}
 
 export async function fetchAfisFactuurDocumentContent(
   requestID: RequestID,

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import {
   fetchAfisBusinessPartnerDetails,
-  fetchAfisClosedInvoices,
+  fetchAfisOpenInvoices,
   fetchAfisFactuurDocumentContent,
   fetchAfisFactuurDocumentID,
   fetchAfisClosedInvoices,
@@ -80,7 +80,7 @@ export async function handleFetchAfisFacturen(
 
     switch (state) {
       case 'open': {
-        const response = await fetchAfisClosedInvoices(
+        const response = await fetchAfisOpenInvoices(
           res.locals.requestID,
           businessPartnerID,
           top
@@ -105,30 +105,14 @@ export async function handleFetchAfisFacturen(
 }
 
 export async function handleFetchAfisDocument(
-  req: Request<BaseParams & { state: AfisInvoiceState }>,
+  req: Request<{ archiveDocumentId: string }>,
   res: Response
 ) {
-  // businessPartnerId, factuurNummer
-  const handler = async (
-    req: Request,
-    res: Response,
-    businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
-  ) => {
-    const requestID = res.locals.requestID;
-
-    const documentIdResponse = await fetchAfisFactuurDocumentID(
-      requestID,
-      businessPartnerID
-    );
-    console.dir(documentIdResponse);
-    // Read atrributes for next out of documentIdResponse
-    // const documentContentResponse =
-    //   await fetchAfisFactuurDocumentContent(requestID);
-    //
-    // return sendResponse(res, documentContentResponse);
-  };
-
-  return await fetchWithEncryptedBusinessPartnerID(handler, req, res);
+  const response = await fetchAfisFactuurDocumentContent(
+    res.locals.requestID,
+    req.params.archiveDocumentId
+  );
+  // return sendResponse(res, response);
 }
 
 async function fetchWithEncryptedBusinessPartnerID<T>(

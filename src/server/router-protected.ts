@@ -34,6 +34,7 @@ import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import {
   handleFetchAfisBusinessPartner,
+  handleFetchAfisDocument,
   handleFetchAfisFacturen,
 } from './services/afis/afis-route-handlers';
 
@@ -237,3 +238,4 @@ attachDocumentDownloadRoute(
 // AFIS facturen en betalen
 router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
 router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
+router.get(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, handleFetchAfisDocument);
