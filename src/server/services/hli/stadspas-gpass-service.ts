@@ -239,7 +239,7 @@ export async function fetchGpassBudgetTransactions(
   };
 
   if (budgetCode) {
-    requestParams.budgetCode = budgetCode;
+    requestParams.budgetcode = budgetCode;
   }
 
   const dataRequestConfig = getApiConfig('GPASS', {
