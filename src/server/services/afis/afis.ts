@@ -11,6 +11,10 @@ import { AuthProfileAndToken } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
+import {
+  DocumentDownloadData,
+  DocumentDownloadResponse,
+} from '../shared/document-download-route-handler';
 import { getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
@@ -29,6 +33,9 @@ import {
   AfisOpenInvoicePropertiesSource,
   AfisOpenInvoiceSource,
   AfisCloseInvoiceSource,
+  AfisDocumentIDSource,
+  AfisArcDocID,
+  AfisDocumentDownloadSource,
 } from './afis-types';
 
 /** Returns if the person logging in, is known in the AFIS source API */
@@ -421,46 +428,54 @@ async function fetchAfisFacturen(
   return await fetchSpecificFacturenFn(requestID, config, businessPartnerID);
 }
 
+// get invoiceNo -> get Doc ArcID -> download Doc
+
 export async function fetchAfisInvoiceDocumentID(
   requestID: RequestID,
-  businessPartnerID: number
+  invoiceNumber: number
 ) {
   const config = getApiConfig('AFIS', {
     formatUrl: (url) =>
       `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
-      `?$filter=AccountNumber eq '${businessPartnerID}'&$select=ArcDocId`,
-    transformResponse: (data) => {
+      `?$filter=AccountNumber eq '${invoiceNumber}'&$select=ArcDocId`,
+    transformResponse: (data: AfisDocumentIDSource) => {
       const entryProperties = getFeedEntryProperties(data);
-      // AccountNumber what is that?
-      // - Longer then the businessPartnerID I have in other request
-      // - Only get one item at the moment
-      // - Link together with factuurnummer?
+      if (entryProperties.length >= 1) {
+        return entryProperties[0].ArcDocId;
+      }
+      return null;
     },
   });
 
-  const response = await requestData(config, requestID);
+  return await requestData<AfisArcDocID>(config, requestID);
 }
 
 export async function fetchAfisInvoiceDocumentContent(
   requestID: RequestID,
-  archiveDocumentID: string
-) {
+  authProfileAndToken: AuthProfileAndToken,
+  documentIDEncrypted: string,
+  queryParams?: Record<string, string>
+): Promise<DocumentDownloadResponse> {
   const config = getApiConfig('AFIS', {
     method: 'post',
     formatUrl: (url) => `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
-    transformResponse: (data) => {
-      return data.Record.attachment;
-    },
     data: {
       Record: {
-        // Optional but maybe handy for linking docs?
-        DocumentInfoRecordDocNumber: 'invoiceNo123456789',
-        // Good identifier, but keep in mind an invoice can have multiple of these pointing to it.
-        ArchiveDocumentID: '89FCDF05B51F1EEEA3BB8E189D924A45',
+        ArchiveDocumentID: archiveDocumentID,
         BusinessObjectTypeName: 'BKPF',
       },
     },
+    transformResponse: (
+      data: AfisDocumentDownloadSource
+    ): DocumentDownloadData => {
+      const encodedDocument = Buffer.from(data.Record.attachment);
+      return {
+        data: encodedDocument,
+        mimetype: 'application/pdf',
+        filename: `factuur-${invoiceNumber}`,
+      };
+    },
   });
 
-  const response = await requestData(config, requestID);
+  return await requestData<DocumentDownloadData>(config, requestID);
 }

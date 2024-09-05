@@ -3,7 +3,6 @@ import {
   fetchAfisBusinessPartnerDetails,
   fetchAfisOpenInvoices,
   fetchAfisInvoiceDocumentContent,
-  fetchAfisInvoiceDocumentID,
   fetchAfisClosedInvoices,
 } from './afis';
 import {
@@ -19,12 +18,12 @@ import {
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 
-type BaseParams = {
+type businessPartnerRouteParams = {
   businessPartnerIdEncrypted: string;
 };
 
 export async function handleFetchAfisBusinessPartner(
-  req: Request<BaseParams>,
+  req: Request<businessPartnerRouteParams>,
   res: Response
 ) {
   const handler = async (
@@ -48,7 +47,7 @@ export async function handleFetchAfisBusinessPartner(
  *    for example `$top=4` will get you four invoices out of potentially 200.
  */
 export async function handleFetchAfisFacturen(
-  req: Request<BaseParams & { state: AfisInvoiceState }>,
+  req: Request<businessPartnerRouteParams & { state: AfisInvoiceState }>,
   res: Response
 ) {
   const handler = async (

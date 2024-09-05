@@ -140,3 +140,28 @@ export type AfisClosedInvoicePropertiesSource = {
   ReverseDocument: string;
   InvoiceNo: string;
 };
+
+export type AfisArcDocID = AfisDocumentIDPropertiesSource['ArcDocId'];
+
+export type AfisDocumentIDSource =
+  AfisApiFeedResponseSource<AfisDocumentIDPropertiesSource>;
+
+export type AfisDocumentIDPropertiesSource = {
+  SapObject: string;
+  ObjectId: number;
+  ArchivId: string;
+  ArcDocId: string;
+  ArObject: string;
+  ArDate: string;
+  Reserve: string;
+  CompanyCode: number;
+  AccountNumber: number;
+  ActYear: number;
+};
+
+export type AfisDocumentDownloadSource = {
+  Record: {
+    attachment: string;
+    attachmentname: string;
+  };
+};

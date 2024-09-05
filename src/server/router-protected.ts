@@ -37,6 +37,7 @@ import {
   handleFetchAfisDocument,
   handleFetchAfisFacturen,
 } from './services/afis/afis-route-handlers';
+import { fetchAfisInvoiceDocumentContent } from './services/afis/afis';
 
 export const router = express.Router();
 
@@ -238,4 +239,8 @@ attachDocumentDownloadRoute(
 // AFIS facturen en betalen
 router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
 router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
-router.get(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, handleFetchAfisDocument);
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
+  fetchAfisInvoiceDocumentContent
+);

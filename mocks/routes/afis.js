@@ -151,25 +151,15 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, _next, core) => {
-            const select = req.query['$select'];
-            if (select) {
-              if (select.split(',').includes('ReverseDocument')) {
-                core.logger.info('Sending closed invoices');
-                return res.send(
-                  require('../fixtures/afis/afgehandelde-facturen.json')
-                );
-              }
-              core.logger.info('Sending open invoices');
-              return res.send(
-                require('../fixtures/afis/openstaande-facturen.json')
-              );
-            } else {
-              core.logger.error(
-                `No $select query, please add to the url query parameters: ${req.query}`
-              );
-              return;
-            }
+          middleware: (req, res) => {
+            const isAboutClosedInvoices =
+              req.query?.['$select']?.includes('ReverseDocument');
+
+            const filename = isAboutClosedInvoices
+              ? 'afgehandelde-facturen.json'
+              : 'openstaande-facturen.json';
+
+            return res.send(require(`../fixtures/afis/${filename}.json`));
           },
         },
       },

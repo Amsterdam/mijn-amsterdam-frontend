@@ -450,8 +450,9 @@ export const BffEndpoints = {
   // AFIS
   AFIS_BUSINESSPARTNER:
     '/services/afis/businesspartner/:businessPartnerIdEncrypted',
-  AFIS_FACTUREN: '/services/afis/facturen/:state/:businessPartnerIdEncrypted',
-  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document/:archiveDocumentId',
+  AFIS_FACTUREN:
+    '/services/afis/facturen/:state(open|closed)/:businessPartnerIdEncrypted',
+  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document/:id',
 
   // Stadspas
   STADSPAS_TRANSACTIONS:
