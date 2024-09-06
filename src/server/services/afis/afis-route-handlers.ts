@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
 import {
   fetchAfisBusinessPartnerDetails,
-  fetchAfisOpenInvoices,
+  fetchAfisFacturen,
   fetchAfisInvoiceDocumentContent,
   fetchAfisClosedInvoices,
+  AfisFacturenQueryParams,
 } from './afis';
 import {
+  getAuth,
   send404,
   sendBadRequest,
   sendResponse,
@@ -13,17 +15,14 @@ import {
 } from '../../helpers/app';
 import {
   AfisBusinessPartnerDetailsTransformed,
-  AfisInvoiceState,
+  AfisFactuurState,
 } from './afis-types';
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
-
-type businessPartnerRouteParams = {
-  businessPartnerIdEncrypted: string;
-};
+import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 export async function handleFetchAfisBusinessPartner(
-  req: Request<businessPartnerRouteParams>,
+  req: Request<{ businessPartnerIdEncrypted: string }>,
   res: Response
 ) {
   const handler = async (
@@ -39,6 +38,10 @@ export async function handleFetchAfisBusinessPartner(
   return fetchWithEncryptedBusinessPartnerID(handler, req, res);
 }
 
+function isPostiveInt(str: string): boolean {
+  return /^\d+$/.test(str);
+}
+
 /** Route handler to get a series of invoices (facturen) from AFIS (SAP)
  *
  *  # Optional query parameters
@@ -47,70 +50,64 @@ export async function handleFetchAfisBusinessPartner(
  *    for example `$top=4` will get you four invoices out of potentially 200.
  */
 export async function handleFetchAfisFacturen(
-  req: Request<businessPartnerRouteParams & { state: AfisInvoiceState }>,
+  req: Request<{ businessPartnerIdEncrypted: string; state: AfisFactuurState }>,
   res: Response
 ) {
-  const handler = async (
-    req: Request,
-    res: Response,
-    businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
-  ) => {
-    const state = req.params.state;
-    let top: number | undefined = undefined;
+  const authProfileAndToken = await getAuth(req);
+  const decryptResponse = decryptAndValidate(
+    req.params.businessPartnerIdEncrypted,
+    authProfileAndToken
+  );
 
-    const t = req.query.top;
-    if (t) {
-      try {
-        top = parseInt(t.toString(), 10);
-      } catch (error) {
-        captureException(error);
-        return sendBadRequest(
-          res,
-          'Something went wrong parsing query paremeter $top'
-        );
-      }
-      if (top <= 0) {
-        return sendBadRequest(
-          res,
-          `Incorrect query parameter '$top=${t}', make sure top is a numerical string > 1.`
-        );
-      }
-    }
+  if (decryptResponse.status === 'ERROR') {
+    return decryptResponse;
+  }
 
-    switch (state) {
-      case 'open': {
-        const response = await fetchAfisOpenInvoices(
-          res.locals.requestID,
-          businessPartnerID,
-          top
-        );
-        return sendResponse(res, response);
-      }
-      case 'closed': {
-        const response = await fetchAfisClosedInvoices(
-          res.locals.requestID,
-          businessPartnerID,
-          top
-        );
-        return sendResponse(res, response);
-      }
-      default: {
-        return send404(res);
-      }
-    }
-  };
+  const businessPartnerID = decryptResponse.content;
+  let top = req.query?.top;
+  if (typeof top !== 'string' || !isPostiveInt(top)) {
+    top = undefined;
+  }
 
-  return await fetchWithEncryptedBusinessPartnerID(handler, req, res);
+  let queryParams: AfisFacturenQueryParams;
+
+  const state = req.params.state;
+  if (state === 'open') {
+    queryParams = {
+      filter: `$filter=Customer eq '${businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
+      select:
+        '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc',
+      orderBy: '$orderBy=NetDueDate asc, PostingDate asc',
+      top,
+    };
+  } else if (state === 'closed') {
+    queryParams = {
+      filter: `&$filter=Customer eq '${businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
+      select:
+        '$select=ReverseDocument,ProfitCenterName,DunningLevel,InvoiceNo,NetDueDate',
+      orderBy: '$orderBy=NetDueDate desc',
+      top,
+    };
+  } else {
+    return send404(res);
+  }
+
+  const response = await fetchAfisFacturen(
+    res.locals.requestID,
+    authProfileAndToken,
+    queryParams
+  );
+  return sendResponse(res, response);
 }
 
 export async function handleFetchAfisDocument(
   req: Request<{ archiveDocumentId: string }>,
   res: Response
 ) {
-  const response = await fetchAfisInvoiceDocumentContent(
-    res.locals.requestID,
-    req.params.archiveDocumentId
-  );
+  // const response = await fetchAfisInvoiceDocumentContent(
+  //   res.locals.requestID,
+  //   req.params.archiveDocumentId
+  // );
   // return sendResponse(res, response);
 }
 

@@ -6,9 +6,10 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
-import { DataRequestConfig, getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
 import {
@@ -27,10 +28,10 @@ import {
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
   AfisBusinessPartnerPrivateResponseSource,
-  AfisOpenInvoice,
+  AfisFactuur,
   AfisClosedInvoice,
   AfisClosedInvoicePropertiesSource,
-  AfisOpenInvoicePropertiesSource,
+  AfisFactuurPropertiesSource,
   AfisOpenInvoiceSource,
   AfisCloseInvoiceSource,
   AfisDocumentIDSource,
@@ -252,180 +253,132 @@ export async function fetchAfisBusinessPartnerDetails(
   return detailsResponse;
 }
 
-export async function fetchAfisOpenInvoices(
+export type AfisFacturenQueryParams = {
+  filter: string;
+  select: string;
+  orderBy?: string;
+  top?: string;
+};
+
+export async function fetchAfisFacturen(
   requestID: RequestID,
-  businessPartnerID: number,
-  top?: number
+  authProfileAndToken: AuthProfileAndToken,
+  queryParams: AfisFacturenQueryParams
 ) {
-  const fetchOpen = async (requestID: RequestID, config: DataRequestConfig) => {
-    const filter = `$filter=Customer eq '${businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`;
-    const select =
-      '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc';
-    const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
+  const config = getApiConfig('AFIS', {
+    formatUrl: ({ url }) => {
+      const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
 
-    let openInvoicesQuery = `${filter}&${select}&${orderBy}`;
+      url = `${url}${baseRoute}?$inlinecount=allpages`;
 
-    config.url = `${config.url}&${openInvoicesQuery}`;
-    config.transformResponse = (data: AfisOpenInvoiceSource) =>
-      getFeedEntryProperties(data).map((invoiceProperties) =>
-        transformOpenInvoices(businessPartnerID, invoiceProperties)
-      );
+      if (queryParams.top) {
+        url += `&$top=${top}`;
+      }
 
-    const response = await requestData<AfisOpenInvoice[]>(config, requestID);
-    return response;
-  };
+      const query = `${queryParams.filter}&${queryParams.select}&${queryParams.orderBy}`;
+      const fullRoute = `${url}&${query}`;
+      console.dir(fullRoute);
+      return fullRoute;
+    },
+    transformResponse: (data: AfisOpenInvoiceSource) => {
+      const feedProperties = getFeedEntryProperties(data);
+      return feedProperties.map((invoiceProperties) => {
+        return transformFacturen(
+          invoiceProperties,
+          authProfileAndToken.profile.sid
+        );
+      });
+    },
+  });
 
-  return await fetchAfisFacturen(fetchOpen, requestID, businessPartnerID, top);
+  const response = await requestData<AfisFactuur[]>(config, requestID);
+  return response;
 }
 
-function transformOpenInvoices(
-  businessPartnerID: number,
-  fields: AfisOpenInvoicePropertiesSource
-): AfisOpenInvoice {
-  const [invoiceNoEncrypted] = encrypt(
-    `${businessPartnerID}:${fields.InvoiceNo}`
-  );
-  const netPaymentAmount = parseInt(fields.NetPaymentAmount);
-  // RP TODO: Why should I add these fields together and can I?
-  //   AmountInBalanceTransacCrcy can be negative.
-  //   And what do both number mean?
-  const amount = parseInt(fields.AmountInBalanceTransacCrcy) + netPaymentAmount;
+function transformFacturen(
+  fields: AfisFactuurPropertiesSource,
+  sessionID: AuthProfileAndToken['profile']['sid']
+): AfisFactuur {
+  const [factuurNummerEncrypted] = encrypt(`${sessionID}:${fields.InvoiceNo}`);
 
-  return {
-    profitCenterName: fields.ProfitCenterName,
-    postingDate: fields.PostingDate,
-    dueDate: fields.NetDueDate,
-    dueDateFormatted: defaultDateFormat(fields.NetDueDate),
-    amount,
-    amountFormatted: `€ ${displayAmount(amount)}`,
-    invoiceNoEncrypted,
-    invoiceStatus: determineOpenInvoiceStatus(
-      fields.DunningLevel,
-      fields.DunningBlockingReason,
-      fields.SEPAMandate,
-      netPaymentAmount
-    ),
-    paylink: fields.Paylink,
-  };
-}
+  const netPaymentAmountInCents = parseFloat(fields.NetPaymentAmount) * 100;
+  const amountInBalanceTransacCrcyInCents =
+    parseFloat(fields.AmountInBalanceTransacCrcy) * 100;
 
-function determineOpenInvoiceStatus(
-  dunningLevel: AfisOpenInvoicePropertiesSource['DunningLevel'],
-  dunningBlockingReason: AfisOpenInvoicePropertiesSource['DunningBlockingReason'],
-  sepaMandate: AfisOpenInvoicePropertiesSource['SEPAMandate'],
-  netPaymentAmount: number
-): AfisOpenInvoice['invoiceStatus'] {
-  if (dunningLevel === 0 && !sepaMandate && netPaymentAmount > 0) {
-    return 'open';
-  } else if (dunningLevel === 0 && sepaMandate) {
-    return 'automatische-incasso';
-  } else if (dunningBlockingReason === 'D') {
-    return 'dispuut';
+  const amountOwed =
+    (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) / 100;
+  const amountOwedFormatted = amountOwed ? displayAmount(amountOwed) : 0;
+
+  let clearingDate = null;
+  let clearingDateFormatted = null;
+  if (fields.ClearingDate) {
+    clearingDate = fields.ClearingDate;
+    clearingDateFormatted = defaultDateFormat(clearingDate);
   }
 
-  const invoiceStatus = null;
-  // RP TODO: Tellen dit als persoonsgegevens? Zijn de praktische overwegingen genoeg om dit te loggen?
-  captureMessage(
-    `invoiceStatus could not be determined; setting invoiceStatus to '${invoiceStatus}'\n` +
-      `\tDunningBlockingReason = ${dunningBlockingReason}, SEPAMandata = ${sepaMandate}`,
-    { severity: 'error' }
-  );
-  return invoiceStatus;
-}
-
-export async function fetchAfisClosedInvoices(
-  requestID: RequestID,
-  businessPartnerID: number,
-  top?: number
-) {
-  const fetchClosed = async (
-    requestID: RequestID,
-    config: DataRequestConfig
-  ) => {
-    const filter = `&$filter=Customer eq '${businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`;
-    const select =
-      '$select=ReverseDocument,ProfitCenterName,DunningLevel,InvoiceNo,NetDueDate';
-    const orderBy = '$orderBy=NetDueDate desc';
-
-    let closedInvoicesQuery = `${filter}&${select}&${orderBy}`;
-    config.url = `${config.url}${closedInvoicesQuery}`;
-
-    config.transformResponse = (data: AfisCloseInvoiceSource) =>
-      getFeedEntryProperties(data).map((invoiceProperties) =>
-        transformClosedInvoices(businessPartnerID, invoiceProperties)
-      );
-
-    const response = await requestData<AfisClosedInvoice[]>(config, requestID);
-    return response;
-  };
-
-  return await fetchAfisFacturen(
-    fetchClosed,
-    requestID,
-    businessPartnerID,
-    top
-  );
-}
-
-function transformClosedInvoices(
-  businessPartnerID: number,
-  fields: AfisClosedInvoicePropertiesSource
-): AfisClosedInvoice {
-  const [invoiceNoEncrypted] = encrypt(
-    `${businessPartnerID}:${fields.InvoiceNo}`
-  );
   return {
-    profitCenterName: fields.ProfitCenterName,
+    afzender: fields.ProfitCenterName,
+    datePublished: fields.PostingDate,
+    datePublishedFormatted: defaultDateFormat(fields.PostingDate),
     dueDate: fields.NetDueDate,
     dueDateFormatted: defaultDateFormat(fields.NetDueDate),
-    invoiceNoEncrypted,
-    invoiceStatus: determineClosedInvoiceStatus(
-      fields.DunningLevel,
-      fields.ReverseDocument
+    clearingDate,
+    clearingDateFormatted,
+    amountOwed: amountOwed ? amountOwed : 0,
+    amountOwedFormatted: `€ ${amountOwedFormatted}`,
+    factuurNummer: fields.InvoiceNo,
+    status: determineFactuurStatus(fields),
+    paylink: fields.Paylink ? fields.Paylink : null,
+    documentDownloadLink: generateFullApiUrlBFF(
+      BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
+      { id: factuurNummerEncrypted }
     ),
   };
 }
 
-function determineClosedInvoiceStatus(
-  dunningLevel: AfisClosedInvoicePropertiesSource['DunningLevel'],
-  reverseDocument: AfisClosedInvoicePropertiesSource['ReverseDocument']
-): AfisClosedInvoice['invoiceStatus'] {
-  if (reverseDocument) {
+function determineFactuurStatus(
+  fields: AfisFactuurPropertiesSource
+): AfisFactuur['status'] {
+  if (fields.IsCleared) {
+    return geslotenFactuurStatus(fields);
+  }
+  return openstaandeFactuurStatus(fields);
+}
+
+function geslotenFactuurStatus(
+  fields: AfisFactuurPropertiesSource
+): AfisFactuur['status'] {
+  if (fields.ReverseDocument) {
     return 'geannuleerd';
-  } else if (dunningLevel === 0) {
+  }
+
+  if (fields.DunningLevel === 0) {
     return 'betaald';
   }
 
-  const invoiceStatus = null;
-  // RP TODO: Tellen dit als persoonsgegevens? Zijn de praktische overwegingen genoeg om dit te loggen?
-  captureMessage(
-    `invoiceStatus could not be determined; setting invoiceStatus to '${invoiceStatus}'\n` +
-      `\treverseDocument was ${reverseDocument ? 'found' : 'not found'}, DunningLevel = ${dunningLevel}`,
-    { severity: 'error' }
-  );
-  return invoiceStatus;
+  return 'onbekend';
 }
 
-async function fetchAfisFacturen(
-  fetchSpecificFacturenFn: (
-    requestID: RequestID,
-    config: DataRequestConfig,
-    businessPartnerID: number
-  ) => any,
-  requestID: RequestID,
-  businessPartnerID: number,
-  top?: number
-) {
-  const invoices_detail_route =
-    '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
-  const config = getApiConfig('AFIS');
-
-  config.url = `${config.url}${invoices_detail_route}?$inlinecount=allpages`;
-  if (top) {
-    config.url += `&$top=${top.toString()}`;
+function openstaandeFactuurStatus(
+  fields: AfisFactuurPropertiesSource
+): AfisFactuur['status'] {
+  if (fields.DunningBlockingReason === 'D') {
+    return 'in-dispuut';
   }
 
-  return await fetchSpecificFacturenFn(requestID, config, businessPartnerID);
+  if (fields.AccountingDocumentType === 'BA') {
+    return 'gedeeltelijke-betaling';
+  }
+
+  if (fields.DunningLevel === 0) {
+    if (fields.SEPAMandate) {
+      return 'automatische-incasso';
+    } else {
+      return 'openstaand';
+    }
+  }
+
+  return 'onbekend';
 }
 
 // get invoiceNo -> get Doc ArcID -> download Doc
@@ -461,7 +414,7 @@ export async function fetchAfisInvoiceDocumentContent(
     formatUrl: (url) => `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
     data: {
       Record: {
-        ArchiveDocumentID: archiveDocumentID,
+        // ArchiveDocumentID: archiveDocumentID,
         BusinessObjectTypeName: 'BKPF',
       },
     },
@@ -472,7 +425,7 @@ export async function fetchAfisInvoiceDocumentContent(
       return {
         data: encodedDocument,
         mimetype: 'application/pdf',
-        filename: `factuur-${invoiceNumber}`,
+        // filename: `factuur-${invoiceNumber}`,
       };
     },
   });

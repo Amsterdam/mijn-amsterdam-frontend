@@ -3,6 +3,7 @@ import memoryCache from 'memory-cache';
 
 import {
   ApiErrorResponse,
+  ApiPostponeResponse,
   ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
@@ -82,11 +83,16 @@ export function getRequestConfigCacheKey(
   ].join('-');
 }
 
+export type RequestDataResponse<T> =
+  | ApiSuccessResponse<T>
+  | ApiErrorResponse<null>
+  | ApiPostponeResponse;
+
 export async function requestData<T>(
   config: DataRequestConfig,
   requestID: RequestID,
   authProfileAndToken?: AuthProfileAndToken
-) {
+): Promise<RequestDataResponse<T>> {
   if (!requestID) {
     throw new Error('Request ID not provided in requestData(...) call.');
   }

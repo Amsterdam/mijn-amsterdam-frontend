@@ -92,53 +92,59 @@ export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
   AfisBusinessPartnerPhone &
   AfisBusinessPartnerEmail;
 
-export type AfisOpenInvoice = {
-  profitCenterName: string;
-  postingDate: string;
+export type AfisFactuurState = 'open' | 'closed';
+
+export type AfisFactuur = {
+  afzender: string;
+  datePublished: string;
+  datePublishedFormatted: string;
   dueDate: string;
   dueDateFormatted: string;
-  amount: number;
-  amountFormatted: string;
-  invoiceNoEncrypted: string;
-  invoiceStatus: 'open' | 'automatische-incasso' | 'dispuut' | null;
+  clearingDate: string | null;
+  clearingDateFormatted: string | null;
+  amountOwed: number;
+  amountOwedFormatted: string;
+  factuurNummer: string;
+  status: AfisFactuurStatus;
   paylink: string | null;
+  documentDownloadLink: string | null;
 };
 
-export type AfisInvoiceState = 'open' | 'closed';
+type AfisFactuurStatus =
+  | 'openstaand'
+  | 'automatische-incasso'
+  | 'in-dispuut'
+  | 'gedeeltelijke-betaling'
+  | 'betaald'
+  | 'geannuleerd'
+  | 'onbekend';
 
 export type AfisOpenInvoiceSource =
-  AfisApiFeedResponseSource<AfisOpenInvoicePropertiesSource>;
+  AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
 
-export type AfisOpenInvoicePropertiesSource = {
+/** # Extra property information
+ *
+ * `NetPaymentAmount`: Is a negative or zero decimal number and represents money that is -
+ *   already payed for the 'factuur'.
+ * `AmountInBalanceTransacCrcy`: Is a static decimal number and represents the amount that should be payed.
+ *   When this is negative it might be a 'krediet factuur' which means that money shall be returned to the one -
+ *   recieving this 'factuur' (RP TODO: Review 'krediet factuur' part when Danish knows more about this).
+ */
+export type AfisFactuurPropertiesSource = {
   DunningLevel: number;
   DunningBlockingReason: string;
   ProfitCenterName: string;
   SEPAMandate: string;
   PostingDate: string;
+  AccountingDocumentType: string;
   NetDueDate: string;
   NetPaymentAmount: string;
   AmountInBalanceTransacCrcy: string;
   InvoiceNo: string;
-  Paylink: string;
-};
-
-export type AfisClosedInvoice = {
-  profitCenterName: string;
-  dueDate: string;
-  dueDateFormatted: string;
-  invoiceNoEncrypted: string;
-  invoiceStatus: 'betaald' | 'geannuleerd' | null;
-};
-
-export type AfisCloseInvoiceSource =
-  AfisApiFeedResponseSource<AfisClosedInvoicePropertiesSource>;
-
-export type AfisClosedInvoicePropertiesSource = {
-  DunningLevel: number;
-  ProfitCenterName: string;
-  NetDueDate: string;
-  ReverseDocument: string;
-  InvoiceNo: string;
+  Paylink: string | null;
+  IsCleared?: boolean;
+  ClearingDate?: string;
+  ReverseDocument?: string;
 };
 
 export type AfisArcDocID = AfisDocumentIDPropertiesSource['ArcDocId'];
