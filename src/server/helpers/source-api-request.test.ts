@@ -27,6 +27,21 @@ import {
   requestData,
 } from './source-api-request';
 
+const mocks = vi.hoisted(() => {
+  return {
+    cacheEnabled: true,
+  };
+});
+
+vi.mock('../config/app', async (importOrigModule) => {
+  return {
+    ...((await importOrigModule()) as object),
+    get BFF_REQUEST_CACHE_ENABLED() {
+      return mocks.cacheEnabled;
+    },
+  };
+});
+
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
   const DUMMY_RESPONSE_2 = { foo: 'baz' };
@@ -115,6 +130,24 @@ describe('requestData.ts', () => {
     vi.runAllTimers();
 
     expect(cache.get(CACHE_KEY_1)).toBe(null);
+  });
+
+  it('Does not cache the response', async () => {
+    mocks.cacheEnabled = false;
+
+    remoteApi.get('/1').reply(200, 'whoa');
+
+    const rs = await requestData(
+      {
+        url: DUMMY_URL,
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(cache.get(CACHE_KEY_1)).toBe(null);
+
+    mocks.cacheEnabled = true;
   });
 
   it('Caches the response per session id', async () => {
@@ -260,6 +293,10 @@ describe('requestData.ts', () => {
       Authorization: `Bearer ababababab`,
     });
   });
+
+  // test('BFF_REQUEST_CACHE_ENABLED', async () => {
+  //   mocks.cacheEnabled = true;
+  // });
 
   test('getRequestConfigCacheKey', () => {
     expect(
