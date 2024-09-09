@@ -153,16 +153,7 @@ export type AfisDocumentIDSource =
   AfisApiFeedResponseSource<AfisDocumentIDPropertiesSource>;
 
 export type AfisDocumentIDPropertiesSource = {
-  SapObject: string;
-  ObjectId: number;
-  ArchivId: string;
   ArcDocId: string;
-  ArObject: string;
-  ArDate: string;
-  Reserve: string;
-  CompanyCode: number;
-  AccountNumber: number;
-  ActYear: number;
 };
 
 export type AfisDocumentDownloadSource = {

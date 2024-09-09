@@ -23,16 +23,16 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
 import {
   fetchAfisBusinessPartnerDetails,
   fetchAfisFacturen,
-  fetchAfisInvoiceDocument,
+  fetchAfisDocument,
   fetchIsKnownInAFIS,
 } from './afis';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { AfisFactuur } from './afis-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import be from 'date-fns/esm/locale/be/index.js';
+
+const FACTUUR_NUMMER = '12346789';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
-const businessPartnerID = '123456789';
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
@@ -41,6 +41,9 @@ const ROUTES = {
   businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27430844%27`,
   facturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$inlinecount=allpages&$A=1&$B=2&$C=3`,
   documentDownload: `${BASE_ROUTE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
+  documentID:
+    `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
+    `?$filter=AccountNumber eq '${FACTUUR_NUMMER}'&$select=ArcDocId`,
 };
 
 const REQUEST_ID = '456';
@@ -570,13 +573,16 @@ describe('Afis', () => {
   describe('fetchAfisInvoiceDocument', async () => {
     test('Success response correctly formatted', async () => {
       remoteApi
+        .get(ROUTES.documentID)
+        .reply(200, require('../../../../mocks/fixtures/afis/arc-doc-id.json'));
+      remoteApi
         .post(ROUTES.documentDownload)
         .reply(200, require('../../../../mocks/fixtures/afis/document.json'));
 
-      const response = await fetchAfisInvoiceDocument(
+      const response = await fetchAfisDocument(
         REQUEST_ID,
         getAuthProfileAndToken('private'),
-        '123456789'
+        FACTUUR_NUMMER
       );
 
       expect(response.status).toBe('OK');

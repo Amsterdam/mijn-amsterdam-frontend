@@ -375,33 +375,19 @@ function openstaandeFactuurStatus(
   return 'onbekend';
 }
 
-// get invoiceNo -> get Doc ArcID -> download Doc
-
-export async function fetchAfisInvoiceDocumentID(
-  requestID: RequestID,
-  invoiceNumber: number
-) {
-  const config = getApiConfig('AFIS', {
-    formatUrl: (url) =>
-      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
-      `?$filter=AccountNumber eq '${invoiceNumber}'&$select=ArcDocId`,
-    transformResponse: (data: AfisDocumentIDSource) => {
-      const entryProperties = getFeedEntryProperties(data);
-      if (entryProperties.length >= 1) {
-        return entryProperties[0].ArcDocId;
-      }
-      return null;
-    },
-  });
-
-  return await requestData<AfisArcDocID>(config, requestID);
-}
-
-export async function fetchAfisInvoiceDocument(
+export async function fetchAfisDocument(
   requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
-  arcDocId: string
+  factuurNummer: string
 ): Promise<DocumentDownloadResponse> {
+  const ArchiveDocumentIDResponse = await fetchAfisDocumentID(
+    requestID,
+    factuurNummer
+  );
+  if (ArchiveDocumentIDResponse.status !== 'OK') {
+    return ArchiveDocumentIDResponse;
+  }
+
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) => {
       return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
@@ -409,7 +395,7 @@ export async function fetchAfisInvoiceDocument(
     method: 'post',
     data: {
       Record: {
-        ArchiveDocumentID: arcDocId,
+        ArchiveDocumentID: ArchiveDocumentIDResponse.id,
         BusinessObjectTypeName: 'BKPF',
       },
     },
@@ -426,4 +412,31 @@ export async function fetchAfisInvoiceDocument(
   });
 
   return await requestData<DocumentDownloadData>(config, requestID);
+}
+
+/** Retrieve an ArcDocID from the AFIS source API.
+ *
+ *  This ID uniquely identifies a document and can be used -
+ *  to download one with our document downloading endpoint for example.
+ *
+ *  There can be more then one ArcDocID's pointing to the same document.
+ */
+async function fetchAfisDocumentID(
+  requestID: RequestID,
+  factuurNummer: string
+) {
+  const config = getApiConfig('AFIS', {
+    formatUrl: ({ url }) =>
+      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
+      `?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
+    transformResponse: (data: AfisDocumentIDSource) => {
+      const entryProperties = getFeedEntryProperties(data);
+      if (entryProperties.length >= 1) {
+        return entryProperties[0].ArcDocId;
+      }
+      return null;
+    },
+  });
+
+  return await requestData<AfisArcDocID>(config, requestID);
 }

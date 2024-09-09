@@ -3,7 +3,7 @@ import {
   fetchAfisBusinessPartnerDetails,
   fetchAfisFacturen,
   AfisFacturenQueryParams,
-  fetchAfisInvoiceDocument,
+  fetchAfisDocument,
 } from './afis';
 import {
   AuthProfileAndToken,
@@ -104,7 +104,7 @@ export async function handleFetchAfisDocument(
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  const response = await fetchAfisInvoiceDocument(
+  const response = await fetchAfisDocument(
     requestID,
     authProfileAndToken,
     documentId
