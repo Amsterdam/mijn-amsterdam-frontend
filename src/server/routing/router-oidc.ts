@@ -23,6 +23,7 @@ import { captureException } from '../services/monitoring';
 import { countLoggedInVisit } from '../services/visitors';
 import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
+import { NextFunction } from 'express-serve-static-core';
 
 export const oidcRouter = express.Router();
 
@@ -47,8 +48,7 @@ function getOidcConfigByRequest(req: Request) {
 
 const authInstances = new Map();
 
-// Determine which OIDC config should be used.
-oidcRouter.use((req, res, next) => {
+function authConfigHandler(req: Request, res: Response, next: NextFunction) {
   const config = getOidcConfigByRequest(req);
 
   let authRequestHandler: RequestHandler;
@@ -62,7 +62,10 @@ oidcRouter.use((req, res, next) => {
   }
 
   return authRequestHandler(req, res, next);
-});
+}
+
+// Determine which OIDC config should be used.
+oidcRouter.use(authConfigHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK,
@@ -213,3 +216,8 @@ oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING_LOCAL,
   createLogoutHandler(process.env.MA_FRONTEND_URL!, false)
 );
+
+export const forTesting = {
+  getOidcConfigByRequest,
+  authConfigHandler,
+};
