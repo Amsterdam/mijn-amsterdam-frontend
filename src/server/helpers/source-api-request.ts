@@ -153,6 +153,7 @@ export async function requestData<T>(
 
   // Set the cache Deferred
   if (
+    BFF_REQUEST_CACHE_ENABLED &&
     cacheKey &&
     !!requestConfig.cacheTimeout &&
     requestConfig.cacheTimeout > 0
@@ -186,7 +187,7 @@ export async function requestData<T>(
     const responseData = apiSuccessResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
-    if (cache.get(cacheKey)) {
+    if (BFF_REQUEST_CACHE_ENABLED && cache.get(cacheKey)) {
       cache.get(cacheKey).resolve(responseData);
     }
 
