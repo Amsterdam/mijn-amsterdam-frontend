@@ -60,9 +60,12 @@ export class ResponseMock {
     };
   }
 
-  send = vi.fn().mockImplementation((content) => content);
+  send = vi.fn().mockImplementation((content) => {
+    return this;
+  });
   status = vi.fn().mockImplementation((statusCode) => {
     this.statusCode = statusCode;
+    return this;
   });
   write = vi.fn();
   clearCookie = vi.fn();
