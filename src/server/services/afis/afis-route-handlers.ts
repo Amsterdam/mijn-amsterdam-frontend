@@ -3,8 +3,10 @@ import {
   fetchAfisBusinessPartnerDetails,
   fetchAfisFacturen,
   AfisFacturenQueryParams,
+  fetchAfisInvoiceDocument,
 } from './afis';
 import {
+  AuthProfileAndToken,
   getAuth,
   send404,
   sendResponse,
@@ -50,6 +52,7 @@ export async function handleFetchAfisFacturen(
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
+  console.dir(encrypt(`${authProfileAndToken.profile.sid}:123456789`));
   const decryptResponse = decryptAndValidate(
     req.params.businessPartnerIdEncrypted,
     authProfileAndToken
@@ -97,14 +100,16 @@ export async function handleFetchAfisFacturen(
 }
 
 export async function handleFetchAfisDocument(
-  req: Request<{ archiveDocumentId: string }>,
-  res: Response
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken,
+  documentId: string
 ) {
-  // const response = await fetchAfisInvoiceDocumentContent(
-  //   res.locals.requestID,
-  //   req.params.archiveDocumentId
-  // );
-  // return sendResponse(res, response);
+  const response = await fetchAfisInvoiceDocument(
+    requestID,
+    authProfileAndToken,
+    documentId
+  );
+  return response;
 }
 
 async function fetchWithEncryptedBusinessPartnerID<T>(

@@ -55,6 +55,7 @@
       "get-wpi-specificaties:standard",
       "post-afis-businesspartner-bsn:standard",
       "post-afis-businesspartner-kvk:standard",
+      "post-afis-factuur-document:standard",
       "get-afis-businesspartner-details:standard",
       "get-afis-businesspartner-phonenumber:standard",
       "get-afis-businesspartner-emailaddress:standard",

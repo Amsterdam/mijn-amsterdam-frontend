@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import {
   apiSuccessResult,
   getFailedDependencies,
@@ -10,6 +11,7 @@ import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import {
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
   DocumentDownloadResponse,
 } from '../shared/document-download-route-handler';
@@ -395,29 +397,30 @@ export async function fetchAfisInvoiceDocumentID(
   return await requestData<AfisArcDocID>(config, requestID);
 }
 
-export async function fetchAfisInvoiceDocumentContent(
+export async function fetchAfisInvoiceDocument(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  documentIDEncrypted: string,
-  queryParams?: Record<string, string>
+  _authProfileAndToken: AuthProfileAndToken,
+  arcDocId: string
 ): Promise<DocumentDownloadResponse> {
   const config = getApiConfig('AFIS', {
+    formatUrl: ({ url }) => {
+      return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
+    },
     method: 'post',
-    formatUrl: (url) => `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
     data: {
       Record: {
-        // ArchiveDocumentID: archiveDocumentID,
+        ArchiveDocumentID: arcDocId,
         BusinessObjectTypeName: 'BKPF',
       },
     },
     transformResponse: (
       data: AfisDocumentDownloadSource
     ): DocumentDownloadData => {
-      const encodedDocument = Buffer.from(data.Record.attachment);
+      const encodedDocument = Buffer.from(data.Record.attachment, 'base64');
       return {
         data: encodedDocument,
-        mimetype: 'application/pdf',
-        // filename: `factuur-${invoiceNumber}`,
+        mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+        filename: data.Record.attachmentname ?? 'factuur.pdf',
       };
     },
   });

@@ -23,6 +23,7 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
 import {
   fetchAfisBusinessPartnerDetails,
   fetchAfisFacturen,
+  fetchAfisInvoiceDocument,
   fetchIsKnownInAFIS,
 } from './afis';
 import { jsonCopy } from '../../../universal/helpers/utils';
@@ -39,6 +40,7 @@ const ROUTES = {
   businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27430844%27`,
   businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27430844%27`,
   facturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$inlinecount=allpages&$A=1&$B=2&$C=3`,
+  documentDownload: `${BASE_ROUTE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
 };
 
 const REQUEST_ID = '456';
@@ -562,6 +564,25 @@ describe('Afis', () => {
 
       const unknownStatusInvoice = response.content[2];
       expect(unknownStatusInvoice.status).toStrictEqual('onbekend');
+    });
+  });
+
+  describe('fetchAfisInvoiceDocument', async () => {
+    test('Success response correctly formatted', async () => {
+      remoteApi
+        .post(ROUTES.documentDownload)
+        .reply(200, require('../../../../mocks/fixtures/afis/document.json'));
+
+      const response = await fetchAfisInvoiceDocument(
+        REQUEST_ID,
+        getAuthProfileAndToken('private'),
+        '123456789'
+      );
+
+      expect(response.status).toBe('OK');
+      expect(response.content?.data.length).toBeGreaterThan(0);
+      expect(response.content?.mimetype).toBe('application/pdf');
+      expect(response.content?.filename).toStrictEqual('FACTUUR.PDF');
     });
   });
 });

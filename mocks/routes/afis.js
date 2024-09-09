@@ -165,4 +165,19 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'post-afis-factuur-document',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: require('../fixtures/afis/document.json'),
+        },
+      },
+    ],
+  },
 ];
