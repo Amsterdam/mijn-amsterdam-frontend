@@ -24,6 +24,7 @@ import { countLoggedInVisit } from '../services/visitors';
 import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
 import { NextFunction } from 'express-serve-static-core';
+import { getFromEnv } from '../helpers/env';
 
 export const oidcRouter = express.Router();
 
@@ -91,17 +92,9 @@ oidcRouter.get(
 oidcRouter.get(
   authRoutes.AUTH_LOGIN_DIGID_LANDING,
   async (req: Request, res: Response) => {
-    try {
-      const auth = getAuth(req);
-      if (auth?.profile.id) {
-        countLoggedInVisit(auth.profile.id);
-      }
-    } catch (error) {
-      captureException(error, {
-        properties: {
-          message: 'At Digid landing',
-        },
-      });
+    const auth = getAuth(req);
+    if (auth?.profile.id) {
+      countLoggedInVisit(auth.profile.id);
     }
     return res.redirect(process.env.MA_FRONTEND_URL + '?authMethod=digid');
   }
@@ -181,7 +174,7 @@ oidcRouter.get(
   }
 );
 
-oidcRouter.get(authRoutes.AUTH_LOGOUT, async (req: Request, res: Response) => {
+async function authLogoutHandler(req: Request, res: Response) {
   let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
   let authMethodRequested = req.query.authMethod;
 
@@ -200,24 +193,27 @@ oidcRouter.get(authRoutes.AUTH_LOGOUT, async (req: Request, res: Response) => {
   }
 
   return res.redirect(redirectUrl);
-});
+}
+
+oidcRouter.get(authRoutes.AUTH_LOGOUT, authLogoutHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_DIGID,
-  createLogoutHandler(process.env.MA_FRONTEND_URL!)
+  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string)
 );
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING,
-  createLogoutHandler(process.env.MA_FRONTEND_URL!)
+  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string)
 );
 
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING_LOCAL,
-  createLogoutHandler(process.env.MA_FRONTEND_URL!, false)
+  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string, false)
 );
 
 export const forTesting = {
   getOidcConfigByRequest,
   authConfigHandler,
+  authLogoutHandler,
 };
