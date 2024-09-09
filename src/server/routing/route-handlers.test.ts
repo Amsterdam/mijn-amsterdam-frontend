@@ -1,7 +1,7 @@
 import { RequestMock, ResponseMock } from '../../test-utils';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import * as authHelpers from '../auth/auth-helpers';
-import { AuthProfileAndToken } from '../auth/auth-types';
+import { AuthProfile, AuthProfileAndToken } from '../auth/auth-types';
 import { cache } from '../helpers/source-api-request';
 import { addToBlackList } from '../services/session-blacklist';
 import {
@@ -63,7 +63,9 @@ describe('routing.route-handlers', () => {
 
   describe('isAuthenticated', () => {
     test('Is authenticated', async () => {
-      vi.spyOn(authHelpers, 'getAuth');
+      vi.spyOn(authHelpers, 'getAuth').mockReturnValue(
+        {} as AuthProfileAndToken
+      );
 
       const reqMock = RequestMock.new()
         .setCookies({
@@ -126,24 +128,51 @@ describe('routing.route-handlers', () => {
     expect(mockNext).toHaveBeenCalled();
   });
 
-  test('isBlacklistedHandler: Add to blacklist', async () => {
+  test.only('isBlacklistedHandler: Add to blacklist', async () => {
     const sessionID = 'test-session-id';
     const nextMock = vi.fn();
     const resMock = ResponseMock.new();
-    const reqMock = RequestMock.new().get();
 
-    vi.spyOn(authHelpers, 'getAuth').mockResolvedValueOnce({
-      profile: {
-        sid: sessionID,
-      },
-    } as AuthProfileAndToken);
+    let reqMockWithOidc = RequestMock.new();
+    await reqMockWithOidc.createOIDCStub({
+      sid: sessionID,
+      authMethod: 'digid',
+      profileType: 'private',
+      id: '1123',
+    });
+    const reqMock = reqMockWithOidc.get();
 
+    const mocks = vi.hoisted(() => {
+      return {
+        db: {
+          query: vi.fn(),
+          queryGET: vi.fn(),
+        },
+      };
+    });
+
+    vi.mock('../services/db/db', async () => {
+      return {
+        db: async () => mocks.db,
+      };
+    });
+
+    mocks.db.queryGET.mockResolvedValueOnce({ count: 0 });
     await isBlacklistedHandler(reqMock, resMock, nextMock);
+    expect(mocks.db.queryGET).toHaveBeenCalledOnce();
 
     expect(nextMock).toHaveBeenCalledTimes(1);
 
     await addToBlackList(sessionID);
+    const mCalls = mocks.db.query.mock.calls;
+    expect(mCalls[mCalls.length - 1]).toStrictEqual([
+      'INSERT INTO acc_session_blacklist (session_id) VALUES ($1) RETURNING id',
+      ['test-session-id'],
+    ]);
+
+    mocks.db.queryGET.mockResolvedValueOnce({ count: 1 });
     await isBlacklistedHandler(reqMock, resMock, nextMock);
+    expect(mocks.db.queryGET).toHaveBeenCalledTimes(2);
 
     expect(resMock.send).toHaveBeenCalled();
     expect(resMock.status).toHaveBeenCalledWith(401);
