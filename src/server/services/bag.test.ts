@@ -20,19 +20,7 @@ describe('BAG service', () => {
       woonplaatsNaam: 'Amsterdam',
     } as unknown as Adres;
 
-    const rs = await fetchBAG(
-      'x',
-      {
-        token: 'xxxx',
-        profile: {
-          authMethod: 'digid',
-          profileType: 'private',
-          sid: '',
-          id: '',
-        },
-      },
-      address
-    );
+    const rs = await fetchBAG('x', address);
 
     expect(rs).toStrictEqual({
       status: 'OK',
@@ -49,19 +37,7 @@ describe('BAG service', () => {
       .get('/bag', { params: { q: 'undefined' } })
       .reply(500);
     // Request non-existing mock url
-    const rs = await fetchBAG(
-      'x',
-      {
-        token: 'xxxx',
-        profile: {
-          authMethod: 'digid',
-          profileType: 'private',
-          id: '',
-          sid: '',
-        },
-      },
-      {} as any
-    );
+    const rs = await fetchBAG('x', {} as any);
 
     expect(rs).toStrictEqual({
       status: 'ERROR',
