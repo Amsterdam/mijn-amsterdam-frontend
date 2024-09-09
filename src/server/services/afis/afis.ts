@@ -1,5 +1,4 @@
 import {
-  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -9,9 +8,7 @@ import displayAmount from '../../../universal/helpers/text';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
-import { getFromEnv } from '../../helpers/env';
 import { requestData } from '../../helpers/source-api-request';
-import { captureMessage } from '../monitoring';
 import {
   DocumentDownloadData,
   DocumentDownloadResponse,
@@ -29,11 +26,8 @@ import {
   AfisBusinessPartnerPhoneSource,
   AfisBusinessPartnerPrivateResponseSource,
   AfisFactuur,
-  AfisClosedInvoice,
-  AfisClosedInvoicePropertiesSource,
   AfisFactuurPropertiesSource,
   AfisOpenInvoiceSource,
-  AfisCloseInvoiceSource,
   AfisDocumentIDSource,
   AfisArcDocID,
   AfisDocumentDownloadSource,
@@ -269,15 +263,13 @@ export async function fetchAfisFacturen(
     formatUrl: ({ url }) => {
       const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
 
-      url = `${url}${baseRoute}?$inlinecount=allpages`;
-
+      let query = `?$inlinecount=allpages`;
       if (queryParams.top) {
-        url += `&$top=${top}`;
+        query += `&$top=${top}`;
       }
+      query += `&${queryParams.filter}&${queryParams.select}&${queryParams.orderBy}`;
 
-      const query = `${queryParams.filter}&${queryParams.select}&${queryParams.orderBy}`;
-      const fullRoute = `${url}&${query}`;
-      console.dir(fullRoute);
+      const fullRoute = `${url}${baseRoute}${query}`;
       return fullRoute;
     },
     transformResponse: (data: AfisOpenInvoiceSource) => {
@@ -318,8 +310,8 @@ function transformFacturen(
 
   return {
     afzender: fields.ProfitCenterName,
-    datePublished: fields.PostingDate,
-    datePublishedFormatted: defaultDateFormat(fields.PostingDate),
+    datePublished: fields.PostingDate || null,
+    datePublishedFormatted: defaultDateFormat(fields.PostingDate) || null,
     dueDate: fields.NetDueDate,
     dueDateFormatted: defaultDateFormat(fields.NetDueDate),
     clearingDate,

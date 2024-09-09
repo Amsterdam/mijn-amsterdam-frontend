@@ -477,8 +477,6 @@ describe('Afis', () => {
   describe('fetchAfisFacturen', async () => {
     const authProfileAndToken = getAuthProfileAndToken('private');
 
-    // Decoupled from actual query which can change (I'm just testing if they're stitches together.
-    //   Which is observed if the nock implementation is called.
     const queryParams = {
       filter: '$A=1',
       select: '$B=2',
@@ -499,7 +497,6 @@ describe('Afis', () => {
         queryParams
       )) as ApiSuccessResponse<AfisFactuur[]>;
 
-      // This also tests the calculation for amountOwed.
       const openFactuur = response.content[0];
       expect(openFactuur).toStrictEqual({
         afzender: 'Moneymakers inc.',
@@ -547,34 +544,24 @@ describe('Afis', () => {
         afzender: '',
         amountOwed: 0,
         amountOwedFormatted: '€ 0',
-        datePublished: undefined,
-        datePublishedFormatted: '',
+        datePublished: null,
+        datePublishedFormatted: null,
         documentDownloadLink:
           'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
         dueDate: '2023-06-12T00:00:00',
         dueDateFormatted: '12 juni 2023',
+        clearingDate: null,
+        clearingDateFormatted: null,
         factuurNummer: '',
         paylink: null,
         status: 'betaald',
       });
 
-      // const betaaldeInvoice = response.content[1];
-      // expect(betaaldeInvoice).toStrictEqual({
-      //   invoiceNoEncrypted: 'xx-encrypted-xx',
-      //   invoiceStatus: 'betaald',
-      //   dueDate: '2023-05-11T00:00:00',
-      //   dueDateFormatted: '11 mei 2023',
-      //   profitCenterName: 'Lisan al Gaib inc.',
-      // });
-      //
-      // const unknownStatusInvoice = response.content[2];
-      // expect(unknownStatusInvoice).toStrictEqual({
-      //   invoiceNoEncrypted: 'xx-encrypted-xx',
-      //   invoiceStatus: null,
-      //   dueDate: '2023-07-27T00:00:00',
-      //   dueDateFormatted: '27 juli 2023',
-      //   profitCenterName: 'Lisan al Gaib inc.',
-      // });
+      const betaaldeInvoice = response.content[1];
+      expect(betaaldeInvoice.status).toStrictEqual('betaald');
+
+      const unknownStatusInvoice = response.content[2];
+      expect(unknownStatusInvoice.status).toStrictEqual('onbekend');
     });
   });
 });

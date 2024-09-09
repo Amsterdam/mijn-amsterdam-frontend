@@ -2,14 +2,11 @@ import { Request, Response } from 'express';
 import {
   fetchAfisBusinessPartnerDetails,
   fetchAfisFacturen,
-  fetchAfisInvoiceDocumentContent,
-  fetchAfisClosedInvoices,
   AfisFacturenQueryParams,
 } from './afis';
 import {
   getAuth,
   send404,
-  sendBadRequest,
   sendResponse,
   sendUnauthorized,
 } from '../../helpers/app';
@@ -17,8 +14,7 @@ import {
   AfisBusinessPartnerDetailsTransformed,
   AfisFactuurState,
 } from './afis-types';
-import { decrypt } from '../../helpers/encrypt-decrypt';
-import { captureException } from '../monitoring';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 export async function handleFetchAfisBusinessPartner(
@@ -60,7 +56,7 @@ export async function handleFetchAfisFacturen(
   );
 
   if (decryptResponse.status === 'ERROR') {
-    return decryptResponse;
+    return res.send(decryptResponse);
   }
 
   const businessPartnerID = decryptResponse.content;

@@ -96,8 +96,8 @@ export type AfisFactuurState = 'open' | 'closed';
 
 export type AfisFactuur = {
   afzender: string;
-  datePublished: string;
-  datePublishedFormatted: string;
+  datePublished: string | null;
+  datePublishedFormatted: string | null;
   dueDate: string;
   dueDateFormatted: string;
   clearingDate: string | null;

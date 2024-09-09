@@ -6,15 +6,17 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 
+/** Decrypt an encrypted 'sessionid:id' and validate it.
+ */
 export function decryptAndValidate(
-  idEncrypted: string,
+  idsEncrypted: string,
   authProfileAndToken: AuthProfileAndToken
 ) {
   let sessionID: AuthProfileAndToken['profile']['sid'] | null = null;
   let id: string | null = null;
 
   try {
-    [sessionID, id] = decrypt(idEncrypted).split(':');
+    [sessionID, id] = decrypt(idsEncrypted).split(':');
   } catch (error) {
     captureException(error);
     return apiErrorResult(

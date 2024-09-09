@@ -156,8 +156,8 @@ module.exports = [
               req.query?.['$select']?.includes('ReverseDocument');
 
             const filename = isAboutClosedInvoices
-              ? 'afgehandelde-facturen.json'
-              : 'openstaande-facturen.json';
+              ? 'afgehandelde-facturen'
+              : 'openstaande-facturen';
 
             return res.send(require(`../fixtures/afis/${filename}.json`));
           },
