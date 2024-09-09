@@ -27,11 +27,7 @@ import { sendUnauthorized } from './route-helpers';
 
 export const authRouterDevelopment = express.Router();
 
-async function createOIDCStub(
-  req: Request,
-  res: Response,
-  authProfile: AuthProfile
-) {
+export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
   (req as any)[OIDC_SESSION_COOKIE_NAME] = authProfile;
 
@@ -56,7 +52,6 @@ authRouterDevelopment.use(async (req, res, next) => {
     const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
     await createOIDCStub(
       req,
-      res,
       JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
     );
   }
@@ -103,7 +98,7 @@ authRouterDevelopment.get(
       profileType: authMethod === 'digid' ? 'private' : 'commercial',
       sid: sessionID,
     };
-    createOIDCStub(req, res, authProfile);
+    createOIDCStub(req, authProfile);
 
     const appSessionCookieValue = Buffer.from(
       JSON.stringify(authProfile)
@@ -114,8 +109,6 @@ authRouterDevelopment.get(
       appSessionCookieValue,
       appSessionCookieOptions
     );
-
-    console.log(OIDC_SESSION_COOKIE_NAME, 'xxx', appSessionCookieOptions);
 
     const isValidRedirectOption = PREDEFINED_REDIRECT_URLS.includes(
       String(req.query.redirectUrl)
