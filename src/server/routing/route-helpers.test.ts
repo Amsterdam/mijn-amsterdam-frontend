@@ -1,7 +1,6 @@
 import Mockdate from 'mockdate';
 import { RequestMock, ResponseMock } from '../../test-utils';
 import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
-import * as authConfig from '../auth/auth-config';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config';
 import { cache } from '../helpers/source-api-request';
 import { clearRequestCache } from './route-handlers';
@@ -16,6 +15,7 @@ import {
   sendResponse,
   sendUnauthorized,
 } from './route-helpers';
+import { bffApiHost } from '../../setupTests';
 
 describe('route-helpers', () => {
   const digidClientId = oidcConfigDigid.clientID;
@@ -24,7 +24,6 @@ describe('route-helpers', () => {
   let resMock = ResponseMock.new();
 
   beforeAll(() => {
-    (authConfig as any).OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = false;
     oidcConfigEherkenning.clientID = 'test1';
     oidcConfigDigid.clientID = 'test2';
 
@@ -127,9 +126,9 @@ describe('route-helpers', () => {
   });
 
   test('queryParams', () => {
-    const reqMock = RequestMock.new().setQuery({ query: 'test' }).get();
-    const result = queryParams<{ query: string }>(reqMock);
-    expect(result).toBe('test');
+    const reqMock = RequestMock.new().setQuery({ paramName: 'test' }).get();
+    const result = queryParams<{ paramName: string }>(reqMock);
+    expect(result).toStrictEqual({ paramName: 'test' });
   });
 
   test('send404', () => {
@@ -139,7 +138,7 @@ describe('route-helpers', () => {
 
     expect(resMock.status).toHaveBeenCalledWith(404);
     expect(resMock.send).toHaveBeenCalledWith(
-      apiErrorResult('Not Found', null)
+      apiErrorResult('Not Found', null, 404)
     );
   });
 
@@ -150,13 +149,13 @@ describe('route-helpers', () => {
 
     expect(resMock.status).toHaveBeenCalledWith(401);
     expect(resMock.send).toHaveBeenCalledWith(
-      apiErrorResult('Unauthorized', null)
+      apiErrorResult('Unauthorized', null, 401)
     );
   });
 
   test('sendBadRequest', () => {
     const resMock = ResponseMock.new();
-    const responseData = apiErrorResult('No can do!', null, 400);
+    const responseData = apiErrorResult('Bad request: No can do!', null, 400);
 
     sendBadRequest(resMock, 'No can do!', null);
 
@@ -165,23 +164,29 @@ describe('route-helpers', () => {
   });
 
   test('isPublicEndpoint', () => {
-    const value = isPublicEndpoint('/api/v1/services/cms');
+    const value = isPublicEndpoint('/services/cms');
     expect(value).toBe(true);
 
-    const value2 = isPublicEndpoint('/api/v1/services/stream');
+    const value2 = isPublicEndpoint('/services/stream');
     expect(value2).toBe(false);
+
+    const value3 = isPublicEndpoint('/services/auth/anything');
+    expect(value3).toBe(false);
   });
 
   test('isProtectedRoute', () => {
-    const value = isProtectedRoute('/api/v1/services/stream');
+    const value = isProtectedRoute('/services/stream');
     expect(value).toBe(true);
 
-    const value2 = isProtectedRoute('/api/v1/services/cms');
+    const value2 = isProtectedRoute('/services/cms');
     expect(value2).toBe(false);
+
+    const value3 = isPublicEndpoint('/services/auth/anything');
+    expect(value3).toBe(false);
   });
 
   test('generateFullApiUrlBFF', () => {
     const value = generateFullApiUrlBFF('/services/stream');
-    expect(value).toBe('x');
+    expect(value).toBe(`${bffApiHost}/api/v1/services/stream`);
   });
 });
