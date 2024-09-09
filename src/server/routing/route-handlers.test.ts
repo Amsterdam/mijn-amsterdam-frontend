@@ -1,7 +1,11 @@
-import { RequestMock, ResponseMock } from '../../test-utils';
+import {
+  getReqMockWithOidc,
+  RequestMock,
+  ResponseMock,
+} from '../../test-utils';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import * as authHelpers from '../auth/auth-helpers';
-import { AuthProfile, AuthProfileAndToken } from '../auth/auth-types';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import { cache } from '../helpers/source-api-request';
 import { addToBlackList } from '../services/session-blacklist';
 import {
@@ -133,14 +137,12 @@ describe('routing.route-handlers', () => {
     const nextMock = vi.fn();
     const resMock = ResponseMock.new();
 
-    let reqMockWithOidc = RequestMock.new();
-    await reqMockWithOidc.createOIDCStub({
-      sid: sessionID,
+    const reqMock = await getReqMockWithOidc({
+      sid: 'x123y',
       authMethod: 'digid',
       profileType: 'private',
-      id: '1123',
+      id: '9988',
     });
-    const reqMock = reqMockWithOidc.get();
 
     const mocks = vi.hoisted(() => {
       return {

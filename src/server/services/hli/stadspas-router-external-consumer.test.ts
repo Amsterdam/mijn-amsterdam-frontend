@@ -30,6 +30,9 @@ async function createAuthenticatedRequestMock<
   T extends Record<string, string> = Record<string, string>,
 >(params: Record<string, string>) {
   const reqMock = RequestMock.new();
+  if (params) {
+    reqMock.setParams(params);
+  }
   await reqMock.createOIDCStub(USER_PROFILE);
   const reqMockWithTokenParams = reqMock.get<T>();
 

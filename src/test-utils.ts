@@ -108,5 +108,11 @@ export class RequestMock {
   }
 }
 
+export async function getReqMockWithOidc(profile: AuthProfile) {
+  let reqMockWithOidc = RequestMock.new();
+  await reqMockWithOidc.createOIDCStub(profile);
+  return reqMockWithOidc.get();
+}
+
 export const DEV_JWT =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
