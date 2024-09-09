@@ -13,6 +13,7 @@ import {
   isSessionCookieName,
 } from './auth-helpers';
 import { SessionData, TokenData } from './auth-types';
+import UID from 'uid-safe';
 
 describe('auth-helpers', () => {
   test('isSessionCookieName', () => {
@@ -38,6 +39,7 @@ describe('auth-helpers', () => {
         {
           authMethod: 'eherkenning',
           profileType: 'commercial',
+          sid: 'overridden',
         } as SessionData,
         {
           sub: '-unused-',
@@ -51,13 +53,17 @@ describe('auth-helpers', () => {
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EHERKENNING-KVK',
-        sid: 'test',
+        sid: 'overridden',
       });
     }
 
     {
       const profile = getAuthProfile(
-        { authMethod: 'digid', profileType: 'private' } as SessionData,
+        {
+          authMethod: 'digid',
+          profileType: 'private',
+          sid: 'overridden',
+        } as SessionData,
         {
           aud: 'test2',
           [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
@@ -69,13 +75,17 @@ describe('auth-helpers', () => {
         authMethod: 'digid',
         profileType: 'private',
         id: 'DIGID-BSN',
-        sid: 'test2',
+        sid: 'overridden',
       });
     }
 
     {
       const profile = getAuthProfile(
-        { authMethod: 'digid', profileType: 'private' } as SessionData,
+        {
+          authMethod: 'digid',
+          profileType: 'private',
+          sid: 'overridden',
+        } as SessionData,
         {
           aud: 'test_x',
           [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
@@ -87,7 +97,7 @@ describe('auth-helpers', () => {
         authMethod: 'digid',
         profileType: 'private',
         id: 'DIGID-BSN',
-        sid: 'test2b',
+        sid: 'overridden',
       });
     }
 
@@ -96,6 +106,7 @@ describe('auth-helpers', () => {
         {
           authMethod: 'eherkenning',
           profileType: 'commercial',
+          sid: 'overridden',
         } as SessionData,
         {
           sub: '',
@@ -109,7 +120,7 @@ describe('auth-helpers', () => {
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EH-KVK1',
-        sid: 'test3',
+        sid: 'overridden',
       });
     }
 
@@ -118,6 +129,7 @@ describe('auth-helpers', () => {
         {
           authMethod: 'eherkenning',
           profileType: 'commercial',
+          sid: 'overridden',
         } as SessionData,
         {
           sub: '',
@@ -131,7 +143,7 @@ describe('auth-helpers', () => {
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EH-KVK1',
-        sid: 'test4',
+        sid: 'overridden',
       });
     }
 
@@ -140,6 +152,7 @@ describe('auth-helpers', () => {
         {
           authMethod: 'eherkenning',
           profileType: 'commercial',
+          sid: 'overridden',
         } as SessionData,
         {
           sub: '',
@@ -154,7 +167,7 @@ describe('auth-helpers', () => {
         authMethod: 'eherkenning',
         profileType: 'commercial',
         id: 'EH-KVK1',
-        sid: 'test5',
+        sid: 'overridden',
       });
     }
   });
