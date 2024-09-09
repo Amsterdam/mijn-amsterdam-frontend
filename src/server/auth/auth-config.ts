@@ -5,6 +5,7 @@ import { getFromEnv } from '../helpers/env';
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
 import { getSessionStore } from './auth-session-store';
 import { TokenData } from './auth-types';
+import UID from 'uid-safe';
 
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
   'amsapp-stadspas-administratienummer';
@@ -55,6 +56,7 @@ export const oidcConfigDigid: ConfigParams = {
   afterCallback: async (req, res, session) => {
     return {
       ...session,
+      sid: UID.sync(8),
       profileType: 'private',
       authMethod: 'digid',
     };
@@ -67,6 +69,7 @@ export const oidcConfigEherkenning: ConfigParams = {
   afterCallback: async (req, res, session) => {
     return {
       ...session,
+      sid: UID.sync(8),
       profileType: 'commercial',
       authMethod: 'eherkenning',
     };

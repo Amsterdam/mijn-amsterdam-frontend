@@ -1,8 +1,6 @@
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
-import memoizee from 'memoizee';
 import { ParsedQs } from 'qs';
-import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
@@ -15,12 +13,7 @@ import {
   RETURNTO_MAMS_LANDING,
 } from './auth-config';
 import { authRoutes } from './auth-routes';
-import {
-  AuthProfile,
-  AuthProfileAndToken,
-  SessionData,
-  TokenData,
-} from './auth-types';
+import { AuthProfile, SessionData, TokenData } from './auth-types';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -44,7 +37,7 @@ export function getAuthProfile(
   const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[sessionData.authMethod](tokenData);
   return {
     id: tokenData[idAttr],
-    sid: tokenData.sid,
+    sid: sessionData.sid,
     authMethod: sessionData.authMethod,
     profileType: sessionData.profileType,
   };
