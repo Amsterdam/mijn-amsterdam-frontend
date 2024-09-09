@@ -151,7 +151,11 @@ export function getTransformerConfigBesluit(
     description: (aanvraag) =>
       hasDecision(aanvraag)
         ? `<p>
-         ${aanvraag.resultaat === 'toegewezen' ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel} per ${getDecisionDateTransformed(aanvraag)}` : `U krijgt geen ${aanvraag.titel}`}.
+         ${
+           aanvraag.resultaat === 'toegewezen'
+             ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
+             : `U krijgt geen ${aanvraag.titel}`
+         }.
       </p>
       ${decisionParagraph(aanvraag)}
       `
