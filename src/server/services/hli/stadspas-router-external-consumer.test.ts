@@ -1,8 +1,8 @@
+import nock from 'nock';
 import { remoteApi, RequestMock, ResponseMock } from '../../../test-utils';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { OIDC_SESSION_COOKIE_NAME } from '../../auth/auth-config';
-import * as authHelpers from '../../auth/auth-helpers';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { AuthProfile } from '../../auth/auth-types';
 import * as stadspas from './stadspas';
 import { forTesting } from './stadspas-router-external-consumer';
 import { StadspasDiscountTransaction } from './stadspas-types';
@@ -19,30 +19,35 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
 
 const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
 
+const USER_PROFILE: AuthProfile = {
+  sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+  profileType: 'private',
+  authMethod: 'digid',
+  id: 'x1',
+};
+
+async function createAuthenticatedRequestMock<
+  T extends Record<string, string> = Record<string, string>,
+>(params: Record<string, string>) {
+  const reqMock = RequestMock.new();
+  await reqMock.createOIDCStub(USER_PROFILE);
+  const reqMockWithTokenParams = reqMock.get<T>();
+
+  return reqMockWithTokenParams;
+}
+
 describe('hli/router-external-consumer', async () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
-  describe('Administratienummer endpoint', () => {
-    vi.spyOn(authHelpers, 'getAuth').mockResolvedValue({
-      profile: {
-        sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
-        profileType: 'private',
-        authMethod: 'digid',
-        id: 'x1',
-      },
-    } as AuthProfileAndToken);
-
+  describe('Administratienummer endpoint', async () => {
     const params = {
       token: 'x123z',
     };
-    const reqMockWithCookieAndTokenParams = RequestMock.new()
-      .setParams(params)
-      .setCookies({
-        [OIDC_SESSION_COOKIE_NAME]: 'foo-bar',
-      })
-      .get<typeof params>();
+
+    const reqMockWithTokenParams =
+      await createAuthenticatedRequestMock<typeof params>(params);
 
     test('OK', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
@@ -57,7 +62,7 @@ describe('hli/router-external-consumer', async () => {
       const resMock = ResponseMock.new();
 
       await forTesting.sendAdministratienummerResponse(
-        reqMockWithCookieAndTokenParams,
+        reqMockWithTokenParams,
         resMock
       );
 
@@ -77,11 +82,12 @@ describe('hli/router-external-consumer', async () => {
           clientidentificatie: '123-123',
         },
       });
-
+      const reqMockWithTokenParams =
+        await createAuthenticatedRequestMock<typeof params>(params);
       const resMock = ResponseMock.new();
 
       await forTesting.sendAdministratienummerResponse(
-        reqMockWithCookieAndTokenParams,
+        reqMockWithTokenParams,
         resMock
       );
 
@@ -99,12 +105,9 @@ describe('hli/router-external-consumer', async () => {
       );
     });
 
-    test.only('NO Digid login', async () => {
+    test('NO Digid login', async () => {
       const resMock = ResponseMock.new();
-      const params = {
-        token: 'x123z',
-      };
-      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
+      const reqMock = RequestMock.new().get<typeof params>();
 
       await forTesting.sendAdministratienummerResponse(reqMock, resMock);
 
@@ -123,7 +126,7 @@ describe('hli/router-external-consumer', async () => {
       const resMock = ResponseMock.new();
 
       await forTesting.sendAdministratienummerResponse(
-        reqMockWithCookieAndTokenParams,
+        reqMockWithTokenParams,
         resMock
       );
 
@@ -145,7 +148,7 @@ describe('hli/router-external-consumer', async () => {
       const resMock = ResponseMock.new();
 
       await forTesting.sendAdministratienummerResponse(
-        reqMockWithCookieAndTokenParams,
+        reqMockWithTokenParams,
         resMock
       );
 
