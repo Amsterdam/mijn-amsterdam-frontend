@@ -225,13 +225,6 @@ export default function HLIStadspas() {
                 </Grid.Cell>
               </>
             )}
-            {!isLoadingStadspas &&
-              !isLoadingTransacties &&
-              !transactionsApi.data.content?.length && (
-                <Grid.Cell span="all">
-                  <Paragraph>U heeft (nog) geen uitgaven.</Paragraph>
-                </Grid.Cell>
-              )}
           </>
         </Grid>
       </Screen>
