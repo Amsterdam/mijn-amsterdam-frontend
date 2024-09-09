@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import nock from 'nock';
-import { AuthProfileAndToken } from './server/auth/auth-types';
+import { AuthProfile, AuthProfileAndToken } from './server/auth/auth-types';
 import { bffApiHost, remoteApiHost } from './setupTests';
+import { createOIDCStub } from './server/routing/router-development';
+import UID from 'uid-safe';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',
@@ -11,6 +13,7 @@ const defaultReplyHeaders = {
 export const bffApi = nock(`${bffApiHost}:80`).defaultReplyHeaders(
   defaultReplyHeaders
 );
+
 export const remoteApi = nock(`${remoteApiHost}:80`).defaultReplyHeaders(
   defaultReplyHeaders
 );
@@ -53,7 +56,7 @@ export class ResponseMock {
   private constructor() {
     this.statusCode = 200;
     this.locals = {
-      requestID: '123',
+      requestID: UID.sync(18),
     };
   }
 
@@ -70,6 +73,7 @@ export class RequestMock {
   cookies: Record<string, string> = {};
   params: Record<string, string> = {};
   query: Record<string, string> = {};
+  oidc: Record<string, string> | null = null;
 
   static new() {
     return new RequestMock() as unknown as Request & RequestMock;
@@ -87,6 +91,12 @@ export class RequestMock {
 
   setQuery(query: typeof this.query) {
     this.query = query;
+    return this;
+  }
+
+  async createOIDCStub(authProfile: AuthProfile) {
+    const self = this as unknown as Request;
+    await createOIDCStub(self, authProfile);
     return this;
   }
 
