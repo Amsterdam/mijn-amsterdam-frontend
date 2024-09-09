@@ -57,11 +57,11 @@ function getSessionData(req: Request) {
 }
 
 export function getAuth(req: Request) {
-  const tokenData = req.oidc.user as TokenData;
-  const oidcToken = req.oidc.idToken ?? '';
+  const tokenData = (req.oidc?.user as TokenData | null) ?? null;
+  const oidcToken = req.oidc?.idToken ?? '';
   const sessionData = getSessionData(req);
 
-  if (!sessionData?.authMethod) {
+  if (!sessionData?.authMethod || !tokenData) {
     return null;
   }
 
