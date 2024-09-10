@@ -132,7 +132,7 @@ describe('routing.route-handlers', () => {
     expect(mockNext).toHaveBeenCalled();
   });
 
-  test.only('isBlacklistedHandler: Add to blacklist', async () => {
+  test('isBlacklistedHandler: Add to blacklist', async () => {
     const sessionID = 'test-session-id';
     const nextMock = vi.fn();
     const resMock = ResponseMock.new();
