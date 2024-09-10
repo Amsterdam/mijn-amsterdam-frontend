@@ -438,5 +438,5 @@ async function fetchAfisDocumentID(
     },
   });
 
-  return await requestData<AfisArcDocID>(config, requestID);
+  return requestData<AfisArcDocID>(config, requestID);
 }
