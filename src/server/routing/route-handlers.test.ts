@@ -1,11 +1,10 @@
 import {
+  getAuthProfileAndToken,
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
 } from '../../test-utils';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
-import * as authHelpers from '../auth/auth-helpers';
-import { AuthProfileAndToken } from '../auth/auth-types';
 import { cache } from '../helpers/source-api-request';
 import { addToBlackList } from '../services/session-blacklist';
 import {
@@ -67,15 +66,12 @@ describe('routing.route-handlers', () => {
 
   describe('isAuthenticated', () => {
     test('Is authenticated', async () => {
-      vi.spyOn(authHelpers, 'getAuth').mockReturnValue(
-        {} as AuthProfileAndToken
+      const reqMock = await getReqMockWithOidc(
+        getAuthProfileAndToken().profile
       );
-
-      const reqMock = RequestMock.new()
-        .setCookies({
-          [OIDC_SESSION_COOKIE_NAME]: 'test',
-        })
-        .get();
+      (reqMock as any).setCookies({
+        [OIDC_SESSION_COOKIE_NAME]: 'test',
+      });
 
       await isAuthenticated(reqMock, resMock, nextMock);
 
@@ -154,6 +150,7 @@ describe('routing.route-handlers', () => {
     });
 
     vi.mock('../services/db/db', async () => {
+      console.log('return dab');
       return {
         db: async () => mocks.db,
       };
