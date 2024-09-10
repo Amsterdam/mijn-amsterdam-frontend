@@ -423,7 +423,7 @@ export async function fetchAfisDocument(
  */
 async function fetchAfisDocumentID(
   requestID: RequestID,
-  factuurNummer: string
+  factuurNummer: AfisFactuur['factuurNummer']
 ) {
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) =>
