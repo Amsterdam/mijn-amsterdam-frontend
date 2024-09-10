@@ -431,7 +431,7 @@ async function fetchAfisDocumentID(
       `?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
     transformResponse: (data: AfisDocumentIDSource) => {
       const entryProperties = getFeedEntryProperties(data);
-      if (entryProperties.length >= 1) {
+      if (entryProperties.length) {
         return entryProperties[0].ArcDocId;
       }
       return null;
