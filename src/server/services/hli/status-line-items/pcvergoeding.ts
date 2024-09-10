@@ -1,4 +1,5 @@
 import { isSameDay, parseISO } from 'date-fns';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -195,6 +196,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
         <p>
          Uw kind krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.
         </p>
+        <p>De laptop of tablet is voor een periode van 5 jaar${regeling.datumEindeGeldigheid ? ` tot ${defaultDateFormat(regeling.datumEindeGeldigheid)}` : ''}.
       `,
   },
   {
