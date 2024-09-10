@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import {
+  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -33,6 +34,7 @@ import {
   AfisDocumentIDSource,
   AfisArcDocID,
   AfisDocumentDownloadSource,
+  AfisFactuurState,
 } from './afis-types';
 
 /** Returns if the person logging in, is known in the AFIS source API */
@@ -48,6 +50,7 @@ export async function fetchIsKnownInAFIS(
     data: {
       [profileIdentifierType]: authProfileAndToken.profile.id,
     },
+    // RP TODO: sessie id toevoegen en encrypten met het BP ID
     transformResponse: transformBusinessPartnerisKnownResponse,
     formatUrl(config) {
       return `${config.url}/businesspartner/${profileIdentifierType}/`;
@@ -259,10 +262,27 @@ export type AfisFacturenQueryParams = {
 export async function fetchAfisFacturen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  queryParams: AfisFacturenQueryParams
+  params: { state: AfisFactuurState; businessPartnerID: string; top?: string }
 ) {
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) => {
+      let queryParams = {
+        filter: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
+        select:
+          '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc',
+        orderBy: '$orderBy=NetDueDate asc, PostingDate asc',
+        top,
+      };
+      if (params.state === 'closed') {
+        queryParams = {
+          filter: `&$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
+          select:
+            '$select=ReverseDocument,ProfitCenterName,DunningLevel,InvoiceNo,NetDueDate',
+          orderBy: '$orderBy=NetDueDate desc',
+          top,
+        };
+      }
+
       const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
 
       let query = `?$inlinecount=allpages`;
@@ -290,14 +310,18 @@ export async function fetchAfisFacturen(
 }
 
 function transformFacturen(
-  fields: AfisFactuurPropertiesSource,
+  sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
   sessionID: AuthProfileAndToken['profile']['sid']
 ): AfisFactuur {
-  const [factuurNummerEncrypted] = encrypt(`${sessionID}:${fields.InvoiceNo}`);
+  const invoice = replaceXmlNulls(sourceInvoice);
 
-  const netPaymentAmountInCents = parseFloat(fields.NetPaymentAmount) * 100;
+  const [factuurNummerEncrypted] = encrypt(
+    `${sessionID}:${sourceInvoice.InvoiceNo}`
+  );
+
+  const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
   const amountInBalanceTransacCrcyInCents =
-    parseFloat(fields.AmountInBalanceTransacCrcy) * 100;
+    parseFloat(invoice.AmountInBalanceTransacCrcy) * 100;
 
   const amountOwed =
     (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) / 100;
@@ -305,29 +329,48 @@ function transformFacturen(
 
   let clearingDate = null;
   let clearingDateFormatted = null;
-  if (fields.ClearingDate) {
-    clearingDate = fields.ClearingDate;
+  if (invoice.ClearingDate) {
+    clearingDate = invoice.ClearingDate;
     clearingDateFormatted = defaultDateFormat(clearingDate);
   }
 
   return {
-    afzender: fields.ProfitCenterName,
-    datePublished: fields.PostingDate || null,
-    datePublishedFormatted: defaultDateFormat(fields.PostingDate) || null,
-    dueDate: fields.NetDueDate,
-    dueDateFormatted: defaultDateFormat(fields.NetDueDate),
+    afzender: invoice.ProfitCenterName,
+    datePublished: invoice.PostingDate || null,
+    datePublishedFormatted: defaultDateFormat(invoice.PostingDate) || null,
+    dueDate: invoice.NetDueDate,
+    dueDateFormatted: defaultDateFormat(invoice.NetDueDate),
     clearingDate,
     clearingDateFormatted,
     amountOwed: amountOwed ? amountOwed : 0,
     amountOwedFormatted: `€ ${amountOwedFormatted}`,
-    factuurNummer: fields.InvoiceNo,
-    status: determineFactuurStatus(fields),
-    paylink: fields.Paylink ? fields.Paylink : null,
+    factuurNummer: invoice.InvoiceNo,
+    status: determineFactuurStatus(invoice),
+    paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink: generateFullApiUrlBFF(
       BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
       { id: factuurNummerEncrypted }
     ),
   };
+}
+
+type XmlNullable<T extends Record<string, any>> = {
+  [key in keyof T]: { '@null': true } | T[key];
+};
+
+/** Replace all values that is an XML Null value with just `null`. */
+function replaceXmlNulls(
+  sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>
+): AfisFactuurPropertiesSource {
+  const withoutXmlNullable = Object.entries(sourceInvoice).map(([key, val]) => {
+    if (typeof val === 'object' && val !== null && val['@null']) {
+      return [key, null];
+    }
+    return [key, val];
+  });
+  const invoice: AfisFactuurPropertiesSource =
+    Object.fromEntries(withoutXmlNullable);
+  return invoice;
 }
 
 function determineFactuurStatus(

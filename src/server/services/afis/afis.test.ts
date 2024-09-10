@@ -482,13 +482,13 @@ describe('Afis', () => {
   describe('fetchAfisFacturen', async () => {
     const authProfileAndToken = getAuthProfileAndToken('private');
 
-    const queryParams = {
-      filter: '$A=1',
-      select: '$B=2',
-      orderBy: '$C=3',
-    };
-
     test('Openstaande factuur data is transformed and url is correctly formatted', async () => {
+      const openParams = {
+        state: 'open' as 'open',
+        businessPartnerID: '123456789',
+        top: undefined,
+      };
+
       remoteApi
         .get(ROUTES.facturen)
         .reply(
@@ -499,7 +499,7 @@ describe('Afis', () => {
       const response = (await fetchAfisFacturen(
         REQUEST_ID,
         authProfileAndToken,
-        queryParams
+        openParams
       )) as ApiSuccessResponse<AfisFactuur[]>;
 
       const openFactuur = response.content[0];
@@ -541,7 +541,7 @@ describe('Afis', () => {
       const response = (await fetchAfisFacturen(
         REQUEST_ID,
         authProfileAndToken,
-        queryParams
+        params
       )) as ApiSuccessResponse<AfisFactuur[]>;
 
       const geannuleerdeInvoice = response.content[0];

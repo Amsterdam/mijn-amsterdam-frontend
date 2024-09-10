@@ -36,7 +36,7 @@ export async function handleFetchAfisBusinessPartner(
   return fetchWithEncryptedBusinessPartnerID(handler, req, res);
 }
 
-function isPostiveInt(str: string): boolean {
+function isPostiveInt(str: string) {
   return /^\d+$/.test(str);
 }
 
@@ -52,7 +52,6 @@ export async function handleFetchAfisFacturen(
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  console.dir(encrypt(`${authProfileAndToken.profile.sid}:123456789`));
   const decryptResponse = decryptAndValidate(
     req.params.businessPartnerIdEncrypted,
     authProfileAndToken
@@ -63,55 +62,20 @@ export async function handleFetchAfisFacturen(
   }
 
   const businessPartnerID = decryptResponse.content;
-  let top = req.query?.top;
+  let top = req.query.top;
   if (typeof top !== 'string' || !isPostiveInt(top)) {
     top = undefined;
-  }
-
-  let queryParams: AfisFacturenQueryParams;
-
-  const state = req.params.state;
-  if (state === 'open') {
-    queryParams = {
-      filter: `$filter=Customer eq '${businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
-      select:
-        '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc',
-      orderBy: '$orderBy=NetDueDate asc, PostingDate asc',
-      top,
-    };
-  } else if (state === 'closed') {
-    queryParams = {
-      filter: `&$filter=Customer eq '${businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
-      select:
-        '$select=ReverseDocument,ProfitCenterName,DunningLevel,InvoiceNo,NetDueDate',
-      orderBy: '$orderBy=NetDueDate desc',
-      top,
-    };
-  } else {
-    return send404(res);
   }
 
   const response = await fetchAfisFacturen(
     res.locals.requestID,
     authProfileAndToken,
-    queryParams
+    { state: req.params.state, businessPartnerID, top }
   );
   return sendResponse(res, response);
 }
 
-export async function handleFetchAfisDocument(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  documentId: string
-) {
-  const response = await fetchAfisDocument(
-    requestID,
-    authProfileAndToken,
-    documentId
-  );
-  return response;
-}
-
+// RP TODO: closure weghalen en terugzettetn
 async function fetchWithEncryptedBusinessPartnerID<T>(
   handler: (
     req: Request,
