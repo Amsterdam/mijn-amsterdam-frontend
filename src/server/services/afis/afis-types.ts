@@ -74,7 +74,7 @@ export type AfisBusinessPartnerEmailSource = {
 };
 
 export type AfisBusinessPartnerDetails = {
-  businessPartnerId: number;
+  businessPartnerId: string;
   fullName: string;
   address: string;
   addressId: number;

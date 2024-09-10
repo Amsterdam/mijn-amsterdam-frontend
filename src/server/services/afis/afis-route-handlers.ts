@@ -1,22 +1,11 @@
 import { Request, Response } from 'express';
-import {
-  fetchAfisBusinessPartnerDetails,
-  fetchAfisFacturen,
-  AfisFacturenQueryParams,
-  fetchAfisDocument,
-} from './afis';
-import {
-  AuthProfileAndToken,
-  getAuth,
-  send404,
-  sendResponse,
-  sendUnauthorized,
-} from '../../helpers/app';
+import { fetchAfisBusinessPartnerDetails, fetchAfisFacturen } from './afis';
+import { getAuth, sendResponse, sendUnauthorized } from '../../helpers/app';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisFactuurState,
 } from './afis-types';
-import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { decrypt } from '../../helpers/encrypt-decrypt';
 import { decryptAndValidate } from '../shared/decrypt-route-param';
 
 export async function handleFetchAfisBusinessPartner(
@@ -69,7 +58,7 @@ export async function handleFetchAfisFacturen(
 
   const response = await fetchAfisFacturen(
     res.locals.requestID,
-    authProfileAndToken,
+    authProfileAndToken.profile.sid,
     { state: req.params.state, businessPartnerID, top }
   );
   return sendResponse(res, response);
@@ -87,6 +76,7 @@ async function fetchWithEncryptedBusinessPartnerID<T>(
 ) {
   let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
   try {
+    // RP TODO: gewoon als string houden
     businessPartnerId = parseInt(
       decrypt(req.params.businessPartnerIdEncrypted),
       10

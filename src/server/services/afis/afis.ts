@@ -1,6 +1,4 @@
-import { Request, Response } from 'express';
 import {
-  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -120,11 +118,10 @@ async function fetchBusinessPartner(
   };
 
   const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
-  const requestId = businessPartnerId.toString();
 
   return requestData<AfisBusinessPartnerDetails>(
     businessPartnerRequestConfig,
-    requestId
+    businessPartnerId
   );
 }
 
@@ -252,64 +249,71 @@ export async function fetchAfisBusinessPartnerDetails(
   return detailsResponse;
 }
 
-export type AfisFacturenQueryParams = {
-  filter: string;
-  select: string;
-  orderBy?: string;
+type AfisFacturenParams = {
+  state: AfisFactuurState;
+  businessPartnerID: string;
   top?: string;
 };
 
 export async function fetchAfisFacturen(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  params: { state: AfisFactuurState; businessPartnerID: string; top?: string }
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  params: AfisFacturenParams
 ) {
   const config = getApiConfig('AFIS', {
-    formatUrl: ({ url }) => {
-      let queryParams = {
-        filter: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
-        select:
-          '$select=Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc',
-        orderBy: '$orderBy=NetDueDate asc, PostingDate asc',
-        top,
-      };
-      if (params.state === 'closed') {
-        queryParams = {
-          filter: `&$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
-          select:
-            '$select=ReverseDocument,ProfitCenterName,DunningLevel,InvoiceNo,NetDueDate',
-          orderBy: '$orderBy=NetDueDate desc',
-          top,
-        };
-      }
-
-      const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
-
-      let query = `?$inlinecount=allpages`;
-      if (queryParams.top) {
-        query += `&$top=${top}`;
-      }
-      query += `&${queryParams.filter}&${queryParams.select}&${queryParams.orderBy}`;
-
-      const fullRoute = `${url}${baseRoute}${query}`;
-      return fullRoute;
-    },
-    transformResponse: (data: AfisOpenInvoiceSource) => {
-      const feedProperties = getFeedEntryProperties(data);
-      return feedProperties.map((invoiceProperties) => {
-        return transformFacturen(
-          invoiceProperties,
-          authProfileAndToken.profile.sid
-        );
-      });
-    },
+    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    transformResponse: (responseData) =>
+      transformFacturen(responseData, sessionID),
   });
 
   const response = await requestData<AfisFactuur[]>(config, requestID);
   return response;
 }
 
+function formatFactuurRequestURL(
+  baseUrl: string | undefined,
+  params: AfisFacturenParams
+): string {
+  const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
+
+  let query = `?$inlinecount=allpages`;
+  if (params.top) {
+    query += `&$top=${top}`;
+  }
+
+  const filters = {
+    open:
+      `$filter=Customer eq '${params.businessPartnerID}' and ` +
+      "IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')",
+    closed:
+      `$filter=Customer eq '${params.businessPartnerID}' and ` +
+      "IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')",
+  };
+
+  const select =
+    '$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,' +
+    'AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,' +
+    'DunningBlockingReason,SEPAMandate';
+
+  const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
+
+  query += `&${filters[params.state]}&${select}&${orderBy}`;
+
+  const fullRoute = `${baseUrl}${baseRoute}${query}`;
+  return fullRoute;
+}
+
 function transformFacturen(
+  responseData: AfisOpenInvoiceSource,
+  sessionID: AuthProfileAndToken['profile']['sid']
+) {
+  const feedProperties = getFeedEntryProperties(responseData);
+  return feedProperties.map((invoiceProperties) => {
+    return transformFactuur(invoiceProperties, sessionID);
+  });
+}
+
+function transformFactuur(
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
   sessionID: AuthProfileAndToken['profile']['sid']
 ): AfisFactuur {
@@ -358,7 +362,7 @@ type XmlNullable<T extends Record<string, any>> = {
   [key in keyof T]: { '@null': true } | T[key];
 };
 
-/** Replace all values that is an XML Null value with just `null`. */
+/** Replace all values that is an XML Null value with just value `null`. */
 function replaceXmlNulls(
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>
 ): AfisFactuurPropertiesSource {
@@ -374,22 +378,22 @@ function replaceXmlNulls(
 }
 
 function determineFactuurStatus(
-  fields: AfisFactuurPropertiesSource
+  sourceInvoice: AfisFactuurPropertiesSource
 ): AfisFactuur['status'] {
-  if (fields.IsCleared) {
-    return geslotenFactuurStatus(fields);
+  if (sourceInvoice.IsCleared) {
+    return geslotenFactuurStatus(sourceInvoice);
   }
-  return openstaandeFactuurStatus(fields);
+  return openstaandeFactuurStatus(sourceInvoice);
 }
 
 function geslotenFactuurStatus(
-  fields: AfisFactuurPropertiesSource
+  sourceInvoice: AfisFactuurPropertiesSource
 ): AfisFactuur['status'] {
-  if (fields.ReverseDocument) {
+  if (sourceInvoice.ReverseDocument) {
     return 'geannuleerd';
   }
 
-  if (fields.DunningLevel === 0) {
+  if (sourceInvoice.DunningLevel === 0) {
     return 'betaald';
   }
 
@@ -397,18 +401,18 @@ function geslotenFactuurStatus(
 }
 
 function openstaandeFactuurStatus(
-  fields: AfisFactuurPropertiesSource
+  sourceInvoice: AfisFactuurPropertiesSource
 ): AfisFactuur['status'] {
-  if (fields.DunningBlockingReason === 'D') {
+  if (sourceInvoice.DunningBlockingReason === 'D') {
     return 'in-dispuut';
   }
 
-  if (fields.AccountingDocumentType === 'BA') {
+  if (sourceInvoice.AccountingDocumentType === 'BA') {
     return 'gedeeltelijke-betaling';
   }
 
-  if (fields.DunningLevel === 0) {
-    if (fields.SEPAMandate) {
+  if (sourceInvoice.DunningLevel === 0) {
+    if (sourceInvoice.SEPAMandate) {
       return 'automatische-incasso';
     } else {
       return 'openstaand';
@@ -445,16 +449,16 @@ export async function fetchAfisDocument(
     transformResponse: (
       data: AfisDocumentDownloadSource
     ): DocumentDownloadData => {
-      const encodedDocument = Buffer.from(data.Record.attachment, 'base64');
+      const decodedDocument = Buffer.from(data.Record.attachment, 'base64');
       return {
-        data: encodedDocument,
+        data: decodedDocument,
         mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
         filename: data.Record.attachmentname ?? 'factuur.pdf',
       };
     },
   });
 
-  return await requestData<DocumentDownloadData>(config, requestID);
+  return requestData<DocumentDownloadData>(config, requestID);
 }
 
 /** Retrieve an ArcDocID from the AFIS source API.

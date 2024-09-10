@@ -31,15 +31,18 @@ import { AfisFactuur } from './afis-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 
 const FACTUUR_NUMMER = '12346789';
+const BUSINESS_PARTNER_ID = '12346789';
 
 const BASE_ROUTE = '/afis/RESTAdapter';
+const FACTUREN_ROUTE = `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`;
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
   businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27213423%27&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`,
   businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27430844%27`,
   businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27430844%27`,
-  facturen: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM?$inlinecount=allpages&$A=1&$B=2&$C=3`,
+  openstaandeFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${BUSINESS_PARTNER_ID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
+  geslotenFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${BUSINESS_PARTNER_ID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
   documentDownload: `${BASE_ROUTE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
   documentID:
     `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
@@ -483,29 +486,30 @@ describe('Afis', () => {
     const authProfileAndToken = getAuthProfileAndToken('private');
 
     test('Openstaande factuur data is transformed and url is correctly formatted', async () => {
-      const openParams = {
-        state: 'open' as 'open',
-        businessPartnerID: '123456789',
-        top: undefined,
-      };
-
       remoteApi
-        .get(ROUTES.facturen)
+        .get(ROUTES.openstaandeFacturen)
         .reply(
           200,
           require('../../../../mocks/fixtures/afis/openstaande-facturen.json')
         );
 
+      const openParams = {
+        state: 'open' as 'open',
+        businessPartnerID: BUSINESS_PARTNER_ID,
+        top: undefined,
+      };
+
       const response = (await fetchAfisFacturen(
         REQUEST_ID,
-        authProfileAndToken,
+        authProfileAndToken.profile.sid,
         openParams
       )) as ApiSuccessResponse<AfisFactuur[]>;
 
+      // All fields are listed here to test correct formatting.
       const openFactuur = response.content[0];
       expect(openFactuur).toStrictEqual({
         afzender: 'Moneymakers inc.',
-        amountOwed: -0.98,
+        amountOwed: -0.98, // Floating point negative number tested here.
         amountOwedFormatted: '€ -0,98',
         factuurNummer: '5555555',
         status: 'openstaand',
@@ -532,16 +536,22 @@ describe('Afis', () => {
 
     test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
       remoteApi
-        .get(ROUTES.facturen)
+        .get(ROUTES.geslotenFacturen)
         .reply(
           200,
           require('../../../../mocks/fixtures/afis/afgehandelde-facturen.json')
         );
 
+      const closedParams = {
+        state: 'closed' as 'closed',
+        businessPartnerID: BUSINESS_PARTNER_ID,
+        top: undefined,
+      };
+
       const response = (await fetchAfisFacturen(
         REQUEST_ID,
-        authProfileAndToken,
-        params
+        authProfileAndToken.profile.sid,
+        closedParams
       )) as ApiSuccessResponse<AfisFactuur[]>;
 
       const geannuleerdeInvoice = response.content[0];
