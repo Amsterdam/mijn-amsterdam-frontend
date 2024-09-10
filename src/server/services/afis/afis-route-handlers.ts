@@ -12,17 +12,19 @@ export async function handleFetchAfisBusinessPartner(
   req: Request<{ businessPartnerIdEncrypted: string }>,
   res: Response
 ) {
-  const handler = async (
-    _req: Request,
-    res: Response,
-    businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
-  ) => {
-    const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
+  let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  try {
+    // RP TODO: gewoon als string houden
+    businessPartnerId = parseInt(
+      decrypt(req.params.businessPartnerIdEncrypted),
+      10
+    );
+  } catch (error) {
+    return sendUnauthorized(res);
+  }
+  const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
 
-    return sendResponse(res, response);
-  };
-
-  return fetchWithEncryptedBusinessPartnerID(handler, req, res);
+  return sendResponse(res, response);
 }
 
 function isPostiveInt(str: string) {
@@ -62,28 +64,4 @@ export async function handleFetchAfisFacturen(
     { state: req.params.state, businessPartnerID, top }
   );
   return sendResponse(res, response);
-}
-
-// RP TODO: closure weghalen en terugzettetn
-async function fetchWithEncryptedBusinessPartnerID<T>(
-  handler: (
-    req: Request,
-    res: Response,
-    businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId']
-  ) => T,
-  req: Request,
-  res: Response
-) {
-  let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
-  try {
-    // RP TODO: gewoon als string houden
-    businessPartnerId = parseInt(
-      decrypt(req.params.businessPartnerIdEncrypted),
-      10
-    );
-  } catch (error) {
-    return sendUnauthorized(res);
-  }
-
-  return await handler(req, res, businessPartnerId);
 }
