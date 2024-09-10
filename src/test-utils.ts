@@ -29,7 +29,7 @@ export function getAuthProfileAndToken(
 ): AuthProfileAndToken {
   const authProfileAndToken: AuthProfileAndToken = {
     profile: {
-      authMethod: 'digid',
+      authMethod: profileType === 'private' ? 'digid' : 'eherkenning',
       profileType,
       id: 'I.M Mokum',
       sid: '0D8ugZyqnzPTyknBDwxsMPb7',
@@ -70,6 +70,7 @@ export class ResponseMock {
   write = vi.fn();
   clearCookie = vi.fn();
   render = vi.fn();
+  redirect = vi.fn();
 }
 
 export class RequestMock {
@@ -77,6 +78,7 @@ export class RequestMock {
   params: Record<string, string> = {};
   query: Record<string, string> = {};
   oidc: Record<string, string> | null = null;
+  url: string | null = null;
 
   static new() {
     return new RequestMock() as unknown as Request & RequestMock;
@@ -94,6 +96,11 @@ export class RequestMock {
 
   setQuery(query: typeof this.query) {
     this.query = query;
+    return this;
+  }
+
+  setUrl(url: string) {
+    this.url = url;
     return this;
   }
 

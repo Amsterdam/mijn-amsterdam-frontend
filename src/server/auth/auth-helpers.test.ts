@@ -8,12 +8,20 @@ import {
   OIDC_SESSION_COOKIE_NAME,
 } from './auth-config';
 import {
+  createLogoutHandler,
   getAuthProfile,
   hasSessionCookie,
   isSessionCookieName,
 } from './auth-helpers';
 import { SessionData, TokenData } from './auth-types';
 import UID from 'uid-safe';
+import {
+  getAuthProfileAndToken,
+  getReqMockWithOidc,
+  RequestMock,
+  ResponseMock,
+} from '../../test-utils';
+import * as blacklist from '../services/session-blacklist';
 
 describe('auth-helpers', () => {
   test('isSessionCookieName', () => {
@@ -170,5 +178,54 @@ describe('auth-helpers', () => {
         sid: 'overridden',
       });
     }
+  });
+
+  describe('createLogoutHandler', async () => {
+    const authProfileAndToken = getAuthProfileAndToken('commercial');
+    const reqMock = await getReqMockWithOidc(authProfileAndToken.profile);
+
+    (reqMock as unknown as RequestMock).setCookies({
+      [OIDC_SESSION_COOKIE_NAME]: 'foo-bar',
+    });
+
+    const resMock = ResponseMock.new();
+
+    (resMock as any).oidc = {
+      logout: vi.fn(),
+    };
+
+    const addToBlackListSpy = vi.spyOn(blacklist, 'addToBlackList');
+
+    beforeEach(() => {
+      addToBlackListSpy.mockClear();
+    });
+
+    test('Authenticated IDP logout', async () => {
+      const handler = createLogoutHandler('http://foo.bar');
+
+      await handler(reqMock, resMock);
+
+      expect(resMock.oidc.logout).toHaveBeenCalledWith({
+        logoutParams: {
+          id_token_hint: null,
+          logout_hint: '0D8ugZyqnzPTyknBDwxsMPb7',
+        },
+        returnTo: 'http://foo.bar',
+      });
+
+      expect(addToBlackListSpy).toHaveBeenCalledWith(
+        authProfileAndToken.profile.sid
+      );
+    });
+
+    test('Local logout', async () => {
+      const handler2 = createLogoutHandler('http://foo.bar', false);
+
+      await handler2(reqMock, resMock);
+
+      expect(resMock.clearCookie).toHaveBeenCalled();
+      expect(resMock.redirect).toHaveBeenCalledWith('http://foo.bar');
+      expect(addToBlackListSpy).not.toHaveBeenCalled();
+    });
   });
 });

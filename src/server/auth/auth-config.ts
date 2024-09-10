@@ -29,7 +29,7 @@ export const oidcConfigBase: ConfigParams = {
   // Cookie encryption
   secret: OIDC_COOKIE_ENCRYPTION_KEY,
   // Client secret
-  clientSecret: process.env.BFF_OIDC_SECRET,
+  clientSecret: getFromEnv('BFF_OIDC_SECRET', true),
   clientID: 'x', // Set in configs for digid and eherkenning, required by ConfigParams type.
   baseURL: BFF_OIDC_BASE_URL,
   issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
@@ -52,7 +52,7 @@ export const oidcConfigBase: ConfigParams = {
 
 export const oidcConfigDigid: ConfigParams = {
   ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_DIGID,
+  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_DIGID', true),
   afterCallback: async (req, res, session) => {
     return {
       ...session,
@@ -65,7 +65,7 @@ export const oidcConfigDigid: ConfigParams = {
 
 export const oidcConfigEherkenning: ConfigParams = {
   ...oidcConfigBase,
-  clientID: process.env.BFF_OIDC_CLIENT_ID_EHERKENNING,
+  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING', true),
   afterCallback: async (req, res, session) => {
     return {
       ...session,

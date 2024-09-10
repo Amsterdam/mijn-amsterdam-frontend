@@ -54,7 +54,11 @@ export function getAuth(req: Request) {
   const oidcToken = req.oidc?.idToken ?? '';
   const sessionData = getSessionData(req);
 
-  if (!sessionData?.authMethod || !tokenData) {
+  if (
+    !sessionData?.authMethod ||
+    !tokenData ||
+    !(sessionData.authMethod in OIDC_TOKEN_ID_ATTRIBUTE)
+  ) {
     return null;
   }
 

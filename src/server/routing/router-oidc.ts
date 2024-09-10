@@ -1,5 +1,6 @@
 import express, { Request, RequestHandler, Response } from 'express';
 import { ConfigParams, requiresAuth } from 'express-openid-connect';
+import { NextFunction } from 'express-serve-static-core';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
@@ -19,12 +20,10 @@ import {
   AUTH_CALLBACK,
   authRoutes,
 } from '../auth/auth-routes';
-import { captureException } from '../services/monitoring';
+import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
 import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
-import { NextFunction } from 'express-serve-static-core';
-import { getFromEnv } from '../helpers/env';
 
 export const oidcRouter = express.Router();
 
@@ -140,8 +139,7 @@ if (FeatureToggle.eherkenningActive) {
   );
 }
 
-// AuthMethod agnostic endpoints
-oidcRouter.get(authRoutes.AUTH_CHECK, async (req: Request, res: Response) => {
+async function authCheckHandler(req: Request, res: Response) {
   const auth = getAuth(req);
   switch (auth?.profile.authMethod) {
     case 'eherkenning':
@@ -151,7 +149,10 @@ oidcRouter.get(authRoutes.AUTH_CHECK, async (req: Request, res: Response) => {
   }
 
   return sendUnauthorized(res);
-});
+}
+
+// AuthMethod agnostic endpoints
+oidcRouter.get(authRoutes.AUTH_CHECK, authCheckHandler);
 
 oidcRouter.get(
   authRoutes.AUTH_TOKEN_DATA,
@@ -175,7 +176,7 @@ oidcRouter.get(
 );
 
 async function authLogoutHandler(req: Request, res: Response) {
-  let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
+  let redirectUrl = getFromEnv('MA_FRONTEND_URL', true) as string;
   let authMethodRequested = req.query.authMethod;
 
   if (hasSessionCookie(req) && !authMethodRequested) {
@@ -207,13 +208,20 @@ oidcRouter.get(
   createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string)
 );
 
+const DO_IDP_LOGOUT = false;
+// Only destroys the BFF Application session, no logout of TMA in our case.
 oidcRouter.get(
   authRoutes.AUTH_LOGOUT_EHERKENNING_LOCAL,
-  createLogoutHandler(getFromEnv('MA_FRONTEND_URL', true) as string, false)
+  createLogoutHandler(
+    getFromEnv('MA_FRONTEND_URL', true) as string,
+    DO_IDP_LOGOUT
+  )
 );
 
 export const forTesting = {
-  getOidcConfigByRequest,
+  authCheckHandler,
   authConfigHandler,
+  authInstances,
   authLogoutHandler,
+  getOidcConfigByRequest,
 };
