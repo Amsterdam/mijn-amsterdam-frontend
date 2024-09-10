@@ -32,22 +32,18 @@ import {
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 import { BffEndpoints } from './bff-routes';
-import { isProtectedRoute, sendUnauthorized } from './route-helpers';
-import { isAuthenticated, isBlacklistedHandler } from './route-handlers';
+import {
+  handleCheckProtectedRoute,
+  isAuthenticated,
+  isBlacklistedHandler,
+} from './route-handlers';
+import { sendUnauthorized } from './route-helpers';
 
 export const router = express.Router();
 
-router.use(
-  (req: Request, res: Response, next: NextFunction) => {
-    // Skip router if we've entered a public route.
-    if (!isProtectedRoute(req.path)) {
-      return next('router');
-    }
-    return next();
-  },
-  isAuthenticated,
-  isBlacklistedHandler
-);
+router.BFF_ID = 'router-protected';
+
+router.use(handleCheckProtectedRoute, isAuthenticated, isBlacklistedHandler);
 
 router.get(
   BffEndpoints.SERVICES_ALL,

@@ -27,6 +27,8 @@ import { sendUnauthorized } from './route-helpers';
 
 export const oidcRouter = express.Router();
 
+oidcRouter.BFF_ID = 'router-oidc';
+
 // Prevent caching the responses from this oidcRouter.
 oidcRouter.use(nocache);
 

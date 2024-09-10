@@ -66,3 +66,14 @@ declare const MA_BUILD_ID: string;
 
 // Is the app built on azure or not.
 declare const MA_IS_AZ: string;
+
+declare global {
+  declare module 'express-serve-static-core' {
+    interface Locals {
+      requestID: string;
+    }
+    interface Router {
+      BFF_ID: string;
+    }
+  }
+}

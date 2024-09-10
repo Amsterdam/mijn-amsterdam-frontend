@@ -26,6 +26,7 @@ import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
 import { sendUnauthorized } from './route-helpers';
 
 export const authRouterDevelopment = express.Router();
+authRouterDevelopment.BFF_ID = 'router-dev';
 
 export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];

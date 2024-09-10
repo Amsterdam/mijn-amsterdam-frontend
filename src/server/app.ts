@@ -163,7 +163,7 @@ app.use((req: Request, res: Response) => {
   return res.end();
 });
 
-(async function startServerBFF() {
+async function startServerBFF() {
   if (IS_DEBUG) {
     await import('log-that-http');
   }
@@ -184,7 +184,14 @@ app.use((req: Request, res: Response) => {
   // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
   server.keepAliveTimeout = 60 * 1000;
   server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
-})();
+}
 
-// Start Cron jobs
-cleanupSessionBlacklistTable.start();
+if (require.main?.filename.endsWith('bffserver.ts')) {
+  startServerBFF();
+  // Start Cron jobs
+  cleanupSessionBlacklistTable.start();
+}
+
+export const forTesting = {
+  app,
+};

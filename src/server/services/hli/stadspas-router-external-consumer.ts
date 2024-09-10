@@ -55,7 +55,10 @@ const apiResponseErrors: Record<string, ApiError> = {
 } as const;
 
 export const routerInternet = express.Router();
+routerInternet.BFF_ID = 'external-consumer-public';
+
 export const routerPrivateNetwork = express.Router();
+routerPrivateNetwork.BFF_ID = 'external-consumer-private-network';
 
 routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,

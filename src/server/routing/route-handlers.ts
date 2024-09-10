@@ -8,9 +8,20 @@ import {
   isRequestAuthenticated,
 } from '../auth/auth-helpers';
 import { clearSessionCache } from '../helpers/source-api-request';
-import { captureMessage } from '../services/monitoring';
 import { getIsBlackListed } from '../services/session-blacklist';
-import { sendUnauthorized } from './route-helpers';
+import { isProtectedRoute, sendUnauthorized } from './route-helpers';
+
+export function handleCheckProtectedRoute(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  // Skip router if we've entered a public route.
+  if (!isProtectedRoute(req.path)) {
+    return next('router');
+  }
+  return next();
+}
 
 export async function isBlacklistedHandler(
   req: Request,
