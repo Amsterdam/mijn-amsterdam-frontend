@@ -98,10 +98,10 @@ export type AfisFactuur = {
   afzender: string;
   datePublished: string | null;
   datePublishedFormatted: string | null;
-  dueDate: string;
-  dueDateFormatted: string;
-  clearingDate: string | null;
-  clearingDateFormatted: string | null;
+  paymentDueDate: string;
+  paymentDueDateFormatted: string;
+  debtClearingDate: string | null;
+  debtClearingDateFormatted: string | null;
   amountOwed: number;
   amountOwedFormatted: string;
   factuurNummer: string;
@@ -122,13 +122,15 @@ type AfisFactuurStatus =
 export type AfisOpenInvoiceSource =
   AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
 
-/** # Extra property information
- *
- * `NetPaymentAmount`: Is a negative or zero decimal number and represents money that is -
- *   already payed for the 'factuur'.
- * `AmountInBalanceTransacCrcy`: Is a static decimal number and represents the amount that should be payed.
- *   When this is negative it might be a 'krediet factuur' which means that money shall be returned to the one -
- *   recieving this 'factuur' (RP TODO: Review 'krediet factuur' part when Danish knows more about this).
+/** Extra property information
+ *  ==========================
+ * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
+ * `NetPaymentAmount`: Is a negative decimal number and represents money that is -
+ *   already payed for this item.
+ * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
+ *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
+ *   to the debtor.
+ *  `IsCleared`: `true` means the 'factuur' is fully payed for.
  */
 export type AfisFactuurPropertiesSource = {
   DunningLevel: number;

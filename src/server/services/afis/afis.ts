@@ -331,21 +331,21 @@ function transformFactuur(
     (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) / 100;
   const amountOwedFormatted = amountOwed ? displayAmount(amountOwed) : 0;
 
-  let clearingDate = null;
-  let clearingDateFormatted = null;
+  let debtClearingDate = null;
+  let debtClearingDateFormatted = null;
   if (invoice.ClearingDate) {
-    clearingDate = invoice.ClearingDate;
-    clearingDateFormatted = defaultDateFormat(clearingDate);
+    debtClearingDate = invoice.ClearingDate;
+    debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
   return {
     afzender: invoice.ProfitCenterName,
     datePublished: invoice.PostingDate || null,
     datePublishedFormatted: defaultDateFormat(invoice.PostingDate) || null,
-    dueDate: invoice.NetDueDate,
-    dueDateFormatted: defaultDateFormat(invoice.NetDueDate),
-    clearingDate,
-    clearingDateFormatted,
+    paymentDueDate: invoice.NetDueDate,
+    paymentDueDateFormatted: defaultDateFormat(invoice.NetDueDate),
+    debtClearingDate,
+    debtClearingDateFormatted,
     amountOwed: amountOwed ? amountOwed : 0,
     amountOwedFormatted: `€ ${amountOwedFormatted}`,
     factuurNummer: invoice.InvoiceNo,
@@ -362,7 +362,7 @@ type XmlNullable<T extends Record<string, any>> = {
   [key in keyof T]: { '@null': true } | T[key];
 };
 
-/** Replace all values that is an XML Null value with just value `null`. */
+/** Replace all values that is an XML Null value with just the value `null`. */
 function replaceXmlNulls(
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>
 ): AfisFactuurPropertiesSource {
@@ -372,9 +372,7 @@ function replaceXmlNulls(
     }
     return [key, val];
   });
-  const invoice: AfisFactuurPropertiesSource =
-    Object.fromEntries(withoutXmlNullable);
-  return invoice;
+  return Object.fromEntries(withoutXmlNullable);
 }
 
 function determineFactuurStatus(

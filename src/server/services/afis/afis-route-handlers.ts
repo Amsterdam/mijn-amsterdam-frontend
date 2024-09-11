@@ -15,6 +15,7 @@ export async function handleFetchAfisBusinessPartner(
   let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
   try {
     // RP TODO: gewoon als string houden
+    // RP TODO: grote pr van tim nakijken
     businessPartnerId = parseInt(
       decrypt(req.params.businessPartnerIdEncrypted),
       10

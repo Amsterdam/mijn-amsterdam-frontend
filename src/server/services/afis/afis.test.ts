@@ -513,10 +513,10 @@ describe('Afis', () => {
         amountOwedFormatted: '€ -0,98',
         factuurNummer: '5555555',
         status: 'openstaand',
-        dueDate: '2023-03-23T00:00:00',
-        dueDateFormatted: '23 maart 2023',
-        clearingDate: null,
-        clearingDateFormatted: null,
+        paymentDueDate: '2023-03-23T00:00:00',
+        paymentDueDateFormatted: '23 maart 2023',
+        debtClearingDate: null,
+        debtClearingDateFormatted: null,
         paylink: 'http://localhost:3100/mocks-server/afis/paylink',
         datePublished: '2023-03-23T00:00:00',
         datePublishedFormatted: '23 maart 2023',
@@ -526,6 +526,7 @@ describe('Afis', () => {
 
       const automatischeIncassoFactuur = response.content[1];
       expect(automatischeIncassoFactuur.status).toBe('automatische-incasso');
+      expect(automatischeIncassoFactuur.paymentDueDate).toBe(null);
 
       const inDispuutInvoice = response.content[2];
       expect(inDispuutInvoice.status).toBe('in-dispuut');
@@ -563,10 +564,10 @@ describe('Afis', () => {
         datePublishedFormatted: null,
         documentDownloadLink:
           'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
-        dueDate: '2023-06-12T00:00:00',
-        dueDateFormatted: '12 juni 2023',
-        clearingDate: null,
-        clearingDateFormatted: null,
+        paymentDueDate: '2023-06-12T00:00:00',
+        paymentDueDateFormatted: '12 juni 2023',
+        debtClearingDate: null,
+        debtClearingDateFormatted: null,
         factuurNummer: '',
         paylink: null,
         status: 'betaald',

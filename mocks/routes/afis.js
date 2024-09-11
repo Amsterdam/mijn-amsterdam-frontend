@@ -159,6 +159,8 @@ module.exports = [
               ? 'afgehandelde-facturen'
               : 'openstaande-facturen';
 
+            // DO NOT adjust this mock data (tests depend on it).
+            // If needed copy, mutate and let it point to the newly made copy.
             return res.send(require(`../fixtures/afis/${filename}.json`));
           },
         },

@@ -72,7 +72,9 @@
             "ProfitCenterName": "Tada Gochelaars",
             "SEPAMandate": "EenGevuldeSepaMandate",
             "PostingDate": "2023-04-11T00:00:00",
-            "NetDueDate": "2023-05-11T00:00:00",
+            "NetDueDate": {
+              "@null": true
+            },
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "230.00",
             "InvoiceNo": "5555555",
