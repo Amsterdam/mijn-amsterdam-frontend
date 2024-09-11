@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import { fetchAfisBusinessPartnerDetails, fetchAfisFacturen } from './afis';
 import { getAuth, sendResponse, sendUnauthorized } from '../../helpers/app';
-import {
-  AfisBusinessPartnerDetailsTransformed,
-  AfisFactuurState,
-} from './afis-types';
+import { AfisFactuurState } from './afis-types';
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { decryptAndValidate } from '../shared/decrypt-route-param';
 import { captureException } from '../monitoring';
@@ -13,7 +10,7 @@ export async function handleFetchAfisBusinessPartner(
   req: Request<{ businessPartnerIdEncrypted: string }>,
   res: Response
 ) {
-  let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  let businessPartnerId: string;
 
   try {
     businessPartnerId = decrypt(req.params.businessPartnerIdEncrypted);

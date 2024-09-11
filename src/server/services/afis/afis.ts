@@ -117,7 +117,7 @@ function transformBusinessPartnerisKnownResponse(
 
 async function fetchBusinessPartner(
   requestID: RequestID,
-  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
+  businessPartnerId: string
 ) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerDetailsResponse,
@@ -228,7 +228,7 @@ function transformEmailResponse(
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
   requestID: RequestID,
-  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
+  businessPartnerId: string
 ) {
   const detailsResponse = await fetchBusinessPartner(
     requestID,
