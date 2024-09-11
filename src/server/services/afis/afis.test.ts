@@ -31,18 +31,19 @@ import { AfisFactuur } from './afis-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 
 const FACTUUR_NUMMER = '12346789';
-const BUSINESS_PARTNER_ID = '12346789';
+const GENERIC_ID = '12346789';
+const ADRRESS_ID = 430844;
 
 const BASE_ROUTE = '/afis/RESTAdapter';
 const FACTUREN_ROUTE = `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`;
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
-  businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27213423%27&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`,
-  businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27430844%27`,
-  businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27430844%27`,
-  openstaandeFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${BUSINESS_PARTNER_ID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
-  geslotenFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${BUSINESS_PARTNER_ID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
+  businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27${GENERIC_ID}%27&$select=BusinessPartner,%20FullName,%20AddressID,%20CityName,%20Country,%20HouseNumber,%20HouseNumberSupplementText,%20PostalCode,%20Region,%20StreetName,%20StreetPrefixName,%20StreetSuffixName`,
+  businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
+  businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
+  openstaandeFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
+  geslotenFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
   documentDownload: `${BASE_ROUTE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
   documentID:
     `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
@@ -263,7 +264,7 @@ describe('Afis', () => {
             content: {
               '@type': 'application/xml',
               properties: {
-                BusinessPartner: 515177,
+                BusinessPartner: GENERIC_ID,
                 FullName: 'Taxon Expeditions BV',
                 AddressID: 430844,
                 CityName: 'Leiden',
@@ -325,15 +326,17 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerEmailAddress)
         .reply(200, responseBodyBusinessEmailAddress);
 
-      const businessPartnerId = 213423;
-      const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
+      const response = await fetchAfisBusinessPartnerDetails(
+        REQUEST_ID,
+        GENERIC_ID
+      );
 
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
             "address": "Rembrandtstraat 20 2311 VW Leiden",
             "addressId": 430844,
-            "businessPartnerId": 515177,
+            "businessPartnerId": "12346789",
             "email": "xxmail@arjanappel.nl",
             "fullName": "Taxon Expeditions BV",
             "phone": "+31622030313",
@@ -355,14 +358,17 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerDetails)
         .reply(200, responseBodyBusinessDetailsWithoutAddressID);
 
-      const response = await fetchAfisBusinessPartnerDetails(213423);
+      const response = await fetchAfisBusinessPartnerDetails(
+        REQUEST_ID,
+        GENERIC_ID
+      );
 
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
             "address": "Rembrandtstraat 20 2311 VW Leiden",
             "addressId": null,
-            "businessPartnerId": 515177,
+            "businessPartnerId": "12346789",
             "fullName": "Taxon Expeditions BV",
           },
           "status": "OK",
@@ -383,15 +389,17 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerEmailAddress)
         .replyWithError('error retrieving doc');
 
-      const businessPartnerId = 213423;
-      let response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
+      let response = await fetchAfisBusinessPartnerDetails(
+        REQUEST_ID,
+        GENERIC_ID
+      );
 
       expect(response).toMatchObject({
         content: {
-          businessPartnerId: 515177,
+          businessPartnerId: GENERIC_ID,
           fullName: 'Taxon Expeditions BV',
           address: 'Rembrandtstraat 20 2311 VW Leiden',
-          addressId: 430844,
+          addressId: ADRRESS_ID,
         },
         status: 'OK',
         failedDependencies: {
@@ -414,8 +422,10 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerDetails)
         .replyWithError('error retrieving doc');
 
-      const businessPartnerId = 213423;
-      const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
+      const response = await fetchAfisBusinessPartnerDetails(
+        REQUEST_ID,
+        GENERIC_ID
+      );
 
       expect(response).toMatchInlineSnapshot(`
         {
@@ -440,7 +450,10 @@ describe('Afis', () => {
       },
     });
 
-    const response = await fetchAfisBusinessPartnerDetails(213423);
+    const response = await fetchAfisBusinessPartnerDetails(
+      REQUEST_ID,
+      GENERIC_ID
+    );
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -467,7 +480,10 @@ describe('Afis', () => {
       },
     });
 
-    const response2 = await fetchAfisBusinessPartnerDetails(213423);
+    const response2 = await fetchAfisBusinessPartnerDetails(
+      REQUEST_ID,
+      GENERIC_ID
+    );
 
     expect(response2).toMatchInlineSnapshot(`
       {
@@ -495,7 +511,7 @@ describe('Afis', () => {
 
       const openParams = {
         state: 'open' as 'open',
-        businessPartnerID: BUSINESS_PARTNER_ID,
+        businessPartnerID: GENERIC_ID,
         top: undefined,
       };
 
@@ -545,7 +561,7 @@ describe('Afis', () => {
 
       const closedParams = {
         state: 'closed' as 'closed',
-        businessPartnerID: BUSINESS_PARTNER_ID,
+        businessPartnerID: GENERIC_ID,
         top: undefined,
       };
 

@@ -7,23 +7,25 @@ import {
 } from './afis-types';
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { decryptAndValidate } from '../shared/decrypt-route-param';
+import { captureException } from '../monitoring';
 
 export async function handleFetchAfisBusinessPartner(
   req: Request<{ businessPartnerIdEncrypted: string }>,
   res: Response
 ) {
   let businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+
   try {
-    // RP TODO: gewoon als string houden
-    // RP TODO: grote pr van tim nakijken
-    businessPartnerId = parseInt(
-      decrypt(req.params.businessPartnerIdEncrypted),
-      10
-    );
+    businessPartnerId = decrypt(req.params.businessPartnerIdEncrypted);
   } catch (error) {
+    captureException(error);
     return sendUnauthorized(res);
   }
-  const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
+
+  const response = await fetchAfisBusinessPartnerDetails(
+    res.locals.requestID,
+    businessPartnerId
+  );
 
   return sendResponse(res, response);
 }

@@ -34,7 +34,6 @@ import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
 import {
   handleFetchAfisBusinessPartner,
-  handleFetchAfisDocument,
   handleFetchAfisFacturen,
 } from './services/afis/afis-route-handlers';
 import { fetchAfisDocument } from './services/afis/afis';

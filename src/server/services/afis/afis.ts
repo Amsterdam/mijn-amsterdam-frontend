@@ -6,7 +6,11 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import {
+  AuthProfileAndToken,
+  generateFullApiUrlBFF,
+  SessionID,
+} from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import {
@@ -48,8 +52,11 @@ export async function fetchIsKnownInAFIS(
     data: {
       [profileIdentifierType]: authProfileAndToken.profile.id,
     },
-    // RP TODO: sessie id toevoegen en encrypten met het BP ID
-    transformResponse: transformBusinessPartnerisKnownResponse,
+    transformResponse: (response) =>
+      transformBusinessPartnerisKnownResponse(
+        response,
+        authProfileAndToken.profile.sid
+      ),
     formatUrl(config) {
       return `${config.url}/businesspartner/${profileIdentifierType}/`;
     },
@@ -70,7 +77,8 @@ function transformBusinessPartnerisKnownResponse(
   response:
     | AfisBusinessPartnerPrivateResponseSource
     | AfisBusinessPartnerCommercialResponseSource
-    | string
+    | string,
+  sessionID: SessionID
 ) {
   if (!response || typeof response === 'string') {
     return null;
@@ -98,7 +106,7 @@ function transformBusinessPartnerisKnownResponse(
   }
 
   if (businessPartnerId) {
-    [businessPartnerIdEncrypted] = encrypt(businessPartnerId);
+    [businessPartnerIdEncrypted] = encrypt(`${sessionID}:${businessPartnerId}`);
   }
 
   return {
@@ -108,6 +116,7 @@ function transformBusinessPartnerisKnownResponse(
 }
 
 async function fetchBusinessPartner(
+  requestID: RequestID,
   businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
 ) {
   const additionalConfig: DataRequestConfig = {
@@ -121,7 +130,7 @@ async function fetchBusinessPartner(
 
   return requestData<AfisBusinessPartnerDetails>(
     businessPartnerRequestConfig,
-    businessPartnerId
+    requestID
   );
 }
 
@@ -155,6 +164,7 @@ function transformBusinessPartnerDetailsResponse(
 }
 
 async function fetchPhoneNumber(
+  requestID: RequestID,
   addressId: AfisBusinessPartnerDetails['addressId']
 ) {
   const additionalConfig: DataRequestConfig = {
@@ -165,11 +175,10 @@ async function fetchPhoneNumber(
   };
 
   const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
-  const requestId = addressId.toString();
 
   return requestData<AfisBusinessPartnerPhone>(
     businessPartnerRequestConfig,
-    requestId
+    requestID
   );
 }
 
@@ -185,7 +194,10 @@ function transformPhoneResponse(
   return transformedResponse;
 }
 
-async function fetchEmail(addressId: AfisBusinessPartnerDetails['addressId']) {
+async function fetchEmail(
+  requestID: RequestID,
+  addressId: AfisBusinessPartnerDetails['addressId']
+) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformEmailResponse,
     formatUrl(config) {
@@ -194,11 +206,10 @@ async function fetchEmail(addressId: AfisBusinessPartnerDetails['addressId']) {
   };
 
   const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
-  const requestId = addressId.toString();
 
   return requestData<AfisBusinessPartnerEmail>(
     businessPartnerRequestConfig,
-    requestId
+    requestID
   );
 }
 
@@ -216,13 +227,23 @@ function transformEmailResponse(
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
+  requestID: RequestID,
   businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
 ) {
-  const detailsResponse = await fetchBusinessPartner(businessPartnerId);
+  const detailsResponse = await fetchBusinessPartner(
+    requestID,
+    businessPartnerId
+  );
 
   if (detailsResponse.status === 'OK' && detailsResponse.content?.addressId) {
-    const phoneRequest = fetchPhoneNumber(detailsResponse.content.addressId);
-    const emailRequest = fetchEmail(detailsResponse.content.addressId);
+    const phoneRequest = fetchPhoneNumber(
+      requestID,
+      detailsResponse.content.addressId
+    );
+    const emailRequest = fetchEmail(
+      requestID,
+      detailsResponse.content.addressId
+    );
 
     const [phoneResponseSettled, emailResponseSettled] =
       await Promise.allSettled([phoneRequest, emailRequest]);
