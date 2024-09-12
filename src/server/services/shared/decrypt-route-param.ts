@@ -8,7 +8,7 @@ import {
 
 /** Decrypt an encrypted 'sessionid:id' and validate it.
  */
-export function decryptAndValidate(
+export function decryptEncryptedRouteParamAndValidateSessionID(
   idsEncrypted: string,
   authProfileAndToken: AuthProfileAndToken
 ) {

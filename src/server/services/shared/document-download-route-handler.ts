@@ -6,7 +6,7 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken, getAuth } from '../../helpers/app';
-import { decryptAndValidate } from './decrypt-route-param';
+import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';
@@ -38,7 +38,7 @@ export function downloadDocumentRouteHandler(
   ) {
     const authProfileAndToken = await getAuth(req);
 
-    const decryptResult = decryptAndValidate(
+    const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
       req.params.id,
       authProfileAndToken
     );

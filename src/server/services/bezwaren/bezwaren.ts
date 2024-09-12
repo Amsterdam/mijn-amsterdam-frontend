@@ -17,7 +17,7 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   Bezwaar,
@@ -420,7 +420,7 @@ export async function fetchBezwaarDetail(
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
-  const decryptResult = decryptAndValidate(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     zaakIdEncrypted,
     authProfileAndToken
   );

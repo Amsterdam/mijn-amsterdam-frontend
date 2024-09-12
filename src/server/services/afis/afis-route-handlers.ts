@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getAuth, sendResponse } from '../../helpers/app';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { fetchAfisBusinessPartnerDetails, fetchAfisFacturen } from './afis';
 import { AfisFactuurState } from './afis-types';
 
@@ -10,7 +10,7 @@ export async function handleFetchAfisBusinessPartner(
 ) {
   const authProfileAndToken = await getAuth(req);
 
-  const decryptResponse = decryptAndValidate(
+  const decryptResponse = decryptEncryptedRouteParamAndValidateSessionID(
     req.params.businessPartnerIdEncrypted,
     authProfileAndToken
   );
@@ -45,7 +45,7 @@ export async function handleFetchAfisFacturen(
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  const decryptResponse = decryptAndValidate(
+  const decryptResponse = decryptEncryptedRouteParamAndValidateSessionID(
     req.params.businessPartnerIdEncrypted,
     authProfileAndToken
   );
