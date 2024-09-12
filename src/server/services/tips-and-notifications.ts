@@ -205,8 +205,8 @@ async function fetchServicesNotifications(
     const services: NotificationServices = notificationServices[profileType];
 
     const results = await Promise.allSettled(
-      Object.values(services).map((fetchNotifactions) =>
-        fetchNotifactions(requestID, authProfileAndToken)
+      Object.values(services).map((fetchNotifications) =>
+        fetchNotifications(requestID, authProfileAndToken)
       )
     );
 
