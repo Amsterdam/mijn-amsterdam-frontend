@@ -209,7 +209,7 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
         ? `
-          <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''} doen.</p>
+          <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : 'de einddatum'} doen.</p>
           <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb</a> voor meer informatie.</p>`
         : ''
     }
