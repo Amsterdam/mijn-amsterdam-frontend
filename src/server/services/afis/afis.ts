@@ -480,8 +480,7 @@ async function fetchAfisDocumentID(
 ) {
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) =>
-      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02\
-?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
+      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
     transformResponse: (data: AfisDocumentIDSource) => {
       const entryProperties = getFeedEntryProperties(data);
       if (entryProperties.length) {
