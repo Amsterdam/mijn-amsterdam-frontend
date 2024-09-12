@@ -303,18 +303,15 @@ function formatFactuurRequestURL(
   }
 
   const filters = {
-    open:
-      `$filter=Customer eq '${params.businessPartnerID}' and ` +
-      "IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')",
-    closed:
-      `$filter=Customer eq '${params.businessPartnerID}' and ` +
-      "IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')",
+    open: `$filter=Customer eq '${params.businessPartnerID}' and \
+IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
+    closed: `$filter=Customer eq '${params.businessPartnerID}' and \
+IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
   };
 
-  const select =
-    '$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,' +
-    'AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,' +
-    'DunningBlockingReason,SEPAMandate';
+  const select = `$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,\
+AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,\
+DunningBlockingReason,SEPAMandate`;
 
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
@@ -493,8 +490,8 @@ async function fetchAfisDocumentID(
 ) {
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) =>
-      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02` +
-      `?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
+      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02\
+?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
     transformResponse: (data: AfisDocumentIDSource) => {
       const entryProperties = getFeedEntryProperties(data);
       if (entryProperties.length) {
