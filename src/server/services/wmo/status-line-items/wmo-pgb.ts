@@ -1,7 +1,7 @@
 import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
 import {
   AANVRAAG,
-  EINDE_RECHT,
+  EINDE_RECHT_PGB,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
   isDecisionStatusActive,
@@ -13,5 +13,5 @@ export const PGB: ZorgnedStatusLineItemTransformerConfig[] = [
   IN_BEHANDELING,
   MEER_INFORMATIE,
   getTransformerConfigBesluit(isDecisionStatusActive, false),
-  EINDE_RECHT,
+  EINDE_RECHT_PGB,
 ];

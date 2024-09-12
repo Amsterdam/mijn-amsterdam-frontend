@@ -1671,18 +1671,18 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
       {
         "datePublished": "2024-08-29T16:48:11.997",
         "id": "B2814508",
-        "title": "Naam in Inkijk-API",
+        "title": "Besluit: Naam in Inkijk-API",
         "url": "",
       },
     ],
     "id": "2545320919",
     "isActueel": false,
     "leverancier": "Carehouse - Leveo Care",
-    "leveringsVorm": "ZIN",
+    "leveringsVorm": "PGB",
     "productIdentificatie": "07A09",
     "productsoortCode": "DBS",
     "resultaat": "toegewezen",
-    "titel": "dagbesteding meewerken",
+    "titel": "PGB: dagbesteding meewerken (toegewezen)",
   },
   {
     "betrokkenen": [

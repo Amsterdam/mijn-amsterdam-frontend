@@ -197,20 +197,20 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
     `<p>
       ${
         aanvraag.isActueel
-          ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
+          ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht`
           : `Uw recht op ${aanvraag.titel} is beëindigd
           ${
             aanvraag.datumEindeGeldigheid
-              ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+              ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
               : ''
           }`
-      }
+      }.
     </p>
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
-        ? `<p>
-           Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb</a> voor meer informatie.
-          </p>`
+        ? `
+          <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : 'de einddatum'} doen.</p>
+          <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb</a> voor meer informatie.</p>`
         : ''
     }
     `,
