@@ -21,6 +21,7 @@ import {
 import { getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
+  AfisArcDocID,
   AfisBusinessPartnerCommercialResponseSource,
   AfisBusinessPartnerDetails,
   AfisBusinessPartnerDetailsSource,
@@ -30,13 +31,12 @@ import {
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
   AfisBusinessPartnerPrivateResponseSource,
+  AfisDocumentDownloadSource,
+  AfisDocumentIDSource,
   AfisFactuur,
   AfisFactuurPropertiesSource,
-  AfisOpenInvoiceSource,
-  AfisDocumentIDSource,
-  AfisArcDocID,
-  AfisDocumentDownloadSource,
   AfisFactuurState,
+  AfisOpenInvoiceSource,
 } from './afis-types';
 
 /** Returns if the person logging in, is known in the AFIS source API */
@@ -251,18 +251,15 @@ export async function fetchAfisBusinessPartnerDetails(
     const phoneResponse = getSettledResult(phoneResponseSettled);
     const emailResponse = getSettledResult(emailResponseSettled);
 
-    // Returns combined response
-    if (phoneResponse.status === 'OK' && emailResponse.status === 'OK') {
-      const detailsCombined: AfisBusinessPartnerDetails = {
-        ...detailsResponse.content,
-        ...phoneResponse.content,
-        ...emailResponse.content,
-      };
-      return apiSuccessResult(detailsCombined);
-    }
+    const detailsCombined: AfisBusinessPartnerDetails = {
+      ...detailsResponse.content,
+      ...phoneResponse.content,
+      ...emailResponse.content,
+    };
+
     return apiSuccessResult(
-      detailsResponse.content,
-      getFailedDependencies({ phone: phoneResponse, email: emailResponse })
+      detailsCombined,
+      getFailedDependencies({ email: emailResponse, phone: phoneResponse })
     );
   }
 
