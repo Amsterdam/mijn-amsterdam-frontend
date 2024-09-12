@@ -21,6 +21,7 @@ import {
 import { getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
+  AfisArcDocID,
   AfisBusinessPartnerCommercialResponseSource,
   AfisBusinessPartnerDetails,
   AfisBusinessPartnerDetailsSource,
@@ -30,13 +31,12 @@ import {
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
   AfisBusinessPartnerPrivateResponseSource,
+  AfisDocumentDownloadSource,
+  AfisDocumentIDSource,
   AfisFactuur,
   AfisFactuurPropertiesSource,
-  AfisOpenInvoiceSource,
-  AfisDocumentIDSource,
-  AfisArcDocID,
-  AfisDocumentDownloadSource,
   AfisFactuurState,
+  AfisOpenInvoiceSource,
 } from './afis-types';
 
 /** Returns if the person logging in, is known in the AFIS source API */
@@ -251,18 +251,15 @@ export async function fetchAfisBusinessPartnerDetails(
     const phoneResponse = getSettledResult(phoneResponseSettled);
     const emailResponse = getSettledResult(emailResponseSettled);
 
-    // Returns combined response
-    if (phoneResponse.status === 'OK' && emailResponse.status === 'OK') {
-      const detailsCombined: AfisBusinessPartnerDetails = {
-        ...detailsResponse.content,
-        ...phoneResponse.content,
-        ...emailResponse.content,
-      };
-      return apiSuccessResult(detailsCombined);
-    }
+    const detailsCombined: AfisBusinessPartnerDetails = {
+      ...detailsResponse.content,
+      ...phoneResponse.content,
+      ...emailResponse.content,
+    };
+
     return apiSuccessResult(
-      detailsResponse.content,
-      getFailedDependencies({ phone: phoneResponse, email: emailResponse })
+      detailsCombined,
+      getFailedDependencies({ email: emailResponse, phone: phoneResponse })
     );
   }
 
@@ -297,28 +294,21 @@ function formatFactuurRequestURL(
 ): string {
   const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
 
-  let query = `?$inlinecount=allpages`;
+  const filters: Record<AfisFacturenParams['state'], string> = {
+    open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
+    closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
+  };
+
+  const select = `$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
+
+  let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
+
   if (params.top) {
     query += `&$top=${top}`;
   }
 
-  const filters = {
-    open: `$filter=Customer eq '${params.businessPartnerID}' and \
-IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
-    closed: `$filter=Customer eq '${params.businessPartnerID}' and \
-IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
-  };
-
-  const select = `$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,\
-AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,\
-DunningBlockingReason,SEPAMandate`;
-
-  const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
-
-  query += `&${filters[params.state]}&${select}&${orderBy}`;
-
-  const fullRoute = `${baseUrl}${baseRoute}${query}`;
-  return fullRoute;
+  return `${baseUrl}${baseRoute}${query}`;
 }
 
 function transformFacturen(
@@ -426,7 +416,7 @@ function determineFactuurStatus(
 export async function fetchAfisDocument(
   requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
-  factuurNummer: string
+  factuurNummer: AfisFactuur['factuurNummer']
 ): Promise<DocumentDownloadResponse> {
   const ArchiveDocumentIDResponse = await fetchAfisDocumentID(
     requestID,
@@ -475,8 +465,7 @@ async function fetchAfisDocumentID(
 ) {
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) =>
-      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02\
-?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
+      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
     transformResponse: (data: AfisDocumentIDSource) => {
       const entryProperties = getFeedEntryProperties(data);
       if (entryProperties.length) {

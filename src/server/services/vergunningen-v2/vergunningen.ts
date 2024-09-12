@@ -17,7 +17,7 @@ import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { encrypt } from '../../helpers/encrypt-decrypt';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 
@@ -146,7 +146,7 @@ export async function fetchVergunningV2(
   authProfileAndToken: AuthProfileAndToken,
   vergunningIdEncrypted: string
 ) {
-  const decryptResult = decryptAndValidate(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     vergunningIdEncrypted,
     authProfileAndToken
   );

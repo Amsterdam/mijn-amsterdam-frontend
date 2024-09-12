@@ -1,23 +1,25 @@
 import { Request, Response } from 'express';
+import { getAuth, sendResponse } from '../../helpers/app';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { fetchAfisBusinessPartnerDetails, fetchAfisFacturen } from './afis';
-import { getAuth, sendResponse, sendUnauthorized } from '../../helpers/app';
 import { AfisFactuurState } from './afis-types';
-import { decrypt } from '../../helpers/encrypt-decrypt';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
-import { captureException } from '../monitoring';
 
 export async function handleFetchAfisBusinessPartner(
   req: Request<{ businessPartnerIdEncrypted: string }>,
   res: Response
 ) {
-  let businessPartnerId: string;
+  const authProfileAndToken = await getAuth(req);
 
-  try {
-    businessPartnerId = decrypt(req.params.businessPartnerIdEncrypted);
-  } catch (error) {
-    captureException(error);
-    return sendUnauthorized(res);
+  const decryptResponse = decryptEncryptedRouteParamAndValidateSessionID(
+    req.params.businessPartnerIdEncrypted,
+    authProfileAndToken
+  );
+
+  if (decryptResponse.status === 'ERROR') {
+    return sendResponse(res, decryptResponse);
   }
+
+  let businessPartnerId = decryptResponse.content;
 
   const response = await fetchAfisBusinessPartnerDetails(
     res.locals.requestID,
@@ -43,13 +45,13 @@ export async function handleFetchAfisFacturen(
   res: Response
 ) {
   const authProfileAndToken = await getAuth(req);
-  const decryptResponse = decryptAndValidate(
+  const decryptResponse = decryptEncryptedRouteParamAndValidateSessionID(
     req.params.businessPartnerIdEncrypted,
     authProfileAndToken
   );
 
   if (decryptResponse.status === 'ERROR') {
-    return res.send(decryptResponse);
+    return sendResponse(res, decryptResponse);
   }
 
   const businessPartnerID = decryptResponse.content;
