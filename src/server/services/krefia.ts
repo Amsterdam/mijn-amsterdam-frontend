@@ -60,7 +60,7 @@ function createNotification(
 }
 
 async function fetchAndTransformKrefia(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await requestData<Krefia>(
@@ -85,7 +85,7 @@ export const fetchSource = memoize(fetchAndTransformKrefia, {
 });
 
 export async function fetchKrefia(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchSource(requestID, authProfileAndToken);
@@ -96,7 +96,7 @@ export async function fetchKrefia(
 }
 
 export async function fetchKrefiaNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchSource(requestID, authProfileAndToken);

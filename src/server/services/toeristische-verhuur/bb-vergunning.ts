@@ -22,7 +22,7 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
 // links: /record/GFO_ZAKEN/-999742/Links
 
 function fetchPowerBrowserToken(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const dataRequestConfig = getApiConfig('POWERBROWSER');
@@ -199,7 +199,7 @@ export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
 }
 
 function fetchPowerBrowserZaken(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   bearerToken: string
 ) {
@@ -306,7 +306,7 @@ function transformPowerBrowserStatusResponse(
 }
 
 async function fetchPowerBrowserZaakStatus(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   bearerToken: string,
   zaak: BBVergunning
@@ -404,7 +404,7 @@ function transformPowerbrowserLinksResponse(
 }
 
 export async function fetchPowerBrowserDocuments(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   bearerToken: string,
   zaakId: PowerBrowserZaak['id']
@@ -431,7 +431,7 @@ export async function fetchPowerBrowserDocuments(
 }
 
 export async function fetchBBVergunning(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const tokenResponse = await fetchPowerBrowserToken(
@@ -485,7 +485,7 @@ export async function fetchBBVergunning(
 }
 
 export async function fetchBBDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {

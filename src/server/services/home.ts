@@ -17,7 +17,7 @@ import { fetchBRP } from './brp';
 import { fetchKVK, getKvkAddresses } from './kvk';
 
 async function fetchPrivate(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const BRP = await fetchBRP(requestID, authProfileAndToken);
@@ -65,7 +65,7 @@ async function fetchPrivate(
 }
 
 async function fetchCommercial(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const KVK = await fetchKVK(requestID, authProfileAndToken);
@@ -105,7 +105,7 @@ async function fetchCommercial(
 }
 
 export async function fetchMyLocation(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {

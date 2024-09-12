@@ -118,7 +118,7 @@ function createKlachtNotification(klacht: Klacht): MyNotification {
 }
 
 async function fetchKlachten(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   page: number = 1
 ) {
@@ -136,7 +136,7 @@ async function fetchKlachten(
 }
 
 export async function fetchAllKlachten(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   let page = 0;
@@ -180,7 +180,7 @@ export async function fetchAllKlachten(
 }
 
 export async function fetchKlachtenNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);

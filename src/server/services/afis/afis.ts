@@ -3,13 +3,25 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { DataRequestConfig, getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import displayAmount from '../../../universal/helpers/text';
+import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import {
+  AuthProfileAndToken,
+  generateFullApiUrlBFF,
+  SessionID,
+} from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
+import {
+  DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+  DocumentDownloadData,
+  DocumentDownloadResponse,
+} from '../shared/document-download-route-handler';
 import { getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
+  AfisArcDocID,
   AfisBusinessPartnerCommercialResponseSource,
   AfisBusinessPartnerDetails,
   AfisBusinessPartnerDetailsSource,
@@ -19,13 +31,54 @@ import {
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
   AfisBusinessPartnerPrivateResponseSource,
+  AfisDocumentDownloadSource,
+  AfisDocumentIDSource,
+  AfisFactuur,
+  AfisFactuurPropertiesSource,
+  AfisFactuurState,
+  AfisOpenInvoiceSource,
 } from './afis-types';
+
+/** Returns if the person logging in, is known in the AFIS source API */
+export async function fetchIsKnownInAFIS(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const profileIdentifierType =
+    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
+
+  const additionalConfig: DataRequestConfig = {
+    method: 'post',
+    data: {
+      [profileIdentifierType]: authProfileAndToken.profile.id,
+    },
+    transformResponse: (response) =>
+      transformBusinessPartnerisKnownResponse(
+        response,
+        authProfileAndToken.profile.sid
+      ),
+    formatUrl(config) {
+      return `${config.url}/businesspartner/${profileIdentifierType}/`;
+    },
+  };
+
+  const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
+
+  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
+    dataRequestConfig,
+    requestID,
+    authProfileAndToken
+  );
+
+  return response;
+}
 
 function transformBusinessPartnerisKnownResponse(
   response:
     | AfisBusinessPartnerPrivateResponseSource
     | AfisBusinessPartnerCommercialResponseSource
-    | string
+    | string,
+  sessionID: SessionID
 ) {
   if (!response || typeof response === 'string') {
     return null;
@@ -53,7 +106,7 @@ function transformBusinessPartnerisKnownResponse(
   }
 
   if (businessPartnerId) {
-    [businessPartnerIdEncrypted] = encrypt(businessPartnerId);
+    [businessPartnerIdEncrypted] = encrypt(`${sessionID}:${businessPartnerId}`);
   }
 
   return {
@@ -62,34 +115,23 @@ function transformBusinessPartnerisKnownResponse(
   };
 }
 
-/** Returns if the person logging in is known in the AFIS source API */
-export async function fetchIsKnownInAFIS(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken
+async function fetchBusinessPartner(
+  requestID: RequestID,
+  businessPartnerId: string
 ) {
-  const profileIdentifierType =
-    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
-
   const additionalConfig: DataRequestConfig = {
-    method: 'post',
-    data: {
-      [profileIdentifierType]: authProfileAndToken.profile.id,
-    },
-    transformResponse: transformBusinessPartnerisKnownResponse,
+    transformResponse: transformBusinessPartnerDetailsResponse,
     formatUrl(config) {
-      return `${config.url}/businesspartner/${profileIdentifierType}/`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`;
     },
   };
 
-  const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
 
-  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
-    dataRequestConfig,
-    requestID,
-    authProfileAndToken
+  return requestData<AfisBusinessPartnerDetails>(
+    businessPartnerRequestConfig,
+    requestID
   );
-
-  return response;
 }
 
 function transformBusinessPartnerDetailsResponse(
@@ -121,22 +163,22 @@ function transformBusinessPartnerDetailsResponse(
   return null;
 }
 
-async function fetchBusinessPartner(
-  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
+async function fetchPhoneNumber(
+  requestID: RequestID,
+  addressId: AfisBusinessPartnerDetails['addressId']
 ) {
   const additionalConfig: DataRequestConfig = {
-    transformResponse: transformBusinessPartnerDetailsResponse,
+    transformResponse: transformPhoneResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressId}'`;
     },
   };
 
   const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
-  const requestId = businessPartnerId.toString();
 
-  return requestData<AfisBusinessPartnerDetails>(
+  return requestData<AfisBusinessPartnerPhone>(
     businessPartnerRequestConfig,
-    requestId
+    requestID
   );
 }
 
@@ -152,22 +194,22 @@ function transformPhoneResponse(
   return transformedResponse;
 }
 
-async function fetchPhoneNumber(
+async function fetchEmail(
+  requestID: RequestID,
   addressId: AfisBusinessPartnerDetails['addressId']
 ) {
   const additionalConfig: DataRequestConfig = {
-    transformResponse: transformPhoneResponse,
+    transformResponse: transformEmailResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressId}'`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressId}'`;
     },
   };
 
   const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
-  const requestId = addressId.toString();
 
-  return requestData<AfisBusinessPartnerPhone>(
+  return requestData<AfisBusinessPartnerEmail>(
     businessPartnerRequestConfig,
-    requestId
+    requestID
   );
 }
 
@@ -183,32 +225,25 @@ function transformEmailResponse(
   return transformedResponse;
 }
 
-async function fetchEmail(addressId: AfisBusinessPartnerDetails['addressId']) {
-  const additionalConfig: DataRequestConfig = {
-    transformResponse: transformEmailResponse,
-    formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressId}'`;
-    },
-  };
-
-  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
-  const requestId = addressId.toString();
-
-  return requestData<AfisBusinessPartnerEmail>(
-    businessPartnerRequestConfig,
-    requestId
-  );
-}
-
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
-  businessPartnerId: AfisBusinessPartnerDetails['businessPartnerId']
+  requestID: RequestID,
+  businessPartnerId: string
 ) {
-  const detailsResponse = await fetchBusinessPartner(businessPartnerId);
+  const detailsResponse = await fetchBusinessPartner(
+    requestID,
+    businessPartnerId
+  );
 
   if (detailsResponse.status === 'OK' && detailsResponse.content?.addressId) {
-    const phoneRequest = fetchPhoneNumber(detailsResponse.content.addressId);
-    const emailRequest = fetchEmail(detailsResponse.content.addressId);
+    const phoneRequest = fetchPhoneNumber(
+      requestID,
+      detailsResponse.content.addressId
+    );
+    const emailRequest = fetchEmail(
+      requestID,
+      detailsResponse.content.addressId
+    );
 
     const [phoneResponseSettled, emailResponseSettled] =
       await Promise.allSettled([phoneRequest, emailRequest]);
@@ -216,21 +251,229 @@ export async function fetchAfisBusinessPartnerDetails(
     const phoneResponse = getSettledResult(phoneResponseSettled);
     const emailResponse = getSettledResult(emailResponseSettled);
 
-    // Returns combined response
-    if (phoneResponse.status === 'OK' && emailResponse.status === 'OK') {
-      const detailsCombined: AfisBusinessPartnerDetails = {
-        ...detailsResponse.content,
-        ...phoneResponse.content,
-        ...emailResponse.content,
-      };
-      return apiSuccessResult(detailsCombined);
-    }
+    const detailsCombined: AfisBusinessPartnerDetails = {
+      ...detailsResponse.content,
+      ...phoneResponse.content,
+      ...emailResponse.content,
+    };
+
     return apiSuccessResult(
-      detailsResponse.content,
-      getFailedDependencies({ phone: phoneResponse, email: emailResponse })
+      detailsCombined,
+      getFailedDependencies({ email: emailResponse, phone: phoneResponse })
     );
   }
 
   // Returns error response or (partial) success response without phone/email.
   return detailsResponse;
+}
+
+type AfisFacturenParams = {
+  state: AfisFactuurState;
+  businessPartnerID: string;
+  top?: string;
+};
+
+export async function fetchAfisFacturen(
+  requestID: RequestID,
+  sessionID: AuthProfileAndToken['profile']['sid'],
+  params: AfisFacturenParams
+) {
+  const config = getApiConfig('AFIS', {
+    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    transformResponse: (responseData) =>
+      transformFacturen(responseData, sessionID),
+  });
+
+  const response = await requestData<AfisFactuur[]>(config, requestID);
+  return response;
+}
+
+function formatFactuurRequestURL(
+  baseUrl: string | undefined,
+  params: AfisFacturenParams
+): string {
+  const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
+
+  const filters: Record<AfisFacturenParams['state'], string> = {
+    open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
+    closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
+  };
+
+  const select = `$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
+
+  let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
+
+  if (params.top) {
+    query += `&$top=${top}`;
+  }
+
+  return `${baseUrl}${baseRoute}${query}`;
+}
+
+function transformFacturen(
+  responseData: AfisOpenInvoiceSource,
+  sessionID: AuthProfileAndToken['profile']['sid']
+) {
+  const feedProperties = getFeedEntryProperties(responseData);
+  return feedProperties.map((invoiceProperties) => {
+    return transformFactuur(invoiceProperties, sessionID);
+  });
+}
+
+function transformFactuur(
+  sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
+  sessionID: AuthProfileAndToken['profile']['sid']
+): AfisFactuur {
+  const invoice = replaceXmlNulls(sourceInvoice);
+
+  const [factuurNummerEncrypted] = encrypt(
+    `${sessionID}:${sourceInvoice.InvoiceNo}`
+  );
+
+  const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
+  const amountInBalanceTransacCrcyInCents =
+    parseFloat(invoice.AmountInBalanceTransacCrcy) * 100;
+
+  const amountOwed =
+    (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) / 100;
+  const amountOwedFormatted = amountOwed ? displayAmount(amountOwed) : 0;
+
+  let debtClearingDate = null;
+  let debtClearingDateFormatted = null;
+  if (invoice.ClearingDate) {
+    debtClearingDate = invoice.ClearingDate;
+    debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
+  }
+
+  return {
+    afzender: invoice.ProfitCenterName,
+    datePublished: invoice.PostingDate || null,
+    datePublishedFormatted: defaultDateFormat(invoice.PostingDate) || null,
+    paymentDueDate: invoice.NetDueDate,
+    paymentDueDateFormatted: defaultDateFormat(invoice.NetDueDate),
+    debtClearingDate,
+    debtClearingDateFormatted,
+    amountOwed: amountOwed ? amountOwed : 0,
+    amountOwedFormatted: `€ ${amountOwedFormatted}`,
+    factuurNummer: invoice.InvoiceNo,
+    status: determineFactuurStatus(invoice),
+    paylink: invoice.Paylink ? invoice.Paylink : null,
+    documentDownloadLink: generateFullApiUrlBFF(
+      BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
+      { id: factuurNummerEncrypted }
+    ),
+  };
+}
+
+type XmlNullable<T extends Record<string, any>> = {
+  [key in keyof T]: { '@null': true } | T[key];
+};
+
+/** Replace all values that is an XML Null value with just the value `null`. */
+function replaceXmlNulls(
+  sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>
+): AfisFactuurPropertiesSource {
+  const withoutXmlNullable = Object.entries(sourceInvoice).map(([key, val]) => {
+    if (typeof val === 'object' && val !== null && val['@null']) {
+      return [key, null];
+    }
+    return [key, val];
+  });
+  return Object.fromEntries(withoutXmlNullable);
+}
+
+function determineFactuurStatus(
+  sourceInvoice: AfisFactuurPropertiesSource
+): AfisFactuur['status'] {
+  switch (true) {
+    // Closed invoices
+    case !!sourceInvoice.ReverseDocument:
+      return 'geannuleerd';
+
+    case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
+      return 'betaald';
+
+    // Open invoices
+    case sourceInvoice.DunningBlockingReason === 'D':
+      return 'in-dispuut';
+
+    case sourceInvoice.DunningBlockingReason === 'BA':
+      return 'gedeeltelijke-betaling';
+
+    case !!sourceInvoice.SEPAMandate:
+      return 'automatische-incasso';
+
+    case !sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
+      return 'openstaand';
+
+    // Unknown status
+    default:
+      return 'onbekend';
+  }
+}
+
+export async function fetchAfisDocument(
+  requestID: RequestID,
+  _authProfileAndToken: AuthProfileAndToken,
+  factuurNummer: AfisFactuur['factuurNummer']
+): Promise<DocumentDownloadResponse> {
+  const ArchiveDocumentIDResponse = await fetchAfisDocumentID(
+    requestID,
+    factuurNummer
+  );
+  if (ArchiveDocumentIDResponse.status !== 'OK') {
+    return ArchiveDocumentIDResponse;
+  }
+
+  const config = getApiConfig('AFIS', {
+    formatUrl: ({ url }) => {
+      return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
+    },
+    method: 'post',
+    data: {
+      Record: {
+        ArchiveDocumentID: ArchiveDocumentIDResponse.id,
+        BusinessObjectTypeName: 'BKPF',
+      },
+    },
+    transformResponse: (
+      data: AfisDocumentDownloadSource
+    ): DocumentDownloadData => {
+      const decodedDocument = Buffer.from(data.Record.attachment, 'base64');
+      return {
+        data: decodedDocument,
+        mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+        filename: data.Record.attachmentname ?? 'factuur.pdf',
+      };
+    },
+  });
+
+  return requestData<DocumentDownloadData>(config, requestID);
+}
+
+/** Retrieve an ArcDocID from the AFIS source API.
+ *
+ *  This ID uniquely identifies a document and can be used -
+ *  to download one with our document downloading endpoint for example.
+ *
+ *  There can be more then one ArcDocID's pointing to the same document.
+ */
+async function fetchAfisDocumentID(
+  requestID: RequestID,
+  factuurNummer: AfisFactuur['factuurNummer']
+) {
+  const config = getApiConfig('AFIS', {
+    formatUrl: ({ url }) =>
+      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
+    transformResponse: (data: AfisDocumentIDSource) => {
+      const entryProperties = getFeedEntryProperties(data);
+      if (entryProperties.length) {
+        return entryProperties[0].ArcDocId;
+      }
+      return null;
+    },
+  });
+
+  return requestData<AfisArcDocID>(config, requestID);
 }

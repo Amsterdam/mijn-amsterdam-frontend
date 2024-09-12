@@ -17,7 +17,7 @@ import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { encrypt } from '../../helpers/encrypt-decrypt';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 
@@ -78,7 +78,7 @@ function transformVergunningFrontend(
 }
 
 async function fetchAndFilterVergunningenV2_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute,
   caseTypeFilter?: VergunningCaseTypeFilter
@@ -113,7 +113,7 @@ export const fetchAndFilterVergunningenV2 = memoizee(
 );
 
 export async function fetchVergunningenV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT
@@ -142,11 +142,11 @@ function addEncryptedDocumentIdToUrl(
 }
 
 export async function fetchVergunningV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   vergunningIdEncrypted: string
 ) {
-  const decryptResult = decryptAndValidate(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     vergunningIdEncrypted,
     authProfileAndToken
   );

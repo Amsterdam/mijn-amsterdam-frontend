@@ -71,6 +71,8 @@ export interface AuthProfileAndToken {
   profile: AuthProfile;
 }
 
+export type SessionID = AuthProfileAndToken['profile']['sid'];
+
 async function getAuth_(req: Request): Promise<AuthProfileAndToken> {
   const combinedCookies = combineCookieChunks(req.cookies);
   const oidcToken = await getOIDCToken(combinedCookies);

@@ -122,7 +122,7 @@ export function getVergunningNotifications(
 }
 
 async function fetchVergunningenV2Notifications_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT,

@@ -63,12 +63,12 @@ import { fetchSSOParkerenURL } from './parkeren/parkeren';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
-  return async (requestID: requestID, req: Request) =>
+  return async (requestID: RequestID, req: Request) =>
     fetchService(requestID, await getAuth(req), queryParams(req));
 }
 
 function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
-  return (requestID: requestID, req: Request) =>
+  return (requestID: RequestID, req: Request) =>
     fetchService(requestID, queryParams(req));
 }
 
@@ -105,29 +105,29 @@ const WPI_TOZO = callService(fetchTozo);
 
 const WMO = callService(fetchWmo);
 
-const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
+const TOERISTISCHE_VERHUUR = async (requestID: RequestID, req: Request) =>
   fetchToeristischeVerhuur(
     requestID,
     await getAuth(req),
     await getProfileType(req)
   );
 
-const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
+const VERGUNNINGEN = async (requestID: RequestID, req: Request) =>
   fetchVergunningen(requestID, await getAuth(req));
-const VERGUNNINGENv2 = async (requestID: requestID, req: Request) =>
+const VERGUNNINGENv2 = async (requestID: RequestID, req: Request) =>
   fetchVergunningenV2(requestID, await getAuth(req));
 
-const HORECA = async (requestID: requestID, req: Request) =>
+const HORECA = async (requestID: RequestID, req: Request) =>
   fetchHorecaVergunningen(requestID, await getAuth(req));
 
 // Location, address, based services
-const MY_LOCATION = async (requestID: requestID, req: Request) =>
+const MY_LOCATION = async (requestID: RequestID, req: Request) =>
   fetchMyLocation(requestID, await getAuth(req), await getProfileType(req));
 
-const AFVAL = async (requestID: requestID, req: Request) =>
+const AFVAL = async (requestID: RequestID, req: Request) =>
   fetchAfval(requestID, await getAuth(req), await getProfileType(req));
 
-const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
+const AFVALPUNTEN = async (requestID: RequestID, req: Request) =>
   fetchAfvalPunten(requestID, await getAuth(req), await getProfileType(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
@@ -144,7 +144,7 @@ const AVG = callService(fetchAVG);
 const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 
 // Special services that aggregates NOTIFICATIONS from various services
-export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
+export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
   const profileType = await getProfileType(req);
 
   // No notifications for this profile type
@@ -333,7 +333,7 @@ export const servicesTipsByProfileType = {
 };
 
 export function loadServices(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request,
   serviceMap:
     | PrivateServices
@@ -398,7 +398,7 @@ export async function loadServicesAll(req: Request, res: Response) {
  * TIPS specific services
  */
 export async function getServiceResultsForTips(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request
 ) {
   let requestData = null;
@@ -417,7 +417,7 @@ export async function getServiceResultsForTips(
 }
 
 export async function getTipNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request
 ): Promise<MyNotification[]> {
   const serviceResults = await getServiceResultsForTips(requestID, req);

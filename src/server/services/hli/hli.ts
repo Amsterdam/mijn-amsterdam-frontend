@@ -68,7 +68,7 @@ function getDocumentsFrontend(
 }
 
 async function transformRegelingForFrontend(
-  requestID: requestID,
+  requestID: RequestID,
   sessionID: AuthProfileAndToken['profile']['sid'],
   aanvraag: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
@@ -114,7 +114,7 @@ async function transformRegelingForFrontend(
 }
 
 export async function transformRegelingenForFrontend(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
@@ -152,7 +152,7 @@ export async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchZorgnedAanvragenHLI(
@@ -172,7 +172,7 @@ async function fetchRegelingen(
 }
 
 export async function fetchHLI(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const [stadspasResult, regelingenResult] = await Promise.allSettled([

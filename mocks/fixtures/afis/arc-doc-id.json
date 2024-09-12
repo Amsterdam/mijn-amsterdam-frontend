@@ -1,0 +1,44 @@
+{
+  "feed": {
+    "@base": "https://aaaaaaaaaaaaaaaaaaaaaaaaa:44300/sap/opu/odata/sap/aaaaaaaaaaaaaaaaaaaaaaaa/",
+    "id": "https://aaaaaaaaaaaaaaaaaaaaaaaaa:44300/sap/opu/odata/sap/aaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbb",
+    "title": {
+      "@type": "text",
+      "$": "AAAAAAAAAAAAA"
+    },
+    "updated": "2022-01-01T14:20:30Z",
+    "author": {
+      "name": ""
+    },
+    "link": {
+      "@href": "AAAAAAAAAAAAA",
+      "@rel": "self",
+      "@title": "AAAAAAAAAAAAA"
+    },
+    "entry": [
+      {
+        "id": "https://aaaaaaaaaaaaaaaaaaaaaaaaa:44300/sap/opu/odata/sap/aaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbb('LLLL')",
+        "title": {
+          "@type": "text",
+          "$": "BBBBBBBBBBBBB('AAAA')"
+        },
+        "updated": "2023-08-01T13:20:30Z",
+        "category": {
+          "@scheme": "http://aaaaaaaaaaaaaaaaa.com/ado/2007/08/dataservices/scheme",
+          "@term": "AAAAAAAAAAAAAAAAAAAA_BBB.CCC_DDD_EEEEEType"
+        },
+        "link": {
+          "@href": "AAAAAAAAAAA01('CCCC')",
+          "@rel": "self",
+          "@title": "AAAAAAAAAAAAAType"
+        },
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "ArcDocId": "ARC-DOC-ID-E11HEHE11HEHE11HEHE11"
+          }
+        }
+      }
+    ]
+  }
+}

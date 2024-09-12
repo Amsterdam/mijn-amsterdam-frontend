@@ -43,7 +43,7 @@ export interface ToeristischeVerhuurRegistratieDetailsSourceData {
 }
 
 export async function fetchRegistraties(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const url = `${process.env.BFF_LVV_API_URL}/bsn`;

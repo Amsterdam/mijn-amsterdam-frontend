@@ -40,7 +40,7 @@ function transformErfpachtResponse(isKnown: ErfpachtSourceResponse) {
 
 export function getConfigMain(
   authProfileAndToken: AuthProfileAndToken,
-  requestID: requestID
+  requestID: RequestID
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
   const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
@@ -60,7 +60,7 @@ export function getConfigMain(
 }
 
 export async function fetchErfpacht(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchService(
@@ -72,7 +72,7 @@ export async function fetchErfpacht(
 
 function getConfigNotifications(
   authProfileAndToken: AuthProfileAndToken,
-  requestID: requestID
+  requestID: RequestID
 ): DataRequestConfig {
   const profile = authProfileAndToken.profile;
   const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
@@ -92,7 +92,7 @@ function getConfigNotifications(
 }
 
 export async function fetchErfpachtNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchTipsAndNotifications(
@@ -454,7 +454,7 @@ export function transformDossierResponse(
 }
 
 export async function fetchErfpachtV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('ERFPACHTv2');
@@ -496,7 +496,7 @@ export async function fetchErfpachtV2(
 }
 
 export async function fetchErfpachtV2DossiersDetail(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   dossierNummerUrlParam: string
 ) {

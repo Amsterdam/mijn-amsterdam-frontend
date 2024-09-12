@@ -73,7 +73,7 @@ function statusLineTransformer(
 }
 
 export async function fetchRequestProcess(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   getLabels: (
     requestProcess: WpiRequestProcess
@@ -108,7 +108,7 @@ export async function fetchRequestProcess(
 }
 
 export async function fetchBijstandsuitkering(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const filterResponse: FilterResponse = (response) =>
@@ -133,7 +133,7 @@ export async function fetchBijstandsuitkering(
 }
 
 export async function fetchEAanvragen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   about?: string[]
 ) {
@@ -164,7 +164,7 @@ export async function fetchEAanvragen(
 }
 
 export async function fetchTozo(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchEAanvragen(requestID, authProfileAndToken, [
@@ -177,7 +177,7 @@ export async function fetchTozo(
 }
 
 export async function fetchBbz(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const bbz = await fetchEAanvragen(requestID, authProfileAndToken, ['Bbz']);
@@ -186,7 +186,7 @@ export async function fetchBbz(
 }
 
 export async function fetchTonk(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchEAanvragen(requestID, authProfileAndToken, ['TONK']);
@@ -213,7 +213,7 @@ export function transformIncomSpecificationResponse(
 }
 
 export function fetchSpecificaties(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
@@ -232,7 +232,7 @@ export function fetchSpecificaties(
 }
 
 export async function fetchWpiNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const today = new Date();
@@ -316,7 +316,7 @@ export async function fetchWpiNotifications(
 }
 
 export async function fetchWpiDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string,
   queryParams?: Record<string, string>

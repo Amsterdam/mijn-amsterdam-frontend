@@ -116,7 +116,7 @@ function transformCMSEventResponse(
 }
 
 async function fetchCMSMaintenanceNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   useCache: boolean = true
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
@@ -189,7 +189,7 @@ export interface QueryParamsMaintenanceNotifications
 }
 
 export async function fetchMaintenanceNotificationsActual(
-  requestID: requestID,
+  requestID: RequestID,
   queryParams?: QueryParamsMaintenanceNotifications
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
@@ -219,7 +219,7 @@ export async function fetchMaintenanceNotificationsActual(
 }
 
 export async function fetchMaintenanceNotificationsDashboard(
-  requestID: requestID
+  requestID: RequestID
 ) {
   const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
     requestID,

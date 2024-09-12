@@ -9,7 +9,7 @@ declare module 'log-that-http';
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 type Nullable<T> = T | null;
 
-type requestID = string;
+type RequestID = string;
 
 type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
 

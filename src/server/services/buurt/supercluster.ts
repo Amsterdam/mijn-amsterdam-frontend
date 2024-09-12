@@ -46,7 +46,7 @@ interface SuperClusterQuery {
 }
 
 export async function loadClusterDatasets(
-  requestID: requestID,
+  requestID: RequestID,
   { bbox, zoom, datasetIds, filters }: SuperClusterQuery
 ) {
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);

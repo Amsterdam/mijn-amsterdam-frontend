@@ -147,7 +147,7 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
 }
 
 async function fetchCleopatra(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const INCLUDE_TIPS_AND_NOTIFICATIONS = true;
@@ -174,7 +174,7 @@ async function fetchCleopatra(
 }
 
 export async function fetchMilieuzone(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchCleopatra(requestID, authProfileAndToken);
@@ -189,7 +189,7 @@ export async function fetchMilieuzone(
 }
 
 export async function fetchOvertredingen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchCleopatra(requestID, authProfileAndToken);
@@ -204,7 +204,7 @@ export async function fetchOvertredingen(
 }
 
 export async function fetchMilieuzoneNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchCleopatra(requestID, authProfileAndToken);
@@ -222,7 +222,7 @@ export async function fetchMilieuzoneNotifications(
 }
 
 export async function fetchOvertredingenNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchCleopatra(requestID, authProfileAndToken);

@@ -378,7 +378,7 @@ export function transformVergunningenData(
 }
 
 export function fetchAllVergunningen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<VergunningenData>(
@@ -423,7 +423,7 @@ export function addLinks(
 }
 
 async function fetchVergunningen_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   options: VergunningOptions = vergunningOptionsDefault
 ) {
@@ -580,7 +580,7 @@ export const getVergunningNotifications = memoizee(
 );
 
 export async function fetchVergunningenNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
 ) {
@@ -601,7 +601,7 @@ export async function fetchVergunningenNotifications(
 }
 
 export async function fetchVergunningenDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentIdEncrypted: string
 ) {
@@ -617,7 +617,7 @@ export async function fetchVergunningenDocument(
 }
 
 export async function fetchVergunningenDocumentsList(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentIdEncrypted: string
 ) {
