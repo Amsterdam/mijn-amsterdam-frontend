@@ -28,7 +28,7 @@ const transformApiResponseDefault: AxiosResponseTransformer = (
 };
 
 export async function fetchService<T extends ApiPatternResponseA>(
-  requestID: requestID,
+  requestID: RequestID,
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false,
   authProfileAndToken?: AuthProfileAndToken
@@ -81,7 +81,7 @@ export function transformNotificationsDefault(
 }
 
 export async function fetchTipsAndNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   apiConfig: DataRequestConfig = {},
   thema: Thema,
   authProfileAndToken?: AuthProfileAndToken

@@ -32,7 +32,7 @@ export function transformServiceNameData(
 const SERVICE_NAME = 'BRP'; // Change to your service name
 
 export function fetchServiceName(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return requestData<ServiceNameData>(

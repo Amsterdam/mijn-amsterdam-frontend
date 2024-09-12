@@ -118,7 +118,7 @@ function transformVoorzieningenForFrontend(
 }
 
 export async function fetchWmo(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(

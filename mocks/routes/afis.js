@@ -1,7 +1,7 @@
 const settings = require('../settings');
 
 const BASE = '/afis';
-const REST_BASE = BASE + '/RESTAdapter';
+const REST_BASE = `${BASE}/RESTAdapter`;
 
 module.exports = [
   {
@@ -138,6 +138,61 @@ module.exports = [
               ],
             },
           },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-facturen',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (req, res) => {
+            const isAboutClosedInvoices =
+              req.query?.['$select']?.includes('ReverseDocument');
+
+            const filename = isAboutClosedInvoices
+              ? 'afgehandelde-facturen'
+              : 'openstaande-facturen';
+
+            // DO NOT adjust this mock data (tests depend on it).
+            // If needed copy, mutate and let it point to the newly made copy.
+            return res.send(require(`../fixtures/afis/${filename}.json`));
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-factuur-id',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: require('../fixtures/afis/document.json'),
+        },
+      },
+    ],
+  },
+  {
+    id: 'post-afis-factuur-document',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: require('../fixtures/afis/document.json'),
         },
       },
     ],

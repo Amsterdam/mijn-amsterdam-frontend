@@ -91,3 +91,76 @@ export type AfisBusinessPartnerEmail = {
 export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
   AfisBusinessPartnerPhone &
   AfisBusinessPartnerEmail;
+
+export type AfisFactuurState = 'open' | 'closed';
+
+export type AfisFactuur = {
+  afzender: string;
+  datePublished: string | null;
+  datePublishedFormatted: string | null;
+  paymentDueDate: string;
+  paymentDueDateFormatted: string;
+  debtClearingDate: string | null;
+  debtClearingDateFormatted: string | null;
+  amountOwed: number;
+  amountOwedFormatted: string;
+  factuurNummer: string;
+  status: AfisFactuurStatus;
+  paylink: string | null;
+  documentDownloadLink: string | null;
+};
+
+type AfisFactuurStatus =
+  | 'openstaand'
+  | 'automatische-incasso'
+  | 'in-dispuut'
+  | 'gedeeltelijke-betaling'
+  | 'betaald'
+  | 'geannuleerd'
+  | 'onbekend';
+
+export type AfisOpenInvoiceSource =
+  AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
+
+/** Extra property information
+ *  ==========================
+ * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
+ * `NetPaymentAmount`: Is a negative decimal number and represents money that is -
+ *   already payed for this item.
+ * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
+ *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
+ *   to the debtor.
+ *  `IsCleared`: `true` means the 'factuur' is fully payed for.
+ */
+export type AfisFactuurPropertiesSource = {
+  DunningLevel: number;
+  DunningBlockingReason: string;
+  ProfitCenterName: string;
+  SEPAMandate: string;
+  PostingDate: string;
+  AccountingDocumentType: string;
+  NetDueDate: string;
+  NetPaymentAmount: string;
+  AmountInBalanceTransacCrcy: string;
+  InvoiceNo: string;
+  Paylink: string | null;
+  IsCleared?: boolean;
+  ClearingDate?: string;
+  ReverseDocument?: string;
+};
+
+export type AfisArcDocID = AfisDocumentIDPropertiesSource['ArcDocId'];
+
+export type AfisDocumentIDSource =
+  AfisApiFeedResponseSource<AfisDocumentIDPropertiesSource>;
+
+export type AfisDocumentIDPropertiesSource = {
+  ArcDocId: string;
+};
+
+export type AfisDocumentDownloadSource = {
+  Record: {
+    attachment: string;
+    attachmentname: string;
+  };
+};

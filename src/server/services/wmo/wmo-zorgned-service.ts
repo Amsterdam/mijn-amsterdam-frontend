@@ -57,7 +57,7 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 }
 
 export async function fetchZorgnedAanvragenWMO(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const requestBodyParams = {

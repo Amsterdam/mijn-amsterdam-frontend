@@ -177,7 +177,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
 const SERVICE_NAME = 'KVK';
 
 export async function fetchKVK(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   if (FeatureToggle.kvkActive) {

@@ -18,7 +18,7 @@ export interface BAGData {
 }
 
 export async function fetchBAG(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   sourceAddress: Adres | null
 ) {

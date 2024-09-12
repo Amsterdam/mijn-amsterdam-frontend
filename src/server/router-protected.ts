@@ -32,8 +32,11 @@ import {
 } from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
-import { handleFetchAfisBusinessPartner } from './services/afis/afis-route-handlers';
-import { fetchSSOParkerenURL } from './services/parkeren/parkeren';
+import {
+  handleFetchAfisBusinessPartner,
+  handleFetchAfisFacturen,
+} from './services/afis/afis-route-handlers';
+import { fetchAfisDocument } from './services/afis/afis';
 
 export const router = express.Router();
 
@@ -234,3 +237,9 @@ attachDocumentDownloadRoute(
 
 // AFIS facturen en betalen
 router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
+router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
+  fetchAfisDocument
+);

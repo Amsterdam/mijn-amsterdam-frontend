@@ -47,7 +47,7 @@ export function hasOtherActualVergunningOfSameType(
 }
 
 async function fetchAndTransformToeristischeVerhuur(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType = 'private'
 ) {
@@ -236,7 +236,7 @@ function createRegistratieNotification(
 }
 
 export async function fetchToeristischeVerhuurNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date,
   profileType?: ProfileType

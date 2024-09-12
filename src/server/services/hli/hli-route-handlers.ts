@@ -22,7 +22,7 @@ export async function handleFetchTransactionsRequest(
 }
 
 export async function fetchZorgnedAVDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {

@@ -138,7 +138,7 @@ export function transformZorgnedAanvragen(
 }
 
 export async function fetchAanvragen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
   requestBodyParams?: Record<string, string>
@@ -167,7 +167,7 @@ export async function fetchAanvragen(
 }
 
 export async function fetchDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
   documentId: ZorgnedDocument['documentidentificatie']
@@ -216,7 +216,7 @@ function transformZorgnedRelaties(responseData: any) {
 }
 
 export async function fetchRelaties(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
@@ -244,7 +244,7 @@ export async function fetchRelaties(
 }
 
 export async function fetchPersoonsgegevensNAW_(
-  requestID: requestID,
+  requestID: RequestID,
   userID: AuthProfileAndToken['profile']['id'],
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {

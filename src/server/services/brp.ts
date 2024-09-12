@@ -222,7 +222,7 @@ export function transformBRPData(
 }
 
 export async function fetchBRP(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const options = getApiConfig('BRP', {
@@ -233,7 +233,7 @@ export async function fetchBRP(
 }
 
 export async function fetchBrpNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const BRP = await fetchBRP(requestID, authProfileAndToken);
@@ -247,7 +247,7 @@ export async function fetchBrpNotifications(
 }
 
 export async function fetchAantalBewoners(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   addressKeyEncrypted: string
 ) {

@@ -32,7 +32,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
 }
 
 export async function fetchWiorNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   profileType: ProfileType
 ) {

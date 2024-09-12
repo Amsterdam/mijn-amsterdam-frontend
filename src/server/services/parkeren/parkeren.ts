@@ -15,7 +15,7 @@ type ParkerenUrlTransformedResponse = {
 };
 
 export async function fetchSSOParkerenURL(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('PARKEREN', {
