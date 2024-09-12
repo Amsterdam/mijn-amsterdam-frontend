@@ -5664,7 +5664,7 @@
                 "identificatie": "07A09",
                 "productCode": "07A09",
                 "productsoortCode": "DBS",
-                "omschrijving": "dagbesteding meewerken"
+                "omschrijving": "PGB: dagbesteding meewerken (toegewezen)"
               },
               "productCategorie": {
                 "code": "07",
@@ -5688,7 +5688,7 @@
                   },
                   "omschrijving": "1 stuks (output) per maand"
                 },
-                "leveringsvorm": "zin",
+                "leveringsvorm": "pgb",
                 "leverancier": {
                   "identificatie": "73731545",
                   "agbcode": "73731545",
@@ -5703,7 +5703,7 @@
         "documenten": [
           {
             "documentidentificatie": "B2814508",
-            "omschrijving": "Naam in Inkijk-API",
+            "omschrijving": "Besluit: Naam in Inkijk-API",
             "datumDefinitief": "2024-08-29T16:48:11.997"
           }
         ]

@@ -37,6 +37,10 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 
   let isActueel = !!aanvraagTransformed.isActueel;
 
+  if (!isActueel && 'datumEindeGeldigheid' in aanvraagTransformed && !isEOG) {
+    isActueel = true;
+  }
+
   // Override actueel indien er nog geen levering heeft plaatsgevonden en de geldigheid nog niet is afgelopen
   if (
     !isActueel &&
