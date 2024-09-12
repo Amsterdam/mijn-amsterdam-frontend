@@ -37,10 +37,10 @@
           "properties": {
             "IsCleared": true,
             "DunningLevel": 0,
-            "ProfitCenterName": "",
+            "ProfitCenterName": "Nebula Dynamics Ltd.",
             "NetDueDate": "2023-06-12T00:00:00",
             "ReverseDocument": "",
-            "InvoiceNo": ""
+            "InvoiceNo": "INV-2023-001"
           }
         }
       },
@@ -65,10 +65,10 @@
           "properties": {
             "IsCleared": true,
             "DunningLevel": 0,
-            "ProfitCenterName": "Lisan al Gaib inc.",
+            "ProfitCenterName": "Quantum Horizons GmbH",
             "NetDueDate": "2023-05-11T00:00:00",
             "ReverseDocument": "",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-002"
           }
         }
       },
@@ -93,10 +93,10 @@
           "properties": {
             "IsCleared": true,
             "DunningLevel": 2,
-            "ProfitCenterName": "Lisan al Gaib inc.",
+            "ProfitCenterName": "Eco Synergy Solutions",
             "NetDueDate": "2023-07-27T00:00:00",
             "ReverseDocument": "",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-003"
           }
         }
       },
@@ -121,10 +121,10 @@
           "properties": {
             "IsCleared": true,
             "DunningLevel": 0,
-            "ProfitCenterName": "Lisan al Gaib inc.",
+            "ProfitCenterName": "Cyber Nexus Technologies",
             "NetDueDate": "2023-04-28T00:00:00",
             "ReverseDocument": "someReverseDocument123",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-004"
           }
         }
       },
@@ -149,10 +149,10 @@
           "properties": {
             "IsCleared": true,
             "DunningLevel": 0,
-            "ProfitCenterName": "Lisan al Gaib inc.",
+            "ProfitCenterName": "Stellar Innovations Corp.",
             "NetDueDate": "2023-08-09T00:00:00",
             "ReverseDocument": "someReverseDocument123",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-005"
           }
         }
       },
@@ -180,7 +180,7 @@
             "ProfitCenterName": "Lisan al Gaib inc.",
             "NetDueDate": "2023-10-26T00:00:00",
             "ReverseDocument": "someReverseDocument123",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-006"
           }
         }
       },
@@ -208,7 +208,7 @@
             "ProfitCenterName": "Lisan al Gaib inc.",
             "NetDueDate": "2023-01-31T00:00:00",
             "ReverseDocument": "someReverseDocument123",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-007"
           }
         }
       },
@@ -236,7 +236,7 @@
             "ProfitCenterName": "Lisan al Gaib inc.",
             "NetDueDate": "2023-12-12T00:00:00",
             "ReverseDocument": "someReverseDocument123",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-008"
           }
         }
       },
@@ -264,7 +264,7 @@
             "ProfitCenterName": "Lisan al Gaib inc.",
             "NetDueDate": "2023-01-01T00:00:00",
             "ReverseDocument": "someReverseDocument123",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-009"
           }
         }
       },
@@ -292,7 +292,7 @@
             "ProfitCenterName": "Lisan al Gaib inc.",
             "NetDueDate": "2023-12-21T00:00:00",
             "ReverseDocument": "someReverseDocument123",
-            "InvoiceNo": "123456789"
+            "InvoiceNo": "INV-2023-010"
           }
         }
       }

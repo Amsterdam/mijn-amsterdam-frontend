@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ZaakDetail } from '../../../universal/types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { AfisFactuur } from '../../../server/services/afis/afis-types';
 
-export type AfisFactuurStub = ZaakDetail & Record<string, string>;
 export type AfisEmandateStub = ZaakDetail & Record<string, string>;
 
 // Themapagina
@@ -10,12 +11,15 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsFacturen = {
-  receiver: 'Naam ontvanger',
+  afzender: 'Afzender',
+  factuurNummer: 'Factuurnummer',
+  status: 'Status',
+  paymentDueDateFormatted: 'Vervaldatum',
 };
 
 export const listPageParamKind = {
-  open: 'open-facturen',
-  closed: 'afgehandelde-facturen',
+  open: 'open',
+  closed: 'closed',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -29,13 +33,11 @@ export const listPageTitle = {
 export const facturenTableConfig = {
   [listPageParamKind.open]: {
     title: listPageTitle[listPageParamKind.open],
-    filter: (factuur: AfisFactuurStub) => factuur.isActual,
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
   },
   [listPageParamKind.closed]: {
     title: listPageTitle[listPageParamKind.closed],
-    filter: (factuur: AfisFactuurStub) => !factuur.isActual,
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
   },

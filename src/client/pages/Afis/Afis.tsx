@@ -1,10 +1,12 @@
 import { Button, Paragraph } from '@amsterdam/design-system-react';
-import { useHistory } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { AfisFactuurStub } from './Afis-thema-config';
 import { useAfisThemaData } from './useAfisThemaData.hook';
+import { AppRoutes } from '../../../universal/config/routes';
+import { AfisFactuur } from '../../../server/services/afis/afis-types';
+import { ListPageParamKind } from './Afis-thema-config';
 
 export function AfisThemaPagina() {
   const history = useHistory();
@@ -34,15 +36,21 @@ export function AfisThemaPagina() {
   );
 
   const pageContentTables = Object.entries(facturenTableConfig).map(
-    ([kind, { title, displayProps, filter }]) => {
+    ([kind, { title, displayProps }]) => {
+      const kindFacturen = (
+        facturen as { [K in ListPageParamKind]: AfisFactuur[] }
+      )[kind as ListPageParamKind];
       return (
-        <ThemaPaginaTable<AfisFactuurStub>
+        <ThemaPaginaTable<AfisFactuur>
           key={kind}
           title={title}
-          zaken={facturen.filter(filter)}
+          zaken={kindFacturen}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
-          maxItems={-1}
+          maxItems={5}
+          listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
+            kind,
+          })}
         />
       );
     }
@@ -56,7 +64,6 @@ export function AfisThemaPagina() {
       isLoading={isThemaPaginaLoading || isFacturenLoading}
       linkListItems={[
         {
-          // TODO: Deze pagina moet nog gemaakt worden
           to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
           title: 'Meer over facturen van de gemeente',
         },

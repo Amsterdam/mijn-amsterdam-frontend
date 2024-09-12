@@ -85,6 +85,7 @@ import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import { useMonitoring } from './utils/monitoring';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
+import { AfisFacturen } from './pages/Afis/AfisFacturen';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -291,6 +292,9 @@ function AppAuthenticated() {
               path={AppRoutes['AFIS/BETAALVOORKEUREN']}
               component={AfisBetaalVoorkeuren}
             />
+          )}
+          {FeatureToggle.afisActive && (
+            <Route path={AppRoutes['AFIS/FACTUREN']} component={AfisFacturen} />
           )}
           {FeatureToggle.afisActive && (
             <Route path={AppRoutes.AFIS} component={AfisThemaPagina} />

@@ -394,7 +394,6 @@ describe('Afis', () => {
         content: {
           businessPartnerId: GENERIC_ID,
           fullName: 'Taxon Expeditions BV',
-          address: 'Rembrandtstraat 20 2311 VW Leiden',
           addressId: ADRRESS_ID,
         },
         status: 'OK',
@@ -567,7 +566,7 @@ describe('Afis', () => {
 
       const geannuleerdeInvoice = response.content[0];
       expect(geannuleerdeInvoice).toStrictEqual({
-        afzender: '',
+        afzender: 'Nebula Dynamics Ltd.',
         amountOwed: 0,
         amountOwedFormatted: '€ 0',
         datePublished: null,
@@ -578,7 +577,7 @@ describe('Afis', () => {
         paymentDueDateFormatted: '12 juni 2023',
         debtClearingDate: null,
         debtClearingDateFormatted: null,
-        factuurNummer: '',
+        factuurNummer: 'INV-2023-001',
         paylink: null,
         status: 'betaald',
       });

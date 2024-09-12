@@ -4,8 +4,6 @@ import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
-const DISPLAY_PROPS_DEFAULT = { title: 'Titel' };
-
 interface ThemaPaginaTableProps<T> {
   className?: string;
   displayProps?: DisplayProps<T>;
@@ -16,12 +14,12 @@ interface ThemaPaginaTableProps<T> {
   zaken: T[];
 }
 
-export default function ThemaPaginaTable<T extends ZaakDetail>({
+export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   title = 'Zaken',
   zaken,
   className,
   textNoContent = 'U heeft (nog) geen zaken.',
-  displayProps = DISPLAY_PROPS_DEFAULT,
+  displayProps,
   listPageRoute,
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
 }: ThemaPaginaTableProps<T>) {
@@ -31,7 +29,7 @@ export default function ThemaPaginaTable<T extends ZaakDetail>({
         showTHead={!!zaken.length}
         caption={title}
         items={maxItems !== -1 ? zaken.slice(0, maxItems) : zaken}
-        displayProps={displayProps}
+        displayProps={displayProps ?? null}
         className={className}
       />
 

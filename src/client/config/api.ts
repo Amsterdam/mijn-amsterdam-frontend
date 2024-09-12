@@ -16,6 +16,7 @@ export const BFFApiUrls = {
   BEZWAREN_DETAIL: `${BFF_API_BASE_URL}/services/bezwaren`,
   AFIS_BUSINESSPARTNER: `${BFF_API_BASE_URL}/services/afis/businesspartner`,
   AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen`,
+  AFIS_FACTUREN_OVERZICHT: `${BFF_API_BASE_URL}/services/afis/facturen/overzicht`,
 };
 
 // Urls directly used from front-end
