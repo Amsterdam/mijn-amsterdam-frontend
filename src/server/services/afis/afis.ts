@@ -294,7 +294,7 @@ function formatFactuurRequestURL(
 ): string {
   const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
 
-  const filters = {
+  const filters: Record<AfisFacturenParams['state'], string> = {
     open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
     closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
   };
@@ -431,7 +431,7 @@ function openstaandeFactuurStatus(
 export async function fetchAfisDocument(
   requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
-  factuurNummer: string
+  factuurNummer: AfisFactuur['factuurNummer']
 ): Promise<DocumentDownloadResponse> {
   const ArchiveDocumentIDResponse = await fetchAfisDocumentID(
     requestID,
