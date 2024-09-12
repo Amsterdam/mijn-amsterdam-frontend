@@ -396,46 +396,31 @@ function replaceXmlNulls(
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource
 ): AfisFactuur['status'] {
-  if (sourceInvoice.IsCleared) {
-    return geslotenFactuurStatus(sourceInvoice);
-  }
-  return openstaandeFactuurStatus(sourceInvoice);
-}
+  switch (true) {
+    // Closed invoices
+    case !!sourceInvoice.ReverseDocument:
+      return 'geannuleerd';
 
-function geslotenFactuurStatus(
-  sourceInvoice: AfisFactuurPropertiesSource
-): AfisFactuur['status'] {
-  if (sourceInvoice.ReverseDocument) {
-    return 'geannuleerd';
-  }
+    case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
+      return 'betaald';
 
-  if (sourceInvoice.DunningLevel === 0) {
-    return 'betaald';
-  }
+    // Open invoices
+    case sourceInvoice.DunningBlockingReason === 'D':
+      return 'in-dispuut';
 
-  return 'onbekend';
-}
+    case sourceInvoice.DunningBlockingReason === 'BA':
+      return 'gedeeltelijke-betaling';
 
-function openstaandeFactuurStatus(
-  sourceInvoice: AfisFactuurPropertiesSource
-): AfisFactuur['status'] {
-  if (sourceInvoice.DunningBlockingReason === 'D') {
-    return 'in-dispuut';
-  }
-
-  if (sourceInvoice.AccountingDocumentType === 'BA') {
-    return 'gedeeltelijke-betaling';
-  }
-
-  if (sourceInvoice.DunningLevel === 0) {
-    if (sourceInvoice.SEPAMandate) {
+    case !!sourceInvoice.SEPAMandate:
       return 'automatische-incasso';
-    } else {
-      return 'openstaand';
-    }
-  }
 
-  return 'onbekend';
+    case !sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
+      return 'openstaand';
+
+    // Unknown status
+    default:
+      return 'onbekend';
+  }
 }
 
 export async function fetchAfisDocument(
