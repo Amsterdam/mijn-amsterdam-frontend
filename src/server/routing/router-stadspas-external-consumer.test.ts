@@ -5,7 +5,7 @@ import * as stadspas from '../services/hli/stadspas';
 import { StadspasDiscountTransaction } from '../services/hli/stadspas-types';
 import { forTesting } from './router-stadspas-external-consumer';
 
-vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
@@ -186,7 +186,7 @@ describe('hli/router-external-consumer', async () => {
   });
 
   describe('Stadspassen endpoint', async () => {
-    vi.mock('./stadspas-gpass-service.ts', async (requireActual) => {
+    vi.mock('../services/hli/stadspas-gpass-service', async (requireActual) => {
       const mod: object = await requireActual();
       return {
         ...mod,
@@ -205,7 +205,9 @@ describe('hli/router-external-consumer', async () => {
     const resMock = ResponseMock.new();
 
     test('Returns stadpassen when supplied with encrypted administratieNummer', async () => {
-      const params = { administratienummerEncrypted: 'ADMINISTRATIENUMMER' };
+      const params = {
+        administratienummerEncrypted: 'ADMINISTRATIENUMMER',
+      };
       const reqMock = RequestMock.new().setParams(params).get<typeof params>();
 
       await forTesting.sendStadspassenResponse(reqMock, resMock);
