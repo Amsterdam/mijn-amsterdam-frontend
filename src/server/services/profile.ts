@@ -6,7 +6,6 @@ export async function fetchProfile(
   authProfileAndToken: AuthProfileAndToken
 ) {
   return apiSuccessResult({
-    tokenData: '', // TODO: Implement
     profile: authProfileAndToken.profile,
   });
 }
