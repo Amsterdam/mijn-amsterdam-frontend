@@ -35,7 +35,7 @@ import { oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
-import { stadspasExternalConsumerRouter } from './services/hli/stadspas-router-external-consumer';
+import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
 
 const app = express();

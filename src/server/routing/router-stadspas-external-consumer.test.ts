@@ -1,11 +1,9 @@
-import nock from 'nock';
-import { remoteApi, RequestMock, ResponseMock } from '../../../test-utils';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { OIDC_SESSION_COOKIE_NAME } from '../../auth/auth-config';
-import { AuthProfile } from '../../auth/auth-types';
-import * as stadspas from './stadspas';
-import { forTesting } from './stadspas-router-external-consumer';
-import { StadspasDiscountTransaction } from './stadspas-types';
+import { remoteApi, RequestMock, ResponseMock } from '../../test-utils';
+import { apiSuccessResult } from '../../universal/helpers/api';
+import { AuthProfile } from '../auth/auth-types';
+import * as stadspas from '../services/hli/stadspas';
+import { StadspasDiscountTransaction } from '../services/hli/stadspas-types';
+import { forTesting } from './router-stadspas-external-consumer';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
