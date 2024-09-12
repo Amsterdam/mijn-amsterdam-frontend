@@ -64,9 +64,6 @@ declare const MA_GIT_SHA: string;
 // The ID of current build
 declare const MA_BUILD_ID: string;
 
-// Is the app built on azure or not.
-declare const MA_IS_AZ: string;
-
 declare global {
   declare module 'express-serve-static-core' {
     interface Locals {
