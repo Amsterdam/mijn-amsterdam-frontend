@@ -31,7 +31,7 @@ export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
 };
 
 function transformVergunningFrontend(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   vergunning: VergunningV2,
   appRoute: AppRoute
 ) {
@@ -79,7 +79,7 @@ function transformVergunningFrontend(
 }
 
 async function fetchAndFilterVergunningenV2_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute,
   caseTypeFilter?: VergunningCaseTypeFilter
@@ -114,7 +114,7 @@ export const fetchAndFilterVergunningenV2 = memoizee(
 );
 
 export async function fetchVergunningenV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT
@@ -128,7 +128,7 @@ export async function fetchVergunningenV2(
 }
 
 function addEncryptedDocumentIdToUrl(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   document: VergunningDocument
 ) {
   const [documentIdEncrypted] = encrypt(`${sessionID}:${document.key}`);
@@ -143,7 +143,7 @@ function addEncryptedDocumentIdToUrl(
 }
 
 export async function fetchVergunningV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   vergunningIdEncrypted: string
 ) {

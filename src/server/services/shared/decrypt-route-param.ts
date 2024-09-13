@@ -12,7 +12,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
   idsEncrypted: string,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  let sessionID: AuthProfileAndToken['profile']['sid'] | null = null;
+  let sessionID: SessionID | null = null;
   let id: string | null = null;
 
   try {

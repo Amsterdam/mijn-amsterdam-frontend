@@ -6,7 +6,11 @@ import {
   fetchVergunningenDocument,
   fetchVergunningenDocumentsList,
 } from '../services';
-import { handleFetchAfisBusinessPartner } from '../services/afis/afis-route-handlers';
+import { fetchAfisDocument } from '../services/afis/afis';
+import {
+  handleFetchAfisBusinessPartner,
+  handleFetchAfisFacturen,
+} from '../services/afis/afis-route-handlers';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,

@@ -50,7 +50,7 @@ function getDisplayStatus(
 }
 
 function getDocumentsFrontend(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   documents: GenericDocument[]
 ) {
   return documents.map((document) => {
@@ -67,7 +67,7 @@ function getDocumentsFrontend(
 
 async function transformRegelingForFrontend(
   requestID: RequestID,
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   aanvraag: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
 ) {

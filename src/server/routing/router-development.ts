@@ -51,10 +51,15 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
 authRouterDevelopment.use(async (req, res, next) => {
   if (hasSessionCookie(req)) {
     const cookieValue = req.cookies[OIDC_SESSION_COOKIE_NAME];
-    await createOIDCStub(
-      req,
-      JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
-    );
+    try {
+      await createOIDCStub(
+        req,
+        JSON.parse(Buffer.from(cookieValue, 'base64').toString('ascii'))
+      );
+    } catch (error) {
+      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+      return sendUnauthorized(res);
+    }
   }
   next();
 });

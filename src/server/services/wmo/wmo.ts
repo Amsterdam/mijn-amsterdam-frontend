@@ -20,7 +20,7 @@ import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 
 function getDocuments(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
   if (
@@ -57,7 +57,7 @@ function getLatestStatusDate(
 }
 
 function transformVoorzieningenForFrontend(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
 ): WMOVoorzieningFrontend[] {

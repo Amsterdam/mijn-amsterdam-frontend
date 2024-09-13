@@ -18,7 +18,7 @@ import {
 } from './wpi-types';
 
 export function transformToStatusLine(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   requestProcess: WpiRequestProcess,
   labels: WpiRequestProcessLabels
 ): WpiRequestProcess {
@@ -47,7 +47,7 @@ export function transformToStatusLine(
 }
 
 export function addApiBasePathToDocumentUrls(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   documents: GenericDocument[]
 ): GenericDocument[] {
   return documents.map((document) => {

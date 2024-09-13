@@ -62,12 +62,12 @@ import { auth } from 'express-openid-connect';
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
   fetchService: (
-    requestID: requestID,
+    requestID: RequestID,
     authProfileAndToken: AuthProfileAndToken,
     ...args: any[]
   ) => Promise<T>
 ) {
-  return async (requestID: requestID, req: Request) => {
+  return async (requestID: RequestID, req: Request) => {
     const authProfileAndToken = getAuth(req);
     if (!authProfileAndToken) {
       return apiErrorResult('Not authorized', null);
@@ -77,7 +77,7 @@ function callAuthenticatedService<T>(
 }
 
 function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
-  return async (requestID: requestID, req: Request) =>
+  return async (requestID: RequestID, req: Request) =>
     fetchService(requestID, queryParams(req));
 }
 
@@ -156,7 +156,7 @@ const AVG = callAuthenticatedService(fetchAVG);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 
 // Special services that aggregates NOTIFICATIONS from various services
-export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
+export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
@@ -344,7 +344,7 @@ export const servicesTipsByProfileType = {
 };
 
 export function loadServices(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request,
   serviceMap:
     | PrivateServices
@@ -444,7 +444,7 @@ export async function getServiceResultsForTips(
 }
 
 export async function getTipNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request
 ): Promise<MyNotification[]> {
   const serviceResults = await getServiceResultsForTips(requestID, req);

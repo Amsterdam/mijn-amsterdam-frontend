@@ -369,7 +369,7 @@ interface PowerbrowserLink {
 }
 
 function transformPowerbrowserLinksResponse(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   responseData: PowerbrowserLink[]
 ) {
   return (

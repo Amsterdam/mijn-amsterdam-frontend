@@ -5,14 +5,13 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import {
-  generateFullApiUrlBFF,
-  SessionID,
-} from '../../helpers/app';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
@@ -275,7 +274,7 @@ type AfisFacturenParams = {
 
 export async function fetchAfisFacturen(
   requestID: RequestID,
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   params: AfisFacturenParams
 ) {
   const config = getApiConfig('AFIS', {
@@ -313,7 +312,7 @@ function formatFactuurRequestURL(
 
 function transformFacturen(
   responseData: AfisOpenInvoiceSource,
-  sessionID: AuthProfileAndToken['profile']['sid']
+  sessionID: SessionID
 ) {
   const feedProperties = getFeedEntryProperties(responseData);
   return feedProperties.map((invoiceProperties) => {
@@ -323,7 +322,7 @@ function transformFacturen(
 
 function transformFactuur(
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
-  sessionID: AuthProfileAndToken['profile']['sid']
+  sessionID: SessionID
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
 

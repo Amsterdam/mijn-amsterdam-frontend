@@ -29,7 +29,6 @@ export async function isBlacklistedHandler(
   next: NextFunction
 ) {
   const auth = getAuth(req);
-  console.log('auth::', auth);
 
   if (auth?.profile?.sid) {
     const isOnList = await getIsBlackListed(auth.profile.sid);

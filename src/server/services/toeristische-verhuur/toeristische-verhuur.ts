@@ -235,7 +235,7 @@ function createRegistratieNotification(
 }
 
 export async function fetchToeristischeVerhuurNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
 ) {

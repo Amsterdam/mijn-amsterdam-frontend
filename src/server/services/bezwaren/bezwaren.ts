@@ -16,10 +16,10 @@ import {
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
@@ -175,7 +175,7 @@ async function fetchBezwaarStatus(
 }
 
 function transformBezwarenDocumentsResults(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): OctopusApiResponse<BezwaarDocument> {
   if (Array.isArray(response.results)) {
@@ -244,7 +244,7 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
 }
 
 function transformBezwarenResults(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: BezwarenSourceResponse<BezwaarSourceData>
 ): OctopusApiResponse<Bezwaar> {
   const results = response.results;
@@ -423,7 +423,7 @@ export async function fetchBezwaarDetail(
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
-  const decryptResult = decryptAndValidate(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     zaakIdEncrypted,
     authProfileAndToken
   );

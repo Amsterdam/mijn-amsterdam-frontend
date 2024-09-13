@@ -46,7 +46,7 @@ export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
 }
 
 function transformLood365Response(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: Lood365Response
 ): LoodMetingen {
   let metingen: LoodMeting[] = [];

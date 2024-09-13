@@ -79,7 +79,7 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
     );
   }
 
-  let sessionID: AuthProfileAndToken['profile']['sid'];
+  let sessionID: SessionID;
   let administratienummer: StadspasAdministratieNummer;
   let pasnummer: string;
 

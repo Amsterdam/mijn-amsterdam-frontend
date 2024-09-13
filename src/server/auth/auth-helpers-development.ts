@@ -18,7 +18,7 @@ export async function getPrivateKeyForDevelopment() {
 export async function signDevelopmentToken(
   authMethod: AuthProfile['authMethod'],
   userID: string,
-  sessionID: string
+  sessionID: SessionID
 ) {
   const data = {
     [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,

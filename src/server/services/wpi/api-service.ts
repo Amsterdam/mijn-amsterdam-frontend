@@ -49,7 +49,7 @@ export interface FetchConfig {
 }
 
 function statusLineTransformer(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: WpiRequestProcess[],
   getLabels: (
     requestProcess: WpiRequestProcess
@@ -194,7 +194,7 @@ export async function fetchTonk(
 }
 
 export function transformIncomSpecificationResponse(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
 ) {
   return {

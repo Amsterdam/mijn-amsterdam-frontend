@@ -11,7 +11,7 @@ export interface SessionData {
   token_type: string;
   expires_at: string;
   client_id: string;
-  sid: string;
+  sid: SessionID;
   profileType: ProfileType;
   authMethod: AuthMethod;
 }

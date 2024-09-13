@@ -155,11 +155,11 @@ const notificationServices: NotificationServicesByProfileType = {
       : fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
     erfpacht: fetchErfpachtNotifications,
-    maintenanceNotifications: (requestID: requestID) =>
+    maintenanceNotifications: (requestID: RequestID) =>
       fetchMaintenanceNotificationsDashboard(requestID),
     subsidie: fetchSubsidieNotifications,
     toeristischeVerhuur: (
-      requestID: requestID,
+      requestID: RequestID,
       authProfileAndToken: AuthProfileAndToken
     ) =>
       fetchToeristischeVerhuurNotifications(
@@ -181,7 +181,7 @@ const notificationServices: NotificationServicesByProfileType = {
       : fetchVergunningenNotifications,
     erfpacht: fetchErfpachtNotifications,
     subsidie: fetchSubsidieNotifications,
-    maintenance: (requestID: requestID) =>
+    maintenance: (requestID: RequestID) =>
       fetchMaintenanceNotificationsDashboard(requestID),
     toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
     fetchKrefia: fetchKrefiaNotifications,

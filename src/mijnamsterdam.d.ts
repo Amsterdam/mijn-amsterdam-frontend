@@ -10,6 +10,7 @@ type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 type Nullable<T> = T | null;
 
 type RequestID = string;
+type SessionID = string;
 
 type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
 

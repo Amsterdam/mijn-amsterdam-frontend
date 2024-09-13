@@ -114,7 +114,7 @@ export function getNotifications(
 }
 
 export function transformIncomeSpecificationItem(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
   const displayDatePublished = defaultDateFormat(item.datePublished);
