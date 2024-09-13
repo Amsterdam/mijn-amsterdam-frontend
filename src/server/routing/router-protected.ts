@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { IS_OT } from '../../universal/config/env';
 import { getAuth } from '../auth/auth-helpers';
-import { isProtectedRoute } from '../helpers/app';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
@@ -33,6 +32,7 @@ import {
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 import { BffEndpoints } from './bff-routes';
+import { isProtectedRoute } from './helpers';
 import { isAuthenticated, isBlacklistedHandler } from './middleware';
 
 export const router = express.Router();

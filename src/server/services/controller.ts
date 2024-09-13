@@ -8,11 +8,10 @@ import {
 } from '../../universal/helpers/api';
 import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
-import {
-  addServiceResultHandler,
-  queryParams,
-  sendMessage,
-} from '../helpers/app';
+import { getAuth, getProfileType } from '../auth/auth-helpers';
+import { addServiceResultHandler } from '../helpers/app';
+import { queryParams } from '../routing/helpers';
+import { sendMessage } from '../routing/middleware';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
@@ -58,7 +57,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { getAuth, getProfileType } from '../auth/auth-helpers';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {

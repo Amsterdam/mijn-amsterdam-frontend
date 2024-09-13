@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import type { Request, Response } from 'express';
+import type { Request } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
@@ -7,15 +7,10 @@ import { createSecretKey, hkdfSync } from 'node:crypto';
 import { ParsedQs } from 'qs';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { IS_AP } from '../../universal/config/env';
-import { apiSuccessResult } from '../../universal/helpers/api';
-import {
-  decodeToken,
-  generateFullApiUrlBFF,
-  sendUnauthorized,
-} from '../helpers/app';
 import { axiosRequest } from '../helpers/source-api-request';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
-import { captureException, captureMessage } from '../services/monitoring';
+import { generateFullApiUrlBFF } from '../routing/helpers';
+import { captureException } from '../services/monitoring';
 import {
   OIDC_COOKIE_ENCRYPTION_KEY,
   OIDC_ID_TOKEN_EXP,
@@ -268,4 +263,10 @@ export async function isRequestAuthenticated(
     captureException(error);
   }
   return false;
+}
+
+export function decodeToken<T extends Record<string, string> = {}>(
+  jwtToken: string
+): T {
+  return jose.decodeJwt(jwtToken) as unknown as T;
 }

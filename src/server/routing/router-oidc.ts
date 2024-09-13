@@ -15,11 +15,10 @@ import {
   getReturnToUrl,
   hasSessionCookie,
 } from '../auth/auth-helpers';
-import { nocache, sendUnauthorized } from '../helpers/app';
 import { captureException } from '../services/monitoring';
 import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
-import { verifyAuthenticated } from './middleware';
+import { nocache, sendUnauthorized, verifyAuthenticated } from './middleware';
 
 export const router = express.Router();
 

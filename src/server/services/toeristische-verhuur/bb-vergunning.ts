@@ -13,7 +13,7 @@ import {
 } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
-import { generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../routing/helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';

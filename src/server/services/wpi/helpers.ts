@@ -4,7 +4,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { Thema } from '../../../universal/config/thema';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../routing/helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';

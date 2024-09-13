@@ -5,7 +5,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../routing/helpers';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { captureException } from '../monitoring';

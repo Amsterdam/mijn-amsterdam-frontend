@@ -16,7 +16,7 @@ import {
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../routing/helpers';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';

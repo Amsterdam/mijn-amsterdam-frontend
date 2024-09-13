@@ -8,7 +8,6 @@ import {
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
-import { queryParams } from '../helpers/app';
 import {
   QueryParamsCMSFooter,
   fetchCMSCONTENT,
@@ -25,6 +24,7 @@ import {
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
 import { BffEndpoints } from './bff-routes';
+import { queryParams } from './helpers';
 
 export const router = express.Router();
 
