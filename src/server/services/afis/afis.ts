@@ -310,6 +310,41 @@ function formatFactuurRequestURL(
   return `${baseUrl}${baseRoute}${query}`;
 }
 
+export async function fetchAfisFacturenOverview(
+  requestID: RequestID,
+  sessionID: SessionID,
+  params: Omit<AfisFacturenParams, 'state' | 'top'>
+) {
+  const facturenOpenRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'open',
+    businessPartnerID: params.businessPartnerID,
+  });
+
+  const facturenClosedRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'closed',
+    businessPartnerID: params.businessPartnerID,
+    top: '3',
+  });
+
+  const [facturenOpenResult, facturenClosedResult] = await Promise.all([
+    facturenOpenRequest,
+    facturenClosedRequest,
+  ]);
+
+  const facturenOverview = {
+    open: facturenOpenResult.content ?? [],
+    closed: facturenClosedResult.content ?? [],
+  };
+
+  return apiSuccessResult(
+    facturenOverview,
+    getFailedDependencies({
+      open: facturenOpenResult,
+      closed: facturenClosedResult,
+    })
+  );
+}
+
 function transformFacturen(
   responseData: AfisOpenInvoiceSource,
   sessionID: SessionID

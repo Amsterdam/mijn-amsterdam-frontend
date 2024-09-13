@@ -254,3 +254,9 @@ attachDocumentDownloadRoute(
   BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
   fetchAfisDocument
 );
+router.get(BffEndpoints.AFIS_FACTUREN_OVERZICHT, handleFetchAfisFacturen);
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
+  fetchAfisDocument
+);
