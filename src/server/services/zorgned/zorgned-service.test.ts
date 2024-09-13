@@ -403,7 +403,7 @@ describe('zorgned-service', () => {
         }
       );
 
-      expect(result.content?.[0]?.betrokkenPersonen).toBe(undefined);
+      expect(result.content?.[0]?.betrokkenPersonen).toStrictEqual([]);
       expect('failedDependencies' in result).toBe(true);
       expect(
         'failedDependencies' in result &&
@@ -424,7 +424,7 @@ describe('zorgned-service', () => {
         }
       );
 
-      expect(result.content?.[0]?.betrokkenPersonen).toBe(undefined);
+      expect(result.content?.[0]?.betrokkenPersonen).toStrictEqual([]);
       expect('failedDependencies' in result).toBe(true);
       expect(
         'failedDependencies' in result &&

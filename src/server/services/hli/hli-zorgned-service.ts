@@ -10,6 +10,7 @@ import {
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types';
 
@@ -93,15 +94,14 @@ async function fetchZorgnedAanvragenHLI_(
   );
 
   if (aanvragenResponse.status === 'OK') {
-    const aanvragenTransformed = aanvragenResponse.content.map(
-      (aanvraagTransformed) => {
+    const aanvragenTransformed: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
+      aanvragenResponse.content.map((aanvraagTransformed) => {
         // Override isActueel for front-end.
         return {
           ...aanvraagTransformed,
           isActueel: isActueel(aanvraagTransformed),
         };
-      }
-    );
+      });
 
     return apiSuccessResult(aanvragenTransformed);
   }

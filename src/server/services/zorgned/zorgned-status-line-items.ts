@@ -1,18 +1,18 @@
 import { StatusLineItem } from '../../../universal/types';
+import { parseLabelContent } from './zorgned-helpers';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
 } from './zorgned-types';
-import { parseLabelContent } from './zorgned-helpers';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
 // we set the match to true so the check doesn't influence the selection criteria and returns items by default.
 const PASS_MATCH_DEFAULT = true;
 
-function getStatusLineItemTransformers(
-  statusLineItemsConfig: ZorgnedStatusLineItemsConfig[],
-  aanvraagTransformed: ZorgnedAanvraagTransformed,
-  allAanvragenTransformed: ZorgnedAanvraagTransformed[]
+function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
+  statusLineItemsConfig: ZorgnedStatusLineItemsConfig<T>[],
+  aanvraagTransformed: T,
+  allAanvragenTransformed: T[]
 ) {
   return statusLineItemsConfig.find((config) => {
     const hasRegelingsVormMatch =
@@ -50,14 +50,14 @@ function getStatusLineItemTransformers(
   })?.lineItemTransformers;
 }
 
-export function getStatusLineItems(
+export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
   serviceName: 'WMO' | 'HLI',
-  statusLineItemsConfig: ZorgnedStatusLineItemsConfig[],
-  aanvraagTransformed: ZorgnedAanvraagTransformed,
-  allAanvragenTransformed: ZorgnedAanvraagTransformed[],
+  statusLineItemsConfig: ZorgnedStatusLineItemsConfig<T>[],
+  aanvraagTransformed: T,
+  allAanvragenTransformed: T[],
   today: Date
 ) {
-  const lineItemTransformer = getStatusLineItemTransformers(
+  const lineItemTransformer = getStatusLineItemTransformers<T>(
     statusLineItemsConfig,
     aanvraagTransformed,
     allAanvragenTransformed
@@ -72,7 +72,7 @@ export function getStatusLineItems(
 
   const statusLineItems: StatusLineItem[] = lineItemTransformer
     .map((statusItem, index) => {
-      const datePublished = parseLabelContent(
+      const datePublished = parseLabelContent<T>(
         statusItem.datePublished,
         aanvraagTransformed,
         today,
@@ -82,7 +82,7 @@ export function getStatusLineItems(
       const stepData: StatusLineItem = {
         id: `status-step-${index}`,
         status: statusItem.status,
-        description: parseLabelContent(
+        description: parseLabelContent<T>(
           statusItem.description,
           aanvraagTransformed,
           today,

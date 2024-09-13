@@ -3,48 +3,58 @@ import { GenericDocument } from '../../../universal/types';
 export const ZORGNED_GEMEENTE_CODE = '0363';
 
 export type TextPartContent = string;
-export type TextPartContentTransformer = (
-  aanvraag: ZorgnedAanvraagTransformed,
+export type TextPartContentTransformer<T extends ZorgnedAanvraagTransformed> = (
+  aanvraag: T,
   today: Date,
-  allAanvragen: ZorgnedAanvraagTransformed[]
+  allAanvragen: T[]
 ) => TextPartContent;
 
-export type TextPartContents = TextPartContent | TextPartContentTransformer;
+export type TextPartContents<T extends ZorgnedAanvraagTransformed> =
+  | TextPartContent
+  | TextPartContentTransformer<T>;
 
 export type LeveringsVormConfig = Record<LeveringsVorm, ProductSoortCode[]>;
 
-export type ZorgnedStatusLineItemTransformerConfig = {
+export type ZorgnedStatusLineItemTransformerConfig<
+  T extends ZorgnedAanvraagTransformed = ZorgnedAanvraagTransformed,
+> = {
   status: string;
-  datePublished: TextPartContents;
-  description: TextPartContents;
+  datePublished: TextPartContents<T>;
+  description: TextPartContents<T>;
   isChecked: (
     stepIndex: number,
-    aanvraag: ZorgnedAanvraagTransformed,
+    aanvraag: T,
     today: Date,
-    allAanvragen: ZorgnedAanvraagTransformed[]
+    allAanvragen: T[]
   ) => boolean;
   isActive: (
     stepIndex: number,
-    aanvraag: ZorgnedAanvraagTransformed,
+    aanvraag: T,
     today: Date,
-    allAanvragen: ZorgnedAanvraagTransformed[]
+    allAanvragen: T[]
   ) => boolean;
   isVisible?: (
     stepIndex: number,
-    aanvraag: ZorgnedAanvraagTransformed,
+    aanvraag: T,
     today: Date,
-    allAanvragen: ZorgnedAanvraagTransformed[]
+    allAanvragen: T[]
   ) => boolean;
 };
 
 type ZorgnedLineItemsFilter = (
-  aanvraag: ZorgnedAanvraagTransformed,
-  allAanvragen: ZorgnedAanvraagTransformed[]
+  aanvraag:
+    | ZorgnedAanvraagTransformed
+    | ZorgnedAanvraagWithRelatedPersonsTransformed,
+  allAanvragen:
+    | ZorgnedAanvraagTransformed[]
+    | ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) => boolean;
 
-export interface ZorgnedStatusLineItemsConfig {
+export interface ZorgnedStatusLineItemsConfig<
+  T extends ZorgnedAanvraagTransformed = ZorgnedAanvraagTransformed,
+> {
   leveringsVorm?: LeveringsVorm;
-  lineItemTransformers: ZorgnedStatusLineItemTransformerConfig[];
+  lineItemTransformers: ZorgnedStatusLineItemTransformerConfig<T>[];
   productsoortCodes?: ProductSoortCode[];
   productIdentificatie?: ProductIdentificatie[];
   filter?: ZorgnedLineItemsFilter;
@@ -123,7 +133,6 @@ export interface ZorgnedResponseDataSource {
 
 export interface ZorgnedAanvraagTransformed {
   betrokkenen: string[];
-  betrokkenPersonen?: ZorgnedPerson[];
   datumAanvraag: string;
   datumBeginLevering: string | null;
   datumBesluit: string;
@@ -141,6 +150,11 @@ export interface ZorgnedAanvraagTransformed {
   productIdentificatie?: ProductIdentificatie;
   resultaat: BeschikkingsResultaat;
   titel: string;
+}
+
+export interface ZorgnedAanvraagWithRelatedPersonsTransformed
+  extends ZorgnedAanvraagTransformed {
+  betrokkenPersonen: ZorgnedPerson[];
 }
 
 export interface ZorgnedDocumentResponseSource {

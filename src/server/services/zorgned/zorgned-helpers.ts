@@ -1,10 +1,10 @@
 import { TextPartContents, ZorgnedAanvraagTransformed } from './zorgned-types';
 
-export function parseLabelContent(
-  text: TextPartContents,
-  aanvraag: ZorgnedAanvraagTransformed,
+export function parseLabelContent<T extends ZorgnedAanvraagTransformed>(
+  text: TextPartContents<T>,
+  aanvraag: T,
   today: Date,
-  allAanvragen: ZorgnedAanvraagTransformed[]
+  allAanvragen: T[]
 ): string {
   let rText = text || '';
 

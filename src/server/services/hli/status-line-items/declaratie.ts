@@ -1,11 +1,12 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
-  ZorgnedAanvraagTransformed,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 import { BESLUIT } from './generic';
 
-function getDeclaratieBesluitDescription(regeling: ZorgnedAanvraagTransformed) {
+function getDeclaratieBesluitDescription(
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
   return `
     <p>
       Uw declaratie is ${regeling.resultaat}.
@@ -17,9 +18,10 @@ function getDeclaratieBesluitDescription(regeling: ZorgnedAanvraagTransformed) {
   `;
 }
 
-export const DECLARATIE: ZorgnedStatusLineItemTransformerConfig[] = [
-  {
-    ...BESLUIT,
-    description: (regeling) => getDeclaratieBesluitDescription(regeling),
-  },
-];
+export const DECLARATIE: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
+  [
+    {
+      ...BESLUIT,
+      description: (regeling) => getDeclaratieBesluitDescription(regeling),
+    },
+  ];

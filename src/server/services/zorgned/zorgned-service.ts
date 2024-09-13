@@ -3,6 +3,7 @@ import {
   apiErrorResult,
   ApiSuccessResponse,
   apiSuccessResult,
+  getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
@@ -20,6 +21,7 @@ import {
   LeveringsVorm,
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
   ZorgnedDocument,
   ZorgnedDocumentResponseSource,
@@ -197,7 +199,7 @@ export async function fetchAanvragenWithRelatedPersons(
 export async function fetchAndMergeRelatedPersons(
   requestID: RequestID,
   zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>
-) {
+): Promise<ApiSuccessResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
   const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
 
   const userIDs = zorgnedAanvragenTransformed.flatMap(
@@ -206,13 +208,7 @@ export async function fetchAndMergeRelatedPersons(
 
   const relatedPersonsResponse = await fetchRelatedPersons(requestID, userIDs);
 
-  if (relatedPersonsResponse.status === 'ERROR') {
-    return apiSuccessResult(zorgnedAanvragenTransformed, {
-      relatedPersons: relatedPersonsResponse,
-    });
-  }
-
-  const personsByUserId = relatedPersonsResponse.content.reduce(
+  const personsByUserId = relatedPersonsResponse.content?.reduce(
     (acc, person) => {
       acc[person.bsn] = person;
       return acc;
@@ -220,21 +216,28 @@ export async function fetchAndMergeRelatedPersons(
     {} as Record<ZorgnedPerson['bsn'], ZorgnedPerson>
   );
 
-  const zorgnedAanvragenWithRelatedPersons = zorgnedAanvragenTransformed.map(
-    (zorgnedAanvraagTransformed) => {
-      if (zorgnedAanvraagTransformed.betrokkenen?.length) {
-        return {
-          ...zorgnedAanvraagTransformed,
-          betrokkenPersonen: zorgnedAanvraagTransformed.betrokkenen
-            .map((userID) => personsByUserId[userID])
-            .filter(Boolean),
-        };
-      }
-      return zorgnedAanvraagTransformed;
-    }
-  );
+  const zorgnedAanvragenWithRelatedPersons: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
+    zorgnedAanvragenTransformed.map((zorgnedAanvraagTransformed) => {
+      let betrokkenPersonen: ZorgnedPerson[] = [];
 
-  return apiSuccessResult(zorgnedAanvragenWithRelatedPersons);
+      if (zorgnedAanvraagTransformed.betrokkenen?.length && personsByUserId) {
+        betrokkenPersonen = zorgnedAanvraagTransformed.betrokkenen
+          .map((userID) => personsByUserId[userID])
+          .filter(Boolean);
+      }
+
+      return {
+        ...zorgnedAanvraagTransformed,
+        betrokkenPersonen,
+      };
+    });
+
+  return apiSuccessResult(
+    zorgnedAanvragenWithRelatedPersons,
+    getFailedDependencies({
+      relatedPersons: relatedPersonsResponse,
+    })
+  );
 }
 
 export async function fetchDocument(
