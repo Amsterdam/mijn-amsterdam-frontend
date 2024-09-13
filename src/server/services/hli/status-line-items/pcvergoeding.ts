@@ -10,13 +10,12 @@ export const AV_UPCZIL = 'AV-UPCZIL';
 export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 
-function isPcVergoeding(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+function getBetrokkenKinderen(
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
-  return (
-    !!aanvraag.productIdentificatie &&
-    [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
-  );
+  return regeling.betrokkenPersonen
+    .map((person) => `(${person.name}, ${person.dateOfBirthFormatted})`)
+    .join(', ');
 }
 
 function isVerzilvering(
@@ -89,12 +88,23 @@ function getUpcPcvDecisionDate(
 export function filterCombineUpcPcvData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  // Add AV_PCVC / AV_UPCC documenten to AV_PCVZIL / AV_UPCZIL
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
+  const baseRegelingIdWithVerzilvering: string[] = [];
+
+  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag, index) => {
+    // Exclude baseRegelingen that have verzilvering
+    if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
+      return null;
+    }
+
+    // Add AV_PCVC / AV_UPCC documenten to AV_PCVZIL / AV_UPCZIL
     if (isVerzilvering(aanvraag)) {
+      // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
+      if (baseRegeling) {
+        baseRegelingIdWithVerzilvering.push(baseRegeling.id);
+      }
       const addedDocs = baseRegeling?.documenten ?? [];
 
       return {
@@ -108,15 +118,6 @@ export function filterCombineUpcPcvData(
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
       };
-    } else if (
-      // Exclude the aanvraag if it's a PcVergoeding that also has a Verzilvering.
-      // Data of this aanvraag will be added to the corresponding vergoeding
-      isPcVergoeding(aanvraag) &&
-      aanvragen.some((compareAanvraag) =>
-        isVerzilveringVanRegeling(aanvraag, compareAanvraag)
-      )
-    ) {
-      return null;
     }
 
     return aanvraag;
@@ -153,18 +154,20 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       isChecked: (stepIndex, regeling) => true,
       isActive: (stepIndex, regeling) =>
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
-      description: (regeling) =>
-        `<p>
+      description: (regeling) => {
+        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        return `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
-            ? `Uw kind heeft recht op een ${regeling.titel}`
-            : `Uw kind heeft geen recht op een ${regeling.titel}`
+            ? `U krijgt een ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind ${betrokkenKinderen}`
+            : `U krijgt geen ${regeling.titel} voor uw kind ${betrokkenKinderen}`
         }.
         </p>
         <p>
-          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.'}
+          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
         </p>
-      `,
+      `;
+      },
     },
     {
       status: 'Workshop',
@@ -175,12 +178,14 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       datePublished: '',
       isChecked: (stepIndex, regeling) => true,
       isActive: (stepIndex, regeling) => true,
-      description: (regeling) =>
-        `
+      description: (regeling) => {
+        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        return `
         <p>
-         U moet eerst een afspraak maken voor de workshop. In de brief staat hoe u dat doet.
+         Voordat u de laptop krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
         </p>
-      `,
+      `;
+      },
     },
     {
       status: 'Workshop gevolgd',
@@ -189,13 +194,15 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
       isActive: () => true,
-      description: (regeling) =>
-        `
+      description: (regeling) => {
+        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        return `
         <p>
-         Uw kind krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.
+         Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.
         </p>
-        ${regeling.datumEindeGeldigheid ? `<p>De regeling is geldig tot ${defaultDateFormat(regeling.datumEindeGeldigheid)}` : ''}.</p>
-      `,
+        ${regeling.datumEindeGeldigheid ? `<p>Deze regeling is geldig tot ${defaultDateFormat(regeling.datumEindeGeldigheid)}` : ''}.</p>
+      `;
+      },
     },
     {
       status: 'Workshop niet gevolgd',
@@ -203,15 +210,17 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
-      description: (regeling) =>
-        `
+      description: (regeling) => {
+        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        return `
         <p>
-         Uw kind krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
+         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
-          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.
         </p>
-      `,
+      `;
+      },
     },
   ];
 

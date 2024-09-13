@@ -132,8 +132,6 @@ export async function transformRegelingenForFrontend(
     regelingenFrontend.push(regelingForFrontend);
   }
 
-  regelingenFrontend.sort(dateSort('dateStart', 'desc'));
-
   return regelingenFrontend;
 }
 

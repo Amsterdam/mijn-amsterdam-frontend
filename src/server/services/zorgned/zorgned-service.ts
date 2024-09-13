@@ -145,7 +145,7 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed;
+  return aanvragenTransformed.sort(dateSort('datumIngangGeldigheid', 'desc'));
 }
 
 export async function fetchAanvragen(
