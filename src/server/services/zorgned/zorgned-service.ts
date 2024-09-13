@@ -216,38 +216,6 @@ export async function fetchDocument(
   );
 }
 
-function transformZorgnedRelaties(responseData: any) {
-  return responseData;
-}
-
-export async function fetchRelaties(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
-) {
-  const postBody = {
-    burgerservicenummer: authProfileAndToken.profile.id,
-    gemeentecode: ZORGNED_GEMEENTE_CODE,
-  };
-
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
-
-  const url = `${dataRequestConfig.url}/relaties`;
-
-  const relaties = await requestData<ZorgnedAanvraagTransformed[]>(
-    {
-      ...dataRequestConfig,
-      url,
-      data: postBody,
-      transformResponse: transformZorgnedRelaties,
-    },
-    requestID,
-    authProfileAndToken
-  );
-
-  return relaties;
-}
-
 function transformZorgnedPersonResponse(
   zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
 ): ZorgnedPerson | null {
