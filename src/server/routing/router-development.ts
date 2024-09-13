@@ -5,19 +5,23 @@ import express, {
   Response,
 } from 'express';
 import UID from 'uid-safe';
-import { testAccounts } from '../universal/config/auth.development';
-import { apiSuccessResult } from '../universal/helpers/api';
+import { testAccounts } from '../../universal/config/auth.development';
+import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-} from './auth/auth-config';
-import { getAuth, getReturnToUrl, hasSessionCookie } from './auth/auth-helpers';
-import { generateDevSessionCookieValue } from './auth/auth-helpers-development';
-import { authRoutes } from './auth/auth-routes';
-import { AuthProfile } from './auth/auth-types';
-import { sendUnauthorized } from './helpers/app';
-import { addToBlackList } from './services/session-blacklist';
-import { countLoggedInVisit } from './services/visitors';
+} from '../auth/auth-config';
+import {
+  getAuth,
+  getReturnToUrl,
+  hasSessionCookie,
+} from '../auth/auth-helpers';
+import { generateDevSessionCookieValue } from '../auth/auth-helpers-development';
+import { authRoutes } from '../auth/auth-routes';
+import { AuthProfile } from '../auth/auth-types';
+import { sendUnauthorized } from '../helpers/app';
+import { addToBlackList } from '../services/session-blacklist';
+import { countLoggedInVisit } from '../services/visitors';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',

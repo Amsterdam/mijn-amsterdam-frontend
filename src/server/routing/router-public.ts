@@ -1,15 +1,15 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { OTAP_ENV } from '../universal/config/env';
+import { OTAP_ENV } from '../../universal/config/env';
 import {
   DATASETS,
   getDatasetCategoryId,
-} from '../universal/config/myarea-datasets';
-import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
-import { authRoutes } from './auth/auth-routes';
-import { RELEASE_VERSION } from './config';
-import { queryParams } from './helpers/app';
-import { BffEndpoints } from './routing/bff-routes';
+} from '../../universal/config/myarea-datasets';
+import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
+import { authRoutes } from '../auth/auth-routes';
+import { RELEASE_VERSION } from '../config';
+import { queryParams } from '../helpers/app';
+import { BffEndpoints } from './bff-routes';
 import {
   QueryParamsCMSFooter,
   fetchCMSCONTENT,
@@ -19,12 +19,12 @@ import {
   loadClusterDatasets,
   loadFeatureDetail,
   loadPolylineFeatures,
-} from './services';
-import { getDatasetEndpointConfig } from './services/buurt/helpers';
+} from '../services';
+import { getDatasetEndpointConfig } from '../services/buurt/helpers';
 import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
-} from './services/cms-maintenance-notifications';
+} from '../services/cms-maintenance-notifications';
 
 export const router = express.Router();
 

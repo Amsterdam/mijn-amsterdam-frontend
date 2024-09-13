@@ -1,44 +1,39 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { IS_OT } from '../universal/config/env';
-import { getAuth, isAuthenticated } from './auth/auth-helpers';
-import { isProtectedRoute } from './helpers/app';
-import { BffEndpoints } from './routing/bff-routes';
+import { IS_OT } from '../../universal/config/env';
+import { getAuth, isAuthenticated } from '../auth/auth-helpers';
+import { isProtectedRoute } from '../helpers/app';
+import { BffEndpoints } from './bff-routes';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
   fetchVergunningenDocumentsList,
-} from './services';
-import {
-  handleFetchAfisBusinessPartner,
-  handleFetchAfisFacturen,
-} from './services/afis/afis-route-handlers';
-import { fetchAfisDocument } from './services/afis/afis';
+} from '../services';
+import { handleFetchAfisBusinessPartner } from '../services/afis/afis-route-handlers';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,
-} from './services/bezwaren/bezwaren';
-import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
+} from '../services/bezwaren/bezwaren';
+import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import {
   NOTIFICATIONS,
   loadServicesAll,
   loadServicesSSE,
-} from './services/controller';
+} from '../services/controller';
 import {
   fetchZorgnedAVDocument,
   handleFetchTransactionsRequest,
-} from './services/hli/hli-route-handlers';
-import { isBlacklistedHandler } from './services/session-blacklist';
-import { attachDocumentDownloadRoute } from './services/shared/document-download-route-handler';
-import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
-import { fetchDecosDocument } from './services/vergunningen-v2/decos-service';
+} from '../services/hli/hli-route-handlers';
+import { isBlacklistedHandler } from '../services/session-blacklist';
+import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
+import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
+import { fetchBBDocument } from '../services/toeristische-verhuur/bb-vergunning';
+import { fetchDecosDocument } from '../services/vergunningen-v2/decos-service';
 import {
   fetchVergunningDetail,
   fetchZakenFromSource,
-} from './services/vergunningen-v2/vergunningen-route-handlers';
-import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
-import { fetchWpiDocument } from './services/wpi/api-service';
-
+} from '../services/vergunningen-v2/vergunningen-route-handlers';
+import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
+import { fetchWpiDocument } from '../services/wpi/api-service';
 
 export const router = express.Router();
 

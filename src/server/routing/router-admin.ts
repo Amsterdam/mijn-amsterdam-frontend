@@ -1,9 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 import basicAuth from 'express-basic-auth';
-import { cacheOverview } from './helpers/file-cache';
-import { BffEndpoints } from './routing/bff-routes';
-import { sessionBlacklistTable } from './services/session-blacklist';
-import { loginStats, loginStatsTable } from './services/visitors';
+import { cacheOverview } from '../helpers/file-cache';
+import { BffEndpoints } from './bff-routes';
+import { sessionBlacklistTable } from '../services/session-blacklist';
+import { loginStats, loginStatsTable } from '../services/visitors';
 
 export const adminRouter = express.Router();
 

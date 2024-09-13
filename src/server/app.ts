@@ -22,12 +22,12 @@ import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import { BFF_PORT, IS_DEBUG } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
-import { adminRouter } from './router-admin';
-import { authRouterDevelopment } from './router-development';
+import { adminRouter } from './routing/router-admin';
+import { authRouterDevelopment } from './routing/router-development';
 
-import { router as oidcRouter } from './router-oidc';
-import { router as protectedRouter } from './router-protected';
-import { legacyRouter, router as publicRouter } from './router-public';
+import { router as oidcRouter } from './routing/router-oidc';
+import { router as protectedRouter } from './routing/router-protected';
+import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { stadspasExternalConsumerRouter } from './services/hli/stadspas-router-external-consumer';

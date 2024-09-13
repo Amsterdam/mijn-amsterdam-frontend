@@ -1,13 +1,13 @@
 import express, { Request, Response } from 'express';
 import { attemptSilentLogin, auth } from 'express-openid-connect';
-import { FeatureToggle } from '../universal/config/feature-toggles';
-import { apiSuccessResult } from '../universal/helpers/api';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
-} from './auth/auth-config';
-import { AUTH_CALLBACK, authRoutes } from './auth/auth-routes';
+} from '../auth/auth-config';
+import { AUTH_CALLBACK, authRoutes } from '../auth/auth-routes';
 
 import {
   decodeOIDCToken,
@@ -15,11 +15,11 @@ import {
   getReturnToUrl,
   hasSessionCookie,
   verifyAuthenticated,
-} from './auth/auth-helpers';
-import { nocache, sendUnauthorized } from './helpers/app';
-import { captureException } from './services/monitoring';
-import { addToBlackList } from './services/session-blacklist';
-import { countLoggedInVisit } from './services/visitors';
+} from '../auth/auth-helpers';
+import { nocache, sendUnauthorized } from '../helpers/app';
+import { captureException } from '../services/monitoring';
+import { addToBlackList } from '../services/session-blacklist';
+import { countLoggedInVisit } from '../services/visitors';
 
 export const router = express.Router();
 

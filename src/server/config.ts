@@ -5,6 +5,9 @@ import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { jsonCopy } from '../universal/helpers/utils';
 import { getFromEnv } from './helpers/env';
+import { BFF_BASE_PATH } from './routing/bff-routes';
+
+export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && getFromEnv(envVarName, false);

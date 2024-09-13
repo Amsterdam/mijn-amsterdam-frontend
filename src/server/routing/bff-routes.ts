@@ -1,6 +1,5 @@
 export const BFF_BASE_PATH = '/api/v1';
 export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
-export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
 export const BffEndpoints = {
   ROOT: '/',
