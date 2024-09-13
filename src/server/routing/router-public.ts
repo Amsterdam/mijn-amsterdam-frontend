@@ -1,13 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import { OTAP_ENV } from '../universal/config/env';
+import { OTAP_ENV } from '../../universal/config/env';
 import {
   DATASETS,
   getDatasetCategoryId,
-} from '../universal/config/myarea-datasets';
-import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
-import { BffEndpoints, RELEASE_VERSION } from './config';
-import { queryParams } from './helpers/app';
+} from '../../universal/config/myarea-datasets';
+import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
+import { authRoutes } from '../auth/auth-routes';
+import { RELEASE_VERSION } from '../config/app';
 import {
   QueryParamsCMSFooter,
   fetchCMSCONTENT,
@@ -17,12 +17,14 @@ import {
   loadClusterDatasets,
   loadFeatureDetail,
   loadPolylineFeatures,
-} from './services';
-import { getDatasetEndpointConfig } from './services/buurt/helpers';
+} from '../services';
+import { getDatasetEndpointConfig } from '../services/buurt/helpers';
 import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
-} from './services/cms-maintenance-notifications';
+} from '../services/cms-maintenance-notifications';
+import { BffEndpoints } from './bff-routes';
+import { queryParams } from './route-helpers';
 
 export const router = express.Router();
 
@@ -188,9 +190,9 @@ router.all(
 export const legacyRouter = express.Router();
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (req, res) => {
-  return res.redirect(BffEndpoints.AUTH_LOGIN_DIGID);
+  return res.redirect(authRoutes.AUTH_LOGIN_DIGID);
 });
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (req, res) => {
-  return res.redirect(BffEndpoints.AUTH_LOGIN_EHERKENNING);
+  return res.redirect(authRoutes.AUTH_LOGIN_EHERKENNING);
 });

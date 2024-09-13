@@ -1,5 +1,5 @@
 import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
@@ -7,7 +7,10 @@ import {
   fetchGpassDiscountTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
-import { StadspasDiscountTransaction } from './stadspas-types';
+import {
+  StadspasDiscountTransactions,
+  StadspasDiscountTransactionsResponseSource,
+} from './stadspas-types';
 
 const pashouderResponse = {
   initialen: 'A',
@@ -195,6 +198,7 @@ describe('stadspas services', () => {
           "administratienummer": "0363000123-123",
           "stadspassen": [
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
@@ -267,6 +271,7 @@ describe('stadspas services', () => {
           "administratienummer": "0363000123-123",
           "stadspassen": [
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
@@ -294,6 +299,7 @@ describe('stadspas services', () => {
               "passNumberComplete": "6666666666666666666",
             },
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
@@ -321,6 +327,7 @@ describe('stadspas services', () => {
               "passNumberComplete": "6666666666666666666",
             },
             {
+              "balance": 0,
               "balanceFormatted": "€0,00",
               "budgets": [
                 {
@@ -454,7 +461,16 @@ describe('stadspas services', () => {
     const passNumber = 123456789;
 
     test('Get success response', async () => {
-      const expectedResponse: StadspasDiscountTransaction[] = [];
+      const apiResponse: StadspasDiscountTransactionsResponseSource = {
+        number_of_items: 0,
+        transacties: [],
+      };
+
+      const expectedResponse: StadspasDiscountTransactions = {
+        discountAmountTotal: 0,
+        discountAmountTotalFormatted: '€0,00',
+        transactions: [],
+      };
 
       remoteApi
         .get(
@@ -464,7 +480,7 @@ describe('stadspas services', () => {
           'authorization',
           `AppBearer ${FAKE_API_KEY},${administratienummer}`
         )
-        .reply(200, expectedResponse);
+        .reply(200, apiResponse);
 
       const response = await fetchGpassDiscountTransactions(
         requestID,

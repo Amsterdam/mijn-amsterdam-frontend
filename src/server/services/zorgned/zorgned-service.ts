@@ -10,14 +10,15 @@ import {
 } from './zorgned-config-and-types';
 
 import { GenericDocument } from '../../../universal/types';
-import { getApiConfig, ONE_SECOND_MS } from '../../config';
+import { ONE_SECOND_MS } from '../../config/app';
 
 import memoizee from 'memoizee';
+import { dateSort } from '../../../universal/helpers/date';
 import { hash } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
-import { dateSort } from '../../../universal/helpers/date';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -138,7 +139,7 @@ export function transformZorgnedAanvragen(
 }
 
 export async function fetchAanvragen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
   requestBodyParams?: Record<string, string>
@@ -167,7 +168,7 @@ export async function fetchAanvragen(
 }
 
 export async function fetchDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
   documentId: ZorgnedDocument['documentidentificatie']
@@ -216,7 +217,7 @@ function transformZorgnedRelaties(responseData: any) {
 }
 
 export async function fetchRelaties(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
@@ -244,7 +245,7 @@ export async function fetchRelaties(
 }
 
 export async function fetchPersoonsgegevensNAW_(
-  requestID: requestID,
+  requestID: RequestID,
   userID: AuthProfileAndToken['profile']['id'],
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {

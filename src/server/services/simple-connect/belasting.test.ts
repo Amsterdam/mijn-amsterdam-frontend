@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchBelasting, fetchBelastingNotifications } from './belasting';
 
 const REQUEST_ID = 'test-x-999';

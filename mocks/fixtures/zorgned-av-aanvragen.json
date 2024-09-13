@@ -667,39 +667,38 @@
           }
         ]
       },
-
       {
-        "identificatie": "992707686",
+        "identificatie": "123123123123",
         "regeling": {
           "identificatie": "Armoedevrz",
           "omschrijving": "Armoedevoorzieningen"
         },
         "hulpvraag": {
-          "datumRegistratie": "2024-06-17",
+          "datumRegistratie": "2024-01-06",
           "aanmeldwijze": { "omschrijving": "AV-Papier" },
           "verwijzer": {
             "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
           }
         },
-        "datumAanmelding": "2024-06-17",
-        "datumAanvraag": "2024-06-17",
+        "datumAanmelding": "2024-01-06",
+        "datumAanvraag": "2024-01-06",
         "beschikking": {
-          "beschikkingNummer": 300985081,
-          "datumAfgifte": "2024-06-17",
+          "beschikkingNummer": 300985080,
+          "datumAfgifte": "2024-01-06",
           "beschikteProducten": [
             {
-              "identificatie": "1204598",
+              "identificatie": "1204597",
               "product": {
-                "identificatie": "AV-UPCZIL",
+                "identificatie": "AV-UPCC",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "[3] Gratis laptop of tablet"
+                "omschrijving": "Gratis laptop of tablet (cursus niet voldaan)"
               },
               "productCategorie": {},
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2023-08-01",
-                "datumEindeGeldigheid": "2029-07-31",
-                "actueel": true,
+                "datumIngangGeldigheid": "2024-01-06",
+                "datumEindeGeldigheid": "2024-01-06",
+                "actueel": false,
                 "omvang": {
                   "volume": 1,
                   "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
@@ -709,22 +708,38 @@
                   },
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
+                "leverancier": {
+                  "identificatie": "AV02",
+                  "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                },
                 "toelichting": "BO",
-                "toewijzingen": [],
-                "betrokkenen": ["123123"]
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1970057",
+                    "toewijzingsDatumTijd": "2024-01-06T17:16:00.7133333",
+                    "ingangsdatum": "2024-01-06",
+                    "einddatum": "2028-07-31",
+                    "datumOpdracht": "2024-01-06T17:16:00.7133333",
+                    "leverancier": {
+                      "identificatie": "AV02",
+                      "omschrijving": "AV-Cybersoek Zelfaanmelders"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["999990512"]
               }
             }
           ]
         },
         "documenten": [
           {
-            "documentidentificatie": "B2806782",
-            "omschrijving": "[2] AV-PCV UPC Toekenning + Verzilvering device",
-            "datumDefinitief": "2024-06-17T17:17:09.75"
+            "documentidentificatie": "B2806781",
+            "omschrijving": "[1] AV-UPC aanmelden workshop",
+            "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
       },
-
       {
         "identificatie": "002707686",
         "regeling": {

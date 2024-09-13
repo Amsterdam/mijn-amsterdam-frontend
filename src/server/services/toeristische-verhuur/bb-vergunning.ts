@@ -11,10 +11,13 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // zaak detail: record/GFO_ZAKEN/$id
@@ -22,7 +25,7 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
 // links: /record/GFO_ZAKEN/-999742/Links
 
 function fetchPowerBrowserToken(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const dataRequestConfig = getApiConfig('POWERBROWSER');
@@ -199,7 +202,7 @@ export function transformBenBZakenResponse(zaken: PowerBrowserZakenResponse) {
 }
 
 function fetchPowerBrowserZaken(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   bearerToken: string
 ) {
@@ -306,7 +309,7 @@ function transformPowerBrowserStatusResponse(
 }
 
 async function fetchPowerBrowserZaakStatus(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   bearerToken: string,
   zaak: BBVergunning
@@ -366,7 +369,7 @@ interface PowerbrowserLink {
 }
 
 function transformPowerbrowserLinksResponse(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   responseData: PowerbrowserLink[]
 ) {
   return (
@@ -404,7 +407,7 @@ function transformPowerbrowserLinksResponse(
 }
 
 export async function fetchPowerBrowserDocuments(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   bearerToken: string,
   zaakId: PowerBrowserZaak['id']
@@ -431,7 +434,7 @@ export async function fetchPowerBrowserDocuments(
 }
 
 export async function fetchBBVergunning(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const tokenResponse = await fetchPowerBrowserToken(
@@ -485,7 +488,7 @@ export async function fetchBBVergunning(
 }
 
 export async function fetchBBDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {

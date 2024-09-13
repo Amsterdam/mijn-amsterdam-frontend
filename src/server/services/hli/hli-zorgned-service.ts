@@ -1,4 +1,4 @@
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
@@ -16,7 +16,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
-import { ONE_SECOND_MS } from '../../config';
+import { ONE_SECOND_MS } from '../../config/app';
 import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 
 function transformToAdministratienummer(identificatie: number): string {
@@ -37,7 +37,7 @@ function transformZorgnedClientNummerResponse(
 }
 
 export async function fetchAdministratienummer(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchPersoonsgegevensNAW(
@@ -82,7 +82,7 @@ function transformZorgnedBetrokkeneNaamResponse(
 }
 
 export async function fetchNamenBetrokkenen_(
-  requestID: requestID,
+  requestID: RequestID,
   userIDs: string[]
 ) {
   const requests = userIDs.map((userID) => {
@@ -140,7 +140,7 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 }
 
 export async function fetchZorgnedAanvragenHLI(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchAanvragen(

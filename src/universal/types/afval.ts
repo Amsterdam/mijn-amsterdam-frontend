@@ -20,7 +20,6 @@ export interface GarbageFractionInformationTransformed {
   opmerking: string | null;
   kalendermelding: string | null;
   fractieCode: GarbageFractionCode;
-  stadsdeelAanvulling: string | null;
   gebruiksdoelWoonfunctie: boolean;
 }
 

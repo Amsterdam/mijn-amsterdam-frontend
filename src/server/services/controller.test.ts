@@ -9,11 +9,17 @@ import {
   vi,
 } from 'vitest';
 import {
+  getReqMockWithOidc,
+  RequestMock,
+  ResponseMock,
+} from '../../test-utils';
+import * as helpers from '../auth/auth-helpers';
+import {
+  addServiceResultHandler,
   getServiceResultsForTips,
   getTipNotifications,
   servicesTipsByProfileType,
 } from './controller';
-import * as helpers from '../helpers/app';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -92,19 +98,14 @@ describe('controller', () => {
   });
 
   test('Get service results for private:digid tips', async () => {
-    vi.spyOn(helpers, 'getAuth').mockResolvedValueOnce({
-      profile: {
-        id: '123456789',
-        profileType: 'private',
-        authMethod: 'digid',
-        sid: '',
-      },
-      token: 'xxx==',
+    const reqMock = await getReqMockWithOidc({
+      sid: 'x123y',
+      authMethod: 'digid',
+      profileType: 'private',
+      id: '9988',
     });
 
-    const results = await getServiceResultsForTips('xx12xx', {
-      cookies: {},
-    } as any);
+    const results = await getServiceResultsForTips('xx12xx', reqMock);
 
     expect(results).toMatchInlineSnapshot(`
       {
@@ -119,20 +120,14 @@ describe('controller', () => {
     `);
   });
 
-  test('Get service results for private:digid tips', async () => {
-    vi.spyOn(helpers, 'getAuth').mockResolvedValueOnce({
-      profile: {
-        id: '90006178',
-        profileType: 'commercial',
-        authMethod: 'eherkenning',
-        sid: '',
-      },
-      token: 'xxx==',
+  test('Get service results for private:eherkenning tips', async () => {
+    const reqMock = await getReqMockWithOidc({
+      id: '90006178',
+      profileType: 'commercial',
+      authMethod: 'eherkenning',
+      sid: '',
     });
-
-    const results2 = await getServiceResultsForTips('xx12xx', {
-      cookies: {},
-    } as any);
+    const results2 = await getServiceResultsForTips('xx12xx', reqMock);
 
     expect(results2).toMatchInlineSnapshot(`
       {
@@ -160,34 +155,44 @@ describe('controller', () => {
   });
 
   test('getTipNotifications private', async () => {
-    vi.spyOn(helpers, 'getAuth').mockResolvedValue({
-      profile: {
-        id: '123456789',
-        profileType: 'private',
-        authMethod: 'digid',
-        sid: '',
-      },
-      token: 'xxx==',
+    const reqMock = await getReqMockWithOidc({
+      id: '123456789',
+      profileType: 'private',
+      authMethod: 'digid',
+      sid: '',
     });
 
-    const result = await getTipNotifications('xx1xx', { cookies: '' } as any);
-
+    const result = await getTipNotifications('xx1xx', reqMock);
     expect(result).toMatchInlineSnapshot('[]');
   });
 
   test('getTipNotifications commercial', async () => {
-    vi.spyOn(helpers, 'getAuth').mockResolvedValue({
-      profile: {
-        id: '90006178',
-        profileType: 'commercial',
-        authMethod: 'eherkenning',
-        sid: '',
-      },
-      token: 'xxx==',
+    const reqMock = await getReqMockWithOidc({
+      id: '90006178',
+      profileType: 'commercial',
+      authMethod: 'eherkenning',
+      sid: '',
     });
 
-    const result = await getTipNotifications('xx2xx', { cookies: '' } as any);
-
+    const result = await getTipNotifications('xx2xx', reqMock);
     expect(result).toMatchInlineSnapshot('[]');
+  });
+
+  test('addServiceResultHandler', async () => {
+    let resMock = ResponseMock.new();
+    const data = { foo: 'bar' };
+    const servicePromise = Promise.resolve(data);
+
+    const result = await addServiceResultHandler(
+      resMock,
+      servicePromise,
+      'test-service'
+    );
+
+    expect(resMock.write).toHaveBeenCalledWith(
+      `event: message\nid: test-service\ndata: {"foo":"bar"}\n\n`
+    );
+
+    expect(result).toEqual(data);
   });
 });

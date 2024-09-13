@@ -5,7 +5,7 @@ import {
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import { CaseType } from '../../universal/types/vergunningen';
-import { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import {
   HorecaVergunningen,
   Vergunning,
@@ -28,7 +28,7 @@ export const horecaOptions = {
 };
 
 export async function fetchHorecaVergunningen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   if (!FeatureToggle.horecaActive) {
@@ -45,7 +45,7 @@ export async function fetchHorecaVergunningen(
 }
 
 export async function fetchHorecaNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
 ) {

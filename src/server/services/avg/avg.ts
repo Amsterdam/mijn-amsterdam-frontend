@@ -9,8 +9,8 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
-import { getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 import {
@@ -82,7 +82,7 @@ function getDataForAvgThemas(avgIds: string[]) {
 }
 
 export async function enrichAvgResponse(
-  requestID: requestID,
+  requestID: RequestID,
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
   const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
@@ -167,7 +167,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
 }
 
 export async function fetchAVG(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const data = getDataForAVG(authProfileAndToken.profile.id!);
@@ -208,7 +208,7 @@ export function transformAVGThemeResponse(
 }
 
 export async function fetchAVGRequestThemes(
-  requestID: requestID,
+  requestID: RequestID,
   avgIds: string[]
 ) {
   const data = getDataForAvgThemas(avgIds);
@@ -230,7 +230,7 @@ export async function fetchAVGRequestThemes(
 
 // fetchNotificaties
 export async function fetchAVGNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const AVG = await fetchAVG(requestID, authProfileAndToken);

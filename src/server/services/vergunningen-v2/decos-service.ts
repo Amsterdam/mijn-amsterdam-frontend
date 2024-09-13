@@ -4,8 +4,10 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { DataRequestConfig, ONE_SECOND_MS, getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { DataRequestConfig } from '../../config/source-api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
@@ -79,7 +81,7 @@ import {
  */
 
 async function getUserKeys(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const apiConfig = getApiConfig('DECOS_API', {
@@ -125,7 +127,7 @@ async function getUserKeys(
 }
 
 async function transformDecosZaakResponse(
-  requestID: requestID,
+  requestID: RequestID,
   decosZaakSource: DecosZaakSource
 ) {
   const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
@@ -221,7 +223,7 @@ async function transformDecosZaakResponse(
 }
 
 async function transformDecosZakenResponse(
-  requestID: requestID,
+  requestID: RequestID,
   decosZakenSource: DecosZaakSource[]
 ) {
   const zakenToBeTransformed = [];
@@ -263,7 +265,7 @@ async function transformDecosZakenResponse(
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-async function getZakenByUserKey(requestID: requestID, userKey: string) {
+async function getZakenByUserKey(requestID: RequestID, userKey: string) {
   const selectFieldsAllCases = Object.keys(SELECT_FIELDS_TRANSFORM_BASE);
   const additionalSelectFields = Object.values(decosZaakTransformers).flatMap(
     (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
@@ -296,7 +298,7 @@ async function getZakenByUserKey(requestID: requestID, userKey: string) {
 }
 
 export async function fetchDecosZakenFromSource(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
@@ -327,7 +329,7 @@ export async function fetchDecosZakenFromSource(
 }
 
 async function fetchDecosVergunningen_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const zakenSourceResponse = await fetchDecosZakenFromSource(
@@ -375,7 +377,7 @@ function transformDecosWorkflowDateResponse(
 }
 
 export async function fetchDecosWorkflowDate(
-  requestID: requestID,
+  requestID: RequestID,
   zaakID: VergunningV2['key'],
   stepTitle: DecosWorkflowStepTitle
 ) {
@@ -407,7 +409,7 @@ export async function fetchDecosWorkflowDate(
 }
 
 async function fetchIsPdfDocument(
-  requestID: requestID,
+  requestID: RequestID,
   documentKey: VergunningDocument['key']
 ) {
   // items / { document_id } / blob ? select = bol10
@@ -442,7 +444,7 @@ function filterValidDocument({
 }
 
 async function transformDecosDocumentListResponse(
-  requestID: requestID,
+  requestID: RequestID,
   decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource[]>
 ) {
   if (Array.isArray(decosDocumentsListResponse.content)) {
@@ -474,7 +476,7 @@ async function transformDecosDocumentListResponse(
 }
 
 export async function fetchDecosDocumentList(
-  requestID: requestID,
+  requestID: RequestID,
   zaakID: VergunningV2['key']
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
@@ -498,7 +500,7 @@ export async function fetchDecosDocumentList(
 }
 
 export async function fetchDecosZaakFromSource(
-  requestID: requestID,
+  requestID: RequestID,
   zaakID: VergunningV2['key'],
   includeProperties: boolean = false
 ) {
@@ -519,7 +521,7 @@ export async function fetchDecosZaakFromSource(
 }
 
 export async function fetchDecosVergunning(
-  requestID: requestID,
+  requestID: RequestID,
   zaakID: VergunningV2['key']
 ) {
   const decosZaakSourceRequest = fetchDecosZaakFromSource(requestID, zaakID);
@@ -565,7 +567,7 @@ export async function fetchDecosVergunning(
 }
 
 export async function fetchDecosDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentID: string
 ) {

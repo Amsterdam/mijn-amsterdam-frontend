@@ -1,6 +1,6 @@
 import MockDate from 'mockdate';
 
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   FetchConfig,
   fetchBijstandsuitkering,

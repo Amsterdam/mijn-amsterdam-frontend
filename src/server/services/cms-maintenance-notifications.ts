@@ -4,7 +4,7 @@ import { IS_TAP } from '../../universal/config/env';
 import { Themas } from '../../universal/config/thema';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
-import { getApiConfig } from '../config';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
 
@@ -116,7 +116,7 @@ function transformCMSEventResponse(
 }
 
 async function fetchCMSMaintenanceNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   useCache: boolean = true
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
@@ -189,8 +189,8 @@ export interface QueryParamsMaintenanceNotifications
 }
 
 export async function fetchMaintenanceNotificationsActual(
-  requestID: requestID,
-  queryParams?: QueryParamsMaintenanceNotifications
+  requestID: RequestID,
+  queryParams: QueryParamsMaintenanceNotifications
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
     requestID,
@@ -219,7 +219,7 @@ export async function fetchMaintenanceNotificationsActual(
 }
 
 export async function fetchMaintenanceNotificationsDashboard(
-  requestID: requestID
+  requestID: RequestID
 ) {
   const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
     requestID,

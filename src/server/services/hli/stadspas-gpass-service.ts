@@ -5,19 +5,22 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
-import { getApiConfig, ONE_SECOND_MS } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   Stadspas,
-  StadspasDiscountTransaction,
-  StadspasDiscountTransactionsResponseSource,
+  StadspasAanbiedingSource,
   StadspasBudget,
   StadspasBudgetTransaction,
   StadspasDetailBudgetSource,
   StadspasDetailSource,
+  StadspasDiscountTransaction,
+  StadspasDiscountTransactions,
+  StadspasDiscountTransactionsResponseSource,
   StadspasHouderSource,
   StadspasOwner,
   StadspasPasHouderResponse,
@@ -77,15 +80,19 @@ function transformStadspasResponse(
     const budgets =
       gpassStadspasResonseData.budgetten?.map(transformBudget) ?? [];
 
+    const balance = budgets.reduce(
+      (balance, budget) => balance + budget.budgetBalance,
+      0
+    );
+
     const stadspasTransformed: Stadspas = {
       id: String(gpassStadspasResonseData.id),
       owner: getOwner(pashouder),
       dateEnd: gpassStadspasResonseData.expiry_date,
       dateEndFormatted: defaultDateFormat(gpassStadspasResonseData.expiry_date),
       budgets: budgets,
-      balanceFormatted: `€${displayAmount(
-        budgets.reduce((balance, budget) => balance + budget.budgetBalance, 0)
-      )}`,
+      balance,
+      balanceFormatted: `€${displayAmount(balance)}`,
       passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
     };
@@ -97,7 +104,7 @@ function transformStadspasResponse(
 }
 
 export async function fetchStadspassenByAdministratienummer(
-  requestID: requestID,
+  requestID: RequestID,
   administratienummer: string
 ) {
   const dataRequestConfig = getApiConfig('GPASS');
@@ -168,7 +175,7 @@ export async function fetchStadspassenByAdministratienummer(
 }
 
 export async function fetchStadspassen_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const administratienummerResponse = await fetchAdministratienummer(
@@ -222,7 +229,7 @@ function transformGpassTransactionsResponse(
 }
 
 export async function fetchGpassBudgetTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber'],
   budgetCode?: StadspasBudget['code']
@@ -233,7 +240,7 @@ export async function fetchGpassBudgetTransactions(
   };
 
   if (budgetCode) {
-    requestParams.budgetCode = budgetCode;
+    requestParams.budgetcode = budgetCode;
   }
 
   const dataRequestConfig = getApiConfig('GPASS', {
@@ -248,27 +255,35 @@ export async function fetchGpassBudgetTransactions(
 
 function transformGpassAanbiedingenResponse(
   responseSource: StadspasDiscountTransactionsResponseSource
-) {
-  if (Array.isArray(responseSource.transacties)) {
-    return responseSource.transacties.map((transactie) => {
-      const discountTransaction: StadspasDiscountTransaction = {
-        id: String(transactie.id),
-        title: transactie.aanbieding.communicatienaam,
-        discountAmount: transactie.verleende_korting,
-        discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
-        datePublished: transactie.transactiedatum,
-        datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
-        discountTitle: transactie.aanbieding.kortingzin,
-        description: transactie.aanbieding.omschrijving,
-      };
-      return discountTransaction;
-    });
+): StadspasDiscountTransactions | StadspasDiscountTransactionsResponseSource {
+  if (Array.isArray(responseSource?.transacties)) {
+    const discountAmountTotal = responseSource.totale_korting ?? 0;
+    return {
+      discountAmountTotal,
+      discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
+      transactions: transformTransactions(responseSource.transacties),
+    };
   }
   return responseSource;
 }
 
+function transformTransactions(
+  transactions: StadspasAanbiedingSource[]
+): StadspasDiscountTransaction[] {
+  return transactions.map((transactie) => ({
+    id: String(transactie.id),
+    title: transactie.aanbieding.communicatienaam,
+    discountAmount: transactie.verleende_korting,
+    discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
+    datePublished: transactie.transactiedatum,
+    datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
+    discountTitle: transactie.aanbieding.kortingzin,
+    description: transactie.aanbieding.omschrijving,
+  }));
+}
+
 export async function fetchGpassDiscountTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   administratienummer: string,
   pasnummer: Stadspas['passNumber']
 ) {

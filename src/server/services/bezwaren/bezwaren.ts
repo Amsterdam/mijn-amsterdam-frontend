@@ -3,7 +3,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 
 import { MyNotification } from '../../../universal/types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig } from '../../config/source-api';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 
 import { AppRoutes } from '../../../universal/config/routes';
@@ -15,9 +15,12 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   Bezwaar,
@@ -88,7 +91,7 @@ function getZaakUrl(zaakId: string) {
 }
 
 async function fetchMultiple<T>(
-  requestID: requestID,
+  requestID: RequestID,
   requestConfig: DataRequestConfig,
   maxPageCount: number = MAX_PAGE_COUNT
 ) {
@@ -148,7 +151,7 @@ function transformBezwaarStatus(
 }
 
 async function fetchBezwaarStatus(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: string
 ) {
@@ -172,7 +175,7 @@ async function fetchBezwaarStatus(
 }
 
 function transformBezwarenDocumentsResults(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): OctopusApiResponse<BezwaarDocument> {
   if (Array.isArray(response.results)) {
@@ -202,7 +205,7 @@ function transformBezwarenDocumentsResults(
 }
 
 export async function fetchBezwarenDocuments(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: string
 ) {
@@ -241,7 +244,7 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
 }
 
 function transformBezwarenResults(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: BezwarenSourceResponse<BezwaarSourceData>
 ): OctopusApiResponse<Bezwaar> {
   const results = response.results;
@@ -321,7 +324,7 @@ function sortByBezwaarIdentificatie(item1: Bezwaar, item2: Bezwaar) {
 }
 
 export async function fetchBezwaren(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const requestBody = JSON.stringify({
@@ -390,7 +393,7 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
 }
 
 export async function fetchBezwarenNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
@@ -416,11 +419,11 @@ export type BezwaarDetail = {
 };
 
 export async function fetchBezwaarDetail(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
-  const decryptResult = decryptAndValidate(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     zaakIdEncrypted,
     authProfileAndToken
   );
@@ -466,7 +469,7 @@ export async function fetchBezwaarDetail(
 }
 
 export async function fetchBezwaarDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {

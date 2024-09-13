@@ -1,6 +1,6 @@
 import { Themas } from '../../../universal/config/thema';
-import { getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 interface SVWISourceResponseData {
@@ -16,7 +16,7 @@ function transformSVWIResponse(response: SVWISourceResponseData | null) {
 }
 
 export function fetchSVWI(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchService(
@@ -30,7 +30,7 @@ export function fetchSVWI(
 }
 
 export async function fetchSVWINotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return await fetchTipsAndNotifications(

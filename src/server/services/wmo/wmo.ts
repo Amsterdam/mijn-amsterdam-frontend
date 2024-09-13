@@ -5,18 +5,22 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
-import { BffEndpoints } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
-import { isAfterWCAGValidDocumentsDate } from './status-line-items/wmo-generic';
+import {
+  hasDecision,
+  isAfterWCAGValidDocumentsDate,
+} from './status-line-items/wmo-generic';
 import { WMOVoorzieningFrontend } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 
 function getDocuments(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
   if (
@@ -41,8 +45,19 @@ function getLatestStatus(steps: StatusLineItem[]) {
   return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
 }
 
+function getLatestStatusDate(
+  steps: StatusLineItem[],
+  doTransformDate: boolean = false
+) {
+  const date = steps.find((step) => step.isActive)?.datePublished;
+  if (date && doTransformDate) {
+    return defaultDateFormat(date);
+  }
+  return date || '-';
+}
+
 function transformVoorzieningenForFrontend(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
 ): WMOVoorzieningFrontend[] {
@@ -64,6 +79,10 @@ function transformVoorzieningenForFrontend(
         id,
       });
 
+      const dateDecision =
+        lineItems.find((step) => step.status === 'Besluit genomen')
+          ?.datePublished ?? '';
+
       const voorzieningFrontend: WMOVoorzieningFrontend = {
         id,
         title: capitalizeFirstLetter(aanvraag.titel),
@@ -77,27 +96,30 @@ function transformVoorzieningenForFrontend(
         steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
-        decision: aanvraag.resultaat
-          ? capitalizeFirstLetter(aanvraag.resultaat)
+        decision:
+          hasDecision(aanvraag) && aanvraag.resultaat
+            ? capitalizeFirstLetter(aanvraag.resultaat)
+            : '',
+        dateDecision,
+        dateDecisionFormatted: dateDecision
+          ? defaultDateFormat(dateDecision)
           : '',
-        dateDescision: aanvraag.datumBesluit,
-        dateDescisionFormatted: defaultDateFormat(aanvraag.datumBesluit),
-        dateStart: aanvraag.datumIngangGeldigheid,
-        dateEnd: aanvraag.datumEindeGeldigheid,
         status: getLatestStatus(lineItems),
+        statusDate: getLatestStatusDate(lineItems),
+        statusDateFormatted: getLatestStatusDate(lineItems, true),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
     }
   }
 
-  voorzieningenFrontend.sort(dateSort('dateStart', 'desc'));
+  voorzieningenFrontend.sort(dateSort('statusDate', 'desc'));
 
   return voorzieningenFrontend;
 }
 
 export async function fetchWmo(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const voorzieningenResponse = await fetchZorgnedAanvragenWMO(

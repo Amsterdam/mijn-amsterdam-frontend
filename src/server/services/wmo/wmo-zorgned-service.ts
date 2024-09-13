@@ -1,16 +1,16 @@
-import { parseISO } from 'date-fns';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
-import { isBeforeToday } from './status-line-items/wmo-generic';
 import {
-  BESCHIKTPRODUCT_RESULTAAT,
+  isAfterWCAGValidDocumentsDate,
+  isBeforeToday,
+} from './status-line-items/wmo-generic';
+import {
   DATE_END_NOT_OLDER_THAN,
-  MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-  PRODUCTS_WITH_DELIVERY,
   REGELING_IDENTIFICATIE,
 } from './wmo-config-and-types';
+import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items';
 
 function isProductWithDelivery(
   wmoProduct: Pick<
@@ -37,6 +37,10 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 
   let isActueel = !!aanvraagTransformed.isActueel;
 
+  if (!isActueel && 'datumEindeGeldigheid' in aanvraagTransformed && !isEOG) {
+    isActueel = true;
+  }
+
   // Override actueel indien er nog geen levering heeft plaatsgevonden en de geldigheid nog niet is afgelopen
   if (
     !isActueel &&
@@ -49,27 +53,15 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   }
 
   // Override actueel indien de einde geldigheid is verlopen
-  if (isActueel && isEOG) {
+  if (isActueel && (isEOG || aanvraagTransformed.resultaat === 'afgewezen')) {
     isActueel = false;
   }
 
   return isActueel;
 }
 
-// If aanvraag was requested after a specific date we should only show them to the user if there are documents attached.
-function shouldBeVisibleToUser(aanvraag: ZorgnedAanvraagTransformed) {
-  const datumAanvraag = parseISO(aanvraag.datumAanvraag);
-
-  const isRequestedAfterSpecificDate =
-    datumAanvraag >= MINIMUM_REQUEST_DATE_FOR_DOCUMENTS;
-
-  const hasDocuments = !!aanvraag.documenten?.length;
-
-  return isRequestedAfterSpecificDate ? hasDocuments : true;
-}
-
 export async function fetchZorgnedAanvragenWMO(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const requestBodyParams = {
@@ -86,13 +78,11 @@ export async function fetchZorgnedAanvragenWMO(
 
   if (aanvragenResponse.status === 'OK') {
     // Filter the aanvragen that we should show in frontend.
-    // After a specific date we only show aanvragen(voorziening) that have at least one document attached.
     const aanvragenFiltered = aanvragenResponse.content
       ?.filter((aanvraagTransformed) => {
-        return (
-          aanvraagTransformed.datumBesluit &&
-          shouldBeVisibleToUser(aanvraagTransformed)
-        );
+        return isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumBesluit)
+          ? !!aanvraagTransformed.resultaat
+          : true;
       })
       .map((aanvraagTransformed) => {
         // Override isActueel for front-end.
@@ -111,5 +101,4 @@ export const forTesting = {
   isActueel,
   fetchZorgnedAanvragenWMO,
   isProductWithDelivery,
-  shouldBeVisibleToUser,
 };

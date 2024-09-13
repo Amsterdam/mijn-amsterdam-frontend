@@ -1,4 +1,4 @@
-import { IS_DISABLED, IS_PG } from './config';
+import { IS_ENABLED, IS_PG } from './config';
 
 type DBAdapter = {
   id: string;
@@ -8,8 +8,8 @@ type DBAdapter = {
 };
 
 export const db: () => Promise<DBAdapter> = () => {
-  if (IS_DISABLED) {
+  if (!IS_ENABLED) {
     return import('./fake-db');
   }
-  return IS_PG ? import('./postgres') : import('./sqlite3');
+  return import('./postgres');
 };

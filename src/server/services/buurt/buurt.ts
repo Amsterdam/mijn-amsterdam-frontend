@@ -9,7 +9,7 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { DataRequestConfig } from '../../config';
+import { DataRequestConfig } from '../../config/source-api';
 import FileCache from '../../helpers/file-cache';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
@@ -67,7 +67,7 @@ function getDatasetFileCache(
 }
 
 export async function fetchDataset(
-  requestID: requestID,
+  requestID: RequestID,
   datasetId: DatasetId,
   datasetConfig: DatasetConfig,
   params: { [key: string]: any } = {},
@@ -173,7 +173,7 @@ export async function fetchDataset(
 type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
 
 export async function loadDatasetFeatures(
-  requestID: requestID,
+  requestID: RequestID,
   configs: Array<[string, DatasetConfig]>
 ) {
   const requests: Array<Promise<ApiDatasetResponse>> = [];
@@ -197,7 +197,7 @@ export async function loadDatasetFeatures(
 }
 
 export async function loadPolylineFeatures(
-  requestID: requestID,
+  requestID: RequestID,
   {
     datasetIds,
     bbox,
@@ -243,7 +243,7 @@ export async function loadPolylineFeatures(
 }
 
 export async function loadFeatureDetail(
-  requestID: requestID,
+  requestID: RequestID,
   datasetId: string,
   id: string
 ) {

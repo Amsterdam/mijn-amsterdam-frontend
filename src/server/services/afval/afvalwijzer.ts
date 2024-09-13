@@ -5,7 +5,7 @@ import {
   GarbageFractionInformationTransformed,
   LinkProps,
 } from '../../../universal/types';
-import { getApiConfig } from '../../config';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { sanitizeCmsContent } from '../cms-content';
 import { labels } from './translations';
@@ -177,10 +177,6 @@ function transformFractionData(
     ''
   );
 
-  const stadsdeelAanvulling = stadsdeelRegelsUrl
-    ? `In uw stadsdeel zijn mogelijk <a href="${stadsdeelRegelsUrl}" rel="noopener noreferrer">aanvullende regels</a> van kracht.`
-    : null;
-
   let titel = getText(fractionData.afvalwijzerFractieCode);
 
   if (
@@ -218,7 +214,6 @@ function transformFractionData(
     opmerking: formatKalenderOpmerking(fractionData),
     kalendermelding: formatKalenderMelding(fractionData),
     fractieCode: fractionData.afvalwijzerFractieCode,
-    stadsdeelAanvulling,
     gebruiksdoelWoonfunctie: fractionData.gebruiksdoelWoonfunctie,
   };
 }
@@ -248,7 +243,7 @@ export function transformGarbageDataResponse(
 }
 
 export async function fetchAfvalwijzer(
-  requestID: requestID,
+  requestID: RequestID,
   bagID: string,
   latlng: LatLngLiteral | null
 ) {

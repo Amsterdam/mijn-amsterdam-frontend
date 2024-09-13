@@ -22,7 +22,7 @@ import styles from './Zorg.module.scss';
 const DISPLAY_PROPS = {
   title: '',
   status: 'Status',
-  dateDescision: 'Datum',
+  dateDecision: 'Datum',
 };
 
 export default function Zorg() {

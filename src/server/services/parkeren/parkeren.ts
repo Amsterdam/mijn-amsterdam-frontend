@@ -1,5 +1,6 @@
-import { getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
@@ -14,25 +15,24 @@ type ParkerenUrlTransformedResponse = {
 };
 
 export async function fetchSSOParkerenURL(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const config = getApiConfig('PARKEREN', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
     },
-    transformResponse: (
-      response: ParkerenUrlSourceResponse
-    ): ParkerenUrlTransformedResponse => {
-      if (!response.url) {
-        captureMessage(
-          'Recieved invalid SSO url response; using fallback URL.'
-        );
-        response.url = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL')!;
-      }
-      return { isKnown: true, url: response.url };
-    },
   });
 
-  return await requestData<ParkerenUrlTransformedResponse>(config, requestID);
+  const response = await requestData<ParkerenUrlTransformedResponse>(
+    config,
+    requestID
+  );
+
+  const fallBackURL = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
+
+  return apiSuccessResult({
+    isKnown: true,
+    url: response.content?.url ?? fallBackURL,
+  });
 }

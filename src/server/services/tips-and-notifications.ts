@@ -4,8 +4,8 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification, MyTip } from '../../universal/types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../config';
-import type { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
@@ -134,18 +134,19 @@ export function getTipsAndNotificationsFromApiResults(
   return [...notificationsResult, ...tipsResult];
 }
 
-type NotificationServices = Record<
+type FetchNotificationFunction = (
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+) => Promise<ApiResponse<any>>;
+
+type NotificationServices = Record<string, FetchNotificationFunction>;
+
+type NotificationServicesByProfileType = Record<
   ProfileType,
-  Record<
-    string,
-    (
-      requestID: requestID,
-      authProfileAndToken: AuthProfileAndToken
-    ) => Promise<ApiResponse<any>>
-  >
+  NotificationServices
 >;
 
-const notificationServices: NotificationServices = {
+const notificationServices: NotificationServicesByProfileType = {
   commercial: {
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
@@ -154,18 +155,17 @@ const notificationServices: NotificationServices = {
       : fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
     erfpacht: fetchErfpachtNotifications,
-    maintenanceNotifications: (requestID: requestID) =>
+    maintenanceNotifications: (requestID: RequestID) =>
       fetchMaintenanceNotificationsDashboard(requestID),
     subsidie: fetchSubsidieNotifications,
     toeristischeVerhuur: (
-      requestID: requestID,
+      requestID: RequestID,
       authProfileAndToken: AuthProfileAndToken
     ) =>
       fetchToeristischeVerhuurNotifications(
         requestID,
         authProfileAndToken,
-        new Date(),
-        'commercial'
+        new Date()
       ),
     bodem: fetchLoodMetingNotifications,
     bezwaren: fetchBezwarenNotifications,
@@ -181,19 +181,11 @@ const notificationServices: NotificationServices = {
       : fetchVergunningenNotifications,
     erfpacht: fetchErfpachtNotifications,
     subsidie: fetchSubsidieNotifications,
-    maintenance: (requestID: requestID) =>
+    maintenance: (requestID: RequestID) =>
       fetchMaintenanceNotificationsDashboard(requestID),
     toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
     fetchKrefia: fetchKrefiaNotifications,
-    fetchWior: (
-      requestID: requestID,
-      authProfileAndToken: AuthProfileAndToken
-    ) =>
-      fetchWiorNotifications(
-        requestID,
-        authProfileAndToken,
-        authProfileAndToken.profile.profileType
-      ),
+    fetchWior: fetchWiorNotifications,
     fetchWpi: fetchWpiNotifications,
     fetchSVWI: fetchSVWINotifications,
     klachten: fetchKlachtenNotifications,
@@ -205,15 +197,16 @@ const notificationServices: NotificationServices = {
 };
 
 async function fetchServicesNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<MyNotification[]> {
   if (authProfileAndToken.profile.profileType !== 'private-attributes') {
+    const profileType = authProfileAndToken.profile.profileType;
+    const services: NotificationServices = notificationServices[profileType];
+
     const results = await Promise.allSettled(
-      Object.values(
-        notificationServices[authProfileAndToken.profile.profileType]
-      ).map((fetchNotifactions) =>
-        fetchNotifactions(requestID, authProfileAndToken)
+      Object.values(services).map((fetchNotifications) =>
+        fetchNotifications(requestID, authProfileAndToken)
       )
     );
 

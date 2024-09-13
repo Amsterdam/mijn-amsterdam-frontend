@@ -9,9 +9,10 @@ import {
 import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
-import { BFF_BASE_PATH, BffEndpoints } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
@@ -21,45 +22,52 @@ import {
   fetchZorgnedAanvragenHLI,
 } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
-import { filterCombineUpcPcvData } from './status-line-items/pcvergoeding';
+import {
+  filterCombineUpcPcvData,
+  isWorkshopNietGevolgd,
+} from './status-line-items/pcvergoeding';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
 ) {
+  const hasEindeRecht = statusLineItems.some(
+    (regeling) => regeling.status === 'Einde recht'
+  );
   switch (true) {
-    case aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
+    // NOTE: Special status for PCVergoedingen.
+    case isWorkshopNietGevolgd(aanvraag):
+      return 'Afgewezen';
+    case (aanvraag.isActueel || !hasEindeRecht) &&
+      aanvraag.resultaat === 'toegewezen':
       return 'Toegewezen';
     case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
       return 'Einde recht';
     case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
       return 'Afgewezen';
   }
-  return statusLineItems[statusLineItems.length - 1].status ?? 'NNB';
+  return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
 }
 
 function getDocumentsFrontend(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   documents: GenericDocument[]
 ) {
   return documents.map((document) => {
     const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
     return {
       ...document,
-      url: `${process.env.BFF_OIDC_BASE_URL}${BFF_BASE_PATH}${generatePath(
-        BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
-        {
-          id: idEncrypted,
-        }
-      )}`,
+      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, {
+        id: idEncrypted,
+      }),
       id: idEncrypted,
     };
   });
 }
 
 async function transformRegelingForFrontend(
-  requestID: requestID,
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  requestID: RequestID,
+  sessionID: SessionID,
   aanvraag: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
 ) {
@@ -104,7 +112,7 @@ async function transformRegelingForFrontend(
 }
 
 export async function transformRegelingenForFrontend(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
@@ -142,7 +150,7 @@ export async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchZorgnedAanvragenHLI(
@@ -162,7 +170,7 @@ async function fetchRegelingen(
 }
 
 export async function fetchHLI(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const [stadspasResult, regelingenResult] = await Promise.allSettled([
@@ -186,3 +194,7 @@ export async function fetchHLI(
     })
   );
 }
+
+export const forTesting = {
+  getDisplayStatus,
+};

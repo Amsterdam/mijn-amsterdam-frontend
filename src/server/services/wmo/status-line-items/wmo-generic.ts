@@ -12,19 +12,29 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-config-and-types';
 import {
+  DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
   DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH,
   DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE,
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
-  DOCUMENT_PGB_BESLUIT,
 } from '../wmo-config-and-types';
 
-export function getDocumentDecisionDate(documents: GenericDocument[]) {
-  return (
-    documents.find((document) =>
-      document.title.startsWith(DOCUMENT_TITLE_BESLUIT_STARTS_WITH)
-    )?.datePublished ?? null
+function getDecisionDocument(documents: GenericDocument[]) {
+  return documents.find((document) =>
+    document.title.startsWith(DOCUMENT_TITLE_BESLUIT_STARTS_WITH)
   );
+}
+
+export function getDocumentDecisionDate(documents: GenericDocument[]) {
+  return getDecisionDocument(documents)?.datePublished ?? null;
+}
+
+export function hasDecision(aanvraag: ZorgnedAanvraagTransformed) {
+  const hasDecision = isDocumentDecisionDateActive(aanvraag.datumAanvraag)
+    ? !!getDecisionDocument(aanvraag.documenten)
+    : !!aanvraag.resultaat;
+
+  return hasDecision;
 }
 
 function getDecisionDate(
@@ -77,7 +87,7 @@ function isDocumentDecisionDateActive(datumAanvraag: string) {
 export function decisionParagraph(aanvraag: ZorgnedAanvraagTransformed) {
   let paragraph = '<p>In de brief leest u meer over dit besluit. ';
   if (isAfterWCAGValidDocumentsDate(aanvraag.datumAanvraag)) {
-    paragraph += 'De brief staat bij brieven bovenaan deze pagina.';
+    paragraph += 'De brief staat bovenaan deze pagina.';
   } else {
     paragraph += 'De brief is per post naar u verstuurd.';
   }
@@ -96,73 +106,37 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
   },
 };
 
-export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
-  status: 'In behandeling',
-  datePublished: (aanvraag) => aanvraag.datumAanvraag,
-  isChecked: () => true,
-  isActive: (stepIndex, aanvraag) =>
-    !aanvraag.resultaat && !hasMeerInformatieNodig(aanvraag),
-  description: () => {
-    return '<p>Uw aanvraag is in behandeling.</p>';
-  },
-};
-
 export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Meer informatie nodig',
   isVisible: (stepIndex, aanvraag) => hasMeerInformatieNodig(aanvraag),
   datePublished: (aanvraag) =>
     getDocumentMeerInformatieDate(aanvraag.documenten) ?? '',
-  isChecked: (stepIndex, aanvraag) => hasMeerInformatieNodig(aanvraag),
+  isChecked: (stepIndex, aanvraag) => true,
   isActive: (stepIndex, aanvraag) =>
-    !aanvraag.resultaat && hasMeerInformatieNodig(aanvraag),
+    hasMeerInformatieNodig(aanvraag) && !hasDecision(aanvraag),
   description: () => {
     return `<p>
-      Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:<br />
-      Uploaden via <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE}">amsterdam.nl/zorgdocumenten</a> of opsturen naar ons gratis antwoordnummer:<br />
-Gemeente Amsterdam <br />
-Services & Data <br />
-Antwoordnummer 9087 <br />
-1000 VV Amsterdam
-
+      Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:</p>
+      <p>Uploaden via <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE}">amsterdam.nl/zorgdocumenten</a> of opsturen naar ons gratis antwoordnummer:</p>
+      <p>Gemeente Amsterdam <br />
+      Services & Data <br />
+      Antwoordnummer 9087 <br />
+      1000 VV Amsterdam
     </p>`;
   },
 };
 
-export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
-  status: 'Einde recht',
-  datePublished: (aanvraag) =>
-    (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
-  isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-    return aanvraag.resultaat !== 'afgewezen';
+export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
+  status: 'In behandeling',
+  datePublished: (aanvraag) => aanvraag.datumBesluit || '2089-01-27', // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
+  isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
+  isActive: (stepIndex, aanvraag) =>
+    !!aanvraag.datumBesluit &&
+    !hasDecision(aanvraag) &&
+    !hasMeerInformatieNodig(aanvraag),
+  description: (aanvraag) => {
+    return '<p>Uw aanvraag is in behandeling.</p>'; // TODO: Do we need a text if no decision is made yet?
   },
-  isChecked: (stepIndex, aanvraag) => aanvraag.isActueel === false,
-  isActive: (stepIndex, aanvraag, today) => aanvraag.isActueel === false,
-  description: (aanvraag) =>
-    `<p>
-      ${
-        aanvraag.isActueel
-          ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
-          : `Uw recht op ${aanvraag.titel} is beëindigd
-          ${
-            aanvraag.datumEindeGeldigheid
-              ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
-              : ''
-          }`
-      }
-    </p>
-    ${
-      aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
-        ? `<p>
-           Wilt u verlenging aanvragen, dan moet u dat 8 weken voor  ${
-             aanvraag.datumEindeGeldigheid
-               ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
-               : ''
-           } doen. Kijk in uw besluit op
-            <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb </a>voor meer informatie.
-          </p>`
-        : ''
-    }
-    `,
 };
 
 export function getTransformerConfigBesluit(
@@ -170,26 +144,77 @@ export function getTransformerConfigBesluit(
   useAsProduct: boolean
 ): ZorgnedStatusLineItemTransformerConfig {
   return {
-    status: 'Besluit',
+    status: 'Besluit genomen',
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
-    isChecked: (stepIndex, aanvraag) => !!aanvraag.resultaat,
+    isChecked: (stepIndex, aanvraag) => hasDecision(aanvraag),
     isActive: isActive,
     description: (aanvraag) =>
-      `<p>
-          ${
-            aanvraag.resultaat === 'toegewezen'
-              ? `U krijgt  ${useAsProduct ? 'een ' : ''}${aanvraag.titel}  ${
-                  aanvraag.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
-                    : ''
-                }`
-              : `U krijgt geen ${aanvraag.titel}`
-          }.
+      hasDecision(aanvraag)
+        ? `<p>
+         ${
+           aanvraag.resultaat === 'toegewezen'
+             ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
+             : `U krijgt geen ${aanvraag.titel}`
+         }.
       </p>
       ${decisionParagraph(aanvraag)}
-      `,
+      `
+        : '', // TODO: Do we need a text if no decision is made yet?
   };
 }
+
+export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
+  status: 'Einde recht',
+  datePublished: (aanvraag) =>
+    (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
+  isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
+    return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
+  },
+  isChecked: (stepIndex, aanvraag) => aanvraag.isActueel === false,
+  isActive: (stepIndex, aanvraag, today) => aanvraag.isActueel === false,
+  description: (aanvraag) =>
+    `<p>
+      ${
+        aanvraag.isActueel
+          ? `Uw recht op ${aanvraag.titel} stopt op ${
+              aanvraag.datumEindeGeldigheid
+                ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+                : ''
+            }`
+          : `Uw recht op ${aanvraag.titel} is beëindigd ${
+              aanvraag.datumEindeGeldigheid
+                ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+                : ''
+            }`
+      }
+    </p>
+    `,
+};
+
+export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
+  ...EINDE_RECHT,
+  description: (aanvraag) =>
+    `<p>
+      ${
+        aanvraag.isActueel
+          ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht`
+          : `Uw recht op ${aanvraag.titel} is beëindigd
+          ${
+            aanvraag.datumEindeGeldigheid
+              ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
+              : ''
+          }`
+      }.
+    </p>
+    ${
+      aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
+        ? `
+          <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : 'de einddatum'} doen.</p>
+          <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_PGB_BESLUIT}">amsterdam.nl/pgb</a> voor meer informatie.</p>`
+        : ''
+    }
+    `,
+};
 
 export function isBeforeToday(dateStr: string | null, compareDate: Date) {
   if (!dateStr) {
@@ -214,7 +239,7 @@ export function isServiceDeliveryStopped(
   return isBeforeToday(sourceData.datumEindeLevering, compareDate);
 }
 
-export function isServiceDeliveryActive(
+export function isServiceDeliveryStatusActive(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
@@ -226,15 +251,13 @@ export function isServiceDeliveryActive(
   );
 }
 
-export function isDecisionActive(
+export function isDecisionStatusActive(
   stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed
 ) {
   if (aanvraag.resultaat === 'toegewezen') {
     return (
-      !!(isDocumentDecisionDateActive(aanvraag.datumAanvraag)
-        ? getDocumentDecisionDate(aanvraag.documenten)
-        : aanvraag.resultaat) &&
+      hasDecision(aanvraag) &&
       !isBeforeToday(aanvraag.datumEindeGeldigheid, new Date())
     );
   } else if (aanvraag.resultaat === 'afgewezen') {
@@ -243,15 +266,30 @@ export function isDecisionActive(
   return false;
 }
 
-export function isDecisionWithDeliveryActive(
+export function isDecisionWithDeliveryStatusActive(
   stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ) {
   return (
     aanvraag.resultaat === 'afgewezen' ||
-    (isDecisionActive(stepIndex, aanvraag) &&
+    (isDecisionStatusActive(stepIndex, aanvraag) &&
       !isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
       !isServiceDeliveryStarted(aanvraag, today))
+  );
+}
+
+export function isDeliveryStepVisible(
+  stepIndex: number,
+  aanvraag: ZorgnedAanvraagTransformed,
+  today: Date
+) {
+  return (
+    hasDecision(aanvraag) &&
+    aanvraag.resultaat !== 'afgewezen' &&
+    (isServiceDeliveryStarted(aanvraag, today) ||
+      // Not yet delivered and not ended yet.
+      (!isServiceDeliveryStarted(aanvraag, today) &&
+        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
   );
 }

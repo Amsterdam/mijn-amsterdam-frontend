@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/react';
 import nock from 'nock';
-import { vi, afterEach, expect, afterAll } from 'vitest';
+import { afterAll, afterEach, expect, vi } from 'vitest';
 
 vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   const envModule = (await importOriginal()) as any;
@@ -10,6 +10,22 @@ vi.mock('./server/helpers/env.ts', async (importOriginal) => {
     ...envModule,
     // Prevent isRequired from spamming logs or throwing errors by ignoring it.
     getFromEnv: (key: string) => process.env[key],
+  };
+});
+
+vi.mock('./universal/config/feature-toggles.ts', async (importOriginal) => {
+  const featureToggleModule = (await importOriginal()) as any;
+
+  let featureTogglesOn = Object.entries(featureToggleModule.FeatureToggle).map(
+    ([keyName]) => {
+      return [keyName, true];
+    }
+  );
+  featureTogglesOn = Object.fromEntries(featureTogglesOn);
+
+  return {
+    ...featureToggleModule,
+    featureTogglesOn,
   };
 });
 
@@ -72,6 +88,7 @@ process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 process.env.BFF_PARKEREN_API_BASE_URL = `${remoteApiHost}/parkeren`;
+process.env.BFF_PARKEREN_EXTERNAL_FALLBACK_URL = `${remoteApiHost}/parkeren/fallback`;
 
 // V2
 process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;

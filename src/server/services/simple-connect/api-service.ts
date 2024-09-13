@@ -3,8 +3,8 @@ import { Thema } from '../../../universal/config/thema';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { MyNotification, MyTip } from '../../../universal/types';
-import { DataRequestConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { DataRequestConfig } from '../../config/source-api';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 
 export interface ApiPatternResponseA {
@@ -28,7 +28,7 @@ const transformApiResponseDefault: AxiosResponseTransformer = (
 };
 
 export async function fetchService<T extends ApiPatternResponseA>(
-  requestID: requestID,
+  requestID: RequestID,
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false,
   authProfileAndToken?: AuthProfileAndToken
@@ -81,7 +81,7 @@ export function transformNotificationsDefault(
 }
 
 export async function fetchTipsAndNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   apiConfig: DataRequestConfig = {},
   thema: Thema,
   authProfileAndToken?: AuthProfileAndToken

@@ -619,7 +619,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
         </a>
       </p>
       <h3>
-        Adressen afvalpunten
+        Adressen recyclepunten
       </h3>
       <ul
         class="_UnstyledList_3a64c8"
@@ -1310,7 +1310,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
         </a>
       </p>
       <h3>
-        Adressen afvalpunten
+        Adressen recyclepunten
       </h3>
       <ul
         class="_UnstyledList_3a64c8"
@@ -2228,7 +2228,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
         </a>
       </p>
       <h3>
-        Adressen afvalpunten
+        Adressen recyclepunten
       </h3>
       <ul
         class="_UnstyledList_3a64c8"

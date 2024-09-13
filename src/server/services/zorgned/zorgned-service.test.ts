@@ -2,7 +2,7 @@ import Mockdate from 'mockdate';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
 import {
   ZORGNED_GEMEENTE_CODE,

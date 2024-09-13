@@ -1,9 +1,9 @@
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { Adres } from '../../universal/types';
-import { getApiConfig } from '../config';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
-import { AuthProfileAndToken } from '../helpers/app';
 import { isAmsterdamAddress } from './buurt/helpers';
 
 type Rechtsvorm = string;
@@ -177,7 +177,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
 const SERVICE_NAME = 'KVK';
 
 export async function fetchKVK(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   if (FeatureToggle.kvkActive) {

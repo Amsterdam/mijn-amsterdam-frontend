@@ -5,9 +5,10 @@ import {
   getTransformerConfigBesluit,
   IN_BEHANDELING,
   isBeforeToday,
-  isDecisionWithDeliveryActive,
-  isServiceDeliveryActive,
+  isDecisionWithDeliveryStatusActive,
+  isDeliveryStepVisible,
   isServiceDeliveryStarted,
+  isServiceDeliveryStatusActive,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -15,13 +16,11 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,
   IN_BEHANDELING,
   MEER_INFORMATIE,
-  getTransformerConfigBesluit(isDecisionWithDeliveryActive, true),
+  getTransformerConfigBesluit(isDecisionWithDeliveryStatusActive, true),
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
-    },
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isBeforeToday(aanvraag.datumOpdrachtLevering, today),
     isActive: (stepIndex, aanvraag, today) =>
@@ -36,13 +35,11 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Aanpassing uitgevoerd',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today) =>
-      isServiceDeliveryActive(aanvraag, today),
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
-    },
+      isServiceDeliveryStatusActive(aanvraag, today),
     description: (aanvraag) =>
       `<p>
         ${aanvraag.leverancier} heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.

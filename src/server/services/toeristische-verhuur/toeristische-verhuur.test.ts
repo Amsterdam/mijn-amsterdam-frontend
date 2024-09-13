@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
   createToeristischeVerhuurNotification,

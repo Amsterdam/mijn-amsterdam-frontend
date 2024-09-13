@@ -9,9 +9,10 @@ import {
   getTransformerConfigBesluit,
   IN_BEHANDELING,
   isBeforeToday,
-  isDecisionActive,
-  isServiceDeliveryActive,
+  isDecisionStatusActive,
+  isDeliveryStepVisible,
   isServiceDeliveryStarted,
+  isServiceDeliveryStatusActive,
   isServiceDeliveryStopped,
   MEER_INFORMATIE,
 } from './wmo-generic';
@@ -23,7 +24,7 @@ function isActive(
 ) {
   return (
     aanvraag.resultaat === 'afgewezen' ||
-    (isDecisionActive(stepIndex, aanvraag) &&
+    (isDecisionStatusActive(stepIndex, aanvraag) &&
       !isServiceDeliveryStarted(aanvraag, today))
   );
 }
@@ -36,13 +37,11 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Levering gestart',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
-    },
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStarted(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>
-      aanvraag.isActueel && isServiceDeliveryActive(aanvraag, today),
+      aanvraag.isActueel && isServiceDeliveryStatusActive(aanvraag, today),
     description: (aanvraag) =>
       `<p> U krijgt nu ${aanvraag.titel} van ${aanvraag.leverancier}.
       </p>
@@ -51,9 +50,11 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Levering gestopt',
     datePublished: (aanvraag) => aanvraag.datumEindeLevering ?? '',
+    isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today: Date) =>
-      isServiceDeliveryStopped(aanvraag, today) ||
-      isBeforeToday(aanvraag.datumEindeGeldigheid, today),
+      isServiceDeliveryStarted(aanvraag, today) &&
+      (isServiceDeliveryStopped(aanvraag, today) ||
+        isBeforeToday(aanvraag.datumEindeGeldigheid, today)),
     isActive: (stepIndex, aanvraag, today) =>
       aanvraag.isActueel &&
       isServiceDeliveryStopped(aanvraag, today) &&
@@ -63,13 +64,9 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
             ${
               aanvraag.isActueel
                 ? 'Niet van toepassing.'
-                : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel}
-        meer krijgt.`
+                : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`
             }
       </p>`,
-    isVisible: (stepIndex, aanvraag, today, allAanvragen) => {
-      return aanvraag.resultaat !== 'afgewezen';
-    },
   },
   EINDE_RECHT,
 ];

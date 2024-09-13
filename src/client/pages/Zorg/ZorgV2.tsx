@@ -14,12 +14,14 @@ export default function ThemaPaginaZorg() {
 
   const pageContentTop = (
     <Paragraph>
-      Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
-      vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk:{' '}
+      Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke
+      ondersteuning (Wmo). Heeft u vragen of wilt u een wijziging doorgeven? Bel
+      dan gratis de Wmo Helpdesk:{' '}
       <Link rel="noreferrer" href="tel:08000643" variant="inline">
         0800 0643
-      </Link>
-      . Of ga langs bij het Sociaal Loket.
+      </Link>{' '}
+      (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het
+      Sociaal Loket.
     </Paragraph>
   );
 
@@ -28,20 +30,16 @@ export default function ThemaPaginaZorg() {
       to: ExternalUrls.ZORG_LEES_MEER,
       title: 'Lees hier meer over zorg en ondersteuning',
     },
-    {
-      to: ExternalUrls.ZORG_LEES_MEER,
-      title: 'Documenten uploaden voor de Wmo',
-    },
   ];
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, maxItems, className }]) => {
+    ([kind, { title, displayProps, filter, maxItems, className }]) => {
       return (
         <ThemaPaginaTable<WMOVoorzieningFrontend>
           key={kind}
           title={title}
           className={className}
-          zaken={regelingen.filter(filter).sort(sort)}
+          zaken={regelingen.filter(filter)}
           listPageRoute={generatePath(routes.listPage, {
             kind,
           })}
@@ -64,8 +62,9 @@ export default function ThemaPaginaZorg() {
         isLoading={isLoading}
       />
       <p className={styles.HistoricItemsMention}>
-        U ziet hier alleen informatie vanaf 1 januari 2018. Bel voor informatie
-        van eerdere jaren de Wmo Helpdesk: 0800 0643.
+        U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van
+        daarvoor? Bel dan de Wmo Helpdesk:{' '}
+        <Link href="tel:08000643">0800 0643</Link>.
       </p>
     </>
   );

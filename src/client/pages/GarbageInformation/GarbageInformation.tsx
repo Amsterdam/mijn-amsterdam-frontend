@@ -393,7 +393,7 @@ export default function GarbageInformation() {
                 Kaart met containers in de buurt
               </Linkd>
             </p>
-            <h3>Adressen afvalpunten</h3>
+            <h3>Adressen recyclepunten</h3>
             <ul className={styles.UnstyledList}>
               {AFVALPUNTEN.content?.centers.map((item, index) => (
                 <li key={item.title}>

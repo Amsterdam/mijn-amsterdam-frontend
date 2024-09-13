@@ -3,19 +3,21 @@ import memoryCache from 'memory-cache';
 
 import {
   ApiErrorResponse,
+  ApiPostponeResponse,
+  ApiResponse,
   ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { BFF_REQUEST_CACHE_ENABLED } from '../config/app';
 import {
   ApiUrlEntries,
-  BFF_REQUEST_CACHE_ENABLED,
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
-} from '../config';
+} from '../config/source-api';
 import { captureException } from '../services/monitoring';
-import { AuthProfileAndToken } from './app';
 import { Deferred } from './deferred';
 
 export const axiosRequest = axios.create({
@@ -58,7 +60,7 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export function clearSessionCache(requestID: requestID) {
+export function clearSessionCache(requestID: RequestID) {
   for (const cacheKey of cache.keys()) {
     if (cacheKey.startsWith(requestID)) {
       cache.del(cacheKey);
@@ -84,13 +86,9 @@ export function getRequestConfigCacheKey(
 
 export async function requestData<T>(
   config: DataRequestConfig,
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken?: AuthProfileAndToken
 ) {
-  if (!requestID) {
-    throw new Error('Request ID not provided in requestData(...) call.');
-  }
-
   const source = axios.CancelToken.source();
 
   const requestConfig: DataRequestConfig = {
@@ -155,6 +153,7 @@ export async function requestData<T>(
 
   // Set the cache Deferred
   if (
+    BFF_REQUEST_CACHE_ENABLED &&
     cacheKey &&
     !!requestConfig.cacheTimeout &&
     requestConfig.cacheTimeout > 0
@@ -188,7 +187,7 @@ export async function requestData<T>(
     const responseData = apiSuccessResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
-    if (cache.get(cacheKey)) {
+    if (BFF_REQUEST_CACHE_ENABLED && cache.get(cacheKey)) {
       cache.get(cacheKey).resolve(responseData);
     }
 

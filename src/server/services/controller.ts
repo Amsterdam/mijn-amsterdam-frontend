@@ -8,13 +8,10 @@ import {
 } from '../../universal/helpers/api';
 import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
-import {
-  addServiceResultHandler,
-  getAuth,
-  getProfileType,
-  queryParams,
-  sendMessage,
-} from '../helpers/app';
+import { getAuth } from '../auth/auth-helpers';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { IS_DEBUG } from '../config/app';
+import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
@@ -30,6 +27,7 @@ import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
+import { fetchSSOParkerenURL } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
 import {
   fetchBelasting,
@@ -59,16 +57,27 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchSSOParkerenURL } from './parkeren/parkeren';
+import { auth } from 'express-openid-connect';
 
-// Default service call just passing requestID and request headers as arguments
-function callService<T>(fetchService: (...args: any) => Promise<T>) {
-  return async (requestID: requestID, req: Request) =>
-    fetchService(requestID, await getAuth(req), queryParams(req));
+// Default service call just passing requestID and query params as arguments
+function callAuthenticatedService<T>(
+  fetchService: (
+    requestID: RequestID,
+    authProfileAndToken: AuthProfileAndToken,
+    ...args: any[]
+  ) => Promise<T>
+) {
+  return async (requestID: RequestID, req: Request) => {
+    const authProfileAndToken = getAuth(req);
+    if (!authProfileAndToken) {
+      return apiErrorResult('Not authorized', null);
+    }
+    return fetchService(requestID, authProfileAndToken);
+  };
 }
 
 function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
-  return (requestID: requestID, req: Request) =>
+  return async (requestID: RequestID, req: Request) =>
     fetchService(requestID, queryParams(req));
 }
 
@@ -80,6 +89,29 @@ function getServiceTipsMap(profileType: ProfileType) {
   return servicesTipsByProfileType[profileType] ?? {};
 }
 
+export function addServiceResultHandler(
+  res: Response,
+  servicePromise: Promise<any>,
+  serviceName: string
+) {
+  if (IS_DEBUG) {
+    console.log(
+      'Service-controller: adding service result handler for ',
+      serviceName
+    );
+  }
+  return servicePromise.then((data) => {
+    sendMessage(res, serviceName, 'message', data);
+    if (IS_DEBUG) {
+      console.log(
+        'Service-controller: service result message sent for',
+        serviceName
+      );
+    }
+    return data;
+  });
+}
+
 /**
  * The service methods
  */
@@ -88,73 +120,52 @@ const CMS_CONTENT = callPublicService(fetchCMSCONTENT);
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
 );
-
 // Protected services
-const AFIS = callService(fetchIsKnownInAFIS);
-const BRP = callService(fetchBRP);
-const HLI = callService(fetchHLI);
-const KREFIA = callService(fetchKrefia);
-const KVK = callService(fetchKVK);
-const PARKEREN = callService(fetchSSOParkerenURL);
-const SVWI = callService(fetchSVWI);
-const WPI_AANVRAGEN = callService(fetchBijstandsuitkering);
-const WPI_BBZ = callService(fetchBbz);
-const WPI_SPECIFICATIES = callService(fetchSpecificaties);
-const WPI_TONK = callService(fetchTonk);
-const WPI_TOZO = callService(fetchTozo);
-
-const WMO = callService(fetchWmo);
-
-const TOERISTISCHE_VERHUUR = async (requestID: requestID, req: Request) =>
-  fetchToeristischeVerhuur(
-    requestID,
-    await getAuth(req),
-    await getProfileType(req)
-  );
-
-const VERGUNNINGEN = async (requestID: requestID, req: Request) =>
-  fetchVergunningen(requestID, await getAuth(req));
-const VERGUNNINGENv2 = async (requestID: requestID, req: Request) =>
-  fetchVergunningenV2(requestID, await getAuth(req));
-
-const HORECA = async (requestID: requestID, req: Request) =>
-  fetchHorecaVergunningen(requestID, await getAuth(req));
-
+const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
+const BRP = callAuthenticatedService(fetchBRP);
+const HLI = callAuthenticatedService(fetchHLI);
+const KREFIA = callAuthenticatedService(fetchKrefia);
+const KVK = callAuthenticatedService(fetchKVK);
+const PARKEREN = callAuthenticatedService(fetchSSOParkerenURL);
+const SVWI = callAuthenticatedService(fetchSVWI);
+const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
+const WPI_BBZ = callAuthenticatedService(fetchBbz);
+const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
+const WPI_TONK = callAuthenticatedService(fetchTonk);
+const WPI_TOZO = callAuthenticatedService(fetchTozo);
+const WMO = callAuthenticatedService(fetchWmo);
+const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
+const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
+const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
+const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
 // Location, address, based services
-const MY_LOCATION = async (requestID: requestID, req: Request) =>
-  fetchMyLocation(requestID, await getAuth(req), await getProfileType(req));
-
-const AFVAL = async (requestID: requestID, req: Request) =>
-  fetchAfval(requestID, await getAuth(req), await getProfileType(req));
-
-const AFVALPUNTEN = async (requestID: requestID, req: Request) =>
-  fetchAfvalPunten(requestID, await getAuth(req), await getProfileType(req));
-
+const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
+const AFVAL = callAuthenticatedService(fetchAfval);
+const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
 // Architectural pattern C. TODO: Make generic services for pattern C.
-const BELASTINGEN = callService(fetchBelasting);
-const MILIEUZONE = callService(fetchMilieuzone);
-const OVERTREDINGEN = callService(fetchOvertredingen);
-const ERFPACHT = callService(fetchErfpacht);
-const ERFPACHTv2 = callService(fetchErfpachtV2);
-const SUBSIDIE = callService(fetchSubsidie);
-const KLACHTEN = callService(fetchAllKlachten);
-const BEZWAREN = callService(fetchBezwaren);
-const PROFILE = callService(fetchProfile);
-const AVG = callService(fetchAVG);
-const BODEM = callService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
+const BELASTINGEN = callAuthenticatedService(fetchBelasting);
+const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
+const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
+const ERFPACHT = callAuthenticatedService(fetchErfpacht);
+const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
+const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
+const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
+const BEZWAREN = callAuthenticatedService(fetchBezwaren);
+const PROFILE = callAuthenticatedService(fetchProfile);
+const AVG = callAuthenticatedService(fetchAVG);
+const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 
 // Special services that aggregates NOTIFICATIONS from various services
-export const NOTIFICATIONS = async (requestID: requestID, req: Request) => {
-  const profileType = await getProfileType(req);
+export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
+  const authProfileAndToken = getAuth(req);
 
-  // No notifications for this profile type
-  if (profileType === 'private-attributes') {
-    return apiSuccessResult([]);
+  if (!authProfileAndToken) {
+    return apiErrorResult('Not authorized', null, 401);
   }
 
   const [tipNotifications, themaAndTipNotifications] = await Promise.all([
     getTipNotifications(requestID, req),
-    fetchTipsAndNotifications(requestID, await getAuth(req)),
+    fetchTipsAndNotifications(requestID, authProfileAndToken),
   ]);
 
   const notifications: Array<MyNotification> = [
@@ -333,7 +344,7 @@ export const servicesTipsByProfileType = {
 };
 
 export function loadServices(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request,
   serviceMap:
     | PrivateServices
@@ -360,7 +371,14 @@ export function loadServices(
 
 export async function loadServicesSSE(req: Request, res: Response) {
   const requestID = res.locals.requestID;
-  const profileType = await getProfileType(req);
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    sendMessage(res, 'close', 'message', 'close');
+    return res.end();
+  }
+
+  const profileType = authProfileAndToken?.profile.profileType;
 
   // Determine the services to be loaded for certain profile types
   const serviceMap = getServiceMap(profileType);
@@ -381,8 +399,13 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
 export async function loadServicesAll(req: Request, res: Response) {
   const requestID = res.locals.requestID;
-  const profileType = await getProfileType(req);
-  const serviceMap = getServiceMap(profileType);
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return Promise.reject(null);
+  }
+
+  const serviceMap = getServiceMap(authProfileAndToken.profile.profileType);
   const servicePromises = loadServices(requestID, req, serviceMap);
 
   // Combine all results into 1 object
@@ -398,47 +421,55 @@ export async function loadServicesAll(req: Request, res: Response) {
  * TIPS specific services
  */
 export async function getServiceResultsForTips(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request
 ) {
   let requestData = null;
-  const auth = await getAuth(req);
-  const servicePromises = loadServices(
-    requestID,
-    req,
-    getServiceTipsMap(auth.profile.profileType) as any
-  );
-  requestData = (await Promise.allSettled(servicePromises)).reduce(
-    (acc, result, index) => Object.assign(acc, getSettledResult(result)),
-    {}
-  );
+
+  const auth = getAuth(req);
+
+  if (auth) {
+    const servicePromises = loadServices(
+      requestID,
+      req,
+      getServiceTipsMap(auth.profile.profileType) as any
+    );
+    requestData = (await Promise.allSettled(servicePromises)).reduce(
+      (acc, result, index) => Object.assign(acc, getSettledResult(result)),
+      {}
+    );
+  }
 
   return requestData;
 }
 
 export async function getTipNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   req: Request
 ): Promise<MyNotification[]> {
   const serviceResults = await getServiceResultsForTips(requestID, req);
-  const {
-    profile: { profileType },
-  } = await getAuth(req);
+  const authProfileAndToken = getAuth(req);
 
-  const { content: tipNotifications } = await createTipsFromServiceResults(
-    profileType,
-    {
-      serviceResults,
-      tipsDirectlyFromServices: [],
-      compareDate:
-        FeatureToggle.passQueryParamsToStreamUrl &&
-        req.query?.[streamEndpointQueryParamKeys.tipsCompareDate]
-          ? new Date(
-              req.query[streamEndpointQueryParamKeys.tipsCompareDate] as string
-            )
-          : new Date(),
-    }
-  );
+  if (authProfileAndToken) {
+    const { content: tipNotifications } = await createTipsFromServiceResults(
+      authProfileAndToken.profile.profileType,
+      {
+        serviceResults,
+        tipsDirectlyFromServices: [],
+        compareDate:
+          FeatureToggle.passQueryParamsToStreamUrl &&
+          req.query?.[streamEndpointQueryParamKeys.tipsCompareDate]
+            ? new Date(
+                req.query[
+                  streamEndpointQueryParamKeys.tipsCompareDate
+                ] as string
+              )
+            : new Date(),
+      }
+    );
 
-  return tipNotifications.map(convertTipToNotication);
+    return tipNotifications.map(convertTipToNotication);
+  }
+
+  return [];
 }

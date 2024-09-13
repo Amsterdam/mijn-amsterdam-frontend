@@ -1,7 +1,15 @@
+import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { BffEndpoints, ONE_SECOND_MS } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
   VergunningCaseTypeFilter,
@@ -11,13 +19,6 @@ import {
   VergunningV2,
 } from './config-and-types';
 import { fetchDecosVergunning, fetchDecosVergunningen } from './decos-service';
-
-import memoizee from 'memoizee';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { encrypt } from '../../helpers/encrypt-decrypt';
-import { decryptAndValidate } from '../shared/decrypt-route-param';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 
@@ -30,7 +31,7 @@ export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
 };
 
 function transformVergunningFrontend(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   vergunning: VergunningV2,
   appRoute: AppRoute
 ) {
@@ -78,7 +79,7 @@ function transformVergunningFrontend(
 }
 
 async function fetchAndFilterVergunningenV2_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute,
   caseTypeFilter?: VergunningCaseTypeFilter
@@ -113,7 +114,7 @@ export const fetchAndFilterVergunningenV2 = memoizee(
 );
 
 export async function fetchVergunningenV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT
@@ -127,7 +128,7 @@ export async function fetchVergunningenV2(
 }
 
 function addEncryptedDocumentIdToUrl(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   document: VergunningDocument
 ) {
   const [documentIdEncrypted] = encrypt(`${sessionID}:${document.key}`);
@@ -142,11 +143,11 @@ function addEncryptedDocumentIdToUrl(
 }
 
 export async function fetchVergunningV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   vergunningIdEncrypted: string
 ) {
-  const decryptResult = decryptAndValidate(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     vergunningIdEncrypted,
     authProfileAndToken
   );

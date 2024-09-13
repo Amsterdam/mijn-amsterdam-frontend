@@ -4,14 +4,15 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { BffEndpoints } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
-  fetchGpassDiscountTransactions,
   fetchGpassBudgetTransactions,
+  fetchGpassDiscountTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import {
@@ -21,7 +22,7 @@ import {
 } from './stadspas-types';
 
 export async function fetchStadspas(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const stadspasResponse = await fetchStadspassen(
@@ -62,7 +63,7 @@ export async function fetchStadspas(
   return stadspasResponse;
 }
 
-async function decryptAndValidateStadspasTransactionsKey(
+async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey(
   transactionsKeyEncrypted: string,
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
@@ -78,7 +79,7 @@ async function decryptAndValidateStadspasTransactionsKey(
     );
   }
 
-  let sessionID: AuthProfileAndToken['profile']['sid'];
+  let sessionID: SessionID;
   let administratienummer: StadspasAdministratieNummer;
   let pasnummer: string;
 
@@ -109,10 +110,11 @@ async function decryptAndFetch<T>(
   transactionsKeyEncrypted: string,
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  const decryptResult = await decryptAndValidateStadspasTransactionsKey(
-    transactionsKeyEncrypted,
-    verifySessionId
-  );
+  const decryptResult =
+    await decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey(
+      transactionsKeyEncrypted,
+      verifySessionId
+    );
 
   if (decryptResult.status === 'OK') {
     return fetchTransactionFn(
@@ -125,7 +127,7 @@ async function decryptAndFetch<T>(
 }
 
 export async function fetchStadspasDiscountTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted']
 ) {
   return decryptAndFetch(
@@ -136,7 +138,7 @@ export async function fetchStadspasDiscountTransactions(
 }
 
 export async function fetchStadspasBudgetTransactions(
-  requestID: requestID,
+  requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
   budgetCode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
@@ -155,7 +157,7 @@ export async function fetchStadspasBudgetTransactions(
 }
 
 export async function fetchStadspasNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const stadspasResponse = await fetchStadspas(requestID, authProfileAndToken);
@@ -166,6 +168,6 @@ export async function fetchStadspasNotifications(
 }
 
 export const forTesting = {
-  decryptAndValidateStadspasTransactionsKey,
+  decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey,
   decryptAndFetch,
 };

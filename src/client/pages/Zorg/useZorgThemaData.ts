@@ -1,9 +1,5 @@
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import {
-  hasFailedDependency,
-  isError,
-  isLoading,
-} from '../../../universal/helpers/api';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';

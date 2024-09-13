@@ -15,9 +15,11 @@ import {
   BRPDataFromSource,
   MyNotification,
 } from '../../universal/types';
-import { BffEndpoints, getApiConfig } from '../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
+import { BffEndpoints } from '../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../routing/route-helpers';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
@@ -222,7 +224,7 @@ export function transformBRPData(
 }
 
 export async function fetchBRP(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const options = getApiConfig('BRP', {
@@ -233,7 +235,7 @@ export async function fetchBRP(
 }
 
 export async function fetchBrpNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const BRP = await fetchBRP(requestID, authProfileAndToken);
@@ -247,7 +249,7 @@ export async function fetchBrpNotifications(
 }
 
 export async function fetchAantalBewoners(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   addressKeyEncrypted: string
 ) {

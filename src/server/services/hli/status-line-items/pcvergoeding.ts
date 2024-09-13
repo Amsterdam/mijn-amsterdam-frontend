@@ -1,9 +1,9 @@
+import { isSameDay, parseISO } from 'date-fns';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-config-and-types';
-import { EINDE_RECHT } from './generic';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -105,8 +105,12 @@ export function filterCombineUpcPcvData(
 
       return {
         ...aanvraag,
-        // Use Basis regeling om actualiteit en einde geldigheid te bepalen
-        isActueel: baseRegeling?.isActueel ?? aanvraag.isActueel,
+        // Use Basis regeling to determine actualiteit en einde geldigheid.
+        // If verzilvering is denied we treat regeling as "niet actueel"
+        isActueel:
+          aanvraag.resultaat === 'toegewezen'
+            ? baseRegeling?.isActueel ?? aanvraag.isActueel
+            : false,
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
       };
@@ -129,6 +133,21 @@ export function filterCombineUpcPcvData(
   );
 }
 
+export function isWorkshopNietGevolgd(regeling: ZorgnedAanvraagTransformed) {
+  return (
+    !isVerzilvering(regeling) &&
+    !!(
+      regeling.datumEindeGeldigheid &&
+      regeling.datumIngangGeldigheid &&
+      isSameDay(
+        parseISO(regeling.datumEindeGeldigheid),
+        parseISO(regeling.datumIngangGeldigheid)
+      )
+    ) &&
+    regeling.resultaat == 'toegewezen'
+  );
+}
+
 export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Besluit',
@@ -140,51 +159,62 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig[] = [
       `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
-            ? `U heeft recht op een ${regeling.titel}. U moet hiervoor eerst een cursus volgen`
-            : `U heeft geen recht op een ${regeling.titel}`
+            ? `Uw kind heeft recht op een ${regeling.titel}`
+            : `Uw kind heeft geen recht op een ${regeling.titel}`
         }.
         </p>
         <p>
-          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.'}
         </p>
       `,
   },
   {
-    status: 'Cursus',
+    status: 'Workshop',
     isVisible: (stepIndex, regeling) =>
-      (!isVerzilvering(regeling) && regeling.resultaat !== 'afgewezen') ||
-      (isVerzilvering(regeling) && regeling.resultaat !== 'toegewezen'),
+      !isVerzilvering(regeling) &&
+      regeling.resultaat === 'toegewezen' &&
+      !isWorkshopNietGevolgd(regeling),
     datePublished: '',
     isChecked: (stepIndex, regeling) => true,
     isActive: (stepIndex, regeling) => true,
     description: (regeling) =>
       `
         <p>
-         Wij wachten op de uitslag van uw te volgen cursus.
-        </p>
-        <p>
-          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
+         U moet eerst een afspraak maken voor de workshop. In de brief staat hoe u dat doet.
         </p>
       `,
   },
   {
-    status: 'Cursus voldaan',
+    status: 'Workshop gevolgd',
     isVisible: (stepIndex, regeling) =>
       isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
     datePublished: (regeling) => regeling.datumBesluit,
-    isChecked: (stepIndex, regeling) => true,
-    isActive: (stepIndex, regeling) => regeling.isActueel,
+    isChecked: () => true,
+    isActive: () => true,
     description: (regeling) =>
       `
         <p>
-         U heeft voldaan aan de cursus voorwaarde voor het recht op ${regeling.titel}.
+         Uw kind krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.
+        </p>
+        <p>De laptop of tablet is voor een periode van 5 jaar${regeling.datumEindeGeldigheid ? ` tot ${defaultDateFormat(regeling.datumEindeGeldigheid)}` : ''}.
+      `,
+  },
+  {
+    status: 'Workshop niet gevolgd',
+    isVisible: (stepIndex, regeling) => isWorkshopNietGevolgd(regeling),
+    datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
+    isChecked: () => true,
+    isActive: () => true,
+    description: (regeling) =>
+      `
+        <p>
+         Uw kind krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken of een klacht kan indienen.
         </p>
       `,
   },
-  EINDE_RECHT,
 ];
 
 export const forTesting = {
@@ -192,4 +222,5 @@ export const forTesting = {
   isVerzilveringVanRegeling,
   isRegelingVanVerzilvering,
   getUpcPcvDecisionDate,
+  isWorkshopNietGevolgd,
 };

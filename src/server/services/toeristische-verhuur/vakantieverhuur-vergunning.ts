@@ -4,7 +4,7 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { LinkProps, StatusLineItem } from '../../../universal/types/App.types';
 import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
 import {
   VakantieverhuurVergunning as VakantieverhuurVergunningDecos,
@@ -147,7 +147,7 @@ export function transformVakantieverhuurVergunningen(
 }
 
 export async function fetchVakantieverhuurVergunningen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const vakantieverhuurVergunningResponse = await fetchVergunningen(
@@ -179,7 +179,7 @@ export async function fetchVakantieverhuurVergunningen(
 }
 
 export async function fetchVakantieverhuurVergunningenV2(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const vergunningenResponse = await fetchVergunningenV2(

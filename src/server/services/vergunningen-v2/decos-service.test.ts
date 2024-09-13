@@ -1,7 +1,7 @@
 import uid from 'uid-safe';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DecosDocumentSource,
   DecosZaakSource,
@@ -111,7 +111,7 @@ describe('decos-service', () => {
     },
     token: '111222333',
   };
-  let reqID: requestID = '456-ABC';
+  let reqID: RequestID = '456-ABC';
 
   const numberOfAddressBooksToSearch =
     process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',').length ?? 0;

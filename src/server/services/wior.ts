@@ -5,7 +5,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import { fetchDataset } from './buurt/buurt';
 import { datasetEndpoints } from './buurt/datasets';
 import {
@@ -32,9 +32,8 @@ function getNotification(bbox: LatLngBoundsLiteral) {
 }
 
 export async function fetchWiorNotifications(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const datasetId = 'wior';
   const config = datasetEndpoints.wior;
@@ -63,11 +62,7 @@ export async function fetchWiorNotifications(
       id: datasetId,
     };
   });
-  const MY_LOCATION = await fetchMyLocation(
-    requestID,
-    authProfileAndToken,
-    profileType
-  );
+  const MY_LOCATION = await fetchMyLocation(requestID, authProfileAndToken);
   if (
     MY_LOCATION.status === 'OK' &&
     MY_LOCATION.content?.[0]?.latlng &&

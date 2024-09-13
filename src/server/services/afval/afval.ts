@@ -2,21 +2,16 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchMyLocation } from '../home';
-import { fetchAfvalpunten } from './afvalpunten';
+import { fetchAfvalpuntenByLatLng } from './afvalpunten';
 import { fetchAfvalwijzer } from './afvalwijzer';
 
 export async function fetchAfval(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const MY_LOCATION = await fetchMyLocation(
-    requestID,
-    authProfileAndToken,
-    profileType
-  );
+  const MY_LOCATION = await fetchMyLocation(requestID, authProfileAndToken);
 
   if (MY_LOCATION.status === 'OK') {
     const primaryLocation = MY_LOCATION.content?.[0];
@@ -33,15 +28,10 @@ export async function fetchAfval(
 }
 
 export async function fetchAfvalPunten(
-  requestID: requestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  const MY_LOCATION = await fetchMyLocation(
-    requestID,
-    authProfileAndToken,
-    profileType
-  );
+  const MY_LOCATION = await fetchMyLocation(requestID, authProfileAndToken);
 
   if (MY_LOCATION.status === 'OK') {
     const primaryLocation = MY_LOCATION.content?.[0]?.latlng;
@@ -50,7 +40,7 @@ export async function fetchAfvalPunten(
       return apiSuccessResult(null);
     }
 
-    return fetchAfvalpunten(primaryLocation);
+    return fetchAfvalpuntenByLatLng(primaryLocation);
   }
 
   return apiDependencyError({ MY_LOCATION });

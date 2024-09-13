@@ -7,8 +7,9 @@ import {
 import { dateSort } from '../../../universal/helpers/date';
 import { pick } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
-import { SourceApiKey, getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { SourceApiKey } from '../../config/source-api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
 import {
@@ -48,7 +49,7 @@ export interface FetchConfig {
 }
 
 function statusLineTransformer(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: WpiRequestProcess[],
   getLabels: (
     requestProcess: WpiRequestProcess
@@ -73,7 +74,7 @@ function statusLineTransformer(
 }
 
 export async function fetchRequestProcess(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   getLabels: (
     requestProcess: WpiRequestProcess
@@ -108,7 +109,7 @@ export async function fetchRequestProcess(
 }
 
 export async function fetchBijstandsuitkering(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const filterResponse: FilterResponse = (response) =>
@@ -133,7 +134,7 @@ export async function fetchBijstandsuitkering(
 }
 
 export async function fetchEAanvragen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   about?: string[]
 ) {
@@ -164,7 +165,7 @@ export async function fetchEAanvragen(
 }
 
 export async function fetchTozo(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchEAanvragen(requestID, authProfileAndToken, [
@@ -177,7 +178,7 @@ export async function fetchTozo(
 }
 
 export async function fetchBbz(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const bbz = await fetchEAanvragen(requestID, authProfileAndToken, ['Bbz']);
@@ -186,14 +187,14 @@ export async function fetchBbz(
 }
 
 export async function fetchTonk(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return fetchEAanvragen(requestID, authProfileAndToken, ['TONK']);
 }
 
 export function transformIncomSpecificationResponse(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: ApiSuccessResponse<WpiIncomeSpecificationResponseData>
 ) {
   return {
@@ -213,7 +214,7 @@ export function transformIncomSpecificationResponse(
 }
 
 export function fetchSpecificaties(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
@@ -232,7 +233,7 @@ export function fetchSpecificaties(
 }
 
 export async function fetchWpiNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const today = new Date();
@@ -316,7 +317,7 @@ export async function fetchWpiNotifications(
 }
 
 export async function fetchWpiDocument(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string,
   queryParams?: Record<string, string>

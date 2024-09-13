@@ -7,11 +7,11 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
-import { getApiConfig } from '../../config';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 import { AppRoutes } from './../../../universal/config/routes';
-import { AuthProfileAndToken } from './../../helpers/app';
+import { AuthProfileAndToken } from './../../auth/auth-types';
 import { Klacht, KlachtenResponse, SmileKlachtenReponse } from './types';
 
 const DEFAULT_PAGE_SIZE = 250;
@@ -118,7 +118,7 @@ function createKlachtNotification(klacht: Klacht): MyNotification {
 }
 
 async function fetchKlachten(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   page: number = 1
 ) {
@@ -136,7 +136,7 @@ async function fetchKlachten(
 }
 
 export async function fetchAllKlachten(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   let page = 0;
@@ -180,7 +180,7 @@ export async function fetchAllKlachten(
 }
 
 export async function fetchKlachtenNotifications(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);

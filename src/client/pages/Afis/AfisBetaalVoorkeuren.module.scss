@@ -1,0 +1,13 @@
+@import '../../styles/global';
+
+.DataList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: var(--ams-grid-column-gap);
+  grid-row-gap: var(--ams-link-list-gap);
+}
+
+.DataList dd {
+  margin-left: 0;
+  margin-bottom: 0;
+}

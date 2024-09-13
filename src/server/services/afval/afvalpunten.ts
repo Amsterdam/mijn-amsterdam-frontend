@@ -23,7 +23,7 @@ function addApproximateDistance(
     .sort(sortByNumber('distance', 'asc'));
 }
 
-export function fetchAfvalpunten(latlng: LatLngLiteral | null) {
+export function fetchAfvalpuntenByLatLng(latlng: LatLngLiteral | null) {
   const centers = addApproximateDistance(latlng, afvalpunten);
   const responseData: { centers: GarbageCenter[] } = { centers };
   return apiSuccessResult(responseData);

@@ -1,10 +1,10 @@
 import { generatePath } from 'react-router-dom';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { TrackingConfig } from './routes';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -16,34 +16,34 @@ export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
 export const ThemaTitles: { [thema in Thema]: string } = {
   AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
+  AVG: 'AVG persoonsgegevens',
   BELASTINGEN: 'Belastingen',
+  BEZWAREN: 'Bezwaren',
+  BODEM: 'Bodem',
+  BRP: 'Mijn gegevens',
   BURGERZAKEN: 'Burgerzaken',
   BUURT: 'Mijn buurt',
-  BEZWAREN: 'Bezwaren',
-  INKOMEN: 'Inkomen',
-  HLI: 'Stadspas en regelingen bij laag inkomen',
-  BRP: 'Mijn gegevens',
-  MILIEUZONE: 'Milieuzone',
-  OVERTREDINGEN: 'Overtredingen voertuigen',
-  NOTIFICATIONS: 'Actueel',
-  ROOT: 'Home',
   ERFPACHT: 'Erfpacht',
   ERFPACHTv2: 'Erfpacht V2',
-  SUBSIDIE: 'Subsidies',
-  ZORG: 'Zorg en ondersteuning',
-  VERGUNNINGEN: 'Vergunningen en ontheffingen',
-  VERGUNNINGEN_LOPEND: 'Vergunningen',
-  VERGUNNINGEN_EERDER: 'Vergunningen',
-  KVK: 'Mijn onderneming',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  KREFIA: 'Kredietbank & FIBU',
-  SEARCH: 'Zoeken',
-  PARKEREN: 'Parkeren',
-  KLACHTEN: 'Klachten',
+  HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
-  AVG: 'AVG persoonsgegevens',
-  BODEM: 'Bodem',
+  INKOMEN: 'Inkomen',
+  KLACHTEN: 'Klachten',
+  KREFIA: 'Kredietbank & FIBU',
+  KVK: 'Mijn onderneming',
+  MILIEUZONE: 'Milieuzone',
+  NOTIFICATIONS: 'Actueel',
+  OVERTREDINGEN: 'Overtredingen voertuigen',
+  PARKEREN: 'Parkeren',
+  ROOT: 'Home',
+  SEARCH: 'Zoeken',
+  SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
+  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
+  VERGUNNINGEN_EERDER: 'Vergunningen',
+  VERGUNNINGEN_LOPEND: 'Vergunningen',
+  VERGUNNINGEN: 'Vergunningen en ontheffingen',
+  ZORG: 'Zorg en ondersteuning',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
@@ -71,6 +71,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['BURGERZAKEN/ID-KAART']]: `ID-Kaart | ${ThemaTitles.BURGERZAKEN}`,
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
+  [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
   [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
     `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
@@ -128,6 +129,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
   [AppRoutes.AFIS]: 'Facturen en betalen | Mijn Amsterdam',
+  [AppRoutes.AFIS_BETAALVOORKEUREN]: 'Betaalvoorkeuren | Facturen en betalen',
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
@@ -276,9 +278,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     ? {
         title: ThemaTitles.PARKEREN,
         id: Themas.PARKEREN,
-        to: (appState: AppState) => {
-          return appState.PARKEREN.content?.url;
-        },
+        to: (appState: AppState) => appState.PARKEREN.content?.url,
         rel: 'external',
         profileTypes: ['private', 'commercial'],
       }

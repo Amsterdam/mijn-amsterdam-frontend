@@ -1,69 +1,43 @@
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
-import { BFFApiUrls } from '../../config/api';
-import { BusinessPartnerKnownResponse } from '../../../server/services/afis/afis-types';
-import { BagThemas } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import { Paragraph } from '@amsterdam/design-system-react';
-import { Datalist } from '../../components/Datalist/Datalist';
+import { Button, Paragraph } from '@amsterdam/design-system-react';
+import { AppRoutes } from '../../../universal/config/routes';
+import { useHistory } from 'react-router-dom';
 
-const pageContentTop = (
-  <Paragraph>
-    Hieronder kunt u uw facturatiegegevens inzien en een automatische incasso
-    instellen per afdeling van de gemeente.
-  </Paragraph>
-);
+export default function Afis() {
+  const history = useHistory();
 
-export default function AfisThemaPagina() {
-  const { AFIS } = useAppStateGetter();
+  const pageContentTop = (
+    <>
+      <Paragraph className="ams-mb--sm">
+        Hieronder kunt u uw facturatiegegevens inzien en een automatische
+        incasso instellen per afdeling van de gemeente.
+      </Paragraph>
+      <Button
+        variant="secondary"
+        onClick={() => history.push(AppRoutes.AFIS_BETAALVOORKEUREN)}
+      >
+        Betaalvoorkeuren
+      </Button>
+    </>
+  );
 
   return (
     <ThemaPagina
       title="AFIS"
       isError={false}
+      isPartialError={false}
       isLoading={false}
-      linkListItems={[]}
-      pageContentTop={pageContentTop}
-      pageContentTables={
-        <>
-          {AFIS.content?.businessPartnerIdEncrypted && (
-            <AfisBusinessPartner
-              businessPartnerIdEncrypted={
-                AFIS.content.businessPartnerIdEncrypted
-              }
-            />
-          )}
-        </>
+      linkListItems={
+        [
+          // {
+          //   to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
+          //   title: 'Meer over facturen van de gemeente',
+          // },
+          // Deze pagina moet nog gemaakt worden
+        ]
       }
+      pageContentTop={pageContentTop}
+      pageContentTables={null}
     />
   );
-}
-
-type AfisBusinessPartnerProps = {
-  businessPartnerIdEncrypted: BusinessPartnerKnownResponse['businessPartnerIdEncrypted'];
-};
-
-function AfisBusinessPartner({
-  businessPartnerIdEncrypted,
-}: AfisBusinessPartnerProps) {
-  const [businesspartner, api] =
-    useAppStateBagApi<BusinessPartnerKnownResponse>({
-      url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
-      bagThema: BagThemas.AFIS,
-      key: businessPartnerIdEncrypted || '',
-    });
-
-  if (!api.isError && businesspartner) {
-    const labels: Record<string, string> = {
-      BusinessPartner: 'Debiteurnummer',
-      BusinessPartnerFullName: 'Naam',
-      BusinessPartnerAddress: 'Adres',
-      PhoneNumber: 'Telefoonnummer',
-    };
-
-    const rows = Object.entries(businesspartner).map(([key, value]) => {
-      return { label: labels[key], content: value };
-    });
-
-    return <Datalist rows={rows} />;
-  }
 }

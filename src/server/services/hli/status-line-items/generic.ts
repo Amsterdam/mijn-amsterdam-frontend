@@ -1,5 +1,8 @@
 import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
+import {
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../zorgned/zorgned-config-and-types';
 
 export const BESLUIT: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Besluit',
@@ -22,6 +25,26 @@ export const BESLUIT: ZorgnedStatusLineItemTransformerConfig = {
       `,
 };
 
+function getEindeRechtDescription(regeling: ZorgnedAanvraagTransformed) {
+  const isActueel = regeling.isActueel;
+  const hasDatumEindeGeldigheid = !!regeling.datumEindeGeldigheid;
+
+  switch (true) {
+    case isActueel && hasDatumEindeGeldigheid:
+      return `Uw recht op ${regeling.titel} stopt per ${regeling.datumEindeGeldigheid ? defaultDateFormat(regeling.datumEindeGeldigheid) : ''}.`;
+    case isActueel && !hasDatumEindeGeldigheid:
+      return `Als uw recht op ${regeling.titel} stopt, krijgt u hiervan bericht.`;
+    case !isActueel && !hasDatumEindeGeldigheid:
+      return `Uw recht op ${regeling.titel} is beëindigd.`;
+    case !isActueel && hasDatumEindeGeldigheid:
+      return `Uw recht op ${regeling.titel} is beëindigd ${
+        regeling.datumEindeGeldigheid
+          ? `per ${defaultDateFormat(regeling.datumEindeGeldigheid)}`
+          : ''
+      }.`;
+  }
+}
+
 export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Einde recht',
   isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
@@ -29,17 +52,12 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: (stepIndex, regeling) => regeling.isActueel === false,
   isActive: (stepIndex, regeling) => regeling.isActueel === false,
   description: (regeling) =>
-    `
-        <p>
-          ${
-            regeling.isActueel
-              ? `Uw recht op ${regeling.titel} stopt per ${regeling.datumEindeGeldigheid ? defaultDateFormat(regeling.datumEindeGeldigheid) : ''}.`
-              : `Uw recht op ${regeling.titel} is beëindigd ${
-                  regeling.datumEindeGeldigheid
-                    ? `per ${defaultDateFormat(regeling.datumEindeGeldigheid)}`
-                    : ''
-                }`
-          }
-        </p>
-      `,
+    `<p>
+      ${getEindeRechtDescription(regeling)}
+    </p>
+    `,
+};
+
+export const forTesting = {
+  getEindeRechtDescription,
 };

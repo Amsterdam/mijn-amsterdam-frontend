@@ -8,8 +8,8 @@ import {
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
-import { ONE_SECOND_MS } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { ONE_SECOND_MS } from '../../config/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
   NotificationLabelByType,
@@ -122,7 +122,7 @@ export function getVergunningNotifications(
 }
 
 async function fetchVergunningenV2Notifications_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT,
