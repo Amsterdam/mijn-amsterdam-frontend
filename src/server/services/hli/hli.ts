@@ -9,9 +9,10 @@ import {
 import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
-import { BFF_BASE_PATH, BffEndpoints } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
@@ -132,7 +133,7 @@ export async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchZorgnedAanvragenHLI(
@@ -151,7 +152,7 @@ async function fetchRegelingen(
 }
 
 export async function fetchHLI(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const [stadspasResult, regelingenResult] = await Promise.allSettled([

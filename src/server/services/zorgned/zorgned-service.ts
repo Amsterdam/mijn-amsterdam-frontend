@@ -1,7 +1,6 @@
 import memoizee from 'memoizee';
 import {
   apiErrorResult,
-  ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
@@ -10,8 +9,10 @@ import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { hash } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types';
-import { getApiConfig, ONE_SECOND_MS } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
@@ -176,7 +177,7 @@ export async function fetchAanvragen(
 }
 
 export async function fetchAanvragenWithRelatedPersons(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   options: ZorgnedAanvragenServiceOptions
 ) {
@@ -194,7 +195,7 @@ export async function fetchAanvragenWithRelatedPersons(
 }
 
 export async function fetchAndMergeRelatedPersons(
-  requestID: requestID,
+  requestID: RequestID,
   zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>
 ) {
   const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
@@ -304,7 +305,7 @@ function transformZorgnedPersonResponse(
 }
 
 export async function fetchRelatedPersons(
-  requestID: requestID,
+  requestID: RequestID,
   userIDs: string[]
 ) {
   const requests = userIDs.map((userID) => {

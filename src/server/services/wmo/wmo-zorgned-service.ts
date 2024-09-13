@@ -1,7 +1,7 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import {
   isAfterWCAGValidDocumentsDate,
   isBeforeToday,

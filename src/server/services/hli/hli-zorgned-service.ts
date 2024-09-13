@@ -1,4 +1,8 @@
-import { AuthProfileAndToken } from '../../helpers/app';
+import memoizee from 'memoizee';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -8,11 +12,6 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types';
-
-import memoizee from 'memoizee';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { ONE_SECOND_MS } from '../../config';
-import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -32,7 +31,7 @@ function transformZorgnedClientNummerResponse(
 }
 
 export async function fetchAdministratienummer(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchPersoonsgegevensNAW(
@@ -84,7 +83,7 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 }
 
 async function fetchZorgnedAanvragenHLI_(
-  requestID: requestID,
+  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchAanvragenWithRelatedPersons(
