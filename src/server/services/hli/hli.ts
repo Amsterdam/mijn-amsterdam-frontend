@@ -9,11 +9,10 @@ import {
 import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { BFF_BASE_PATH, BffEndpoints } from '../../config';
+import { AuthProfileAndToken } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
@@ -64,7 +63,6 @@ function getDocumentsFrontend(
 }
 
 async function transformRegelingForFrontend(
-  requestID: RequestID,
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagTransformed,
   statusLineItems: StatusLineItem[]
@@ -75,18 +73,6 @@ async function transformRegelingForFrontend(
     id,
     regeling: slug(aanvraag.titel),
   });
-
-  let namen: string[] = [];
-
-  if (aanvraag.betrokkenen?.length) {
-    const personsResponse = await fetchRelatedPersons(
-      requestID,
-      aanvraag.betrokkenen
-    );
-    if (personsResponse.status === 'OK') {
-      namen = personsResponse.content.map((person) => person.name);
-    }
-  }
 
   const regelingFrontend: HLIRegeling = {
     id,
@@ -102,7 +88,8 @@ async function transformRegelingForFrontend(
     dateEnd: aanvraag.datumEindeGeldigheid,
     decision: aanvraag.resultaat,
     displayStatus: getDisplayStatus(aanvraag, statusLineItems),
-    receiver: namen.join(', '),
+    receiver:
+      aanvraag.betrokkenPersonen?.map((person) => person.name).join(', ') ?? '',
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
   };
 
@@ -110,7 +97,6 @@ async function transformRegelingForFrontend(
 }
 
 export async function transformRegelingenForFrontend(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
@@ -133,7 +119,6 @@ export async function transformRegelingenForFrontend(
     }
 
     const regelingForFrontend = await transformRegelingForFrontend(
-      requestID,
       authProfileAndToken.profile.sid,
       aanvraag,
       statusLineItems
@@ -148,7 +133,7 @@ export async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(
-  requestID: RequestID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchZorgnedAanvragenHLI(
@@ -157,7 +142,6 @@ async function fetchRegelingen(
   );
   if (aanvragenResponse.status === 'OK') {
     const regelingen = await transformRegelingenForFrontend(
-      requestID,
       authProfileAndToken,
       aanvragenResponse.content,
       new Date()
@@ -168,7 +152,7 @@ async function fetchRegelingen(
 }
 
 export async function fetchHLI(
-  requestID: RequestID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const [stadspasResult, regelingenResult] = await Promise.allSettled([

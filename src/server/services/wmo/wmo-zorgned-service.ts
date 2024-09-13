@@ -72,8 +72,10 @@ export async function fetchZorgnedAanvragenWMO(
   const aanvragenResponse = await fetchAanvragen(
     requestID,
     authProfileAndToken,
-    'ZORGNED_JZD',
-    requestBodyParams
+    {
+      zorgnedApiConfigKey: 'ZORGNED_JZD',
+      requestBodyParams,
+    }
   );
 
   if (aanvragenResponse.status === 'OK') {

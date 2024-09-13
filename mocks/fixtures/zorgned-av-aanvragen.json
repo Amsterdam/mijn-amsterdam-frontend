@@ -73,7 +73,7 @@
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
                 "toewijzingen": [],
-                "betrokkenen": ["123459965"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -137,12 +137,7 @@
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
                 "toewijzingen": [],
-                "betrokkenen": [
-                  "999991619",
-                  "234397305",
-                  "999990202",
-                  "187836644"
-                ]
+                "betrokkenen": ["123123", "123123", "123123", "123123"]
               }
             }
           ]
@@ -211,7 +206,7 @@
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
                 "toewijzingen": [],
-                "betrokkenen": ["999991619", "234397305", "999990202"]
+                "betrokkenen": ["123123", "123123", "123123"]
               }
             }
           ]
@@ -271,11 +266,11 @@
                 },
                 "toewijzingen": [],
                 "betrokkenen": [
-                  "999994104",
-                  "999994311",
-                  "999990810",
-                  "999990512",
-                  "999995182"
+                  "123123",
+                  "123123",
+                  "123123",
+                  "123123",
+                  "123123"
                 ]
               }
             }
@@ -323,7 +318,7 @@
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
                 "toewijzingen": [],
-                "betrokkenen": ["999994311"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -370,7 +365,7 @@
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
                 "toewijzingen": [],
-                "betrokkenen": ["999994104"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -435,7 +430,7 @@
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
                 "toewijzingen": [],
-                "betrokkenen": ["230899055"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -561,7 +556,7 @@
                   "omschrijving": "1 stuks (output) per beschikking"
                 },
                 "toewijzingen": [],
-                "betrokkenen": ["230899055"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -654,7 +649,7 @@
                     "leveringen": []
                   }
                 ],
-                "betrokkenen": ["999990512"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -727,7 +722,7 @@
                     "leveringen": []
                   }
                 ],
-                "betrokkenen": ["999990512"]
+                "betrokkenen": ["123123"]
               }
             }
           ]
@@ -1050,7 +1045,7 @@
                 },
                 "leveringsvorm": "zin",
                 "toewijzingen": [],
-                "betrokkenen": ["123459916"]
+                "betrokkenen": ["123123"]
               }
             }
           ]

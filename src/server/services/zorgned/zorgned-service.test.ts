@@ -105,10 +105,12 @@ describe('zorgned-service', () => {
     const result = await fetchAanvragen(
       mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken,
-      'ZORGNED_JZD',
       {
-        maxeinddatum: '2018-01-01',
-        regeling: 'wmo',
+        zorgnedApiConfigKey: 'ZORGNED_JZD',
+        requestBodyParams: {
+          maxeinddatum: '2018-01-01',
+          regeling: 'wmo',
+        },
       }
     );
 
@@ -194,11 +196,13 @@ describe('zorgned-service', () => {
         geboortenaam: 'Alex',
         voornamen: 'Flex',
         geboortedatum: '2016-07-09',
+        bsn: 'x123z',
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
     expect(naam).toMatchInlineSnapshot(`
       {
+        "bsn": "x123z",
         "dateOfBirth": "2016-07-09",
         "dateOfBirthFormatted": "09 juli 2016",
         "name": "Flex",
@@ -211,11 +215,13 @@ describe('zorgned-service', () => {
         geboortenaam: 'Jarvis',
         voornamen: 'Baron',
         geboortedatum: '2016-07-09',
+        bsn: 'x123z',
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
     expect(naam2).toMatchInlineSnapshot(`
       {
+        "bsn": "x123z",
         "dateOfBirth": "2016-07-09",
         "dateOfBirthFormatted": "09 juli 2016",
         "name": "Baron",
@@ -236,6 +242,7 @@ describe('zorgned-service', () => {
         geboortenaam: 'Jarvis',
         voornamen: 'Baron',
         geboortedatum: '2016-07-09',
+        bsn: 'x123z',
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
@@ -245,6 +252,7 @@ describe('zorgned-service', () => {
         geboortenaam: 'Alex',
         voornamen: 'Flex',
         geboortedatum: '2016-07-09',
+        bsn: 'x123z',
       },
     } as ZorgnedPersoonsgegevensNAWResponse);
 
@@ -254,11 +262,13 @@ describe('zorgned-service', () => {
       {
         "content": [
           {
+            "bsn": "x123z",
             "dateOfBirth": "2016-07-09",
             "dateOfBirthFormatted": "09 juli 2016",
             "name": "Baron",
           },
           {
+            "bsn": "x123z",
             "dateOfBirth": "2016-07-09",
             "dateOfBirthFormatted": "09 juli 2016",
             "name": "Flex",

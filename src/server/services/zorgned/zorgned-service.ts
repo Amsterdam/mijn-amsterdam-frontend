@@ -1,6 +1,8 @@
 import memoizee from 'memoizee';
 import {
   apiErrorResult,
+  ApiResponse,
+  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -17,6 +19,7 @@ import {
   LeveringsVorm,
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
+  ZorgnedAanvragenServiceOptions,
   ZorgnedDocument,
   ZorgnedDocumentResponseSource,
   ZorgnedPerson,
@@ -49,7 +52,7 @@ function transformZorgnedAanvraag(
   datumBesluit: string,
   beschiktProduct: BeschiktProduct,
   documenten: ZorgnedDocument[]
-) {
+): ZorgnedAanvraagTransformed {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
@@ -95,7 +98,7 @@ function transformZorgnedAanvraag(
 
 export function transformZorgnedAanvragen(
   responseData: ZorgnedResponseDataSource
-) {
+): ZorgnedAanvraagTransformed[] {
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
   const aanvragenTransformed: ZorgnedAanvraagTransformed[] = [];
@@ -145,19 +148,20 @@ export function transformZorgnedAanvragen(
 export async function fetchAanvragen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
-  requestBodyParams?: Record<string, string>
+  options: ZorgnedAanvragenServiceOptions
 ) {
   const postBody = {
-    ...requestBodyParams,
+    ...(options.requestBodyParams ?? {}),
     burgerservicenummer: authProfileAndToken.profile.id,
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
 
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
+  const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
   const url = `${dataRequestConfig.url}/aanvragen`;
 
-  const voorzieningen = await requestData<ZorgnedAanvraagTransformed[]>(
+  const zorgnedAanvragenResponse = await requestData<
+    ZorgnedAanvraagTransformed[]
+  >(
     {
       ...dataRequestConfig,
       url,
@@ -168,7 +172,58 @@ export async function fetchAanvragen(
     authProfileAndToken
   );
 
-  return voorzieningen;
+  if (zorgnedAanvragenResponse.status === 'OK' && options.includeBetrokkenen) {
+    return fetchAndMergeRelatedPersons(requestID, zorgnedAanvragenResponse);
+  }
+
+  return zorgnedAanvragenResponse;
+}
+
+export async function fetchAndMergeRelatedPersons(
+  requestID: requestID,
+  zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>
+) {
+  const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
+
+  const userIDs = zorgnedAanvragenTransformed.flatMap(
+    (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
+  );
+
+  const relatedPersonsResponse = await fetchRelatedPersons(requestID, userIDs);
+
+  if (relatedPersonsResponse.status === 'ERROR') {
+    return apiSuccessResult(zorgnedAanvragenTransformed, {
+      relatedPersons: relatedPersonsResponse,
+    });
+  }
+
+  const personsByUserId = relatedPersonsResponse.content.reduce(
+    (acc, person) => {
+      acc[person.bsn] = person;
+      return acc;
+    },
+    {} as Record<ZorgnedPerson['bsn'], ZorgnedPerson>
+  );
+
+  const zorgnedAanvragenWithRelatedPersons = zorgnedAanvragenTransformed.map(
+    (zorgnedAanvraagTransformed) => {
+      if (zorgnedAanvraagTransformed.betrokkenen?.length) {
+        return {
+          ...zorgnedAanvraagTransformed,
+          betrokkenPersonen: zorgnedAanvraagTransformed.betrokkenen
+            .map((userID) => personsByUserId[userID])
+            .filter(Boolean),
+        };
+      }
+      return zorgnedAanvraagTransformed;
+    }
+  );
+  console.log(
+    'zorgnedAanvragenWithRelatedPersons::',
+    zorgnedAanvragenWithRelatedPersons
+  );
+
+  return apiSuccessResult(zorgnedAanvragenWithRelatedPersons);
 }
 
 export async function fetchDocument(
@@ -221,6 +276,7 @@ function transformZorgnedPersonResponse(
 ): ZorgnedPerson | null {
   if (zorgnedResponseData?.persoon) {
     return {
+      bsn: zorgnedResponseData.persoon.bsn,
       name:
         zorgnedResponseData?.persoon?.voornamen ??
         getFullName({

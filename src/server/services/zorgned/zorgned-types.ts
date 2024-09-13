@@ -123,6 +123,7 @@ export interface ZorgnedResponseDataSource {
 
 export interface ZorgnedAanvraagTransformed {
   betrokkenen: string[];
+  betrokkenPersonen?: ZorgnedPerson[];
   datumAanvraag: string;
   datumBeginLevering: string | null;
   datumBesluit: string;
@@ -150,6 +151,7 @@ export interface ZorgnedDocumentResponseSource {
 
 export interface ZorgnedPersoonsgegevensNAWResponse {
   persoon: {
+    bsn: string;
     clientidentificatie: number | null;
     geboortenaam: string;
     roepnaam: string | null;
@@ -161,7 +163,14 @@ export interface ZorgnedPersoonsgegevensNAWResponse {
 }
 
 export interface ZorgnedPerson {
+  bsn: string;
   name: string;
   dateOfBirth: string | null;
   dateOfBirthFormatted: string | null;
+}
+
+export interface ZorgnedAanvragenServiceOptions {
+  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV';
+  requestBodyParams?: Record<string, string>;
+  includeBetrokkenen?: true;
 }
