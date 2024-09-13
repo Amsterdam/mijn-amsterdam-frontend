@@ -1,8 +1,6 @@
 import { APP_MODE, IS_OT, IS_PRODUCTION } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
-export const IS_PG = process.env.BFF_DB_PG_ENABLED === 'true';
-
 export const IS_ENABLED = FeatureToggle.dbEnabled;
 
 export const IS_VERBOSE = IS_OT && APP_MODE !== 'unittest';

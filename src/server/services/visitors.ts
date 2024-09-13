@@ -13,7 +13,7 @@ import {
 import { Request, Response } from 'express';
 import { IS_TAP } from '../../universal/config/env';
 import { defaultDateFormat } from '../../universal/helpers/date';
-import { IS_PG, tableNameLoginCount } from './db/config';
+import { tableNameLoginCount } from './db/config';
 import { db } from './db/db';
 import { captureException } from './monitoring';
 
