@@ -5,6 +5,10 @@ import { getFromEnv } from '../helpers/env';
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
 import { TokenData } from './auth-types';
 
+export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
+  'amsapp-stadspas-administratienummer';
+export const RETURNTO_MAMS_LANDING = 'mams-landing';
+
 export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;

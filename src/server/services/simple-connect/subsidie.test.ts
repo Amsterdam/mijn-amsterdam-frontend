@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { remoteApi } from '../../../test-utils';
 import { Themas } from '../../../universal/config/thema';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchSubsidieNotifications } from './subsidie';
 
 describe('Subsidie', () => {

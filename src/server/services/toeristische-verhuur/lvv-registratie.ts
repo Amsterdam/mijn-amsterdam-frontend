@@ -4,7 +4,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 import { isAmsterdamAddress } from '../buurt/helpers';
 

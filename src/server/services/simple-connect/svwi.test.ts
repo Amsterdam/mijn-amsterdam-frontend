@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { remoteApi } from '../../../test-utils';
 import { fetchSVWI } from './svwi';
 import SVWI from '../../../../mocks/fixtures/svwi.json';

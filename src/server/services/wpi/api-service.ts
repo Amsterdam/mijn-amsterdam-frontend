@@ -8,7 +8,7 @@ import { dateSort } from '../../../universal/helpers/date';
 import { pick } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { SourceApiKey, getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
 import {

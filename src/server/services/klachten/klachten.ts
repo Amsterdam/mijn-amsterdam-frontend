@@ -11,7 +11,7 @@ import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 import { AppRoutes } from './../../../universal/config/routes';
-import { AuthProfileAndToken } from './../../helpers/app';
+import { AuthProfileAndToken } from './../../auth/auth-types';
 import { Klacht, KlachtenResponse, SmileKlachtenReponse } from './types';
 
 const DEFAULT_PAGE_SIZE = 250;

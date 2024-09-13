@@ -3,8 +3,8 @@ import { URL, URLSearchParams } from 'url';
 import { Themas } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
+import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../config';
-import { AuthProfile, AuthProfileAndToken } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 

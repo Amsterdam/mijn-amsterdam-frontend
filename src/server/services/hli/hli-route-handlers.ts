@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import { AuthProfileAndToken, getAuth, sendResponse } from '../../helpers/app';
+import { getAuth } from '../../auth/auth-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { sendResponse } from '../../helpers/app';
 import { fetchDocument } from '../zorgned/zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';

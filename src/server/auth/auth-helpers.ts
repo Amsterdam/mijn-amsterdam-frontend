@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import type { NextFunction, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
-import jose from 'jose';
+import * as jose from 'jose';
 import memoizee from 'memoizee';
 import { createSecretKey, hkdfSync } from 'node:crypto';
 import { ParsedQs } from 'qs';
@@ -14,7 +14,6 @@ import {
   generateFullApiUrlBFF,
   sendUnauthorized,
 } from '../helpers/app';
-import { getPublicKeyForDevelopment } from './auth-helpers-development';
 import { axiosRequest } from '../helpers/source-api-request';
 import { captureException, captureMessage } from '../services/monitoring';
 import {
@@ -25,15 +24,14 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   oidcConfigDigid,
   oidcConfigEherkenning,
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_MAMS_LANDING,
   TOKEN_ID_ATTRIBUTE,
   TokenIdAttribute,
 } from './auth-config';
+import { getPublicKeyForDevelopment } from './auth-helpers-development';
 import { authRoutes } from './auth-routes';
 import { AuthProfile, AuthProfileAndToken, TokenData } from './auth-types';
-
-export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
-  'amsapp-stadspas-administratienummer';
-export const RETURNTO_MAMS_LANDING = 'mams-landing';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {

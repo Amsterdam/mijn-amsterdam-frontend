@@ -7,8 +7,8 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig, getCert } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
 import { ApiPatternResponseA, fetchService } from './api-service';
 
 const DEV_KEY = {

@@ -1,4 +1,4 @@
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDocument } from '../zorgned/zorgned-service';
 
 export async function fetchZorgnedJZDDocument(

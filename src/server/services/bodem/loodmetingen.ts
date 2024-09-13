@@ -6,7 +6,7 @@ import {
 } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../helpers/app';
 import {
   Lood365Response,
   LoodMeting,
@@ -21,6 +21,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import { captureException } from '../monitoring';

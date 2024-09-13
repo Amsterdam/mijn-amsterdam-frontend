@@ -4,7 +4,7 @@ import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { DataRequestConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 
 export interface ApiPatternResponseA {

@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 import { BffEndpoints, ONE_SECOND_MS } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../helpers/app';
 import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
   VergunningCaseTypeFilter,
@@ -16,6 +16,7 @@ import memoizee from 'memoizee';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { isExpired, toDateFormatted } from './helpers';

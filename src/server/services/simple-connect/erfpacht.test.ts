@@ -1,7 +1,7 @@
 import { createDecipheriv } from 'crypto';
 import { describe, expect, test } from 'vitest';
 import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   fetchErfpacht,
   fetchErfpachtNotifications,

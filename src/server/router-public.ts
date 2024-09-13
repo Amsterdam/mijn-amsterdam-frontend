@@ -6,6 +6,7 @@ import {
   getDatasetCategoryId,
 } from '../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
+import { authRoutes } from './auth/auth-routes';
 import { BffEndpoints, RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
 import {
@@ -188,9 +189,9 @@ router.all(
 export const legacyRouter = express.Router();
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API_LOGIN, (req, res) => {
-  return res.redirect(BffEndpoints.AUTH_LOGIN_DIGID);
+  return res.redirect(authRoutes.AUTH_LOGIN_DIGID);
 });
 
 legacyRouter.get(BffEndpoints.LEGACY_LOGIN_API1_LOGIN, (req, res) => {
-  return res.redirect(BffEndpoints.AUTH_LOGIN_EHERKENNING);
+  return res.redirect(authRoutes.AUTH_LOGIN_EHERKENNING);
 });

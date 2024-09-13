@@ -14,7 +14,7 @@ import { getApiConfig, ONE_SECOND_MS } from '../../config';
 
 import memoizee from 'memoizee';
 import { hash } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import { dateSort } from '../../../universal/helpers/date';

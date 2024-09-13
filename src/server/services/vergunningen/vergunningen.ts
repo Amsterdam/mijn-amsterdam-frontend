@@ -26,8 +26,9 @@ import {
   MyNotification,
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { BffEndpoints, ONE_SECOND_MS, getApiConfig } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
 import {
   NotificationLabels,

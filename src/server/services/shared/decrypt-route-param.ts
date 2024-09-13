@@ -1,5 +1,5 @@
 import { decrypt } from '../../helpers/encrypt-decrypt';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { captureException } from '../monitoring';
 import {
   apiErrorResult,

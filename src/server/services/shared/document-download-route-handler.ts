@@ -5,9 +5,9 @@ import {
   ApiPostponeResponse,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
-import { AuthProfileAndToken, getAuth } from '../../helpers/app';
+import { getAuth } from '../../auth/auth-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
-
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';
 
@@ -23,7 +23,7 @@ export type DocumentDownloadResponse =
   | ApiPostponeResponse;
 
 export type FetchDocumenDownloadService = (
-  requestID: RequestID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   documentIDEncrypted: string,
   queryParams?: Record<string, string>

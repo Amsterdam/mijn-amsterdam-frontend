@@ -1,7 +1,7 @@
 import uid from 'uid-safe';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DecosDocumentSource,
   DecosZaakSource,

@@ -1,5 +1,6 @@
 import { apiSuccessResult } from '../../universal/helpers/api';
-import { AuthProfileAndToken, decodeOIDCToken } from '../helpers/app';
+import { decodeOIDCToken } from '../auth/auth-helpers';
+import { AuthProfileAndToken } from '../auth/auth-types';
 
 export async function fetchProfile(
   requestID: RequestID,

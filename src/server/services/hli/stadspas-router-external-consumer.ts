@@ -1,27 +1,24 @@
 import express, { Request, Response } from 'express';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../auth/auth-config';
+import { getAuth } from '../../auth/auth-helpers';
+import { authRoutes } from '../../auth/auth-routes';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
-  BffEndpoints,
   ExternalConsumerEndpoints,
   getApiConfig,
   STADSPASSEN_ENDPOINT_PARAMETER,
 } from '../../config';
-import {
-  AuthProfileAndToken,
-  getAuth,
-  sendBadRequest,
-  sendResponse,
-} from '../../helpers/app';
-import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
+import { sendBadRequest, sendResponse } from '../../helpers/app';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import { apiKeyVerificationHandler } from '../../middleware';
 import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  fetchStadspasDiscountTransactions,
   fetchStadspasBudgetTransactions,
+  fetchStadspasDiscountTransactions,
 } from './stadspas';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
@@ -67,7 +64,7 @@ routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
   async (req: Request<{ token: string }>, res: Response) => {
     return res.redirect(
-      BffEndpoints.AUTH_LOGIN_DIGID +
+      authRoutes.AUTH_LOGIN_DIGID +
         `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
     );
   }

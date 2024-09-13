@@ -15,8 +15,9 @@ import {
   BRPDataFromSource,
   MyNotification,
 } from '../../universal/types';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import { BffEndpoints, getApiConfig } from '../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../helpers/app';
+import { generateFullApiUrlBFF } from '../helpers/app';
 import { requestData } from '../helpers/source-api-request';
 
 const DAYS_BEFORE_EXPIRATION = 120;

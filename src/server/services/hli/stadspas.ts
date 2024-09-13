@@ -4,14 +4,15 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { BffEndpoints } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../helpers/app';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
-  fetchGpassDiscountTransactions,
   fetchGpassBudgetTransactions,
+  fetchGpassDiscountTransactions,
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import {

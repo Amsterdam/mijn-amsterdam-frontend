@@ -22,7 +22,7 @@ import {
 } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { BBVergunning, fetchBBVergunning } from './bb-vergunning';
 import {
   ToeristischeVerhuurRegistratieDetail,

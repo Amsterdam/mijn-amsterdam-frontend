@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import apiResponse from '../../../../mocks/fixtures/klachten.json';
 import { remoteApi } from '../../../test-utils';
 import { ApiConfig } from '../../config';
-import apiResponse from '../../../../mocks/fixtures/klachten.json';
-import { AuthProfileAndToken } from './../../helpers/app';
+import { AuthProfileAndToken } from './../../auth/auth-types';
 import {
   fetchAllKlachten,
   fetchKlachtenNotifications,

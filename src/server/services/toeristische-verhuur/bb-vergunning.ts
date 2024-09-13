@@ -11,8 +11,9 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';

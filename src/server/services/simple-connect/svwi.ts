@@ -1,6 +1,6 @@
 import { Themas } from '../../../universal/config/thema';
 import { getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 interface SVWISourceResponseData {

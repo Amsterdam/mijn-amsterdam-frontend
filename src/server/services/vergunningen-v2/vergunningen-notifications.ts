@@ -9,7 +9,7 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { ONE_SECOND_MS } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
   NotificationLabelByType,

@@ -7,10 +7,10 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
 import {
-  AuthProfileAndToken,
   generateFullApiUrlBFF,
   SessionID,
 } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import {

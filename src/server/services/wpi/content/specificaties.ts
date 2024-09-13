@@ -6,7 +6,7 @@ import {
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import { AuthProfileAndToken } from '../../../helpers/app';
+import { AuthProfileAndToken } from '../../../auth/auth-types';
 import { ServiceResults } from '../../tips/tip-types';
 import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
 import type {
