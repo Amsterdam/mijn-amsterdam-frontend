@@ -10,7 +10,7 @@ import {
 import { clearSessionCache } from '../helpers/source-api-request';
 import { captureMessage } from '../services/monitoring';
 import { getIsBlackListed } from '../services/session-blacklist';
-import { sendUnauthorized } from './helpers';
+import { sendUnauthorized } from './route-helpers';
 
 export async function isBlacklistedHandler(
   req: Request,

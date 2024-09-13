@@ -23,7 +23,7 @@ import {
 import { sessionStore } from '../auth/auth-session-store';
 import { captureException } from '../services/monitoring';
 import { countLoggedInVisit } from '../services/visitors';
-import { sendUnauthorized } from './helpers';
+import { sendUnauthorized } from './route-helpers';
 import { nocache, verifyAuthenticated } from './route-handlers';
 
 export const oidcRouter = express.Router();

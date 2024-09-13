@@ -24,7 +24,7 @@ import {
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
 import { BffEndpoints } from './bff-routes';
-import { queryParams } from './helpers';
+import { queryParams } from './route-helpers';
 
 export const router = express.Router();
 

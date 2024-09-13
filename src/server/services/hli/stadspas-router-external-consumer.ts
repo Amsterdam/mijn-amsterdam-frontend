@@ -10,7 +10,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import { apiKeyVerificationHandler } from '../../routing/route-handlers';
-import { sendBadRequest, sendResponse } from '../../routing/helpers';
+import { sendBadRequest, sendResponse } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {

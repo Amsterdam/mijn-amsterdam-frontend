@@ -25,7 +25,7 @@ import { authRouterDevelopment } from './routing/router-development';
 
 import { BFF_PORT, IS_DEBUG } from './config/app';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import { send404 } from './routing/helpers';
+import { send404 } from './routing/route-helpers';
 import {
   clearRequestCache,
   nocache,

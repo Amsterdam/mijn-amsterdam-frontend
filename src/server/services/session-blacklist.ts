@@ -81,7 +81,7 @@ export async function addToBlackList(sessionID: string) {
   return query(queries.addToBlackList, [sessionID]);
 }
 
-export async function getIsBlacklisted(sessionID: string) {
+export async function getIsBlackListed(sessionID: string) {
   const { queryGET } = await db();
   const result = (await queryGET(queries.getIsBlackListed, [sessionID])) as {
     count: number;

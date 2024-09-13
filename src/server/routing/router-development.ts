@@ -22,7 +22,7 @@ import { AuthProfile } from '../auth/auth-types';
 import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
-import { sendUnauthorized } from './helpers';
+import { sendUnauthorized } from './route-helpers';
 
 export const authRouterDevelopment = express.Router();
 

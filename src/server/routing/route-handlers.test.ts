@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { apiErrorResult } from '../../universal/helpers/api';
 import { cache } from '../helpers/source-api-request';
-import { send404, sendUnauthorized } from './helpers';
+import { send404, sendUnauthorized } from './route-helpers';
 import {
   clearRequestCache,
   isAuthenticated,

@@ -6,7 +6,7 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
-import { generateFullApiUrlBFF } from '../../routing/helpers';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';

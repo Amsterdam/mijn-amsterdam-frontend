@@ -42,10 +42,14 @@ import {
   requestID,
   verifyAuthenticated,
 } from '../routing/route-handlers';
-import { sendMessage } from '../routing/helpers';
-import { send404, sendResponse, sendUnauthorized } from '../routing/helpers';
+import { sendMessage } from '../routing/route-helpers';
+import {
+  send404,
+  sendResponse,
+  sendUnauthorized,
+} from '../routing/route-helpers';
 
-import { queryParams } from '../routing/helpers';
+import { queryParams } from '../routing/route-helpers';
 import { addServiceResultHandler } from '../services/controller';
 import { cache } from './source-api-request';
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
-import { generateFullApiUrlBFF } from '../../routing/helpers';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { DecosZaakSource } from './config-and-types';
 import {

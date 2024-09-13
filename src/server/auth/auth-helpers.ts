@@ -10,7 +10,7 @@ import { IS_AP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { axiosRequest } from '../helpers/source-api-request';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../routing/helpers';
+import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
 import { addToBlackList } from '../services/session-blacklist';
 import {
