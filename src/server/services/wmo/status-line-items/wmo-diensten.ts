@@ -1,7 +1,7 @@
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-config-and-types';
+} from '../../zorgned/zorgned-types';
 
 import {
   AANVRAAG,

@@ -2,7 +2,7 @@ import {
   GenericDocument,
   ZaakDetail,
 } from '../../../universal/types/App.types';
-import { BeschikkingsResultaat } from '../zorgned/zorgned-config-and-types';
+import { BeschikkingsResultaat } from '../zorgned/zorgned-types';
 import { StadspasFrontend } from './stadspas-types';
 
 export interface HLIRegeling extends ZaakDetail {

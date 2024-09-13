@@ -3,7 +3,7 @@ import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
-import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-config-and-types';
+import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-types';
 import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 
 const mocks = vi.hoisted(() => {

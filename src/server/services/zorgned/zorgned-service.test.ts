@@ -7,7 +7,7 @@ import * as request from '../../helpers/source-api-request';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedResponseDataSource,
-} from './zorgned-config-and-types';
+} from './zorgned-types';
 import { fetchAanvragen, fetchDocument, forTesting } from './zorgned-service';
 
 const mocks = vi.hoisted(() => {

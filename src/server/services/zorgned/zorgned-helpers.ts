@@ -1,7 +1,4 @@
-import {
-  TextPartContents,
-  ZorgnedAanvraagTransformed,
-} from './zorgned-config-and-types';
+import { TextPartContents, ZorgnedAanvraagTransformed } from './zorgned-types';
 
 export function parseLabelContent(
   text: TextPartContents,

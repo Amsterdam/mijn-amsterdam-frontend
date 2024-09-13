@@ -1,4 +1,4 @@
-import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-config-and-types';
+import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types';
 import { AV_PCVZIL, AV_UPCC, AV_UPCZIL, forTesting } from './pcvergoeding';
 
 describe('pcvergoeding', () => {

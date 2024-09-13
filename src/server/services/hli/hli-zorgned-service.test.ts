@@ -3,7 +3,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
-} from '../zorgned/zorgned-config-and-types';
+} from '../zorgned/zorgned-types';
 import {
   fetchAdministratienummer,
   fetchNamenBetrokkenen,

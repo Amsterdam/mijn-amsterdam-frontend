@@ -7,7 +7,7 @@ import {
   ZorgnedDocumentResponseSource,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
-} from './zorgned-config-and-types';
+} from './zorgned-types';
 
 import { GenericDocument } from '../../../universal/types';
 import { ONE_SECOND_MS } from '../../config/app';

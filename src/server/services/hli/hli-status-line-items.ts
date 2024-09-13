@@ -1,4 +1,4 @@
-import { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-config-and-types';
+import { ZorgnedStatusLineItemsConfig } from '../zorgned/zorgned-types';
 import { DECLARATIE } from './status-line-items/declaratie';
 import {
   AV_PCVC,

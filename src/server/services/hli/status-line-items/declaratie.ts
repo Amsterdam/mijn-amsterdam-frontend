@@ -2,7 +2,7 @@ import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-config-and-types';
+} from '../../zorgned/zorgned-types';
 import { BESLUIT } from './generic';
 
 function getDeclaratieBesluitDescription(regeling: ZorgnedAanvraagTransformed) {

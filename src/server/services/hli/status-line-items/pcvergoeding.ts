@@ -3,7 +3,7 @@ import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-config-and-types';
+} from '../../zorgned/zorgned-types';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';

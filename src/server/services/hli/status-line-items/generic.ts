@@ -2,7 +2,7 @@ import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-config-and-types';
+} from '../../zorgned/zorgned-types';
 
 export const BESLUIT: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Besluit',

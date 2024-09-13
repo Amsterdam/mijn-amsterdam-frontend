@@ -2,7 +2,7 @@ import { StatusLineItem } from '../../../universal/types';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
-} from './zorgned-config-and-types';
+} from './zorgned-types';
 import { parseLabelContent } from './zorgned-helpers';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
