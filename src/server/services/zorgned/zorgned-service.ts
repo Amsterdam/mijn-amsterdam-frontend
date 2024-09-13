@@ -172,7 +172,21 @@ export async function fetchAanvragen(
     authProfileAndToken
   );
 
-  if (zorgnedAanvragenResponse.status === 'OK' && options.includeBetrokkenen) {
+  return zorgnedAanvragenResponse;
+}
+
+export async function fetchAanvragenWithRelatedPersons(
+  requestID: requestID,
+  authProfileAndToken: AuthProfileAndToken,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  const zorgnedAanvragenResponse = await fetchAanvragen(
+    requestID,
+    authProfileAndToken,
+    options
+  );
+
+  if (zorgnedAanvragenResponse.status === 'OK') {
     return fetchAndMergeRelatedPersons(requestID, zorgnedAanvragenResponse);
   }
 
@@ -217,10 +231,6 @@ export async function fetchAndMergeRelatedPersons(
       }
       return zorgnedAanvraagTransformed;
     }
-  );
-  console.log(
-    'zorgnedAanvragenWithRelatedPersons::',
-    zorgnedAanvragenWithRelatedPersons
   );
 
   return apiSuccessResult(zorgnedAanvragenWithRelatedPersons);
@@ -293,7 +303,7 @@ function transformZorgnedPersonResponse(
   return null;
 }
 
-export async function fetchRelatedPersons_(
+export async function fetchRelatedPersons(
   requestID: requestID,
   userIDs: string[]
 ) {
@@ -314,7 +324,7 @@ export async function fetchRelatedPersons_(
       namesAndDatesOfBirth.push(person);
     } else {
       return apiErrorResult(
-        'Something went wrong when retrieving names of betrokkenen.',
+        'Something went wrong when retrieving related persons.',
         null
       );
     }
@@ -322,11 +332,6 @@ export async function fetchRelatedPersons_(
 
   return apiSuccessResult(namesAndDatesOfBirth);
 }
-
-export const fetchRelatedPersons = memoizee(fetchRelatedPersons_, {
-  length: 3,
-  maxAge: 45 * ONE_SECOND_MS,
-});
 
 export async function fetchPersoonsgegevensNAW_(
   requestID: RequestID,

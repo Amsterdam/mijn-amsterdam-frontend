@@ -172,5 +172,4 @@ export interface ZorgnedPerson {
 export interface ZorgnedAanvragenServiceOptions {
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV';
   requestBodyParams?: Record<string, string>;
-  includeBetrokkenen?: true;
 }

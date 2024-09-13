@@ -2,6 +2,7 @@ import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   ZorgnedAanvraagTransformed,
+  ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types';
 import {
@@ -130,11 +131,11 @@ describe('hli-zorgned-service', () => {
 
   test('fetchZorgnedAanvragenHLI no content', async () => {
     const fetchAanvragenSpy = vitest
-      .spyOn(zorgnedService, 'fetchAanvragen')
+      .spyOn(zorgnedService, 'fetchAanvragenWithRelatedPersons')
       .mockResolvedValueOnce({ content: [], status: 'OK' });
 
     const result = await fetchZorgnedAanvragenHLI(
-      'xxx4xxx',
+      'xxx9xxx',
       authProfileAndToken
     );
 
@@ -149,7 +150,7 @@ describe('hli-zorgned-service', () => {
 
   test('fetchZorgnedAanvragenHLI Einde geldigheid niet verstreken', async () => {
     const fetchAanvragenSpy = vitest
-      .spyOn(zorgnedService, 'fetchAanvragen')
+      .spyOn(zorgnedService, 'fetchAanvragenWithRelatedPersons')
       .mockResolvedValueOnce({
         content: [
           {
@@ -167,6 +168,7 @@ describe('hli-zorgned-service', () => {
     );
 
     expect(fetchAanvragenSpy).toHaveBeenCalled();
+
     expect(result).toMatchInlineSnapshot(`
       {
         "content": [
@@ -183,7 +185,7 @@ describe('hli-zorgned-service', () => {
 
   test('fetchZorgnedAanvragenHLI Einde geldigheid verstreken', async () => {
     const fetchAanvragenSpy = vitest
-      .spyOn(zorgnedService, 'fetchAanvragen')
+      .spyOn(zorgnedService, 'fetchAanvragenWithRelatedPersons')
       .mockResolvedValueOnce({
         content: [
           {
@@ -195,7 +197,7 @@ describe('hli-zorgned-service', () => {
       });
 
     const result = await fetchZorgnedAanvragenHLI(
-      'xxx4xxx',
+      'xxx1xxx',
       authProfileAndToken
     );
 

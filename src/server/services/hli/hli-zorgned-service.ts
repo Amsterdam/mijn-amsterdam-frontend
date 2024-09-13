@@ -1,6 +1,6 @@
 import { AuthProfileAndToken } from '../../helpers/app';
 import {
-  fetchAanvragen,
+  fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
 } from '../zorgned/zorgned-service';
 import {
@@ -9,10 +9,10 @@ import {
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types';
 
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 import memoizee from 'memoizee';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { ONE_SECOND_MS } from '../../config';
+import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -87,10 +87,10 @@ async function fetchZorgnedAanvragenHLI_(
   requestID: requestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const aanvragenResponse = await fetchAanvragen(
+  const aanvragenResponse = await fetchAanvragenWithRelatedPersons(
     requestID,
     authProfileAndToken,
-    { zorgnedApiConfigKey: 'ZORGNED_AV', includeBetrokkenen: true }
+    { zorgnedApiConfigKey: 'ZORGNED_AV' }
   );
 
   if (aanvragenResponse.status === 'OK') {
@@ -103,6 +103,7 @@ async function fetchZorgnedAanvragenHLI_(
         };
       }
     );
+
     return apiSuccessResult(aanvragenTransformed);
   }
 

@@ -12,8 +12,8 @@ import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { BFF_BASE_PATH, BffEndpoints } from '../../config';
 import { AuthProfileAndToken } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
@@ -22,7 +22,6 @@ import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,
 } from './status-line-items/pcvergoeding';
-import { fetchRelatedPersons } from '../zorgned/zorgned-service';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,

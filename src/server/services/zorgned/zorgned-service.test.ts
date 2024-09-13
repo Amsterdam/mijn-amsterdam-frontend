@@ -1,11 +1,12 @@
 import Mockdate from 'mockdate';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../setupTests';
-import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
+import { AuthProfileAndToken } from '../../helpers/app';
 import * as request from '../../helpers/source-api-request';
 import {
   fetchAanvragen,
+  fetchAanvragenWithRelatedPersons,
   fetchDocument,
   fetchRelatedPersons,
   forTesting,
@@ -277,5 +278,158 @@ describe('zorgned-service', () => {
         "status": "OK",
       }
     `);
+  });
+
+  describe('fetchAndMergeRelatedPersons', () => {
+    const ZORGNED_RESPONSE_CONTENT = {
+      _links: null,
+      _embedded: {
+        aanvraag: [
+          {
+            datumAanvraag: '2023-04-25',
+            beschikking: {
+              datumAfgifte: '2023-05-17',
+              beschikteProducten: [
+                {
+                  product: {
+                    identificatie: 'WRA',
+                    productCode: null,
+                    productsoortCode: 'WRA',
+                    omschrijving: 'woonruimteaanpassing (in behandeling)',
+                  },
+                  resultaat: 'toegewezen',
+                  toegewezenProduct: {
+                    datumIngangGeldigheid: '2023-05-06',
+                    datumEindeGeldigheid: null,
+                    actueel: true,
+                    leveringsvorm: 'zin',
+                    leverancier: {
+                      omschrijving: 'Gebr Koenen B.V.',
+                    },
+                    toewijzingen: [
+                      {
+                        toewijzingsDatumTijd: '2024-01-25T17:10:55.2733333',
+                        ingangsdatum: '2024-01-01',
+                        datumOpdracht: '2024-01-25T17:10:55.2733333',
+                        leveringen: [
+                          {
+                            begindatum: '2024-03-14',
+                          },
+                        ],
+                      },
+                    ],
+                    betrokkenen: ['9999999999'],
+                  },
+                },
+              ],
+            },
+            documenten: [],
+          },
+        ],
+      },
+    };
+
+    test('happy', async () => {
+      remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_RESPONSE_CONTENT);
+
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          bsn: '9999999999',
+          voorletters: 'E',
+          voorvoegsel: null,
+          geboortenaam: 'Alex',
+          voornamen: 'Flex',
+          geboortedatum: '2010-06-12',
+        },
+      } as ZorgnedPersoonsgegevensNAWResponse);
+
+      const result = await fetchAanvragenWithRelatedPersons(
+        'xx1yy2xx',
+        getAuthProfileAndToken(),
+        {
+          zorgnedApiConfigKey: 'ZORGNED_AV',
+        }
+      );
+
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "content": [
+            {
+              "betrokkenPersonen": [
+                {
+                  "bsn": "9999999999",
+                  "dateOfBirth": "2010-06-12",
+                  "dateOfBirthFormatted": "12 juni 2010",
+                  "name": "Flex",
+                },
+              ],
+              "betrokkenen": [
+                "9999999999",
+              ],
+              "datumAanvraag": "2023-04-25",
+              "datumBeginLevering": "2024-03-14",
+              "datumBesluit": "2023-05-17",
+              "datumEindeGeldigheid": null,
+              "datumEindeLevering": null,
+              "datumIngangGeldigheid": "2023-05-06",
+              "datumOpdrachtLevering": "2024-01-25T17:10:55.2733333",
+              "datumToewijzing": "2024-01-25T17:10:55.2733333",
+              "documenten": [],
+              "id": "4075803736",
+              "isActueel": true,
+              "leverancier": "Gebr Koenen B.V.",
+              "leveringsVorm": "ZIN",
+              "productIdentificatie": "WRA",
+              "productsoortCode": "WRA",
+              "resultaat": "toegewezen",
+              "titel": "woonruimteaanpassing (in behandeling)",
+            },
+          ],
+          "status": "OK",
+        }
+      `);
+    });
+
+    test('NAW request error', async () => {
+      remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_RESPONSE_CONTENT);
+
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
+
+      const result = await fetchAanvragenWithRelatedPersons(
+        'xx2yy3xx',
+        getAuthProfileAndToken(),
+        {
+          zorgnedApiConfigKey: 'ZORGNED_AV',
+        }
+      );
+
+      expect(result.content?.[0]?.betrokkenPersonen).toBe(undefined);
+      expect('failedDependencies' in result).toBe(true);
+      expect(
+        'failedDependencies' in result &&
+          'relatedPersons' in result.failedDependencies!
+      ).toBe(true);
+    });
+
+    test('NAW relation not found', async () => {
+      remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_RESPONSE_CONTENT);
+
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, null!);
+
+      const result = await fetchAanvragenWithRelatedPersons(
+        'xx3yy4xx',
+        getAuthProfileAndToken(),
+        {
+          zorgnedApiConfigKey: 'ZORGNED_AV',
+        }
+      );
+
+      expect(result.content?.[0]?.betrokkenPersonen).toBe(undefined);
+      expect('failedDependencies' in result).toBe(true);
+      expect(
+        'failedDependencies' in result &&
+          'relatedPersons' in result.failedDependencies!
+      ).toBe(true);
+    });
   });
 });
