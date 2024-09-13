@@ -10,6 +10,7 @@ import { fetchAfisDocument } from '../services/afis/afis';
 import {
   handleFetchAfisBusinessPartner,
   handleFetchAfisFacturen,
+  handleFetchAfisFacturenOverview,
 } from '../services/afis/afis-route-handlers';
 import {
   fetchBezwaarDetail,
@@ -248,6 +249,10 @@ attachDocumentDownloadRoute(
 
 // AFIS facturen en betalen
 router.get(BffEndpoints.AFIS_BUSINESSPARTNER, handleFetchAfisBusinessPartner);
+router.get(
+  BffEndpoints.AFIS_FACTUREN_OVERZICHT,
+  handleFetchAfisFacturenOverview
+);
 router.get(BffEndpoints.AFIS_FACTUREN, handleFetchAfisFacturen);
 attachDocumentDownloadRoute(
   router,

@@ -2,7 +2,11 @@ import { Request, Response } from 'express';
 import { getAuth } from '../../auth/auth-helpers';
 import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
-import { fetchAfisBusinessPartnerDetails, fetchAfisFacturen } from './afis';
+import {
+  fetchAfisBusinessPartnerDetails,
+  fetchAfisFacturen,
+  fetchAfisFacturenOverview,
+} from './afis';
 import { AfisFactuurState } from './afis-types';
 
 export async function handleFetchAfisBusinessPartner(
@@ -15,16 +19,16 @@ export async function handleFetchAfisBusinessPartner(
     return sendUnauthorized(res);
   }
 
-  const decryptResponse = decryptEncryptedRouteParamAndValidateSessionID(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     req.params.businessPartnerIdEncrypted,
     authProfileAndToken
   );
 
-  if (decryptResponse.status === 'ERROR') {
-    return sendResponse(res, decryptResponse);
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
   }
 
-  let businessPartnerId = decryptResponse.content;
+  let businessPartnerId = decryptResult.content;
 
   const response = await fetchAfisBusinessPartnerDetails(
     res.locals.requestID,
@@ -55,16 +59,16 @@ export async function handleFetchAfisFacturen(
     return sendUnauthorized(res);
   }
 
-  const decryptResponse = decryptEncryptedRouteParamAndValidateSessionID(
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
     req.params.businessPartnerIdEncrypted,
     authProfileAndToken
   );
 
-  if (decryptResponse.status === 'ERROR') {
-    return sendResponse(res, decryptResponse);
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
   }
 
-  const businessPartnerID = decryptResponse.content;
+  const businessPartnerID = decryptResult.content;
   let top = req.query.top;
   if (typeof top !== 'string' || !isPostiveInt(top)) {
     top = undefined;
@@ -75,5 +79,33 @@ export async function handleFetchAfisFacturen(
     authProfileAndToken.profile.sid,
     { state: req.params.state, businessPartnerID, top }
   );
+  return sendResponse(res, response);
+}
+
+export async function handleFetchAfisFacturenOverview(
+  req: Request<{ businessPartnerIdEncrypted: string }>,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+    req.params.businessPartnerIdEncrypted,
+    authProfileAndToken
+  );
+
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
+  }
+
+  const response = await fetchAfisFacturenOverview(
+    res.locals.requestID,
+    authProfileAndToken.profile.sid,
+    { businessPartnerID: decryptResult.content }
+  );
+
   return sendResponse(res, response);
 }

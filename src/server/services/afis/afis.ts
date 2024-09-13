@@ -304,10 +304,46 @@ function formatFactuurRequestURL(
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
 
   if (params.top) {
-    query += `&$top=${top}`;
+    query += `&$top=${params.top}`;
   }
 
   return `${baseUrl}${baseRoute}${query}`;
+}
+
+export async function fetchAfisFacturenOverview(
+  requestID: RequestID,
+  sessionID: SessionID,
+  params: Omit<AfisFacturenParams, 'state' | 'top'>
+) {
+  const facturenOpenRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'open',
+    businessPartnerID: params.businessPartnerID,
+  });
+
+  const facturenClosedRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'closed',
+    businessPartnerID: params.businessPartnerID,
+    top: '3',
+  });
+
+  const [facturenOpenResponse, facturenClosedResponse] =
+    await Promise.allSettled([facturenOpenRequest, facturenClosedRequest]);
+
+  const facturenOpenResult = getSettledResult(facturenOpenResponse);
+  const facturenClosedResult = getSettledResult(facturenClosedResponse);
+
+  const facturenOverview = {
+    open: facturenOpenResult.content ?? [],
+    closed: facturenClosedResult.content ?? [],
+  };
+
+  return apiSuccessResult(
+    facturenOverview,
+    getFailedDependencies({
+      open: facturenOpenResult,
+      closed: facturenClosedResult,
+    })
+  );
 }
 
 function transformFacturen(
