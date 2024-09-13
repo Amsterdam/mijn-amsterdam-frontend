@@ -5,7 +5,7 @@ import {
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import { CaseType } from '../../universal/types/vergunningen';
-import { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import {
   HorecaVergunningen,
   Vergunning,

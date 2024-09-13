@@ -1,10 +1,24 @@
 import {
+  MockInstance,
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  test,
+  vi,
+} from 'vitest';
+import { remoteApiHost } from '../../setupTests';
+import { remoteApi } from '../../test-utils';
+import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { ApiUrlEntries } from '../config';
-import { AuthProfileAndToken } from './app';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { ApiUrlEntries } from '../config/source-api';
 import {
   axiosRequest,
   cache,
@@ -12,20 +26,21 @@ import {
   getRequestConfigCacheKey,
   requestData,
 } from './source-api-request';
-import { remoteApi } from '../../test-utils';
-import {
-  vi,
-  describe,
-  beforeAll,
-  beforeEach,
-  afterEach,
-  expect,
-  it,
-  test,
-  MockInstance,
-  afterAll,
-} from 'vitest';
-import { remoteApiHost } from '../../setupTests';
+
+const mocks = vi.hoisted(() => {
+  return {
+    cacheEnabled: true,
+  };
+});
+
+vi.mock('../config/app', async (importOrigModule) => {
+  return {
+    ...((await importOrigModule()) as object),
+    get BFF_REQUEST_CACHE_ENABLED() {
+      return mocks.cacheEnabled;
+    },
+  };
+});
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
@@ -115,6 +130,24 @@ describe('requestData.ts', () => {
     vi.runAllTimers();
 
     expect(cache.get(CACHE_KEY_1)).toBe(null);
+  });
+
+  it('Does not cache the response', async () => {
+    mocks.cacheEnabled = false;
+
+    remoteApi.get('/1').reply(200, 'whoa');
+
+    const rs = await requestData(
+      {
+        url: DUMMY_URL,
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(cache.get(CACHE_KEY_1)).toBe(null);
+
+    mocks.cacheEnabled = true;
   });
 
   it('Caches the response per session id', async () => {
@@ -260,6 +293,10 @@ describe('requestData.ts', () => {
       Authorization: `Bearer ababababab`,
     });
   });
+
+  // test('BFF_REQUEST_CACHE_ENABLED', async () => {
+  //   mocks.cacheEnabled = true;
+  // });
 
   test('getRequestConfigCacheKey', () => {
     expect(

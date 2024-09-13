@@ -11,5 +11,5 @@ export const db: () => Promise<DBAdapter> = () => {
   if (!IS_ENABLED) {
     return import('./fake-db');
   }
-  return IS_PG ? import('./postgres') : import('./sqlite3');
+  return import('./postgres');
 };

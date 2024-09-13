@@ -20,17 +20,23 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, IS_DEBUG } from './config';
-import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
-import { adminRouter } from './router-admin';
-import { authRouterDevelopment } from './router-development';
+import { adminRouter } from './routing/router-admin';
+import { authRouterDevelopment } from './routing/router-development';
 
-import { router as oidcRouter } from './router-oidc';
-import { router as protectedRouter } from './router-protected';
-import { legacyRouter, router as publicRouter } from './router-public';
+import { BFF_PORT, IS_DEBUG } from './config/app';
+import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
+import { send404 } from './routing/route-helpers';
+import {
+  clearRequestCache,
+  nocache,
+  requestID,
+} from './routing/route-handlers';
+import { oidcRouter } from './routing/router-oidc';
+import { router as protectedRouter } from './routing/router-protected';
+import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
+import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
-import { stadspasExternalConsumerRouter } from './services/hli/stadspas-router-external-consumer';
 
 const app = express();
 
@@ -45,11 +51,12 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
-// Request logging
+// Add request logging attribute (:build)
 morgan.token('build', function (req, res) {
   return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
 });
 
+// Logs all Incoming requests
 app.use(
   morgan(
     '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
@@ -76,9 +83,8 @@ app.use(requestID);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(function (req, res, next) {
-  res.on('finish', function () {
+  res.on('end', function () {
     clearRequestCache(req, res);
-    console.log('the response has been sent');
   });
   next();
 });
@@ -157,7 +163,7 @@ app.use((req: Request, res: Response) => {
   return res.end();
 });
 
-(async function startServerBFF() {
+async function startServerBFF() {
   if (IS_DEBUG) {
     await import('log-that-http');
   }
@@ -178,7 +184,14 @@ app.use((req: Request, res: Response) => {
   // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
   server.keepAliveTimeout = 60 * 1000;
   server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
-})();
+}
 
-// Start Cron jobs
-cleanupSessionBlacklistTable.start();
+if (require.main?.filename.endsWith('bffserver.ts')) {
+  startServerBFF();
+  // Start Cron jobs
+  cleanupSessionBlacklistTable.start();
+}
+
+export const forTesting = {
+  app,
+};

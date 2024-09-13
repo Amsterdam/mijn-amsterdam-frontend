@@ -1,5 +1,5 @@
 import { decrypt } from '../../helpers/encrypt-decrypt';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { captureException } from '../monitoring';
 import {
   apiErrorResult,
@@ -12,7 +12,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
   idsEncrypted: string,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  let sessionID: AuthProfileAndToken['profile']['sid'] | null = null;
+  let sessionID: SessionID | null = null;
   let id: string | null = null;
 
   try {

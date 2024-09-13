@@ -4,8 +4,10 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { DataRequestConfig, ONE_SECOND_MS, getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { DataRequestConfig } from '../../config/source-api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';

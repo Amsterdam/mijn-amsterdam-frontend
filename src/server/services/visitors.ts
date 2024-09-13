@@ -15,7 +15,6 @@ import { IS_TAP } from '../../universal/config/env';
 import { defaultDateFormat } from '../../universal/helpers/date';
 import { IS_PG, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
-import { execDB } from './db/sqlite3';
 import { captureException } from './monitoring';
 
 /**
@@ -24,17 +23,6 @@ import { captureException } from './monitoring';
 
 const SALT = process.env.BFF_LOGIN_COUNT_SALT;
 const QUERY_DATE_FORMAT = 'yyyy-MM-dd';
-
-const queriesSQLITE = (tableNameLoginCount: string) => ({
-  countLogin: `INSERT INTO ${tableNameLoginCount} (uid, auth_method) VALUES (?, ?)`,
-  totalLogins: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
-  totalLoginsAll: `SELECT count(id) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
-  uniqueLogins: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ? AND auth_method = ?`,
-  uniqueLoginsAll: `SELECT count(distinct uid) as count FROM ${tableNameLoginCount} WHERE DATE(date_created) BETWEEN ? AND ?`,
-  dateMinAll: `SELECT min(date_created) as date_min FROM ${tableNameLoginCount}`,
-  dateMaxAll: `SELECT max(date_created) as date_max FROM ${tableNameLoginCount}`,
-  rawOverview: `SELECT uid, count(uid) as count, auth_method FROM ${tableNameLoginCount} WHERE auth_method IS NOT null GROUP BY auth_method, uid ORDER BY auth_method ASC, count DESC, uid ASC`,
-});
 
 const queriesPG = (tableNameLoginCount: string) => ({
   countLogin: `INSERT INTO ${tableNameLoginCount} (uid, "authMethod") VALUES ($1, $2) RETURNING id`,
@@ -50,8 +38,7 @@ const queriesPG = (tableNameLoginCount: string) => ({
 async function setupTables() {
   const { query } = await db();
 
-  if (IS_PG) {
-    const createTableQuery = `
+  const createTableQuery = `
     -- Sequence and defined type
     CREATE SEQUENCE IF NOT EXISTS ${tableNameLoginCount}_id_seq;
 
@@ -65,30 +52,19 @@ async function setupTables() {
     );
     `;
 
-    const alterTableQuery1 = `
+  const alterTableQuery1 = `
       ALTER TABLE IF EXISTS "public"."${tableNameLoginCount}"
       ADD IF NOT EXISTS "authMethod" VARCHAR(100);
     `;
 
-    await query(createTableQuery);
-    await query(alterTableQuery1);
-  } else {
-    // Create the table
-    execDB(`
-      CREATE TABLE IF NOT EXISTS ${tableNameLoginCount} (
-          "id" INTEGER PRIMARY KEY,
-          "uid" VARCHAR(100) NOT NULL,
-          "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')),
-          "auth_method" VARCHAR(100) DEFAULT NULL
-      );
-    `);
-  }
+  await query(createTableQuery);
+  await query(alterTableQuery1);
 }
 
 setupTables();
 
 async function getQueries() {
-  return (IS_PG ? queriesPG : queriesSQLITE)(tableNameLoginCount);
+  return queriesPG(tableNameLoginCount);
 }
 
 function hashUserId(userID: string, salt = SALT) {

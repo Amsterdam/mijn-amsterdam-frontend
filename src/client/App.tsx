@@ -93,6 +93,7 @@ function AppNotAuthenticated() {
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  // Note: see MIJN-5785
   const hasSSO = params.get('sso');
   const authMethod = params.get('authMethod');
   const shouldRedirectSSO =

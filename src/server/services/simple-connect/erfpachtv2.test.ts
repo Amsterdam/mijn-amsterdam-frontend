@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import ERFPACHTv2_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHTv2_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';

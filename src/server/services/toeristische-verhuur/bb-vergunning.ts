@@ -11,10 +11,13 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // zaak detail: record/GFO_ZAKEN/$id
@@ -366,7 +369,7 @@ interface PowerbrowserLink {
 }
 
 function transformPowerbrowserLinksResponse(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   responseData: PowerbrowserLink[]
 ) {
   return (

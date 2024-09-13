@@ -3,7 +3,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 
 import { MyNotification } from '../../../universal/types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig } from '../../config/source-api';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 
 import { AppRoutes } from '../../../universal/config/routes';
@@ -15,8 +15,11 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
@@ -172,7 +175,7 @@ async function fetchBezwaarStatus(
 }
 
 function transformBezwarenDocumentsResults(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: BezwarenSourceResponse<BezwaarSourceDocument>
 ): OctopusApiResponse<BezwaarDocument> {
   if (Array.isArray(response.results)) {
@@ -241,7 +244,7 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
 }
 
 function transformBezwarenResults(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   response: BezwarenSourceResponse<BezwaarSourceData>
 ): OctopusApiResponse<Bezwaar> {
   const results = response.results;

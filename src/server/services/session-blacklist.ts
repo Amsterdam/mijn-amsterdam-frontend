@@ -1,29 +1,21 @@
 import { sub } from 'date-fns';
-import { NextFunction, Request, Response } from 'express';
-import { OIDC_TOKEN_EXP, ONE_MINUTE_MS } from '../config';
-import { getAuth, sendUnauthorized } from '../helpers/app';
+import { Request, Response } from 'express';
+import { OIDC_TOKEN_EXP } from '../auth/auth-config';
+import { ONE_MINUTE_MS } from '../config/app';
 import { IS_PG, tableNameSessionBlacklist } from './db/config';
 import { db } from './db/db';
-import { execDB } from './db/sqlite3';
 
 const MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED = OIDC_TOKEN_EXP + ONE_MINUTE_MS;
 
 export const queriesPG = (tableNameSessionBlacklist: string) => ({
   addToBlackList: `INSERT INTO ${tableNameSessionBlacklist} (session_id) VALUES ($1) RETURNING id`,
-  isBlacklisted: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = $1) AS count`,
+  getIsBlackListed: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = $1) AS count`,
   cleanupSessionIds: `DELETE FROM ${tableNameSessionBlacklist} WHERE date_created <= $1`,
   rawOverview: `SELECT * FROM ${tableNameSessionBlacklist} ORDER BY date_created ASC`,
 });
 
-export const queriesSQLITE = (tableNameSessionBlacklist: string) => ({
-  addToBlackList: `INSERT INTO ${tableNameSessionBlacklist}  (session_id) VALUES (?)`,
-  isBlacklisted: `SELECT EXISTS(SELECT 1 FROM ${tableNameSessionBlacklist} WHERE session_id = ?) AS count`,
-  cleanupSessionIds: `DELETE FROM ${tableNameSessionBlacklist} WHERE date_created <= ?`,
-  rawOverview: `SELECT * FROM ${tableNameSessionBlacklist} ORDER BY date_created ASC`,
-});
-
 function getQueries() {
-  return (IS_PG ? queriesPG : queriesSQLITE)(tableNameSessionBlacklist);
+  return queriesPG(tableNameSessionBlacklist);
 }
 
 const queries = getQueries();
@@ -31,8 +23,7 @@ const queries = getQueries();
 async function setupTables() {
   const { query } = await db();
 
-  if (IS_PG) {
-    const createTableQuery = `
+  const createTableQuery = `
     -- Sequence and defined type
     CREATE SEQUENCE IF NOT EXISTS ${tableNameSessionBlacklist}_id_seq;
 
@@ -45,21 +36,7 @@ async function setupTables() {
     );
     `;
 
-    await query(createTableQuery);
-  } else {
-    // Create the table
-    try {
-      execDB(`
-      CREATE TABLE IF NOT EXISTS "${tableNameSessionBlacklist}" (
-          "id" INTEGER PRIMARY KEY,
-          "session_id" VARCHAR(256) NOT NULL,
-          "date_created" DATETIME NOT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime'))
-      );
-    `);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  await query(createTableQuery);
 }
 
 setupTables();
@@ -76,33 +53,18 @@ export async function cleanupSessionIds(
   return query(queries.cleanupSessionIds, [dateCreatedBefore]);
 }
 
-export async function addToBlackList(sessionID: string) {
+export async function addToBlackList(sessionID: SessionID) {
   const { query } = await db();
   return query(queries.addToBlackList, [sessionID]);
 }
 
-export async function isBlacklisted(sessionID: string) {
+export async function getIsBlackListed(sessionID: SessionID) {
   const { queryGET } = await db();
-  const result = (await queryGET(queries.isBlacklisted, [sessionID])) as {
+  const result = (await queryGET(queries.getIsBlackListed, [sessionID])) as {
     count: number;
   };
 
   return result ? !!result.count : false;
-}
-
-export async function isBlacklistedHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const auth = await getAuth(req);
-  if (auth.profile.sid) {
-    const isOnList = await isBlacklisted(auth.profile.sid);
-    if (isOnList) {
-      return sendUnauthorized(res);
-    }
-  }
-  return next();
 }
 
 export async function sessionBlacklistTable(req: Request, res: Response) {

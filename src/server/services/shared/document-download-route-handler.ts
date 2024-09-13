@@ -5,8 +5,10 @@ import {
   ApiPostponeResponse,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
-import { AuthProfileAndToken, getAuth } from '../../helpers/app';
+import { getAuth } from '../../auth/auth-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
+import { sendUnauthorized } from '../../routing/route-helpers';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';
@@ -36,45 +38,49 @@ export function downloadDocumentRouteHandler(
     req: Request<{ id: string }>,
     res: Response
   ) {
-    const authProfileAndToken = await getAuth(req);
+    const authProfileAndToken = getAuth(req);
 
-    const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-      req.params.id,
-      authProfileAndToken
-    );
-
-    if (decryptResult.status === 'OK') {
-      const documentResponse = await fetchDocument(
-        res.locals.requestID,
-        authProfileAndToken,
-        decryptResult.content,
-        req.query as Record<string, string>
+    if (authProfileAndToken) {
+      const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+        req.params.id,
+        authProfileAndToken
       );
 
-      if (
-        documentResponse.status === 'ERROR' ||
-        documentResponse.status === 'POSTPONE'
-      ) {
-        return res.status(500).send(documentResponse);
+      if (decryptResult.status === 'OK') {
+        const documentResponse = await fetchDocument(
+          res.locals.requestID,
+          authProfileAndToken,
+          decryptResult.content,
+          req.query as Record<string, string>
+        );
+
+        if (
+          documentResponse.status === 'ERROR' ||
+          documentResponse.status === 'POSTPONE'
+        ) {
+          return res.status(500).send(documentResponse);
+        }
+
+        if (
+          'mimetype' in documentResponse.content &&
+          documentResponse.content.mimetype
+        ) {
+          res.type(documentResponse.content.mimetype);
+        }
+        res.header(
+          'Content-Disposition',
+          `attachment${documentResponse.content.filename ? `;${documentResponse.content.filename}` : ''}`
+        );
+        return 'pipe' in documentResponse.content.data &&
+          typeof documentResponse.content.data.pipe === 'function'
+          ? documentResponse.content.data.pipe(res)
+          : res.send(documentResponse.content.data);
       }
 
-      if (
-        'mimetype' in documentResponse.content &&
-        documentResponse.content.mimetype
-      ) {
-        res.type(documentResponse.content.mimetype);
-      }
-      res.header(
-        'Content-Disposition',
-        `attachment${documentResponse.content.filename ? `;${documentResponse.content.filename}` : ''}`
-      );
-      return 'pipe' in documentResponse.content.data &&
-        typeof documentResponse.content.data.pipe === 'function'
-        ? documentResponse.content.data.pipe(res)
-        : res.send(documentResponse.content.data);
+      return res.status(400).send(decryptResult);
     }
 
-    return res.status(400).send(decryptResult);
+    return sendUnauthorized(res);
   };
 }
 

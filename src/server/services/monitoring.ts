@@ -2,7 +2,7 @@ import * as appInsights from 'applicationinsights';
 import { SeverityLevel } from 'applicationinsights/out/Declarations/Contracts';
 import { Telemetry } from 'applicationinsights/out/Declarations/Contracts/TelemetryTypes/Telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { IS_DEBUG } from '../config';
+import { IS_DEBUG } from '../config/app';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
@@ -16,7 +16,8 @@ if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
     .start();
 }
 
-const client = appInsights.defaultClient;
+const client: appInsights.TelemetryClient | undefined =
+  appInsights.defaultClient;
 // See also: https://www.npmjs.com/package/applicationinsights
 
 export type Severity =
@@ -54,7 +55,7 @@ export function captureException(error: unknown, properties?: Properties) {
 
   IS_DEVELOPMENT
     ? IS_DEBUG && console.log('Capture Exception', payload)
-    : client.trackException(payload);
+    : client?.trackException(payload);
 }
 
 export function captureMessage(message: string, properties?: Properties) {
@@ -67,7 +68,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
   IS_DEVELOPMENT
     ? IS_DEBUG && console.log('Capture message', payload)
-    : client.trackTrace(payload);
+    : client?.trackTrace(payload);
 }
 
 interface TrackRequestProps {
@@ -99,7 +100,7 @@ export function trackRequest({
 
         IS_DEVELOPMENT
           ? IS_DEBUG && console.log('Track request', payload)
-          : client.trackRequest(payload);
+          : client?.trackRequest(payload);
       }
     },
   };

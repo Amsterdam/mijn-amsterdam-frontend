@@ -1,6 +1,6 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { getApiConfig } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';

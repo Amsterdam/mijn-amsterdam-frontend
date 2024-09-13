@@ -23,7 +23,7 @@ export type Properties = {
   severity?: Severity;
 };
 
-const browserHistory = createBrowserHistory({ basename: '' });
+const browserHistory = createBrowserHistory();
 
 export const reactPlugin = new ReactPlugin();
 

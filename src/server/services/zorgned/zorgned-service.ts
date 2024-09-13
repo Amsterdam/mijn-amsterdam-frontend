@@ -10,14 +10,15 @@ import {
 } from './zorgned-config-and-types';
 
 import { GenericDocument } from '../../../universal/types';
-import { getApiConfig, ONE_SECOND_MS } from '../../config';
+import { ONE_SECOND_MS } from '../../config/app';
 
 import memoizee from 'memoizee';
+import { dateSort } from '../../../universal/helpers/date';
 import { hash } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
-import { dateSort } from '../../../universal/helpers/date';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];

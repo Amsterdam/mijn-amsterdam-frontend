@@ -6,8 +6,7 @@ import {
   getLatLonByAddress,
 } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
-import { getApiConfig } from '../config';
-import { AuthProfileAndToken } from '../helpers/app';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 
 export interface BAGData {
@@ -19,7 +18,6 @@ export interface BAGData {
 
 export async function fetchBAG(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
   sourceAddress: Adres | null
 ) {
   if (!sourceAddress) {

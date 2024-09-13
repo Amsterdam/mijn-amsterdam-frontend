@@ -60,7 +60,7 @@ export const hasValidRecentStadspasRequest: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   if (appState.HLI?.status === 'OK') {
-    return appState.HLI?.content?.regelingen.some((aanvraag: HLIRegeling) => {
+    return !!appState.HLI?.content?.regelingen.some((aanvraag: HLIRegeling) => {
       return aanvraag.dateDecision
         ? differenceInYears(today, parseISO(aanvraag.dateDecision)) <= 1 &&
             aanvraag.decision === 'toegewezen'

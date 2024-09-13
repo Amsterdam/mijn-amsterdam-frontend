@@ -1,56 +1,53 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { IS_OT } from '../universal/config/env';
-import { BffEndpoints } from './config';
-import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import { IS_OT } from '../../universal/config/env';
+import { getAuth } from '../auth/auth-helpers';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
   fetchVergunningenDocumentsList,
-} from './services';
+} from '../services';
+import { fetchAfisDocument } from '../services/afis/afis';
+import {
+  handleFetchAfisBusinessPartner,
+  handleFetchAfisFacturen,
+} from '../services/afis/afis-route-handlers';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,
-} from './services/bezwaren/bezwaren';
-import { fetchLoodMetingDocument } from './services/bodem/loodmetingen';
+} from '../services/bezwaren/bezwaren';
+import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import {
   NOTIFICATIONS,
   loadServicesAll,
   loadServicesSSE,
-} from './services/controller';
+} from '../services/controller';
 import {
   fetchZorgnedAVDocument,
   handleFetchTransactionsRequest,
-} from './services/hli/hli-route-handlers';
-import { isBlacklistedHandler } from './services/session-blacklist';
-import { attachDocumentDownloadRoute } from './services/shared/document-download-route-handler';
-import { fetchErfpachtV2DossiersDetail } from './services/simple-connect/erfpacht';
-import { fetchBBDocument } from './services/toeristische-verhuur/bb-vergunning';
-import { fetchDecosDocument } from './services/vergunningen-v2/decos-service';
+} from '../services/hli/hli-route-handlers';
+import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
+import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
+import { fetchBBDocument } from '../services/toeristische-verhuur/bb-vergunning';
+import { fetchDecosDocument } from '../services/vergunningen-v2/decos-service';
 import {
   fetchVergunningDetail,
   fetchZakenFromSource,
-} from './services/vergunningen-v2/vergunningen-route-handlers';
-import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
-import { fetchWpiDocument } from './services/wpi/api-service';
+} from '../services/vergunningen-v2/vergunningen-route-handlers';
+import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
+import { fetchWpiDocument } from '../services/wpi/api-service';
+import { BffEndpoints } from './bff-routes';
 import {
-  handleFetchAfisBusinessPartner,
-  handleFetchAfisFacturen,
-} from './services/afis/afis-route-handlers';
-import { fetchAfisDocument } from './services/afis/afis';
+  handleCheckProtectedRoute,
+  isAuthenticated,
+  isBlacklistedHandler,
+} from './route-handlers';
+import { sendUnauthorized } from './route-helpers';
 
 export const router = express.Router();
 
-router.use(
-  (req: Request, res: Response, next: NextFunction) => {
-    // Skip router if we've entered a public route.
-    if (!isProtectedRoute(req.path)) {
-      return next('router');
-    }
-    return next();
-  },
-  isAuthenticated,
-  isBlacklistedHandler
-);
+router.BFF_ID = 'router-protected';
+
+router.use(handleCheckProtectedRoute, isAuthenticated, isBlacklistedHandler);
 
 router.get(
   BffEndpoints.SERVICES_ALL,
@@ -69,9 +66,8 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await NOTIFICATIONS(res.locals.requestID, req);
-      const tips = response.content.filter(
-        (notification) => notification.isTip
-      );
+      const tips =
+        response.content?.filter((notification) => notification.isTip) ?? [];
       return res.json(tips);
     } catch (error) {
       next(error);
@@ -110,15 +106,18 @@ attachDocumentDownloadRoute(
 router.get(
   BffEndpoints.MKS_AANTAL_BEWONERS,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
+    const authProfileAndToken = getAuth(req);
 
-    const bewonersResponse = await fetchAantalBewoners(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.addressKeyEncrypted
-    );
+    if (authProfileAndToken) {
+      const bewonersResponse = await fetchAantalBewoners(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.addressKeyEncrypted
+      );
 
-    return res.send(bewonersResponse);
+      return res.send(bewonersResponse);
+    }
+    return sendUnauthorized(res);
   }
 );
 
@@ -126,15 +125,19 @@ router.get(
 router.get(
   BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
+    const authProfileAndToken = getAuth(req);
 
-    const documentsListResponse = await fetchVergunningenDocumentsList(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
+    if (authProfileAndToken) {
+      const documentsListResponse = await fetchVergunningenDocumentsList(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.id
+      );
 
-    return res.send(documentsListResponse);
+      return res.send(documentsListResponse);
+    }
+
+    return sendUnauthorized(res);
   }
 );
 
@@ -142,17 +145,19 @@ router.get(
 router.get(
   BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
+    const authProfileAndToken = getAuth(req);
+    if (authProfileAndToken) {
+      const documentResponse = await fetchVergunningenDocument(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.id
+      );
 
-    const documentResponse = await fetchVergunningenDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    const contentType = documentResponse.headers['content-type'];
-    res.setHeader('content-type', contentType);
-    documentResponse.data.pipe(res);
+      const contentType = documentResponse.headers['content-type'];
+      res.setHeader('content-type', contentType);
+      documentResponse.data.pipe(res);
+    }
+    return sendUnauthorized(res);
   }
 );
 
@@ -189,32 +194,38 @@ attachDocumentDownloadRoute(
 router.get(
   BffEndpoints.BEZWAREN_DETAIL,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-    const response = await fetchBezwaarDetail(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
+    const authProfileAndToken = getAuth(req);
+    if (authProfileAndToken) {
+      const response = await fetchBezwaarDetail(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.id
+      );
 
-    return res.send(response);
+      return res.send(response);
+    }
+    return sendUnauthorized(res);
   }
 );
 
 router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-    const response = await fetchErfpachtV2DossiersDetail(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.dossierNummerUrlParam
-    );
+    const authProfileAndToken = getAuth(req);
+    if (authProfileAndToken) {
+      const response = await fetchErfpachtV2DossiersDetail(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.dossierNummerUrlParam
+      );
 
-    if (response.status === 'ERROR') {
-      res.status(typeof response.code === 'number' ? response.code : 500);
+      if (response.status === 'ERROR') {
+        res.status(typeof response.code === 'number' ? response.code : 500);
+      }
+
+      return res.send(response);
     }
-
-    return res.send(response);
+    return sendUnauthorized(res);
   }
 );
 

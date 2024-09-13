@@ -1,4 +1,4 @@
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
@@ -16,7 +16,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
-import { ONE_SECOND_MS } from '../../config';
+import { ONE_SECOND_MS } from '../../config/app';
 import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 
 function transformToAdministratienummer(identificatie: number): string {

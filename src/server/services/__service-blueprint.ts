@@ -1,6 +1,6 @@
-import { getApiConfig } from '../config';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { GenericDocument } from '../../universal/types/App.types';
-import { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import { requestData } from '../helpers/source-api-request';
 
 /**

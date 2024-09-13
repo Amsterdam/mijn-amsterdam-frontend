@@ -11,7 +11,7 @@ import {
 } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { Adres } from '../../universal/types';
-import { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import { BAGData, fetchBAG } from './bag';
 import { fetchBRP } from './brp';
 import { fetchKVK, getKvkAddresses } from './kvk';
@@ -25,9 +25,7 @@ async function fetchPrivate(
   let MY_LOCATION: ApiResponse<(BAGData | null)[] | null>;
 
   if (BRP.status === 'OK' && isMokum(BRP.content)) {
-    const location = (
-      await fetchBAG(requestID, authProfileAndToken, BRP.content.adres)
-    )?.content;
+    const location = (await fetchBAG(requestID, BRP.content.adres))?.content;
 
     // No BAG location found
     if (!location?.latlng) {
@@ -77,9 +75,7 @@ async function fetchCommercial(
 
     if (addresses.length) {
       const locations = await Promise.all(
-        addresses.map((address) =>
-          fetchBAG(requestID, authProfileAndToken, address)
-        )
+        addresses.map((address) => fetchBAG(requestID, address))
       ).then((results) => {
         return results.map((result) =>
           result.content !== null
@@ -106,10 +102,9 @@ async function fetchCommercial(
 
 export async function fetchMyLocation(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType
+  authProfileAndToken: AuthProfileAndToken
 ) {
-  switch (profileType) {
+  switch (authProfileAndToken.profile.profileType) {
     case 'commercial':
       return fetchCommercial(requestID, authProfileAndToken);
 

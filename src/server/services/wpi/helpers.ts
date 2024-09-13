@@ -3,9 +3,10 @@ import { LinkProps, generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Thema } from '../../../universal/config/thema';
 import { GenericDocument, MyNotification } from '../../../universal/types';
-import { BffEndpoints } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
@@ -17,7 +18,7 @@ import {
 } from './wpi-types';
 
 export function transformToStatusLine(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   requestProcess: WpiRequestProcess,
   labels: WpiRequestProcessLabels
 ): WpiRequestProcess {
@@ -46,7 +47,7 @@ export function transformToStatusLine(
 }
 
 export function addApiBasePathToDocumentUrls(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   documents: GenericDocument[]
 ): GenericDocument[] {
   return documents.map((document) => {

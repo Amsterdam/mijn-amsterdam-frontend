@@ -10,6 +10,7 @@ type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 type Nullable<T> = T | null;
 
 type RequestID = string;
+type SessionID = string;
 
 type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
 
@@ -64,5 +65,13 @@ declare const MA_GIT_SHA: string;
 // The ID of current build
 declare const MA_BUILD_ID: string;
 
-// Is the app built on azure or not.
-declare const MA_IS_AZ: string;
+declare global {
+  declare module 'express-serve-static-core' {
+    interface Locals {
+      requestID: string;
+    }
+    interface Router {
+      BFF_ID: string;
+    }
+  }
+}

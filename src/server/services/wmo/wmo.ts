@@ -5,9 +5,10 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
-import { BffEndpoints } from '../../config';
-import { AuthProfileAndToken, generateFullApiUrlBFF } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
@@ -19,7 +20,7 @@ import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 
 function getDocuments(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
   if (
@@ -56,7 +57,7 @@ function getLatestStatusDate(
 }
 
 function transformVoorzieningenForFrontend(
-  sessionID: AuthProfileAndToken['profile']['sid'],
+  sessionID: SessionID,
   aanvragen: ZorgnedAanvraagTransformed[],
   today: Date
 ): WMOVoorzieningFrontend[] {

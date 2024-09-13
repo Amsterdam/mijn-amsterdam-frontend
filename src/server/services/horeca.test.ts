@@ -1,6 +1,6 @@
 import MockDate from 'mockdate';
 import { bffApi, remoteApi } from '../../test-utils';
-import { AuthProfileAndToken } from '../helpers/app';
+import { AuthProfileAndToken } from '../auth/auth-types';
 import vergunningenMockData from '../../../mocks/fixtures/vergunningen.json';
 import { fetchHorecaNotifications, fetchHorecaVergunningen } from './horeca';
 

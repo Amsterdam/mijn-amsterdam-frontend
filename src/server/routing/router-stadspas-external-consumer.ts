@@ -1,30 +1,27 @@
 import express, { Request, Response } from 'express';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import { IS_PRODUCTION } from '../../universal/config/env';
+import { apiSuccessResult } from '../../universal/helpers/api';
+import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../auth/auth-config';
+import { getAuth } from '../auth/auth-helpers';
+import { authRoutes } from '../auth/auth-routes';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { decrypt, encrypt } from '../helpers/encrypt-decrypt';
+import { getApiConfig } from '../helpers/source-api-helpers';
+import { requestData } from '../helpers/source-api-request';
+import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
 import {
-  BffEndpoints,
-  ExternalConsumerEndpoints,
-  getApiConfig,
-  STADSPASSEN_ENDPOINT_PARAMETER,
-} from '../../config';
-import {
-  AuthProfileAndToken,
-  getAuth,
-  sendBadRequest,
-  sendResponse,
-} from '../../helpers/app';
-import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../helpers/auth';
-import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
-import { requestData } from '../../helpers/source-api-request';
-import { apiKeyVerificationHandler } from '../../middleware';
-import { captureException, captureMessage } from '../monitoring';
-import { fetchAdministratienummer } from './hli-zorgned-service';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import {
-  fetchStadspasDiscountTransactions,
   fetchStadspasBudgetTransactions,
-} from './stadspas';
-import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
-import { StadspasAMSAPPFrontend, StadspasBudget } from './stadspas-types';
+  fetchStadspasDiscountTransactions,
+} from '../services/hli/stadspas';
+import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service';
+import {
+  StadspasAMSAPPFrontend,
+  StadspasBudget,
+} from '../services/hli/stadspas-types';
+import { captureException, captureMessage } from '../services/monitoring';
+import { ExternalConsumerEndpoints } from './bff-routes';
+import { apiKeyVerificationHandler } from './route-handlers';
+import { sendBadRequest, sendResponse } from './route-helpers';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -52,7 +49,7 @@ const apiResponseErrors: Record<string, ApiError> = {
   },
   ADMINISTRATIENUMMER_FAILED_TO_DECRYPT: {
     code: '005',
-    message: `Could not decrypt url parameter '${STADSPASSEN_ENDPOINT_PARAMETER}'.`,
+    message: `Could not decrypt url parameter 'administratienummerEncrypted'.`,
   },
   UNKNOWN: {
     code: '000',
@@ -61,13 +58,16 @@ const apiResponseErrors: Record<string, ApiError> = {
 } as const;
 
 export const routerInternet = express.Router();
+routerInternet.BFF_ID = 'external-consumer-public';
+
 export const routerPrivateNetwork = express.Router();
+routerPrivateNetwork.BFF_ID = 'external-consumer-private-network';
 
 routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
   async (req: Request<{ token: string }>, res: Response) => {
     return res.redirect(
-      BffEndpoints.AUTH_LOGIN_DIGID +
+      authRoutes.AUTH_LOGIN_DIGID +
         `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
     );
   }
@@ -77,12 +77,10 @@ async function sendAdministratienummerResponse(
   req: Request<{ token: string }>,
   res: Response
 ) {
-  let authProfileAndToken: AuthProfileAndToken | null = null;
+  let authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
   let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
 
-  try {
-    authProfileAndToken = await getAuth(req);
-  } catch (error) {
+  if (!authProfileAndToken) {
     apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
 
@@ -164,7 +162,7 @@ routerInternet.get(
 );
 
 async function sendStadspassenResponse(
-  req: Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>,
+  req: Request<{ administratienummerEncrypted: string }>,
   res: Response
 ) {
   let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
@@ -172,7 +170,7 @@ async function sendStadspassenResponse(
 
   try {
     const administratienummerEncrypted =
-      req.params[STADSPASSEN_ENDPOINT_PARAMETER];
+      req.params.administratienummerEncrypted;
 
     administratienummer = decrypt(administratienummerEncrypted);
   } catch (error) {

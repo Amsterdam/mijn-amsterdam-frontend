@@ -1,17 +1,11 @@
-import { Request, Response } from 'express';
-import UID from 'uid-safe';
-import { remoteApi, ResponseMock } from '../../../test-utils';
-import {
-  OIDC_SESSION_COOKIE_NAME,
-  STADSPASSEN_ENDPOINT_PARAMETER,
-} from '../../config';
-import { generateDevSessionCookieValue } from '../../helpers/app.development';
-import { forTesting } from './stadspas-router-external-consumer';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import * as stadspas from './stadspas';
-import { StadspasDiscountTransaction } from './stadspas-types';
+import { remoteApi, RequestMock, ResponseMock } from '../../test-utils';
+import { apiSuccessResult } from '../../universal/helpers/api';
+import { AuthProfile } from '../auth/auth-types';
+import * as stadspas from '../services/hli/stadspas';
+import { StadspasDiscountTransaction } from '../services/hli/stadspas-types';
+import { forTesting } from './router-stadspas-external-consumer';
 
-vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encrypt: () => {
@@ -23,45 +17,39 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
 
 const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
 
-describe('hli/router-external-consumer', async () => {
-  const sendMock = vi.fn();
-  const statusMock = vi.fn();
-  const renderMock = vi.fn();
-  const redirectMock = vi.fn();
+const USER_PROFILE: AuthProfile = {
+  sid: 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+  profileType: 'private',
+  authMethod: 'digid',
+  id: 'x1',
+};
 
-  async function getReqMock(useCookie: boolean = true) {
-    const cookieValue = useCookie
-      ? await generateDevSessionCookieValue('digid', 'digi1', UID.sync(10))
-      : undefined;
-    const reqMock = {
-      cookies: {
-        [OIDC_SESSION_COOKIE_NAME]: cookieValue,
-      },
-      params: {
-        token: 'x123z',
-      },
-    } as unknown as Request<{ token: string }>;
-
-    return reqMock;
+async function createAuthenticatedRequestMock<
+  T extends Record<string, string> = Record<string, string>,
+>(params: Record<string, string>) {
+  const reqMock = RequestMock.new();
+  if (params) {
+    reqMock.setParams(params);
   }
+  await reqMock.createOIDCStub(USER_PROFILE);
+  const reqMockWithTokenParams = reqMock.get<T>();
 
-  const resMock = {
-    locals: {
-      get requestID() {
-        return UID.sync(10);
-      },
-    },
-    send: sendMock,
-    status: statusMock,
-    render: renderMock,
-    redirect: redirectMock,
-  } as unknown as Response;
+  return reqMockWithTokenParams;
+}
 
+describe('hli/router-external-consumer', async () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
-  describe('Administratienummer endpoint', () => {
+  describe('Administratienummer endpoint', async () => {
+    const params = {
+      token: 'x123z',
+    };
+
+    const reqMockWithTokenParams =
+      await createAuthenticatedRequestMock<typeof params>(params);
+
     test('OK', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
         persoon: {
@@ -72,12 +60,14 @@ describe('hli/router-external-consumer', async () => {
         .post('/amsapp/session/credentials')
         .reply(200, { detail: 'Success' });
 
+      const resMock = ResponseMock.new();
+
       await forTesting.sendAdministratienummerResponse(
-        await getReqMock(),
+        reqMockWithTokenParams,
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
+      expect(resMock.render).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
           administratienummerEncrypted: 'test-encrypted-id',
@@ -93,13 +83,16 @@ describe('hli/router-external-consumer', async () => {
           clientidentificatie: '123-123',
         },
       });
+      const reqMockWithTokenParams =
+        await createAuthenticatedRequestMock<typeof params>(params);
+      const resMock = ResponseMock.new();
 
       await forTesting.sendAdministratienummerResponse(
-        await getReqMock(),
+        reqMockWithTokenParams,
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
+      expect(resMock.render).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
           error: {
@@ -114,12 +107,12 @@ describe('hli/router-external-consumer', async () => {
     });
 
     test('NO Digid login', async () => {
-      await forTesting.sendAdministratienummerResponse(
-        await getReqMock(false),
-        resMock
-      );
+      const resMock = ResponseMock.new();
+      const reqMock = RequestMock.new().get<typeof params>();
 
-      expect(renderMock).toHaveBeenCalledWith(
+      await forTesting.sendAdministratienummerResponse(reqMock, resMock);
+
+      expect(resMock.render).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
           error: { code: '001', message: 'Niet ingelogd met Digid' },
@@ -131,13 +124,14 @@ describe('hli/router-external-consumer', async () => {
 
     test('NO Administratienummer', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(404);
+      const resMock = ResponseMock.new();
 
       await forTesting.sendAdministratienummerResponse(
-        await getReqMock(),
+        reqMockWithTokenParams,
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
+      expect(resMock.render).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
           error: {
@@ -152,13 +146,14 @@ describe('hli/router-external-consumer', async () => {
 
     test('ERROR', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
+      const resMock = ResponseMock.new();
 
       await forTesting.sendAdministratienummerResponse(
-        await getReqMock(),
+        reqMockWithTokenParams,
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
+      expect(resMock.render).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
           error: {
@@ -172,14 +167,14 @@ describe('hli/router-external-consumer', async () => {
     });
 
     test('Unauthorized', async () => {
+      const resMock = ResponseMock.new();
+
       await forTesting.sendAdministratienummerResponse(
-        {
-          cookies: {},
-        } as unknown as Request<{ token: string }>,
+        RequestMock.new().get(),
         resMock
       );
 
-      expect(renderMock).toHaveBeenCalledWith(
+      expect(resMock.render).toHaveBeenCalledWith(
         'amsapp-stadspas-administratienummer',
         {
           error: { code: '001', message: 'Niet ingelogd met Digid' },
@@ -191,7 +186,7 @@ describe('hli/router-external-consumer', async () => {
   });
 
   describe('Stadspassen endpoint', async () => {
-    vi.mock('./stadspas-gpass-service.ts', async (requireActual) => {
+    vi.mock('../services/hli/stadspas-gpass-service', async (requireActual) => {
       const mod: object = await requireActual();
       return {
         ...mod,
@@ -207,21 +202,13 @@ describe('hli/router-external-consumer', async () => {
       };
     });
 
-    const resMock = {
-      locals: { requestID: 'xxx' },
-      send: sendMock,
-      status: (_code: number) => {
-        return {
-          send: sendMock,
-        };
-      },
-      render: renderMock,
-    } as unknown as Response;
+    const resMock = ResponseMock.new();
 
     test('Returns stadpassen when supplied with encrypted administratieNummer', async () => {
-      const reqMock = {
-        params: { [STADSPASSEN_ENDPOINT_PARAMETER]: 'ADMINISTRATIENUMMER' },
-      } as unknown as Request<{ [STADSPASSEN_ENDPOINT_PARAMETER]: string }>;
+      const params = {
+        administratienummerEncrypted: 'ADMINISTRATIENUMMER',
+      };
+      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
 
       await forTesting.sendStadspassenResponse(reqMock, resMock);
 
@@ -241,37 +228,44 @@ describe('hli/router-external-consumer', async () => {
 
   describe('Budget transactions endpoint', async () => {
     test('Happy path without budgetcode filter', async () => {
+      const resMock = ResponseMock.new();
+
       const fetchStadspasTransactionsSpy = vi
         .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
         .mockResolvedValueOnce(apiSuccessResult([]));
 
-      const reqMock = {
-        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
-      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+      const params = { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED };
+      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
 
       await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
 
       expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
-      expect(sendMock).toHaveBeenCalledOnce();
+      expect(resMock.send).toHaveBeenCalledOnce();
     });
 
     test('Happy path with budgetcode filter.', async () => {
+      const resMock = ResponseMock.new();
+
       const fetchStadspasTransactionsSpy = vi
         .spyOn(stadspas, 'fetchStadspasBudgetTransactions')
         .mockResolvedValueOnce(apiSuccessResult([]));
 
-      const reqMock = {
-        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
-        query: {
+      const params = {
+        transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+      };
+
+      const reqMock = RequestMock.new()
+        .setParams(params)
+        .setQuery({
           budgetCode: 'GPAS05_19',
-        },
-      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+        })
+        .get<typeof params>();
 
       await forTesting.sendBudgetTransactionsResponse(reqMock, resMock);
 
       expect(fetchStadspasTransactionsSpy).toHaveBeenCalledOnce();
-      expect(sendMock).toHaveBeenCalledOnce();
-      expect(sendMock).toHaveBeenCalledWith({ content: [], status: 'OK' });
+      expect(resMock.send).toHaveBeenCalledOnce();
+      expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
     });
   });
 
@@ -287,9 +281,11 @@ describe('hli/router-external-consumer', async () => {
           apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
         );
 
-      const reqMock = {
-        params: { transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED },
-      } as unknown as Request<{ transactionsKeyEncrypted: string }>;
+      const params = {
+        transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+      };
+
+      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
       const resMock = ResponseMock.new();
 
       await forTesting.sendDiscountTransactionsResponse(reqMock, resMock);

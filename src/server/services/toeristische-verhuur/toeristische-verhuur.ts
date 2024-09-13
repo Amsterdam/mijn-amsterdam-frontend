@@ -21,8 +21,8 @@ import {
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import { BBVergunning, fetchBBVergunning } from './bb-vergunning';
 import {
   ToeristischeVerhuurRegistratieDetail,
@@ -48,8 +48,7 @@ export function hasOtherActualVergunningOfSameType(
 
 async function fetchAndTransformToeristischeVerhuur(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  profileType: ProfileType = 'private'
+  authProfileAndToken: AuthProfileAndToken
 ) {
   if (!FeatureToggle.toeristischeVerhuurActive) {
     return apiSuccessResult({
@@ -59,7 +58,7 @@ async function fetchAndTransformToeristischeVerhuur(
     });
   }
   const lvvRegistratiesRequest =
-    profileType === 'commercial'
+    authProfileAndToken.profile.profileType === 'commercial'
       ? Promise.resolve(apiSuccessResult([]))
       : fetchRegistraties(requestID, authProfileAndToken);
 
@@ -238,13 +237,11 @@ function createRegistratieNotification(
 export async function fetchToeristischeVerhuurNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  compareDate?: Date,
-  profileType?: ProfileType
+  compareDate?: Date
 ) {
   const TOERISTISCHE_VERHUUR = await fetchToeristischeVerhuur(
     requestID,
-    authProfileAndToken,
-    profileType
+    authProfileAndToken
   );
 
   if (TOERISTISCHE_VERHUUR.status === 'OK') {

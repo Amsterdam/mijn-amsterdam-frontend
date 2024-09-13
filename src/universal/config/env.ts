@@ -7,14 +7,6 @@ function getAppMode(): AppModeName {
   return (maAppMode || 'production') as AppModeName;
 }
 
-function getIsAz(): boolean {
-  const isAz =
-    typeof MA_IS_AZ !== 'undefined'
-      ? MA_IS_AZ === 'true'
-      : process.env.MA_IS_AZ === 'true';
-  return isAz;
-}
-
 export function getOtapEnv(): OtapEnvName {
   const maOtapEnv =
     typeof MA_OTAP_ENV !== 'undefined' ? MA_OTAP_ENV : process.env.MA_OTAP_ENV;
@@ -37,5 +29,3 @@ export const IS_DEVELOPMENT = OTAP_ENV === 'development';
 export const IS_OT = IS_DEVELOPMENT || IS_TEST;
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
 export const IS_TAP = IS_TEST || IS_ACCEPTANCE || IS_PRODUCTION;
-
-export const IS_AZ = getIsAz();

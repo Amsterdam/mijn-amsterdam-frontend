@@ -5,7 +5,7 @@ import bezwarenApiResponse from '../../../../mocks/fixtures/bezwaren.json';
 import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
 import { range } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../helpers/app';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,

@@ -9,7 +9,7 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { DataRequestConfig } from '../../config';
+import { DataRequestConfig } from '../../config/source-api';
 import FileCache from '../../helpers/file-cache';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
