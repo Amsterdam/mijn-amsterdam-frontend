@@ -5,7 +5,7 @@ import {
   sortAlpha,
 } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig, getApiConfig } from '../../config';
 import { generateFullApiUrlBFF } from '../../helpers/app';
 import {
   Lood365Response,
@@ -24,6 +24,7 @@ import {
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { captureException } from '../monitoring';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,

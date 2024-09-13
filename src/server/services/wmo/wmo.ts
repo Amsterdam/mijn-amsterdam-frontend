@@ -6,9 +6,9 @@ import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { BffEndpoints } from '../../config';
 import { generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {

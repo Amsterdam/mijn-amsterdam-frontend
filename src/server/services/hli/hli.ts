@@ -9,9 +9,10 @@ import {
 import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
-import { BFF_BASE_PATH, BffEndpoints } from '../../config';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
@@ -56,12 +57,9 @@ function getDocumentsFrontend(
     const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
     return {
       ...document,
-      url: `${process.env.BFF_OIDC_BASE_URL}${BFF_BASE_PATH}${generatePath(
-        BffEndpoints.HLI_DOCUMENT_DOWNLOAD,
-        {
-          id: idEncrypted,
-        }
-      )}`,
+      url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, {
+        id: idEncrypted,
+      }),
       id: idEncrypted,
     };
   });

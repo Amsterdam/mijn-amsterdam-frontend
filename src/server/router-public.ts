@@ -7,8 +7,9 @@ import {
 } from '../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccessResult } from '../universal/helpers/api';
 import { authRoutes } from './auth/auth-routes';
-import { BffEndpoints, RELEASE_VERSION } from './config';
+import { RELEASE_VERSION } from './config';
 import { queryParams } from './helpers/app';
+import { BffEndpoints } from './routing/bff-routes';
 import {
   QueryParamsCMSFooter,
   fetchCMSCONTENT,

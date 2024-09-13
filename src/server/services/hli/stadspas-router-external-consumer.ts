@@ -5,11 +5,12 @@ import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../../auth/auth-co
 import { getAuth } from '../../auth/auth-helpers';
 import { authRoutes } from '../../auth/auth-routes';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ExternalConsumerEndpoints, getApiConfig } from '../../config';
+import { getApiConfig } from '../../config';
 import { sendBadRequest, sendResponse } from '../../helpers/app';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
 import { apiKeyVerificationHandler } from '../../middleware';
+import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {

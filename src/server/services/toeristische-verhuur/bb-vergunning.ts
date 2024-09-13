@@ -12,10 +12,11 @@ import {
   StatusLineItem,
 } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig, getApiConfig } from '../../config';
 import { generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // zaak detail: record/GFO_ZAKEN/$id

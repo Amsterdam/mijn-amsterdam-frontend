@@ -1,7 +1,15 @@
+import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { BffEndpoints, ONE_SECOND_MS } from '../../config';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config';
 import { generateFullApiUrlBFF } from '../../helpers/app';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
   VergunningCaseTypeFilter,
@@ -11,14 +19,6 @@ import {
   VergunningV2,
 } from './config-and-types';
 import { fetchDecosVergunning, fetchDecosVergunningen } from './decos-service';
-
-import memoizee from 'memoizee';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encrypt } from '../../helpers/encrypt-decrypt';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 
@@ -79,7 +79,7 @@ function transformVergunningFrontend(
 }
 
 async function fetchAndFilterVergunningenV2_(
-  requestID: RequestID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute,
   caseTypeFilter?: VergunningCaseTypeFilter
@@ -114,7 +114,7 @@ export const fetchAndFilterVergunningenV2 = memoizee(
 );
 
 export async function fetchVergunningenV2(
-  requestID: RequestID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
   filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT
@@ -143,7 +143,7 @@ function addEncryptedDocumentIdToUrl(
 }
 
 export async function fetchVergunningV2(
-  requestID: RequestID,
+  requestID: requestID,
   authProfileAndToken: AuthProfileAndToken,
   vergunningIdEncrypted: string
 ) {

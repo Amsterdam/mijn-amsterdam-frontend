@@ -8,13 +8,13 @@ import { ParsedQs } from 'qs';
 import { DEFAULT_PROFILE_TYPE } from '../../universal/config/app';
 import { IS_AP } from '../../universal/config/env';
 import { apiSuccessResult } from '../../universal/helpers/api';
-import { ExternalConsumerEndpoints } from '../config';
 import {
   decodeToken,
   generateFullApiUrlBFF,
   sendUnauthorized,
 } from '../helpers/app';
 import { axiosRequest } from '../helpers/source-api-request';
+import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { captureException, captureMessage } from '../services/monitoring';
 import {
   OIDC_COOKIE_ENCRYPTION_KEY,

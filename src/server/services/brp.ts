@@ -16,9 +16,10 @@ import {
   MyNotification,
 } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { BffEndpoints, getApiConfig } from '../config';
+import { getApiConfig } from '../config';
 import { generateFullApiUrlBFF } from '../helpers/app';
 import { requestData } from '../helpers/source-api-request';
+import { BffEndpoints } from '../routing/bff-routes';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;

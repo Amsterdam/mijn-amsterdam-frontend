@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { IS_OT } from '../universal/config/env';
 import { getAuth, isAuthenticated } from './auth/auth-helpers';
-import { BffEndpoints } from './config';
 import { isProtectedRoute } from './helpers/app';
+import { BffEndpoints } from './routing/bff-routes';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,

@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import basicAuth from 'express-basic-auth';
-import { BffEndpoints } from './config';
 import { cacheOverview } from './helpers/file-cache';
+import { BffEndpoints } from './routing/bff-routes';
 import { sessionBlacklistTable } from './services/session-blacklist';
 import { loginStats, loginStatsTable } from './services/visitors';
 

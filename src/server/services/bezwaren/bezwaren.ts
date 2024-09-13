@@ -3,7 +3,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 
 import { MyNotification } from '../../../universal/types';
-import { BffEndpoints, DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig, getApiConfig } from '../../config';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 
 import { AppRoutes } from '../../../universal/config/routes';
@@ -18,6 +18,7 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { generateFullApiUrlBFF } from '../../helpers/app';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
@@ -421,7 +422,7 @@ export async function fetchBezwaarDetail(
   authProfileAndToken: AuthProfileAndToken,
   zaakIdEncrypted: string
 ) {
-  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+  const decryptResult = decryptAndValidate(
     zaakIdEncrypted,
     authProfileAndToken
   );

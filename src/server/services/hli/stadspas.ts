@@ -5,9 +5,9 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { BffEndpoints } from '../../config';
 import { generateFullApiUrlBFF } from '../../helpers/app';
 import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { captureException } from '../monitoring';
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {

@@ -20,7 +20,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { BFF_BASE_PATH, BFF_PORT, BffEndpoints, IS_DEBUG } from './config';
+import { BFF_PORT, IS_DEBUG } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './router-admin';
 import { authRouterDevelopment } from './router-development';
@@ -28,9 +28,10 @@ import { authRouterDevelopment } from './router-development';
 import { router as oidcRouter } from './router-oidc';
 import { router as protectedRouter } from './router-protected';
 import { legacyRouter, router as publicRouter } from './router-public';
+import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
-import { captureException } from './services/monitoring';
 import { stadspasExternalConsumerRouter } from './services/hli/stadspas-router-external-consumer';
+import { captureException } from './services/monitoring';
 
 const app = express();
 
