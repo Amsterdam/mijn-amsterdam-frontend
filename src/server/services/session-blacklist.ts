@@ -1,7 +1,8 @@
 import { sub } from 'date-fns';
 import { NextFunction, Request, Response } from 'express';
+import { getAuth } from '../auth/auth-helpers';
 import { OIDC_TOKEN_EXP, ONE_MINUTE_MS } from '../config';
-import { getAuth, sendUnauthorized } from '../helpers/app';
+import { sendUnauthorized } from '../helpers/app';
 import { IS_PG, tableNameSessionBlacklist } from './db/config';
 import { db } from './db/db';
 import { execDB } from './db/sqlite3';

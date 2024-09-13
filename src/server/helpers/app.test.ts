@@ -36,7 +36,7 @@ import {
 import {
   generateDevSessionCookieValue,
   signDevelopmentToken,
-} from './app.development';
+} from '../auth/auth-helpers-development';
 import { cache } from './source-api-request';
 
 const {

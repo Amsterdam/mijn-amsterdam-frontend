@@ -17,8 +17,8 @@ import {
   DataRequestConfig,
 } from '../config';
 import { captureException } from '../services/monitoring';
-import { AuthProfileAndToken } from './app';
 import { Deferred } from './deferred';
+import { AuthProfileAndToken } from '../auth/auth-types';
 
 export const axiosRequest = axios.create({
   responseType: 'json',

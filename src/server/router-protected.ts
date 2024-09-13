@@ -1,12 +1,18 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { IS_OT } from '../universal/config/env';
+import { getAuth, isAuthenticated } from './auth/auth-helpers';
 import { BffEndpoints } from './config';
-import { getAuth, isAuthenticated, isProtectedRoute } from './helpers/app';
+import { isProtectedRoute } from './helpers/app';
 import {
   fetchAantalBewoners,
   fetchVergunningenDocument,
   fetchVergunningenDocumentsList,
 } from './services';
+import {
+  handleFetchAfisBusinessPartner,
+  handleFetchAfisFacturen,
+} from './services/afis/afis-route-handlers';
+import { fetchAfisDocument } from './services/afis/afis';
 import {
   fetchBezwaarDetail,
   fetchBezwaarDocument,
@@ -32,11 +38,7 @@ import {
 } from './services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchZorgnedJZDDocument } from './services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from './services/wpi/api-service';
-import {
-  handleFetchAfisBusinessPartner,
-  handleFetchAfisFacturen,
-} from './services/afis/afis-route-handlers';
-import { fetchAfisDocument } from './services/afis/afis';
+
 
 export const router = express.Router();
 

@@ -5,7 +5,7 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   STADSPASSEN_ENDPOINT_PARAMETER,
 } from '../../config';
-import { generateDevSessionCookieValue } from '../../helpers/app.development';
+import { generateDevSessionCookieValue } from '../../auth/auth-helpers-development';
 import { forTesting } from './stadspas-router-external-consumer';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import * as stadspas from './stadspas';

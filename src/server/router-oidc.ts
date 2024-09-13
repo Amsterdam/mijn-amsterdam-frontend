@@ -3,22 +3,20 @@ import { attemptSilentLogin, auth } from 'express-openid-connect';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { apiSuccessResult } from '../universal/helpers/api';
 import {
-  AUTH_CALLBACK,
-  BffEndpoints,
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
-} from './config';
+} from './auth/auth-config';
+import { AUTH_CALLBACK, authRoutes } from './auth/auth-routes';
+
 import {
   decodeOIDCToken,
   getAuth,
+  getReturnToUrl,
   hasSessionCookie,
-  isRequestAuthenticated,
-  nocache,
-  sendUnauthorized,
   verifyAuthenticated,
-} from './helpers/app';
-import { getReturnToUrl } from './helpers/auth';
+} from './auth/auth-helpers';
+import { nocache, sendUnauthorized } from './helpers/app';
 import { captureException } from './services/monitoring';
 import { addToBlackList } from './services/session-blacklist';
 import { countLoggedInVisit } from './services/visitors';
@@ -30,46 +28,46 @@ router.use(nocache);
 /**
  * DIGID Oidc config
  */
-router.use(BffEndpoints.AUTH_BASE_DIGID, auth(oidcConfigDigid));
+router.use(authRoutes.AUTH_BASE_DIGID, auth(oidcConfigDigid));
 
-router.get(BffEndpoints.AUTH_BASE_DIGID + AUTH_CALLBACK, (req, res) =>
+router.get(authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK, (req, res) =>
   res.oidc.callback({
-    redirectUri: BffEndpoints.AUTH_CALLBACK_DIGID,
+    redirectUri: authRoutes.AUTH_CALLBACK_DIGID,
   })
 );
 
 router.post(
-  BffEndpoints.AUTH_BASE_DIGID + AUTH_CALLBACK,
+  authRoutes.AUTH_BASE_DIGID + AUTH_CALLBACK,
   express.urlencoded({ extended: false }),
   (req, res) =>
     res.oidc.callback({
-      redirectUri: BffEndpoints.AUTH_CALLBACK_DIGID,
+      redirectUri: authRoutes.AUTH_CALLBACK_DIGID,
     })
 );
 
 router.use(
-  BffEndpoints.AUTH_BASE_SSO_DIGID,
+  authRoutes.AUTH_BASE_SSO_DIGID,
   attemptSilentLogin(),
   (req, res, next) => {
     return res.send(req.oidc.isAuthenticated());
   }
 );
 
-router.get(BffEndpoints.AUTH_LOGIN_DIGID, async (req, res) => {
+router.get(authRoutes.AUTH_LOGIN_DIGID, async (req, res) => {
   return res.oidc.login({
     returnTo: getReturnToUrl(req.query),
     authorizationParams: {
-      redirect_uri: BffEndpoints.AUTH_CALLBACK_DIGID,
+      redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
     },
   });
 });
 
 router.get(
-  BffEndpoints.AUTH_CHECK_DIGID,
+  authRoutes.AUTH_CHECK_DIGID,
   verifyAuthenticated('digid', 'private')
 );
 
-router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
+router.get(authRoutes.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
   try {
     const auth = await getAuth(req);
     if (auth.profile.id) {
@@ -89,41 +87,41 @@ router.get(BffEndpoints.AUTH_LOGIN_DIGID_LANDING, async (req, res) => {
  * EHerkenning Oidc config
  */
 if (FeatureToggle.eherkenningActive) {
-  router.use(BffEndpoints.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
+  router.use(authRoutes.AUTH_BASE_EHERKENNING, auth(oidcConfigEherkenning));
 
-  router.get(BffEndpoints.AUTH_BASE_EHERKENNING + AUTH_CALLBACK, (req, res) =>
+  router.get(authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK, (req, res) =>
     res.oidc.callback({
-      redirectUri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+      redirectUri: authRoutes.AUTH_CALLBACK_EHERKENNING,
     })
   );
 
   router.post(
-    BffEndpoints.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
+    authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
     express.urlencoded({ extended: false }),
     (req, res) =>
       res.oidc.callback({
-        redirectUri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+        redirectUri: authRoutes.AUTH_CALLBACK_EHERKENNING,
       })
   );
 
   router.use(
-    BffEndpoints.AUTH_BASE_SSO_EHERKENNING,
+    authRoutes.AUTH_BASE_SSO_EHERKENNING,
     attemptSilentLogin(),
     (req, res, next) => {
       return res.send(req.oidc.isAuthenticated());
     }
   );
 
-  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING, async (req, res) => {
+  router.get(authRoutes.AUTH_LOGIN_EHERKENNING, async (req, res) => {
     return res.oidc.login({
-      returnTo: BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING,
+      returnTo: authRoutes.AUTH_LOGIN_EHERKENNING_LANDING,
       authorizationParams: {
-        redirect_uri: BffEndpoints.AUTH_CALLBACK_EHERKENNING,
+        redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
       },
     });
   });
 
-  router.get(BffEndpoints.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
+  router.get(authRoutes.AUTH_LOGIN_EHERKENNING_LANDING, async (req, res) => {
     const auth = await getAuth(req);
     if (auth.profile.id) {
       countLoggedInVisit(auth.profile.id, 'eherkenning');
@@ -134,19 +132,19 @@ if (FeatureToggle.eherkenningActive) {
   });
 
   router.get(
-    BffEndpoints.AUTH_CHECK_EHERKENNING,
+    authRoutes.AUTH_CHECK_EHERKENNING,
     verifyAuthenticated('eherkenning', 'commercial')
   );
 }
 
-router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
+router.use(authRoutes.AUTH_BASE_SSO, async (req, res) => {
   const authMethod = req.query.authMethod;
 
   switch (authMethod) {
     case 'digid':
-      return res.redirect(BffEndpoints.AUTH_BASE_SSO_DIGID);
+      return res.redirect(authRoutes.AUTH_BASE_SSO_DIGID);
     case 'eherkenning':
-      return res.redirect(BffEndpoints.AUTH_BASE_SSO_EHERKENNING);
+      return res.redirect(authRoutes.AUTH_BASE_SSO_EHERKENNING);
     default: {
       // No sessions found at Identify provider, let the front-end decide which SSO attempt is made.
       return res.redirect(`${process.env.MA_FRONTEND_URL}?sso=1`);
@@ -155,17 +153,17 @@ router.use(BffEndpoints.AUTH_BASE_SSO, async (req, res) => {
 });
 
 // AuthMethod agnostic endpoints
-router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
+router.get(authRoutes.AUTH_CHECK, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
       let redirectUrl = '';
       switch (auth.profile.authMethod) {
         case 'eherkenning':
-          redirectUrl = BffEndpoints.AUTH_CHECK_EHERKENNING;
+          redirectUrl = authRoutes.AUTH_CHECK_EHERKENNING;
           break;
         case 'digid':
-          redirectUrl = BffEndpoints.AUTH_CHECK_DIGID;
+          redirectUrl = authRoutes.AUTH_CHECK_DIGID;
           break;
       }
 
@@ -179,7 +177,7 @@ router.get(BffEndpoints.AUTH_CHECK, async (req, res) => {
   return sendUnauthorized(res);
 });
 
-router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
+router.get(authRoutes.AUTH_TOKEN_DATA, async (req, res) => {
   if (hasSessionCookie(req)) {
     try {
       const auth = await getAuth(req);
@@ -198,7 +196,7 @@ router.get(BffEndpoints.AUTH_TOKEN_DATA, async (req, res) => {
   return sendUnauthorized(res);
 });
 
-router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
+router.get(authRoutes.AUTH_LOGOUT, async (req, res) => {
   let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
   let authMethodRequested = req.query.authMethod;
 
@@ -209,10 +207,10 @@ router.get(BffEndpoints.AUTH_LOGOUT, async (req, res) => {
 
   switch (authMethodRequested) {
     case 'eherkenning':
-      redirectUrl = BffEndpoints.AUTH_LOGOUT_EHERKENNING;
+      redirectUrl = authRoutes.AUTH_LOGOUT_EHERKENNING;
       break;
     case 'digid':
-      redirectUrl = BffEndpoints.AUTH_LOGOUT_DIGID;
+      redirectUrl = authRoutes.AUTH_LOGOUT_DIGID;
       break;
   }
 
@@ -248,17 +246,14 @@ function logout(postLogoutRedirectUrl: string, doIDPLogout: boolean = true) {
   };
 }
 
+router.get(authRoutes.AUTH_LOGOUT_DIGID, logout(process.env.MA_FRONTEND_URL!));
+
 router.get(
-  BffEndpoints.AUTH_LOGOUT_DIGID,
+  authRoutes.AUTH_LOGOUT_EHERKENNING,
   logout(process.env.MA_FRONTEND_URL!)
 );
 
 router.get(
-  BffEndpoints.AUTH_LOGOUT_EHERKENNING,
-  logout(process.env.MA_FRONTEND_URL!)
-);
-
-router.get(
-  BffEndpoints.AUTH_LOGOUT_EHERKENNING_LOCAL,
+  authRoutes.AUTH_LOGOUT_EHERKENNING_LOCAL,
   logout(process.env.MA_FRONTEND_URL!, false)
 );

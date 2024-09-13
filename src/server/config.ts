@@ -1,13 +1,10 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ConfigParams } from 'express-openid-connect';
-import https from 'https';
-import * as jose from 'jose';
-import { FeatureToggle } from '../universal/config/feature-toggles';
-import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
-import { getFromEnv } from './helpers/env';
-import { jsonCopy } from '../universal/helpers/utils';
-import { TokenData } from './helpers/app';
 import fs from 'fs';
+import https from 'https';
+import { IS_DEVELOPMENT, IS_OT, IS_TAP } from '../universal/config/env';
+import { FeatureToggle } from '../universal/config/feature-toggles';
+import { jsonCopy } from '../universal/helpers/utils';
+import { getFromEnv } from './helpers/env';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && getFromEnv(envVarName, false);
@@ -394,24 +391,6 @@ export function getApiConfig(
   );
 }
 
-export const AUTH_BASE = '/api/v1/auth';
-export const AUTH_BASE_DIGID = `${AUTH_BASE}/digid`;
-export const AUTH_BASE_EHERKENNING = `${AUTH_BASE}/eherkenning`;
-
-export const AUTH_BASE_SSO = `${AUTH_BASE}/sso`;
-export const AUTH_BASE_SSO_DIGID = `${AUTH_BASE}/digid/sso`;
-export const AUTH_BASE_SSO_EHERKENNING = `${AUTH_BASE}/eherkenning/sso`;
-
-export const AUTH_LOGIN = `${getFromEnv('BFF_OIDC_LOGIN', false) ?? '/login'}`;
-export const AUTH_LOGOUT = `${getFromEnv('BFF_OIDC_LOGOUT', false) ?? '/logout'}`;
-export const AUTH_CALLBACK = `${getFromEnv('BFF_OIDC_CALLBACK', false) ?? '/callback'}`;
-
-export const BFF_OIDC_BASE_URL = `${
-  getFromEnv('BFF_OIDC_BASE_URL') ?? 'https://mijn.amsterdam.nl'
-}`;
-
-export const BFF_OIDC_ISSUER_BASE_URL = `${getFromEnv('BFF_OIDC_ISSUER_BASE_URL')}`;
-
 export const STADSPASSEN_ENDPOINT_PARAMETER = 'administratienummerEncrypted';
 
 export const ExternalConsumerEndpoints = {
@@ -497,38 +476,6 @@ export const BffEndpoints = {
   TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
     '/services/toeristische-verhuur/bb/document/:id',
 
-  // start: OIDC config
-  AUTH_BASE_DIGID,
-  AUTH_BASE_EHERKENNING,
-  AUTH_BASE_SSO,
-  AUTH_BASE_SSO_DIGID,
-  AUTH_BASE_SSO_EHERKENNING,
-
-  // Digid
-  AUTH_CALLBACK_DIGID: BFF_OIDC_BASE_URL + AUTH_BASE_DIGID + AUTH_CALLBACK,
-  AUTH_LOGIN_DIGID: AUTH_BASE_DIGID + AUTH_LOGIN,
-  AUTH_LOGIN_DIGID_LANDING: AUTH_BASE_DIGID + AUTH_LOGIN + '/landing',
-  AUTH_LOGOUT_DIGID: AUTH_BASE_DIGID + AUTH_LOGOUT,
-
-  // EHerkenning
-  AUTH_CALLBACK_EHERKENNING:
-    BFF_OIDC_BASE_URL + AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
-  AUTH_LOGIN_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGIN,
-  AUTH_LOGIN_EHERKENNING_LANDING:
-    AUTH_BASE_EHERKENNING + AUTH_LOGIN + '/landing',
-  AUTH_LOGOUT_EHERKENNING: AUTH_BASE_EHERKENNING + AUTH_LOGOUT,
-  AUTH_LOGOUT_EHERKENNING_LOCAL:
-    AUTH_BASE_EHERKENNING + `${AUTH_LOGOUT}/local-session`,
-
-  // Application specific urls
-  AUTH_CHECK: `${AUTH_BASE}/check`,
-  AUTH_CHECK_EHERKENNING: `${AUTH_BASE_EHERKENNING}/check`,
-  AUTH_CHECK_DIGID: `${AUTH_BASE_DIGID}/check`,
-  AUTH_TOKEN_DATA: `${AUTH_BASE}/token-data`,
-  AUTH_TOKEN_DATA_EHERKENNING: `${AUTH_BASE_EHERKENNING}/token-data`,
-  AUTH_TOKEN_DATA_DIGID: `${AUTH_BASE_DIGID}/token-data`,
-  AUTH_LOGOUT: `${AUTH_BASE}/logout`,
-  // end: OIDC config
   // Bodem / loodmetingen
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
 };
@@ -542,125 +489,6 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.FOOTER,
   BffEndpoints.TELEMETRY_PROXY,
 ];
-
-export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
-export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
-export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
-export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
-export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
-
-const oidcConfigBase: ConfigParams = {
-  authRequired: false,
-  auth0Logout: false,
-  idpLogout: true,
-  // Cookie encryption
-  secret: OIDC_COOKIE_ENCRYPTION_KEY,
-  // Client secret
-  clientSecret: getFromEnv('BFF_OIDC_SECRET'),
-  baseURL: BFF_OIDC_BASE_URL,
-  issuerBaseURL: BFF_OIDC_ISSUER_BASE_URL,
-  attemptSilentLogin: false,
-  authorizationParams: { prompt: 'login', response_type: 'code' },
-  clockTolerance: 120, // 2 minutes
-  session: {
-    rolling: true,
-    rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
-    name: OIDC_SESSION_COOKIE_NAME,
-  },
-  routes: {
-    login: false,
-    logout: false,
-    callback: false,
-  },
-  afterCallback: (req, res, session) => {
-    const claims = jose.decodeJwt(session.id_token) as {
-      nonce: string;
-    };
-
-    const authVerification = JSON.parse(
-      req.cookies.auth_verification.split('.')[0]
-    );
-
-    if (claims.nonce !== authVerification.nonce) {
-      throw new Error(`Nonce invalid`);
-    }
-
-    if (req.query.state !== authVerification.state) {
-      throw new Error(`State invalid`);
-    }
-
-    return session;
-  },
-};
-
-export const oidcConfigDigid: ConfigParams = {
-  ...oidcConfigBase,
-  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_DIGID'),
-};
-
-export const oidcConfigEherkenning: ConfigParams = {
-  ...oidcConfigBase,
-  clientID: getFromEnv('BFF_OIDC_CLIENT_ID_EHERKENNING'),
-};
-
-// Op 1.13 met ketenmachtiging
-export const EH_ATTR_INTERMEDIATE_PRIMARY_ID =
-  'urn:etoegang:core:LegalSubjectID';
-export const EH_ATTR_INTERMEDIATE_SECONDARY_ID =
-  'urn:etoegang:1.9:IntermediateEntityID:KvKnr';
-
-// 1.13 inlog zonder ketenmachtiging:
-export const EH_ATTR_PRIMARY_ID = 'urn:etoegang:core:LegalSubjectID';
-
-// < 1.13 id
-export const EH_ATTR_PRIMARY_ID_LEGACY =
-  'urn:etoegang:1.9:EntityConcernedID:KvKnr';
-
-export const DIGID_ATTR_PRIMARY = 'sub';
-
-export const OIDC_TOKEN_ID_ATTRIBUTE = {
-  eherkenning: (tokenData: TokenData) => {
-    if (FeatureToggle.ehKetenmachtigingActive) {
-      if (
-        EH_ATTR_INTERMEDIATE_PRIMARY_ID in tokenData &&
-        EH_ATTR_INTERMEDIATE_SECONDARY_ID in tokenData
-      ) {
-        return EH_ATTR_INTERMEDIATE_PRIMARY_ID;
-      }
-
-      if (EH_ATTR_PRIMARY_ID in tokenData) {
-        return EH_ATTR_PRIMARY_ID;
-      }
-    }
-
-    // Attr Prior to 1.13
-    return EH_ATTR_PRIMARY_ID_LEGACY;
-  },
-  digid: () => DIGID_ATTR_PRIMARY,
-};
-
-export type TokenIdAttribute =
-  | typeof DIGID_ATTR_PRIMARY
-  | typeof EH_ATTR_PRIMARY_ID;
-
-export const TOKEN_ID_ATTRIBUTE: Record<AuthMethod, TokenIdAttribute> = {
-  eherkenning: EH_ATTR_PRIMARY_ID,
-  digid: DIGID_ATTR_PRIMARY,
-};
-
-export const profileTypeByAuthMethod: Record<AuthMethod, ProfileType[]> = {
-  digid: ['private'],
-  eherkenning: ['commercial'],
-};
-
-export const OIDC_TOKEN_AUD_ATTRIBUTE_VALUE = {
-  get eherkenning() {
-    return oidcConfigEherkenning.clientID;
-  },
-  get digid() {
-    return oidcConfigDigid.clientID;
-  },
-};
 
 export const DEV_JWK_PUBLIC: any = {
   kty: 'RSA',

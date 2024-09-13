@@ -4,23 +4,18 @@ import express, {
   Request,
   Response,
 } from 'express';
-import { testAccounts } from '../universal/config/auth.development';
-
 import UID from 'uid-safe';
+import { testAccounts } from '../universal/config/auth.development';
 import { apiSuccessResult } from '../universal/helpers/api';
 import {
-  BffEndpoints,
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-} from './config';
-import {
-  AuthProfile,
-  getAuth,
-  hasSessionCookie,
-  sendUnauthorized,
-} from './helpers/app';
-import { generateDevSessionCookieValue } from './helpers/app.development';
-import { getReturnToUrl } from './helpers/auth';
+} from './auth/auth-config';
+import { getAuth, getReturnToUrl, hasSessionCookie } from './auth/auth-helpers';
+import { generateDevSessionCookieValue } from './auth/auth-helpers-development';
+import { authRoutes } from './auth/auth-routes';
+import { AuthProfile } from './auth/auth-types';
+import { sendUnauthorized } from './helpers/app';
 import { addToBlackList } from './services/session-blacklist';
 import { countLoggedInVisit } from './services/visitors';
 
@@ -58,7 +53,7 @@ authRouterDevelopment.get(
         const queryString = queryEntries.length
           ? `?${queryEntries.map(([key, val]) => `${key}=${val}`).join('&')}`
           : '';
-        return `<li><a href=${BffEndpoints.AUTH_LOGIN_DIGID}/${userName}${queryString}>${userName}</a>`;
+        return `<li><a href=${authRoutes.AUTH_LOGIN_DIGID}/${userName}${queryString}>${userName}</a>`;
       });
       return res.send(`<ul>${list}</ul>`);
     }

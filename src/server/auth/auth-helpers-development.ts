@@ -1,25 +1,12 @@
 import * as jose from 'jose';
-import { IS_TEST } from '../../universal/config/env';
+import { DEV_JWK_PRIVATE, DEV_JWK_PUBLIC } from '../config';
 import {
-  DEV_JWK_PRIVATE,
-  DEV_JWK_PUBLIC,
   OIDC_SESSION_MAX_AGE_SECONDS,
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   TOKEN_ID_ATTRIBUTE,
-} from '../config';
-import { encryptCookieValue, type AuthProfile } from './app';
-
-const TMA_LONG_LIVED_ID_TOKENS =
-  IS_TEST && process.env.TMA_LONG_LIVED_ID_TOKENS
-    ? process.env.TMA_LONG_LIVED_ID_TOKENS.split(',').reduce(
-        (acc, userToken) => {
-          const [user, token] = userToken.split('=');
-          acc[user] = token;
-          return acc;
-        },
-        {} as Record<string, string>
-      )
-    : null;
+} from './auth-config';
+import { encryptCookieValue } from './auth-helpers';
+import { AuthProfile } from './auth-types';
 
 /**
  *
@@ -68,9 +55,7 @@ export async function generateDevSessionCookieValue(
 
   const value = await encryptCookieValue(
     JSON.stringify({
-      id_token:
-        TMA_LONG_LIVED_ID_TOKENS?.[userID] ??
-        (await signDevelopmentToken(authMethod, userID, sessionID)),
+      id_token: await signDevelopmentToken(authMethod, userID, sessionID),
     }),
     {
       iat,

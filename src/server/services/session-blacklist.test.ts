@@ -3,7 +3,7 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
 } from '../config';
-import { generateDevSessionCookieValue } from '../helpers/app.development';
+import { generateDevSessionCookieValue } from '../auth/auth-helpers-development';
 import {
   addToBlackList,
   isBlacklisted,

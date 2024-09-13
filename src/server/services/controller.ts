@@ -10,8 +10,6 @@ import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
 import {
   addServiceResultHandler,
-  getAuth,
-  getProfileType,
   queryParams,
   sendMessage,
 } from '../helpers/app';
@@ -30,6 +28,7 @@ import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
+import { fetchSSOParkerenURL } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
 import {
   fetchBelasting,
@@ -59,16 +58,16 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchSSOParkerenURL } from './parkeren/parkeren';
+import { getAuth, getProfileType } from '../auth/auth-helpers';
 
 // Default service call just passing requestID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
-  return async (requestID: RequestID, req: Request) =>
+  return async (requestID: requestID, req: Request) =>
     fetchService(requestID, await getAuth(req), queryParams(req));
 }
 
 function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
-  return (requestID: RequestID, req: Request) =>
+  return (requestID: requestID, req: Request) =>
     fetchService(requestID, queryParams(req));
 }
 
@@ -122,13 +121,13 @@ const HORECA = async (requestID: RequestID, req: Request) =>
 
 // Location, address, based services
 const MY_LOCATION = async (requestID: RequestID, req: Request) =>
-  fetchMyLocation(requestID, await getAuth(req), await getProfileType(req));
+  fetchMyLocation(requestID, await getAuth(req));
 
 const AFVAL = async (requestID: RequestID, req: Request) =>
-  fetchAfval(requestID, await getAuth(req), await getProfileType(req));
+  fetchAfval(requestID, await getAuth(req));
 
 const AFVALPUNTEN = async (requestID: RequestID, req: Request) =>
-  fetchAfvalPunten(requestID, await getAuth(req), await getProfileType(req));
+  fetchAfvalPunten(requestID, await getAuth(req));
 
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBelasting);
@@ -333,7 +332,7 @@ export const servicesTipsByProfileType = {
 };
 
 export function loadServices(
-  requestID: RequestID,
+  requestID: requestID,
   req: Request,
   serviceMap:
     | PrivateServices
