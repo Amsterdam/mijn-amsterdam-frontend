@@ -124,7 +124,7 @@ export function createLogoutHandler(
               ? auth.token
               : null,
             logout_hint: FeatureToggle.oidcLogoutHintActive
-              ? (req as any)[OIDC_SESSION_COOKIE_NAME]?.sid
+              ? (req as any)[OIDC_SESSION_COOKIE_NAME]?.sidTMA
               : null,
           },
         });
