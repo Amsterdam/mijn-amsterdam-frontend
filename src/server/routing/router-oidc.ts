@@ -89,8 +89,8 @@ oidcRouter.get(
   authRoutes.AUTH_LOGIN_DIGID_LANDING,
   async (req: Request, res: Response) => {
     try {
-      const auth = await getAuth(req);
-      if (auth.profile.id) {
+      const auth = getAuth(req);
+      if (auth?.profile.id) {
         countLoggedInVisit(auth.profile.id);
       }
     } catch (error) {
@@ -133,8 +133,8 @@ if (FeatureToggle.eherkenningActive) {
   oidcRouter.get(
     authRoutes.AUTH_LOGIN_EHERKENNING_LANDING,
     async (req: Request, res: Response) => {
-      const auth = await getAuth(req);
-      if (auth.profile.id) {
+      const auth = getAuth(req);
+      if (auth?.profile.id) {
         countLoggedInVisit(auth.profile.id, 'eherkenning');
       }
       return res.redirect(
@@ -146,16 +146,12 @@ if (FeatureToggle.eherkenningActive) {
 
 // AuthMethod agnostic endpoints
 oidcRouter.get(authRoutes.AUTH_CHECK, async (req: Request, res: Response) => {
-  try {
-    const auth = await getAuth(req);
-    switch (auth.profile.authMethod) {
-      case 'eherkenning':
-        return verifyAuthenticated('eherkenning', 'commercial')(req, res);
-      case 'digid':
-        return verifyAuthenticated('digid', 'private')(req, res);
-    }
-  } catch (error) {
-    captureException(error);
+  const auth = getAuth(req);
+  switch (auth?.profile.authMethod) {
+    case 'eherkenning':
+      return verifyAuthenticated('eherkenning', 'commercial')(req, res);
+    case 'digid':
+      return verifyAuthenticated('digid', 'private')(req, res);
   }
 
   return sendUnauthorized(res);
@@ -166,8 +162,8 @@ oidcRouter.get(
   requiresAuth(),
   async (req: Request, res: Response) => {
     if (hasSessionCookie(req)) {
-      try {
-        const auth = await getAuth(req);
+      const auth = getAuth(req);
+      if (auth) {
         return res.send(
           apiSuccessResult({
             tokenData: (req as any)[OIDC_SESSION_COOKIE_NAME],
@@ -175,8 +171,6 @@ oidcRouter.get(
             profile: auth.profile,
           })
         );
-      } catch (error) {
-        captureException(error);
       }
     }
 
@@ -189,8 +183,8 @@ oidcRouter.get(authRoutes.AUTH_LOGOUT, async (req: Request, res: Response) => {
   let authMethodRequested = req.query.authMethod;
 
   if (hasSessionCookie(req) && !authMethodRequested) {
-    const auth = await getAuth(req);
-    authMethodRequested = auth.profile.authMethod;
+    const auth = getAuth(req);
+    authMethodRequested = auth?.profile.authMethod;
   }
 
   switch (authMethodRequested) {

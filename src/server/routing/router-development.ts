@@ -137,8 +137,8 @@ authRouterDevelopment.get(
 );
 
 authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
-  const auth = await getAuth(req);
-  if (auth.profile.sid) {
+  const auth = getAuth(req);
+  if (auth?.profile.sid) {
     await addToBlackList(auth.profile.sid);
   }
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
@@ -151,15 +151,9 @@ authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_AUTH_CHECK,
   async (req, res) => {
-    console.log(
-      res.locals.requestID,
-      '\n===>>>>>>>\n auth check',
-      (req as any).oidc
-    );
     if (hasSessionCookie(req)) {
-      console.log('session req', req.cookies);
-      try {
-        const auth = await getAuth(req);
+      const auth = getAuth(req);
+      if (auth) {
         return res.send(
           apiSuccessResult({
             isAuthenticated: true,
@@ -167,8 +161,6 @@ authRouterDevelopment.get(
             authMethod: auth.profile.authMethod,
           })
         );
-      } catch (error) {
-        console.log(error);
       }
     }
 

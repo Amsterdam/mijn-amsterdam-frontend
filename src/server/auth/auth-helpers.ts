@@ -56,7 +56,7 @@ function getSessionData(req: Request) {
   return reqWithSession?.[OIDC_SESSION_COOKIE_NAME] ?? null;
 }
 
-export async function getAuth(req: Request) {
+export function getAuth(req: Request) {
   const tokenData = req.oidc.user as TokenData;
   const oidcToken = req.oidc.idToken ?? '';
   const sessionData = getSessionData(req);
@@ -71,12 +71,6 @@ export async function getAuth(req: Request) {
     token: oidcToken,
     profile,
   };
-}
-
-export async function getProfileType(req: Request): Promise<ProfileType> {
-  const auth = await getAuth(req);
-  const profileType = auth.profile.profileType;
-  return profileType || DEFAULT_PROFILE_TYPE;
 }
 
 export function isSessionCookieName(cookieName: string) {
@@ -95,8 +89,10 @@ export async function isRequestAuthenticated(
 ) {
   try {
     if (req.oidc.isAuthenticated()) {
-      const auth = await getAuth(req);
-      return auth.profile.authMethod === authMethod;
+      const auth = getAuth(req);
+      if (auth) {
+        return auth.profile.authMethod === authMethod;
+      }
     }
   } catch (error) {
     console.error(error);
@@ -117,22 +113,25 @@ export function createLogoutHandler(
 ) {
   return async (req: Request, res: Response) => {
     if (req.oidc.isAuthenticated() && doIDPLogout) {
-      const auth = await getAuth(req);
-      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
-      if (auth.profile.sid) {
-        await addToBlackList(auth.profile.sid);
+      const auth = getAuth(req);
+      if (auth) {
+        // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
+        if (auth.profile.sid) {
+          await addToBlackList(auth.profile.sid);
+        }
+
+        return res.oidc.logout({
+          returnTo: postLogoutRedirectUrl,
+          logoutParams: {
+            id_token_hint: !FeatureToggle.oidcLogoutHintActive
+              ? auth.token
+              : null,
+            logout_hint: FeatureToggle.oidcLogoutHintActive
+              ? auth.profile.sid
+              : null,
+          },
+        });
       }
-      return res.oidc.logout({
-        returnTo: postLogoutRedirectUrl,
-        logoutParams: {
-          id_token_hint: !FeatureToggle.oidcLogoutHintActive
-            ? auth.token
-            : null,
-          logout_hint: FeatureToggle.oidcLogoutHintActive
-            ? auth.profile.sid
-            : null,
-        },
-      });
     }
 
     // Destroy the session context

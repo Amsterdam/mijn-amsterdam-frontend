@@ -32,7 +32,7 @@ import {
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 import { BffEndpoints } from './bff-routes';
-import { isProtectedRoute } from './route-helpers';
+import { isProtectedRoute, sendUnauthorized } from './route-helpers';
 import { isAuthenticated, isBlacklistedHandler } from './route-handlers';
 
 export const router = express.Router();
@@ -66,9 +66,8 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await NOTIFICATIONS(res.locals.requestID, req);
-      const tips = response.content.filter(
-        (notification) => notification.isTip
-      );
+      const tips =
+        response.content?.filter((notification) => notification.isTip) ?? [];
       return res.json(tips);
     } catch (error) {
       next(error);
@@ -107,15 +106,18 @@ attachDocumentDownloadRoute(
 router.get(
   BffEndpoints.MKS_AANTAL_BEWONERS,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
+    const authProfileAndToken = getAuth(req);
 
-    const bewonersResponse = await fetchAantalBewoners(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.addressKeyEncrypted
-    );
+    if (authProfileAndToken) {
+      const bewonersResponse = await fetchAantalBewoners(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.addressKeyEncrypted
+      );
 
-    return res.send(bewonersResponse);
+      return res.send(bewonersResponse);
+    }
+    return sendUnauthorized(res);
   }
 );
 
@@ -123,15 +125,19 @@ router.get(
 router.get(
   BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
+    const authProfileAndToken = getAuth(req);
 
-    const documentsListResponse = await fetchVergunningenDocumentsList(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
+    if (authProfileAndToken) {
+      const documentsListResponse = await fetchVergunningenDocumentsList(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.id
+      );
 
-    return res.send(documentsListResponse);
+      return res.send(documentsListResponse);
+    }
+
+    return sendUnauthorized(res);
   }
 );
 
@@ -139,17 +145,19 @@ router.get(
 router.get(
   BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
+    const authProfileAndToken = getAuth(req);
+    if (authProfileAndToken) {
+      const documentResponse = await fetchVergunningenDocument(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.id
+      );
 
-    const documentResponse = await fetchVergunningenDocument(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
-
-    const contentType = documentResponse.headers['content-type'];
-    res.setHeader('content-type', contentType);
-    documentResponse.data.pipe(res);
+      const contentType = documentResponse.headers['content-type'];
+      res.setHeader('content-type', contentType);
+      documentResponse.data.pipe(res);
+    }
+    return sendUnauthorized(res);
   }
 );
 
@@ -186,32 +194,38 @@ attachDocumentDownloadRoute(
 router.get(
   BffEndpoints.BEZWAREN_DETAIL,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-    const response = await fetchBezwaarDetail(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.id
-    );
+    const authProfileAndToken = getAuth(req);
+    if (authProfileAndToken) {
+      const response = await fetchBezwaarDetail(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.id
+      );
 
-    return res.send(response);
+      return res.send(response);
+    }
+    return sendUnauthorized(res);
   }
 );
 
 router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
   async (req: Request, res: Response) => {
-    const authProfileAndToken = await getAuth(req);
-    const response = await fetchErfpachtV2DossiersDetail(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.dossierNummerUrlParam
-    );
+    const authProfileAndToken = getAuth(req);
+    if (authProfileAndToken) {
+      const response = await fetchErfpachtV2DossiersDetail(
+        res.locals.requestID,
+        authProfileAndToken,
+        req.params.dossierNummerUrlParam
+      );
 
-    if (response.status === 'ERROR') {
-      res.status(typeof response.code === 'number' ? response.code : 500);
+      if (response.status === 'ERROR') {
+        res.status(typeof response.code === 'number' ? response.code : 500);
+      }
+
+      return res.send(response);
     }
-
-    return res.send(response);
+    return sendUnauthorized(res);
   }
 );
 

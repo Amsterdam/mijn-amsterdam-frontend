@@ -165,8 +165,7 @@ const notificationServices: NotificationServicesByProfileType = {
       fetchToeristischeVerhuurNotifications(
         requestID,
         authProfileAndToken,
-        new Date(),
-        'commercial'
+        new Date()
       ),
     bodem: fetchLoodMetingNotifications,
     bezwaren: fetchBezwarenNotifications,

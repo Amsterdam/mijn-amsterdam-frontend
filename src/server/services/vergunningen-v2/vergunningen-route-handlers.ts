@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import {
+  generateFullApiUrlBFF,
+  sendUnauthorized,
+} from '../../routing/route-helpers';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { DecosZaakSource } from './config-and-types';
 import {
@@ -11,21 +14,28 @@ import {
 import { fetchVergunningV2 } from './vergunningen';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
-  const authProfileAndToken = await getAuth(req);
-  const response = await fetchVergunningV2(
-    res.locals.requestID,
-    authProfileAndToken,
-    req.params.id
-  );
+  const authProfileAndToken = getAuth(req);
+  if (authProfileAndToken) {
+    const response = await fetchVergunningV2(
+      res.locals.requestID,
+      authProfileAndToken,
+      req.params.id
+    );
 
-  return res.send(response);
+    return res.send(response);
+  }
+  return sendUnauthorized(res);
 }
 
 export async function fetchZakenFromSource(
   req: Request<{ id?: string }>,
   res: Response
 ) {
-  const authProfileAndToken = await getAuth(req);
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
 
   if (req.params.id) {
     const zaakResponse = await fetchDecosZaakFromSource(

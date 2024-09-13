@@ -4,7 +4,7 @@ import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
 
-export function queryParams<T extends Record<string, string>>(req: Request) {
+export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
 }
 

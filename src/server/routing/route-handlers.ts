@@ -17,13 +17,15 @@ export async function isBlacklistedHandler(
   res: Response,
   next: NextFunction
 ) {
-  const auth = await getAuth(req);
-  if (auth.profile.sid) {
+  const auth = getAuth(req);
+
+  if (auth?.profile.sid) {
     const isOnList = await getIsBlackListed(auth.profile.sid);
     if (isOnList) {
       return sendUnauthorized(res);
     }
   }
+
   return next();
 }
 
@@ -34,7 +36,7 @@ export async function isAuthenticated(
 ) {
   if (hasSessionCookie(req)) {
     try {
-      await getAuth(req);
+      getAuth(req);
       return next();
     } catch (error) {
       captureMessage('Not authenticated: Session invalid', {

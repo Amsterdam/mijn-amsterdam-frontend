@@ -190,7 +190,7 @@ export interface QueryParamsMaintenanceNotifications
 
 export async function fetchMaintenanceNotificationsActual(
   requestID: RequestID,
-  queryParams?: QueryParamsMaintenanceNotifications
+  queryParams: QueryParamsMaintenanceNotifications
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
     requestID,

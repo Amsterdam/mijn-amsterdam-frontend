@@ -75,7 +75,7 @@ async function sendAdministratienummerResponse(
   let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
   console.log('send::');
   try {
-    authProfileAndToken = await getAuth(req);
+    authProfileAndToken = getAuth(req);
     console.log('authProfileAndToken::', authProfileAndToken);
   } catch (error) {
     apiResponseError = apiResponseErrors.DIGID_AUTH;
