@@ -304,7 +304,7 @@ function formatFactuurRequestURL(
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
 
   if (params.top) {
-    query += `&$top=${top}`;
+    query += `&$top=${params.top}`;
   }
 
   return `${baseUrl}${baseRoute}${query}`;
