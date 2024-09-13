@@ -1,6 +1,6 @@
 import { TextPartContents, ZorgnedAanvraagTransformed } from './zorgned-types';
 
-export function parseLabelContent<T extends ZorgnedAanvraagTransformed>(
+export function parseLabelContent<T>(
   text: TextPartContents<T>,
   aanvraag: T,
   today: Date,

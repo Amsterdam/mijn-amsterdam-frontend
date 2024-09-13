@@ -3,13 +3,13 @@ import { GenericDocument } from '../../../universal/types';
 export const ZORGNED_GEMEENTE_CODE = '0363';
 
 export type TextPartContent = string;
-export type TextPartContentTransformer<T extends ZorgnedAanvraagTransformed> = (
+export type TextPartContentTransformer<T> = (
   aanvraag: T,
   today: Date,
   allAanvragen: T[]
 ) => TextPartContent;
 
-export type TextPartContents<T extends ZorgnedAanvraagTransformed> =
+export type TextPartContents<T> =
   | TextPartContent
   | TextPartContentTransformer<T>;
 
