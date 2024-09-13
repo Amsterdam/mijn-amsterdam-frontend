@@ -186,7 +186,10 @@ async function startServerBFF() {
   server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
 
-if (require.main?.filename.endsWith('bffserver.ts')) {
+if (
+  require.main?.filename.endsWith('bffserver.ts') ||
+  require.main?.filename.endsWith('app.js')
+) {
   startServerBFF();
   // Start Cron jobs
   cleanupSessionBlacklistTable.start();
