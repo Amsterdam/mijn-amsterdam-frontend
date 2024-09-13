@@ -5,10 +5,16 @@ import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
 import {
+  fetchAanvragen,
+  fetchDocument,
+  fetchRelatedPersons,
+  forTesting,
+} from './zorgned-service';
+import {
   ZORGNED_GEMEENTE_CODE,
+  ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
 } from './zorgned-types';
-import { fetchAanvragen, fetchDocument, forTesting } from './zorgned-service';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -34,6 +40,7 @@ vi.mock('../../../server/helpers/encrypt-decrypt', () => ({
 
 describe('zorgned-service', () => {
   const requestData = vi.spyOn(request, 'requestData');
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -178,5 +185,87 @@ describe('zorgned-service', () => {
         data: Buffer.from('Zm9vLWJhcg==', 'base64'),
       },
     });
+  });
+
+  test('transformZorgnedPersonResponse', () => {
+    const naam = forTesting.transformZorgnedPersonResponse({
+      persoon: {
+        voorvoegsel: null,
+        geboortenaam: 'Alex',
+        voornamen: 'Flex',
+        geboortedatum: '2016-07-09',
+      },
+    } as ZorgnedPersoonsgegevensNAWResponse);
+
+    expect(naam).toMatchInlineSnapshot(`
+      {
+        "dateOfBirth": "2016-07-09",
+        "dateOfBirthFormatted": "09 juli 2016",
+        "name": "Flex",
+      }
+    `);
+
+    const naam2 = forTesting.transformZorgnedPersonResponse({
+      persoon: {
+        voorvoegsel: 'de',
+        geboortenaam: 'Jarvis',
+        voornamen: 'Baron',
+        geboortedatum: '2016-07-09',
+      },
+    } as ZorgnedPersoonsgegevensNAWResponse);
+
+    expect(naam2).toMatchInlineSnapshot(`
+      {
+        "dateOfBirth": "2016-07-09",
+        "dateOfBirthFormatted": "09 juli 2016",
+        "name": "Baron",
+      }
+    `);
+
+    const naam3 = forTesting.transformZorgnedPersonResponse({
+      persoon: null,
+    } as unknown as ZorgnedPersoonsgegevensNAWResponse);
+
+    expect(naam3).toBe(null);
+  });
+
+  test('fetchRelatedPersons', async () => {
+    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+      persoon: {
+        voorvoegsel: 'de',
+        geboortenaam: 'Jarvis',
+        voornamen: 'Baron',
+        geboortedatum: '2016-07-09',
+      },
+    } as ZorgnedPersoonsgegevensNAWResponse);
+
+    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+      persoon: {
+        voorvoegsel: null,
+        geboortenaam: 'Alex',
+        voornamen: 'Flex',
+        geboortedatum: '2016-07-09',
+      },
+    } as ZorgnedPersoonsgegevensNAWResponse);
+
+    const response = await fetchRelatedPersons('xx2xxx', ['1', '2']);
+
+    expect(response).toMatchInlineSnapshot(`
+      {
+        "content": [
+          {
+            "dateOfBirth": "2016-07-09",
+            "dateOfBirthFormatted": "09 juli 2016",
+            "name": "Baron",
+          },
+          {
+            "dateOfBirth": "2016-07-09",
+            "dateOfBirthFormatted": "09 juli 2016",
+            "name": "Flex",
+          },
+        ],
+        "status": "OK",
+      }
+    `);
   });
 });

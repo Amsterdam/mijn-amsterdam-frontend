@@ -1,3 +1,17 @@
+import memoizee from 'memoizee';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+  getSettledResult,
+} from '../../../universal/helpers/api';
+import { getFullName } from '../../../universal/helpers/brp';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
+import { hash } from '../../../universal/helpers/utils';
+import { GenericDocument } from '../../../universal/types';
+import { getApiConfig, ONE_SECOND_MS } from '../../config';
+import { AuthProfileAndToken } from '../../helpers/app';
+import { requestData } from '../../helpers/source-api-request';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   BeschiktProduct,
   LeveringsVorm,
@@ -5,20 +19,10 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedDocument,
   ZorgnedDocumentResponseSource,
+  ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
 } from './zorgned-types';
-
-import { GenericDocument } from '../../../universal/types';
-import { ONE_SECOND_MS } from '../../config/app';
-
-import memoizee from 'memoizee';
-import { dateSort } from '../../../universal/helpers/date';
-import { hash } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -244,6 +248,62 @@ export async function fetchRelaties(
   return relaties;
 }
 
+function transformZorgnedPersonResponse(
+  zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
+): ZorgnedPerson | null {
+  if (zorgnedResponseData?.persoon) {
+    return {
+      name:
+        zorgnedResponseData?.persoon?.voornamen ??
+        getFullName({
+          voornamen: zorgnedResponseData?.persoon?.voornamen,
+          geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
+          voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
+        }),
+      dateOfBirth: zorgnedResponseData.persoon.geboortedatum,
+      dateOfBirthFormatted: zorgnedResponseData.persoon.geboortedatum
+        ? defaultDateFormat(zorgnedResponseData.persoon.geboortedatum)
+        : null,
+    };
+  }
+  return null;
+}
+
+export async function fetchRelatedPersons_(
+  requestID: requestID,
+  userIDs: string[]
+) {
+  const requests = userIDs.map((userID) => {
+    return fetchPersoonsgegevensNAW(requestID, userID, 'ZORGNED_AV');
+  });
+
+  const results = await Promise.allSettled(requests);
+  const namesAndDatesOfBirth: ZorgnedPerson[] = [];
+
+  for (const result of results) {
+    const response = getSettledResult(result);
+    const person =
+      response.status === 'OK'
+        ? transformZorgnedPersonResponse(response.content)
+        : null;
+    if (person) {
+      namesAndDatesOfBirth.push(person);
+    } else {
+      return apiErrorResult(
+        'Something went wrong when retrieving names of betrokkenen.',
+        null
+      );
+    }
+  }
+
+  return apiSuccessResult(namesAndDatesOfBirth);
+}
+
+export const fetchRelatedPersons = memoizee(fetchRelatedPersons_, {
+  length: 3,
+  maxAge: 45 * ONE_SECOND_MS,
+});
+
 export async function fetchPersoonsgegevensNAW_(
   requestID: RequestID,
   userID: AuthProfileAndToken['profile']['id'],
@@ -276,6 +336,7 @@ export const forTesting = {
   transformDocumenten,
   transformZorgnedAanvraag,
   transformZorgnedAanvragen,
+  transformZorgnedPersonResponse,
   fetchAanvragen,
   fetchDocument,
 };

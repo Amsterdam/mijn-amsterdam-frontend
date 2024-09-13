@@ -6,7 +6,6 @@ import {
 } from '../zorgned/zorgned-types';
 import {
   fetchAdministratienummer,
-  fetchNamenBetrokkenen,
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
@@ -82,64 +81,6 @@ describe('hli-zorgned-service', () => {
         "content": null,
         "message": "Request failed with status code 500",
         "status": "ERROR",
-      }
-    `);
-  });
-
-  test('transformZorgnedBetrokkeneNaamResponse', () => {
-    const naam = forTesting.transformZorgnedBetrokkeneNaamResponse({
-      persoon: {
-        voorvoegsel: null,
-        geboortenaam: 'Alex',
-        voornamen: 'Flex',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    expect(naam).toMatchInlineSnapshot(`"Flex"`);
-
-    const naam2 = forTesting.transformZorgnedBetrokkeneNaamResponse({
-      persoon: {
-        voorvoegsel: 'de',
-        geboortenaam: 'Jarvis',
-        voornamen: 'Baron',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    expect(naam2).toMatchInlineSnapshot(`"Baron"`);
-
-    const naam3 = forTesting.transformZorgnedBetrokkeneNaamResponse({
-      persoon: null,
-    } as unknown as ZorgnedPersoonsgegevensNAWResponse);
-
-    expect(naam3).toBe(null);
-  });
-
-  test('fetchNamenBetrokkenen', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        voorvoegsel: 'de',
-        geboortenaam: 'Jarvis',
-        voornamen: 'Baron',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        voorvoegsel: null,
-        geboortenaam: 'Alex',
-        voornamen: 'Flex',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    const response = await fetchNamenBetrokkenen('xx2xxx', ['1', '2']);
-
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": [
-          "Baron",
-          "Flex",
-        ],
-        "status": "OK",
       }
     `);
   });

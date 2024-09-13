@@ -156,5 +156,12 @@ export interface ZorgnedPersoonsgegevensNAWResponse {
     voorletters: string;
     voornamen: string;
     voorvoegsel: string | null;
+    geboortedatum: string | null;
   };
+}
+
+export interface ZorgnedPerson {
+  name: string;
+  dateOfBirth: string | null;
+  dateOfBirthFormatted: string | null;
 }

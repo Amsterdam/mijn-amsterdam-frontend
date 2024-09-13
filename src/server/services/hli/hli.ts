@@ -17,15 +17,13 @@ import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types'
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
-import {
-  fetchNamenBetrokkenen,
-  fetchZorgnedAanvragenHLI,
-} from './hli-zorgned-service';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,
 } from './status-line-items/pcvergoeding';
+import { fetchRelatedPersons } from '../zorgned/zorgned-service';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagTransformed,
@@ -81,12 +79,12 @@ async function transformRegelingForFrontend(
   let namen: string[] = [];
 
   if (aanvraag.betrokkenen?.length) {
-    const namenResponse = await fetchNamenBetrokkenen(
+    const personsResponse = await fetchRelatedPersons(
       requestID,
       aanvraag.betrokkenen
     );
-    if (namenResponse.status === 'OK') {
-      namen = namenResponse.content;
+    if (personsResponse.status === 'OK') {
+      namen = personsResponse.content.map((person) => person.name);
     }
   }
 
