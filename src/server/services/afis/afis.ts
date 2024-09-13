@@ -326,10 +326,11 @@ export async function fetchAfisFacturenOverview(
     top: '3',
   });
 
-  const [facturenOpenResult, facturenClosedResult] = await Promise.all([
-    facturenOpenRequest,
-    facturenClosedRequest,
-  ]);
+  const [facturenOpenResponse, facturenClosedResponse] =
+    await Promise.allSettled([facturenOpenRequest, facturenClosedRequest]);
+
+  const facturenOpenResult = getSettledResult(facturenOpenResponse);
+  const facturenClosedResult = getSettledResult(facturenClosedResponse);
 
   const facturenOverview = {
     open: facturenOpenResult.content ?? [],
