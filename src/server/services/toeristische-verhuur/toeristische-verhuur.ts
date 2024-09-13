@@ -21,7 +21,7 @@ import {
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { BBVergunning, fetchBBVergunning } from './bb-vergunning';
 import {

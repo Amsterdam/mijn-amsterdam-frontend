@@ -1,27 +1,9 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import https from 'https';
-import { IS_OT, IS_TAP } from '../universal/config/env';
-import { FeatureToggle } from '../universal/config/feature-toggles';
-import { jsonCopy } from '../universal/helpers/utils';
-import { getCert } from './helpers/cert';
-import { getFromEnv } from './helpers/env';
-import { BFF_BASE_PATH } from './routing/bff-routes';
-
-export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
-
-export const IS_DEBUG = process.env.DEBUG === '1';
-
-export const BFF_REQUEST_CACHE_ENABLED =
-  typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
-    ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'
-    : true;
-
-export const RELEASE_VERSION = `mijnamsterdam-bff@${process.env.MA_RELEASE_VERSION_TAG ?? 'notset'}`;
-
-// Urls used in the BFF api
-// Microservices (Tussen Api) base url
-export const BFF_HOST = process.env.BFF_HOST || 'localhost';
-export const BFF_PORT = process.env.BFF_PORT || 5000;
+import { IS_OT, IS_TAP } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { getCert } from '../helpers/cert';
+import { getFromEnv } from '../helpers/env';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -56,8 +38,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 export const ONE_SECOND_MS = 1000;
 export const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
 export const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
-
-export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 24 * 3; // The TMA currently has a token expiration time of 3 hours
 
 export const DEFAULT_API_CACHE_TTL_MS = (IS_OT ? 65 : 45) * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
 export const DEFAULT_CANCEL_TIMEOUT_MS = (IS_OT ? 60 : 20) * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
@@ -327,38 +307,3 @@ type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];
 
 export type ApiUrlEntries = ApiUrlEntry[];
-
-export function getApiConfig(
-  name: SourceApiKey,
-  config: DataRequestConfig = {}
-): DataRequestConfig {
-  let apiConfig = ApiConfig[name];
-
-  // Take of the agent because it cannot be jsonCopied.
-  const agent = apiConfig.httpsAgent;
-  delete apiConfig.httpsAgent;
-
-  // Copy the config to prevent assigning privacy/identity related information across requests
-  let apiConfigCopy = jsonCopy(apiConfig);
-
-  // copy the config and transfer the https agent instance.
-  if (agent) {
-    // re-assign the agent
-    apiConfig.httpsAgent = agent;
-
-    // also assign agent to copy
-    apiConfigCopy.httpsAgent = agent;
-  }
-
-  let customUrl = '';
-
-  if (typeof config.formatUrl === 'function') {
-    customUrl = config.formatUrl(apiConfig);
-  }
-
-  return Object.assign(
-    apiConfigCopy,
-    config,
-    customUrl ? { url: customUrl } : null
-  );
-}

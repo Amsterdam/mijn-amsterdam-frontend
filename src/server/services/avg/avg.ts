@@ -9,7 +9,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
-import { getApiConfig } from '../../config';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';

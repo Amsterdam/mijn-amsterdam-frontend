@@ -2,7 +2,7 @@ import express, { Response, Request } from 'express';
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_SESSION_MAX_AGE_SECONDS,
-} from '../config';
+} from '../config/source-api';
 import { generateDevSessionCookieValue } from '../auth/auth-helpers-development';
 import {
   addToBlackList,

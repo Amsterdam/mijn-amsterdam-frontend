@@ -1,10 +1,24 @@
 import {
+  MockInstance,
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  test,
+  vi,
+} from 'vitest';
+import { remoteApiHost } from '../../setupTests';
+import { remoteApi } from '../../test-utils';
+import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { ApiUrlEntries } from '../config';
-import { AuthProfileAndToken } from './app';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { ApiUrlEntries } from '../config/source-api';
 import {
   axiosRequest,
   cache,
@@ -12,20 +26,6 @@ import {
   getRequestConfigCacheKey,
   requestData,
 } from './source-api-request';
-import { remoteApi } from '../../test-utils';
-import {
-  vi,
-  describe,
-  beforeAll,
-  beforeEach,
-  afterEach,
-  expect,
-  it,
-  test,
-  MockInstance,
-  afterAll,
-} from 'vitest';
-import { remoteApiHost } from '../../setupTests';
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };

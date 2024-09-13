@@ -2,7 +2,7 @@ import * as appInsights from 'applicationinsights';
 import { SeverityLevel } from 'applicationinsights/out/Declarations/Contracts';
 import { Telemetry } from 'applicationinsights/out/Declarations/Contracts/TelemetryTypes/Telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { IS_DEBUG } from '../config';
+import { IS_DEBUG } from '../config/app';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights

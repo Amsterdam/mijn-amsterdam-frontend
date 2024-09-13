@@ -7,9 +7,8 @@ import {
 } from '../../universal/config/myarea-datasets';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { authRoutes } from '../auth/auth-routes';
-import { RELEASE_VERSION } from '../config';
+import { RELEASE_VERSION } from '../config/app';
 import { queryParams } from '../helpers/app';
-import { BffEndpoints } from './bff-routes';
 import {
   QueryParamsCMSFooter,
   fetchCMSCONTENT,
@@ -25,6 +24,7 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
+import { BffEndpoints } from './bff-routes';
 
 export const router = express.Router();
 

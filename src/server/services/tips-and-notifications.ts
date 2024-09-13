@@ -5,7 +5,7 @@ import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification, MyTip } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../config';
+import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';

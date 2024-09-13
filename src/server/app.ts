@@ -20,15 +20,15 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { BFF_PORT, IS_DEBUG } from './config';
 import { clearRequestCache, nocache, requestID, send404 } from './helpers/app';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
 
+import { BFF_PORT, IS_DEBUG } from './config/app';
+import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { router as oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { stadspasExternalConsumerRouter } from './services/hli/stadspas-router-external-consumer';
 import { captureException } from './services/monitoring';

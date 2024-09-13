@@ -8,7 +8,7 @@ import {
   generateDevSessionCookieValue,
   signDevelopmentToken,
 } from '../auth/auth-helpers-development';
-import * as config from '../config';
+import * as config from '../config/source-api';
 
 import {
   DIGID_ATTR_PRIMARY,

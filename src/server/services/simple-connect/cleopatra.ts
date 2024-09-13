@@ -8,7 +8,7 @@ import {
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../config';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { getCert } from '../../helpers/cert';
 import { ApiPatternResponseA, fetchService } from './api-service';
 

@@ -3,7 +3,7 @@ import * as jose from 'jose';
 import { generatePath, matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
-import { BFF_API_BASE_URL, IS_DEBUG } from '../config';
+import { BFF_API_BASE_URL, IS_DEBUG } from '../config/app';
 import { PUBLIC_BFF_ENDPOINTS } from '../routing/bff-routes';
 import { clearSessionCache } from './source-api-request';
 

@@ -27,8 +27,9 @@ import {
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS, getApiConfig } from '../../config';
+import { ONE_SECOND_MS } from '../../config/source-api';
 import { generateFullApiUrlBFF } from '../../helpers/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import {

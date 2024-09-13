@@ -10,15 +10,15 @@ import {
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import { AuthProfileAndToken } from '../auth/auth-types';
+import { BFF_REQUEST_CACHE_ENABLED } from '../config/app';
 import {
   ApiUrlEntries,
-  BFF_REQUEST_CACHE_ENABLED,
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
-} from '../config';
+} from '../config/source-api';
 import { captureException } from '../services/monitoring';
 import { Deferred } from './deferred';
-import { AuthProfileAndToken } from '../auth/auth-types';
 
 export const axiosRequest = axios.create({
   responseType: 'json',

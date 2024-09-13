@@ -4,7 +4,7 @@ import { IS_TAP } from '../../universal/config/env';
 import { Themas } from '../../universal/config/thema';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
-import { getApiConfig } from '../config';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
 

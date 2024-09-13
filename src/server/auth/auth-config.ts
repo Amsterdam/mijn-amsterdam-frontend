@@ -1,6 +1,7 @@
 import { ConfigParams } from 'express-openid-connect';
 import * as jose from 'jose';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { ONE_HOUR_MS } from '../config/source-api';
 import { getFromEnv } from '../helpers/env';
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
 import { TokenData } from './auth-types';
@@ -14,6 +15,8 @@ export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
+
+export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 24 * 3; // The TMA currently has a token expiration time of 3 hours
 
 const oidcConfigBase: ConfigParams = {
   authRequired: false,

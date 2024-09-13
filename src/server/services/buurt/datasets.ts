@@ -15,7 +15,7 @@ import {
 } from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
-import { DataRequestConfig } from '../../config';
+import { DataRequestConfig } from '../../config/source-api';
 import FileCache from '../../helpers/file-cache';
 import {
   axiosRequest,

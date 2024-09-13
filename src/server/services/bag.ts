@@ -6,7 +6,7 @@ import {
   getLatLonByAddress,
 } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
-import { getApiConfig } from '../config';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 
 export interface BAGData {

@@ -2,7 +2,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { Adres } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { getApiConfig } from '../config';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 import { isAmsterdamAddress } from './buurt/helpers';
 

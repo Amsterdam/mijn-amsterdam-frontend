@@ -1,28 +1,21 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
-import {
-  isRecentNotification,
-  sortAlpha,
-} from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
-import { DataRequestConfig, getApiConfig } from '../../config';
-import { generateFullApiUrlBFF } from '../../helpers/app';
-import {
-  Lood365Response,
-  LoodMeting,
-  LoodMetingDocument,
-  LoodMetingRequestsSource,
-  LoodMetingen,
-} from './types';
-
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import {
+  isRecentNotification,
+  sortAlpha,
+} from '../../../universal/helpers/utils';
+import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
+import { generateFullApiUrlBFF } from '../../helpers/app';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { captureException } from '../monitoring';
@@ -30,6 +23,13 @@ import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
 } from '../shared/document-download-route-handler';
+import {
+  Lood365Response,
+  LoodMeting,
+  LoodMetingDocument,
+  LoodMetingRequestsSource,
+  LoodMetingen,
+} from './types';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {

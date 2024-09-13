@@ -3,7 +3,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 
 import { MyNotification } from '../../../universal/types';
-import { DataRequestConfig, getApiConfig } from '../../config';
+import { DataRequestConfig } from '../../config/source-api';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 
 import { AppRoutes } from '../../../universal/config/routes';
@@ -17,6 +17,7 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { generateFullApiUrlBFF } from '../../helpers/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
