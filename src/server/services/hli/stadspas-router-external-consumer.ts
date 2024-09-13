@@ -9,11 +9,8 @@ import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
-import {
-  apiKeyVerificationHandler,
-  sendBadRequest,
-  sendResponse,
-} from '../../routing/middleware';
+import { apiKeyVerificationHandler } from '../../routing/middleware';
+import { sendBadRequest, sendResponse } from '../../routing/helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {

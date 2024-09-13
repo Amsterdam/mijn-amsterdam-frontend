@@ -21,7 +21,7 @@ import { authRoutes } from '../auth/auth-routes';
 import { AuthProfile } from '../auth/auth-types';
 import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
-import { sendUnauthorized } from './middleware';
+import { sendUnauthorized } from './helpers';
 
 const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',

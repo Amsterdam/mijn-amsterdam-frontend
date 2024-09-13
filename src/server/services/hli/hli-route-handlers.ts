@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { sendResponse } from '../../routing/middleware';
+import { sendResponse } from '../../routing/helpers';
 import { fetchDocument } from '../zorgned/zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';

@@ -11,7 +11,7 @@ import { MyNotification } from '../../universal/types';
 import { getAuth, getProfileType } from '../auth/auth-helpers';
 import { IS_DEBUG } from '../config/app';
 import { queryParams } from '../routing/helpers';
-import { sendMessage } from '../routing/middleware';
+import { sendMessage } from '../routing/helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';

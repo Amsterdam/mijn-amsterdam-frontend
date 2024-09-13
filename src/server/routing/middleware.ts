@@ -1,10 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import uid from 'uid-safe';
-import {
-  apiErrorResult,
-  ApiResponse,
-  apiSuccessResult,
-} from '../../universal/helpers/api';
+import { apiSuccessResult } from '../../universal/helpers/api';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import {
   getAuth,
@@ -14,6 +10,7 @@ import {
 import { clearSessionCache } from '../helpers/source-api-request';
 import { captureMessage } from '../services/monitoring';
 import { isBlacklisted } from '../services/session-blacklist';
+import { sendUnauthorized } from './helpers';
 
 export async function isBlacklistedHandler(
   req: Request,
@@ -98,51 +95,7 @@ export function requestID(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-/** Sets the right statuscode and sends a response. */
-export function sendResponse(res: Response, apiResponse: ApiResponse) {
-  if (apiResponse.status === 'ERROR') {
-    res.status(typeof apiResponse.code === 'number' ? apiResponse.code : 500);
-  }
-
-  return res.send(apiResponse);
-}
-
-export function sendBadRequest(
-  res: Response,
-  reason: string,
-  content: object | string | null = null
-) {
-  return res
-    .status(400)
-    .send(apiErrorResult(`Bad request: ${reason}`, content, 400));
-}
-
-export function sendUnauthorized(
-  res: Response,
-  message: string = 'Unauthorized'
-) {
-  res.status(401);
-  return res.send(apiErrorResult(message, null, 401));
-}
-
-export function send404(res: Response) {
-  res.status(404);
-  return res.send(apiErrorResult('Not Found', null, 404));
-}
-
 export function clearRequestCache(req: Request, res: Response) {
   const requestID = res.locals.requestID!;
   clearSessionCache(requestID);
-}
-
-export function sendMessage(
-  res: Response,
-  id: string,
-  event: string = 'message',
-  data?: any
-) {
-  const doStringify = typeof data !== 'string';
-  const payload = doStringify ? JSON.stringify(data) : data;
-  const message = `event: ${event}\nid: ${id}\ndata: ${payload}\n\n`;
-  res.write(message);
 }

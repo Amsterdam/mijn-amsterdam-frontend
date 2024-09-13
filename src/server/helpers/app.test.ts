@@ -40,12 +40,10 @@ import {
   clearRequestCache,
   isAuthenticated,
   requestID,
-  send404,
-  sendMessage,
-  sendResponse,
-  sendUnauthorized,
   verifyAuthenticated,
 } from '../routing/middleware';
+import { sendMessage } from '../routing/helpers';
+import { send404, sendResponse, sendUnauthorized } from '../routing/helpers';
 
 import { queryParams } from '../routing/helpers';
 import { addServiceResultHandler } from '../services/controller';

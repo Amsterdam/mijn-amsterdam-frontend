@@ -25,12 +25,8 @@ import { authRouterDevelopment } from './routing/router-development';
 
 import { BFF_PORT, IS_DEBUG } from './config/app';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import {
-  clearRequestCache,
-  nocache,
-  requestID,
-  send404,
-} from './routing/middleware';
+import { clearRequestCache, nocache, requestID } from './routing/middleware';
+import { send404 } from './routing/helpers';
 import { router as oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
