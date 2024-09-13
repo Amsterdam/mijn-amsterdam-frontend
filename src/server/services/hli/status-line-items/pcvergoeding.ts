@@ -14,7 +14,7 @@ function getBetrokkenKinderen(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return regeling.betrokkenPersonen
-    .map((person) => `(${person.name}, ${person.dateOfBirthFormatted})`)
+    .map((person) => `(${person.name} - ${person.dateOfBirthFormatted})`)
     .join(', ');
 }
 
