@@ -32,7 +32,7 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
   (req as any)[OIDC_SESSION_COOKIE_NAME] = {
     ...authProfile,
-    sidTMA: 'xx-tma-sid-xx',
+    TMASessionID: 'xx-tma-sid-xx',
   };
 
   req.oidc = {

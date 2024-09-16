@@ -12,7 +12,7 @@ export interface SessionData {
   expires_at: string;
   client_id: string;
   sid: SessionID;
-  sidTMA: string; // TMA Session ID
+  TMASessionID: string; // TMA Session ID
   profileType: ProfileType;
   authMethod: AuthMethod;
 }

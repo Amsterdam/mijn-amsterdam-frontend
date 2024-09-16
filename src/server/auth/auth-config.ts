@@ -56,7 +56,7 @@ export const oidcConfigDigid: ConfigParams = {
   afterCallback: async (req, res, session) => {
     return {
       ...session,
-      sidTMA: session.sid,
+      TMASessionID: session.sid,
       sid: UID.sync(8),
       profileType: 'private',
       authMethod: 'digid',
@@ -70,7 +70,7 @@ export const oidcConfigEherkenning: ConfigParams = {
   afterCallback: async (req, res, session) => {
     return {
       ...session,
-      sidTMA: session.sid,
+      TMASessionID: session.sid,
       sid: UID.sync(8),
       profileType: 'commercial',
       authMethod: 'eherkenning',
