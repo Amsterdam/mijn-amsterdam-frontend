@@ -150,7 +150,6 @@ describe('routing.route-handlers', () => {
     });
 
     vi.mock('../services/db/db', async () => {
-      console.log('return dab');
       return {
         db: async () => mocks.db,
       };

@@ -10,7 +10,7 @@ import { GenericDocument } from '../../../../universal/types';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-config-and-types';
+} from '../../zorgned/zorgned-types';
 import {
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,

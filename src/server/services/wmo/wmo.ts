@@ -6,11 +6,11 @@ import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import {
   hasDecision,
   isAfterWCAGValidDocumentsDate,

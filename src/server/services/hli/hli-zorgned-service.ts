@@ -1,23 +1,18 @@
+import memoizee from 'memoizee';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
+import {
+  fetchAanvragenWithRelatedPersons,
+  fetchPersoonsgegevensNAW,
+} from '../zorgned/zorgned-service';
 import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
-} from '../zorgned/zorgned-config-and-types';
-import {
-  fetchAanvragen,
-  fetchPersoonsgegevensNAW,
-} from '../zorgned/zorgned-service';
-
-import memoizee from 'memoizee';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-  getSettledResult,
-} from '../../../universal/helpers/api';
-import { getFullName } from '../../../universal/helpers/brp';
-import { ONE_SECOND_MS } from '../../config/app';
-import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
+} from '../zorgned/zorgned-types';
 
 function transformToAdministratienummer(identificatie: number): string {
   const clientnummerPadded = String(identificatie).padStart(10, '0');
@@ -65,57 +60,6 @@ export async function fetchAdministratienummer(
   return response;
 }
 
-function transformZorgnedBetrokkeneNaamResponse(
-  zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
-) {
-  if (zorgnedResponseData?.persoon) {
-    return (
-      zorgnedResponseData?.persoon?.voornamen ??
-      getFullName({
-        voornamen: zorgnedResponseData?.persoon?.voornamen,
-        geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
-        voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
-      })
-    );
-  }
-  return null;
-}
-
-export async function fetchNamenBetrokkenen_(
-  requestID: RequestID,
-  userIDs: string[]
-) {
-  const requests = userIDs.map((userID) => {
-    return fetchPersoonsgegevensNAW(requestID, userID, 'ZORGNED_AV');
-  });
-
-  const results = await Promise.allSettled(requests);
-  const namen: string[] = [];
-
-  for (const result of results) {
-    const response = getSettledResult(result);
-    const naam =
-      response.status === 'OK'
-        ? transformZorgnedBetrokkeneNaamResponse(response.content)
-        : null;
-    if (naam) {
-      namen.push(naam);
-    } else {
-      return apiErrorResult(
-        'Something went wrong when retrieving names of betrokkenen.',
-        null
-      );
-    }
-  }
-
-  return apiSuccessResult(namen);
-}
-
-export const fetchNamenBetrokkenen = memoizee(fetchNamenBetrokkenen_, {
-  length: 3,
-  maxAge: 45 * ONE_SECOND_MS,
-});
-
 function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   const isEOG = isBeforeToday(
     aanvraagTransformed.datumEindeGeldigheid,
@@ -139,35 +83,38 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
-export async function fetchZorgnedAanvragenHLI(
+async function fetchZorgnedAanvragenHLI_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const aanvragenResponse = await fetchAanvragen(
+  const aanvragenResponse = await fetchAanvragenWithRelatedPersons(
     requestID,
     authProfileAndToken,
-    'ZORGNED_AV'
+    { zorgnedApiConfigKey: 'ZORGNED_AV' }
   );
 
   if (aanvragenResponse.status === 'OK') {
-    const aanvragenTransformed = aanvragenResponse.content.map(
-      (aanvraagTransformed) => {
+    const aanvragenTransformed: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
+      aanvragenResponse.content.map((aanvraagTransformed) => {
         // Override isActueel for front-end.
         return {
           ...aanvraagTransformed,
           isActueel: isActueel(aanvraagTransformed),
         };
-      }
-    );
+      });
+
     return apiSuccessResult(aanvragenTransformed);
   }
 
   return aanvragenResponse;
 }
 
+export const fetchZorgnedAanvragenHLI = memoizee(fetchZorgnedAanvragenHLI_, {
+  maxAge: 45 * ONE_SECOND_MS,
+});
+
 export const forTesting = {
   isActueel,
-  transformZorgnedBetrokkeneNaamResponse,
   transformToAdministratienummer,
   transformZorgnedClientNummerResponse,
 };

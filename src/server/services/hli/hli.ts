@@ -10,17 +10,14 @@ import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
+import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
-import {
-  fetchNamenBetrokkenen,
-  fetchZorgnedAanvragenHLI,
-} from './hli-zorgned-service';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineUpcPcvData,
@@ -28,7 +25,7 @@ import {
 } from './status-line-items/pcvergoeding';
 
 function getDisplayStatus(
-  aanvraag: ZorgnedAanvraagTransformed,
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   statusLineItems: StatusLineItem[]
 ) {
   const hasEindeRecht = statusLineItems.some(
@@ -38,14 +35,18 @@ function getDisplayStatus(
     // NOTE: Special status for PCVergoedingen.
     case isWorkshopNietGevolgd(aanvraag):
       return 'Afgewezen';
+
     case (aanvraag.isActueel || !hasEindeRecht) &&
       aanvraag.resultaat === 'toegewezen':
       return 'Toegewezen';
+
     case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
       return 'Einde recht';
+
     case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
       return 'Afgewezen';
   }
+
   return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
 }
 
@@ -66,9 +67,8 @@ function getDocumentsFrontend(
 }
 
 async function transformRegelingForFrontend(
-  requestID: RequestID,
   sessionID: SessionID,
-  aanvraag: ZorgnedAanvraagTransformed,
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   statusLineItems: StatusLineItem[]
 ) {
   const id = aanvraag.id;
@@ -77,18 +77,6 @@ async function transformRegelingForFrontend(
     id,
     regeling: slug(aanvraag.titel),
   });
-
-  let namen: string[] = [];
-
-  if (aanvraag.betrokkenen?.length) {
-    const namenResponse = await fetchNamenBetrokkenen(
-      requestID,
-      aanvraag.betrokkenen
-    );
-    if (namenResponse.status === 'OK') {
-      namen = namenResponse.content;
-    }
-  }
 
   const regelingFrontend: HLIRegeling = {
     id,
@@ -104,7 +92,8 @@ async function transformRegelingForFrontend(
     dateEnd: aanvraag.datumEindeGeldigheid,
     decision: aanvraag.resultaat,
     displayStatus: getDisplayStatus(aanvraag, statusLineItems),
-    receiver: namen.join(', '),
+    receiver:
+      aanvraag.betrokkenPersonen?.map((person) => person.name).join(', ') ?? '',
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
   };
 
@@ -112,9 +101,8 @@ async function transformRegelingForFrontend(
 }
 
 export async function transformRegelingenForFrontend(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  aanvragen: ZorgnedAanvraagTransformed[],
+  aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): Promise<HLIRegeling[]> {
   const regelingenFrontend: HLIRegeling[] = [];
@@ -122,20 +110,20 @@ export async function transformRegelingenForFrontend(
   const aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
-    const statusLineItems = getStatusLineItems(
-      'HLI',
-      hliStatusLineItemsConfig,
-      aanvraag,
-      aanvragen,
-      today
-    );
+    const statusLineItems =
+      getStatusLineItems<ZorgnedAanvraagWithRelatedPersonsTransformed>(
+        'HLI',
+        hliStatusLineItemsConfig,
+        aanvraag,
+        aanvragen,
+        today
+      );
 
     if (!Array.isArray(statusLineItems) || !statusLineItems.length) {
       continue;
     }
 
     const regelingForFrontend = await transformRegelingForFrontend(
-      requestID,
       authProfileAndToken.profile.sid,
       aanvraag,
       statusLineItems
@@ -143,8 +131,6 @@ export async function transformRegelingenForFrontend(
 
     regelingenFrontend.push(regelingForFrontend);
   }
-
-  regelingenFrontend.sort(dateSort('dateStart', 'desc'));
 
   return regelingenFrontend;
 }
@@ -159,7 +145,6 @@ async function fetchRegelingen(
   );
   if (aanvragenResponse.status === 'OK') {
     const regelingen = await transformRegelingenForFrontend(
-      requestID,
       authProfileAndToken,
       aanvragenResponse.content,
       new Date()

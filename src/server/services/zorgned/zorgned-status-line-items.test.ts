@@ -2,7 +2,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
-} from './zorgned-config-and-types';
+} from './zorgned-types';
 import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
 
 function getTransformerConfig() {
