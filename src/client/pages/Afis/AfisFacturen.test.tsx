@@ -27,8 +27,6 @@ function initializeState(snapshot: MutableSnapshot) {
 describe('<AfisFacturen />', () => {
   const mockFacturen: AfisFactuur[] = [
     {
-      id: 'F004',
-      title: 'Invoice F004',
       afzender: 'Company D',
       datePublished: '2023-04-01',
       datePublishedFormatted: '1 april 2023',
@@ -44,8 +42,6 @@ describe('<AfisFacturen />', () => {
       documentDownloadLink: 'https://download.example.com/F004',
     },
     {
-      id: 'F005',
-      title: 'Invoice F005',
       afzender: 'Company E',
       datePublished: '2023-04-15',
       datePublishedFormatted: '15 april 2023',
