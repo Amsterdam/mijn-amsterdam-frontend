@@ -57,8 +57,14 @@ async function setupTables() {
       ADD IF NOT EXISTS "authMethod" VARCHAR(100);
     `;
 
-  await query(createTableQuery);
-  await query(alterTableQuery1);
+  try {
+    await query(createTableQuery);
+    await query(alterTableQuery1);
+    console.log('Setup tables completed.');
+  } catch (error) {
+    console.log('Setup tables error.');
+    console.error(error);
+  }
 }
 
 setupTables();
