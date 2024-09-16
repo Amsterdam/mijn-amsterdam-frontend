@@ -2,12 +2,12 @@ import Mockdate from 'mockdate';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import { StatusLineItem } from '../../../universal/types';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { fetchWmo, forTesting } from './wmo';
 
-vi.mock('../../../server/helpers/encrypt-decrypt', () => ({
-  encrypt: vi.fn().mockReturnValue(['123-123-123-123', 'xx']),
+vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
+  ...((await importOriginal()) as object),
+  encryptSessionIdWithRouteIdParam: vi.fn().mockReturnValue('123-123-123-123'),
 }));
 
 describe('Transform api items', () => {

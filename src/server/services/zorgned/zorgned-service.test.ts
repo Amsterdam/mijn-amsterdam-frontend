@@ -34,7 +34,8 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('../../../server/helpers/encrypt-decrypt', () => ({
+vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
+  ...((await importOriginal()) as object),
   decrypt: vi.fn().mockReturnValue(`session-id:${mocks.mockDocumentId}`),
   encrypt: vi.fn().mockReturnValue([mocks.mockDocumentIdEncrypted, 'xx']),
 }));
