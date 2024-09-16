@@ -1,4 +1,4 @@
-import { IS_ENABLED, IS_PG } from './config';
+import { IS_ENABLED } from './config';
 
 type DBAdapter = {
   id: string;
