@@ -172,6 +172,10 @@ function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
       );
     case 'in-dispuut':
       return 'In dispuut';
+    case 'gedeeltelijke-betaling':
+      return `Automatische incasso - Betaal het openstaande bedrag van ${factuur.amountOwedFormatted} via bankoverschrijving`;
+    case 'betaald':
+      return `Betaald ${factuur.debtClearingDateFormatted ? `op ${factuur.debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
       return (
         <>
