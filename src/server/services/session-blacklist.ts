@@ -2,7 +2,7 @@ import { sub } from 'date-fns';
 import { Request, Response } from 'express';
 import { OIDC_TOKEN_EXP } from '../auth/auth-config';
 import { ONE_MINUTE_MS } from '../config/app';
-import { tableNameSessionBlacklist } from './db/config';
+import { IS_DB_ENABLED, tableNameSessionBlacklist } from './db/config';
 import { db } from './db/db';
 
 const MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED = OIDC_TOKEN_EXP + ONE_MINUTE_MS;
@@ -45,7 +45,9 @@ async function setupTables() {
   }
 }
 
-setupTables();
+if (IS_DB_ENABLED) {
+  setupTables();
+}
 
 export async function cleanupSessionIds(
   minHoursToKeepSessionsBlacklisted: number = MIN_HOURS_TO_KEEP_SESSIONS_BLACKLISTED

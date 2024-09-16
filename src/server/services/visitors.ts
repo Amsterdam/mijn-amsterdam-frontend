@@ -13,7 +13,7 @@ import {
 import { Request, Response } from 'express';
 import { IS_TAP } from '../../universal/config/env';
 import { defaultDateFormat } from '../../universal/helpers/date';
-import { tableNameLoginCount } from './db/config';
+import { IS_DB_ENABLED, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
 import { captureException } from './monitoring';
 
@@ -67,7 +67,9 @@ async function setupTables() {
   }
 }
 
-setupTables();
+if (IS_DB_ENABLED) {
+  setupTables();
+}
 
 async function getQueries() {
   return queriesPG(tableNameLoginCount);
