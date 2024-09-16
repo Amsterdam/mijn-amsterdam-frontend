@@ -1,3 +1,4 @@
+import memoizee from 'memoizee';
 import { IS_DB_ENABLED } from './config';
 
 type DBAdapter = {
@@ -7,7 +8,7 @@ type DBAdapter = {
   queryALL: (query: string, values?: any[] | undefined) => Promise<unknown>;
 };
 
-export const db: () => Promise<DBAdapter> = () => {
+const db_: () => Promise<DBAdapter> = () => {
   if (!IS_DB_ENABLED) {
     return import('./fake-db').finally(() => {
       console.info('Using Fake DB');
@@ -17,3 +18,5 @@ export const db: () => Promise<DBAdapter> = () => {
     console.info('Using Postgres DB');
   });
 };
+
+export const db = memoizee(db_);
