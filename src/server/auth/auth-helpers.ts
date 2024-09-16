@@ -13,7 +13,7 @@ import {
   RETURNTO_MAMS_LANDING,
 } from './auth-config';
 import { authRoutes } from './auth-routes';
-import { AuthProfile, SessionData, TokenData } from './auth-types';
+import { AuthProfile, MaSession, TokenData } from './auth-types';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -31,38 +31,38 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
 }
 
 export function getAuthProfile(
-  sessionData: SessionData,
+  maSession: MaSession,
   tokenData: TokenData
 ): AuthProfile {
-  const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[sessionData.authMethod](tokenData);
+  const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[maSession.authMethod](tokenData);
   return {
     id: tokenData[idAttr],
-    sid: sessionData.sid,
-    authMethod: sessionData.authMethod,
-    profileType: sessionData.profileType,
+    sid: maSession.sid,
+    authMethod: maSession.authMethod,
+    profileType: maSession.profileType,
   };
 }
 
 function getSessionData(req: Request) {
   const reqWithSession = req as Request &
-    Record<typeof OIDC_SESSION_COOKIE_NAME, SessionData>;
+    Record<typeof OIDC_SESSION_COOKIE_NAME, MaSession>;
   return reqWithSession?.[OIDC_SESSION_COOKIE_NAME] ?? null;
 }
 
 export function getAuth(req: Request) {
   const tokenData = (req.oidc?.user as TokenData | null) ?? null;
   const oidcToken = req.oidc?.idToken ?? '';
-  const sessionData = getSessionData(req);
+  const maSession = getSessionData(req);
 
   if (
-    !sessionData?.authMethod ||
+    !maSession?.authMethod ||
     !tokenData ||
-    !(sessionData.authMethod in OIDC_TOKEN_ID_ATTRIBUTE)
+    !(maSession.authMethod in OIDC_TOKEN_ID_ATTRIBUTE)
   ) {
     return null;
   }
 
-  const profile = getAuthProfile(sessionData, tokenData);
+  const profile = getAuthProfile(maSession, tokenData);
 
   return {
     token: oidcToken,

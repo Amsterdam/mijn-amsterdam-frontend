@@ -11,7 +11,7 @@ export const pgDbConfig: ClientConfig = {
   ssl: { rejectUnauthorized: false },
 };
 
-const pool = new Pool(pgDbConfig);
+export const pool = new Pool(pgDbConfig);
 let isConnected = false;
 
 /**

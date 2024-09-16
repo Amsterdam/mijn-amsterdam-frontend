@@ -4,6 +4,7 @@ import { ONE_HOUR_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
 import { getSessionStore } from './auth-session-store';
+import expressSession from 'express-session';
 import { TokenData } from './auth-types';
 import UID from 'uid-safe';
 
@@ -20,6 +21,8 @@ export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 24 * 3; // The TMA currently has a token expiration time of 3 hours
 
 export const openIdAuth = auth;
+
+export const OIDC_SESSIONS_TABLE_NAME = 'oidcsessions';
 
 export const oidcConfigBase: ConfigParams = {
   authRequired: false,
@@ -40,7 +43,9 @@ export const oidcConfigBase: ConfigParams = {
     rolling: true,
     rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
-    store: getSessionStore(openIdAuth) as any,
+    store: getSessionStore(openIdAuth as typeof expressSession, {
+      tableName: OIDC_SESSIONS_TABLE_NAME,
+    }),
   },
   routes: {
     login: false,

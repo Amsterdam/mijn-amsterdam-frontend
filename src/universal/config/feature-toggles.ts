@@ -1,4 +1,4 @@
-import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
+import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION, IS_TAP } from './env';
 
 export const FeatureToggle = {
   afisActive: !IS_PRODUCTION,
@@ -10,7 +10,7 @@ export const FeatureToggle = {
   bodemActive: true,
   cleopatraApiActive: true,
   cmsFooterActive: true,
-  dbEnabled: true,
+  dbEnabled: IS_TAP,
   decosServiceActive: IS_OT,
   ehKetenmachtigingActive: !IS_PRODUCTION,
   eherkenningActive: true,
