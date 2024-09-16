@@ -240,7 +240,7 @@ export default function MainHeader({
           }
         />
         <OtapLabel />
-        {isDisplayLiveSearch && isSearchActive && (
+        {isDisplayLiveSearch && isSearchActive && isAuthenticated && (
           <div className={styles.SearchBar}>
             <div className={styles.SearchBarInner}>
               <Search
