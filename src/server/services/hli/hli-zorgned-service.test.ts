@@ -2,11 +2,11 @@ import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   ZorgnedAanvraagTransformed,
+  ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
-} from '../zorgned/zorgned-config-and-types';
+} from '../zorgned/zorgned-types';
 import {
   fetchAdministratienummer,
-  fetchNamenBetrokkenen,
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
@@ -86,64 +86,6 @@ describe('hli-zorgned-service', () => {
     `);
   });
 
-  test('transformZorgnedBetrokkeneNaamResponse', () => {
-    const naam = forTesting.transformZorgnedBetrokkeneNaamResponse({
-      persoon: {
-        voorvoegsel: null,
-        geboortenaam: 'Alex',
-        voornamen: 'Flex',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    expect(naam).toMatchInlineSnapshot(`"Flex"`);
-
-    const naam2 = forTesting.transformZorgnedBetrokkeneNaamResponse({
-      persoon: {
-        voorvoegsel: 'de',
-        geboortenaam: 'Jarvis',
-        voornamen: 'Baron',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    expect(naam2).toMatchInlineSnapshot(`"Baron"`);
-
-    const naam3 = forTesting.transformZorgnedBetrokkeneNaamResponse({
-      persoon: null,
-    } as unknown as ZorgnedPersoonsgegevensNAWResponse);
-
-    expect(naam3).toBe(null);
-  });
-
-  test('fetchNamenBetrokkenen', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        voorvoegsel: 'de',
-        geboortenaam: 'Jarvis',
-        voornamen: 'Baron',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        voorvoegsel: null,
-        geboortenaam: 'Alex',
-        voornamen: 'Flex',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    const response = await fetchNamenBetrokkenen('xx2xxx', ['1', '2']);
-
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": [
-          "Baron",
-          "Flex",
-        ],
-        "status": "OK",
-      }
-    `);
-  });
-
   test('isActueel', () => {
     const aanvraag = {
       isActueel: false,
@@ -189,11 +131,11 @@ describe('hli-zorgned-service', () => {
 
   test('fetchZorgnedAanvragenHLI no content', async () => {
     const fetchAanvragenSpy = vitest
-      .spyOn(zorgnedService, 'fetchAanvragen')
+      .spyOn(zorgnedService, 'fetchAanvragenWithRelatedPersons')
       .mockResolvedValueOnce({ content: [], status: 'OK' });
 
     const result = await fetchZorgnedAanvragenHLI(
-      'xxx4xxx',
+      'xxx9xxx',
       authProfileAndToken
     );
 
@@ -208,7 +150,7 @@ describe('hli-zorgned-service', () => {
 
   test('fetchZorgnedAanvragenHLI Einde geldigheid niet verstreken', async () => {
     const fetchAanvragenSpy = vitest
-      .spyOn(zorgnedService, 'fetchAanvragen')
+      .spyOn(zorgnedService, 'fetchAanvragenWithRelatedPersons')
       .mockResolvedValueOnce({
         content: [
           {
@@ -226,6 +168,7 @@ describe('hli-zorgned-service', () => {
     );
 
     expect(fetchAanvragenSpy).toHaveBeenCalled();
+
     expect(result).toMatchInlineSnapshot(`
       {
         "content": [
@@ -242,7 +185,7 @@ describe('hli-zorgned-service', () => {
 
   test('fetchZorgnedAanvragenHLI Einde geldigheid verstreken', async () => {
     const fetchAanvragenSpy = vitest
-      .spyOn(zorgnedService, 'fetchAanvragen')
+      .spyOn(zorgnedService, 'fetchAanvragenWithRelatedPersons')
       .mockResolvedValueOnce({
         content: [
           {
@@ -254,7 +197,7 @@ describe('hli-zorgned-service', () => {
       });
 
     const result = await fetchZorgnedAanvragenHLI(
-      'xxx4xxx',
+      'xxx1xxx',
       authProfileAndToken
     );
 

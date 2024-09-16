@@ -10,7 +10,7 @@ import type { WpiRequestProcess } from '../wpi/wpi-types';
 import type { TipsPredicateFN } from './tip-types';
 import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
 import { HLIRegeling } from '../hli/hli-regelingen-types';
-import { BeschikkingsResultaat } from '../zorgned/zorgned-config-and-types';
+import { BeschikkingsResultaat } from '../zorgned/zorgned-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (

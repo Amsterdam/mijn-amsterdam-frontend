@@ -4,7 +4,7 @@ import {
   BeschikkingsResultaat,
   LeveringsVorm,
   ProductSoortCode,
-} from '../zorgned/zorgned-config-and-types';
+} from '../zorgned/zorgned-types';
 
 export const SINGLE_DOC_TITLE_BESLUIT = 'Brief';
 

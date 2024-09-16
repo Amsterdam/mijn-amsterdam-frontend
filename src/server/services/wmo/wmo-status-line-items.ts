@@ -2,7 +2,7 @@ import {
   LeveringsVorm,
   ProductSoortCode,
   ZorgnedStatusLineItemsConfig,
-} from '../zorgned/zorgned-config-and-types';
+} from '../zorgned/zorgned-types';
 import { AOV } from './status-line-items/wmo-aov';
 import { diensten } from './status-line-items/wmo-diensten';
 import { hulpmiddelen } from './status-line-items/wmo-hulpmiddelen';
