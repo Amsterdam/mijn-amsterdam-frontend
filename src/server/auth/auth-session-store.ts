@@ -15,7 +15,8 @@ export function getSessionStore<T extends typeof expressSession>(
   options: SessionStoreOptions
 ): SessionStore<Session> {
   // Use Postgres Database
-  if (FeatureToggle.dbEnabled) {
+  if (FeatureToggle.dbSessionsEnabled) {
+    console.log('Using PG sessions DB');
     const pgSession = connectPGSimple(auth);
     return new pgSession({
       tableName: options.tableName,
@@ -25,6 +26,7 @@ export function getSessionStore<T extends typeof expressSession>(
   }
 
   const MemoryStore = createMemorystore(auth);
+  console.log('Using sessions MemoryStore');
   return new MemoryStore({
     max: OIDC_SESSION_MAX_AGE_SECONDS,
   }) as unknown as SessionStore<Session>;
