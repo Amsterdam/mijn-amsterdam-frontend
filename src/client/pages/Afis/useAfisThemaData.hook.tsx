@@ -79,12 +79,12 @@ export function useAfisThemaData(kind?: ListPageParamKind) {
 function mapFactuur(factuur: AfisFactuur) {
   return {
     ...factuur,
-    invoiceStatusDescription: getInvoiceStatusDescription(factuur),
-    invoiceNo: factuur.documentDownloadLink ? (
+    status: getInvoiceStatusDescription(factuur),
+    factuurNummer: factuur.documentDownloadLink ? (
       <DocumentLink
         document={toGenericDocument(
           factuur.documentDownloadLink,
-          factuur.factuurNummer
+          `factuur ${factuur.factuurNummer}`
         )}
       />
     ) : (
