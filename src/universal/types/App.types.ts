@@ -106,11 +106,6 @@ export interface ZaakDetail {
   about?: string;
 }
 
-export type OptionalZaakDetailProps = Omit<ZaakDetail, 'steps' | 'link'> & {
-  steps?: ZaakDetail['steps'];
-  link?: ZaakDetail['link'];
-};
-
 export type StatusLine = ZaakDetail;
 
 export interface ApiError {
