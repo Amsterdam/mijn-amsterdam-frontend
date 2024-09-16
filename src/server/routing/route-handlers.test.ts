@@ -164,7 +164,7 @@ describe('routing.route-handlers', () => {
     await addToBlackList(sessionID);
     const mCalls = mocks.db.query.mock.calls;
     expect(mCalls[mCalls.length - 1]).toStrictEqual([
-      'INSERT INTO acc_session_blacklist (session_id) VALUES ($1) RETURNING id',
+      'INSERT INTO session_blacklist (session_id) VALUES ($1) RETURNING id',
       ['test-session-id'],
     ]);
 
