@@ -91,6 +91,7 @@ app.use(function (req, res, next) {
 ///// Public routes Voor Acceptance - Development
 ////////////////////////////////////////////////////////////////////////
 if (IS_AP && !IS_OT) {
+  console.info('Using AUTH OIDC Router');
   app.use(oidcRouter);
 }
 
@@ -106,6 +107,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 ///// Development routing for mock data
 ////////////////////////////////////////////////////////////////////////
 if (IS_OT && !IS_AP) {
+  console.info('Using AUTH Development Router');
   app.use(authRouterDevelopment);
 }
 
