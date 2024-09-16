@@ -1,4 +1,4 @@
-import { IS_ENABLED } from './config';
+import { IS_DB_ENABLED } from './config';
 
 type DBAdapter = {
   id: string;
@@ -8,8 +8,12 @@ type DBAdapter = {
 };
 
 export const db: () => Promise<DBAdapter> = () => {
-  if (!IS_ENABLED) {
-    return import('./fake-db');
+  if (!IS_DB_ENABLED) {
+    return import('./fake-db').finally(() => {
+      console.info('Using Fake DB');
+    });
   }
-  return import('./postgres');
+  return import('./postgres').finally(() => {
+    console.info('Using Postgres DB');
+  });
 };
