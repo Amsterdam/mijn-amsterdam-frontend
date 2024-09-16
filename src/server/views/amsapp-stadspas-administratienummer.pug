@@ -1,18 +1,96 @@
 doctype html
-html(lang="en")
+html(lang="nl")
   head
-    title Stadspas administratienummer
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    title Stadspas
+    style.
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+      }
+
+      body {
+        font-family: Amsterdam Sans, Arial;
+        font-weight: 400;
+        font-size: 1.3rem;
+      }
+
+      #amsterdam-logo svg {
+        margin-top: 25px;
+        margin-left: 20px;
+        width: 8rem;
+      }
+
+      .main {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      .main h1 {
+        font-weight: 800;
+        font-size: 2.5rem;
+      }
+
+      #protocol-link-button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.5rem;
+        padding-block: 0.5rem;
+        border: none;
+        outline-offset: 2px;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-color: #004699;
+        color: white;
+        width: 100%;
+        height: 2.5rem;
+        margin-top: 1em;
+      }
+
+      #protocol-link-button:link {
+        text-decoration: none;
+      }
+
+      @font-face {
+        font-family: 'Amsterdam Sans';
+        src:
+          url('#{pathTofontRegular}2')
+            format('woff2'),
+          url('#{pathTofontRegular}')
+            format('woff');
+        font-weight: 400;
+      }
+
+      @font-face {
+        font-family: 'Amsterdam Sans';
+        src:
+          url('#{pathTofontExtraBold}2')
+            format('woff2'),
+          url('#{pathTofontExtraBold}')
+            format('woff');
+        font-weight: 800;
+      }
+
   body
-    h1 Stadspas administratienummer
+    header
+      div(id='amsterdam-logo', nonce=nonce)
+        | !{amsterdamLogo}
 
-    if administratienummerEncrypted
-      pre #{administratienummerEncrypted}
+    div(class='main')
+      h1 Inloggen
+      p Open de Amsterdam App om verder te gaan.
 
-    if error
-      p Foutmelding: #{error.code} - #{error.message}
+      if administratienummerEncrypted
+        pre #{administratienummerEncrypted}
 
-    p
-      a(href=appHref id='protocol-link') Klik hier om de Amsterdam app te openen.
+      if error
+        p Foutmelding: #{error.code} - #{error.message}
+
+      a(href=appHref id='protocol-link-button') Open Amsterdam App
 
     script(type='text/javascript' nonce=nonce).
         document.getElementById('protocol-link').click();
