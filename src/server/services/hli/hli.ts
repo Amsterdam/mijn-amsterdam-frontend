@@ -6,11 +6,10 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
@@ -55,7 +54,10 @@ function getDocumentsFrontend(
   documents: GenericDocument[]
 ) {
   return documents.map((document) => {
-    const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
+    const idEncrypted = encryptSessionIdWithRouteIdParam(
+      sessionID,
+      document.id
+    );
     return {
       ...document,
       url: generateFullApiUrlBFF(BffEndpoints.HLI_DOCUMENT_DOWNLOAD, {

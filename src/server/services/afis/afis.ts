@@ -7,7 +7,10 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import {
+  encrypt,
+  encryptSessionIdWithRouteIdParam,
+} from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -105,7 +108,10 @@ function transformBusinessPartnerisKnownResponse(
   }
 
   if (businessPartnerId) {
-    [businessPartnerIdEncrypted] = encrypt(`${sessionID}:${businessPartnerId}`);
+    businessPartnerIdEncrypted = encryptSessionIdWithRouteIdParam(
+      sessionID,
+      businessPartnerId
+    );
   }
 
   return {
@@ -362,8 +368,9 @@ function transformFactuur(
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
 
-  const [factuurNummerEncrypted] = encrypt(
-    `${sessionID}:${sourceInvoice.InvoiceNo}`
+  const factuurNummerEncrypted = encryptSessionIdWithRouteIdParam(
+    sessionID,
+    invoice.InvoiceNo
   );
 
   const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
