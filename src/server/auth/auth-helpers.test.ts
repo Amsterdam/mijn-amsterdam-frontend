@@ -208,7 +208,7 @@ describe('auth-helpers', () => {
       expect(resMock.oidc.logout).toHaveBeenCalledWith({
         logoutParams: {
           id_token_hint: null,
-          logout_hint: '0D8ugZyqnzPTyknBDwxsMPb7',
+          logout_hint: 'xx-tma-sid-xx',
         },
         returnTo: 'http://foo.bar',
       });

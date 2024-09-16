@@ -30,7 +30,10 @@ authRouterDevelopment.BFF_ID = 'router-dev';
 
 export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
-  (req as any)[OIDC_SESSION_COOKIE_NAME] = authProfile;
+  (req as any)[OIDC_SESSION_COOKIE_NAME] = {
+    ...authProfile,
+    TMASessionID: 'xx-tma-sid-xx',
+  };
 
   req.oidc = {
     isAuthenticated() {
@@ -39,11 +42,14 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
     async fetchUserInfo() {
       return {} as any; // UserInfoResponse
     },
-    user: { [idAttr]: authProfile.id, sid: authProfile.sid },
+    user: {
+      [idAttr]: authProfile.id,
+      sid: authProfile.sid,
+    },
     idToken: await signDevelopmentToken(
       authProfile.authMethod,
       authProfile.id,
-      authProfile.sid
+      'xx-tma-sid-xx'
     ),
   };
 }
