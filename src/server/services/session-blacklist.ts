@@ -36,7 +36,13 @@ async function setupTables() {
     );
     `;
 
-  await query(createTableQuery);
+  try {
+    await query(createTableQuery);
+    console.log(`setupTable: ${tableNameSessionBlacklist} succeeded.`);
+  } catch (error) {
+    console.log(`setupTable: ${tableNameSessionBlacklist} failed.`);
+    console.error(error);
+  }
 }
 
 setupTables();

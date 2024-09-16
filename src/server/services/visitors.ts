@@ -60,9 +60,9 @@ async function setupTables() {
   try {
     await query(createTableQuery);
     await query(alterTableQuery1);
-    console.log('Setup tables completed.');
+    console.log(`setupTable: ${tableNameLoginCount} succeeded.`);
   } catch (error) {
-    console.log('Setup tables error.');
+    console.log(`setupTable: ${tableNameLoginCount} failed.`);
     console.error(error);
   }
 }
