@@ -140,7 +140,7 @@ function transformBusinessPartnerDetailsResponse(
 
   if (businessPartnerEntry) {
     const transformedResponse: AfisBusinessPartnerDetails = {
-      businessPartnerId: businessPartnerEntry.BusinessPartner ?? null,
+      businessPartnerId: businessPartnerEntry.BusinessPartner?.toString() ?? '',
       fullName: businessPartnerEntry.FullName ?? null,
       addressId: businessPartnerEntry.AddressID ?? null,
     };

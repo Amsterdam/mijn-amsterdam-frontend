@@ -76,7 +76,7 @@ export type AfisBusinessPartnerEmailSource = {
 };
 
 export type AfisBusinessPartnerDetails = {
-  businessPartnerId: number;
+  businessPartnerId: string;
   fullName: string;
   addressId: number;
 };
@@ -108,7 +108,7 @@ export type AfisFactuur = {
   factuurNummer: string;
   status: AfisFactuurStatus;
   paylink: string | null;
-  documentDownloadLink: GenericDocument | string | null;
+  documentDownloadLink: string;
 } & Omit<ZaakDetail, 'steps' | 'link' | 'title' | 'id'>;
 
 type AfisFactuurStatus =

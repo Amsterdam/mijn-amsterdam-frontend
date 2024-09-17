@@ -454,7 +454,7 @@ describe('Afis', () => {
       {
         "content": {
           "addressId": null,
-          "businessPartnerId": null,
+          "businessPartnerId": "",
           "fullName": null,
         },
         "status": "OK",
@@ -483,7 +483,7 @@ describe('Afis', () => {
       {
         "content": {
           "addressId": null,
-          "businessPartnerId": null,
+          "businessPartnerId": "",
           "fullName": null,
         },
         "status": "OK",

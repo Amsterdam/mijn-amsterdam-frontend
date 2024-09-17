@@ -3,17 +3,23 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { ZaakDetail } from '../../../universal/types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { AfisFactuur } from '../../../server/services/afis/afis-types';
+import { DisplayProps } from '../../components/Table/TableV2';
 
 export type AfisEmandateStub = ZaakDetail & Record<string, string>;
+
+export type AfisFactuurFrontend = AfisFactuur & {
+  statusDescription: string;
+  factuurNummerEl: ReactNode;
+};
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsFacturen = {
+const displayPropsFacturen: DisplayProps<AfisFactuurFrontend> = {
   afzender: 'Afzender',
   factuurNummer: 'Factuurnummer',
-  status: 'Status',
+  statusDescription: 'Status',
   paymentDueDateFormatted: 'Vervaldatum',
 };
 
@@ -44,7 +50,7 @@ export const facturenTableConfig = {
 } as const;
 
 // Betaalvoorkeuren
-const displayPropsEmandates = {
+const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
   name: 'Naam',
 };
 

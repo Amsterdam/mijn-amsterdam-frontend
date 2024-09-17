@@ -25,7 +25,6 @@ import { MaRouterLink } from '../../components/MaLink/MaLink';
 
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { GenericDocument } from '../../../universal/types';
 
 export function useAfisThemaData(kind?: ListPageParamKind) {
   const { AFIS } = useAppStateGetter();
@@ -33,8 +32,8 @@ export function useAfisThemaData(kind?: ListPageParamKind) {
   const [facturen, facturenApi, fetchFacturen] = useAppStateBagApi<
     { [key in ListPageParamKind]: AfisFactuur[] } | AfisFactuur[] | null
   >({
-    bagThema: kind ? BagThemas.AFIS : BagThemas.AFIS_OVERZICHT,
-    key: `${businessPartnerIdEncrypted}-facturen`,
+    bagThema: BagThemas.AFIS,
+    key: `${businessPartnerIdEncrypted}-facturen-${kind}`,
   });
 
   useEffect(() => {
@@ -72,6 +71,11 @@ export function useAfisThemaData(kind?: ListPageParamKind) {
     listPageParamKind,
     isFacturenError: facturenApi.isError,
     isFacturenLoading: facturenApi.isLoading,
+    hasFailedFacturenOpenDependencyFacturen: hasFailedDependency(
+      facturenApi.data,
+      'open'
+    ),
+
     facturen: updatedFacturen,
   };
 }
@@ -79,33 +83,20 @@ export function useAfisThemaData(kind?: ListPageParamKind) {
 function mapFactuur(factuur: AfisFactuur) {
   return {
     ...factuur,
-    status: getInvoiceStatusDescription(factuur),
-    factuurNummer: factuur.documentDownloadLink ? (
+    statusDescription: getInvoiceStatusDescription(factuur),
+    factuurNummer: factuur.paylink ? (
       <DocumentLink
-        document={toGenericDocument(
-          factuur.documentDownloadLink,
-          `factuur ${factuur.factuurNummer}`
-        )}
+        document={{
+          id: factuur.factuurNummer,
+          datePublished: factuur.datePublished ?? '',
+          url: factuur.paylink,
+          title: `factuur ${factuur.factuurNummer}`,
+        }}
       />
     ) : (
       factuur.factuurNummer
     ),
   };
-}
-
-function toGenericDocument(
-  document: GenericDocument | string,
-  title: string
-): GenericDocument {
-  if (typeof document === 'string') {
-    return {
-      id: document,
-      url: document,
-      title,
-      datePublished: new Date().toISOString(),
-    };
-  }
-  return document;
 }
 
 const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
@@ -178,10 +169,16 @@ function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
       return `Betaald ${factuur.debtClearingDateFormatted ? `op ${factuur.debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
       return (
-        <>
-          {factuur.amountOwedFormatted} wordt automatisch van uw <br />
-          rekening afgeschreven
-        </>
+        <div
+          style={{
+            whiteSpace: 'normal',
+            wordWrap: 'break-word',
+            wordBreak: 'break-word',
+          }}
+        >
+          {factuur.amountOwedFormatted} wordt automatisch van uw rekening
+          afgeschreven
+        </div>
       );
     default:
       return capitalizeFirstLetter(factuur.status ?? '');

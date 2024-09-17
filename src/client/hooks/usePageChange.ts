@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { matchPath, useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { matchPath, useHistory, useLocation } from 'react-router-dom';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { ExcludePageViewTrackingUrls } from '../config/api';
 import { CustomTrackingUrls, TrackingConfig } from '../config/routes';
@@ -23,11 +23,25 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
 
 export function usePageChange(isAuthenticated: boolean) {
   const location = useLocation();
+  const history = useHistory();
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
+  const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
+    const isNewPageNavigation = prevPathRef.current !== location.pathname;
+    if (isNewPageNavigation) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    } else {
+      history.scrollRestoration = 'auto';
+    }
+
+    prevPathRef.current = location.pathname;
+
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex((route) => {
       return (
@@ -109,6 +123,7 @@ export function usePageChange(isAuthenticated: boolean) {
     profileType,
     userCity,
     isAuthenticated,
+    history.action,
   ]);
 }
 

@@ -129,7 +129,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
   [AppRoutes.AFIS]: 'Facturen en betalen | Mijn Amsterdam',
-  [AppRoutes.AFIS_BETAALVOORKEUREN]: 'Betaalvoorkeuren | Facturen en betalen',
+  [AppRoutes['AFIS/FACTUREN']]: 'Facturen | Facturen en betalen',
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {

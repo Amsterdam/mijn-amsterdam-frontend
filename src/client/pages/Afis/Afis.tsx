@@ -18,6 +18,8 @@ export function AfisThemaPagina() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     routes,
+    hasFailedFacturenOpenDependency,
+    hasFailedFacturenClosedDependency,
   } = useAfisThemaData();
 
   const pageContentTop = (
@@ -36,7 +38,7 @@ export function AfisThemaPagina() {
   );
 
   const pageContentTables = Object.entries(facturenTableConfig).map(
-    ([kind, { title, displayProps }]) => {
+    ([kind, { title, displayProps, maxItems }]) => {
       const kindFacturen = (
         facturen as { [K in ListPageParamKind]: AfisFactuur[] }
       )[kind as ListPageParamKind];
@@ -47,7 +49,7 @@ export function AfisThemaPagina() {
           zaken={kindFacturen}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
-          maxItems={5}
+          maxItems={maxItems}
           listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
             kind,
           })}
@@ -60,7 +62,11 @@ export function AfisThemaPagina() {
     <ThemaPagina
       title={ThemaTitles.AFIS}
       isError={isFacturenError && isThemaPaginaError}
-      isPartialError={isFacturenError}
+      isPartialError={
+        isFacturenError ||
+        hasFailedFacturenOpenDependency ||
+        hasFailedFacturenClosedDependency
+      }
       isLoading={isThemaPaginaLoading || isFacturenLoading}
       linkListItems={[
         {
