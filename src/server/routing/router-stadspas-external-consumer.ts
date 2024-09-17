@@ -175,15 +175,7 @@ routerInternet.get(
 function getAmsterdamLogoFromFile() {
   try {
     return fs.readFileSync(
-      path.join(
-        __dirname,
-        '..',
-        '..',
-        'client',
-        'assets',
-        'images',
-        'logo-amsterdam.svg'
-      ),
+      path.resolve('src', 'client', 'assets', 'images', 'logo-amsterdam.svg'),
       {
         flag: 'r',
         encoding: 'utf-8',
