@@ -1,6 +1,10 @@
+import { frontentHost } from '../../setupTests';
+import fs from 'fs';
+import path from 'path';
 import { remoteApi, RequestMock, ResponseMock } from '../../test-utils';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { AuthProfile } from '../auth/auth-types';
+import { getFromEnv } from '../helpers/env';
 import * as stadspas from '../services/hli/stadspas';
 import { StadspasDiscountTransaction } from '../services/hli/stadspas-types';
 import { forTesting } from './router-stadspas-external-consumer';
@@ -67,14 +71,40 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(resMock.render).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          administratienummerEncrypted: 'test-encrypted-id',
-          appHref: 'amsterdam://stadspas/gelukt',
-          nonce: 'h70yjZuEZl',
-        }
+      // @ts-ignore
+      const renderSecondArg = resMock.render.mock.calls[0][1];
+      expect(renderSecondArg.administratienummerEncrypted).toStrictEqual(
+        'test-encrypted-id'
       );
+      expect(renderSecondArg.amsterdamLogo).not.toBeUndefined();
+      expect(renderSecondArg.pathToFontExtraBold).not.toBeUndefined();
+      expect(renderSecondArg.pathToFontRegular).not.toBeUndefined();
+
+      // Safety in case the files will move.
+      const fontpaths = [
+        path.resolve(
+          'src',
+          'client',
+          'assets',
+          'fonts',
+          'AmsterdamSansExtraBold',
+          'AmsterdamSans-ExtraBold.woff'
+        ),
+        path.resolve(
+          'src',
+          'client',
+          'assets',
+          'fonts',
+          'AmsterdamSans',
+          'AmsterdamSans-Regular.woff'
+        ),
+      ];
+      expect(fontpaths.every(fs.existsSync)).toBe(true);
+
+      expect(renderSecondArg.appHref).toStrictEqual(
+        'amsterdam://stadspas/gelukt'
+      );
+      expect(renderSecondArg.nonce).toStrictEqual('h70yjZuEZl');
     });
 
     test('Delivery failed', async () => {
@@ -92,17 +122,15 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(resMock.render).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: {
-            code: '004',
-            message:
-              'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
-          },
-          appHref:
-            'amsterdam://stadspas/mislukt?errorMessage=Verzenden%20van%20administratienummer%20naar%20de%20Amsterdam%20app%20niet%20gelukt&errorCode=004',
-        }
+      // @ts-ignore
+      const renderSecondArg = resMock.render.mock.calls[0][1];
+      expect(renderSecondArg.error).toStrictEqual({
+        code: '004',
+        message:
+          'Verzenden van administratienummer naar de Amsterdam app niet gelukt',
+      });
+      expect(renderSecondArg.appHref).toStrictEqual(
+        'amsterdam://stadspas/mislukt?errorMessage=Verzenden%20van%20administratienummer%20naar%20de%20Amsterdam%20app%20niet%20gelukt&errorCode=004'
       );
     });
 
@@ -112,13 +140,14 @@ describe('hli/router-external-consumer', async () => {
 
       await forTesting.sendAdministratienummerResponse(reqMock, resMock);
 
-      expect(resMock.render).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: { code: '001', message: 'Niet ingelogd met Digid' },
-          appHref:
-            'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
-        }
+      // @ts-ignore
+      const renderSecondArg = resMock.render.mock.calls[0][1];
+      expect(renderSecondArg.error).toStrictEqual({
+        code: '001',
+        message: 'Niet ingelogd met Digid',
+      });
+      expect(renderSecondArg.appHref).toStrictEqual(
+        'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001'
       );
     });
 
@@ -131,16 +160,14 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(resMock.render).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: {
-            code: '003',
-            message: 'Geen administratienummer gevonden',
-          },
-          appHref:
-            'amsterdam://stadspas/mislukt?errorMessage=Geen%20administratienummer%20gevonden&errorCode=003',
-        }
+      // @ts-ignore
+      const renderSecondArg = resMock.render.mock.calls[0][1];
+      expect(renderSecondArg.error).toStrictEqual({
+        code: '003',
+        message: 'Geen administratienummer gevonden',
+      });
+      expect(renderSecondArg.appHref).toStrictEqual(
+        'amsterdam://stadspas/mislukt?errorMessage=Geen%20administratienummer%20gevonden&errorCode=003'
       );
     });
 
@@ -153,16 +180,14 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(resMock.render).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: {
-            message: 'Kon het administratienummer niet ophalen',
-            code: '002',
-          },
-          appHref:
-            'amsterdam://stadspas/mislukt?errorMessage=Kon%20het%20administratienummer%20niet%20ophalen&errorCode=002',
-        }
+      // @ts-ignore
+      const renderSecondArg = resMock.render.mock.calls[0][1];
+      expect(renderSecondArg.error).toStrictEqual({
+        code: '002',
+        message: 'Kon het administratienummer niet ophalen',
+      });
+      expect(renderSecondArg.appHref).toStrictEqual(
+        'amsterdam://stadspas/mislukt?errorMessage=Kon%20het%20administratienummer%20niet%20ophalen&errorCode=002'
       );
     });
 
@@ -174,13 +199,14 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      expect(resMock.render).toHaveBeenCalledWith(
-        'amsapp-stadspas-administratienummer',
-        {
-          error: { code: '001', message: 'Niet ingelogd met Digid' },
-          appHref:
-            'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001',
-        }
+      // @ts-ignore
+      const renderSecondArg = resMock.render.mock.calls[0][1];
+      expect(renderSecondArg.error).toStrictEqual({
+        code: '001',
+        message: 'Niet ingelogd met Digid',
+      });
+      expect(renderSecondArg.appHref).toStrictEqual(
+        'amsterdam://stadspas/mislukt?errorMessage=Niet%20ingelogd%20met%20Digid&errorCode=001'
       );
     });
   });
