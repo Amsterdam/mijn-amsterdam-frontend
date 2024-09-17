@@ -28,7 +28,6 @@ import { getFromEnv } from '../helpers/env';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
-const AMSAPP_LINK_NONCE = 'h70yjZuEZl';
 
 type ApiError = {
   code: string;
@@ -142,7 +141,7 @@ async function sendAdministratienummerResponse(
             'AmsterdamSans-ExtraBold.woff'
           ),
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
-          nonce: AMSAPP_LINK_NONCE,
+          nonce: getFromEnv('BFF_AMSAPP_NONCE'),
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
             : '',
