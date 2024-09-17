@@ -87,6 +87,11 @@ async function sendAdministratienummerResponse(
   }
 
   const amsterdamLogo = getAmsterdamLogoFromFile();
+  const nonce = getFromEnv('BFF_AMSAPP_NONCE');
+  res.append(
+    'Content-Security-Policy',
+    `script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'`
+  );
 
   if (
     authProfileAndToken?.profile.id &&
@@ -127,21 +132,19 @@ async function sendAdministratienummerResponse(
         return res.render('amsapp-stadspas-administratienummer', {
           amsterdamLogo,
           pathToFontRegular: path.join(
-            frontendURL,
             'assets',
             'fonts',
             'AmsterdamSans',
             'AmsterdamSans-Regular.woff'
           ),
           pathToFontExtraBold: path.join(
-            frontendURL,
             'assets',
             'fonts',
             'AmsterdamSansExtraBold',
             'AmsterdamSans-ExtraBold.woff'
           ),
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
-          nonce: getFromEnv('BFF_AMSAPP_NONCE'),
+          nonce,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
             : '',
