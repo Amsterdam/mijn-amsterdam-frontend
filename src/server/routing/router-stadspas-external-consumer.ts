@@ -124,25 +124,12 @@ async function sendAdministratienummerResponse(
         res.locals.requestID
       );
 
-      const frontendURL = getFromEnv('MA_FRONTEND_URL')!;
       if (
         deliveryResponse.status === 'OK' &&
         deliveryResponse.content.detail === 'Success'
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
           amsterdamLogo,
-          pathToFontRegular: path.join(
-            'assets',
-            'fonts',
-            'AmsterdamSans',
-            'AmsterdamSans-Regular.woff'
-          ),
-          pathToFontExtraBold: path.join(
-            'assets',
-            'fonts',
-            'AmsterdamSansExtraBold',
-            'AmsterdamSans-ExtraBold.woff'
-          ),
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
           nonce,
           administratienummerEncrypted: !IS_PRODUCTION

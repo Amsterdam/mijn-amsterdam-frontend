@@ -71,6 +71,7 @@ export class ResponseMock {
   clearCookie = vi.fn();
   render = vi.fn();
   redirect = vi.fn();
+  append = vi.fn();
 }
 
 export class RequestMock {

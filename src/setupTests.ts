@@ -143,3 +143,4 @@ process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuz
 process.env.REACT_APP_SSO_URL_PARKEREN = `${remoteApiHost}/sso/portaal/parkeren`;
 
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
+process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';

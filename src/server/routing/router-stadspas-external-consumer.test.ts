@@ -77,34 +77,11 @@ describe('hli/router-external-consumer', async () => {
         'test-encrypted-id'
       );
       expect(renderSecondArg.amsterdamLogo).not.toBeUndefined();
-      expect(renderSecondArg.pathToFontExtraBold).not.toBeUndefined();
-      expect(renderSecondArg.pathToFontRegular).not.toBeUndefined();
-
-      // Safety in case the files will move.
-      const fontpaths = [
-        path.resolve(
-          'src',
-          'client',
-          'assets',
-          'fonts',
-          'AmsterdamSansExtraBold',
-          'AmsterdamSans-ExtraBold.woff'
-        ),
-        path.resolve(
-          'src',
-          'client',
-          'assets',
-          'fonts',
-          'AmsterdamSans',
-          'AmsterdamSans-Regular.woff'
-        ),
-      ];
-      expect(fontpaths.every(fs.existsSync)).toBe(true);
 
       expect(renderSecondArg.appHref).toStrictEqual(
         'amsterdam://stadspas/gelukt'
       );
-      expect(renderSecondArg.nonce).toStrictEqual('h70yjZuEZl');
+      expect(renderSecondArg.nonce).not.toBeUndefined();
     });
 
     test('Delivery failed', async () => {
