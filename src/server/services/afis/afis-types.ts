@@ -109,6 +109,7 @@ export type AfisFactuur = {
   status: AfisFactuurStatus;
   paylink: string | null;
   documentDownloadLink: string;
+  statusDescription: string;
 } & Omit<ZaakDetail, 'steps' | 'link' | 'title' | 'id'>;
 
 type AfisFactuurStatus =

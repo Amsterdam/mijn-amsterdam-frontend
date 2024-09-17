@@ -157,30 +157,21 @@ function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
         <>
           Openstaand:{' '}
           <MaRouterLink maVariant="fatNoUnderline" href={factuur.paylink ?? ''}>
-            {factuur.amountOwedFormatted} betaal nu
+            {factuur.statusDescription}
           </MaRouterLink>
         </>
       );
-    case 'in-dispuut':
-      return 'In dispuut';
-    case 'gedeeltelijke-betaling':
-      return `Automatische incasso - Betaal het openstaande bedrag van ${factuur.amountOwedFormatted} via bankoverschrijving`;
-    case 'betaald':
-      return `Betaald ${factuur.debtClearingDateFormatted ? `op ${factuur.debtClearingDateFormatted}` : ''}`;
-    case 'automatische-incasso':
+    default:
       return (
         <div
           style={{
             whiteSpace: 'normal',
             wordWrap: 'break-word',
-            wordBreak: 'break-word',
           }}
         >
           {factuur.amountOwedFormatted} wordt automatisch van uw rekening
           afgeschreven
         </div>
       );
-    default:
-      return capitalizeFirstLetter(factuur.status ?? '');
   }
 }

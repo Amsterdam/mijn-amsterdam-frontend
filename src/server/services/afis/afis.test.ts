@@ -531,6 +531,7 @@ describe('Afis', () => {
         paymentDueDate: '2023-12-21T00:00:00',
         paymentDueDateFormatted: '21 december 2023',
         status: 'in-dispuut',
+        statusDescription: 'In dispuut',
       });
 
       const automatischeIncassoFactuur = response.content[1];
@@ -582,6 +583,7 @@ describe('Afis', () => {
         paymentDueDate: '2023-12-21T00:00:00',
         paymentDueDateFormatted: '21 december 2023',
         status: 'geannuleerd',
+        statusDescription: 'Geannuleerd',
       });
 
       const betaaldeInvoice = response.content[1];

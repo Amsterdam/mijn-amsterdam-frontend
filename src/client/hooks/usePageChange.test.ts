@@ -25,6 +25,9 @@ vi.mock('react-router-dom', async (requireActual) => {
     __setPathname: (name: string) => {
       mocks.pathname = name;
     },
+    useHistory: () => {
+      return { action: 'PUSH' };
+    },
   };
 });
 

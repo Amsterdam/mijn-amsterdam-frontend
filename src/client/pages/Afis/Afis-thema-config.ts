@@ -8,7 +8,6 @@ import { DisplayProps } from '../../components/Table/TableV2';
 export type AfisEmandateStub = ZaakDetail & Record<string, string>;
 
 export type AfisFactuurFrontend = AfisFactuur & {
-  statusDescription: string;
   factuurNummerEl: ReactNode;
 };
 
