@@ -5,7 +5,10 @@ import express, {
   Response,
 } from 'express';
 import UID from 'uid-safe';
-import { testAccounts } from '../../universal/config/auth.development';
+import {
+  testAccountsDigid,
+  testAccountsEherkenning,
+} from '../../universal/config/auth.development';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -83,12 +86,15 @@ authRouterDevelopment.get(
       sameSite: 'lax',
     };
     const authMethod = req.params.authMethod as AuthProfile['authMethod'];
+    const testAccounts =
+      authMethod === 'digid' ? testAccountsDigid : testAccountsEherkenning;
+    const allUsernames = Object.keys(testAccounts);
     const userName =
       req.params.user && req.params.user in testAccounts
         ? req.params.user
-        : Object.keys(testAccounts)[0];
+        : allUsernames[0];
 
-    if (!req.params.user) {
+    if (!req.params.user && allUsernames.length > 1) {
       const list = Object.keys(testAccounts).map((userName) => {
         const queryEntries = Object.entries(req.query);
         const queryString = queryEntries.length
@@ -96,7 +102,9 @@ authRouterDevelopment.get(
           : '';
         return `<li><a href=${authRoutes.AUTH_LOGIN_DIGID}/${userName}${queryString}>${userName}</a>`;
       });
-      return res.send(`<ul>${list}</ul>`);
+      return res.send(
+        `<div style="height:100vh;width:100vw;display:flex;justify-content:center;"><div><h1>Selecteer ${authMethod} test account.</h1><ul>${list}</ul></div></div>`
+      );
     }
 
     const userId = testAccounts[userName];
