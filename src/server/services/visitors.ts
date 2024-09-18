@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import {
   add,
+  endOfDay,
   format,
   parseISO,
   startOfMonth,
@@ -112,12 +113,13 @@ export async function loginStats(req: Request, res: Response) {
   }
 
   const today = new Date();
+  const todayEnd = endOfDay(today);
   const dateEndday = format(today, QUERY_DATE_FORMAT);
   const ranges = [
     {
       label: 'Vandaag',
       dateStart: today,
-      dateEnd: add(today, { days: 1 }),
+      dateEnd: todayEnd,
     },
     {
       label: 'Gister',
@@ -127,7 +129,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Deze week',
       dateStart: startOfWeek(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Vorige week',
@@ -137,7 +139,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Deze maand',
       dateStart: startOfMonth(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Vorige maand',
@@ -147,7 +149,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Dit kwartaal',
       dateStart: startOfQuarter(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Vorig kwartaal',
@@ -157,7 +159,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Dit jaar',
       dateStart: startOfYear(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Afgelopen jaar',
