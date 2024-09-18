@@ -1,0 +1,60 @@
+{
+  "feed": {
+    "@base": "https://sap:8080OPERACCTGDOCITEM_CDS/",
+    "id": "https://sap:8080OPERACCTGDOCITEM_CDS/SomeITEM",
+    "title": {
+      "@type": "text",
+      "$": "SomeITEM"
+    },
+    "updated": "2000-01-22T11:32:02Z",
+    "author": {
+      "name": ""
+    },
+    "link": {
+      "@href": "SomeITEM",
+      "@rel": "self",
+      "@title": "SomeITEM"
+    },
+    "entry": [
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-12-21T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-010"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-12-12T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-008"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-10-26T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-006"
+          }
+        }
+      }
+    ]
+  }
+}

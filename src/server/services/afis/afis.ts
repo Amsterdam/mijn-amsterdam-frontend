@@ -17,6 +17,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { captureMessage } from '../monitoring';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
@@ -295,7 +296,7 @@ function formatFactuurRequestURL(
     closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
   };
 
-  const select = `$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
@@ -379,6 +380,11 @@ function transformFactuur(
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
+  const status = determineFactuurStatus(
+    invoice,
+    amountInBalanceTransacCrcyInCents
+  );
+
   return {
     afzender: invoice.ProfitCenterName,
     datePublished: invoice.PostingDate || null,
@@ -390,9 +396,9 @@ function transformFactuur(
     amountOwed: amountOwed ? amountOwed : 0,
     amountOwedFormatted,
     factuurNummer: invoice.InvoiceNo,
-    status: determineFactuurStatus(invoice),
+    status,
     statusDescription: determineFactuurStatusDescription(
-      determineFactuurStatus(invoice),
+      status,
       amountOwedFormatted,
       debtClearingDateFormatted
     ),
@@ -422,7 +428,8 @@ function replaceXmlNulls(
 }
 
 function determineFactuurStatus(
-  sourceInvoice: AfisFactuurPropertiesSource
+  sourceInvoice: AfisFactuurPropertiesSource,
+  amountInBalanceTransacCrcyInCents: number
 ): AfisFactuur['status'] {
   switch (true) {
     // Closed invoices
@@ -433,6 +440,10 @@ function determineFactuurStatus(
       return 'betaald';
 
     // Open invoices
+    case amountInBalanceTransacCrcyInCents < 0: {
+      return 'geld-terug';
+    }
+
     case sourceInvoice.DunningBlockingReason === 'D':
       return 'in-dispuut';
 
@@ -445,8 +456,17 @@ function determineFactuurStatus(
     case !sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'openstaand';
 
-    // Unknown status
     default:
+      captureMessage(
+        `Error: invoice status 'onbekend' (unknown)
+Source Invoice Properties that determine this are:
+\tReverseDocument: ${sourceInvoice.ReverseDocument}
+\tIsCleared: ${sourceInvoice.IsCleared}
+\tDunningLevel: ${sourceInvoice.DunningLevel}
+\tDunningBlockingReason: ${sourceInvoice.DunningBlockingReason}`,
+        { severity: 'error' }
+      );
+      // Unknown status
       return 'onbekend';
   }
 }
@@ -463,6 +483,8 @@ function determineFactuurStatusDescription(
       return 'In dispuut';
     case 'gedeeltelijke-betaling':
       return `Automatische incasso - Betaal het openstaande bedrag van ${amountOwedFormatted} via bankoverschrijving`;
+    case 'geld-terug':
+      return `U krijgt ${amountOwedFormatted.replace('-', '')} terug`;
     case 'betaald':
       return `Betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':

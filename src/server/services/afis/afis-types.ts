@@ -117,6 +117,7 @@ type AfisFactuurStatus =
   | 'automatische-incasso'
   | 'in-dispuut'
   | 'gedeeltelijke-betaling'
+  | 'geld-terug'
   | 'betaald'
   | 'geannuleerd'
   | 'onbekend';

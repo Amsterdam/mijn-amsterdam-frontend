@@ -44,8 +44,8 @@ const ROUTES = {
   businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27${GENERIC_ID}%27&$select=BusinessPartner,%20FullName,%20AddressID,%20CityName,%20Country,%20HouseNumber,%20HouseNumberSupplementText,%20PostalCode,%20Region,%20StreetName,%20StreetPrefixName,%20StreetSuffixName`,
   businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
   businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
-  openstaandeFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
-  geslotenFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
+  openstaandeFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
+  geslotenFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
   documentDownload: `${BASE_ROUTE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
   documentID: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${FACTUUR_NUMMER}'&$select=ArcDocId`,
 };
@@ -499,10 +499,7 @@ describe('Afis', () => {
     test('Openstaande factuur data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.openstaandeFacturen)
-        .reply(
-          200,
-          require('../../../../mocks/fixtures/afis/openstaande-facturen.json')
-        );
+        .reply(200, require('./test-fixtures/openstaande-facturen.json'));
 
       const openParams = {
         state: 'open' as 'open',
@@ -537,25 +534,26 @@ describe('Afis', () => {
       });
 
       const automatischeIncassoFactuur = response.content[1];
-      expect(automatischeIncassoFactuur.status).toBe('in-dispuut');
+      expect(automatischeIncassoFactuur.status).toBe('openstaand');
       expect(automatischeIncassoFactuur.paymentDueDate).toBe(
         '2023-12-12T00:00:00'
       );
 
       const inDispuutInvoice = response.content[2];
-      expect(inDispuutInvoice.status).toBe('onbekend');
+      expect(inDispuutInvoice.status).toBe('automatische-incasso');
 
-      const unknownStatusInvoice = response.content[3];
-      expect(unknownStatusInvoice.status).toBe('in-dispuut');
+      const geldTerugInvoice = response.content[3];
+      expect(geldTerugInvoice.status).toBe('geld-terug');
+      expect(geldTerugInvoice.statusDescription.includes('-')).toBe(false);
+
+      const unknownStatusInvoice = response.content[4];
+      expect(unknownStatusInvoice.status).toBe('onbekend');
     });
 
     test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.geslotenFacturen)
-        .reply(
-          200,
-          require('../../../../mocks/fixtures/afis/afgehandelde-facturen.json')
-        );
+        .reply(200, require('./test-fixtures/afgehandelde-facturen.json'));
 
       const closedParams = {
         state: 'closed' as 'closed',
