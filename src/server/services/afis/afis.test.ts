@@ -332,7 +332,6 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "address": "Rembrandtstraat 20 2311 VW Leiden",
             "addressId": 430844,
             "businessPartnerId": "12346789",
             "email": "xxmail@arjanappel.nl",
@@ -364,7 +363,6 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "address": "Rembrandtstraat 20 2311 VW Leiden",
             "addressId": null,
             "businessPartnerId": "12346789",
             "fullName": "Taxon Expeditions BV",
@@ -396,7 +394,6 @@ describe('Afis', () => {
         content: {
           businessPartnerId: GENERIC_ID,
           fullName: 'Taxon Expeditions BV',
-          address: 'Rembrandtstraat 20 2311 VW Leiden',
           addressId: ADRRESS_ID,
         },
         status: 'OK',
@@ -456,9 +453,8 @@ describe('Afis', () => {
     expect(response).toMatchInlineSnapshot(`
       {
         "content": {
-          "address": "",
           "addressId": null,
-          "businessPartnerId": null,
+          "businessPartnerId": "",
           "fullName": null,
         },
         "status": "OK",
@@ -486,9 +482,8 @@ describe('Afis', () => {
     expect(response2).toMatchInlineSnapshot(`
       {
         "content": {
-          "address": "",
           "addressId": null,
-          "businessPartnerId": null,
+          "businessPartnerId": "",
           "fullName": null,
         },
         "status": "OK",
@@ -522,31 +517,34 @@ describe('Afis', () => {
       // All fields are listed here to test correct formatting.
       const openFactuur = response.content[0];
       expect(openFactuur).toStrictEqual({
-        afzender: 'Moneymakers inc.',
-        amountOwed: -0.98, // Floating point negative number tested here.
-        amountOwedFormatted: '€ -0,98',
-        factuurNummer: '5555555',
-        status: 'openstaand',
-        paymentDueDate: '2023-03-23T00:00:00',
-        paymentDueDateFormatted: '23 maart 2023',
+        afzender: 'Bedrijf: Ok',
+        amountOwed: 343,
+        amountOwedFormatted: '€ 343,00',
+        datePublished: '2023-11-21T00:00:00',
+        datePublishedFormatted: '21 november 2023',
         debtClearingDate: null,
         debtClearingDateFormatted: null,
-        paylink: 'http://localhost:3100/mocks-server/afis/paylink',
-        datePublished: '2023-03-23T00:00:00',
-        datePublishedFormatted: '23 maart 2023',
         documentDownloadLink:
           'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
+        factuurNummer: '5555555',
+        paylink: 'http://localhost:3100/mocks-server/afis/paylink',
+        paymentDueDate: '2023-12-21T00:00:00',
+        paymentDueDateFormatted: '21 december 2023',
+        status: 'in-dispuut',
+        statusDescription: 'In dispuut',
       });
 
       const automatischeIncassoFactuur = response.content[1];
-      expect(automatischeIncassoFactuur.status).toBe('automatische-incasso');
-      expect(automatischeIncassoFactuur.paymentDueDate).toBe(null);
+      expect(automatischeIncassoFactuur.status).toBe('in-dispuut');
+      expect(automatischeIncassoFactuur.paymentDueDate).toBe(
+        '2023-12-12T00:00:00'
+      );
 
       const inDispuutInvoice = response.content[2];
-      expect(inDispuutInvoice.status).toBe('in-dispuut');
+      expect(inDispuutInvoice.status).toBe('onbekend');
 
       const unknownStatusInvoice = response.content[3];
-      expect(unknownStatusInvoice.status).toBe('onbekend');
+      expect(unknownStatusInvoice.status).toBe('in-dispuut');
     });
 
     test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
@@ -571,27 +569,28 @@ describe('Afis', () => {
 
       const geannuleerdeInvoice = response.content[0];
       expect(geannuleerdeInvoice).toStrictEqual({
-        afzender: '',
+        afzender: 'Lisan al Gaib inc.',
         amountOwed: 0,
         amountOwedFormatted: '€ 0',
         datePublished: null,
         datePublishedFormatted: null,
-        documentDownloadLink:
-          'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
-        paymentDueDate: '2023-06-12T00:00:00',
-        paymentDueDateFormatted: '12 juni 2023',
         debtClearingDate: null,
         debtClearingDateFormatted: null,
-        factuurNummer: '',
+        documentDownloadLink:
+          'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
+        factuurNummer: 'INV-2023-010',
         paylink: null,
-        status: 'betaald',
+        paymentDueDate: '2023-12-21T00:00:00',
+        paymentDueDateFormatted: '21 december 2023',
+        status: 'geannuleerd',
+        statusDescription: 'Geannuleerd',
       });
 
       const betaaldeInvoice = response.content[1];
-      expect(betaaldeInvoice.status).toStrictEqual('betaald');
+      expect(betaaldeInvoice.status).toStrictEqual('geannuleerd');
 
       const unknownStatusInvoice = response.content[2];
-      expect(unknownStatusInvoice.status).toStrictEqual('onbekend');
+      expect(unknownStatusInvoice.status).toStrictEqual('geannuleerd');
     });
   });
 

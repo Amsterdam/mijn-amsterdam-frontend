@@ -33,7 +33,7 @@ interface ListPagePaginatedProps<T> {
   pageSize?: number;
 }
 
-export function ListPagePaginated<T extends ZaakDetail>({
+export function ListPagePaginated<T extends object = ZaakDetail>({
   appRoute,
   appRouteBack,
   appRouteParams = null,

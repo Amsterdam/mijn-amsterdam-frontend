@@ -4,7 +4,9 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import displayAmount from '../../../universal/helpers/text';
+import displayAmount, {
+  capitalizeFirstLetter,
+} from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { encrypt } from '../../helpers/encrypt-decrypt';
@@ -139,20 +141,9 @@ function transformBusinessPartnerDetailsResponse(
   const [businessPartnerEntry] = getFeedEntryProperties(response);
 
   if (businessPartnerEntry) {
-    const address = [
-      businessPartnerEntry.StreetName,
-      businessPartnerEntry.HouseNumber,
-      businessPartnerEntry.HouseNumberSupplementText,
-      businessPartnerEntry.PostalCode,
-      businessPartnerEntry.CityName,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
     const transformedResponse: AfisBusinessPartnerDetails = {
-      businessPartnerId: businessPartnerEntry.BusinessPartner ?? null,
+      businessPartnerId: businessPartnerEntry.BusinessPartner?.toString() ?? '',
       fullName: businessPartnerEntry.FullName ?? null,
-      address,
       addressId: businessPartnerEntry.AddressID ?? null,
     };
 
@@ -372,7 +363,7 @@ function transformFactuur(
 
   const amountOwed =
     (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) / 100;
-  const amountOwedFormatted = amountOwed ? displayAmount(amountOwed) : 0;
+  const amountOwedFormatted = `€ ${amountOwed ? displayAmount(amountOwed) : 0}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
@@ -390,9 +381,14 @@ function transformFactuur(
     debtClearingDate,
     debtClearingDateFormatted,
     amountOwed: amountOwed ? amountOwed : 0,
-    amountOwedFormatted: `€ ${amountOwedFormatted}`,
+    amountOwedFormatted,
     factuurNummer: invoice.InvoiceNo,
     status: determineFactuurStatus(invoice),
+    statusDescription: determineFactuurStatusDescription(
+      determineFactuurStatus(invoice),
+      amountOwedFormatted,
+      debtClearingDateFormatted
+    ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink: generateFullApiUrlBFF(
       BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
@@ -445,6 +441,27 @@ function determineFactuurStatus(
     // Unknown status
     default:
       return 'onbekend';
+  }
+}
+
+function determineFactuurStatusDescription(
+  status: AfisFactuur['status'],
+  amountOwedFormatted: AfisFactuur['amountOwedFormatted'],
+  debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
+) {
+  switch (status) {
+    case 'openstaand':
+      return `${amountOwedFormatted} betaal nu`;
+    case 'in-dispuut':
+      return 'In dispuut';
+    case 'gedeeltelijke-betaling':
+      return `Automatische incasso - Betaal het openstaande bedrag van ${amountOwedFormatted} via bankoverschrijving`;
+    case 'betaald':
+      return `Betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+    case 'automatische-incasso':
+      return `${amountOwedFormatted} wordt automatisch van uw rekening afgeschreven`;
+    default:
+      return capitalizeFirstLetter(status ?? '');
   }
 }
 

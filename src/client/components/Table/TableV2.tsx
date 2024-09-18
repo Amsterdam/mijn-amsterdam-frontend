@@ -14,10 +14,11 @@ interface ObjectWithOptionalLinkAttr extends Unshaped {
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
   propertyName: keyof T = 'title',
-  addDetailLinkComponentAttr: boolean = false
+  addDetailLinkComponentAttr = false,
+  linkName = 'link'
 ): Array<T & { detailLinkComponent?: ReactNode }> {
   return items.map((item) => {
-    if (!item.link?.to) {
+    if (!item[linkName]?.to) {
       return item;
     }
 
@@ -35,7 +36,7 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [linkPropertyName]: (
-        <MaRouterLink maVariant="fatNoUnderline" href={item.link.to}>
+        <MaRouterLink maVariant="fatNoUnderline" href={item[linkName].to}>
           {capitalizeFirstLetter(label)}
         </MaRouterLink>
       ),
@@ -63,7 +64,6 @@ export function TableV2<T extends object = ZaakDetail>({
   showTHead = true,
 }: TableV2Props<T>) {
   const displayPropEntries = displayProps !== null ? entries(displayProps) : [];
-
   return (
     <Table className={classNames(styles.TableV2, className)}>
       {!!caption && <Table.Caption>{caption}</Table.Caption>}

@@ -105,6 +105,7 @@ export interface ZaakDetail {
   link: LinkProps;
   about?: string;
 }
+
 export type StatusLine = ZaakDetail;
 
 export interface ApiError {
