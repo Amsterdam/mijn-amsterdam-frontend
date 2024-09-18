@@ -1,0 +1,151 @@
+{
+  "feed": {
+    "@base": "https://sap:8080OPERACCTGDOCITEM_CDS/",
+    "id": "https://sap:8080OPERACCTGDOCITEM_CDS/SomeITEM",
+    "title": {
+      "@type": "text",
+      "$": "SomeITEM"
+    },
+    "updated": "2000-01-22T11:32:02Z",
+    "author": {
+      "name": ""
+    },
+    "link": {
+      "@href": "SomeITEM",
+      "@rel": "self",
+      "@title": "SomeITEM"
+    },
+    "entry": [
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-12-21T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-010"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-12-12T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-008"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-10-26T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-006"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Stellar Innovations Corp.",
+            "NetDueDate": "2023-08-09T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-005"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 2,
+            "ProfitCenterName": "Eco Synergy Solutions",
+            "NetDueDate": "2023-07-27T00:00:00",
+            "ReverseDocument": "",
+            "InvoiceNo": "INV-2023-003"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Nebula Dynamics Ltd.",
+            "NetDueDate": "2023-06-12T00:00:00",
+            "ReverseDocument": "",
+            "InvoiceNo": "INV-2023-001"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Quantum Horizons GmbH",
+            "NetDueDate": "2023-05-11T00:00:00",
+            "ReverseDocument": "",
+            "InvoiceNo": "INV-2023-002"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Cyber Nexus Technologies",
+            "NetDueDate": "2023-04-28T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-004"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-01-31T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-007"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-01-01T00:00:00",
+            "ReverseDocument": "someReverseDocument123",
+            "InvoiceNo": "INV-2023-009"
+          }
+        }
+      }
+    ]
+  }
+}

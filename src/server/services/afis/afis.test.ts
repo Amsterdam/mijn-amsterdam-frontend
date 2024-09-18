@@ -499,10 +499,7 @@ describe('Afis', () => {
     test('Openstaande factuur data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.openstaandeFacturen)
-        .reply(
-          200,
-          require('../../../../mocks/fixtures/afis/openstaande-facturen.json')
-        );
+        .reply(200, require('./test-fixtures/openstaande-facturen.json'));
 
       const openParams = {
         state: 'open' as 'open',
@@ -537,25 +534,25 @@ describe('Afis', () => {
       });
 
       const automatischeIncassoFactuur = response.content[1];
-      expect(automatischeIncassoFactuur.status).toBe('in-dispuut');
+      expect(automatischeIncassoFactuur.status).toBe('openstaand');
       expect(automatischeIncassoFactuur.paymentDueDate).toBe(
         '2023-12-12T00:00:00'
       );
 
       const inDispuutInvoice = response.content[2];
-      expect(inDispuutInvoice.status).toBe('onbekend');
+      expect(inDispuutInvoice.status).toBe('automatische-incasso');
 
-      const unknownStatusInvoice = response.content[3];
-      expect(unknownStatusInvoice.status).toBe('in-dispuut');
+      const geldTerugInvoice = response.content[3];
+      expect(geldTerugInvoice.status).toBe('geld-terug');
+
+      const unknownStatusInvoice = response.content[4];
+      expect(unknownStatusInvoice.status).toBe('onbekend');
     });
 
     test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.geslotenFacturen)
-        .reply(
-          200,
-          require('../../../../mocks/fixtures/afis/afgehandelde-facturen.json')
-        );
+        .reply(200, require('./test-fixtures/afgehandelde-facturen.json'));
 
       const closedParams = {
         state: 'closed' as 'closed',
