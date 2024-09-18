@@ -165,15 +165,6 @@ function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
         </>
       );
     default:
-      return (
-        <div
-          style={{
-            whiteSpace: 'normal',
-            wordWrap: 'break-word',
-          }}
-        >
-          {factuur.statusDescription}
-        </div>
-      );
+      return factuur.statusDescription;
   }
 }
