@@ -85,7 +85,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op logeeropvang Respijt stopt op 01 januari 2024.
+      Als uw recht op logeeropvang Respijt stopt, krijgt u hiervan bericht.
     </p>
     ",
           "documents": [],
@@ -159,7 +159,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Als uw recht op PGB: dagbesteding meewerken (toegewezen) stopt, krijgt u hiervan bericht.
+      Uw recht op PGB: dagbesteding meewerken (toegewezen) stopt op 01 augustus 2026..
     </p>
     
           <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 01 augustus 2026 doen.</p>
@@ -344,7 +344,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Als uw recht op aanvullende individuele ondersteuning stopt, krijgt u hiervan bericht.
+      Uw recht op aanvullende individuele ondersteuning stopt op 22 maart 2026..
     </p>
     
           <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 22 maart 2026 doen.</p>
@@ -894,7 +894,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op hulp bij het huishouden kind stopt op 21 december 2024.
+      Als uw recht op hulp bij het huishouden kind stopt, krijgt u hiervan bericht.
     </p>
     ",
           "documents": [],
@@ -990,7 +990,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op logeeropvang Mantelzorg stopt op 31 december 2024.
+      Als uw recht op logeeropvang Mantelzorg stopt, krijgt u hiervan bericht.
     </p>
     ",
           "documents": [],
@@ -1546,7 +1546,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op hulp bij het huishouden stopt op 11 maart 2024.
+      Als uw recht op hulp bij het huishouden stopt, krijgt u hiervan bericht.
     </p>
     ",
           "documents": [],
