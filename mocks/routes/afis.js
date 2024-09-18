@@ -152,9 +152,9 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            const isAboutClosedInvoices =
-              req.query?.['$select']?.includes('ReverseDocument');
-
+            const isAboutClosedInvoices = req.query?.['$filter']?.includes(
+              `IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`
+            );
             const filename = isAboutClosedInvoices
               ? 'afgehandelde-facturen'
               : 'openstaande-facturen';

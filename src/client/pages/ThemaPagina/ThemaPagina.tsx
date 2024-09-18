@@ -56,7 +56,6 @@ export default function ThemaPagina({
   isLoading,
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
-
   return (
     <OverviewPage>
       <PageHeading backLink={backLink} icon={icon}>

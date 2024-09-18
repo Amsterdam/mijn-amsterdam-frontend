@@ -38,13 +38,13 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Foobaz",
             "SEPAMandate": "",
             "PostingDate": "2023-12-12T00:00:00",
             "NetDueDate": "2023-12-12T00:00:00",
             "NetPaymentAmount": "0.00",
-            "AmountInBalanceTransacCrcy": "-80.00",
+            "AmountInBalanceTransacCrcy": "343.00",
             "InvoiceNo": "5555555",
             "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
           }
@@ -54,14 +54,14 @@
         "content": {
           "@type": "application/xml",
           "properties": {
-            "DunningLevel": 5,
+            "DunningLevel": 0,
             "DunningBlockingReason": "Z",
             "ProfitCenterName": "Nana Co",
-            "SEPAMandate": "",
+            "SEPAMandate": "EenGevuldeSepaMandate",
             "PostingDate": "2023-10-26T00:00:00",
             "NetDueDate": "2023-10-26T00:00:00",
             "NetPaymentAmount": "0.00",
-            "AmountInBalanceTransacCrcy": "-12.10",
+            "AmountInBalanceTransacCrcy": "5.50",
             "InvoiceNo": "5555555",
             "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
           }
@@ -88,50 +88,14 @@
         "content": {
           "@type": "application/xml",
           "properties": {
-            "DunningLevel": 0,
-            "DunningBlockingReason": "",
+            "DunningLevel": 9999,
+            "DunningBlockingReason": "ONBEKEND",
             "ProfitCenterName": "Moneymakers inc.",
             "SEPAMandate": "",
             "PostingDate": "2023-03-23T00:00:00",
             "NetDueDate": "2023-03-23T00:00:00",
-            "NetPaymentAmount": "-900.98",
+            "NetPaymentAmount": "-1000.98",
             "AmountInBalanceTransacCrcy": "1000.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-          }
-        }
-      },
-      {
-        "content": {
-          "@type": "application/xml",
-          "properties": {
-            "DunningLevel": 0,
-            "DunningBlockingReason": "D",
-            "ProfitCenterName": "Trala",
-            "SEPAMandate": "",
-            "PostingDate": "2023-11-30T00:00:00",
-            "NetDueDate": "2023-01-31T00:00:00",
-            "NetPaymentAmount": "0.00",
-            "AmountInBalanceTransacCrcy": "121.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
-          }
-        }
-      },
-      {
-        "content": {
-          "@type": "application/xml",
-          "properties": {
-            "DunningLevel": 0,
-            "DunningBlockingReason": "",
-            "ProfitCenterName": "Tada Gochelaars",
-            "SEPAMandate": "EenGevuldeSepaMandate",
-            "PostingDate": "2023-04-11T00:00:00",
-            "NetDueDate": {
-              "@null": true
-            },
-            "NetPaymentAmount": "0.00",
-            "AmountInBalanceTransacCrcy": "230.00",
             "InvoiceNo": "5555555",
             "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
           }

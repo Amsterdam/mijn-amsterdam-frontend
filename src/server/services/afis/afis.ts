@@ -4,14 +4,20 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import displayAmount from '../../../universal/helpers/text';
+import displayAmount, {
+  capitalizeFirstLetter,
+} from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import {
+  encrypt,
+  encryptSessionIdWithRouteIdParam,
+} from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { captureMessage } from '../monitoring';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
@@ -105,7 +111,10 @@ function transformBusinessPartnerisKnownResponse(
   }
 
   if (businessPartnerId) {
-    [businessPartnerIdEncrypted] = encrypt(`${sessionID}:${businessPartnerId}`);
+    businessPartnerIdEncrypted = encryptSessionIdWithRouteIdParam(
+      sessionID,
+      businessPartnerId
+    );
   }
 
   return {
@@ -139,20 +148,9 @@ function transformBusinessPartnerDetailsResponse(
   const [businessPartnerEntry] = getFeedEntryProperties(response);
 
   if (businessPartnerEntry) {
-    const address = [
-      businessPartnerEntry.StreetName,
-      businessPartnerEntry.HouseNumber,
-      businessPartnerEntry.HouseNumberSupplementText,
-      businessPartnerEntry.PostalCode,
-      businessPartnerEntry.CityName,
-    ]
-      .filter(Boolean)
-      .join(' ');
-
     const transformedResponse: AfisBusinessPartnerDetails = {
-      businessPartnerId: businessPartnerEntry.BusinessPartner ?? null,
+      businessPartnerId: businessPartnerEntry.BusinessPartner?.toString() ?? '',
       fullName: businessPartnerEntry.FullName ?? null,
-      address,
       addressId: businessPartnerEntry.AddressID ?? null,
     };
 
@@ -298,7 +296,7 @@ function formatFactuurRequestURL(
     closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
   };
 
-  const select = `$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
@@ -362,8 +360,9 @@ function transformFactuur(
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
 
-  const [factuurNummerEncrypted] = encrypt(
-    `${sessionID}:${sourceInvoice.InvoiceNo}`
+  const factuurNummerEncrypted = encryptSessionIdWithRouteIdParam(
+    sessionID,
+    invoice.InvoiceNo
   );
 
   const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
@@ -372,7 +371,7 @@ function transformFactuur(
 
   const amountOwed =
     (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) / 100;
-  const amountOwedFormatted = amountOwed ? displayAmount(amountOwed) : 0;
+  const amountOwedFormatted = `€ ${amountOwed ? displayAmount(amountOwed) : 0}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
@@ -380,6 +379,11 @@ function transformFactuur(
     debtClearingDate = invoice.ClearingDate;
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
+
+  const status = determineFactuurStatus(
+    invoice,
+    amountInBalanceTransacCrcyInCents
+  );
 
   return {
     afzender: invoice.ProfitCenterName,
@@ -390,9 +394,14 @@ function transformFactuur(
     debtClearingDate,
     debtClearingDateFormatted,
     amountOwed: amountOwed ? amountOwed : 0,
-    amountOwedFormatted: `€ ${amountOwedFormatted}`,
+    amountOwedFormatted,
     factuurNummer: invoice.InvoiceNo,
-    status: determineFactuurStatus(invoice),
+    status,
+    statusDescription: determineFactuurStatusDescription(
+      status,
+      amountOwedFormatted,
+      debtClearingDateFormatted
+    ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink: generateFullApiUrlBFF(
       BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
@@ -419,7 +428,8 @@ function replaceXmlNulls(
 }
 
 function determineFactuurStatus(
-  sourceInvoice: AfisFactuurPropertiesSource
+  sourceInvoice: AfisFactuurPropertiesSource,
+  amountInBalanceTransacCrcyInCents: number
 ): AfisFactuur['status'] {
   switch (true) {
     // Closed invoices
@@ -430,6 +440,10 @@ function determineFactuurStatus(
       return 'betaald';
 
     // Open invoices
+    case amountInBalanceTransacCrcyInCents < 0: {
+      return 'geld-terug';
+    }
+
     case sourceInvoice.DunningBlockingReason === 'D':
       return 'in-dispuut';
 
@@ -442,9 +456,41 @@ function determineFactuurStatus(
     case !sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'openstaand';
 
-    // Unknown status
     default:
+      captureMessage(
+        `Error: invoice status 'onbekend' (unknown)
+Source Invoice Properties that determine this are:
+\tReverseDocument: ${sourceInvoice.ReverseDocument}
+\tIsCleared: ${sourceInvoice.IsCleared}
+\tDunningLevel: ${sourceInvoice.DunningLevel}
+\tDunningBlockingReason: ${sourceInvoice.DunningBlockingReason}`,
+        { severity: 'error' }
+      );
+      // Unknown status
       return 'onbekend';
+  }
+}
+
+function determineFactuurStatusDescription(
+  status: AfisFactuur['status'],
+  amountOwedFormatted: AfisFactuur['amountOwedFormatted'],
+  debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
+) {
+  switch (status) {
+    case 'openstaand':
+      return `${amountOwedFormatted} betaal nu`;
+    case 'in-dispuut':
+      return 'In dispuut';
+    case 'gedeeltelijke-betaling':
+      return `Automatische incasso - Betaal het openstaande bedrag van ${amountOwedFormatted} via bankoverschrijving`;
+    case 'geld-terug':
+      return `U krijgt ${amountOwedFormatted.replace('-', '')} terug`;
+    case 'betaald':
+      return `Betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+    case 'automatische-incasso':
+      return `${amountOwedFormatted} wordt automatisch van uw rekening afgeschreven`;
+    default:
+      return capitalizeFirstLetter(status ?? '');
   }
 }
 

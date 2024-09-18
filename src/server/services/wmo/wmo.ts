@@ -6,7 +6,7 @@ import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
@@ -28,7 +28,10 @@ function getDocuments(
     isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
   ) {
     return aanvraagTransformed.documenten.map((document) => {
-      const [idEncrypted] = encrypt(`${sessionID}:${document.id}`);
+      const idEncrypted = encryptSessionIdWithRouteIdParam(
+        sessionID,
+        document.id
+      );
       return {
         ...document,
         url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {

@@ -1,3 +1,5 @@
+import { ZaakDetail } from '../../../universal/types';
+
 type JaOfNee = 'Ja' | 'Nee';
 
 /** Business partner private response from external AFIS API.
@@ -74,9 +76,8 @@ export type AfisBusinessPartnerEmailSource = {
 };
 
 export type AfisBusinessPartnerDetails = {
-  businessPartnerId: number;
+  businessPartnerId: string;
   fullName: string;
-  address: string;
   addressId: number;
 };
 
@@ -107,14 +108,16 @@ export type AfisFactuur = {
   factuurNummer: string;
   status: AfisFactuurStatus;
   paylink: string | null;
-  documentDownloadLink: string | null;
-};
+  documentDownloadLink: string;
+  statusDescription: string;
+} & Omit<ZaakDetail, 'steps' | 'link' | 'title' | 'id'>;
 
 type AfisFactuurStatus =
   | 'openstaand'
   | 'automatische-incasso'
   | 'in-dispuut'
   | 'gedeeltelijke-betaling'
+  | 'geld-terug'
   | 'betaald'
   | 'geannuleerd'
   | 'onbekend';

@@ -6,9 +6,9 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
@@ -35,7 +35,10 @@ function transformVergunningFrontend(
   vergunning: VergunningV2,
   appRoute: AppRoute
 ) {
-  const [idEncrypted] = encrypt(`${sessionID}:${vergunning.key}`);
+  const idEncrypted = encryptSessionIdWithRouteIdParam(
+    sessionID,
+    vergunning.key
+  );
   const vergunningFrontend: VergunningFrontendV2 = {
     ...vergunning,
     dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
@@ -131,7 +134,10 @@ function addEncryptedDocumentIdToUrl(
   sessionID: SessionID,
   document: VergunningDocument
 ) {
-  const [documentIdEncrypted] = encrypt(`${sessionID}:${document.key}`);
+  const documentIdEncrypted = encryptSessionIdWithRouteIdParam(
+    sessionID,
+    document.key
+  );
 
   return {
     ...document,
