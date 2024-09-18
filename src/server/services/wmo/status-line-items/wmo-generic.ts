@@ -10,7 +10,7 @@ import { GenericDocument } from '../../../../universal/types';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-config-and-types';
+} from '../../zorgned/zorgned-types';
 import {
   DOCUMENT_PGB_BESLUIT,
   DOCUMENT_TITLE_BESLUIT_STARTS_WITH,
@@ -102,7 +102,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: () => true,
   isActive: () => false,
   description: () => {
-    return '<p>Uw aanvraag is ontvangen.</p>';
+    return '';
   },
 };
 
@@ -135,7 +135,7 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
     !hasDecision(aanvraag) &&
     !hasMeerInformatieNodig(aanvraag),
   description: (aanvraag) => {
-    return '<p>Uw aanvraag is in behandeling.</p>'; // TODO: Do we need a text if no decision is made yet?
+    return '';
   },
 };
 
@@ -159,7 +159,7 @@ export function getTransformerConfigBesluit(
       </p>
       ${decisionParagraph(aanvraag)}
       `
-        : '', // TODO: Do we need a text if no decision is made yet?
+        : '',
   };
 }
 
@@ -175,17 +175,19 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   description: (aanvraag) =>
     `<p>
       ${
-        aanvraag.isActueel
-          ? `Uw recht op ${aanvraag.titel} stopt op ${
-              aanvraag.datumEindeGeldigheid
-                ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
-                : ''
-            }`
-          : `Uw recht op ${aanvraag.titel} is beëindigd ${
-              aanvraag.datumEindeGeldigheid
-                ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
-                : ''
-            }`
+        aanvraag.datumEindeGeldigheid
+          ? aanvraag.isActueel
+            ? `Uw recht op ${aanvraag.titel} stopt op ${
+                aanvraag.datumEindeGeldigheid
+                  ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+                  : ''
+              }`
+            : `Uw recht op ${aanvraag.titel} is beëindigd ${
+                aanvraag.datumEindeGeldigheid
+                  ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
+                  : ''
+              }`
+          : ``
       }
     </p>
     `,
@@ -196,14 +198,16 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
   description: (aanvraag) =>
     `<p>
       ${
-        aanvraag.isActueel
-          ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht`
-          : `Uw recht op ${aanvraag.titel} is beëindigd
+        aanvraag.datumEindeGeldigheid
+          ? aanvraag.isActueel
+            ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht`
+            : `Uw recht op ${aanvraag.titel} is beëindigd
           ${
             aanvraag.datumEindeGeldigheid
               ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
               : ''
           }`
+          : ''
       }.
     </p>
     ${

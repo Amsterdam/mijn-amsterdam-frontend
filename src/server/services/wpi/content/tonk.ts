@@ -14,7 +14,7 @@ const weigeringVerlengingLabels: WpiRequestStatusLabels = {
       )} geweigerd.`,
   },
   description: (requestProcess, statusStep) =>
-    `<p> U heeft uw ${
+    `<p>U heeft uw ${
       statusStep.about || requestProcess.about
     } verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };

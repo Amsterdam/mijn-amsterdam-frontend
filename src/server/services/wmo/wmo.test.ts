@@ -3,7 +3,7 @@ import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvra
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { StatusLineItem } from '../../../universal/types';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-config-and-types';
+import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { fetchWmo, forTesting } from './wmo';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', () => ({

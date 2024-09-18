@@ -1,4 +1,4 @@
-import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-config-and-types';
+import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-types';
 import {
   AANVRAAG,
   EINDE_RECHT,

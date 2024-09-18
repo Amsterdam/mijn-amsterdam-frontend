@@ -1,24 +1,34 @@
+import memoizee from 'memoizee';
+import {
+  apiErrorResult,
+  ApiSuccessResponse,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../../universal/helpers/api';
+import { getFullName } from '../../../universal/helpers/brp';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
+import { hash } from '../../../universal/helpers/utils';
+import { GenericDocument } from '../../../universal/types';
+
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   BeschiktProduct,
   LeveringsVorm,
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
+  ZorgnedAanvragenServiceOptions,
   ZorgnedDocument,
   ZorgnedDocumentResponseSource,
+  ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
-} from './zorgned-config-and-types';
-
-import { GenericDocument } from '../../../universal/types';
-import { ONE_SECOND_MS } from '../../config/app';
-
-import memoizee from 'memoizee';
-import { dateSort } from '../../../universal/helpers/date';
-import { hash } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
+} from './zorgned-types';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -45,7 +55,7 @@ function transformZorgnedAanvraag(
   datumBesluit: string,
   beschiktProduct: BeschiktProduct,
   documenten: ZorgnedDocument[]
-) {
+): ZorgnedAanvraagTransformed {
   const toegewezenProduct = beschiktProduct.toegewezenProduct;
   const toewijzingen = toegewezenProduct?.toewijzingen ?? [];
   const toewijzing = toewijzingen.pop();
@@ -91,7 +101,7 @@ function transformZorgnedAanvraag(
 
 export function transformZorgnedAanvragen(
   responseData: ZorgnedResponseDataSource
-) {
+): ZorgnedAanvraagTransformed[] {
   const aanvragenSource = responseData?._embedded?.aanvraag ?? [];
 
   const aanvragenTransformed: ZorgnedAanvraagTransformed[] = [];
@@ -135,25 +145,26 @@ export function transformZorgnedAanvragen(
     }
   }
 
-  return aanvragenTransformed;
+  return aanvragenTransformed.sort(dateSort('datumIngangGeldigheid', 'desc'));
 }
 
 export async function fetchAanvragen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
-  requestBodyParams?: Record<string, string>
+  options: ZorgnedAanvragenServiceOptions
 ) {
   const postBody = {
-    ...requestBodyParams,
+    ...(options.requestBodyParams ?? {}),
     burgerservicenummer: authProfileAndToken.profile.id,
     gemeentecode: ZORGNED_GEMEENTE_CODE,
   };
 
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
+  const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
   const url = `${dataRequestConfig.url}/aanvragen`;
 
-  const voorzieningen = await requestData<ZorgnedAanvraagTransformed[]>(
+  const zorgnedAanvragenResponse = await requestData<
+    ZorgnedAanvraagTransformed[]
+  >(
     {
       ...dataRequestConfig,
       url,
@@ -164,7 +175,69 @@ export async function fetchAanvragen(
     authProfileAndToken
   );
 
-  return voorzieningen;
+  return zorgnedAanvragenResponse;
+}
+
+export async function fetchAanvragenWithRelatedPersons(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  const zorgnedAanvragenResponse = await fetchAanvragen(
+    requestID,
+    authProfileAndToken,
+    options
+  );
+
+  if (zorgnedAanvragenResponse.status === 'OK') {
+    return fetchAndMergeRelatedPersons(requestID, zorgnedAanvragenResponse);
+  }
+
+  return zorgnedAanvragenResponse;
+}
+
+export async function fetchAndMergeRelatedPersons(
+  requestID: RequestID,
+  zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>
+): Promise<ApiSuccessResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
+  const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
+
+  const userIDs = zorgnedAanvragenTransformed.flatMap(
+    (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
+  );
+
+  const relatedPersonsResponse = await fetchRelatedPersons(requestID, userIDs);
+
+  const personsByUserId = relatedPersonsResponse.content?.reduce(
+    (acc, person) => {
+      acc[person.bsn] = person;
+      return acc;
+    },
+    {} as Record<ZorgnedPerson['bsn'], ZorgnedPerson>
+  );
+
+  const zorgnedAanvragenWithRelatedPersons: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
+    zorgnedAanvragenTransformed.map((zorgnedAanvraagTransformed) => {
+      let betrokkenPersonen: ZorgnedPerson[] = [];
+
+      if (zorgnedAanvraagTransformed.betrokkenen?.length && personsByUserId) {
+        betrokkenPersonen = zorgnedAanvraagTransformed.betrokkenen
+          .map((userID) => personsByUserId[userID])
+          .filter(Boolean);
+      }
+
+      return {
+        ...zorgnedAanvraagTransformed,
+        betrokkenPersonen,
+      };
+    });
+
+  return apiSuccessResult(
+    zorgnedAanvragenWithRelatedPersons,
+    getFailedDependencies({
+      relatedPersons: relatedPersonsResponse,
+    })
+  );
 }
 
 export async function fetchDocument(
@@ -212,36 +285,56 @@ export async function fetchDocument(
   );
 }
 
-function transformZorgnedRelaties(responseData: any) {
-  return responseData;
+function transformZorgnedPersonResponse(
+  zorgnedResponseData: ZorgnedPersoonsgegevensNAWResponse
+): ZorgnedPerson | null {
+  if (zorgnedResponseData?.persoon) {
+    return {
+      bsn: zorgnedResponseData.persoon.bsn,
+      name:
+        zorgnedResponseData?.persoon?.voornamen ??
+        getFullName({
+          voornamen: zorgnedResponseData?.persoon?.voornamen,
+          geslachtsnaam: zorgnedResponseData?.persoon?.geboortenaam,
+          voorvoegselGeslachtsnaam: zorgnedResponseData?.persoon?.voorvoegsel,
+        }),
+      dateOfBirth: zorgnedResponseData.persoon.geboortedatum,
+      dateOfBirthFormatted: zorgnedResponseData.persoon.geboortedatum
+        ? defaultDateFormat(zorgnedResponseData.persoon.geboortedatum)
+        : null,
+    };
+  }
+  return null;
 }
 
-export async function fetchRelaties(
+export async function fetchRelatedPersons(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
+  userIDs: string[]
 ) {
-  const postBody = {
-    burgerservicenummer: authProfileAndToken.profile.id,
-    gemeentecode: ZORGNED_GEMEENTE_CODE,
-  };
+  const requests = userIDs.map((userID) => {
+    return fetchPersoonsgegevensNAW(requestID, userID, 'ZORGNED_AV');
+  });
 
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
+  const results = await Promise.allSettled(requests);
+  const namesAndDatesOfBirth: ZorgnedPerson[] = [];
 
-  const url = `${dataRequestConfig.url}/relaties`;
+  for (const result of results) {
+    const response = getSettledResult(result);
+    const person =
+      response.status === 'OK'
+        ? transformZorgnedPersonResponse(response.content)
+        : null;
+    if (person) {
+      namesAndDatesOfBirth.push(person);
+    } else {
+      return apiErrorResult(
+        'Something went wrong when retrieving related persons.',
+        null
+      );
+    }
+  }
 
-  const relaties = await requestData<ZorgnedAanvraagTransformed[]>(
-    {
-      ...dataRequestConfig,
-      url,
-      data: postBody,
-      transformResponse: transformZorgnedRelaties,
-    },
-    requestID,
-    authProfileAndToken
-  );
-
-  return relaties;
+  return apiSuccessResult(namesAndDatesOfBirth);
 }
 
 export async function fetchPersoonsgegevensNAW_(
@@ -276,6 +369,7 @@ export const forTesting = {
   transformDocumenten,
   transformZorgnedAanvraag,
   transformZorgnedAanvragen,
+  transformZorgnedPersonResponse,
   fetchAanvragen,
   fetchDocument,
 };

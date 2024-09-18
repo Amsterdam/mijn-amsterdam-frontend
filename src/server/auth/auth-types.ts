@@ -2,7 +2,7 @@ export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
   profileType: ProfileType;
   id: string; // User id (bsn/kvknr)
-  sid: string; // TMA Session ID
+  sid: SessionID;
 }
 
 export interface SessionData {
@@ -12,6 +12,7 @@ export interface SessionData {
   expires_at: string;
   client_id: string;
   sid: SessionID;
+  TMASessionID: string; // TMA Session ID
   profileType: ProfileType;
   authMethod: AuthMethod;
 }

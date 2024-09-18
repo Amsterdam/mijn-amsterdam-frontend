@@ -1,4 +1,4 @@
-import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-config-and-types';
+import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types';
 import { forTesting } from './generic';
 
 describe('HLI/Status-line-items/Generic', () => {

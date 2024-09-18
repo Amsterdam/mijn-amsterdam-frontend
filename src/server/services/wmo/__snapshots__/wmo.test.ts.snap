@@ -28,7 +28,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -38,7 +38,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-05-13",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -62,9 +62,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> U krijgt nu logeeropvang Respijt van HVO Querido.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -75,7 +73,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-            Niet van toepassing.
+            
       </p>",
           "documents": [],
           "id": "status-step-5",
@@ -126,7 +124,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -136,7 +134,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-08-29",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -215,7 +213,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -225,7 +223,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-04-18",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -249,9 +247,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> U krijgt nu hulp bij het huishouden bijzondere schoonmaak van Cordaan.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -262,7 +258,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-            Niet van toepassing.
+            
       </p>",
           "documents": [],
           "id": "status-step-5",
@@ -274,7 +270,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op hulp bij het huishouden bijzondere schoonmaak stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -313,7 +309,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -323,7 +319,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-07-08",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -390,7 +386,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -400,7 +396,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-07-08",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -451,7 +447,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -461,7 +457,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-04-30",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -485,9 +481,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-04-30T16:40:11.41",
-          "description": "<p>
-        Wij hebben Medipoint gevraagd om een rolstoelfiets aan u te leveren.
-      </p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -497,10 +491,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>
-        Medipoint heeft ons laten weten dat de/het rolstoelfiets bij u is afgeleverd.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -511,7 +502,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op rolstoelfiets stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -550,7 +541,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -560,7 +551,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-04-30",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -584,9 +575,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>
-        Wij hebben  gevraagd om een aanpassing aan een eigen (brom)fiets aan u te leveren.
-      </p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -596,10 +585,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>
-         heeft ons laten weten dat de/het aanpassing aan een eigen (brom)fiets bij u is afgeleverd.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -610,7 +596,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op aanpassing aan een eigen (brom)fiets stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -649,7 +635,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -659,7 +645,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-04-22",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -683,9 +669,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>
-        Wij hebben Kersten Hulpmiddelen gevraagd om een scootmobiel voor buitengebruik aan u te leveren.
-      </p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -695,10 +679,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>
-        Kersten Hulpmiddelen heeft ons laten weten dat de/het scootmobiel voor buitengebruik bij u is afgeleverd.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -709,7 +690,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op scootmobiel voor buitengebruik stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -754,7 +735,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -764,7 +745,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-03-27",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -788,9 +769,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-01-01",
-          "description": "<p> U krijgt nu hulp bij het huishouden van Adonai Zorg B.V..
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -801,7 +780,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-            Niet van toepassing.
+            
       </p>",
           "documents": [],
           "id": "status-step-5",
@@ -813,7 +792,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op hulp bij het huishouden stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -858,7 +837,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -868,7 +847,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-03-27",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -892,9 +871,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-01-01",
-          "description": "<p> U krijgt nu hulp bij het huishouden kind van Cordaan.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -905,7 +882,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-            Niet van toepassing.
+            
       </p>",
           "documents": [],
           "id": "status-step-5",
@@ -956,7 +933,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -966,7 +943,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-03-26",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -990,9 +967,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> U krijgt nu logeeropvang Mantelzorg van De Regenbooggroep.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1003,7 +978,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-            Niet van toepassing.
+            
       </p>",
           "documents": [],
           "id": "status-step-5",
@@ -1054,7 +1029,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1064,7 +1039,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-01-25",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1088,9 +1063,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-03-14",
-          "description": "<p> U krijgt nu dagbesteding meedoen van Amstelring.
-      </p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1101,7 +1074,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-            Niet van toepassing.
+            
       </p>",
           "documents": [],
           "id": "status-step-5",
@@ -1113,7 +1086,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op dagbesteding meedoen stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -1145,7 +1118,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1155,7 +1128,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-06-08",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": true,
@@ -1202,7 +1175,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1212,7 +1185,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-01-29",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1236,9 +1209,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-01-12",
-          "description": "<p> U krijgt nu aanvullende individuele ondersteuning van Aya Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu aanvullende individuele ondersteuning van Aya Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1293,7 +1264,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1303,7 +1274,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-05-17",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": true,
@@ -1350,7 +1321,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1360,7 +1331,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-05-17",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1424,7 +1395,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1434,7 +1405,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-03-01",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1458,9 +1429,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-03-02T11:17:35.4",
-          "description": "<p>
-        Wij hebben Medipoint gevraagd om een elektrische rolstoel voor binnen en buiten aan u te leveren.
-      </p>",
+          "description": "<p>Wij hebben Medipoint gevraagd om een elektrische rolstoel voor binnen en buiten aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1470,10 +1439,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-05-15",
-          "description": "<p>
-        Medipoint heeft ons laten weten dat de/het elektrische rolstoel voor binnen en buiten bij u is afgeleverd.
-      </p>
-      ",
+          "description": "<p>Medipoint heeft ons laten weten dat de/het elektrische rolstoel voor binnen en buiten bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -1484,7 +1450,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op elektrische rolstoel voor binnen en buiten stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -1523,7 +1489,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1533,7 +1499,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-03-16",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1557,9 +1523,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-03-12",
-          "description": "<p> U krijgt nu hulp bij het huishouden van Emile Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu hulp bij het huishouden van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": true,
@@ -1570,7 +1534,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-            Niet van toepassing.
+            
       </p>",
           "documents": [],
           "id": "status-step-5",
@@ -1621,7 +1585,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1631,7 +1595,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-03-14",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1655,9 +1619,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-03-11",
-          "description": "<p> U krijgt nu dagbesteding van Ons Tweede Thuis NA (vh Nieuw Amstelraede).
-      </p>
-      ",
+          "description": "<p>U krijgt nu dagbesteding van Ons Tweede Thuis NA (vh Nieuw Amstelraede).</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1719,7 +1681,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1729,7 +1691,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-03-14",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1753,9 +1715,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-03-11",
-          "description": "<p> U krijgt nu hulp bij het huishouden van Emile Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu hulp bij het huishouden van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1810,7 +1770,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1820,7 +1780,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-12-22",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": true,
@@ -1860,7 +1820,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1870,7 +1830,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2014-09-09",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1894,9 +1854,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01T00:00:00",
-          "description": "<p>
-        Wij hebben Harting-Bank gevraagd om een elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) aan u te leveren.
-      </p>",
+          "description": "<p>Wij hebben Harting-Bank gevraagd om een elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1906,10 +1864,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>
-        Harting-Bank heeft ons laten weten dat de/het elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) bij u is afgeleverd.
-      </p>
-      ",
+          "description": "<p>Harting-Bank heeft ons laten weten dat de/het elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -1959,7 +1914,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -1969,7 +1924,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-10-20",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -1994,7 +1949,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op kamer tot kamer vervoer (ook iets?) stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -2033,7 +1988,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2043,7 +1998,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-08-16",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2094,7 +2049,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2104,7 +2059,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-08-06",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2129,7 +2084,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op deur tot deur, samenreizend vervoer stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -2161,7 +2116,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2171,7 +2126,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-08-01",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": true,
@@ -2218,7 +2173,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2228,7 +2183,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-04-15",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2252,9 +2207,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-04-19T13:16:57",
-          "description": "<p>
-       We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2264,9 +2217,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2022-06-07",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -2277,7 +2228,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op niet standaard opdracht natte cel en toilet stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -2309,7 +2260,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2319,7 +2270,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-03-11",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2343,9 +2294,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-03-10",
-          "description": "<p> U krijgt nu dagbesteding (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).
-      </p>
-      ",
+          "description": "<p>U krijgt nu dagbesteding (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2400,7 +2349,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2410,7 +2359,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-03-11",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2434,9 +2383,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-03-10",
-          "description": "<p> U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2491,7 +2438,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2501,7 +2448,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-03-11",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2525,9 +2472,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-03-10",
-          "description": "<p> U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2582,7 +2527,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2592,7 +2537,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-06",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2616,9 +2561,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-06T16:01:09",
-          "description": "<p>
-       We hebben Van der Leij Bouwbedrijven B.V gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Van der Leij Bouwbedrijven B.V gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2628,9 +2571,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-17",
-          "description": "<p>
-        Van der Leij Bouwbedrijven B.V heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Van der Leij Bouwbedrijven B.V heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -2673,7 +2614,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2683,7 +2624,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-08",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2707,9 +2648,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-20T14:05:02",
-          "description": "<p>
-       We hebben Van der Leij Bouwbedrijven B.V gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Van der Leij Bouwbedrijven B.V gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2719,9 +2658,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-20",
-          "description": "<p>
-        Van der Leij Bouwbedrijven B.V heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Van der Leij Bouwbedrijven B.V heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -2732,7 +2669,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op handzender(s) voor deurautomaat (vóór 01-01-2022) stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -2764,7 +2701,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2774,7 +2711,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-08",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2798,9 +2735,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-12-08T10:54:18",
-          "description": "<p>
-       We hebben Van der Leij Bouwbedrijven B.V gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Van der Leij Bouwbedrijven B.V gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": true,
@@ -2810,9 +2745,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>
-        Van der Leij Bouwbedrijven B.V heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -2823,7 +2756,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op reparatie-/verwijderopdracht toegang stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -2855,7 +2788,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2865,7 +2798,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-08-26",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2889,9 +2822,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-08-30T13:51:35",
-          "description": "<p>
-        Wij hebben Welzorg gevraagd om een handbewogen kinderrolstoel aan u te leveren.
-      </p>",
+          "description": "<p>Wij hebben Welzorg gevraagd om een handbewogen kinderrolstoel aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2901,10 +2832,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-11-19",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de/het handbewogen kinderrolstoel bij u is afgeleverd.
-      </p>
-      ",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het handbewogen kinderrolstoel bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -2915,7 +2843,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op handbewogen kinderrolstoel stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -2947,7 +2875,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -2957,7 +2885,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-10-22",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -2981,9 +2909,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-10-22T16:51:15",
-          "description": "<p>
-       We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -2993,9 +2919,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-10-13",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -3006,7 +2930,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op niet standaard opdracht natte cel en toilet (vóór 01-01-2022) stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -3019,98 +2943,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       ],
       "supplier": "Welzorg",
       "title": "Niet standaard opdracht natte cel en toilet (vóór 01-01-2022)",
-    },
-    {
-      "dateDecision": "2013-06-17",
-      "dateDecisionFormatted": "17 juni 2013",
-      "decision": "Toegewezen",
-      "documents": [],
-      "id": "819420661",
-      "isActual": false,
-      "itemTypeCode": "OVE",
-      "link": {
-        "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/819420661",
-      },
-      "status": "Einde recht",
-      "statusDate": "2021-08-23",
-      "statusDateFormatted": "23 augustus 2021",
-      "steps": [
-        {
-          "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
-          "documents": [],
-          "id": "status-step-0",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Aanvraag ontvangen",
-        },
-        {
-          "datePublished": "2013-06-17",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
-          "documents": [],
-          "id": "status-step-1",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "In behandeling",
-        },
-        {
-          "datePublished": "2013-06-17",
-          "description": "<p>
-         U krijgt een buggy per 07 februari 2013.
-      </p>
-      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
-      ",
-          "documents": [],
-          "id": "status-step-3",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit genomen",
-        },
-        {
-          "datePublished": "2017-06-01T00:00:00",
-          "description": "<p>
-        Wij hebben Welzorg gevraagd om een buggy aan u te leveren.
-      </p>",
-          "documents": [],
-          "id": "status-step-4",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Opdracht gegeven",
-        },
-        {
-          "datePublished": "2017-06-01",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de/het buggy bij u is afgeleverd.
-      </p>
-      ",
-          "documents": [],
-          "id": "status-step-5",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Product geleverd",
-        },
-        {
-          "datePublished": "2021-08-23",
-          "description": "<p>
-      Uw recht op buggy is beëindigd per 23 augustus 2021.
-    </p>
-    ",
-          "documents": [],
-          "id": "status-step-6",
-          "isActive": true,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Einde recht",
-        },
-      ],
-      "supplier": "Welzorg",
-      "title": "Buggy",
     },
     {
       "dateDecision": "2015-02-16",
@@ -3130,7 +2962,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3140,7 +2972,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2015-02-16",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3164,9 +2996,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01T00:00:00",
-          "description": "<p>
-        Wij hebben Welzorg gevraagd om een driewielfiets 5-9 jr aan u te leveren.
-      </p>",
+          "description": "<p>Wij hebben Welzorg gevraagd om een driewielfiets 5-9 jr aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3176,10 +3006,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de/het driewielfiets 5-9 jr bij u is afgeleverd.
-      </p>
-      ",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het driewielfiets 5-9 jr bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3205,6 +3032,93 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Driewielfiets 5-9 jr",
     },
     {
+      "dateDecision": "2013-06-17",
+      "dateDecisionFormatted": "17 juni 2013",
+      "decision": "Toegewezen",
+      "documents": [],
+      "id": "819420661",
+      "isActual": false,
+      "itemTypeCode": "OVE",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorziening/819420661",
+      },
+      "status": "Einde recht",
+      "statusDate": "2021-08-23",
+      "statusDateFormatted": "23 augustus 2021",
+      "steps": [
+        {
+          "datePublished": "",
+          "description": "",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanvraag ontvangen",
+        },
+        {
+          "datePublished": "2013-06-17",
+          "description": "",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "In behandeling",
+        },
+        {
+          "datePublished": "2013-06-17",
+          "description": "<p>
+         U krijgt een buggy per 07 februari 2013.
+      </p>
+      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
+      ",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit genomen",
+        },
+        {
+          "datePublished": "2017-06-01T00:00:00",
+          "description": "<p>Wij hebben Welzorg gevraagd om een buggy aan u te leveren.</p>",
+          "documents": [],
+          "id": "status-step-4",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
+        },
+        {
+          "datePublished": "2017-06-01",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het buggy bij u is afgeleverd.</p>",
+          "documents": [],
+          "id": "status-step-5",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Product geleverd",
+        },
+        {
+          "datePublished": "2021-08-23",
+          "description": "<p>
+      Uw recht op buggy is beëindigd per 23 augustus 2021.
+    </p>
+    ",
+          "documents": [],
+          "id": "status-step-6",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Welzorg",
+      "title": "Buggy",
+    },
+    {
       "dateDecision": "2021-01-09",
       "dateDecisionFormatted": "09 januari 2021",
       "decision": "Toegewezen",
@@ -3222,7 +3136,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3232,7 +3146,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-01-09",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3256,9 +3170,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-01-01",
-          "description": "<p> U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3313,7 +3225,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3323,7 +3235,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-01-09",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3347,9 +3259,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-01-01",
-          "description": "<p> U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3404,7 +3314,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3414,7 +3324,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-01-09",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3438,9 +3348,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-01-01",
-          "description": "<p> U krijgt nu dagbesteding (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).
-      </p>
-      ",
+          "description": "<p>U krijgt nu dagbesteding (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3495,7 +3403,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3505,7 +3413,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-12-04",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3529,9 +3437,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-12-07T07:01:20",
-          "description": "<p>
-       We hebben Meyra Wooncare B.V. gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Meyra Wooncare B.V. gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3541,9 +3447,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-01-13",
-          "description": "<p>
-        Meyra Wooncare B.V. heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Meyra Wooncare B.V. heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -3554,7 +3458,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op antislipvloer/behandeling badkamer  (vóór 01-01-2022) stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -3567,6 +3471,95 @@ exports[`Transform api items > fetchWmo 1`] = `
       ],
       "supplier": "Meyra Wooncare B.V.",
       "title": "Antislipvloer/behandeling badkamer  (vóór 01-01-2022)",
+    },
+    {
+      "dateDecision": "2020-06-16",
+      "dateDecisionFormatted": "16 juni 2020",
+      "decision": "Toegewezen",
+      "documents": [],
+      "id": "3303327448",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorziening/3303327448",
+      },
+      "status": "Einde recht",
+      "statusDate": "2020-12-31",
+      "statusDateFormatted": "31 december 2020",
+      "steps": [
+        {
+          "datePublished": "",
+          "description": "",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanvraag ontvangen",
+        },
+        {
+          "datePublished": "2020-06-16",
+          "description": "",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "In behandeling",
+        },
+        {
+          "datePublished": "2020-06-16",
+          "description": "<p>
+         U krijgt dagbesteding  (vóór 01-01-2022) per 15 juni 2020.
+      </p>
+      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
+      ",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit genomen",
+        },
+        {
+          "datePublished": "2020-06-15",
+          "description": "<p>U krijgt nu dagbesteding  (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).</p>",
+          "documents": [],
+          "id": "status-step-4",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "2020-12-31",
+          "description": "<p>
+            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft ons laten weten dat u geen dagbesteding  (vóór 01-01-2022) meer krijgt.
+      </p>",
+          "documents": [],
+          "id": "status-step-5",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-12-31",
+          "description": "<p>
+      Uw recht op dagbesteding  (vóór 01-01-2022) is beëindigd per 31 december 2020.
+    </p>
+    ",
+          "documents": [],
+          "id": "status-step-6",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
+      "title": "Dagbesteding  (vóór 01-01-2022)",
     },
     {
       "dateDecision": "2020-03-12",
@@ -3586,7 +3579,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3596,7 +3589,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-12",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3620,9 +3613,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-09",
-          "description": "<p> U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3677,7 +3668,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3687,7 +3678,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-12",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3711,9 +3702,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-09",
-          "description": "<p> U krijgt nu hulp bij het huishouden  (vóór 01-01-2022) van Emile Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu hulp bij het huishouden  (vóór 01-01-2022) van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3751,97 +3740,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden  (vóór 01-01-2022)",
     },
     {
-      "dateDecision": "2020-06-16",
-      "dateDecisionFormatted": "16 juni 2020",
-      "decision": "Toegewezen",
-      "documents": [],
-      "id": "3303327448",
-      "isActual": false,
-      "itemTypeCode": "DBS",
-      "link": {
-        "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/3303327448",
-      },
-      "status": "Einde recht",
-      "statusDate": "2020-12-31",
-      "statusDateFormatted": "31 december 2020",
-      "steps": [
-        {
-          "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
-          "documents": [],
-          "id": "status-step-0",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Aanvraag ontvangen",
-        },
-        {
-          "datePublished": "2020-06-16",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
-          "documents": [],
-          "id": "status-step-1",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "In behandeling",
-        },
-        {
-          "datePublished": "2020-06-16",
-          "description": "<p>
-         U krijgt dagbesteding  (vóór 01-01-2022) per 15 juni 2020.
-      </p>
-      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
-      ",
-          "documents": [],
-          "id": "status-step-3",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit genomen",
-        },
-        {
-          "datePublished": "2020-06-15",
-          "description": "<p> U krijgt nu dagbesteding  (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).
-      </p>
-      ",
-          "documents": [],
-          "id": "status-step-4",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Levering gestart",
-        },
-        {
-          "datePublished": "2020-12-31",
-          "description": "<p>
-            Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft ons laten weten dat u geen dagbesteding  (vóór 01-01-2022) meer krijgt.
-      </p>",
-          "documents": [],
-          "id": "status-step-5",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Levering gestopt",
-        },
-        {
-          "datePublished": "2020-12-31",
-          "description": "<p>
-      Uw recht op dagbesteding  (vóór 01-01-2022) is beëindigd per 31 december 2020.
-    </p>
-    ",
-          "documents": [],
-          "id": "status-step-6",
-          "isActive": true,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Einde recht",
-        },
-      ],
-      "supplier": "Ons Tweede Thuis NA (vh Nieuw Amstelraede)",
-      "title": "Dagbesteding  (vóór 01-01-2022)",
-    },
-    {
       "dateDecision": "2020-06-18",
       "dateDecisionFormatted": "18 juni 2020",
       "decision": "Toegewezen",
@@ -3859,7 +3757,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3869,7 +3767,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-18",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -3893,9 +3791,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-18T14:21:01",
-          "description": "<p>
-        Wij hebben Medipoint gevraagd om een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) aan u te leveren.
-      </p>",
+          "description": "<p>Wij hebben Medipoint gevraagd om een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3905,10 +3801,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-09-10",
-          "description": "<p>
-        Medipoint heeft ons laten weten dat de/het douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.
-      </p>
-      ",
+          "description": "<p>Medipoint heeft ons laten weten dat de/het douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -3919,7 +3812,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op douche-/toiletstoel zelfrijder  (vóór 01-01-2022) stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -3951,7 +3844,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -3961,7 +3854,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-05",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4018,7 +3911,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4028,7 +3921,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-12",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4052,9 +3945,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-09",
-          "description": "<p> U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4109,7 +4000,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4119,7 +4010,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2012-10-05",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4143,9 +4034,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01T00:00:00",
-          "description": "<p>
-        Wij hebben Harting-Bank gevraagd om een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) aan u te leveren.
-      </p>",
+          "description": "<p>Wij hebben Harting-Bank gevraagd om een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4155,10 +4044,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>
-        Harting-Bank heeft ons laten weten dat de/het douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) bij u is afgeleverd.
-      </p>
-      ",
+          "description": "<p>Harting-Bank heeft ons laten weten dat de/het douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -4184,6 +4070,95 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022)",
     },
     {
+      "dateDecision": "2019-04-15",
+      "dateDecisionFormatted": "15 april 2019",
+      "decision": "Toegewezen",
+      "documents": [],
+      "id": "446200219",
+      "isActual": false,
+      "itemTypeCode": "WMH",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorziening/446200219",
+      },
+      "status": "Einde recht",
+      "statusDate": "2020-03-08",
+      "statusDateFormatted": "08 maart 2020",
+      "steps": [
+        {
+          "datePublished": "",
+          "description": "",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanvraag ontvangen",
+        },
+        {
+          "datePublished": "2019-04-15",
+          "description": "",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "In behandeling",
+        },
+        {
+          "datePublished": "2019-04-15",
+          "description": "<p>
+         U krijgt hulp bij het huishouden (vóór 01-01-2022) per 14 april 2019.
+      </p>
+      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
+      ",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit genomen",
+        },
+        {
+          "datePublished": "2019-04-14",
+          "description": "<p>U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.</p>",
+          "documents": [],
+          "id": "status-step-4",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "2020-03-08",
+          "description": "<p>
+            Emile Thuiszorg heeft ons laten weten dat u geen hulp bij het huishouden (vóór 01-01-2022) meer krijgt.
+      </p>",
+          "documents": [],
+          "id": "status-step-5",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2020-03-08",
+          "description": "<p>
+      Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 08 maart 2020.
+    </p>
+    ",
+          "documents": [],
+          "id": "status-step-6",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Emile Thuiszorg",
+      "title": "Hulp bij het huishouden (vóór 01-01-2022)",
+    },
+    {
       "dateDecision": "2019-03-11",
       "dateDecisionFormatted": "11 maart 2019",
       "decision": "Toegewezen",
@@ -4201,7 +4176,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4211,7 +4186,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-03-11",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4235,9 +4210,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-03-09",
-          "description": "<p> U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4292,7 +4265,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4302,7 +4275,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-03-11",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4326,9 +4299,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-03-09",
-          "description": "<p> U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4366,97 +4337,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
-      "dateDecision": "2019-04-15",
-      "dateDecisionFormatted": "15 april 2019",
-      "decision": "Toegewezen",
-      "documents": [],
-      "id": "446200219",
-      "isActual": false,
-      "itemTypeCode": "WMH",
-      "link": {
-        "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/446200219",
-      },
-      "status": "Einde recht",
-      "statusDate": "2020-03-08",
-      "statusDateFormatted": "08 maart 2020",
-      "steps": [
-        {
-          "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
-          "documents": [],
-          "id": "status-step-0",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Aanvraag ontvangen",
-        },
-        {
-          "datePublished": "2019-04-15",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
-          "documents": [],
-          "id": "status-step-1",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "In behandeling",
-        },
-        {
-          "datePublished": "2019-04-15",
-          "description": "<p>
-         U krijgt hulp bij het huishouden (vóór 01-01-2022) per 14 april 2019.
-      </p>
-      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
-      ",
-          "documents": [],
-          "id": "status-step-3",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit genomen",
-        },
-        {
-          "datePublished": "2019-04-14",
-          "description": "<p> U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.
-      </p>
-      ",
-          "documents": [],
-          "id": "status-step-4",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Levering gestart",
-        },
-        {
-          "datePublished": "2020-03-08",
-          "description": "<p>
-            Emile Thuiszorg heeft ons laten weten dat u geen hulp bij het huishouden (vóór 01-01-2022) meer krijgt.
-      </p>",
-          "documents": [],
-          "id": "status-step-5",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Levering gestopt",
-        },
-        {
-          "datePublished": "2020-03-08",
-          "description": "<p>
-      Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 08 maart 2020.
-    </p>
-    ",
-          "documents": [],
-          "id": "status-step-6",
-          "isActive": true,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Einde recht",
-        },
-      ],
-      "supplier": "Emile Thuiszorg",
-      "title": "Hulp bij het huishouden (vóór 01-01-2022)",
-    },
-    {
       "dateDecision": "2019-10-09",
       "dateDecisionFormatted": "09 oktober 2019",
       "decision": "Toegewezen",
@@ -4474,7 +4354,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4484,7 +4364,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-10-09",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4508,9 +4388,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-10-09T11:19:30",
-          "description": "<p>
-       We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4520,9 +4398,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-10-17",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -4565,7 +4441,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4575,7 +4451,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-04-25",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4599,9 +4475,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-04-14",
-          "description": "<p> U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4656,7 +4530,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4666,7 +4540,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-12-27",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4690,9 +4564,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-02-15T13:45:36",
-          "description": "<p>
-       We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4702,9 +4574,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2019-03-25",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -4715,7 +4585,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op woonruimteaanpassing met doc 4 (vóór 01-01-2022) stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -4728,97 +4598,6 @@ exports[`Transform api items > fetchWmo 1`] = `
       ],
       "supplier": "Welzorg",
       "title": "Woonruimteaanpassing met doc 4 (vóór 01-01-2022)",
-    },
-    {
-      "dateDecision": "2018-04-19",
-      "dateDecisionFormatted": "19 april 2018",
-      "decision": "Toegewezen",
-      "documents": [],
-      "id": "2707273693",
-      "isActual": false,
-      "itemTypeCode": "DBS",
-      "link": {
-        "title": "Meer informatie",
-        "to": "/zorg-en-ondersteuning/voorziening/2707273693",
-      },
-      "status": "Einde recht",
-      "statusDate": "2019-03-08",
-      "statusDateFormatted": "08 maart 2019",
-      "steps": [
-        {
-          "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
-          "documents": [],
-          "id": "status-step-0",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Aanvraag ontvangen",
-        },
-        {
-          "datePublished": "2018-04-19",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
-          "documents": [],
-          "id": "status-step-1",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "In behandeling",
-        },
-        {
-          "datePublished": "2018-04-19",
-          "description": "<p>
-         U krijgt dagbesteding (vóór 01-01-2022) per 09 maart 2018.
-      </p>
-      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
-      ",
-          "documents": [],
-          "id": "status-step-3",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Besluit genomen",
-        },
-        {
-          "datePublished": "2018-03-09",
-          "description": "<p> U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
-          "documents": [],
-          "id": "status-step-4",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Levering gestart",
-        },
-        {
-          "datePublished": "2019-03-08",
-          "description": "<p>
-            Amstelring heeft ons laten weten dat u geen dagbesteding (vóór 01-01-2022) meer krijgt.
-      </p>",
-          "documents": [],
-          "id": "status-step-5",
-          "isActive": false,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Levering gestopt",
-        },
-        {
-          "datePublished": "2019-03-08",
-          "description": "<p>
-      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 08 maart 2019.
-    </p>
-    ",
-          "documents": [],
-          "id": "status-step-6",
-          "isActive": true,
-          "isChecked": true,
-          "isVisible": true,
-          "status": "Einde recht",
-        },
-      ],
-      "supplier": "Amstelring",
-      "title": "Dagbesteding (vóór 01-01-2022)",
     },
     {
       "dateDecision": "2018-11-29",
@@ -4838,7 +4617,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4848,7 +4627,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-11-29",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4872,9 +4651,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-11-28",
-          "description": "<p> U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -4912,6 +4689,95 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Aanvullende individuele ondersteuning (vóór 01-01-2022)",
     },
     {
+      "dateDecision": "2018-04-19",
+      "dateDecisionFormatted": "19 april 2018",
+      "decision": "Toegewezen",
+      "documents": [],
+      "id": "2707273693",
+      "isActual": false,
+      "itemTypeCode": "DBS",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorziening/2707273693",
+      },
+      "status": "Einde recht",
+      "statusDate": "2019-03-08",
+      "statusDateFormatted": "08 maart 2019",
+      "steps": [
+        {
+          "datePublished": "",
+          "description": "",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanvraag ontvangen",
+        },
+        {
+          "datePublished": "2018-04-19",
+          "description": "",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "In behandeling",
+        },
+        {
+          "datePublished": "2018-04-19",
+          "description": "<p>
+         U krijgt dagbesteding (vóór 01-01-2022) per 09 maart 2018.
+      </p>
+      <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>
+      ",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit genomen",
+        },
+        {
+          "datePublished": "2018-03-09",
+          "description": "<p>U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.</p>",
+          "documents": [],
+          "id": "status-step-4",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "2019-03-08",
+          "description": "<p>
+            Amstelring heeft ons laten weten dat u geen dagbesteding (vóór 01-01-2022) meer krijgt.
+      </p>",
+          "documents": [],
+          "id": "status-step-5",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "2019-03-08",
+          "description": "<p>
+      Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 08 maart 2019.
+    </p>
+    ",
+          "documents": [],
+          "id": "status-step-6",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Amstelring",
+      "title": "Dagbesteding (vóór 01-01-2022)",
+    },
+    {
       "dateDecision": "2017-11-24",
       "dateDecisionFormatted": "24 november 2017",
       "decision": "Toegewezen",
@@ -4929,7 +4795,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -4939,7 +4805,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-11-24",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -4963,9 +4829,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-11-24",
-          "description": "<p> U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu aanvullende individuele ondersteuning (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -5020,7 +4884,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5030,7 +4894,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-04-25",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -5054,9 +4918,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-04-26T08:24:32",
-          "description": "<p>
-       We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -5066,9 +4928,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2018-05-09",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Welzorg heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -5079,7 +4939,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op woonruimteaanpassing stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -5111,7 +4971,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5121,7 +4981,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -5145,9 +5005,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p> U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.
-      </p>
-      ",
+          "description": "<p>U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -5202,7 +5060,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5212,7 +5070,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -5236,9 +5094,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p> U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.
-      </p>
-      ",
+          "description": "<p>U krijgt nu dagbesteding (vóór 01-01-2022) van Amstelring.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -5293,7 +5149,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5303,7 +5159,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2012-11-30",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -5327,9 +5183,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01T00:00:00",
-          "description": "<p>
-        Wij hebben Welzorg gevraagd om een autozitje aan u te leveren.
-      </p>",
+          "description": "<p>Wij hebben Welzorg gevraagd om een autozitje aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -5339,10 +5193,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>
-        Welzorg heeft ons laten weten dat de/het autozitje bij u is afgeleverd.
-      </p>
-      ",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het autozitje bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -5353,7 +5204,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op autozitje stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -5385,7 +5236,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5395,7 +5246,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2014-09-11",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -5419,9 +5270,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2014-09-11T00:00:00",
-          "description": "<p>
-       We hebben Gebr Koenen B.V. gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Gebr Koenen B.V. gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -5431,9 +5280,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2014-11-07",
-          "description": "<p>
-        Gebr Koenen B.V. heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Gebr Koenen B.V. heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -5444,7 +5291,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op woonruimteaanpassing 3 (vóór 01-01-2022) stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -5476,7 +5323,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5486,7 +5333,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2013-12-09",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -5543,7 +5390,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5553,7 +5400,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-05-17",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
@@ -5594,9 +5441,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-05-17T00:00:00",
-          "description": "<p>
-       We hebben Gebr Koenen B.V. gevraagd om de aanpassing(en) aan uw woning uit te voeren.
-      </p>",
+          "description": "<p>We hebben Gebr Koenen B.V. gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -5606,9 +5451,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2013-06-17",
-          "description": "<p>
-        Gebr Koenen B.V. heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.
-      </p>",
+          "description": "<p>Gebr Koenen B.V. heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -5619,7 +5462,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op woonruimteaanpassing met doc 2 / meer info stopt op 
+      
     </p>
     ",
           "documents": [],
@@ -5651,7 +5494,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "steps": [
         {
           "datePublished": "",
-          "description": "<p>Uw aanvraag is ontvangen.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-0",
           "isActive": false,
@@ -5661,7 +5504,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2012-08-07",
-          "description": "<p>Uw aanvraag is in behandeling.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-1",
           "isActive": false,
