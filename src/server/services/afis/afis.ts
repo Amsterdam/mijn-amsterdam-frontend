@@ -296,7 +296,7 @@ function formatFactuurRequestURL(
     closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
   };
 
-  const select = `$select=ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
