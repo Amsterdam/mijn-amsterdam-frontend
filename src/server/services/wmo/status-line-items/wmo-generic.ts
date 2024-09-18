@@ -195,7 +195,7 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
             ? `Uw recht op ${aanvraag.titel} stopt op ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
             : `Uw recht op ${aanvraag.titel} is beëindigd ${aanvraag.datumEindeGeldigheid ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
           : ``
-      }.
+      }
     </p>
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'

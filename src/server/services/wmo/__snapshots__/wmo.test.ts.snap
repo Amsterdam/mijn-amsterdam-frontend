@@ -159,7 +159,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op PGB: dagbesteding meewerken (toegewezen) stopt op 01 augustus 2026..
+      Uw recht op PGB: dagbesteding meewerken (toegewezen) stopt op 01 augustus 2026.
     </p>
     
           <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 01 augustus 2026 doen.</p>
@@ -344,7 +344,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         {
           "datePublished": "",
           "description": "<p>
-      Uw recht op aanvullende individuele ondersteuning stopt op 22 maart 2026..
+      Uw recht op aanvullende individuele ondersteuning stopt op 22 maart 2026.
     </p>
     
           <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 22 maart 2026 doen.</p>
