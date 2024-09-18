@@ -155,7 +155,8 @@ export function useAfisBetaalVoorkeurenData(
 function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
     case 'openstaand':
-      const [label, linkText] = factuur.statusDescription.split(':');
+      const [label = factuur.statusDescription || '', linkText = ''] =
+        factuur.statusDescription?.split(':') || [];
       return (
         <>
           {label}:{' '}

@@ -372,8 +372,6 @@ function transformFactuur(
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
-  const status = determineFactuurStatus(invoice);
-
   return {
     afzender: invoice.ProfitCenterName,
     datePublished: invoice.PostingDate || null,
@@ -385,9 +383,9 @@ function transformFactuur(
     amountOwed: amountOwed ? amountOwed : 0,
     amountOwedFormatted,
     factuurNummer: invoice.InvoiceNo,
-    status,
+    status: determineFactuurStatus(invoice),
     statusDescription: determineFactuurStatusDescription(
-      status,
+      determineFactuurStatus(invoice),
       amountOwedFormatted,
       debtClearingDateFormatted
     ),
@@ -453,7 +451,7 @@ function determineFactuurStatusDescription(
 ) {
   switch (status) {
     case 'openstaand':
-      return `Openstaand: ${amountOwedFormatted} betaal nu`;
+      return `${amountOwedFormatted} betaal nu`;
     case 'in-dispuut':
       return 'In dispuut';
     case 'gedeeltelijke-betaling':
