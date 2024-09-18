@@ -94,7 +94,7 @@
             "SEPAMandate": "",
             "PostingDate": "2023-03-23T00:00:00",
             "NetDueDate": "2023-03-23T00:00:00",
-            "NetPaymentAmount": "-1000.98",
+            "NetPaymentAmount": "-900.98",
             "AmountInBalanceTransacCrcy": "1000.00",
             "InvoiceNo": "5555555",
             "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
