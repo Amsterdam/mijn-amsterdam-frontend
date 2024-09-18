@@ -3,10 +3,9 @@ import { LinkProps, generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Thema } from '../../../universal/config/thema';
 import { GenericDocument, MyNotification } from '../../../universal/types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
@@ -56,8 +55,9 @@ export function addApiBasePathToDocumentUrls(
         ? document.url
         : `http://example.com${document.url}` // Create FAKE url so URL can parse correctly.
     );
-    const [idEncrypted] = encrypt(
-      `${sessionID}:${sourceUrl.searchParams.get('id') ?? ''}`
+    const idEncrypted = encryptSessionIdWithRouteIdParam(
+      sessionID,
+      sourceUrl.searchParams.get('id') ?? ''
     );
     const url = new URL(
       generateFullApiUrlBFF(BffEndpoints.WPI_DOCUMENT_DOWNLOAD, {

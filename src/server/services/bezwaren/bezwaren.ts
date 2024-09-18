@@ -4,7 +4,7 @@ import { generatePath } from 'react-router-dom';
 
 import { MyNotification } from '../../../universal/types';
 import { DataRequestConfig } from '../../config/source-api';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
@@ -181,7 +181,10 @@ function transformBezwarenDocumentsResults(
   if (Array.isArray(response.results)) {
     const items = response.results.map(
       ({ bestandsnaam, identificatie, dossiertype, verzenddatum }) => {
-        const [documentIdEncrypted] = encrypt(`${sessionID}:${identificatie}`);
+        const documentIdEncrypted = encryptSessionIdWithRouteIdParam(
+          sessionID,
+          identificatie
+        );
         return {
           id: documentIdEncrypted,
           title: bestandsnaam,
@@ -252,7 +255,10 @@ function transformBezwarenResults(
   if (Array.isArray(results)) {
     const bezwaren = results
       .map((bezwaarBron) => {
-        const [idEncrypted] = encrypt(`${sessionID}:${bezwaarBron.uuid}`);
+        const idEncrypted = encryptSessionIdWithRouteIdParam(
+          sessionID,
+          bezwaarBron.uuid
+        );
 
         const bezwaar: Bezwaar = {
           identificatie: bezwaarBron.identificatie,

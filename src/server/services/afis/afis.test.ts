@@ -15,7 +15,9 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   const original: object = await importOriginal();
   return {
     ...original,
-    encrypt: vi.fn().mockReturnValue([mocks.MOCK_VALUE_ENCRYPTED]),
+    encryptSessionIdWithRouteIdParam: vi
+      .fn()
+      .mockReturnValue(mocks.MOCK_VALUE_ENCRYPTED),
     decrypt: vi.fn().mockReturnValue(mocks.MOCK_VALUE_DECRYPTED),
   };
 });

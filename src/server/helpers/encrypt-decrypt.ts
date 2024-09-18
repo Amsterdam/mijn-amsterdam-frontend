@@ -38,3 +38,11 @@ export function decrypt(
   const decipheriv = crypto.createDecipheriv(ENC_ALGO, keyBuffer, ivBuffer);
   return decipheriv.update(dataBuffer).toString() + decipheriv.final('utf-8');
 }
+
+export function encryptSessionIdWithRouteIdParam(
+  sessionID: SessionID,
+  routeIdParam: string
+) {
+  const [encrptedValue] = encrypt(`${sessionID}:${routeIdParam}`);
+  return encrptedValue;
+}

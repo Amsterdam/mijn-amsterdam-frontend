@@ -13,11 +13,11 @@ import {
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
@@ -71,8 +71,9 @@ function transformLood365Response(
           !!location.Reportsenton &&
           !!location.Reportavailable
         ) {
-          const [documentIDEncrypted] = encrypt(
-            `${sessionID}:${location.Workorderid}`
+          const documentIDEncrypted = encryptSessionIdWithRouteIdParam(
+            sessionID,
+            location.Workorderid
           );
 
           document = {

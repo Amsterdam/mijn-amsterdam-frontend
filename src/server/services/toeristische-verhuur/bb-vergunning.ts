@@ -13,11 +13,11 @@ import {
 } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // zaak detail: record/GFO_ZAKEN/$id
@@ -381,7 +381,10 @@ function transformPowerbrowserLinksResponse(
           !!link.caption?.toLowerCase().includes('.pdf')
       )
       .map((link) => {
-        const [docIdEncrypted] = encrypt(`${sessionID}:${link.mainId}`);
+        const docIdEncrypted = encryptSessionIdWithRouteIdParam(
+          sessionID,
+          String(link.mainId)
+        );
 
         const [docTitleTranslated] =
           Object.entries(documentNamenMA_PB).find(
