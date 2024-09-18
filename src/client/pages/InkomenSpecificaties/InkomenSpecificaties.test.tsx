@@ -14,8 +14,8 @@ import InkomenSpecificaties from './InkomenSpecificaties';
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
-    encrypt: () => {
-      return ['test-encrypted-id'];
+    encryptSessionIdWithRouteIdParam: () => {
+      return 'test-encrypted-id';
     },
     decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
   };
