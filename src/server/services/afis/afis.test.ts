@@ -544,6 +544,7 @@ describe('Afis', () => {
 
       const geldTerugInvoice = response.content[3];
       expect(geldTerugInvoice.status).toBe('geld-terug');
+      expect(geldTerugInvoice.statusDescription.includes('-')).toBe(false);
 
       const unknownStatusInvoice = response.content[4];
       expect(unknownStatusInvoice.status).toBe('onbekend');
