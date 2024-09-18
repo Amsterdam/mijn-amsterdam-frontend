@@ -459,7 +459,7 @@ function determineFactuurStatus(
     default:
       captureMessage(
         `Error: invoice status 'onbekend' (unknown)
-Source Invoice Properties to determine this are:
+Source Invoice Properties that determine this are:
 \tReverseDocument: ${sourceInvoice.ReverseDocument}
 \tIsCleared: ${sourceInvoice.IsCleared}
 \tDunningLevel: ${sourceInvoice.DunningLevel}
