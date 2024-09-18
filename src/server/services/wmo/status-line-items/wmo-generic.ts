@@ -177,17 +177,9 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
       ${
         aanvraag.datumEindeGeldigheid
           ? aanvraag.isActueel
-            ? `Uw recht op ${aanvraag.titel} stopt op ${
-                aanvraag.datumEindeGeldigheid
-                  ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
-                  : ''
-              }`
-            : `Uw recht op ${aanvraag.titel} is beëindigd ${
-                aanvraag.datumEindeGeldigheid
-                  ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}.`
-                  : ''
-              }`
-          : ``
+            ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
+            : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+          : ''
       }
     </p>
     `,
@@ -200,15 +192,10 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
       ${
         aanvraag.datumEindeGeldigheid
           ? aanvraag.isActueel
-            ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht`
-            : `Uw recht op ${aanvraag.titel} is beëindigd
-          ${
-            aanvraag.datumEindeGeldigheid
-              ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}`
-              : ''
-          }`
-          : ''
-      }.
+            ? `Uw recht op ${aanvraag.titel} stopt op ${aanvraag.datumEindeGeldigheid ? `${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+            : `Uw recht op ${aanvraag.titel} is beëindigd ${aanvraag.datumEindeGeldigheid ? `per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+          : ``
+      }
     </p>
     ${
       aanvraag.isActueel && aanvraag.leveringsVorm === 'PGB'
