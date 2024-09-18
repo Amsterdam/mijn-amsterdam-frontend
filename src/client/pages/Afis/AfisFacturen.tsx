@@ -3,6 +3,7 @@ import { ListPageParamKind } from './Afis-thema-config';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { AfisFactuur } from '../../../server/services/afis/afis-types';
+import styles from './Afis.module.scss';
 
 export const AfisFacturen = () => {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
@@ -21,6 +22,7 @@ export const AfisFacturen = () => {
       displayProps={listPageTableConfig.displayProps}
       isLoading={isFacturenLoading}
       isError={false}
+      tableClassName={styles.FacturenTable}
     />
   );
 };

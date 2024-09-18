@@ -21,10 +21,9 @@ import {
   listPageTitle,
   routes,
 } from './Afis-thema-config';
-import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { MaLink } from '../../components/MaLink/MaLink';
 
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 export function useAfisThemaData(kind?: ListPageParamKind) {
   const { AFIS } = useAppStateGetter();
@@ -71,11 +70,14 @@ export function useAfisThemaData(kind?: ListPageParamKind) {
     listPageParamKind,
     isFacturenError: facturenApi.isError,
     isFacturenLoading: facturenApi.isLoading,
-    hasFailedFacturenOpenDependencyFacturen: hasFailedDependency(
+    hasFailedFacturenOpenDependency: hasFailedDependency(
       facturenApi.data,
       'open'
     ),
-
+    hasFailedFacturenClosedDependency: hasFailedDependency(
+      facturenApi.data,
+      'closed'
+    ),
     facturen: updatedFacturen,
   };
 }
@@ -153,12 +155,13 @@ export function useAfisBetaalVoorkeurenData(
 function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
     case 'openstaand':
+      const [label, linkText] = factuur.statusDescription.split(':');
       return (
         <>
-          Openstaand:{' '}
-          <MaRouterLink maVariant="fatNoUnderline" href={factuur.paylink ?? ''}>
-            {factuur.statusDescription}
-          </MaRouterLink>
+          {label}:{' '}
+          <MaLink maVariant="fatNoUnderline" href={factuur.paylink ?? ''}>
+            {linkText}
+          </MaLink>
         </>
       );
     default:
@@ -169,8 +172,7 @@ function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
             wordWrap: 'break-word',
           }}
         >
-          {factuur.amountOwedFormatted} wordt automatisch van uw rekening
-          afgeschreven
+          {factuur.statusDescription}
         </div>
       );
   }

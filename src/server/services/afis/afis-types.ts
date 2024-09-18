@@ -1,4 +1,4 @@
-import { GenericDocument, ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types';
 
 type JaOfNee = 'Ja' | 'Nee';
 

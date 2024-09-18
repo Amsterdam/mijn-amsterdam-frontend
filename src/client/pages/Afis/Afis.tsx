@@ -7,6 +7,7 @@ import { useAfisThemaData } from './useAfisThemaData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AfisFactuur } from '../../../server/services/afis/afis-types';
 import { ListPageParamKind } from './Afis-thema-config';
+import styles from './Afis.module.scss';
 
 export function AfisThemaPagina() {
   const history = useHistory();
@@ -53,6 +54,7 @@ export function AfisThemaPagina() {
           listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
             kind,
           })}
+          className={styles.FacturenTable}
         />
       );
     }

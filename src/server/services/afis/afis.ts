@@ -372,6 +372,8 @@ function transformFactuur(
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
+  const status = determineFactuurStatus(invoice);
+
   return {
     afzender: invoice.ProfitCenterName,
     datePublished: invoice.PostingDate || null,
@@ -383,9 +385,9 @@ function transformFactuur(
     amountOwed: amountOwed ? amountOwed : 0,
     amountOwedFormatted,
     factuurNummer: invoice.InvoiceNo,
-    status: determineFactuurStatus(invoice),
+    status,
     statusDescription: determineFactuurStatusDescription(
-      determineFactuurStatus(invoice),
+      status,
       amountOwedFormatted,
       debtClearingDateFormatted
     ),
