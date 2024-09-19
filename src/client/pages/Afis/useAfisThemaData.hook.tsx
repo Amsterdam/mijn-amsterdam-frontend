@@ -86,12 +86,12 @@ function mapFactuur(factuur: AfisFactuur) {
   return {
     ...factuur,
     statusDescription: getInvoiceStatusDescription(factuur),
-    factuurNummer: factuur.paylink ? (
+    factuurNummer: factuur.documentDownloadLink ? (
       <DocumentLink
         document={{
           id: factuur.factuurNummer,
           datePublished: factuur.datePublished ?? '',
-          url: factuur.paylink,
+          url: factuur.documentDownloadLink,
           title: `factuur ${factuur.factuurNummer}`,
         }}
       />
