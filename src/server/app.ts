@@ -63,15 +63,12 @@ app.use(
   )
 );
 
-if (IS_DEVELOPMENT) {
-  app.use(
-    cors({
-      origin: process.env.MA_FRONTEND_URL,
-      credentials: true,
-    })
-  );
-}
-
+app.use(
+  cors({
+    origin: process.env.MA_FRONTEND_URL,
+    credentials: true,
+  })
+);
 // Json body parsing
 app.use(express.json());
 
