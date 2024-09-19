@@ -370,11 +370,6 @@ export default function GarbageInformation() {
             {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
               <GarbageFractionPanels fractions={AFVAL.content} />
             )}
-            {AFVAL.content?.[0]?.stadsdeelAanvulling && (
-              <InnerHtml el="p">
-                {AFVAL.content[0].stadsdeelAanvulling}
-              </InnerHtml>
-            )}
             <p>
               <Button
                 className={styles.ContactLink}

@@ -575,16 +575,6 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
         </div>
       </div>
       <p>
-        In uw stadsdeel zijn mogelijk 
-        <a
-          href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum"
-          rel="noopener noreferrer"
-        >
-          aanvullende regels
-        </a>
-         van kracht.
-      </p>
-      <p>
         <button
           class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
         >
@@ -1265,16 +1255,6 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
           </article>
         </div>
       </div>
-      <p>
-        In uw stadsdeel zijn mogelijk 
-        <a
-          href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum"
-          rel="noopener noreferrer"
-        >
-          aanvullende regels
-        </a>
-         van kracht.
-      </p>
       <p>
         <button
           class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
@@ -2183,16 +2163,6 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
           </article>
         </div>
       </div>
-      <p>
-        In uw stadsdeel zijn mogelijk 
-        <a
-          href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum"
-          rel="noopener noreferrer"
-        >
-          aanvullende regels
-        </a>
-         van kracht.
-      </p>
       <p>
         <button
           class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
