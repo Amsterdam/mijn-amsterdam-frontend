@@ -62,6 +62,11 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   },
   {
     leveringsVorm: '',
+    productsoortCodes: ['MAO'],
+    lineItemTransformers: diensten,
+  },
+  {
+    leveringsVorm: '',
     productsoortCodes: ['AO2', 'AO5', 'DBS', 'KVB', 'WMH', 'AWBG'],
     lineItemTransformers: diensten,
   },

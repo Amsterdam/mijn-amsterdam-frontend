@@ -177,6 +177,102 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "PGB: dagbesteding meewerken (toegewezen)",
     },
     {
+      "dateDecision": "2024-08-26T11:40:46.087",
+      "dateDecisionFormatted": "26 augustus 2024",
+      "decision": "Toegewezen",
+      "documents": [
+        {
+          "datePublished": "2024-08-26T11:40:46.087",
+          "id": "B2814016",
+          "title": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+          "url": "http://bff-api-host/api/v1/services/wmo/document/123-123-123-123",
+        },
+      ],
+      "id": "3453673529",
+      "isActual": true,
+      "itemTypeCode": "MAO",
+      "link": {
+        "title": "Meer informatie",
+        "to": "/zorg-en-ondersteuning/voorziening/3453673529",
+      },
+      "status": "Besluit genomen",
+      "statusDate": "2024-08-26T11:40:46.087",
+      "statusDateFormatted": "26 augustus 2024",
+      "steps": [
+        {
+          "datePublished": "",
+          "description": "",
+          "documents": [],
+          "id": "status-step-0",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Aanvraag ontvangen",
+        },
+        {
+          "datePublished": "2024-08-26",
+          "description": "",
+          "documents": [],
+          "id": "status-step-1",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "In behandeling",
+        },
+        {
+          "datePublished": "2024-08-26T11:40:46.087",
+          "description": "<p>
+         U krijgt begeleid thuis individueel per 01 augustus 2024.
+      </p>
+      <p>In de brief leest u meer over dit besluit. De brief staat bovenaan deze pagina.</p>
+      ",
+          "documents": [],
+          "id": "status-step-3",
+          "isActive": true,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Besluit genomen",
+        },
+        {
+          "datePublished": "",
+          "description": "",
+          "documents": [],
+          "id": "status-step-4",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Levering gestart",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+            
+      </p>",
+          "documents": [],
+          "id": "status-step-5",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Levering gestopt",
+        },
+        {
+          "datePublished": "",
+          "description": "<p>
+      
+    </p>
+    ",
+          "documents": [],
+          "id": "status-step-6",
+          "isActive": false,
+          "isChecked": false,
+          "isVisible": true,
+          "status": "Einde recht",
+        },
+      ],
+      "supplier": "Cordaan",
+      "title": "Begeleid thuis individueel",
+    },
+    {
       "dateDecision": "2024-08-20T16:02:09.277",
       "dateDecisionFormatted": "20 augustus 2024",
       "decision": "Toegewezen",
