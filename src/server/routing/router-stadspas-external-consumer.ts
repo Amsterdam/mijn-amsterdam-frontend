@@ -100,8 +100,6 @@ async function sendAdministratienummerResponse(
     urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
     urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
   };
-  res.append('Content-Security-Policy', `script-src 'nonce-${nonce}'`);
-  res.append('Access-Control-Allow-Origin', `${maFrontendUrl}`);
 
   if (
     authProfileAndToken?.profile.id &&
