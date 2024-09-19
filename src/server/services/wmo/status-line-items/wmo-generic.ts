@@ -102,7 +102,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: () => true,
   isActive: () => false,
   description: () => {
-    return '<p>Uw aanvraag is ontvangen</p>';
+    return '<p>Uw aanvraag is ontvangen.</p>';
   },
 };
 
@@ -133,7 +133,7 @@ export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
     !hasDecision(aanvraag) &&
     !hasMeerInformatieNodig(aanvraag),
   description: (aanvraag) => {
-    return '<p>Uw aanvraag is in behandeling</p>';
+    return '<p>Uw aanvraag is in behandeling.</p>';
   },
 };
 
