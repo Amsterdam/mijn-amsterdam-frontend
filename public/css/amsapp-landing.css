@@ -40,19 +40,27 @@ body {
 }
 
 #amsterdam-logo {
-  margin-top: 25px;
-  margin-left: 20px;
+  margin-top: 1.5rem;
+  margin-left: 1rem;
   width: 8rem;
 }
 
 .main {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .main h1 {
   font-weight: 800;
   font-size: 2.5rem;
+}
+
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 #protocol-link-button {
@@ -62,7 +70,6 @@ body {
   line-height: 1.5rem;
   padding-block: 0.5rem;
   border: none;
-  outline-offset: 2px;
   touch-action: manipulation;
   cursor: pointer;
   background-color: #004699;

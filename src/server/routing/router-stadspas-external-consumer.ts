@@ -9,8 +9,6 @@ import { decrypt, encrypt } from '../helpers/encrypt-decrypt';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
-import fs from 'fs';
-import path from 'path';
 import {
   fetchStadspasBudgetTransactions,
   fetchStadspasDiscountTransactions,
@@ -75,6 +73,15 @@ routerInternet.get(
   }
 );
 
+type RenderProps = {
+  nonce: string;
+  urlToImage: string;
+  urlToCSS: string;
+  appHref: string;
+  error?: ApiError;
+  administratienummerEncrypted?: string; // Only included in debug build.
+};
+
 async function sendAdministratienummerResponse(
   req: Request<{ token: string }>,
   res: Response
@@ -86,9 +93,13 @@ async function sendAdministratienummerResponse(
     apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
 
-  const amsterdamLogo = getAmsterdamLogoFromFile();
-  const nonce = getFromEnv('BFF_AMSAPP_NONCE');
-  const maFrontendUrl = getFromEnv('MA_FRONTEND_URL');
+  const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
+  const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
+  const baseRenderProps = {
+    nonce,
+    urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
+    urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
+  };
   res.append('Content-Security-Policy', `script-src 'nonce-${nonce}'`);
   res.append('Access-Control-Allow-Origin', `${maFrontendUrl}`);
 
@@ -127,15 +138,14 @@ async function sendAdministratienummerResponse(
         deliveryResponse.status === 'OK' &&
         deliveryResponse.content.detail === 'Success'
       ) {
-        return res.render('amsapp-stadspas-administratienummer', {
-          urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
-          urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
+        const renderProps: RenderProps = {
+          ...baseRenderProps,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
-          nonce,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
             : '',
-        });
+        };
+        return res.render('amsapp-stadspas-administratienummer', renderProps);
       }
 
       if (
@@ -160,32 +170,18 @@ async function sendAdministratienummerResponse(
 
   captureMessage(`AMSAPP Stadspas: ${apiResponseError.message}`);
 
-  return res.render('amsapp-stadspas-administratienummer', {
-    amsterdamLogo,
+  const renderProps: RenderProps = {
+    ...baseRenderProps,
     error: apiResponseError,
     appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
-  });
+  };
+  return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
 
 routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   sendAdministratienummerResponse
 );
-
-function getAmsterdamLogoFromFile() {
-  try {
-    return fs.readFileSync(
-      path.resolve('src', 'client', 'assets', 'images', 'logo-amsterdam.svg'),
-      {
-        flag: 'r',
-        encoding: 'utf-8',
-      }
-    );
-  } catch (err) {
-    captureException(err);
-    return 'Error: Amsterdam logo not found.';
-  }
-}
 
 async function sendStadspassenResponse(
   req: Request<{ administratienummerEncrypted: string }>,
