@@ -6,6 +6,7 @@ import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { decrypt, encrypt } from '../helpers/encrypt-decrypt';
+import { getFromEnv } from '../helpers/env';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
@@ -22,7 +23,6 @@ import { captureException, captureMessage } from '../services/monitoring';
 import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
 import { sendBadRequest, sendResponse } from './route-helpers';
-import { getFromEnv } from '../helpers/env';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
