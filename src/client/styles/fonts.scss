@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'Amsterdam Sans';
   src:
-    url('../assets/fonts/AmsterdamSans/AmsterdamSans-Regular.woff2')
+    url('../../../public/fonts/AmsterdamSans/AmsterdamSans-Regular.woff2')
       format('woff2'),
-    url('../assets/fonts/AmsterdamSans/AmsterdamSans-Regular.woff')
+    url('../../../public/fonts/AmsterdamSans/AmsterdamSans-Regular.woff')
       format('woff');
   font-weight: 400;
 }
@@ -11,9 +11,9 @@
 @font-face {
   font-family: 'Amsterdam Sans';
   src:
-    url('../assets/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff2')
+    url('../../../public/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff2')
       format('woff2'),
-    url('../assets/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff')
+    url('../../../public/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff')
       format('woff');
   font-weight: 700;
 }
@@ -21,9 +21,9 @@
 @font-face {
   font-family: 'Amsterdam Sans';
   src:
-    url('../assets/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff2')
+    url('../../../public/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff2')
       format('woff2'),
-    url('../assets/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff')
+    url('../../../public/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff')
       format('woff');
   font-weight: 800;
 }

@@ -88,10 +88,9 @@ async function sendAdministratienummerResponse(
 
   const amsterdamLogo = getAmsterdamLogoFromFile();
   const nonce = getFromEnv('BFF_AMSAPP_NONCE');
-  res.append(
-    'Content-Security-Policy',
-    `script-src 'nonce-${nonce}'; style-src 'nonce-${nonce}'`
-  );
+  const maFrontendUrl = getFromEnv('MA_FRONTEND_URL');
+  res.append('Content-Security-Policy', `script-src 'nonce-${nonce}'`);
+  res.append('Access-Control-Allow-Origin', `${maFrontendUrl}`);
 
   if (
     authProfileAndToken?.profile.id &&
@@ -129,7 +128,8 @@ async function sendAdministratienummerResponse(
         deliveryResponse.content.detail === 'Success'
       ) {
         return res.render('amsapp-stadspas-administratienummer', {
-          amsterdamLogo,
+          urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
+          urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
           nonce,
           administratienummerEncrypted: !IS_PRODUCTION
