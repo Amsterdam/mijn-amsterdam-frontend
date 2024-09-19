@@ -43,9 +43,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     isActive: (stepIndex, aanvraag, today: Date) =>
       aanvraag.isActueel && isServiceDeliveryStatusActive(aanvraag, today),
     description: (aanvraag, today) =>
-      isServiceDeliveryStarted(aanvraag, today)
-        ? `<p>U krijgt nu ${aanvraag.titel} van ${aanvraag.leverancier}.</p>`
-        : '',
+      `<p>U krijgt nu ${aanvraag.titel} van ${aanvraag.leverancier}.</p>`,
   },
   {
     status: 'Levering gestopt',
@@ -61,11 +59,11 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
       !aanvraag.datumEindeGeldigheid,
     description: (aanvraag, today) =>
       `<p>
-            ${
-              isServiceDeliveryStopped(aanvraag, today)
-                ? `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`
-                : ''
-            }
+           ${
+             aanvraag.isActueel
+               ? 'Niet van toepassing.'
+               : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`
+           }
       </p>`,
   },
   EINDE_RECHT,

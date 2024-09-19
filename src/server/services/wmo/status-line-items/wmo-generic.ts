@@ -102,7 +102,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: () => true,
   isActive: () => false,
   description: () => {
-    return '';
+    return '<p>Uw aanvraag is ontvangen</p>';
   },
 };
 
@@ -128,14 +128,14 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
 
 export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   status: 'In behandeling',
-  datePublished: (aanvraag) => aanvraag.datumBesluit || '2089-01-27', // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
+  datePublished: (aanvraag) => aanvraag.datumBesluit || '', // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
   isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
   isActive: (stepIndex, aanvraag) =>
     !!aanvraag.datumBesluit &&
     !hasDecision(aanvraag) &&
     !hasMeerInformatieNodig(aanvraag),
   description: (aanvraag) => {
-    return '';
+    return '<p>Uw aanvraag is in behandeling</p>';
   },
 };
 
@@ -175,11 +175,9 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   description: (aanvraag) =>
     `<p>
       ${
-        aanvraag.datumEindeGeldigheid
-          ? aanvraag.isActueel
-            ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
-            : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
-          : ''
+        aanvraag.isActueel
+          ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
+          : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
       }
     </p>
     `,
