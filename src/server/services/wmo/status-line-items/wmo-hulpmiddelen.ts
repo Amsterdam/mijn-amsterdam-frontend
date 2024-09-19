@@ -29,9 +29,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
       isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
       !isServiceDeliveryStarted(aanvraag, today),
     description: (aanvraag, today) =>
-      `<p>
-        Wij hebben ${aanvraag.leverancier} gevraagd om een ${aanvraag.titel} aan u te leveren.
-      </p>`,
+      `<p>Wij hebben ${aanvraag.leverancier} gevraagd om een ${aanvraag.titel} aan u te leveren.</p>`,
   },
   {
     status: 'Product geleverd',
@@ -42,9 +40,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
     isActive: (stepIndex, aanvraag, today: Date) =>
       isServiceDeliveryStatusActive(aanvraag, today),
     description: (aanvraag, today) =>
-      `<p>
-        ${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.
-      </p>
+      `<p>${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.</p>
       `,
   },
   EINDE_RECHT,

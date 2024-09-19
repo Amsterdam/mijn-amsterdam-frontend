@@ -115,14 +115,12 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
   isActive: (stepIndex, aanvraag) =>
     hasMeerInformatieNodig(aanvraag) && !hasDecision(aanvraag),
   description: () => {
-    return `<p>
-      Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:</p>
+    return `<p>Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:</p>
       <p>Uploaden via <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE}">amsterdam.nl/zorgdocumenten</a> of opsturen naar ons gratis antwoordnummer:</p>
       <p>Gemeente Amsterdam <br />
       Services & Data <br />
       Antwoordnummer 9087 <br />
-      1000 VV Amsterdam
-    </p>`;
+      1000 VV Amsterdam</p>`;
   },
 };
 
@@ -150,13 +148,13 @@ export function getTransformerConfigBesluit(
     isActive: isActive,
     description: (aanvraag) =>
       hasDecision(aanvraag)
-        ? `<p>
-         ${
-           aanvraag.resultaat === 'toegewezen'
-             ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
-             : `U krijgt geen ${aanvraag.titel}`
-         }.
-      </p>
+        ? `<p>${
+            aanvraag.resultaat === 'toegewezen'
+              ? `U krijgt ${
+                  useAsProduct ? 'een ' : ''
+                }${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
+              : `U krijgt geen ${aanvraag.titel}`
+          }.</p>
       ${decisionParagraph(aanvraag)}
       `
         : '',
@@ -173,13 +171,11 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: (stepIndex, aanvraag) => aanvraag.isActueel === false,
   isActive: (stepIndex, aanvraag, today) => aanvraag.isActueel === false,
   description: (aanvraag) =>
-    `<p>
-      ${
-        aanvraag.isActueel
-          ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
-          : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
-      }
-    </p>
+    `<p>${
+      aanvraag.isActueel
+        ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
+        : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+    }</p>
     `,
 };
 

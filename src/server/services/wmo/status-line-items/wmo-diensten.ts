@@ -58,13 +58,7 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
       isServiceDeliveryStopped(aanvraag, today) &&
       !aanvraag.datumEindeGeldigheid,
     description: (aanvraag, today) =>
-      `<p>
-           ${
-             aanvraag.isActueel
-               ? 'Niet van toepassing.'
-               : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`
-           }
-      </p>`,
+      `<p>${aanvraag.isActueel ? 'Niet van toepassing.' : `${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`}</p>`,
   },
   EINDE_RECHT,
 ];
