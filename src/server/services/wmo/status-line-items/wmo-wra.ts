@@ -4,11 +4,12 @@ import {
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isBeforeToday,
   isDecisionWithDeliveryStatusActive,
+  isDelivered,
+  isDeliveredStatusActive,
   isDeliveryStepVisible,
-  isServiceDeliveryStarted,
-  isServiceDeliveryStatusActive,
+  isOpdrachtGegeven,
+  isOpdrachtGegevenVisible,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -20,14 +21,14 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
-    isVisible: isDeliveryStepVisible,
-    isChecked: (stepIndex, aanvraag, today: Date) =>
-      isBeforeToday(aanvraag.datumOpdrachtLevering, today),
+    isVisible: isOpdrachtGegevenVisible,
+    isChecked: (stepIndex, aanvraag, today) =>
+      isOpdrachtGegeven(aanvraag, today),
     isActive: (stepIndex, aanvraag, today) =>
       aanvraag.isActueel &&
-      isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(aanvraag, today),
-    description: (aanvraag, today) =>
+      isOpdrachtGegeven(aanvraag, today) &&
+      !isDelivered(aanvraag, today),
+    description: (aanvraag) =>
       `<p>We hebben ${aanvraag.leverancier} gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>`,
   },
   {
@@ -35,10 +36,10 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
     isVisible: isDeliveryStepVisible,
     isChecked: (stepIndex, aanvraag, today) =>
-      isServiceDeliveryStarted(aanvraag, today),
+      isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today),
     isActive: (stepIndex, aanvraag, today) =>
-      isServiceDeliveryStatusActive(aanvraag, today),
-    description: (aanvraag, today) =>
+      isDeliveredStatusActive(aanvraag, today),
+    description: (aanvraag) =>
       `<p>${aanvraag.leverancier} heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>`,
   },
   EINDE_RECHT,

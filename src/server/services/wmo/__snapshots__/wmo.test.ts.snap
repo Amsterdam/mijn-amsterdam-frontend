@@ -70,7 +70,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>HVO Querido heeft ons laten weten dat u geen logeeropvang Respijt meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -235,7 +235,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>Cordaan heeft ons laten weten dat u geen begeleid thuis individueel meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -259,8 +259,8 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Begeleid thuis individueel",
     },
     {
-      "dateDecision": "2024-08-20T16:02:09.277",
-      "dateDecisionFormatted": "20 augustus 2024",
+      "dateDecision": "2024-07-09T16:43:58.217",
+      "dateDecisionFormatted": "09 juli 2024",
       "decision": "Toegewezen",
       "documents": [
         {
@@ -290,8 +290,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "to": "/zorg-en-ondersteuning/voorziening/2438738167",
       },
       "status": "Besluit genomen",
-      "statusDate": "2024-08-20T16:02:09.277",
-      "statusDateFormatted": "20 augustus 2024",
+      "statusDate": "2024-07-09T16:43:58.217",
+      "statusDateFormatted": "09 juli 2024",
       "steps": [
         {
           "datePublished": "",
@@ -314,7 +314,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2024-08-20T16:02:09.277",
+          "datePublished": "2024-07-09T16:43:58.217",
           "description": "<p>U krijgt hulp bij het huishouden bijzondere schoonmaak per 01 januari 2024.</p>
       <p>In de brief leest u meer over dit besluit. De brief staat bovenaan deze pagina.</p>
       ",
@@ -337,7 +337,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>Cordaan heeft ons laten weten dat u geen hulp bij het huishouden bijzondere schoonmaak meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -768,8 +768,8 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Scootmobiel voor buitengebruik",
     },
     {
-      "dateDecision": "2024-04-10T14:27:29.267",
-      "dateDecisionFormatted": "10 april 2024",
+      "dateDecision": "2024-03-27T14:59:54.633",
+      "dateDecisionFormatted": "27 maart 2024",
       "decision": "Toegewezen",
       "documents": [
         {
@@ -793,8 +793,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "to": "/zorg-en-ondersteuning/voorziening/1185022933",
       },
       "status": "Besluit genomen",
-      "statusDate": "2024-04-10T14:27:29.267",
-      "statusDateFormatted": "10 april 2024",
+      "statusDate": "2024-03-27T14:59:54.633",
+      "statusDateFormatted": "27 maart 2024",
       "steps": [
         {
           "datePublished": "",
@@ -817,7 +817,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2024-04-10T14:27:29.267",
+          "datePublished": "2024-03-27T14:59:54.633",
           "description": "<p>U krijgt hulp bij het huishouden per 01 januari 2024.</p>
       <p>In de brief leest u meer over dit besluit. De brief staat bovenaan deze pagina.</p>
       ",
@@ -840,7 +840,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>Adonai Zorg B.V. heeft ons laten weten dat u geen hulp bij het huishouden meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -864,8 +864,8 @@ exports[`Transform api items > fetchWmo 1`] = `
       "title": "Hulp bij het huishouden",
     },
     {
-      "dateDecision": "2024-04-10T14:27:29.267",
-      "dateDecisionFormatted": "10 april 2024",
+      "dateDecision": "2024-03-27T14:59:54.633",
+      "dateDecisionFormatted": "27 maart 2024",
       "decision": "Toegewezen",
       "documents": [
         {
@@ -889,8 +889,8 @@ exports[`Transform api items > fetchWmo 1`] = `
         "to": "/zorg-en-ondersteuning/voorziening/1185022932",
       },
       "status": "Besluit genomen",
-      "statusDate": "2024-04-10T14:27:29.267",
-      "statusDateFormatted": "10 april 2024",
+      "statusDate": "2024-03-27T14:59:54.633",
+      "statusDateFormatted": "27 maart 2024",
       "steps": [
         {
           "datePublished": "",
@@ -913,7 +913,7 @@ exports[`Transform api items > fetchWmo 1`] = `
           "status": "In behandeling",
         },
         {
-          "datePublished": "2024-04-10T14:27:29.267",
+          "datePublished": "2024-03-27T14:59:54.633",
           "description": "<p>U krijgt hulp bij het huishouden kind per 01 januari 2024.</p>
       <p>In de brief leest u meer over dit besluit. De brief staat bovenaan deze pagina.</p>
       ",
@@ -936,7 +936,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>Cordaan heeft ons laten weten dat u geen hulp bij het huishouden kind meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -1026,7 +1026,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>De Regenbooggroep heeft ons laten weten dat u geen logeeropvang Mantelzorg meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -1116,7 +1116,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>Amstelring heeft ons laten weten dat u geen dagbesteding meedoen meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -1559,7 +1559,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Niet van toepassing.</p>",
+          "description": "<p>Emile Thuiszorg heeft ons laten weten dat u geen hulp bij het huishouden meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3780,6 +3780,16 @@ exports[`Transform api items > fetchWmo 1`] = `
           "isChecked": true,
           "isVisible": true,
           "status": "Besluit genomen",
+        },
+        {
+          "datePublished": "2020-06-05T09:22:46",
+          "description": "<p>We hebben Welzorg gevraagd om de aanpassing(en) aan uw woning uit te voeren.</p>",
+          "documents": [],
+          "id": "status-step-4",
+          "isActive": false,
+          "isChecked": true,
+          "isVisible": true,
+          "status": "Opdracht gegeven",
         },
         {
           "datePublished": "2020-08-05",

@@ -19,9 +19,19 @@ import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
 } from '../wmo-config-and-types';
 
+function getLastDocumentStartsWithTitle(
+  documents: GenericDocument[],
+  title: string
+) {
+  return (
+    documents.findLast((document) => document?.title.startsWith(title)) ?? null
+  );
+}
+
 function getDecisionDocument(documents: GenericDocument[]) {
-  return documents.find((document) =>
-    document.title.startsWith(DOCUMENT_TITLE_BESLUIT_STARTS_WITH)
+  return getLastDocumentStartsWithTitle(
+    documents,
+    DOCUMENT_TITLE_BESLUIT_STARTS_WITH
   );
 }
 
@@ -58,8 +68,9 @@ function getDecisionDateTransformed(aanvraag: ZorgnedAanvraagTransformed) {
 
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   return (
-    documents.find((document) =>
-      document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+    getLastDocumentStartsWithTitle(
+      documents,
+      DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH
     )?.datePublished ?? null
   );
 }
@@ -210,28 +221,34 @@ export function isBeforeToday(dateStr: string | null, compareDate: Date) {
     : isDateInPast(dateStr, compareDate);
 }
 
-export function isServiceDeliveryStarted(
+export function isDelivered(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return isBeforeToday(sourceData.datumBeginLevering, compareDate);
+  return (
+    !!sourceData.datumBeginLevering &&
+    isBeforeToday(sourceData.datumBeginLevering, compareDate)
+  );
 }
 
-export function isServiceDeliveryStopped(
+export function isDeliveryStopped(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return isBeforeToday(sourceData.datumEindeLevering, compareDate);
+  return (
+    !!sourceData.datumEindeLevering &&
+    isBeforeToday(sourceData.datumEindeLevering, compareDate)
+  );
 }
 
-export function isServiceDeliveryStatusActive(
+export function isDeliveredStatusActive(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
   return (
     sourceData.isActueel &&
-    isServiceDeliveryStarted(sourceData, compareDate) &&
-    !isServiceDeliveryStopped(sourceData, compareDate) &&
+    isDelivered(sourceData, compareDate) &&
+    !isDeliveryStopped(sourceData, compareDate) &&
     !isBeforeToday(sourceData.datumEindeGeldigheid, compareDate)
   );
 }
@@ -259,8 +276,8 @@ export function isDecisionWithDeliveryStatusActive(
   return (
     aanvraag.resultaat === 'afgewezen' ||
     (isDecisionStatusActive(stepIndex, aanvraag) &&
-      !isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(aanvraag, today))
+      !isOpdrachtGegeven(aanvraag, today) &&
+      !isDelivered(aanvraag, today))
   );
 }
 
@@ -272,9 +289,49 @@ export function isDeliveryStepVisible(
   return (
     hasDecision(aanvraag) &&
     aanvraag.resultaat !== 'afgewezen' &&
-    (isServiceDeliveryStarted(aanvraag, today) ||
+    (isDelivered(aanvraag, today) ||
       // Not yet delivered and not ended yet.
-      (!isServiceDeliveryStarted(aanvraag, today) &&
+      (!isDelivered(aanvraag, today) &&
+        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+  );
+}
+
+export function isOpdrachtGegeven(
+  sourceData: ZorgnedAanvraagTransformed,
+  compareDate: Date
+) {
+  return (
+    !!sourceData.datumOpdrachtLevering &&
+    isBeforeToday(sourceData.datumOpdrachtLevering, compareDate)
+  );
+}
+
+export function isOpdrachtGegevenVisible(
+  stepIndex: number,
+  aanvraag: ZorgnedAanvraagTransformed,
+  today: Date
+) {
+  return (
+    hasDecision(aanvraag) &&
+    aanvraag.resultaat !== 'afgewezen' &&
+    (isOpdrachtGegeven(aanvraag, today) ||
+      // Not yet given and not ended yet.
+      (!isOpdrachtGegeven(aanvraag, today) &&
+        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+  );
+}
+
+export function isGeleverdVisible(
+  stepIndex: number,
+  aanvraag: ZorgnedAanvraagTransformed,
+  today: Date
+) {
+  return (
+    hasDecision(aanvraag) &&
+    aanvraag.resultaat !== 'afgewezen' &&
+    (isOpdrachtGegeven(aanvraag, today) ||
+      // Not yet given and not ended yet.
+      (!isOpdrachtGegeven(aanvraag, today) &&
         !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
   );
 }
