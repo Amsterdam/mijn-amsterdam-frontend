@@ -19,9 +19,19 @@ import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
 } from '../wmo-config-and-types';
 
+function getLastDocumentStartsWithTitle(
+  documents: GenericDocument[],
+  title: string
+) {
+  return (
+    documents.findLast((document) => document?.title.startsWith(title)) ?? null
+  );
+}
+
 function getDecisionDocument(documents: GenericDocument[]) {
-  return documents.find((document) =>
-    document.title.startsWith(DOCUMENT_TITLE_BESLUIT_STARTS_WITH)
+  return getLastDocumentStartsWithTitle(
+    documents,
+    DOCUMENT_TITLE_BESLUIT_STARTS_WITH
   );
 }
 
@@ -58,8 +68,9 @@ function getDecisionDateTransformed(aanvraag: ZorgnedAanvraagTransformed) {
 
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
   return (
-    documents.find((document) =>
-      document.title.startsWith(DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH)
+    getLastDocumentStartsWithTitle(
+      documents,
+      DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH
     )?.datePublished ?? null
   );
 }
@@ -102,7 +113,7 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: () => true,
   isActive: () => false,
   description: () => {
-    return '';
+    return '<p>Uw aanvraag is ontvangen.</p>';
   },
 };
 
@@ -115,27 +126,25 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
   isActive: (stepIndex, aanvraag) =>
     hasMeerInformatieNodig(aanvraag) && !hasDecision(aanvraag),
   description: () => {
-    return `<p>
-      Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:</p>
+    return `<p>Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:</p>
       <p>Uploaden via <a rel="noreferrer" class="ams-link ams-link--inline" href="${DOCUMENT_UPLOAD_LINK_MEER_INFORMATIE}">amsterdam.nl/zorgdocumenten</a> of opsturen naar ons gratis antwoordnummer:</p>
       <p>Gemeente Amsterdam <br />
       Services & Data <br />
       Antwoordnummer 9087 <br />
-      1000 VV Amsterdam
-    </p>`;
+      1000 VV Amsterdam</p>`;
   },
 };
 
 export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   status: 'In behandeling',
-  datePublished: (aanvraag) => aanvraag.datumBesluit || '2089-01-27', // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
+  datePublished: (aanvraag) => aanvraag.datumBesluit || '', // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
   isChecked: (stepIndex, aanvraag) => !!aanvraag.datumBesluit,
   isActive: (stepIndex, aanvraag) =>
     !!aanvraag.datumBesluit &&
     !hasDecision(aanvraag) &&
     !hasMeerInformatieNodig(aanvraag),
   description: (aanvraag) => {
-    return '';
+    return '<p>Uw aanvraag is in behandeling.</p>';
   },
 };
 
@@ -150,13 +159,13 @@ export function getTransformerConfigBesluit(
     isActive: isActive,
     description: (aanvraag) =>
       hasDecision(aanvraag)
-        ? `<p>
-         ${
-           aanvraag.resultaat === 'toegewezen'
-             ? `U krijgt ${useAsProduct ? 'een ' : ''}${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
-             : `U krijgt geen ${aanvraag.titel}`
-         }.
-      </p>
+        ? `<p>${
+            aanvraag.resultaat === 'toegewezen'
+              ? `U krijgt ${
+                  useAsProduct ? 'een ' : ''
+                }${aanvraag.titel} ${aanvraag.datumIngangGeldigheid ? `per ${defaultDateFormat(aanvraag.datumIngangGeldigheid)}` : ''}`
+              : `U krijgt geen ${aanvraag.titel}`
+          }.</p>
       ${decisionParagraph(aanvraag)}
       `
         : '',
@@ -173,15 +182,11 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   isChecked: (stepIndex, aanvraag) => aanvraag.isActueel === false,
   isActive: (stepIndex, aanvraag, today) => aanvraag.isActueel === false,
   description: (aanvraag) =>
-    `<p>
-      ${
-        aanvraag.datumEindeGeldigheid
-          ? aanvraag.isActueel
-            ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
-            : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
-          : ''
-      }
-    </p>
+    `<p>${
+      aanvraag.isActueel
+        ? `Als uw recht op ${aanvraag.titel} stopt, krijgt u hiervan bericht.`
+        : `Uw recht op ${aanvraag.titel} is beëindigd${aanvraag.datumEindeGeldigheid ? ` per ${defaultDateFormat(aanvraag.datumEindeGeldigheid)}` : ''}.`
+    }</p>
     `,
 };
 
@@ -216,28 +221,34 @@ export function isBeforeToday(dateStr: string | null, compareDate: Date) {
     : isDateInPast(dateStr, compareDate);
 }
 
-export function isServiceDeliveryStarted(
+export function isDelivered(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return isBeforeToday(sourceData.datumBeginLevering, compareDate);
+  return (
+    !!sourceData.datumBeginLevering &&
+    isBeforeToday(sourceData.datumBeginLevering, compareDate)
+  );
 }
 
-export function isServiceDeliveryStopped(
+export function isDeliveryStopped(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
-  return isBeforeToday(sourceData.datumEindeLevering, compareDate);
+  return (
+    !!sourceData.datumEindeLevering &&
+    isBeforeToday(sourceData.datumEindeLevering, compareDate)
+  );
 }
 
-export function isServiceDeliveryStatusActive(
+export function isDeliveredStatusActive(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
   return (
     sourceData.isActueel &&
-    isServiceDeliveryStarted(sourceData, compareDate) &&
-    !isServiceDeliveryStopped(sourceData, compareDate) &&
+    isDelivered(sourceData, compareDate) &&
+    !isDeliveryStopped(sourceData, compareDate) &&
     !isBeforeToday(sourceData.datumEindeGeldigheid, compareDate)
   );
 }
@@ -265,8 +276,8 @@ export function isDecisionWithDeliveryStatusActive(
   return (
     aanvraag.resultaat === 'afgewezen' ||
     (isDecisionStatusActive(stepIndex, aanvraag) &&
-      !isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(aanvraag, today))
+      !isOpdrachtGegeven(aanvraag, today) &&
+      !isDelivered(aanvraag, today))
   );
 }
 
@@ -278,9 +289,49 @@ export function isDeliveryStepVisible(
   return (
     hasDecision(aanvraag) &&
     aanvraag.resultaat !== 'afgewezen' &&
-    (isServiceDeliveryStarted(aanvraag, today) ||
+    (isDelivered(aanvraag, today) ||
       // Not yet delivered and not ended yet.
-      (!isServiceDeliveryStarted(aanvraag, today) &&
+      (!isDelivered(aanvraag, today) &&
+        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+  );
+}
+
+export function isOpdrachtGegeven(
+  sourceData: ZorgnedAanvraagTransformed,
+  compareDate: Date
+) {
+  return (
+    !!sourceData.datumOpdrachtLevering &&
+    isBeforeToday(sourceData.datumOpdrachtLevering, compareDate)
+  );
+}
+
+export function isOpdrachtGegevenVisible(
+  stepIndex: number,
+  aanvraag: ZorgnedAanvraagTransformed,
+  today: Date
+) {
+  return (
+    hasDecision(aanvraag) &&
+    aanvraag.resultaat !== 'afgewezen' &&
+    (isOpdrachtGegeven(aanvraag, today) ||
+      // Not yet given and not ended yet.
+      (!isOpdrachtGegeven(aanvraag, today) &&
+        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+  );
+}
+
+export function isGeleverdVisible(
+  stepIndex: number,
+  aanvraag: ZorgnedAanvraagTransformed,
+  today: Date
+) {
+  return (
+    hasDecision(aanvraag) &&
+    aanvraag.resultaat !== 'afgewezen' &&
+    (isOpdrachtGegeven(aanvraag, today) ||
+      // Not yet given and not ended yet.
+      (!isOpdrachtGegeven(aanvraag, today) &&
         !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
   );
 }

@@ -5,11 +5,11 @@ import {
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isBeforeToday,
   isDecisionWithDeliveryStatusActive,
-  isDeliveryStepVisible,
-  isServiceDeliveryStarted,
-  isServiceDeliveryStatusActive,
+  isDelivered,
+  isDeliveredStatusActive,
+  isOpdrachtGegeven,
+  isOpdrachtGegevenVisible,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -21,30 +21,27 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
   {
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
-    isVisible: isDeliveryStepVisible,
-    isChecked: (stepIndex, aanvraag, today: Date) =>
-      isBeforeToday(aanvraag.datumOpdrachtLevering, today),
+    isVisible: isOpdrachtGegevenVisible,
+    isChecked: (stepIndex, aanvraag, today) =>
+      isOpdrachtGegeven(aanvraag, today),
     isActive: (stepIndex, aanvraag, today) =>
       aanvraag.isActueel &&
-      isBeforeToday(aanvraag.datumOpdrachtLevering, today) &&
-      !isServiceDeliveryStarted(aanvraag, today),
-    description: (aanvraag, today) =>
-      isBeforeToday(aanvraag.datumOpdrachtLevering, today)
-        ? `<p>Wij hebben ${aanvraag.leverancier} gevraagd om een ${aanvraag.titel} aan u te leveren.</p>`
-        : '',
+      isOpdrachtGegeven(aanvraag, today) &&
+      !isDelivered(aanvraag, today),
+    description: (aanvraag) =>
+      `<p>Wij hebben ${aanvraag.leverancier} gevraagd om een ${aanvraag.titel} aan u te leveren.</p>`,
   },
   {
     status: 'Product geleverd',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
-    isVisible: isDeliveryStepVisible,
+    isVisible: isOpdrachtGegevenVisible,
     isChecked: (stepIndex, aanvraag, today) =>
-      isServiceDeliveryStarted(aanvraag, today),
+      isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>
-      isServiceDeliveryStatusActive(aanvraag, today),
-    description: (aanvraag, today) =>
-      isServiceDeliveryStarted(aanvraag, today)
-        ? `<p>${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.</p>`
-        : '',
+      isDeliveredStatusActive(aanvraag, today),
+    description: (aanvraag) =>
+      `<p>${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.</p>
+      `,
   },
   EINDE_RECHT,
 ];
