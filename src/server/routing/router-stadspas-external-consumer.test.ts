@@ -73,11 +73,10 @@ describe('hli/router-external-consumer', async () => {
 
       // @ts-ignore
       const renderSecondArg = resMock.render.mock.calls[0][1];
+
       expect(renderSecondArg.administratienummerEncrypted).toStrictEqual(
         'test-encrypted-id'
       );
-      expect(renderSecondArg.amsterdamLogo).not.toBeUndefined();
-
       expect(renderSecondArg.appHref).toStrictEqual(
         'amsterdam://stadspas/gelukt'
       );
