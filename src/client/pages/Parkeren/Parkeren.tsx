@@ -1,52 +1,77 @@
-import { AppRoutes } from '../../../universal/config/routes';
+import { MaLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
-import {
-  ThemaIcon,
-  Linkd,
-  OverviewPage,
-  PageContent,
-  PageHeading,
-} from '../../components';
+import ThemaPagina from '../ThemaPagina/ThemaPagina';
+import { Button, Icon, Paragraph } from '@amsterdam/design-system-react';
+import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
+import { useParkerenData } from './useParkerenData.hook';
+import { tableConfig } from '../VergunningenV2/config';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { generatePath } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routes';
 
 export default function Parkeren() {
-  return (
-    <OverviewPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        icon={<ThemaIcon />}
-      >
-        {ThemaTitles.PARKEREN}
-      </PageHeading>
-      <PageContent>
-        <p>
-          Alle informatie over parkeren in Amsterdam vindt u op{' '}
-          <a
-            title="Informatie over parkeren op Amsterdam.nl"
-            rel="noopener noreferrer"
-            href="https://www.amsterdam.nl/parkeren-verkeer/"
-          >
-            amsterdam.nl
-          </a>
-          . Daar kunt u ook terecht voor informatie over fietskelders, laadpalen
-          voor elektrische auto's en andere vragen die U heeft over parkeren of
-          vervoer. Het aanvragen of wijzigen van een parkeervergunning voor
-          bewoners kan via Mijn Parkeren. U moet hier wel opnieuw inloggen.
-        </p>
-        <Linkd
-          external={true}
-          href="https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/"
-        >
-          Lees hier meer over parkeervergunningen
-        </Linkd>{' '}
-        <br />
-        <Linkd external={true} href="https://parkeervergunningen.amsterdam.nl/">
+  const { parkeervergunningen, isLoading, isError } = useParkerenData();
+
+  const tables = Object.entries(tableConfig).map(
+    ([
+      kind,
+      {
+        title,
+        displayProps,
+        filter: vergunningenListFilter,
+        sort: vergunningenListSort,
+      },
+    ]) => {
+      return (
+        <ThemaPaginaTable<VergunningFrontendV2>
+          key={kind}
+          title={title}
+          zaken={parkeervergunningen
+            .filter(vergunningenListFilter)
+            .sort(vergunningenListSort)}
+          listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
+            kind,
+          })}
+          displayProps={displayProps}
+          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+        />
+      );
+    }
+  );
+
+  const pageContentTop = (
+    <>
+      <Paragraph className="ams-mb--sm">
+        Alle informatie over parkeren in Amsterdam vindt u op . Daar kunt u ook
+        terecht voor informatie over fietskelders, laadpalen voor elektrische
+        auto's en andere vragen die U heeft over parkeren of vervoer. Het
+        aanvragen of wijzigen van een parkeervergunning voor bewoners kan via
+        Mijn Parkeren. U moet hier wel opnieuw inloggen.
+      </Paragraph>
+      <MaLink href={'https://parkeervergunningen.amsterdam.nl'}>
+        <Button>
           Log in op Mijn Parkeren
-        </Linkd>
-        <br />
-      </PageContent>
-    </OverviewPage>
+          <Icon svg={ExternalLinkIcon} size={'level-5'} />
+        </Button>
+      </MaLink>
+    </>
+  );
+
+  return (
+    <ThemaPagina
+      title={ThemaTitles.PARKEREN}
+      isError={isError}
+      isPartialError={false}
+      isLoading={isLoading}
+      pageContentTop={pageContentTop}
+      linkListItems={[
+        {
+          to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
+          title: 'Meer over parkeervergunningen',
+        },
+      ]}
+      pageContentTables={tables}
+    />
   );
 }

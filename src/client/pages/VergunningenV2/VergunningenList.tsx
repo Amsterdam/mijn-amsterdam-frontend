@@ -14,6 +14,7 @@ export function VergunningenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
   const appState = useAppStateGetter();
   const { VERGUNNINGENv2 } = appState;
+
   const {
     title,
     displayProps,
@@ -29,7 +30,6 @@ export function VergunningenList() {
     addLinkElementToProperty<VergunningFrontendV2>(vergunningenFiltered);
 
   const appRouteBack = AppRoutes['VERGUNNINGEN'];
-
   return (
     <ListPagePaginated
       items={vergunningen}

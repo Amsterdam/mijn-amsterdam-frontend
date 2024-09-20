@@ -46,6 +46,7 @@ export const AppRoutes = {
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   PARKEREN: '/parkeren',
+  'PARKEREN/LIST': '/parkeren/lijst/:kind/:page?',
   KLACHTEN: '/klachten/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
   HORECA: '/horeca/',

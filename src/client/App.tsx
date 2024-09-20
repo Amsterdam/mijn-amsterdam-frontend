@@ -86,6 +86,7 @@ import { useMonitoring } from './utils/monitoring';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
+import { ParkerenList } from './pages/Parkeren/ParkerenList';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -351,6 +352,7 @@ function AppAuthenticated() {
             <Route path={AppRoutes.ERFPACHTv2} component={Erfpacht} />
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
+          <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route component={NotFound} />
