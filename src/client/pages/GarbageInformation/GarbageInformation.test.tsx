@@ -52,8 +52,6 @@ const testState: any = {
         opmerking: null,
         kalendermelding: null,
         fractieCode: 'Glas',
-        stadsdeelAanvulling:
-          'In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.',
       },
       {
         titel: 'Groente-, fruit-, etensresten en tuinafval (gfe/t)',
@@ -66,8 +64,6 @@ const testState: any = {
           'Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen',
         kalendermelding: null,
         fractieCode: 'GFT',
-        stadsdeelAanvulling:
-          'In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.',
       },
       {
         titel: 'Grof afval',
@@ -80,8 +76,6 @@ const testState: any = {
           'Of breng het naar <a href="https://kaart.amsterdam.nl/afvalpunten">een Afvalpunt</a>',
         kalendermelding: null,
         fractieCode: 'GA',
-        stadsdeelAanvulling:
-          'In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.',
       },
       {
         titel: 'Papier en karton',
@@ -96,8 +90,6 @@ const testState: any = {
         opmerking: null,
         kalendermelding: null,
         fractieCode: 'Papier',
-        stadsdeelAanvulling:
-          'In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.',
       },
       {
         titel: 'Restafval',
@@ -109,8 +101,6 @@ const testState: any = {
         opmerking: null,
         kalendermelding: null,
         fractieCode: 'Rest',
-        stadsdeelAanvulling:
-          'In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.',
       },
       {
         titel: 'Textiel',
@@ -125,8 +115,6 @@ const testState: any = {
         opmerking: null,
         kalendermelding: null,
         fractieCode: 'Textiel',
-        stadsdeelAanvulling:
-          'In uw stadsdeel zijn mogelijk <a href="https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum" rel="noopener noreferrer">aanvullende regels</a> van kracht.',
       },
     ],
   },
