@@ -1,19 +1,28 @@
 doctype html
-html(lang="en")
+html(lang="nl")
   head
-    title Stadspas administratienummer
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    title Stadspas
+    link(href=urlToCSS rel="stylesheet")
+
   body
-    h1 Stadspas administratienummer
+    header
+      img(id="amsterdam-logo" src=urlToImage)
 
-    if administratienummerEncrypted
-      pre #{administratienummerEncrypted}
+    div(class='main')
+      h1 Inloggen
+      p Open de Amsterdam App om verder te gaan.
 
-    if error
-      p Foutmelding: #{error.code} - #{error.message}
+      if administratienummerEncrypted
+        pre #{administratienummerEncrypted}
 
-    p
-      a(href=appHref id='protocol-link') Klik hier om de Amsterdam app te openen.
+      if error
+        p Foutmelding: #{error.code} - #{error.message}
+
+      a(href=appHref id='protocol-link-button') Open Amsterdam App
 
     script(type='text/javascript' nonce=nonce).
-        document.getElementById('protocol-link').click();
+        document.getElementById('protocol-link-button').click();
 

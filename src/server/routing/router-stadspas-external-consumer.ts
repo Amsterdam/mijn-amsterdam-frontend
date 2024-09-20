@@ -6,6 +6,7 @@ import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { decrypt, encrypt } from '../helpers/encrypt-decrypt';
+import { getFromEnv } from '../helpers/env';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
@@ -25,7 +26,6 @@ import { sendBadRequest, sendResponse } from './route-helpers';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
-const AMSAPP_LINK_NONCE = 'h70yjZuEZl';
 
 type ApiError = {
   code: string;
@@ -73,6 +73,15 @@ routerInternet.get(
   }
 );
 
+type RenderProps = {
+  nonce: string;
+  urlToImage: string;
+  urlToCSS: string;
+  appHref: string;
+  error?: ApiError;
+  administratienummerEncrypted?: string; // Only included in debug build.
+};
+
 async function sendAdministratienummerResponse(
   req: Request<{ token: string }>,
   res: Response
@@ -83,6 +92,14 @@ async function sendAdministratienummerResponse(
   if (!authProfileAndToken) {
     apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
+
+  const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
+  const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
+  const baseRenderProps = {
+    nonce,
+    urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
+    urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
+  };
 
   if (
     authProfileAndToken?.profile.id &&
@@ -119,13 +136,14 @@ async function sendAdministratienummerResponse(
         deliveryResponse.status === 'OK' &&
         deliveryResponse.content.detail === 'Success'
       ) {
-        return res.render('amsapp-stadspas-administratienummer', {
+        const renderProps: RenderProps = {
+          ...baseRenderProps,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
-          nonce: AMSAPP_LINK_NONCE,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
             : '',
-        });
+        };
+        return res.render('amsapp-stadspas-administratienummer', renderProps);
       }
 
       if (
@@ -150,10 +168,12 @@ async function sendAdministratienummerResponse(
 
   captureMessage(`AMSAPP Stadspas: ${apiResponseError.message}`);
 
-  return res.render('amsapp-stadspas-administratienummer', {
+  const renderProps: RenderProps = {
+    ...baseRenderProps,
     error: apiResponseError,
     appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
-  });
+  };
+  return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
 
 routerInternet.get(

@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'Amsterdam Sans';
+  src:
+    url('/fonts/AmsterdamSans/AmsterdamSans-Regular.woff2')
+      format('woff2'),
+    url('/fonts/AmsterdamSans/AmsterdamSans-Regular.woff')
+      format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Amsterdam Sans';
+  src:
+    url('/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff2')
+      format('woff2'),
+    url('/fonts/AmsterdamSansBold/AmsterdamSans-Bold.woff')
+      format('woff');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Amsterdam Sans';
+  src:
+    url('/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff2')
+      format('woff2'),
+    url('/fonts/AmsterdamSansExtraBold/AmsterdamSans-ExtraBold.woff')
+      format('woff');
+  font-weight: 800;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Amsterdam Sans, Arial;
+  font-size: 1.3rem;
+}
+
+#amsterdam-logo {
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+  width: 8rem;
+}
+
+.main {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.main h1 {
+  font-weight: 800;
+  font-size: 2.5rem;
+}
+
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+#protocol-link-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5rem;
+  padding-block: 0.5rem;
+  border: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-color: #004699;
+  color: white;
+  width: 100%;
+  height: 2.5rem;
+  margin-top: 1em;
+}
+
+#protocol-link-button:link {
+  text-decoration: none;
+}
