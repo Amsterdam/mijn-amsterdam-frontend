@@ -52,6 +52,8 @@ export const listPageTitle = {
 export const facturenTableConfig = {
   [listPageParamState.open]: {
     title: listPageTitle[listPageParamState.open],
+    subTitle:
+      'De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde wijzigingen.',
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
   },

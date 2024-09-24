@@ -10,12 +10,14 @@ interface ThemaPaginaTableProps<T> {
   listPageRoute?: string;
   maxItems?: number | -1;
   textNoContent?: string;
+  subTitle?: string;
   title?: string;
   zaken: T[];
 }
 
 export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   title = 'Zaken',
+  subTitle = '',
   zaken,
   className,
   textNoContent = 'U heeft (nog) geen zaken.',
@@ -28,6 +30,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
+        subTitle={subTitle}
         items={maxItems !== -1 ? zaken.slice(0, maxItems) : zaken}
         displayProps={displayProps ?? null}
         className={className}

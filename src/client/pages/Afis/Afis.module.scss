@@ -4,3 +4,9 @@
     word-wrap: break-word;
   }
 }
+
+:global(.ams-paragraph) {
+  &.PageContentBottomDisclaimer {
+    margin-top: -20px;
+  }
+}

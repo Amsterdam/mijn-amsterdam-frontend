@@ -37,47 +37,47 @@ export function AfisThemaPagina() {
   );
 
   const pageContentSecondary = (
-    <>
-      <Grid.Cell span="all">
-        <Button
-          variant="secondary"
-          onClick={() => history.push(routes.betaalVoorkeuren)}
-        >
-          Betaalvoorkeuren
-        </Button>
-      </Grid.Cell>
-      <Grid.Cell span="all">
-        <Alert title="Let op!">
-          <UnorderedList>
-            <UnorderedList.Item>
-              De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
-              wijzigingen.
-            </UnorderedList.Item>
-            <UnorderedList.Item>
-              Facturen waarvoor een betalingsregeling is getroffen, worden niet
-              getoond.
-            </UnorderedList.Item>
-          </UnorderedList>
-        </Alert>
-      </Grid.Cell>
-    </>
+    <Grid.Cell span="all">
+      <Button
+        variant="secondary"
+        onClick={() => history.push(routes.betaalVoorkeuren)}
+      >
+        Betaalvoorkeuren
+      </Button>
+    </Grid.Cell>
+  );
+
+  const pageContentBottom = (
+    <Grid.Cell span="all">
+      <Paragraph className={styles.PageContentBottomDisclaimer}>
+        Betalingsregelingen worden hier niet getoond.
+        <br />
+        Gedeeltelijk betaalde facturen kunt u hier niet zien betaal het
+        resterende bedrag via bankoverschrijving. Er wordt een herinnering
+        verstuurd al uw factuur is vervallen. Bij een vervallen factuur werkt de
+        betaal link niet meer.
+      </Paragraph>
+    </Grid.Cell>
   );
 
   const pageContentTables = Object.entries(facturenTableConfig).map(
-    ([state, { title, displayProps, maxItems }]) => {
+    ([state, { title, subTitle, displayProps, maxItems }]) => {
       return (
-        <ThemaPaginaTable<AfisFactuurFrontend>
-          key={state}
-          title={title}
-          zaken={facturenByState[state as AfisFactuurState] ?? []}
-          displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
-          maxItems={maxItems}
-          listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
-            state,
-          })}
-          className={styles.FacturenTable}
-        />
+        <>
+          <ThemaPaginaTable<AfisFactuurFrontend>
+            key={state}
+            title={title}
+            subTitle={subTitle}
+            zaken={facturenByState[state as AfisFactuurState] ?? []}
+            displayProps={displayProps}
+            textNoContent={`U heeft geen ${title.toLowerCase()}`}
+            maxItems={maxItems}
+            listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
+              state,
+            })}
+            className={styles.FacturenTable}
+          />
+        </>
       );
     }
   );
@@ -103,6 +103,7 @@ export function AfisThemaPagina() {
         <>
           {pageContentSecondary}
           {pageContentTables}
+          {pageContentBottom}
         </>
       }
     />

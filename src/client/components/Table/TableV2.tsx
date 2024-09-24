@@ -1,4 +1,4 @@
-import { Table } from '@amsterdam/design-system-react';
+import { Heading, Paragraph, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
@@ -54,10 +54,12 @@ export interface TableV2Props<T> {
   className?: string;
   showTHead?: boolean;
   caption?: string;
+  subTitle?: string;
 }
 
 export function TableV2<T extends object = ZaakDetail>({
   caption,
+  subTitle,
   items,
   displayProps,
   className,
@@ -65,40 +67,50 @@ export function TableV2<T extends object = ZaakDetail>({
 }: TableV2Props<T>) {
   const displayPropEntries = displayProps !== null ? entries(displayProps) : [];
   return (
-    <Table className={classNames(styles.TableV2, className)}>
-      {!!caption && <Table.Caption>{caption}</Table.Caption>}
-      {showTHead && (
-        <Table.Header>
-          <Table.Row>
-            {displayPropEntries.map(([key, label], index) => {
-              if (!!label) {
-                return (
-                  <Table.HeaderCell key={`th-${key}`}>{label}</Table.HeaderCell>
-                );
-              }
-              return <Table.Cell key={`th-${key}`}>{label}</Table.Cell>;
-            })}
-          </Table.Row>
-        </Table.Header>
+    <>
+      {!!caption && (
+        <Heading level={3} size="level-2">
+          {caption}
+        </Heading>
       )}
-      <Table.Body>
-        {items.map((item, index) => {
-          const key = String(
-            'id' in item ? item.id : `item-${index}` ?? `tr-${index}`
-          );
-          return (
-            <Table.Row key={key}>
-              {displayPropEntries.map(([key]) => {
-                return (
-                  <Table.Cell key={`td-${key}`}>
-                    {item[key] as ReactNode}
-                  </Table.Cell>
-                );
+
+      {!!subTitle && <Paragraph>{subTitle}</Paragraph>}
+      <Table className={classNames(styles.TableV2, className)}>
+        {showTHead && (
+          <Table.Header>
+            <Table.Row>
+              {displayPropEntries.map(([key, label], index) => {
+                if (!!label) {
+                  return (
+                    <Table.HeaderCell key={`th-${key}`}>
+                      {label}
+                    </Table.HeaderCell>
+                  );
+                }
+                return <Table.Cell key={`th-${key}`}>{label}</Table.Cell>;
               })}
             </Table.Row>
-          );
-        })}
-      </Table.Body>
-    </Table>
+          </Table.Header>
+        )}
+        <Table.Body>
+          {items.map((item, index) => {
+            const key = String(
+              'id' in item ? item.id : `item-${index}` ?? `tr-${index}`
+            );
+            return (
+              <Table.Row key={key}>
+                {displayPropEntries.map(([key]) => {
+                  return (
+                    <Table.Cell key={`td-${key}`}>
+                      {item[key] as ReactNode}
+                    </Table.Cell>
+                  );
+                })}
+              </Table.Row>
+            );
+          })}
+        </Table.Body>
+      </Table>
+    </>
   );
 }
