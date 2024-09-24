@@ -20,7 +20,7 @@ export function getSessionStore<T extends typeof expressSession>(
     const pgSession = connectPGSimple(auth);
     return new pgSession({
       tableName: options.tableName,
-      pool: pool,
+      pool,
       createTableIfMissing: true,
     }) as unknown as SessionStore<Session>;
   }
