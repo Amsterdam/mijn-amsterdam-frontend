@@ -279,7 +279,12 @@ export function useAppStateBagApi<T extends unknown>({
     }
   }, [isApiDataCached, api, key, url]);
 
-  return [appState?.[bagThema]?.[key] as T, api, fetch] as const;
+  return [
+    appState?.[bagThema]?.[key] as T,
+    api,
+    fetch,
+    isApiDataCached,
+  ] as const;
 }
 
 export function useRemoveAppStateBagData() {

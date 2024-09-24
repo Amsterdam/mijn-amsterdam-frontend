@@ -30,20 +30,20 @@ export function useAfisThemaData(state?: AfisFactuurState) {
   const { AFIS } = useAppStateGetter();
   const businessPartnerIdEncrypted = AFIS.content?.businessPartnerIdEncrypted;
 
-  const [facturen, facturenApi, fetchFacturen] =
+  const [facturen, facturenApi, fetchFacturen, isApiDataCached] =
     useAppStateBagApi<AfisFacturenByStateResponse>({
       bagThema: BagThemas.AFIS,
       key: `${businessPartnerIdEncrypted}-facturen-${state ?? 'overzicht'}`,
     });
 
   useEffect(() => {
-    if (businessPartnerIdEncrypted) {
+    if (businessPartnerIdEncrypted && !isApiDataCached) {
       const url = state
         ? `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`
         : `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`;
       fetchFacturen({ url });
     }
-  }, [businessPartnerIdEncrypted, fetchFacturen, state]);
+  }, [businessPartnerIdEncrypted, fetchFacturen, state, isApiDataCached]);
 
   const facturenByState: AfisFacturenByStateFrontend = useMemo(() => {
     if (facturen) {
@@ -108,18 +108,19 @@ export function useAfisBetaalVoorkeurenData(
     businesspartnerDetails,
     businesspartnerDetailsApi,
     fetchBusinessPartner,
+    isApiDataCached,
   ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
     bagThema: BagThemas.AFIS,
     key: `${businessPartnerIdEncrypted}-betaalvoorkeuren`,
   });
 
   useEffect(() => {
-    if (businessPartnerIdEncrypted) {
+    if (businessPartnerIdEncrypted && !isApiDataCached) {
       fetchBusinessPartner({
         url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
       });
     }
-  }, [businessPartnerIdEncrypted, fetchBusinessPartner]);
+  }, [businessPartnerIdEncrypted, fetchBusinessPartner, isApiDataCached]);
 
   return {
     businesspartnerDetails,
