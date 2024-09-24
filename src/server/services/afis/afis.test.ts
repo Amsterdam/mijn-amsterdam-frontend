@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import { remoteApi, getAuthProfileAndToken } from '../../../test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 
 const mocks = vi.hoisted(() => {
   const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';
@@ -22,15 +22,14 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
+import { jsonCopy } from '../../../universal/helpers/utils';
 import {
   fetchAfisBusinessPartnerDetails,
-  fetchAfisFacturen,
   fetchAfisDocument,
+  fetchAfisFacturen,
   fetchIsKnownInAFIS,
 } from './afis';
-import { jsonCopy } from '../../../universal/helpers/utils';
-import { AfisFacturenResponse, AfisFactuur } from './afis-types';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import { AfisFacturenParams } from './afis-types';
 
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
@@ -555,7 +554,7 @@ describe('Afis', () => {
         .get(ROUTES.geslotenFacturen)
         .reply(200, require('./test-fixtures/afgehandelde-facturen.json'));
 
-      const closedParams = {
+      const closedParams: AfisFacturenParams = {
         state: 'afgehandeld',
         businessPartnerID: GENERIC_ID,
         top: undefined,
