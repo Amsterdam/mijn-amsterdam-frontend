@@ -12,6 +12,7 @@ interface ThemaPaginaTableProps<T> {
   textNoContent?: string;
   subTitle?: string;
   title?: string;
+  listPageLinkLabel?: string;
   zaken: T[];
 }
 
@@ -24,6 +25,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   displayProps,
   listPageRoute,
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  listPageLinkLabel = 'Toon meer',
 }: ThemaPaginaTableProps<T>) {
   return (
     <Grid.Cell span="all">
@@ -39,7 +41,11 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
       {!zaken.length && <Paragraph>{textNoContent}</Paragraph>}
 
       {!!listPageRoute && (
-        <LinkToListPage label="" count={zaken.length} route={listPageRoute} />
+        <LinkToListPage
+          label={listPageLinkLabel}
+          count={zaken.length}
+          route={listPageRoute}
+        />
       )}
     </Grid.Cell>
   );

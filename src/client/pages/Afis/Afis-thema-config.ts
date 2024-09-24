@@ -56,16 +56,19 @@ export const facturenTableConfig = {
       'De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde wijzigingen.',
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
+    listPageLinkLabel: 'Alle openstaande facturen',
   },
   [listPageParamState.closed]: {
     title: listPageTitle[listPageParamState.closed],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
+    listPageLinkLabel: 'Alle afgehandelde facturen',
   },
   [listPageParamState.transferred]: {
     title: listPageTitle[listPageParamState.transferred],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
+    listPageLinkLabel: 'Alle afgehandelde facturen',
   },
 } as const;
 

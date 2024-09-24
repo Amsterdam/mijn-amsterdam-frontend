@@ -61,7 +61,10 @@ export function AfisThemaPagina() {
   );
 
   const pageContentTables = Object.entries(facturenTableConfig).map(
-    ([state, { title, subTitle, displayProps, maxItems }]) => {
+    ([
+      state,
+      { title, subTitle, displayProps, maxItems, listPageLinkLabel },
+    ]) => {
       return (
         <>
           <ThemaPaginaTable<AfisFactuurFrontend>
@@ -72,6 +75,7 @@ export function AfisThemaPagina() {
             displayProps={displayProps}
             textNoContent={`U heeft geen ${title.toLowerCase()}`}
             maxItems={maxItems}
+            listPageLinkLabel={listPageLinkLabel}
             listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
               state,
             })}
