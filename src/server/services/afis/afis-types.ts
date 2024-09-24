@@ -1,5 +1,3 @@
-import { ZaakDetail } from '../../../universal/types';
-
 type JaOfNee = 'Ja' | 'Nee';
 
 /** Business partner private response from external AFIS API.
@@ -115,7 +113,7 @@ export type AfisFactuur = {
   paylink: string | null;
   documentDownloadLink: string;
   statusDescription: string;
-} & Omit<ZaakDetail, 'steps' | 'link' | 'title' | 'id'>;
+};
 
 type AfisFactuurStatus =
   | 'openstaand'
