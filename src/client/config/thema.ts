@@ -128,7 +128,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
-  [AppRoutes.AFIS]: 'Facturen en betalen | Mijn Amsterdam',
+  [AppRoutes.AFIS]: 'Facturen en betalen | overzicht',
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
     'Betaalvoorkeuren | Facturen en betalen',
 };
