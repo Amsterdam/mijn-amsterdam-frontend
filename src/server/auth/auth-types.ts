@@ -1,3 +1,5 @@
+import { Session } from 'express-openid-connect';
+
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
   profileType: ProfileType;
@@ -5,12 +7,7 @@ export interface AuthProfile {
   sid: SessionID;
 }
 
-export interface SessionData {
-  access_token: string;
-  id_token: string;
-  token_type: string;
-  expires_at: string;
-  client_id: string;
+export interface MaSession extends Session {
   sid: SessionID;
   TMASessionID: string; // TMA Session ID
   profileType: ProfileType;

@@ -53,12 +53,6 @@ declare const MA_APP_VERSION: string;
 // Mode: Development Unittest Production
 declare const MA_APP_MODE: string;
 
-// A fixed user id (BSN/KVK) for development purposes.
-declare const MA_PROFILE_DEV_ID: string;
-
-// A list with test-accounts in the form of: foo=123,bar=456,hello=789
-declare const MA_TEST_ACCOUNTS: string;
-
 // The commit sha
 declare const MA_GIT_SHA: string;
 
