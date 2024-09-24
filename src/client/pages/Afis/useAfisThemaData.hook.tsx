@@ -74,6 +74,10 @@ export function useAfisThemaData(state?: AfisFactuurState) {
       facturenApi.data,
       'closed'
     ),
+    hasFailedFacturenTransferredDependency: hasFailedDependency(
+      facturenApi.data,
+      'transferred'
+    ),
     facturenByState,
   };
 }

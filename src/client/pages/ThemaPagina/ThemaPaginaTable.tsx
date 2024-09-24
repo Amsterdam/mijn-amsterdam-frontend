@@ -36,7 +36,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
       {!zaken.length && <Paragraph>{textNoContent}</Paragraph>}
 
       {!!listPageRoute && (
-        <LinkToListPage count={zaken.length} route={listPageRoute} />
+        <LinkToListPage label="" count={zaken.length} route={listPageRoute} />
       )}
     </Grid.Cell>
   );

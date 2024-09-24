@@ -93,7 +93,7 @@ export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
   AfisBusinessPartnerPhone &
   AfisBusinessPartnerEmail;
 
-export type AfisFactuurState = 'open' | 'closed';
+export type AfisFactuurState = 'open' | 'closed' | 'transferred';
 
 export type AfisFacturenByStateResponse = {
   [key in AfisFactuurState]?: AfisFactuur[];
@@ -122,6 +122,7 @@ type AfisFactuurStatus =
   | 'automatische-incasso'
   | 'in-dispuut'
   | 'gedeeltelijke-betaling'
+  | 'overgedragen-aan-belastingen'
   | 'geld-terug'
   | 'betaald'
   | 'geannuleerd'

@@ -5,6 +5,7 @@ import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import {
   AfisFacturenByStateResponse,
   AfisFactuur,
+  AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { DisplayProps } from '../../components/Table/TableV2';
 
@@ -20,6 +21,7 @@ export type AfisFacturenByStateFrontend = {
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsFacturen: DisplayProps<AfisFactuurFrontend> = {
@@ -29,29 +31,39 @@ const displayPropsFacturen: DisplayProps<AfisFactuurFrontend> = {
   paymentDueDateFormatted: 'Vervaldatum',
 };
 
-export const listPageParamKind = {
+export const listPageParamState: {
+  [key in AfisFactuurState]: AfisFactuurState;
+} = {
   open: 'open',
   closed: 'closed',
-} as const;
+  transferred: 'transferred',
+};
 
-export type ListPageParamKey = keyof typeof listPageParamKind;
-export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+export type ListPageParamStateKey = keyof typeof listPageParamState;
+export type ListPageParamState =
+  (typeof listPageParamState)[ListPageParamStateKey];
 
 export const listPageTitle = {
-  [listPageParamKind.open]: 'Openstaande facturen',
-  [listPageParamKind.closed]: 'Afgehandelde facturen',
+  [listPageParamState.open]: 'Openstaande facturen',
+  [listPageParamState.closed]: 'Afgehandelde facturen',
+  [listPageParamState.transferred]: 'Overgedragen facturen',
 } as const;
 
 export const facturenTableConfig = {
-  [listPageParamKind.open]: {
-    title: listPageTitle[listPageParamKind.open],
+  [listPageParamState.open]: {
+    title: listPageTitle[listPageParamState.open],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
   },
-  [listPageParamKind.closed]: {
-    title: listPageTitle[listPageParamKind.closed],
+  [listPageParamState.closed]: {
+    title: listPageTitle[listPageParamState.closed],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
+  },
+  [listPageParamState.transferred]: {
+    title: listPageTitle[listPageParamState.transferred],
+    displayProps: displayPropsFacturen,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
   },
 } as const;
 

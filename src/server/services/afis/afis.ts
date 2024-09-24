@@ -293,11 +293,15 @@ function formatFactuurRequestURL(
   const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
 
   const filters: Record<AfisFacturenParams['state'], string> = {
+    // Openstaaand (met betaallink of sepamandaat)
     open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
-    closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
+    // Afgehandeld (ge-incasseerd, betaald, geannuleerd)
+    closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel neq '3' or ReverseDocument ne '')`,
+    // Overgedragen aan belastingen
+    transferred: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and DunningLevel eq '3'`,
   };
 
-  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,InvoiceReference`;
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
@@ -325,15 +329,31 @@ export async function fetchAfisFacturenOverview(
     top: '3',
   });
 
-  const [facturenOpenResponse, facturenClosedResponse] =
-    await Promise.allSettled([facturenOpenRequest, facturenClosedRequest]);
+  const facturenTransferredRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'transferred',
+    businessPartnerID: params.businessPartnerID,
+  });
+
+  const [
+    facturenOpenResponse,
+    facturenClosedResponse,
+    facturenTransferredResponse,
+  ] = await Promise.allSettled([
+    facturenOpenRequest,
+    facturenClosedRequest,
+    facturenTransferredRequest,
+  ]);
 
   const facturenOpenResult = getSettledResult(facturenOpenResponse);
   const facturenClosedResult = getSettledResult(facturenClosedResponse);
+  const facturenTransferredResult = getSettledResult(
+    facturenTransferredResponse
+  );
 
   const facturenOverview = {
     open: facturenOpenResult.content ?? [],
     closed: facturenClosedResult.content ?? [],
+    transferred: facturenTransferredResult.content ?? [],
   };
 
   return apiSuccessResult(
@@ -341,6 +361,7 @@ export async function fetchAfisFacturenOverview(
     getFailedDependencies({
       open: facturenOpenResult,
       closed: facturenClosedResult,
+      transferred: facturenTransferredResult,
     })
   );
 }
@@ -461,9 +482,8 @@ function determineFactuurStatus(
       return 'betaald';
 
     // Open invoices
-    case amountInBalanceTransacCrcyInCents < 0: {
+    case amountInBalanceTransacCrcyInCents < 0:
       return 'geld-terug';
-    }
 
     case sourceInvoice.DunningBlockingReason === 'D':
       return 'in-dispuut';
@@ -476,6 +496,9 @@ function determineFactuurStatus(
 
     case !sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'openstaand';
+
+    case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 3:
+      return 'overgedragen-aan-belastingen';
 
     default:
       captureMessage(
@@ -510,6 +533,8 @@ function determineFactuurStatusDescription(
       return `Betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
       return `${amountOwedFormatted} wordt automatisch van uw rekening afgeschreven`;
+    case 'overgedragen-aan-belastingen':
+      return `Overgedragen aan belastingen ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     default:
       return capitalizeFirstLetter(status ?? '');
   }

@@ -152,16 +152,27 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            const isAboutClosedInvoices = req.query?.['$filter']?.includes(
-              `IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`
-            );
-            const filename = isAboutClosedInvoices
-              ? 'afgehandelde-facturen'
-              : 'openstaande-facturen';
+            const stateFilters = {
+              openstaande: 'IsCleared eq false',
+              afgehandelde: `DunningLevel neq '3' or ReverseDocument ne ''`,
+              overgedragen: `DunningLevel eq '3'`,
+            };
+
+            const stateName = Object.entries(stateFilters).find(
+              ([name, filterValueSegment]) => {
+                return req.query?.['$filter']?.includes(filterValueSegment);
+              }
+            )?.[0];
+
+            if (!stateName) {
+              return res.status(500).end();
+            }
 
             // DO NOT adjust this mock data (tests depend on it).
             // If needed copy, mutate and let it point to the newly made copy.
-            return res.send(require(`../fixtures/afis/${filename}.json`));
+            return res.send(
+              require(`../fixtures/afis/${stateName}-facturen.json`)
+            );
           },
         },
       },
