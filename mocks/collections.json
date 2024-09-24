@@ -61,6 +61,7 @@
       "get-afis-businesspartner-emailaddress:standard",
       "get-afis-facturen:standard",
       "get-afis-factuur-id:standard",
+      "get-afis-paylink:standard",
       "get-powerbrowser-bb-vergunning-attachments:standard",
       "post-powerbrowser-bb-vergunning-attachments:standard",
       "post-powerbrowser-token:standard",

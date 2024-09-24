@@ -28,8 +28,9 @@
             "NetDueDate": "2023-12-21T00:00:00",
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "343.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "5555555",
+            "AccountingDocument": "5555555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       },
@@ -45,8 +46,9 @@
             "NetDueDate": "2023-12-12T00:00:00",
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "-80.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "5555555",
+            "AccountingDocument": "5555555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       },
@@ -62,8 +64,9 @@
             "NetDueDate": "2023-10-26T00:00:00",
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "-12.10",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "5555555",
+            "AccountingDocument": "5555555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       },
@@ -79,8 +82,9 @@
             "NetDueDate": "2023-08-09T00:00:00",
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "-16.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "5555555",
+            "AccountingDocument": "5555555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       },
@@ -96,8 +100,9 @@
             "NetDueDate": "2023-03-23T00:00:00",
             "NetPaymentAmount": "-900.98",
             "AmountInBalanceTransacCrcy": "1000.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "5555555",
+            "AccountingDocument": "5555555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       },
@@ -113,8 +118,9 @@
             "NetDueDate": "2023-01-31T00:00:00",
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "121.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "5555555",
+            "AccountingDocument": "5555555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       },
@@ -132,8 +138,9 @@
             },
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "230.00",
-            "InvoiceNo": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "5555555",
+            "AccountingDocument": "5555555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
       }

@@ -197,4 +197,21 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'get-afis-paylink',
+    url: `${settings.MOCK_BASE_PATH}/afis/paylink`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (req, res, next, core) => {
+            const htmlResponse = `<h1>Afis factuur betalen</h1><button onclick="history.back()">Betaal factuur</button>`;
+            res.send(htmlResponse);
+          },
+        },
+      },
+    ],
+  },
 ];
