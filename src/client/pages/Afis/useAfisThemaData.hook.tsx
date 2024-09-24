@@ -52,7 +52,7 @@ export function useAfisThemaData(state?: AfisFactuurState) {
         entries.map(([state, facturen]) => [state, facturen.map(mapFactuur)])
       );
     }
-    return { open: [], closed: [] };
+    return { open: [], closed: [], transferred: [] };
   }, [facturen]);
 
   return {

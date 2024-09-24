@@ -8,6 +8,7 @@ import {
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { DisplayProps } from '../../components/Table/TableV2';
+import { generatePath } from 'react-router-dom';
 
 export type AfisEmandateStub = ZaakDetail & Record<string, string>;
 
@@ -21,7 +22,8 @@ export type AfisFacturenByStateFrontend = {
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsFacturen: DisplayProps<AfisFactuurFrontend> = {
@@ -57,18 +59,27 @@ export const facturenTableConfig = {
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
     listPageLinkLabel: 'Alle openstaande facturen',
+    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+      state: listPageParamState.open,
+    }),
   },
   [listPageParamState.closed]: {
     title: listPageTitle[listPageParamState.closed],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
+    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+      state: listPageParamState.closed,
+    }),
   },
   [listPageParamState.transferred]: {
     title: listPageTitle[listPageParamState.transferred],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
+    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+      state: listPageParamState.transferred,
+    }),
   },
 } as const;
 
