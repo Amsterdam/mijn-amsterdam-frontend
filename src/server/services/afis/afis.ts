@@ -1,4 +1,5 @@
 import {
+  apiErrorResult,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -42,6 +43,7 @@ import {
 } from './afis-types';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
+export const FACTUUR_STATE_KEYS: AfisFactuurState[] = ['open', 'closed'];
 
 /** Returns if the person logging in, is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
@@ -341,6 +343,24 @@ export async function fetchAfisFacturenOverview(
       closed: facturenClosedResult,
     })
   );
+}
+
+export async function fetchAfisFacturenByState(
+  requestID: RequestID,
+  sessionID: SessionID,
+  params: AfisFacturenParams
+) {
+  const facturenResponse = await fetchAfisFacturen(
+    requestID,
+    sessionID,
+    params
+  );
+  if ((await facturenResponse.status) === 'OK') {
+    return apiSuccessResult({
+      [params.state]: facturenResponse.content,
+    });
+  }
+  return facturenResponse;
 }
 
 function transformFacturen(

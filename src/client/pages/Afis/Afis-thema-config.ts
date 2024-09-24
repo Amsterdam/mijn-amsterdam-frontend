@@ -2,13 +2,20 @@ import { ReactNode } from 'react';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ZaakDetail } from '../../../universal/types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import { AfisFactuur } from '../../../server/services/afis/afis-types';
+import {
+  AfisFacturenByStateResponse,
+  AfisFactuur,
+} from '../../../server/services/afis/afis-types';
 import { DisplayProps } from '../../components/Table/TableV2';
 
 export type AfisEmandateStub = ZaakDetail & Record<string, string>;
 
 export type AfisFactuurFrontend = AfisFactuur & {
   factuurNummerEl: ReactNode;
+};
+
+export type AfisFacturenByStateFrontend = {
+  [key in keyof AfisFacturenByStateResponse]: AfisFactuurFrontend[];
 };
 
 // Themapagina
@@ -51,6 +58,13 @@ export const facturenTableConfig = {
 // Betaalvoorkeuren
 const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
   name: 'Naam',
+};
+
+export const businessPartnerDetailsLabels = {
+  fullName: 'Debiteurnaam',
+  businessPartnerId: 'Debiteurnummer',
+  email: 'E-mailadres factuur',
+  phone: 'Telefoonnummer',
 };
 
 export const eMandateTableConfig = {

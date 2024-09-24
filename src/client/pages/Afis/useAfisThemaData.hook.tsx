@@ -2,63 +2,58 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisBusinessPartnerKnownResponse,
+  AfisFacturenByStateResponse,
   AfisFactuur,
+  AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import {
   hasFailedDependency,
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
-import { DisplayProps } from '../../components/Table/TableV2';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { DocumentLink } from '../../components/DocumentList/DocumentLink';
+import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import {
+  AfisFacturenByStateFrontend,
+  businessPartnerDetailsLabels,
   eMandateTableConfig,
   facturenTableConfig,
-  ListPageParamKind,
-  listPageParamKind,
   listPageTitle,
   routes,
 } from './Afis-thema-config';
-import { MaLink } from '../../components/MaLink/MaLink';
 
-import { DocumentLink } from '../../components/DocumentList/DocumentLink';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-
-export function useAfisThemaData(kind?: ListPageParamKind) {
+export function useAfisThemaData(state?: AfisFactuurState) {
   const { AFIS } = useAppStateGetter();
   const businessPartnerIdEncrypted = AFIS.content?.businessPartnerIdEncrypted;
-  const [facturen, facturenApi, fetchFacturen] = useAppStateBagApi<
-    { [key in ListPageParamKind]: AfisFactuur[] } | AfisFactuur[] | null
-  >({
-    bagThema: BagThemas.AFIS,
-    key: `${businessPartnerIdEncrypted}-facturen-${kind}`,
-  });
+
+  const [facturen, facturenApi, fetchFacturen] =
+    useAppStateBagApi<AfisFacturenByStateResponse>({
+      bagThema: BagThemas.AFIS,
+      key: `${businessPartnerIdEncrypted}-facturen-${state ?? 'overzicht'}`,
+    });
 
   useEffect(() => {
     if (businessPartnerIdEncrypted) {
-      const url = kind
-        ? `${BFFApiUrls.AFIS_FACTUREN}/${kind}/${businessPartnerIdEncrypted}`
+      const url = state
+        ? `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`
         : `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`;
       fetchFacturen({ url });
     }
-  }, [businessPartnerIdEncrypted, fetchFacturen, kind]);
+  }, [businessPartnerIdEncrypted, fetchFacturen, state]);
 
-  const updatedFacturen = useMemo(() => {
-    return kind
-      ? Array.isArray(facturen)
-        ? (facturen as AfisFactuur[])?.map(mapFactuur)
-        : []
-      : facturen && Object.keys(facturen).length > 0
-        ? Object.fromEntries(
-            Object.entries(facturen).map(([key, value]) => [
-              key,
-              value.map(mapFactuur),
-            ])
-          )
-        : { open: [], closed: [] };
-  }, [facturen, kind]);
+  const facturenByState: AfisFacturenByStateFrontend = useMemo(() => {
+    if (facturen) {
+      const entries = Object.entries(facturen);
+      return Object.fromEntries(
+        entries.map(([state, facturen]) => [state, facturen.map(mapFactuur)])
+      );
+    }
+    return { open: [], closed: [] };
+  }, [facturen]);
 
   return {
     businessPartnerIdEncrypted:
@@ -68,7 +63,7 @@ export function useAfisThemaData(kind?: ListPageParamKind) {
     routes,
     facturenTableConfig,
     listPageTitle,
-    listPageParamKind,
+    state,
     isFacturenError: facturenApi.isError,
     isFacturenLoading: facturenApi.isLoading,
     hasFailedFacturenOpenDependency: hasFailedDependency(
@@ -79,7 +74,7 @@ export function useAfisThemaData(kind?: ListPageParamKind) {
       facturenApi.data,
       'closed'
     ),
-    facturen: updatedFacturen,
+    facturenByState,
   };
 }
 
@@ -87,7 +82,7 @@ function mapFactuur(factuur: AfisFactuur) {
   return {
     ...factuur,
     statusDescription: getInvoiceStatusDescription(factuur),
-    factuurNummer: factuur.documentDownloadLink ? (
+    factuurNummerEl: factuur.documentDownloadLink ? (
       <DocumentLink
         document={{
           id: factuur.factuurNummer,
@@ -101,14 +96,6 @@ function mapFactuur(factuur: AfisFactuur) {
     ),
   };
 }
-
-const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
-  {
-    fullName: 'Debiteurnaam',
-    businessPartnerId: 'Debiteurnummer',
-    email: 'E-mailadres factuur',
-    phone: 'Telefoonnummer',
-  };
 
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']

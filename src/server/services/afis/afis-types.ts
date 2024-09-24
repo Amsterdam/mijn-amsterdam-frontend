@@ -95,6 +95,10 @@ export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
 
 export type AfisFactuurState = 'open' | 'closed';
 
+export type AfisFacturenByStateResponse = {
+  [key in AfisFactuurState]?: AfisFactuur[];
+};
+
 export type AfisFactuur = {
   afzender: string;
   datePublished: string | null;

@@ -1,28 +1,23 @@
 import {
   Grid,
-  Heading,
   Link,
   LinkList,
   Paragraph,
 } from '@amsterdam/design-system-react';
-import {
-  AfisBusinessPartnerDetailsTransformed,
-  AfisBusinessPartnerKnownResponse,
-} from '../../../server/services/afis/afis-types';
+import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { LoadingContent } from '../../components';
+import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { DisplayProps } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import styles from './AfisBetaalVoorkeuren.module.scss';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import { AfisEmandateStub } from './Afis-thema-config';
 import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { AfisEmandateStub } from './Afis-thema-config';
-import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
-import { LoadingContent } from '../../components';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;

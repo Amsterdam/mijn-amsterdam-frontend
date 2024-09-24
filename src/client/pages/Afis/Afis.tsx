@@ -1,18 +1,18 @@
 import { Button, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useHistory } from 'react-router-dom';
+import { AfisFactuurState } from '../../../server/services/afis/afis-types';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { useAfisThemaData } from './useAfisThemaData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
-import { AfisFactuur } from '../../../server/services/afis/afis-types';
-import { ListPageParamKind } from './Afis-thema-config';
+import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
+import { useAfisThemaData } from './useAfisThemaData.hook';
 
 export function AfisThemaPagina() {
   const history = useHistory();
   const {
-    facturen,
+    facturenByState,
     facturenTableConfig,
     isFacturenError,
     isFacturenLoading,
@@ -39,20 +39,17 @@ export function AfisThemaPagina() {
   );
 
   const pageContentTables = Object.entries(facturenTableConfig).map(
-    ([kind, { title, displayProps, maxItems }]) => {
-      const kindFacturen = (
-        facturen as { [K in ListPageParamKind]: AfisFactuur[] }
-      )[kind as ListPageParamKind];
+    ([state, { title, displayProps, maxItems }]) => {
       return (
-        <ThemaPaginaTable<AfisFactuur>
-          key={kind}
+        <ThemaPaginaTable<AfisFactuurFrontend>
+          key={state}
           title={title}
-          zaken={kindFacturen}
+          zaken={facturenByState[state as AfisFactuurState] ?? []}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
           maxItems={maxItems}
           listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
-            kind,
+            state,
           })}
           className={styles.FacturenTable}
         />

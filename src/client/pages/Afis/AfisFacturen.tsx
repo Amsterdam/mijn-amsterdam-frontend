@@ -1,23 +1,25 @@
 import { useParams } from 'react-router-dom';
-import { ListPageParamKind } from './Afis-thema-config';
+import {
+  AfisFactuur,
+  AfisFactuurState,
+} from '../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { useAfisThemaData } from './useAfisThemaData.hook';
-import { AfisFactuur } from '../../../server/services/afis/afis-types';
 import styles from './Afis.module.scss';
+import { useAfisThemaData } from './useAfisThemaData.hook';
 
 export const AfisFacturen = () => {
-  const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const { facturen, facturenTableConfig, routes, isFacturenLoading } =
-    useAfisThemaData(kind);
-  const listPageTableConfig = facturenTableConfig[kind];
-
+  const { state } = useParams<{ state: AfisFactuurState }>();
+  const { facturenByState, facturenTableConfig, routes, isFacturenLoading } =
+    useAfisThemaData(state);
+  const listPageTableConfig = facturenTableConfig[state];
+  const facturen = facturenByState[state] ?? [];
   return (
     <ListPagePaginated<AfisFactuur>
-      items={facturen as AfisFactuur[]}
+      items={facturen}
       backLinkTitle={listPageTableConfig.title}
       title={listPageTableConfig.title}
       appRoute={routes.listPageFacturen}
-      appRouteParams={{ kind }}
+      appRouteParams={{ state }}
       appRouteBack={routes.themaPage}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isFacturenLoading}
