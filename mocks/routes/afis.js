@@ -194,9 +194,9 @@ module.exports = [
     ],
   },
   {
-    id: 'post-afis-factuur-document',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
-    method: 'POST',
+    id: 'get-afis-factuur-document',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
+    method: 'GET',
     variants: [
       {
         id: 'standard',

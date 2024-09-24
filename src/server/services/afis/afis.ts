@@ -543,11 +543,11 @@ function determineFactuurStatusDescription(
 export async function fetchAfisDocument(
   requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
-  factuurNummer: AfisFactuur['factuurDocumentId']
+  factuurDocumentId: AfisFactuur['factuurDocumentId']
 ): Promise<DocumentDownloadResponse> {
   const ArchiveDocumentIDResponse = await fetchAfisDocumentID(
     requestID,
-    factuurNummer
+    factuurDocumentId
   );
   if (ArchiveDocumentIDResponse.status !== 'OK') {
     return ArchiveDocumentIDResponse;
@@ -593,11 +593,12 @@ export async function fetchAfisDocument(
  */
 async function fetchAfisDocumentID(
   requestID: RequestID,
-  factuurNummer: AfisFactuur['factuurDocumentId']
+  factuurDocumentId: AfisFactuur['factuurDocumentId']
 ) {
   const config = getApiConfig('AFIS', {
-    formatUrl: ({ url }) =>
-      `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurNummer}'&$select=ArcDocId`,
+    formatUrl: ({ url }) => {
+      return `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurDocumentId}'&$select=ArcDocId`;
+    },
     transformResponse: (data: AfisDocumentIDSource) => {
       const entryProperties = getFeedEntryProperties(data);
       if (entryProperties.length) {
