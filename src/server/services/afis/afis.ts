@@ -484,6 +484,9 @@ function determineFactuurStatus(
     case !!sourceInvoice.ReverseDocument:
       return 'geannuleerd';
 
+    case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 3:
+      return 'overgedragen-aan-belastingen';
+
     case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'betaald';
 
@@ -502,9 +505,6 @@ function determineFactuurStatus(
 
     case !sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'openstaand';
-
-    case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 3:
-      return 'overgedragen-aan-belastingen';
 
     default:
       captureMessage(
