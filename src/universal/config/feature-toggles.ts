@@ -12,7 +12,7 @@ export const FeatureToggle = {
   cmsFooterActive: true,
   dbEnabled: IS_TAP,
   dbSessionsEnabled: IS_TAP,
-  decosServiceActive: IS_OT,
+  decosServiceActive: false,
   ehKetenmachtigingActive: !IS_PRODUCTION,
   eherkenningActive: true,
   erfpachtV2Active: !IS_PRODUCTION,
