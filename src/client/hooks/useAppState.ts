@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
+import {
+  SetterOrUpdater,
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from 'recoil';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
@@ -285,6 +291,14 @@ export function useAppStateBagApi<T extends unknown>({
     fetch,
     isApiDataCached,
   ] as const;
+}
+
+export function useGetAppStateBagDataByKey<T>({
+  bagThema,
+  key,
+}: Omit<AppStateBagApiParams, 'url'>) {
+  const appState = useRecoilValue(appStateAtom);
+  return (appState?.[bagThema]?.[key] as T) ?? null;
 }
 
 export function useRemoveAppStateBagData() {
