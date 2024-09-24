@@ -294,7 +294,7 @@ function formatFactuurRequestURL(
 
   const filters: Record<AfisFacturenParams['state'], string> = {
     // Openstaaand (met betaallink of sepamandaat)
-    open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')`,
+    open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false`,
     // Afgehandeld (ge-incasseerd, betaald, geannuleerd)
     closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel neq '3' or ReverseDocument ne '')`,
     // Overgedragen aan belastingen
