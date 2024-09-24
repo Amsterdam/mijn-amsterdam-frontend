@@ -40,6 +40,7 @@ export type AfisBusinessPartnerKnownResponse = {
 
 export type AfisApiFeedResponseSource<T> = {
   feed?: {
+    count?: number;
     entry?: [
       {
         content?: {
@@ -95,6 +96,11 @@ export type AfisFactuurState = 'open' | 'closed' | 'transferred';
 
 export type AfisFacturenByStateResponse = {
   [key in AfisFactuurState]?: AfisFactuur[];
+};
+
+export type AfisFacturenResponse = {
+  count: number;
+  facturen: AfisFactuur[];
 };
 
 export type AfisFactuur = {

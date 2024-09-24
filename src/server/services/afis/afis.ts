@@ -1,5 +1,5 @@
 import {
-  apiErrorResult,
+  ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -36,6 +36,7 @@ import {
   AfisBusinessPartnerPrivateResponseSource,
   AfisDocumentDownloadSource,
   AfisDocumentIDSource,
+  AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurPropertiesSource,
   AfisFactuurState,
@@ -275,15 +276,14 @@ export async function fetchAfisFacturen(
   requestID: RequestID,
   sessionID: SessionID,
   params: AfisFacturenParams
-) {
+): Promise<ApiResponse<AfisFacturenResponse | null>> {
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
     transformResponse: (responseData) =>
       transformFacturen(responseData, sessionID),
   });
 
-  const response = await requestData<AfisFactuur[]>(config, requestID);
-  return response;
+  return requestData<AfisFacturenResponse>(config, requestID);
 }
 
 function formatFactuurRequestURL(
@@ -388,11 +388,16 @@ export async function fetchAfisFacturenByState(
 function transformFacturen(
   responseData: AfisOpenInvoiceSource,
   sessionID: SessionID
-) {
+): AfisFacturenResponse {
   const feedProperties = getFeedEntryProperties(responseData);
-  return feedProperties.map((invoiceProperties) => {
+  const count = responseData?.feed?.count ?? feedProperties.length;
+  const facturenTransformed = feedProperties.map((invoiceProperties) => {
     return transformFactuur(invoiceProperties, sessionID);
   });
+  return {
+    count,
+    facturen: facturenTransformed,
+  };
 }
 
 function transformFactuur(
