@@ -1,6 +1,17 @@
 import { Themas } from '../../universal/config/thema';
 import { ThemaMenuItem, ThemaTitles } from '../config/thema';
 import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
+import { renderHook, act } from '@testing-library/react';
+import { useThemaMenuItems } from './useThemaMenuItems';
+import { trackEvent } from '../utils/monitoring';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
+import { ReactNode } from 'react';
+import { appStateAtom } from './useAppState';
+import { AppState } from '../../universal/types';
+
+vi.mock('../utils/monitoring', () => ({
+  trackEvent: vi.fn(),
+}));
 
 describe('useThemaMenuItems', () => {
   test('Parkeren is not active without an Appstate entry.', () => {
@@ -70,5 +81,48 @@ describe('useThemaMenuItems', () => {
     expect(getThemaMenuItemsAppState(appState, items)).toStrictEqual([
       appState.BRP,
     ]);
+  });
+
+  test('trackEvent is called with the correct arguments', () => {
+    const testState = {
+      AFIS: {
+        status: 'OK',
+        content: {
+          isKnown: true,
+          businessPartnerIdEncrypted: 'yyy-456-yyy',
+        },
+      },
+      PARKEREN: {
+        status: 'OK',
+        content: {
+          url: 'http://localhost:3000/afspraak-maken',
+        },
+      },
+    } as AppState;
+
+    function initializeState(snapshot: MutableSnapshot) {
+      snapshot.set(appStateAtom, testState);
+    }
+
+    const mockApp = ({ children }: { children: ReactNode }) => (
+      <RecoilRoot initializeState={initializeState}>{children}</RecoilRoot>
+    );
+
+    renderHook(() => useThemaMenuItems(), {
+      wrapper: mockApp,
+    });
+
+    expect(trackEvent).toHaveBeenCalledWith('themas-per-sessie', {
+      themas: [
+        {
+          id: 'AFIS',
+          title: 'Facturen en betalen',
+        },
+        {
+          id: 'PARKEREN',
+          title: 'Parkeren',
+        },
+      ],
+    });
   });
 });

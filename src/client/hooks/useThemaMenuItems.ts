@@ -1,10 +1,12 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { ApiResponse, isError, isLoading } from '../../universal/helpers/api';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItem } from '../config/thema';
 import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
 import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
+import { useSessionStorage } from './storage.hook';
+import { trackEvent } from '../utils/monitoring';
 
 export interface ThemasState {
   items: ThemaMenuItem[];
@@ -26,7 +28,7 @@ export function useThemaMenuItems(): ThemasState {
     themaItems
   );
 
-  return useMemo(
+  const themasState = useMemo(
     () => ({
       items,
       isLoading:
@@ -38,4 +40,18 @@ export function useThemaMenuItems(): ThemasState {
     }),
     [items, appState, themaItemsWithAppState]
   );
+
+  const [storedThemas, setStoredThemas] = useSessionStorage('themas', null);
+  useEffect(() => {
+    if (!storedThemas && !themasState.isLoading) {
+      const themaTitlesAndIds = items.map((item) => ({
+        title: item.title,
+        id: item.id,
+      }));
+      setStoredThemas(themaTitlesAndIds);
+      trackEvent('themas-per-sessie', { themas: themaTitlesAndIds });
+    }
+  }, [storedThemas, themasState.isLoading, items, setStoredThemas]);
+
+  return themasState;
 }
