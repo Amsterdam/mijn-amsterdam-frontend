@@ -1,4 +1,10 @@
-import { Button, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Button,
+  Grid,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
 import { generatePath, useHistory } from 'react-router-dom';
 import { AfisFactuurState } from '../../../server/services/afis/afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -26,8 +32,8 @@ export function AfisThemaPagina() {
   const pageContentTop = (
     <>
       <Paragraph className="ams-mb--sm">
-        Hieronder kunt u uw facturatiegegevens inzien en een automatische
-        incasso instellen per afdeling van de gemeente.
+        Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de
+        facturen van belastingen. U kunt deze bij belastingen vinden.
       </Paragraph>
       <Button
         variant="secondary"
@@ -74,7 +80,25 @@ export function AfisThemaPagina() {
         },
       ]}
       pageContentTop={pageContentTop}
-      pageContentTables={pageContentTables}
+      pageContentTables={
+        <>
+          <Grid.Cell span="all">
+            <Alert title="Let op!">
+              <UnorderedList>
+                <UnorderedList.Item>
+                  De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
+                  wijzigingen.
+                </UnorderedList.Item>
+                <UnorderedList.Item>
+                  Facturen waarvoor een betalingsregeling is getroffen, worden
+                  niet getoond.
+                </UnorderedList.Item>
+              </UnorderedList>
+            </Alert>
+          </Grid.Cell>
+          {pageContentTables}
+        </>
+      }
     />
   );
 }
