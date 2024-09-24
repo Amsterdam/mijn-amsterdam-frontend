@@ -296,7 +296,7 @@ function formatFactuurRequestURL(
     // Openstaaand (met betaallink of sepamandaat)
     open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false`,
     // Afgehandeld (ge-incasseerd, betaald, geannuleerd)
-    closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel neq '3' or ReverseDocument ne '')`,
+    closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`,
     // Overgedragen aan belastingen
     transferred: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and DunningLevel eq '3'`,
   };
@@ -332,6 +332,7 @@ export async function fetchAfisFacturenOverview(
   const facturenTransferredRequest = fetchAfisFacturen(requestID, sessionID, {
     state: 'transferred',
     businessPartnerID: params.businessPartnerID,
+    top: '3',
   });
 
   const [
