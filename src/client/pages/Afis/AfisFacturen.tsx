@@ -11,12 +11,12 @@ import { useAfisListPageData } from './useAfisThemaData.hook';
 export const AfisFacturen = () => {
   const { state } = useParams<{ state: AfisFactuurState }>();
   const {
+    api,
     facturenResponse,
     facturenTableConfig,
-    routes,
-    api,
-    isThemaPaginaLoading,
     isThemaPaginaError,
+    isThemaPaginaLoading,
+    routes,
   } = useAfisListPageData(state);
 
   const listPageTableConfig = facturenTableConfig[state];

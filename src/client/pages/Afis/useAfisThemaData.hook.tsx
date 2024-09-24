@@ -31,14 +31,56 @@ import {
 } from './Afis-thema-config';
 
 const AFIS_OVERVIEW_STATE_KEY = 'afis-facturen-overzicht';
+const AFIS_FACTUREN_RESPONSE = { count: 0, facturen: [] };
 
-function useTransformFacturen(facturenByState: AfisFacturenByStateResponse) {
+function mapFactuur(factuur: AfisFactuur) {
+  return {
+    ...factuur,
+    statusDescription: getInvoiceStatusDescriptionFrontend(factuur),
+    factuurNummerEl: factuur.documentDownloadLink ? (
+      <DocumentLink
+        document={{
+          id: factuur.factuurNummer,
+          datePublished: factuur.datePublished ?? '',
+          url: factuur.documentDownloadLink,
+          title: `factuur ${factuur.factuurNummer}`,
+        }}
+      />
+    ) : (
+      factuur.factuurNummer
+    ),
+  };
+}
+
+function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
+  switch (factuur.status) {
+    case 'openstaand':
+      return (
+        <>
+          {capitalizeFirstLetter(factuur.status)}:{' '}
+          <MaLink
+            maVariant="fatNoUnderline"
+            href={factuur.paylink ?? '#missing-paylink'}
+          >
+            {factuur.statusDescription}
+          </MaLink>
+        </>
+      );
+    default:
+      return factuur.statusDescription;
+  }
+}
+
+function useTransformFacturen(
+  facturenByState: AfisFacturenByStateResponse,
+  state?: AfisFactuurState
+) {
   const facturenByStateUpdated: AfisFacturenByStateFrontend = useMemo(() => {
     if (facturenByState) {
       const entries = Object.entries(facturenByState);
       return Object.fromEntries(
         entries
-          .filter(([state, facturenAndCount]) => facturenAndCount !== null)
+          .filter(([state, facturenResponse]) => facturenResponse !== null)
           .map(([state, facturen]) => [
             state,
             {
@@ -48,11 +90,13 @@ function useTransformFacturen(facturenByState: AfisFacturenByStateResponse) {
           ])
       );
     }
-    return {
-      open: { count: -1, facturen: [] },
-      closed: { count: -1, facturen: [] },
-      transferred: { count: -1, facturen: [] },
-    };
+    return state
+      ? { [state]: AFIS_FACTUREN_RESPONSE }
+      : {
+          open: AFIS_FACTUREN_RESPONSE,
+          closed: AFIS_FACTUREN_RESPONSE,
+          transferred: AFIS_FACTUREN_RESPONSE,
+        };
   }, [facturenByState]);
 
   return facturenByStateUpdated;
@@ -80,6 +124,11 @@ function useAfisOverviewApi(
   return [facturenByStateUpdated, api, fetchFacturen, isApiDataCached] as const;
 }
 
+/**
+ * Fetches facturen by state. If open facturen (on thema pagina) are already loaded, use those, all open facturen are loaded initially
+ * because we consider those most important and want no additional fetching when navigatinng from Themapagina to Listpage.
+ * Otherwise fetch all open facturen from api.
+ */
 function useAfisListpageApi(
   businessPartnerIdEncrypted: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted'],
   state: AfisFactuurState
@@ -117,7 +166,8 @@ function useAfisListpageApi(
   const facturenByStateUpdated = useTransformFacturen(
     state === 'open' && hasFacturenByStateOpen
       ? facturenByStateOpen
-      : facturenByState
+      : facturenByState,
+    state
   );
 
   return [facturenByStateUpdated, api, fetchFacturen, isApiDataCached] as const;
@@ -153,6 +203,7 @@ export function useAfisThemaData() {
 
   return {
     api,
+    businessPartnerIdEncrypted,
     facturenByState,
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
@@ -160,44 +211,6 @@ export function useAfisThemaData() {
     listPageTitle,
     routes,
   };
-}
-
-function mapFactuur(factuur: AfisFactuur) {
-  return {
-    ...factuur,
-    statusDescription: getInvoiceStatusDescription(factuur),
-    factuurNummerEl: factuur.documentDownloadLink ? (
-      <DocumentLink
-        document={{
-          id: factuur.factuurNummer,
-          datePublished: factuur.datePublished ?? '',
-          url: factuur.documentDownloadLink,
-          title: `factuur ${factuur.factuurNummer}`,
-        }}
-      />
-    ) : (
-      factuur.factuurNummer
-    ),
-  };
-}
-
-function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
-  switch (factuur.status) {
-    case 'openstaand':
-      return (
-        <>
-          {capitalizeFirstLetter(factuur.status)}:{' '}
-          <MaLink
-            maVariant="fatNoUnderline"
-            href={factuur.paylink ?? '#missing-paylink'}
-          >
-            {factuur.statusDescription}
-          </MaLink>
-        </>
-      );
-    default:
-      return factuur.statusDescription;
-  }
 }
 
 export function useAfisBetaalVoorkeurenData(

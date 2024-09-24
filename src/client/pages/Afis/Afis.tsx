@@ -1,13 +1,13 @@
 import { Button, Grid, Paragraph } from '@amsterdam/design-system-react';
 import { useHistory } from 'react-router-dom';
-import { AfisFactuurState } from '../../../server/services/afis/afis-types';
+import { hasFailedDependency } from '../../../universal/helpers/api';
+import { entries } from '../../../universal/helpers/utils';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
-import { hasFailedDependency } from '../../../universal/helpers/api';
 
 export function AfisThemaPagina() {
   const history = useHistory();
@@ -38,7 +38,7 @@ export function AfisThemaPagina() {
     </Grid.Cell>
   );
 
-  const pageContentBottom = (
+  const pageContentDisclaimer = (
     <Grid.Cell span="all">
       <Paragraph className={styles.PageContentBottomDisclaimer}>
         Betalingsregelingen worden hier niet getoond.
@@ -53,7 +53,7 @@ export function AfisThemaPagina() {
 
   const pageContentErrorAlert = <>errors!</>;
 
-  const pageContentTables = Object.entries(facturenTableConfig).map(
+  const pageContentTables = entries(facturenTableConfig).map(
     ([
       state,
       {
@@ -65,7 +65,7 @@ export function AfisThemaPagina() {
         listPageRoute,
       },
     ]) => {
-      const facturen = facturenByState[state as AfisFactuurState];
+      const facturen = facturenByState[state];
       return (
         <>
           <ThemaPaginaTable<AfisFactuurFrontend>
@@ -81,6 +81,7 @@ export function AfisThemaPagina() {
             listPageRoute={listPageRoute}
             className={styles.FacturenTable}
           />
+          {state === 'afgehandeld' && pageContentDisclaimer}
         </>
       );
     }
@@ -108,7 +109,6 @@ export function AfisThemaPagina() {
         <>
           {pageContentSecondary}
           {pageContentTables}
-          {pageContentBottom}
         </>
       }
     />

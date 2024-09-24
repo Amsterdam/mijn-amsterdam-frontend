@@ -73,19 +73,19 @@ function AfisBusinessPartnerDetails({
 export function AfisBetaalVoorkeuren() {
   const {
     businessPartnerIdEncrypted,
-    isThemaPaginaLoading,
     isThemaPaginaError,
+    isThemaPaginaLoading,
   } = useAfisThemaData();
   const {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
+    eMandates,
+    eMandateTableConfig,
     hasBusinessPartnerDetailsError,
     hasEmandatesError,
     hasFailedEmailDependency,
     hasFailedPhoneDependency,
     isLoadingBusinessPartnerDetails,
-    eMandateTableConfig,
-    eMandates,
     isLoadingEmandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
