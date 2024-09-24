@@ -145,7 +145,7 @@ export type AfisFactuurPropertiesSource = {
   NetDueDate: string;
   NetPaymentAmount: string;
   AmountInBalanceTransacCrcy: string;
-  InvoiceNo: string;
+  DocumentReferenceID: string;
   Paylink: string | null;
   IsCleared?: boolean;
   ClearingDate?: string;

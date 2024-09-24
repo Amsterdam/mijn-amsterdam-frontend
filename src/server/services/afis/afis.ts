@@ -9,10 +9,7 @@ import displayAmount, {
 } from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
-import {
-  encrypt,
-  encryptSessionIdWithRouteIdParam,
-} from '../../helpers/encrypt-decrypt';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -296,7 +293,7 @@ function formatFactuurRequestURL(
     closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
   };
 
-  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
@@ -362,7 +359,7 @@ function transformFactuur(
 
   const factuurNummerEncrypted = encryptSessionIdWithRouteIdParam(
     sessionID,
-    invoice.InvoiceNo
+    invoice.DocumentReferenceID
   );
 
   const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
@@ -395,7 +392,7 @@ function transformFactuur(
     debtClearingDateFormatted,
     amountOwed: amountOwed ? amountOwed : 0,
     amountOwedFormatted,
-    factuurNummer: invoice.InvoiceNo,
+    factuurNummer: invoice.DocumentReferenceID,
     status,
     statusDescription: determineFactuurStatusDescription(
       status,
