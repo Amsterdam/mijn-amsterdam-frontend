@@ -15,6 +15,7 @@
       "@rel": "self",
       "@title": "SomeITEM"
     },
+    "count": 10,
     "entry": [
       {
         "content": {

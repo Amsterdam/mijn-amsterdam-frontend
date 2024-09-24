@@ -154,7 +154,7 @@ module.exports = [
           middleware: (req, res) => {
             const stateFilters = {
               openstaande: 'IsCleared eq false',
-              afgehandelde: `DunningLevel neq '3' or ReverseDocument ne ''`,
+              afgehandelde: `DunningLevel ne '3' or ReverseDocument ne ''`,
               overgedragen: `DunningLevel eq '3'`,
             };
 
@@ -170,9 +170,23 @@ module.exports = [
 
             // DO NOT adjust this mock data (tests depend on it).
             // If needed copy, mutate and let it point to the newly made copy.
-            return res.send(
-              require(`../fixtures/afis/${stateName}-facturen.json`)
+            const facturenData = require(
+              `../fixtures/afis/${stateName}-facturen.json`
             );
+
+            if (req.query?.['$top']) {
+              return res.send({
+                feed: {
+                  count: facturenData.feed.count,
+                  entry: facturenData.feed.entry.slice(
+                    0,
+                    parseInt(req.query?.['$top'], 10)
+                  ),
+                },
+              });
+            }
+
+            return res.send(facturenData);
           },
         },
       },
