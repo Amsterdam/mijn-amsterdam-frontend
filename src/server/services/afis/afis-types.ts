@@ -106,6 +106,7 @@ export type AfisFactuur = {
   amountOwed: number;
   amountOwedFormatted: string;
   factuurNummer: string;
+  factuurDocumentId: string;
   status: AfisFactuurStatus;
   paylink: string | null;
   documentDownloadLink: string;
@@ -136,20 +137,21 @@ export type AfisOpenInvoiceSource =
  *  `IsCleared`: `true` means the 'factuur' is fully payed for.
  */
 export type AfisFactuurPropertiesSource = {
-  DunningLevel: number;
-  DunningBlockingReason: string;
-  ProfitCenterName: string;
-  SEPAMandate: string;
-  PostingDate: string;
+  AccountingDocument: string;
   AccountingDocumentType: string;
+  AmountInBalanceTransacCrcy: string;
+  ClearingDate?: string;
+  DocumentReferenceID: string;
+  DunningBlockingReason: string;
+  DunningLevel: number;
+  IsCleared?: boolean;
   NetDueDate: string;
   NetPaymentAmount: string;
-  AmountInBalanceTransacCrcy: string;
-  DocumentReferenceID: string;
   Paylink: string | null;
-  IsCleared?: boolean;
-  ClearingDate?: string;
+  PostingDate: string;
+  ProfitCenterName: string;
   ReverseDocument?: string;
+  SEPAMandate: string;
 };
 
 export type AfisArcDocID = AfisDocumentIDPropertiesSource['ArcDocId'];

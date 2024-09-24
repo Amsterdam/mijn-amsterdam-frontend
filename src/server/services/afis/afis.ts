@@ -293,7 +293,7 @@ function formatFactuurRequestURL(
     closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`,
   };
 
-  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
+  const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate`;
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
   let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
@@ -356,10 +356,11 @@ function transformFactuur(
   sessionID: SessionID
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
-
-  const factuurNummerEncrypted = encryptSessionIdWithRouteIdParam(
+  const factuurDocumentId = invoice.AccountingDocument;
+  const factuurNummer = invoice.DocumentReferenceID || factuurDocumentId; // NOTE: This has to be verified with proper test data.
+  const factuurDocumentIdEncrypted = encryptSessionIdWithRouteIdParam(
     sessionID,
-    invoice.DocumentReferenceID
+    factuurDocumentId
   );
 
   const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
@@ -392,7 +393,8 @@ function transformFactuur(
     debtClearingDateFormatted,
     amountOwed: amountOwed ? amountOwed : 0,
     amountOwedFormatted,
-    factuurNummer: invoice.DocumentReferenceID,
+    factuurNummer,
+    factuurDocumentId,
     status,
     statusDescription: determineFactuurStatusDescription(
       status,
@@ -402,7 +404,7 @@ function transformFactuur(
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink: generateFullApiUrlBFF(
       BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
-      { id: factuurNummerEncrypted }
+      { id: factuurDocumentIdEncrypted }
     ),
   };
 }
@@ -494,7 +496,7 @@ function determineFactuurStatusDescription(
 export async function fetchAfisDocument(
   requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
-  factuurNummer: AfisFactuur['factuurNummer']
+  factuurNummer: AfisFactuur['factuurDocumentId']
 ): Promise<DocumentDownloadResponse> {
   const ArchiveDocumentIDResponse = await fetchAfisDocumentID(
     requestID,
@@ -539,7 +541,7 @@ export async function fetchAfisDocument(
  */
 async function fetchAfisDocumentID(
   requestID: RequestID,
-  factuurNummer: AfisFactuur['factuurNummer']
+  factuurNummer: AfisFactuur['factuurDocumentId']
 ) {
   const config = getApiConfig('AFIS', {
     formatUrl: ({ url }) =>
