@@ -9,6 +9,7 @@ interface ThemaPaginaTableProps<T> {
   displayProps?: DisplayProps<T>;
   listPageRoute?: string;
   maxItems?: number | -1;
+  totalItems?: number;
   textNoContent?: string;
   subTitle?: string;
   title?: string;
@@ -25,6 +26,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   displayProps,
   listPageRoute,
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  totalItems,
   listPageLinkLabel = 'Toon meer',
 }: ThemaPaginaTableProps<T>) {
   return (
@@ -40,10 +42,11 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
 
       {!zaken.length && <Paragraph>{textNoContent}</Paragraph>}
 
-      {!!listPageRoute && (
+      {!!listPageRoute && maxItems !== -1 && (
         <LinkToListPage
+          threshold={maxItems}
           label={listPageLinkLabel}
-          count={zaken.length}
+          count={totalItems ?? zaken.length}
           route={listPageRoute}
         />
       )}
