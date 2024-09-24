@@ -16,7 +16,11 @@ import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
+import {
+  useAppStateBagApi,
+  useAppStateGetter,
+  useGetAppStateBagDataByKey,
+} from '../../hooks/useAppState';
 import {
   AfisFacturenByStateFrontend,
   businessPartnerDetailsLabels,
@@ -26,59 +30,135 @@ import {
   routes,
 } from './Afis-thema-config';
 
-export function useAfisThemaData(state?: AfisFactuurState) {
-  const { AFIS } = useAppStateGetter();
-  const businessPartnerIdEncrypted = AFIS.content?.businessPartnerIdEncrypted;
+const AFIS_OVERVIEW_STATE_KEY = 'afis-facturen-overzicht';
 
-  const [facturen, facturenApi, fetchFacturen, isApiDataCached] =
+function useTransformFacturen(facturenByState: AfisFacturenByStateResponse) {
+  const facturenByStateUpdated: AfisFacturenByStateFrontend = useMemo(() => {
+    if (facturenByState) {
+      const entries = Object.entries(facturenByState);
+      return Object.fromEntries(
+        entries
+          .filter(([state, facturenAndCount]) => facturenAndCount !== null)
+          .map(([state, facturen]) => [
+            state,
+            {
+              ...facturen,
+              facturen: facturen?.facturen.map(mapFactuur) ?? [],
+            },
+          ])
+      );
+    }
+    return {
+      open: { count: -1, facturen: [] },
+      closed: { count: -1, facturen: [] },
+      transferred: { count: -1, facturen: [] },
+    };
+  }, [facturenByState]);
+
+  return facturenByStateUpdated;
+}
+
+function useAfisOverviewApi(
+  businessPartnerIdEncrypted?: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
+) {
+  const [facturenByState, api, fetchFacturen, isApiDataCached] =
     useAppStateBagApi<AfisFacturenByStateResponse>({
       bagThema: BagThemas.AFIS,
-      key: `${businessPartnerIdEncrypted}-facturen-${state ?? 'overzicht'}`,
+      key: AFIS_OVERVIEW_STATE_KEY,
     });
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
-      const url = state
-        ? `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`
-        : `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`;
-      fetchFacturen({ url });
+      fetchFacturen({
+        url: `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`,
+      });
     }
-  }, [businessPartnerIdEncrypted, fetchFacturen, state, isApiDataCached]);
+  }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached]);
 
-  const facturenByState: AfisFacturenByStateFrontend = useMemo(() => {
-    if (facturen) {
-      const entries = Object.entries(facturen);
-      return Object.fromEntries(
-        entries.map(([state, facturen]) => [state, facturen.map(mapFactuur)])
-      );
+  const facturenByStateUpdated = useTransformFacturen(facturenByState);
+
+  return [facturenByStateUpdated, api, fetchFacturen, isApiDataCached] as const;
+}
+
+function useAfisListpageApi(
+  businessPartnerIdEncrypted: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted'],
+  state: AfisFactuurState
+) {
+  const [facturenByState, api, fetchFacturen, isApiDataCached] =
+    useAppStateBagApi<AfisFacturenByStateResponse>({
+      bagThema: BagThemas.AFIS,
+      key: `afis-facturen-${state}`,
+    });
+
+  const facturenByStateOpen = useGetAppStateBagDataByKey<
+    Omit<AfisFacturenByStateResponse, 'afgehandeld' | 'overgedragen'>
+  >({ bagThema: BagThemas.AFIS, key: AFIS_OVERVIEW_STATE_KEY });
+
+  const hasFacturenByStateOpen = !!facturenByStateOpen;
+
+  useEffect(() => {
+    if (
+      businessPartnerIdEncrypted &&
+      !isApiDataCached &&
+      (state !== 'open' || !hasFacturenByStateOpen)
+    ) {
+      fetchFacturen({
+        url: `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`,
+      });
     }
-    return { open: [], closed: [], transferred: [] };
-  }, [facturen]);
+  }, [
+    businessPartnerIdEncrypted,
+    fetchFacturen,
+    isApiDataCached,
+    state,
+    hasFacturenByStateOpen,
+  ]);
+
+  const facturenByStateUpdated = useTransformFacturen(
+    state === 'open' && hasFacturenByStateOpen
+      ? facturenByStateOpen
+      : facturenByState
+  );
+
+  return [facturenByStateUpdated, api, fetchFacturen, isApiDataCached] as const;
+}
+
+export function useAfisListPageData(state: AfisFactuurState) {
+  const { AFIS } = useAppStateGetter();
+  const businessPartnerIdEncrypted =
+    AFIS.content?.businessPartnerIdEncrypted ?? null;
+
+  const [facturenByState, api] = useAfisListpageApi(
+    businessPartnerIdEncrypted,
+    state
+  );
 
   return {
-    businessPartnerIdEncrypted:
-      AFIS.content?.businessPartnerIdEncrypted ?? null,
-    isThemaPaginaLoading: isLoading(AFIS),
-    isThemaPaginaError: isError(AFIS, false),
-    routes,
+    api,
+    facturenResponse: facturenByState[state],
     facturenTableConfig,
+    isThemaPaginaError: isError(AFIS, false),
+    isThemaPaginaLoading: isLoading(AFIS),
     listPageTitle,
-    state,
-    isFacturenError: facturenApi.isError,
-    isFacturenLoading: facturenApi.isLoading,
-    hasFailedFacturenOpenDependency: hasFailedDependency(
-      facturenApi.data,
-      'open'
-    ),
-    hasFailedFacturenClosedDependency: hasFailedDependency(
-      facturenApi.data,
-      'closed'
-    ),
-    hasFailedFacturenTransferredDependency: hasFailedDependency(
-      facturenApi.data,
-      'transferred'
-    ),
+    routes,
+  };
+}
+
+export function useAfisThemaData() {
+  const { AFIS } = useAppStateGetter();
+  const businessPartnerIdEncrypted =
+    AFIS.content?.businessPartnerIdEncrypted ?? null;
+
+  const [facturenByState, api] = useAfisOverviewApi(businessPartnerIdEncrypted);
+
+  return {
+    api,
     facturenByState,
+    facturenTableConfig,
+    isThemaPaginaError: isError(AFIS, false),
+    isThemaPaginaLoading: isLoading(AFIS),
+    listPageTitle,
+    routes,
   };
 }
 
@@ -101,6 +181,25 @@ function mapFactuur(factuur: AfisFactuur) {
   };
 }
 
+function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
+  switch (factuur.status) {
+    case 'openstaand':
+      return (
+        <>
+          {capitalizeFirstLetter(factuur.status)}:{' '}
+          <MaLink
+            maVariant="fatNoUnderline"
+            href={factuur.paylink ?? '#missing-paylink'}
+          >
+            {factuur.statusDescription}
+          </MaLink>
+        </>
+      );
+    default:
+      return factuur.statusDescription;
+  }
+}
+
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted: AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
 ) {
@@ -111,7 +210,7 @@ export function useAfisBetaalVoorkeurenData(
     isApiDataCached,
   ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
     bagThema: BagThemas.AFIS,
-    key: `${businessPartnerIdEncrypted}-betaalvoorkeuren`,
+    key: `afis-betaalvoorkeuren`,
   });
 
   useEffect(() => {
@@ -143,23 +242,4 @@ export function useAfisBetaalVoorkeurenData(
     eMandates: [],
     isLoadingEmandates: false,
   };
-}
-
-function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
-  switch (factuur.status) {
-    case 'openstaand':
-      return (
-        <>
-          {capitalizeFirstLetter(factuur.status)}:{' '}
-          <MaLink
-            maVariant="fatNoUnderline"
-            href={factuur.paylink ?? '#missing-paylink'}
-          >
-            {factuur.statusDescription}
-          </MaLink>
-        </>
-      );
-    default:
-      return factuur.statusDescription;
-  }
 }
