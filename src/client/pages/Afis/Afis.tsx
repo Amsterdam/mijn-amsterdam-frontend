@@ -30,17 +30,36 @@ export function AfisThemaPagina() {
   } = useAfisThemaData();
 
   const pageContentTop = (
+    <Paragraph>
+      Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de
+      facturen van belastingen. U kunt deze bij belastingen vinden.
+    </Paragraph>
+  );
+
+  const pageContentSecondary = (
     <>
-      <Paragraph className="ams-mb--sm">
-        Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de
-        facturen van belastingen. U kunt deze bij belastingen vinden.
-      </Paragraph>
-      <Button
-        variant="secondary"
-        onClick={() => history.push(routes.betaalVoorkeuren)}
-      >
-        Betaalvoorkeuren
-      </Button>
+      <Grid.Cell span="all">
+        <Button
+          variant="secondary"
+          onClick={() => history.push(routes.betaalVoorkeuren)}
+        >
+          Betaalvoorkeuren
+        </Button>
+      </Grid.Cell>
+      <Grid.Cell span="all">
+        <Alert title="Let op!">
+          <UnorderedList>
+            <UnorderedList.Item>
+              De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
+              wijzigingen.
+            </UnorderedList.Item>
+            <UnorderedList.Item>
+              Facturen waarvoor een betalingsregeling is getroffen, worden niet
+              getoond.
+            </UnorderedList.Item>
+          </UnorderedList>
+        </Alert>
+      </Grid.Cell>
     </>
   );
 
@@ -82,20 +101,7 @@ export function AfisThemaPagina() {
       pageContentTop={pageContentTop}
       pageContentTables={
         <>
-          <Grid.Cell span="all">
-            <Alert title="Let op!">
-              <UnorderedList>
-                <UnorderedList.Item>
-                  De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
-                  wijzigingen.
-                </UnorderedList.Item>
-                <UnorderedList.Item>
-                  Facturen waarvoor een betalingsregeling is getroffen, worden
-                  niet getoond.
-                </UnorderedList.Item>
-              </UnorderedList>
-            </Alert>
-          </Grid.Cell>
+          {pageContentSecondary}
           {pageContentTables}
         </>
       }
