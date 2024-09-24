@@ -566,7 +566,7 @@ export async function fetchAfisDocument(
     method: 'post',
     data: {
       Record: {
-        ArchiveDocumentID: ArchiveDocumentIDResponse.id,
+        ArchiveDocumentID: ArchiveDocumentIDResponse.content,
         BusinessObjectTypeName: 'BKPF',
       },
     },
