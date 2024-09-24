@@ -81,7 +81,6 @@ export function AfisThemaPagina() {
             listPageRoute={listPageRoute}
             className={styles.FacturenTable}
           />
-          {state === 'afgehandeld' && pageContentDisclaimer}
         </>
       );
     }
@@ -109,6 +108,7 @@ export function AfisThemaPagina() {
         <>
           {pageContentSecondary}
           {pageContentTables}
+          {pageContentDisclaimer}
         </>
       }
     />

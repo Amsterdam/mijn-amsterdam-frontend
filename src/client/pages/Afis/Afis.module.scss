@@ -7,6 +7,6 @@
 
 :global(.ams-paragraph) {
   &.PageContentBottomDisclaimer {
-    margin-top: -20px;
+    margin-top: calc(-1 * var(--ams-grid-column-gap));
   }
 }
