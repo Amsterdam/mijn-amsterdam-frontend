@@ -89,12 +89,12 @@ export function isEindeGeldigheidVerstreken(
   datumEindeGeldigheid: string | null,
   compareDate: Date
 ) {
-  const isEOG = datumEindeGeldigheid
+  const isEindeGeldigheidVerstreken = datumEindeGeldigheid
     ? isSameDay(parseISO(datumEindeGeldigheid), compareDate) ||
       isDateInPast(datumEindeGeldigheid, compareDate)
     : false;
 
-  return isEOG;
+  return isEindeGeldigheidVerstreken;
 }
 
 // TODO: Determine if there are any other conditions that can be used.
