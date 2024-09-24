@@ -5,14 +5,16 @@ import {
 } from '../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import styles from './Afis.module.scss';
-import { useAfisThemaData } from './useAfisThemaData.hook';
+import { useAfisListPageData, useAfisThemaData } from './useAfisThemaData.hook';
 
 export const AfisFacturen = () => {
   const { state } = useParams<{ state: AfisFactuurState }>();
-  const { facturenByState, facturenTableConfig, routes, isFacturenLoading } =
-    useAfisThemaData(state);
+  const { facturenResponse, facturenTableConfig, routes, api } =
+    useAfisListPageData(state);
+
   const listPageTableConfig = facturenTableConfig[state];
-  const facturen = facturenByState[state] ?? [];
+  const facturen = facturenResponse?.facturen ?? [];
+
   return (
     <ListPagePaginated<AfisFactuur>
       items={facturen}
@@ -22,8 +24,8 @@ export const AfisFacturen = () => {
       appRouteParams={{ state }}
       appRouteBack={routes.themaPage}
       displayProps={listPageTableConfig.displayProps}
-      isLoading={isFacturenLoading}
-      isError={false}
+      isLoading={api.isLoading}
+      isError={api.isError}
       tableClassName={styles.FacturenTable}
     />
   );
