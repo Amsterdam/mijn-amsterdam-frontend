@@ -41,6 +41,8 @@ import {
   AfisOpenInvoiceSource,
 } from './afis-types';
 
+const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
+
 /** Returns if the person logging in, is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
   requestID: RequestID,
@@ -384,7 +386,7 @@ function transformFactuur(
   );
 
   return {
-    afzender: invoice.ProfitCenterName,
+    afzender: invoice.ProfitCenterName || DEFAULT_PROFIT_CENTER_NAME,
     datePublished: invoice.PostingDate || null,
     datePublishedFormatted: defaultDateFormat(invoice.PostingDate) || null,
     paymentDueDate: invoice.NetDueDate,
