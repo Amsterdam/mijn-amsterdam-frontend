@@ -24,6 +24,7 @@ import {
 import { MaLink } from '../../components/MaLink/MaLink';
 
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 export function useAfisThemaData(kind?: ListPageParamKind) {
   const { AFIS } = useAppStateGetter();
@@ -155,13 +156,14 @@ export function useAfisBetaalVoorkeurenData(
 function getInvoiceStatusDescription(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
     case 'openstaand':
-      const [label = factuur.statusDescription || '', linkText = ''] =
-        factuur.statusDescription?.split(':') || [];
       return (
         <>
-          {label}:{' '}
-          <MaLink maVariant="fatNoUnderline" href={factuur.paylink ?? ''}>
-            {linkText}
+          {capitalizeFirstLetter(factuur.status)}:{' '}
+          <MaLink
+            maVariant="fatNoUnderline"
+            href={factuur.paylink ?? '#missing-paylink'}
+          >
+            {factuur.statusDescription}
           </MaLink>
         </>
       );
