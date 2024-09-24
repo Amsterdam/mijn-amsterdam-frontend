@@ -406,7 +406,7 @@ function transformFactuur(
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
   const factuurDocumentId = invoice.AccountingDocument;
-  const factuurNummer = invoice.DocumentReferenceID || factuurDocumentId; // NOTE: This has to be verified with proper test data.
+  const factuurNummer = factuurDocumentId || invoice.DocumentReferenceID; // NOTE: This has to be verified with proper test data.
   const factuurDocumentIdEncrypted = encryptSessionIdWithRouteIdParam(
     sessionID,
     factuurDocumentId
