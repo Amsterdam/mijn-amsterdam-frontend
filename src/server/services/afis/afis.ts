@@ -36,6 +36,8 @@ import {
   AfisBusinessPartnerPrivateResponseSource,
   AfisDocumentDownloadSource,
   AfisDocumentIDSource,
+  AfisFacturenByStateResponse,
+  AfisFacturenParams,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurPropertiesSource,
@@ -44,7 +46,11 @@ import {
 } from './afis-types';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
-export const FACTUUR_STATE_KEYS: AfisFactuurState[] = ['open', 'closed'];
+export const FACTUUR_STATE_KEYS: AfisFactuurState[] = [
+  'open',
+  'afgehandeld',
+  'overgedragen',
+];
 
 /** Returns if the person logging in, is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
@@ -266,12 +272,6 @@ export async function fetchAfisBusinessPartnerDetails(
   return detailsResponse;
 }
 
-type AfisFacturenParams = {
-  state: AfisFactuurState;
-  businessPartnerID: string;
-  top?: string;
-};
-
 export async function fetchAfisFacturen(
   requestID: RequestID,
   sessionID: SessionID,
@@ -296,9 +296,9 @@ function formatFactuurRequestURL(
     // Openstaaand (met betaallink of sepamandaat)
     open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false`,
     // Afgehandeld (ge-incasseerd, betaald, geannuleerd)
-    closed: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`,
+    afgehandeld: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`,
     // Overgedragen aan belastingen
-    transferred: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and DunningLevel eq '3'`,
+    overgedragen: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and DunningLevel eq '3'`,
   };
 
   const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,InvoiceReference`;
@@ -324,13 +324,13 @@ export async function fetchAfisFacturenOverview(
   });
 
   const facturenClosedRequest = fetchAfisFacturen(requestID, sessionID, {
-    state: 'closed',
+    state: 'afgehandeld',
     businessPartnerID: params.businessPartnerID,
     top: '3',
   });
 
   const facturenTransferredRequest = fetchAfisFacturen(requestID, sessionID, {
-    state: 'transferred',
+    state: 'overgedragen',
     businessPartnerID: params.businessPartnerID,
     top: '3',
   });
@@ -351,18 +351,18 @@ export async function fetchAfisFacturenOverview(
     facturenTransferredResponse
   );
 
-  const facturenOverview = {
-    open: facturenOpenResult.content ?? [],
-    closed: facturenClosedResult.content ?? [],
-    transferred: facturenTransferredResult.content ?? [],
+  const facturenOverview: AfisFacturenByStateResponse = {
+    open: facturenOpenResult.content ?? null,
+    afgehandeld: facturenClosedResult.content ?? null,
+    overgedragen: facturenTransferredResult.content ?? null,
   };
 
   return apiSuccessResult(
     facturenOverview,
     getFailedDependencies({
       open: facturenOpenResult,
-      closed: facturenClosedResult,
-      transferred: facturenTransferredResult,
+      afgehandeld: facturenClosedResult,
+      overgedragen: facturenTransferredResult,
     })
   );
 }

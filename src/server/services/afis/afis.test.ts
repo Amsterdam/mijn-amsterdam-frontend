@@ -29,7 +29,7 @@ import {
   fetchIsKnownInAFIS,
 } from './afis';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import { AfisFactuur } from './afis-types';
+import { AfisFacturenResponse, AfisFactuur } from './afis-types';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 
 const FACTUUR_NUMMER = '12346789';
@@ -507,14 +507,14 @@ describe('Afis', () => {
         top: undefined,
       };
 
-      const response = (await fetchAfisFacturen(
+      const response = await fetchAfisFacturen(
         REQUEST_ID,
         authProfileAndToken.profile.sid,
         openParams
-      )) as ApiSuccessResponse<AfisFactuur[]>;
+      );
 
       // All fields are listed here to test correct formatting.
-      const openFactuur = response.content[0];
+      const openFactuur = response.content?.facturen[0];
       expect(openFactuur).toStrictEqual({
         afzender: 'Bedrijf: Ok',
         amountOwed: 343,
@@ -533,21 +533,21 @@ describe('Afis', () => {
         statusDescription: 'In dispuut',
       });
 
-      const automatischeIncassoFactuur = response.content[1];
-      expect(automatischeIncassoFactuur.status).toBe('openstaand');
-      expect(automatischeIncassoFactuur.paymentDueDate).toBe(
+      const automatischeIncassoFactuur = response.content?.facturen[1];
+      expect(automatischeIncassoFactuur?.status).toBe('openstaand');
+      expect(automatischeIncassoFactuur?.paymentDueDate).toBe(
         '2023-12-12T00:00:00'
       );
 
-      const inDispuutInvoice = response.content[2];
-      expect(inDispuutInvoice.status).toBe('automatische-incasso');
+      const inDispuutInvoice = response.content?.facturen[2];
+      expect(inDispuutInvoice?.status).toBe('automatische-incasso');
 
-      const geldTerugInvoice = response.content[3];
-      expect(geldTerugInvoice.status).toBe('geld-terug');
-      expect(geldTerugInvoice.statusDescription.includes('-')).toBe(false);
+      const geldTerugInvoice = response.content?.facturen[3];
+      expect(geldTerugInvoice?.status).toBe('geld-terug');
+      expect(geldTerugInvoice?.statusDescription.includes('-')).toBe(false);
 
-      const unknownStatusInvoice = response.content[4];
-      expect(unknownStatusInvoice.status).toBe('onbekend');
+      const unknownStatusInvoice = response.content?.facturen[4];
+      expect(unknownStatusInvoice?.status).toBe('onbekend');
     });
 
     test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
@@ -556,18 +556,18 @@ describe('Afis', () => {
         .reply(200, require('./test-fixtures/afgehandelde-facturen.json'));
 
       const closedParams = {
-        state: 'closed' as 'closed',
+        state: 'afgehandeld',
         businessPartnerID: GENERIC_ID,
         top: undefined,
       };
 
-      const response = (await fetchAfisFacturen(
+      const response = await fetchAfisFacturen(
         REQUEST_ID,
         authProfileAndToken.profile.sid,
         closedParams
-      )) as ApiSuccessResponse<AfisFactuur[]>;
+      );
 
-      const geannuleerdeInvoice = response.content[0];
+      const geannuleerdeInvoice = response.content?.facturen[0];
       expect(geannuleerdeInvoice).toStrictEqual({
         afzender: 'Lisan al Gaib inc.',
         amountOwed: 0,
@@ -586,11 +586,11 @@ describe('Afis', () => {
         statusDescription: 'Geannuleerd',
       });
 
-      const betaaldeInvoice = response.content[1];
-      expect(betaaldeInvoice.status).toStrictEqual('geannuleerd');
+      const betaaldeInvoice = response.content?.facturen[1];
+      expect(betaaldeInvoice?.status).toStrictEqual('geannuleerd');
 
-      const unknownStatusInvoice = response.content[2];
-      expect(unknownStatusInvoice.status).toStrictEqual('geannuleerd');
+      const unknownStatusInvoice = response.content?.facturen[2];
+      expect(unknownStatusInvoice?.status).toStrictEqual('geannuleerd');
     });
   });
 

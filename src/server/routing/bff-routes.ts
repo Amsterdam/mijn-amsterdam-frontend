@@ -24,7 +24,7 @@ export const BffEndpoints = {
   AFIS_BUSINESSPARTNER:
     '/services/afis/businesspartner/:businessPartnerIdEncrypted',
   AFIS_FACTUREN:
-    '/services/afis/facturen/:state(open|closed)/:businessPartnerIdEncrypted',
+    '/services/afis/facturen/:state(open|afgehandeld|overgedragen)/:businessPartnerIdEncrypted',
   AFIS_FACTUREN_OVERZICHT:
     '/services/afis/facturen/overzicht/:businessPartnerIdEncrypted',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document/:id',

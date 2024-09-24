@@ -92,15 +92,21 @@ export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
   AfisBusinessPartnerPhone &
   AfisBusinessPartnerEmail;
 
-export type AfisFactuurState = 'open' | 'closed' | 'transferred';
-
-export type AfisFacturenByStateResponse = {
-  [key in AfisFactuurState]?: AfisFactuur[];
-};
+export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
 
 export type AfisFacturenResponse = {
   count: number;
   facturen: AfisFactuur[];
+};
+
+export type AfisFacturenByStateResponse = {
+  [key in AfisFactuurState]?: AfisFacturenResponse | null;
+};
+
+export type AfisFacturenParams = {
+  state: AfisFactuurState;
+  businessPartnerID: string;
+  top?: string;
 };
 
 export type AfisFactuur = {

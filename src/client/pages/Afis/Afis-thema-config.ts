@@ -4,6 +4,7 @@ import { ZaakDetail } from '../../../universal/types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import {
   AfisFacturenByStateResponse,
+  AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
@@ -16,8 +17,12 @@ export type AfisFactuurFrontend = AfisFactuur & {
   factuurNummerEl: ReactNode;
 };
 
+export type AfisFacturenResponseFrontend = AfisFacturenResponse & {
+  facturen: AfisFactuurFrontend[];
+};
+
 export type AfisFacturenByStateFrontend = {
-  [key in keyof AfisFacturenByStateResponse]: AfisFactuurFrontend[];
+  [key in keyof AfisFacturenByStateResponse]: AfisFacturenResponseFrontend;
 };
 
 // Themapagina
@@ -37,8 +42,8 @@ export const listPageParamState: {
   [key in AfisFactuurState]: AfisFactuurState;
 } = {
   open: 'open',
-  closed: 'closed',
-  transferred: 'transferred',
+  afgehandeld: 'afgehandeld',
+  overgedragen: 'overgedragen',
 };
 
 export type ListPageParamStateKey = keyof typeof listPageParamState;
@@ -47,8 +52,8 @@ export type ListPageParamState =
 
 export const listPageTitle = {
   [listPageParamState.open]: 'Openstaande facturen',
-  [listPageParamState.closed]: 'Afgehandelde facturen',
-  [listPageParamState.transferred]: 'Overgedragen facturen',
+  [listPageParamState.afgehandeld]: 'Afgehandelde facturen',
+  [listPageParamState.overgedragen]: 'Overgedragen facturen',
 } as const;
 
 export const facturenTableConfig = {
@@ -63,22 +68,22 @@ export const facturenTableConfig = {
       state: listPageParamState.open,
     }),
   },
-  [listPageParamState.closed]: {
-    title: listPageTitle[listPageParamState.closed],
+  [listPageParamState.afgehandeld]: {
+    title: listPageTitle[listPageParamState.afgehandeld],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
-      state: listPageParamState.closed,
+      state: listPageParamState.afgehandeld,
     }),
   },
-  [listPageParamState.transferred]: {
-    title: listPageTitle[listPageParamState.transferred],
+  [listPageParamState.overgedragen]: {
+    title: listPageTitle[listPageParamState.overgedragen],
     displayProps: displayPropsFacturen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
-      state: listPageParamState.transferred,
+      state: listPageParamState.overgedragen,
     }),
   },
 } as const;
