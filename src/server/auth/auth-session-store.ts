@@ -8,6 +8,7 @@ import { pool } from '../services/db/postgres';
 
 type SessionStoreOptions = {
   tableName: string;
+  ttlSeconds?: number;
 };
 
 export function getSessionStore<T extends typeof expressSession>(
@@ -22,6 +23,7 @@ export function getSessionStore<T extends typeof expressSession>(
       tableName: options.tableName,
       pool,
       createTableIfMissing: true,
+      ttl: options.ttlSeconds,
     }) as unknown as SessionStore<Session>;
   }
 
