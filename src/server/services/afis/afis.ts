@@ -138,7 +138,7 @@ async function fetchBusinessPartner(
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerDetailsResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartner, FullName, AddressID, CityName, Country, HouseNumber, HouseNumberSupplementText, PostalCode, Region, StreetName, StreetPrefixName, StreetSuffixName`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartner,FullName,AddressID`;
     },
   };
 
