@@ -7,12 +7,12 @@ import {
   EINDE_RECHT,
   getTransformerConfigBesluit,
   IN_BEHANDELING,
-  isBeforeToday,
   isDecisionStatusActive,
   isDelivered,
   isDeliveredStatusActive,
   isDeliveryStepVisible,
   isDeliveryStopped,
+  isEindeGeldigheidVerstreken,
   MEER_INFORMATIE,
 } from './wmo-generic';
 
@@ -51,10 +51,10 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     isChecked: (stepIndex, aanvraag, today: Date) =>
       isDelivered(aanvraag, today) &&
       (isDeliveryStopped(aanvraag, today) ||
-        isBeforeToday(aanvraag.datumEindeGeldigheid, today)),
+        isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, today)),
     isActive: (stepIndex, aanvraag, today) =>
       isDeliveryStopped(aanvraag, today) &&
-      !isBeforeToday(aanvraag.datumEindeGeldigheid, today),
+      !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, today),
     description: (aanvraag) =>
       `<p>${`${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`}</p>`,
   },
