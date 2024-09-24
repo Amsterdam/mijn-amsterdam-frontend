@@ -522,6 +522,11 @@ export async function fetchAfisDocument(
     transformResponse: (
       data: AfisDocumentDownloadSource
     ): DocumentDownloadData => {
+      if (typeof data?.Record?.attachment !== 'string') {
+        throw new Error(
+          'Afis document download - no valid response data provided'
+        );
+      }
       const decodedDocument = Buffer.from(data.Record.attachment, 'base64');
       return {
         data: decodedDocument,
