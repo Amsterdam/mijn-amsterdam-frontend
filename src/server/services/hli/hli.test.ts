@@ -1,5 +1,5 @@
 import { StatusLineItem } from '../../../universal/types';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
+import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 import { forTesting } from './hli';
 
 describe('HLI', () => {
@@ -9,7 +9,7 @@ describe('HLI', () => {
       datumEindeGeldigheid: '2024-08-29',
       datumIngangGeldigheid: '2024-08-29',
       resultaat: 'toegewezen',
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     const statusLineItems1 = [] as StatusLineItem[];
 
@@ -20,7 +20,7 @@ describe('HLI', () => {
     const regeling2 = {
       resultaat: 'toegewezen',
       isActueel: false,
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     const statusLineItems2 = [{ status: 'Einde recht' }] as StatusLineItem[];
 
@@ -31,7 +31,7 @@ describe('HLI', () => {
     const regeling3 = {
       resultaat: 'toegewezen',
       isActueel: false,
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     const statusLineItems3 = [] as StatusLineItem[];
 
@@ -42,7 +42,7 @@ describe('HLI', () => {
     const regeling4 = {
       resultaat: 'afgewezen',
       isActueel: true,
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     const statusLineItems4 = [] as StatusLineItem[];
 
@@ -53,7 +53,7 @@ describe('HLI', () => {
     const regeling5 = {
       resultaat: 'afgewezen',
       isActueel: true,
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     const statusLineItems5 = [{ status: 'Foo Bar' }] as StatusLineItem[];
 
@@ -63,12 +63,30 @@ describe('HLI', () => {
 
     const regeling6 = {
       isActueel: false,
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     const statusLineItems6 = [] as StatusLineItem[];
 
     expect(forTesting.getDisplayStatus(regeling6, statusLineItems6)).toBe(
       'Afgewezen'
     );
+
+    const regeling7 = {
+      productIdentificatie: 'AV-UPCC',
+      datumEindeGeldigheid: '2024-08-29',
+      datumIngangGeldigheid: '2024-08-29',
+      resultaat: 'toegewezen',
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
+
+    expect(forTesting.getDisplayStatus(regeling7, [])).toBe('Afgewezen');
+
+    const regeling8 = {
+      productIdentificatie: 'AV-FOOBAR',
+      datumEindeGeldigheid: '2024-08-29',
+      datumIngangGeldigheid: '2024-08-29',
+      resultaat: 'toegewezen',
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
+
+    expect(forTesting.getDisplayStatus(regeling8, [])).toBe('Toegewezen');
   });
 });

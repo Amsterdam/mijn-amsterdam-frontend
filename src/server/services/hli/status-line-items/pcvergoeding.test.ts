@@ -1,5 +1,5 @@
-import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types';
-import { AV_PCVZIL, AV_UPCC, AV_UPCZIL, forTesting } from './pcvergoeding';
+import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
+import { AV_UPCC, AV_UPCZIL, forTesting } from './pcvergoeding';
 
 describe('pcvergoeding', () => {
   describe('isVerzilveringVanRegeling', () => {
@@ -16,7 +16,7 @@ describe('pcvergoeding', () => {
         productIdentificatie: AV_UPCZIL,
         betrokkenen: ['B'],
       },
-    ] as unknown as ZorgnedAanvraagTransformed[];
+    ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
     test('isVerzilveringVanRegeling', () => {
       expect(
@@ -48,7 +48,7 @@ describe('pcvergoeding', () => {
         productIdentificatie: AV_UPCZIL,
         betrokkenen: ['B'],
       },
-    ] as unknown as ZorgnedAanvraagTransformed[];
+    ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
     test('isRegelingVanVerzilvering', () => {
       expect(
@@ -78,7 +78,7 @@ describe('pcvergoeding', () => {
         betrokkenen: ['A'],
         datumBesluit: '2028-05-18',
       },
-    ] as unknown as ZorgnedAanvraagTransformed[];
+    ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
     expect(
       forTesting.getUpcPcvDecisionDate(testData[1], UNUSED_DATE, testData)
@@ -88,7 +88,7 @@ describe('pcvergoeding', () => {
   test('isWorkshopNietGevolgd', () => {
     const regeling1 = {
       productIdentificatie: 'AV-UPCZIL',
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     expect(forTesting.isWorkshopNietGevolgd(regeling1)).toBe(false);
 
@@ -96,7 +96,7 @@ describe('pcvergoeding', () => {
       productIdentificatie: 'AV-UPCC',
       datumEindeGeldigheid: '2024-08-29',
       datumIngangGeldigheid: '2024-07-29',
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     expect(forTesting.isWorkshopNietGevolgd(regeling2)).toBe(false);
 
@@ -104,7 +104,7 @@ describe('pcvergoeding', () => {
       productIdentificatie: 'AV-UPCC',
       datumEindeGeldigheid: '2024-08-29',
       datumIngangGeldigheid: '2024-08-29',
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     expect(forTesting.isWorkshopNietGevolgd(regeling3)).toBe(false);
 
@@ -113,7 +113,7 @@ describe('pcvergoeding', () => {
       datumEindeGeldigheid: '2024-08-29T23:45:00',
       datumIngangGeldigheid: '2024-08-29T11:32:00',
       resultaat: 'toegewezen',
-    } as ZorgnedAanvraagTransformed;
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     expect(forTesting.isWorkshopNietGevolgd(regeling4)).toBe(true);
   });

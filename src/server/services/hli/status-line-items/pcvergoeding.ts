@@ -27,6 +27,15 @@ function isVerzilvering(
   );
 }
 
+function isPcVergoeding(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return (
+    !!aanvraag.productIdentificatie &&
+    [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
+  );
+}
+
 function isVerzilveringVanRegeling(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -133,6 +142,7 @@ export function isWorkshopNietGevolgd(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
+    isPcVergoeding(regeling) &&
     !isVerzilvering(regeling) &&
     !!(
       regeling.datumEindeGeldigheid &&
