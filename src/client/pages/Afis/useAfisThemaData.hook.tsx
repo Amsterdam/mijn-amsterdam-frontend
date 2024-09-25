@@ -210,6 +210,11 @@ export function useAfisThemaData() {
     isThemaPaginaLoading: isLoading(AFIS),
     listPageTitle,
     routes,
+    dependencyErrors: {
+      open: hasFailedDependency(api.data, 'open'),
+      afgehandeld: hasFailedDependency(api.data, 'afgehandeld'),
+      overgedragen: hasFailedDependency(api.data, 'overgedragen'),
+    },
   };
 }
 
