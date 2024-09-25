@@ -111,17 +111,7 @@ function useAfisOverviewApi(
     });
 
   useEffect(() => {
-    console.log(
-      'effect!',
-      businessPartnerIdEncrypted,
-      !isApiDataCached,
-      facturenApiResponse
-    );
     if (businessPartnerIdEncrypted && !isApiDataCached) {
-      console.log(
-        'fetch overview!!',
-        `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`
-      );
       fetchFacturen({
         url: `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`,
       });
@@ -260,10 +250,6 @@ export function useAfisBetaalVoorkeurenData(
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
-      console.log(
-        'fetch!',
-        `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`
-      );
       fetchBusinessPartner({
         url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
       });
