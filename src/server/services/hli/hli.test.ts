@@ -70,5 +70,23 @@ describe('HLI', () => {
     expect(forTesting.getDisplayStatus(regeling6, statusLineItems6)).toBe(
       'Afgewezen'
     );
+
+    const regeling7 = {
+      productIdentificatie: 'AV-UPCC',
+      datumEindeGeldigheid: '2024-08-29',
+      datumIngangGeldigheid: '2024-08-29',
+      resultaat: 'toegewezen',
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
+
+    expect(forTesting.getDisplayStatus(regeling7, [])).toBe('Afgewezen');
+
+    const regeling8 = {
+      productIdentificatie: 'AV-FOOBAR',
+      datumEindeGeldigheid: '2024-08-29',
+      datumIngangGeldigheid: '2024-08-29',
+      resultaat: 'toegewezen',
+    } as ZorgnedAanvraagWithRelatedPersonsTransformed;
+
+    expect(forTesting.getDisplayStatus(regeling8, [])).toBe('Toegewezen');
   });
 });
