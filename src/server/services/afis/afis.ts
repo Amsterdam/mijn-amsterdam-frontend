@@ -4,7 +4,10 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  defaultDateFormat,
+  isDateInPast,
+} from '../../../universal/helpers/date';
 import displayAmount, {
   capitalizeFirstLetter,
 } from '../../../universal/helpers/text';
@@ -495,6 +498,11 @@ function determineFactuurStatus(
     case amountInBalanceTransacCrcyInCents < 0:
       return 'geld-terug';
 
+    case !!sourceInvoice.NetDueDate &&
+      isDateInPast(sourceInvoice.NetDueDate) &&
+      (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
+      return 'herinnering';
+
     case sourceInvoice.DunningBlockingReason === 'D':
       return 'in-dispuut';
 
@@ -530,6 +538,8 @@ function determineFactuurStatusDescription(
   switch (status) {
     case 'openstaand':
       return `${amountOwedFormatted} betaal nu`;
+    case 'herinnering':
+      return 'Betaaltermijn verstreken: betaal via de herinneringsbrief';
     case 'in-dispuut':
       return 'In dispuut';
     case 'gedeeltelijke-betaling':

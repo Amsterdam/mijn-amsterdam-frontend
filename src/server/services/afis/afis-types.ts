@@ -137,6 +137,7 @@ type AfisFactuurStatus =
   | 'geld-terug'
   | 'betaald'
   | 'geannuleerd'
+  | 'herinnering'
   | 'onbekend';
 
 export type AfisOpenInvoiceSource =
