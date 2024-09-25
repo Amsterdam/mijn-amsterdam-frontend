@@ -6,6 +6,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
+import { entries } from '../../../universal/helpers/utils';
 import { LoadingContent } from '../../components';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
@@ -18,17 +19,20 @@ import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
   labels: DisplayProps<AfisBusinessPartnerDetailsTransformed>;
   isLoading: boolean;
+  startCollapsed: boolean;
 };
 
 function AfisBusinessPartnerDetails({
   businesspartner,
   labels,
   isLoading,
+  startCollapsed = true,
 }: AfisBusinessPartnerProps) {
   const rows = !!businesspartner
     ? Object.entries(labels).map(([key, label]) => {
@@ -49,7 +53,7 @@ function AfisBusinessPartnerDetails({
 
   return (
     <Grid.Cell span="all">
-      <CollapsiblePanel title="Betaalgegevens">
+      <CollapsiblePanel title="Betaalgegevens" startCollapsed={startCollapsed}>
         {isLoading && <LoadingContent />}
         {!isLoading && !!rows.length && (
           <Grid>
@@ -76,6 +80,7 @@ export function AfisBetaalVoorkeuren() {
     isThemaPaginaError,
     isThemaPaginaLoading,
   } = useAfisThemaData();
+
   const {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
@@ -94,25 +99,27 @@ export function AfisBetaalVoorkeuren() {
     isLoadingBusinessPartnerDetails &&
     isLoadingEmandates;
 
-  const eMandateTables = Object.entries(eMandateTableConfig).map(
-    ([kind, { title, displayProps, filter }]) => {
-      return (
-        <ThemaPaginaTable<AfisEmandateStub>
-          key={kind}
-          title={title}
-          zaken={eMandates.filter(filter)}
-          displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
-          maxItems={-1}
-        />
-      );
-    }
-  );
+  const eMandateTables =
+    FeatureToggle.afisEmandatesActive &&
+    entries(eMandateTableConfig).map(
+      ([kind, { title, displayProps, filter }]) => {
+        return (
+          <ThemaPaginaTable<AfisEmandateStub>
+            key={kind}
+            title={title}
+            zaken={eMandates.filter(filter)}
+            displayProps={displayProps}
+            textNoContent={`U heeft geen ${title.toLowerCase()}`}
+            maxItems={-1}
+          />
+        );
+      }
+    );
 
   const pageContentTop = (
     <>
       <Paragraph>
-        Hier kunt u uw betaal gegevens inzien en automatische incasso gegevens
+        Hier kunt u uw betaalgegevens inzien en automatische incasso gegevens
         instellen.
       </Paragraph>
     </>
@@ -120,16 +127,21 @@ export function AfisBetaalVoorkeuren() {
 
   const pageContentTables = (
     <>
-      <AfisBusinessPartnerDetails
-        businesspartner={businesspartnerDetails}
-        labels={businessPartnerDetailsLabels}
-        isLoading={isLoadingBusinessPartnerDetails || isThemaPaginaLoading}
-      />
+      {!!businesspartnerDetails && (
+        <AfisBusinessPartnerDetails
+          businesspartner={businesspartnerDetails}
+          labels={businessPartnerDetailsLabels}
+          isLoading={isLoadingBusinessPartnerDetails || isThemaPaginaLoading}
+          startCollapsed={FeatureToggle.afisEmandatesActive}
+        />
+      )}
       {eMandateTables}
     </>
   );
 
-  const errorAlertContent = (
+  const errorAlertContent = isThemaPaginaError ? (
+    <>Wij kunnen nu niet alle gegevens laten zien.</>
+  ) : (
     <>
       {!hasBusinessPartnerDetailsError &&
         (hasFailedEmailDependency || hasFailedPhoneDependency) && (
