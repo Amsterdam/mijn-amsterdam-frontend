@@ -41,6 +41,9 @@ global.matchMedia =
 
 global.window && ((global.window as any).scrollTo = vi.fn());
 global.window && ((global.window as any).scrollBy = vi.fn());
+global.console.log = vi.fn();
+global.console.info = vi.fn();
+global.console.error = vi.fn();
 
 nock.disableNetConnect();
 
