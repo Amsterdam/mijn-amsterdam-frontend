@@ -298,9 +298,9 @@ export function useAppStateBagApi<T extends unknown>({
 export function useGetAppStateBagDataByKey<T>({
   bagThema,
   key,
-}: Omit<AppStateBagApiParams, 'url'>) {
+}: Omit<AppStateBagApiParams, 'url'>): ApiResponse<T | null> | null {
   const appState = useRecoilValue(appStateAtom);
-  return (appState?.[bagThema]?.[key] as ApiResponse<T | null>) ?? null;
+  return appState?.[bagThema]?.[key] ?? null;
 }
 
 export function useRemoveAppStateBagData() {

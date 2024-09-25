@@ -46,7 +46,11 @@ describe('<AfisBetaalVoorkeuren />', () => {
   bffApi
     .get(`/services/afis/facturen/overzicht/${businessPartnerIdEncrypted}`)
     .reply(200, {
-      content: [],
+      content: {
+        open: { facturen: [], count: 0 },
+        afgehandeld: { facturen: [], count: 0 },
+        overgedragen: { facturen: [], count: 0 },
+      },
       status: 'OK',
     });
 
@@ -63,8 +67,9 @@ describe('<AfisBetaalVoorkeuren />', () => {
   );
 
   test('Display business partner details', async () => {
-    let screen = render(<Component />);
     const user = userEvent.setup();
+
+    let screen = render(<Component />);
 
     await waitFor(() => {
       expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();

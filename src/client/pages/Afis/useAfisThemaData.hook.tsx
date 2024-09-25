@@ -76,7 +76,7 @@ function mapFactuur(factuur: AfisFactuur) {
 function useTransformFacturen(
   facturenByStateApiResponse: ApiResponse<AfisFacturenByStateResponse | null>
 ): ApiResponse<AfisFacturenByStateFrontend | null> {
-  const facturenByStateUpdated: AfisFacturenByStateFrontend | null =
+  const facturenByStateTransfomed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
       if (facturenByStateApiResponse.content) {
         return Object.fromEntries(
@@ -86,7 +86,7 @@ function useTransformFacturen(
               state,
               {
                 ...facturenResponse,
-                facturen: facturenResponse?.facturen.map(mapFactuur) ?? [],
+                facturen: facturenResponse?.facturen?.map(mapFactuur) ?? [],
               },
             ])
         );
@@ -95,7 +95,7 @@ function useTransformFacturen(
     }, [facturenByStateApiResponse]);
 
   return Object.assign({}, facturenByStateApiResponse, {
-    content: facturenByStateUpdated,
+    content: facturenByStateTransfomed,
   });
 }
 
@@ -111,7 +111,17 @@ function useAfisOverviewApi(
     });
 
   useEffect(() => {
+    console.log(
+      'effect!',
+      businessPartnerIdEncrypted,
+      !isApiDataCached,
+      facturenApiResponse
+    );
     if (businessPartnerIdEncrypted && !isApiDataCached) {
+      console.log(
+        'fetch overview!!',
+        `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`
+      );
       fetchFacturen({
         url: `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`,
       });
@@ -150,7 +160,7 @@ function useAfisListpageApi(
     Pick<AfisFacturenByStateResponse, 'open'>
   >({ bagThema: BagThemas.AFIS, key: AFIS_OVERVIEW_STATE_KEY });
 
-  const hasFacturenByStateOpen = !!facturenByStateApiResponseOpen.content;
+  const hasFacturenByStateOpen = !!facturenByStateApiResponseOpen?.content;
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached && state !== 'open') {
