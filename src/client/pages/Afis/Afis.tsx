@@ -1,6 +1,6 @@
 import { Button, Grid, Paragraph } from '@amsterdam/design-system-react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { hasFailedDependency } from '../../../universal/helpers/api';
 import { entries } from '../../../universal/helpers/utils';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -9,22 +9,42 @@ import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 
+const pageContentTop = (
+  <Paragraph>
+    Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen
+    van belastingen. U kunt deze bij belastingen vinden.
+  </Paragraph>
+);
+
+const pageContentDisclaimer = (
+  <Grid.Cell span="all">
+    <Paragraph>
+      Betalingsregelingen worden hier niet getoond.
+      <br />
+      Gedeeltelijk betaalde facturen kunt u hier niet zien betaal het resterende
+      bedrag via bankoverschrijving. Er wordt een herinnering verstuurd al uw
+      factuur is vervallen. Bij een vervallen factuur werkt de betaal link niet
+      meer.
+    </Paragraph>
+  </Grid.Cell>
+);
+
 export function AfisThemaPagina() {
   const history = useHistory();
+
   const {
     api,
+    dependencyErrors,
     facturenByState,
     facturenTableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
+    listPageTitle,
     routes,
   } = useAfisThemaData();
 
-  const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de
-      facturen van belastingen. U kunt deze bij belastingen vinden.
-    </Paragraph>
+  const isPartialError = entries(dependencyErrors).some(
+    ([, hasError]) => hasError
   );
 
   const pageContentSecondary = (
@@ -38,20 +58,18 @@ export function AfisThemaPagina() {
     </Grid.Cell>
   );
 
-  const pageContentDisclaimer = (
-    <Grid.Cell span="all">
-      <Paragraph className={styles.PageContentBottomDisclaimer}>
-        Betalingsregelingen worden hier niet getoond.
-        <br />
-        Gedeeltelijk betaalde facturen kunt u hier niet zien betaal het
-        resterende bedrag via bankoverschrijving. Er wordt een herinnering
-        verstuurd al uw factuur is vervallen. Bij een vervallen factuur werkt de
-        betaal link niet meer.
-      </Paragraph>
-    </Grid.Cell>
+  const pageContentErrorAlert = (
+    <>
+      We kunnen niet alle gegevens tonen.{' '}
+      {entries(dependencyErrors)
+        .filter(([, hasError]) => hasError)
+        .map(([state]) => (
+          <React.Fragment key={state}>
+            <br />- {listPageTitle[state]} kunnen nu niet getoond worden.
+          </React.Fragment>
+        ))}
+    </>
   );
-
-  const pageContentErrorAlert = <>errors!</>;
 
   const pageContentTables = entries(facturenTableConfig).map(
     ([
@@ -65,23 +83,20 @@ export function AfisThemaPagina() {
         listPageRoute,
       },
     ]) => {
-      const facturen = facturenByState[state];
       return (
-        <>
-          <ThemaPaginaTable<AfisFactuurFrontend>
-            key={state}
-            title={title}
-            subTitle={subTitle}
-            zaken={facturen?.facturen ?? []}
-            displayProps={displayProps}
-            textNoContent={`U heeft geen ${title.toLowerCase()}`}
-            maxItems={maxItems}
-            totalItems={facturen?.count}
-            listPageLinkLabel={listPageLinkLabel}
-            listPageRoute={listPageRoute}
-            className={styles.FacturenTable}
-          />
-        </>
+        <ThemaPaginaTable<AfisFactuurFrontend>
+          key={state}
+          title={title}
+          subTitle={subTitle}
+          zaken={facturenByState[state]?.facturen ?? []}
+          displayProps={displayProps}
+          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          maxItems={maxItems}
+          totalItems={facturenByState[state]?.count}
+          listPageLinkLabel={listPageLinkLabel}
+          listPageRoute={listPageRoute}
+          className={styles.FacturenTable}
+        />
       );
     }
   );
@@ -90,11 +105,7 @@ export function AfisThemaPagina() {
     <ThemaPagina
       title={ThemaTitles.AFIS}
       isError={api.isError && isThemaPaginaError}
-      isPartialError={
-        hasFailedDependency(api.data, 'open') ||
-        hasFailedDependency(api.data, 'afgehandeld') ||
-        hasFailedDependency(api.data, 'overgedragen')
-      }
+      isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={isThemaPaginaLoading || api.isLoading}
       linkListItems={[
