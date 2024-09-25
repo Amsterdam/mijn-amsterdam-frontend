@@ -433,6 +433,7 @@ function transformFactuur(
   );
 
   return {
+    id: factuurDocumentId,
     afzender: invoice.ProfitCenterName || DEFAULT_PROFIT_CENTER_NAME,
     datePublished: invoice.PostingDate || null,
     datePublishedFormatted: defaultDateFormat(invoice.PostingDate) || null,

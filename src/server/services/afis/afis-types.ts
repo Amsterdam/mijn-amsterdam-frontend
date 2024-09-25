@@ -110,6 +110,7 @@ export type AfisFacturenParams = {
 };
 
 export type AfisFactuur = {
+  id: string;
   afzender: string;
   datePublished: string | null;
   datePublishedFormatted: string | null;
