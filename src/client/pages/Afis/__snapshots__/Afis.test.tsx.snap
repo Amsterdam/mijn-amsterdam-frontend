@@ -81,16 +81,10 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           class="ams-grid__cell ams-grid__cell--span-all"
         >
           <p
-            class="ams-paragraph ams-mb--sm"
+            class="ams-paragraph"
           >
-            Hieronder kunt u uw facturatiegegevens inzien en een automatische incasso instellen per afdeling van de gemeente.
+            Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen van belastingen. U kunt deze bij belastingen vinden.
           </p>
-          <button
-            class="ams-button ams-button--secondary"
-            type="button"
-          >
-            Betaalvoorkeuren
-          </button>
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-all"

@@ -5,6 +5,7 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { entries } from '../../../universal/helpers/utils';
 import { LoadingContent } from '../../components';
@@ -19,7 +20,6 @@ import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
@@ -35,7 +35,7 @@ function AfisBusinessPartnerDetails({
   startCollapsed = true,
 }: AfisBusinessPartnerProps) {
   const rows = !!businesspartner
-    ? Object.entries(labels).map(([key, label]) => {
+    ? entries(labels).map(([key, label]) => {
         const value = businesspartner[key as keyof typeof businesspartner];
         return {
           label,

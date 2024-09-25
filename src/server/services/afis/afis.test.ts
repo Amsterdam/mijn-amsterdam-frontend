@@ -34,19 +34,38 @@ import { AfisFacturenParams } from './afis-types';
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
 const ADRRESS_ID = 430844;
-
 const BASE_ROUTE = '/afis/RESTAdapter';
-const FACTUREN_ROUTE = `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`;
+
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
-  businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27${GENERIC_ID}%27&$select=BusinessPartner,%20FullName,%20AddressID,%20CityName,%20Country,%20HouseNumber,%20HouseNumberSupplementText,%20PostalCode,%20Region,%20StreetName,%20StreetPrefixName,%20StreetSuffixName`,
-  businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
-  businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
-  openstaandeFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
-  geslotenFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
-  documentDownload: `${BASE_ROUTE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
-  documentID: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${FACTUUR_NUMMER}'&$select=ArcDocId`,
+  businesspartnerDetails: (uri: string) => {
+    return decodeURI(uri).includes(
+      'ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner'
+    );
+  },
+  businesspartnerPhonenumber: (uri: string) => {
+    return decodeURI(uri).includes(
+      `ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`
+    );
+  },
+  businesspartnerEmailAddress: (uri: string) => {
+    return decodeURI(uri).includes(
+      `ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`
+    );
+  },
+  openstaandeFacturen: (uri: string) => {
+    return decodeURI(uri).includes(`IsCleared eq false`);
+  },
+  geslotenFacturen: (uri: string) => {
+    return decodeURI(uri).includes('and IsCleared eq true');
+  },
+  documentDownload: (uri: string) => {
+    return decodeURI(uri).includes('API_CV_ATTACHMENT_SRV');
+  },
+  documentID: (uri: string) => {
+    return decodeURI(uri).includes('ZFI_CDS_TOA02');
+  },
 };
 
 const REQUEST_ID = '456';
@@ -500,10 +519,9 @@ describe('Afis', () => {
         .get(ROUTES.openstaandeFacturen)
         .reply(200, require('./test-fixtures/openstaande-facturen.json'));
 
-      const openParams = {
-        state: 'open' as 'open',
+      const openParams: AfisFacturenParams = {
+        state: 'open',
         businessPartnerID: GENERIC_ID,
-        top: undefined,
       };
 
       const response = await fetchAfisFacturen(
@@ -514,23 +532,26 @@ describe('Afis', () => {
 
       // All fields are listed here to test correct formatting.
       const openFactuur = response.content?.facturen[0];
-      expect(openFactuur).toStrictEqual({
-        afzender: 'Bedrijf: Ok',
-        amountOwed: 343,
-        amountOwedFormatted: '€ 343,00',
-        datePublished: '2023-11-21T00:00:00',
-        datePublishedFormatted: '21 november 2023',
-        debtClearingDate: null,
-        debtClearingDateFormatted: null,
-        documentDownloadLink:
-          'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
-        factuurNummer: '5555555',
-        paylink: 'http://localhost:3100/mocks-server/afis/paylink',
-        paymentDueDate: '2023-12-21T00:00:00',
-        paymentDueDateFormatted: '21 december 2023',
-        status: 'in-dispuut',
-        statusDescription: 'In dispuut',
-      });
+      expect(openFactuur).toMatchInlineSnapshot(`
+        {
+          "afzender": "Bedrijf: Ok",
+          "amountOwed": 343,
+          "amountOwedFormatted": "€ 343,00",
+          "datePublished": "2023-11-21T00:00:00",
+          "datePublishedFormatted": "21 november 2023",
+          "debtClearingDate": null,
+          "debtClearingDateFormatted": null,
+          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx",
+          "factuurDocumentId": "5555555",
+          "factuurNummer": "5555555",
+          "id": "5555555",
+          "paylink": "http://localhost:3100/mocks-server/afis/paylink",
+          "paymentDueDate": "2023-12-21T00:00:00",
+          "paymentDueDateFormatted": "21 december 2023",
+          "status": "in-dispuut",
+          "statusDescription": "In dispuut",
+        }
+      `);
 
       const automatischeIncassoFactuur = response.content?.facturen[1];
       expect(automatischeIncassoFactuur?.status).toBe('openstaand');
@@ -567,23 +588,26 @@ describe('Afis', () => {
       );
 
       const geannuleerdeInvoice = response.content?.facturen[0];
-      expect(geannuleerdeInvoice).toStrictEqual({
-        afzender: 'Lisan al Gaib inc.',
-        amountOwed: 0,
-        amountOwedFormatted: '€ 0',
-        datePublished: null,
-        datePublishedFormatted: null,
-        debtClearingDate: null,
-        debtClearingDateFormatted: null,
-        documentDownloadLink:
-          'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
-        factuurNummer: 'INV-2023-010',
-        paylink: null,
-        paymentDueDate: '2023-12-21T00:00:00',
-        paymentDueDateFormatted: '21 december 2023',
-        status: 'geannuleerd',
-        statusDescription: 'Geannuleerd',
-      });
+      expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
+        {
+          "afzender": "Lisan al Gaib inc.",
+          "amountOwed": 0,
+          "amountOwedFormatted": "€ 0",
+          "datePublished": null,
+          "datePublishedFormatted": null,
+          "debtClearingDate": null,
+          "debtClearingDateFormatted": null,
+          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx",
+          "factuurDocumentId": "INV-2023-010",
+          "factuurNummer": "INV-2023-010",
+          "id": "INV-2023-010",
+          "paylink": null,
+          "paymentDueDate": "2023-12-21T00:00:00",
+          "paymentDueDateFormatted": "21 december 2023",
+          "status": "geannuleerd",
+          "statusDescription": "Geannuleerd",
+        }
+      `);
 
       const betaaldeInvoice = response.content?.facturen[1];
       expect(betaaldeInvoice?.status).toStrictEqual('geannuleerd');

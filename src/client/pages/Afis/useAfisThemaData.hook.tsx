@@ -110,8 +110,6 @@ function useAfisOverviewApi(
       key: AFIS_OVERVIEW_STATE_KEY,
     });
 
-  console.log('facturenApiResponse:', facturenApiResponse);
-
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
       fetchFacturen({
@@ -155,11 +153,7 @@ function useAfisListpageApi(
   const hasFacturenByStateOpen = !!facturenByStateApiResponseOpen.content;
 
   useEffect(() => {
-    if (
-      businessPartnerIdEncrypted &&
-      !isApiDataCached &&
-      (state !== 'open' || !hasFacturenByStateOpen)
-    ) {
+    if (businessPartnerIdEncrypted && !isApiDataCached && state !== 'open') {
       fetchFacturen({
         url: `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`,
       });
@@ -216,8 +210,6 @@ export function useAfisThemaData() {
     businessPartnerIdEncrypted
   );
 
-  console.log('facturenByStateApiResponse:', facturenByStateApiResponse);
-
   return {
     businessPartnerIdEncrypted,
     facturenByState: facturenByStateApiResponse.content,
@@ -258,6 +250,10 @@ export function useAfisBetaalVoorkeurenData(
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
+      console.log(
+        'fetch!',
+        `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`
+      );
       fetchBusinessPartner({
         url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
       });

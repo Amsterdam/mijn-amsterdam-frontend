@@ -39,53 +39,55 @@ const testState = {
   BEZWAREN_BAG: {
     abc: null,
     'asdasd98asd098asdjalmsndas-d9aps9dapsdja.sdasd': {
-      statussen: [
-        {
-          uuid: 'b62fdaa9-f7ec-45d1-b23c-7f36fa00b393',
-          datum: '2023-03-29T10:00:00+02:00',
-          statustoelichting: 'Ontvangen',
-        },
-        {
-          uuid: '50dcd25b-a826-422b-b51c-9049dda9600c',
-          datum: '2023-03-30T02:53:00+02:00',
-          statustoelichting: 'In behandeling',
-        },
-        {
-          uuid: '00000000-0000-0000-0000-000000000000',
-          datum: '',
-          statustoelichting: 'Afgehandeld',
-        },
-      ],
-      documents: [
-        {
-          id: 'd0fe0ace-6f53-4342-b978-1cf12f8675be',
-          title: 'connector.docx',
-          datePublished: '30 augustus 2023',
-          url: 'http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments',
-          dossiertype: 'Online Aangeleverd',
-        },
-        {
-          id: '736ae47e-e703-4238-a664-100cde4c90a1',
-          title: 'Bezwaar_JB20230049.pdf',
-          datePublished: '30 augustus 2023',
-          url: 'http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments',
-          dossiertype: 'Online Aangeleverd',
-        },
-        {
-          id: 'd0fe0ace-6f53-4342-b978-1cf12f8675be',
-          title: 'connector.docx',
-          datePublished: '30 augustus 2023',
-          url: 'http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments',
-          dossiertype: 'Online Besluitvorming',
-        },
-        {
-          id: '736ae47e-e703-4238-a664-100cde4c90a1',
-          title: 'Bezwaar_JB20230049.pdf',
-          datePublished: '30 augustus 2023',
-          url: 'http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments',
-          dossiertype: 'Online Procesdossier',
-        },
-      ],
+      content: {
+        statussen: [
+          {
+            uuid: 'b62fdaa9-f7ec-45d1-b23c-7f36fa00b393',
+            datum: '2023-03-29T10:00:00+02:00',
+            statustoelichting: 'Ontvangen',
+          },
+          {
+            uuid: '50dcd25b-a826-422b-b51c-9049dda9600c',
+            datum: '2023-03-30T02:53:00+02:00',
+            statustoelichting: 'In behandeling',
+          },
+          {
+            uuid: '00000000-0000-0000-0000-000000000000',
+            datum: '',
+            statustoelichting: 'Afgehandeld',
+          },
+        ],
+        documents: [
+          {
+            id: 'd0fe0ace-6f53-4342-b978-1cf12f8675be',
+            title: 'connector.docx',
+            datePublished: '30 augustus 2023',
+            url: 'http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments',
+            dossiertype: 'Online Aangeleverd',
+          },
+          {
+            id: '736ae47e-e703-4238-a664-100cde4c90a1',
+            title: 'Bezwaar_JB20230049.pdf',
+            datePublished: '30 augustus 2023',
+            url: 'http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments',
+            dossiertype: 'Online Aangeleverd',
+          },
+          {
+            id: 'd0fe0ace-6f53-4342-b978-1cf12f8675be',
+            title: 'connector.docx',
+            datePublished: '30 augustus 2023',
+            url: 'http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments',
+            dossiertype: 'Online Besluitvorming',
+          },
+          {
+            id: '736ae47e-e703-4238-a664-100cde4c90a1',
+            title: 'Bezwaar_JB20230049.pdf',
+            datePublished: '30 augustus 2023',
+            url: 'http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments',
+            dossiertype: 'Online Procesdossier',
+          },
+        ],
+      },
     },
   },
 };

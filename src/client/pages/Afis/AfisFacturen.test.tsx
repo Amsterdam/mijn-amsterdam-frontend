@@ -8,6 +8,7 @@ import MockApp from '../MockApp';
 import { AfisFacturen } from './AfisFacturen';
 import { bffApi } from '../../../test-utils';
 import { AfisFactuur } from '../../../server/services/afis/afis-types';
+import { AfisFactuurFrontend } from './Afis-thema-config';
 
 const businessPartnerIdEncrypted = 'yyy-456-yyy';
 const testState = {
@@ -25,8 +26,10 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<AfisFacturen />', () => {
-  const mockFacturen: AfisFactuur[] = [
+  const mockFacturen: AfisFactuurFrontend[] = [
     {
+      id: '1',
+      factuurDocumentId: '1',
       afzender: 'Company D',
       datePublished: '2023-04-01',
       datePublishedFormatted: '1 april 2023',
@@ -37,11 +40,15 @@ describe('<AfisFacturen />', () => {
       amountOwed: 1500,
       amountOwedFormatted: '€ 1.500,00',
       factuurNummer: 'F004',
+      factuurNummerEl: 'F004',
       status: 'openstaand',
+      statusDescription: 'Openstaand description',
       paylink: 'https://payment.example.com/F004',
       documentDownloadLink: 'https://download.example.com/F004',
     },
     {
+      id: '2',
+      factuurDocumentId: '2',
       afzender: 'Company E',
       datePublished: '2023-04-15',
       datePublishedFormatted: '15 april 2023',
@@ -52,7 +59,9 @@ describe('<AfisFacturen />', () => {
       amountOwed: 2500,
       amountOwedFormatted: '€ 2.500,00',
       factuurNummer: 'F005',
+      factuurNummerEl: 'F005',
       status: 'openstaand',
+      statusDescription: 'Openstaand description',
       paylink: 'https://payment.example.com/F005',
       documentDownloadLink: 'https://download.example.com/F005',
     },
@@ -61,12 +70,21 @@ describe('<AfisFacturen />', () => {
   bffApi
     .get(`/services/afis/facturen/open/${businessPartnerIdEncrypted}`)
     .reply(200, {
-      content: mockFacturen,
+      content: { open: mockFacturen },
       status: 'OK',
     });
 
-  const routeEntry = generatePath(AppRoutes['AFIS/FACTUREN'], { kind: 'open' });
+  bffApi
+    .get(`/services/afis/facturen/overzicht/${businessPartnerIdEncrypted}`)
+    .reply(200, {
+      content: { open: [], afgehandeld: [], overgedragen: [] },
+      status: 'OK',
+    });
+
   const routePath = AppRoutes['AFIS/FACTUREN'];
+  const routeEntry = generatePath(routePath, {
+    state: 'open',
+  });
 
   const Component = () => (
     <MockApp
