@@ -14,9 +14,3 @@
     }
   }
 }
-
-:global(.ams-paragraph) {
-  &.PageContentBottomDisclaimer {
-    margin-top: calc(-1 * var(--ams-grid-column-gap));
-  }
-}
