@@ -72,7 +72,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
     return items.slice(start, end);
   }, [currentPage, items, pageSize]);
 
-  const total = totalCount || items.length;
+  const total = totalCount ?? items.length;
 
   return (
     <OverviewPage>
