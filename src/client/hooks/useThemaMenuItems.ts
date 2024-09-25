@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { ApiResponse, isError, isLoading } from '../../universal/helpers/api';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItem } from '../config/thema';
@@ -12,6 +12,8 @@ export interface ThemasState {
   items: ThemaMenuItem[];
   isLoading: boolean;
 }
+
+type ThemaTitleAndId = Record<'title' | 'id', string>;
 
 export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
@@ -42,16 +44,24 @@ export function useThemaMenuItems(): ThemasState {
   );
 
   const [storedThemas, setStoredThemas] = useSessionStorage('themas', null);
+  const hasTrackedThemas = useRef(storedThemas ? true : false);
+
   useEffect(() => {
-    if (!storedThemas && !themasState.isLoading) {
-      const themaTitlesAndIds = items.map((item) => ({
-        title: item.title,
+    if (
+      (!storedThemas || !hasTrackedThemas.current) &&
+      !themasState.isLoading
+    ) {
+      const themaTitlesAndIds: ThemaTitleAndId[] = items.map((item) => ({
+        title:
+          typeof item.title === 'function' ? item.title(appState) : item.title,
         id: item.id,
       }));
       setStoredThemas(themaTitlesAndIds);
+
       trackEvent('themas-per-sessie', { themas: themaTitlesAndIds });
+      hasTrackedThemas.current = true;
     }
-  }, [storedThemas, themasState.isLoading, items, setStoredThemas]);
+  }, [storedThemas, themasState, items, setStoredThemas]);
 
   return themasState;
 }
