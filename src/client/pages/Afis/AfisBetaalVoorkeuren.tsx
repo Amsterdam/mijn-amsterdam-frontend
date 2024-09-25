@@ -127,14 +127,12 @@ export function AfisBetaalVoorkeuren() {
 
   const pageContentTables = (
     <>
-      {!!businesspartnerDetails && (
-        <AfisBusinessPartnerDetails
-          businesspartner={businesspartnerDetails}
-          labels={businessPartnerDetailsLabels}
-          isLoading={isLoadingBusinessPartnerDetails || isThemaPaginaLoading}
-          startCollapsed={FeatureToggle.afisEmandatesActive}
-        />
-      )}
+      <AfisBusinessPartnerDetails
+        businesspartner={businesspartnerDetails}
+        labels={businessPartnerDetailsLabels}
+        isLoading={isLoadingBusinessPartnerDetails || isThemaPaginaLoading}
+        startCollapsed={FeatureToggle.afisEmandatesActive}
+      />
       {eMandateTables}
     </>
   );
