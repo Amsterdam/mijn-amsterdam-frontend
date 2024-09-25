@@ -13,7 +13,7 @@ import {
   hasSessionCookie,
   isSessionCookieName,
 } from './auth-helpers';
-import { SessionData, TokenData } from './auth-types';
+import { MaSession, TokenData } from './auth-types';
 import UID from 'uid-safe';
 import {
   getAuthProfileAndToken,
@@ -48,7 +48,7 @@ describe('auth-helpers', () => {
           authMethod: 'eherkenning',
           profileType: 'commercial',
           sid: 'overridden',
-        } as SessionData,
+        } as MaSession,
         {
           sub: '-unused-',
           aud: 'test1',
@@ -71,7 +71,7 @@ describe('auth-helpers', () => {
           authMethod: 'digid',
           profileType: 'private',
           sid: 'overridden',
-        } as SessionData,
+        } as MaSession,
         {
           aud: 'test2',
           [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
@@ -93,7 +93,7 @@ describe('auth-helpers', () => {
           authMethod: 'digid',
           profileType: 'private',
           sid: 'overridden',
-        } as SessionData,
+        } as MaSession,
         {
           aud: 'test_x',
           [DIGID_ATTR_PRIMARY]: 'DIGID-BSN',
@@ -115,7 +115,7 @@ describe('auth-helpers', () => {
           authMethod: 'eherkenning',
           profileType: 'commercial',
           sid: 'overridden',
-        } as SessionData,
+        } as MaSession,
         {
           sub: '',
           aud: 'test1',
@@ -138,7 +138,7 @@ describe('auth-helpers', () => {
           authMethod: 'eherkenning',
           profileType: 'commercial',
           sid: 'overridden',
-        } as SessionData,
+        } as MaSession,
         {
           sub: '',
           aud: 'test1',
@@ -161,7 +161,7 @@ describe('auth-helpers', () => {
           authMethod: 'eherkenning',
           profileType: 'commercial',
           sid: 'overridden',
-        } as SessionData,
+        } as MaSession,
         {
           sub: '',
           aud: 'test1',

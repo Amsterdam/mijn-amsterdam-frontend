@@ -1,4 +1,5 @@
 import memoizee from 'memoizee';
+import { captureException } from '../services/monitoring';
 
 /** Retrieve an environment variable.
  *
@@ -13,9 +14,12 @@ function getFromEnv_(
     return process.env[key];
   }
   if (isRequired) {
-    throw new Error(`ENV undefined key: ${key}.`);
+    const error = new Error(`ENV undefined key: ${key}.`);
+    console.error(error); // So we see it in logstream.
+    captureException(error); // So we see it in monitoring.
+  } else {
+    console.warn(`ENV undefined, but not required: ${key}`);
   }
-  console.warn(`ENV undefined, but not required: ${key}`);
 }
 
 // Prevents spamming the console with duplicate missing env messages

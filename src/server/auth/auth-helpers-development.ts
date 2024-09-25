@@ -5,6 +5,7 @@ import {
   TOKEN_ID_ATTRIBUTE,
 } from './auth-config';
 import { AuthProfile } from './auth-types';
+import memoizee from 'memoizee';
 
 /**
  *
@@ -15,7 +16,7 @@ export async function getPrivateKeyForDevelopment() {
   return jose.importJWK(DEV_JWK_PRIVATE);
 }
 
-export async function signDevelopmentToken(
+async function signDevelopmentToken_(
   authMethod: AuthProfile['authMethod'],
   userID: string,
   sessionID: SessionID
@@ -37,3 +38,5 @@ export async function signDevelopmentToken(
     console.error(err);
   }
 }
+
+export const signDevelopmentToken = memoizee(signDevelopmentToken_);

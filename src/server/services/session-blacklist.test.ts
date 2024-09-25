@@ -33,7 +33,7 @@ describe('Session-blacklist', () => {
   test('Add to black list', async () => {
     await addToBlackList(sessionID);
     expect(mocks.db.query).toHaveBeenCalledWith(
-      'INSERT INTO acc_session_blacklist (session_id) VALUES ($1) RETURNING id',
+      'INSERT INTO session_blacklist (session_id) VALUES ($1) RETURNING id',
       ['test123']
     );
   });

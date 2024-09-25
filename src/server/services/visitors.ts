@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import {
   add,
+  endOfDay,
   format,
   parseISO,
   startOfMonth,
@@ -13,7 +14,7 @@ import {
 import { Request, Response } from 'express';
 import { IS_TAP } from '../../universal/config/env';
 import { defaultDateFormat } from '../../universal/helpers/date';
-import { IS_PG, tableNameLoginCount } from './db/config';
+import { IS_DB_ENABLED, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
 import { captureException } from './monitoring';
 
@@ -57,11 +58,19 @@ async function setupTables() {
       ADD IF NOT EXISTS "authMethod" VARCHAR(100);
     `;
 
-  await query(createTableQuery);
-  await query(alterTableQuery1);
+  try {
+    await query(createTableQuery);
+    await query(alterTableQuery1);
+    console.log(`setupTable: ${tableNameLoginCount} succeeded.`);
+  } catch (error) {
+    console.log(`setupTable: ${tableNameLoginCount} failed.`);
+    console.error(error);
+  }
 }
 
-setupTables();
+if (IS_DB_ENABLED) {
+  setupTables();
+}
 
 async function getQueries() {
   return queriesPG(tableNameLoginCount);
@@ -104,12 +113,13 @@ export async function loginStats(req: Request, res: Response) {
   }
 
   const today = new Date();
+  const todayEnd = endOfDay(today);
   const dateEndday = format(today, QUERY_DATE_FORMAT);
   const ranges = [
     {
       label: 'Vandaag',
       dateStart: today,
-      dateEnd: add(today, { days: 1 }),
+      dateEnd: todayEnd,
     },
     {
       label: 'Gister',
@@ -119,7 +129,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Deze week',
       dateStart: startOfWeek(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Vorige week',
@@ -129,7 +139,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Deze maand',
       dateStart: startOfMonth(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Vorige maand',
@@ -139,7 +149,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Dit kwartaal',
       dateStart: startOfQuarter(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Vorig kwartaal',
@@ -149,7 +159,7 @@ export async function loginStats(req: Request, res: Response) {
     {
       label: 'Dit jaar',
       dateStart: startOfYear(today),
-      dateEnd: today,
+      dateEnd: todayEnd,
     },
     {
       label: 'Afgelopen jaar',

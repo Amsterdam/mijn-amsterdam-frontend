@@ -4,7 +4,7 @@ import { fetchAanvragen } from '../zorgned/zorgned-service';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import {
   isAfterWCAGValidDocumentsDate,
-  isBeforeToday,
+  isEindeGeldigheidVerstreken,
 } from './status-line-items/wmo-generic';
 import {
   DATE_END_NOT_OLDER_THAN,
@@ -30,7 +30,7 @@ function isProductWithDelivery(
 }
 
 export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
-  const isEOG = isBeforeToday(
+  const isEOG = isEindeGeldigheidVerstreken(
     aanvraagTransformed.datumEindeGeldigheid,
     new Date()
   );
