@@ -8,6 +8,7 @@ import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 import { useErfpachtV2Data } from './erfpachtData.hook';
+import { isError, isLoading } from '../../../universal/helpers/api';
 
 export default function ErfpachtFacturen() {
   const { displayPropsAlleFacturen } = useErfpachtV2Data();
@@ -16,11 +17,15 @@ export default function ErfpachtFacturen() {
     dossierNummerUrlParam: string;
   }>();
 
-  const [dossier, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
-    url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagThema: BagThemas.ERFPACHTv2,
-    key: dossierNummerUrlParam,
-  });
+  const [dossierApiResponse, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>(
+    {
+      url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
+      bagThema: BagThemas.ERFPACHTv2,
+      key: dossierNummerUrlParam,
+    }
+  );
+
+  const dossier = dossierApiResponse.content;
 
   return (
     <ListPagePaginated
@@ -42,8 +47,8 @@ export default function ErfpachtFacturen() {
       appRouteBack={AppRoutes['ERFPACHTv2']}
       displayProps={displayPropsAlleFacturen}
       thema={Themas.ERFPACHTv2}
-      isLoading={api.isLoading}
-      isError={api.isError}
+      isLoading={isLoading(dossierApiResponse)}
+      isError={isError(dossierApiResponse)}
     />
   );
 }

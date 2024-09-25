@@ -11,8 +11,9 @@ import { useAfisListPageData } from './useAfisThemaData.hook';
 export const AfisFacturen = () => {
   const { state } = useParams<{ state: AfisFactuurState }>();
   const {
-    api,
-    facturenResponse,
+    facturenListResponse,
+    isListPageError,
+    isListPageLoading,
     facturenTableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
@@ -20,7 +21,7 @@ export const AfisFacturen = () => {
   } = useAfisListPageData(state);
 
   const listPageTableConfig = facturenTableConfig[state];
-  const facturen = facturenResponse?.facturen ?? [];
+  const facturen = facturenListResponse?.facturen ?? [];
 
   return (
     <ListPagePaginated<AfisFactuur>
@@ -31,8 +32,8 @@ export const AfisFacturen = () => {
       appRouteParams={{ state }}
       appRouteBack={routes.themaPage}
       displayProps={listPageTableConfig.displayProps}
-      isLoading={isThemaPaginaLoading || api.isLoading}
-      isError={isThemaPaginaError || api.isError}
+      isLoading={isThemaPaginaLoading || isListPageLoading}
+      isError={isThemaPaginaError || isListPageError}
       tableClassName={styles.FacturenTable}
     />
   );

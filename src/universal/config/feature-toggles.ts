@@ -13,7 +13,7 @@ export const FeatureToggle = {
   cmsFooterActive: true,
   dbEnabled: IS_TAP,
   dbSessionsEnabled: IS_TAP,
-  decosServiceActive: false,
+  decosServiceActive: IS_DEVELOPMENT, // TODO: Enable when working on MIJN-8914
   ehKetenmachtigingActive: !IS_PRODUCTION,
   eherkenningActive: true,
   erfpachtV2Active: !IS_PRODUCTION,

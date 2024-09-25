@@ -33,12 +33,13 @@ export function AfisThemaPagina() {
   const history = useHistory();
 
   const {
-    api,
     dependencyErrors,
     facturenByState,
     facturenTableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
+    isOverviewApiError,
+    isOverviewApiLoading,
     listPageTitle,
     routes,
   } = useAfisThemaData();
@@ -88,11 +89,11 @@ export function AfisThemaPagina() {
           key={state}
           title={title}
           subTitle={subTitle}
-          zaken={facturenByState[state]?.facturen ?? []}
+          zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
           maxItems={maxItems}
-          totalItems={facturenByState[state]?.count}
+          totalItems={facturenByState?.[state]?.count}
           listPageLinkLabel={listPageLinkLabel}
           listPageRoute={listPageRoute}
           className={styles.FacturenTable}
@@ -104,10 +105,10 @@ export function AfisThemaPagina() {
   return (
     <ThemaPagina
       title={ThemaTitles.AFIS}
-      isError={api.isError && isThemaPaginaError}
+      isError={isOverviewApiError && isThemaPaginaError}
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
-      isLoading={isThemaPaginaLoading || api.isLoading}
+      isLoading={isThemaPaginaLoading || isOverviewApiLoading}
       linkListItems={[
         {
           to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',

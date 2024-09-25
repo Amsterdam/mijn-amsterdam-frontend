@@ -25,6 +25,7 @@ import { captureMessage } from '../utils/monitoring';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
+import { entries } from '../../universal/helpers/utils';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -259,13 +260,15 @@ export function useAppStateBagApi<T extends unknown>({
   );
 
   useEffect(() => {
+    // Initial automatic fetch
     if (url && !isApiDataCached && !api.isDirty && !api.isLoading) {
       fetch({
         url,
         postpone: false,
       });
     }
-    if (!isApiDataCached && !!api.data.content) {
+
+    if (!isApiDataCached && api.isDirty && !api.isLoading) {
       setAppState((state) => {
         let localState = state[bagThema];
         if (!localState) {
@@ -274,7 +277,7 @@ export function useAppStateBagApi<T extends unknown>({
 
         localState = {
           ...localState,
-          [key]: api.data.content as T,
+          [key]: api.data as ApiResponse<T | null>,
         };
 
         return {
@@ -286,8 +289,7 @@ export function useAppStateBagApi<T extends unknown>({
   }, [isApiDataCached, api, key, url]);
 
   return [
-    appState?.[bagThema]?.[key] as T,
-    api,
+    (appState?.[bagThema]?.[key] as ApiResponse<T | null>) || api.data, // Return the response data from remote system or the pristine data provided to useApiData.
     fetch,
     isApiDataCached,
   ] as const;
@@ -298,7 +300,7 @@ export function useGetAppStateBagDataByKey<T>({
   key,
 }: Omit<AppStateBagApiParams, 'url'>) {
   const appState = useRecoilValue(appStateAtom);
-  return (appState?.[bagThema]?.[key] as T) ?? null;
+  return (appState?.[bagThema]?.[key] as ApiResponse<T | null>) ?? null;
 }
 
 export function useRemoveAppStateBagData() {
@@ -310,7 +312,7 @@ export function useRemoveAppStateBagData() {
         setAppState(
           Object.assign({}, appState, {
             [bagThema]: Object.fromEntries(
-              Object.entries(local).filter(([key]) => {
+              entries(local).filter(([key]) => {
                 return keyExpected !== key;
               })
             ),
