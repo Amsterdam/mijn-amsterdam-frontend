@@ -17,11 +17,23 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsFacturen: DisplayProps<AfisFactuurFrontend> = {
+const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   afzender: 'Afzender',
   factuurNummerEl: 'Factuurnummer',
   statusDescription: 'Status',
   paymentDueDateFormatted: 'Vervaldatum',
+};
+
+const displayPropsFacturenAfgehandeld: DisplayProps<AfisFactuurFrontend> = {
+  afzender: 'Afzender',
+  factuurNummerEl: 'Factuurnummer',
+  statusDescription: 'Status',
+};
+
+const displayPropsFacturenOvergedragen: DisplayProps<AfisFactuurFrontend> = {
+  afzender: 'Afzender',
+  factuurNummerEl: 'Factuurnummer',
+  statusDescription: 'Status',
 };
 
 export const listPageTitle: Record<AfisFactuurState, string> = {
@@ -63,7 +75,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     title: listPageTitle.open,
     subTitle:
       'De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde wijzigingen.',
-    displayProps: displayPropsFacturen,
+    displayProps: displayPropsFacturenOpen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
     listPageLinkLabel: 'Alle openstaande facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
@@ -72,7 +84,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
   },
   afgehandeld: {
     title: listPageTitle.afgehandeld,
-    displayProps: displayPropsFacturen,
+    displayProps: displayPropsFacturenAfgehandeld,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
@@ -81,7 +93,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
   },
   overgedragen: {
     title: listPageTitle.overgedragen,
-    displayProps: displayPropsFacturen,
+    displayProps: displayPropsFacturenOvergedragen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {

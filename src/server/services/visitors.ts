@@ -147,7 +147,7 @@ export async function loginStats(req: Request, res: Response) {
       dateEnd: sub(startOfMonth(today), { days: 1 }),
     },
     {
-      label: 'Dit kwartaal',
+      label: 'Dit kwartaal tot nu',
       dateStart: startOfQuarter(today),
       dateEnd: todayEnd,
     },
