@@ -19,12 +19,13 @@ export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWith
     isActive: (stepIndex, regeling) =>
       regeling.isActueel === true || regeling.resultaat === 'afgewezen',
     description: (regeling) => {
+      const namenBetrokkenen = getNamenBetrokkenen(regeling);
       return `<p>
         ${
           regeling.resultaat === 'toegewezen'
-            ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor ${getNamenBetrokkenen(regeling)}`
-            : `U krijgt geen ${regeling.titel} voor ${getNamenBetrokkenen(regeling)}`
-        }.
+            ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}${namenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+            : `U krijgt geen ${regeling.titel}${namenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+        }
         </p>
         <p>
           ${regeling.resultaat === 'toegewezen' ? 'In de brief vindt u meer informatie hierover.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
