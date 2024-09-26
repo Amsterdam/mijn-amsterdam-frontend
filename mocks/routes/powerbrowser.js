@@ -28,7 +28,7 @@ module.exports = [
         type: 'text',
         options: {
           status: 200,
-          body: 'xxxx-909090-yyyy',
+          body: '"xxxx-909090-yyyy"',
         },
       },
     ],
