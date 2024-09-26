@@ -33,6 +33,7 @@ function fetchPowerBrowserToken(
     {
       ...dataRequestConfig,
       url: `${dataRequestConfig.url}/Token`,
+      responseType: 'text',
       data: {
         apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
       },

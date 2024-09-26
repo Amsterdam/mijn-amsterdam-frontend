@@ -181,8 +181,7 @@ describe('Toeristische verhuur service', () => {
   it('Should return only vergunningen if commercial profiletype', async () => {
     const response = await fetchToeristischeVerhuur(
       'x4.b',
-      authProfileAndToken,
-      'commercial'
+      authProfileAndToken
     );
 
     expect(response.content.lvvRegistraties.length).toBe(0);
