@@ -1,4 +1,10 @@
-import { Button, Grid, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Button,
+  Grid,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { entries } from '../../../universal/helpers/utils';
@@ -16,22 +22,8 @@ const pageContentTop = (
   </Paragraph>
 );
 
-const pageContentDisclaimer = (
-  <Grid.Cell span="all">
-    <Paragraph>
-      Betalingsregelingen worden hier niet getoond.
-      <br />
-      Gedeeltelijk betaalde facturen kunt u hier niet zien betaal het resterende
-      bedrag via bankoverschrijving. Er wordt een herinnering verstuurd al uw
-      factuur is vervallen. Bij een vervallen factuur werkt de betaal link niet
-      meer.
-    </Paragraph>
-  </Grid.Cell>
-);
-
 export function AfisThemaPagina() {
   const history = useHistory();
-
   const {
     dependencyErrors,
     facturenByState,
@@ -51,11 +43,23 @@ export function AfisThemaPagina() {
   const pageContentSecondary = (
     <Grid.Cell span="all">
       <Button
+        className="ams-mb--sm"
         variant="secondary"
         onClick={() => history.push(routes.betaalVoorkeuren)}
       >
         Betaalvoorkeuren
       </Button>
+      <Alert severity="warning">
+        <UnorderedList>
+          <UnorderedList.Item>
+            De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
+            wijzigingen.
+          </UnorderedList.Item>
+          <UnorderedList.Item>
+            Betalingsregelingen zijn niet zichtbaar in dit overzicht.
+          </UnorderedList.Item>
+        </UnorderedList>
+      </Alert>
     </Grid.Cell>
   );
 
@@ -114,13 +118,16 @@ export function AfisThemaPagina() {
           to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
           title: 'Meer over facturen van de gemeente',
         },
+        {
+          to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
+          title: 'Belastingen op Mijn Amsterdam',
+        },
       ]}
       pageContentTop={pageContentTop}
       pageContentTables={
         <>
           {pageContentSecondary}
           {pageContentTables}
-          {pageContentDisclaimer}
         </>
       }
     />

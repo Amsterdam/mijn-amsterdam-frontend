@@ -73,8 +73,6 @@ type AfisFacturenTableConfigByState = Record<
 export const facturenTableConfig: AfisFacturenTableConfigByState = {
   open: {
     title: listPageTitle.open,
-    subTitle:
-      'De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde wijzigingen.',
     displayProps: displayPropsFacturenOpen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
     listPageLinkLabel: 'Alle openstaande facturen',
