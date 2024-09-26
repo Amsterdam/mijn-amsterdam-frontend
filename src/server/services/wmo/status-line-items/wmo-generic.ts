@@ -224,22 +224,13 @@ export const EINDE_RECHT_PGB: ZorgnedStatusLineItemTransformerConfig = {
     `,
 };
 
-export function isBeforeToday(dateStr: string | null, compareDate: Date) {
-  if (!dateStr) {
-    return false;
-  }
-  return isSameDay(parseISO(dateStr), compareDate)
-    ? false
-    : isDateInPast(dateStr, compareDate);
-}
-
 export function isDelivered(
   sourceData: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
   return (
     !!sourceData.datumBeginLevering &&
-    isBeforeToday(sourceData.datumBeginLevering, compareDate)
+    isDateInPast(sourceData.datumBeginLevering, compareDate)
   );
 }
 
@@ -249,7 +240,7 @@ export function isDeliveryStopped(
 ) {
   return (
     !!sourceData.datumEindeLevering &&
-    isBeforeToday(sourceData.datumEindeLevering, compareDate)
+    isDateInPast(sourceData.datumEindeLevering, compareDate)
   );
 }
 
@@ -314,7 +305,7 @@ export function isOpdrachtGegeven(
 ) {
   return (
     !!sourceData.datumOpdrachtLevering &&
-    isBeforeToday(sourceData.datumOpdrachtLevering, compareDate)
+    isDateInPast(sourceData.datumOpdrachtLevering, compareDate)
   );
 }
 

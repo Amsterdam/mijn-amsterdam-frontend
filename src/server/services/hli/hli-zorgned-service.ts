@@ -1,8 +1,8 @@
 import memoizee from 'memoizee';
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
-import { isBeforeToday } from '../wmo/status-line-items/wmo-generic';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -61,10 +61,10 @@ export async function fetchAdministratienummer(
 }
 
 function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
-  const isEOG = isBeforeToday(
-    aanvraagTransformed.datumEindeGeldigheid,
-    new Date()
-  );
+  const isEOG = aanvraagTransformed.datumEindeGeldigheid
+    ? isDateInPast(aanvraagTransformed.datumEindeGeldigheid, new Date())
+    : false;
+
   const isActueel = aanvraagTransformed.isActueel;
 
   switch (true) {
