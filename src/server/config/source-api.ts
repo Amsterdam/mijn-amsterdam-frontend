@@ -45,6 +45,10 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
   passthroughOIDCToken: false,
+  responseType: 'json',
+  transitional: {
+    silentJSONParsing: false,
+  },
 };
 
 export type SourceApiKey =
