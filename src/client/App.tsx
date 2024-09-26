@@ -86,6 +86,7 @@ import { useMonitoring } from './utils/monitoring';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
+import { useTrackThemas } from './hooks/useTrackThemas.hook';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -146,6 +147,7 @@ function AppNotAuthenticated() {
 function AppAuthenticated() {
   useAppStateRemote();
   usePageChange(true);
+  useTrackThemas();
 
   const history = useHistory();
   const profileType = useProfileTypeValue();
