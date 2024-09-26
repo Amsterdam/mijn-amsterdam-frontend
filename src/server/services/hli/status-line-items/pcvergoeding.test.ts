@@ -117,4 +117,116 @@ describe('pcvergoeding', () => {
 
     expect(forTesting.isWorkshopNietGevolgd(regeling4)).toBe(true);
   });
+
+  describe('getBetrokkenKinderen', () => {
+    test('Name and DateOfBirth known', () => {
+      expect(
+        forTesting.getBetrokkenKinderen({
+          betrokkenPersonen: [
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Foo',
+              dateOfBirthFormatted: '12 juli 1981',
+            },
+          ],
+        } as ZorgnedAanvraagWithRelatedPersonsTransformed)
+      ).toMatchInlineSnapshot(`"(Foo - geboren op 12 juli 1981)"`);
+    });
+
+    test('Name and DateOfBirth known multiple kids', () => {
+      expect(
+        forTesting.getBetrokkenKinderen({
+          betrokkenPersonen: [
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Foo',
+              dateOfBirthFormatted: '12 juli 1981',
+            },
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Bar',
+              dateOfBirthFormatted: '01 december 1983',
+            },
+          ],
+        } as ZorgnedAanvraagWithRelatedPersonsTransformed)
+      ).toMatchInlineSnapshot(
+        `"(Foo - geboren op 12 juli 1981), (Bar - geboren op 01 december 1983)"`
+      );
+    });
+
+    test('Name known', () => {
+      expect(
+        forTesting.getBetrokkenKinderen({
+          betrokkenPersonen: [
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Foo',
+              dateOfBirthFormatted: '',
+            },
+          ],
+        } as ZorgnedAanvraagWithRelatedPersonsTransformed)
+      ).toMatchInlineSnapshot(`"(Foo)"`);
+    });
+
+    test('Name known multiple', () => {
+      expect(
+        forTesting.getBetrokkenKinderen({
+          betrokkenPersonen: [
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Foo',
+              dateOfBirthFormatted: '',
+            },
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Bar',
+              dateOfBirthFormatted: '',
+            },
+          ],
+        } as ZorgnedAanvraagWithRelatedPersonsTransformed)
+      ).toMatchInlineSnapshot(`"(Foo), (Bar)"`);
+    });
+
+    test('Name unknown', () => {
+      expect(
+        forTesting.getBetrokkenKinderen({
+          betrokkenPersonen: [
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: '',
+              dateOfBirthFormatted: '',
+            },
+          ],
+        } as ZorgnedAanvraagWithRelatedPersonsTransformed)
+      ).toMatchInlineSnapshot(`""`);
+    });
+
+    test('Name known multiple, 1 dateOfBirth', () => {
+      expect(
+        forTesting.getBetrokkenKinderen({
+          betrokkenPersonen: [
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Foo',
+              dateOfBirthFormatted: '1 juli 2017',
+            },
+            {
+              bsn: '',
+              dateOfBirth: '',
+              name: 'Bar',
+              dateOfBirthFormatted: '',
+            },
+          ],
+        } as ZorgnedAanvraagWithRelatedPersonsTransformed)
+      ).toMatchInlineSnapshot(`"(Foo - geboren op 1 juli 2017), (Bar)"`);
+    });
+  });
 });
