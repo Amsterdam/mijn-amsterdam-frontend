@@ -20,15 +20,16 @@ export function useThemaMenuItems(): ThemasState {
   const appState = useAppStateGetter();
   const themaItems = themasByProfileType(profileType);
 
-  const items = themaItems.filter((item) => {
-    // Check to see if Thema has been loaded or if it is directly available
-    return item.isAlwaysVisible || isThemaActive(item, appState);
-  });
+  const items = useMemo(() => {
+    return themaItems.filter((item) => {
+      // Check to see if Thema has been loaded or if it is directly available
+      return item.isAlwaysVisible || isThemaActive(item, appState);
+    });
+  }, [themaItems, appState]);
 
-  const themaItemsWithAppState = getThemaMenuItemsAppState(
-    appState,
-    themaItems
-  );
+  const themaItemsWithAppState = useMemo(() => {
+    return getThemaMenuItemsAppState(appState, themaItems);
+  }, [appState, themaItems]);
 
   const themasState = useMemo(
     () => ({
@@ -44,7 +45,11 @@ export function useThemaMenuItems(): ThemasState {
   );
 
   const [storedThemas, setStoredThemas] = useSessionStorage('themas', null);
-  const hasTrackedThemas = useRef(storedThemas ? true : false);
+  const hasTrackedThemas = useRef(false);
+
+  if (storedThemas) {
+    hasTrackedThemas.current = true;
+  }
 
   useEffect(() => {
     if (
@@ -61,7 +66,7 @@ export function useThemaMenuItems(): ThemasState {
       trackEvent('themas-per-sessie', { themas: themaTitlesAndIds });
       hasTrackedThemas.current = true;
     }
-  }, [storedThemas, themasState, items, setStoredThemas]);
+  }, [storedThemas, themasState.isLoading, items, setStoredThemas]);
 
   return themasState;
 }
