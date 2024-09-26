@@ -2,8 +2,7 @@ import { describe, expect, vi } from 'vitest';
 
 const mocksDbConfig = vi.hoisted(() => {
   return {
-    IS_PG: false,
-    IS_ENABLED: false,
+    IS_DB_ENABLED: false,
   };
 });
 
@@ -11,29 +10,17 @@ vi.mock('./config', async () => {
   const module: object = await vi.importActual('./config');
   return {
     ...module,
-    get IS_PG() {
-      return mocksDbConfig.IS_PG;
-    },
-    get IS_ENABLED() {
-      return mocksDbConfig.IS_ENABLED;
+    get IS_DB_ENABLED() {
+      return mocksDbConfig.IS_DB_ENABLED;
     },
   };
 });
 
 describe('db', () => {
   it('should return a fake db', async () => {
-    mocksDbConfig.IS_ENABLED = false;
+    mocksDbConfig.IS_DB_ENABLED = false;
     const { db } = await import('./db');
     const result = await db();
     expect(result.id).toBe('fake-db');
-  });
-
-  it('should return a postgres id when IS_PG is true', async () => {
-    mocksDbConfig.IS_PG = true;
-    mocksDbConfig.IS_ENABLED = true;
-
-    const { db } = await import('./db');
-    const result = await db();
-    expect(result.id).toBe('postgres');
   });
 });

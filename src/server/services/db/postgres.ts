@@ -1,16 +1,17 @@
 import { ClientConfig, Pool } from 'pg';
 import { captureException } from '../monitoring';
+import { getFromEnv } from '../../helpers/env';
 
 export const pgDbConfig: ClientConfig = {
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT ?? '5432', 10),
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: getFromEnv('PGHOST', true),
+  port: parseInt(getFromEnv('PGPORT', true) ?? '5432', 10),
+  user: getFromEnv('PGUSER', true),
+  password: getFromEnv('PGPASSWORD', true),
+  database: getFromEnv('PGDATABASE', true),
   ssl: { rejectUnauthorized: false },
 };
 
-const pool = new Pool(pgDbConfig);
+export const pool = new Pool(pgDbConfig);
 let isConnected = false;
 
 /**

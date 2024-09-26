@@ -85,6 +85,18 @@ export function isAfterWCAGValidDocumentsDate(date: string) {
   return isAfter(parseISO(date), MINIMUM_REQUEST_DATE_FOR_DOCUMENTS);
 }
 
+export function isEindeGeldigheidVerstreken(
+  datumEindeGeldigheid: string | null,
+  compareDate: Date
+) {
+  const isEindeGeldigheidVerstreken = datumEindeGeldigheid
+    ? isSameDay(parseISO(datumEindeGeldigheid), compareDate) ||
+      isDateInPast(datumEindeGeldigheid, compareDate)
+    : false;
+
+  return isEindeGeldigheidVerstreken;
+}
+
 // TODO: Determine if there are any other conditions that can be used.
 // For example we might want to enable the document decision date based on a fixed date.
 // It's unknown right now if all the existing data (documents) adhere to the updated document names.
@@ -242,14 +254,14 @@ export function isDeliveryStopped(
 }
 
 export function isDeliveredStatusActive(
-  sourceData: ZorgnedAanvraagTransformed,
+  aanvraag: ZorgnedAanvraagTransformed,
   compareDate: Date
 ) {
   return (
-    sourceData.isActueel &&
-    isDelivered(sourceData, compareDate) &&
-    !isDeliveryStopped(sourceData, compareDate) &&
-    !isBeforeToday(sourceData.datumEindeGeldigheid, compareDate)
+    aanvraag.isActueel &&
+    isDelivered(aanvraag, compareDate) &&
+    !isDeliveryStopped(aanvraag, compareDate) &&
+    !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, compareDate)
   );
 }
 
@@ -260,7 +272,7 @@ export function isDecisionStatusActive(
   if (aanvraag.resultaat === 'toegewezen') {
     return (
       hasDecision(aanvraag) &&
-      !isBeforeToday(aanvraag.datumEindeGeldigheid, new Date())
+      !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, new Date())
     );
   } else if (aanvraag.resultaat === 'afgewezen') {
     return true;
@@ -292,7 +304,7 @@ export function isDeliveryStepVisible(
     (isDelivered(aanvraag, today) ||
       // Not yet delivered and not ended yet.
       (!isDelivered(aanvraag, today) &&
-        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+        !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, today)))
   );
 }
 
@@ -317,7 +329,7 @@ export function isOpdrachtGegevenVisible(
     (isOpdrachtGegeven(aanvraag, today) ||
       // Not yet given and not ended yet.
       (!isOpdrachtGegeven(aanvraag, today) &&
-        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+        !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, today)))
   );
 }
 
@@ -332,6 +344,6 @@ export function isGeleverdVisible(
     (isOpdrachtGegeven(aanvraag, today) ||
       // Not yet given and not ended yet.
       (!isOpdrachtGegeven(aanvraag, today) &&
-        !isBeforeToday(aanvraag.datumEindeGeldigheid, today)))
+        !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, today)))
   );
 }
