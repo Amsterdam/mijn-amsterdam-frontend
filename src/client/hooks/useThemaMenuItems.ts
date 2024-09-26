@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import { ApiResponse, isError, isLoading } from '../../universal/helpers/api';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItem } from '../config/thema';
