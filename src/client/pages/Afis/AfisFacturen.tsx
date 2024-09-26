@@ -6,7 +6,7 @@ import {
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { ThemaTitles } from '../../config/thema';
 import styles from './Afis.module.scss';
-import { useAfisListPageData, useAfisThemaData } from './useAfisThemaData.hook';
+import { useAfisListPageData } from './useAfisThemaData.hook';
 
 export const AfisFacturen = () => {
   const { state } = useParams<{ state: AfisFactuurState }>();
@@ -20,13 +20,8 @@ export const AfisFacturen = () => {
     routes,
   } = useAfisListPageData(state);
 
-  const { facturenByState } = useAfisThemaData();
-
   const listPageTableConfig = facturenTableConfig[state];
-  const facturen =
-    (state === 'open'
-      ? facturenByState?.open?.facturen
-      : facturenListResponse?.facturen) ?? [];
+  const facturen = facturenListResponse?.facturen ?? [];
 
   return (
     <ListPagePaginated<AfisFactuur>

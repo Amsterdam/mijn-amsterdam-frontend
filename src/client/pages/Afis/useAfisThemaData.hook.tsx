@@ -99,77 +99,40 @@ function useTransformFacturen(
   });
 }
 
-function useAfisOverviewApi(
+/**
+ * Uses /overview endpoint for Open and Overview facturen (All the Open facuren are loaded with this endpoint)
+ * Uses /facturen/(afgehandeld|overgedragen) for the facturen with this state.
+ */
+function useAfisFacturenApi(
   businessPartnerIdEncrypted:
     | AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
-    | undefined
+    | undefined,
+  state?: AfisFactuurState
 ) {
-  const [facturenApiResponse, fetchFacturen, isApiDataCached] =
+  const isOpenfacturenState = !state || state === 'open';
+
+  const [facturenByStateApiResponse, fetchFacturen, isApiDataCached] =
     useAppStateBagApi<AfisFacturenByStateResponse>({
       bagThema: BagThemas.AFIS,
-      key: AFIS_OVERVIEW_STATE_KEY,
+      key: isOpenfacturenState
+        ? AFIS_OVERVIEW_STATE_KEY
+        : `afis-facturen-${state}`,
     });
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
+      let url = `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`;
+      if (isOpenfacturenState) {
+        url = `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`;
+      }
       fetchFacturen({
-        url: `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`,
+        url,
       });
     }
-  }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached]);
-
-  const facturenByStateApiResponseUpdated =
-    useTransformFacturen(facturenApiResponse);
-
-  return [
-    facturenByStateApiResponseUpdated,
-    fetchFacturen,
-    isApiDataCached,
-  ] as const;
-}
-
-/**
- * Fetches facturen by state. If open facturen (on thema pagina) are already loaded, use those, all open facturen are loaded initially
- * because we consider those most important and want no additional fetching when navigatinng from Themapagina to Listpage.
- * Otherwise fetch all open facturen from api.
- */
-function useAfisListpageApi(
-  businessPartnerIdEncrypted:
-    | AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
-    | undefined,
-  state: AfisFactuurState
-) {
-  const [facturenByStateApiResponse, fetchFacturen, isApiDataCached] =
-    useAppStateBagApi<AfisFacturenByStateResponse>({
-      bagThema: BagThemas.AFIS,
-      key: `afis-facturen-${state}`,
-    });
-
-  // Check if we already loaded the open facturen from the overview api
-  const facturenByStateApiResponseOpen = useGetAppStateBagDataByKey<
-    Pick<AfisFacturenByStateResponse, 'open'>
-  >({ bagThema: BagThemas.AFIS, key: AFIS_OVERVIEW_STATE_KEY });
-
-  const hasFacturenByStateOpen = !!facturenByStateApiResponseOpen?.content;
-
-  useEffect(() => {
-    if (businessPartnerIdEncrypted && !isApiDataCached && state !== 'open') {
-      fetchFacturen({
-        url: `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`,
-      });
-    }
-  }, [
-    businessPartnerIdEncrypted,
-    fetchFacturen,
-    isApiDataCached,
-    state,
-    hasFacturenByStateOpen,
-  ]);
+  }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
 
   const facturenByStateApiResponseUpdated = useTransformFacturen(
-    state === 'open' && hasFacturenByStateOpen
-      ? facturenByStateApiResponseOpen
-      : facturenByStateApiResponse
+    facturenByStateApiResponse
   );
 
   return [
@@ -184,7 +147,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
-  const [facturenByStateApiResponse] = useAfisListpageApi(
+  const [facturenByStateApiResponse] = useAfisFacturenApi(
     businessPartnerIdEncrypted,
     state
   );
@@ -206,7 +169,7 @@ export function useAfisThemaData() {
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
-  const [facturenByStateApiResponse] = useAfisOverviewApi(
+  const [facturenByStateApiResponse] = useAfisFacturenApi(
     businessPartnerIdEncrypted
   );
 
