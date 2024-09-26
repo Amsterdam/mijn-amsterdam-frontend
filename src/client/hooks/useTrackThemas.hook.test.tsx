@@ -40,6 +40,7 @@ describe('useTrackThemas', () => {
       wrapper: mockApp,
     });
 
+    expect(trackEvent).toHaveBeenCalledOnce();
     expect(trackEvent).toHaveBeenCalledWith('themas-per-sessie', {
       themas: [
         {
