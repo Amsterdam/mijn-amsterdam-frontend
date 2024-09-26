@@ -15,7 +15,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppState } from '../../../universal/types';
 
 const testState = {
-  VERGUNNINGENv2: {
+  VERGUNNINGEN: {
     status: 'OK',
     content: [
       {

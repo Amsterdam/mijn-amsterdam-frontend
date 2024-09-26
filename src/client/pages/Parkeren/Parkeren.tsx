@@ -6,9 +6,9 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { useParkerenData } from './useParkerenData.hook';
 import { tableConfig } from '../VergunningenV2/config';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Vergunning } from '../../../server/services';
 
 export default function Parkeren() {
   const { parkeervergunningen, isLoading, isError } = useParkerenData();
@@ -24,11 +24,15 @@ export default function Parkeren() {
       },
     ]) => {
       return (
-        <ThemaPaginaTable<VergunningFrontendV2>
+        <ThemaPaginaTable<Vergunning>
           key={kind}
           title={title}
           zaken={parkeervergunningen
-            .filter(vergunningenListFilter)
+            .filter(
+              vergunningenListFilter as unknown as (
+                vergunning: Vergunning
+              ) => boolean
+            )
             .sort(vergunningenListSort)}
           listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
             kind,

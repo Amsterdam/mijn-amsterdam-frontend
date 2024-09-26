@@ -11,14 +11,14 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { appStateAtom } from '../../hooks/useAppState';
 import { MutableSnapshot } from 'recoil';
 import { AppState } from '../../../universal/types';
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { CaseType } from '../../../universal/types/vergunningen';
 
 const testState = {
-  VERGUNNINGENv2: {
+  VERGUNNINGEN: {
     status: 'OK',
     content: [
       {
-        caseType: CaseTypeV2.GPP,
+        caseType: CaseType.GPP,
         dateDecision: null,
         dateDecisionFormatted: null,
         dateEnd: null,
@@ -43,7 +43,7 @@ const testState = {
         title: 'Vergunning 1',
       },
       {
-        caseType: CaseTypeV2.GPK,
+        caseType: CaseType.GPK,
         dateDecision: null,
         dateDecisionFormatted: null,
         dateEnd: null,

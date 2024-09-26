@@ -9,9 +9,12 @@ import { useParkerenData } from './useParkerenData.hook';
 export function ParkerenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
 
-  const { parkeervergunningen, title, displayProps, isLoading, isError } =
-    useParkerenData(params.kind);
+  const { parkeervergunningen, isLoading, isError, tableConfig } =
+    useParkerenData();
   const appRouteBack = AppRoutes['PARKEREN'];
+
+  const title = tableConfig[params.kind].title;
+  const displayProps = tableConfig[params.kind].displayProps;
 
   return (
     <ListPagePaginated
