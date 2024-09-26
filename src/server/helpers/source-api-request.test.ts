@@ -113,8 +113,8 @@ describe('requestData.ts', () => {
     // expect(axiosRequestSpy.mock.calls[0][0].headers).toEqual(HEADERS_FILTERED);
   });
 
-  it('Caches the response', async () => {
-    remoteApi.get('/1').reply(200, 'whoa');
+  it('Caches the response: Valid JSON', async () => {
+    remoteApi.get('/1').reply(200, '"whoa"');
 
     const rs = await requestData(
       {
@@ -130,6 +130,20 @@ describe('requestData.ts', () => {
     vi.runAllTimers();
 
     expect(cache.get(CACHE_KEY_1)).toBe(null);
+  });
+
+  it('Does not cache the response: BAD JSON', async () => {
+    remoteApi.get('/1').reply(200, 'whoa');
+
+    const rs = await requestData(
+      {
+        url: DUMMY_URL,
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(await cache.get(CACHE_KEY_1)).toBe(null);
   });
 
   it('Does not cache the response', async () => {
