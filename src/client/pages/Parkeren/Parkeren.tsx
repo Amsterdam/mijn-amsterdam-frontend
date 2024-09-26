@@ -4,14 +4,14 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import { Button, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { useParkerenData } from './useParkerenData.hook';
-import { tableConfig } from '../VergunningenV2/config';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Vergunning } from '../../../server/services';
 
 export default function Parkeren() {
-  const { parkeervergunningen, isLoading, isError } = useParkerenData();
+  const { tableConfig, parkeervergunningen, isLoading, isError } =
+    useParkerenData();
 
   const tables = Object.entries(tableConfig).map(
     ([

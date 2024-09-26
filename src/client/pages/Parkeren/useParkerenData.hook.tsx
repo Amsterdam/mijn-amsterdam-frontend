@@ -17,12 +17,10 @@ const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
 
 export function useParkerenData() {
   const { VERGUNNINGEN } = useAppStateGetter();
-  let vergunningen = addLinkElementToProperty<Vergunning>(
-    VERGUNNINGEN.content ?? []
-  );
-
-  const parkeervergunningen = vergunningen.filter((vergunning) =>
-    PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
+  const parkeervergunningen = addLinkElementToProperty<Vergunning>(
+    (VERGUNNINGEN.content ?? []).filter((vergunning) =>
+      PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
+    )
   );
 
   return {

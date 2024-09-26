@@ -36,6 +36,7 @@ import {
   NotificationLabels,
   notificationContent,
 } from './vergunningen-content';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
@@ -368,6 +369,7 @@ export function transformVergunningenData(
 
     const vergunning = Object.assign({}, item, {
       id,
+      dateRequestFormatted: defaultDateFormat(item.dateRequest),
       documentsUrl: idEncrypted
         ? generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS, {
             id: idEncrypted,
