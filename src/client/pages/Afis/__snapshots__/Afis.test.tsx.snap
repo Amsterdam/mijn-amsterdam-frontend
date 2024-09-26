@@ -116,6 +116,30 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                 Meer over facturen van de gemeente
               </a>
             </li>
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="http://remote-api-host/sso/portaal/belastingen"
+                rel="noreferrer"
+              >
+                <span
+                  class="ams-icon ams-icon--size-5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Belastingen op Mijn Amsterdam
+              </a>
+            </li>
           </ul>
         </div>
         <div
