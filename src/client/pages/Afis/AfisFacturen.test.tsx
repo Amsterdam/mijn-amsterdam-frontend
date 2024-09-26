@@ -148,4 +148,8 @@ describe('<AfisFacturen />', () => {
       expect(screen.queryByText('15 mei 2023')).not.toBeInTheDocument();
     });
   });
+
+  test('Partial error display', () => {});
+
+  test('Error display', () => {});
 });
