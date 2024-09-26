@@ -458,11 +458,31 @@ describe('decos-service', () => {
       `);
     });
 
-    test('Bad content', async () => {
+    test('Bad content: bad json', async () => {
       remoteApi
         .get(/\/decos\/items\/123456789\/folders/)
         .times(numberOfAddressBooksToSearch)
         .reply(200, 'abc');
+
+      const responseData = await forTesting.getZakenByUserKey(
+        reqID,
+        '123456789'
+      );
+
+      expect(responseData).toMatchInlineSnapshot(`
+        {
+          "content": null,
+          "message": "Unexpected token 'a', "abc" is not valid JSON",
+          "status": "ERROR",
+        }
+      `);
+    });
+
+    test('Bad content: valid json', async () => {
+      remoteApi
+        .get(/\/decos\/items\/123456789\/folders/)
+        .times(numberOfAddressBooksToSearch)
+        .reply(200, '"abc"');
 
       const responseData = await forTesting.getZakenByUserKey(
         reqID,
