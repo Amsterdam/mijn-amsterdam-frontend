@@ -20,7 +20,7 @@ import {
   StadspasBudget,
   StadspasFrontend,
 } from './stadspas-types';
-import { isRecentNotification } from './path/to/isRecentNotification'; // Add this import
+import { isRecentNotification } from '../../../universal/helpers/utils';
 
 export async function fetchStadspas(
   requestID: RequestID,
@@ -165,7 +165,9 @@ export async function fetchStadspasNotifications(
 
   if (Array.isArray(stadspasResponse.content)) {
     const notifications = getBudgetNotifications(stadspasResponse.content);
-    return notifications.filter(isRecentNotification); // Filter notifications
+    return notifications.filter((notification) =>
+      isRecentNotification(notification.datePublished)
+    ); // Filter notifications
   }
 
   return [];

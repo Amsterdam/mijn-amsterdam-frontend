@@ -20,7 +20,6 @@ import {
   SmileAvgResponse,
   SmileAvgThemesResponse,
 } from './types';
-import notification from '../../../client/components/MyNotifications/Notification';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 
 const DEFAULT_PAGE_SIZE = 25;
