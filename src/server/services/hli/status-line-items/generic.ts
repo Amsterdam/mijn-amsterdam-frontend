@@ -7,7 +7,8 @@ import {
 function getNamenBetrokkenen(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
-  return `(${regeling.betrokkenPersonen.map((person) => person.name).join(', ')})`;
+  const names = regeling.betrokkenPersonen.map((person) => person.name);
+  return names.length === 1 ? names.join('') : `(${names.join(', ')})`;
 }
 
 export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed> =
