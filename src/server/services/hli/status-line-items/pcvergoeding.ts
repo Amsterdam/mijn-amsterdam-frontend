@@ -14,7 +14,11 @@ function getBetrokkenKinderen(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return regeling.betrokkenPersonen
-    .map((person) => `(${person.name} - ${person.dateOfBirthFormatted})`)
+    .map((person) =>
+      person.name
+        ? `(${person.name}${person.dateOfBirthFormatted ? ` - geboren op ${person.dateOfBirthFormatted}` : ''})`
+        : ''
+    )
     .join(', ');
 }
 
@@ -169,9 +173,9 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         return `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
-            ? `U krijgt een ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind ${betrokkenKinderen}`
-            : `U krijgt geen ${regeling.titel} voor uw kind ${betrokkenKinderen}`
-        }.
+            ? `U krijgt een ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+            : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+        }
         </p>
         <p>
           ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
@@ -235,9 +239,10 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
   ];
 
 export const forTesting = {
+  getBetrokkenKinderen,
+  getUpcPcvDecisionDate,
+  isRegelingVanVerzilvering,
   isVerzilvering,
   isVerzilveringVanRegeling,
-  isRegelingVanVerzilvering,
-  getUpcPcvDecisionDate,
   isWorkshopNietGevolgd,
 };

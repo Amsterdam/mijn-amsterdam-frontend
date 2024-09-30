@@ -16,17 +16,18 @@ export function useThemaMenuItems(): ThemasState {
   const appState = useAppStateGetter();
   const themaItems = themasByProfileType(profileType);
 
-  const items = themaItems.filter((item) => {
-    // Check to see if Thema has been loaded or if it is directly available
-    return item.isAlwaysVisible || isThemaActive(item, appState);
-  });
+  const items = useMemo(() => {
+    return themaItems.filter((item) => {
+      // Check to see if Thema has been loaded or if it is directly available
+      return item.isAlwaysVisible || isThemaActive(item, appState);
+    });
+  }, [themaItems, appState]);
 
-  const themaItemsWithAppState = getThemaMenuItemsAppState(
-    appState,
-    themaItems
-  );
+  const themaItemsWithAppState = useMemo(() => {
+    return getThemaMenuItemsAppState(appState, themaItems);
+  }, [appState, themaItems]);
 
-  return useMemo(
+  const themasState = useMemo(
     () => ({
       items,
       isLoading:
@@ -38,4 +39,6 @@ export function useThemaMenuItems(): ThemasState {
     }),
     [items, appState, themaItemsWithAppState]
   );
+
+  return themasState;
 }

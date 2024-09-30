@@ -5,20 +5,21 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 
 import MockApp from '../MockApp';
-import Parkeren from './Parkeren';
+import { ParkerenList } from './ParkerenList';
 
 import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { listPageParamKind } from '../VergunningenV2/config';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { appStateAtom } from '../../hooks/useAppState';
 import { MutableSnapshot } from 'recoil';
 import { AppState } from '../../../universal/types';
-import { CaseType } from '../../../universal/types/vergunningen';
 
 const testState = {
   VERGUNNINGEN: {
     status: 'OK',
     content: [
       {
-        caseType: CaseType.GPP,
+        caseType: CaseTypeV2.GPP,
         dateDecision: null,
         dateDecisionFormatted: null,
         dateEnd: null,
@@ -43,7 +44,7 @@ const testState = {
         title: 'Vergunning 1',
       },
       {
-        caseType: CaseType.GPK,
+        caseType: CaseTypeV2.GPK,
         dateDecision: null,
         dateDecisionFormatted: null,
         dateEnd: null,
@@ -75,19 +76,22 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
-describe('Parkeren', () => {
+describe('ParkerenList', () => {
   beforeAll(() => {
     (window.scrollTo as any) = vi.fn();
   });
 
-  const routeEntry = generatePath(AppRoutes.PARKEREN);
-  const routePath = AppRoutes.PARKEREN;
+  const routeEntry = generatePath(AppRoutes['PARKEREN/LIST'], {
+    kind: listPageParamKind.inProgress,
+  });
+
+  const routePath = AppRoutes['PARKEREN/LIST'];
 
   const Component = () => (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={Parkeren}
+      component={ParkerenList}
       initializeState={initializeState}
     />
   );
@@ -96,16 +100,6 @@ describe('Parkeren', () => {
     render(<Component />);
 
     expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
-  });
-
-  it('should contain the correct links', () => {
-    render(<Component />);
-
-    expect(
-      screen.getByText('Meer over parkeervergunningen')
-    ).toBeInTheDocument();
-
-    expect(screen.getByText('Log in op Mijn Parkeren')).toBeInTheDocument();
   });
 
   it('should display the list of parkeervergunningen', async () => {

@@ -1,6 +1,5 @@
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
-  ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
@@ -8,7 +7,8 @@ import {
 function getNamenBetrokkenen(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
-  return `(${regeling.betrokkenPersonen.map((person) => person.name).join(', ')})`;
+  const names = regeling.betrokkenPersonen.map((person) => person.name);
+  return names.length === 1 ? names.join('') : `(${names.join(', ')})`;
 }
 
 export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed> =
@@ -19,12 +19,15 @@ export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWith
     isActive: (stepIndex, regeling) =>
       regeling.isActueel === true || regeling.resultaat === 'afgewezen',
     description: (regeling) => {
+      const hasNamenBetrokkenen = regeling.betrokkenPersonen.some(
+        (person) => !!person.name
+      );
       return `<p>
         ${
           regeling.resultaat === 'toegewezen'
-            ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor ${getNamenBetrokkenen(regeling)}`
-            : `U krijgt geen ${regeling.titel} voor ${getNamenBetrokkenen(regeling)}`
-        }.
+            ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+            : `U krijgt geen ${regeling.titel}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+        }
         </p>
         <p>
           ${regeling.resultaat === 'toegewezen' ? 'In de brief vindt u meer informatie hierover.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
