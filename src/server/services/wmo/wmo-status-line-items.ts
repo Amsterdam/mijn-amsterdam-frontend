@@ -32,11 +32,6 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
     lineItemTransformers: hulpmiddelen,
   },
   {
-    leveringsVorm: '',
-    productsoortCodes: ['AAN', 'FIE'],
-    lineItemTransformers: hulpmiddelen,
-  },
-  {
     leveringsVorm: 'ZIN',
     productsoortCodes: [
       'AO1',
@@ -120,7 +115,7 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
   },
   {
     leveringsVorm: '',
-    productsoortCodes: ['FIE', 'FIN', 'MVV', 'MVW', 'VHK', 'VVK'],
+    productsoortCodes: ['FIE', 'FIN', 'MVV', 'MVW', 'VHK', 'VVK', 'AAN'],
     lineItemTransformers: vergoeding,
   },
   {
