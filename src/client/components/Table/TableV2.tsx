@@ -95,7 +95,7 @@ export function TableV2<T extends object = ZaakDetail>({
         <Table.Body>
           {items.map((item, index) => {
             const key = String(
-              'id' in item ? item.id : `item-${index}` ?? `tr-${index}`
+              ('id' in item ? item.id : `item-${index}`) ?? `tr-${index}`
             );
             return (
               <Table.Row key={key}>
