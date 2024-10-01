@@ -39,9 +39,10 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
       isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today),
     isActive: (stepIndex, aanvraag, today: Date) =>
       isDeliveredStatusActive(aanvraag, today),
-    description: (aanvraag) =>
-      `<p>${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.</p>
-      `,
+    description: (aanvraag, today) =>
+      isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today)
+        ? `<p>${aanvraag.leverancier} heeft ons laten weten dat de/het ${aanvraag.titel} bij u is afgeleverd.</p>`
+        : '',
   },
   EINDE_RECHT,
 ];
