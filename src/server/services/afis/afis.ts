@@ -410,10 +410,9 @@ function transformFactuur(
   const invoice = replaceXmlNulls(sourceInvoice);
   const factuurDocumentId = invoice.AccountingDocument;
   const factuurNummer = factuurDocumentId || invoice.DocumentReferenceID; // NOTE: This has to be verified with proper test data.
-  const factuurDocumentIdEncrypted = encryptSessionIdWithRouteIdParam(
-    sessionID,
-    factuurDocumentId
-  );
+  const factuurDocumentIdEncrypted = factuurDocumentId
+    ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
+    : null;
 
   const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
   const amountInBalanceTransacCrcyInCents =
@@ -455,10 +454,11 @@ function transformFactuur(
       debtClearingDateFormatted
     ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
-    documentDownloadLink: generateFullApiUrlBFF(
-      BffEndpoints.AFIS_DOCUMENT_DOWNLOAD,
-      { id: factuurDocumentIdEncrypted }
-    ),
+    documentDownloadLink: factuurDocumentIdEncrypted
+      ? generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD, {
+          id: factuurDocumentIdEncrypted,
+        })
+      : null,
   };
 }
 

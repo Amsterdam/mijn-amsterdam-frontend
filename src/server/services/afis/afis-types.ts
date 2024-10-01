@@ -124,7 +124,7 @@ export type AfisFactuur = {
   factuurDocumentId: string;
   status: AfisFactuurStatus;
   paylink: string | null;
-  documentDownloadLink: string;
+  documentDownloadLink: string | null;
   statusDescription: string;
 };
 
