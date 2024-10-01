@@ -11,7 +11,6 @@ import {
   hasFailedDependency,
   isError,
   isLoading,
-  isOk,
 } from '../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
@@ -19,11 +18,7 @@ import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
-import {
-  useAppStateBagApi,
-  useAppStateGetter,
-  useGetAppStateBagDataByKey,
-} from '../../hooks/useAppState';
+import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import {
   AfisFacturenByStateFrontend,
   businessPartnerDetailsLabels,
