@@ -164,10 +164,9 @@ export async function fetchStadspasNotifications(
   const stadspasResponse = await fetchStadspas(requestID, authProfileAndToken);
 
   if (Array.isArray(stadspasResponse.content)) {
-    const notifications = getBudgetNotifications(stadspasResponse.content);
-    return notifications.filter((notification) =>
-      isRecentNotification(notification.datePublished)
-    ); // Filter notifications
+    return getBudgetNotifications(stadspasResponse.content).filter(
+      ({ datePublished }) => isRecentNotification(datePublished)
+    );
   }
 
   return [];

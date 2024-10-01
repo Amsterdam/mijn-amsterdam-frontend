@@ -185,7 +185,6 @@ export async function fetchKlachtenNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);
-
   if (KLACHTEN.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(
       KLACHTEN.content.klachten
@@ -194,7 +193,6 @@ export async function fetchKlachtenNotifications(
           createKlachtNotification(klacht)
         )
       : [];
-
     const recentNotifications = notifications.filter((notification) =>
       isRecentNotification(notification.datePublished)
     );
