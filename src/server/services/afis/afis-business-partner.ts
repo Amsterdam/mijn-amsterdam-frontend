@@ -28,7 +28,7 @@ function transformBusinessPartnerAddressResponse(
   const [addressEntry] = getFeedEntryProperties(response);
 
   if (addressEntry) {
-    return addressEntry.AddressId;
+    return addressEntry.AddressID;
   }
 
   return null;

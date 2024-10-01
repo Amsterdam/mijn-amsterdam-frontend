@@ -52,7 +52,7 @@ export type AfisApiFeedResponseSource<T> = {
 };
 
 export type AfisBusinessPartnerAddressSource = {
-  AddressId: string;
+  AddressID: string;
 };
 
 export type AfisBusinessPartnerDetailsSource = {
