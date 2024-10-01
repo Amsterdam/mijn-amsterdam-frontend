@@ -175,7 +175,7 @@ export async function fetchAfisBusinessPartnerDetails(
   let phoneResponse: ApiResponse<AfisBusinessPartnerPhone | null>;
   let emailResponse: ApiResponse<AfisBusinessPartnerEmail | null>;
 
-  if (addressIdResponse.status === 'OK' && addressIdResponse.content !== null) {
+  if (addressIdResponse.status === 'OK' && !!addressIdResponse.content) {
     const phoneRequest = fetchPhoneNumber(requestID, addressIdResponse.content);
     const emailRequest = fetchEmail(requestID, addressIdResponse.content);
 
