@@ -56,7 +56,7 @@ module.exports = [
         id: 'standard',
         type: 'json',
         options: {
-          status: 500,
+          status: 200,
           body: {
             feed: {
               entry: [
