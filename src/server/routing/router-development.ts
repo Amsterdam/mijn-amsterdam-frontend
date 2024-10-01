@@ -27,6 +27,7 @@ import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
 import { sendUnauthorized } from './route-helpers';
+import { ONE_SECOND_MS } from '../config/app';
 
 export const authRouterDevelopment = express.Router();
 authRouterDevelopment.BFF_ID = 'router-dev';
@@ -78,7 +79,7 @@ authRouterDevelopment.get(
   async (req: Request, res: Response, next: NextFunction) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
-        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * 1000 * 2000
+        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
       ),
       httpOnly: true,
       path: '/',
