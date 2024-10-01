@@ -60,7 +60,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>U krijgt nu logeeropvang Respijt van HVO Querido.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -70,7 +70,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>HVO Querido heeft ons laten weten dat u geen logeeropvang Respijt meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -225,7 +225,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>U krijgt nu begeleid thuis individueel van Cordaan.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -235,7 +235,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Cordaan heeft ons laten weten dat u geen begeleid thuis individueel meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -327,7 +327,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>U krijgt nu hulp bij het huishouden bijzondere schoonmaak van Cordaan.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -337,7 +337,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Cordaan heeft ons laten weten dat u geen hulp bij het huishouden bijzondere schoonmaak meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -561,8 +561,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Medipoint heeft ons laten weten dat de/het rolstoelfiets bij u is afgeleverd.</p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -722,8 +721,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Kersten Hulpmiddelen heeft ons laten weten dat de/het scootmobiel voor buitengebruik bij u is afgeleverd.</p>
-      ",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -809,7 +807,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-01-01",
-          "description": "<p>U krijgt nu hulp bij het huishouden van Adonai Zorg B.V..</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -819,7 +817,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Adonai Zorg B.V. heeft ons laten weten dat u geen hulp bij het huishouden meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -905,7 +903,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-01-01",
-          "description": "<p>U krijgt nu hulp bij het huishouden kind van Cordaan.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -915,7 +913,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Cordaan heeft ons laten weten dat u geen hulp bij het huishouden kind meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -995,7 +993,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>U krijgt nu logeeropvang Mantelzorg van De Regenbooggroep.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1005,7 +1003,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>De Regenbooggroep heeft ons laten weten dat u geen logeeropvang Mantelzorg meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -1085,7 +1083,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-03-14",
-          "description": "<p>U krijgt nu dagbesteding meedoen van Amstelring.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -1095,7 +1093,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Amstelring heeft ons laten weten dat u geen dagbesteding meedoen meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -1447,8 +1445,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-05-15",
-          "description": "<p>Medipoint heeft ons laten weten dat de/het elektrische rolstoel voor binnen en buiten bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Medipoint heeft ons laten weten dat de/het elektrische rolstoel voor binnen en buiten bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -1538,7 +1535,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Emile Thuiszorg heeft ons laten weten dat u geen hulp bij het huishouden meer krijgt.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -1851,8 +1848,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Harting-Bank heeft ons laten weten dat de/het elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Harting-Bank heeft ons laten weten dat de/het elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -2689,7 +2685,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Van der Leij Bouwbedrijven B.V heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>",
+          "description": "",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -2772,8 +2768,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-11-19",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het handbewogen kinderrolstoel bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het handbewogen kinderrolstoel bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -2939,8 +2934,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het driewielfiets 5-9 jr bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het driewielfiets 5-9 jr bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3023,8 +3017,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het buggy bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het buggy bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3688,8 +3681,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-09-10",
-          "description": "<p>Medipoint heeft ons laten weten dat de/het douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Medipoint heeft ons laten weten dat de/het douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -3928,8 +3920,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Harting-Bank heeft ons laten weten dat de/het douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Harting-Bank heeft ons laten weten dat de/het douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -5008,8 +4999,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het autozitje bij u is afgeleverd.</p>
-      ",
+          "description": "<p>Welzorg heeft ons laten weten dat de/het autozitje bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
