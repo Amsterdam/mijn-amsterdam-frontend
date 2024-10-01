@@ -51,19 +51,13 @@ export type AfisApiFeedResponseSource<T> = {
   };
 };
 
+export type AfisBusinessPartnerAddressSource = {
+  AddressId: string;
+};
+
 export type AfisBusinessPartnerDetailsSource = {
   BusinessPartner: number;
-  FullName: string;
-  AddressID: number;
-  CityName: string;
-  Country: string;
-  HouseNumber: number;
-  HouseNumberSupplementText: string;
-  PostalCode: string;
-  Region: string;
-  StreetName: string;
-  StreetPrefixName: string;
-  StreetSuffixName: string;
+  BusinessPartnerFullName: string;
 };
 
 export type AfisBusinessPartnerPhoneSource = {
@@ -75,10 +69,10 @@ export type AfisBusinessPartnerEmailSource = {
 };
 
 export type AfisBusinessPartnerDetails = {
-  businessPartnerId: string;
   fullName: string;
-  addressId: number;
 };
+
+export type AfisBusinessPartnerAddressId = number | null;
 
 export type AfisBusinessPartnerPhone = {
   phone: string | null;
@@ -88,9 +82,12 @@ export type AfisBusinessPartnerEmail = {
   email: string | null;
 };
 
-export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
-  AfisBusinessPartnerPhone &
-  AfisBusinessPartnerEmail;
+export type AfisBusinessPartnerDetailsTransformed = {
+  businessPartnerId: string;
+  email?: string | null;
+  fullName?: string | null;
+  phone?: string | null;
+};
 
 export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
 

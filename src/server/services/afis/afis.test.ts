@@ -23,12 +23,10 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
 });
 
 import { jsonCopy } from '../../../universal/helpers/utils';
-import {
-  fetchAfisBusinessPartnerDetails,
-  fetchAfisDocument,
-  fetchAfisFacturen,
-  fetchIsKnownInAFIS,
-} from './afis';
+import { fetchIsKnownInAFIS } from './afis';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
+import { fetchAfisDocument } from './afis-documents';
+import { fetchAfisFacturen } from './afis-facturen';
 import { AfisFacturenParams } from './afis-types';
 
 const FACTUUR_NUMMER = '12346789';
@@ -39,9 +37,14 @@ const BASE_ROUTE = '/afis/RESTAdapter';
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
-  businesspartnerDetails: (uri: string) => {
+  businesspartnerFullName: (uri: string) => {
     return decodeURI(uri).includes(
       'ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner'
+    );
+  },
+  businesspartnerAddressId: (uri: string) => {
+    return decodeURI(uri).includes(
+      'ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress'
     );
   },
   businesspartnerPhonenumber: (uri: string) => {
@@ -274,26 +277,30 @@ describe('Afis', () => {
     });
   });
 
-  describe('fetchAfisBusinessPartner ', () => {
-    const responseBodyBusinessDetails = {
+  describe('fetchAfisBusinessPartnerDetails ', () => {
+    const responseBodyBusinessPartnerAddressId = {
       feed: {
         entry: [
           {
             content: {
               '@type': 'application/xml',
               properties: {
-                BusinessPartner: GENERIC_ID,
-                FullName: 'Taxon Expeditions BV',
                 AddressID: 430844,
-                CityName: 'Leiden',
-                Country: 'NL',
-                HouseNumber: 20,
-                HouseNumberSupplementText: '',
-                PostalCode: '2311 VW',
-                Region: '',
-                StreetName: 'Rembrandtstraat',
-                StreetPrefixName: '',
-                StreetSuffixName: '',
+              },
+            },
+          },
+        ],
+      },
+    };
+
+    const responseBodyBusinessPartnerFullName = {
+      feed: {
+        entry: [
+          {
+            content: {
+              '@type': 'application/xml',
+              properties: {
+                BusinessPartnerFullName: 'Taxon Expeditions BV',
               },
             },
           },
@@ -333,8 +340,12 @@ describe('Afis', () => {
 
     it('fetches and transforms business partner details correctly', async () => {
       remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetails);
+        .get(ROUTES.businesspartnerFullName)
+        .reply(200, responseBodyBusinessPartnerFullName);
+
+      remoteApi
+        .get(ROUTES.businesspartnerAddressId)
+        .reply(200, responseBodyBusinessPartnerAddressId);
 
       remoteApi
         .get(ROUTES.businesspartnerPhonenumber)
@@ -352,7 +363,6 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "addressId": 430844,
             "businessPartnerId": "12346789",
             "email": "xxmail@arjanappel.nl",
             "fullName": "Taxon Expeditions BV",
@@ -363,17 +373,10 @@ describe('Afis', () => {
       `);
     });
 
-    it('returns just the business partner details when there is no AddressID', async () => {
-      const responseBodyBusinessDetailsWithoutAddressID = jsonCopy(
-        responseBodyBusinessDetails
-      );
-
-      delete responseBodyBusinessDetailsWithoutAddressID.feed.entry[0].content
-        .properties.AddressID;
-
+    it('returns just the business partner fullname when there is no AddressID', async () => {
       remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetailsWithoutAddressID);
+        .get(ROUTES.businesspartnerFullName)
+        .reply(200, responseBodyBusinessPartnerFullName);
 
       const response = await fetchAfisBusinessPartnerDetails(
         REQUEST_ID,
@@ -383,9 +386,20 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "addressId": null,
             "businessPartnerId": "12346789",
             "fullName": "Taxon Expeditions BV",
+          },
+          "failedDependencies": {
+            "email": {
+              "content": null,
+              "message": "Could not get email, missing required query param addressId",
+              "status": "ERROR",
+            },
+            "phone": {
+              "content": null,
+              "message": "Could not get phone, missing required query param addressId",
+              "status": "ERROR",
+            },
           },
           "status": "OK",
         }
@@ -394,48 +408,39 @@ describe('Afis', () => {
 
     it('returns a partial error when there is an error fetching the phone number or email address', async () => {
       remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetails);
-
-      remoteApi
-        .get(ROUTES.businesspartnerPhonenumber)
-        .replyWithError('error retrieving doc');
-
-      remoteApi
-        .get(ROUTES.businesspartnerEmailAddress)
-        .replyWithError('error retrieving doc');
+        .get(ROUTES.businesspartnerFullName)
+        .reply(200, responseBodyBusinessPartnerAddressId);
 
       let response = await fetchAfisBusinessPartnerDetails(
         REQUEST_ID,
         GENERIC_ID
       );
 
-      expect(response).toMatchObject({
-        content: {
-          businessPartnerId: GENERIC_ID,
-          fullName: 'Taxon Expeditions BV',
-          addressId: ADRRESS_ID,
-        },
-        status: 'OK',
-        failedDependencies: {
-          phone: {
-            content: null,
-            message: 'error retrieving doc',
-            status: 'ERROR',
+      expect(response).toMatchInlineSnapshot(`
+        {
+          "content": {
+            "businessPartnerId": "12346789",
+            "fullName": null,
           },
-          email: {
-            content: null,
-            message: 'error retrieving doc',
-            status: 'ERROR',
+          "failedDependencies": {
+            "email": {
+              "content": null,
+              "message": "Could not get email, missing required query param addressId",
+              "status": "ERROR",
+            },
+            "phone": {
+              "content": null,
+              "message": "Could not get phone, missing required query param addressId",
+              "status": "ERROR",
+            },
           },
-        },
-      });
+          "status": "OK",
+        }
+      `);
     });
 
     it('returns an error when there is an error fetching the business partner details', async () => {
-      remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .replyWithError('error retrieving doc');
+      remoteApi.get(ROUTES.businesspartnerFullName).reply(500);
 
       const response = await fetchAfisBusinessPartnerDetails(
         REQUEST_ID,
@@ -444,16 +449,35 @@ describe('Afis', () => {
 
       expect(response).toMatchInlineSnapshot(`
         {
-          "content": null,
-          "message": "error retrieving doc",
-          "status": "ERROR",
+          "content": {
+            "businessPartnerId": "12346789",
+          },
+          "failedDependencies": {
+            "email": {
+              "content": null,
+              "message": "Could not get email, missing required query param addressId",
+              "status": "ERROR",
+            },
+            "fullName": {
+              "code": 500,
+              "content": null,
+              "message": "Request failed with status code 500",
+              "status": "ERROR",
+            },
+            "phone": {
+              "content": null,
+              "message": "Could not get phone, missing required query param addressId",
+              "status": "ERROR",
+            },
+          },
+          "status": "OK",
         }
       `);
     });
   });
 
-  it('returns null properties when the business partner details data quality is not sufficient', async () => {
-    remoteApi.get(ROUTES.businesspartnerDetails).reply(200, {
+  it('Omits email and phone properties when the business partner details data quality is not sufficient', async () => {
+    remoteApi.get(ROUTES.businesspartnerFullName).reply(200, {
       feed: {
         entry: [
           {
@@ -473,16 +497,27 @@ describe('Afis', () => {
     expect(response).toMatchInlineSnapshot(`
       {
         "content": {
-          "addressId": null,
-          "businessPartnerId": "",
+          "businessPartnerId": "12346789",
           "fullName": null,
+        },
+        "failedDependencies": {
+          "email": {
+            "content": null,
+            "message": "Could not get email, missing required query param addressId",
+            "status": "ERROR",
+          },
+          "phone": {
+            "content": null,
+            "message": "Could not get phone, missing required query param addressId",
+            "status": "ERROR",
+          },
         },
         "status": "OK",
       }
     `);
 
     // also test when the response is an array
-    remoteApi.get(ROUTES.businesspartnerDetails).reply(200, {
+    remoteApi.get(ROUTES.businesspartnerFullName).reply(200, {
       feed: {
         entry: [
           {
@@ -502,9 +537,20 @@ describe('Afis', () => {
     expect(response2).toMatchInlineSnapshot(`
       {
         "content": {
-          "addressId": null,
-          "businessPartnerId": "",
+          "businessPartnerId": "12346789",
           "fullName": null,
+        },
+        "failedDependencies": {
+          "email": {
+            "content": null,
+            "message": "Could not get email, missing required query param addressId",
+            "status": "ERROR",
+          },
+          "phone": {
+            "content": null,
+            "message": "Could not get phone, missing required query param addressId",
+            "status": "ERROR",
+          },
         },
         "status": "OK",
       }

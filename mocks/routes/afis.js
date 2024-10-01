@@ -56,7 +56,7 @@ module.exports = [
         id: 'standard',
         type: 'json',
         options: {
-          status: 200,
+          status: 500,
           body: {
             feed: {
               entry: [
@@ -65,17 +65,35 @@ module.exports = [
                     '@type': 'application/xml',
                     properties: {
                       BusinessPartner: 515177,
-                      FullName: 'Taxon Expeditions BV',
+                      BusinessPartnerFullName: 'Taxon Expeditions BV',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-businesspartner-address',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            feed: {
+              entry: [
+                {
+                  content: {
+                    '@type': 'application/xml',
+                    properties: {
                       AddressID: 430844,
-                      CityName: 'Leiden',
-                      Country: 'NL',
-                      HouseNumber: 20,
-                      HouseNumberSupplementText: '',
-                      PostalCode: '2311 VW',
-                      Region: '',
-                      StreetName: 'Rembrandtstraat',
-                      StreetPrefixName: '',
-                      StreetSuffixName: '',
                     },
                   },
                 },

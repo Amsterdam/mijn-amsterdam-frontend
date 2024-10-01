@@ -6,13 +6,12 @@ import {
   sendUnauthorized,
 } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
 import {
   FACTUUR_STATE_KEYS,
-  fetchAfisBusinessPartnerDetails,
-  fetchAfisFacturen,
   fetchAfisFacturenByState,
   fetchAfisFacturenOverview,
-} from './afis';
+} from './afis-facturen';
 import { AfisFactuurState } from './afis-types';
 
 export async function handleFetchAfisBusinessPartner(

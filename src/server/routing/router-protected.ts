@@ -6,7 +6,7 @@ import {
   fetchVergunningenDocument,
   fetchVergunningenDocumentsList,
 } from '../services';
-import { fetchAfisDocument } from '../services/afis/afis';
+import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   handleFetchAfisBusinessPartner,
   handleFetchAfisFacturen,

@@ -199,7 +199,7 @@ export function useAfisBetaalVoorkeurenData(
 ) {
   const [
     businesspartnerDetailsApiResponse,
-    fetchBusinessPartner,
+    fetchBusinessPartnerDetails,
     isApiDataCached,
   ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
     bagThema: BagThemas.AFIS,
@@ -208,11 +208,15 @@ export function useAfisBetaalVoorkeurenData(
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
-      fetchBusinessPartner({
+      fetchBusinessPartnerDetails({
         url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
       });
     }
-  }, [businessPartnerIdEncrypted, fetchBusinessPartner, isApiDataCached]);
+  }, [
+    businessPartnerIdEncrypted,
+    fetchBusinessPartnerDetails,
+    isApiDataCached,
+  ]);
 
   return {
     businesspartnerDetails: businesspartnerDetailsApiResponse.content,
@@ -232,6 +236,10 @@ export function useAfisBetaalVoorkeurenData(
     hasFailedPhoneDependency: hasFailedDependency(
       businesspartnerDetailsApiResponse,
       'phone'
+    ),
+    hasFailedFullNameDependency: hasFailedDependency(
+      businesspartnerDetailsApiResponse,
+      'fullName'
     ),
     eMandateTableConfig,
     eMandates: [],

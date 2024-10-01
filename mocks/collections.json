@@ -57,6 +57,7 @@
       "post-afis-businesspartner-kvk:standard",
       "get-afis-factuur-document:standard",
       "get-afis-businesspartner-details:standard",
+      "get-afis-businesspartner-address:standard",
       "get-afis-businesspartner-phonenumber:standard",
       "get-afis-businesspartner-emailaddress:standard",
       "get-afis-facturen:standard",

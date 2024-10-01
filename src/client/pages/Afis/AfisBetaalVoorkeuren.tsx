@@ -90,6 +90,7 @@ export function AfisBetaalVoorkeuren() {
     hasEmandatesError,
     hasFailedEmailDependency,
     hasFailedPhoneDependency,
+    hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
     isLoadingEmandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
@@ -142,12 +143,19 @@ export function AfisBetaalVoorkeuren() {
   ) : (
     <>
       {!hasBusinessPartnerDetailsError &&
-        (hasFailedEmailDependency || hasFailedPhoneDependency) && (
+        (hasFailedEmailDependency ||
+          hasFailedPhoneDependency ||
+          hasFailedFullNameDependency) && (
           <>
             De volgende gegevens konden niet worden opgehaald:
+            {hasFailedFullNameDependency && (
+              <>
+                <br />- Debiteurnaam
+              </>
+            )}
             {hasFailedEmailDependency && (
               <>
-                <br />- Email
+                <br />- E-mailadres
               </>
             )}
             {hasFailedPhoneDependency && (
@@ -177,7 +185,8 @@ export function AfisBetaalVoorkeuren() {
         (hasBusinessPartnerDetailsError && hasEmandatesError)
       }
       isPartialError={
-        hasFailedEmailDependency ||
+        hasFailedFullNameDependency ||
+        hasFailedPhoneDependency ||
         hasFailedPhoneDependency ||
         hasBusinessPartnerDetailsError ||
         hasEmandatesError
