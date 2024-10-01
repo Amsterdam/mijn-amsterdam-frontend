@@ -13,6 +13,7 @@ import { smileDateParser } from '../smile/smile-helpers';
 import { AppRoutes } from './../../../universal/config/routes';
 import { AuthProfileAndToken } from './../../auth/auth-types';
 import { Klacht, KlachtenResponse, SmileKlachtenReponse } from './types';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 
 const DEFAULT_PAGE_SIZE = 250;
 
@@ -184,7 +185,6 @@ export async function fetchKlachtenNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);
-
   if (KLACHTEN.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(
       KLACHTEN.content.klachten
@@ -193,9 +193,12 @@ export async function fetchKlachtenNotifications(
           createKlachtNotification(klacht)
         )
       : [];
+    const recentNotifications = notifications.filter((notification) =>
+      isRecentNotification(notification.datePublished)
+    );
 
     return apiSuccessResult({
-      notifications,
+      notifications: recentNotifications,
     });
   }
 

@@ -20,6 +20,7 @@ import {
   StadspasBudget,
   StadspasFrontend,
 } from './stadspas-types';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 
 export async function fetchStadspas(
   requestID: RequestID,
@@ -162,9 +163,13 @@ export async function fetchStadspasNotifications(
 ) {
   const stadspasResponse = await fetchStadspas(requestID, authProfileAndToken);
 
-  return Array.isArray(stadspasResponse.content)
-    ? getBudgetNotifications(stadspasResponse.content)
-    : [];
+  if (Array.isArray(stadspasResponse.content)) {
+    return getBudgetNotifications(stadspasResponse.content).filter(
+      ({ datePublished }) => isRecentNotification(datePublished)
+    );
+  }
+
+  return [];
 }
 
 export const forTesting = {

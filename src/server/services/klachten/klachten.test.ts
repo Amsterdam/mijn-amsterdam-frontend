@@ -3,6 +3,8 @@ import apiResponse from '../../../../mocks/fixtures/klachten.json';
 import { remoteApi } from '../../../test-utils';
 import { ApiConfig } from '../../config/source-api';
 import { AuthProfileAndToken } from './../../auth/auth-types';
+import MockDate from 'mockdate';
+
 import {
   fetchAllKlachten,
   fetchKlachtenNotifications,
@@ -10,6 +12,14 @@ import {
 } from './klachten';
 
 describe('Klachten', () => {
+  afterAll(() => {
+    MockDate.reset();
+  });
+
+  beforeAll(() => {
+    MockDate.set('2022-06-02');
+  });
+
   const requestId = '456';
 
   const profileAndToken: AuthProfileAndToken = {
@@ -104,28 +114,6 @@ describe('Klachten', () => {
               "link": {
                 "title": "Bekijk details",
                 "to": "/klachten/klacht/280321",
-              },
-              "thema": "KLACHTEN",
-              "title": "Klacht ontvangen",
-            },
-            {
-              "datePublished": "2022-02-13T00:00:00.000Z",
-              "description": "Uw klacht is ontvangen.",
-              "id": "klacht-237821-notification",
-              "link": {
-                "title": "Bekijk details",
-                "to": "/klachten/klacht/237821",
-              },
-              "thema": "KLACHTEN",
-              "title": "Klacht ontvangen",
-            },
-            {
-              "datePublished": "2022-01-12T00:00:00.000Z",
-              "description": "Uw klacht is ontvangen.",
-              "id": "klacht-438001-notification",
-              "link": {
-                "title": "Bekijk details",
-                "to": "/klachten/klacht/438001",
               },
               "thema": "KLACHTEN",
               "title": "Klacht ontvangen",
