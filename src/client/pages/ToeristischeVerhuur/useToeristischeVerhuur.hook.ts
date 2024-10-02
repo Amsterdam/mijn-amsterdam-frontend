@@ -51,23 +51,18 @@ export function useToeristischeVerhuurThemaData() {
   const hasBothVerleend =
     hasVergunningenVakantieVerhuurVerleend && hasVergunningBBVerleend;
 
-  let dependencyError = '';
-  const isBBVergunningError = hasFailedDependency(
+  const hasBBVergunningError = hasFailedDependency(
     TOERISTISCHE_VERHUUR,
     'bbVergunning'
   );
-  const isVakantieVerhuurVergunningError = hasFailedDependency(
+  const hasVakantieVerhuurVergunningError = hasFailedDependency(
     TOERISTISCHE_VERHUUR,
     'vakantieVerhuurVergunning'
   );
-
-  if (isBBVergunningError && !isVakantieVerhuurVergunningError) {
-    dependencyError = 'Wij kunnen nu geen informatie tonen over Stadspassen';
-  }
-
-  if (isVakantieVerhuurVergunningError && !isBBVergunningError) {
-    dependencyError = 'Wij kunnen nu geen informatie tonen over de regelingen';
-  }
+  const hasLVVRegistratiesError = hasFailedDependency(
+    TOERISTISCHE_VERHUUR,
+    'lvvRegistraties'
+  );
 
   return {
     vergunningen,
@@ -75,7 +70,9 @@ export function useToeristischeVerhuurThemaData() {
     title: 'Toeristische verhuur',
     isLoading: isLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),
-    dependencyError,
+    hasLVVRegistratiesError,
+    hasBBVergunningError,
+    hasVakantieVerhuurVergunningError,
     routes,
     tableConfigVergunningen,
     tableConfigLVVRegistraties,
