@@ -3,6 +3,7 @@ import {
   ZaakDetail,
 } from '../../../universal/types/App.types';
 
+// LVV Registraties
 export interface ToeristischeVerhuurRegistratieNumberSource {
   registrationNumber: string;
 }
@@ -33,6 +34,7 @@ export interface LVVRegistratiesSourceData {
   content: LVVRegistratie[];
 }
 
+// Vakantieverhuur vergunningen (DECOS)
 export interface VakantieverhuurVergunning extends ZaakDetail {
   adres: string;
   dateDecision?: string | null;
@@ -50,6 +52,7 @@ export interface VakantieverhuurVergunning extends ZaakDetail {
   title: 'Vergunning vakantieverhuur';
 }
 
+// Bead & Breakfast vergunningen (Powerbrowser)
 export type PBRecordField<K extends string = string> = {
   fieldName: K;
   fieldValue?: string;
@@ -73,7 +76,6 @@ export type SearchRequestResponse<
 
 export type PBZaakFields =
   | PBRecordField<'ZAAK_IDENTIFICATIE'>
-  // | PBRecordField<'CREATEDATE'>
   | PBRecordField<'STARTDATUM'>
   | PBRecordField<'EINDDATUM'>
   | PBRecordField<'INGANGSDATUM'>
@@ -134,8 +136,6 @@ export type PBZaakStatus =
 
 export type PBZaakResultaat =
   | null
-  // | 'Niet van toepassing'
-  // | 'Buiten behandeling'
   | 'Geweigerd'
   | 'Geweigerd op basis van Quotum'
   | 'Verleend met overgangsrecht'
@@ -152,3 +152,7 @@ export type PBZaakCompacted = {
   result: PBZaakResultaat | null;
   status: PBZaakStatus | null;
 };
+
+export type ToeristischeVerhuurVergunning =
+  | BBVergunning
+  | VakantieverhuurVergunning;

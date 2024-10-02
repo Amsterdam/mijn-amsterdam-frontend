@@ -24,21 +24,20 @@ import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import {
-  BBVergunning,
   LVVRegistratie,
-  VakantieverhuurVergunning,
+  ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur-types';
 import { fetchRegistraties } from './tv-lvv-registratie';
 import { fetchBBVergunningen } from './tv-powerbrowser-bb-vergunning';
 import { fetchVakantieverhuurVergunningen } from './tv-vakantieverhuur-vergunning';
 
 export function hasOtherActualVergunningOfSameType(
-  items: Array<VakantieverhuurVergunning | BBVergunning>,
-  item: VakantieverhuurVergunning | BBVergunning,
+  items: ToeristischeVerhuurVergunning[],
+  item: ToeristischeVerhuurVergunning,
   dateNow: Date = new Date()
 ): boolean {
   return items.some(
-    (otherVergunning: VakantieverhuurVergunning | BBVergunning) =>
+    (otherVergunning: ToeristischeVerhuurVergunning) =>
       otherVergunning.title === item.title &&
       otherVergunning.zaaknummer !== item.zaaknummer &&
       !!otherVergunning.dateEnd &&
@@ -121,8 +120,8 @@ export const fetchToeristischeVerhuur = memoize(
 );
 
 export function createToeristischeVerhuurNotification(
-  item: BBVergunning | VakantieverhuurVergunning,
-  items: Array<BBVergunning | VakantieverhuurVergunning>,
+  item: ToeristischeVerhuurVergunning,
+  items: ToeristischeVerhuurVergunning[],
   dateNow: Date = new Date()
 ): MyNotification {
   const vergunningTitleLower = item.title.toLowerCase();

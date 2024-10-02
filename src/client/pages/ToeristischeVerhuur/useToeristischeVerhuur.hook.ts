@@ -1,7 +1,4 @@
-import {
-  BBVergunning,
-  VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import {
   hasFailedDependency,
   isError,
@@ -39,9 +36,7 @@ export function useToeristischeVerhuurThemaData() {
       (vergunning) => vergunning.result === 'Verleend'
     );
 
-  const vergunningen = addLinkElementToProperty<
-    BBVergunning | VakantieverhuurVergunning
-  >(
+  const vergunningen = addLinkElementToProperty<ToeristischeVerhuurVergunning>(
     [
       ...(TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen ?? []),
       ...(TOERISTISCHE_VERHUUR.content?.bbVergunningen ?? []),
