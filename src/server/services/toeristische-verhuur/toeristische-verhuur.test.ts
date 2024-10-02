@@ -1,14 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
-import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
+import { remoteApi } from '../../../test-utils';
+import { jsonCopy } from '../../../universal/helpers/utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   createToeristischeVerhuurNotification,
   fetchToeristischeVerhuur,
 } from './toeristische-verhuur';
-import { VakantieverhuurVergunning } from './tv-vakantieverhuur-vergunning';
-import { BBVergunning } from './bb-vergunning';
-import { jsonCopy } from '../../../universal/helpers/utils';
+import {
+  BBVergunning,
+  VakantieverhuurVergunning,
+} from './toeristische-verhuur-types';
 
 describe('Toeristische verhuur service', () => {
   const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);
@@ -71,7 +73,7 @@ describe('Toeristische verhuur service', () => {
         datumingang: '2023-03-21T23:00:00.0000000Z',
         besluitdatumvervallen: '2028-06-30T22:00:00.0000000Z',
         status: 'Gereed',
-        resultaat: 'Verleend met overgangsrecht',
+        result: 'Verleend met overgangsrecht',
         initator: 'Weerd',
         adres: 'SchniffSchnaff 4C 1234AB Amsterdam',
       },
@@ -93,14 +95,12 @@ describe('Toeristische verhuur service', () => {
 
     for (const registratie of response.content.lvvRegistraties!) {
       expect(typeof registratie.registrationNumber).toBe('string');
-      expect(typeof registratie.street).toBe('string');
-      expect(typeof registratie.houseNumber).toBe('string');
-      expect(typeof registratie.postalCode).toBe('string');
+      expect(typeof registratie.address).toBe('string');
     }
 
     expect(
       response.content.vakantieverhuurVergunningen.every((vergunning) =>
-        vergunning.titel.endsWith('vakantieverhuur')
+        vergunning.title.endsWith('vakantieverhuur')
       )
     ).toBe(true);
   });
@@ -190,15 +190,17 @@ describe('Toeristische verhuur service', () => {
   it('Should create notifcations from vergunningen', async () => {
     const vakantieverhuurVergunning: VakantieverhuurVergunning = {
       id: 'Z-000-000040',
-      titel: 'Vergunning vakantieverhuur',
-      datumAfhandeling: null,
-      datumAanvraag: '10 mei 2021',
-      datumVan: '01 juni 2019',
-      datumTot: '31 mei 2020',
+      title: 'Vergunning vakantieverhuur',
+      dateDecision: null,
+      dateReceived: '10 mei 2021',
+      dateStart: '01 juni 2019',
+      dateStartFormatted: '01 juni 2019',
+      dateEnd: '31 mei 2020',
+      dateEndFormatted: '31 mei 2020',
       adres: 'Amstel 1 1017AB Amsterdam',
-      resultaat: 'Verleend',
+      result: 'Verleend',
       zaaknummer: 'Z/000/000040',
-      statussen: [
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -230,26 +232,28 @@ describe('Toeristische verhuur service', () => {
           isChecked: true,
         },
       ],
-      documentenUrl:
+      documents: [],
+      documentsUrl:
         '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
       link: {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-000-000040',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      isActief: false,
+      isActual: false,
       status: 'Afgehandeld',
     };
 
     const bbVergunnig: BBVergunning = {
-      datumAfhandeling: '22 maart 2023',
-      datumAanvraag: '13 februari 2023',
-      datumVan: '22 maart 2023',
-      datumTot: '01 juli 2028',
-      resultaat: 'Verleend',
-      heeftOvergangsRecht: true,
+      dateDecision: '22 maart 2023',
+      dateReceived: '13 februari 2023',
+      dateStart: '22 maart 2023',
+      dateStartFormatted: '22 maart 2023',
+      dateEnd: '01 juli 2028',
+      dateEndFormatted: '01 juli 2028',
+      result: 'Verleend',
       id: 'Z-23-2130506',
-      zaakId: '-999741',
       zaaknummer: 'Z/23/2130506',
+      heeftOvergangsRecht: false,
       link: {
         to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
         title: 'Vergunning bed & breakfast',
@@ -257,8 +261,9 @@ describe('Toeristische verhuur service', () => {
       adres: 'SchniffSchnaff 4C 1234AB Amsterdam',
       eigenaar: '',
       aanvrager: '',
-      titel: 'Vergunning bed & breakfast',
-      statussen: [
+      title: 'Vergunning bed & breakfast',
+      documents: [],
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -276,8 +281,7 @@ describe('Toeristische verhuur service', () => {
         },
       ],
       status: 'Afgehandeld',
-      isActief: true,
-      documents: [],
+      isActual: true,
     };
 
     const notification3 = createToeristischeVerhuurNotification(
@@ -286,17 +290,17 @@ describe('Toeristische verhuur service', () => {
     );
 
     expect(notification3.title).toBe(
-      `Aanvraag ${vakantieverhuurVergunning.titel.toLowerCase()} verleend`
+      `Aanvraag ${vakantieverhuurVergunning.title.toLowerCase()} verleend`
     );
     expect(notification3.description).toBe(
-      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.titel.toLowerCase()} met gemeentelijk zaaknummer ${
+      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.title.toLowerCase()} met gemeentelijk zaaknummer ${
         vakantieverhuurVergunning.zaaknummer
       } verleend.`
     );
     expect(notification3.link?.title).toBe('Bekijk uw aanvraag');
 
     const notification4 = createToeristischeVerhuurNotification(
-      { ...vakantieverhuurVergunning, datumTot: '2021-05-30' },
+      { ...vakantieverhuurVergunning, dateEnd: '2021-05-30' },
       []
     );
 
@@ -305,7 +309,7 @@ describe('Toeristische verhuur service', () => {
     );
 
     const notification5 = createToeristischeVerhuurNotification(
-      { ...vakantieverhuurVergunning, datumTot: '2021-08-30' },
+      { ...vakantieverhuurVergunning, dateEnd: '2021-08-30' },
       []
     );
 
@@ -325,7 +329,7 @@ describe('Toeristische verhuur service', () => {
     expect(notification6.link?.title).toBe('Bekijk uw aanvraag');
 
     const notification7 = createToeristischeVerhuurNotification(
-      { ...bbVergunnig, datumTot: '2021-05-30' },
+      { ...bbVergunnig, dateEnd: '2021-05-30' },
       []
     );
 
@@ -334,7 +338,7 @@ describe('Toeristische verhuur service', () => {
     );
 
     const notification8 = createToeristischeVerhuurNotification(
-      { ...bbVergunnig, datumTot: '2021-08-30' },
+      { ...bbVergunnig, dateEnd: '2021-08-30' },
       []
     );
 
