@@ -7,7 +7,7 @@ import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
 
 const vakantieverhuurVergunningen = [
   {
@@ -142,7 +142,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ToeristischVerhuurDetail}
+        component={ToeristischeVerhuurDetail}
         initializeState={state(testState)}
       />
     );
@@ -173,7 +173,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ToeristischVerhuurDetail}
+        component={ToeristischeVerhuurDetail}
         initializeState={state(testState)}
       />
     );
