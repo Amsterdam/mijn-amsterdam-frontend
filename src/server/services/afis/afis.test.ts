@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import { remoteApi, getAuthProfileAndToken } from '../../../test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 
 const mocks = vi.hoisted(() => {
   const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';
@@ -22,32 +22,53 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
-import {
-  fetchAfisBusinessPartnerDetails,
-  fetchAfisFacturen,
-  fetchAfisDocument,
-  fetchIsKnownInAFIS,
-} from './afis';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import { AfisFactuur } from './afis-types';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import { fetchIsKnownInAFIS } from './afis';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
+import { fetchAfisDocument } from './afis-documents';
+import { fetchAfisFacturen } from './afis-facturen';
+import { AfisFacturenParams } from './afis-types';
 
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
 const ADRRESS_ID = 430844;
-
 const BASE_ROUTE = '/afis/RESTAdapter';
-const FACTUREN_ROUTE = `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`;
+
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
-  businesspartnerDetails: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner%20eq%20%27${GENERIC_ID}%27&$select=BusinessPartner,%20FullName,%20AddressID,%20CityName,%20Country,%20HouseNumber,%20HouseNumberSupplementText,%20PostalCode,%20Region,%20StreetName,%20StreetPrefixName,%20StreetSuffixName`,
-  businesspartnerPhonenumber: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
-  businesspartnerEmailAddress: `${BASE_ROUTE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID%20eq%20%27${ADRRESS_ID}%27`,
-  openstaandeFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq false and (DunningLevel eq '0' or DunningBlockingReason eq 'D')&$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
-  geslotenFacturen: `${FACTUREN_ROUTE}?$inlinecount=allpages&$filter=Customer eq '${GENERIC_ID}' and IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')&$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,InvoiceNo,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate&$orderBy=NetDueDate asc, PostingDate asc`,
-  documentDownload: `${BASE_ROUTE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
-  documentID: `${BASE_ROUTE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${FACTUUR_NUMMER}'&$select=ArcDocId`,
+  businesspartnerFullName: (uri: string) => {
+    return decodeURI(uri).includes(
+      'ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner'
+    );
+  },
+  businesspartnerAddressId: (uri: string) => {
+    return decodeURI(uri).includes(
+      'ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress'
+    );
+  },
+  businesspartnerPhonenumber: (uri: string) => {
+    return decodeURI(uri).includes(
+      `ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`
+    );
+  },
+  businesspartnerEmailAddress: (uri: string) => {
+    return decodeURI(uri).includes(
+      `ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`
+    );
+  },
+  openstaandeFacturen: (uri: string) => {
+    return decodeURI(uri).includes(`IsCleared eq false`);
+  },
+  geslotenFacturen: (uri: string) => {
+    return decodeURI(uri).includes('and IsCleared eq true');
+  },
+  documentDownload: (uri: string) => {
+    return decodeURI(uri).includes('API_CV_ATTACHMENT_SRV');
+  },
+  documentID: (uri: string) => {
+    return decodeURI(uri).includes('ZFI_CDS_TOA02');
+  },
 };
 
 const REQUEST_ID = '456';
@@ -256,26 +277,30 @@ describe('Afis', () => {
     });
   });
 
-  describe('fetchAfisBusinessPartner ', () => {
-    const responseBodyBusinessDetails = {
+  describe('fetchAfisBusinessPartnerDetails ', () => {
+    const responseBodyBusinessPartnerAddressId = {
       feed: {
         entry: [
           {
             content: {
               '@type': 'application/xml',
               properties: {
-                BusinessPartner: GENERIC_ID,
-                FullName: 'Taxon Expeditions BV',
                 AddressID: 430844,
-                CityName: 'Leiden',
-                Country: 'NL',
-                HouseNumber: 20,
-                HouseNumberSupplementText: '',
-                PostalCode: '2311 VW',
-                Region: '',
-                StreetName: 'Rembrandtstraat',
-                StreetPrefixName: '',
-                StreetSuffixName: '',
+              },
+            },
+          },
+        ],
+      },
+    };
+
+    const responseBodyBusinessPartnerFullName = {
+      feed: {
+        entry: [
+          {
+            content: {
+              '@type': 'application/xml',
+              properties: {
+                BusinessPartnerFullName: 'Taxon Expeditions BV',
               },
             },
           },
@@ -315,8 +340,12 @@ describe('Afis', () => {
 
     it('fetches and transforms business partner details correctly', async () => {
       remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetails);
+        .get(ROUTES.businesspartnerFullName)
+        .reply(200, responseBodyBusinessPartnerFullName);
+
+      remoteApi
+        .get(ROUTES.businesspartnerAddressId)
+        .reply(200, responseBodyBusinessPartnerAddressId);
 
       remoteApi
         .get(ROUTES.businesspartnerPhonenumber)
@@ -334,7 +363,6 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "addressId": 430844,
             "businessPartnerId": "12346789",
             "email": "xxmail@arjanappel.nl",
             "fullName": "Taxon Expeditions BV",
@@ -345,17 +373,10 @@ describe('Afis', () => {
       `);
     });
 
-    it('returns just the business partner details when there is no AddressID', async () => {
-      const responseBodyBusinessDetailsWithoutAddressID = jsonCopy(
-        responseBodyBusinessDetails
-      );
-
-      delete responseBodyBusinessDetailsWithoutAddressID.feed.entry[0].content
-        .properties.AddressID;
-
+    it('returns just the business partner fullname when there is no AddressID', async () => {
       remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetailsWithoutAddressID);
+        .get(ROUTES.businesspartnerFullName)
+        .reply(200, responseBodyBusinessPartnerFullName);
 
       const response = await fetchAfisBusinessPartnerDetails(
         REQUEST_ID,
@@ -365,9 +386,20 @@ describe('Afis', () => {
       expect(response).toMatchInlineSnapshot(`
         {
           "content": {
-            "addressId": null,
             "businessPartnerId": "12346789",
             "fullName": "Taxon Expeditions BV",
+          },
+          "failedDependencies": {
+            "email": {
+              "content": null,
+              "message": "Could not get email, missing required query param addressId",
+              "status": "ERROR",
+            },
+            "phone": {
+              "content": null,
+              "message": "Could not get phone, missing required query param addressId",
+              "status": "ERROR",
+            },
           },
           "status": "OK",
         }
@@ -376,48 +408,39 @@ describe('Afis', () => {
 
     it('returns a partial error when there is an error fetching the phone number or email address', async () => {
       remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .reply(200, responseBodyBusinessDetails);
-
-      remoteApi
-        .get(ROUTES.businesspartnerPhonenumber)
-        .replyWithError('error retrieving doc');
-
-      remoteApi
-        .get(ROUTES.businesspartnerEmailAddress)
-        .replyWithError('error retrieving doc');
+        .get(ROUTES.businesspartnerFullName)
+        .reply(200, responseBodyBusinessPartnerAddressId);
 
       let response = await fetchAfisBusinessPartnerDetails(
         REQUEST_ID,
         GENERIC_ID
       );
 
-      expect(response).toMatchObject({
-        content: {
-          businessPartnerId: GENERIC_ID,
-          fullName: 'Taxon Expeditions BV',
-          addressId: ADRRESS_ID,
-        },
-        status: 'OK',
-        failedDependencies: {
-          phone: {
-            content: null,
-            message: 'error retrieving doc',
-            status: 'ERROR',
+      expect(response).toMatchInlineSnapshot(`
+        {
+          "content": {
+            "businessPartnerId": "12346789",
+            "fullName": null,
           },
-          email: {
-            content: null,
-            message: 'error retrieving doc',
-            status: 'ERROR',
+          "failedDependencies": {
+            "email": {
+              "content": null,
+              "message": "Could not get email, missing required query param addressId",
+              "status": "ERROR",
+            },
+            "phone": {
+              "content": null,
+              "message": "Could not get phone, missing required query param addressId",
+              "status": "ERROR",
+            },
           },
-        },
-      });
+          "status": "OK",
+        }
+      `);
     });
 
     it('returns an error when there is an error fetching the business partner details', async () => {
-      remoteApi
-        .get(ROUTES.businesspartnerDetails)
-        .replyWithError('error retrieving doc');
+      remoteApi.get(ROUTES.businesspartnerFullName).reply(500);
 
       const response = await fetchAfisBusinessPartnerDetails(
         REQUEST_ID,
@@ -426,16 +449,35 @@ describe('Afis', () => {
 
       expect(response).toMatchInlineSnapshot(`
         {
-          "content": null,
-          "message": "error retrieving doc",
-          "status": "ERROR",
+          "content": {
+            "businessPartnerId": "12346789",
+          },
+          "failedDependencies": {
+            "email": {
+              "content": null,
+              "message": "Could not get email, missing required query param addressId",
+              "status": "ERROR",
+            },
+            "fullName": {
+              "code": 500,
+              "content": null,
+              "message": "Request failed with status code 500",
+              "status": "ERROR",
+            },
+            "phone": {
+              "content": null,
+              "message": "Could not get phone, missing required query param addressId",
+              "status": "ERROR",
+            },
+          },
+          "status": "OK",
         }
       `);
     });
   });
 
-  it('returns null properties when the business partner details data quality is not sufficient', async () => {
-    remoteApi.get(ROUTES.businesspartnerDetails).reply(200, {
+  it('Omits email and phone properties when the business partner details data quality is not sufficient', async () => {
+    remoteApi.get(ROUTES.businesspartnerFullName).reply(200, {
       feed: {
         entry: [
           {
@@ -455,16 +497,27 @@ describe('Afis', () => {
     expect(response).toMatchInlineSnapshot(`
       {
         "content": {
-          "addressId": null,
-          "businessPartnerId": "",
+          "businessPartnerId": "12346789",
           "fullName": null,
+        },
+        "failedDependencies": {
+          "email": {
+            "content": null,
+            "message": "Could not get email, missing required query param addressId",
+            "status": "ERROR",
+          },
+          "phone": {
+            "content": null,
+            "message": "Could not get phone, missing required query param addressId",
+            "status": "ERROR",
+          },
         },
         "status": "OK",
       }
     `);
 
     // also test when the response is an array
-    remoteApi.get(ROUTES.businesspartnerDetails).reply(200, {
+    remoteApi.get(ROUTES.businesspartnerFullName).reply(200, {
       feed: {
         entry: [
           {
@@ -484,9 +537,20 @@ describe('Afis', () => {
     expect(response2).toMatchInlineSnapshot(`
       {
         "content": {
-          "addressId": null,
-          "businessPartnerId": "",
+          "businessPartnerId": "12346789",
           "fullName": null,
+        },
+        "failedDependencies": {
+          "email": {
+            "content": null,
+            "message": "Could not get email, missing required query param addressId",
+            "status": "ERROR",
+          },
+          "phone": {
+            "content": null,
+            "message": "Could not get phone, missing required query param addressId",
+            "status": "ERROR",
+          },
         },
         "status": "OK",
       }
@@ -501,53 +565,55 @@ describe('Afis', () => {
         .get(ROUTES.openstaandeFacturen)
         .reply(200, require('./test-fixtures/openstaande-facturen.json'));
 
-      const openParams = {
-        state: 'open' as 'open',
+      const openParams: AfisFacturenParams = {
+        state: 'open',
         businessPartnerID: GENERIC_ID,
-        top: undefined,
       };
 
-      const response = (await fetchAfisFacturen(
+      const response = await fetchAfisFacturen(
         REQUEST_ID,
         authProfileAndToken.profile.sid,
         openParams
-      )) as ApiSuccessResponse<AfisFactuur[]>;
+      );
 
       // All fields are listed here to test correct formatting.
-      const openFactuur = response.content[0];
-      expect(openFactuur).toStrictEqual({
-        afzender: 'Bedrijf: Ok',
-        amountOwed: 343,
-        amountOwedFormatted: '€ 343,00',
-        datePublished: '2023-11-21T00:00:00',
-        datePublishedFormatted: '21 november 2023',
-        debtClearingDate: null,
-        debtClearingDateFormatted: null,
-        documentDownloadLink:
-          'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
-        factuurNummer: '5555555',
-        paylink: 'http://localhost:3100/mocks-server/afis/paylink',
-        paymentDueDate: '2023-12-21T00:00:00',
-        paymentDueDateFormatted: '21 december 2023',
-        status: 'in-dispuut',
-        statusDescription: 'In dispuut',
-      });
+      const openFactuur = response.content?.facturen[0];
+      expect(openFactuur).toMatchInlineSnapshot(`
+        {
+          "afzender": "Bedrijf: Ok",
+          "amountOwed": 343,
+          "amountOwedFormatted": "€ 343,00",
+          "datePublished": "2023-11-21T00:00:00",
+          "datePublishedFormatted": "21 november 2023",
+          "debtClearingDate": null,
+          "debtClearingDateFormatted": null,
+          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx",
+          "factuurDocumentId": "5555555",
+          "factuurNummer": "5555555",
+          "id": "5555555",
+          "paylink": "http://localhost:3100/mocks-server/afis/paylink",
+          "paymentDueDate": "2023-12-21T00:00:00",
+          "paymentDueDateFormatted": "21 december 2023",
+          "status": "in-dispuut",
+          "statusDescription": "In dispuut",
+        }
+      `);
 
-      const automatischeIncassoFactuur = response.content[1];
-      expect(automatischeIncassoFactuur.status).toBe('openstaand');
-      expect(automatischeIncassoFactuur.paymentDueDate).toBe(
+      const automatischeIncassoFactuur = response.content?.facturen[1];
+      expect(automatischeIncassoFactuur?.status).toBe('openstaand');
+      expect(automatischeIncassoFactuur?.paymentDueDate).toBe(
         '2023-12-12T00:00:00'
       );
 
-      const inDispuutInvoice = response.content[2];
-      expect(inDispuutInvoice.status).toBe('automatische-incasso');
+      const inDispuutInvoice = response.content?.facturen[2];
+      expect(inDispuutInvoice?.status).toBe('automatische-incasso');
 
-      const geldTerugInvoice = response.content[3];
-      expect(geldTerugInvoice.status).toBe('geld-terug');
-      expect(geldTerugInvoice.statusDescription.includes('-')).toBe(false);
+      const geldTerugInvoice = response.content?.facturen[3];
+      expect(geldTerugInvoice?.status).toBe('geld-terug');
+      expect(geldTerugInvoice?.statusDescription.includes('-')).toBe(false);
 
-      const unknownStatusInvoice = response.content[4];
-      expect(unknownStatusInvoice.status).toBe('onbekend');
+      const unknownStatusInvoice = response.content?.facturen[4];
+      expect(unknownStatusInvoice?.status).toBe('onbekend');
     });
 
     test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
@@ -555,42 +621,45 @@ describe('Afis', () => {
         .get(ROUTES.geslotenFacturen)
         .reply(200, require('./test-fixtures/afgehandelde-facturen.json'));
 
-      const closedParams = {
-        state: 'closed' as 'closed',
+      const closedParams: AfisFacturenParams = {
+        state: 'afgehandeld',
         businessPartnerID: GENERIC_ID,
         top: undefined,
       };
 
-      const response = (await fetchAfisFacturen(
+      const response = await fetchAfisFacturen(
         REQUEST_ID,
         authProfileAndToken.profile.sid,
         closedParams
-      )) as ApiSuccessResponse<AfisFactuur[]>;
+      );
 
-      const geannuleerdeInvoice = response.content[0];
-      expect(geannuleerdeInvoice).toStrictEqual({
-        afzender: 'Lisan al Gaib inc.',
-        amountOwed: 0,
-        amountOwedFormatted: '€ 0',
-        datePublished: null,
-        datePublishedFormatted: null,
-        debtClearingDate: null,
-        debtClearingDateFormatted: null,
-        documentDownloadLink:
-          'http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx',
-        factuurNummer: 'INV-2023-010',
-        paylink: null,
-        paymentDueDate: '2023-12-21T00:00:00',
-        paymentDueDateFormatted: '21 december 2023',
-        status: 'geannuleerd',
-        statusDescription: 'Geannuleerd',
-      });
+      const geannuleerdeInvoice = response.content?.facturen[0];
+      expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
+        {
+          "afzender": "Lisan al Gaib inc.",
+          "amountOwed": 0,
+          "amountOwedFormatted": "€ 0",
+          "datePublished": null,
+          "datePublishedFormatted": null,
+          "debtClearingDate": null,
+          "debtClearingDateFormatted": null,
+          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx",
+          "factuurDocumentId": "INV-2023-010",
+          "factuurNummer": "INV-2023-010",
+          "id": "INV-2023-010",
+          "paylink": null,
+          "paymentDueDate": "2023-12-21T00:00:00",
+          "paymentDueDateFormatted": "21 december 2023",
+          "status": "geannuleerd",
+          "statusDescription": "Geannuleerd",
+        }
+      `);
 
-      const betaaldeInvoice = response.content[1];
-      expect(betaaldeInvoice.status).toStrictEqual('geannuleerd');
+      const betaaldeInvoice = response.content?.facturen[1];
+      expect(betaaldeInvoice?.status).toStrictEqual('geannuleerd');
 
-      const unknownStatusInvoice = response.content[2];
-      expect(unknownStatusInvoice.status).toStrictEqual('geannuleerd');
+      const unknownStatusInvoice = response.content?.facturen[2];
+      expect(unknownStatusInvoice?.status).toStrictEqual('geannuleerd');
     });
   });
 

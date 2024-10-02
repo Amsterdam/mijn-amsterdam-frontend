@@ -1,5 +1,3 @@
-import { ZaakDetail } from '../../../universal/types';
-
 type JaOfNee = 'Ja' | 'Nee';
 
 /** Business partner private response from external AFIS API.
@@ -42,6 +40,7 @@ export type AfisBusinessPartnerKnownResponse = {
 
 export type AfisApiFeedResponseSource<T> = {
   feed?: {
+    count?: number;
     entry?: [
       {
         content?: {
@@ -52,19 +51,13 @@ export type AfisApiFeedResponseSource<T> = {
   };
 };
 
+export type AfisBusinessPartnerAddressSource = {
+  AddressID: string;
+};
+
 export type AfisBusinessPartnerDetailsSource = {
   BusinessPartner: number;
-  FullName: string;
-  AddressID: number;
-  CityName: string;
-  Country: string;
-  HouseNumber: number;
-  HouseNumberSupplementText: string;
-  PostalCode: string;
-  Region: string;
-  StreetName: string;
-  StreetPrefixName: string;
-  StreetSuffixName: string;
+  BusinessPartnerFullName: string;
 };
 
 export type AfisBusinessPartnerPhoneSource = {
@@ -76,10 +69,10 @@ export type AfisBusinessPartnerEmailSource = {
 };
 
 export type AfisBusinessPartnerDetails = {
-  businessPartnerId: string;
   fullName: string;
-  addressId: number;
 };
+
+export type AfisBusinessPartnerAddressId = number | null;
 
 export type AfisBusinessPartnerPhone = {
   phone: string | null;
@@ -89,13 +82,32 @@ export type AfisBusinessPartnerEmail = {
   email: string | null;
 };
 
-export type AfisBusinessPartnerDetailsTransformed = AfisBusinessPartnerDetails &
-  AfisBusinessPartnerPhone &
-  AfisBusinessPartnerEmail;
+export type AfisBusinessPartnerDetailsTransformed = {
+  businessPartnerId: string;
+  email?: string | null;
+  fullName?: string | null;
+  phone?: string | null;
+};
 
-export type AfisFactuurState = 'open' | 'closed';
+export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
+
+export type AfisFacturenResponse = {
+  count: number;
+  facturen: AfisFactuur[];
+};
+
+export type AfisFacturenByStateResponse = {
+  [key in AfisFactuurState]?: AfisFacturenResponse | null;
+};
+
+export type AfisFacturenParams = {
+  state: AfisFactuurState;
+  businessPartnerID: string;
+  top?: string;
+};
 
 export type AfisFactuur = {
+  id: string;
   afzender: string;
   datePublished: string | null;
   datePublishedFormatted: string | null;
@@ -106,20 +118,23 @@ export type AfisFactuur = {
   amountOwed: number;
   amountOwedFormatted: string;
   factuurNummer: string;
+  factuurDocumentId: string;
   status: AfisFactuurStatus;
   paylink: string | null;
-  documentDownloadLink: string;
+  documentDownloadLink: string | null;
   statusDescription: string;
-} & Omit<ZaakDetail, 'steps' | 'link' | 'title' | 'id'>;
+};
 
 type AfisFactuurStatus =
   | 'openstaand'
   | 'automatische-incasso'
   | 'in-dispuut'
   | 'gedeeltelijke-betaling'
+  | 'overgedragen-aan-belastingen'
   | 'geld-terug'
   | 'betaald'
   | 'geannuleerd'
+  | 'herinnering'
   | 'onbekend';
 
 export type AfisOpenInvoiceSource =
@@ -136,20 +151,21 @@ export type AfisOpenInvoiceSource =
  *  `IsCleared`: `true` means the 'factuur' is fully payed for.
  */
 export type AfisFactuurPropertiesSource = {
-  DunningLevel: number;
-  DunningBlockingReason: string;
-  ProfitCenterName: string;
-  SEPAMandate: string;
-  PostingDate: string;
+  AccountingDocument: string;
   AccountingDocumentType: string;
+  AmountInBalanceTransacCrcy: string;
+  ClearingDate?: string;
+  DocumentReferenceID: string;
+  DunningBlockingReason: string;
+  DunningLevel: number;
+  IsCleared?: boolean;
   NetDueDate: string;
   NetPaymentAmount: string;
-  AmountInBalanceTransacCrcy: string;
-  InvoiceNo: string;
   Paylink: string | null;
-  IsCleared?: boolean;
-  ClearingDate?: string;
+  PostingDate: string;
+  ProfitCenterName: string;
   ReverseDocument?: string;
+  SEPAMandate: string;
 };
 
 export type AfisArcDocID = AfisDocumentIDPropertiesSource['ArcDocId'];

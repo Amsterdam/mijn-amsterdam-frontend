@@ -1,13 +1,13 @@
 import { getFromEnv } from '../../server/helpers/env';
 
 export const DEV_USER_ID_DEFAULT =
-  getFromEnv('MA_PROFILE_DEV_ID') || 'I.M Mokum';
+  getFromEnv('MA_PROFILE_DEV_ID', false) || 'I.M Mokum';
 
 // accounts in  a string: foo=1234,bar=8098
 const accountsDigid =
-  getFromEnv('MA_TEST_ACCOUNTS') || `dev=${DEV_USER_ID_DEFAULT}`;
+  getFromEnv('MA_TEST_ACCOUNTS', false) || `dev=${DEV_USER_ID_DEFAULT}`;
 const accountsEherkenning =
-  getFromEnv('MA_TEST_ACCOUNTS_EH') || `dev=${DEV_USER_ID_DEFAULT}`;
+  getFromEnv('MA_TEST_ACCOUNTS_EH', false) || `dev=${DEV_USER_ID_DEFAULT}`;
 
 function splitUsersIntoRecord(accounts: string) {
   return accounts.split(',').reduce(

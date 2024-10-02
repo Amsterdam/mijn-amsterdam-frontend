@@ -30,7 +30,7 @@ function initializeState(snapshot: MutableSnapshot) {
 describe('<AfisBetaalVoorkeuren />', () => {
   const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
     addressId: 999,
-    businessPartnerId: 515177,
+    businessPartnerId: '515177',
     fullName: 'Taxon Expeditions BV',
     phone: null,
     email: null,
@@ -44,14 +44,18 @@ describe('<AfisBetaalVoorkeuren />', () => {
     });
 
   bffApi
-    .get(`/services/afis/facturen/${businessPartnerIdEncrypted}`)
+    .get(`/services/afis/facturen/overzicht/${businessPartnerIdEncrypted}`)
     .reply(200, {
-      content: [],
+      content: {
+        open: { facturen: [], count: 0 },
+        afgehandeld: { facturen: [], count: 0 },
+        overgedragen: { facturen: [], count: 0 },
+      },
       status: 'OK',
     });
 
-  const routeEntry = generatePath(AppRoutes['AFIS/BETAALVOORKEUREN']);
   const routePath = AppRoutes['AFIS/BETAALVOORKEUREN'];
+  const routeEntry = generatePath(routePath);
 
   const Component = () => (
     <MockApp
@@ -62,17 +66,20 @@ describe('<AfisBetaalVoorkeuren />', () => {
     />
   );
 
-  it('Matches the Full Page snapshot', async () => {
-    const screen = render(<Component />);
+  test('Display business partner details', async () => {
     const user = userEvent.setup();
 
-    const toonButton = screen.getByText('Toon');
-    await user.click(toonButton);
+    let screen = render(<Component />);
 
     await waitFor(() => {
       expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();
     });
 
-    expect(screen.asFragment()).toMatchSnapshot();
+    const verbergKnop = screen.getByText('Verberg');
+    expect(verbergKnop).toBeInTheDocument();
+
+    await user.click(verbergKnop);
+
+    expect(screen.getByText('Toon')).toBeInTheDocument();
   });
 });

@@ -21,6 +21,7 @@ import { DatalistGeneral } from './DatalistGeneral';
 import { DatalistJuridisch } from './DatalistJuridisch';
 import { DatalistsFinancieel } from './DatalistsFinancieel';
 import styles from './ErfpachtDossierDetail.module.scss';
+import { isError, isLoading } from '../../../../universal/helpers/api';
 
 const loadingContentBarConfig: BarConfig = [
   ['12rem', '2rem', '.5rem'],
@@ -45,12 +46,13 @@ export default function ErfpachtDossierDetail() {
     dossierNummerUrlParam: string;
   }>();
   const { ERFPACHTv2 } = useErfpachtV2Data();
-  const [dossier, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
+  const [dossierApiResponse] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
     url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
     bagThema: BagThemas.ERFPACHTv2,
     key: dossierNummerUrlParam,
   });
-  const noContent = !api.isLoading && !dossier;
+  const dossier = dossierApiResponse.content;
+  const noContent = !isLoading(dossierApiResponse) && !dossier;
 
   return (
     <DetailPage className={styles.ErfpachtDetail}>
@@ -65,10 +67,10 @@ export default function ErfpachtDossierDetail() {
       </PageHeading>
       <Screen>
         <Grid className={styles.Grid}>
-          {api.isLoading && (
+          {isLoading(dossierApiResponse) && (
             <LoadingContent barConfig={loadingContentBarConfig} />
           )}
-          {(api.isError || noContent) && (
+          {(isError(dossierApiResponse) || noContent) && (
             <Grid.Cell span="all">
               <ErrorAlert>
                 We kunnen op dit moment geen erfpachtdossier tonen.

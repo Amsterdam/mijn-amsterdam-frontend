@@ -1,59 +1,105 @@
-import { Button, Paragraph } from '@amsterdam/design-system-react';
-import { generatePath, useHistory } from 'react-router-dom';
+import {
+  Alert,
+  Button,
+  Grid,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { entries } from '../../../universal/helpers/utils';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { useAfisThemaData } from './useAfisThemaData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
-import { AfisFactuur } from '../../../server/services/afis/afis-types';
-import { ListPageParamKind } from './Afis-thema-config';
+import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
+import { useAfisThemaData } from './useAfisThemaData.hook';
+
+const pageContentTop = (
+  <Paragraph>
+    Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen
+    van belastingen. U kunt deze bij belastingen vinden.
+  </Paragraph>
+);
 
 export function AfisThemaPagina() {
   const history = useHistory();
   const {
-    facturen,
+    dependencyErrors,
+    facturenByState,
     facturenTableConfig,
-    isFacturenError,
-    isFacturenLoading,
     isThemaPaginaError,
     isThemaPaginaLoading,
+    isOverviewApiError,
+    isOverviewApiLoading,
+    listPageTitle,
     routes,
-    hasFailedFacturenOpenDependency,
-    hasFailedFacturenClosedDependency,
   } = useAfisThemaData();
 
-  const pageContentTop = (
-    <>
-      <Paragraph className="ams-mb--sm">
-        Hieronder kunt u uw facturatiegegevens inzien en een automatische
-        incasso instellen per afdeling van de gemeente.
-      </Paragraph>
+  const isPartialError = entries(dependencyErrors).some(
+    ([, hasError]) => hasError
+  );
+
+  const pageContentSecondary = (
+    <Grid.Cell span="all">
       <Button
+        className="ams-mb--sm"
         variant="secondary"
         onClick={() => history.push(routes.betaalVoorkeuren)}
       >
         Betaalvoorkeuren
       </Button>
+      <Alert severity="warning">
+        <UnorderedList>
+          <UnorderedList.Item>
+            De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
+            wijzigingen.
+          </UnorderedList.Item>
+          <UnorderedList.Item>
+            Betalingsregelingen zijn niet zichtbaar in dit overzicht.
+          </UnorderedList.Item>
+        </UnorderedList>
+      </Alert>
+    </Grid.Cell>
+  );
+
+  const pageContentErrorAlert = (
+    <>
+      We kunnen niet alle gegevens tonen.{' '}
+      {entries(dependencyErrors)
+        .filter(([, hasError]) => hasError)
+        .map(([state]) => (
+          <React.Fragment key={state}>
+            <br />- {listPageTitle[state]} kunnen nu niet getoond worden.
+          </React.Fragment>
+        ))}
     </>
   );
 
-  const pageContentTables = Object.entries(facturenTableConfig).map(
-    ([kind, { title, displayProps, maxItems }]) => {
-      const kindFacturen = (
-        facturen as { [K in ListPageParamKind]: AfisFactuur[] }
-      )[kind as ListPageParamKind];
+  const pageContentTables = entries(facturenTableConfig).map(
+    ([
+      state,
+      {
+        title,
+        subTitle,
+        displayProps,
+        maxItems,
+        listPageLinkLabel,
+        listPageRoute,
+      },
+    ]) => {
       return (
-        <ThemaPaginaTable<AfisFactuur>
-          key={kind}
+        <ThemaPaginaTable<AfisFactuurFrontend>
+          key={state}
           title={title}
-          zaken={kindFacturen}
+          subTitle={subTitle}
+          zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
           maxItems={maxItems}
-          listPageRoute={generatePath(AppRoutes['AFIS/FACTUREN'], {
-            kind,
-          })}
+          totalItems={facturenByState?.[state]?.count}
+          listPageLinkLabel={listPageLinkLabel}
+          listPageRoute={listPageRoute}
           className={styles.FacturenTable}
         />
       );
@@ -63,21 +109,27 @@ export function AfisThemaPagina() {
   return (
     <ThemaPagina
       title={ThemaTitles.AFIS}
-      isError={isFacturenError && isThemaPaginaError}
-      isPartialError={
-        isFacturenError ||
-        hasFailedFacturenOpenDependency ||
-        hasFailedFacturenClosedDependency
-      }
-      isLoading={isThemaPaginaLoading || isFacturenLoading}
+      isError={isOverviewApiError && isThemaPaginaError}
+      isPartialError={isPartialError}
+      errorAlertContent={pageContentErrorAlert}
+      isLoading={isThemaPaginaLoading || isOverviewApiLoading}
       linkListItems={[
         {
           to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
           title: 'Meer over facturen van de gemeente',
         },
+        {
+          to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
+          title: 'Belastingen op Mijn Amsterdam',
+        },
       ]}
       pageContentTop={pageContentTop}
-      pageContentTables={pageContentTables}
+      pageContentTables={
+        <>
+          {pageContentSecondary}
+          {pageContentTables}
+        </>
+      }
     />
   );
 }

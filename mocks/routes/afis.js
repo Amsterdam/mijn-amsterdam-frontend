@@ -65,17 +65,35 @@ module.exports = [
                     '@type': 'application/xml',
                     properties: {
                       BusinessPartner: 515177,
-                      FullName: 'Taxon Expeditions BV',
+                      BusinessPartnerFullName: 'Taxon Expeditions BV',
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-businesspartner-address',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            feed: {
+              entry: [
+                {
+                  content: {
+                    '@type': 'application/xml',
+                    properties: {
                       AddressID: 430844,
-                      CityName: 'Leiden',
-                      Country: 'NL',
-                      HouseNumber: 20,
-                      HouseNumberSupplementText: '',
-                      PostalCode: '2311 VW',
-                      Region: '',
-                      StreetName: 'Rembrandtstraat',
-                      StreetPrefixName: '',
-                      StreetSuffixName: '',
                     },
                   },
                 },
@@ -152,16 +170,41 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            const isAboutClosedInvoices = req.query?.['$filter']?.includes(
-              `IsCleared eq true and (DunningLevel eq '0' or ReverseDocument ne '')`
-            );
-            const filename = isAboutClosedInvoices
-              ? 'afgehandelde-facturen'
-              : 'openstaande-facturen';
+            const stateFilters = {
+              openstaande: 'IsCleared eq false',
+              afgehandelde: `DunningLevel ne '3' or ReverseDocument ne ''`,
+              overgedragen: `DunningLevel eq '3'`,
+            };
+
+            const stateName = Object.entries(stateFilters).find(
+              ([name, filterValueSegment]) => {
+                return req.query?.['$filter']?.includes(filterValueSegment);
+              }
+            )?.[0];
+
+            if (!stateName) {
+              return res.status(500).end();
+            }
 
             // DO NOT adjust this mock data (tests depend on it).
             // If needed copy, mutate and let it point to the newly made copy.
-            return res.send(require(`../fixtures/afis/${filename}.json`));
+            const facturenData = require(
+              `../fixtures/afis/${stateName}-facturen.json`
+            );
+
+            if (req.query?.['$top']) {
+              return res.send({
+                feed: {
+                  count: facturenData.feed.count,
+                  entry: facturenData.feed.entry.slice(
+                    0,
+                    parseInt(req.query?.['$top'], 10)
+                  ),
+                },
+              });
+            }
+
+            return res.send(facturenData);
           },
         },
       },
@@ -183,9 +226,9 @@ module.exports = [
     ],
   },
   {
-    id: 'post-afis-factuur-document',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
-    method: 'POST',
+    id: 'get-afis-factuur-document',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
+    method: 'GET',
     variants: [
       {
         id: 'standard',
@@ -193,6 +236,23 @@ module.exports = [
         options: {
           status: 200,
           body: require('../fixtures/afis/document.json'),
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-paylink',
+    url: `${settings.MOCK_BASE_PATH}/afis/paylink`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (req, res, next, core) => {
+            const htmlResponse = `<h1>Afis factuur betalen</h1><button onclick="history.back()">Betaal factuur</button>`;
+            res.send(htmlResponse);
+          },
         },
       },
     ],

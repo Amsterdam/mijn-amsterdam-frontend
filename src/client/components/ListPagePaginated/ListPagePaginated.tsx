@@ -20,17 +20,18 @@ interface ListPagePaginatedProps<T> {
   appRouteBack: string;
   appRouteParams?: Record<string, string> | null;
   backLinkTitle?: string;
+  body?: ReactNode;
   displayProps: DisplayProps<T> | null;
+  errorText?: string;
   isError: boolean;
   isLoading: boolean;
   items: T[];
-  title: string;
-  body?: ReactNode;
-  thema?: Thema;
-  tableClassName?: string;
-  errorText?: string;
   noItemsText?: string;
   pageSize?: number;
+  tableClassName?: string;
+  thema?: Thema;
+  title: string;
+  totalCount?: number;
 }
 
 export function ListPagePaginated<T extends object = ZaakDetail>({
@@ -47,6 +48,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   isLoading,
   items,
   pageSize = DEFAULT_PAGE_SIZE,
+  totalCount,
   tableClassName,
   title,
 }: ListPagePaginatedProps<T>) {
@@ -70,7 +72,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
     return items.slice(start, end);
   }, [currentPage, items, pageSize]);
 
-  const total = items.length;
+  const total = totalCount ?? items.length;
 
   return (
     <OverviewPage>

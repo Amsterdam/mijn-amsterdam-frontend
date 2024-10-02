@@ -1,12 +1,17 @@
 import { Request, Response } from 'express';
 import { getAuth } from '../../auth/auth-helpers';
-import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import {
-  fetchAfisBusinessPartnerDetails,
-  fetchAfisFacturen,
+  sendBadRequest,
+  sendResponse,
+  sendUnauthorized,
+} from '../../routing/route-helpers';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
+import {
+  FACTUUR_STATE_KEYS,
+  fetchAfisFacturenByState,
   fetchAfisFacturenOverview,
-} from './afis';
+} from './afis-facturen';
 import { AfisFactuurState } from './afis-types';
 
 export async function handleFetchAfisBusinessPartner(
@@ -53,6 +58,10 @@ export async function handleFetchAfisFacturen(
   req: Request<{ businessPartnerIdEncrypted: string; state: AfisFactuurState }>,
   res: Response
 ) {
+  if (!FACTUUR_STATE_KEYS.includes(req.params.state)) {
+    return sendBadRequest(res, 'Unknown state param provided');
+  }
+
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
@@ -74,11 +83,12 @@ export async function handleFetchAfisFacturen(
     top = undefined;
   }
 
-  const response = await fetchAfisFacturen(
+  const response = await fetchAfisFacturenByState(
     res.locals.requestID,
     authProfileAndToken.profile.sid,
     { state: req.params.state, businessPartnerID, top }
   );
+
   return sendResponse(res, response);
 }
 

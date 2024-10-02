@@ -21,7 +21,7 @@ export const AppRoutes = {
   INKOMEN: '/inkomen',
   AFIS: '/afis',
   'AFIS/BETAALVOORKEUREN': '/afis/betaalvoorkeuren',
-  'AFIS/FACTUREN': '/afis/facturen/:kind/:page?',
+  'AFIS/FACTUREN': '/afis/facturen/:state/:page?',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',

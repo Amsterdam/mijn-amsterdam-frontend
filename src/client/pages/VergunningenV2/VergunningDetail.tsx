@@ -5,7 +5,7 @@ import {
   VergunningFrontendV2,
 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { isLoading } from '../../../universal/helpers/api';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
@@ -54,7 +54,7 @@ export default function VergunningV2Detail() {
   const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
   const vergunning = VERGUNNINGENv2.content?.find((item) => item.id === id);
   const fetchUrl = vergunning?.fetchUrl ?? '';
-  const [vergunningDetailResponseContent, api] = useAppStateBagApi<{
+  const [vergunningDetailApiResponse] = useAppStateBagApi<{
     vergunning: VergunningFrontendV2 | null;
     documents: VergunningDocument[];
   }>({
@@ -62,7 +62,7 @@ export default function VergunningV2Detail() {
     bagThema: BagThemas.VERGUNNINGEN,
     key: id,
   });
-
+  const vergunningDetailResponseContent = vergunningDetailApiResponse.content;
   const vergunningDetail = vergunningDetailResponseContent?.vergunning ?? null;
   const vergunningDocuments = vergunningDetailResponseContent?.documents ?? [];
 
@@ -70,8 +70,10 @@ export default function VergunningV2Detail() {
     <ThemaDetailPagina<VergunningFrontendV2>
       title={vergunningDetail?.title ?? 'Vergunning'}
       zaak={vergunningDetail}
-      isError={api.isError}
-      isLoading={api.isLoading || isLoading(VERGUNNINGENv2)}
+      isError={isError(vergunningDetailApiResponse)}
+      isLoading={
+        isLoading(vergunningDetailApiResponse) || isLoading(VERGUNNINGENv2)
+      }
       icon={<ThemaIcon />}
       pageContentTop={
         vergunningDetail && (

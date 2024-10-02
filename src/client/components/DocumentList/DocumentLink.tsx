@@ -53,6 +53,7 @@ export function DocumentLink({
       if (isLoading) {
         return false;
       }
+      setErrorVisible(false);
       setLoading(true);
 
       if (!('fetch' in window) || document?.external) {
@@ -122,7 +123,7 @@ export function DocumentLink({
         });
       return false;
     },
-    [document, profileType, isLoading, trackPath, userCity]
+    [document, profileType, isLoading, trackPath, userCity, setErrorVisible]
   );
 
   return (

@@ -67,6 +67,10 @@ export function isLoading(apiResponseData: ApiResponse<any>) {
   );
 }
 
+export function isOk(apiResponseData: ApiResponse<any>) {
+  return apiResponseData?.status === 'OK';
+}
+
 export function isError(
   apiResponseData: ApiResponse<any>,
   includeFailedDependencies: boolean = true

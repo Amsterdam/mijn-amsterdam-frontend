@@ -1,0 +1,37 @@
+{
+  "feed": {
+    "@base": "https://sap:8080OPERACCTGDOCITEM_CDS/",
+    "id": "https://sap:8080OPERACCTGDOCITEM_CDS/SomeITEM",
+    "title": {
+      "@type": "text",
+      "$": "SomeITEM"
+    },
+    "updated": "2000-01-22T11:32:02Z",
+    "author": {
+      "name": ""
+    },
+    "link": {
+      "@href": "SomeITEM",
+      "@rel": "self",
+      "@title": "SomeITEM"
+    },
+    "count": 1,
+    "entry": [
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 3,
+            "ProfitCenterName": "Qui-gon jinn",
+            "NetDueDate": "2023-12-21T00:00:00",
+            "ClearingDate": "2024-05-01",
+            "ReverseDocument": "",
+            "DocumentReferenceID": "INV-2024-001",
+            "AccountingDocument": "INV-2024-001"
+          }
+        }
+      }
+    ]
+  }
+}

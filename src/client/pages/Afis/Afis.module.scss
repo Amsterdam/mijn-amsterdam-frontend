@@ -1,6 +1,19 @@
+@import '../../styles/_global.scss';
+
 .FacturenTable {
-  tr td:nth-child(2) {
-    white-space: normal;
-    word-wrap: break-word;
+  tr {
+    th,
+    td {
+      @media screen and (min-width: $ams-breakpoint-medium) {
+        &:nth-child(1),
+        &:nth-child(2) {
+          width: 25%;
+        }
+      }
+      &:nth-child(2) {
+        white-space: normal;
+        word-wrap: break-word;
+      }
+    }
   }
 }

@@ -9,25 +9,32 @@ interface ThemaPaginaTableProps<T> {
   displayProps?: DisplayProps<T>;
   listPageRoute?: string;
   maxItems?: number | -1;
+  totalItems?: number;
   textNoContent?: string;
+  subTitle?: string;
   title?: string;
+  listPageLinkLabel?: string;
   zaken: T[];
 }
 
 export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   title = 'Zaken',
+  subTitle = '',
   zaken,
   className,
   textNoContent = 'U heeft (nog) geen zaken.',
   displayProps,
   listPageRoute,
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  totalItems,
+  listPageLinkLabel = 'Toon meer',
 }: ThemaPaginaTableProps<T>) {
   return (
     <Grid.Cell span="all">
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
+        subTitle={subTitle}
         items={maxItems !== -1 ? zaken.slice(0, maxItems) : zaken}
         displayProps={displayProps ?? null}
         className={className}
@@ -35,8 +42,13 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
 
       {!zaken.length && <Paragraph>{textNoContent}</Paragraph>}
 
-      {!!listPageRoute && (
-        <LinkToListPage count={zaken.length} route={listPageRoute} />
+      {!!listPageRoute && maxItems !== -1 && (
+        <LinkToListPage
+          threshold={maxItems}
+          label={listPageLinkLabel}
+          count={totalItems ?? zaken.length}
+          route={listPageRoute}
+        />
       )}
     </Grid.Cell>
   );

@@ -39,12 +39,13 @@ interface BezwarenDetailPartialProps {
 }
 
 function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
-  const [bezwaarDetail, api] = useAppStateBagApi<BezwaarDetail | null>({
-    url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuidEncrypted}`,
-    bagThema: BagThemas.BEZWAREN,
-    key: uuidEncrypted,
-  });
-
+  const [bezwaarDetailApiResponse, api] =
+    useAppStateBagApi<BezwaarDetail | null>({
+      url: `${BFFApiUrls.BEZWAREN_DETAIL}/${uuidEncrypted}`,
+      bagThema: BagThemas.BEZWAREN,
+      key: uuidEncrypted,
+    });
+  const bezwaarDetail = bezwaarDetailApiResponse.content;
   const documents = bezwaarDetail?.documents ?? [];
   const statussen = bezwaarDetail?.statussen ?? [];
 
@@ -85,7 +86,7 @@ function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
             })}
           </>
         )}
-        {api.isLoading && (
+        {isLoading(bezwaarDetailApiResponse) && (
           <>
             <Heading level={4} size="level-4">
               Status

@@ -2,6 +2,7 @@ import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION, IS_TAP } from './env';
 
 export const FeatureToggle = {
   afisActive: !IS_PRODUCTION,
+  afisEmandatesActive: false,
   avgActive: true,
   bbDocumentDownloadsActive: IS_OT,
   bekendmakingenDatasetActive: false,
@@ -12,7 +13,7 @@ export const FeatureToggle = {
   cmsFooterActive: true,
   dbEnabled: IS_TAP,
   dbSessionsEnabled: IS_TAP,
-  decosServiceActive: IS_OT,
+  decosServiceActive: IS_DEVELOPMENT, // TODO: Enable when working on MIJN-8914
   ehKetenmachtigingActive: !IS_PRODUCTION,
   eherkenningActive: true,
   erfpachtV2Active: !IS_PRODUCTION,
