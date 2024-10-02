@@ -1,25 +1,23 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
-import { LinkProps } from '../../../universal/types/App.types';
-import { ErrorAlert, InfoDetail, LinkdInline } from '../../components';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { routes } from './toeristischeVerhuur-thema-config';
-import styles from './ToeristischeVerhuur.module.scss';
-import {
-  BB_VERGUNNING_DISCLAIMER,
-  useToeristischeVerhuurThemaData,
-} from './useToeristischeVerhuur.hook';
 import {
   BBVergunning,
   LVVRegistratie,
   VakantieverhuurVergunning,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { entries } from '../../../universal/helpers/utils';
+import { LinkProps } from '../../../universal/types/App.types';
+import { ErrorAlert, LinkdInline } from '../../components';
+import ThemaPagina from '../ThemaPagina/ThemaPagina';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import { routes } from './toeristischeVerhuur-thema-config';
+import {
+  BB_VERGUNNING_DISCLAIMER,
+  useToeristischeVerhuurThemaData,
+} from './useToeristischeVerhuur.hook';
 
 export function ToeristscheVerhuurThema() {
   const {
-    dependencyError,
     hasBothPermits,
     hasBothVerleend,
     hasPermits,
@@ -32,7 +30,39 @@ export function ToeristscheVerhuurThema() {
     tableConfigLVVRegistraties,
     title,
     vergunningen,
+    hasBBVergunningError,
+    hasLVVRegistratiesError,
+    hasVakantieVerhuurVergunningError,
   } = useToeristischeVerhuurThemaData();
+
+  const errorAlertContent = isError ? (
+    <>Wij kunnen nu niet alle gegevens laten zien.</>
+  ) : (
+    <>
+      {(hasBBVergunningError ||
+        hasLVVRegistratiesError ||
+        hasVakantieVerhuurVergunningError) && (
+        <>
+          De volgende gegevens konden niet worden opgehaald:
+          {hasBBVergunningError && (
+            <>
+              <br />- Vergunning(en) bed & breakfast
+            </>
+          )}
+          {hasLVVRegistratiesError && (
+            <>
+              <br />- Landelijk registratienummer
+            </>
+          )}
+          {hasVakantieVerhuurVergunningError && (
+            <>
+              <br />- Vergunning(en) vakantieverhuur
+            </>
+          )}
+        </>
+      )}
+    </>
+  );
 
   const pageContentTop = (
     <Paragraph>
@@ -146,8 +176,12 @@ export function ToeristscheVerhuurThema() {
         </>
       }
       isError={isError}
-      errorAlertContent={dependencyError}
-      isPartialError={!!dependencyError}
+      errorAlertContent={errorAlertContent}
+      isPartialError={
+        hasBBVergunningError ||
+        hasLVVRegistratiesError ||
+        hasVakantieVerhuurVergunningError
+      }
       isLoading={isLoading}
     />
   );
