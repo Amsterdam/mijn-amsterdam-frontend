@@ -38,11 +38,10 @@ export const AppRoutes = {
   'VERGUNNINGEN/LIST': '/vergunningen/lijst/:kind/:page?',
   'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
-  'TOERISTISCHE_VERHUUR/VERGUNNING': '/toeristische-verhuur/vergunning/:id',
-  'TOERISTISCHE_VERHUUR/VERGUNNING/BB':
-    '/toeristische-verhuur/vergunning/bed-and-breakfast/:id',
-  'TOERISTISCHE_VERHUUR/VERGUNNING/VV':
-    '/toeristische-verhuur/vergunning/vakantieverhuur/:id',
+  'TOERISTISCHE_VERHUUR/VERGUNNING':
+    '/toeristische-verhuur/vergunning/:casetype/:id',
+  'TOERISTISCHE_VERHUUR/VERGUNNING/LIST':
+    '/toeristische-verhuur/vergunning/list/:casetype',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   PARKEREN: '/parkeren',

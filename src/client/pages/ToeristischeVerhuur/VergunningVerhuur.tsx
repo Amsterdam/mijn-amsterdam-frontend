@@ -1,8 +1,9 @@
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/tv-powerbrowser-bb-vergunning';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/tv-vakantieverhuur-vergunning';
+import {
+  BBVergunning,
+  VakantieverhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { VakantieverhuurVergunning as VakantieverhuurVergunningDecos } from '../../../server/services/vergunningen/vergunningen';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 import { DocumentList, LinkdInline, PageContent } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,

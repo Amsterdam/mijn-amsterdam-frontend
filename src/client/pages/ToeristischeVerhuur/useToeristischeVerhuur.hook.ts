@@ -1,21 +1,20 @@
-import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/tv-powerbrowser-bb-vergunning';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/tv-vakantieverhuur-vergunning';
+import {
+  BBVergunning,
+  VakantieverhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import {
   hasFailedDependency,
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
-import {
-  addLinkElementToProperty,
-  DisplayProps,
-} from '../../components/Table/TableV2';
+import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
   listPageParamKind,
   listPageTitle,
   routes,
-  tableConfig,
+  tableConfigLVVRegistraties,
+  tableConfigVergunningen,
 } from './toeristischeVerhuur-thema-config';
 
 export const BB_VERGUNNING_DISCLAIMER =
@@ -25,15 +24,11 @@ export function useToeristischeVerhuurThemaData() {
   const { TOERISTISCHE_VERHUUR } = useAppStateGetter();
 
   const hasVergunningenVakantieVerhuur =
-    TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen?.some(
-      (vergunning) => vergunning.title.endsWith('vakantieverhuur')
-    );
+    !!TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen?.length;
 
   const hasVergunningenVakantieVerhuurVerleend =
     TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen?.some(
-      (vergunning) =>
-        vergunning.title.endsWith('vakantieverhuur') &&
-        vergunning.result === 'Verleend'
+      (vergunning) => vergunning.result === 'Verleend'
     );
 
   const hasVergunningBB =
@@ -41,9 +36,7 @@ export function useToeristischeVerhuurThemaData() {
 
   const hasVergunningBBVerleend =
     TOERISTISCHE_VERHUUR.content?.bbVergunningen?.some(
-      (vergunning) =>
-        vergunning.title.endsWith('bed & breakfast') &&
-        vergunning.result === 'Verleend'
+      (vergunning) => vergunning.result === 'Verleend'
     );
 
   const vergunningen = addLinkElementToProperty<
@@ -89,7 +82,8 @@ export function useToeristischeVerhuurThemaData() {
     isError: isError(TOERISTISCHE_VERHUUR, false),
     dependencyError,
     routes,
-    tableConfig,
+    tableConfigVergunningen,
+    tableConfigLVVRegistraties,
     listPageTitle,
     listPageParamKind,
     hasRegistrations,

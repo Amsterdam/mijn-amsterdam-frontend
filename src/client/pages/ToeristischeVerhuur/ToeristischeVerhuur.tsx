@@ -1,8 +1,5 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
-import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/tv-lvv-registratie';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/tv-powerbrowser-bb-vergunning';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/tv-vakantieverhuur-vergunning';
 import { LinkProps } from '../../../universal/types/App.types';
 import { ErrorAlert, InfoDetail, LinkdInline } from '../../components';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -13,6 +10,12 @@ import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
 } from './useToeristischeVerhuur.hook';
+import {
+  BBVergunning,
+  LVVRegistratie,
+  VakantieverhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { entries } from '../../../universal/helpers/utils';
 
 export function ToeristscheVerhuurThema() {
   const {
@@ -25,7 +28,8 @@ export function ToeristscheVerhuurThema() {
     isError,
     isLoading,
     lvvRegistraties,
-    tableConfig,
+    tableConfigVergunningen,
+    tableConfigLVVRegistraties,
     title,
     vergunningen,
   } = useToeristischeVerhuurThemaData();
@@ -62,7 +66,7 @@ export function ToeristscheVerhuurThema() {
     });
   }
 
-  const vergunningenTables = Object.entries(tableConfig).map(
+  const vergunningenTables = entries(tableConfigVergunningen).map(
     ([kind, { title, displayProps, filter, sort, maxItems, className }]) => {
       return (
         <ThemaPaginaTable<BBVergunning | VakantieverhuurVergunning>
@@ -81,12 +85,22 @@ export function ToeristscheVerhuurThema() {
     }
   );
 
+  const registratieTable = (
+    <ThemaPaginaTable<LVVRegistratie>
+      key="lvv-registraties"
+      title={tableConfigLVVRegistraties.title}
+      zaken={lvvRegistraties}
+      displayProps={tableConfigLVVRegistraties.displayProps}
+      textNoContent={`U heeft geen ${title.toLowerCase()}`}
+    />
+  );
+
   return (
     <ThemaPagina
       title={title}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
-      pageContentTables={
+      pageContentMain={
         <>
           {hasBothVerleend && (
             <Grid.Cell span="all">
@@ -123,38 +137,18 @@ export function ToeristscheVerhuurThema() {
             </Grid.Cell>
           )}
           {!hasVergunningBB && (
-            <p className={styles.DisclaimerCollapseText}>
-              {BB_VERGUNNING_DISCLAIMER}
-            </p>
+            <Grid.Cell span="all">
+              <Paragraph>{BB_VERGUNNING_DISCLAIMER}</Paragraph>
+            </Grid.Cell>
           )}
           {vergunningenTables}
+          {registratieTable}
         </>
       }
       isError={isError}
       errorAlertContent={dependencyError}
       isPartialError={!!dependencyError}
       isLoading={isLoading}
-      pageContentBottom={
-        <InfoDetail
-          label="Registratienummer toeristische verhuur"
-          valueWrapperElement="div"
-          value={lvvRegistraties?.map(
-            (registrationItem: ToeristischeVerhuurRegistratieDetail) => (
-              <article
-                key={registrationItem.registrationNumber}
-                className={styles.RegistrationNumber}
-              >
-                <span>{registrationItem.registrationNumber}</span>
-                <br />
-                {registrationItem.street} {registrationItem.houseNumber}
-                {registrationItem.houseLetter}{' '}
-                {registrationItem.houseNumberExtension}{' '}
-                {registrationItem.postalCode} {registrationItem.city}
-              </article>
-            )
-          )}
-        />
-      }
     />
   );
 }

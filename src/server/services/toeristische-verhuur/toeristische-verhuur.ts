@@ -21,21 +21,16 @@ import {
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-
-import {
-  ToeristischeVerhuurRegistratieDetail,
-  fetchRegistraties,
-} from './tv-lvv-registratie';
-import {
-  VakantieverhuurVergunning,
-  fetchVakantieverhuurVergunningen,
-} from './tv-vakantieverhuur-vergunning';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import {
   BBVergunning,
-  fetchBBVergunningen,
-} from './tv-powerbrowser-bb-vergunning';
+  LVVRegistratie,
+  VakantieverhuurVergunning,
+} from './toeristische-verhuur-types';
+import { fetchRegistraties } from './tv-lvv-registratie';
+import { fetchBBVergunningen } from './tv-powerbrowser-bb-vergunning';
+import { fetchVakantieverhuurVergunningen } from './tv-vakantieverhuur-vergunning';
 
 export function hasOtherActualVergunningOfSameType(
   items: Array<VakantieverhuurVergunning | BBVergunning>,
@@ -146,6 +141,10 @@ export function createToeristischeVerhuurNotification(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: item.id,
+        casetype:
+          item.title === 'Vergunning vakantieverhuur'
+            ? 'vakantieverhuur'
+            : 'bed-and-breakfast',
       }
     );
     const ctaLinkToAanvragen =
@@ -218,9 +217,7 @@ export function createToeristischeVerhuurNotification(
   };
 }
 
-function createRegistratieNotification(
-  item: ToeristischeVerhuurRegistratieDetail
-): MyNotification {
+function createRegistratieNotification(item: LVVRegistratie): MyNotification {
   const title = 'Aanvraag landelijk registratienummer toeristische verhuur';
   const description = `Uw landelijke registratienummer voor toeristische verhuur is toegekend. Uw registratienummer is ${item.registrationNumber}.`;
   const datePublished = !!item.agreementDate ? item.agreementDate : '';

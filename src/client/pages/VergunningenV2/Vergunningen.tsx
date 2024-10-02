@@ -84,7 +84,7 @@ export default function VergunningenV2() {
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
       pageContentBottom={pageContentBottom}
-      pageContentTables={tables}
+      pageContentMain={tables}
       isError={isError(VERGUNNINGENv2)}
       isLoading={isLoading(VERGUNNINGENv2)}
     />

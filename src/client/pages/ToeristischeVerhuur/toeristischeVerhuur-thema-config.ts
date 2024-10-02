@@ -1,5 +1,9 @@
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/tv-powerbrowser-bb-vergunning';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/tv-vakantieverhuur-vergunning';
+import { ReactNode } from 'react';
+import {
+  BBVergunning,
+  LVVRegistratie,
+  VakantieverhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { DisplayProps } from '../../components/Table/TableV2';
@@ -10,13 +14,21 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const DISPLAY_PROPS_VERGUNNINGEN: DisplayProps<
-  BBVergunning | VakantieverhuurVergunning
+  (BBVergunning | VakantieverhuurVergunning) & {
+    detailLinkComponent: ReactNode;
+  }
 > = {
-  title: 'Soort vergunning',
+  detailLinkComponent: 'Soort vergunning',
   zaaknummer: 'Zaaknummer',
   status: 'Status',
   dateStartFormatted: 'Vanaf',
   dateEndFormatted: 'Tot',
+};
+
+const DISPLAY_PROPS_LVV_REGISTRATIES: DisplayProps<LVVRegistratie> = {
+  registrationNumber: 'Registratienummer',
+  address: 'Adres',
+  agreementDateFormatted: 'Geregistreerd op',
 };
 
 export const listPageParamKind = {
@@ -32,7 +44,7 @@ export const listPageTitle = {
   [listPageParamKind.historic]: 'Eerdere en afgewezen vergunningen',
 } as const;
 
-export const tableConfig = {
+export const tableConfigVergunningen = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (vergunning: BBVergunning | VakantieverhuurVergunning) =>
@@ -53,9 +65,13 @@ export const tableConfig = {
   },
 } as const;
 
+export const tableConfigLVVRegistraties = {
+  title: 'Landelijke registratienummer(s)',
+  displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
+};
+
 export const routes = {
-  listPage: AppRoutes['TOERISTISCHE_VERHUUR'],
-  detailPageBB: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
-  detailPageVV: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
+  listPage: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST'],
+  detailPageVergunning: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
   themaPage: AppRoutes['TOERISTISCHE_VERHUUR'],
 } as const;

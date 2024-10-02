@@ -57,7 +57,7 @@ export default function ThemaPaginaZorg() {
         title={title}
         pageContentTop={pageContentTop}
         linkListItems={linkListItems}
-        pageContentTables={tables}
+        pageContentMain={tables}
         isError={isError}
         isLoading={isLoading}
       />
