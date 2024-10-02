@@ -97,7 +97,9 @@ async function fetchAndTransformToeristischeVerhuur(
 
   return apiSuccessResult(
     {
-      lvvRegistraties: lvvRegistraties.content ?? [],
+      lvvRegistraties: (lvvRegistraties.content ?? []).sort(
+        dateSort('agreementDate', 'desc')
+      ),
       vakantieverhuurVergunningen: (
         vakantieverhuurVergunningen.content ?? []
       ).sort(dateSort('dateReceived', 'desc')),
