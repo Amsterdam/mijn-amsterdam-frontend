@@ -166,7 +166,10 @@ export async function fetchVakantieverhuurVergunningen(
       appRoute: (vergunning: Vergunning) => {
         switch (vergunning.caseType) {
           case CaseType.VakantieverhuurVergunning:
-            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
+            return generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
+              casetype: 'vakantieverhuur',
+              id: ':id',
+            });
           default:
             return AppRoutes['TOERISTISCHE_VERHUUR'];
         }

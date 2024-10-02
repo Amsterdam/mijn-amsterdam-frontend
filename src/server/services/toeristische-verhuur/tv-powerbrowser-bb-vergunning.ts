@@ -403,18 +403,15 @@ async function fetchZakenByIds(
   );
 
   if (zakenResponse.status === 'OK') {
-    console.log('zakenResponse:', zakenResponse.content.length);
     const zakenWithAddress = await fetchAndMergeAdressen(
       requestID,
       zakenResponse.content
     );
 
-    console.log('zakenResponse:', zakenWithAddress.length);
     const zakenWithStatus = await fetchAndMergeZaakStatussen(
       requestID,
       zakenWithAddress
     );
-    console.log('zakenResponse:', zakenWithAddress);
 
     return apiSuccessResult(zakenWithStatus);
   }
