@@ -6,7 +6,7 @@ import {
   createToeristischeVerhuurNotification,
   fetchToeristischeVerhuur,
 } from './toeristische-verhuur';
-import { VakantieverhuurVergunning } from './vakantieverhuur-vergunning';
+import { VakantieverhuurVergunning } from './tv-vakantieverhuur-vergunning';
 import { BBVergunning } from './bb-vergunning';
 import { jsonCopy } from '../../../universal/helpers/utils';
 
@@ -317,10 +317,10 @@ describe('Toeristische verhuur service', () => {
     );
 
     expect(notification6.title).toBe(
-      `Aanvraag vergunning bed & breakfast verleend`
+      `Aanvraag Vergunning bed & breakfast verleend`
     );
     expect(notification6.description).toBe(
-      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met gemeentelijk zaaknummer ${bbVergunnig.zaaknummer} verleend.`
+      `Wij hebben uw aanvraag voor een Vergunning bed & breakfast met gemeentelijk zaaknummer ${bbVergunnig.zaaknummer} verleend.`
     );
     expect(notification6.link?.title).toBe('Bekijk uw aanvraag');
 
@@ -330,7 +330,7 @@ describe('Toeristische verhuur service', () => {
     );
 
     expect(notification7.title).toBe(
-      'Uw vergunning bed & breakfast is verlopen'
+      'Uw Vergunning bed & breakfast is verlopen'
     );
 
     const notification8 = createToeristischeVerhuurNotification(
@@ -338,6 +338,6 @@ describe('Toeristische verhuur service', () => {
       []
     );
 
-    expect(notification8.title).toBe('Uw vergunning bed & breakfast loopt af');
+    expect(notification8.title).toBe('Uw Vergunning bed & breakfast loopt af');
   });
 });

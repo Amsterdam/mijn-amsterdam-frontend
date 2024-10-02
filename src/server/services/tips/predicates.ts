@@ -5,12 +5,11 @@ import {
 } from 'date-fns';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { isAmsterdamAddress } from '../buurt/helpers';
+import { HLIRegeling } from '../hli/hli-regelingen-types';
+import { BBVergunning } from '../toeristische-verhuur/tv-powerbrowser-bb-vergunning';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 import type { TipsPredicateFN } from './tip-types';
-import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
-import { HLIRegeling } from '../hli/hli-regelingen-types';
-import { BeschikkingsResultaat } from '../zorgned/zorgned-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
