@@ -142,14 +142,20 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
     return null;
   }
 
-  let resultaatTransformed: BBVergunning['result'] = null;
+  let resultaatTransformed: BBVergunning['result'] = resultaat;
 
   const resultatenVerleend = [
     'Verleend met overgangsrecht',
     'Verleend zonder overgangsrecht',
     'Verleend',
   ];
-  const resultatenNietVerleend = ['Geweigerd op basis van Quotum', 'Geweigerd'];
+
+  const resultatenNietVerleend = [
+    'Geweigerd op basis van Quotum',
+    'Geweigerd',
+    'Geweigerd met overgangsrecht',
+    'Buiten behandeling',
+  ];
   const resultatenOverig = ['Ingetrokken'];
 
   switch (true) {

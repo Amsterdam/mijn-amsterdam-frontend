@@ -43,13 +43,14 @@ export interface VakantieverhuurVergunning extends ZaakDetail {
   dateReceived: string;
   dateStart: string;
   dateStartFormatted: string;
+  documents: GenericDocument[];
   documentsUrl: string | null;
   id: string;
   isActual: boolean;
   result: 'Verleend' | 'Ingetrokken' | null;
   status: string;
-  zaaknummer: string;
   title: 'Vergunning vakantieverhuur';
+  zaaknummer: string;
 }
 
 // Bead & Breakfast vergunningen (Powerbrowser)
@@ -94,6 +95,7 @@ export type BBVergunningZaakResult =
   | 'Verleend'
   | 'Niet verleend'
   | 'Ingetrokken'
+  | string
   | null;
 
 export interface BBVergunning extends ZaakDetail {
@@ -141,6 +143,7 @@ export type PBZaakResultaat =
   | 'Verleend met overgangsrecht'
   | 'Verleend zonder overgangsrecht'
   | 'Verleend'
+  | 'Buiten behandeling'
   | 'Ingetrokken';
 
 export type PBZaakCompacted = {

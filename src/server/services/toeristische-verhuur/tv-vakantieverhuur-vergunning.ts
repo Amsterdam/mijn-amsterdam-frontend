@@ -134,6 +134,7 @@ export function transformVakantieverhuurVergunningen(
       result: vergunning.decision as VakantieverhuurVergunning['result'],
       zaaknummer: vergunning.identifier,
       steps,
+      documents: [],
       documentsUrl: vergunning.documentsUrl,
       link: {
         to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {

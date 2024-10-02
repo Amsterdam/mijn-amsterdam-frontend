@@ -73,7 +73,7 @@ import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
 import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
-import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
+import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
