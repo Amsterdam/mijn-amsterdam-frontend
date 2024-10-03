@@ -47,7 +47,6 @@ export function useToeristischeVerhuurThemaData() {
   const lvvRegistraties = TOERISTISCHE_VERHUUR.content?.lvvRegistraties ?? [];
   const hasRegistrations = !!lvvRegistraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
-  const hasBothPermits = hasVergunningenVakantieVerhuur && hasVergunningBB;
   const hasBothVerleend =
     hasVergunningenVakantieVerhuurVerleend && hasVergunningBBVerleend;
 
@@ -80,7 +79,7 @@ export function useToeristischeVerhuurThemaData() {
     listPageParamKind,
     hasRegistrations,
     hasPermits,
-    hasBothPermits,
+    hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
   };
