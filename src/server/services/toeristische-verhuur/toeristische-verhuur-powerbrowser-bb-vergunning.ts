@@ -12,11 +12,14 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
-import { GenericDocument, StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   BBVergunning,
@@ -28,9 +31,6 @@ import {
   PBZaakResultaat,
   SearchRequestResponse,
 } from './toeristische-verhuur-types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 function fetchPowerBrowserToken_(requestID: RequestID) {
   const requestConfig = getApiConfig('POWERBROWSER', {
@@ -348,7 +348,7 @@ function isZaakActual({
   return !!dateEnd && !isDateInPast(dateEnd);
 }
 
-function transformZaak(zaak: PBZaakRecord): BBVergunning {
+function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
   const pbZaak = Object.fromEntries(
     entries(fieldMap).map(([pbFieldName, desiredName]) => {
       return [desiredName, getFieldValue(pbFieldName, zaak.fields)];
@@ -359,6 +359,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
   const dateStart = pbZaak.dateStart ?? pbZaak.dateReceived ?? '';
   const dateEnd = pbZaak.dateEnd;
   const id = zaak.id;
+  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, id);
   const result = getZaakResultaat(pbZaak.result);
 
   return {
@@ -387,6 +388,13 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     adres: null,
     status: 'Ontvangen',
     documents: [],
+    fetchDocumentsUrl:
+      parseInt(id, 10) < 0
+        ? null
+        : generateFullApiUrlBFF(
+            BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST,
+            { id: idEncrypted }
+          ),
     steps: [getReceivedStatusStep(dateStart)],
     heeftOvergangsRecht: pbZaak.result?.includes('met overgangsrecht') ?? false,
   };
@@ -394,6 +402,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
 
 async function fetchZakenByIds(
   requestID: RequestID,
+  sessionID: SessionID,
   zaakIds: string[]
 ): Promise<ApiResponse<BBVergunning[] | null>> {
   const requestConfig: DataRequestConfig = {
@@ -402,7 +411,7 @@ async function fetchZakenByIds(
       return `${url}/record/GFO_ZAKEN/${zaakIds.join(',')}`;
     },
     transformResponse(responseData: PBZaakRecord[]) {
-      return responseData.map(transformZaak);
+      return responseData.map((pbZaak) => transformZaak(sessionID, pbZaak));
     },
   };
 
@@ -446,6 +455,7 @@ export async function fetchBBVergunningen(
 
     const zakenResponse = await fetchZakenByIds(
       requestID,
+      authProfile.sid,
       zakenIdsResponse.content
     );
     return zakenResponse;
@@ -522,13 +532,13 @@ function transformPowerbrowserLinksResponse(
   );
 }
 
-export async function fetchPowerBrowserDocuments(
+export async function fetchBBDocumentsList(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: BBVergunning['id']
 ) {
   const dataRequestConfig: DataRequestConfig = {
-    method: 'GET',
+    method: 'get',
     formatUrl({ url }) {
       return `${url}/Link/GFO_ZAKEN/${zaakId}`;
     },
@@ -555,15 +565,18 @@ export async function fetchBBDocument(
   }
 
   const dataRequestConfig: DataRequestConfig = {
+    method: 'get',
+    responseType: 'stream',
     formatUrl({ url }) {
-      return `${url}${generatePath('/Dms/:id/Pdf', {
+      const fullUrl = `${url}${generatePath('/Dms/:id/Pdf', {
         id: documentId,
       })}`;
+      return fullUrl;
     },
-    responseType: 'stream',
-    transformResponse: (documentResponseData) => {
+    transformResponse: (documentResponseData): DocumentDownloadData => {
       return {
         data: documentResponseData,
+        mimetype: 'application/pdf',
       };
     },
   };

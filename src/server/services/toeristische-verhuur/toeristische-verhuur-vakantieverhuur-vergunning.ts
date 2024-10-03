@@ -135,7 +135,7 @@ export function transformVakantieverhuurVergunningen(
       zaaknummer: vergunning.identifier,
       steps,
       documents: [],
-      documentsUrl: vergunning.documentsUrl,
+      fetchDocumentsUrl: vergunning.documentsUrl,
       link: {
         to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
           id: idTransformed,

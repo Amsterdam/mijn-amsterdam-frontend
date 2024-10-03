@@ -27,9 +27,9 @@ import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur-types';
-import { fetchRegistraties } from './tv-lvv-registratie';
-import { fetchBBVergunningen } from './tv-powerbrowser-bb-vergunning';
-import { fetchVakantieverhuurVergunningen } from './tv-vakantieverhuur-vergunning';
+import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
+import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning';
+import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
 
 export function hasOtherActualVergunningOfSameType(
   items: ToeristischeVerhuurVergunning[],
