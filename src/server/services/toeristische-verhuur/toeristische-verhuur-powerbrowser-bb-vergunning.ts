@@ -356,19 +356,21 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
   ) as PBZaakCompacted;
 
   const title = 'Vergunning bed & breakfast';
-  const dateStart = pbZaak.dateStart ?? pbZaak.dateReceived ?? '';
-  const dateEnd = pbZaak.dateEnd;
+  const result = getZaakResultaat(pbZaak.result);
+  // The permit is valid from the date we have a decision.
+  const dateStart =
+    result === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
+  const dateEnd = result === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
   const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, id);
-  const result = getZaakResultaat(pbZaak.result);
 
   return {
     dateReceived: pbZaak.dateReceived,
     dateDecision: pbZaak.dateDecision,
     dateStart,
-    dateStartFormatted: dateStart ? defaultDateFormat(dateStart) : null,
+    dateStartFormatted: dateStart ? defaultDateFormat(dateStart) : '-',
     dateEnd,
-    dateEndFormatted: dateEnd ? defaultDateFormat(dateEnd) : null,
+    dateEndFormatted: dateEnd ? defaultDateFormat(dateEnd) : '-',
     result,
     id,
     zaaknummer: pbZaak.zaaknummer ?? zaak.id,
