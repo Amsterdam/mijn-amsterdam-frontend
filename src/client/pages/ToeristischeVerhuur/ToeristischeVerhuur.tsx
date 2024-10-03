@@ -134,7 +134,7 @@ export function ToeristscheVerhuurThema() {
         <>
           {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
             <Grid.Cell span="all">
-              <Alert severity="info" title="Let op!">
+              <Alert severity="info" title="Voorwaarden en regels">
                 {hasBothVerleend && (
                   <Paragraph className="ams-mb--sm">
                     U heeft een vergunning voor vakantieverhuur &eacute;n bed
