@@ -14,7 +14,7 @@ import { generatePath } from 'react-router-dom';
 import MockApp from '../MockApp';
 import { MutableSnapshot } from 'recoil';
 import { appStateAtom } from '../../hooks/useAppState';
-import { AppState } from '../../AppState';
+import { AppState } from '../../../universal/types';
 
 const pushMock = vi.fn();
 
@@ -123,9 +123,7 @@ describe('ZaakStatus', () => {
     const { asFragment } = render(<Component />);
 
     expect(
-      screen.getByText(
-        'Wij kunnen de status van uw aanvraag nu niet laten zien.'
-      )
+      screen.getByText('Wij kunnen de status van uw aanvraag niet laten zien.')
     ).toBeInTheDocument();
 
     expect(pushMock).not.toHaveBeenCalled();
@@ -154,9 +152,7 @@ describe('ZaakStatus', () => {
     const { asFragment } = render(<Component />);
 
     expect(
-      screen.getByText(
-        'Wij kunnen de status van uw aanvraag nu niet laten zien.'
-      )
+      screen.getByText('Wij kunnen de status van uw aanvraag niet laten zien.')
     ).toBeInTheDocument();
     expect(
       screen.getByText(
