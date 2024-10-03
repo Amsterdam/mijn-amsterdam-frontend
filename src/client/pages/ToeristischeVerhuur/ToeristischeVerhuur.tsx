@@ -1,4 +1,4 @@
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 import {
   BBVergunning,
@@ -132,38 +132,41 @@ export function ToeristscheVerhuurThema() {
       linkListItems={linkListItems}
       pageContentMain={
         <>
-          {hasBothVerleend && (
+          {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
             <Grid.Cell span="all">
-              <ErrorAlert severity="warning" title="Let op!">
-                U heeft een vergunning voor vakantieverhuur &eacute;n bed &amp;
-                breakfast. Het is niet toegestaan om op hetzelfde adres zowel
-                aan vakantieverhuur als bed &amp; breakfast te doen. U moet
-                daarom 1 van deze vergunningen opzeggen.
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
-                >
-                  Meer informatie over voorwaarden vakantieverhuur
-                </LinkdInline>
-                .
-              </ErrorAlert>
-            </Grid.Cell>
-          )}
-          {!hasRegistrations && hasPermits && (
-            <Grid.Cell span="all">
-              <ErrorAlert severity="info" title="Let op!">
-                U heeft een vergunning voor vakantieverhuur of bed &amp;
-                breakfast. U moet daarom ook een landelijk registratienummer
-                voor toeristische verhuur aanvragen.
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
-                >
-                  Meer informatie over het landelijk registratienummer
-                  toeristische verhuur
-                </LinkdInline>
-                .
-              </ErrorAlert>
+              <Alert severity="info" title="Let op!">
+                {hasBothVerleend && (
+                  <Paragraph className="ams-mb--sm">
+                    U heeft een vergunning voor vakantieverhuur &eacute;n bed
+                    &amp; breakfast. Het is niet toegestaan om op hetzelfde
+                    adres zowel aan vakantieverhuur als bed &amp; breakfast te
+                    doen. U moet daarom 1 van deze vergunningen opzeggen.
+                    <LinkdInline
+                      external={true}
+                      href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
+                    >
+                      Meer informatie over voorwaarden vakantieverhuur
+                    </LinkdInline>
+                    .
+                  </Paragraph>
+                )}
+
+                {!hasRegistrations && hasPermits && (
+                  <Paragraph>
+                    U heeft een vergunning voor vakantieverhuur of bed &amp;
+                    breakfast. U moet daarom ook een landelijk registratienummer
+                    voor toeristische verhuur aanvragen.
+                    <LinkdInline
+                      external={true}
+                      href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
+                    >
+                      Meer informatie over het landelijk registratienummer
+                      toeristische verhuur
+                    </LinkdInline>
+                    .
+                  </Paragraph>
+                )}
+              </Alert>
             </Grid.Cell>
           )}
           {!hasVergunningBB && (
