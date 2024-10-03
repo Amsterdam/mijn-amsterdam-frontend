@@ -200,7 +200,7 @@ function transformZaakStatusResponse(
     const datum =
       statusResponse?.find(({ omschrijving }) => status.includes(omschrijving))
         ?.datum ?? null;
-    return datum ? defaultDateFormat(datum) : null;
+    return datum || null;
   }
 
   let datumInBehandeling = getStatusDate(['In behandeling']) ?? '';
@@ -395,7 +395,7 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
             BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST,
             { id: idEncrypted }
           ),
-    steps: [getReceivedStatusStep(dateStart)],
+    steps: [getReceivedStatusStep(pbZaak.dateReceived ?? '')],
     heeftOvergangsRecht: pbZaak.result?.includes('met overgangsrecht') ?? false,
   };
 }
