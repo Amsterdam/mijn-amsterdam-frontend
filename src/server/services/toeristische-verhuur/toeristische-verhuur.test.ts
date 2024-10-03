@@ -3,10 +3,8 @@ import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  createToeristischeVerhuurNotification,
-  fetchToeristischeVerhuur,
-} from './toeristische-verhuur';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur';
+import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
 import {
   BBVergunning,
   VakantieverhuurVergunning,
@@ -233,7 +231,7 @@ describe('Toeristische verhuur service', () => {
         },
       ],
       documents: [],
-      documentsUrl:
+      fetchDocumentsUrl:
         '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
       link: {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-000-000040',
@@ -259,10 +257,9 @@ describe('Toeristische verhuur service', () => {
         title: 'Vergunning bed & breakfast',
       },
       adres: 'SchniffSchnaff 4C 1234AB Amsterdam',
-      eigenaar: '',
-      aanvrager: '',
       title: 'Vergunning bed & breakfast',
       documents: [],
+      fetchDocumentsUrl: '/a/b/x',
       steps: [
         {
           id: 'step-1',

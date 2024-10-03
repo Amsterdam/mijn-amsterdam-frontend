@@ -99,7 +99,6 @@ export type BBVergunningZaakResult =
   | null;
 
 export interface BBVergunning extends ZaakDetail {
-  aanvrager: string | null;
   heeftOvergangsRecht: boolean;
   adres: string | null;
   dateReceived: string | null;
@@ -108,7 +107,6 @@ export interface BBVergunning extends ZaakDetail {
   dateStartFormatted: string | null;
   dateEnd: string | null;
   dateEndFormatted: string | null;
-  eigenaar: string | null;
   isActual: boolean;
   result: BBVergunningZaakResult;
   status: BBVergunningZaakStatus | BBVergunningZaakResult;

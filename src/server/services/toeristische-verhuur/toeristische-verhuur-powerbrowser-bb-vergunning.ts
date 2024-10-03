@@ -214,8 +214,8 @@ function transformZaakStatusResponse(
     id: 'step-2',
     status: 'In behandeling',
     datePublished: datumInBehandeling,
-    isActive: !dateDecision,
-    isChecked: !!(datumInBehandeling || dateDecision),
+    isActive: !dateDecision && !!datumInBehandeling,
+    isChecked: !dateDecision,
   };
 
   const statusAfgehandeld: StatusLineItem = {
@@ -227,7 +227,7 @@ function transformZaakStatusResponse(
   };
 
   return [
-    { ...statusOntvangen, isActive: false },
+    { ...statusOntvangen, isActive: !datumInBehandeling && !dateDecision },
     statusInBehandeling,
     statusAfgehandeld,
   ];
@@ -381,8 +381,6 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
       }),
       title,
     },
-    eigenaar: '',
-    aanvrager: '',
     title,
     isActual: isZaakActual({ dateEnd, result }),
 

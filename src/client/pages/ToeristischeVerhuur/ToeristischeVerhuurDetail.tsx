@@ -90,14 +90,24 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
           <Datalist rows={rows} />
         </Grid.Cell>
       )}
-      {!!documentsResponseData.content?.length && (
-        <Grid.Cell span="all">
+
+      <Grid.Cell span="all">
+        {!vergunning.fetchDocumentsUrl && (
+          <Paragraph>
+            Stuur een mail naar:{' '}
+            <Link href="mailto:mail@amsterdam.nl" rel="noreferrer">
+              mail@amsterdam.nl
+            </Link>{' '}
+            om uw document in te kunnen zien.
+          </Paragraph>
+        )}
+        {!!documentsResponseData.content?.length && (
           <DocumentListV2
             documents={documentsResponseData.content}
             columns={['Document', '']}
           />
-        </Grid.Cell>
-      )}
+        )}
+      </Grid.Cell>
     </>
   );
 }
