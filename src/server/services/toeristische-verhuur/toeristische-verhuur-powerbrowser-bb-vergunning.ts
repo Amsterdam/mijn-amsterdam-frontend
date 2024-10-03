@@ -215,7 +215,7 @@ function transformZaakStatusResponse(
     status: 'In behandeling',
     datePublished: datumInBehandeling,
     isActive: !dateDecision && !!datumInBehandeling,
-    isChecked: !dateDecision,
+    isChecked: !!dateDecision || !!datumInBehandeling,
   };
 
   const statusAfgehandeld: StatusLineItem = {
