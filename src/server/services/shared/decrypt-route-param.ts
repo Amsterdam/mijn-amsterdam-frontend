@@ -8,10 +8,12 @@ import { IS_DEBUG } from '../../config/app';
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { captureException } from '../monitoring';
 
+export type SessionIDAndROuteParamIdEncrypted = string;
+
 /** Decrypt an encrypted 'sessionid:id' and validate it.
  */
 export function decryptEncryptedRouteParamAndValidateSessionID(
-  sessionIDAndRouteParamIdEncrypted: string,
+  sessionIDAndRouteParamIdEncrypted: SessionIDAndROuteParamIdEncrypted,
   authProfileAndToken: AuthProfileAndToken
 ) {
   let sessionID: SessionID | null = null;
@@ -20,6 +22,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
   try {
     [sessionID, id] = decrypt(sessionIDAndRouteParamIdEncrypted).split(':');
   } catch (error) {
+    console.error(error);
     captureException(error);
     return apiErrorResult(
       'Bad request: failed to process encrypted param',

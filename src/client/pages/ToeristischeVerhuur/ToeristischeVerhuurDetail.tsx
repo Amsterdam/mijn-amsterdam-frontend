@@ -7,12 +7,29 @@ import { LocationModal } from '../../components/LocationModal/LocationModal';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import styles from './ToeristischeVerhuurDetail.module.scss';
+import { BagThemas } from '../../config/thema';
+import { GenericDocument } from '../../../universal/types';
+import { useAppStateBagApi } from '../../hooks/useAppState';
+import { useEffect } from 'react';
 
 type DetailPageContentProps = {
   vergunning: ToeristischeVerhuurVergunning;
 };
 
 function DetailPageContent({ vergunning }: DetailPageContentProps) {
+  const [documentsResponseData, fetch, isApiDataCached] = useAppStateBagApi<
+    GenericDocument[]
+  >({
+    bagThema: BagThemas.TOERISTISCHE_VERHUUR,
+    key: vergunning.id,
+  });
+
+  useEffect(() => {
+    if (vergunning.fetchDocumentsUrl && !isApiDataCached) {
+      fetch({ url: vergunning.fetchDocumentsUrl });
+    }
+  }, [vergunning.fetchDocumentsUrl, isApiDataCached]);
+
   const rows: Array<Row | RowSet> = [
     {
       label: 'Gemeentelijk zaaknummer',
@@ -72,9 +89,9 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
           <Datalist rows={rows} />
         </Grid.Cell>
       )}
-      {!!vergunning.documents.length && (
+      {!!documentsResponseData.content?.length && (
         <Grid.Cell span="all">
-          <DocumentListV2 documents={vergunning.documents} />
+          <DocumentListV2 documents={documentsResponseData.content} />
         </Grid.Cell>
       )}
     </>

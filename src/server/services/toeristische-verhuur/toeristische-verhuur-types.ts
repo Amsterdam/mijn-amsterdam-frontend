@@ -44,7 +44,7 @@ export interface VakantieverhuurVergunning extends ZaakDetail {
   dateStart: string;
   dateStartFormatted: string;
   documents: GenericDocument[];
-  documentsUrl: string | null;
+  fetchDocumentsUrl: string | null;
   id: string;
   isActual: boolean;
   result: 'Verleend' | 'Ingetrokken' | null;
@@ -114,6 +114,7 @@ export interface BBVergunning extends ZaakDetail {
   status: BBVergunningZaakStatus | BBVergunningZaakResult;
   zaaknummer: string;
   documents: GenericDocument[];
+  fetchDocumentsUrl: string | null;
   title: 'Vergunning bed & breakfast';
 }
 

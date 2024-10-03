@@ -366,6 +366,7 @@ export function transformVergunningenData(
     const id = hash(
       `vergunning-${(item.identifier || item.caseType) + item.dateRequest}`
     );
+    // documentsUrl is added by Koppel Api
     const idEncrypted = item.documentsUrl?.split('/').pop();
 
     const vergunning = Object.assign({}, item, {

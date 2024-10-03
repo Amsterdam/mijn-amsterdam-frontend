@@ -153,7 +153,7 @@ export function DocumentLink({
             />
           )}
         </span>
-        {label || document.title}
+        {label || document.title || 'Document'}
       </MaLink>
       {isLoading && <span className={styles.DownloadInfo}>Downloaden...</span>}
       {isErrorVisible && (
