@@ -18,7 +18,7 @@ import {
 
 export function ToeristscheVerhuurThema() {
   const {
-    hasBothPermits,
+    hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasPermits,
     hasRegistrations,
@@ -82,14 +82,14 @@ export function ToeristscheVerhuurThema() {
     },
   ];
 
-  if (hasVergunningBB && !hasBothPermits) {
+  if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
     linkListItems.unshift({
       title: 'Meer informatie over bed &amp; breakfast',
       to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/',
     });
   }
 
-  if (!hasVergunningBB) {
+  if (hasVergunningenVakantieVerhuur) {
     linkListItems.unshift({
       title: 'Meer informatie over particuliere vakantieverhuur',
       to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
