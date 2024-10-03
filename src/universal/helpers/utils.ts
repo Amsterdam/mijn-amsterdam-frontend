@@ -34,7 +34,7 @@ export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
 }
 
-export function sortAlpha<T extends unknown>(
+export function sortAlpha<T>(
   key: keyof T,
   direction: 'asc' | 'desc' = 'asc',
   casing?: 'lower' | 'upper'
@@ -71,8 +71,8 @@ export function sortAlpha<T extends unknown>(
 export function sortByNumber(key: string, direction: 'asc' | 'desc' = 'asc') {
   return (a: Record<string, any>, b: Record<string, any>) => {
     const sortASC = direction === 'asc';
-    let aValue = a[key];
-    let bValue = b[key];
+    const aValue = a[key];
+    const bValue = b[key];
 
     return sortASC ? aValue - bValue : bValue - aValue;
   };
@@ -80,11 +80,12 @@ export function sortByNumber(key: string, direction: 'asc' | 'desc' = 'asc') {
 
 // https://github.com/darkskyapp/string-hash
 export function hash(str: string) {
-  var hash = 5381,
+  // eslint-disable-next-line no-magic-numbers
+  let hash = 5381,
     i = str.length;
-
+  const bits = 33;
   while (i) {
-    hash = (hash * 33) ^ str.charCodeAt(--i);
+    hash = (hash * bits) ^ str.charCodeAt(--i);
   }
 
   /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
@@ -96,7 +97,7 @@ export function hash(str: string) {
 // Recursively omit keys from objects. Important: Objects with all keys omitted will remain in the data empty.
 export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   if (Array.isArray(data)) {
-    return data.map((item) => deepOmitKeys(data, omitKeys));
+    return data.map(() => deepOmitKeys(data, omitKeys));
   } else if (data !== null && typeof data === 'object') {
     const rdata: Record<string, any> = omit(data, omitKeys);
     for (const [key, value] of Object.entries(rdata)) {

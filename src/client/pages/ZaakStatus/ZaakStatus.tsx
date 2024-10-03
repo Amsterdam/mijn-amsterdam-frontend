@@ -1,6 +1,9 @@
-import { Paragraph } from '@amsterdam/design-system-react';
 import { useEffect, useState } from 'react';
+
+import { Paragraph } from '@amsterdam/design-system-react';
 import { useHistory } from 'react-router-dom';
+
+import styles from './ZaakStatus.module.scss';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types/App.types';
@@ -13,7 +16,6 @@ import {
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
-import styles from './ZaakStatus.module.scss';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';

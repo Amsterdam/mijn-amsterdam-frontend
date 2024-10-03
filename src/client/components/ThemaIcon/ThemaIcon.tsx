@@ -1,6 +1,7 @@
 import classnames from 'classnames';
-
 import { matchPath, useLocation } from 'react-router-dom';
+
+import styles from './ThemaIcon.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Thema, Themas } from '../../../universal/config/thema';
 import { entries } from '../../../universal/helpers/utils';
@@ -8,7 +9,6 @@ import { IconBurgerZaken } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 import { ThemaIcons } from '../../config/themaIcons';
-import styles from './ThemaIcon.module.scss';
 
 export interface ThemaIconProps {
   thema?: Thema;

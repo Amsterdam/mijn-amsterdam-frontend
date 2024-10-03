@@ -105,7 +105,7 @@ export interface KVKSourceData {
   content: KVKSourceDataContent;
 }
 
-export interface KVKData extends KVKSourceDataContent {}
+export type KVKData = KVKSourceDataContent;
 
 export function getKvkAddresses(kvkData: KVKData | null): Adres[] {
   let vestigingen: Vestiging[] = [];

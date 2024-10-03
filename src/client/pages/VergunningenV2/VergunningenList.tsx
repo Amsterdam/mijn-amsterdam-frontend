@@ -1,14 +1,14 @@
+import { useParams } from 'react-router-dom';
+
+import { ListPageParamKind, tableConfig } from './config';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
-
-import { useParams } from 'react-router-dom';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { Themas } from '../../../universal/config/thema';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { ListPageParamKind, tableConfig } from './config';
 
 export function VergunningenList() {
   const params = useParams<{ kind: ListPageParamKind }>();

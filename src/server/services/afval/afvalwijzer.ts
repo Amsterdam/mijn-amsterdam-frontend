@@ -1,4 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
+
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   GarbageFractionCode,
@@ -83,8 +84,9 @@ function getAfvalPuntKaartUrl(centroid: LatLngLiteral | null) {
   const mapUrl = 'https://kaart.amsterdam.nl/afvalpunten/#13/';
 
   if (centroid) {
-    const location = `${centroid.lat.toFixed(5)}/${centroid.lng.toFixed(5)}`;
-    const center = `${centroid.lat.toFixed(5)},${centroid.lng.toFixed(5)}`;
+    const fractionDigits = 5;
+    const location = `${centroid.lat.toFixed(fractionDigits)}/${centroid.lng.toFixed(fractionDigits)}`;
+    const center = `${centroid.lat.toFixed(fractionDigits)},${centroid.lng.toFixed(fractionDigits)}`;
 
     return `${mapUrl}${location}/brt/14324///${center}`;
   }

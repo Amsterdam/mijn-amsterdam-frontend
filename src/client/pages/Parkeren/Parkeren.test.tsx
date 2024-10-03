@@ -1,17 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
-
-import MockApp from '../MockApp';
-import Parkeren from './Parkeren';
-
-import { beforeAll, describe, expect, it, vi } from 'vitest';
-import { appStateAtom } from '../../hooks/useAppState';
-import { MutableSnapshot } from 'recoil';
 import { AppState } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
+import { ThemaTitles } from '../../config/thema';
+import MockApp from '../MockApp';
+import Parkeren from './Parkeren';
+import { appStateAtom } from '../../hooks/useAppState';
+
+
 
 const testState = {
   VERGUNNINGEN: {

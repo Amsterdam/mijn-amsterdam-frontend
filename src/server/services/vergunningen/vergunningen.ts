@@ -2,6 +2,11 @@ import axios from 'axios';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
+
+import {
+  NotificationLabels,
+  notificationContent,
+} from './vergunningen-content';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import {
@@ -9,6 +14,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   hash,
   isRecentNotification,
@@ -28,15 +34,10 @@ import {
 import { CaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
-import {
-  NotificationLabels,
-  notificationContent,
-} from './vergunningen-content';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 export const toeristischeVerhuurVergunningTypes: Array<
   VergunningBase['caseType']
@@ -449,8 +450,9 @@ async function fetchVergunningen_(
   return response;
 }
 
+const secondsMaxAge = 45;
 export const fetchVergunningen = memoizee(fetchVergunningen_, {
-  maxAge: 45 * ONE_SECOND_MS,
+  maxAge: secondsMaxAge * ONE_SECOND_MS,
   length: 3,
 });
 
@@ -580,7 +582,7 @@ function getVergunningNotifications_(
 export const getVergunningNotifications = memoizee(
   getVergunningNotifications_,
   {
-    maxAge: 45 * ONE_SECOND_MS,
+    maxAge: secondsMaxAge * ONE_SECOND_MS,
   }
 );
 

@@ -1,11 +1,12 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
+
+import styles from './HLI.module.scss';
+import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
-import styles from './HLI.module.scss';
-import { useHliThemaData } from './useHliThemaData';
 
 type DetailPageContentProps = {
   hliRegeling: HLIRegeling;

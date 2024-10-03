@@ -1,7 +1,3 @@
-import {
-  DatasetId,
-  POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/myarea-datasets';
 import type {
   DatasetConfig,
   DatasetFeatureProperties,
@@ -13,10 +9,16 @@ import {
   getPropertyFilters,
   recursiveCoordinateSwap,
 } from './helpers';
+import {
+  DatasetId,
+  POLYLINE_GEOMETRY_TYPES,
+} from '../../../universal/config/myarea-datasets';
+
+const DEFAULT_PAGE_SIZE = 1000;
 
 export function dsoApiListUrl(
   dataset: string,
-  pageSize: number = 1000,
+  pageSize: number = DEFAULT_PAGE_SIZE,
   datasetId?: DatasetId
 ) {
   return (datasetConfig: DatasetConfig) => {

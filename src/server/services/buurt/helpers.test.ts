@@ -1,6 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { remoteApiHost } from '../../../setupTests';
-import { ApiResponse } from '../../../universal/helpers/api';
+
 import {
   DatasetConfig,
   DatasetResponse,
@@ -27,6 +26,8 @@ import {
   recursiveCoordinateSwap,
   refineFilterSelection,
 } from './helpers';
+import { remoteApiHost } from '../../../setupTests';
+import { ApiResponse } from '../../../universal/helpers/api';
 
 const DSO_API_RESULT = {
   _links: {

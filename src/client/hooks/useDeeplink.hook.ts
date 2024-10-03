@@ -1,7 +1,8 @@
 import { useLocation } from 'react-router-dom';
+
+import { removeLocalStorageKey, useLocalStorage } from './storage.hook';
 import { AppRoutes } from '../../universal/config/routes';
 import { isPrivateRoute } from '../config/routes';
-import { removeLocalStorageKey, useLocalStorage } from './storage.hook';
 
 export const ROUTE_ENTRY_KEY = 'RouteEntry';
 

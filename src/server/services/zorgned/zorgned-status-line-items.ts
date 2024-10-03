@@ -1,9 +1,9 @@
-import { StatusLineItem } from '../../../universal/types';
 import { parseLabelContent } from './zorgned-helpers';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
 } from './zorgned-types';
+import { StatusLineItem } from '../../../universal/types';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
 // we set the match to true so the check doesn't influence the selection criteria and returns items by default.

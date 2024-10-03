@@ -1,4 +1,5 @@
 import { describe } from 'vitest';
+
 import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 
 const mocks = vi.hoisted(() => {
@@ -22,7 +23,6 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
-import { jsonCopy } from '../../../universal/helpers/utils';
 import { fetchIsKnownInAFIS } from './afis';
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
 import { fetchAfisDocument } from './afis-documents';
@@ -411,7 +411,7 @@ describe('Afis', () => {
         .get(ROUTES.businesspartnerFullName)
         .reply(200, responseBodyBusinessPartnerAddressId);
 
-      let response = await fetchAfisBusinessPartnerDetails(
+      const response = await fetchAfisBusinessPartnerDetails(
         REQUEST_ID,
         GENERIC_ID
       );

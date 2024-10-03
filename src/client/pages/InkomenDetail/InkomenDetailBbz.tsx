@@ -1,11 +1,12 @@
+import { useCallback } from 'react';
+
 import {
   Grid,
-  Link,
   LinkList,
   Paragraph,
 } from '@amsterdam/design-system-react';
-import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';

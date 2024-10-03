@@ -1,13 +1,14 @@
 import { Heading, Link } from '@amsterdam/design-system-react';
+
+import { DatalistCanons } from './DatalistCanons';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
+import styles from './ErfpachtDossierDetail.module.scss';
 import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
 } from '../../../../server/services/simple-connect/erfpacht';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
-import { DatalistCanons } from './DatalistCanons';
-import { ErfpachtDatalistProps } from './DatalistGeneral';
-import styles from './ErfpachtDossierDetail.module.scss';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;
@@ -93,15 +94,21 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
 }
 
 function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
-  return dossier.financieel?.toekomstigePeriodeList?.map((periode) => (
-    <DatalistFinancieelPeriode
-      titelAlgemeneBepaling={periode.titelFinancieelToekomstigeAlgemeneBepaling}
-      titelPeriodeVan={periode.titelFinancieelToekomstigePeriodeVan}
-      titelCanon={periode.titelFinancieelToekomstigeCanon}
-      periode={periode}
-      isHuidigePeriode={false}
-    />
-  ));
+  const firstItemsCount = 3;
+  return dossier.financieel?.toekomstigePeriodeList
+    ?.slice(0, firstItemsCount)
+    .map((periode) => (
+      <DatalistFinancieelPeriode
+        key={periode.titelFinancieelToekomstigeAlgemeneBepaling}
+        titelAlgemeneBepaling={
+          periode.titelFinancieelToekomstigeAlgemeneBepaling
+        }
+        titelPeriodeVan={periode.titelFinancieelToekomstigePeriodeVan}
+        titelCanon={periode.titelFinancieelToekomstigeCanon}
+        periode={periode}
+        isHuidigePeriode={false}
+      />
+    ));
 }
 
 export function DatalistsFinancieel({ dossier }: ErfpachtDatalistProps) {

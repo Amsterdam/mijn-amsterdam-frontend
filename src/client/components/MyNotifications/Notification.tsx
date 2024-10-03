@@ -1,8 +1,11 @@
+import { useRef, useState } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import { animated, useSpring } from '@react-spring/web';
-import { useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+
 import { InnerHtml } from '..';
+import styles from './MyNotifications.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   MyNotification as MyNotificationBase,
@@ -19,7 +22,6 @@ import { isInteralUrl } from '../../utils/utils';
 import Linkd from '../Button/Button';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import ThemaIcon from '../ThemaIcon/ThemaIcon';
-import styles from './MyNotifications.module.scss';
 
 export interface MyNotification extends MyNotificationBase {
   Icon?: SVGComponent;
@@ -41,11 +43,12 @@ const Notification = ({
   const contentDimensions = useContentDimensions(contentRef);
   const [isTipReasonShown, showTipReason] = useState(false);
 
+  const DEBOUNCE_MS = 50;
   const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
     if (contentDimensions.height > 0 && contentDimensions.width > 0) {
       setReadyForAnimation(true);
     }
-  }, 50);
+  });
 
   setReadyForAnimatonDebounced();
 
@@ -178,11 +181,11 @@ const Notification = ({
                   <IconInfo />
                   <a
                     onClick={() => {
-                      !isTipReasonShown &&
+                      if (!isTipReasonShown) {
                         trackEvent('klik-op-tip-reden', {
                           title: `${trackCategory} - ${notification.title}`,
-                          profileType,
                         });
+                      }
                       return showTipReason(
                         (isTipReasonShown) => !isTipReasonShown
                       );

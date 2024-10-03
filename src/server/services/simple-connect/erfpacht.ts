@@ -1,5 +1,8 @@
 import crypto from 'crypto';
+
 import { generatePath } from 'react-router-dom';
+
+import { fetchService, fetchTipsAndNotifications } from './api-service';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -9,11 +12,11 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { fetchService, fetchTipsAndNotifications } from './api-service';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
-  const iv = crypto.randomBytes(16).toString('base64').slice(0, 16);
+  const ivLength = 16;
+  const iv = crypto.randomBytes(ivLength).toString('base64').slice(0, ivLength);
   const ivBuffer = Buffer.from(iv, 'utf-8');
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);

@@ -1,12 +1,12 @@
-import type { ERVV as ERVVType } from '../../../../server/services';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../../components/InfoDetail/InfoDetail';
 import { Location } from './Location';
+import type { ERVV as ERVVType } from '../../../../server/services';
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
 } from '../../../../universal/helpers/date';
+import InfoDetail, {
+  InfoDetailGroup,
+} from '../../../components/InfoDetail/InfoDetail';
 
 export function ERVV({ vergunning }: { vergunning: ERVVType }) {
   const isVerleend = vergunning?.decision === 'Verleend';

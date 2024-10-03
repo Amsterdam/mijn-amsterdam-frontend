@@ -1,9 +1,12 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import classnames from 'classnames';
 import { parseISO } from 'date-fns';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
+
+import styles from './InkomenSpecificaties.module.scss';
+import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
@@ -18,9 +21,8 @@ import {
   Table,
 } from '../../components';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './InkomenSpecificaties.module.scss';
-import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 
 export const specificationsTableDisplayProps = {
   category: 'Regeling',

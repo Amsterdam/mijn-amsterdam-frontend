@@ -1,6 +1,10 @@
-import { describe, expect, vi } from 'vitest';
-import ZaakStatus from './ZaakStatus';
 import { render, screen } from '@testing-library/react';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { describe, expect, vi } from 'vitest';
+
+import ZaakStatus from './ZaakStatus';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import {
   addLinks,
   horecaVergunningTypes,
@@ -8,14 +12,11 @@ import {
   transformVergunningenData,
   VergunningenSourceData,
 } from '../../../server/services';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { AppRoutes } from '../../../universal/config/routes';
-import { generatePath } from 'react-router-dom';
-import MockApp from '../MockApp';
-import { MutableSnapshot } from 'recoil';
 import { appStateAtom } from '../../hooks/useAppState';
-import { AppState } from '../../../universal/types';
 
+import MockApp from '../MockApp';
+import { AppState } from '../../../universal/types';
 const pushMock = vi.fn();
 
 const testState = {

@@ -3,9 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { describe, expect, it, vi } from 'vitest';
+
+import MyNotifications from './MyNotifications';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types';
-import MyNotifications from './MyNotifications';
 
 describe('<MyNotifications />', () => {
   const callback = vi.fn();

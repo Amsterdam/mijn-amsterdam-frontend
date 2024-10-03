@@ -1,6 +1,7 @@
 import { ClientConfig, Pool } from 'pg';
-import { captureException } from '../monitoring';
+
 import { getFromEnv } from '../../helpers/env';
+import { captureException } from '../monitoring';
 
 export const pgDbConfig: ClientConfig = {
   host: getFromEnv('PGHOST', true),

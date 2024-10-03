@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
-import Linkd from '../../components/Button/Button';
-import { ExternalUrls } from '../../config/app';
-import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
+
 import {
   Grid,
-  Link,
   LinkList,
   Paragraph,
 } from '@amsterdam/design-system-react';
+
+import { ExternalUrls } from '../../config/app';
+import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
 
 export default function InkomenDetailTonk() {
   const pageContent = useCallback(

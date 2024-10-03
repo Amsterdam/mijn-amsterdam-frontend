@@ -1,3 +1,10 @@
+import { getFeedEntryProperties } from './afis-helpers';
+import {
+  AfisArcDocID,
+  AfisDocumentDownloadSource,
+  AfisDocumentIDSource,
+  AfisFactuur,
+} from './afis-types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -6,13 +13,6 @@ import {
   DocumentDownloadData,
   DocumentDownloadResponse,
 } from '../shared/document-download-route-handler';
-import { getFeedEntryProperties } from './afis-helpers';
-import {
-  AfisArcDocID,
-  AfisDocumentDownloadSource,
-  AfisDocumentIDSource,
-  AfisFactuur,
-} from './afis-types';
 
 export async function fetchAfisDocument(
   requestID: RequestID,

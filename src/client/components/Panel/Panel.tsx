@@ -1,8 +1,9 @@
 import { HTMLProps } from 'react';
 
-import { ComponentChildren } from '../../../universal/types';
 import classnames from 'classnames';
+
 import styles from './Panel.module.scss';
+import { ComponentChildren } from '../../../universal/types';
 
 export interface PanelProps extends HTMLProps<HTMLDivElement> {
   className?: string;

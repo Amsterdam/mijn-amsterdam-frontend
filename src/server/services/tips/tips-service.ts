@@ -1,8 +1,8 @@
+import { collectTips } from './collect-tips';
+import { ServiceResults } from './tip-types';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { pick } from '../../../universal/helpers/utils';
 import { MyNotification, MyTip } from '../../../universal/types';
-import { collectTips } from './collect-tips';
-import { ServiceResults } from './tip-types';
 
 function prioritySort(a: MyTip, b: MyTip) {
   const prioA = a.priority ?? 0;

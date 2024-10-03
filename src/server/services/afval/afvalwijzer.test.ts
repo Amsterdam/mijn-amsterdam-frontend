@@ -1,4 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
+
 import {
   AFVALSourceData,
   exportedForTesting,

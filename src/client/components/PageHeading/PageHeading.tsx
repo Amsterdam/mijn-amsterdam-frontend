@@ -1,12 +1,13 @@
-import { Heading } from '@amsterdam/design-system-react';
 import type { HTMLProps, ReactNode } from 'react';
-import { ComponentChildren, LinkProps } from '../../../universal/types';
 
+import { Heading } from '@amsterdam/design-system-react';
 import composeClassNames from 'classnames';
+
+import styles from './PageHeading.module.scss';
+import { ComponentChildren, LinkProps } from '../../../universal/types';
 import { IconChevronLeft } from '../../assets/icons';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import styles from './PageHeading.module.scss';
 
 export interface PageHeadingProps
   extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {

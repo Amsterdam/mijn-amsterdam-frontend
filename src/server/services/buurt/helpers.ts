@@ -4,6 +4,15 @@ import {
   LatLngLiteral,
   LatLngTuple,
 } from 'leaflet';
+
+import type {
+  DatasetConfig,
+  DatasetFeatures,
+  DatasetResponse,
+  MaFeature,
+  MaPointFeature,
+} from './datasets';
+import { datasetEndpoints } from './datasets';
 import {
   DATASETS,
   DatasetFilterSelection,
@@ -19,14 +28,6 @@ import {
 } from '../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import type {
-  DatasetConfig,
-  DatasetFeatures,
-  DatasetResponse,
-  MaFeature,
-  MaPointFeature,
-} from './datasets';
-import { datasetEndpoints } from './datasets';
 
 export function getDatasetEndpointConfig(
   endpointIDs?: string[],
@@ -124,7 +125,7 @@ export function filterPolylineFeaturesWithinBoundingBox(
     isCoordWithingBoundingBox(bbox, coord);
 
   let i = 0;
-  let len = features.length;
+  const len = features.length;
 
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates);
@@ -149,7 +150,7 @@ export function filterPointFeaturesWithinBoundingBox(
 ) {
   const featuresFiltered = [];
   let i = 0;
-  let len = features.length;
+  const len = features.length;
 
   for (i; i < len; i += 1) {
     if (
@@ -511,7 +512,8 @@ function getDistanceFromLatLonInKm(
 }
 
 function deg2rad(deg: number) {
-  return deg * (Math.PI / 180);
+  const halfCircle = 180;
+  return deg * (Math.PI / halfCircle);
 }
 
 export function filterFeaturesinRadius(

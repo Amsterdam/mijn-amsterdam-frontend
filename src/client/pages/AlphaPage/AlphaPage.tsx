@@ -1,10 +1,7 @@
-import { Page, PageContent, PageHeading } from '../../components';
 import styles from './AlphaPage.module.scss';
-
-// import { useAppStateGetter } from '../../hooks/useAppState';
+import { Page, PageContent, PageHeading } from '../../components';
 
 export default function AlphaPage() {
-  // const { STATE_SLICE } = useAppStateGetter();
   return (
     <Page className={styles.AlphaPage}>
       <PageHeading>AlphaPage title</PageHeading>

@@ -1,6 +1,6 @@
+import { RVVSloterweg, VergunningFrontendV2 } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
-import { RVVSloterweg, VergunningFrontendV2 } from './config-and-types';
 
 export function getStatusStepsRVVSloterweg(
   vergunning: RVVSloterweg
@@ -82,7 +82,7 @@ export function getStatusStepsRVVSloterweg(
       datePublished:
         !vergunning.dateWorkflowVerleend && !!vergunning.dateDecision
           ? vergunning.dateDecision
-          : !!vergunning.dateWorkflowVerleend
+          : vergunning.dateWorkflowVerleend
             ? vergunning.dateWorkflowVerleend
             : '',
       description: descriptionAfgehandeld,

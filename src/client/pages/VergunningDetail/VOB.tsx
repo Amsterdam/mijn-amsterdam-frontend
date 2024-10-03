@@ -1,6 +1,6 @@
+import { Location } from './Location';
 import type { Ligplaatsvergunning } from '../../../server/services';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
 
 export function VOB({ vergunning }: { vergunning: Ligplaatsvergunning }) {
   const isAfgehandeld = vergunning.processed;

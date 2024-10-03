@@ -1,4 +1,6 @@
 import jose from 'node-jose';
+
+import { ApiPatternResponseA, fetchService } from './api-service';
 import { IS_TAP } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { Themas } from '../../../universal/config/thema';
@@ -8,9 +10,8 @@ import {
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import { getCert } from '../../helpers/cert';
-import { ApiPatternResponseA, fetchService } from './api-service';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -28,7 +29,9 @@ function getPublicKey() {
     if (IS_TAP) {
       certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error('Error getting public key', error);
+  }
 
   const pemPubKey = !IS_TAP
     ? keystore.add(DEV_KEY, 'json')

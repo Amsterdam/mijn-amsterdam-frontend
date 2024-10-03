@@ -1,8 +1,9 @@
 import classNames from 'classnames';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { GenericDocument } from '../../../universal/types/App.types';
+
 import { DocumentLink } from './DocumentLink';
 import styles from './DocumentListV2.module.scss';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { GenericDocument } from '../../../universal/types/App.types';
 
 interface DocumentListProps<T extends GenericDocument = GenericDocument> {
   documents: T[];

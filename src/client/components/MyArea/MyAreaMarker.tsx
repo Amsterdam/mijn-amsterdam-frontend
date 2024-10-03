@@ -1,18 +1,20 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import L, {
   LatLngLiteral,
   LeafletEventHandlerFn,
   Marker as MarkerType,
   MarkerOptions,
 } from 'leaflet';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import Marker from './Map/Marker';
+import styles from './MyArea.module.scss';
+import { useMapRef } from './useMap';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
 import iconUrl from '../../assets/icons/home.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
 import markerIconUrl from '../../assets/icons/map/pin.svg';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import Marker from './Map/Marker';
-import styles from './MyArea.module.scss';
-import { useMapRef } from './useMap';
 
 interface MyAreaMarkerProps {
   latlng: LatLngLiteral;
@@ -30,10 +32,12 @@ function MyAreaMarker({
   alt,
 }: MyAreaMarkerProps) {
   const markerConfig = useMemo(() => {
+    const ICON_SIZE = 32;
+    const ICON_ANCHOR = 16;
     const icon = L.icon({
       iconUrl,
-      iconSize: [32, 32],
-      iconAnchor: [16, 16],
+      iconSize: [ICON_SIZE, ICON_SIZE],
+      iconAnchor: [ICON_ANCHOR, ICON_ANCHOR],
     });
 
     const events: { [key: string]: LeafletEventHandlerFn } = {};
@@ -58,6 +62,8 @@ function MyAreaMarker({
 
   useEffect(() => {
     if (markerInstance && label) {
+      const MARKER_LABEL_OFFSET = 14;
+
       markerInstance
         .unbindTooltip()
         .bindTooltip(
@@ -67,7 +73,7 @@ function MyAreaMarker({
           {
             className: styles.MarkerLabel,
             permanent: true,
-            offset: [0, 14],
+            offset: [0, MARKER_LABEL_OFFSET],
             direction: 'bottom',
           }
         );

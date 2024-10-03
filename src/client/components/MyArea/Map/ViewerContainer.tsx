@@ -1,5 +1,6 @@
-import styles from './ViewerContainer.module.scss';
 import classnames from 'classnames';
+
+import styles from './ViewerContainer.module.scss';
 
 type Props = {
   topLeft?: React.ReactNode;

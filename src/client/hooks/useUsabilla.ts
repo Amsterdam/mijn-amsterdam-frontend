@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { IS_AP } from '../../universal/config/env';
-import { captureException } from '../utils/monitoring';
+
 import { usePhoneScreen } from './media.hook';
 import { useScript } from './useScript';
+import { IS_AP } from '../../universal/config/env';
+import { captureException } from '../utils/monitoring';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 const USABILLA_ID_MOBILE = '9fd5da44aa5b';
@@ -16,8 +17,9 @@ export function waitForUsabillaLiveInWindow() {
       if ((window as any).usabilla_live) {
         return resolve(true);
       }
+      const timeoutMs = 30;
       if (!timeoutReached) {
-        polling = setTimeout(waitForFoo, 30);
+        polling = setTimeout(waitForFoo, timeoutMs);
       }
     })();
     setTimeout(() => {

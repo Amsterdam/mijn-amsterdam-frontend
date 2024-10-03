@@ -1,3 +1,4 @@
+import styles from './Bezwaren.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -13,7 +14,6 @@ import {
   addTitleLinkComponent,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Bezwaren.module.scss';
 
 const DISPLAY_PROPS_BEZWAREN = {
   identificatie: 'Zaaknummer',

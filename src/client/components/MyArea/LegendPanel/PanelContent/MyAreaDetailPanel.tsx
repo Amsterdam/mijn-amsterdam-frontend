@@ -11,11 +11,11 @@ import MyAreaPanelContentBedrijvenInvesteringsZones from './BedrijvenInvestering
 import MyAreaPanelContentBekendmaking from './Bekendmaking';
 import MyAreaPanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
+import MyAreaPanelContentLaadpalen from './Laadpalen';
 import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt';
 import MyAreaPanelContentParkeren from './Parkeren';
 import MyAreaPanelContentSport from './Sport';
 import MyAreaPanelContentWIOR from './Wior';
-import MyAreaPanelContentLaadpalen from './Laadpalen';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;

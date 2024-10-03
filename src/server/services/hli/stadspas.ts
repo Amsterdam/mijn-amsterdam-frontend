@@ -1,14 +1,5 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config/routes';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { captureException } from '../monitoring';
+
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
   fetchGpassBudgetTransactions,
@@ -20,6 +11,17 @@ import {
   StadspasBudget,
   StadspasFrontend,
 } from './stadspas-types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { decrypt, encrypt } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { captureException } from '../monitoring';
 
 export async function fetchStadspas(
   requestID: RequestID,
@@ -75,7 +77,7 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
     return apiErrorResult(
       'Bad request: Failed to decrypt transactions key',
       null,
-      400
+      HTTP_STATUS_CODES.BAD_REQUEST
     );
   }
 
@@ -86,14 +88,22 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
   if (verifySessionId) {
     [sessionID, administratienummer, pasnummer] = payload;
     if (sessionID !== verifySessionId) {
-      return apiErrorResult('Not authorized', null, 401);
+      return apiErrorResult(
+        'Not authorized',
+        null,
+        HTTP_STATUS_CODES.UNAUTHORIZED
+      );
     }
   } else {
     [administratienummer, pasnummer] = payload;
   }
 
   if (!administratienummer || !pasnummer) {
-    return apiErrorResult('Not authorized', null, 401);
+    return apiErrorResult(
+      'Not authorized',
+      null,
+      HTTP_STATUS_CODES.UNAUTHORIZED
+    );
   }
 
   return apiSuccessResult({

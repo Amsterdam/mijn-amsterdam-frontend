@@ -1,8 +1,10 @@
 import fs from 'fs';
+import path from 'path';
+
 import { parse } from 'html-to-ast';
 import { Attr } from 'html-to-ast/dist/types';
-import path from 'path';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
+
 import { IS_TAP } from '../../universal/config/env';
 import {
   ApiResponse,
@@ -11,8 +13,8 @@ import {
 } from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
-import { getApiConfig } from '../helpers/source-api-helpers';
 import FileCache from '../helpers/file-cache';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 
 const TAGS_ALLOWED = [
@@ -175,9 +177,10 @@ function transformFooterResponse(responseData: any) {
   return footer;
 }
 
+const cacheTimeMinutes = 24 * 60;
 const fileCache = new FileCache({
   name: 'cms-content',
-  cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
+  cacheTimeMinutes: IS_TAP ? cacheTimeMinutes : -1,
 });
 
 async function getGeneralPage(

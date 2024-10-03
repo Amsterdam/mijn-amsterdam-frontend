@@ -1,13 +1,3 @@
-import {
-  apiErrorResult,
-  ApiResponse,
-  apiSuccessResult,
-  getFailedDependencies,
-  getSettledResult,
-} from '../../../universal/helpers/api';
-import { DataRequestConfig } from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
 import { getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
@@ -21,6 +11,16 @@ import {
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
 } from './afis-types';
+import {
+  apiErrorResult,
+  ApiResponse,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../../universal/helpers/api';
+import { DataRequestConfig } from '../../config/source-api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 
 function transformBusinessPartnerAddressResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerAddressSource>

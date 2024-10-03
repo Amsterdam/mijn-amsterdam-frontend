@@ -1,7 +1,7 @@
-import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { Component } from 'react';
 
 import { MemoryRouter, Route } from 'react-router-dom';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 
 interface MockAppProps {
   routePath: string;

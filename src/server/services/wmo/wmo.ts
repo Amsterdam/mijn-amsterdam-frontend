@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router-dom';
+
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';

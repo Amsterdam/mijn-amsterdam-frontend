@@ -1,6 +1,6 @@
+import { forTesting } from './hli';
 import { StatusLineItem } from '../../../universal/types';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
-import { forTesting } from './hli';
 
 describe('HLI', () => {
   test('getDisplayStatus', () => {

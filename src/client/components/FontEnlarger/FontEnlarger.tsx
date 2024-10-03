@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
-import { ComponentChildren } from '../../../universal/types';
+
 import styles from './FontEnlarger.module.scss';
+import { ComponentChildren } from '../../../universal/types';
 
 export interface ComponentProps {
   children?: ComponentChildren;

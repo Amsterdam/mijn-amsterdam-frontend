@@ -1,10 +1,10 @@
 import { ReactElement, ReactNode } from 'react';
 
-import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
+import { Grid, Screen } from '@amsterdam/design-system-react';
+
 import {
   GenericDocument,
   LinkProps,
-  StatusLine,
   ZaakDetail,
 } from '../../../universal/types/App.types';
 import {

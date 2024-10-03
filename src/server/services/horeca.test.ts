@@ -1,10 +1,11 @@
 import MockDate from 'mockdate';
-import { bffApi, remoteApi } from '../../test-utils';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import vergunningenMockData from '../../../mocks/fixtures/vergunningen.json';
-import { fetchHorecaNotifications, fetchHorecaVergunningen } from './horeca';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { fetchHorecaNotifications, fetchHorecaVergunningen } from './horeca';
+import vergunningenMockData from '../../../mocks/fixtures/vergunningen.json';
+import { remoteApi } from '../../test-utils';
+import { AuthProfileAndToken } from '../auth/auth-types';
+
 
 describe('Horeca service', () => {
   const authProfileAndToken: AuthProfileAndToken = {

@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+
+import styles from './Burgerzaken.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -16,7 +18,6 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Burgerzaken.module.scss';
 
 const DISPLAY_PROPS_ID_KAARTEN = {
   datumAfloop: 'Geldig tot',

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import Panel from './Panel';
 
 it('Renders without crashing', () => {

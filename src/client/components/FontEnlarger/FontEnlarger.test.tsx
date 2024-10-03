@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import FontEnlarger from './FontEnlarger';
 
 describe('Font enlarger information', () => {

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
+
 import { PanelState, usePanelStateCycle } from './PanelComponent';
+import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
 
 export function useLegendPanelCycle() {
   const isWideScreen = useWidescreen();

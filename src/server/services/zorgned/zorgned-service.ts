@@ -1,21 +1,5 @@
 import memoizee from 'memoizee';
-import {
-  apiErrorResult,
-  ApiSuccessResponse,
-  apiSuccessResult,
-  getFailedDependencies,
-  getSettledResult,
-} from '../../../universal/helpers/api';
-import { getFullName } from '../../../universal/helpers/brp';
-import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { hash } from '../../../universal/helpers/utils';
-import { GenericDocument } from '../../../universal/types';
 
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   BeschiktProduct,
   LeveringsVorm,
@@ -29,6 +13,22 @@ import {
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
 } from './zorgned-types';
+import {
+  apiErrorResult,
+  ApiSuccessResponse,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../../universal/helpers/api';
+import { getFullName } from '../../../universal/helpers/brp';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
+import { hash } from '../../../universal/helpers/utils';
+import { GenericDocument } from '../../../universal/types';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -360,9 +360,10 @@ export async function fetchPersoonsgegevensNAW_(
   return response;
 }
 
+const seconds = 45;
 export const fetchPersoonsgegevensNAW = memoizee(fetchPersoonsgegevensNAW_, {
   length: 3,
-  maxAge: 45 * ONE_SECOND_MS,
+  maxAge: seconds * ONE_SECOND_MS,
 });
 
 export const forTesting = {

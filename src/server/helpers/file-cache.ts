@@ -1,8 +1,11 @@
-import { Cache, clearCacheById, create } from 'flat-cache';
 import fs from 'fs';
 import { createHash } from 'node:crypto';
 import path from 'path';
+
+import { Cache, clearCacheById, create } from 'flat-cache';
+
 import { IS_AP } from '../../universal/config/env';
+import { ONE_SECOND_MS } from '../config/app';
 
 interface FileCacheProps {
   name: string;
@@ -11,7 +14,7 @@ interface FileCacheProps {
   triesUntilConsiderdStale?: number;
 }
 
-const ONE_MINUTE_MS = 1000 * 60;
+const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
 const EXT = 'flat-cache.json';
 
 export const DEFAULT_CACHE_DIR = path.join(__dirname, '../', 'cache');
@@ -55,6 +58,7 @@ export function cacheOverview() {
   });
 }
 
+const defaultTriesUntilConsiderdStale = 5;
 export default class FileCache {
   name: string;
   name_: string;
@@ -68,7 +72,7 @@ export default class FileCache {
     name,
     path = DEFAULT_CACHE_DIR,
     cacheTimeMinutes = 0,
-    triesUntilConsiderdStale = 5,
+    triesUntilConsiderdStale = defaultTriesUntilConsiderdStale,
   }: FileCacheProps) {
     this.name = fileName(name);
     this.path = path;

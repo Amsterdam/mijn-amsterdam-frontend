@@ -1,11 +1,13 @@
+import { ReactNode } from 'react';
+
 import { Heading, Paragraph, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { ReactNode } from 'react';
+
+import styles from './TableV2.module.scss';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped, ZaakDetail } from '../../../universal/types';
 import { MaRouterLink } from '../MaLink/MaLink';
-import styles from './TableV2.module.scss';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -80,7 +82,7 @@ export function TableV2<T extends object = ZaakDetail>({
           <Table.Header>
             <Table.Row>
               {displayPropEntries.map(([key, label], index) => {
-                if (!!label) {
+                if (label) {
                   return (
                     <Table.HeaderCell key={`th-${key}`}>
                       {label}

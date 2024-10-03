@@ -1,10 +1,14 @@
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
+
+import { BffEndpoints } from './bff-routes';
+import { queryParams } from './route-helpers';
 import { OTAP_ENV } from '../../universal/config/env';
 import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../universal/config/myarea-datasets';
+import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
@@ -23,8 +27,6 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
-import { BffEndpoints } from './bff-routes';
-import { queryParams } from './route-helpers';
 
 export const router = express.Router();
 
@@ -154,7 +156,7 @@ router.get(
       }
 
       if (response?.status !== 'OK') {
-        res.status(500);
+        res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
       }
 
       return res.json(response);

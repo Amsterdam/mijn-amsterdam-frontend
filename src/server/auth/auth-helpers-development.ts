@@ -1,11 +1,13 @@
 import * as jose from 'jose';
-import { DEV_JWK_PRIVATE } from '../config/development';
+import memoizee from 'memoizee';
+
 import {
   OIDC_TOKEN_AUD_ATTRIBUTE_VALUE,
   TOKEN_ID_ATTRIBUTE,
 } from './auth-config';
 import { AuthProfile } from './auth-types';
-import memoizee from 'memoizee';
+import { DEV_JWK_PRIVATE } from '../config/development';
+
 
 /**
  *

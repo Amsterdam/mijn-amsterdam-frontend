@@ -1,3 +1,4 @@
+import styles from './ToeristischeVerhuurDetail.module.scss';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
 import { VakantieverhuurVergunning as VakantieverhuurVergunningDecos } from '../../../server/services/vergunningen/vergunningen';
@@ -10,7 +11,6 @@ import InfoDetail, {
 import StatusLine from '../../components/StatusLine/StatusLine';
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import { Location } from '../VergunningDetail/Location';
-import styles from './ToeristischeVerhuurDetail.module.scss';
 
 export default function VergunningVerhuur({
   vergunning,

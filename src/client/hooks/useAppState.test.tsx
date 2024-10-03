@@ -1,17 +1,5 @@
-import axios from 'axios';
-import * as appStateModule from '../AppState';
-import { renderRecoilHook } from '../utils/renderRecoilHook';
-import { newEventSourceMock } from './EventSourceMock';
-import * as dataApiHook from './api/useDataApi';
-import {
-  addParamsToStreamEndpoint,
-  isAppStateReady,
-  useAppStateRemote,
-} from './useAppState';
-import * as sseHook from './useSSE';
-import { SSE_ERROR_MESSAGE } from './useSSE';
-
 import { act, waitFor } from '@testing-library/react';
+import axios from 'axios';
 import {
   MockInstance,
   afterEach,
@@ -21,12 +9,24 @@ import {
   it,
   vi,
 } from 'vitest';
+
+import * as dataApiHook from './api/useDataApi';
+import { newEventSourceMock } from './EventSourceMock';
+import {
+  addParamsToStreamEndpoint,
+  isAppStateReady,
+  useAppStateRemote,
+} from './useAppState';
+import * as sseHook from './useSSE';
+import { SSE_ERROR_MESSAGE } from './useSSE';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   apiPristineResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import * as appStateModule from '../AppState';
 import * as Monitoring from '../utils/monitoring';
+import { renderRecoilHook } from '../utils/renderRecoilHook';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');

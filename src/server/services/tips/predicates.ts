@@ -3,27 +3,28 @@ import {
   differenceInYears,
   parseISO,
 } from 'date-fns';
+
+import type { TipsPredicateFN } from './tip-types';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { isAmsterdamAddress } from '../buurt/helpers';
+import { HLIRegeling } from '../hli/hli-regelingen-types';
+import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
-import type { TipsPredicateFN } from './tip-types';
-import { BBVergunning } from '../toeristische-verhuur/bb-vergunning';
-import { HLIRegeling } from '../hli/hli-regelingen-types';
-import { BeschikkingsResultaat } from '../zorgned/zorgned-types';
 
 // rule 2
 export const is18OrOlder: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
+  const age = 18;
   return (
     differenceInYears(
       today,
       appState.BRP?.content?.persoon.geboortedatum
         ? new Date(appState.BRP.content.persoon.geboortedatum)
         : today
-    ) >= 18
+    ) >= age
   );
 };
 
@@ -40,8 +41,9 @@ export const hasValidId: TipsPredicateFN = (
 // To use an ID for voting it needs an expiration date with a maximum of five years ago.
 export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
   const dateOfVote = new Date('2023-11-20'); // Minus 2 days for request processing.
+  const years = 5;
   const fiveYearsAgo = new Date(
-    dateOfVote.setFullYear(dateOfVote.getFullYear() - 5)
+    dateOfVote.setFullYear(dateOfVote.getFullYear() - years)
   );
   return hasValidId(appState, fiveYearsAgo);
 };
@@ -136,17 +138,33 @@ export const hasKidsBetweenAges2And18: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 2, 18, today);
+  const ageFrom = 2;
+  const ageTo = 18;
+  return hasKidsBetweenAges(
+    appState.BRP?.content?.kinderen,
+    ageFrom,
+    ageTo,
+    today
+  );
 };
 
 export const hasKidsBetweenAges4And11: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  return hasKidsBetweenAges(appState.BRP?.content?.kinderen, 4, 11, today);
+  const ageFrom = 4;
+  const ageTo = 11;
+  return hasKidsBetweenAges(
+    appState.BRP?.content?.kinderen,
+    ageFrom,
+    ageTo,
+    today
+  );
 };
 
 export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
+  const yearFrom = 2016;
+  const yearTo = 2024;
   const oldestKid = appState.BRP?.content?.kinderen?.sort(
     (a: any, b: any) =>
       new Date(a.geboortedatum as string).getTime() -
@@ -158,7 +176,7 @@ export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
   }
 
   const birthYear = new Date(oldestKid?.geboortedatum).getFullYear();
-  return birthYear >= 2016 && birthYear < 2024;
+  return birthYear >= yearFrom && birthYear < yearTo;
 };
 
 // Rule 13
@@ -178,9 +196,11 @@ export const isBetween17and18: TipsPredicateFN = (
     return false;
   }
 
+  const ageFrom = 17;
+  const ageTo = 18;
   return (
-    differenceInYears(today, new Date(geboortedatum)) >= 17 &&
-    differenceInYears(today, new Date(geboortedatum)) <= 18
+    differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
+    differenceInYears(today, new Date(geboortedatum)) <= ageTo
   );
 };
 
@@ -194,9 +214,11 @@ export const isBetween4and12: TipsPredicateFN = (
     return false;
   }
 
+  const ageFrom = 4;
+  const ageTo = 12;
   return (
-    differenceInYears(today, new Date(geboortedatum)) >= 4 &&
-    differenceInYears(today, new Date(geboortedatum)) <= 12
+    differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
+    differenceInYears(today, new Date(geboortedatum)) <= ageTo
   );
 };
 

@@ -1,5 +1,8 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
+
+import styles from './BezwarenDetail.module.scss';
+import BezwarenStatusLines from './BezwarenStatusLines';
 import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -25,8 +28,6 @@ import { BFFApiUrls } from '../../config/api';
 import { BagThemas, ThemaTitles } from '../../config/thema';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
-import styles from './BezwarenDetail.module.scss';
-import BezwarenStatusLines from './BezwarenStatusLines';
 
 const loadingContentBarConfig2: BarConfig = [
   ['30rem', '4rem', '2rem'],

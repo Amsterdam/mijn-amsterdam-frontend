@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import uid from 'uid-safe';
+
+import { isProtectedRoute, sendUnauthorized } from './route-helpers';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import {
@@ -9,7 +11,6 @@ import {
 } from '../auth/auth-helpers';
 import { clearSessionCache } from '../helpers/source-api-request';
 import { getIsBlackListed } from '../services/session-blacklist';
-import { isProtectedRoute, sendUnauthorized } from './route-helpers';
 
 export function handleCheckProtectedRoute(
   req: Request,
@@ -97,7 +98,8 @@ export function nocache(_req: Request, res: Response, next: NextFunction) {
 }
 
 export function requestID(req: Request, res: Response, next: NextFunction) {
-  res.locals.requestID = uid.sync(18);
+  const byteLength = 18;
+  res.locals.requestID = uid.sync(byteLength);
   next();
 }
 

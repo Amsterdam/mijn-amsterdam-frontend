@@ -1,14 +1,5 @@
-import {
-  DatasetFilterSelection,
-  POLYLINE_GEOMETRY_TYPES,
-} from '../../../universal/config/myarea-datasets';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { jsonCopy, omit } from '../../../universal/helpers/utils';
-import FileCache from '../../helpers/file-cache';
-import { requestData } from '../../helpers/source-api-request';
+import { Mock, afterEach, describe, expect, it, vi } from 'vitest';
+
 import * as service from './buurt';
 import {
   ACCEPT_CRS_4326,
@@ -25,8 +16,18 @@ import {
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
 } from './helpers';
+import {
+  DatasetFilterSelection,
+  POLYLINE_GEOMETRY_TYPES,
+} from '../../../universal/config/myarea-datasets';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import { jsonCopy, omit } from '../../../universal/helpers/utils';
+import FileCache from '../../helpers/file-cache';
+import { requestData } from '../../helpers/source-api-request';
 
-import { Mock, afterEach, describe, expect, it, vi } from 'vitest';
 
 const DUMMY_DATA_RESPONSE = apiSuccessResult([
   { properties: { foo: 'bar', bar: undefined } },

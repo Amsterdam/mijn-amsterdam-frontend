@@ -1,7 +1,9 @@
 import * as appInsights from 'applicationinsights';
 import { SeverityLevel } from 'applicationinsights/out/Declarations/Contracts';
 import { Telemetry } from 'applicationinsights/out/Declarations/Contracts/TelemetryTypes/Telemetry';
+
 import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { IS_DEBUG } from '../config/app';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
@@ -78,15 +80,13 @@ interface TrackRequestProps {
   properties?: { [key: string]: string };
 }
 
-export function trackRequest({
-  name,
-  url,
-  method = 'get',
-  properties,
-}: TrackRequestProps) {
-  let startTime_ = Date.now();
+export function trackRequest({ name, url, properties }: TrackRequestProps) {
+  const startTime_ = Date.now();
   return {
-    finish: (resultCode: number = 200, status: 'OK' | 'ERROR' = 'OK') => {
+    finish: (
+      resultCode = HTTP_STATUS_CODES.OK,
+      status: 'OK' | 'ERROR' = 'OK'
+    ) => {
       if (startTime_) {
         const payload = {
           url,

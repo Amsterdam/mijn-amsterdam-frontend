@@ -269,7 +269,7 @@ export async function loadFeatureDetail(
    * This way we can extract the detail data from the dataset cache in the transformDetail function.
    */
   if (!detailUrl) {
-    if (!!config.transformDetail) {
+    if (config.transformDetail) {
       try {
         // We can't provide response data here because we don't have an Url to request to.
         const detailFeature = config.transformDetail(null, {
@@ -297,7 +297,7 @@ export async function loadFeatureDetail(
    * or:
    * https://some-domein/api/dataset/detail/$id
    */
-  let url = config.idKeyDetail
+  const url = config.idKeyDetail
     ? `${detailUrl}?${config.idKeyDetail}=${id}`
     : `${detailUrl}${id}`;
 

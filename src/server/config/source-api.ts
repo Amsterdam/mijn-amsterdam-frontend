@@ -1,10 +1,12 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import https from 'https';
+
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+import { ONE_HOUR_MS, ONE_SECOND_MS } from './app';
 import { IS_OT, IS_TAP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
-import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -36,8 +38,15 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
 }
 
-export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
-export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
+const defaultApiCacheTtlSecondsOT = 65;
+const defaultApiCacheTtlSeconds = 45;
+export const DEFAULT_API_CACHE_TTL_MS =
+  (IS_OT ? defaultApiCacheTtlSecondsOT : defaultApiCacheTtlSeconds) *
+  ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
+
+const defaultCancelTimeoutSecondsOT = 60;
+export const DEFAULT_CANCEL_TIMEOUT_MS =
+  (IS_OT ? 60 : defaultCancelTimeoutSecondsOT) * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
@@ -90,6 +99,8 @@ export type SourceApiKey =
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
+const minuteMinus1 = 59;
+const oneMinuteMs = minuteMinus1 * ONE_SECOND_MS + ONE_SECOND_MS;
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
     postponeFetch: !FeatureToggle.afisActive,
@@ -200,6 +211,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     },
   },
   CMS_CONTENT_GENERAL_INFO: {
+    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
     urls: {
       private: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
@@ -209,6 +221,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   CMS_CONTENT_FOOTER: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
+    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
@@ -291,7 +304,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
     postponeFetch: !FeatureToggle.bodemActive,
-    cacheTimeout: 59 * ONE_MINUTE_MS,
+    cacheTimeout: oneMinuteMs,
   },
   AMSAPP: {
     url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,

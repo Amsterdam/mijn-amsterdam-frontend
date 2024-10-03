@@ -1,8 +1,5 @@
 import { AnyProps, PointFeature } from 'supercluster';
-import {
-  DatasetFilterSelection,
-  DatasetId,
-} from '../../../universal/config/myarea-datasets';
+
 import { loadDatasetFeatures } from './buurt';
 import { MaPointFeature } from './datasets';
 import {
@@ -10,9 +7,13 @@ import {
   filterPointFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
 } from './helpers';
+import {
+  DatasetFilterSelection,
+  DatasetId,
+} from '../../../universal/config/myarea-datasets';
 
 async function generateSuperCluster(features: MaPointFeature[]) {
-  if (!!features?.length) {
+  if (features?.length) {
     const Supercluster = (await import('supercluster')).default;
     const superClusterIndex = new Supercluster({
       log: true,

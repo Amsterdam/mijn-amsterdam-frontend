@@ -1,8 +1,10 @@
+import { BAGData, fetchBAG } from './bag';
+import { fetchBRP } from './brp';
+import { fetchKVK, getKvkAddresses } from './kvk';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
 } from '../../universal/config/myarea-datasets';
-
 import {
   ApiResponse,
   apiDependencyError,
@@ -12,9 +14,6 @@ import {
 import { isMokum } from '../../universal/helpers/brp';
 import { Adres } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { BAGData, fetchBAG } from './bag';
-import { fetchBRP } from './brp';
-import { fetchKVK, getKvkAddresses } from './kvk';
 
 async function fetchPrivate(
   requestID: RequestID,

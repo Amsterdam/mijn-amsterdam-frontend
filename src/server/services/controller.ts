@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
@@ -38,17 +39,17 @@ import {
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
 import {
-  fetchTipsAndNotifications,
-  sortNotifications,
-} from './tips-and-notifications';
-import {
   convertTipToNotication,
   createTipsFromServiceResults,
   prefixTipNotification,
 } from './tips/tips-service';
+import {
+  fetchTipsAndNotifications,
+  sortNotifications,
+} from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
-import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
+import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {
   fetchBbz,
@@ -57,7 +58,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { auth } from 'express-openid-connect';
+import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -160,7 +161,11 @@ export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
-    return apiErrorResult('Not authorized', null, 401);
+    return apiErrorResult(
+      'Not authorized',
+      null,
+      HTTP_STATUS_CODES.UNAUTHORIZED
+    );
   }
 
   const [tipNotifications, themaAndTipNotifications] = await Promise.all([
@@ -410,7 +415,7 @@ export async function loadServicesAll(req: Request, res: Response) {
 
   // Combine all results into 1 object
   const serviceResults = (await Promise.all(servicePromises)).reduce(
-    (acc, result, index) => Object.assign(acc, result),
+    (acc, result) => Object.assign(acc, result),
     {}
   );
 

@@ -1,17 +1,18 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
+import Horeca from './Horeca';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
+import { horecaOptions } from '../../../server/services/horeca';
 import {
   addLinks,
   transformVergunningenData,
   VergunningenSourceData,
 } from '../../../server/services/vergunningen/vergunningen';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { AppRoutes } from '../../../universal/config/routes';
-import { horecaOptions } from '../../../server/services/horeca';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Horeca from './Horeca';
 
 const testState: any = {
   HORECA: {

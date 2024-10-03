@@ -1,5 +1,3 @@
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-types';
 import {
   AANVRAAG,
   EINDE_RECHT,
@@ -8,6 +6,7 @@ import {
   isDecisionStatusActive,
   MEER_INFORMATIE,
 } from './wmo-generic';
+import { ZorgnedStatusLineItemTransformerConfig } from '../../zorgned/zorgned-types';
 
 export const vergoeding: ZorgnedStatusLineItemTransformerConfig[] = [
   AANVRAAG,

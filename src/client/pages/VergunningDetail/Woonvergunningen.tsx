@@ -1,6 +1,6 @@
+import { Location } from './Location';
 import type { WoningVergunning } from '../../../universal/helpers/vergunningen';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
 
 export function Woonvergunningen({
   vergunning,

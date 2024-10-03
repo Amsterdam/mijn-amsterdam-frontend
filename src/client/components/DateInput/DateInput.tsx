@@ -1,11 +1,18 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import classnames from 'classnames';
 import { format, getDaysInMonth, isValid, parseISO } from 'date-fns';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { range } from '../../../universal/helpers/utils';
+
 import styles from './DateInput.module.scss';
 import { getMonth } from '../../../universal/helpers/date';
+import { range } from '../../../universal/helpers/utils';
 
 const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
+
+const MINIMUM_YEAR = 1900;
+const YEARS_BEFORE_SELECTED = 50;
+const YEARS_AFTER_SELECTED = 100;
+const currentYear = new Date().getFullYear();
 
 export function isNativeDatePickerInputSupported() {
   const input = document.createElement('input');
@@ -51,13 +58,14 @@ export default function DateInput({
     return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
   }, [yearSelected, monthSelected, daySelected]);
 
-  let valueError = !isValid(value);
+  const valueError = !isValid(value);
   let valueFormatted = '';
 
   if (!valueError) {
     valueFormatted = format(value, DATE_INPUT_FORMAT);
   }
 
+  const MONTHS_IN_YEAR_INDEX = 11;
   return (
     <>
       {hasNativeSupport && (
@@ -72,7 +80,7 @@ export default function DateInput({
           onChange={(event) => {
             if (event.target.value) {
               const parsed = parseISO(event.target.value);
-              let dateValue = isValid(parsed) ? parsed : null;
+              const dateValue = isValid(parsed) ? parsed : null;
               if (dateValue !== null) {
                 onChange(dateValue);
               }
@@ -103,7 +111,7 @@ export default function DateInput({
             }}
             value={monthSelected}
           >
-            {range(0, 11).map((month) => (
+            {range(0, MONTHS_IN_YEAR_INDEX).map((month) => (
               <option key={month} value={month}>
                 {getMonth(month)}
               </option>
@@ -118,8 +126,8 @@ export default function DateInput({
             value={yearSelected}
           >
             {range(
-              Math.min(1900, yearSelected - 50),
-              Math.min(yearSelected + 100, new Date().getFullYear())
+              Math.max(MINIMUM_YEAR, yearSelected - YEARS_BEFORE_SELECTED),
+              Math.min(yearSelected + YEARS_AFTER_SELECTED, currentYear)
             ).map((year) => (
               <option key={year}>{year}</option>
             ))}

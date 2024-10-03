@@ -1,5 +1,5 @@
-import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 import { AV_UPCC, AV_UPCZIL, forTesting } from './pcvergoeding';
+import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 
 describe('pcvergoeding', () => {
   describe('isVerzilveringVanRegeling', () => {

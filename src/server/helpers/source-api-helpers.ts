@@ -9,14 +9,14 @@ export function getApiConfig(
   name: SourceApiKey,
   config: DataRequestConfig = {}
 ): DataRequestConfig {
-  let apiConfig = ApiConfig[name];
+  const apiConfig = ApiConfig[name];
 
   // Take of the agent because it cannot be jsonCopied.
   const agent = apiConfig.httpsAgent;
   delete apiConfig.httpsAgent;
 
   // Copy the config to prevent assigning privacy/identity related information across requests
-  let apiConfigCopy = jsonCopy(apiConfig);
+  const apiConfigCopy = jsonCopy(apiConfig);
 
   // copy the config and transfer the https agent instance.
   if (agent) {

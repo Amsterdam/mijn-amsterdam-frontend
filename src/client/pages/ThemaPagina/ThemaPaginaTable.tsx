@@ -1,4 +1,5 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
+
 import { ZaakDetail } from '../../../universal/types';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';

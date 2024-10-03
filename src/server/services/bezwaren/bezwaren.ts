@@ -2,26 +2,6 @@ import * as jose from 'jose';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 
-import { MyNotification } from '../../../universal/types';
-import { DataRequestConfig } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-
-import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
-import {
-  apiDependencyError,
-  apiSuccessResult,
-  getFailedDependencies,
-  getSettledResult,
-} from '../../../universal/helpers/api';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
 import {
   Bezwaar,
   BezwaarDocument,
@@ -34,6 +14,26 @@ import {
   OctopusApiResponse,
   kenmerkKey,
 } from './types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
+import {
+  apiDependencyError,
+  apiSuccessResult,
+  getFailedDependencies,
+  getSettledResult,
+} from '../../../universal/helpers/api';
+import { isRecentNotification } from '../../../universal/helpers/utils';
+import { MyNotification } from '../../../universal/types';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { DataRequestConfig } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
@@ -42,6 +42,7 @@ async function getBezwarenApiHeaders_(
 ) {
   const now = new Date();
 
+  const minutesToExpire = 5;
   const tokenData = {
     unique_name: process.env.BFF_BEZWAREN_EMAIL,
     actort: process.env.BFF_BEZWAREN_USER,
@@ -51,7 +52,9 @@ async function getBezwarenApiHeaders_(
     medewerkerId: parseInt(process.env.BFF_BEZWAREN_EMPLOYEE_ID ?? '-1', 10),
     role: '',
     nameIdentifier: '',
-    exp: Math.ceil(now.setMinutes(now.getMinutes() + 5) / 1000),
+    exp: Math.ceil(
+      now.setMinutes(now.getMinutes() + minutesToExpire) / ONE_SECOND_MS
+    ),
   };
 
   if (authProfileAndToken.profile.authMethod === 'digid') {

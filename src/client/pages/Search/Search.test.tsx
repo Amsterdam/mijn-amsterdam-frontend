@@ -2,11 +2,12 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, it } from 'vitest';
+
+import Search from './Search';
 import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
-import Search from './Search';
 
 const testState: any = {
   WPI_AANVRAGEN: {

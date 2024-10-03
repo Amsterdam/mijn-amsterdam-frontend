@@ -1,9 +1,9 @@
+import { Location } from './Location';
+import styles from './VergunningDetail.module.scss';
 import type { Flyeren as FlyerenVergunning } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
-import styles from './VergunningDetail.module.scss';
 
 // Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
 // In dat geval allen de datum tonen.

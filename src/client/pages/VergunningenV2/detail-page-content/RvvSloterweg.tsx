@@ -84,7 +84,7 @@ export function getRVVSloterwegLineItems(
       datePublished:
         !vergunning.dateWorkflowVerleend && !!vergunning.dateDecision
           ? vergunning.dateDecision
-          : !!vergunning.dateWorkflowVerleend
+          : vergunning.dateWorkflowVerleend
             ? vergunning.dateWorkflowVerleend
             : '',
       description: descriptionAfgehandeld,

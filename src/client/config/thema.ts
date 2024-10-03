@@ -1,10 +1,11 @@
 import { generatePath } from 'react-router-dom';
+
+import { TrackingConfig } from './routes';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
-import { TrackingConfig } from './routes';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {

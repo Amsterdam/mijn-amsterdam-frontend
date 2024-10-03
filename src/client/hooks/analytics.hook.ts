@@ -7,6 +7,7 @@ import {
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
 import memoize from 'memoizee';
+
 import { ThemaTitles } from '../config/thema';
 
 let PiwikInstance: PiwikTracker;
@@ -25,6 +26,7 @@ const PiwikTrackerConfig: UserOptions = {
 };
 
 const DEFAULT_THEMA_VALUE = 'Mijn Amsterdam algemeen';
+const MIN_SEARCH_LENGTH = 3;
 
 // See dimension Ids specified in aansluitgids MIJN-5416
 enum CustomDimensionId {
@@ -46,7 +48,7 @@ function maThema(thema: string) {
 }
 
 export function getDerivedThemaNaamFromDocumentTitle() {
-  let title = typeof document !== undefined ? document.title : '';
+  const title = typeof document !== 'undefined' ? document.title : '';
 
   return (
     Object.values(ThemaTitles).find((t) => {
@@ -68,7 +70,7 @@ export function trackSearch(
   searchMachine: string,
   profileType: ProfileType
 ) {
-  if (keyword.length <= 3) {
+  if (keyword.length <= MIN_SEARCH_LENGTH) {
     //Only track from 4 chars and above
     return;
   }
@@ -90,7 +92,7 @@ export function trackSearchResultClick({
   amountOfResultsShown,
   type,
 }: TrackSiteSearchResultClick) {
-  if (keyword.length <= 3) {
+  if (keyword.length <= MIN_SEARCH_LENGTH) {
     return;
   }
 

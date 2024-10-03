@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
+
+import { useAppStateGetter } from './useAppState';
+import { useProfileTypeValue } from './useProfileType';
 import { ApiResponse, isError, isLoading } from '../../universal/helpers/api';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItem } from '../config/thema';
 import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
-import { useAppStateGetter } from './useAppState';
-import { useProfileTypeValue } from './useProfileType';
 
 export interface ThemasState {
   items: ThemaMenuItem[];

@@ -1,6 +1,9 @@
 import express, { Request, RequestHandler, Response } from 'express';
 import { ConfigParams, requiresAuth } from 'express-openid-connect';
 import { NextFunction } from 'express-serve-static-core';
+
+import { nocache, verifyAuthenticated } from './route-handlers';
+import { sendUnauthorized } from './route-helpers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
@@ -22,8 +25,6 @@ import {
 } from '../auth/auth-routes';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
-import { nocache, verifyAuthenticated } from './route-handlers';
-import { sendUnauthorized } from './route-helpers';
 
 export const oidcRouter = express.Router();
 

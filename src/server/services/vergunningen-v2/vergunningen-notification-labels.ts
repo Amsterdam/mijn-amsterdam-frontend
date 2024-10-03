@@ -1,5 +1,5 @@
 import { subMonths } from 'date-fns';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
+
 import {
   NotificationLabels,
   RVVSloterweg,
@@ -7,6 +7,7 @@ import {
   VergunningFrontendV2,
 } from './config-and-types';
 import { dateFormat } from '../../../universal/helpers/date';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 
 const link = (vergunning: VergunningFrontendV2) => ({
   title: 'Bekijk details',

@@ -1,6 +1,7 @@
 import classnames from 'classnames';
-import { OTAP_ENV } from '../../../universal/config/env';
+
 import styles from './OtapLabel.module.scss';
+import { OTAP_ENV } from '../../../universal/config/env';
 
 export function OtapLabel() {
   return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (

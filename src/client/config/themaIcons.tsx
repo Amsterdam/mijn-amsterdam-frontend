@@ -23,7 +23,6 @@ import {
   IconOvertredingen,
   IconParkeren,
   IconSearch,
-  IconStadspas,
   IconSubsidie,
   IconToeristischeVerhuur,
   IconVergunningen,

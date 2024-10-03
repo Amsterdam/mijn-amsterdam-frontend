@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import Section from './Section';
 
 it('Renders without crashing', () => {

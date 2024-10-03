@@ -1,14 +1,14 @@
+import React from 'react';
+
+import GenericBase from './GenericBase';
+import styles from './Laadpalen.module.scss';
+import { laadpaalValueConfig } from '../../../../../universal/config/myarea-datasets';
+import { getFullAddress } from '../../../../../universal/helpers/brp';
 import {
   IconConnectorTypeCCS,
   IconConnectorTypeChademo,
   IconConnectorTypeMennekes,
 } from '../../../../assets/icons';
-import GenericBase from './GenericBase';
-import styles from './Laadpalen.module.scss';
-
-import React from 'react';
-import { laadpaalValueConfig } from '../../../../../universal/config/myarea-datasets';
-import { getFullAddress } from '../../../../../universal/helpers/brp';
 import InfoDetail from '../../../InfoDetail/InfoDetail';
 
 type Props = {

@@ -1,3 +1,5 @@
+import { ReactElement, useEffect, useMemo } from 'react';
+
 import {
   Alert as DSAlert,
   Grid,
@@ -5,8 +7,9 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
-import { ReactElement, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+
+import styles from './StatusDetail.module.scss';
 import { AppRoutes, RouteKey } from '../../../universal/config/routes';
 import { Thema } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -28,7 +31,6 @@ import { LinkdInline } from '../../components/Button/Button';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { captureMessage } from '../../utils/monitoring';
-import styles from './StatusDetail.module.scss';
 
 export type StatusSourceItem = StatusLine;
 

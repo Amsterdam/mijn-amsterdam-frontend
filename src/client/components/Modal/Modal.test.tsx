@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { Dialog } from './Modal';
 import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from 'vitest';
+
+import { Dialog } from './Modal';
 
 describe('Modal test', () => {
   it('Renders without crashing', () => {

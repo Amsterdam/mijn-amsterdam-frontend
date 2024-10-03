@@ -1,12 +1,13 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
+
+import { useZorgThemaData } from './useZorgThemaData';
+import styles from './Zorg.module.scss';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { LinkProps } from '../../../universal/types/App.types';
 import { ExternalUrls } from '../../config/external-urls';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { useZorgThemaData } from './useZorgThemaData';
-import styles from './Zorg.module.scss';
 
 export default function ThemaPaginaZorg() {
   const { isError, isLoading, regelingen, title, routes, tableConfig } =

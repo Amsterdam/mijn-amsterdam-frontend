@@ -1,5 +1,7 @@
 import { Link } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
+
+import styles from './GarbageInformation.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { getFullAddress, isMokum } from '../../../universal/helpers/brp';
@@ -36,7 +38,6 @@ import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import styles from './GarbageInformation.module.scss';
 
 function GarbageInfoDetail({ ...props }: InfoDetailProps) {
   return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;

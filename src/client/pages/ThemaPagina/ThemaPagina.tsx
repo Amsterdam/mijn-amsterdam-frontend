@@ -1,4 +1,10 @@
+
+import { ReactElement, ReactNode } from 'react';
+
 import { Grid, LinkList, Screen } from '@amsterdam/design-system-react';
+
+import { AppRoutes } from '../../../universal/config/routes';
+import { LinkProps } from '../../../universal/types';
 import {
   ErrorAlert,
   LoadingContent,
@@ -6,10 +12,6 @@ import {
   PageHeading,
   ThemaIcon,
 } from '../../components';
-
-import { ReactElement, ReactNode } from 'react';
-import { AppRoutes } from '../../../universal/config/routes';
-import { LinkProps } from '../../../universal/types';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
