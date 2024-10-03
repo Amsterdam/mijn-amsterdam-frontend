@@ -101,7 +101,7 @@ export function ToeristischeVerhuurDetail() {
         to: routes.themaPage,
       }}
       documentPathForTracking={(document) =>
-        `/downloads/hli/regeling/${vergunning?.title}/${document.title.split(/\n/)[0]}`
+        `/downloads/toeristische-verhuur/vergunning/${vergunning?.title}/${document.title.split(/\n/)[0]}`
       }
     />
   );
