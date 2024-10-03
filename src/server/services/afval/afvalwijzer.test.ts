@@ -157,7 +157,7 @@ describe('Afvalwijzer service', () => {
         afvalwijzerFractieCode: 'GA',
         afvalwijzerBasisroutetypeOmschrijving: 'Grofvuil Route op afspraak',
         afvalwijzerInstructie2: 'In vuilniszak',
-        afvalwijzerOphaaldagen2: 'maandag, donderdag',
+        afvalwijzerOphaaldagen2: ['maandag', 'donderdag'],
         afvalwijzerWaar: 'Aan de rand van de stoep of op de vaste plek',
         afvalwijzerBuitenzetten: 'Tussen 06.00 en 07.30 uur',
         afvalwijzerUrl: 'https://www.afvalgids.nl/afval/inzamelaar/',
