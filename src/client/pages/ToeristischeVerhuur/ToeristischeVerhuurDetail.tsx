@@ -48,6 +48,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
           className: styles.VanTot_Col2,
         },
       ],
+      isVisible: vergunning.result === 'Verleend',
     },
     {
       label: 'Adres',
@@ -91,7 +92,10 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       )}
       {!!documentsResponseData.content?.length && (
         <Grid.Cell span="all">
-          <DocumentListV2 documents={documentsResponseData.content} />
+          <DocumentListV2
+            documents={documentsResponseData.content}
+            columns={['Document', '']}
+          />
         </Grid.Cell>
       )}
     </>
