@@ -12,7 +12,7 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
-import { StatusLineItem } from '../../../universal/types';
+import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -28,6 +28,9 @@ import {
   PBZaakResultaat,
   SearchRequestResponse,
 } from './toeristische-verhuur-types';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 function fetchPowerBrowserToken_(requestID: RequestID) {
   const requestConfig = getApiConfig('POWERBROWSER', {
@@ -456,6 +459,90 @@ export async function fetchBBVergunningen(
   );
 }
 
+const documentNamenMA_PB = {
+  'Besluit toekenning': [
+    'Anoniem Besluit BB (brief)',
+    'Anoniem Besluit BB met overgangsrecht (brief)',
+    'Besluit B&B',
+    'Besluit B&B met overgangsrecht',
+    'Besluit BB vergunningvrij (brief)',
+    'Besluit verlening beslistermijn B&B (Brief)',
+  ],
+  'Besluit Buiten behandeling': ['Besluit aanvraag B&B niet in behandeling '],
+  'Besluit weigering': ['Besluit B&B weigering zonder overgangsrecht'],
+  'Besluit instrekking': ['Intrekken vergunning BB (brief)'],
+};
+
+interface PowerbrowserLink {
+  mainTable: string | 'DOCLINK';
+  mainId: number;
+  caption: string;
+  linkID: number;
+  note: string | 'Bijlage';
+}
+
+function transformPowerbrowserLinksResponse(
+  sessionID: SessionID,
+  responseData: PowerbrowserLink[]
+) {
+  return (
+    responseData
+      ?.filter(
+        (link) =>
+          link.mainTable === 'DOCLINK' &&
+          link.note === 'Bijlage' &&
+          !!link.caption?.toLowerCase().includes('.pdf')
+      )
+      .map((link) => {
+        const docIdEncrypted = encryptSessionIdWithRouteIdParam(
+          sessionID,
+          String(link.mainId)
+        );
+
+        const [docTitleTranslated] =
+          Object.entries(documentNamenMA_PB).find(
+            ([docTitleMa, docTitlesPB]) => {
+              return docTitlesPB.some((docTitlePb) =>
+                link.caption.includes(docTitlePb)
+              );
+            }
+          ) ?? [];
+
+        return {
+          id: docIdEncrypted,
+          title: docTitleTranslated ?? link.caption,
+          url: generateFullApiUrlBFF(
+            BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
+            { id: docIdEncrypted }
+          ),
+          download: link.caption,
+          datePublished: '',
+        };
+      }) ?? []
+  );
+}
+
+export async function fetchPowerBrowserDocuments(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken,
+  zaakId: BBVergunning['id']
+) {
+  const dataRequestConfig: DataRequestConfig = {
+    method: 'GET',
+    formatUrl({ url }) {
+      return `${url}/Link/GFO_ZAKEN/${zaakId}`;
+    },
+    transformResponse(responseData) {
+      return transformPowerbrowserLinksResponse(
+        authProfileAndToken.profile.sid,
+        responseData
+      );
+    },
+  };
+
+  return fetchPowerBrowserData(requestID, dataRequestConfig);
+}
+
 export async function fetchBBDocument(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -467,19 +554,13 @@ export async function fetchBBDocument(
     return tokenResponse;
   }
 
-  const dataRequestConfigBase = getApiConfig('POWERBROWSER');
   const dataRequestConfig: DataRequestConfig = {
-    ...dataRequestConfigBase,
-    url:
-      dataRequestConfigBase.url +
-      generatePath('/Dms/:id/Pdf', {
+    formatUrl({ url }) {
+      return `${url}${generatePath('/Dms/:id/Pdf', {
         id: documentId,
-      }),
-    responseType: 'stream',
-    headers: {
-      Authorization: `Bearer ${tokenResponse.content}`,
-      ...dataRequestConfigBase.headers,
+      })}`;
     },
+    responseType: 'stream',
     transformResponse: (documentResponseData) => {
       return {
         data: documentResponseData,
@@ -487,9 +568,8 @@ export async function fetchBBDocument(
     },
   };
 
-  return requestData<DocumentDownloadData>(
-    dataRequestConfig,
+  return fetchPowerBrowserData<DocumentDownloadData>(
     requestID,
-    authProfileAndToken
+    dataRequestConfig
   );
 }
