@@ -27,7 +27,7 @@ import {
   convertTipToNotication,
   prefixTipNotification,
 } from './tips/tips-service';
-import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
 import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
