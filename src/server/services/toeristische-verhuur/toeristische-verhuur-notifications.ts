@@ -30,7 +30,11 @@ export function createToeristischeVerhuurNotification(
 
   let title = `Aanvraag ${vergunningTitleLower} in behandeling`;
   let description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} in behandeling.`;
-  let datePublished = vergunning.dateReceived ?? '';
+  let datePublished =
+    vergunning.steps.find((step) => step.status === 'In behandeling')
+      ?.datePublished ??
+    vergunning.dateReceived ??
+    '';
   let cta = 'Bekijk uw aanvraag';
   let linkTo: string = AppRoutes.TOERISTISCHE_VERHUUR;
 
