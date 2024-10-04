@@ -49,7 +49,7 @@ export const tableConfigVergunningen = {
     title: listPageTitle[listPageParamKind.actual],
     filter: (vergunning: BBVergunning | VakantieverhuurVergunning) =>
       vergunning.isActual,
-    sort: dateSort('dateDecision', 'desc'),
+    sort: dateSort('dateReceived', 'desc'),
     displayProps: DISPLAY_PROPS_VERGUNNINGEN,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.HuidigeRegelingen,
@@ -58,7 +58,7 @@ export const tableConfigVergunningen = {
     title: listPageTitle[listPageParamKind.historic],
     filter: (vergunning: BBVergunning | VakantieverhuurVergunning) =>
       !vergunning.isActual,
-    sort: dateSort('dateDecision', 'desc'),
+    sort: dateSort('dateReceived', 'desc'),
     displayProps: DISPLAY_PROPS_VERGUNNINGEN,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.EerdereRegelingen,
