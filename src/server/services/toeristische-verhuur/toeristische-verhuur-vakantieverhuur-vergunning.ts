@@ -118,10 +118,8 @@ export function transformVakantieverhuurVergunningen(
     const vergunningTransformed: VakantieverhuurVergunning = {
       id: idTransformed,
       title,
-      dateDecision: vergunning.dateDecision
-        ? defaultDateFormat(vergunning.dateDecision)
-        : null,
-      dateReceived: defaultDateFormat(vergunning.dateRequest),
+      dateDecision: vergunning.dateDecision,
+      dateReceived: vergunning.dateRequest,
       dateStart: vergunning.dateStart ?? '',
       dateStartFormatted: vergunning.dateStart
         ? defaultDateFormat(vergunning.dateStart)
