@@ -121,7 +121,7 @@ export function ToeristscheVerhuurThema() {
       title={tableConfigLVVRegistraties.title}
       zaken={lvvRegistraties}
       displayProps={tableConfigLVVRegistraties.displayProps}
-      textNoContent={`U heeft geen ${title.toLowerCase()}`}
+      textNoContent={`U heeft geen ${tableConfigLVVRegistraties.title.toLowerCase()}`}
     />
   );
 
