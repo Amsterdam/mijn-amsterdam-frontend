@@ -7,7 +7,7 @@ import {
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/App.types';
-import { ErrorAlert, LinkdInline } from '../../components';
+import { LinkdInline } from '../../components';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { routes } from './toeristischeVerhuur-thema-config';

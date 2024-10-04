@@ -4,6 +4,7 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
+import { dateSort } from '../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
@@ -44,6 +45,7 @@ export function useToeristischeVerhuurThemaData() {
     'title',
     true
   );
+
   const lvvRegistraties = TOERISTISCHE_VERHUUR.content?.lvvRegistraties ?? [];
   const hasRegistrations = !!lvvRegistraties.length;
   const hasPermits = hasVergunningenVakantieVerhuur || hasVergunningBB;
