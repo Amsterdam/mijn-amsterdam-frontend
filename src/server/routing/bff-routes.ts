@@ -3,6 +3,7 @@ export const BFF_BASE_PATH_PRIVATE = '/private/api/v1';
 
 export const BffEndpoints = {
   ROOT: '/',
+  ZAAK_STATUS: '/services/zaak-status',
   SERVICES_ALL: '/services/all',
   SERVICES_TIPS: '/services/tips',
   SERVICES_STREAM: '/services/stream',

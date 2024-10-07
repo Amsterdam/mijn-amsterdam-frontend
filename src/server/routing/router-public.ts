@@ -25,6 +25,8 @@ import {
 } from '../services/cms-maintenance-notifications';
 import { BffEndpoints } from './bff-routes';
 import { queryParams } from './route-helpers';
+import { getAuth } from '../auth/auth-helpers';
+import { AppRoutes } from '../../universal/config/routes';
 
 export const router = express.Router();
 
@@ -163,6 +165,34 @@ router.get(
     }
   }
 );
+
+// /**
+//  * Zaak status endpoint redirects to zaakstatus if authenticated, else redirect to login
+//  */
+router.get(BffEndpoints.ZAAK_STATUS, zaakStatusHandler);
+
+export async function zaakStatusHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const authProfileAndToken = getAuth(req);
+    const params = new URLSearchParams(req.url);
+    if (authProfileAndToken) {
+      const redirectUrl = `${AppRoutes.ZAAK_STATUS}${params ? `?${params}` : ''}`;
+      return res.redirect(process.env.MA_FRONTEND_URL + redirectUrl);
+    } else {
+      if (params.get('auth-type') === 'eherkenning') {
+        return res.redirect(authRoutes.AUTH_LOGIN_EHERKENNING);
+      } else {
+        return res.redirect(authRoutes.AUTH_LOGIN_DIGID);
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+}
 
 router.get(
   [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
