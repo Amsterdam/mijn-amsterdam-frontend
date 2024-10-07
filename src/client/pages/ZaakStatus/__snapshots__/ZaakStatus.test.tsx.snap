@@ -135,7 +135,7 @@ exports[`ZaakStatus > should show not found message 1`] = `
       <p
         class="ams-paragraph ams-mb--xs"
       >
-        Wij kunnen de status van uw aanvraag nu niet laten zien.
+        Wij kunnen de status van uw aanvraag niet laten zien.
       </p>
       <p
         class="ams-paragraph"
@@ -176,7 +176,7 @@ exports[`ZaakStatus > should show wachten op betaling 1`] = `
       <p
         class="ams-paragraph ams-mb--xs"
       >
-        Wij kunnen de status van uw aanvraag nu niet laten zien.
+        Wij kunnen de status van uw aanvraag niet laten zien.
       </p>
       <p
         class="ams-paragraph ams-mb--xs"

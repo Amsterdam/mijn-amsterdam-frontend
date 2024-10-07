@@ -108,7 +108,7 @@ export default function ZaakStatus() {
         {pageRoute.unResolvedState === ITEM_NOT_FOUND && (
           <>
             <Paragraph className="ams-mb--xs">
-              Wij kunnen de status van uw aanvraag nu niet laten zien.
+              Wij kunnen de status van uw aanvraag niet laten zien.
             </Paragraph>
             {queryParams.get('payment') && (
               <Paragraph className="ams-mb--xs">
