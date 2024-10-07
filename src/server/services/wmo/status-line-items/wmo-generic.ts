@@ -20,11 +20,11 @@ import {
 } from '../wmo-config-and-types';
 
 function getLastDocumentStartsWithTitle(
-  documents: GenericDocument[],
+  documents: GenericDocument[] | undefined,
   title: string
 ) {
   return (
-    documents.findLast((document) => document?.title.startsWith(title)) ?? null
+    documents?.findLast((document) => document?.title.startsWith(title)) ?? null
   );
 }
 
@@ -40,8 +40,12 @@ export function getDocumentDecisionDate(documents: GenericDocument[]) {
 }
 
 export function hasDecision(aanvraag: ZorgnedAanvraagTransformed) {
-  const hasDecision = isDocumentDecisionDateActive(aanvraag.datumAanvraag)
-    ? !!getDecisionDocument(aanvraag.documenten)
+  const isDecisionDateActive = isDocumentDecisionDateActive(
+    aanvraag.datumAanvraag
+  );
+  const hasDecisionDocument = !!getDecisionDocument(aanvraag.documenten);
+  const hasDecision = isDecisionDateActive
+    ? hasDecisionDocument
     : !!aanvraag.resultaat;
 
   return hasDecision;
@@ -59,11 +63,6 @@ function getDecisionDate(
     decisionDate = defaultDateFormat(decisionDate);
   }
   return decisionDate ?? null;
-}
-
-function getDecisionDateTransformed(aanvraag: ZorgnedAanvraagTransformed) {
-  const DO_TRANSFORM = true;
-  return getDecisionDate(aanvraag, DO_TRANSFORM);
 }
 
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
