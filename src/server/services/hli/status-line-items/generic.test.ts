@@ -35,7 +35,7 @@ describe('HLI/Status-line-items/Generic', () => {
       } as ZorgnedAanvraagTransformed);
 
       expect(description).toMatchInlineSnapshot(
-        `"Als uw recht op HLI regeling stopt, krijgt u hiervan bericht."`
+        `"Als uw recht op HLI regeling stopt, krijgt u hiervan tijdig bericht."`
       );
     });
 

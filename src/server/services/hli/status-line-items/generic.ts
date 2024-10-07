@@ -46,7 +46,7 @@ function getEindeRechtDescription(
     case isActueel && hasDatumEindeGeldigheid:
       return `Uw recht op ${regeling.titel} stopt per ${regeling.datumEindeGeldigheid ? defaultDateFormat(regeling.datumEindeGeldigheid) : ''}.`;
     case isActueel && !hasDatumEindeGeldigheid:
-      return `Als uw recht op ${regeling.titel} stopt, krijgt u hiervan bericht.`;
+      return `Als uw recht op ${regeling.titel} stopt, krijgt u hiervan tijdig bericht.`;
     case !isActueel && !hasDatumEindeGeldigheid:
       return `Uw recht op ${regeling.titel} is beëindigd.`;
     case !isActueel && hasDatumEindeGeldigheid:
