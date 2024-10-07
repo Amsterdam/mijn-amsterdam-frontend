@@ -32,7 +32,7 @@ export interface GarbageFractionData {
   afvalwijzerAfvalkalenderVan: string | null;
   afvalwijzerAfvalkalenderTot: string | null;
   afvalwijzerInstructie2: string | null;
-  afvalwijzerOphaaldagen2: string | null;
+  afvalwijzerOphaaldagen2: string[] | string | null;
   afvalwijzerWaar: string | null;
   afvalwijzerBuitenzetten: string | null;
   afvalwijzerBasisroutetypeCode: string | null;
@@ -145,8 +145,13 @@ function transformFractionData(
       addressCode
     : fractionData.afvalwijzerUrl;
 
+  const afvalwijzerOphaaldagen2 = Array.isArray(
+    fractionData.afvalwijzerOphaaldagen2
+  )
+    ? fractionData.afvalwijzerOphaaldagen2.join(', ')
+    : fractionData.afvalwijzerOphaaldagen2;
   const ophaaldagen = [
-    fractionData.afvalwijzerOphaaldagen2,
+    afvalwijzerOphaaldagen2,
     fractionData.afvalwijzerPerXWeken,
   ]
     .map((s) => (s ? getText(s, '') : ''))
