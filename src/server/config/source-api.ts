@@ -124,6 +124,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
+    postponeFetch: !FeatureToggle.hliThemaActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
