@@ -3,6 +3,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import {
+  hasDecision,
   isAfterWCAGValidDocumentsDate,
   isEindeGeldigheidVerstreken,
 } from './status-line-items/wmo-generic';
@@ -30,14 +31,18 @@ function isProductWithDelivery(
 }
 
 export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
-  const isEOG = isEindeGeldigheidVerstreken(
+  const isEindeGeldigheid = isEindeGeldigheidVerstreken(
     aanvraagTransformed.datumEindeGeldigheid,
     new Date()
   );
 
   let isActueel = !!aanvraagTransformed.isActueel;
 
-  if (!isActueel && 'datumEindeGeldigheid' in aanvraagTransformed && !isEOG) {
+  if (
+    !isActueel &&
+    'datumEindeGeldigheid' in aanvraagTransformed &&
+    !isEindeGeldigheid
+  ) {
     isActueel = true;
   }
 
@@ -46,15 +51,23 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
     !isActueel &&
     !aanvraagTransformed.datumEindeLevering &&
     !aanvraagTransformed.datumBeginLevering &&
-    !isEOG &&
+    !isEindeGeldigheid &&
     isProductWithDelivery(aanvraagTransformed)
   ) {
     isActueel = true;
   }
 
   // Override actueel indien de einde geldigheid is verlopen
-  if (isActueel && (isEOG || aanvraagTransformed.resultaat === 'afgewezen')) {
+  if (
+    isActueel &&
+    (isEindeGeldigheid || aanvraagTransformed.resultaat === 'afgewezen')
+  ) {
     isActueel = false;
+  }
+
+  // Edge-case where no decision document is found
+  if (!isActueel && !hasDecision(aanvraagTransformed)) {
+    isActueel = true;
   }
 
   return isActueel;

@@ -4,6 +4,28 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
 [
   {
     "betrokkenen": [
+      "307741837",
+    ],
+    "datumAanvraag": "2024-09-30",
+    "datumBeginLevering": "2024-09-30",
+    "datumBesluit": "2024-09-30",
+    "datumEindeGeldigheid": "2024-10-01",
+    "datumEindeLevering": "2024-10-01",
+    "datumIngangGeldigheid": "2024-09-30",
+    "datumOpdrachtLevering": "2024-09-30T18:58:05.6966667",
+    "datumToewijzing": "2024-09-30T18:58:05.6966667",
+    "documenten": [],
+    "id": "1448787772",
+    "isActueel": false,
+    "leverancier": "Otolift",
+    "leveringsVorm": "ZIN",
+    "productIdentificatie": "13W15",
+    "productsoortCode": "WRA1",
+    "resultaat": "toegewezen",
+    "titel": "reparatie-/verwijderopdracht   trapliften",
+  },
+  {
+    "betrokkenen": [
       "123123123123",
     ],
     "datumAanvraag": "2024-08-26",
