@@ -11,7 +11,7 @@ describe('HLI/Status-line-items/Generic', () => {
       } as ZorgnedAanvraagTransformed);
 
       expect(description).toMatchInlineSnapshot(
-        `"Uw recht op HLI regeling stopt per 23 mei 2024."`
+        `"Uw recht op HLI regeling stopt per 23 mei 2024. U kunt daarna opnieuw een HLI regeling aanvragen."`
       );
     });
 
