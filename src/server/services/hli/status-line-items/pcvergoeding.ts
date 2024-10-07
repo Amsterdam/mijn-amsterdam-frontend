@@ -210,12 +210,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
-        return `
-        <p>
-         Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.
-        </p>
-        ${regeling.datumEindeGeldigheid ? `<p>Deze regeling is geldig tot ${defaultDateFormat(regeling.datumEindeGeldigheid)}` : ''}.</p>
-      `;
+        return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.</p>
+        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${regeling.titel} aanvragen.</p>` : ''}`;
       },
     },
     {
