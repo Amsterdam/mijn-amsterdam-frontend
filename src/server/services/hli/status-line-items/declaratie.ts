@@ -12,8 +12,7 @@ function getDeclaratieBesluitDescription(
       Uw declaratie is ${regeling.resultaat}.
     </p>
     <p>
-      In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-      indienen.
+      In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.
     </p>
   `;
 }
