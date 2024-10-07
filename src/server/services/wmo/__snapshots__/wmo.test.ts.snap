@@ -1445,7 +1445,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2023-05-15",
-          "description": "<p>Medipoint heeft ons laten weten dat de/het elektrische rolstoel voor binnen en buiten bij u is afgeleverd.</p>",
+          "description": "<p>Medipoint heeft ons laten weten dat een elektrische rolstoel voor binnen en buiten bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -1848,7 +1848,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Harting-Bank heeft ons laten weten dat de/het elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) bij u is afgeleverd.</p>",
+          "description": "<p>Harting-Bank heeft ons laten weten dat een elektrische hulpaandrijving voor rolstoel (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -2768,7 +2768,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2021-11-19",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het handbewogen kinderrolstoel bij u is afgeleverd.</p>",
+          "description": "<p>Welzorg heeft ons laten weten dat een handbewogen kinderrolstoel bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -2934,7 +2934,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het driewielfiets 5-9 jr bij u is afgeleverd.</p>",
+          "description": "<p>Welzorg heeft ons laten weten dat een driewielfiets 5-9 jr bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3017,7 +3017,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het buggy bij u is afgeleverd.</p>",
+          "description": "<p>Welzorg heeft ons laten weten dat een buggy bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3681,7 +3681,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-09-10",
-          "description": "<p>Medipoint heeft ons laten weten dat de/het douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.</p>",
+          "description": "<p>Medipoint heeft ons laten weten dat een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -3920,7 +3920,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Harting-Bank heeft ons laten weten dat de/het douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) bij u is afgeleverd.</p>",
+          "description": "<p>Harting-Bank heeft ons laten weten dat een douche-/toiletstoel (verrijdb/kantelb/ind aangep.) (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -4999,7 +4999,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2017-06-01",
-          "description": "<p>Welzorg heeft ons laten weten dat de/het autozitje bij u is afgeleverd.</p>",
+          "description": "<p>Welzorg heeft ons laten weten dat een autozitje bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
