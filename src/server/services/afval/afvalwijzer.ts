@@ -145,10 +145,11 @@ function transformFractionData(
       addressCode
     : fractionData.afvalwijzerUrl;
 
-  const afvalwijzerOphaaldagen2 =
-    fractionData.afvalwijzerOphaaldagen2 instanceof Array
-      ? fractionData.afvalwijzerOphaaldagen2.join(', ')
-      : fractionData.afvalwijzerOphaaldagen2;
+  const afvalwijzerOphaaldagen2 = Array.isArray(
+    fractionData.afvalwijzerOphaaldagen2
+  )
+    ? fractionData.afvalwijzerOphaaldagen2.join(', ')
+    : fractionData.afvalwijzerOphaaldagen2;
   const ophaaldagen = [
     afvalwijzerOphaaldagen2,
     fractionData.afvalwijzerPerXWeken,
