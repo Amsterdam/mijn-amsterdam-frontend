@@ -71,7 +71,7 @@ describe('router-public', () => {
       const getAuthSpy = vi
         .spyOn(authHelpers, 'getAuth')
         .mockImplementation(() => {
-          throw new Error('Test errorr');
+          throw new Error('Test error');
         });
 
       await zaakStatusHandler(reqMock, resMock, nextMock);
