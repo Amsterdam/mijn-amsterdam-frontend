@@ -8,7 +8,10 @@ import {
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
-import { sendUnauthorized } from '../../routing/route-helpers';
+import {
+  RequestWithRouteAndQueryParams,
+  sendUnauthorized,
+} from '../../routing/route-helpers';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';
@@ -35,14 +38,18 @@ export function downloadDocumentRouteHandler(
   fetchDocument: FetchDocumenDownloadService
 ) {
   return async function handleDownloadRoute(
-    req: Request<{ id: string }>,
+    req: RequestWithRouteAndQueryParams<
+      { id: string },
+      { id: string; [key: string]: string }
+    >,
     res: Response
   ) {
     const authProfileAndToken = getAuth(req);
 
     if (authProfileAndToken) {
       const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-        req.params.id,
+        // TODO: params.id should be removed, BFF routes should use queryParams for handling route/service variables.
+        req.query.id || req.params.id,
         authProfileAndToken
       );
 
@@ -89,8 +96,5 @@ export function attachDocumentDownloadRoute(
   route: string,
   fetchDocumentService: FetchDocumenDownloadService
 ) {
-  if (!route.split('/').includes(':id')) {
-    throw new Error('Document download route requires an :id path parameter.');
-  }
   router.get(route, downloadDocumentRouteHandler(fetchDocumentService));
 }
