@@ -1,1 +1,16 @@
 @import '../../styles/_global.scss';
+
+.HuidigeRegelingen,
+.EerdereRegelingen {
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    tr {
+      th,
+      td {
+        &:nth-child(4),
+        &:nth-child(5) {
+          display: none;
+        }
+      }
+    }
+  }
+}

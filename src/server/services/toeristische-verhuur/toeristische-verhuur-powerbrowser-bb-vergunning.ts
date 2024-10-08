@@ -31,6 +31,7 @@ import {
   PBZaakResultaat,
   SearchRequestResponse,
 } from './toeristische-verhuur-types';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 function fetchPowerBrowserToken_(requestID: RequestID) {
   const requestConfig = getApiConfig('POWERBROWSER', {
@@ -389,7 +390,7 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
     status: 'Ontvangen',
     documents: [],
     fetchDocumentsUrl:
-      parseInt(id, 10) < 0
+      parseInt(id, 10) < 0 || !FeatureToggle.bbDocumentDownloadsActive
         ? null
         : generateFullApiUrlBFF(
             BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST,
