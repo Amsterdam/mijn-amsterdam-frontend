@@ -9,45 +9,51 @@ import {
   BBVergunning,
   VakantieverhuurVergunning,
 } from './toeristische-verhuur-types';
+import Mockdate from 'mockdate';
+
+const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);
+const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
+  {
+    registrationNumber: 'AAAAAAAAAAAAAAAAAAAA',
+  },
+  {
+    registrationNumber: 'BBBBBBBBBBBBBBBBBBBB',
+  },
+];
+const REGISTRATIES_DUMMY_RESPONSE = {
+  registrationNumber: 'AAAA AAAA AAAA AAAA AAAA',
+  rentalHouse: {
+    street: 'Amstel',
+    houseNumber: '1',
+    houseLetter: null,
+    houseNumberExtension: null,
+    postalCode: '1012PN',
+    city: 'Amsterdam',
+    shortName: 'Amstel',
+    owner: null,
+  },
+  agreementDate: '2021-01-01T10:47:44.6107122',
+};
+
+const DUMMY_TOKEN = 'xxxxx';
+
+const authProfileAndToken: AuthProfileAndToken = {
+  profile: {
+    authMethod: 'digid',
+    profileType: 'private',
+    id: 'DIGID-BSN',
+    sid: '',
+  },
+  token: 'xxxxxx',
+};
 
 describe('Toeristische verhuur service', () => {
-  const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);
-  const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
-    {
-      registrationNumber: 'AAAAAAAAAAAAAAAAAAAA',
-    },
-    {
-      registrationNumber: 'BBBBBBBBBBBBBBBBBBBB',
-    },
-  ];
-  const REGISTRATIES_DUMMY_RESPONSE = {
-    registrationNumber: 'AAAA AAAA AAAA AAAA AAAA',
-    rentalHouse: {
-      street: 'Amstel',
-      houseNumber: '1',
-      houseLetter: null,
-      houseNumberExtension: null,
-      postalCode: '1012PN',
-      city: 'Amsterdam',
-      shortName: 'Amstel',
-      owner: null,
-    },
-    agreementDate: '2021-01-01T10:47:44.6107122',
-  };
-
-  const DUMMY_TOKEN = 'xxxxx';
-
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: {
-      authMethod: 'digid',
-      profileType: 'private',
-      id: 'DIGID-BSN',
-      sid: '',
-    },
-    token: 'xxxxxx',
-  };
-
-  vi.useFakeTimers().setSystemTime(new Date('2021-07-07').getTime());
+  beforeAll(() => {
+    Mockdate.set('2021-07-07');
+  });
+  afterAll(() => {
+    Mockdate.reset();
+  });
 
   it('Should respond with both vergunningen and registraties', async () => {
     remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
@@ -254,7 +260,7 @@ describe('Toeristische verhuur service', () => {
       heeftOvergangsRecht: false,
       link: {
         to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
-        title: 'Vergunning bed & breakfast',
+        title: 'vergunning bed & breakfast',
       },
       adres: 'SchniffSchnaff 4C 1234AB Amsterdam',
       title: 'Vergunning bed & breakfast',
@@ -318,10 +324,10 @@ describe('Toeristische verhuur service', () => {
     );
 
     expect(notification6.title).toBe(
-      `Aanvraag Vergunning bed & breakfast verleend`
+      `Aanvraag vergunning bed & breakfast verleend`
     );
     expect(notification6.description).toBe(
-      `Wij hebben uw aanvraag voor een Vergunning bed & breakfast met gemeentelijk zaaknummer ${bbVergunnig.zaaknummer} verleend.`
+      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met gemeentelijk zaaknummer ${bbVergunnig.zaaknummer} verleend.`
     );
     expect(notification6.link?.title).toBe('Bekijk uw aanvraag');
 
@@ -331,7 +337,7 @@ describe('Toeristische verhuur service', () => {
     );
 
     expect(notification7.title).toBe(
-      'Uw Vergunning bed & breakfast is verlopen'
+      'Uw vergunning bed & breakfast is verlopen'
     );
 
     const notification8 = createToeristischeVerhuurNotification(
@@ -339,6 +345,6 @@ describe('Toeristische verhuur service', () => {
       []
     );
 
-    expect(notification8.title).toBe('Uw Vergunning bed & breakfast loopt af');
+    expect(notification8.title).toBe('Uw vergunning bed & breakfast loopt af');
   });
 });
