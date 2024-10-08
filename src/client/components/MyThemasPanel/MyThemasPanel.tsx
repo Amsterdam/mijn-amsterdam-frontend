@@ -1,4 +1,6 @@
 import { Heading } from '@amsterdam/design-system-react';
+
+import styles from './MyThemasPanel.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { IconInfo } from '../../assets/icons';
 import { ThemaMenuItem } from '../../config/thema';
@@ -7,7 +9,6 @@ import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
-import styles from './MyThemasPanel.module.scss';
 
 export interface MyThemasPanelProps {
   title: string;

@@ -1,18 +1,18 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { generatePath } from 'react-router-dom';
+
+import { tableConfig } from './config';
+import styles from './Vergunningen.module.scss';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Vergunningen.module.scss';
-
-import { generatePath } from 'react-router-dom';
 import { LinkProps } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { tableConfig } from './config';
 
 export default function VergunningenV2() {
   const { VERGUNNINGENv2 } = useAppStateGetter();

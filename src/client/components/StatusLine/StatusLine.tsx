@@ -1,6 +1,9 @@
+import { CSSProperties } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { CSSProperties } from 'react';
+
+import styles from './StatusLine.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { ComponentChildren } from '../../../universal/types';
 import {
@@ -10,7 +13,6 @@ import {
 } from '../../../universal/types/App.types';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
-import styles from './StatusLine.module.scss';
 
 interface StatusLinePanelProps {
   children: ComponentChildren;

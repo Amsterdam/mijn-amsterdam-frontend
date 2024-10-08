@@ -1,13 +1,27 @@
 import { useMemo } from 'react';
 
-import { AppRoutes } from '../../../universal/config/routes';
-import styles from './MainHeaderHero.module.scss';
-import { useLocation, matchPath } from 'react-router-dom';
 import classnames from 'classnames';
+import { useLocation, matchPath } from 'react-router-dom';
+
+import styles from './MainHeaderHero.module.scss';
+import { AppRoutes } from '../../../universal/config/routes';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
+
+const IMAGE_SIZES = {
+  PORTRAIT_SMALL: 360,
+  LANDSCAPE_SMALL: 1024,
+  LANDSCAPE_MEDIUM: 1366,
+  LANDSCAPE_LARGE: 1600,
+};
+
+const PIXEL_DENSITIES = {
+  STANDARD: 1,
+  RETINA: 2,
+  HIGH_DPI: 3,
+};
 
 function imgUrl(
   imageName: string,
@@ -95,13 +109,56 @@ function useHeroSrc() {
       return null;
     }
     return {
-      PORTRAIT_SMALL: imgUrl(imageName, 360, 'portrait', 1, dir),
-      PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'portrait', 2, dir),
-      PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'portrait', 3, dir),
-      LANDSCAPE_SMALL: imgUrl(imageName, 1024, 'landscape', 1, dir),
-      LANDSCAPE_MEDIUM: imgUrl(imageName, 1366, 'landscape', 1, dir),
-      LANDSCAPE_LARGE: imgUrl(imageName, 1600, 'landscape', 1, dir),
-      FALLBACK: imgUrl(imageName, 1600, 'landscape', 1, dir, 'jpg'),
+      PORTRAIT_SMALL: imgUrl(
+        imageName,
+        IMAGE_SIZES.PORTRAIT_SMALL,
+        'portrait',
+        PIXEL_DENSITIES.STANDARD,
+        dir
+      ),
+      PORTRAIT_SMALL_2X: imgUrl(
+        imageName,
+        IMAGE_SIZES.PORTRAIT_SMALL,
+        'portrait',
+        PIXEL_DENSITIES.RETINA,
+        dir
+      ),
+      PORTRAIT_SMALL_3X: imgUrl(
+        imageName,
+        IMAGE_SIZES.PORTRAIT_SMALL,
+        'portrait',
+        PIXEL_DENSITIES.HIGH_DPI,
+        dir
+      ),
+      LANDSCAPE_SMALL: imgUrl(
+        imageName,
+        IMAGE_SIZES.LANDSCAPE_SMALL,
+        'landscape',
+        PIXEL_DENSITIES.STANDARD,
+        dir
+      ),
+      LANDSCAPE_MEDIUM: imgUrl(
+        imageName,
+        IMAGE_SIZES.LANDSCAPE_MEDIUM,
+        'landscape',
+        PIXEL_DENSITIES.STANDARD,
+        dir
+      ),
+      LANDSCAPE_LARGE: imgUrl(
+        imageName,
+        IMAGE_SIZES.LANDSCAPE_LARGE,
+        'landscape',
+        PIXEL_DENSITIES.STANDARD,
+        dir
+      ),
+      FALLBACK: imgUrl(
+        imageName,
+        IMAGE_SIZES.LANDSCAPE_LARGE,
+        'landscape',
+        PIXEL_DENSITIES.STANDARD,
+        dir,
+        'jpg'
+      ),
     };
   }, [imageName, dir]);
 }

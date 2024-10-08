@@ -1,6 +1,6 @@
 import MockDate from 'mockdate';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   FetchConfig,
   fetchBijstandsuitkering,
@@ -11,11 +11,10 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatusLabels,
 } from './wpi-types';
-
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { remoteApi } from '../../../test-utils';
 import { ApiErrorResponse } from '../../../universal/helpers/api';
 import { jsonCopy } from '../../../universal/helpers/utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 function fakeStepLabels(): WpiRequestStatusLabels {
   return {
@@ -36,8 +35,8 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 }
 
 describe('wpi/app-service', () => {
-  let requestID = 'xxxxxxx';
-  let authProfileAndToken: AuthProfileAndToken = {
+  const requestID = 'xxxxxxx';
+  const authProfileAndToken: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxx',
   };

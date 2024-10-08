@@ -1,13 +1,15 @@
+import { PropsWithChildren } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { PropsWithChildren } from 'react';
+
+import styles from './GenericBase.module.scss';
+import JsonString from './JsonString';
 import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../../../../universal/config/myarea-datasets';
 import { usePhoneScreen } from '../../../../hooks/media.hook';
-import styles from './GenericBase.module.scss';
-import JsonString from './JsonString';
 
 type GenericBaseProps = PropsWithChildren<{
   title?: string;

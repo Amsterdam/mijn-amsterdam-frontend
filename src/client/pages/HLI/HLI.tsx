@@ -1,13 +1,14 @@
 import { Grid, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
+
+import styles from './HLI.module.scss';
+import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import styles from './HLI.module.scss';
-import { useHliThemaData } from './useHliThemaData';
 
 function StadspasListItem({ stadspas }: { stadspas: StadspasFrontend }) {
   return (

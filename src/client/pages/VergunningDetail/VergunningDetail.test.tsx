@@ -2,8 +2,8 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
+import { describe, expect, it } from 'vitest';
 
-import { describe, expect, it, test } from 'vitest';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { transformVergunningenData } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config/routes';

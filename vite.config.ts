@@ -29,12 +29,14 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom', // NOTE: overridden with 'node' when testing bff application
     setupFiles: './src/setupTests.ts',
-    // you might want to disable it, if you don't have tests that rely on CSS
-    // since parsing CSS is slow
     css: false,
   },
   plugins: [
     react(),
+    // insert eslint plugin when errors are dealt with
+    // eslint({
+    //   overrideConfigFile: path.resolve(__dirname, 'eslint.config.mjs'),
+    // }),
     // svgr options: https://react-svgr.com/docs/options/
     svgr(),
   ],
@@ -42,7 +44,7 @@ export default defineConfig({
     modules: {
       scopeBehaviour: 'local',
       // Generate correct CSS name that matches the Create React App one. Some Styles depend on these generated class names.
-      generateScopedName: function (name, filename, css) {
+      generateScopedName: function (name, filename) {
         const path = require('path');
         let file = path.basename(filename);
         file = file.split('.')[0];

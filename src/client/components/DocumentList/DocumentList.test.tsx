@@ -1,13 +1,14 @@
-import * as Monitoring from '../../utils/monitoring';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { describe, expect, it, vi, Mock } from 'vitest';
+
+import DocumentList from './DocumentList';
 import { GenericDocument } from '../../../universal/types/App.types';
 import * as analytics from '../../hooks/analytics.hook';
 import { trackDownload } from '../../hooks/analytics.hook';
-import DocumentList from './DocumentList';
+import * as Monitoring from '../../utils/monitoring';
 
 vi.mock('../../hooks/analytics.hook');
 

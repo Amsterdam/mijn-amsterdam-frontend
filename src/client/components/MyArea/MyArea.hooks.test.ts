@@ -1,8 +1,9 @@
 import * as reactMaps from '@amsterdam/react-maps';
 import { describe, expect, it, test, vi } from 'vitest';
+
+import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks';
 import { appStateAtom } from '../../hooks/useAppState';
 import { renderRecoilHook } from '../../utils/renderRecoilHook';
-import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks';
 
 const mapInstanceMock = {
   setView: vi.fn(),

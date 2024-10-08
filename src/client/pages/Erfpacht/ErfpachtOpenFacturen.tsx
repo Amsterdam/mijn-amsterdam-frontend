@@ -1,4 +1,6 @@
 import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
+
+import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
@@ -10,7 +12,6 @@ import {
   ThemaIcon,
 } from '../../components';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
-import { useErfpachtV2Data } from './erfpachtData.hook';
 
 interface OpenFacturenListGroupedProps {
   facturen: ErfpachtDossierFactuur[];

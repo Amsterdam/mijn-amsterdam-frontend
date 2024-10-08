@@ -1,8 +1,13 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
+
+import styles from './Search.module.scss';
+import { SearchEntry, displayPath } from './searchConfig';
+import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 import { AppRoutes } from '../../../universal/config/routes';
 import { IconSearch } from '../../assets/icons';
 import { Colors } from '../../config/app';
@@ -19,9 +24,6 @@ import {
 } from '../../hooks/useProfileType';
 import { Button, IconButton } from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
-import styles from './Search.module.scss';
-import { SearchEntry, displayPath } from './searchConfig';
-import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 
 interface ResultSetProps {
   results: SearchEntry[];
@@ -132,10 +134,11 @@ interface SearchProps {
   replaceResultUrl?: (result: SearchEntry) => boolean;
 }
 
+const MAX_RESULT_COUNT_DISPLAY = 10;
 export function Search({
   onFinish: onFinishCallback,
   term: termInitial = '',
-  maxResultCountDisplay = 10,
+  maxResultCountDisplay = MAX_RESULT_COUNT_DISPLAY,
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
@@ -180,22 +183,24 @@ export function Search({
 
   useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
+  const SEARCH_INPUT_DELAY_MS = 2000;
   const trackSearchDebounced = useDebouncedCallback(
     (term: string, count: number) => {
       if (term) {
         trackSearch(term, count, searchCategory, profileType);
       }
     },
-    2000
+    SEARCH_INPUT_DELAY_MS
   );
 
+  const SET_TERM_DELAY_MS = 300;
   const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
     setIsTyping(false);
     if (!term) {
       setResultsVisible(false);
     }
-  }, 300);
+  }, SET_TERM_DELAY_MS);
 
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -241,12 +246,10 @@ export function Search({
       if (result.url.startsWith('https')) {
         window.location.href = result.url;
         return;
+      } else if (replaceResultUrl?.(result)) {
+        history.replace(result.url);
       } else {
-        if (replaceResultUrl?.(result)) {
-          history.replace(result.url);
-        } else {
-          history.push(result.url);
-        }
+        history.push(result.url);
       }
     },
     [replaceResultUrl, history, setResultsVisible, onFinish, term]
@@ -266,7 +269,6 @@ export function Search({
     return () => {
       onFinish('Unmount component');
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -295,7 +297,6 @@ export function Search({
     } else {
       setTerm('');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

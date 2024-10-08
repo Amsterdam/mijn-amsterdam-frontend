@@ -1,8 +1,9 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import DateInput from './DateInput';
 import { parseISO } from 'date-fns';
 import { describe, it, expect, vi } from 'vitest';
+
+import DateInput from './DateInput';
 
 describe('<DateInput />', () => {
   it('Renders without crashing', () => {

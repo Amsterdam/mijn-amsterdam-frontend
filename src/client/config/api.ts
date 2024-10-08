@@ -84,7 +84,7 @@ export function createErrorDisplayData(
   apiResponseData: ApiResponse<any> | null | string
 ): ApiError {
   const name = ErrorNames[stateKey] || stateKey;
-  let errorMessage =
+  const errorMessage =
     (typeof apiResponseData === 'object' &&
     apiResponseData !== null &&
     'message' in apiResponseData
@@ -116,7 +116,7 @@ export function createFailedDependenciesError(
 }
 
 export function getApiErrors(appState: AppState): ApiError[] {
-  if (!!appState) {
+  if (appState) {
     const filteredResponses = Object.entries(appState).filter(
       ([, apiResponseData]: [string, any]) => {
         return (

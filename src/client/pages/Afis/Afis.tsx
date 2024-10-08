@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Alert,
   Button,
@@ -5,15 +7,15 @@ import {
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
-import React from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { AfisFactuurFrontend } from './Afis-thema-config';
+import styles from './Afis.module.scss';
+import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../universal/helpers/utils';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { AfisFactuurFrontend } from './Afis-thema-config';
-import styles from './Afis.module.scss';
-import { useAfisThemaData } from './useAfisThemaData.hook';
 
 const pageContentTop = (
   <Paragraph>

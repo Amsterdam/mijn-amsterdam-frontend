@@ -42,7 +42,7 @@ export function getLatLonByAddress(
   bagSearchAddress: BAGSearchAddress,
   isWeesp: boolean
 ) {
-  if (!!results.length) {
+  if (results.length) {
     const result1 = getBagResult(results, bagSearchAddress, isWeesp);
 
     if (result1 && result1.adres && result1.centroid) {

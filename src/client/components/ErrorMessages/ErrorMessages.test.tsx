@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import ErrorMessages from './ErrorMessages';
-import { RecoilRoot } from 'recoil';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
+import { RecoilRoot } from 'recoil';
+import { describe, it, expect } from 'vitest';
+
+import ErrorMessages from './ErrorMessages';
 
 const DUMMY_ERRORS = [
   {

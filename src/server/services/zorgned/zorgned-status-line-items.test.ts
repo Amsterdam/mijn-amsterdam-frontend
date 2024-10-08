@@ -1,9 +1,9 @@
+import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
 } from './zorgned-types';
-import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
 
 function getTransformerConfig() {
   const transformerConfig: ZorgnedStatusLineItemTransformerConfig = {
@@ -31,14 +31,14 @@ const lineItemsConfig1: ZorgnedStatusLineItemsConfig = {
 const lineItemsConfig2: ZorgnedStatusLineItemsConfig = {
   productIdentificatie: ['BAR'],
   lineItemTransformers: [transformerConfig2],
-  filter(aanvraag, allAanvragen) {
+  filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('B');
   },
 };
 
 const lineItemsConfig3: ZorgnedStatusLineItemsConfig = {
   productIdentificatie: ['BAR'],
-  filter(aanvraag, allAanvragen) {
+  filter(aanvraag) {
     return aanvraag.betrokkenen?.includes('A');
   },
   lineItemTransformers: [transformerConfig],

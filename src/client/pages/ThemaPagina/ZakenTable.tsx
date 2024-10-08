@@ -1,5 +1,6 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
-import { Unshaped, ZaakDetail } from '../../../universal/types';
+
+import { ZaakDetail } from '../../../universal/types';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';

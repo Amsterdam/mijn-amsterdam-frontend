@@ -1,4 +1,5 @@
 import { generatePath, matchPath } from 'react-router-dom';
+
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Match } from '../../universal/types';
 

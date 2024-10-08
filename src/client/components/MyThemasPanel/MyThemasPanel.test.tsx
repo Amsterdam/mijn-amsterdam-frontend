@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { ThemaMenuItem } from '../../config/thema';
+
 import MyThemasPanel from './MyThemasPanel';
+import { ThemaMenuItem } from '../../config/thema';
 
 const PANEL_TITLE = 'whoa!';
 const items: ThemaMenuItem[] = [

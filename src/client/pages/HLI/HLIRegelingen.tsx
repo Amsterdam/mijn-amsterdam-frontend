@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+
 import { ListPageParamKind } from './HLI-thema-config';
 import { useHliThemaData } from './useHliThemaData';
+import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export default function HLIRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();

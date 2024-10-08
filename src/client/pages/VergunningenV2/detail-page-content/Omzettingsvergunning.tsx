@@ -1,6 +1,6 @@
+import { Location } from './Location';
 import type { Omzettingsvergunning as OmzettingsvergunningType } from '../../../../server/services';
 import InfoDetail from '../../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
 
 export function Omzettingsvergunning({
   vergunning,

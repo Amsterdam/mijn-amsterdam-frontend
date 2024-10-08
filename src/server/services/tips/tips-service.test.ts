@@ -1,11 +1,3 @@
-import BRP from '../../../../mocks/fixtures/brp.json';
-import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import {
-  createTipsFromServiceResults,
-  prefixTipNotification,
-} from './tips-service';
-
 import {
   afterAll,
   beforeAll,
@@ -15,6 +7,15 @@ import {
   it,
   vi,
 } from 'vitest';
+
+import {
+  createTipsFromServiceResults,
+  prefixTipNotification,
+} from './tips-service';
+import BRP from '../../../../mocks/fixtures/brp.json';
+import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
+import { ApiSuccessResponse } from '../../../universal/helpers/api';
+
 
 const TOZO = {
   content: WPI_E.content.filter((c) => c.about === 'Tozo 5'),

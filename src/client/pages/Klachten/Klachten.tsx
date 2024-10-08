@@ -1,4 +1,6 @@
 import { generatePath, useHistory, useParams } from 'react-router-dom';
+
+import styles from './Klachten.module.scss';
 import type { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -17,7 +19,6 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Klachten.module.scss';
 
 const DISPLAY_PROPS_KLACHTEN = {
   idAsLink: 'Nummer van uw klacht',

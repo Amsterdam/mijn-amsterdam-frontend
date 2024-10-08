@@ -1,9 +1,11 @@
+import { ReactNode } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { ReactNode } from 'react';
+
+import styles from './Section.module.scss';
 import { ComponentChildren } from '../../../universal/types';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import styles from './Section.module.scss';
 
 export interface SectionProps {
   title?: string;

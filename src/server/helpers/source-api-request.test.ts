@@ -10,6 +10,14 @@ import {
   test,
   vi,
 } from 'vitest';
+
+import {
+  axiosRequest,
+  cache,
+  findApiByRequestUrl,
+  getRequestConfigCacheKey,
+  requestData,
+} from './source-api-request';
 import { remoteApiHost } from '../../setupTests';
 import { remoteApi } from '../../test-utils';
 import {
@@ -19,13 +27,6 @@ import {
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { ApiUrlEntries } from '../config/source-api';
-import {
-  axiosRequest,
-  cache,
-  findApiByRequestUrl,
-  getRequestConfigCacheKey,
-  requestData,
-} from './source-api-request';
 
 const mocks = vi.hoisted(() => {
   return {

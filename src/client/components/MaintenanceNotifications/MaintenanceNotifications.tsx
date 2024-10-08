@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { ErrorAlert, InnerHtml } from '../../components';
+
+import { Alert } from '@amsterdam/design-system-react';
+
+import styles from './MaintenanceNotifications.module.scss';
+import { InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 import { Button } from '../Button/Button';
-import styles from './MaintenanceNotifications.module.scss';
 import Linkd from '../Button/Button';
-import { Alert } from '@amsterdam/design-system-react';
+
 
 interface MaintenanceNotificationsProps {
   page?: string;

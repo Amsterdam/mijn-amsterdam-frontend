@@ -1,6 +1,7 @@
 import { KeyboardEvent, MouseEvent } from 'react';
 
 // Repeating conditions for accessible keyboard event
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
   return (event: KeyboardEvent<T> | MouseEvent<T>) => {
     if (!('key' in event) || event.key.toLowerCase() === keyName) {

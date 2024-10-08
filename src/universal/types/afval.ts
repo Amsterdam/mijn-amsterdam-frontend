@@ -1,4 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
+
 import { LinkProps } from './App.types';
 
 export type GarbageFractionCode =

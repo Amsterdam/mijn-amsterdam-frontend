@@ -1,3 +1,4 @@
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -23,7 +24,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
     return apiErrorResult(
       'Bad request: failed to process encrypted param',
       null,
-      400
+      HTTP_STATUS_CODES.BAD_REQUEST
     );
   }
 
@@ -42,7 +43,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
     return apiErrorResult(
       'Not authorized: incomplete session validation',
       null,
-      401
+      HTTP_STATUS_CODES.UNAUTHORIZED
     );
   }
 

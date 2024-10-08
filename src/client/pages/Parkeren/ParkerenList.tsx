@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
+
+import { useParkerenData } from './useParkerenData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Themas } from '../../../universal/config/thema';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { ThemaTitles } from '../../config/thema';
-import { Themas } from '../../../universal/config/thema';
 import { ListPageParamKind } from '../VergunningenV2/config';
-import { useParkerenData } from './useParkerenData.hook';
 
 export function ParkerenList() {
   const params = useParams<{ kind: ListPageParamKind }>();

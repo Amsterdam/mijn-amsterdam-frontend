@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
+
 import { useSessionStorage } from './storage.hook';
-import { useThemaMenuItems } from './useThemaMenuItems';
 import { useAppStateGetter } from './useAppState';
+import { useThemaMenuItems } from './useThemaMenuItems';
 import { trackEvent } from '../utils/monitoring';
 
 type ThemaTitleAndId = Record<'title' | 'id', string>;

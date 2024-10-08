@@ -1,8 +1,10 @@
 import type { Request, Response } from 'express';
 import { generatePath, matchPath } from 'react-router-dom';
+
+import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
+import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
-import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
 
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
@@ -36,9 +38,13 @@ export function generateFullApiUrlBFF(
   return `${baseUrl}${generatePath(path, params)}`;
 } /** Sets the right statuscode and sends a response. */
 
-export function sendResponse(res: Response, apiResponse: ApiResponse) {
+export function sendResponse(res: Response, apiResponse: ApiResponse<any>) {
   if (apiResponse.status === 'ERROR') {
-    res.status(typeof apiResponse.code === 'number' ? apiResponse.code : 500);
+    res.status(
+      typeof apiResponse.code === 'number'
+        ? apiResponse.code
+        : HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+    );
   }
 
   return res.send(apiResponse);
@@ -50,21 +56,31 @@ export function sendBadRequest(
   content: object | string | null = null
 ) {
   return res
-    .status(400)
-    .send(apiErrorResult(`Bad request: ${reason}`, content, 400));
+    .status(HTTP_STATUS_CODES.BAD_REQUEST)
+    .send(
+      apiErrorResult(
+        `Bad request: ${reason}`,
+        content,
+        HTTP_STATUS_CODES.BAD_REQUEST
+      )
+    );
 }
 
 export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized'
 ) {
-  res.status(401);
-  return res.send(apiErrorResult(message, null, 401));
+  res.status(HTTP_STATUS_CODES.UNAUTHORIZED);
+  return res.send(
+    apiErrorResult(message, null, HTTP_STATUS_CODES.UNAUTHORIZED)
+  );
 }
 
 export function send404(res: Response) {
-  res.status(404);
-  return res.send(apiErrorResult('Not Found', null, 404));
+  res.status(HTTP_STATUS_CODES.NOT_FOUND);
+  return res.send(
+    apiErrorResult('Not Found', null, HTTP_STATUS_CODES.NOT_FOUND)
+  );
 }
 export function sendMessage(
   res: Response,

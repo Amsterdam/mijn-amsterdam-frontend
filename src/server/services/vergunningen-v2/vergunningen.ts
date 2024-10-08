@@ -1,15 +1,7 @@
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+
 import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
   VergunningCaseTypeFilter,
@@ -21,6 +13,15 @@ import {
 import { fetchDecosVergunning, fetchDecosVergunningen } from './decos-service';
 import { isExpired, toDateFormatted } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { apiSuccessResult } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
   vergunning: VergunningV2
@@ -111,7 +112,7 @@ async function fetchAndFilterVergunningenV2_(
 export const fetchAndFilterVergunningenV2 = memoizee(
   fetchAndFilterVergunningenV2_,
   {
-    maxAge: 45 * ONE_SECOND_MS,
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
     length: 4,
   }
 );

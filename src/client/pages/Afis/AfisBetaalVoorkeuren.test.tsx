@@ -1,7 +1,8 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
-
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
 import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
 import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -9,7 +10,7 @@ import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
-import userEvent from '@testing-library/user-event';
+
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 
@@ -69,7 +70,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
   test('Display business partner details', async () => {
     const user = userEvent.setup();
 
-    let screen = render(<Component />);
+    const screen = render(<Component />);
 
     await waitFor(() => {
       expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();

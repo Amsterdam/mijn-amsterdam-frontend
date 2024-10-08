@@ -1,10 +1,9 @@
 import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import memoryCache from 'memory-cache';
 
+import { Deferred } from './deferred';
 import {
   ApiErrorResponse,
-  ApiPostponeResponse,
-  ApiResponse,
   ApiSuccessResponse,
   apiErrorResult,
   apiPostponeResult,
@@ -18,7 +17,6 @@ import {
   DataRequestConfig,
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
-import { Deferred } from './deferred';
 
 export const axiosRequest = axios.create({
   responseType: 'json',

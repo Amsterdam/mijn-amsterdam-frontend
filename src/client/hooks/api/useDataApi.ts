@@ -1,8 +1,10 @@
-import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
 import { useCallback, useEffect, useReducer, useState } from 'react';
+
+import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
+
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
-import { captureException, captureMessage } from '../../utils/monitoring';
+import { captureException } from '../../utils/monitoring';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
@@ -109,7 +111,7 @@ export function useDataApi<T>(
     let requestTimeout;
 
     const fetchData = async () => {
-      let source = axios.CancelToken.source();
+      const source = axios.CancelToken.source();
 
       requestTimeout = setTimeout(() => {
         source.cancel('Request timeout.');

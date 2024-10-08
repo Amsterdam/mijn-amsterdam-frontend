@@ -2,8 +2,9 @@ import connectPGSimple from 'connect-pg-simple';
 import { Session, SessionStore } from 'express-openid-connect';
 import expressSession from 'express-session';
 import createMemorystore from 'memorystore';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+
 import { OIDC_SESSION_MAX_AGE_SECONDS } from './auth-config';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { pool } from '../services/db/postgres';
 
 type SessionStoreOptions = {

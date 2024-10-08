@@ -1,6 +1,7 @@
+import { render, screen } from '@testing-library/react';
+
 import InfoDetail from './InfoDetail';
 
-import { render, screen } from '@testing-library/react';
 
 it('Renders without crashing', () => {
   const { container } = render(

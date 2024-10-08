@@ -1,12 +1,14 @@
 import { createDecipheriv } from 'crypto';
+
 import { describe, expect, test } from 'vitest';
-import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+
 import {
   fetchErfpacht,
   fetchErfpachtNotifications,
   getConfigMain,
 } from './erfpacht';
+import { remoteApi } from '../../../test-utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('simple-connect/erfpacht', () => {
   const REQUEST_ID = 'test-x-789';

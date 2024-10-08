@@ -1,6 +1,7 @@
 import { Link, LinkProps } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
+
 import styles from './MaLink.module.scss';
 
 type MaClassNameVariant = 'fatNoUnderline' | 'noDefaultUnderline';

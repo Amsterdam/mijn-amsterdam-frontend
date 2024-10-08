@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import {
   ButtonHTMLAttributes,
   forwardRef,
@@ -11,13 +10,16 @@ import {
   useMemo,
   useRef,
 } from 'react';
+
 import { animated, AnimatedValue, useSpring } from '@react-spring/web';
+import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
+
+import styles from './PanelComponent.module.scss';
 import { IconChevronRight } from '../../../assets/icons';
 import { useWidescreen } from '../../../hooks/media.hook';
 import { CloseButton } from '../../Button/Button';
-import styles from './PanelComponent.module.scss';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible
@@ -32,11 +34,16 @@ function px(size: number) {
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const WIDE_PANEL_TIP_WIDTH = px(8 * 4);
-export const WIDE_PANEL_PREVIEW_WIDTH = px(60 * 4);
-export const WIDE_PANEL_WIDTH = px(120 * 4);
-export const NARROW_PANEL_PREVIEW_HEIGHT = px(60 * 4);
-export const NARROW_PANEL_TIP_HEIGHT = px(10 * 4);
+const UNIT_SIZE = 4;
+const TIP_WIDTH = 8;
+const PREVIEW_WIDTH = 60;
+const FULL_WIDTH = 120;
+const NARROW_TIP_HEIGHT = 10;
+export const WIDE_PANEL_TIP_WIDTH = px(TIP_WIDTH * UNIT_SIZE);
+export const WIDE_PANEL_PREVIEW_WIDTH = px(PREVIEW_WIDTH * UNIT_SIZE);
+export const WIDE_PANEL_WIDTH = px(FULL_WIDTH * UNIT_SIZE);
+export const NARROW_PANEL_PREVIEW_HEIGHT = px(60 * UNIT_SIZE);
+export const NARROW_PANEL_TIP_HEIGHT = px(NARROW_TIP_HEIGHT * UNIT_SIZE);
 
 const NARROW_PANEL_SWIPE_CONFIG = {
   delta: 40, // min distance(px) before a swipe starts

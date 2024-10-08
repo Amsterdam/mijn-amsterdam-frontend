@@ -1,11 +1,15 @@
+import { useEffect } from 'react';
+
 import {
   Grid,
   Heading,
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { getThemaTitleWithAppState } from './helpers';
+import styles from './HLIStadspas.module.scss';
 import {
   StadspasBudget,
   StadspasBudgetTransaction,
@@ -28,11 +32,9 @@ import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { TableV2 } from '../../components/Table/TableV2';
-import { useAppStateGetter } from '../../hooks/useAppState';
 import { useDataApi } from '../../hooks/api/useDataApi';
-import styles from './HLIStadspas.module.scss';
-import { getThemaTitleWithAppState } from './helpers';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],

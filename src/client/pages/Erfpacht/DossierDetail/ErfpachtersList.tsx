@@ -1,9 +1,11 @@
-import { Button, OrderedList } from '@amsterdam/design-system-react';
 import { useState } from 'react';
-import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
-import { useMediumScreen } from '../../../hooks/media.hook';
+
+import { Button, OrderedList } from '@amsterdam/design-system-react';
+
 import styles from './ErfpachtDossierDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
+import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
+import { useMediumScreen } from '../../../hooks/media.hook';
 
 const MAX_ERFPACHTERS_VISIBLE_INITIALLY = 3;
 
@@ -21,7 +23,9 @@ export function ErfpachtersList({
   relatieCode,
 }: ErfpachtersListProps) {
   const isMediumScreen = useMediumScreen();
-  const colCount = isMediumScreen ? 3 : 2;
+  const colCountMediumScreen = 3;
+  const colCountSmallScreen = 2;
+  const colCount = isMediumScreen ? colCountMediumScreen : colCountSmallScreen;
   const rowsPerCol = 8;
   const erfpachtersCount = erfpachters?.length ?? 0;
   const shouldCollapse = erfpachtersCount > MAX_ERFPACHTERS_VISIBLE_INITIALLY;
@@ -57,7 +61,7 @@ export function ErfpachtersList({
           className={shouldCollapse ? styles.ColumnList : undefined}
           style={cssStyle()}
         >
-          {erfpachtersList.map((relatie, index, all) => {
+          {erfpachtersList.map((relatie, index) => {
             const hasBetalerWijzigenLink =
               (relatie.betaler && relatie.relatieCode !== relatieCode) ||
               (!hasBetaler && relatie.relatieCode === relatieCode);

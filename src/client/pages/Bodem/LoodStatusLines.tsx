@@ -1,7 +1,7 @@
+import styles from './LoodMeting.module.scss';
 import type { LoodMeting } from '../../../server/services/bodem/types';
 import { StatusLineItem } from '../../../universal/types';
 import { StatusLine } from '../../components';
-import styles from './LoodMeting.module.scss';
 
 export default function LoodStatusLines({ request }: { request: LoodMeting }) {
   const status = request.status.toLowerCase();

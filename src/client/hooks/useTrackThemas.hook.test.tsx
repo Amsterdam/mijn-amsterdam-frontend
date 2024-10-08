@@ -1,10 +1,12 @@
-import { renderHook } from '@testing-library/react';
-import { trackEvent } from '../utils/monitoring';
-import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { ReactNode } from 'react';
+
+import { renderHook } from '@testing-library/react';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
+
 import { appStateAtom } from './useAppState';
-import { AppState } from '../../universal/types';
 import { useTrackThemas } from './useTrackThemas.hook';
+import { AppState } from '../../universal/types';
+import { trackEvent } from '../utils/monitoring';
 
 vi.mock('../utils/monitoring', () => ({
   trackEvent: vi.fn(),

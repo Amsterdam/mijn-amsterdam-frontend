@@ -1,9 +1,9 @@
+import { ThemaMenuItem } from './thema';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import { ThemaMenuItem } from './thema';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -44,7 +44,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.AFIS: {
       return FeatureToggle.afisActive && AFIS?.content?.isKnown;
     }
-    case Themas.INKOMEN:
+    case Themas.INKOMEN: {
       const { jaaropgaven, uitkeringsspecificaties } =
         WPI_SPECIFICATIES?.content ?? {};
       const hasAanvragen = WPI_AANVRAGEN?.content?.length;
@@ -69,6 +69,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
           hasBbz ||
           hasUitkeringsspecificaties)
       );
+    }
 
     case Themas.SVWI:
       return (
@@ -91,13 +92,14 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.ZORG:
       return !isLoading(WMO) && !!WMO.content?.length;
 
-    case Themas.BELASTINGEN:
+    case Themas.BELASTINGEN: {
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =
         FeatureToggle.belastingApiActive && BELASTINGEN?.status === 'OK'
           ? BELASTINGEN.content?.isKnown
           : true;
       return !isLoading(BELASTINGEN) && belastingenActive;
+    }
 
     case Themas.MILIEUZONE:
       return (
@@ -137,16 +139,18 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.SUBSIDIE:
       return !isLoading(SUBSIDIE) && SUBSIDIE.content?.isKnown === true;
 
-    case Themas.BURGERZAKEN:
+    case Themas.BURGERZAKEN: {
       const hasIdentiteitsbewijs = !!BRP?.content?.identiteitsbewijzen?.length;
       return (
         FeatureToggle.identiteitsbewijzenActive &&
         !isLoading(BRP) &&
         hasIdentiteitsbewijs
       );
+    }
 
-    case Themas.BRP:
+    case Themas.BRP: {
       return !isLoading(BRP) && !!BRP.content?.persoon;
+    }
 
     case Themas.VERGUNNINGEN:
       return (
@@ -157,7 +161,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.KVK:
       return !isLoading(KVK) && !!KVK.content;
 
-    case Themas.TOERISTISCHE_VERHUUR:
+    case Themas.TOERISTISCHE_VERHUUR: {
       const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
         TOERISTISCHE_VERHUUR?.content ?? {};
       const hasRegistraties = !!lvvRegistraties?.length;
@@ -166,6 +170,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return (
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );
+    }
 
     case Themas.KREFIA:
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;

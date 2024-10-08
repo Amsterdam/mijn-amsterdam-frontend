@@ -1,6 +1,6 @@
+import styles from './AlphaComponent.module.scss';
 import { ComponentChildren } from '../../../universal/types';
 
-import styles from './AlphaComponent.module.scss';
 
 export interface ComponentProps {
   children?: ComponentChildren;

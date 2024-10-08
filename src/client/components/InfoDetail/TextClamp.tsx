@@ -1,5 +1,7 @@
-import classNames from 'classnames';
 import React, { ReactNode, useCallback, useState } from 'react';
+
+import classNames from 'classnames';
+
 import styles from './TextClamp.module.scss';
 
 // The difference between maxHeight and actualHeight should be at least this number in pixels

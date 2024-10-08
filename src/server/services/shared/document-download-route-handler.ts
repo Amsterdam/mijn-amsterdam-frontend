@@ -1,5 +1,8 @@
 import { AxiosResponse } from 'axios';
 import { Request, Response, Router } from 'express';
+
+import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
@@ -7,7 +10,6 @@ import {
 } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
 import { sendUnauthorized } from '../../routing/route-helpers';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
@@ -58,7 +60,9 @@ export function downloadDocumentRouteHandler(
           documentResponse.status === 'ERROR' ||
           documentResponse.status === 'POSTPONE'
         ) {
-          return res.status(500).send(documentResponse);
+          return res
+            .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+            .send(documentResponse);
         }
 
         if (
@@ -77,7 +81,7 @@ export function downloadDocumentRouteHandler(
           : res.send(documentResponse.content.data);
       }
 
-      return res.status(400).send(decryptResult);
+      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send(decryptResult);
     }
 
     return sendUnauthorized(res);

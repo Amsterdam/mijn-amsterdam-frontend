@@ -1,5 +1,7 @@
-import { Button, Heading } from '@amsterdam/design-system-react';
 import { ReactNode, useState } from 'react';
+
+import { Button, Heading } from '@amsterdam/design-system-react';
+
 import styles from './CollapsiblePanel.module.scss';
 
 interface CollapsiblePanelHeadingProps {

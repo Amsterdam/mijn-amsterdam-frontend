@@ -1,7 +1,8 @@
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   atom,
@@ -11,6 +12,9 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
+
+import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
+import styles from './MyAreaDatasets.module.scss';
 import { BAGData } from '../../../server/services';
 import type {
   MaPointFeature,
@@ -30,8 +34,6 @@ import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { captureMessage } from '../../utils/monitoring';
-import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
-import styles from './MyAreaDatasets.module.scss';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -146,7 +148,7 @@ export function useFetchPanelFeature() {
       return;
     }
 
-    let source = axios.CancelToken.source();
+    const source = axios.CancelToken.source();
     const { datasetId, id } = loadingFeature;
 
     axios({
@@ -376,7 +378,7 @@ export function useFilterControlItemChange() {
         propertyValue
       );
 
-      let activeFiltersUpdate = { ...activeFilters };
+      const activeFiltersUpdate = { ...activeFilters };
 
       if (!isChecked && !activeFiltersUpdate[datasetId]) {
         activeFiltersUpdate[datasetId] = {
@@ -558,7 +560,7 @@ export function useMapLocations(
       const [primaryLocation, ...secondaryLocations] = locations;
 
       let homeLocationMarker: MapLocationMarker | null = null;
-      let secondaryLocationMarkers: MapLocationMarker[] = [];
+      const secondaryLocationMarkers: MapLocationMarker[] = [];
 
       if (primaryLocation?.latlng && !centerMarker) {
         const latlng = primaryLocation.latlng;

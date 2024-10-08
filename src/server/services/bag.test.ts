@@ -1,10 +1,10 @@
 import nock from 'nock';
 import { describe, expect, it } from 'vitest';
 
+import { fetchBAG } from './bag';
 import bagData from '../../../mocks/fixtures/bag.json';
 import { jsonCopy } from '../../universal/helpers/utils';
 import { Adres } from '../../universal/types';
-import { fetchBAG } from './bag';
 
 describe('BAG service', () => {
   const DUMMY_RESPONSE = jsonCopy(bagData);

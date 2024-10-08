@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+
+import ThemaIcon from './ThemaIcon';
 import { Themas } from '../../../universal/config/thema';
 import { ThemaTitles } from '../../config/thema';
-import ThemaIcon from './ThemaIcon';
 
 describe('<ThemaIcon/>', () => {
   it('Renders icon with label', () => {

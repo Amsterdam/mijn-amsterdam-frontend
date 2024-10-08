@@ -1,10 +1,5 @@
 import { parseISO } from 'date-fns';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import {
-  CaseTypeV2,
-  DecosCaseType,
-} from '../../../universal/types/vergunningen';
+
 import {
   AanbiedenDiensten as AanbiedenDienstenType,
   BZB as BZBType,
@@ -52,6 +47,12 @@ import {
   caseNotificationLabelsExpirables,
   caseNotificationLabelsRevoke,
 } from './vergunningen-notification-labels';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import {
+  CaseTypeV2,
+  DecosCaseType,
+} from '../../../universal/types/vergunningen';
 
 const decision: DecosFieldTransformer = {
   name: 'decision',
@@ -175,11 +176,12 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTypeTransformer<Vakanti
       // Vakantieverhuur vergunningen worden direct verleend (en dus voor Mijn Amsterdam afgehandeld)
       vergunning.status = 'Afgehandeld';
 
+      const monthIndex = 4;
       // The validity of this case runs from april 1st until the next. set the end date to the next april the 1st
       if ('dateEnd' in vergunning && vergunning.dateRequest) {
         vergunning.dateEnd = new Date(
           parseISO(vergunning.dateRequest).getFullYear() + 1,
-          4,
+          monthIndex,
           1
         ).toISOString();
       }

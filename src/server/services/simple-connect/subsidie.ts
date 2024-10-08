@@ -1,12 +1,14 @@
-import * as jose from 'jose';
 import { URL, URLSearchParams } from 'url';
+
+import * as jose from 'jose';
+
+import { fetchService, fetchTipsAndNotifications } from './api-service';
 import { Themas } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import { encrypt } from '../../helpers/encrypt-decrypt';
-import { fetchService, fetchTipsAndNotifications } from './api-service';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);

@@ -1,9 +1,9 @@
+import { Vergunning } from '../../../server/services';
 import { isError, isLoading } from '../../../universal/helpers/api';
+import { CaseType, DecosCaseType } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { tableConfig } from '../VergunningenV2/config';
-import { CaseType, DecosCaseType } from '../../../universal/types/vergunningen';
-import { Vergunning } from '../../../server/services';
 
 const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseType.GPK,

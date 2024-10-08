@@ -1,6 +1,8 @@
-import { Button, OrderedList } from '@amsterdam/design-system-react';
-import { ErfpachtCanon } from '../../../../server/services/simple-connect/erfpacht';
 import { useState } from 'react';
+
+import { Button, OrderedList } from '@amsterdam/design-system-react';
+
+import { ErfpachtCanon } from '../../../../server/services/simple-connect/erfpacht';
 
 const MAX_CANONS_VISIBLE_INITIALLY = 2;
 
@@ -17,7 +19,7 @@ export function DatalistCanons({ canons }: DatalistCanonsProps) {
       ? canons?.slice(0, MAX_CANONS_VISIBLE_INITIALLY)
       : canons) ?? [];
 
-  if (!!displayCanons.length) {
+  if (displayCanons.length) {
     return (
       <>
         <OrderedList markers={false}>

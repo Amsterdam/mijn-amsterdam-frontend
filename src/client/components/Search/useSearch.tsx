@@ -1,8 +1,9 @@
+import { useEffect, useMemo, useState } from 'react';
+
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import axios, { AxiosResponse } from 'axios';
 import Fuse from 'fuse.js';
 import { LatLngTuple } from 'leaflet';
-import { useEffect, useMemo, useState } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
   Loadable,
@@ -14,6 +15,16 @@ import {
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
+
+import styles from './Search.module.scss';
+import {
+  ApiBaseItem,
+  ApiSearchConfig,
+  SearchConfigRemote,
+  SearchEntry,
+  apiSearchConfigs,
+  displayPath,
+} from './searchConfig';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
@@ -27,15 +38,6 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import styles from './Search.module.scss';
-import {
-  ApiBaseItem,
-  ApiSearchConfig,
-  SearchConfigRemote,
-  SearchEntry,
-  apiSearchConfigs,
-  displayPath,
-} from './searchConfig';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
@@ -171,9 +173,10 @@ function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
   return [];
 }
 
+const RESULT_COUNT_PER_PAGE = 5;
 export async function searchAmsterdamNL(
   keywords: string,
-  resultCountPerPage: number = 5,
+  resultCountPerPage: number = RESULT_COUNT_PER_PAGE,
   isExtendedAmsterdamSearch: boolean = false
 ) {
   const url = isExtendedAmsterdamSearch
@@ -200,23 +203,26 @@ interface BagSearchResult {
 
 function transformSearchBagresponse(responseData: any): SearchEntry[] {
   if (Array.isArray(responseData?.results)) {
-    return responseData.results.slice(0, 5).map((address: BagSearchResult) => {
-      const displayTitle = `${address.adres} ${address.postcode} ${address.woonplaats}`;
-      return {
-        displayTitle,
-        keywords: [address.adres, 'bag'],
-        description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
-        url: `/buurt?zoom=12&centerMarker=${encodeURIComponent(
-          JSON.stringify({
-            latlng: { lat: address.centroid[1], lng: address.centroid[0] },
-            label: displayTitle,
-          })
-        )}`,
-        trailingIcon: (
-          <IconMarker width="14" height="14" className={styles.ExternalUrl} />
-        ),
-      };
-    });
+    const MAX_SEARCH_RESULTS = 5;
+    return responseData.results
+      .slice(0, MAX_SEARCH_RESULTS)
+      .map((address: BagSearchResult) => {
+        const displayTitle = `${address.adres} ${address.postcode} ${address.woonplaats}`;
+        return {
+          displayTitle,
+          keywords: [address.adres, 'bag'],
+          description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
+          url: `/buurt?zoom=12&centerMarker=${encodeURIComponent(
+            JSON.stringify({
+              latlng: { lat: address.centroid[1], lng: address.centroid[0] },
+              label: displayTitle,
+            })
+          )}`,
+          trailingIcon: (
+            <IconMarker width="14" height="14" className={styles.ExternalUrl} />
+          ),
+        };
+      });
   }
 
   return [];
@@ -341,6 +347,7 @@ export function useSearchTerm() {
   return useRecoilState(searchTermAtom);
 }
 
+const RESULTS_PER_PAGE = 10;
 const amsterdamNLQuery = selectorFamily({
   key: 'amsterdamNLQuery',
   get:
@@ -348,7 +355,7 @@ const amsterdamNLQuery = selectorFamily({
     async ({ get }) => {
       const term = get(searchTermAtom);
       const response = await (term
-        ? searchAmsterdamNL(term, 10, useExtendedAmsterdamSearch)
+        ? searchAmsterdamNL(term, RESULTS_PER_PAGE, useExtendedAmsterdamSearch)
         : null);
       return response;
     },

@@ -1,6 +1,6 @@
+import { Location } from './Location';
 import { WerkzaamhedenEnVervoerOpStraat } from '../../../server/services';
 import { InfoDetail } from '../../components';
-import { Location } from './Location';
 
 export function hasMultiplePermits(vergunning: WerkzaamhedenEnVervoerOpStraat) {
   return (

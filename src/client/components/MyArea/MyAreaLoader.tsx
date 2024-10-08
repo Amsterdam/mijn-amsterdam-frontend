@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+
 import { MyAreaProps } from './MyArea';
 import styles from './MyAreaLoadingIndicator.module.scss';
 

@@ -1,4 +1,5 @@
 import memoizee from 'memoizee';
+
 import { IS_DB_ENABLED } from './config';
 
 type DBAdapter = {

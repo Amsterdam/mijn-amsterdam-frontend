@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import InfoPanel from './InfoPanel';
 import { BrowserRouter } from 'react-router-dom';
+
+import InfoPanel from './InfoPanel';
 
 const infoData = {
   foo: 'bar',

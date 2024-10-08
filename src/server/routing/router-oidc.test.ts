@@ -1,3 +1,4 @@
+import { forTesting } from './router-oidc';
 import { bffApiHost } from '../../setupTests';
 import {
   getAuthProfileAndToken,
@@ -9,11 +10,9 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,
   oidcConfigEherkenning,
-  openIdAuth,
 } from '../auth/auth-config';
 import { authRoutes } from '../auth/auth-routes';
 import { getFromEnv } from '../helpers/env';
-import { forTesting } from './router-oidc';
 
 const mocks = vi.hoisted(() => {
   const openIdAuthHandlerEH = vi.fn();

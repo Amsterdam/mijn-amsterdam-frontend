@@ -1,7 +1,5 @@
 import uid from 'uid-safe';
-import { remoteApi } from '../../../test-utils';
-import { jsonCopy, range } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+
 import {
   DecosDocumentSource,
   DecosZaakSource,
@@ -14,6 +12,9 @@ import {
   fetchDecosZakenFromSource,
   forTesting,
 } from './decos-service';
+import { remoteApi } from '../../../test-utils';
+import { jsonCopy, range } from '../../../universal/helpers/utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 const zakenSource = {
   count: 1,

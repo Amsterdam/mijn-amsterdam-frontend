@@ -1,11 +1,4 @@
 import {
-  defaultDateFormat,
-  isDateInPast,
-  monthsFromNow,
-} from '../../../universal/helpers/date';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
   DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
   DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
@@ -18,6 +11,13 @@ import {
   VergunningExpirable,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
+import {
+  defaultDateFormat,
+  isDateInPast,
+  monthsFromNow,
+} from '../../../universal/helpers/date';
+import { DecosCaseType } from '../../../universal/types/vergunningen';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(

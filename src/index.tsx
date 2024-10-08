@@ -1,6 +1,8 @@
-import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { ErrorInfo } from 'react';
+
+import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { createRoot } from 'react-dom/client';
+
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';

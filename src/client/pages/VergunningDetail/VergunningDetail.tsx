@@ -1,6 +1,30 @@
 import { useParams } from 'react-router-dom';
+
+import { AanbiedenDiensten } from './AanbiedenDiensten';
+import { BZB } from './BZB';
+import { BZP } from './BZP';
+import { DocumentDetails } from './DocumentDetails';
+import { EigenParkeerplaats } from './EigenParkeerplaats';
+import { EigenParkeerplaatsOpheffen } from './EigenParkeerplaatsOpheffen';
+import { ERVV } from './ERVV';
+import { EvenementMelding } from './EvenementMelding';
+import { EvenementVergunning } from './EvenementVergunning';
+import { Flyeren } from './Flyeren';
+import { GPK } from './GPK';
+import { GPP } from './GPP';
+import { Nachtwerkontheffing } from './Nachtwerkontheffing';
+import { Omzettingsvergunning } from './Omzettingsvergunning';
+import { RvvHeleStad } from './RvvHeleStad';
+import { RvvSloterweg } from './RvvSloterweg';
+import { StatusLineItems } from './StatusLineItems';
+import { Touringcar } from './Touringcar';
+import { TVMRVVObject } from './TVMRVVObject';
+import { VOB } from './VOB';
+import styles from './VergunningDetail.module.scss';
+import { Woonvergunningen } from './Woonvergunningen';
+import { ZwaarVerkeer } from './ZwaarVerkeer';
+import { WVOS } from './WVOS';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   isWoonvergunning,
@@ -16,31 +40,8 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { AanbiedenDiensten } from './AanbiedenDiensten';
-import { BZB } from './BZB';
-import { BZP } from './BZP';
-import { DocumentDetails } from './DocumentDetails';
-import { ERVV } from './ERVV';
-import { EvenementMelding } from './EvenementMelding';
-import { EvenementVergunning } from './EvenementVergunning';
-import { Flyeren } from './Flyeren';
-import { GPK } from './GPK';
-import { GPP } from './GPP';
-import { Nachtwerkontheffing } from './Nachtwerkontheffing';
-import { Omzettingsvergunning } from './Omzettingsvergunning';
-import { RvvHeleStad } from './RvvHeleStad';
-import { RvvSloterweg } from './RvvSloterweg';
-import { StatusLineItems } from './StatusLineItems';
-import { TVMRVVObject } from './TVMRVVObject';
-import { VOB } from './VOB';
-import styles from './VergunningDetail.module.scss';
-import { Woonvergunningen } from './Woonvergunningen';
-import { ZwaarVerkeer } from './ZwaarVerkeer';
-import { EigenParkeerplaats } from './EigenParkeerplaats';
-import { EigenParkeerplaatsOpheffen } from './EigenParkeerplaatsOpheffen';
-import { Touringcar } from './Touringcar';
-import { WVOS } from './WVOS';
 
 export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();

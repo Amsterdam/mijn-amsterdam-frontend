@@ -41,7 +41,7 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   geboortedatum: [
     'Geboortedatum',
     (geboorteDatum, persoon) => {
-      return !!persoon.indicatieGeboortedatum
+      return persoon.indicatieGeboortedatum
         ? formatBirthdate(persoon.indicatieGeboortedatum, geboorteDatum)
         : defaultDateFormat(geboorteDatum);
     },
@@ -113,13 +113,13 @@ const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
     (_value, adres, brpData) => {
-      return !!adres?.straatnaam ? getFullAddress(adres) : 'Onbekend';
+      return adres?.straatnaam ? getFullAddress(adres) : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
     (_value, adres, brpData) => {
-      return !!adres
+      return adres
         ? `${adres.postcode || ''} ${adres.woonplaatsNaam || 'Onbekend'}`
         : 'Onbekend';
     },
@@ -238,7 +238,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   };
 
   // Exclude below profile data for non-mokum residents.
-  if (!!brpData?.persoon.mokum) {
+  if (brpData?.persoon.mokum) {
     if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
       profileData.verbintenis = {
         ...format(brpInfoLabels.verbintenis, brpData.verbintenis, brpData),

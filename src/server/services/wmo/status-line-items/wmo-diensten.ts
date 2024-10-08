@@ -1,8 +1,4 @@
 import {
-  ZorgnedAanvraagTransformed,
-  ZorgnedStatusLineItemTransformerConfig,
-} from '../../zorgned/zorgned-types';
-import {
   AANVRAAG,
   EINDE_RECHT,
   getTransformerConfigBesluit,
@@ -15,6 +11,10 @@ import {
   isEindeGeldigheidVerstreken,
   MEER_INFORMATIE,
 } from './wmo-generic';
+import {
+  ZorgnedAanvraagTransformed,
+  ZorgnedStatusLineItemTransformerConfig,
+} from '../../zorgned/zorgned-types';
 
 function isActive(
   stepIndex: number,

@@ -1,16 +1,18 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 import { marked } from 'marked';
+
 import { IS_TAP } from '../../universal/config/env';
 import { Themas } from '../../universal/config/thema';
 import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
-import { getApiConfig } from '../helpers/source-api-helpers';
 import FileCache from '../helpers/file-cache';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
-  cacheTimeMinutes: IS_TAP ? 15 : -1, // 15 minutes
+  // eslint-disable-next-line no-magic-numbers
+  cacheTimeMinutes: IS_TAP ? 45 / 60 : -1,
 });
 
 interface Tyd {
@@ -43,7 +45,7 @@ interface CMSEventData {
         veld: Array<Tyd | Website | Dtm | MeerInfo | Omschrijving>;
       };
       title: string;
-      CorDtm: String;
+      CorDtm: string;
     };
   };
 }

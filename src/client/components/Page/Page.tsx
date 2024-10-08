@@ -1,8 +1,9 @@
 import { HTMLProps } from 'react';
 
-import { ComponentChildren } from '../../../universal/types';
 import composeClassNames from 'classnames';
+
 import styles from './Page.module.scss';
+import { ComponentChildren } from '../../../universal/types';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;

@@ -1,8 +1,3 @@
-import {
-  ApiErrorResponse,
-  ApiPostponeResponse,
-  ApiSuccessResponse,
-} from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types/App.types';
 
 export interface StadspasTransactieSource {

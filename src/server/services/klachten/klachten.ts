@@ -1,6 +1,7 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
 import UID from 'uid-safe';
+
 import { Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
@@ -72,7 +73,8 @@ export function transformKlachtenResponse(
   }
 
   const klachten = data.List.map((klacht) => {
-    const id = klacht.klacht_id.value || UID.sync(18);
+    const BYTE_LENGTH = 18;
+    const id = klacht.klacht_id.value || UID.sync(BYTE_LENGTH);
 
     return {
       id,
@@ -140,7 +142,9 @@ export async function fetchAllKlachten(
   authProfileAndToken: AuthProfileAndToken
 ) {
   let page = 0;
-  const MAX_KLACHTEN_COUNT = 5 * DEFAULT_PAGE_SIZE;
+
+  const PAGES_TO_FETCH = 5;
+  const MAX_KLACHTEN_COUNT = PAGES_TO_FETCH * DEFAULT_PAGE_SIZE;
   const result: KlachtenResponse = {
     aantal: 0,
     klachten: [],

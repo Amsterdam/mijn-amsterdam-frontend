@@ -1,9 +1,9 @@
+import { StadspasFrontend } from './stadspas-types';
 import {
   GenericDocument,
   ZaakDetail,
 } from '../../../universal/types/App.types';
 import { BeschikkingsResultaat } from '../zorgned/zorgned-types';
-import { StadspasFrontend } from './stadspas-types';
 
 export interface HLIRegeling extends ZaakDetail {
   dateDecision: string;

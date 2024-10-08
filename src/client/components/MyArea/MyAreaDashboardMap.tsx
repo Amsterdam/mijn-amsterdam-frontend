@@ -1,4 +1,11 @@
 import { LatLngLiteral } from 'leaflet';
+
+import { FitBounds } from './FitBounds';
+import BaseLayer from './Map/BaseLayer';
+import Map from './Map/Map';
+import styles from './MyAreaDashboard.module.scss';
+import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
+import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
 import { BAGData } from '../../../server/services';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
 import { isLoading } from '../../../universal/helpers/api';
@@ -8,12 +15,6 @@ import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { FitBounds } from './FitBounds';
-import BaseLayer from './Map/BaseLayer';
-import Map from './Map/Map';
-import styles from './MyAreaDashboard.module.scss';
-import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
-import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
 
 export default function MyAreaDashboard() {
   const { MY_LOCATION } = useAppStateGetter();
@@ -22,7 +23,7 @@ export default function MyAreaDashboard() {
     (location: BAGData | null): location is BAGData => !!location?.latlng
   );
   const [primaryLocation, ...secondaryLocations] = locations;
-  let center: LatLngLiteral | undefined =
+  const center: LatLngLiteral | undefined =
     primaryLocation?.latlng || DEFAULT_MAP_OPTIONS.center;
 
   return (

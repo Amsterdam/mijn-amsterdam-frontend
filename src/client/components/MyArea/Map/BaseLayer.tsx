@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { TileLayer } from '@amsterdam/react-maps';
 import { TileLayer as TileLayerType, TileLayerOptions } from 'leaflet';
-import { useEffect, useState } from 'react';
 
 type Props = {
   baseLayer?: string;

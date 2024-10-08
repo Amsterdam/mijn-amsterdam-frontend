@@ -1,3 +1,4 @@
+import styles from './Search.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   Page,
@@ -8,7 +9,6 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateReady } from '../../hooks/useAppState';
-import styles from './Search.module.scss';
 
 export default function Search() {
   const termParam =

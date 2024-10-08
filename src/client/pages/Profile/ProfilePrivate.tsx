@@ -1,6 +1,11 @@
+import { useEffect, useMemo } from 'react';
+
 import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { useEffect, useMemo } from 'react';
+
+import { formatBrpProfileData } from './formatDataPrivate';
+import styles from './Profile.module.scss';
+import { PanelConfigFormatter, panelConfig } from './profilePanelConfig';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -29,9 +34,6 @@ import {
 } from '../../components';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Profile.module.scss';
-import { formatBrpProfileData } from './formatDataPrivate';
-import { PanelConfigFormatter, panelConfig } from './profilePanelConfig';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,

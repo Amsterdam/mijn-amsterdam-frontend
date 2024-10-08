@@ -1,8 +1,16 @@
-import { Header, PageMenu } from '@amsterdam/design-system-react';
-import { animated, useSpring } from '@react-spring/web';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { Header, PageMenu } from '@amsterdam/design-system-react';
+import { CloseIcon, MenuIcon } from '@amsterdam/design-system-react-icons';
+import { animated, useSpring } from '@react-spring/web';
 import { useHistory, useLocation } from 'react-router-dom';
+
+import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
+import styles from './MainHeader.module.scss';
+import { OtapLabel } from './OtapLabel';
+import { SecondaryLinks } from './SecondaryLinks';
 import { AppRoutes } from '../../../universal/config/routes';
+import { IconSearch } from '../../assets/icons';
 import { ErrorMessages } from '../../components';
 import { getApiErrors } from '../../config/api';
 import { ThemaTitles } from '../../config/thema';
@@ -14,14 +22,8 @@ import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MegaMenu from '../MegaMenu/MegaMenu';
 import { Search } from '../Search/Search';
-import { CloseIcon, MenuIcon } from '@amsterdam/design-system-react-icons';
 import { SearchEntry } from '../Search/searchConfig';
 import { useSearchOnPage } from '../Search/useSearch';
-import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
-import styles from './MainHeader.module.scss';
-import { OtapLabel } from './OtapLabel';
-import { SecondaryLinks } from './SecondaryLinks';
-import { IconSearch } from '../../assets/icons';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -146,7 +148,8 @@ export default function MainHeader({
       }
 
       // Add 10 pixels to the height to make sure the overlay is not visible when the menu is changing is size
-      let menuHeight = menuRef.current?.offsetHeight + 10;
+      const PADDING_HEIGHT = 10;
+      let menuHeight = menuRef.current?.offsetHeight + PADDING_HEIGHT;
       const scrollTop = window.scrollY;
 
       if (scrollTop >= menuHeight) {

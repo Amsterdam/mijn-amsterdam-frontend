@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
@@ -6,11 +5,14 @@ import {
   forwardRef,
   ReactNode,
 } from 'react';
+
+import classnames from 'classnames';
 import { Link } from 'react-router-dom';
+
+import styles from './Button.module.scss';
 import { IconChevronRight, IconClose } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { trackLink } from '../../hooks/analytics.hook';
-import styles from './Button.module.scss';
 
 interface CustomButtonProps {
   variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain' | 'inline';

@@ -1,5 +1,8 @@
-import escapeRegex from 'lodash.escaperegexp';
 import { ReactNode } from 'react';
+
+import escapeRegex from 'lodash.escaperegexp';
+
+import styles from './Search.module.scss';
 import type {
   HorecaVergunningen,
   Krefia,
@@ -37,7 +40,6 @@ import {
   StatusLineItem,
 } from '../../../universal/types';
 import InnerHtml from '../InnerHtml/InnerHtml';
-import styles from './Search.module.scss';
 
 export interface SearchEntry {
   url: string;

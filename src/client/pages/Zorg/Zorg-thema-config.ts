@@ -1,7 +1,7 @@
+import styles from './Zorg.module.scss';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import styles from './Zorg.module.scss';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;

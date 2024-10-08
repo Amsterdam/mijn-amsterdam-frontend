@@ -238,7 +238,7 @@ export async function fetchWpiNotifications(
 ) {
   const today = new Date();
 
-  let notifications: MyNotification[] = [];
+  const notifications: MyNotification[] = [];
 
   // Bijstandsuitkeringen
   {

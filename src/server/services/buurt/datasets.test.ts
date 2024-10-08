@@ -1,8 +1,7 @@
 import nock from 'nock';
-import { remoteApi } from '../../../test-utils';
+
 import {
   DatasetConfig,
-  datasetEndpoints,
   fetchMeldingenBuurt,
   transformHardlooproutesResponse,
   transformMeldingenBuurtResponse,

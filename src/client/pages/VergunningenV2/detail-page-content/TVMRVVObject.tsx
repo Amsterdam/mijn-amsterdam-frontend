@@ -1,9 +1,9 @@
+import { Location } from './Location';
 import type { TVMRVVObject as TVMRVVObjectType } from '../../../../server/services';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
 
 export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
   return (

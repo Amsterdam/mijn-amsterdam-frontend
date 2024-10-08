@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+
 import { AppRoutes } from '../../../universal/config/routes';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { AppState } from '../../../universal/types/App.types';

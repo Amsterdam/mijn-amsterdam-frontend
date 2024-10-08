@@ -1,10 +1,11 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
+
+import { getRowsByKey } from './fields-config';
 import {
   VergunningFrontendV2,
   WerkzaamhedenEnVervoerOpStraat,
 } from '../../../../server/services/vergunningen-v2/config-and-types';
-import { Datalist, Row } from '../../../components/Datalist/Datalist';
-import { getRowsByKey } from './fields-config';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function WVOSContent({
   vergunning,

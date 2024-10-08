@@ -1,7 +1,10 @@
-import classnames from 'classnames';
 import { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
+
+import classnames from 'classnames';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
+
+import styles from './MainNavSubmenu.module.scss';
 import {
   ComponentChildren,
   LinkProps,
@@ -9,7 +12,8 @@ import {
 } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import { trackLink } from '../../hooks/analytics.hook';
-import styles from './MainNavSubmenu.module.scss';
+
+const MENU_TOGGLE_DELAY_MS = 100;
 
 export interface MainNavSubmenuLinkProps
   extends LinkProps,
@@ -31,7 +35,9 @@ export function MainNavSubmenuLink({
     <a
       href={to}
       onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-        onClick && onClick(event);
+        if (onClick) {
+          onClick(event);
+        }
         trackLink(to, title);
       }}
       rel={rel}
@@ -78,11 +84,11 @@ export default function MainNavSubmenu({
 
   const debouncedLeave = useDebouncedCallback(() => {
     setMenuIsOpen(false);
-  }, 100);
+  }, MENU_TOGGLE_DELAY_MS);
 
   const debouncedEnter = useDebouncedCallback(() => {
     setMenuIsOpen(true);
-  }, 100);
+  }, MENU_TOGGLE_DELAY_MS);
 
   const onEnter = () => {
     debouncedLeave.cancel();

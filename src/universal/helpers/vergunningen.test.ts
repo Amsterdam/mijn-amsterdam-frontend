@@ -1,4 +1,3 @@
-import { CaseType } from '../types/vergunningen';
 import {
   hasOtherActualVergunningOfSameType,
   hasWorkflow,
@@ -6,6 +5,7 @@ import {
   isNearEndDate,
   showDocuments,
 } from './vergunningen';
+import { CaseType } from '../types/vergunningen';
 
 describe('helpers/Vergunningen', () => {
   vi.useFakeTimers();

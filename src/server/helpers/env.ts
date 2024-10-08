@@ -1,4 +1,5 @@
 import memoizee from 'memoizee';
+
 import { captureException } from '../services/monitoring';
 
 /** Retrieve an environment variable.

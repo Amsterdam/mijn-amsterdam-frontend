@@ -1,8 +1,6 @@
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import {
   DecosZaakSource,
   TouringcarDagontheffing,
-  WerkzaamhedenEnVervoerOpStraat,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import {
@@ -19,6 +17,7 @@ import {
   transformBoolean,
   transformKenteken,
 } from './helpers';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 
 describe('helpers/Vergunningen', () => {
   vi.useFakeTimers();

@@ -1,5 +1,6 @@
 import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
+
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
@@ -264,7 +265,7 @@ function transformPowerBrowserStatusResponse(
 
   // Nieuwe zaken hebben wel statussen
   let datumOntvangen = getStatusDate(['Intake', 'Ontvangen']);
-  let datumInBehandeling = getStatusDate(['In behandeling']);
+  const datumInBehandeling = getStatusDate(['In behandeling']);
   let datumAfgehandeld: string = getStatusDate(['Afgehandeld', 'Gereed']);
 
   // NOTE: Gemigreerde zaken (van Decos naar Powerbrowser) hebben een negatief nummer als id gekregen.

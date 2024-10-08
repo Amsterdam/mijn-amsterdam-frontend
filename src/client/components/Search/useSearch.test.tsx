@@ -1,8 +1,10 @@
-import { renderHook } from '@testing-library/react';
 import { ReactNode } from 'react';
+
+import { renderHook } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
-import type { Vergunning } from '../../../server/services';
-import { AppRoutes } from '../../../universal/config/routes';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+
+import * as remoteConfig from './search-config.json';
 import {
   API_SEARCH_CONFIG_DEFAULT,
   ApiBaseItem,
@@ -16,12 +18,11 @@ import {
   requestID,
   useSearchIndex,
 } from './useSearch';
-
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import type { Vergunning } from '../../../server/services';
 import { bffApi } from '../../../test-utils';
-import { appStateAtom } from '../../hooks/useAppState';
-import * as remoteConfig from './search-config.json';
+import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
+import { appStateAtom } from '../../hooks/useAppState';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {

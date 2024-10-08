@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
+
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
+import styles from './TablePagePaginated.module.scss';
 import { Thema } from '../../../universal/config/thema';
 import {
   ErrorAlert,
@@ -14,7 +16,6 @@ import {
   ThemaIcon,
 } from '../../components';
 import { TableProps } from '../../components/Table/Table';
-import styles from './TablePagePaginated.module.scss';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -26,10 +27,11 @@ interface PageTableCutoffLinkProps {
   label?: string;
 }
 
+const CUT_OFF_AT = 3;
 export function PageTableCutoffLink({
   label = 'Toon alles',
   count = 0,
-  cutOffAt = 3,
+  cutOffAt = CUT_OFF_AT,
   appRouteWithPageParam,
   params,
 }: PageTableCutoffLinkProps) {

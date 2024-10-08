@@ -1,6 +1,6 @@
-import { InfoDetail } from '../../..';
 import GenericBase from './GenericBase';
 import Url from './Url';
+import { InfoDetail } from '../../..';
 
 interface MyArePanelContentBedrijvenInvesteringsZonesProps {
   panelItem: any;

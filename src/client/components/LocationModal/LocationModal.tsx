@@ -1,6 +1,9 @@
+import { ReactNode, useEffect, useState } from 'react';
+
 import { Link } from '@amsterdam/design-system-react';
 import { LatLngLiteral } from 'leaflet';
-import { ReactNode, useEffect, useState } from 'react';
+
+import styles from './LocationModal.module.scss';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -16,7 +19,6 @@ import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
-import styles from './LocationModal.module.scss';
 
 export interface LocationModalProps {
   // The address for determining latlng

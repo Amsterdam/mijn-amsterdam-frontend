@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
+
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
+
 import { useSessionStorage } from './storage.hook';
 
 const PROFILE_TYPE_STORAGE_KEY = 'profileType';

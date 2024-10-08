@@ -1,3 +1,4 @@
+import styles from './ToeristischeVerhuur.module.scss';
 import type { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/lvv-registratie';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -17,7 +18,6 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './ToeristischeVerhuur.module.scss';
 
 const DISPLAY_PROPS_VERGUNNINGEN = {
   titel: 'Soort vergunning',

@@ -32,12 +32,12 @@ export function useErfpachtV2Data() {
   const openFacturen = openFacturenBase?.facturen ?? [];
 
   let displayPropsDossiers: DisplayPropsDossiers | null = null;
-  let titleDossiers = erfpachtData?.titelDossiersKop;
+  const titleDossiers = erfpachtData?.titelDossiersKop;
   let displayPropsOpenFacturen: Partial<DisplayPropsFacturen> | null = null;
   let displayPropsAlleFacturen: DisplayPropsFacturen | null = null;
-  let titleOpenFacturen = erfpachtData?.titelOpenFacturenKop;
+  const titleOpenFacturen = erfpachtData?.titelOpenFacturenKop;
 
-  if (!!dossiersBase) {
+  if (dossiersBase) {
     displayPropsDossiers = {
       voorkeursadres: dossiersBase.titelVoorkeursAdres,
       dossierNummer: dossiersBase.titelDossiernummer,
@@ -52,7 +52,7 @@ export function useErfpachtV2Data() {
     }
   }
 
-  if (!!openFacturenBase) {
+  if (openFacturenBase) {
     if (isMediumScreen) {
       displayPropsOpenFacturen = {
         dossierAdres: openFacturenBase.titelFacturenDossierAdres,
@@ -67,7 +67,7 @@ export function useErfpachtV2Data() {
     };
   }
 
-  if (!!openFacturenBase) {
+  if (openFacturenBase) {
     displayPropsAlleFacturen = {
       factuurNummer: openFacturenBase.titelFacturenNummer,
       formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,

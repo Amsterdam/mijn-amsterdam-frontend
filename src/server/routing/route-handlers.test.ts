@@ -1,4 +1,10 @@
 import {
+  clearRequestCache,
+  isAuthenticated,
+  isBlacklistedHandler,
+  requestID,
+} from './route-handlers';
+import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
   RequestMock,
@@ -7,15 +13,9 @@ import {
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import { cache } from '../helpers/source-api-request';
 import { addToBlackList } from '../services/session-blacklist';
-import {
-  clearRequestCache,
-  isAuthenticated,
-  isBlacklistedHandler,
-  requestID,
-} from './route-handlers';
 
 describe('routing.route-handlers', () => {
-  let resMock = ResponseMock.new();
+  const resMock = ResponseMock.new();
   const nextMock = vi.fn();
 
   afterEach(() => {

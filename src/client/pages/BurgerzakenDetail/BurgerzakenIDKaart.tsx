@@ -1,4 +1,6 @@
 import { useParams } from 'react-router-dom';
+
+import styles from './BurgerzakenDetail.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -14,7 +16,6 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './BurgerzakenDetail.module.scss';
 
 export default function BurgerzakenIDKaart() {
   const { BRP } = useAppStateGetter();

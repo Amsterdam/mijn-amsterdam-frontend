@@ -1,12 +1,13 @@
 import { useParams } from 'react-router-dom';
+
+import styles from './Afis.module.scss';
+import { useAfisListPageData } from './useAfisThemaData.hook';
 import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { ThemaTitles } from '../../config/thema';
-import styles from './Afis.module.scss';
-import { useAfisListPageData } from './useAfisThemaData.hook';
 
 export const AfisFacturen = () => {
   const { state } = useParams<{ state: AfisFactuurState }>();

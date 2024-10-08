@@ -1,19 +1,11 @@
+import { useCallback, useEffect, useState } from 'react';
+
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
-import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-import type {
-  MaPointFeature,
-  MaPolylineFeature,
-} from '../../../server/services/buurt/datasets';
-import { AppRoutes } from '../../../universal/config/routes';
-import {
-  DatasetFilterSelection,
-  DatasetId,
-} from '../../../universal/config/myarea-datasets';
-import ErrorMessages from '../ErrorMessages/ErrorMessages';
+
 import { toBoundLiteral } from './MyArea.helpers';
 import {
   getQueryConfig,
@@ -28,6 +20,16 @@ import {
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import type {
+  MaPointFeature,
+  MaPolylineFeature,
+} from '../../../server/services/buurt/datasets';
+import {
+  DatasetFilterSelection,
+  DatasetId,
+} from '../../../universal/config/myarea-datasets';
+import { AppRoutes } from '../../../universal/config/routes';
+import ErrorMessages from '../ErrorMessages/ErrorMessages';
 
 interface MyAreaDatasetsProps {
   datasetIds?: DatasetId[];
@@ -51,9 +53,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     !!datasetIds?.length && !clusterFeatures.length && !polylineFeatures.length
   );
 
+  const FEATURES_LOADING_DEBOUNCE_MS = 600;
   const setFeaturesLoadingDebounced = useDebouncedCallback(
     setFeaturesLoading,
-    600
+    FEATURES_LOADING_DEBOUNCE_MS
   );
 
   const search = history.location.search;
@@ -163,7 +166,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     [fetchFeatures, setFilterSelection, setFeaturesLoadingDebounced]
   );
 
-  const fetchDebounced = useDebouncedCallback(fetch, 100);
+  const FETCH_DEBOUNCE_MS = 100;
+  const fetchDebounced = useDebouncedCallback(fetch, FETCH_DEBOUNCE_MS);
 
   const reflectMapViewUrl = useCallback(
     (map: Map) => {

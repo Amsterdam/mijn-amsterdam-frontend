@@ -1,13 +1,13 @@
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
 import {
   AfisBusinessPartnerCommercialResponseSource,
   AfisBusinessPartnerKnownResponse,
   AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 
 /** Returns if the person logging in, is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(

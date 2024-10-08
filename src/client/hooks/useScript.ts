@@ -39,7 +39,7 @@ export function useScript({
       cachedScripts.push(src);
 
       // Create script
-      let script = document.createElement('script');
+      const script = document.createElement('script');
 
       script.src = src;
       script.async = async;

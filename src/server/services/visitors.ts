@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+
 import {
   add,
   endOfDay,
@@ -12,11 +13,12 @@ import {
   subQuarters,
 } from 'date-fns';
 import { Request, Response } from 'express';
-import { IS_TAP } from '../../universal/config/env';
-import { defaultDateFormat } from '../../universal/helpers/date';
+
 import { IS_DB_ENABLED, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
 import { captureException } from './monitoring';
+import { IS_TAP } from '../../universal/config/env';
+import { defaultDateFormat } from '../../universal/helpers/date';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -230,7 +232,7 @@ export async function loginStats(req: Request, res: Response) {
     dateEnd = req.query.dateEnd as string;
   }
 
-  let params: Array<string | Date> = [dateStart, dateEnd];
+  const params: Array<string | Date> = [dateStart, dateEnd];
   let totalQuery = queries.totalLoginsAll;
   let uniqueQuery = queries.uniqueLoginsAll;
 

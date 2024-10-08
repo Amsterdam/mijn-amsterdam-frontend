@@ -3,7 +3,6 @@ import {
   differenceInMonths,
   format,
   formatDistanceToNow,
-  isSameDay,
   isThisYear,
   parseISO,
 } from 'date-fns';

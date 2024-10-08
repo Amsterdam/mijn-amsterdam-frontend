@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-
 import { describe, expect } from 'vitest';
+
 import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
@@ -137,7 +137,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
-    let Component = () => (
+    const Component = () => (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
@@ -167,7 +167,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
-    let Component = () => (
+    const Component = () => (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}

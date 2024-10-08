@@ -1,10 +1,12 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import https from 'https';
-import { IS_OT, IS_TAP } from '../../universal/config/env';
+
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
+import { IS_TAP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
-import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -291,6 +293,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
     postponeFetch: !FeatureToggle.bodemActive,
+    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 59 * ONE_MINUTE_MS,
   },
   AMSAPP: {

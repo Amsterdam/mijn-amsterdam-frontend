@@ -1,5 +1,13 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
+
+import {
+  AVGRequest,
+  AVGResponse,
+  AvgThemesResponse,
+  SmileAvgResponse,
+  SmileAvgThemesResponse,
+} from './types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
@@ -9,17 +17,10 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
-import {
-  AVGRequest,
-  AVGResponse,
-  AvgThemesResponse,
-  SmileAvgResponse,
-  SmileAvgThemesResponse,
-} from './types';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -73,8 +74,8 @@ function getDataForAvgThemas(avgIds: string[]) {
     'filters',
     `themaperavgverzoek.avgverzoek.id IN ('${avgIds.join("', '")}')`
   );
-  // Maximum amount of themes is 14.
-  data.append('pagesize', 14 * DEFAULT_PAGE_SIZE);
+  const MAX_AMOUNT_OF_THEMES = 14;
+  data.append('pagesize', MAX_AMOUNT_OF_THEMES * DEFAULT_PAGE_SIZE);
 
   data.append('orderbys', 'themaperavgverzoek_avgverzoek_id desc');
 

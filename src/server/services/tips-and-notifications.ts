@@ -1,5 +1,6 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
+
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
@@ -28,8 +29,8 @@ import {
   prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur';
-import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
+import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 
@@ -38,7 +39,7 @@ export function sortNotifications(
   doRandomize: boolean = true
 ) {
   // sort the notifications with and without a tip
-  let sorted = notifications
+  const sorted = notifications
     .sort(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
     .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
@@ -58,7 +59,12 @@ export function sortNotifications(
   // Insert a tip after every 3 notifications
   const notificationsWithTipsInserted = notificationsWithoutTips.reduce(
     (acc, notification, index) => {
-      if (index !== 0 && index % 3 === 0 && notificationsWithTips.length > 0) {
+      const INDEX_TO_INSERT_TIP = 3;
+      if (
+        index !== 0 &&
+        index % INDEX_TO_INSERT_TIP === 0 &&
+        notificationsWithTips.length > 0
+      ) {
         const tip = notificationsWithTips.shift();
         if (tip) {
           acc.push(tip);

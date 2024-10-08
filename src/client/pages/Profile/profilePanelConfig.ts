@@ -1,14 +1,13 @@
-import {
-  ActionLink,
-  InfoPanelProps,
-} from '../../components/InfoPanel/InfoPanel';
-
+import styles from './Profile.module.scss';
 import type { KVKData } from '../../../server/services/kvk';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { isMokum } from '../../../universal/helpers/brp';
 import { BRPData } from '../../../universal/types';
+import {
+  ActionLink,
+  InfoPanelProps,
+} from '../../components/InfoPanel/InfoPanel';
 import { ExternalUrls } from '../../config/app';
-import styles from './Profile.module.scss';
 
 type BRPPanelKey = keyof Omit<
   BRPData,

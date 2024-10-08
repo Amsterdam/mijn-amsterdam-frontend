@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+
+import styles from './Zorg.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
@@ -17,7 +19,6 @@ import {
 import { ExternalUrls } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
   title: '',

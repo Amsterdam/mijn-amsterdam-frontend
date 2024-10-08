@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react';
+
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
+
+import { trackPageViewWithCustomDimension } from './analytics.hook';
+import { useProfileTypeValue } from './useProfileType';
+import { useTermReplacement } from './useTermReplacement';
+import { useUserCity } from './useUserCity';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { ExcludePageViewTrackingUrls } from '../config/api';
 import { CustomTrackingUrls, TrackingConfig } from '../config/routes';
@@ -9,10 +15,6 @@ import {
   PageTitleMain,
 } from '../config/thema';
 import { captureMessage } from '../utils/monitoring';
-import { trackPageViewWithCustomDimension } from './analytics.hook';
-import { useProfileTypeValue } from './useProfileType';
-import { useTermReplacement } from './useTermReplacement';
-import { useUserCity } from './useUserCity';
 
 const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {

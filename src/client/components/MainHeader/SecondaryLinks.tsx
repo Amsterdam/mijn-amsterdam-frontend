@@ -1,13 +1,14 @@
 import { Icon } from '@amsterdam/design-system-react';
 import { LogoutIcon } from '@amsterdam/design-system-react-icons';
+
+import { ProfileName } from './ProfileName';
+import styles from './SecondaryLinks.module.scss';
 import { isError } from '../../../universal/helpers/api';
 import { LOGOUT_URL } from '../../config/api';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaLink } from '../MaLink/MaLink';
-import { ProfileName } from './ProfileName';
-import styles from './SecondaryLinks.module.scss';
 
 type SecondaryLinksProps = {
   showIcons?: boolean;

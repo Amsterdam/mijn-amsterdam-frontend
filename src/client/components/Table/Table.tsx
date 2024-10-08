@@ -1,12 +1,13 @@
-import classnames from 'classnames';
 import { isValidElement, ReactNode } from 'react';
+
+import classnames from 'classnames';
+
+import styles from './Table.module.scss';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries, keys } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import InnerHtml from '../InnerHtml/InnerHtml';
-import { MaRouterLink } from '../MaLink/MaLink';
-import styles from './Table.module.scss';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -76,7 +77,7 @@ export default function Table<T extends ObjectWithOptionalId>({
   const hasDisplayPropTableHeadingLabels = !!keys(displayPropsFinal).filter(
     (titleKey) => !!displayPropsFinal[titleKey]
   ).length;
-  const FirstHeadCellTag = !!displayPropsFinal[titleKey] ? 'th' : 'td';
+  const FirstHeadCellTag = displayPropsFinal[titleKey] ? 'th' : 'td';
 
   return (
     <table className={classnames(styles.Table, className)}>
@@ -89,7 +90,7 @@ export default function Table<T extends ObjectWithOptionalId>({
               </FirstHeadCellTag>
             )}
             {displayPropEntries.map(([key, label]) => {
-              const EL = !!label ? 'th' : 'td';
+              const EL = label ? 'th' : 'td';
               return (
                 <EL key={`th-${key}`} className={styles.DisplayProp}>
                   {label}

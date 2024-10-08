@@ -1,8 +1,10 @@
 import React, { ReactNode, isValidElement } from 'react';
+
+import { Heading } from '@amsterdam/design-system-react';
+import classnames from 'classnames';
+
 import styles from './InfoDetail.module.scss';
 import { ComponentChildren } from '../../../universal/types/App.types';
-import classnames from 'classnames';
-import { Heading } from '@amsterdam/design-system-react';
 
 export interface InfoDetailGroupProps {
   children: ComponentChildren;

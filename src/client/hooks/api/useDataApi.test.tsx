@@ -1,8 +1,9 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+
+import { getDefaultState, useDataApi } from './useDataApi';
 import { bffApiHost } from '../../../setupTests';
 import { bffApi } from '../../../test-utils';
-import { getDefaultState, useDataApi } from './useDataApi';
 
 interface ResponseData {
   foo: string;

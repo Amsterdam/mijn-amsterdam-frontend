@@ -1,5 +1,10 @@
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
+
+import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
+import { hliStatusLineItemsConfig } from './hli-status-line-items';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
+import { fetchStadspas } from './stadspas';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiSuccessResult,
@@ -14,10 +19,6 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
-import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
-import { hliStatusLineItemsConfig } from './hli-status-line-items';
-import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
-import { fetchStadspas } from './stadspas';
 import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,

@@ -1,7 +1,8 @@
 import { ReactNode, useMemo } from 'react';
+
+import styles from './Krefia.module.scss';
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
@@ -15,8 +16,8 @@ import {
   SectionCollapsible,
   Table,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Krefia.module.scss';
 
 const DISPLAY_PROPS = {
   title: 'Status',

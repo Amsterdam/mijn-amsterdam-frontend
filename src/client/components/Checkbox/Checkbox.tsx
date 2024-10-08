@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import {
   ChangeEvent,
   forwardRef,
@@ -9,8 +8,11 @@ import {
   useRef,
   useState,
 } from 'react';
-import { IconCheckmark, IconIndeterminate } from '../../assets/icons';
+
+import classnames from 'classnames';
+
 import styles from './Checkbox.module.scss';
+import { IconCheckmark, IconIndeterminate } from '../../assets/icons';
 
 type CheckboxProps = {
   checked?: boolean;

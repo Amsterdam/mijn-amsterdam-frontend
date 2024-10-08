@@ -1,12 +1,17 @@
-import { IconSpinner } from '../../assets/icons';
 import styles from './Spinner.module.scss';
+import { IconSpinner } from '../../assets/icons';
 
 interface SpinnerProps {
   width?: number;
   height?: number;
 }
 
-export function Spinner({ width = 14, height = 14 }: SpinnerProps) {
+const DEFAULT_WIDTH = 14;
+const DEFAULT_HEIGHT = 14;
+export function Spinner({
+  width = DEFAULT_WIDTH,
+  height = DEFAULT_HEIGHT,
+}: SpinnerProps) {
   const style = {
     width: width + 'px',
     height: height + 'px',

@@ -1,5 +1,7 @@
-import classnames from 'classnames';
 import { FormEvent, ReactNode } from 'react';
+
+import classnames from 'classnames';
+
 import {
   DatasetCategory,
   DatasetFilterSelection,

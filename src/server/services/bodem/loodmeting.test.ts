@@ -1,14 +1,14 @@
-import nock from 'nock';
 import MockDate from 'mockdate';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import metingen from '../../../../mocks/fixtures/loodmetingen.json';
-import document from '../../../../mocks/fixtures/loodmeting-rapport.json';
+
 import {
   fetchLoodMetingDocument,
   fetchLoodMetingNotifications,
   fetchLoodmetingen,
 } from './loodmetingen';
+import document from '../../../../mocks/fixtures/loodmeting-rapport.json';
+import metingen from '../../../../mocks/fixtures/loodmetingen.json';
 import { remoteApi } from '../../../test-utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('Loodmeting', () => {
   const requestId = '456';

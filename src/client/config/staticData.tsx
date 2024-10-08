@@ -1,14 +1,14 @@
+import { ExternalUrls } from './app';
 import { Themas } from '../../universal/config/thema';
 import { MyNotification } from '../../universal/types';
-import { ExternalUrls } from './app';
-import { AppRoutes } from '../../universal/config/routes';
-import ReactDOMServer from 'react-dom/server';
-import { MaRouterLink } from '../components/MaLink/MaLink';
 
+const year = 2022;
+const day = 20;
+const month = 0;
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
   thema: Themas.NOTIFICATIONS,
-  datePublished: new Date(2022, 0, 20).toISOString(),
+  datePublished: new Date(year, month, day).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: true,
   description: `

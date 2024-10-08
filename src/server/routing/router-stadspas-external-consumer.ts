@@ -1,4 +1,8 @@
 import express, { Request, Response } from 'express';
+
+import { ExternalConsumerEndpoints } from './bff-routes';
+import { apiKeyVerificationHandler } from './route-handlers';
+import { sendBadRequest, sendResponse } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../auth/auth-config';
@@ -20,9 +24,6 @@ import {
   StadspasBudget,
 } from '../services/hli/stadspas-types';
 import { captureException, captureMessage } from '../services/monitoring';
-import { ExternalConsumerEndpoints } from './bff-routes';
-import { apiKeyVerificationHandler } from './route-handlers';
-import { sendBadRequest, sendResponse } from './route-helpers';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
@@ -86,7 +87,7 @@ async function sendAdministratienummerResponse(
   req: Request<{ token: string }>,
   res: Response
 ) {
-  let authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
+  const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
   let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
 
   if (!authProfileAndToken) {

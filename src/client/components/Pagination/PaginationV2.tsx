@@ -1,8 +1,9 @@
-import { Pagination } from '@amsterdam/design-system-react';
-import paginate from 'jw-paginate';
 import { PropsWithChildren, useMemo } from 'react';
 
-export interface PaginationPageButtonProps extends PropsWithChildren<{}> {
+import { Pagination } from '@amsterdam/design-system-react';
+import paginate from 'jw-paginate';
+
+export interface PaginationPageButtonProps extends PropsWithChildren {
   page: number;
   currentPage: number;
   onPageClick: PaginationProps['onPageClick'];
@@ -16,10 +17,11 @@ export interface PaginationProps {
   currentPage?: number;
 }
 
+const MAX_PAGES = 7;
 export function PaginationV2({
   totalCount,
   pageSize,
-  maxPages = 7,
+  maxPages = MAX_PAGES,
   onPageClick,
   currentPage = 1,
 }: PaginationProps) {

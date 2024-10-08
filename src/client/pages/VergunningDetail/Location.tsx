@@ -1,9 +1,9 @@
+import styles from './VergunningDetail.module.scss';
 import { InfoDetail } from '../../components';
 import {
   LocationModal,
   LocationModalProps,
 } from '../../components/LocationModal/LocationModal';
-import styles from './VergunningDetail.module.scss';
 
 interface LocationProps extends LocationModalProps {
   // Text content above the "Modal open" link

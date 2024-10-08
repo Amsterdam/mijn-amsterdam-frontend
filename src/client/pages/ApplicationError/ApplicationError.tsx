@@ -1,7 +1,10 @@
+import { useState } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { useState } from 'react';
 import type { FallbackProps } from 'react-error-boundary';
+
+import styles from './ApplicationError.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import AmsterdamLogoLarge from '../../assets/images/logo-amsterdam-large.svg?react';
 import AmsterdamLogo from '../../assets/images/logo-amsterdam.svg?react';
@@ -12,7 +15,6 @@ import PageHeading from '../../components/PageHeading/PageHeading';
 import { ExternalUrls } from '../../config/external-urls';
 import { useDesktopScreen } from '../../hooks/media.hook';
 import { useUsabilla } from '../../hooks/useUsabilla';
-import styles from './ApplicationError.module.scss';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -31,9 +33,9 @@ function imgUrl(
     pixelDensity * (width * ratio)
   )}-${imageName}.${ext}`;
 }
-
+const IMG_WIDTH = 1600;
 const srcSet = {
-  FALLBACK: imgUrl('algemeen', 1600, 'landscape', 1, '', 'jpg'),
+  FALLBACK: imgUrl('algemeen', IMG_WIDTH, 'landscape', 1, '', 'jpg'),
 };
 
 export default function ApplicationError({ error }: FallbackProps) {

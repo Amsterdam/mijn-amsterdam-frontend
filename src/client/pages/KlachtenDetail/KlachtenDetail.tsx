@@ -1,4 +1,5 @@
 import { generatePath, useParams } from 'react-router-dom';
+
 import type { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';

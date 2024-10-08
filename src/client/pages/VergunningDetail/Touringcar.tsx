@@ -1,3 +1,4 @@
+import styles from './VergunningDetail.module.scss';
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
@@ -9,7 +10,6 @@ import {
 import { CaseType } from '../../../universal/types/vergunningen';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
-import styles from './VergunningDetail.module.scss';
 
 export function Touringcar({
   vergunning,

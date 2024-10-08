@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
+import Krefia from './Krefia';
 import KrefiaData from '../../../../mocks/fixtures/krefia.json';
 import { Krefia as KrefiaContent } from '../../../server/services/krefia';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
-import Krefia from './Krefia';
 import MockApp from '../MockApp';
 
 interface TestState {

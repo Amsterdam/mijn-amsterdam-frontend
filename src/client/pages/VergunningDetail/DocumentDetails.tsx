@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import type {
   Vergunning,
   VergunningDocument,
@@ -76,7 +77,7 @@ export function DocumentDetails({
             ['100%', '2rem', '1rem'],
           ]}
         />
-      ) : !!documents?.length ? (
+      ) : documents?.length ? (
         <DocumentList
           documents={documents}
           isExpandedView={true}

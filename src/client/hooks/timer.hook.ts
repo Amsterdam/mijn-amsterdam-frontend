@@ -23,7 +23,7 @@ const DefaultConfig: CounterProps = {
 };
 
 // taken from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-export function useInterval(callback: any, delay: number = 1000) {
+export function useInterval(callback: any, delay: number = ONE_SECOND_IN_MS) {
   const savedCallback: any = useRef();
 
   // Remember the latest callback.
@@ -37,7 +37,7 @@ export function useInterval(callback: any, delay: number = 1000) {
       savedCallback.current();
     }
     if (delay > 0) {
-      let id = setInterval(tick, delay);
+      const id = setInterval(tick, delay);
       return () => clearInterval(id);
     }
   }, [delay]);

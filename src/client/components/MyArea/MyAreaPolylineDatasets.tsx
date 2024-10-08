@@ -1,7 +1,9 @@
-import { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useMemo } from 'react';
-import type { MaPolylineFeature } from '../../../server/services/buurt/datasets';
+
+import { LeafletMouseEventHandlerFn } from 'leaflet';
+
 import { MaPolylineLayer } from './MyAreaPolylineLayer';
+import type { MaPolylineFeature } from '../../../server/services/buurt/datasets';
 
 interface MyAreaPolylineDatasetsProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;

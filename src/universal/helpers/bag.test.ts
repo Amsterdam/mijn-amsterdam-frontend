@@ -1,11 +1,11 @@
 import { Adres } from '../types';
-import { BAGSourceData } from '../types/bag';
 import {
   extractAddress,
   getBagSearchAddress,
   getLatLonByAddress,
   isLocatedInWeesp,
 } from './bag';
+import { BAGSourceData } from '../types/bag';
 
 describe('getLatLonByAddress', () => {
   const weesp = 'Herengracht 23';

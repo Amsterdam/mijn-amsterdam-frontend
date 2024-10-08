@@ -1,5 +1,6 @@
-import { useMapInstance } from '@amsterdam/react-maps';
 import { useRef, useEffect } from 'react';
+
+import { useMapInstance } from '@amsterdam/react-maps';
 
 export function useMapRef() {
   const mapInstance = useMapInstance();

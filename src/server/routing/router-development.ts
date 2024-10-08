@@ -5,6 +5,9 @@ import express, {
   Response,
 } from 'express';
 import UID from 'uid-safe';
+
+import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
+import { sendUnauthorized } from './route-helpers';
 import {
   testAccountsDigid,
   testAccountsEherkenning,
@@ -23,11 +26,9 @@ import {
 import { signDevelopmentToken } from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfile } from '../auth/auth-types';
+import { ONE_SECOND_MS } from '../config/app';
 import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
-import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
-import { sendUnauthorized } from './route-helpers';
-import { ONE_SECOND_MS } from '../config/app';
 
 export const authRouterDevelopment = express.Router();
 authRouterDevelopment.BFF_ID = 'router-dev';
@@ -112,7 +113,8 @@ authRouterDevelopment.get(
 
     countLoggedInVisit(userId, authMethod);
 
-    const sessionID = UID.sync(18);
+    const SESSION_ID_BYTE_LENGTH = 18;
+    const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
       id: userId,
       authMethod,
@@ -139,7 +141,7 @@ authRouterDevelopment.get(
       return res.send('ok');
     }
 
-    let redirectUrl =
+    const redirectUrl =
       req.query.redirectUrl && isValidRedirectOption
         ? String(req.query.redirectUrl)
         : req.query.returnTo
@@ -157,7 +159,7 @@ authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
   }
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
-  let redirectUrl = `${process.env.MA_FRONTEND_URL}`;
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}`;
 
   return res.redirect(redirectUrl);
 });

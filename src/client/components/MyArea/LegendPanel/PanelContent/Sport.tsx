@@ -1,8 +1,8 @@
-import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
-import InfoDetail from '../../../InfoDetail/InfoDetail';
 import Description from './Description';
 import GenericBase, { GenericContent } from './GenericBase';
 import Url from './Url';
+import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
+import InfoDetail from '../../../InfoDetail/InfoDetail';
 
 interface MyArePanelContentSportProps {
   panelItem: any;

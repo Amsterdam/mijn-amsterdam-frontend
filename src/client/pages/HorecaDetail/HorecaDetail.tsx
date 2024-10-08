@@ -1,7 +1,9 @@
 import { generatePath, useParams } from 'react-router-dom';
+
+import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaTitles } from '../../config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
+import { showDocuments } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
@@ -11,11 +13,10 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
-import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
-import { showDocuments } from '../../../universal/helpers/vergunningen';
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
+import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
 
 export default function HorecaDetail() {
   const { HORECA } = useAppStateGetter();

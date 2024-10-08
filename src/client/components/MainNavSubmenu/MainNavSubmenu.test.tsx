@@ -2,6 +2,7 @@ import { act, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
+
 import MainNavSubmenu from './MainNavSubmenu';
 
 const SUBMENU_TITLE = 'submenutje';

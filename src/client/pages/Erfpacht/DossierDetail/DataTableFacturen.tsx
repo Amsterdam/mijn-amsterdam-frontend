@@ -1,6 +1,7 @@
 import { Grid, Heading, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { generatePath, useParams } from 'react-router-dom';
+
 import { AppRoutes } from '../../../../universal/config/routes';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage';
@@ -53,6 +54,8 @@ export function DataTableFacturen({
       ],
     },
   ];
+
+  const firstItemsCount = 3;
   return (
     <Grid className={styles.FacturenBetaler}>
       <Grid.Cell span="all">
@@ -70,9 +73,9 @@ export function DataTableFacturen({
             email="erfpachtadministratie@amsterdam.nl"
             label="erfpachtadministratie@amsterdam.nl"
           />
-          . Zet in het onderwerp 'Adreswijziging'. Vermeld in de mail uw
-          debiteurennummer of het E-dossiernummer en uw nieuwe adresgegevens. U
-          krijgt binnen 3 werkdagen een reactie.
+          . Zet in het onderwerp &apos;Adreswijziging&apos;. Vermeld in de mail
+          uw debiteurennummer of het E-dossiernummer en uw nieuwe adresgegevens.
+          U krijgt binnen 3 werkdagen een reactie.
         </Paragraph>
       </Grid.Cell>
       <Grid.Cell span="all">
@@ -100,7 +103,7 @@ export function DataTableFacturen({
         />
         {!!dossier.facturen?.facturen?.length && (
           <TableV2
-            items={dossier.facturen.facturen.slice(0, 3)}
+            items={dossier.facturen.facturen.slice(0, firstItemsCount)}
             className={classNames(
               styles.FacturenTable,
               styles.DossierDetailFacturenTable

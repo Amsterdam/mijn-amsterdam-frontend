@@ -2,6 +2,8 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
+import ErfpachtDossierDetail from './ErfpachtDossierDetail';
 import ERFPACHTv2_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHTv2_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
@@ -14,7 +16,6 @@ import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import ErfpachtDossierDetail from './ErfpachtDossierDetail';
 
 describe('<Erfpacht/DossierDetail />', () => {
   const routeEntry = generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {

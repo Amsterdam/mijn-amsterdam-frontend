@@ -1,6 +1,9 @@
-import classnames from 'classnames';
 import { isValidElement, ReactElement, ReactNode } from 'react';
+
+import classnames from 'classnames';
 import { renderToStaticMarkup } from 'react-dom/server';
+
+import styles from './Datasets.module.scss';
 import type { MaPointFeature } from '../../../server/services/buurt/datasets';
 import {
   IconAfvalGft,
@@ -44,7 +47,6 @@ import {
   IconZwembad,
 } from '../../assets/icons/map';
 import { Colors } from '../../config/app';
-import styles from './Datasets.module.scss';
 
 const DatasetIcon: React.FC<{
   color?: string;
@@ -370,7 +372,7 @@ export function getIconChildIdFromValue(id: string, value: string) {
 
 export function getIconHtml(feature: MaPointFeature) {
   let datasetId = feature.properties.datasetId;
-  let iconDefault = datasetIcons.default;
+  const iconDefault = datasetIcons.default;
   let childId: undefined | string = undefined;
   switch (datasetId) {
     case 'sport':

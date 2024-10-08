@@ -1,4 +1,5 @@
 import memoize from 'memoizee';
+
 import { Themas } from '../../universal/config/thema';
 import {
   apiDependencyError,

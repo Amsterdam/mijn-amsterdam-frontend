@@ -1,15 +1,15 @@
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import { addLinkElementToProperty } from '../../components/Table/TableV2';
-import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
-
 import {
   listPageParamKind,
   listPageTitle,
   routes,
   tableConfig,
 } from './Zorg-thema-config';
+import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
+import { useAppStateGetter } from '../../hooks/useAppState';
+
 
 export function useZorgThemaData() {
   const { WMO } = useAppStateGetter();

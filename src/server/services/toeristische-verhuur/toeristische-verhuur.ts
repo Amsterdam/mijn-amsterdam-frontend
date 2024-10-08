@@ -1,6 +1,16 @@
 import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
+
+import { BBVergunning, fetchBBVergunning } from './bb-vergunning';
+import {
+  ToeristischeVerhuurRegistratieDetail,
+  fetchRegistraties,
+} from './lvv-registratie';
+import {
+  VakantieverhuurVergunning,
+  fetchVakantieverhuurVergunningen,
+} from './vakantieverhuur-vergunning';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
@@ -21,17 +31,8 @@ import {
   isNearEndDate,
 } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { BBVergunning, fetchBBVergunning } from './bb-vergunning';
-import {
-  ToeristischeVerhuurRegistratieDetail,
-  fetchRegistraties,
-} from './lvv-registratie';
-import {
-  VakantieverhuurVergunning,
-  fetchVakantieverhuurVergunningen,
-} from './vakantieverhuur-vergunning';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 
 export function hasOtherActualVergunningOfSameType(
   items: Array<VakantieverhuurVergunning | BBVergunning>,
@@ -188,7 +189,7 @@ export function createToeristischeVerhuurNotification(
         datePublished = item.datumAanvraag;
         break;
       // B&B + Vakantieverhuurvergunning
-      case !!item.resultaat:
+      case !!item.resultaat: {
         const resultaat = item.resultaat?.toLowerCase() || 'afgehandeld';
         title = `Aanvraag ${vergunningTitleLower} ${resultaat}`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${item.zaaknummer} ${resultaat}.`;
@@ -196,6 +197,7 @@ export function createToeristischeVerhuurNotification(
         linkTo = ctaLinkToDetail;
         datePublished = item.datumAfhandeling || item.datumAanvraag;
         break;
+      }
     }
   }
 
@@ -217,7 +219,7 @@ function createRegistratieNotification(
 ): MyNotification {
   const title = 'Aanvraag landelijk registratienummer toeristische verhuur';
   const description = `Uw landelijke registratienummer voor toeristische verhuur is toegekend. Uw registratienummer is ${item.registrationNumber}.`;
-  const datePublished = !!item.agreementDate ? item.agreementDate : '';
+  const datePublished = item.agreementDate ? item.agreementDate : '';
   const cta = 'Bekijk uw overzicht toeristische verhuur';
   const linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
 

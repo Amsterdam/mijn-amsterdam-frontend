@@ -1,9 +1,9 @@
-import InfoDetail from '../../../InfoDetail/InfoDetail';
 import Date from './Date';
 import Description from './Description';
 import GenericBase from './GenericBase';
 import Url from './Url';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
+import InfoDetail from '../../../InfoDetail/InfoDetail';
 
 interface MyArePanelContentBekendmakingProps {
   panelItem: any;

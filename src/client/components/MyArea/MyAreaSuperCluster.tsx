@@ -1,3 +1,5 @@
+import { useCallback, useEffect, useMemo } from 'react';
+
 import { useMapInstance } from '@amsterdam/react-maps';
 import classnames from 'classnames';
 import L, {
@@ -5,14 +7,14 @@ import L, {
   LeafletMouseEvent,
   LeafletMouseEventHandlerFn,
 } from 'leaflet';
-import { useCallback, useEffect, useMemo } from 'react';
+
+import { getIconHtml } from './dataset-icons';
+import { processFeatures } from './MyArea.helpers';
+import styles from './MyAreaDatasets.module.scss';
 import type {
   DatasetFeatureProperties,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
-import { getIconHtml } from './dataset-icons';
-import { processFeatures } from './MyArea.helpers';
-import styles from './MyAreaDatasets.module.scss';
 
 function createClusterMarker(
   feature: MaSuperClusterFeature,
@@ -21,25 +23,36 @@ function createClusterMarker(
   let icon;
   if (!feature?.properties.cluster) {
     const html = getIconHtml(feature);
+    const ICON_SIZE = 32;
+    const ICON_ANCHOR = 14;
     icon = L.divIcon({
       html: `<div role="button" aria-label="Toon meer informatie over ${feature.properties.datasetId} met id ${feature.properties.id}." class="${styles.MarkerClusterIconLabel}">${html}</div>`,
       className: styles.MarkerIcon,
-      iconSize: [32, 32],
-      iconAnchor: [14, 14],
+      iconSize: [ICON_SIZE, ICON_SIZE],
+      iconAnchor: [ICON_ANCHOR, ICON_ANCHOR],
     });
   } else {
+    const SMALL_CLUSTER_COUNT = 100;
+    const LARGE_CLUSTER_COUNT = 1000;
     const count = feature.properties.point_count || 0;
-    const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
+    const size =
+      count < SMALL_CLUSTER_COUNT
+        ? 'small'
+        : count < LARGE_CLUSTER_COUNT
+          ? 'medium'
+          : 'large';
     const label = count.toString();
 
+    const ICON_SIZE = 40;
+    const ICON_ANCHOR = 20;
     icon = L.divIcon({
       className: classnames(
         styles.MarkerClusterIcon,
         styles[`MarkerClusterIcon--${size}`]
       ),
-      iconSize: [40, 40],
+      iconSize: [ICON_SIZE, ICON_SIZE],
       html: `<div role="button" aria-label="Zoom in op ${label} locaties op de kaart." class="${styles.MarkerClusterIconLabel}">${label}</div>`,
-      iconAnchor: [20, 20],
+      iconAnchor: [ICON_ANCHOR, ICON_ANCHOR],
     });
   }
 
@@ -76,7 +89,9 @@ export function MaSuperClusterLayer({
           event.propagatedFrom.feature.properties.expansion_zoom
         );
       }
-      onMarkerClick && onMarkerClick(event);
+      if (onMarkerClick) {
+        onMarkerClick(event);
+      }
     },
     [onMarkerClick, map]
   );

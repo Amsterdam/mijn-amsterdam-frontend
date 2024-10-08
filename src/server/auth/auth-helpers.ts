@@ -1,11 +1,7 @@
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import { ParsedQs } from 'qs';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ExternalConsumerEndpoints } from '../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../routing/route-helpers';
-import { captureException } from '../services/monitoring';
-import { addToBlackList } from '../services/session-blacklist';
+
 import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
@@ -14,6 +10,11 @@ import {
 } from './auth-config';
 import { authRoutes } from './auth-routes';
 import { AuthProfile, MaSession, TokenData } from './auth-types';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { ExternalConsumerEndpoints } from '../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../routing/route-helpers';
+import { captureException } from '../services/monitoring';
+import { addToBlackList } from '../services/session-blacklist';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -98,7 +99,7 @@ export async function isRequestAuthenticated(
   return false;
 }
 
-export function decodeToken<T extends Record<string, string> = {}>(
+export function decodeToken<T extends Record<string, string>>(
   jwtToken: string
 ): T {
   return jose.decodeJwt(jwtToken) as unknown as T;

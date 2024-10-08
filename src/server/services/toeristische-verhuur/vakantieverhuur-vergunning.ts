@@ -1,11 +1,11 @@
 import { generatePath } from 'react-router-dom';
+
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { LinkProps, StatusLineItem } from '../../../universal/types/App.types';
 import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
 import {
   VakantieverhuurVergunning as VakantieverhuurVergunningDecos,
   Vergunning,
@@ -13,6 +13,7 @@ import {
   fetchVergunningen,
   toeristischeVerhuurVergunningTypes,
 } from '../vergunningen/vergunningen';
+import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
 
 export interface VakantieverhuurVergunning {
   datumAfhandeling?: string | null;

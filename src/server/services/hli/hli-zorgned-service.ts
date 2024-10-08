@@ -1,8 +1,10 @@
 import memoizee from 'memoizee';
+
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -15,7 +17,8 @@ import {
 } from '../zorgned/zorgned-types';
 
 function transformToAdministratienummer(identificatie: number): string {
-  const clientnummerPadded = String(identificatie).padStart(10, '0');
+  const padLength = 10;
+  const clientnummerPadded = String(identificatie).padStart(padLength, '0');
   const administratienummer = `${ZORGNED_GEMEENTE_CODE}${clientnummerPadded}`;
   return administratienummer;
 }
@@ -52,7 +55,10 @@ export async function fetchAdministratienummer(
     return apiSuccessResult(administratienummer);
   }
 
-  if (response.status === 'ERROR' && response.code === 404) {
+  if (
+    response.status === 'ERROR' &&
+    response.code === HTTP_STATUS_CODES.NOT_FOUND
+  ) {
     // 404 means there is no record available in the ZORGNED api for the requested BSN
     return apiSuccessResult(administratienummer);
   }
@@ -110,7 +116,7 @@ async function fetchZorgnedAanvragenHLI_(
 }
 
 export const fetchZorgnedAanvragenHLI = memoizee(fetchZorgnedAanvragenHLI_, {
-  maxAge: 45 * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
 export const forTesting = {

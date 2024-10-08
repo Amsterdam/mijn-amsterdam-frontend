@@ -1,5 +1,7 @@
-import classnames from 'classnames';
 import { ReactNode } from 'react';
+
+import classnames from 'classnames';
+
 import styles from './PanelList.module.scss';
 
 interface PanelListProps {

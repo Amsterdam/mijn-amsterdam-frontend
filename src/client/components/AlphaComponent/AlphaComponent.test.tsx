@@ -1,6 +1,7 @@
+import { render, screen } from '@testing-library/react';
+
 import AlphaComponent from './AlphaComponent';
 
-import { render, screen } from '@testing-library/react';
 
 describe('<AlphaComponent />', () => {
   it('Renders without crashing', () => {

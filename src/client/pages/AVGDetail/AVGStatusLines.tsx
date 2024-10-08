@@ -1,7 +1,7 @@
+import styles from './AVGDetail.module.scss';
 import { AVGRequest } from '../../../server/services/avg/types';
 import { StatusLineItem } from '../../../universal/types';
 import { StatusLine } from '../../components';
-import styles from './AVGDetail.module.scss';
 
 function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
   const isDone = !!request.datumAfhandeling;

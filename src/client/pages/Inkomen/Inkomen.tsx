@@ -1,6 +1,9 @@
-import classnames from 'classnames';
 import { useMemo } from 'react';
+
+import classnames from 'classnames';
 import { generatePath } from 'react-router-dom';
+
+import styles from './Inkomen.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
@@ -25,7 +28,6 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
-import styles from './Inkomen.module.scss';
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',
@@ -121,8 +123,12 @@ export default function Inkomen() {
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsCompleted.length;
 
-  const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(0, 3);
-  const itemsSpecificationsYearly = jaaropgaven?.slice(0, 3);
+  const firstItemsCount = 3;
+  const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(
+    0,
+    firstItemsCount
+  );
+  const itemsSpecificationsYearly = jaaropgaven?.slice(0, firstItemsCount);
 
   const isLoadingWpi =
     isLoading(WPI_AANVRAGEN) ||
@@ -216,7 +222,7 @@ export default function Inkomen() {
           />
         )}
         {uitkeringsspecificaties?.length &&
-          uitkeringsspecificaties.length > 3 && (
+          uitkeringsspecificaties.length > firstItemsCount && (
             <p className={styles.ShowAllButtonContainer}>
               <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
             </p>
@@ -241,7 +247,7 @@ export default function Inkomen() {
             displayProps={annualStatementsTableDisplayProps}
           />
         )}
-        {jaaropgaven?.length && jaaropgaven.length > 3 && (
+        {jaaropgaven?.length && jaaropgaven.length > firstItemsCount && (
           <p className={styles.ShowAllButtonContainer}>
             <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
           </p>

@@ -1,5 +1,6 @@
 import { sub } from 'date-fns';
 import { Request, Response } from 'express';
+
 import { OIDC_TOKEN_EXP } from '../auth/auth-config';
 import { ONE_MINUTE_MS } from '../config/app';
 import { IS_DB_ENABLED, tableNameSessionBlacklist } from './db/config';

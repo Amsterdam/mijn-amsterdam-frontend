@@ -1,11 +1,6 @@
 import { differenceInMonths, format } from 'date-fns';
 import { LinkProps, generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config/routes';
-import { Thema } from '../../../universal/config/thema';
-import { GenericDocument, MyNotification } from '../../../universal/types';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
 import { requestProcess as tonkRequestProcessLabels } from './content/tonk';
@@ -15,6 +10,12 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { Thema } from '../../../universal/config/thema';
+import { GenericDocument, MyNotification } from '../../../universal/types';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 export function transformToStatusLine(
   sessionID: SessionID,
@@ -140,7 +141,7 @@ export function productName(
 }
 
 export function addLink(requestProcess: WpiRequestProcess) {
-  let title = 'Bekijk uw aanvraag';
+  const title = 'Bekijk uw aanvraag';
 
   const id = requestProcess.id;
   let link: LinkProps | undefined = undefined;

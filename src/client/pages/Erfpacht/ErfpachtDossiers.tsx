@@ -1,8 +1,8 @@
+import { useErfpachtV2Data } from './erfpachtData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { useErfpachtV2Data } from './erfpachtData.hook';
 
 export default function ErfpachtDossiers() {
   const { ERFPACHTv2, dossiers, displayPropsDossiers, titleDossiers } =

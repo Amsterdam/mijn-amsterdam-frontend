@@ -1,14 +1,5 @@
 import Mockdate from 'mockdate';
-import BRP from '../../../../mocks/fixtures/brp.json';
-import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
-import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import {
-  ApiResponse,
-  ApiSuccessResponse,
-} from '../../../universal/helpers/api';
-import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
-import { transformBRPData } from '../brp';
-import { WpiRequestProcess } from '../wpi/wpi-types';
+
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
@@ -31,6 +22,16 @@ import {
   previouslyLivingInAmsterdam,
 } from './predicates';
 import { TipsPredicateFN } from './tip-types';
+import BRP from '../../../../mocks/fixtures/brp.json';
+import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
+import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
+import {
+  ApiResponse,
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api';
+import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
+import { transformBRPData } from '../brp';
+import { WpiRequestProcess } from '../wpi/wpi-types';
 
 const TONK = {
   content: WPI_E.content.filter((c) => c.about === 'TONK'),

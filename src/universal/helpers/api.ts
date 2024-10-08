@@ -52,7 +52,7 @@ export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
   ReturnType<T>
 >;
 
-export type ApiResponse<T extends unknown = unknown> =
+export type ApiResponse<T> =
   | ApiErrorResponse<T>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>
@@ -182,16 +182,14 @@ export function apiDependencyError(
   };
 }
 
-export function getSettledResult<T extends any>(
-  result: PromiseSettledResult<T>
-) {
+export function getSettledResult<T>(result: PromiseSettledResult<T>) {
   if (result.status === 'fulfilled') {
     return result.value;
   }
   let errorMessage: string;
   try {
     errorMessage = result.reason.message || result.reason.toString();
-  } catch (error) {
+  } catch (_) {
     errorMessage = 'An error occurred';
   }
   return apiErrorResult(errorMessage, null);

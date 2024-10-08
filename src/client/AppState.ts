@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { apiPristineResult } from '../universal/helpers/api';
 import { AppState } from '../universal/types/App.types';

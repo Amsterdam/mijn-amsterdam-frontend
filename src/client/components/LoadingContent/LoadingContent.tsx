@@ -1,7 +1,8 @@
-import { ComponentChildren } from '../../../universal/types';
 
 import classnames from 'classnames';
+
 import styles from './LoadingContent.module.scss';
+import { ComponentChildren } from '../../../universal/types';
 
 type width = string;
 type height = string;

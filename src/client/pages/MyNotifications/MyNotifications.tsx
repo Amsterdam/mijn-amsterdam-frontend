@@ -1,5 +1,8 @@
 import { useEffect, useMemo } from 'react';
+
 import { generatePath, useHistory, useParams } from 'react-router-dom';
+
+import styles from './MyNotifications.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
@@ -13,7 +16,6 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import styles from './MyNotifications.module.scss';
 
 const PAGE_SIZE = 12;
 

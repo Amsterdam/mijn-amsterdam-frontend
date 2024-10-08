@@ -1,5 +1,6 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
+
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';

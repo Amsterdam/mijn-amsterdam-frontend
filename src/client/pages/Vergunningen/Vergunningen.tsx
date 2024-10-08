@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import styles from './Vergunningen.module.scss';
 import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -21,7 +22,6 @@ import { OverviewPage } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { hasMultiplePermits } from '../VergunningDetail/WVOS';
-import styles from './Vergunningen.module.scss';
 
 export const DISPLAY_PROPS = {
   identifier: 'Kenmerk',
