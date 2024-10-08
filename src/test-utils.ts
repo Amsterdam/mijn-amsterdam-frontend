@@ -57,9 +57,9 @@ export class ResponseMock {
 
   private constructor() {
     this.statusCode = HTTP_STATUS_CODES.OK;
-    const requestIDLength = 18;
+    const REQUEST_ID_LENGTH = 18;
     this.locals = {
-      requestID: UID.sync(requestIDLength),
+      requestID: UID.sync(REQUEST_ID_LENGTH),
     };
   }
 

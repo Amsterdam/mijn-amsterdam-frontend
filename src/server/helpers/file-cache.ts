@@ -58,7 +58,7 @@ export function cacheOverview() {
   });
 }
 
-const defaultTriesUntilConsiderdStale = 5;
+const DEFAULT_TRIES_UNTIL_CONSIDERED_STALE = 5;
 export default class FileCache {
   name: string;
   name_: string;
@@ -72,7 +72,7 @@ export default class FileCache {
     name,
     path = DEFAULT_CACHE_DIR,
     cacheTimeMinutes = 0,
-    triesUntilConsiderdStale = defaultTriesUntilConsiderdStale,
+    triesUntilConsiderdStale = DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   }: FileCacheProps) {
     this.name = fileName(name);
     this.path = path;

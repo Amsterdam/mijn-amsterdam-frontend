@@ -10,9 +10,9 @@ export function getApproximateDistance(
   latlngA: LatLngLiteral,
   latlngB: LatLngLiteral
 ) {
-  const degreesToRadians = 180;
+  const DEGREES_TO_RADIANS = 180;
   const squared = (x: number) => x * x;
-  const toRad = (x: number) => (x * Math.PI) / degreesToRadians;
+  const toRad = (x: number) => (x * Math.PI) / DEGREES_TO_RADIANS;
   const R = 6371; // Earth’s mean radius in km
 
   const dLat = toRad(latlngB.lng - latlngA.lng);

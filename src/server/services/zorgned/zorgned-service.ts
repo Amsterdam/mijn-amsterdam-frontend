@@ -360,10 +360,10 @@ export async function fetchPersoonsgegevensNAW_(
   return response;
 }
 
-const seconds = 45;
+const SECONDS = 45;
 export const fetchPersoonsgegevensNAW = memoizee(fetchPersoonsgegevensNAW_, {
   length: 3,
-  maxAge: seconds * ONE_SECOND_MS,
+  maxAge: SECONDS * ONE_SECOND_MS,
 });
 
 export const forTesting = {

@@ -83,9 +83,9 @@ export function hash(str: string) {
   // eslint-disable-next-line no-magic-numbers
   let hash = 5381,
     i = str.length;
-  const bits = 33;
+  const BITS = 33;
   while (i) {
-    hash = (hash * bits) ^ str.charCodeAt(--i);
+    hash = (hash * BITS) ^ str.charCodeAt(--i);
   }
 
   /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
@@ -97,7 +97,7 @@ export function hash(str: string) {
 // Recursively omit keys from objects. Important: Objects with all keys omitted will remain in the data empty.
 export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   if (Array.isArray(data)) {
-    return data.map(() => deepOmitKeys(data, omitKeys));
+    return data.map((item) => deepOmitKeys(item, omitKeys));
   } else if (data !== null && typeof data === 'object') {
     const rdata: Record<string, any> = omit(data, omitKeys);
     for (const [key, value] of Object.entries(rdata)) {

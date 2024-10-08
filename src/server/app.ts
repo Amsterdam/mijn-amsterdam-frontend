@@ -1,24 +1,7 @@
+/* tslint:disable:no-implicit-dependencies */
+/* tslint:disable:no-submodule-imports */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
-import express, { NextFunction, Request, Response } from 'express';
-import morgan from 'morgan';
-
-import { BFF_PORT, IS_DEBUG, ONE_SECOND_MS } from './config/app';
-import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import {
-  clearRequestCache,
-  nocache,
-  requestID,
-} from './routing/route-handlers';
-import { send404 } from './routing/route-helpers';
-import { adminRouter } from './routing/router-admin';
-import { authRouterDevelopment } from './routing/router-development';
-import {
-  IS_AP,
-  IS_DEVELOPMENT,
-  IS_OT,
-  IS_PRODUCTION,
-} from '../universal/config/env';
 
 if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
@@ -30,15 +13,31 @@ if (IS_DEVELOPMENT) {
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import express, { NextFunction, Request, Response } from 'express';
+import morgan from 'morgan';
 
+import { BFF_PORT, IS_DEBUG } from './config/app';
+import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
+import {
+  clearRequestCache,
+  nocache,
+  requestID,
+} from './routing/route-handlers';
+import { send404 } from './routing/route-helpers';
+import { adminRouter } from './routing/router-admin';
+import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
+import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { captureException } from './services/monitoring';
-
-import path from 'path';
+import {
+  IS_AP,
+  IS_DEVELOPMENT,
+  IS_OT,
+  IS_PRODUCTION,
+} from '../universal/config/env';
 
 const app = express();
 
@@ -47,7 +46,7 @@ app.set('trust proxy', true);
 // Security, disable express header.
 app.disable('x-powered-by');
 
-const viewDir = path.basename(path.dirname(__dirname));
+const viewDir = __dirname.split('/').slice(-2, -1);
 
 // Set-up view engine voor SSR
 app.set('view engine', 'pug');
@@ -183,9 +182,8 @@ async function startServerBFF() {
   });
 
   // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
-  const headerTimeoutSeconds = 65;
-  server.keepAliveTimeout = 60 * ONE_SECOND_MS;
-  server.headersTimeout = headerTimeoutSeconds * ONE_SECOND_MS; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+  server.keepAliveTimeout = 60 * 1000;
+  server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
 
 if (

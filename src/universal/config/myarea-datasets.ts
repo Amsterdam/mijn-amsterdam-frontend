@@ -59,9 +59,9 @@ export type DatasetFilterSelection = Record<DatasetId, DatasetPropertyFilter>;
 const excludeFractieOmschrijving = [];
 const month = new Date().getMonth();
 // Exlude Kerstboom in all months but December and January
-const december = 11;
-const january = 0;
-if (month !== december && month !== january) {
+const DECEMBER = 11;
+const JANUARY = 0;
+if (month !== DECEMBER && month !== JANUARY) {
   excludeFractieOmschrijving.push('Kerstboom');
 }
 
