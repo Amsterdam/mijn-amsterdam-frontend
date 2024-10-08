@@ -117,9 +117,9 @@ function useAfisFacturenApi(
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
-      let url = `${BFFApiUrls.AFIS_FACTUREN}/${state}/${businessPartnerIdEncrypted}`;
+      let url = `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`;
       if (isOpenfacturenState) {
-        url = `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}/${businessPartnerIdEncrypted}`;
+        url = `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}?id=${businessPartnerIdEncrypted}`;
       }
       fetchFacturen({
         url,
@@ -210,7 +210,7 @@ export function useAfisBetaalVoorkeurenData(
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
       fetchBusinessPartnerDetails({
-        url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}/${businessPartnerIdEncrypted}`,
+        url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`,
       });
     }
   }, [
