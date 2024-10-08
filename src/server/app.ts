@@ -3,6 +3,14 @@
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 
+// eslint-disable-next-line import/order
+import {
+  IS_AP,
+  IS_DEVELOPMENT,
+  IS_OT,
+  IS_PRODUCTION,
+} from '../universal/config/env';
+
 if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
   console.debug(`[BFF server] trying env file ${ENV_FILE}`);
@@ -32,12 +40,6 @@ import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { captureException } from './services/monitoring';
-import {
-  IS_AP,
-  IS_DEVELOPMENT,
-  IS_OT,
-  IS_PRODUCTION,
-} from '../universal/config/env';
 
 const app = express();
 

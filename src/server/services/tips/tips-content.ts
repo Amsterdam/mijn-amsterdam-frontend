@@ -27,7 +27,7 @@ import {
 import { Tip } from './tip-types';
 import { Themas } from '../../../universal/config/thema';
 
-const days = 90;
+const DAYS = 90;
 export const tips: Tip[] = [
   {
     id: 'mijn-10',
@@ -40,7 +40,7 @@ export const tips: Tip[] = [
     profileTypes: ['private'],
     thema: Themas.AFVAL,
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
-    predicates: [isLivingInAmsterdamLessThanNumberOfDays(days)],
+    predicates: [isLivingInAmsterdamLessThanNumberOfDays(DAYS)],
     reason: 'U ziet deze tip omdat u in Amsterdam woont.',
     link: {
       title: 'Kijk op de kaart',
@@ -79,7 +79,7 @@ export const tips: Tip[] = [
     description:
       'U woont in Amsterdam, welkom! Blijf op de hoogte van de producten en diensten die u heeft bij de gemeente Amsterdam.nl.',
     predicates: [
-      isLivingInAmsterdamLessThanNumberOfDays(days),
+      isLivingInAmsterdamLessThanNumberOfDays(DAYS),
       not(previouslyLivingInAmsterdam),
     ],
     reason: 'U ziet deze tip omdat u in Amsterdam woont.',

@@ -450,9 +450,9 @@ async function fetchVergunningen_(
   return response;
 }
 
-const secondsMaxAge = 45;
+const SECONDS_MAX_AGE = 45;
 export const fetchVergunningen = memoizee(fetchVergunningen_, {
-  maxAge: secondsMaxAge * ONE_SECOND_MS,
+  maxAge: SECONDS_MAX_AGE * ONE_SECOND_MS,
   length: 3,
 });
 
@@ -582,7 +582,7 @@ function getVergunningNotifications_(
 export const getVergunningNotifications = memoizee(
   getVergunningNotifications_,
   {
-    maxAge: secondsMaxAge * ONE_SECOND_MS,
+    maxAge: SECONDS_MAX_AGE * ONE_SECOND_MS,
   }
 );
 

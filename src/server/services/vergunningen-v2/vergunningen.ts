@@ -109,11 +109,11 @@ async function fetchAndFilterVergunningenV2_(
   return response;
 }
 
-const seconds = 45;
+const SECONDS = 45;
 export const fetchAndFilterVergunningenV2 = memoizee(
   fetchAndFilterVergunningenV2_,
   {
-    maxAge: seconds * ONE_SECOND_MS,
+    maxAge: SECONDS * ONE_SECOND_MS,
     length: 4,
   }
 );

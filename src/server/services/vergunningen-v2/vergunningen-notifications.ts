@@ -150,11 +150,11 @@ async function fetchVergunningenV2Notifications_(
   return apiDependencyError({ VERGUNNINGEN });
 }
 
-const seconds = 45;
+const SECONDS = 45;
 export const fetchVergunningenV2Notifications = memoizee(
   fetchVergunningenV2Notifications_,
   {
-    maxAge: seconds * ONE_SECOND_MS,
+    maxAge: SECONDS * ONE_SECOND_MS,
     length: 5,
   }
 );

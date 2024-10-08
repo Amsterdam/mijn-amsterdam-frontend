@@ -350,9 +350,9 @@ async function fetchDecosVergunningen_(
   return zakenSourceResponse;
 }
 
-const secondsMaxAge = 45;
+const SECONDS_MAX_AGE = 45;
 export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_, {
-  maxAge: secondsMaxAge * ONE_SECOND_MS,
+  maxAge: SECONDS_MAX_AGE * ONE_SECOND_MS,
 });
 
 function transformDecosWorkflowKeysResponse(workflowsResponseData: {
