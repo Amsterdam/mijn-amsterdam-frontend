@@ -6,6 +6,7 @@ import {
 } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
   listPageParamKind,
@@ -68,7 +69,7 @@ export function useToeristischeVerhuurThemaData() {
   return {
     vergunningen,
     lvvRegistraties,
-    title: 'Toeristische verhuur',
+    title: ThemaTitles.TOERISTISCHE_VERHUUR,
     isLoading: isLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),
     hasLVVRegistratiesError,
