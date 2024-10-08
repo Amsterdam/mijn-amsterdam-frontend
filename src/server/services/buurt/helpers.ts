@@ -512,8 +512,8 @@ function getDistanceFromLatLonInKm(
 }
 
 function deg2rad(deg: number) {
-  const halfCircle = 180;
-  return deg * (Math.PI / halfCircle);
+  // eslint-disable-next-line no-magic-numbers
+  return deg * (Math.PI / 180);
 }
 
 export function filterFeaturesinRadius(

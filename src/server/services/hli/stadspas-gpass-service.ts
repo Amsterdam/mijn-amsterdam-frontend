@@ -27,7 +27,7 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -203,9 +203,8 @@ export async function fetchStadspassen_(
 
   return fetchStadspassenByAdministratienummer(requestID, administratienummer);
 }
-const secondsMaxAge = 45;
 export const fetchStadspassen = memoizee(fetchStadspassen_, {
-  maxAge: secondsMaxAge * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
 function transformGpassTransactionsResponse(

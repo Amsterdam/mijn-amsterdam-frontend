@@ -113,8 +113,8 @@ authRouterDevelopment.get(
 
     countLoggedInVisit(userId, authMethod);
 
-    const byteLength = 18;
-    const sessionID = UID.sync(byteLength);
+    const SESSION_ID_BYTE_LENGTH = 18;
+    const sessionID = UID.sync(SESSION_ID_BYTE_LENGTH);
     const authProfile: AuthProfile = {
       id: userId,
       authMethod,

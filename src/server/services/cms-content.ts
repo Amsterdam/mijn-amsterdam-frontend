@@ -177,10 +177,10 @@ function transformFooterResponse(responseData: any) {
   return footer;
 }
 
-const cacheTimeMinutes = 24 * 60;
+const CACHE_TIME_MINUTES = 24 * 60;
 const fileCache = new FileCache({
   name: 'cms-content',
-  cacheTimeMinutes: IS_TAP ? cacheTimeMinutes : -1,
+  cacheTimeMinutes: IS_TAP ? CACHE_TIME_MINUTES : -1,
 });
 
 async function getGeneralPage(

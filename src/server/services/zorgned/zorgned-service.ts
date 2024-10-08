@@ -25,7 +25,7 @@ import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { hash } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
@@ -360,10 +360,9 @@ export async function fetchPersoonsgegevensNAW_(
   return response;
 }
 
-const SECONDS = 45;
 export const fetchPersoonsgegevensNAW = memoizee(fetchPersoonsgegevensNAW_, {
   length: 3,
-  maxAge: SECONDS * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
 export const forTesting = {

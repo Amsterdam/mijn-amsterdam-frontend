@@ -74,8 +74,8 @@ function getDataForAvgThemas(avgIds: string[]) {
     'filters',
     `themaperavgverzoek.avgverzoek.id IN ('${avgIds.join("', '")}')`
   );
-  const maxAmountOfThemes = 14;
-  data.append('pagesize', maxAmountOfThemes * DEFAULT_PAGE_SIZE);
+  const MAX_AMOUNT_OF_THEMES = 14;
+  data.append('pagesize', MAX_AMOUNT_OF_THEMES * DEFAULT_PAGE_SIZE);
 
   data.append('orderbys', 'themaperavgverzoek_avgverzoek_id desc');
 

@@ -23,7 +23,7 @@ import {
 } from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import FileCache from '../../helpers/file-cache';
 import {
@@ -598,14 +598,12 @@ function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
   let features = featuresSource;
 
   const wattRanges = [
-    // eslint-disable-next-line no-magic-numbers
+    /* eslint-disable no-magic-numbers */
     { label: 'W1', range: [0, 50] },
-    // eslint-disable-next-line no-magic-numbers
     { label: 'W2', range: [50, 100] },
-    // eslint-disable-next-line no-magic-numbers
     { label: 'W3', range: [100, 300] },
-    // eslint-disable-next-line no-magic-numbers
     { label: 'W4', range: [300, Infinity] },
+    /* eslint-enable no-magic-numbers */
   ];
 
   const connectorTypes = uniqueArray(
@@ -930,9 +928,8 @@ export function transformWiorApiListResponse(
         feature.duur = 'enkel';
       }
 
-      const daysInYear = 365;
       const startsWithinYears =
-        differenceInDays(new Date(start), Date.now()) / daysInYear;
+        differenceInDays(new Date(start), Date.now()) / DAYS_IN_YEAR;
 
       if (startsWithinYears < 0) {
         feature.datumStartUitvoering = dateRanges[0].label;

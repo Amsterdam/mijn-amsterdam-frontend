@@ -17,7 +17,7 @@ import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
@@ -109,11 +109,10 @@ async function fetchAndFilterVergunningenV2_(
   return response;
 }
 
-const SECONDS = 45;
 export const fetchAndFilterVergunningenV2 = memoizee(
   fetchAndFilterVergunningenV2_,
   {
-    maxAge: SECONDS * ONE_SECOND_MS,
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
     length: 4,
   }
 );

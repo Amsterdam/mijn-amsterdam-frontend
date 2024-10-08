@@ -30,8 +30,10 @@ import {
 } from '../../../universal/helpers/api';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
+import {
+  DataRequestConfig,
+  DEFAULT_API_CACHE_TTL_MS,
+} from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureException, captureMessage } from '../monitoring';
@@ -350,9 +352,8 @@ async function fetchDecosVergunningen_(
   return zakenSourceResponse;
 }
 
-const SECONDS_MAX_AGE = 45;
 export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_, {
-  maxAge: SECONDS_MAX_AGE * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
 function transformDecosWorkflowKeysResponse(workflowsResponseData: {

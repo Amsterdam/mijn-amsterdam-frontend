@@ -15,8 +15,11 @@ import { requestData } from '../../helpers/source-api-request';
 
 function encryptPayload(payload: string) {
   const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
-  const ivLength = 16;
-  const iv = crypto.randomBytes(ivLength).toString('base64').slice(0, ivLength);
+  const IV_LENGTH = 16;
+  const iv = crypto
+    .randomBytes(IV_LENGTH)
+    .toString('base64')
+    .slice(0, IV_LENGTH);
   const ivBuffer = Buffer.from(iv, 'utf-8');
   const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
   const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);

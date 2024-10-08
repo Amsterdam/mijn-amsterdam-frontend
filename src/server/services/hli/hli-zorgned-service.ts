@@ -4,7 +4,7 @@ import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -115,9 +115,8 @@ async function fetchZorgnedAanvragenHLI_(
   return aanvragenResponse;
 }
 
-const maxAgeSeconds = 45;
 export const fetchZorgnedAanvragenHLI = memoizee(fetchZorgnedAanvragenHLI_, {
-  maxAge: maxAgeSeconds * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
 export const forTesting = {

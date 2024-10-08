@@ -293,6 +293,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
     postponeFetch: !FeatureToggle.bodemActive,
+    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 59 * ONE_MINUTE_MS,
   },
   AMSAPP: {

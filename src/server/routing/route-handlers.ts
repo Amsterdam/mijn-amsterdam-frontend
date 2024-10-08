@@ -98,8 +98,8 @@ export function nocache(_req: Request, res: Response, next: NextFunction) {
 }
 
 export function requestID(req: Request, res: Response, next: NextFunction) {
-  const byteLength = 18;
-  res.locals.requestID = uid.sync(byteLength);
+  const REQUEST_ID_BYTE_LENGTH = 18;
+  res.locals.requestID = uid.sync(REQUEST_ID_BYTE_LENGTH);
   next();
 }
 

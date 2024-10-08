@@ -7,7 +7,7 @@ type Iv = Buffer;
 
 const ENC_ALGO = 'aes-256-cbc';
 
-const ivByteLength = 16;
+const IV_BYTE_LENGTH = 16;
 export function encrypt(
   plainText: string,
   encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
@@ -16,7 +16,7 @@ export function encrypt(
     throw new Error('Cannot encrypt, Encryption key not found.');
   }
 
-  const iv = crypto.randomBytes(ivByteLength);
+  const iv = crypto.randomBytes(IV_BYTE_LENGTH);
   const cipher = crypto.createCipheriv(ENC_ALGO, encryptionKey, iv);
   const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
 
@@ -36,11 +36,11 @@ export function decrypt(
   const ivBuffer = Uint8Array.prototype.slice.call(
     decodedBuffer,
     0,
-    ivByteLength
+    IV_BYTE_LENGTH
   );
   const dataBuffer = Uint8Array.prototype.slice.call(
     decodedBuffer,
-    ivByteLength
+    IV_BYTE_LENGTH
   );
 
   const decipheriv = crypto.createDecipheriv(ENC_ALGO, keyBuffer, ivBuffer);

@@ -84,9 +84,9 @@ function getAfvalPuntKaartUrl(centroid: LatLngLiteral | null) {
   const mapUrl = 'https://kaart.amsterdam.nl/afvalpunten/#13/';
 
   if (centroid) {
-    const fractionDigits = 5;
-    const location = `${centroid.lat.toFixed(fractionDigits)}/${centroid.lng.toFixed(fractionDigits)}`;
-    const center = `${centroid.lat.toFixed(fractionDigits)},${centroid.lng.toFixed(fractionDigits)}`;
+    const FRACTION_DIGITS = 5;
+    const location = `${centroid.lat.toFixed(FRACTION_DIGITS)}/${centroid.lng.toFixed(FRACTION_DIGITS)}`;
+    const center = `${centroid.lat.toFixed(FRACTION_DIGITS)},${centroid.lng.toFixed(FRACTION_DIGITS)}`;
 
     return `${mapUrl}${location}/brt/14324///${center}`;
   }

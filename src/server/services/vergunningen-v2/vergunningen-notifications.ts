@@ -24,7 +24,7 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 
 // prettier-ignore
 export function getNotificationLabels(
@@ -150,11 +150,10 @@ async function fetchVergunningenV2Notifications_(
   return apiDependencyError({ VERGUNNINGEN });
 }
 
-const SECONDS = 45;
 export const fetchVergunningenV2Notifications = memoizee(
   fetchVergunningenV2Notifications_,
   {
-    maxAge: SECONDS * ONE_SECOND_MS,
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
     length: 5,
   }
 );

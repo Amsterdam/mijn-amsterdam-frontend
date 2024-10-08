@@ -9,10 +9,10 @@ import FileCache from '../helpers/file-cache';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 
-const MAX_AGE_SECONDS = 45;
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
-  cacheTimeMinutes: IS_TAP ? MAX_AGE_SECONDS / 60 : -1,
+  // eslint-disable-next-line no-magic-numbers
+  cacheTimeMinutes: IS_TAP ? 45 / 60 : -1,
 });
 
 interface Tyd {

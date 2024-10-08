@@ -33,7 +33,7 @@ import {
 } from '../../../universal/types/App.types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -450,9 +450,8 @@ async function fetchVergunningen_(
   return response;
 }
 
-const SECONDS_MAX_AGE = 45;
 export const fetchVergunningen = memoizee(fetchVergunningen_, {
-  maxAge: SECONDS_MAX_AGE * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
   length: 3,
 });
 
@@ -582,7 +581,7 @@ function getVergunningNotifications_(
 export const getVergunningNotifications = memoizee(
   getVergunningNotifications_,
   {
-    maxAge: SECONDS_MAX_AGE * ONE_SECOND_MS,
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
   }
 );
 

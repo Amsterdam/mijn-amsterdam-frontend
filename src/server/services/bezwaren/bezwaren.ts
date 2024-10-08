@@ -42,7 +42,7 @@ async function getBezwarenApiHeaders_(
 ) {
   const now = new Date();
 
-  const minutesToExpire = 5;
+  const MINUTES_TO_EXPIRE = 5;
   const tokenData = {
     unique_name: process.env.BFF_BEZWAREN_EMAIL,
     actort: process.env.BFF_BEZWAREN_USER,
@@ -53,7 +53,7 @@ async function getBezwarenApiHeaders_(
     role: '',
     nameIdentifier: '',
     exp: Math.ceil(
-      now.setMinutes(now.getMinutes() + minutesToExpire) / ONE_SECOND_MS
+      now.setMinutes(now.getMinutes() + MINUTES_TO_EXPIRE) / ONE_SECOND_MS
     ),
   };
 

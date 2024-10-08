@@ -59,10 +59,10 @@ export function sortNotifications(
   // Insert a tip after every 3 notifications
   const notificationsWithTipsInserted = notificationsWithoutTips.reduce(
     (acc, notification, index) => {
-      const indexToInsertTip = 3;
+      const INDEX_TO_INSERT_TIP = 3;
       if (
         index !== 0 &&
-        index % indexToInsertTip === 0 &&
+        index % INDEX_TO_INSERT_TIP === 0 &&
         notificationsWithTips.length > 0
       ) {
         const tip = notificationsWithTips.shift();
