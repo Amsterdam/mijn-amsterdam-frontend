@@ -462,12 +462,14 @@ export async function fetchBBVergunningen(
     return zakenResponse;
   }
 
-  return apiErrorResult(
-    persoonIdResponse.status === 'ERROR'
-      ? persoonIdResponse.message
-      : 'Could not get personID for BBVergunning',
-    null
-  );
+  if (persoonIdResponse.status === 'ERROR') {
+    return apiErrorResult(
+      persoonIdResponse.message || 'Could not get personID for BBVergunning',
+      null
+    );
+  }
+
+  return apiSuccessResult([]);
 }
 
 const documentNamenMA_PB = {
