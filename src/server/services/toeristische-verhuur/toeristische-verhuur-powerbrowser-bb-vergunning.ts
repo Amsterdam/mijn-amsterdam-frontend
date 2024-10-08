@@ -99,7 +99,7 @@ async function fetchPersonIdByUid(
   return fetchPowerBrowserData<string>(requestID, requestConfig);
 }
 
-async function getZaakIds(requestID: RequestID, persoonId: string) {
+async function fetchZaakIds(requestID: RequestID, persoonId: string) {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/Link/PERSONEN/GFO_ZAKEN/Table`;
@@ -445,7 +445,7 @@ export async function fetchBBVergunningen(
   const persoonIdResponse = await fetchPersonIdByUid(requestID, authProfile);
 
   if (persoonIdResponse.status === 'OK' && persoonIdResponse.content) {
-    const zakenIdsResponse = await getZaakIds(
+    const zakenIdsResponse = await fetchZaakIds(
       requestID,
       persoonIdResponse.content
     );
