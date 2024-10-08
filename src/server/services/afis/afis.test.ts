@@ -22,7 +22,6 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
-import { jsonCopy } from '../../../universal/helpers/utils';
 import { fetchIsKnownInAFIS } from './afis';
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
 import { fetchAfisDocument } from './afis-documents';
@@ -587,7 +586,7 @@ describe('Afis', () => {
           "datePublishedFormatted": "21 november 2023",
           "debtClearingDate": null,
           "debtClearingDateFormatted": null,
-          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx",
+          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
           "factuurDocumentId": "5555555",
           "factuurNummer": "5555555",
           "id": "5555555",
@@ -643,7 +642,7 @@ describe('Afis', () => {
           "datePublishedFormatted": null,
           "debtClearingDate": null,
           "debtClearingDateFormatted": null,
-          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document/xx-encrypted-xx",
+          "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
           "factuurDocumentId": "INV-2023-010",
           "factuurNummer": "INV-2023-010",
           "id": "INV-2023-010",

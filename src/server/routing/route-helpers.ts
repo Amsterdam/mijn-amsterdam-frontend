@@ -4,6 +4,18 @@ import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
 
+export type RequestWithQueryParams<T extends Record<string, string>> = Request<
+  {},
+  {},
+  {},
+  T
+>;
+
+export type RequestWithRouteAndQueryParams<
+  T extends Record<string, string> = Record<string, string>,
+  T2 extends Record<string, string> = Record<string, string>,
+> = Request<T, {}, {}, T2>;
+
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
 }
