@@ -14,8 +14,8 @@ export type RequestWithQueryParams<T extends Record<string, string>> = Request<
 >;
 
 export type RequestWithRouteAndQueryParams<
-  T extends Record<string, string>,
-  T2 extends Record<string, string>,
+  T extends Record<string, string> = Record<string, string>,
+  T2 extends Record<string, string> = Record<string, string>,
 > = Request<T, {}, {}, T2>;
 
 export function queryParams<T extends Record<string, any>>(req: Request) {

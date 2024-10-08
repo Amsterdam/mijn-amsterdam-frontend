@@ -34,8 +34,15 @@ export type FetchDocumenDownloadService = (
   queryParams?: Record<string, string>
 ) => Promise<DocumentDownloadResponse>;
 
+type FetRouteOrQueryParamsFN = (
+  req: RequestWithRouteAndQueryParams<{ id: string }, { id: string }>
+) => string;
+
 export function downloadDocumentRouteHandler(
-  fetchDocument: FetchDocumenDownloadService
+  fetchDocument: FetchDocumenDownloadService,
+  getRouteOrQueryParams: FetRouteOrQueryParamsFN = (
+    req: RequestWithRouteAndQueryParams<{ id: string }, { id: string }>
+  ) => req.query.id || req.params.id
 ) {
   return async function handleDownloadRoute(
     req: RequestWithRouteAndQueryParams<
@@ -49,7 +56,7 @@ export function downloadDocumentRouteHandler(
     if (authProfileAndToken) {
       const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
         // TODO: params.id should be removed, BFF routes should use queryParams for handling route/service variables.
-        req.query.id || req.params.id,
+        getRouteOrQueryParams(req),
         authProfileAndToken
       );
 
@@ -94,7 +101,11 @@ export function downloadDocumentRouteHandler(
 export function attachDocumentDownloadRoute(
   router: Router,
   route: string,
-  fetchDocumentService: FetchDocumenDownloadService
+  fetchDocumentService: FetchDocumenDownloadService,
+  getRouteOrQueryParams?: FetRouteOrQueryParamsFN
 ) {
-  router.get(route, downloadDocumentRouteHandler(fetchDocumentService));
+  router.get(
+    route,
+    downloadDocumentRouteHandler(fetchDocumentService, getRouteOrQueryParams)
+  );
 }
