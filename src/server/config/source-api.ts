@@ -233,6 +233,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   ERFPACHTv2: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
+    cancelTimeout: ONE_MINUTE_MS,
     httpsAgent: new https.Agent({
       ca: IS_TAP ? getCert('BFF_SERVER_CLIENT_CERT') : [],
     }),
