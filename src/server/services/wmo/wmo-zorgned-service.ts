@@ -1,10 +1,12 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { GenericDocument } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import {
-  hasDecision,
+  FAKE_DECISION_DOCUMENT_ID,
   isAfterWCAGValidDocumentsDate,
+  isDocumentDecisionDateActive,
   isEindeGeldigheidVerstreken,
 } from './status-line-items/wmo-generic';
 import {
@@ -28,6 +30,30 @@ function isProductWithDelivery(
   }
 
   return false;
+}
+
+function getFakeDecisionDocuments(
+  aanvraagTransformed: ZorgnedAanvraagTransformed
+): GenericDocument[] {
+  if (
+    !aanvraagTransformed.documenten.length &&
+    aanvraagTransformed.resultaat === 'toegewezen' &&
+    (aanvraagTransformed.datumBeginLevering ||
+      aanvraagTransformed.datumEindeGeldigheid ||
+      aanvraagTransformed.datumEindeLevering) &&
+    isDocumentDecisionDateActive(aanvraagTransformed.datumAanvraag)
+  ) {
+    return [
+      {
+        id: FAKE_DECISION_DOCUMENT_ID,
+        title: 'Besluit: mist',
+        datePublished: aanvraagTransformed.datumBesluit,
+        url: '',
+        isVisible: false,
+      },
+    ];
+  }
+  return aanvraagTransformed.documenten;
 }
 
 export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
@@ -65,11 +91,6 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
     isActueel = false;
   }
 
-  // Edge-case where no decision document is found
-  if (!isActueel && !hasDecision(aanvraagTransformed)) {
-    isActueel = true;
-  }
-
   return isActueel;
 }
 
@@ -104,6 +125,10 @@ export async function fetchZorgnedAanvragenWMO(
         return {
           ...aanvraagTransformed,
           isActueel: isActueel(aanvraagTransformed),
+          // NOTE: Bij sommige aanvraagbehandelingsprocessen worden er geen besluitdocumenten bijgevoegd.
+          // Wij voegen een nep document toe zodat de businesslogica tav de statustreinen obv Besluit: documenten kan blijven bestaan.
+          // Zie ook MIJN-9343
+          documenten: getFakeDecisionDocuments(aanvraagTransformed),
         };
       });
 
@@ -113,7 +138,8 @@ export async function fetchZorgnedAanvragenWMO(
 }
 
 export const forTesting = {
-  isActueel,
   fetchZorgnedAanvragenWMO,
+  getFakeDecisionDocuments,
+  isActueel,
   isProductWithDelivery,
 };

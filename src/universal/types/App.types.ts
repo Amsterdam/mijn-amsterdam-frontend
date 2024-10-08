@@ -82,6 +82,7 @@ export interface GenericDocument {
   download?: string;
   external?: boolean;
   datePublished: string;
+  isVisible?: boolean;
 }
 
 export type AltDocumentContent = string | ReactNode;
