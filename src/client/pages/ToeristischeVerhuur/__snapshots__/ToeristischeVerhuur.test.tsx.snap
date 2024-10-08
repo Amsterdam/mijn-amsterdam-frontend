@@ -274,7 +274,7 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Afgehandeld
+                    Verleend
                   </td>
                   <td
                     class="ams-table__cell"
@@ -304,14 +304,18 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Afgehandeld
+                    Verleend
                   </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    22 maart 2023
+                  </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    01 juli 2028
+                  </td>
                 </tr>
                 <tr
                   class="ams-table__row"
@@ -334,7 +338,7 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Ontvangen
+                    Afgehandeld
                   </td>
                   <td
                     class="ams-table__cell"
@@ -364,7 +368,7 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Ontvangen
+                    Afgehandeld
                   </td>
                   <td
                     class="ams-table__cell"
@@ -448,14 +452,18 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Afgehandeld
+                    Verleend
                   </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    01 augustus 2022
+                  </td>
                   <td
                     class="ams-table__cell"
-                  />
+                  >
+                    22 augustus 2023
+                  </td>
                 </tr>
                 <tr
                   class="ams-table__row"
@@ -478,7 +486,7 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    Afgehandeld
+                    Verlopen
                   </td>
                   <td
                     class="ams-table__cell"
@@ -534,7 +542,7 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
           <h3
             class="ams-heading ams-heading--2"
           >
-            Landelijke registratienummer(s)
+            Registratienummer(s) toeristische verhuur
           </h3>
           <div
             class="ams-table"
