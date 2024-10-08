@@ -17,16 +17,18 @@ export default function DocumentListV2({
   columns,
   className,
 }: DocumentListProps) {
-  const columnHeaders = columns ?? ['Document', 'Datum'];
+  const [colH1, colH2] = columns ?? ['Document', 'Datum'];
 
   return (
     <table className={classNames(styles.DocumentListV2, className)}>
-      <thead>
-        <tr>
-          <th>{columnHeaders[0]}</th>
-          <th>{columnHeaders[1]}</th>
-        </tr>
-      </thead>
+      {(colH1 || colH2) && (
+        <thead>
+          <tr>
+            {colH1 && <th>{colH1}</th>}
+            {colH2 && <th>{colH2}</th>}
+          </tr>
+        </thead>
+      )}
       <tbody>
         {documents.map((document) => (
           <tr key={document.id}>
@@ -37,9 +39,11 @@ export default function DocumentListV2({
                 trackPath={trackPath}
               />
             </td>
-            <td>
-              <time>{defaultDateFormat(document.datePublished)}</time>
-            </td>
+            {document.datePublished && (
+              <td>
+                <time>{defaultDateFormat(document.datePublished)}</time>
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

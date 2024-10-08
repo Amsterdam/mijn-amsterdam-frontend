@@ -57,7 +57,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { auth } from 'express-openid-connect';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(

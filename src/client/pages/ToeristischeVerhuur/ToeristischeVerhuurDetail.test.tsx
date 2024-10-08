@@ -7,7 +7,7 @@ import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
 
 const vakantieverhuurVergunningen = [
   {
@@ -134,6 +134,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
+        casetype: 'vakantieverhuur',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
@@ -141,7 +142,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ToeristischVerhuurDetail}
+        component={ToeristischeVerhuurDetail}
         initializeState={state(testState)}
       />
     );
@@ -164,6 +165,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
+        casetype: 'bed-and-breakfast',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
@@ -171,7 +173,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ToeristischVerhuurDetail}
+        component={ToeristischeVerhuurDetail}
         initializeState={state(testState)}
       />
     );

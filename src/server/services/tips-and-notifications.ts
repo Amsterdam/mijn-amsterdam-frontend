@@ -27,7 +27,7 @@ import {
   convertTipToNotication,
   prefixTipNotification,
 } from './tips/tips-service';
-import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
 import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchWiorNotifications } from './wior';
@@ -50,14 +50,15 @@ export function sortNotifications(
   if (doRandomize) {
     // Simple randomization
     notificationsWithTips = notificationsWithTips
-      .map((value) => ({ value, sort: Math.random() }))
+      .map((tip) => ({ tip, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value);
+      .map(({ tip }) => tip);
   }
 
   // Insert a tip after every 3 notifications
   const notificationsWithTipsInserted = notificationsWithoutTips.reduce(
     (acc, notification, index) => {
+      // Add tip before next notification
       if (index !== 0 && index % 3 === 0 && notificationsWithTips.length > 0) {
         const tip = notificationsWithTips.shift();
         if (tip) {

@@ -7,6 +7,7 @@ export interface Row {
   content: ReactNode;
   classNameLabel?: string;
   classNameContent?: string;
+  isVisible?: boolean;
 }
 
 export function DatalistRow({
@@ -33,6 +34,7 @@ interface WrappedRow {
   label: ReactNode;
   content: ReactNode;
   className?: string;
+  isVisible?: boolean;
 }
 
 function DatalistRowWrapped({ label, content, className }: WrappedRow) {
@@ -47,6 +49,7 @@ function DatalistRowWrapped({ label, content, className }: WrappedRow) {
 export interface RowSet {
   rows: WrappedRow[];
   className?: string;
+  isVisible?: boolean;
 }
 
 function DatalistRowsWithWrapper({ rows, className }: RowSet) {
@@ -58,14 +61,19 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
         className
       )}
     >
-      {rows.map((row) => (
-        <DatalistRowWrapped
-          key={`row-${row.label}`}
-          label={row.label}
-          content={row.content}
-          className={row.className}
-        />
-      ))}
+      {rows
+        .filter((row) =>
+          typeof row.isVisible !== 'undefined' ? row.isVisible : true
+        )
+        .map((row) => (
+          <DatalistRowWrapped
+            key={`row-${row.label}`}
+            label={row.label}
+            content={row.content}
+            className={row.className}
+            isVisible={row.isVisible}
+          />
+        ))}
     </div>
   );
 }
@@ -90,15 +98,22 @@ export function Datalist({
       )}
     >
       {rows
-        .filter(Boolean)
+        .filter((row) =>
+          !!row && typeof row.isVisible !== 'undefined' ? row.isVisible : true
+        )
         .map((row: Row | RowSet, index) =>
           'rows' in row ? (
-            <DatalistRowsWithWrapper key={`row-${index}`} rows={row.rows} />
+            <DatalistRowsWithWrapper
+              isVisible={row.isVisible}
+              key={`row-${index}`}
+              rows={row.rows}
+            />
           ) : (
             <DatalistRow
               key={`row-${index}`}
               label={row.label}
               content={row.content}
+              isVisible={row.isVisible}
               classNameLabel={row.classNameLabel}
               classNameContent={row.classNameContent}
             />
