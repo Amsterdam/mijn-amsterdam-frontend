@@ -147,4 +147,66 @@ describe('wmo-zorgned-service', () => {
       }
     `);
   });
+
+  describe('getFakeDecisionDocuments', () => {
+    const aanvraagBase = {
+      datumAanvraag: '2023-05-05',
+      datumBesluit: '2023-08-05',
+      documenten: [],
+      resultaat: 'toegewezen',
+    };
+    const expected = [
+      {
+        datePublished: '2023-08-05',
+        id: 'besluit-document-mist',
+        isVisible: false,
+        title: 'Besluit: mist',
+        url: '',
+      },
+    ];
+    test('Returns fake document', () => {
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          datumBeginLevering: '2023-12-10',
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual(expected);
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          datumEindeLevering: '2023-12-10',
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual(expected);
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          datumEindeGeldigheid: '2023-12-10',
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual(expected);
+    });
+    test('Does not return fake document', () => {
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          documenten: [
+            {
+              datePublished: '2023-08-05',
+              id: 'doc1',
+              isVisible: true,
+              title: 'Besluit: aanvraag goedgekeurd',
+              url: '/foo/bar',
+            },
+          ],
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual([
+        {
+          datePublished: '2023-08-05',
+          id: 'doc1',
+          isVisible: true,
+          title: 'Besluit: aanvraag goedgekeurd',
+          url: '/foo/bar',
+        },
+      ]);
+    });
+  });
 });

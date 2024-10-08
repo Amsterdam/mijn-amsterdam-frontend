@@ -138,7 +138,8 @@ export async function fetchZorgnedAanvragenWMO(
 }
 
 export const forTesting = {
-  isActueel,
   fetchZorgnedAanvragenWMO,
+  getFakeDecisionDocuments,
+  isActueel,
   isProductWithDelivery,
 };
