@@ -84,7 +84,7 @@ export function ToeristscheVerhuurThema() {
 
   if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
     linkListItems.unshift({
-      title: 'Meer informatie over bed &amp; breakfast',
+      title: 'Meer informatie over bed & breakfast',
       to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/',
     });
   }

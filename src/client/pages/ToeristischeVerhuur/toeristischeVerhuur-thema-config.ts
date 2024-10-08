@@ -66,7 +66,7 @@ export const tableConfigVergunningen = {
 } as const;
 
 export const tableConfigLVVRegistraties = {
-  title: 'Landelijke registratienummer(s)',
+  title: 'Registratienummer(s) toeristische verhuur',
   displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
 };
 
