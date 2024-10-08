@@ -27,32 +27,48 @@ function getDocuments(
     FeatureToggle.zorgnedDocumentAttachmentsActive &&
     isAfterWCAGValidDocumentsDate(aanvraagTransformed.datumAanvraag)
   ) {
-    return aanvraagTransformed.documenten.map((document) => {
-      const idEncrypted = encryptSessionIdWithRouteIdParam(
-        sessionID,
-        document.id
-      );
-      return {
-        ...document,
-        url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
-          id: idEncrypted,
-        }),
-      };
-    });
+    return aanvraagTransformed.documenten
+      .filter((document) =>
+        typeof document.isVisible !== 'undefined' ? document.isVisible : true
+      )
+      .map((document) => {
+        const idEncrypted = encryptSessionIdWithRouteIdParam(
+          sessionID,
+          document.id
+        );
+        return {
+          ...document,
+          url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
+            id: idEncrypted,
+          }),
+        };
+      });
   }
 
   return [];
 }
 
+function getLatestStatusStep(steps: StatusLineItem[]): StatusLineItem | null {
+  const active = steps.findLast((step) => step.isActive);
+  if (active) {
+    return active;
+  }
+  const checked = steps.findLast((step) => step.isChecked);
+  if (checked) {
+    return checked;
+  }
+  return null;
+}
+
 function getLatestStatus(steps: StatusLineItem[]) {
-  return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
+  return getLatestStatusStep(steps)?.status ?? 'Onbekend';
 }
 
 function getLatestStatusDate(
   steps: StatusLineItem[],
   doTransformDate: boolean = false
 ) {
-  const date = steps.find((step) => step.isActive)?.datePublished;
+  const date = getLatestStatusStep(steps)?.datePublished;
   if (date && doTransformDate) {
     return defaultDateFormat(date);
   }

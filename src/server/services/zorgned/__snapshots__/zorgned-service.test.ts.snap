@@ -4,7 +4,7 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
 [
   {
     "betrokkenen": [
-      "307741837",
+      "123123123",
     ],
     "datumAanvraag": "2024-09-30",
     "datumBeginLevering": "2024-09-30",

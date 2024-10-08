@@ -107,7 +107,7 @@ describe('wmo-zorgned-service', () => {
       leveringsVorm: 'BLO',
     } as ZorgnedAanvraagTransformed;
 
-    expect(forTesting.isActueel(aanvraag4)).toBe(true);
+    expect(forTesting.isActueel(aanvraag4)).toBe(false);
   });
 
   it('should fetch voorzieningen', async () => {

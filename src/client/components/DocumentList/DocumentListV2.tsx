@@ -28,20 +28,26 @@ export default function DocumentListV2({
         </tr>
       </thead>
       <tbody>
-        {documents.map((document) => (
-          <tr key={document.id}>
-            <td>
-              <DocumentLink
-                key={document.id}
-                document={document}
-                trackPath={trackPath}
-              />
-            </td>
-            <td>
-              <time>{defaultDateFormat(document.datePublished)}</time>
-            </td>
-          </tr>
-        ))}
+        {documents
+          .filter((document) =>
+            typeof document.isVisible !== 'undefined'
+              ? document.isVisible
+              : true
+          )
+          .map((document) => (
+            <tr key={document.id}>
+              <td>
+                <DocumentLink
+                  key={document.id}
+                  document={document}
+                  trackPath={trackPath}
+                />
+              </td>
+              <td>
+                <time>{defaultDateFormat(document.datePublished)}</time>
+              </td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
