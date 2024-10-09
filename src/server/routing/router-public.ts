@@ -183,10 +183,17 @@ export async function zaakStatusHandler(
       const redirectUrl = `${AppRoutes.ZAAK_STATUS}${params ? `?${params}` : ''}`;
       return res.redirect(process.env.MA_FRONTEND_URL + redirectUrl);
     } else {
+      const redirectUrl = encodeURIComponent(
+        `${AppRoutes.ZAAK_STATUS}${params ? `?${params}` : ''}`
+      );
       if (params.get('auth-type') === 'eherkenning') {
-        return res.redirect(authRoutes.AUTH_LOGIN_EHERKENNING);
+        return res.redirect(
+          `${authRoutes.AUTH_LOGIN_EHERKENNING}?returnTo=${redirectUrl}`
+        );
       } else {
-        return res.redirect(authRoutes.AUTH_LOGIN_DIGID);
+        return res.redirect(
+          `${authRoutes.AUTH_LOGIN_DIGID}?returnTo=${redirectUrl}`
+        );
       }
     }
   } catch (error) {

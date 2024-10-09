@@ -40,7 +40,9 @@ describe('router-public', () => {
 
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
-      expect(resMock.redirect).toHaveBeenCalledWith('/api/v1/auth/digid/login');
+      expect(resMock.redirect).toHaveBeenCalledWith(
+        '/api/v1/auth/digid/login?returnTo=%2Fzaak-status%3Fhttp%253A%252F%252Fbff-api-host%252Fapi%252Fv1%252Fservices%252Fzaak-status%253Fthema%3Dvergunningen%26id%3DZ%252F000%252F000001'
+      );
     });
 
     test('redirects to login with eherkenning if not authenticated', async () => {
@@ -55,7 +57,7 @@ describe('router-public', () => {
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        '/api/v1/auth/eherkenning/login'
+        '/api/v1/auth/eherkenning/login?returnTo=%2Fzaak-status%3Fhttp%253A%252F%252Fbff-api-host%252Fapi%252Fv1%252Fservices%252Fzaak-status%253Fthema%3Dvergunningen%26id%3DZ%252F000%252F000001%26auth-type%3Deherkenning'
       );
     });
 
