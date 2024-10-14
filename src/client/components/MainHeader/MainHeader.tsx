@@ -195,7 +195,7 @@ export default function MainHeader({
         <Header
           ref={menuRef}
           className={styles.header}
-          title="Mijn Amsterdam"
+          appName="Mijn Amsterdam"
           links={
             isAuthenticated && (
               <PageMenu alignEnd>
@@ -205,7 +205,7 @@ export default function MainHeader({
           }
           menu={
             isAuthenticated && (
-              <PageMenu alignEnd className={styles.PageMenu}>
+              <PageMenu alignEnd wrap={false} className={styles.PageMenu}>
                 {isDisplayLiveSearch && (
                   <PageMenu.Link
                     icon={IconSearch}
