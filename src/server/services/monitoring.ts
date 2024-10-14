@@ -1,10 +1,10 @@
 import * as appInsights from 'applicationinsights';
 import { SeverityLevel } from 'applicationinsights/out/Declarations/Contracts';
 import { Telemetry } from 'applicationinsights/out/Declarations/Contracts/TelemetryTypes/Telemetry';
-
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { IS_DEBUG } from '../config/app';
+import { KnownSeverityLevel, Telemetry } from 'applicationinsights';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
@@ -29,29 +29,27 @@ export type Severity =
   | 'error'
   | 'critical';
 
-const severityMap: Record<Severity, SeverityLevel> = {
-  verbose: SeverityLevel.Verbose,
-  information: SeverityLevel.Information,
-  warning: SeverityLevel.Warning,
-  error: SeverityLevel.Error,
-  critical: SeverityLevel.Critical,
+const severityMap: Record<Severity, KnownSeverityLevel> = {
+  verbose: KnownSeverityLevel.Verbose,
+  information: KnownSeverityLevel.Information,
+  warning: KnownSeverityLevel.Warning,
+  error: KnownSeverityLevel.Error,
+  critical: KnownSeverityLevel.Critical,
 };
 
 export type Properties = {
   properties?: Telemetry['properties'];
   severity?: Severity;
-  tags?: Telemetry['tagOverrides'];
+  tags?: Telemetry['properties'];
 };
 
 export function captureException(error: unknown, properties?: Properties) {
   const severity = properties?.severity
     ? severityMap[properties.severity]
     : undefined;
-  const tagOverrides = properties?.tags;
   const payload = {
     exception: error as Error,
     severity,
-    tagOverrides,
     properties,
   };
 
@@ -65,8 +63,11 @@ export function captureMessage(message: string, properties?: Properties) {
     ? severityMap[properties.severity]
     : undefined;
 
-  const tagOverrides = properties?.tags;
-  const payload = { message, severity, tagOverrides, properties };
+  const payload: appInsights.TraceTelemetry = {
+    message,
+    severity,
+    properties,
+  };
 
   IS_DEVELOPMENT
     ? IS_DEBUG && console.log('Capture message', payload)
@@ -88,11 +89,11 @@ export function trackRequest({ name, url, properties }: TrackRequestProps) {
       status: 'OK' | 'ERROR' = 'OK'
     ) => {
       if (startTime_) {
-        const payload = {
+        const payload: appInsights.Contracts.RequestTelemetry = {
           url,
           success: status === 'OK',
           name,
-          resultCode,
+          resultCode: String(resultCode),
           time: new Date(startTime_),
           duration: Date.now() - startTime_,
           properties,
