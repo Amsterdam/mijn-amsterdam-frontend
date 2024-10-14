@@ -13,13 +13,17 @@ export const AV_PCVZIL = 'AV-PCVZIL';
 function getBetrokkenKinderen(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
-  return regeling.betrokkenPersonen
-    .map((person) =>
-      person.name
-        ? `(${person.name}${person.dateOfBirthFormatted ? ` - geboren op ${person.dateOfBirthFormatted}` : ''})`
-        : ''
-    )
-    .join(', ');
+  const names = regeling.betrokkenPersonen
+    .filter((person) => !!person.name)
+    .map(
+      (person) =>
+        `${person.name}${person.dateOfBirthFormatted ? ` (geboren op ${person.dateOfBirthFormatted})` : ''}`
+    );
+  if (names.length === 1) {
+    return names.join('');
+  }
+  const lastName = names.pop();
+  return `${names.join(', ')} en ${lastName}`;
 }
 
 function isVerzilvering(

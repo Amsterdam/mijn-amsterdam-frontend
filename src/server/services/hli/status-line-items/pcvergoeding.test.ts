@@ -131,7 +131,7 @@ describe('pcvergoeding', () => {
             },
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
-      ).toMatchInlineSnapshot(`"(Foo - geboren op 12 juli 1981)"`);
+      ).toMatchInlineSnapshot(`"Foo (geboren op 12 juli 1981)"`);
     });
 
     test('Name and DateOfBirth known multiple kids', () => {
@@ -153,7 +153,7 @@ describe('pcvergoeding', () => {
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
       ).toMatchInlineSnapshot(
-        `"(Foo - geboren op 12 juli 1981), (Bar - geboren op 01 december 1983)"`
+        `"Foo (geboren op 12 juli 1981) en Bar (geboren op 01 december 1983)"`
       );
     });
 
@@ -169,7 +169,7 @@ describe('pcvergoeding', () => {
             },
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
-      ).toMatchInlineSnapshot(`"(Foo)"`);
+      ).toMatchInlineSnapshot(`"Foo"`);
     });
 
     test('Name known multiple', () => {
@@ -190,7 +190,7 @@ describe('pcvergoeding', () => {
             },
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
-      ).toMatchInlineSnapshot(`"(Foo), (Bar)"`);
+      ).toMatchInlineSnapshot(`"Foo en Bar"`);
     });
 
     test('Name unknown', () => {
@@ -205,7 +205,7 @@ describe('pcvergoeding', () => {
             },
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
-      ).toMatchInlineSnapshot(`""`);
+      ).toMatchInlineSnapshot(`" en undefined"`);
     });
 
     test('Name known multiple, 1 dateOfBirth', () => {
@@ -226,7 +226,7 @@ describe('pcvergoeding', () => {
             },
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
-      ).toMatchInlineSnapshot(`"(Foo - geboren op 1 juli 2017), (Bar)"`);
+      ).toMatchInlineSnapshot(`"Foo (geboren op 1 juli 2017) en Bar"`);
     });
   });
 });
