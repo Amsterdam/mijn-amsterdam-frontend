@@ -27,6 +27,10 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
+import { BffEndpoints } from './bff-routes';
+import { queryParams } from './route-helpers';
+import { getAuth, getReturnToUrlZaakStatus } from '../auth/auth-helpers';
+import { AppRoutes } from '../../universal/config/routes';
 
 export const router = express.Router();
 
@@ -165,6 +169,38 @@ router.get(
     }
   }
 );
+
+// /**
+//  * Zaak status endpoint redirects to zaakstatus if authenticated, else redirect to login
+//  */
+router.get(BffEndpoints.ZAAK_STATUS, zaakStatusHandler);
+
+export async function zaakStatusHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const authProfileAndToken = getAuth(req);
+  const params = queryParams<{
+    id: string;
+    thema: string;
+    'auth-type': string;
+  }>(req);
+
+  const redirectUrl = getReturnToUrlZaakStatus(params);
+
+  if (authProfileAndToken) {
+    return res.redirect(redirectUrl);
+  }
+
+  const authType =
+    params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
+  const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
+
+  const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}&id=${params.id}&thema=${params.thema}`;
+
+  return res.redirect(loginRouteWithReturnTo);
+}
 
 router.get(
   [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],

@@ -10,6 +10,7 @@ import {
 } from './auth-config';
 import { authRoutes } from './auth-routes';
 import { AuthProfile, MaSession, TokenData } from './auth-types';
+import { AppRoutes } from '../../universal/config/routes';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
@@ -25,10 +26,22 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
           token: queryParams['amsapp-session-token'] as string,
         }
       );
+    case AppRoutes.ZAAK_STATUS:
+      return getReturnToUrlZaakStatus(queryParams);
     default:
+
     case RETURNTO_MAMS_LANDING:
       return authRoutes.AUTH_LOGIN_DIGID_LANDING;
   }
+}
+
+export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
+  const searchParams =
+    queryParams?.id && queryParams?.thema
+      ? `?id=${queryParams.id}&thema=${queryParams.thema}`
+      : '';
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}${AppRoutes.ZAAK_STATUS}${searchParams}`;
+  return redirectUrl;
 }
 
 export function getAuthProfile(
