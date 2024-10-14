@@ -14,6 +14,7 @@ import {
 } from './auth-config';
 import { authRoutes } from './auth-routes';
 import { AuthProfile, MaSession, TokenData } from './auth-types';
+import { AppRoutes } from '../../universal/config/routes';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -24,10 +25,17 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
           token: queryParams['amsapp-session-token'] as string,
         }
       );
+    case AppRoutes.ZAAK_STATUS:
+      return getReturnToUrlZaakStatus(queryParams);
     default:
     case RETURNTO_MAMS_LANDING:
       return authRoutes.AUTH_LOGIN_DIGID_LANDING;
   }
+}
+
+export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}${AppRoutes.ZAAK_STATUS}?id=${queryParams?.id}&thema=${queryParams?.thema}`;
+  return redirectUrl;
 }
 
 export function getAuthProfile(

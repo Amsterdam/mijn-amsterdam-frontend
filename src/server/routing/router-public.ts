@@ -25,7 +25,7 @@ import {
 } from '../services/cms-maintenance-notifications';
 import { BffEndpoints } from './bff-routes';
 import { queryParams } from './route-helpers';
-import { getAuth } from '../auth/auth-helpers';
+import { getAuth, getReturnToUrlZaakStatus } from '../auth/auth-helpers';
 import { AppRoutes } from '../../universal/config/routes';
 
 export const router = express.Router();
@@ -178,21 +178,25 @@ export async function zaakStatusHandler(
 ) {
   try {
     const authProfileAndToken = getAuth(req);
-    const params = new URLSearchParams(req.url);
-    const redirectUrl = `${AppRoutes.ZAAK_STATUS}${params.toString() ? `?${params}` : ''}`;
+    const params = queryParams<{
+      id: string;
+      thema: string;
+      'auth-type': string;
+    }>(req);
+
+    const redirectUrl = getReturnToUrlZaakStatus(params);
 
     if (authProfileAndToken) {
-      return res.redirect(`${process.env.MA_FRONTEND_URL}${redirectUrl}`);
+      return res.redirect(`${redirectUrl}`);
     }
 
     const authType =
-      params.get('auth-type') === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
+      params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
     const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
-    const separator = loginRoute.includes('?') ? '&' : '?';
 
-    return res.redirect(
-      `${loginRoute}${separator}returnTo=${encodeURIComponent(redirectUrl)}`
-    );
+    const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}`;
+
+    return res.redirect(loginRouteWithReturnTo);
   } catch (error) {
     next(error);
   }
