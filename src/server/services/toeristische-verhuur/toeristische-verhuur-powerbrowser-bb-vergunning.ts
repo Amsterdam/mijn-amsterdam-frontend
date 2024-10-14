@@ -32,6 +32,10 @@ import {
   SearchRequestResponse,
 } from './toeristische-verhuur-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import isBefore from 'date-fns/isBefore';
+
+// See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
+const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
 function fetchPowerBrowserToken_(requestID: RequestID) {
   const requestConfig = getApiConfig('POWERBROWSER', {
@@ -397,7 +401,12 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
             { id: idEncrypted }
           ),
     steps: [getReceivedStatusStep(pbZaak.dateReceived ?? '')],
-    heeftOvergangsRecht: pbZaak.result?.includes('met overgangsrecht') ?? false,
+    heeftOvergangsRecht: pbZaak.dateReceived
+      ? isBefore(
+          new Date(pbZaak.dateReceived),
+          new Date(DATE_NEW_REGIME_BB_RULES)
+        )
+      : false,
   };
 }
 
