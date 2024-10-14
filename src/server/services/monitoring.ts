@@ -1,10 +1,9 @@
+import { KnownSeverityLevel } from 'applicationinsights';
 import * as appInsights from 'applicationinsights';
-import { SeverityLevel } from 'applicationinsights/out/Declarations/Contracts';
-import { Telemetry } from 'applicationinsights/out/Declarations/Contracts/TelemetryTypes/Telemetry';
+
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { IS_DEBUG } from '../config/app';
-import { KnownSeverityLevel, Telemetry } from 'applicationinsights';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
@@ -38,9 +37,9 @@ const severityMap: Record<Severity, KnownSeverityLevel> = {
 };
 
 export type Properties = {
-  properties?: Telemetry['properties'];
+  properties?: appInsights.Telemetry['properties'];
   severity?: Severity;
-  tags?: Telemetry['properties'];
+  tags?: appInsights.Telemetry['properties'];
 };
 
 export function captureException(error: unknown, properties?: Properties) {
@@ -53,9 +52,14 @@ export function captureException(error: unknown, properties?: Properties) {
     properties,
   };
 
-  IS_DEVELOPMENT
-    ? IS_DEBUG && console.log('Capture Exception', payload)
-    : client?.trackException(payload);
+  if (IS_DEVELOPMENT) {
+    // Does nothing (As expected) if development is not in debug mode.
+    if (IS_DEBUG) {
+      console.log('Capture Exception', payload);
+    }
+  } else {
+    client?.trackException(payload);
+  }
 }
 
 export function captureMessage(message: string, properties?: Properties) {
@@ -69,9 +73,14 @@ export function captureMessage(message: string, properties?: Properties) {
     properties,
   };
 
-  IS_DEVELOPMENT
-    ? IS_DEBUG && console.log('Capture message', payload)
-    : client?.trackTrace(payload);
+  if (IS_DEVELOPMENT) {
+    // Does nothing (As expected) if development is not in debug mode.
+    if (IS_DEBUG) {
+      console.log('Capture message', payload);
+    }
+  } else {
+    client?.trackTrace(payload);
+  }
 }
 
 interface TrackRequestProps {
@@ -99,9 +108,14 @@ export function trackRequest({ name, url, properties }: TrackRequestProps) {
           properties,
         };
 
-        IS_DEVELOPMENT
-          ? IS_DEBUG && console.log('Track request', payload)
-          : client?.trackRequest(payload);
+        if (IS_DEVELOPMENT) {
+          // Does nothing (As expected) if development is not in debug mode.
+          if (IS_DEBUG) {
+            console.log('Track request', payload);
+          }
+        } else {
+          client?.trackRequest(payload);
+        }
       }
     },
   };
