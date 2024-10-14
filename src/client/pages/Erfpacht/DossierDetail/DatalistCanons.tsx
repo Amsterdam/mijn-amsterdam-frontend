@@ -34,7 +34,7 @@ export function DatalistCanons({ canons }: DatalistCanonsProps) {
         {shouldCollapse && (
           <Button
             variant="tertiary"
-            style={{ transform: 'translateX(-0.9rem)' }}
+            style={{ transform: 'translateX(-1.4rem)' }}
             onClick={() => setIsCollapsed(!isCollapsed)}
           >
             {isCollapsed ? 'Toon meer' : 'Verberg'}
