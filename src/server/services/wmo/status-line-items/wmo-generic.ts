@@ -19,12 +19,14 @@ import {
   MINIMUM_REQUEST_DATE_FOR_DOCUMENTS,
 } from '../wmo-config-and-types';
 
+export const FAKE_DECISION_DOCUMENT_ID = 'besluit-document-mist';
+
 function getLastDocumentStartsWithTitle(
-  documents: GenericDocument[],
+  documents: GenericDocument[] | undefined,
   title: string
 ) {
   return (
-    documents.findLast((document) => document?.title.startsWith(title)) ?? null
+    documents?.findLast((document) => document?.title.startsWith(title)) ?? null
   );
 }
 
@@ -40,8 +42,12 @@ export function getDocumentDecisionDate(documents: GenericDocument[]) {
 }
 
 export function hasDecision(aanvraag: ZorgnedAanvraagTransformed) {
-  const hasDecision = isDocumentDecisionDateActive(aanvraag.datumAanvraag)
-    ? !!getDecisionDocument(aanvraag.documenten)
+  const isDecisionDateActive = isDocumentDecisionDateActive(
+    aanvraag.datumAanvraag
+  );
+  const hasDecisionDocument = !!getDecisionDocument(aanvraag.documenten);
+  const hasDecision = isDecisionDateActive
+    ? hasDecisionDocument
     : !!aanvraag.resultaat;
 
   return hasDecision;
@@ -59,11 +65,6 @@ function getDecisionDate(
     decisionDate = defaultDateFormat(decisionDate);
   }
   return decisionDate ?? null;
-}
-
-function getDecisionDateTransformed(aanvraag: ZorgnedAanvraagTransformed) {
-  const DO_TRANSFORM = true;
-  return getDecisionDate(aanvraag, DO_TRANSFORM);
 }
 
 export function getDocumentMeerInformatieDate(documents: GenericDocument[]) {
@@ -100,7 +101,7 @@ export function isEindeGeldigheidVerstreken(
 // TODO: Determine if there are any other conditions that can be used.
 // For example we might want to enable the document decision date based on a fixed date.
 // It's unknown right now if all the existing data (documents) adhere to the updated document names.
-function isDocumentDecisionDateActive(datumAanvraag: string) {
+export function isDocumentDecisionDateActive(datumAanvraag: string) {
   return (
     isAfterWCAGValidDocumentsDate(datumAanvraag) &&
     FeatureToggle.zorgnedDocumentDecisionDateActive
@@ -169,6 +170,12 @@ export function getTransformerConfigBesluit(
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
     isChecked: (stepIndex, aanvraag) => hasDecision(aanvraag),
     isActive: isActive,
+    isVisible: (stepIndex, aanvraag) => {
+      return (
+        getDecisionDocument(aanvraag.documenten)?.id !==
+        FAKE_DECISION_DOCUMENT_ID
+      );
+    },
     description: (aanvraag) =>
       hasDecision(aanvraag)
         ? `<p>${

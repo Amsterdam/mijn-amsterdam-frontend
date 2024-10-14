@@ -3,7 +3,10 @@ import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
-import { ZORGNED_GEMEENTE_CODE } from '../zorgned/zorgned-types';
+import {
+  ZORGNED_GEMEENTE_CODE,
+  ZorgnedAanvraagTransformed,
+} from '../zorgned/zorgned-types';
 import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 
 const mocks = vi.hoisted(() => {
@@ -75,7 +78,7 @@ describe('wmo-zorgned-service', () => {
       datumBeginLevering: '',
       productsoortCode: 'WRA',
       leveringsVorm: 'ZIN',
-    } as unknown as Parameters<typeof forTesting.isActueel>[0];
+    } as ZorgnedAanvraagTransformed;
 
     expect(forTesting.isActueel(aanvraag1)).toBe(true);
 
@@ -86,21 +89,23 @@ describe('wmo-zorgned-service', () => {
       datumBeginLevering: '2022-12-12',
       productsoortCode: 'WRA',
       leveringsVorm: 'ZIN',
-    } as unknown as Parameters<typeof forTesting.isActueel>[0];
+      datumAanvraag: '2022-10-30',
+      documenten: [{ title: 'Besluit: xx', datePublished: '2022-11-30' }],
+    } as ZorgnedAanvraagTransformed;
 
     expect(forTesting.isActueel(aanvraag2)).toBe(false);
 
     const aanvraag3 = {
       isActueel: true,
       datumEindeGeldigheid: '2024-01-01',
-    } as unknown as Parameters<typeof forTesting.isActueel>[0];
+    } as ZorgnedAanvraagTransformed;
 
     expect(forTesting.isActueel(aanvraag3)).toBe(true);
 
     const aanvraag4 = {
       productsoortCode: 'BLA',
       leveringsVorm: 'BLO',
-    } as unknown as Parameters<typeof forTesting.isActueel>[0];
+    } as ZorgnedAanvraagTransformed;
 
     expect(forTesting.isActueel(aanvraag4)).toBe(false);
   });
@@ -141,5 +146,67 @@ describe('wmo-zorgned-service', () => {
         "status": "OK",
       }
     `);
+  });
+
+  describe('getFakeDecisionDocuments', () => {
+    const aanvraagBase = {
+      datumAanvraag: '2023-05-05',
+      datumBesluit: '2023-08-05',
+      documenten: [],
+      resultaat: 'toegewezen',
+    };
+    const expected = [
+      {
+        datePublished: '2023-08-05',
+        id: 'besluit-document-mist',
+        isVisible: false,
+        title: 'Besluit: mist',
+        url: '',
+      },
+    ];
+    test('Returns fake document', () => {
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          datumBeginLevering: '2023-12-10',
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual(expected);
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          datumEindeLevering: '2023-12-10',
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual(expected);
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          datumEindeGeldigheid: '2023-12-10',
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual(expected);
+    });
+    test('Does not return fake document', () => {
+      expect(
+        forTesting.getFakeDecisionDocuments({
+          ...aanvraagBase,
+          documenten: [
+            {
+              datePublished: '2023-08-05',
+              id: 'doc1',
+              isVisible: true,
+              title: 'Besluit: aanvraag goedgekeurd',
+              url: '/foo/bar',
+            },
+          ],
+        } as unknown as ZorgnedAanvraagTransformed)
+      ).toStrictEqual([
+        {
+          datePublished: '2023-08-05',
+          id: 'doc1',
+          isVisible: true,
+          title: 'Besluit: aanvraag goedgekeurd',
+          url: '/foo/bar',
+        },
+      ]);
+    });
   });
 });

@@ -5798,6 +5798,85 @@
         },
         "datumAanmelding": "2024-09-02",
         "datumAanvraag": "2024-09-02"
+      },
+      {
+        "identificatie": "2719515",
+        "regeling": { "identificatie": "WMO", "omschrijving": "WMO" },
+        "hulpvraag": { "datumRegistratie": "2024-09-30" },
+        "datumAanmelding": "2024-09-30",
+        "datumAanvraag": "2024-09-30",
+        "beschikking": {
+          "beschikkingNummer": 300992070,
+          "datumAfgifte": "2024-09-30",
+          "beschikteProducten": [
+            {
+              "identificatie": "1215588",
+              "product": {
+                "identificatie": "13W15",
+                "productCode": "13W15",
+                "productsoortCode": "WRA1",
+                "omschrijving": "reparatie-/verwijderopdracht   trapliften"
+              },
+              "productCategorie": {
+                "code": "13",
+                "omschrijving": "Woonvoorzieningen"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-09-30",
+                "datumEindeGeldigheid": "2024-10-01",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks  (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per  beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per  beschikking"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "LA0997",
+                  "agbcode": "11122266",
+                  "omschrijving": "Otolift"
+                },
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1976992",
+                    "toewijzingsDatumTijd": "2024-09-30T18:58:05.6966667",
+                    "ingangsdatum": "2024-09-30",
+                    "einddatum": "2024-10-01",
+                    "datumOpdracht": "2024-09-30T18:58:05.6966667",
+                    "leverancier": {
+                      "identificatie": "LA0997",
+                      "agbcode": "11122266",
+                      "omschrijving": "Otolift"
+                    },
+                    "redenWijziging": {
+                      "code": "05",
+                      "omschrijving": "Herbeoordeling:  verkorting toewijzing  (05)"
+                    },
+                    "leveringen": [
+                      {
+                        "begindatum": "2024-09-30",
+                        "einddatum": "2024-10-01",
+                        "redenBeeindiging": {
+                          "code": "07",
+                          "omschrijving": "Einde   zorg"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "betrokkenen": ["123123123"]
+              }
+            }
+          ]
+        }
       }
     ]
   }
