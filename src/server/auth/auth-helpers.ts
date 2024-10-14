@@ -28,13 +28,18 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
     case AppRoutes.ZAAK_STATUS:
       return getReturnToUrlZaakStatus(queryParams);
     default:
+
     case RETURNTO_MAMS_LANDING:
       return authRoutes.AUTH_LOGIN_DIGID_LANDING;
   }
 }
 
 export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
-  const redirectUrl = `${process.env.MA_FRONTEND_URL}${AppRoutes.ZAAK_STATUS}?id=${queryParams?.id}&thema=${queryParams?.thema}`;
+  const searchParams =
+    queryParams?.id && queryParams?.thema
+      ? `?id=${queryParams.id}&thema=${queryParams.thema}`
+      : '';
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}${AppRoutes.ZAAK_STATUS}${searchParams}`;
   return redirectUrl;
 }
 

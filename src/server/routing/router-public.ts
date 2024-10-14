@@ -176,30 +176,26 @@ export async function zaakStatusHandler(
   res: Response,
   next: NextFunction
 ) {
-  try {
-    const authProfileAndToken = getAuth(req);
-    const params = queryParams<{
-      id: string;
-      thema: string;
-      'auth-type': string;
-    }>(req);
+  const authProfileAndToken = getAuth(req);
+  const params = queryParams<{
+    id: string;
+    thema: string;
+    'auth-type': string;
+  }>(req);
 
-    const redirectUrl = getReturnToUrlZaakStatus(params);
+  const redirectUrl = getReturnToUrlZaakStatus(params);
 
-    if (authProfileAndToken) {
-      return res.redirect(`${redirectUrl}`);
-    }
-
-    const authType =
-      params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
-    const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
-
-    const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}`;
-
-    return res.redirect(loginRouteWithReturnTo);
-  } catch (error) {
-    next(error);
+  if (authProfileAndToken) {
+    return res.redirect(redirectUrl);
   }
+
+  const authType =
+    params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
+  const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
+
+  const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}&id=${params.id}&thema=${params.thema}`;
+
+  return res.redirect(loginRouteWithReturnTo);
 }
 
 router.get(

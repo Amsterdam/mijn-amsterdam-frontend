@@ -1,10 +1,5 @@
 import { bffApiHost } from '../../setupTests';
-import {
-  getAuthProfileAndToken,
-  RequestMock,
-  ResponseMock,
-} from '../../test-utils';
-import * as authHelpers from '../auth/auth-helpers';
+import { RequestMock, ResponseMock } from '../../test-utils';
 
 import { zaakStatusHandler } from './router-public';
 
@@ -26,7 +21,7 @@ describe('router-public', () => {
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        '/api/v1/auth/digid/login?returnTo=/zaak-status'
+        '/api/v1/auth/digid/login?returnTo=/zaak-status&id=Z%2F000%2F000001&thema=vergunningen'
       );
     });
 
@@ -46,34 +41,8 @@ describe('router-public', () => {
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        '/api/v1/auth/eherkenning/login?returnTo=/zaak-status'
+        '/api/v1/auth/eherkenning/login?returnTo=/zaak-status&id=Z%2F000%2F000001&thema=vergunningen'
       );
-    });
-
-    test('calls next with error if an exception occurs', async () => {
-      const reqMock = RequestMock.new()
-        .setUrl(`${bffApiHost}/api/v1/services/zaak-status`)
-        .setQuery({
-          id: 'Z%2F000%2F000001',
-          thema: 'vergunningen',
-        });
-
-      const resMock = ResponseMock.new();
-
-      const nextMock = vi.fn();
-
-      const getAuthSpy = vi
-        .spyOn(authHelpers, 'getAuth')
-        .mockImplementation(() => {
-          throw new Error('Test error');
-        });
-
-      await zaakStatusHandler(reqMock, resMock, nextMock);
-
-      expect(nextMock).toHaveBeenCalledWith(expect.any(Error));
-      expect(nextMock.mock.calls[0][0].message).toBe('Test error');
-
-      getAuthSpy.mockRestore();
     });
   });
 });
