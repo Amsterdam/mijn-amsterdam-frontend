@@ -179,23 +179,20 @@ export async function zaakStatusHandler(
   try {
     const authProfileAndToken = getAuth(req);
     const params = new URLSearchParams(req.url);
+    const redirectUrl = `${AppRoutes.ZAAK_STATUS}${params.toString() ? `?${params}` : ''}`;
+
     if (authProfileAndToken) {
-      const redirectUrl = `${AppRoutes.ZAAK_STATUS}${params ? `?${params}` : ''}`;
-      return res.redirect(process.env.MA_FRONTEND_URL + redirectUrl);
-    } else {
-      const redirectUrl = encodeURIComponent(
-        `${AppRoutes.ZAAK_STATUS}${params ? `?${params}` : ''}`
-      );
-      if (params.get('auth-type') === 'eherkenning') {
-        return res.redirect(
-          `${authRoutes.AUTH_LOGIN_EHERKENNING}?returnTo=${redirectUrl}`
-        );
-      } else {
-        return res.redirect(
-          `${authRoutes.AUTH_LOGIN_DIGID}?returnTo=${redirectUrl}`
-        );
-      }
+      return res.redirect(`${process.env.MA_FRONTEND_URL}${redirectUrl}`);
     }
+
+    const authType =
+      params.get('auth-type') === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
+    const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
+    const separator = loginRoute.includes('?') ? '&' : '?';
+
+    return res.redirect(
+      `${loginRoute}${separator}returnTo=${encodeURIComponent(redirectUrl)}`
+    );
   } catch (error) {
     next(error);
   }
