@@ -1,3 +1,4 @@
+import { FlatCache, clearCacheById, create, createFromFile } from 'flat-cache';
 import fs from 'fs';
 import { createHash } from 'node:crypto';
 import path from 'path';
@@ -13,6 +14,11 @@ interface FileCacheProps {
   cacheTimeMinutes?: number;
   triesUntilConsiderdStale?: number;
 }
+
+type KeyData = {
+  expire: number | false;
+  data: any;
+};
 
 const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
 const EXT = 'flat-cache.json';
@@ -34,12 +40,14 @@ export function cacheOverview() {
         .filter((name) => name.endsWith(`.${EXT}`))
         .map((file) => {
           const [env, name] = file.split('.');
-          const fileCache = create(fileName(name), DEFAULT_CACHE_DIR);
+          const fileCache = createFromFile(fileName(name), {
+            ttl: DEFAULT_CACHE_DIR,
+          });
           return {
             name,
             env,
             keys: fileCache.keys().map((key) => {
-              const keyData = fileCache.getKey(key);
+              const keyData = fileCache.getKey<KeyData>(key);
               const overview: Record<string, string | boolean> = {
                 key,
                 expire: keyData.expire
@@ -63,7 +71,7 @@ export default class FileCache {
   name: string;
   name_: string;
   path?: string;
-  cache: Cache;
+  cache: FlatCache;
   expire: number | false;
   hashes: string[];
   triesUntilConsiderdStale: number;
@@ -77,7 +85,7 @@ export default class FileCache {
     this.name = fileName(name);
     this.path = path;
     this.name_ = name;
-    this.cache = create(this.name, path);
+    this.cache = createFromFile(`${path}/${this.name}`);
     this.expire =
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
     this.hashes = [];
@@ -86,7 +94,7 @@ export default class FileCache {
 
   getKey(key: string) {
     const now = new Date().getTime();
-    const value = this.cache.getKey(key);
+    const value = this.cache.getKey<KeyData>(key);
 
     if (value === undefined || (value.expire !== false && value.expire < now)) {
       return undefined;
@@ -116,7 +124,7 @@ export default class FileCache {
     hash.update(
       this.cache
         .keys()
-        .map((k) => this.cache.getKey(k).data)
+        .map((k) => this.cache.getKey<KeyData>(k).data)
         .join()
     );
     const generatedHash = hash.digest('hex');
@@ -130,7 +138,9 @@ export default class FileCache {
   }
 
   getKeyStale(key: string, isProd: boolean = IS_AP) {
-    return create(fileName(this.name_, isProd), this.path).getKey(key)?.data;
+    return createFromFile(
+      `${this.path}/${fileName(this.name_, isProd)}`
+    ).getKey<KeyData>(key)?.data;
   }
 
   isStale() {
