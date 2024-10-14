@@ -1,7 +1,7 @@
-import { AnyProps, PointFeature } from 'supercluster';
+import Supercluster, { AnyProps, PointFeature } from 'supercluster';
 
 import { loadDatasetFeatures } from './buurt';
-import { MaPointFeature } from './datasets';
+import { MaFeature, MaPointFeature } from './datasets';
 import {
   filterAndRefineFeatures,
   filterPointFeaturesWithinBoundingBox,
@@ -26,11 +26,11 @@ async function generateSuperCluster(features: MaPointFeature[]) {
   }
 }
 
-function addExpansionZoom(superClusterIndex: any, feature: any) {
+function addExpansionZoom(superClusterIndex: Supercluster, feature: MaFeature) {
   try {
     feature.properties.expansion_zoom =
       superClusterIndex.getClusterExpansionZoom(feature.properties.cluster_id);
-  } catch (error) {
+  } catch (_error) {
     console.error(
       "Can't add expansion zoom to cluster",
       feature.properties.cluster_id,
@@ -40,7 +40,7 @@ function addExpansionZoom(superClusterIndex: any, feature: any) {
 }
 
 interface SuperClusterQuery {
-  bbox: any;
+  bbox: [number, number, number, number];
   zoom: number;
   datasetIds: DatasetId[];
   filters: DatasetFilterSelection;
@@ -81,7 +81,7 @@ export async function loadClusterDatasets(
     clusters = superClusterIndex.getClusters(bbox, zoom);
 
     for (const feature of clusters) {
-      addExpansionZoom(superClusterIndex, feature);
+      addExpansionZoom(superClusterIndex, feature as MaFeature);
     }
   }
 
