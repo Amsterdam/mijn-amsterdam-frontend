@@ -1,10 +1,12 @@
+import { PropsWithChildren, useMemo } from 'react';
+
 import classnames from 'classnames';
 import paginate from 'jw-paginate';
-import { PropsWithChildren, useMemo } from 'react';
-import { IconChevronLeft, IconChevronRight } from '../../assets/icons';
-import styles from './Pagination.module.scss';
 
-export interface PaginationPageButtonProps extends PropsWithChildren<{}> {
+import styles from './Pagination.module.scss';
+import { IconChevronLeft, IconChevronRight } from '../../assets/icons';
+
+export interface PaginationPageButtonProps extends PropsWithChildren {
   page: number;
   currentPage: number;
   onPageClick: PaginationProps['onPageClick'];
@@ -45,10 +47,11 @@ export interface PaginationProps {
   currentPage?: number;
 }
 
+const MAX_PAGES = 5;
 export default function Pagination({
   totalCount,
   pageSize,
-  maxPages = 5,
+  maxPages = MAX_PAGES,
   onPageClick,
   className,
   currentPage = 1,
@@ -77,7 +80,7 @@ export default function Pagination({
             vorige
           </button>
         )}
-        {totalPages > 5 && currentPage - 2 > 1 && (
+        {totalPages > MAX_PAGES && currentPage - 2 > 1 && (
           <PaginationPageButton
             page={1}
             currentPage={-1}
@@ -96,7 +99,7 @@ export default function Pagination({
             {page}
           </PaginationPageButton>
         ))}
-        {totalPages > 5 && totalPages - 2 >= currentPage && (
+        {totalPages > MAX_PAGES && totalPages - 2 >= currentPage && (
           <PaginationPageButton
             page={totalPages}
             currentPage={-1}

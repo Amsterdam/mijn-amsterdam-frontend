@@ -1,8 +1,8 @@
-import nock from 'nock';
 import { beforeEach, describe, expect, test } from 'vitest';
+
 import * as service from './api-service';
-import { remoteApi } from '../../../test-utils';
 import { remoteApiHost } from '../../../setupTests';
+import { remoteApi } from '../../../test-utils';
 
 const REQUEST_ID = 'test-x';
 

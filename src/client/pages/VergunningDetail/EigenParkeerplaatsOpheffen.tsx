@@ -1,7 +1,8 @@
-import type { EigenParkeerplaatsOpheffen as EigenParkeerplaatsOpheffenType } from '../../../server/services';
 import { Link } from '@amsterdam/design-system-react';
-import InfoDetail from '../../components/InfoDetail/InfoDetail';
+
 import { Location } from './Location';
+import type { EigenParkeerplaatsOpheffen as EigenParkeerplaatsOpheffenType } from '../../../server/services';
+import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import styles from '../../components/LocationModal/LocationModal.module.scss';
 
 export function EigenParkeerplaatsOpheffen({

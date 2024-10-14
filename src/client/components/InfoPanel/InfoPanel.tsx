@@ -1,13 +1,15 @@
+import { isValidElement, useMemo } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { isValidElement, useMemo } from 'react';
 import slug from 'slugme';
+
+import styles from './InfoPanel.module.scss';
+import { personalDetailFields } from './personalDetailFields';
 import { entries } from '../../../universal/helpers/utils';
 import { Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
-import styles from './InfoPanel.module.scss';
-import { personalDetailFields } from './personalDetailFields';
 
 export interface ActionLink {
   title: string;
@@ -72,7 +74,9 @@ function getValue(value: any) {
   if (Array.isArray(value) || typeof value === 'object') {
     try {
       return JSON.stringify(value);
-    } catch (error) {}
+    } catch (error) {
+      return '';
+    }
   }
   return value;
 }

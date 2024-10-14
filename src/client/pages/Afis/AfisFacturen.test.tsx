@@ -1,14 +1,13 @@
 import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { AfisFacturen } from './AfisFacturen';
 import { bffApi } from '../../../test-utils';
-import { AfisFactuur } from '../../../server/services/afis/afis-types';
-import { AfisFactuurFrontend } from './Afis-thema-config';
 
 const businessPartnerIdEncrypted = 'yyy-456-yyy';
 const testState = {

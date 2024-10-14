@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { default as IconComponent } from '../../assets/icons/Alert.svg?react';
+
 import Linkd from './Button';
+import { default as IconComponent } from '../../assets/icons/Alert.svg?react';
 
 describe('Linkd', () => {
   it('Renders without crashing', () => {

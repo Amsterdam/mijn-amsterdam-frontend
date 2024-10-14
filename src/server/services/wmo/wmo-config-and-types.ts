@@ -1,8 +1,8 @@
 import { parseISO } from 'date-fns';
+
 import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import {
   BeschikkingsResultaat,
-  LeveringsVorm,
   ProductSoortCode,
 } from '../zorgned/zorgned-types';
 

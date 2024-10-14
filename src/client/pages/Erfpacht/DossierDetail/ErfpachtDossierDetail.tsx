@@ -1,5 +1,10 @@
 import { Grid, Screen } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
+
+import { DataTableBijzondereBepalingen } from './DatalistBijzondereBepalingen';
+import { DatalistGeneral } from './DatalistGeneral';
+import { DatalistJuridisch } from './DatalistJuridisch';
+import { DatalistsFinancieel } from './DatalistsFinancieel';
 import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../../universal/config/routes';
 import {
@@ -16,10 +21,6 @@ import { BagThemas, ThemaTitles } from '../../../config/thema';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
 import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { DataTableFacturen } from './DataTableFacturen';
-import { DataTableBijzondereBepalingen } from './DatalistBijzondereBepalingen';
-import { DatalistGeneral } from './DatalistGeneral';
-import { DatalistJuridisch } from './DatalistJuridisch';
-import { DatalistsFinancieel } from './DatalistsFinancieel';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 

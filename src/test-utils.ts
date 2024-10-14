@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import nock from 'nock';
-import { AuthProfile, AuthProfileAndToken } from './server/auth/auth-types';
-import { bffApiHost, remoteApiHost } from './setupTests';
-import { createOIDCStub } from './server/routing/router-development';
 import UID from 'uid-safe';
+
+import { AuthProfile, AuthProfileAndToken } from './server/auth/auth-types';
+import { createOIDCStub } from './server/routing/router-development';
+import { bffApiHost, remoteApiHost } from './setupTests';
+import { HTTP_STATUS_CODES } from './universal/constants/errorCodes';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',
@@ -54,13 +56,14 @@ export class ResponseMock {
   }
 
   private constructor() {
-    this.statusCode = 200;
+    this.statusCode = HTTP_STATUS_CODES.OK;
+    const REQUEST_ID_LENGTH = 18;
     this.locals = {
-      requestID: UID.sync(18),
+      requestID: UID.sync(REQUEST_ID_LENGTH),
     };
   }
 
-  send = vi.fn().mockImplementation((content) => {
+  send = vi.fn().mockImplementation(() => {
     return this;
   });
   status = vi.fn().mockImplementation((statusCode) => {
@@ -117,7 +120,7 @@ export class RequestMock {
 }
 
 export async function getReqMockWithOidc(profile: AuthProfile) {
-  let reqMockWithOidc = RequestMock.new();
+  const reqMockWithOidc = RequestMock.new();
   await reqMockWithOidc.createOIDCStub(profile);
   return reqMockWithOidc.get();
 }

@@ -1,4 +1,5 @@
 import { describe, expect } from 'vitest';
+
 import { sortNotifications } from './tips-and-notifications';
 
 describe('tips-and-notifications', () => {

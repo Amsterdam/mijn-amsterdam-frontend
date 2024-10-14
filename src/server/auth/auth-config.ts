@@ -1,24 +1,26 @@
 import { auth, ConfigParams } from 'express-openid-connect';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ONE_HOUR_MS } from '../config/app';
-import { getFromEnv } from '../helpers/env';
+import expressSession from 'express-session';
+import UID from 'uid-safe';
+
 import { BFF_OIDC_BASE_URL, BFF_OIDC_ISSUER_BASE_URL } from './auth-routes';
 import { getSessionStore } from './auth-session-store';
-import expressSession from 'express-session';
 import { TokenData } from './auth-types';
-import UID from 'uid-safe';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
+import { getFromEnv } from '../helpers/env';
 
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
   'amsapp-stadspas-administratienummer';
 export const RETURNTO_MAMS_LANDING = 'mams-landing';
 
-export const OIDC_SESSION_MAX_AGE_SECONDS = 15 * 60; // 15 minutes
+// eslint-disable-next-line no-magic-numbers
+export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
 export const OIDC_IS_TOKEN_EXP_VERIFICATION_ENABLED = true;
 
-export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 24 * 3; // The TMA currently has a token expiration time of 3 hours
+export const OIDC_TOKEN_EXP = ONE_HOUR_MS * 3; // The TMA currently has a token expiration time of 3 hours
 
 export const openIdAuth = auth;
 
@@ -56,14 +58,15 @@ export const oidcConfigBase: ConfigParams = {
   httpTimeout: 10000,
 };
 
+const BYTE_LENGTH = 8;
 export const oidcConfigDigid: ConfigParams = {
   ...oidcConfigBase,
   clientID: getFromEnv('BFF_OIDC_CLIENT_ID_DIGID', true),
-  afterCallback: async (req, res, session) => {
+  afterCallback: async (_, __, session) => {
     return {
       ...session,
       TMASessionID: session.sid,
-      sid: UID.sync(8),
+      sid: UID.sync(BYTE_LENGTH),
       profileType: 'private',
       authMethod: 'digid',
     };
@@ -77,7 +80,7 @@ export const oidcConfigEherkenning: ConfigParams = {
     return {
       ...session,
       TMASessionID: session.sid,
-      sid: UID.sync(8),
+      sid: UID.sync(BYTE_LENGTH),
       profileType: 'commercial',
       authMethod: 'eherkenning',
     };

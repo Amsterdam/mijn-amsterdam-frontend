@@ -1,6 +1,6 @@
-import { MyTip } from '../../../universal/types';
 import { ServiceResults, Tip } from './tip-types';
 import { tips } from './tips-content';
+import { MyTip } from '../../../universal/types';
 
 function tipsFilter(serviceResults: ServiceResults, now: Date = new Date()) {
   return (t: Tip) => {

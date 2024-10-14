@@ -1,10 +1,11 @@
 import { AxiosResponseTransformer } from 'axios';
+
 import { Thema } from '../../../universal/config/thema';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { MyNotification, MyTip } from '../../../universal/types';
-import { DataRequestConfig } from '../../config/source-api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
 import { requestData } from '../../helpers/source-api-request';
 
 export interface ApiPatternResponseA {

@@ -1,4 +1,6 @@
 import { LatLngLiteral } from 'leaflet';
+
+import afvalpunten from './afvalpunten-data.json';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { getApproximateDistance } from '../../../universal/helpers/geo';
 import { sortByNumber } from '../../../universal/helpers/utils';
@@ -6,7 +8,6 @@ import type {
   AfvalPuntenData,
   GarbageCenter,
 } from '../../../universal/types/afval';
-import afvalpunten from './afvalpunten-data.json';
 
 function addApproximateDistance(
   latlng: LatLngLiteral | null,

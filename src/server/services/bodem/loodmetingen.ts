@@ -1,5 +1,13 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
+
+import {
+  Lood365Response,
+  LoodMeting,
+  LoodMetingDocument,
+  LoodMetingRequestsSource,
+  LoodMetingen,
+} from './types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import {
@@ -23,13 +31,6 @@ import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
 } from '../shared/document-download-route-handler';
-import {
-  Lood365Response,
-  LoodMeting,
-  LoodMetingDocument,
-  LoodMetingRequestsSource,
-  LoodMetingen,
-} from './types';
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {

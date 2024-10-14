@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
+
 import { GarbageFractionData } from '../../../server/services/afval/afvalwijzer';
 import { AppRoutes } from '../../../universal/config/routes';
 import { jsonCopy } from '../../../universal/helpers/utils';

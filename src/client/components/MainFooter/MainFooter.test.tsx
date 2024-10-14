@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it, vi } from 'vitest';
+
+import footer from './amsterdam-nl-footer-data.json';
+import MainFooter from './MainFooter';
+import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
-import MainFooter from './MainFooter';
-import footer from './amsterdam-nl-footer-data.json';
-import { bffApi } from '../../../test-utils';
 
 vi.mock('../../hooks/media.hook');
 

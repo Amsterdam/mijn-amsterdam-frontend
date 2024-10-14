@@ -1,3 +1,10 @@
+import { getThemaTitle } from './helpers';
+import {
+  listPageParamKind,
+  listPageTitle,
+  routes,
+  tableConfig,
+} from './HLI-thema-config';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import {
   hasFailedDependency,
@@ -6,13 +13,6 @@ import {
 } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { getThemaTitle } from './helpers';
-import {
-  listPageParamKind,
-  listPageTitle,
-  routes,
-  tableConfig,
-} from './HLI-thema-config';
 
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();

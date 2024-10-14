@@ -1,9 +1,10 @@
 import { describe, expect, beforeEach, afterEach, vi, it } from 'vitest';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+
 import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
-import apiResponse from '../../../../mocks/fixtures/avg.json';
 import avgThemasResponse from '../../../../mocks/fixtures/avg-themas.json';
+import apiResponse from '../../../../mocks/fixtures/avg.json';
 import { remoteApi } from '../../../test-utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('AVG', () => {
   const requestId = '456';

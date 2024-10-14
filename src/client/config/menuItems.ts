@@ -1,6 +1,6 @@
+import { ThemaMenuItem, myThemasMenuItems } from './thema';
 import { useAppStateGetter } from '../hooks/useAppState';
 import { termReplace } from '../hooks/useTermReplacement';
-import { ThemaMenuItem, myThemasMenuItems } from './thema';
 
 export const themasByProfileType: (
   profileType: ProfileType

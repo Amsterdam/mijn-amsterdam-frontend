@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import { Unshaped } from '../../universal/types';
 import { captureException } from '../utils/monitoring';
 
@@ -123,7 +124,9 @@ function useWindowStorage(
 
   try {
     hasLocalStorage = adapter === localStorage;
-  } catch (e) {}
+  } catch (_) {
+    console.error('Error checking for localStorage');
+  }
 
   useEffect(() => {
     if (hasLocalStorage) {
@@ -151,14 +154,18 @@ export function useStorage(
   let val = null;
   try {
     val = initialValue !== null ? JSON.stringify(initialValue) : initialValue;
-  } catch (e) {}
+  } catch (_) {
+    console.error('Error getting localStorage');
+  }
 
   const { value: item, set: setValue } = useWindowStorage(key, val, adapter);
   const setItem = useCallback(
     (newValue: string | null) => {
       try {
         setValue(newValue !== null ? JSON.stringify(newValue) : null);
-      } catch (e) {}
+      } catch (_) {
+        console.error('Error setting localStorage');
+      }
     },
     [setValue]
   );
@@ -177,7 +184,9 @@ export function useLocalStorage<Value>(
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
     adapter = localStorage || memoryHandler;
-  } catch (error) {}
+  } catch (_) {
+    console.error('Error getting localStorage');
+  }
 
   return useStorage(key, value, adapter);
 }
@@ -189,7 +198,9 @@ export function useSessionStorage<Value>(
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
     adapter = sessionStorage || memoryHandler;
-  } catch (error) {}
+  } catch (_) {
+    console.error('Error getting sessionStorage');
+  }
 
   return useStorage(key, value, adapter);
 }
@@ -197,17 +208,23 @@ export function useSessionStorage<Value>(
 export function clearSessionStorage() {
   try {
     sessionStorage.clear();
-  } catch (error) {}
+  } catch (_) {
+    console.error('Error clearing sessionStorage');
+  }
 }
 
 export function clearLocalStorage() {
   try {
     localStorage.clear();
-  } catch (error) {}
+  } catch (_) {
+    console.error('Error clearing localStorage');
+  }
 }
 
 export function removeLocalStorageKey(key: string) {
   try {
     localStorage.removeItem(key);
-  } catch (error) {}
+  } catch (_) {
+    console.error('Error removing localStorage key');
+  }
 }

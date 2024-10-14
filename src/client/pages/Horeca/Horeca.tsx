@@ -1,3 +1,4 @@
+import styles from './Horeca.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -13,7 +14,6 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Horeca.module.scss';
 
 const DISPLAY_PROPS_HORECA = {
   identifier: 'Kenmerk',

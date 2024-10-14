@@ -21,7 +21,6 @@ APP_MODE !== 'unittest' &&
   console.info(
     `App running in ${APP_MODE} mode on the ${OTAP_ENV} environment.`
   );
-
 export const IS_ACCEPTANCE = OTAP_ENV === 'acceptance';
 export const IS_PRODUCTION = OTAP_ENV === 'production';
 export const IS_TEST = OTAP_ENV === 'test';

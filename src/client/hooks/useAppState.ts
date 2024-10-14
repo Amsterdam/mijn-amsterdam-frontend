@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import {
   SetterOrUpdater,
   atom,
   useRecoilState,
   useRecoilValue,
-  useSetRecoilState,
 } from 'recoil';
+
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
@@ -104,7 +105,7 @@ export function addParamsToStreamEndpoint(
   // For testing and development purposes we can pass a set of arbitrary parameters to the BFF.
   // See also: universal/config/app.ts : streamEndpointQueryParamKeys
   if (FeatureToggle.passQueryParamsToStreamUrl) {
-    let testStreamEndpointUrl = streamEndpointUrl;
+    const testStreamEndpointUrl = streamEndpointUrl;
     if (searchParams !== '') {
       const locationParams = new URLSearchParams(searchParams);
       const newUrlSearchParams = new URLSearchParams();
@@ -308,7 +309,7 @@ export function useRemoveAppStateBagData() {
   return useCallback(
     ({ bagThema, key: keyExpected }: Omit<AppStateBagApiParams, 'url'>) => {
       const local = appState[bagThema];
-      if (!!local) {
+      if (local) {
         setAppState(
           Object.assign({}, appState, {
             [bagThema]: Object.fromEntries(

@@ -1,3 +1,4 @@
+import { ProfileSection, format } from './formatDataPrivate';
 import type {
   Aandeelhouder,
   Aansprakelijke,
@@ -17,7 +18,6 @@ import {
 } from '../../../universal/helpers/text';
 import { Adres } from '../../../universal/types';
 import { LinkdInline } from '../../components/Button/Button';
-import { ProfileSection, format } from './formatDataPrivate';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

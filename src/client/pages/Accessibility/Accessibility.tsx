@@ -1,11 +1,12 @@
 import { Heading } from '@amsterdam/design-system-react';
-import { ThemaTitles } from '../../config/thema';
+
 import {
   LinkdInline,
   PageContent,
   PageHeading,
   TextPage,
 } from '../../components';
+import { ThemaTitles } from '../../config/thema';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 export default function Accessibility() {

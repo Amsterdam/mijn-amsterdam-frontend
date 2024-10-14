@@ -1,4 +1,6 @@
 import { generatePath, useParams } from 'react-router-dom';
+
+import LoodStatusLines from './LoodStatusLines';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
@@ -14,7 +16,6 @@ import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { Location } from '../VergunningDetail/Location';
-import LoodStatusLines from './LoodStatusLines';
 
 export default function LoodMeting() {
   const { BODEM } = useAppStateGetter();

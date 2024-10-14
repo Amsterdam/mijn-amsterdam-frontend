@@ -1,4 +1,5 @@
 import { differenceInMonths } from 'date-fns';
+
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { Themas } from '../../../../universal/config/thema';
 import {
@@ -6,7 +7,6 @@ import {
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import { AuthProfileAndToken } from '../../../auth/auth-types';
 import { ServiceResults } from '../../tips/tip-types';
 import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
 import type {

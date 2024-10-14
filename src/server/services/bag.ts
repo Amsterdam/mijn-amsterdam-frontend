@@ -1,4 +1,5 @@
 import { LatLngLiteral } from 'leaflet';
+
 import { apiErrorResult } from '../../universal/helpers/api';
 import {
   getBagResult,

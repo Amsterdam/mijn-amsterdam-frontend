@@ -1,4 +1,6 @@
 import { generatePath, useParams } from 'react-router-dom';
+
+import AVGStatusLines from './AVGStatusLines';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
@@ -11,7 +13,6 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import AVGStatusLines from './AVGStatusLines';
 
 const AVGDetail = () => {
   const { AVG } = useAppStateGetter();

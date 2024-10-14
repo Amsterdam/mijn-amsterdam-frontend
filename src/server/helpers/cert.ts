@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
+
 import { getFromEnv } from './env';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && getFromEnv(envVarName, false);

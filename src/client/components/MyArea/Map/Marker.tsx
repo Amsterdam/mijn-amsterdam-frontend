@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { Marker as MarkerComponent } from '@amsterdam/react-maps';
 import {
   LatLngLiteral,
@@ -5,7 +7,6 @@ import {
   Marker as MarkerType,
   MarkerOptions,
 } from 'leaflet';
-import { useEffect, useState } from 'react';
 
 type Props = {
   latLng: LatLngLiteral;

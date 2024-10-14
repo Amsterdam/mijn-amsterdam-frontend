@@ -1,6 +1,10 @@
+import { useCallback, useState } from 'react';
+
 import { Icon } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { useCallback, useState } from 'react';
+
+import styles from './DocumentLink.module.scss';
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { GenericDocument } from '../../../universal/types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { trackDownload } from '../../hooks/analytics.hook';
@@ -9,7 +13,6 @@ import { useUserCity } from '../../hooks/useUserCity';
 import { captureException } from '../../utils/monitoring';
 import { MaLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
-import styles from './DocumentLink.module.scss';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -66,7 +69,7 @@ export function DocumentLink({
         .then((res) => {
           setLoading(false);
 
-          if (res.status !== 200) {
+          if (res.status !== HTTP_STATUS_CODES.OK) {
             throw new Error(
               `Failed to download document. Error: ${res.statusText}, Code: ${res.status}`
             );
@@ -92,22 +95,20 @@ export function DocumentLink({
 
           if (!blob) {
             downloadFile(document);
+          } else if (
+            window.navigator &&
+            (window.navigator as any).msSaveOrOpenBlob
+          ) {
+            (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
           } else {
-            if (
-              window.navigator &&
-              (window.navigator as any).msSaveOrOpenBlob
-            ) {
-              (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
-            } else {
-              try {
-                const fileUrl = window.URL.createObjectURL(blob);
-                downloadFile({
-                  ...document,
-                  url: fileUrl,
-                });
-              } catch (error) {
-                downloadFile(document);
-              }
+            try {
+              const fileUrl = window.URL.createObjectURL(blob);
+              downloadFile({
+                ...document,
+                url: fileUrl,
+              });
+            } catch (_) {
+              downloadFile(document);
             }
           }
         })

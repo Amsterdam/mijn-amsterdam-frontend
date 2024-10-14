@@ -3,8 +3,8 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { isAmsterdamAddress } from '../buurt/helpers';
 

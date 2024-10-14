@@ -1,17 +1,16 @@
-import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  ZorgnedAanvraagTransformed,
-  ZorgnedPerson,
-  ZorgnedPersoonsgegevensNAWResponse,
-} from '../zorgned/zorgned-types';
 import {
   fetchAdministratienummer,
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
-
+import { remoteApi } from '../../../test-utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as zorgnedService from '../zorgned/zorgned-service';
+import {
+  ZorgnedAanvraagTransformed,
+  ZorgnedPersoonsgegevensNAWResponse,
+} from '../zorgned/zorgned-types';
+
 
 describe('hli-zorgned-service', () => {
   const authProfileAndToken: AuthProfileAndToken = {

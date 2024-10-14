@@ -1,16 +1,5 @@
 import memoizee from 'memoizee';
-import {
-  apiSuccessResult,
-  getSettledResult,
-} from '../../../universal/helpers/api';
-import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { DataRequestConfig } from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { captureException, captureMessage } from '../monitoring';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
+
 import {
   AddressBookEntry,
   DecosDocumentBlobSource,
@@ -35,6 +24,20 @@ import {
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
 } from './helpers';
+import {
+  apiSuccessResult,
+  getSettledResult,
+} from '../../../universal/helpers/api';
+import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import {
+  DataRequestConfig,
+  DEFAULT_API_CACHE_TTL_MS,
+} from '../../config/source-api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { captureException, captureMessage } from '../monitoring';
+import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of vergunningen.
  *
@@ -350,7 +353,7 @@ async function fetchDecosVergunningen_(
 }
 
 export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_, {
-  maxAge: 45 * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
 function transformDecosWorkflowKeysResponse(workflowsResponseData: {

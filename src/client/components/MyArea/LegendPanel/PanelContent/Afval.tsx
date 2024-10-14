@@ -1,5 +1,5 @@
-import { LinkdInline } from '../../../Button/Button';
 import GenericBase from './GenericBase';
+import { LinkdInline } from '../../../Button/Button';
 
 const afvalUrls: Record<string, string> = {
   rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval',

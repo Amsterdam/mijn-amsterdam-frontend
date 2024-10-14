@@ -1,6 +1,8 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
+
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
-import { useEffect, useMemo, useRef, useState } from 'react';
+
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';

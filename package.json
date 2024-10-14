@@ -17,7 +17,7 @@
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release": "sh scripts/release.sh --minor",
-    "start": "cross-env MA_APP_MODE=development vite",
+    "start": "cross-env MA_APP_MODE=development vite ",
     "build": "cross-env MA_APP_MODE=production vite build",
     "serve": "vite preview",
     "test": "cross-env MA_APP_MODE=unittest vitest src/client",
@@ -25,7 +25,9 @@
     "bff-api:test": "cross-env MA_APP_MODE=unittest vitest --environment=node src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "cross-env NODE_OPTS=--inspect ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
-    "bff-api:build": "tsc --project ./tsconfig.bff.json"
+    "bff-api:build": "tsc --project ./tsconfig.bff.json",
+    "lint": "eslint src --max-warnings 0 --quiet",
+    "lint:fix": "eslint src --fix"
   },
   "browserslist": [
     ">0.2%",
@@ -142,6 +144,7 @@
     "uid-safe": "^2.1.5",
     "use-debounce": "^10.0.0",
     "vite": "^5.3.3",
+    "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.2.0",
     "vitest": "^2.0.3",
     "xlsx": "file:vendor/xlsx-0.20.2.tgz"
@@ -150,7 +153,14 @@
     "@rollup/rollup-linux-x64-gnu": "4.14.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
     "@mocks-server/main": "^4.1.0",
-    "formidable": "^3.5.1"
+    "eslint": "^9.11.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-unused-imports": "^4.1.0",
+    "formidable": "^3.5.1",
+    "globals": "^15.9.0",
+    "typescript-eslint": "^8.8.0"
   }
 }

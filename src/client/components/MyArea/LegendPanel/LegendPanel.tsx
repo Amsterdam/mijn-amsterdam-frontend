@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
+
 import { useLocation } from 'react-router-dom';
+
 import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
 import {
   useFetchPanelFeature,
@@ -48,7 +50,6 @@ export function LegendPanel({ availableHeight }: LegendPanelProps) {
       filterPanelCycle.reset();
       resetMyAreaState();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetMyAreaState]);
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.

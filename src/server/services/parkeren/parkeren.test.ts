@@ -1,6 +1,6 @@
+import { fetchSSOParkerenURL } from './parkeren';
 import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 import { getFromEnv } from '../../helpers/env';
-import { fetchSSOParkerenURL } from './parkeren';
 
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
@@ -32,7 +32,7 @@ test('Calls with digid', async () => {
 });
 
 test('Calls with eherkenning', async () => {
-  let authProfileAndToken = getAuthProfileAndToken('commercial');
+  const authProfileAndToken = getAuthProfileAndToken('commercial');
 
   remoteApi
     .get('/parkeren/sso/get_authentication_url?service=eherkenning')
@@ -61,7 +61,7 @@ describe('Fallback url given', async () => {
   };
 
   test('When URL is null', async () => {
-    let authProfileAndToken = getAuthProfileAndToken('private');
+    const authProfileAndToken = getAuthProfileAndToken('private');
 
     remoteApi
       .get('/parkeren/sso/get_authentication_url?service=digid')
@@ -75,7 +75,7 @@ describe('Fallback url given', async () => {
   });
 
   test('When no url in response', async () => {
-    let authProfileAndToken = getAuthProfileAndToken('private');
+    const authProfileAndToken = getAuthProfileAndToken('private');
 
     remoteApi
       .get('/parkeren/sso/get_authentication_url?service=digid')
@@ -87,7 +87,7 @@ describe('Fallback url given', async () => {
   });
 
   test('When status errors', async () => {
-    let authProfileAndToken = getAuthProfileAndToken('private');
+    const authProfileAndToken = getAuthProfileAndToken('private');
 
     remoteApi
       .get('/parkeren/sso/get_authentication_url?service=digid')

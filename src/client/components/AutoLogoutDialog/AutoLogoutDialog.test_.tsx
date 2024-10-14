@@ -4,11 +4,12 @@
 import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RecoilRoot } from 'recoil';
-import { MockInstance, describe, expect, it, vi } from 'vitest';
-import { sessionAtom } from '../../hooks/api/useSessionApi';
-import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
+import { describe, expect, it, vi } from 'vitest';
 
-const ONE_SECOND_IN_MS = 1000;
+import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
+import { ONE_SECOND_MS } from '../../../server/config/app';
+import { sessionAtom } from '../../hooks/api/useSessionApi';
+
 const DOC_TITLE = 'AutoLogoutDialog';
 
 describe('AutoLogoutDialog', () => {
@@ -24,13 +25,11 @@ describe('AutoLogoutDialog', () => {
     secondsSessionRenewRequestInterval: 2,
   };
   const map: any = {};
-  let listenerSpy: MockInstance;
   window.addEventListener = vi.fn((event, callback: any) => {
     map[event] = (...args: any) => {
       callback && callback(...args);
     };
   });
-  listenerSpy = vi.spyOn(window, 'addEventListener');
   document.title = DOC_TITLE;
   vi.useFakeTimers();
   it('shows the auto logout dialog after x seconds and fires callback after another x seconds', () => {
@@ -42,15 +41,11 @@ describe('AutoLogoutDialog', () => {
       </RecoilRoot>
     );
     act(() => {
-      vi.advanceTimersByTime(
-        ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
-      );
+      vi.advanceTimersByTime(ONE_SECOND_MS * settings.secondsBeforeDialogShow!);
     });
     expect(screen.getByText('Wilt u doorgaan?')).toBeInTheDocument();
     act(() => {
-      vi.advanceTimersByTime(
-        ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
-      );
+      vi.advanceTimersByTime(ONE_SECOND_MS * settings.secondsBeforeAutoLogout!);
     });
     expect(logout).toHaveBeenCalled();
   });
@@ -64,9 +59,7 @@ describe('AutoLogoutDialog', () => {
       </RecoilRoot>
     );
     act(() => {
-      vi.advanceTimersByTime(
-        ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
-      );
+      vi.advanceTimersByTime(ONE_SECOND_MS * settings.secondsBeforeDialogShow!);
     });
     expect(screen.getByText('Doorgaan')).toBeInTheDocument();
     await user.click(screen.getByText('Doorgaan'));
@@ -83,14 +76,13 @@ describe('AutoLogoutDialog', () => {
     );
     const documentTitle = document.title;
     act(() => {
-      vi.advanceTimersByTime(
-        ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
-      );
+      vi.advanceTimersByTime(ONE_SECOND_MS * settings.secondsBeforeDialogShow!);
     });
     expect(screen.getByText('Doorgaan')).toBeInTheDocument();
     expect(document.title).toBe(documentTitle);
+    const secondsToAdvance = 2.1;
     act(() => {
-      vi.advanceTimersByTime(ONE_SECOND_IN_MS * 2.1);
+      vi.advanceTimersByTime(ONE_SECOND_MS * secondsToAdvance);
     });
     expect(document.title).not.toBe(DOC_TITLE);
   });

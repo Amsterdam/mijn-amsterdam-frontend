@@ -1,10 +1,10 @@
+import { Location } from './Location';
+import styles from './VergunningDetail.module.scss';
 import type { Nachtwerkontheffing as NachtwerkontheffingType } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
-import styles from './VergunningDetail.module.scss';
 
 export function Nachtwerkontheffing({
   vergunning,

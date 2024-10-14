@@ -1,6 +1,3 @@
-import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import {
@@ -11,6 +8,9 @@ import {
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
 } from './stadspas-types';
+import { remoteApi } from '../../../test-utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
 const pashouderResponse = {
   initialen: 'A',

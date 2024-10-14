@@ -4,6 +4,12 @@ import {
   LinkList,
   Paragraph,
 } from '@amsterdam/design-system-react';
+
+import { AfisEmandateStub } from './Afis-thema-config';
+import {
+  useAfisBetaalVoorkeurenData,
+  useAfisThemaData,
+} from './useAfisThemaData.hook';
 import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -15,11 +21,6 @@ import { DisplayProps } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { AfisEmandateStub } from './Afis-thema-config';
-import {
-  useAfisBetaalVoorkeurenData,
-  useAfisThemaData,
-} from './useAfisThemaData.hook';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
@@ -34,7 +35,7 @@ function AfisBusinessPartnerDetails({
   isLoading,
   startCollapsed = true,
 }: AfisBusinessPartnerProps) {
-  const rows = !!businesspartner
+  const rows = businesspartner
     ? entries(labels).map(([key, label]) => {
         const value = businesspartner[key as keyof typeof businesspartner];
         return {

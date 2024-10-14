@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
-import { AppRoutes } from '../../../universal/config/routes';
-import MockApp from '../../pages/MockApp';
+
 import { ProfileName } from './ProfileName';
+import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom, useAppStateGetter } from '../../hooks/useAppState';
+import MockApp from '../../pages/MockApp';
 
 vi.mock('../../hooks/media.hook');
 

@@ -1,15 +1,17 @@
+import { ReactNode, useRef, useState } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import { animated, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
-import { ReactNode, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+
+import styles from './SectionCollapsible.module.scss';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { useContentDimensions } from '../../hooks/useContentDimensions';
 import { withKeyPress } from '../../utils/utils';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import styles from './SectionCollapsible.module.scss';
 
 export interface SectionCollapsibleProps {
   id: string;
@@ -81,11 +83,12 @@ export default function SectionCollapsible({
   const hasNoItemsMessage = !!noItemsMessage;
   const { height: contentHeight } = useContentDimensions(contentRef);
 
+  const DEBOUNCE_MS = 50;
   const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
     if (!isLoading && isReadyForAnimation === false) {
       setReadyForAnimaton(true);
     }
-  }, 50);
+  }, DEBOUNCE_MS);
 
   setReadyForAnimatonDebounced();
 

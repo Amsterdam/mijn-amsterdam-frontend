@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
+
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import StatusDetail, { StatusSourceItem } from './StatusDetail';

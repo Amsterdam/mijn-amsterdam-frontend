@@ -1,14 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
-import { remoteApi } from '../../../test-utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
+
+import { BBVergunning } from './bb-vergunning';
 import {
   createToeristischeVerhuurNotification,
   fetchToeristischeVerhuur,
 } from './toeristische-verhuur';
 import { VakantieverhuurVergunning } from './vakantieverhuur-vergunning';
-import { BBVergunning } from './bb-vergunning';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
+import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('Toeristische verhuur service', () => {
   const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);

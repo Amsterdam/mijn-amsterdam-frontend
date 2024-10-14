@@ -2,6 +2,14 @@ import { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import slug from 'slugme';
 import Supercluster from 'supercluster';
+
+import {
+  discoverSingleDsoApiEmbeddedResponse,
+  dsoApiListUrl,
+  getDsoApiEmbeddedResponse,
+  transformGenericApiListResponse,
+} from './dso-helpers';
+import { Colors } from '../../../universal/config/colors';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
@@ -15,19 +23,13 @@ import {
 } from '../../../universal/config/myarea-datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
+import { DAYS_IN_YEAR, ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import FileCache from '../../helpers/file-cache';
 import {
   axiosRequest,
   getNextUrlFromLinkHeader,
 } from '../../helpers/source-api-request';
-import {
-  discoverSingleDsoApiEmbeddedResponse,
-  dsoApiListUrl,
-  getDsoApiEmbeddedResponse,
-  transformGenericApiListResponse,
-} from './dso-helpers';
-import { Colors } from '../../../universal/config/colors';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -73,13 +75,17 @@ export type DatasetResponse = {
 
 export const BUURT_CACHE_TTL_HOURS = 24;
 export const BUURT_CACHE_TTL_1_DAY_IN_MINUTES = 24 * 60;
-export const BUURT_CACHE_TTL_8_HOURS_IN_MINUTES = 8 * 60;
+const BUURT_CACHE_TTL_8_HOURS = 8;
+export const BUURT_CACHE_TTL_8_HOURS_IN_MINUTES = BUURT_CACHE_TTL_8_HOURS * 60;
+const BUURT_CACHE_TTL_1_WEEK = 7;
 export const BUURT_CACHE_TTL_1_WEEK_IN_MINUTES =
-  7 * BUURT_CACHE_TTL_1_DAY_IN_MINUTES;
+  BUURT_CACHE_TTL_1_WEEK * BUURT_CACHE_TTL_1_DAY_IN_MINUTES;
 export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };
-export const DEFAULT_API_REQUEST_TIMEOUT = 1000 * 60 * 3; // 3 mins
+const DEFAULT_API_REQUEST_TIMEOUT_MINUTES = 3;
+export const DEFAULT_API_REQUEST_TIMEOUT =
+  ONE_SECOND_MS * DEFAULT_API_REQUEST_TIMEOUT_MINUTES;
 export const DEFAULT_TRIES_UNTIL_CONSIDERED_STALE = 5;
 
 interface TransformDetailProps {
@@ -127,6 +133,8 @@ export interface DatasetConfig {
   // If disabled is true, the dataset will not be retrieved.
   disabled?: boolean;
 }
+
+const SPORT_AANBIEDER_LIMIT = 2000;
 
 export const datasetEndpoints: Record<
   DatasetId | DatasetCategoryId,
@@ -300,7 +308,11 @@ export const datasetEndpoints: Record<
     },
   },
   sportaanbieder: {
-    listUrl: dsoApiListUrl('sport/aanbieder', 2000, 'sportaanbieder'),
+    listUrl: dsoApiListUrl(
+      'sport/aanbieder',
+      SPORT_AANBIEDER_LIMIT,
+      'sportaanbieder'
+    ),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/aanbieder/',
     transformList: transformSportaanbiederResponse,
     featureType: 'Point',
@@ -586,10 +598,12 @@ function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
   let features = featuresSource;
 
   const wattRanges = [
+    /* eslint-disable no-magic-numbers */
     { label: 'W1', range: [0, 50] },
     { label: 'W2', range: [50, 100] },
     { label: 'W3', range: [100, 300] },
     { label: 'W4', range: [300, Infinity] },
+    /* eslint-enable no-magic-numbers */
   ];
 
   const connectorTypes = uniqueArray(
@@ -860,8 +874,11 @@ export function transformHardlooproutesResponse(
   );
 
   const groups = [
+    // eslint-disable-next-line no-magic-numbers
     { label: '0-5 km', range: [0, 6] },
+    // eslint-disable-next-line no-magic-numbers
     { label: '6-10 km', range: [6, 11] },
+    // eslint-disable-next-line no-magic-numbers
     { label: 'Meer dan 10 km', range: [11, Infinity] },
   ];
 
@@ -890,11 +907,13 @@ export function transformWiorApiListResponse(
 
   const dateRanges = [
     { label: 'Lopend', range: [-Infinity, 0] },
+    /* eslint-disable no-magic-numbers */
     { label: 'Binnenkort', range: [0.156, 0.5] },
     { label: '0-1 jaar', range: [0, 1] },
     { label: '1-3 jaar', range: [1, 3] },
     { label: '>3 jaar', range: [3, Infinity] },
     { label: 'Onbekend', range: [] },
+    /* eslint-enable no-magic-numbers */
   ];
 
   for (const feature of features) {
@@ -906,8 +925,9 @@ export function transformWiorApiListResponse(
       } else {
         feature.duur = 'enkel';
       }
+
       const startsWithinYears =
-        differenceInDays(new Date(start), Date.now()) / 365;
+        differenceInDays(new Date(start), Date.now()) / DAYS_IN_YEAR;
 
       if (startsWithinYears < 0) {
         feature.datumStartUitvoering = dateRanges[0].label;

@@ -1,4 +1,6 @@
 import Mockdate from 'mockdate';
+
+import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';

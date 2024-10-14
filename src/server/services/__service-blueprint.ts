@@ -1,6 +1,6 @@
-import { getApiConfig } from '../helpers/source-api-helpers';
 import { GenericDocument } from '../../universal/types/App.types';
 import { AuthProfileAndToken } from '../auth/auth-types';
+import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 
 /**
@@ -17,7 +17,7 @@ export interface ServiceNameSource {
 export type ServiceNameSourceData = ServiceNameSource[];
 
 // The items you want to output in this api
-export interface Service extends ServiceNameSource {}
+export type Service = ServiceNameSource;
 
 // The root type of the items you want to output in this api
 export type ServiceNameData = Service[];

@@ -1,6 +1,9 @@
-/* eslint-disable import/first */
+/* tslint:disable:no-implicit-dependencies */
+/* tslint:disable:no-submodule-imports */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
+
+// eslint-disable-next-line import/order
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -20,22 +23,22 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { adminRouter } from './routing/router-admin';
-import { authRouterDevelopment } from './routing/router-development';
 
 import { BFF_PORT, IS_DEBUG } from './config/app';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import { send404 } from './routing/route-helpers';
 import {
   clearRequestCache,
   nocache,
   requestID,
 } from './routing/route-handlers';
+import { send404 } from './routing/route-helpers';
+import { adminRouter } from './routing/router-admin';
+import { authRouterDevelopment } from './routing/router-development';
 import { oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
-import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
+import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { captureException } from './services/monitoring';
 
 const app = express();
@@ -179,10 +182,10 @@ async function startServerBFF() {
       },
     });
   });
-
+  const HEADER_TIMEOUT_SECONDS = 65;
   // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
   server.keepAliveTimeout = 60 * 1000;
-  server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+  server.headersTimeout = HEADER_TIMEOUT_SECONDS * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
 
 if (

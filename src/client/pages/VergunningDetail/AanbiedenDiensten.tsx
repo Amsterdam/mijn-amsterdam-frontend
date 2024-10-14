@@ -1,9 +1,9 @@
+import { Location } from './Location';
+import styles from './VergunningDetail.module.scss';
 import type { AanbiedenDiensten as AanbiedenDienstenVergunning } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { InfoDetail } from '../../components';
 import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
-import styles from './VergunningDetail.module.scss';
 
 export function AanbiedenDiensten({
   vergunning,

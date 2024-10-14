@@ -1,15 +1,6 @@
 import { differenceInMonths, parseISO } from 'date-fns';
 import memoizee from 'memoizee';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
-import { Thema, Themas } from '../../../universal/config/thema';
-import {
-  apiDependencyError,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+
 import {
   NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
   NotificationLabelByType,
@@ -24,6 +15,16 @@ import {
   FILTER_VERGUNNINGEN_DEFAULT,
   fetchVergunningenV2,
 } from './vergunningen';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { Thema, Themas } from '../../../universal/config/thema';
+import {
+  apiDependencyError,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import { isRecentNotification } from '../../../universal/helpers/utils';
+import { MyNotification } from '../../../universal/types';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 
 // prettier-ignore
 export function getNotificationLabels(
@@ -152,7 +153,7 @@ async function fetchVergunningenV2Notifications_(
 export const fetchVergunningenV2Notifications = memoizee(
   fetchVergunningenV2Notifications_,
   {
-    maxAge: 45 * ONE_SECOND_MS,
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
     length: 5,
   }
 );

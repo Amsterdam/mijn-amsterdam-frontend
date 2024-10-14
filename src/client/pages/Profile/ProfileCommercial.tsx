@@ -1,5 +1,14 @@
-import classnames from 'classnames';
 import { useMemo } from 'react';
+
+import classnames from 'classnames';
+
+import { formatKvkProfileData } from './formatDataCommercial';
+import { ProfileSection } from './formatDataPrivate';
+import styles from './Profile.module.scss';
+import {
+  panelConfigCommercial,
+  PanelConfigFormatter,
+} from './profilePanelConfig';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types/App.types';
 import {
@@ -16,13 +25,6 @@ import {
   ThemaIcon,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { formatKvkProfileData } from './formatDataCommercial';
-import { ProfileSection } from './formatDataPrivate';
-import styles from './Profile.module.scss';
-import {
-  panelConfigCommercial,
-  PanelConfigFormatter,
-} from './profilePanelConfig';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,

@@ -1,8 +1,10 @@
-import { useMapInstance } from '@amsterdam/react-maps';
 import { memo } from 'react';
+
+import { useMapInstance } from '@amsterdam/react-maps';
+
 import styles from './Zoom.module.scss';
-import { IconButton } from '../../Button/Button';
 import { IconEnlarge, IconMinimise } from '../../../assets/icons';
+import { IconButton } from '../../Button/Button';
 
 const Zoom: React.FC = () => {
   const mapInstance = useMapInstance();

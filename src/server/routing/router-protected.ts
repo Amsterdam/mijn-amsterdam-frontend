@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+
 import { IS_OT } from '../../universal/config/env';
 import { getAuth } from '../auth/auth-helpers';
 import {
@@ -6,6 +7,14 @@ import {
   fetchVergunningenDocument,
   fetchVergunningenDocumentsList,
 } from '../services';
+import { BffEndpoints } from './bff-routes';
+import {
+  handleCheckProtectedRoute,
+  isAuthenticated,
+  isBlacklistedHandler,
+} from './route-handlers';
+import { sendUnauthorized } from './route-helpers';
+import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   handleFetchAfisBusinessPartner,
@@ -36,13 +45,6 @@ import {
 } from '../services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
-import { BffEndpoints } from './bff-routes';
-import {
-  handleCheckProtectedRoute,
-  isAuthenticated,
-  isBlacklistedHandler,
-} from './route-handlers';
-import { sendUnauthorized } from './route-helpers';
 
 export const router = express.Router();
 
@@ -82,7 +84,7 @@ router.get(
     // See https://nodejs.org/api/net.html#net_socket_setnodelay_nodelay
     req.socket.setNoDelay(true);
     // Tell the client we respond with an event stream
-    res.writeHead(200, {
+    res.writeHead(HTTP_STATUS_CODES.OK, {
       'Content-type': 'text/event-stream',
       'Cache-Control': 'no-cache, no-transform',
       Connection: 'keep-alive',
@@ -221,7 +223,11 @@ router.get(
       );
 
       if (response.status === 'ERROR') {
-        res.status(typeof response.code === 'number' ? response.code : 500);
+        res.status(
+          typeof response.code === 'number'
+            ? response.code
+            : HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+        );
       }
 
       return res.send(response);

@@ -1,4 +1,4 @@
-import { differenceInMonths } from 'date-fns';
+import { isDateInPast, monthsFromNow } from './date';
 import type {
   Samenvoegingsvergunning,
   Onttrekkingsvergunning,
@@ -15,7 +15,6 @@ import {
   VergunningExpirable,
 } from '../../server/services/vergunningen/vergunningen';
 import { CaseType } from '../types/vergunningen';
-import { isDateInPast, monthsFromNow } from './date';
 
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 

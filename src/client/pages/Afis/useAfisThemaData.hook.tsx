@@ -1,4 +1,13 @@
 import { ReactNode, useEffect, useMemo } from 'react';
+
+import {
+  AfisFacturenByStateFrontend,
+  businessPartnerDetailsLabels,
+  eMandateTableConfig,
+  facturenTableConfig,
+  listPageTitle,
+  routes,
+} from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisBusinessPartnerKnownResponse,
@@ -19,14 +28,6 @@ import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
-import {
-  AfisFacturenByStateFrontend,
-  businessPartnerDetailsLabels,
-  eMandateTableConfig,
-  facturenTableConfig,
-  listPageTitle,
-  routes,
-} from './Afis-thema-config';
 
 const AFIS_OVERVIEW_STATE_KEY = 'afis-facturen-overzicht';
 

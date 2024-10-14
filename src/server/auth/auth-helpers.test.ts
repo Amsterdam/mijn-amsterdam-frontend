@@ -1,4 +1,5 @@
 import { Request } from 'express';
+
 import {
   DIGID_ATTR_PRIMARY,
   EH_ATTR_INTERMEDIATE_PRIMARY_ID,
@@ -16,7 +17,6 @@ import {
   isSessionCookieName,
 } from './auth-helpers';
 import { MaSession, TokenData } from './auth-types';
-import UID from 'uid-safe';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,

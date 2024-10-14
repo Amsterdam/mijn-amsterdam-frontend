@@ -1,5 +1,5 @@
-import { IconHome, MapIconHomeCommercial } from '../../assets/icons';
 import styles from './MyAreaLoadingIndicator.module.scss';
+import { IconHome, MapIconHomeCommercial } from '../../assets/icons';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 interface MyAreaLoadingIndicatorProps {

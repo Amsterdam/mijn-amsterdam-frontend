@@ -1,10 +1,11 @@
-import { generatePath } from 'react-router-dom';
 import classnames from 'classnames';
+import { generatePath } from 'react-router-dom';
+
+import styles from './MyNotifications.module.scss';
+import Notification, { MyNotification } from './Notification';
 import { AppRoutes } from '../../../universal/config/routes';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import styles from './MyNotifications.module.scss';
-import Notification, { MyNotification } from './Notification';
 
 export interface MyNotificationsProps {
   items: MyNotification[];

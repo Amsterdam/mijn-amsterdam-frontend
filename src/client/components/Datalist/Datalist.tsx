@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
-import styles from './Datalist.module.scss';
+
 import classNames from 'classnames';
+
+import styles from './Datalist.module.scss';
 
 export interface Row {
   label: ReactNode;

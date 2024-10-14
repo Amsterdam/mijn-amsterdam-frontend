@@ -1,4 +1,4 @@
-import { TextPartContents, ZorgnedAanvraagTransformed } from './zorgned-types';
+import { TextPartContents } from './zorgned-types';
 
 export function parseLabelContent<T>(
   text: TextPartContents<T>,
@@ -6,7 +6,7 @@ export function parseLabelContent<T>(
   today: Date,
   allAanvragen: T[]
 ): string {
-  let rText = text || '';
+  const rText = text || '';
 
   if (typeof rText === 'function') {
     return rText(aanvraag, today, allAanvragen);

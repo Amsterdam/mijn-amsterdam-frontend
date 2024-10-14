@@ -1,14 +1,5 @@
 import memoizee from 'memoizee';
-import {
-  apiSuccessResult,
-  getSettledResult,
-} from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import displayAmount from '../../../universal/helpers/text';
-import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_SECOND_MS } from '../../config/app';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
@@ -28,6 +19,17 @@ import {
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
 } from './stadspas-types';
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
+import {
+  apiSuccessResult,
+  getSettledResult,
+} from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import displayAmount from '../../../universal/helpers/text';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -126,7 +128,7 @@ export async function fetchStadspassenByAdministratienummer(
   );
 
   if (stadspasHouderResponse.status === 'ERROR') {
-    if (stadspasHouderResponse.code === 401) {
+    if (stadspasHouderResponse.code === HTTP_STATUS_CODES.UNAUTHORIZED) {
       // 401 means there is no record available in the GPASS api for the requested administratienummer
       return NO_PASHOUDER_CONTENT_RESPONSE;
     }
@@ -202,7 +204,7 @@ export async function fetchStadspassen_(
   return fetchStadspassenByAdministratienummer(requestID, administratienummer);
 }
 export const fetchStadspassen = memoizee(fetchStadspassen_, {
-  maxAge: 45 * ONE_SECOND_MS,
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
 function transformGpassTransactionsResponse(

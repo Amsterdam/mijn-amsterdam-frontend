@@ -2,11 +2,7 @@ import {
   VergunningBase,
   VergunningFrontendV2,
 } from '../../../../server/services/vergunningen-v2/config-and-types';
-import {
-  DatalistProps,
-  Row,
-  RowSet,
-} from '../../../components/Datalist/Datalist';
+import { Row, RowSet } from '../../../components/Datalist/Datalist';
 import { LocationModal } from '../../../components/LocationModal/LocationModal';
 
 type DataListRowOptions = {
@@ -41,7 +37,7 @@ export const commonRows: Record<string, VergunningDataListRow> = {
         }
       : null,
   decision: (vergunning) =>
-    !!vergunning.decision
+    vergunning.decision
       ? {
           label: 'Resultaat',
           content: vergunning.decision,
@@ -94,11 +90,11 @@ export function getRowsByKey<T extends VergunningFrontendV2>(
   keys: string[]
 ): Record<string, Row | RowSet> {
   const rows = Object.entries(commonRows)
-    .filter(([key, row]) => keys.includes(key))
+    .filter(([key]) => keys.includes(key))
     .map(([key, getRow]) => {
       return [key, getRow(vergunning as T)];
     })
-    .filter(([key, row]) => row !== null);
+    .filter(([_, row]) => row !== null);
   return Object.fromEntries(rows);
 }
 

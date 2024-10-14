@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ListPageParamKind } from './Zorg-thema-config';
+
 import { useZorgThemaData } from './useZorgThemaData';
+import { ListPageParamKind } from './Zorg-thema-config';
+import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export default function ZorgVoorzieningen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();

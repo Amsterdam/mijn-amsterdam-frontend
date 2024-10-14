@@ -1,3 +1,4 @@
+import { Location } from './Location';
 import type { EvenementVergunning as EvenementVergunningType } from '../../../server/services';
 import {
   defaultDateFormat,
@@ -7,7 +8,6 @@ import { StatusLineItem } from '../../../universal/types';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import { Location } from './Location';
 
 export function getEvenementVergunningLineItems(
   vergunning: EvenementVergunningType

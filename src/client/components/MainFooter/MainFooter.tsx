@@ -1,3 +1,5 @@
+import { Fragment, ReactNode } from 'react';
+
 import {
   Footer,
   Grid,
@@ -11,15 +13,15 @@ import {
 } from '@amsterdam/design-system-react';
 import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
-import { Fragment, ReactNode } from 'react';
+
+import styles from './MainFooter.module.scss';
 import type {
   AstNode,
   CMSFooterContent,
   FooterBlock as FooterBlockProps,
 } from '../../../server/services';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './MainFooter.module.scss';
 import { useCMSApi } from '../../hooks/api/useCmsApi';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 function FooterBlock({ id, title, links, description }: FooterBlockProps) {
   return (

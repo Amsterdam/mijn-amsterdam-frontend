@@ -1,5 +1,6 @@
-import classnames from 'classnames';
 import { useEffect } from 'react';
+
+import classnames from 'classnames';
 import {
   BrowserRouter,
   Redirect,
@@ -10,11 +11,14 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { FeatureToggle } from '../universal/config/feature-toggles';
-import { AppRoutes } from '../universal/config/routes';
 
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
+import { loginUrlByAuthMethod } from './config/api';
+import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
+import { useAnalytics } from './hooks/analytics.hook';
+import { FeatureToggle } from '../universal/config/feature-toggles';
+import { AppRoutes } from '../universal/config/routes';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -22,19 +26,19 @@ import {
   useDeeplinkRedirect,
   useSetDeeplinkEntry,
 } from './hooks/useDeeplink.hook';
+import { usePageChange } from './hooks/usePageChange';
 import { useProfileTypeValue } from './hooks/useProfileType';
+import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
-
-import { loginUrlByAuthMethod } from './config/api';
+import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
+import Accessibility from './pages/Accessibility/Accessibility';
+import { AfisThemaPagina } from './pages/Afis/Afis';
+import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
+import { AfisFacturen } from './pages/Afis/AfisFacturen';
+import AVG from './pages/AVG/AVG';
 import { default as LandingPage } from './pages/Landing/Landing';
 
-import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
-import { useAnalytics } from './hooks/analytics.hook';
-import { usePageChange } from './hooks/usePageChange';
-import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
-import AVG from './pages/AVG/AVG';
 import AVGDetail from './pages/AVGDetail/AVGDetail';
-import Accessibility from './pages/Accessibility/Accessibility';
 import Bezwaren from './pages/Bezwaren/Bezwaren';
 import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
 import BFF500Error from './pages/BffError/BffError';
@@ -67,6 +71,7 @@ import Krefia from './pages/Krefia/Krefia';
 import MyNotifications from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import Parkeren from './pages/Parkeren/Parkeren';
+import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
@@ -83,11 +88,6 @@ import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgV2 from './pages/Zorg/ZorgV2';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import { useMonitoring } from './utils/monitoring';
-import { AfisThemaPagina } from './pages/Afis/Afis';
-import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
-import { AfisFacturen } from './pages/Afis/AfisFacturen';
-import { useTrackThemas } from './hooks/useTrackThemas.hook';
-import { ParkerenList } from './pages/Parkeren/ParkerenList';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);

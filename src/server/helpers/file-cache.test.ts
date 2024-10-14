@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import FileCache from './file-cache';
 
 vi.mock('flat-cache', () => {

@@ -1,5 +1,8 @@
-import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
+
+import classnames from 'classnames';
+
+import styles from './ErrorMessages.module.scss';
 import { ApiError } from '../../../universal/types';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
@@ -7,7 +10,6 @@ import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { Button, IconButton, LinkdInline } from '../Button/Button';
 import Modal from '../Modal/Modal';
-import styles from './ErrorMessages.module.scss';
 
 interface ComponentProps {
   className?: string;

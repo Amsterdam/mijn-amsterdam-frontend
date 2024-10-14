@@ -8,18 +8,17 @@ import {
   test,
   vi,
 } from 'vitest';
-import {
-  getReqMockWithOidc,
-  RequestMock,
-  ResponseMock,
-} from '../../test-utils';
-import * as helpers from '../auth/auth-helpers';
+
 import {
   addServiceResultHandler,
   getServiceResultsForTips,
   getTipNotifications,
   servicesTipsByProfileType,
 } from './controller';
+import {
+  getReqMockWithOidc,
+  ResponseMock,
+} from '../../test-utils';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -179,7 +178,7 @@ describe('controller', () => {
   });
 
   test('addServiceResultHandler', async () => {
-    let resMock = ResponseMock.new();
+    const resMock = ResponseMock.new();
     const data = { foo: 'bar' };
     const servicePromise = Promise.resolve(data);
 

@@ -1,9 +1,10 @@
 import Mockdate from 'mockdate';
+
+import { fetchWmo, forTesting } from './wmo';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
-import { fetchWmo, forTesting } from './wmo';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),

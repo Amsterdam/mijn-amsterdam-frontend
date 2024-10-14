@@ -1,6 +1,9 @@
+import { useRef, useState } from 'react';
+
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { useRef, useState } from 'react';
+
+import styles from './Landing.module.scss';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
@@ -13,7 +16,6 @@ import {
 } from '../../components';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
-import styles from './Landing.module.scss';
 
 export default function Landing() {
   const loginButton = useRef(null);

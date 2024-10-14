@@ -1,7 +1,10 @@
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+
 import { Icon } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import styles from './ProfileName.module.scss';
 import type { KVKData } from '../../../server/services/kvk';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -11,7 +14,6 @@ import { IconProfile } from '../../assets/icons';
 import { useAppStateReady } from '../../hooks/useAppState';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MaRouterLink } from '../MaLink/MaLink';
-import styles from './ProfileName.module.scss';
 
 interface CommercialProfileNameProps {
   company?: KVKData;

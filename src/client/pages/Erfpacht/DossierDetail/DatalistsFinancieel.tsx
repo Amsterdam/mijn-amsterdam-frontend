@@ -1,13 +1,15 @@
 import { Heading, Link } from '@amsterdam/design-system-react';
+
+import { DatalistCanons } from './DatalistCanons';
+import { ErfpachtDatalistProps } from './DatalistGeneral';
+import styles from './ErfpachtDossierDetail.module.scss';
 import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
 } from '../../../../server/services/simple-connect/erfpacht';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
-import { DatalistCanons } from './DatalistCanons';
-import { ErfpachtDatalistProps } from './DatalistGeneral';
-import styles from './ErfpachtDossierDetail.module.scss';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;
@@ -93,15 +95,20 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
 }
 
 function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
-  return dossier.financieel?.toekomstigePeriodeList?.map((periode) => (
-    <DatalistFinancieelPeriode
-      titelAlgemeneBepaling={periode.titelFinancieelToekomstigeAlgemeneBepaling}
-      titelPeriodeVan={periode.titelFinancieelToekomstigePeriodeVan}
-      titelCanon={periode.titelFinancieelToekomstigeCanon}
-      periode={periode}
-      isHuidigePeriode={false}
-    />
-  ));
+  return dossier.financieel?.toekomstigePeriodeList
+    ?.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)
+    .map((periode) => (
+      <DatalistFinancieelPeriode
+        key={periode.titelFinancieelToekomstigeAlgemeneBepaling}
+        titelAlgemeneBepaling={
+          periode.titelFinancieelToekomstigeAlgemeneBepaling
+        }
+        titelPeriodeVan={periode.titelFinancieelToekomstigePeriodeVan}
+        titelCanon={periode.titelFinancieelToekomstigeCanon}
+        periode={periode}
+        isHuidigePeriode={false}
+      />
+    ));
 }
 
 export function DatalistsFinancieel({ dossier }: ErfpachtDatalistProps) {

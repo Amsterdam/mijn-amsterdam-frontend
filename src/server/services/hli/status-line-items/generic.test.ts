@@ -1,5 +1,5 @@
-import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types';
 import { forTesting } from './generic';
+import { ZorgnedAanvraagTransformed } from '../../zorgned/zorgned-types';
 
 describe('HLI/Status-line-items/Generic', () => {
   describe('getEindeRechtDescription', () => {

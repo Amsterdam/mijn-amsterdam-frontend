@@ -1,6 +1,8 @@
-import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import { ReactNode, useMemo } from 'react';
+
+import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
+
 import {
   ErrorAlert,
   LoadingContent,

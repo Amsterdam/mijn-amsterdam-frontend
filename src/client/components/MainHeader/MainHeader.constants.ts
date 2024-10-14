@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router-dom';
+
 import { AppRoutes } from '../../../universal/config/routes';
 import { Thema } from '../../../universal/config/thema';
 import { LinkProps } from '../../../universal/types';

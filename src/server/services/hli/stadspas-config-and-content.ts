@@ -1,9 +1,10 @@
 import { generatePath } from 'react-router-dom';
+
+import { StadspasFrontend } from './stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types';
-import { StadspasFrontend } from './stadspas-types';
 
 export const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
 export const GPASS_BUDGET_ONLY_FOR_CHILDREN = true;

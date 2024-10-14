@@ -1,10 +1,6 @@
 import MockDate from 'mockdate';
 import { afterAll, describe, expect, it } from 'vitest';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import { remoteApi } from '../../../test-utils';
-import { jsonCopy } from '../../../universal/helpers/utils';
-import { CaseType } from '../../../universal/types/vergunningen';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+
 import {
   BZB,
   BZP,
@@ -16,6 +12,11 @@ import {
   getVergunningNotifications,
   transformVergunningenData,
 } from './vergunningen';
+import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
+import { remoteApi } from '../../../test-utils';
+import { jsonCopy } from '../../../universal/helpers/utils';
+import { CaseType } from '../../../universal/types/vergunningen';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('Vergunningen service', () => {
   const DUMMY_RESPONSE = jsonCopy(vergunningenData);

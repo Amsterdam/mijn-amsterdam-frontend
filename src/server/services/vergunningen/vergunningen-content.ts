@@ -1,12 +1,6 @@
 import { subMonths } from 'date-fns';
 import { LinkProps } from 'react-router-dom';
-import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
-import {
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  getCustomTitleForVergunningWithLicensePlates,
-  hasWorkflow,
-} from '../../../universal/helpers/vergunningen';
-import { CaseType } from '../../../universal/types/vergunningen';
+
 import {
   BZB,
   BZP,
@@ -16,6 +10,13 @@ import {
   Vergunning,
   VergunningExpirable,
 } from './vergunningen';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
+  getCustomTitleForVergunningWithLicensePlates,
+  hasWorkflow,
+} from '../../../universal/helpers/vergunningen';
+import { CaseType } from '../../../universal/types/vergunningen';
 
 type NotificationStatusType =
   | 'almostExpired'
@@ -393,9 +394,9 @@ export const notificationContent: NotificationContent = {
             : ''
         } ${item.title} verleend`,
       datePublished: (item) =>
-        (!!item.dateDecision
+        (item.dateDecision
           ? item.dateDecision
-          : !!(item as RVVSloterweg).dateWorkflowVerleend
+          : (item as RVVSloterweg).dateWorkflowVerleend
             ? (item as RVVSloterweg).dateWorkflowVerleend
             : item.dateRequest) ?? '',
       description: (item) =>
