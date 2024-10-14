@@ -6,10 +6,12 @@ import {
   EH_ATTR_PRIMARY_ID,
   EH_ATTR_PRIMARY_ID_LEGACY,
   OIDC_SESSION_COOKIE_NAME,
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
 } from './auth-config';
 import {
   createLogoutHandler,
   getAuthProfile,
+  getReturnToUrl,
   hasSessionCookie,
   isSessionCookieName,
 } from './auth-helpers';
@@ -226,6 +228,36 @@ describe('auth-helpers', () => {
       expect(resMock.clearCookie).toHaveBeenCalled();
       expect(resMock.redirect).toHaveBeenCalledWith('http://foo.bar');
       expect(addToBlackListSpy).not.toHaveBeenCalled();
+    });
+  });
+  describe('getReturnToUrl', () => {
+    test('getReturnToUrl should return the corrent zaak-status url', () => {
+      const url = getReturnToUrl({
+        returnTo: '/zaak-status',
+        id: 'Z%2F000%2F000001',
+        thema: 'vergunningen',
+      });
+
+      expect(url).toBe(
+        'http://frontend-host/zaak-status?id=Z%2F000%2F000001&thema=vergunningen'
+      );
+    });
+
+    test('getReturnToUrl should return the corrent RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER  url', () => {
+      const url = getReturnToUrl({
+        returnTo: RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+        'amsapp-session-token': 'foo-bar',
+      });
+
+      expect(url).toBe(
+        'http://bff-api-host/api/v1/services/amsapp/stadspas/administratienummer/foo-bar'
+      );
+    });
+
+    test('getReturnUrl should return the landingpage when no returnTo is provided', () => {
+      const url = getReturnToUrl({});
+
+      expect(url).toBe('/api/v1/auth/digid/login/landing');
     });
   });
 });
