@@ -6,7 +6,7 @@ import {
   isThisYear,
   parseISO,
 } from 'date-fns';
-import NL_LOCALE from 'date-fns/locale/nl';
+import { nl } from 'date-fns/locale/nl';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -17,7 +17,7 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
   }
   try {
     const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
-    return format(d, fmt, { locale: NL_LOCALE });
+    return format(d, fmt, { locale: nl });
   } catch (error) {
     console.error(`Could not parse date ${datestr}`);
   }
@@ -38,7 +38,7 @@ export function dateTimeFormatYear(datestr: string | Date | number) {
 }
 
 export function formatDurationInWords(datestr: string) {
-  return formatDistanceToNow(new Date(datestr), { locale: NL_LOCALE });
+  return formatDistanceToNow(new Date(datestr), { locale: nl });
 }
 
 export function formatMonthAndYear(datestr: string | Date | number) {
