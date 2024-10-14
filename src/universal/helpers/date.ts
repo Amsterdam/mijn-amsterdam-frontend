@@ -81,8 +81,15 @@ export function isDateInPast(
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
   return (a: any, b: any) => {
-    const c = parseISO(a[sortKey]);
-    const d = parseISO(b[sortKey]);
+    const v1 = a[sortKey];
+    const v2 = b[sortKey];
+    const c =
+      v1 instanceof Date ? v1 : typeof v1 === 'string' ? parseISO(v1) : null;
+    const d =
+      v2 instanceof Date ? v2 : typeof v2 === 'string' ? parseISO(v2) : null;
+    if (!c || !d) {
+      return 0;
+    }
     // @ts-ignore
     return direction === 'asc' ? c - d : d - c;
   };
