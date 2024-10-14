@@ -120,6 +120,7 @@ export function ToeristscheVerhuurThema() {
       key="lvv-registraties"
       title={tableConfigLVVRegistraties.title}
       zaken={lvvRegistraties}
+      maxItems={-1}
       displayProps={tableConfigLVVRegistraties.displayProps}
       textNoContent={`U heeft geen ${tableConfigLVVRegistraties.title.toLowerCase()}`}
     />

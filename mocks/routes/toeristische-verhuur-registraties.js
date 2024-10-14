@@ -2,9 +2,6 @@ const settings = require('../settings');
 const BSN_RESPONSE = require('../fixtures/registraties-toeristische-verhuur-bsn.json');
 const NORMAL_RESPONSE = require('../fixtures/registraties-toeristische-verhuur.json');
 
-const A_NUMBER = 'AAAAAAAAAAAAAAAAAAAA';
-const B_NUMBER = 'BBBBBBBBBBBBBBBBBBBB';
-
 module.exports = [
   {
     id: 'post-toeristische-verhuur-with-bsn',
@@ -22,36 +19,20 @@ module.exports = [
     ],
   },
   {
-    id: 'get-toeristische-verhuur-with-a-number',
-    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/${A_NUMBER}`,
+    id: 'get-toeristische-verhuur-by-number',
+    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/:number`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: {
-            ...NORMAL_RESPONSE,
-            registrationNumber: A_NUMBER,
-          },
-        },
-      },
-    ],
-  },
-  {
-    id: 'get-toeristische-verhuur-with-b-number',
-    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/${B_NUMBER}`,
-    method: 'GET',
-    variants: [
-      {
-        id: 'standard',
-        type: 'json',
-        options: {
-          status: 200,
-          body: {
-            ...NORMAL_RESPONSE,
-            registrationNumber: B_NUMBER,
+          middleware: (req, res, next) => {
+            const { number } = req.params;
+            return res.send({
+              ...NORMAL_RESPONSE,
+              registrationNumber: number,
+            });
           },
         },
       },
