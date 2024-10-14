@@ -9,6 +9,7 @@ import {
 } from '../../../../server/services/simple-connect/erfpacht';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;
@@ -94,9 +95,8 @@ function DatalistHuidigePeriode({ dossier }: ErfpachtDatalistProps) {
 }
 
 function DatalistToekomstigePeriodes({ dossier }: ErfpachtDatalistProps) {
-  const firstItemsCount = 3;
   return dossier.financieel?.toekomstigePeriodeList
-    ?.slice(0, firstItemsCount)
+    ?.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)
     .map((periode) => (
       <DatalistFinancieelPeriode
         key={periode.titelFinancieelToekomstigeAlgemeneBepaling}

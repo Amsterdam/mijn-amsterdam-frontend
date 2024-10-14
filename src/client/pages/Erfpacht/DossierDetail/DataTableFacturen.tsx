@@ -55,7 +55,6 @@ export function DataTableFacturen({
     },
   ];
 
-  const firstItemsCount = 3;
   return (
     <Grid className={styles.FacturenBetaler}>
       <Grid.Cell span="all">
@@ -103,7 +102,10 @@ export function DataTableFacturen({
         />
         {!!dossier.facturen?.facturen?.length && (
           <TableV2
-            items={dossier.facturen.facturen.slice(0, firstItemsCount)}
+            items={dossier.facturen.facturen.slice(
+              0,
+              MAX_TABLE_ROWS_ON_THEMA_PAGINA
+            )}
             className={classNames(
               styles.FacturenTable,
               styles.DossierDetailFacturenTable

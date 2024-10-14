@@ -182,10 +182,10 @@ async function startServerBFF() {
       },
     });
   });
-
+  const HEADER_TIMEOUT_SECONDS = 65;
   // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
   server.keepAliveTimeout = 60 * 1000;
-  server.headersTimeout = 65 * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+  server.headersTimeout = HEADER_TIMEOUT_SECONDS * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
 
 if (

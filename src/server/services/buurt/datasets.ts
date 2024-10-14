@@ -907,15 +907,13 @@ export function transformWiorApiListResponse(
 
   const dateRanges = [
     { label: 'Lopend', range: [-Infinity, 0] },
-    // eslint-disable-next-line no-magic-numbers
+    /* eslint-disable no-magic-numbers */
     { label: 'Binnenkort', range: [0.156, 0.5] },
-
     { label: '0-1 jaar', range: [0, 1] },
-    // eslint-disable-next-line no-magic-numbers
     { label: '1-3 jaar', range: [1, 3] },
-    // eslint-disable-next-line no-magic-numbers
     { label: '>3 jaar', range: [3, Infinity] },
     { label: 'Onbekend', range: [] },
+    /* eslint-enable no-magic-numbers */
   ];
 
   for (const feature of features) {

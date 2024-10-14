@@ -19,7 +19,7 @@ import {
   ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
-import { ExternalUrls } from '../../config/app';
+import { ExternalUrls, MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
@@ -123,12 +123,14 @@ export default function Inkomen() {
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsCompleted.length;
 
-  const firstItemsCount = 3;
   const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(
     0,
-    firstItemsCount
+    MAX_TABLE_ROWS_ON_THEMA_PAGINA
   );
-  const itemsSpecificationsYearly = jaaropgaven?.slice(0, firstItemsCount);
+  const itemsSpecificationsYearly = jaaropgaven?.slice(
+    0,
+    MAX_TABLE_ROWS_ON_THEMA_PAGINA
+  );
 
   const isLoadingWpi =
     isLoading(WPI_AANVRAGEN) ||
@@ -222,7 +224,7 @@ export default function Inkomen() {
           />
         )}
         {uitkeringsspecificaties?.length &&
-          uitkeringsspecificaties.length > firstItemsCount && (
+          uitkeringsspecificaties.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
             <p className={styles.ShowAllButtonContainer}>
               <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
             </p>
@@ -247,11 +249,12 @@ export default function Inkomen() {
             displayProps={annualStatementsTableDisplayProps}
           />
         )}
-        {jaaropgaven?.length && jaaropgaven.length > firstItemsCount && (
-          <p className={styles.ShowAllButtonContainer}>
-            <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
-          </p>
-        )}
+        {jaaropgaven?.length &&
+          jaaropgaven.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+            <p className={styles.ShowAllButtonContainer}>
+              <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
+            </p>
+          )}
       </SectionCollapsible>
     </OverviewPage>
   );
