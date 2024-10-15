@@ -19,11 +19,11 @@ import { RvvSloterweg } from './RvvSloterweg';
 import { StatusLineItems } from './StatusLineItems';
 import { Touringcar } from './Touringcar';
 import { TVMRVVObject } from './TVMRVVObject';
-import { VOB } from './VOB';
 import styles from './VergunningDetail.module.scss';
+import { VOB } from './VOB';
 import { Woonvergunningen } from './Woonvergunningen';
-import { ZwaarVerkeer } from './ZwaarVerkeer';
 import { WVOS } from './WVOS';
+import { ZwaarVerkeer } from './ZwaarVerkeer';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {

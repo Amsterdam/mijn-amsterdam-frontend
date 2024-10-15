@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
-import { Request, Response, Router } from 'express';
+import { Response, Router } from 'express';
+
+import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
@@ -7,7 +9,6 @@ import {
 } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
 import {
   RequestWithRouteAndQueryParams,
   sendUnauthorized,

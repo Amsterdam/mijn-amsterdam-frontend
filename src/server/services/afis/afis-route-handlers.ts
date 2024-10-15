@@ -1,4 +1,12 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
+import {
+  FACTUUR_STATE_KEYS,
+  fetchAfisFacturenByState,
+  fetchAfisFacturenOverview,
+} from './afis-facturen';
+import { AfisFactuurState } from './afis-types';
 import { getAuth } from '../../auth/auth-helpers';
 import {
   RequestWithQueryParams,
@@ -8,13 +16,6 @@ import {
   sendUnauthorized,
 } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
-import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
-import {
-  FACTUUR_STATE_KEYS,
-  fetchAfisFacturenByState,
-  fetchAfisFacturenOverview,
-} from './afis-facturen';
-import { AfisFactuurState } from './afis-types';
 
 export async function handleFetchAfisBusinessPartner(
   req: RequestWithQueryParams<{ id: string }>,
@@ -35,7 +36,7 @@ export async function handleFetchAfisBusinessPartner(
     return sendResponse(res, decryptResult);
   }
 
-  let businessPartnerId = decryptResult.content;
+  const businessPartnerId = decryptResult.content;
 
   const response = await fetchAfisBusinessPartnerDetails(
     res.locals.requestID,

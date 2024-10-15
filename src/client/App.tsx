@@ -36,8 +36,6 @@ import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
 import AVG from './pages/AVG/AVG';
-import { default as LandingPage } from './pages/Landing/Landing';
-
 import AVGDetail from './pages/AVGDetail/AVGDetail';
 import Bezwaren from './pages/Bezwaren/Bezwaren';
 import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
@@ -68,6 +66,7 @@ import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificat
 import Klachten from './pages/Klachten/Klachten';
 import KlachtenDetail from './pages/KlachtenDetail/KlachtenDetail';
 import Krefia from './pages/Krefia/Krefia';
+import { default as LandingPage } from './pages/Landing/Landing';
 import MyNotifications from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import Parkeren from './pages/Parkeren/Parkeren';
