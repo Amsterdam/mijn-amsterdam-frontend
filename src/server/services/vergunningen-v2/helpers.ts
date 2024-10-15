@@ -8,7 +8,6 @@ import {
   DecosZaakTypeTransformer,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   VergunningV2,
-  VergunningExpirable,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import {

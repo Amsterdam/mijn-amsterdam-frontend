@@ -1,4 +1,9 @@
 import {
+  LVVRegistratie,
+  LVVRegistratieSource,
+  ToeristischeVerhuurRegistratieNumberSource,
+} from './toeristische-verhuur-types';
+import {
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
@@ -9,11 +14,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import {
-  LVVRegistratie,
-  LVVRegistratieSource,
-  ToeristischeVerhuurRegistratieNumberSource,
-} from './toeristische-verhuur-types';
 
 export async function fetchRegistraties(
   requestID: RequestID,

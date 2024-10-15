@@ -1,4 +1,6 @@
 import { generatePath } from 'react-router-dom';
+
+import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import {
@@ -8,7 +10,6 @@ import {
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
 import {
   VakantieverhuurVergunning as VakantieverhuurVergunningDecos,
   Vergunning,
@@ -16,7 +17,7 @@ import {
   fetchVergunningen,
   toeristischeVerhuurVergunningTypes,
 } from '../vergunningen/vergunningen';
-import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
+import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
 
 function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   const isAfgehandeld =

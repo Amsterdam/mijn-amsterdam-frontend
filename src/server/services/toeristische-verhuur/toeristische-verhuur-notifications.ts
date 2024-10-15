@@ -1,5 +1,14 @@
 import { subMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
+
+import {
+  fetchToeristischeVerhuur,
+  hasOtherActualVergunningOfSameType,
+} from './toeristische-verhuur';
+import {
+  LVVRegistratie,
+  ToeristischeVerhuurVergunning,
+} from './toeristische-verhuur-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import {
@@ -12,14 +21,6 @@ import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen-v2/config-and-types';
 import { isNearEndDate } from '../vergunningen-v2/helpers';
-import {
-  fetchToeristischeVerhuur,
-  hasOtherActualVergunningOfSameType,
-} from './toeristische-verhuur';
-import {
-  LVVRegistratie,
-  ToeristischeVerhuurVergunning,
-} from './toeristische-verhuur-types';
 
 export function createToeristischeVerhuurNotification(
   vergunning: ToeristischeVerhuurVergunning,
@@ -129,7 +130,7 @@ function createRegistratieNotification(
 ): MyNotification {
   const title = 'Aanvraag landelijk registratienummer toeristische verhuur';
   const description = `Uw landelijke registratienummer voor toeristische verhuur is toegekend. Uw registratienummer is ${vergunning.registrationNumber}.`;
-  const datePublished = !!vergunning.agreementDate
+  const datePublished = vergunning.agreementDate
     ? vergunning.agreementDate
     : '';
   const cta = 'Bekijk uw overzicht toeristische verhuur';

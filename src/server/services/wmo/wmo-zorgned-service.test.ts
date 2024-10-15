@@ -1,6 +1,7 @@
 import Mockdate from 'mockdate';
 
 import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
+import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 import { remoteApiHost } from '../../../setupTests';
 import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -9,7 +10,6 @@ import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types';
-import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 
 const mocks = vi.hoisted(() => {
   return {

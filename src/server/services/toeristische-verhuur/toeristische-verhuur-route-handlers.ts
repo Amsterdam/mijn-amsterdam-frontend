@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
+
+import { fetchBBDocumentsList } from './toeristische-verhuur-powerbrowser-bb-vergunning';
 import { getAuth } from '../../auth/auth-helpers';
 import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
 import {
   decryptEncryptedRouteParamAndValidateSessionID,
   SessionIDAndROuteParamIdEncrypted,
 } from '../shared/decrypt-route-param';
-import { fetchBBDocumentsList } from './toeristische-verhuur-powerbrowser-bb-vergunning';
 
 export async function handleFetchDocumentsRoute(
   req: Request<{ id: SessionIDAndROuteParamIdEncrypted }>,
@@ -26,7 +27,7 @@ export async function handleFetchDocumentsRoute(
     return sendResponse(res, decryptResult);
   }
 
-  let zaakId = decryptResult.content;
+  const zaakId = decryptResult.content;
 
   const response = await fetchBBDocumentsList(
     res.locals.requestID,

@@ -1,35 +1,23 @@
-import { subMonths } from 'date-fns';
 import memoize from 'memoizee';
-import { generatePath } from 'react-router-dom';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+
+import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
+import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning';
 import {
-  apiDependencyError,
+  ToeristischeVerhuurVergunning,
+} from './toeristische-verhuur-types';
+import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import {
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
 import {
-  dateFormat,
   dateSort,
   isDateInPast,
 } from '../../../universal/helpers/date';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import {
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  isNearEndDate,
-} from '../../../universal/helpers/vergunningen';
-import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-import {
-  LVVRegistratie,
-  ToeristischeVerhuurVergunning,
-} from './toeristische-verhuur-types';
-import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
-import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
 
 export function hasOtherActualVergunningOfSameType(
   items: ToeristischeVerhuurVergunning[],

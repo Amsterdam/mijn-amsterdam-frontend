@@ -13,10 +13,9 @@ import {
   VergunningenSourceData,
 } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom } from '../../hooks/useAppState';
-
-import MockApp from '../MockApp';
 import { AppState } from '../../../universal/types';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
 const pushMock = vi.fn();
 
 const testState = {

@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+
 import { ListPageParamKind } from './toeristischeVerhuur-thema-config';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
+import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export function ToeristischeVerhuurVergunningen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();

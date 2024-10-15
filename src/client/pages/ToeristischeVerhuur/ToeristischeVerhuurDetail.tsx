@@ -1,16 +1,18 @@
+import { useEffect } from 'react';
+
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
+
+import styles from './ToeristischeVerhuurDetail.module.scss';
+import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { GenericDocument } from '../../../universal/types';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { LocationModal } from '../../components/LocationModal/LocationModal';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
-import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
-import styles from './ToeristischeVerhuurDetail.module.scss';
 import { BagThemas } from '../../config/thema';
-import { GenericDocument } from '../../../universal/types';
 import { useAppStateBagApi } from '../../hooks/useAppState';
-import { useEffect } from 'react';
+import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 type DetailPageContentProps = {
   vergunning: ToeristischeVerhuurVergunning;

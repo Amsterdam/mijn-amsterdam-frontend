@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+
+import styles from './ToeristischeVerhuur.module.scss';
 import {
   BBVergunning,
   LVVRegistratie,
@@ -8,7 +10,6 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { DisplayProps } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import styles from './ToeristischeVerhuur.module.scss';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;

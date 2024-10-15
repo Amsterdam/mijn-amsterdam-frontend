@@ -1,5 +1,11 @@
 import { Alert, Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
+
+import { routes } from './toeristischeVerhuur-thema-config';
+import {
+  BB_VERGUNNING_DISCLAIMER,
+  useToeristischeVerhuurThemaData,
+} from './useToeristischeVerhuur.hook';
 import {
   BBVergunning,
   LVVRegistratie,
@@ -10,11 +16,6 @@ import { LinkProps } from '../../../universal/types/App.types';
 import { LinkdInline } from '../../components';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { routes } from './toeristischeVerhuur-thema-config';
-import {
-  BB_VERGUNNING_DISCLAIMER,
-  useToeristischeVerhuurThemaData,
-} from './useToeristischeVerhuur.hook';
 
 export function ToeristscheVerhuurThema() {
   const {

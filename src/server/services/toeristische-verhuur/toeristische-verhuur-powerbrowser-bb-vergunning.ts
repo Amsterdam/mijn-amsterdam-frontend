@@ -1,5 +1,18 @@
+import isBefore from 'date-fns/isBefore';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
+
+import {
+  BBVergunning,
+  BBVergunningZaakResult,
+  fieldMap,
+  PBZaakCompacted,
+  PBZaakFields,
+  PBZaakRecord,
+  PBZaakResultaat,
+  SearchRequestResponse,
+} from './toeristische-verhuur-types';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
@@ -21,18 +34,6 @@ import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
-import {
-  BBVergunning,
-  BBVergunningZaakResult,
-  fieldMap,
-  PBZaakCompacted,
-  PBZaakFields,
-  PBZaakRecord,
-  PBZaakResultaat,
-  SearchRequestResponse,
-} from './toeristische-verhuur-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import isBefore from 'date-fns/isBefore';
 
 // See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
@@ -150,7 +151,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
     return null;
   }
 
-  let resultaatTransformed: BBVergunning['result'] = resultaat;
+  const resultaatTransformed: BBVergunning['result'] = resultaat;
 
   const resultatenVerleend = [
     'Verleend met overgangsrecht',
@@ -208,8 +209,8 @@ function transformZaakStatusResponse(
     return datum || null;
   }
 
-  let datumInBehandeling = getStatusDate(['In behandeling']) ?? '';
-  let dateDecision: string =
+  const datumInBehandeling = getStatusDate(['In behandeling']) ?? '';
+  const dateDecision: string =
     getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
 
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
