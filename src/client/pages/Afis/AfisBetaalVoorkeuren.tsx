@@ -178,7 +178,7 @@ export function AfisBetaalVoorkeuren() {
         </>
       )}
       {hasEmandatesError && (
-        <>Wij kunnen nu geen automatische incasso's laten zien.</>
+        <>Wij kunnen nu geen automatische incasso&apos;s laten zien.</>
       )}
     </>
   );
