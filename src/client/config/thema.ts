@@ -104,13 +104,12 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]:
     `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]:
-    `Vergunning Bed & Breakfast | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV']]:
-    `Vergunning vakantieverhuur | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]:
+    `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
-  [AppRoutes.PARKEREN]: 'Parkeren',
+  [AppRoutes.PARKEREN]: `${ThemaTitles.PARKEREN} | overzicht`,
+  [AppRoutes['PARKEREN/LIST']]: `Vergunningen | ${ThemaTitles.PARKEREN}`,
   [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
   [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
   [AppRoutes.HORECA]: 'Horeca | overzicht',

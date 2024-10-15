@@ -1,8 +1,8 @@
+import { BESLUIT, EINDE_RECHT } from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
-import { BESLUIT, EINDE_RECHT } from './generic';
 
 const EINDE_RECHT_CZM = {
   ...EINDE_RECHT,

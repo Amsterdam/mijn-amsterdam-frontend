@@ -127,7 +127,7 @@ export function AfisBetaalVoorkeuren() {
     </>
   );
 
-  const pageContentTables = (
+  const pageContentMain = (
     <>
       <AfisBusinessPartnerDetails
         businesspartner={businesspartnerDetails}
@@ -202,7 +202,7 @@ export function AfisBetaalVoorkeuren() {
         },
       ]}
       pageContentTop={pageContentTop}
-      pageContentTables={pageContentTables}
+      pageContentMain={pageContentMain}
     />
   );
 }

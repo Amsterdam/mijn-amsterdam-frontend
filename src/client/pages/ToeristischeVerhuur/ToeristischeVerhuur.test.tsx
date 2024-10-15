@@ -1,52 +1,47 @@
 import { render } from '@testing-library/react';
+import Mockdate from 'mockdate';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ToeristischeVerhuur from './ToeristischeVerhuur';
+import { ToeristscheVerhuurThema } from './ToeristischeVerhuur';
 
 type VerhuurState = Pick<AppState, 'TOERISTISCHE_VERHUUR'>;
 
 const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
   lvvRegistraties: [
     {
-      street: 'Amstel',
-      houseNumber: '1',
-      houseLetter: null,
-      houseNumberExtension: null,
-      postalCode: '1012PN',
-      city: 'Amsterdam',
+      address: 'Amstel 1 1017AB Amsterdam',
       registrationNumber: 'E7B8 B042 8A92 37E5 0363',
       agreementDate: '2021-01-01T10:47:44.6107122',
+      agreementDateFormatted: '1 januari 2021',
     },
     {
-      street: 'Amstel',
-      houseNumber: '1',
-      houseLetter: null,
-      houseNumberExtension: null,
-      postalCode: '1012PN',
-      city: 'Amsterdam',
+      address: 'Amstel 1 1017AB Amsterdam',
       registrationNumber: 'BBBBBBBBBBBBBBBBBBBB',
       agreementDate: '2021-01-01T10:47:44.6107122',
+      agreementDateFormatted: '1 januari 2021',
     },
   ],
   vakantieverhuurVergunningen: [
     {
       id: 'Z-XXX-000007C',
-      titel: 'Vergunning vakantieverhuur',
-      datumAfhandeling: null,
-      datumAanvraag: '10 mei 2022',
-      datumVan: '01 augustus 2022',
-      datumTot: '22 augustus 2023',
+      title: 'Vergunning vakantieverhuur',
+      dateDecision: null,
+      dateReceived: '2022-05-10',
+      dateStart: '2022-08-01',
+      dateStartFormatted: '01 augustus 2022',
+      dateEnd: '2023-08-23',
+      dateEndFormatted: '22 augustus 2023',
       adres: 'Amstel 1 1017AB Amsterdam',
-      resultaat: 'Verleend',
+      result: 'Verleend',
       zaaknummer: 'Z/XXX/000007c',
-      statussen: [
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -71,33 +66,36 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
         },
         {
           id: 'step-4',
-          status: 'Gewijzigd',
+          status: 'Verlopen',
           datePublished: '2023-08-22',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
           isActive: true,
           isChecked: true,
         },
       ],
-      documentenUrl:
+      fetchDocumentsUrl:
         '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
       link: {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      isActief: false,
-      status: 'Afgehandeld',
+      isActual: false,
+      status: 'Verleend',
+      documents: [],
     },
     {
       id: 'Z-XXX-000007B',
-      titel: 'Vergunning vakantieverhuur',
-      datumAfhandeling: null,
-      datumAanvraag: '10 mei 2023',
-      datumVan: '01 augustus 2023',
-      datumTot: '30 september 2024',
+      title: 'Vergunning vakantieverhuur',
+      dateDecision: null,
+      dateReceived: '10 mei 2023',
+      dateStart: '01 augustus 2023',
+      dateStartFormatted: '',
+      dateEnd: '30 september 2024',
+      dateEndFormatted: '',
       adres: 'Amstel 1 1017AB Amsterdam',
-      resultaat: 'Verleend',
+      result: 'Verleend',
       zaaknummer: 'Z/XXX/000007b',
-      statussen: [
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -121,26 +119,29 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
       ],
-      documentenUrl:
+      fetchDocumentsUrl:
         '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
       link: {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007B',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      isActief: true,
-      status: 'Afgehandeld',
+      isActual: true,
+      status: 'Verleend',
+      documents: [],
     },
     {
       id: 'Z-XXX-000007',
-      titel: 'Vergunning vakantieverhuur',
-      datumAfhandeling: null,
-      datumAanvraag: '10 mei 2020',
-      datumVan: '01 augustus 2020',
-      datumTot: '30 september 2021',
+      title: 'Vergunning vakantieverhuur',
+      dateDecision: null,
+      dateReceived: '10 mei 2020',
+      dateStart: '01 augustus 2020',
+      dateStartFormatted: '',
+      dateEnd: '30 september 2021',
+      dateEndFormatted: '',
       adres: 'Amstel 1 1017AB Amsterdam',
-      resultaat: 'Verleend',
+      result: 'Verleend',
       zaaknummer: 'Z/XXX/000007',
-      statussen: [
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -165,33 +166,36 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
         },
         {
           id: 'step-4',
-          status: 'Gewijzigd',
+          status: 'Verlopen',
           datePublished: '2021-09-30',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
           isActive: true,
           isChecked: true,
         },
       ],
-      documentenUrl:
+      fetchDocumentsUrl:
         '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
       link: {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      isActief: false,
-      status: 'Afgehandeld',
+      isActual: false,
+      status: 'Verlopen',
+      documents: [],
     },
     {
       id: 'Z-001-000040',
-      titel: 'Vergunning vakantieverhuur',
-      datumAfhandeling: null,
-      datumAanvraag: '10 mei 2021',
-      datumVan: '01 juni 2020',
-      datumTot: '31 mei 2024',
+      title: 'Vergunning vakantieverhuur',
+      dateDecision: null,
+      dateReceived: '10 mei 2021',
+      dateStart: '01 juni 2020',
+      dateStartFormatted: '',
+      dateEnd: '31 mei 2024',
+      dateEndFormatted: '',
       adres: 'Amstel 1 1017AB Amsterdam',
-      resultaat: 'Ingetrokken',
+      result: 'Ingetrokken',
       zaaknummer: 'Z/001/000040',
-      statussen: [
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -216,33 +220,36 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
         },
         {
           id: 'step-4',
-          status: 'Gewijzigd',
+          status: 'Ingetrokken',
           datePublished: '',
           description: 'Wij hebben uw Vergunning vakantieverhuur ingetrokken.',
           isActive: true,
           isChecked: true,
         },
       ],
-      documentenUrl:
+      fetchDocumentsUrl:
         '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
       link: {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-001-000040',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      isActief: false,
+      isActual: false,
       status: 'Ingetrokken',
+      documents: [],
     },
     {
       id: 'Z-000-000040',
-      titel: 'Vergunning vakantieverhuur',
-      datumAfhandeling: null,
-      datumAanvraag: '10 mei 2021',
-      datumVan: '01 juni 2019',
-      datumTot: '31 mei 2020',
+      title: 'Vergunning vakantieverhuur',
+      dateDecision: null,
+      dateReceived: '10 mei 2021',
+      dateStart: '01 juni 2019',
+      dateStartFormatted: '',
+      dateEnd: '31 mei 2020',
+      dateEndFormatted: '',
       adres: 'Amstel 1 1017AB Amsterdam',
-      resultaat: 'Verleend',
+      result: 'Verleend',
       zaaknummer: 'Z/000/000040',
-      statussen: [
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -267,43 +274,83 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
         },
         {
           id: 'step-4',
-          status: 'Gewijzigd',
+          status: 'Verlopen',
           datePublished: '2020-05-31',
           description: 'Uw Vergunning vakantieverhuur is verlopen.',
           isActive: true,
           isChecked: true,
         },
       ],
-      documentenUrl:
+      fetchDocumentsUrl:
         '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
       link: {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-000-000040',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      isActief: false,
-      status: 'Afgehandeld',
+      isActual: false,
+      status: 'Verlopen',
+      documents: [],
     },
   ],
   bbVergunningen: [
     {
-      datumAfhandeling: '22 maart 2023',
-      datumAanvraag: '13 februari 2023',
-      datumVan: '22 maart 2023',
-      datumTot: '01 juli 2028',
-      resultaat: 'Verleend',
+      dateDecision: '2023-03-22',
+      dateReceived: '2023-02-13',
+      dateStart: '2023-03-22',
+      dateStartFormatted: '22 maart 2023',
+      dateEnd: '2028-07-01',
+      dateEndFormatted: '01 juli 2028',
+      result: 'Verleend',
       heeftOvergangsRecht: true,
       id: 'Z-23-2130506',
-      zaakId: '-999741',
       zaaknummer: 'Z/23/2130506',
       link: {
         to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
         title: 'Vergunning bed & breakfast',
       },
       adres: 'Amstel 3 Amsterdam',
-      eigenaar: '',
-      aanvrager: '',
-      titel: 'Vergunning bed & breakfast',
-      statussen: [
+      title: 'Vergunning bed & breakfast',
+      fetchDocumentsUrl: null,
+      steps: [
+        {
+          id: 'step-1',
+          status: 'Ontvangen',
+          datePublished: '13 februari 2023',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          id: 'step-2',
+          status: 'Afgehandeld',
+          datePublished: '22 maart 2023',
+          description: '',
+          isActive: true,
+          isChecked: true,
+        },
+      ],
+      status: 'Verleend',
+      isActual: true,
+      documents: [],
+    },
+    {
+      dateDecision: '',
+      dateReceived: '25 oktober 2023',
+      dateStart: '',
+      dateStartFormatted: '',
+      dateEnd: '',
+      dateEndFormatted: '',
+      result: null,
+      heeftOvergangsRecht: false,
+      id: 'Z2023-WK000236',
+      zaaknummer: 'Z2023-WK000236',
+      link: {
+        to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z2023-WK000236',
+        title: 'Vergunning bed & breakfast',
+      },
+      adres: 'Amstel 2 Amsterdam',
+      fetchDocumentsUrl: null,
+      title: 'Vergunning bed & breakfast',
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -321,67 +368,28 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
         },
       ],
       status: 'Afgehandeld',
-      isActief: true,
+      isActual: true,
       documents: [],
     },
     {
-      datumAfhandeling: '',
-      datumAanvraag: '25 oktober 2023',
-      datumVan: '',
-      datumTot: '',
-      resultaat: null,
-      heeftOvergangsRecht: false,
-      id: 'Z2023-WK000236',
-      zaakId: '126085265',
-      zaaknummer: 'Z2023-WK000236',
-      link: {
-        to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z2023-WK000236',
-        title: 'Vergunning bed & breakfast',
-      },
-      adres: 'Amstel 2 Amsterdam',
-      eigenaar: '',
-      aanvrager: '',
-      titel: 'Vergunning bed & breakfast',
-      statussen: [
-        {
-          id: 'step-1',
-          status: 'Ontvangen',
-          datePublished: '13 februari 2023',
-          isActive: false,
-          isChecked: true,
-        },
-        {
-          id: 'step-2',
-          status: 'Afgehandeld',
-          datePublished: '22 maart 2023',
-          description: '',
-          isActive: true,
-          isChecked: true,
-        },
-      ],
-      status: 'Ontvangen',
-      isActief: true,
-      documents: [],
-    },
-    {
-      datumAfhandeling: '',
-      datumAanvraag: '20 november 2023',
-      datumVan: '',
-      datumTot: '',
-      resultaat: null,
+      dateDecision: '',
+      dateReceived: '20 november 2023',
+      dateStart: '',
+      dateStartFormatted: '',
+      dateEnd: '',
+      dateEndFormatted: '',
+      result: null,
       heeftOvergangsRecht: false,
       id: 'Z2023-WK000284',
-      zaakId: '126085711',
       zaaknummer: 'Z2023-WK000284',
       link: {
         to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z2023-WK000284',
         title: 'Vergunning bed & breakfast',
       },
       adres: 'Amstel 1 Amsterdam',
-      eigenaar: '',
-      aanvrager: '',
-      titel: 'Vergunning bed & breakfast',
-      statussen: [
+      fetchDocumentsUrl: null,
+      title: 'Vergunning bed & breakfast',
+      steps: [
         {
           id: 'step-1',
           status: 'Ontvangen',
@@ -398,8 +406,8 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
       ],
-      status: 'Ontvangen',
-      isActief: true,
+      status: 'Afgehandeld',
+      isActual: true,
       documents: [],
     },
   ],
@@ -419,7 +427,7 @@ function initializeState(snapshot: MutableSnapshot, state: VerhuurState) {
   snapshot.set(appStateAtom as any, state);
 }
 
-describe('<ToeristischeVerhuur />', () => {
+describe('<ToeristscheVerhuurThema />', () => {
   const routeEntry = generatePath(AppRoutes.TOERISTISCHE_VERHUUR);
   const routePath = AppRoutes.TOERISTISCHE_VERHUUR;
 
@@ -427,18 +435,17 @@ describe('<ToeristischeVerhuur />', () => {
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={ToeristischeVerhuur}
+      component={ToeristscheVerhuurThema}
       initializeState={(snap) => initializeState(snap, state)}
     />
   );
 
   beforeAll(() => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2021-09-22').getTime());
+    Mockdate.set('2021-09-22');
   });
 
   afterAll(() => {
-    vi.useRealTimers();
+    Mockdate.reset();
   });
 
   it('Matches the Full Page snapshot', () => {
@@ -453,10 +460,10 @@ describe('<ToeristischeVerhuur />', () => {
       screen.getByText('Meer over toeristenbelasting')
     ).toBeInTheDocument();
     expect(
-      screen.queryAllByText('Registratienummer toeristische verhuur').length
+      screen.queryAllByText('Registratienummer(s) toeristische verhuur').length
     ).toBe(1);
     expect(screen.getByText('E7B8 B042 8A92 37E5 0363')).toBeInTheDocument();
-    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(5);
+    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(4);
     expect(screen.getAllByText('Vergunning bed & breakfast').length).toBe(3);
 
     expect(
@@ -516,7 +523,7 @@ describe('<ToeristischeVerhuur />', () => {
       screen.getByText('Meer informatie over particuliere vakantieverhuur')
     ).toBeInTheDocument();
 
-    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(5);
+    expect(screen.getAllByText('Vergunning vakantieverhuur').length).toBe(4);
     expect(
       screen.queryByText('Vergunning bed & breakfast')
     ).not.toBeInTheDocument();

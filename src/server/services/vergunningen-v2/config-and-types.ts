@@ -309,18 +309,6 @@ export interface VakantieverhuurVergunningaanvraag
   decision: 'Verleend' | 'Ingetrokken';
 }
 
-export interface BBVergunning
-  extends VergunningWithLocation,
-    VergunningWithDateRange {
-  caseType: GetCaseType<'BBVergunning'>;
-  title: 'VergunningV2 bed & breakfast';
-  decision: 'Verleend' | 'Geweigerd' | 'Ingetrokken';
-  requester: string | null;
-  owner: string | null;
-  hasTransitionAgreement: boolean;
-  dateInBehandeling: string | null;
-}
-
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
 export interface BZB extends VergunningWithDateRange {
   caseType: GetCaseType<'BZB'>;
@@ -491,7 +479,6 @@ export type VergunningV2 =
   | ERVV
   | BZB
   | BZP
-  | BBVergunning
   | VakantieverhuurVergunningaanvraag
   | Flyeren
   | AanbiedenDiensten

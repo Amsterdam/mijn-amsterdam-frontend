@@ -8,7 +8,6 @@ import {
   DecosZaakTypeTransformer,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   VergunningV2,
-  VergunningExpirable,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import {
@@ -131,7 +130,7 @@ export function getUserKeysSearchQuery(
 }
 
 export function isNearEndDate(
-  vergunning: VergunningExpirable,
+  vergunning: { dateEnd: string | null },
   dateNow: Date = new Date()
 ) {
   if (!vergunning.dateEnd) {
@@ -148,7 +147,7 @@ export function isNearEndDate(
 }
 
 export function isExpired(
-  vergunning: VergunningExpirable,
+  vergunning: { dateEnd: string | null },
   dateNow: Date = new Date()
 ) {
   if (!vergunning.dateEnd) {

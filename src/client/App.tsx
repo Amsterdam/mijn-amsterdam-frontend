@@ -14,12 +14,10 @@ import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
+import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
 import { useAnalytics } from './hooks/analytics.hook';
-import { FeatureToggle } from '../universal/config/feature-toggles';
-import { AppRoutes } from '../universal/config/routes';
-import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
@@ -30,14 +28,14 @@ import { usePageChange } from './hooks/usePageChange';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
+import { FeatureToggle } from '../universal/config/feature-toggles';
+import { AppRoutes } from '../universal/config/routes';
 import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
 import Accessibility from './pages/Accessibility/Accessibility';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
 import AVG from './pages/AVG/AVG';
-import { default as LandingPage } from './pages/Landing/Landing';
-
 import AVGDetail from './pages/AVGDetail/AVGDetail';
 import Bezwaren from './pages/Bezwaren/Bezwaren';
 import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
@@ -68,6 +66,7 @@ import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificat
 import Klachten from './pages/Klachten/Klachten';
 import KlachtenDetail from './pages/KlachtenDetail/KlachtenDetail';
 import Krefia from './pages/Krefia/Krefia';
+import { default as LandingPage } from './pages/Landing/Landing';
 import MyNotifications from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import Parkeren from './pages/Parkeren/Parkeren';
@@ -75,8 +74,9 @@ import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
-import ToeristischeVerhuur from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
-import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail';
+import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
+import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
+import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
 import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
@@ -276,18 +276,20 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
-              path={[
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-              ]}
+              path={AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']}
+              component={ToeristischeVerhuurVergunningen}
+            />
+          )}
+          {FeatureToggle.toeristischeVerhuurActive && (
+            <Route
+              path={AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']}
               component={ToeristischeVerhuurDetail}
             />
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={AppRoutes.TOERISTISCHE_VERHUUR}
-              component={ToeristischeVerhuur}
+              component={ToeristscheVerhuurThema}
             />
           )}
           {FeatureToggle.afisActive && (

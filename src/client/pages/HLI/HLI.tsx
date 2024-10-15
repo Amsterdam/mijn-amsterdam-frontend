@@ -132,7 +132,7 @@ export default function ThemaPaginaHLI() {
       title={title}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
-      pageContentTables={
+      pageContentMain={
         <>
           {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
           {!!regelingen?.length && regelingenTables}

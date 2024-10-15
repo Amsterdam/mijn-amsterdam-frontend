@@ -39,7 +39,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 }
 
 export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
-export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 20 seconds without a response.
+export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,

@@ -37,7 +37,8 @@ import {
 } from '../services/hli/hli-route-handlers';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
-import { fetchBBDocument } from '../services/toeristische-verhuur/bb-vergunning';
+import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
+import { handleFetchDocumentsRoute } from '../services/toeristische-verhuur/toeristische-verhuur-route-handlers';
 import { fetchDecosDocument } from '../services/vergunningen-v2/decos-service';
 import {
   fetchVergunningDetail,
@@ -158,7 +159,7 @@ router.get(
 
       const contentType = documentResponse.headers['content-type'];
       res.setHeader('content-type', contentType);
-      documentResponse.data.pipe(res);
+      return documentResponse.data.pipe(res);
     }
     return sendUnauthorized(res);
   }
@@ -241,6 +242,10 @@ attachDocumentDownloadRoute(
   router,
   BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
   fetchBBDocument
+);
+router.get(
+  BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST,
+  handleFetchDocumentsRoute
 );
 
 // HLI Stadspas transacties

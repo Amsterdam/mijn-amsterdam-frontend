@@ -10,8 +10,8 @@ import {
 } from './auth-config';
 import { authRoutes } from './auth-routes';
 import { AuthProfile, MaSession, TokenData } from './auth-types';
-import { AppRoutes } from '../../universal/config/routes';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { AppRoutes } from '../../universal/config/routes';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';

@@ -1,9 +1,13 @@
 import { generatePath } from 'react-router-dom';
 
+import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { LinkProps, StatusLineItem } from '../../../universal/types/App.types';
+import {
+  defaultDateFormat,
+  isDateInPast,
+} from '../../../universal/helpers/date';
+import { StatusLineItem } from '../../../universal/types/App.types';
 import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
@@ -14,23 +18,6 @@ import {
   toeristischeVerhuurVergunningTypes,
 } from '../vergunningen/vergunningen';
 import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
-
-export interface VakantieverhuurVergunning {
-  datumAfhandeling?: string | null;
-  datumAanvraag: string;
-  datumVan: string;
-  datumTot: string;
-  resultaat: 'Verleend' | 'Ingetrokken' | null;
-  documentenUrl: string | null;
-  id: string;
-  zaaknummer: string;
-  link: LinkProps;
-  titel: string;
-  statussen: StatusLineItem[];
-  isActief: boolean;
-  adres: string;
-  status: string;
-}
 
 function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   const isAfgehandeld =
@@ -70,14 +57,14 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   if (isVerlopen || isIngetrokken) {
     const statusGewijzigd: StatusLineItem = {
       id: 'step-4',
-      status: 'Gewijzigd',
+      status: isIngetrokken ? 'Ingetrokken' : 'Verlopen',
       datePublished:
         (isVerlopen && !isIngetrokken
           ? vergunning.dateDecision ?? vergunning.dateEnd
           : vergunning.dateDecision) ?? '',
-      description: isVerlopen
-        ? `Uw ${vergunning.title} is verlopen.`
-        : `Wij hebben uw ${vergunning.title} ingetrokken.`,
+      description: isIngetrokken
+        ? `Wij hebben uw ${vergunning.title} ingetrokken.`
+        : `Uw ${vergunning.title} is verlopen.`,
       isActive: true,
       isChecked: true,
     };
@@ -86,6 +73,21 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   }
 
   return statussen;
+}
+
+function getZaakStatus(
+  zaak: VakantieverhuurVergunning
+): VakantieverhuurVergunning['status'] | VakantieverhuurVergunning['result'] {
+  if (zaak.dateEnd && isDateInPast(zaak.dateEnd)) {
+    return 'Verlopen';
+  }
+  if (zaak.result) {
+    return zaak.result;
+  }
+  const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
+    ?.status as VakantieverhuurVergunning['status'];
+
+  return lastStepStatus ?? 'Ontvangen';
 }
 
 export function transformVakantieverhuurVergunningen(
@@ -109,37 +111,43 @@ export function transformVakantieverhuurVergunningen(
       vergunning.status === 'Verlopen' ||
       (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());
 
-    const title = `${vergunning.identifier} vakantieverhuur`;
+    const title = 'Vergunning vakantieverhuur';
+    const steps = getVergunningStatussen(
+      vergunning as VakantieverhuurVergunningDecos
+    );
 
     const vergunningTransformed: VakantieverhuurVergunning = {
       id: idTransformed,
-      titel: title,
-      datumAfhandeling: vergunning.dateDecision
-        ? defaultDateFormat(vergunning.dateDecision)
-        : null,
-      datumAanvraag: defaultDateFormat(vergunning.dateRequest),
-      datumVan: vergunning.dateStart
+      title,
+      dateDecision: vergunning.dateDecision,
+      dateReceived: vergunning.dateRequest,
+      dateStart: vergunning.dateStart ?? '',
+      dateStartFormatted: vergunning.dateStart
         ? defaultDateFormat(vergunning.dateStart)
         : '-',
-      datumTot: vergunning.dateEnd
+      dateEnd: vergunning.dateEnd ?? '',
+      dateEndFormatted: vergunning.dateEnd
         ? defaultDateFormat(vergunning.dateEnd)
         : '-',
       adres: vergunning.location ?? '-',
-      resultaat: vergunning.decision as VakantieverhuurVergunning['resultaat'],
+      result: vergunning.decision as VakantieverhuurVergunning['result'],
       zaaknummer: vergunning.identifier,
-      statussen: getVergunningStatussen(
-        vergunning as VakantieverhuurVergunningDecos
-      ),
-      documentenUrl: vergunning.documentsUrl,
+      steps,
+      documents: [],
+      fetchDocumentsUrl: vergunning.documentsUrl,
       link: {
-        to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'], {
+        to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
           id: idTransformed,
+          casetype: 'vakantieverhuur',
         }),
         title: vergunning.link.title,
       },
-      isActief: !isIngetrokken && !isVerlopen && isVerleend,
-      status: vergunning.status,
+      isActual: !isIngetrokken && !isVerlopen && isVerleend,
+      status: 'Ontvangen',
     };
+
+    vergunningTransformed.status =
+      getZaakStatus(vergunningTransformed) ?? vergunningTransformed.status;
 
     vergunningenTransformed.push(vergunningTransformed);
   }
@@ -158,7 +166,10 @@ export async function fetchVakantieverhuurVergunningen(
       appRoute: (vergunning: Vergunning) => {
         switch (vergunning.caseType) {
           case CaseType.VakantieverhuurVergunning:
-            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
+            return generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
+              casetype: 'vakantieverhuur',
+              id: ':id',
+            });
           default:
             return AppRoutes['TOERISTISCHE_VERHUUR'];
         }

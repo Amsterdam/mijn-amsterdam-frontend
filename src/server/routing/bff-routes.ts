@@ -71,7 +71,9 @@ export const BffEndpoints = {
 
   // Toeristische verhuur / Bed & Breakfast
   TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:
-    '/services/toeristische-verhuur/bb/document/:id',
+    '/services/toeristische-verhuur/bed-and-breakfast/document/:id',
+  TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST:
+    '/services/toeristische-verhuur/bed-and-breakfast/documents/list/:id',
 
   // Bodem / loodmetingen
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',

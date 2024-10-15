@@ -259,7 +259,7 @@ export const tips: Tip[] = [
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
     predicates: [hasBnBVergunning, not(hasVerhuurRegistrations), isMokum],
-    reason: 'U ziet deze tip omdat u een vergunning bed & breakfast hebt',
+    reason: 'U ziet deze tip omdat u een Vergunning bed & breakfast hebt',
     link: {
       title: 'U leest hier wat de voorwaarden zijn',
       to: 'https://www.amsterdam.nl/bedandbreakfast ',

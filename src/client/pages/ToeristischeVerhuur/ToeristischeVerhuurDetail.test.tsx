@@ -7,33 +7,42 @@ import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ToeristischVerhuurDetail from './ToeristischeVerhuurDetail';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
+import {
+  BBVergunning,
+  VakantieverhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 
-const vakantieverhuurVergunningen = [
+const vakantieverhuurVergunningen: VakantieverhuurVergunning[] = [
   {
     id: 'Z-XXX-000007C',
-    titel: 'Vergunning vakantieverhuur',
-    datumAfhandeling: null,
-    datumAanvraag: '10 mei 2022',
-    datumVan: '01 augustus 2022',
-    datumTot: '22 augustus 2023',
+    title: 'Vergunning vakantieverhuur',
+    dateDecision: null,
+    dateReceived: '2022-05-10',
+    dateStart: '2022-08-01',
+    dateStartFormatted: '01 augustus 2022',
+    dateEnd: '2023-08-01',
+    dateEndFormatted: '22 augustus 2023',
     adres: 'Amstel 1 1017AB Amsterdam',
-    resultaat: 'Verleend',
+    result: 'Verleend',
     zaaknummer: 'Z/XXX/000007c',
-    statussen: [
+    steps: [
       {
+        id: 'step-1',
         status: 'Ontvangen',
         datePublished: '2022-05-10',
         isActive: false,
         isChecked: true,
       },
       {
+        id: 'step-2',
         status: 'In behandeling',
         datePublished: '2022-05-10',
         isActive: false,
         isChecked: true,
       },
       {
+        id: 'step-3',
         status: 'Afgehandeld',
         datePublished: '2022-05-10',
         description: '',
@@ -41,6 +50,7 @@ const vakantieverhuurVergunningen = [
         isChecked: true,
       },
       {
+        id: 'step-4',
         status: 'Gewijzigd',
         datePublished: '2023-08-22',
         description: 'Uw Vergunning vakantieverhuur is verlopen.',
@@ -48,44 +58,46 @@ const vakantieverhuurVergunningen = [
         isChecked: true,
       },
     ],
-    documentenUrl:
+    fetchDocumentsUrl:
       '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
     link: {
       to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
-    isActief: false,
+    isActual: false,
     status: 'Afgehandeld',
+    documents: [],
   },
 ];
 
-const bbVergunningen = [
+const bbVergunningen: BBVergunning[] = [
   {
-    datumAfhandeling: '22 maart 2023',
-    datumAanvraag: '13 februari 2023',
-    datumVan: '22 maart 2023',
-    datumTot: '01 juli 2028',
-    resultaat: 'Verleend',
+    dateDecision: '2023-03-22',
+    dateReceived: '2023-02-13',
+    dateStart: '2023-03-22',
+    dateStartFormatted: '22 maart 2023',
+    dateEnd: '2028-07-01',
+    dateEndFormatted: '01 juli 2028',
+    result: 'Verleend',
     heeftOvergangsRecht: true,
     id: 'Z-23-2130506',
-    zaakId: '-999741',
     zaaknummer: 'Z/23/2130506',
     link: {
       to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
       title: 'Vergunning bed & breakfast',
     },
     adres: 'Amstel 3 Amsterdam',
-    eigenaar: '',
-    aanvrager: '',
-    titel: 'Vergunning bed & breakfast',
-    statussen: [
+    title: 'Vergunning bed & breakfast',
+    steps: [
       {
+        id: 'step-1',
         status: 'Ontvangen',
         datePublished: '13 februari 2023',
         isActive: false,
         isChecked: true,
       },
       {
+        id: 'step-2',
         status: 'Afgehandeld',
         datePublished: '22 maart 2023',
         description: '',
@@ -94,7 +106,8 @@ const bbVergunningen = [
       },
     ],
     status: 'Afgehandeld',
-    isActief: true,
+    isActual: true,
+    fetchDocumentsUrl: null,
     documents: [
       {
         id: 'xiup_IrPSXXuB6bI5sNz6Zrwl5UbqsqYoeEQXwGLrvA',
@@ -128,12 +141,13 @@ describe('<ToeristischVerhuurDetail />', () => {
     content: [],
   });
 
-  test('Vakantieverhuur vergunning <VergunningVerhuur/>', () => {
+  test('Vakantieverhuur vergunning', () => {
     const vergunning = vakantieverhuurVergunningen[0];
     const routeEntry = generatePath(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
+        casetype: 'vakantieverhuur',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
@@ -141,7 +155,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ToeristischVerhuurDetail}
+        component={ToeristischeVerhuurDetail}
         initializeState={state(testState)}
       />
     );
@@ -158,12 +172,13 @@ describe('<ToeristischVerhuurDetail />', () => {
     ).toBeInTheDocument();
   });
 
-  test('Bed & Breakfast vergunning <VergunningVerhuur/>', () => {
+  test('Bed & Breakfast vergunning', () => {
     const vergunning = bbVergunningen[0];
     const routeEntry = generatePath(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
+        casetype: 'bed-and-breakfast',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
@@ -171,11 +186,11 @@ describe('<ToeristischVerhuurDetail />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ToeristischVerhuurDetail}
+        component={ToeristischeVerhuurDetail}
         initializeState={state(testState)}
       />
     );
-    render(<Component />);
+    const screen = render(<Component />);
     expect(screen.getByText('Vergunning bed & breakfast')).toBeInTheDocument();
     expect(screen.getByText('Z/23/2130506')).toBeInTheDocument();
     expect(screen.getByText('Vanaf')).toBeInTheDocument();
