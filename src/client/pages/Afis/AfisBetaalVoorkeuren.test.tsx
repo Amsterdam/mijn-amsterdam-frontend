@@ -30,7 +30,6 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<AfisBetaalVoorkeuren />', () => {
   const businessPartnerDetails: AfisBusinessPartnerDetailsTransformed = {
-    addressId: 999,
     businessPartnerId: '515177',
     fullName: 'Taxon Expeditions BV',
     phone: null,
@@ -38,14 +37,14 @@ describe('<AfisBetaalVoorkeuren />', () => {
   };
 
   bffApi
-    .get(`/services/afis/businesspartner/${businessPartnerIdEncrypted}`)
+    .get(`/services/afis/businesspartner?id=${businessPartnerIdEncrypted}`)
     .reply(200, {
       content: businessPartnerDetails,
       status: 'OK',
     });
 
   bffApi
-    .get(`/services/afis/facturen/overzicht/${businessPartnerIdEncrypted}`)
+    .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
     .reply(200, {
       content: {
         open: { facturen: [], count: 0 },
