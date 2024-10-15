@@ -50,6 +50,20 @@ export async function fetchAfisFacturen(
   return requestData<AfisFacturenResponse>(config, requestID);
 }
 
+const accountingDocumentTypesByState: Record<AfisFactuurState, string[]> = {
+  open: ['DR', 'DG', 'DM', 'DE', 'DF', 'DV', 'DW'],
+  afgehandeld: ['DR', 'DE', 'DM', 'DV', 'DG', 'DF', 'DM', 'DW'],
+  overgedragen: ['DR', 'DE', 'DM', 'DV', 'DG', 'DF', 'DM', 'DW'],
+};
+
+function getAccountingDocumentTypesFilter(state: AfisFactuurState) {
+  const docTypeFilters = accountingDocumentTypesByState[state]
+    .map((type) => `AccountingDocumentType eq '${type}'`)
+    .join(' OR ');
+
+  return `and (${docTypeFilters})`;
+}
+
 function formatFactuurRequestURL(
   baseUrl: string | undefined,
   params: AfisFacturenParams
@@ -68,7 +82,7 @@ function formatFactuurRequestURL(
   const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate`;
   const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
 
-  let query = `?$inlinecount=allpages&${filters[params.state]}&${select}&${orderBy}`;
+  let query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}&${select}&${orderBy}`;
 
   if (params.top) {
     query += `&$top=${params.top}`;
@@ -174,13 +188,15 @@ function transformFactuur(
   const factuurDocumentIdEncrypted = factuurDocumentId
     ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
     : null;
-
-  const netPaymentAmountInCents = parseFloat(invoice.NetPaymentAmount) * 100;
+  const MULTIPLY_WITH_100 = 100;
+  const netPaymentAmountInCents =
+    parseFloat(invoice.NetPaymentAmount) * MULTIPLY_WITH_100;
   const amountInBalanceTransacCrcyInCents =
-    parseFloat(invoice.AmountInBalanceTransacCrcy) * 100;
+    parseFloat(invoice.AmountInBalanceTransacCrcy) * MULTIPLY_WITH_100;
 
   const amountOwed =
-    (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) / 100;
+    (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) /
+    MULTIPLY_WITH_100;
   const amountOwedFormatted = `€ ${amountOwed ? displayAmount(amountOwed) : 0}`;
 
   let debtClearingDate = null;
@@ -221,7 +237,7 @@ function transformFactuur(
   };
 }
 
-type XmlNullable<T extends Record<string, any>> = {
+type XmlNullable<T extends Record<string, unknown>> = {
   [key in keyof T]: { '@null': true } | T[key];
 };
 
@@ -238,6 +254,8 @@ function replaceXmlNulls(
   return Object.fromEntries(withoutXmlNullable);
 }
 
+const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
+
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
   amountInBalanceTransacCrcyInCents: number
@@ -247,7 +265,9 @@ function determineFactuurStatus(
     case !!sourceInvoice.ReverseDocument:
       return 'geannuleerd';
 
-    case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 3:
+    case sourceInvoice.IsCleared &&
+      sourceInvoice.DunningLevel ===
+        DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN:
       return 'overgedragen-aan-belastingen';
 
     case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
