@@ -121,8 +121,13 @@ export function AfisBetaalVoorkeuren() {
   const pageContentTop = (
     <>
       <Paragraph>
-        Hier kunt u uw betaalgegevens inzien en automatische incasso gegevens
-        instellen.
+        Hieronder kunt u uw betaalgegevens bekijken en een automatische incasso
+        instellen per afdeling van de gemeente. Wil u uw betaalgegevens
+        wijzigen, stuur dan een email naar{' '}
+        <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+          debiteurenadministratie@amsterdam.nl
+        </Link>
+        .
       </Paragraph>
     </>
   );
