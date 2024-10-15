@@ -131,7 +131,7 @@ export function getUserKeysSearchQuery(
 }
 
 export function isNearEndDate(
-  vergunning: VergunningExpirable,
+  vergunning: { dateEnd: string | null },
   dateNow: Date = new Date()
 ) {
   if (!vergunning.dateEnd) {
@@ -148,7 +148,7 @@ export function isNearEndDate(
 }
 
 export function isExpired(
-  vergunning: VergunningExpirable,
+  vergunning: { dateEnd: string | null },
   dateNow: Date = new Date()
 ) {
   if (!vergunning.dateEnd) {
