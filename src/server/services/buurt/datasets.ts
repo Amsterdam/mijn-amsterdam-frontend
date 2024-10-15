@@ -6,8 +6,11 @@ import Supercluster from 'supercluster';
 import {
   discoverSingleDsoApiEmbeddedResponse,
   dsoApiListUrl,
+  DsoApiResponse,
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
+  WFSApiResponse,
+  WFSFeatureSource,
 } from './dso-helpers';
 import { Colors } from '../../../universal/config/colors';
 import { IS_PRODUCTION } from '../../../universal/config/env';
@@ -46,7 +49,9 @@ export type DatasetFeatureProperties = {
   datasetId: DatasetId;
   color?: string;
   zIndex?: zIndexPane;
-  [propertyName: string /*DatasetPropertyName*/]: DatasetPropertyValue | any;
+  [propertyName: string /*DatasetPropertyName*/]:
+    | DatasetPropertyValue
+    | unknown;
 };
 
 export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {
@@ -54,16 +59,21 @@ export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {
   point_count?: number;
 };
 export type MaFeature<
+  T = DatasetFeatureProperties,
   G extends GeoJSON.Geometry = Exclude<
     GeoJSON.Geometry,
     GeoJSON.GeometryCollection
   >,
-> = GeoJSON.Feature<G, DatasetFeatureProperties>;
-export type MaPointFeature = MaFeature<GeoJSON.Point>;
-export type MaPolylineFeature = MaFeature<
+> = GeoJSON.Feature<G, T>;
+export type MaPointFeature<T = DatasetFeatureProperties> = MaFeature<
+  T,
+  GeoJSON.Point
+>;
+export type MaPolylineFeature<T = DatasetFeatureProperties> = MaFeature<
+  T,
   GeoJSON.MultiPolygon | GeoJSON.MultiLineString
 >;
-export type DatasetFeatures = MaFeature[];
+export type DatasetFeatures<T = DatasetFeatureProperties> = MaFeature<T>[];
 export type MaSuperClusterFeature =
   | Supercluster.PointFeature<DatasetClusterFeatureProperties>
   | Supercluster.ClusterFeature<DatasetClusterFeatureProperties>;
@@ -104,11 +114,14 @@ export interface DatasetConfig {
   transformList?: (
     datasetId: DatasetId,
     config: DatasetConfig,
-    data: any
+    data: DsoApiResponse | WFSApiResponse
   ) => DatasetFeatures;
   // Response data transformer that is passed to axios transformData for the detailUrl response. If we haven't specified a detailUrl for a dataset.
   // The cached transformed response of the listUrl will be passed via the options.
-  transformDetail?: (responseData: any, options: TransformDetailProps) => any;
+  transformDetail?: (
+    responseData: DsoApiResponse | WFSApiResponse,
+    options: TransformDetailProps
+  ) => DatasetFeatureProperties | DsoApiResponse | null;
   // DataRequestConfig used in source-api-request.
   requestConfig?: DataRequestConfig;
   // Wether the response should be cached to disk
@@ -483,19 +496,31 @@ export async function fetchMeldingenBuurt(requestConfig: DataRequestConfig) {
   return response;
 }
 
+type MeldingBuurt = {
+  category: { slug: string; parent: { slug: string }; name: string };
+  created_at: string;
+};
+
+type BuurtFeature = WFSFeatureSource<MeldingBuurt>;
+
 export function transformMeldingenBuurtResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: { features: DatasetFeatures }
+  responseData: WFSApiResponse | DsoApiResponse
 ): DatasetFeatures {
-  const collection = responseData?.features?.map((sourceFeature: MaFeature) => {
+  if (!('features' in responseData)) {
+    return [];
+  }
+
+  const collection = responseData.features.map((sourceFeature_) => {
+    const sourceFeature = sourceFeature_ as BuurtFeature;
     let id = '';
 
     // Assign a custom id because the response features do not include id's
     if (config.idKeyList) {
       id = slug(
         `${
-          sourceFeature.properties.category.slug
+          sourceFeature.properties.category?.slug
         }-${sourceFeature.properties.created_at.replaceAll(/[^0-9.]/g, '')}`
       );
     }
@@ -509,7 +534,7 @@ export function transformMeldingenBuurtResponse(
         category: sourceFeature.properties.category.parent.slug,
         subcategory: sourceFeature.properties.category.name,
       },
-      geometry: sourceFeature.geometry,
+      geometry: sourceFeature.geometry as MaFeature['geometry'],
     };
 
     const dataSetConfig =
@@ -517,7 +542,7 @@ export function transformMeldingenBuurtResponse(
         ?.valueConfig;
 
     const filterCategoryKey = capitalizeFirstLetter(
-      feature.properties.category
+      feature.properties.category as string
     );
 
     // If the source api publishes a new category which is not covered in our valueConfig for this particular dataset, assign a misc. category.
@@ -528,15 +553,15 @@ export function transformMeldingenBuurtResponse(
     return feature;
   });
 
-  return collection ?? [];
+  return (collection ?? []) as DatasetFeatures;
 }
 
 function transformMeldingDetailResponse(
-  responseData: null,
-  { datasetId, config, id, datasetCache }: TransformDetailProps
+  _responseData: unknown,
+  { id, datasetCache }: TransformDetailProps
 ) {
   const item = datasetCache
-    ?.getKey('features')
+    ?.getKey<DatasetFeatures>('features')
     ?.find((feature: MaFeature) => feature.properties.id === id);
 
   if (!item) {
@@ -558,15 +583,13 @@ export async function fetchAndTransformLaadpalen<T>(
   const datasetConfig = datasetEndpoints.laadpalen;
 
   const requests = urls.map((url) => {
-    return axiosRequest.request<{ features: DatasetFeatures }>({
+    return axiosRequest.request<WFSApiResponse>({
       ...requestConfig,
       url,
     });
   });
 
-  const responses: AxiosResponse<
-    { features: DatasetFeatures } | DatasetFeatures
-  >[] = await Promise.all(requests);
+  const responses = await Promise.all(requests);
 
   // Merge the features we got from the 2 responses.
   const features = responses
@@ -580,21 +603,28 @@ export async function fetchAndTransformLaadpalen<T>(
       }
       return response.data;
     })
-    .flat();
+    .flat() as WFSFeatureSource<LaadPaalProps>[];
 
   // Transform all the features at once and assign back the result to the first Axios response.
-  responses[0].data = transformGenericApiListResponse(
-    datasetId,
-    datasetConfig,
-    {
+  (responses[0].data as unknown as DatasetFeatures) =
+    transformGenericApiListResponse(datasetId, datasetConfig, {
       features: transformLaadpalenFeatures(features),
-    }
-  );
+    });
 
   return <AxiosResponse<T>>responses[0];
 }
 
-function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
+type LaadPaalProps = {
+  connector_type: string;
+  charging_cap_max: string;
+  id: string;
+  maxWattage: string;
+  [key: string]: unknown;
+};
+
+function transformLaadpalenFeatures(
+  featuresSource: WFSFeatureSource<LaadPaalProps>[]
+) {
   let features = featuresSource;
 
   const wattRanges = [
@@ -632,18 +662,23 @@ function transformLaadpalenFeatures(featuresSource: DatasetFeatures) {
 }
 
 function transformLaadpalenDetailResponse(
-  responseData: any,
-  { datasetId, config, id, datasetCache }: TransformDetailProps
+  _responseData: WFSApiResponse | DsoApiResponse,
+  { id, datasetCache }: TransformDetailProps
 ) {
   const item = datasetCache
-    ?.getKey('features')
-    ?.find((item: any) => item.properties.id === id);
+    ?.getKey<DatasetFeatures>('features')
+    ?.find((item) => item.properties.id === id);
 
   return item?.properties ?? null;
 }
 
-function createCustomFractieOmschrijving(featureProps: any) {
-  if (featureProps.serienummer?.trim().startsWith('Kerstboom')) {
+function createCustomFractieOmschrijving(
+  featureProps: WFSFeatureSource['properties']
+) {
+  if (
+    typeof featureProps.serienummer === 'string' &&
+    featureProps.serienummer.trim().startsWith('Kerstboom')
+  ) {
     return 'Kerstboom inzamellocatie';
   }
   if (featureProps.type_id === '5467' || featureProps.type_id === '4371') {
@@ -658,44 +693,44 @@ function createCustomFractieOmschrijving(featureProps: any) {
 function transformAfvalcontainersResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
-  const features: MaFeature[] =
-    (Array.isArray(responseData.features)
+  const features: WFSFeatureSource[] =
+    ('features' in responseData
       ? responseData.features
       : getDsoApiEmbeddedResponse(datasetId, responseData)) ?? [];
 
   return transformGenericApiListResponse(datasetId, config, {
-    features: features
-      .filter(
-        (feature: any) =>
-          feature.fractie_omschrijving?.toLowerCase() !== 'plastic' // Gemeente Amsterdam does not work with plastic containers anymore.
-      )
-      .map((feature: any) => {
-        let fractie_omschrijving = feature.properties.fractie_omschrijving;
-        if (!fractie_omschrijving || fractie_omschrijving === 'GFT') {
-          fractie_omschrijving = createCustomFractieOmschrijving(
-            feature.properties
-          );
-        }
-        return {
-          ...feature,
-          properties: {
-            ...feature.properties,
-            fractie_omschrijving,
-          },
-        };
-      }),
+    features: features.map((feature) => {
+      let fractie_omschrijving = feature.properties.fractie_omschrijving;
+      if (!fractie_omschrijving || fractie_omschrijving === 'GFT') {
+        fractie_omschrijving = createCustomFractieOmschrijving(
+          feature.properties
+        );
+      }
+      return {
+        ...feature,
+        properties: {
+          ...feature.properties,
+          fractie_omschrijving,
+        },
+      };
+    }),
   });
 }
 
-function transformAfvalcontainerDetailResponse(responseData: any) {
-  const feature = discoverSingleDsoApiEmbeddedResponse(responseData);
-  let fractieOmschrijving = feature.fractieOmschrijving;
+function transformAfvalcontainerDetailResponse(
+  responseData: DsoApiResponse | WFSApiResponse
+) {
+  const feature = discoverSingleDsoApiEmbeddedResponse(
+    responseData as DsoApiResponse
+  );
+
+  let fractieOmschrijving = feature?.fractieOmschrijving;
   if (!fractieOmschrijving || fractieOmschrijving === 'GFT') {
     fractieOmschrijving = createCustomFractieOmschrijving({
       ...feature,
-      type_id: feature.typeId,
+      type_id: feature?.typeId,
     });
   }
   return {
@@ -708,14 +743,14 @@ function transformAfvalcontainerDetailResponse(responseData: any) {
         },
       ],
     },
-  };
+  } as DsoApiResponse;
 }
 
 function transformParkeerzoneCoords(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
-) {
+  responseData: WFSApiResponse | DsoApiResponse
+): DatasetFeatures {
   const features = transformGenericApiListResponse(
     datasetId,
     config,
@@ -724,9 +759,12 @@ function transformParkeerzoneCoords(
 
   if (features && features.length) {
     for (const feature of features) {
+      const gebiedsnaam =
+        typeof feature.properties.gebiedsnaam === 'string'
+          ? feature.properties.gebiedsnaam?.split(' ')[0]
+          : 'Amsterdam';
       // Change gebiedsnaam for grouping purposes
-      feature.properties.gebiedsnaam =
-        feature.properties.gebiedsnaam?.split(' ')[0] || 'Amsterdam';
+      feature.properties.gebiedsnaam = gebiedsnaam;
 
       const colors: Record<string, string> = {
         oost: Colors.supportLightblue,
@@ -740,8 +778,7 @@ function transformParkeerzoneCoords(
       };
 
       // Add custom color code
-      feature.properties.color =
-        colors[feature.properties.gebiedsnaam.toLowerCase()] || 'red';
+      feature.properties.color = colors[gebiedsnaam.toLowerCase()] || 'red';
 
       // collection.push(featureTransformed);
     }
@@ -752,7 +789,7 @@ function transformParkeerzoneCoords(
 function transformSportparkResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features = transformGenericApiListResponse(
     datasetId,
@@ -767,7 +804,7 @@ function transformSportparkResponse(
 function transformSportaanbiederResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features = transformGenericApiListResponse(
     datasetId,
@@ -782,7 +819,7 @@ function transformSportaanbiederResponse(
 function transformSporthalResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features = transformGenericApiListResponse(
     datasetId,
@@ -797,7 +834,7 @@ function transformSporthalResponse(
 function transformSportveldResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features = transformGenericApiListResponse(
     datasetId,
@@ -811,7 +848,10 @@ function transformSportveldResponse(
 
   for (const feature of features) {
     for (const type of types) {
-      if (feature.properties.soortOndergrond?.startsWith(type)) {
+      if (
+        typeof feature.properties.soortOndergrond === 'string' &&
+        feature.properties.soortOndergrond.startsWith(type)
+      ) {
         feature.properties.soortOndergrond = type;
         break;
       }
@@ -827,7 +867,7 @@ function transformSportveldResponse(
 function transformSportzaalResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features = transformGenericApiListResponse(
     datasetId,
@@ -838,7 +878,7 @@ function transformSportzaalResponse(
 
   return features.filter(
     (feature) =>
-      feature.properties.type &&
+      typeof feature.properties.type === 'string' &&
       !feature.properties.type.toLowerCase().includes('gymz')
   );
 }
@@ -846,7 +886,7 @@ function transformSportzaalResponse(
 function transformGymzaalResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features = transformGenericApiListResponse(
     datasetId,
@@ -857,7 +897,7 @@ function transformGymzaalResponse(
 
   return features.filter(
     (feature) =>
-      feature.properties.type &&
+      typeof feature.properties.type === 'string' &&
       feature.properties.type.toLowerCase().includes('gymz')
   );
 }
@@ -865,7 +905,7 @@ function transformGymzaalResponse(
 export function transformHardlooproutesResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features = transformGenericApiListResponse(
     datasetId,
@@ -884,7 +924,7 @@ export function transformHardlooproutesResponse(
 
   for (const feature of features) {
     const distance = feature.properties.lengte;
-    if (distance) {
+    if (typeof distance === 'number') {
       const groupDistance = groups.find((group) => {
         return distance >= group.range[0] && distance < group.range[1];
       });
@@ -897,9 +937,12 @@ export function transformHardlooproutesResponse(
 export function transformWiorApiListResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: DsoApiResponse | WFSApiResponse
 ) {
-  const features = getDsoApiEmbeddedResponse(datasetId, responseData);
+  const features = getDsoApiEmbeddedResponse(
+    datasetId,
+    responseData as DsoApiResponse
+  );
 
   if (!features) {
     return [];
@@ -919,7 +962,7 @@ export function transformWiorApiListResponse(
   for (const feature of features) {
     const start = feature.datumStartUitvoering;
     const eind = feature.datumEindeUitvoering;
-    if (start) {
+    if (typeof start === 'string' && typeof eind === 'string') {
       if (new Date(eind) > new Date(start)) {
         feature.duur = 'meerdaags';
       } else {

@@ -13,6 +13,7 @@ import type {
   MaPointFeature,
 } from './datasets';
 import { datasetEndpoints } from './datasets';
+import { WFSFeatureSource } from './dso-helpers';
 import {
   DATASETS,
   DatasetFilterSelection,
@@ -50,23 +51,26 @@ export function getDatasetEndpointConfig(
       return !endpointIDs || isEndpoint || hasDatasetId;
     })
     .filter(
-      ([id, config]) =>
+      ([_id, config]) =>
         !featureTypes || featureTypes.includes(config.featureType)
     );
 
   return Array.from(new Set(configs));
 }
 
-export function recursiveCoordinateSwap(coords: any[]) {
-  const nCoords: any[] = [];
+export function recursiveCoordinateSwap(
+  coords: LatLngPositions
+): LatLngPositions {
+  const nCoords: LatLngPositions = [];
   let i = 0;
   for (i; i < coords.length; i++) {
     const coord = coords[i];
     const c1 = coord[0];
     if (typeof c1 !== 'number') {
-      nCoords.push(recursiveCoordinateSwap(coord));
+      const swapped = recursiveCoordinateSwap(coord as LatLngPositions);
+      nCoords.push(swapped as LatLngTuple[] | LatLngTuple);
     } else if (typeof c1 === 'number') {
-      nCoords.push([coord[1], c1]);
+      nCoords.push([coord[1], c1] as LatLngTuple);
     }
   }
   return nCoords;
@@ -89,14 +93,16 @@ export function isCoordWithingBoundingBox(
   return false;
 }
 
+export type LatLngPositions = Array<LatLngTuple[] | LatLngTuple>;
+
 // Flatten GeoJSON for easy processing
-function flatten(input: any[]) {
+function flatten(input: LatLngPositions) {
   const flattened: LatLngTuple[] = [];
   for (const value of input) {
     if (Array.isArray(value) && typeof value[0] === 'number') {
       flattened.push(value as LatLngTuple);
     } else if (Array.isArray(value)) {
-      flattened.push(...flatten(value));
+      flattened.push(...flatten(value as LatLngPositions));
     }
   }
   return flattened;
@@ -128,7 +134,7 @@ export function filterPolylineFeaturesWithinBoundingBox(
   const len = features.length;
 
   for (i; i < len; i += 1) {
-    const coords = flatten(features[i].geometry.coordinates);
+    const coords = flatten(features[i].geometry.coordinates as LatLngPositions);
     if (
       coords.some(hasCoord) ||
       // Checks if the boundingbox is covered by the Polygon
@@ -259,7 +265,7 @@ export function createDynamicFilterConfig(
 function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   return Object.entries(filters).every(([propertyName, valueConfig]) => {
     const propertyValues = valueConfig.values;
-    const propVal = feature.properties[propertyName];
+    const propVal = feature.properties[propertyName] as string;
     const isFilteredValue = propertyValues ? propVal in propertyValues : false;
 
     return propertyValues
@@ -355,7 +361,7 @@ export function getPropertyFilters(datasetId: DatasetId) {
 export function createFeaturePropertiesFromPropertyFilterConfig(
   datasetId: DatasetId,
   featureProperties: MaFeature['properties'],
-  featureSourceProperties: any
+  featureSourceProperties: WFSFeatureSource
 ) {
   const propertyFilters = getPropertyFilters(datasetId);
   const filterPropertyNames = propertyFilters
@@ -424,7 +430,10 @@ export function datasetApiResult(
   };
 }
 
-export function getFeaturePolylineColor(datasetId: DatasetId, feature: any) {
+export function getFeaturePolylineColor(
+  datasetId: DatasetId,
+  feature: WFSFeatureSource
+) {
   switch (datasetId) {
     case 'sportveld':
       switch (feature.sportfunctie) {
@@ -526,7 +535,7 @@ export function filterFeaturesinRadius(
   const len = features.length;
 
   for (i; i < len; i += 1) {
-    const coords = flatten(features[i].geometry.coordinates);
+    const coords = flatten(features[i].geometry.coordinates as LatLngPositions);
     const hasCoord = (coord: LatLngTuple) =>
       getDistanceFromLatLonInKm(
         coord[0],
@@ -552,7 +561,7 @@ export function getBboxFromFeatures(
   lats.push(location.lat);
   lngs.push(location.lng);
   for (i; i < len; i += 1) {
-    const coords = flatten(features[i].geometry.coordinates);
+    const coords = flatten(features[i].geometry.coordinates as LatLngPositions);
     coords.forEach((coord) => {
       lats.push(coord[0]);
       lngs.push(coord[1]);

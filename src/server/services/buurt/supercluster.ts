@@ -28,8 +28,12 @@ async function generateSuperCluster(features: MaPointFeature[]) {
 
 function addExpansionZoom(superClusterIndex: Supercluster, feature: MaFeature) {
   try {
-    feature.properties.expansion_zoom =
-      superClusterIndex.getClusterExpansionZoom(feature.properties.cluster_id);
+    if (typeof feature.properties.cluster_id === 'number') {
+      feature.properties.expansion_zoom =
+        superClusterIndex.getClusterExpansionZoom(
+          feature.properties.cluster_id
+        );
+    }
   } catch (_error) {
     console.error(
       "Can't add expansion zoom to cluster",

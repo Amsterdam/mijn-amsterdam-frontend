@@ -2,15 +2,18 @@ import type {
   DatasetConfig,
   DatasetFeatureProperties,
   DatasetFeatures,
+  MaFeature,
 } from './datasets';
 import {
   createFeaturePropertiesFromPropertyFilterConfig,
   getFeaturePolylineColor,
   getPropertyFilters,
+  LatLngPositions,
   recursiveCoordinateSwap,
 } from './helpers';
 import {
   DatasetId,
+  FeatureType,
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/myarea-datasets';
 
@@ -45,12 +48,33 @@ export function dsoApiListUrl(
   };
 }
 
-export function getDsoApiEmbeddedResponse(id: string, responseData: any) {
+export function getDsoApiEmbeddedResponse(
+  id: string,
+  responseData: DsoApiResponse
+) {
   const results = responseData?._embedded?.[id];
   return Array.isArray(results) ? results : null;
 }
 
-export function discoverSingleDsoApiEmbeddedResponse(responseData: any) {
+export type DsoApiResponse<T = WFSFeatureSource> = {
+  _embedded: Record<string, T[]>;
+};
+
+type GeoKey = 'geometry' | 'geometrie';
+
+export type WFSFeatureSource<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
+  [key in GeoKey]?: GeoJSON.Geometry;
+} & { properties: T } & Record<string, unknown>;
+
+export type WFSApiResponse<T = WFSFeatureSource> = {
+  features: T[];
+};
+
+export function discoverSingleDsoApiEmbeddedResponse<T = WFSFeatureSource>(
+  responseData: DsoApiResponse<T>
+) {
   // Use first key found in embedded response
   const embeddedKey = responseData?._embedded
     ? Object.keys(responseData._embedded)[0]
@@ -63,28 +87,35 @@ export function discoverSingleDsoApiEmbeddedResponse(responseData: any) {
 export function transformGenericApiListResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any,
+  responseData: WFSApiResponse | DsoApiResponse,
   embeddedDatasetId?: string
 ) {
-  const results = responseData?.features
-    ? responseData?.features
-    : getDsoApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
+  const results =
+    'features' in responseData
+      ? responseData?.features
+      : getDsoApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
 
   const collection: DatasetFeatures = [];
-  const geometryKey = config.geometryKey || 'geometry';
+  const geometryKey = (config.geometryKey || 'geometry') as GeoKey;
 
   if (results && results.length) {
     for (const feature of results) {
-      if (feature[geometryKey]?.coordinates) {
+      const featureGeometry = feature[geometryKey] as GeoJSON.Geometry;
+      if (
+        geometryKey in feature &&
+        'coordinates' in featureGeometry &&
+        featureGeometry.coordinates
+      ) {
+        const featureProperties = feature.properties as Record<string, unknown>;
         const id = config.idKeyList
           ? encodeURIComponent(
               String(
-                feature?.properties
-                  ? feature?.properties[config.idKeyList]
+                featureProperties
+                  ? featureProperties[config.idKeyList]
                   : feature[config.idKeyList]
               )
             )
-          : String(feature?.properties?.id || feature.id);
+          : String(featureProperties.id || feature.id);
 
         const properties: DatasetFeatureProperties = {
           id,
@@ -92,7 +123,7 @@ export function transformGenericApiListResponse(
         };
 
         const hasShapeGeometry = POLYLINE_GEOMETRY_TYPES.includes(
-          feature[geometryKey].type
+          featureGeometry.type as FeatureType // NOTE: FeatureType does not include all possible values of GeoJSON.Geometry['type']
         );
 
         if (hasShapeGeometry) {
@@ -101,13 +132,13 @@ export function transformGenericApiListResponse(
             properties.zIndex = config.zIndex;
           }
           // Swap the coordinates of the polyline datasets so leaflet can render them easily on the front-end.
-          feature[geometryKey].coordinates = recursiveCoordinateSwap(
-            feature[geometryKey].coordinates
-          );
+          featureGeometry.coordinates = recursiveCoordinateSwap(
+            featureGeometry.coordinates as LatLngPositions
+          ) as MaFeature['geometry']['coordinates'];
         }
         collection.push({
           type: 'Feature',
-          geometry: feature[geometryKey],
+          geometry: featureGeometry,
           properties: createFeaturePropertiesFromPropertyFilterConfig(
             datasetId,
             properties,

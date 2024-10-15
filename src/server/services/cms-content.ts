@@ -7,12 +7,15 @@ import sanitizeHtml, { IOptions } from 'sanitize-html';
 
 import { IS_TAP } from '../../universal/config/env';
 import {
+  apiErrorResult,
   ApiResponse,
+  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
+import { DataRequestConfig } from '../config/source-api';
 import FileCache from '../helpers/file-cache';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
@@ -187,13 +190,20 @@ async function getGeneralPage(
   requestID: RequestID,
   profileType: ProfileType = 'private',
   forceRenew: boolean = false
-) {
-  const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO_' + profileType);
+): Promise<ApiResponse<CMSPageContent | null>> {
+  const apiData = fileCache.getKey<ApiSuccessResponse<CMSPageContent>>(
+    'CMS_CONTENT_GENERAL_INFO_' + profileType
+  );
   if (apiData && !forceRenew) {
     return Promise.resolve(apiData);
   }
   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
-    transformResponse: (responseData: any) => {
+    transformResponse: (responseData: {
+      applicatie: {
+        title: string;
+        inhoud: { inleiding: string; tekst: string };
+      };
+    }) => {
       return {
         title: responseData.applicatie.title,
         content:
@@ -203,63 +213,72 @@ async function getGeneralPage(
     },
   });
 
-  const requestConfigFinal = {
+  const requestConfigFinal: DataRequestConfig = {
     ...requestConfig,
     url: requestConfig.urls![profileType],
   };
 
-  return requestData<CMSPageContent>(requestConfigFinal, requestID)
-    .then((apiData) => {
-      if (apiData.content?.content && apiData.content?.title) {
+  return requestData<CMSPageContent>(requestConfigFinal, requestID).then(
+    (apiData) => {
+      if (
+        apiData.status === 'OK' &&
+        apiData.content?.content &&
+        apiData.content?.title
+      ) {
         fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
         fileCache.save();
         return apiData;
       }
-      throw new Error('Unexpected page data from iProx CMS');
-    })
-    .catch((error) => {
       // Try to get stale cache instead.
-      const staleApiData = fileCache.getKeyStale(
-        'CMS_CONTENT_GENERAL_INFO_' + profileType
-      );
+      const staleApiData = fileCache.getKeyStale<
+        ApiSuccessResponse<CMSPageContent>
+      >('CMS_CONTENT_GENERAL_INFO_' + profileType);
 
       if (staleApiData) {
         return Promise.resolve(staleApiData);
       }
 
-      throw error;
-    });
+      return apiErrorResult('Unexpected page data from iProx CMS', null);
+    }
+  );
 }
 
-async function getFooter(requestID: RequestID, forceRenew: boolean = false) {
-  const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
+async function getFooter(
+  requestID: RequestID,
+  forceRenew: boolean = false
+): Promise<ApiResponse<CMSFooterContent | null>> {
+  const apiData =
+    fileCache.getKey<ApiResponse<CMSFooterContent>>('CMS_CONTENT_FOOTER') ??
+    null;
+
   if (apiData && !forceRenew) {
     return Promise.resolve(apiData);
   }
-  return requestData<CMSFooterContent>(
-    getApiConfig('CMS_CONTENT_FOOTER', {
-      transformResponse: transformFooterResponse,
-    }),
-    requestID
-  )
-    .then((apiData) => {
+
+  const requestConfig = getApiConfig('CMS_CONTENT_FOOTER', {
+    transformResponse: transformFooterResponse,
+  });
+
+  return requestData<CMSFooterContent>(requestConfig, requestID).then(
+    (apiData) => {
       if (apiData.content?.blocks.length) {
         fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
         fileCache.save();
         return apiData;
       }
-      throw new Error('Unexpected footer data from iProx CMS');
-    })
-    .catch((error) => {
       // Try to get stale cache instead.
-      const staleApiData = fileCache.getKeyStale('CMS_CONTENT_FOOTER');
+      const staleApiData =
+        fileCache.getKeyStale<ApiResponse<CMSFooterContent>>(
+          'CMS_CONTENT_FOOTER'
+        );
 
       if (staleApiData) {
-        return Promise.resolve(staleApiData);
+        return staleApiData;
       }
 
-      throw error;
-    });
+      return apiErrorResult('Could not fet Footer data', null);
+    }
+  );
 }
 
 async function fetchCmsBase(
@@ -317,11 +336,51 @@ const searchFileCache = new FileCache({
   cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
 });
 
+type StaticSearchEntry = {
+  url: string;
+  displayTitle: string;
+  description: string;
+  keywords: string[];
+  profileTypes?: string[];
+};
+
+type ApiSearchConfig = {
+  keywordsGeneratedFromProps?: string[];
+  profileTypes?: string[];
+  keywords?: string[];
+};
+
+type SearchConfigRemote = {
+  staticSearchEntries: StaticSearchEntry[];
+  apiSearchConfigs: Record<string, ApiSearchConfig>;
+};
+
+// // Example usage:
+// const config: SearchConfigRemote = {
+//   staticSearchEntries: [
+//     {
+//       url: '/',
+//       displayTitle: 'Home - Dashboard',
+//       description:
+//         'Dashboard pagina met overzicht van wat U heeft op Mijn Amsterdam.',
+//       keywords: [],
+//     },
+//     // Add other entries here...
+//   ],
+//   apiSearchConfigs: {
+//     WPI_AANVRAGEN: {
+//       keywordsGeneratedFromProps: ['title', 'decision', 'about'],
+//     },
+//     // Add other configs here...
+//   },
+// };
+
 export async function fetchSearchConfig(
   requestID: RequestID,
   query?: Record<string, string>
 ) {
-  const config = searchFileCache.getKey('CONFIG');
+  const config =
+    searchFileCache.getKey<ApiSuccessResponse<SearchConfigRemote>>('CONFIG');
 
   if (IS_TAP && config?.content && query?.cache !== 'renew') {
     return Promise.resolve(config);
@@ -345,7 +404,10 @@ export async function fetchSearchConfig(
       );
     });
   } else {
-    dataRequest = requestData<any>(getApiConfig('SEARCH_CONFIG'), requestID);
+    dataRequest = requestData<SearchConfigRemote>(
+      getApiConfig('SEARCH_CONFIG'),
+      requestID
+    );
   }
 
   return dataRequest

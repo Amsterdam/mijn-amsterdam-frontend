@@ -1,9 +1,8 @@
-import { FlatCache, clearCacheById, create, createFromFile } from 'flat-cache';
 import fs from 'fs';
 import { createHash } from 'node:crypto';
 import path from 'path';
 
-import { Cache, clearCacheById, create } from 'flat-cache';
+import { FlatCache, clearCacheById, createFromFile } from 'flat-cache';
 
 import { IS_AP } from '../../universal/config/env';
 import { ONE_SECOND_MS } from '../config/app';
@@ -15,9 +14,9 @@ interface FileCacheProps {
   triesUntilConsiderdStale?: number;
 }
 
-type KeyData = {
+type KeyData<T = unknown> = {
   expire: number | false;
-  data: any;
+  data: T;
 };
 
 const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
@@ -48,7 +47,7 @@ export function cacheOverview() {
             env,
             keys: fileCache.keys().map((key) => {
               const keyData = fileCache.getKey<KeyData>(key);
-              const overview: Record<string, string | boolean> = {
+              const overview: Record<string, unknown> = {
                 key,
                 expire: keyData.expire
                   ? new Date(keyData.expire).toISOString()
@@ -92,18 +91,17 @@ export default class FileCache {
     this.triesUntilConsiderdStale = triesUntilConsiderdStale;
   }
 
-  getKey(key: string) {
+  getKey<T = unknown>(key: string): T | undefined {
     const now = new Date().getTime();
-    const value = this.cache.getKey<KeyData>(key);
+    const value = this.cache.getKey<KeyData<T>>(key);
 
     if (value === undefined || (value.expire !== false && value.expire < now)) {
       return undefined;
-    } else {
-      return value.data;
     }
+    return value.data;
   }
 
-  setKey(key: string, value: any) {
+  setKey(key: string, value: unknown) {
     const now = new Date().getTime();
     this.cache.setKey(key, {
       expire: this.expire === false ? false : now + this.expire,
@@ -137,10 +135,10 @@ export default class FileCache {
     this.hashes = [];
   }
 
-  getKeyStale(key: string, isProd: boolean = IS_AP) {
+  getKeyStale<T>(key: string, isProd: boolean = IS_AP) {
     return createFromFile(
       `${this.path}/${fileName(this.name_, isProd)}`
-    ).getKey<KeyData>(key)?.data;
+    ).getKey<KeyData<T>>(key)?.data;
   }
 
   isStale() {
