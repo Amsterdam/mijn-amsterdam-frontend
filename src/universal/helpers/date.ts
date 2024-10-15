@@ -80,9 +80,9 @@ export function isDateInPast(
 }
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
-  return (a: Record<string, unknown>, b: Record<string, unknown>) => {
-    const v1 = a[sortKey];
-    const v2 = b[sortKey];
+  return (a: unknown, b: unknown) => {
+    const v1 = (a as Record<string, unknown>)[sortKey];
+    const v2 = (b as Record<string, unknown>)[sortKey];
     const c =
       v1 instanceof Date ? v1 : typeof v1 === 'string' ? parseISO(v1) : null;
     const d =
