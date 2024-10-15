@@ -508,7 +508,7 @@ export function transformMeldingenBuurtResponse(
   config: DatasetConfig,
   responseData: WFSApiResponse | DsoApiResponse
 ): DatasetFeatures {
-  if (!('features' in responseData)) {
+  if (!responseData || !('features' in responseData)) {
     return [];
   }
 
@@ -923,8 +923,8 @@ export function transformHardlooproutesResponse(
   ];
 
   for (const feature of features) {
-    const distance = feature.properties.lengte;
-    if (typeof distance === 'number') {
+    if (typeof feature.properties.lengte === 'string') {
+      const distance = parseInt(feature.properties.lengte, 10);
       const groupDistance = groups.find((group) => {
         return distance >= group.range[0] && distance < group.range[1];
       });

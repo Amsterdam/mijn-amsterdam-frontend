@@ -106,7 +106,9 @@ export function transformGenericApiListResponse(
         'coordinates' in featureGeometry &&
         featureGeometry.coordinates
       ) {
-        const featureProperties = feature.properties as Record<string, unknown>;
+        const featureProperties = feature.properties as
+          | Record<string, unknown>
+          | undefined;
         const id = config.idKeyList
           ? encodeURIComponent(
               String(
@@ -115,7 +117,7 @@ export function transformGenericApiListResponse(
                   : feature[config.idKeyList]
               )
             )
-          : String(featureProperties.id || feature.id);
+          : String(featureProperties?.id || feature.id);
 
         const properties: DatasetFeatureProperties = {
           id,
