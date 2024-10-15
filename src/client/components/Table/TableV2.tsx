@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Heading, Paragraph, Table } from '@amsterdam/design-system-react';
+import { Heading, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './TableV2.module.scss';
@@ -56,7 +56,7 @@ export interface TableV2Props<T> {
   className?: string;
   showTHead?: boolean;
   caption?: string;
-  subTitle?: string;
+  subTitle?: ReactNode;
 }
 
 export function TableV2<T extends object = ZaakDetail>({
@@ -76,7 +76,7 @@ export function TableV2<T extends object = ZaakDetail>({
         </Heading>
       )}
 
-      {!!subTitle && <Paragraph>{subTitle}</Paragraph>}
+      {subTitle}
       <Table className={classNames(styles.TableV2, className)}>
         {showTHead && (
           <Table.Header>

@@ -90,11 +90,21 @@ export function AfisThemaPagina() {
         listPageRoute,
       },
     ]) => {
+      const subTitleNode =
+        state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
+          ? state === 'overgedragen' && (
+              <Alert>
+                <Paragraph>
+                  Incasso traject betalingen zijn zichtbaar in belastingen.
+                </Paragraph>
+              </Alert>
+            )
+          : subTitle;
       return (
         <ThemaPaginaTable<AfisFactuurFrontend>
           key={state}
           title={title}
-          subTitle={subTitle}
+          subTitle={subTitleNode}
           zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}

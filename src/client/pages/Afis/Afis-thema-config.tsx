@@ -60,7 +60,7 @@ export type AfisFacturenByStateFrontend = {
 
 type AfisFacturenTableConfig = {
   title: string;
-  subTitle?: string;
+  subTitle?: ReactNode;
   displayProps: DisplayProps<AfisFactuurFrontend>;
   maxItems: number;
   listPageLinkLabel: string;
