@@ -1,11 +1,8 @@
 import Mockdate from 'mockdate';
 import { describe, expect, test } from 'vitest';
-
-import { getRVVSloterwegLineItems } from './RvvSloterweg';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import {
-  RVVSloterweg,
-} from '../../../server/services/vergunningen/vergunningen';
+import { RVVSloterweg } from '../../../server/services/vergunningen/vergunningen';
+import { getRVVSloterwegLineItems } from './RvvSloterweg';
 
 describe('RVV Sloterweg status line items', () => {
   const zaken: Array<{ title: string; identifier: string }> = [
