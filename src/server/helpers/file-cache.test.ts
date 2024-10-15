@@ -8,11 +8,11 @@ vi.mock('flat-cache', () => {
   return {
     default: vi.fn(),
     setKey: vi.fn(),
-    createFromFile: () => ({
-      setKey: (key: string, data: any) => {
+    create: () => ({
+      set: (key: string, data: any) => {
         cache[key] = data;
       },
-      getKey: (key: string) => cache[key],
+      get: (key: string) => cache[key],
       save: vi.fn(),
       keys: () => Object.keys(cache),
     }),
