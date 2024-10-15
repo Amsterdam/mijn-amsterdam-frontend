@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
 import {
@@ -9,6 +9,8 @@ import {
 import { AfisFactuurState } from './afis-types';
 import { getAuth } from '../../auth/auth-helpers';
 import {
+  RequestWithQueryParams,
+  RequestWithRouteAndQueryParams,
   sendBadRequest,
   sendResponse,
   sendUnauthorized,
@@ -16,7 +18,7 @@ import {
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export async function handleFetchAfisBusinessPartner(
-  req: Request<{ businessPartnerIdEncrypted: string }>,
+  req: RequestWithQueryParams<{ id: string }>,
   res: Response
 ) {
   const authProfileAndToken = getAuth(req);
@@ -26,7 +28,7 @@ export async function handleFetchAfisBusinessPartner(
   }
 
   const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    req.params.businessPartnerIdEncrypted,
+    req.query.id,
     authProfileAndToken
   );
 
@@ -56,7 +58,12 @@ function isPostiveInt(str: string) {
  *    for example `$top=4` will get you four invoices out of potentially 200.
  */
 export async function handleFetchAfisFacturen(
-  req: Request<{ businessPartnerIdEncrypted: string; state: AfisFactuurState }>,
+  req: RequestWithRouteAndQueryParams<
+    {
+      state: AfisFactuurState;
+    },
+    { id: string; top?: string }
+  >,
   res: Response
 ) {
   if (!FACTUUR_STATE_KEYS.includes(req.params.state)) {
@@ -70,7 +77,7 @@ export async function handleFetchAfisFacturen(
   }
 
   const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    req.params.businessPartnerIdEncrypted,
+    req.query.id,
     authProfileAndToken
   );
 
@@ -94,7 +101,7 @@ export async function handleFetchAfisFacturen(
 }
 
 export async function handleFetchAfisFacturenOverview(
-  req: Request<{ businessPartnerIdEncrypted: string }>,
+  req: RequestWithQueryParams<{ id: string }>,
   res: Response
 ) {
   const authProfileAndToken = getAuth(req);
@@ -104,7 +111,7 @@ export async function handleFetchAfisFacturenOverview(
   }
 
   const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    req.params.businessPartnerIdEncrypted,
+    req.query.id,
     authProfileAndToken
   );
 

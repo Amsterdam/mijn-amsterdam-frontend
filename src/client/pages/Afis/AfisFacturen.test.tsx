@@ -2,12 +2,12 @@ import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
+import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { AfisFacturen } from './AfisFacturen';
-import { bffApi } from '../../../test-utils';
 
 const businessPartnerIdEncrypted = 'yyy-456-yyy';
 const testState = {
@@ -29,7 +29,7 @@ describe('<AfisFacturen />', () => {
 
   test('Lists Open facturen', async () => {
     bffApi
-      .get(`/services/afis/facturen/overzicht/${businessPartnerIdEncrypted}`)
+      .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
       .reply(200, {
         content: {
           open: {
@@ -85,7 +85,9 @@ describe('<AfisFacturen />', () => {
 
   test('Lists Closed facturen', async () => {
     bffApi
-      .get(`/services/afis/facturen/afgehandeld/${businessPartnerIdEncrypted}`)
+      .get(
+        `/services/afis/facturen/afgehandeld?id=${businessPartnerIdEncrypted}`
+      )
       .reply(200, {
         content: {
           afgehandeld: {
@@ -117,7 +119,7 @@ describe('<AfisFacturen />', () => {
       });
 
     bffApi
-      .get(`/services/afis/facturen/overzicht/${businessPartnerIdEncrypted}`)
+      .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
       .reply(200, {
         content: {
           open: { count: 0, facturen: [] },
