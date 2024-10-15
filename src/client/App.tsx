@@ -276,11 +276,7 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
-              path={[
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'],
-                AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-              ]}
+              path={AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']}
               component={ToeristischeVerhuurDetail}
             />
           )}

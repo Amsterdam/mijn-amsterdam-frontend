@@ -12,16 +12,22 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
-import {
-  GenericDocument,
-  StatusLineItem,
-  ZaakDetail,
-} from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+import {
+  BBVergunning,
+  BBVergunningZaakResult,
+  fieldMap,
+  PBZaakCompacted,
+  PBZaakFields,
+  PBZaakRecord,
+  PBZaakResultaat,
+  SearchRequestResponse,
+} from './toeristische-verhuur-types';
 
 function fetchPowerBrowserToken_(requestID: RequestID) {
   const requestConfig = getApiConfig('POWERBROWSER', {
@@ -37,27 +43,6 @@ function fetchPowerBrowserToken_(requestID: RequestID) {
 }
 
 const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_);
-
-type PBRecordField<K extends string = string> = {
-  fieldName: K;
-  fieldValue?: string;
-  text?: string;
-};
-
-type PBRecord<T, F extends PBRecordField[] = PBRecordField[]> = {
-  fields: F;
-  fmtCpn: string;
-  id: string;
-  mainTableName: T;
-};
-
-type SearchRequestResponse<
-  T extends string,
-  F extends PBRecordField[] = PBRecordField[],
-> = {
-  mainTableName: T;
-  records: PBRecord<T, F>[];
-};
 
 async function fetchPowerBrowserData<T extends unknown>(
   requestID: RequestID,
@@ -122,88 +107,6 @@ async function getZaakIds(requestID: RequestID, persoonId: string) {
   };
   return fetchPowerBrowserData<string[]>(requestID, requestConfig);
 }
-
-type PBZaakFields =
-  | PBRecordField<'ZAAK_IDENTIFICATIE'>
-  // | PBRecordField<'CREATEDATE'>
-  | PBRecordField<'STARTDATUM'>
-  | PBRecordField<'EINDDATUM'>
-  | PBRecordField<'INGANGSDATUM'>
-  | PBRecordField<'DATUM_TOT'>
-  | PBRecordField<'RESULTAAT_ID'>;
-
-type PBZaakRecord = PBRecord<'GFO_ZAKEN', PBZaakFields[]>;
-
-type BBVergunningZaakStatus =
-  | 'Ontvangen'
-  | 'In behandeling'
-  | 'Afgehandeld'
-  | 'Verlopen'
-  | null;
-type BBVergunningZaakResult =
-  | 'Verleend'
-  | 'Niet verleend'
-  | 'Ingetrokken'
-  | null;
-
-export interface BBVergunning extends ZaakDetail {
-  aanvrager: string | null;
-  heeftOvergangsRecht: boolean;
-  adres: string | null;
-  dateReceived: string | null;
-  dateDecision: string | null;
-  dateStart: string;
-  dateStartFormatted: string | null;
-  dateEnd: string | null;
-  dateEndFormatted: string | null;
-  eigenaar: string | null;
-  isActual: boolean;
-  result: BBVergunningZaakResult;
-  status: BBVergunningZaakStatus | BBVergunningZaakResult;
-  zaaknummer: string;
-  documents: GenericDocument[];
-  title: 'Vergunning bed & breakfast';
-}
-
-const fieldMap: Record<PBZaakFields['fieldName'], string> = {
-  ZAAK_IDENTIFICATIE: 'zaaknummer',
-  EINDDATUM: 'dateDecision',
-  INGANGSDATUM: 'dateReceived',
-  DATUM_TOT: 'dateEnd',
-  RESULTAAT_ID: 'result',
-  STARTDATUM: 'dateStart',
-};
-
-type PBZaakStatus =
-  | string
-  | 'Gereed'
-  | 'Intake'
-  | 'In behandeling'
-  | 'Geaccepteerd'
-  | 'Afgehandeld'
-  | 'Toetsen volledigheid'
-  | 'Controle bezoek';
-
-type PBZaakResultaat =
-  | null
-  // | 'Niet van toepassing'
-  // | 'Buiten behandeling'
-  | 'Geweigerd'
-  | 'Geweigerd op basis van Quotum'
-  | 'Verleend met overgangsrecht'
-  | 'Verleend zonder overgangsrecht'
-  | 'Verleend'
-  | 'Ingetrokken';
-
-type PBZaakCompacted = {
-  zaaknummer: string | null;
-  dateStart: string | null;
-  dateReceived: string | null;
-  dateDecision: string | null;
-  dateEnd: string | null;
-  result: PBZaakResultaat | null;
-  status: PBZaakStatus | null;
-};
 
 function getFieldValue(
   pbFieldName: PBZaakFields['fieldName'],
@@ -460,7 +363,10 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     id,
     zaaknummer: pbZaak.zaaknummer ?? zaak.id,
     link: {
-      to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB'], { id }),
+      to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
+        id,
+        casetype: 'bed-and-breakfast',
+      }),
       title,
     },
     eigenaar: '',

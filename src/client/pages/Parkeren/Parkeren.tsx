@@ -78,7 +78,7 @@ export default function Parkeren() {
           title: 'Meer over parkeervergunningen',
         },
       ]}
-      pageContentTables={tables}
+      pageContentMain={tables}
     />
   );
 }

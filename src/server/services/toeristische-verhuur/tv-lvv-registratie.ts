@@ -3,53 +3,27 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { getFullAddress } from '../../../universal/helpers/brp';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { isAmsterdamAddress } from '../buurt/helpers';
-
-export interface ToeristischeVerhuurRegistratieNumberSource {
-  registrationNumber: string;
-}
-
-export interface ToeristischeVerhuurRegistratieHouse {
-  city: string;
-  houseLetter: string | null;
-  houseNumber: string | null;
-  houseNumberExtension: string | null;
-  postalCode: string | null;
-  street: string | null;
-}
-
-export interface ToeristischeVerhuurRegistratieDetailSource {
-  rentalHouse: ToeristischeVerhuurRegistratieHouse;
-  registrationNumber: string;
-  agreementDate: string | null;
-}
-
-export interface ToeristischeVerhuurRegistratieDetail {
-  city: string;
-  houseLetter: string | null;
-  houseNumber: string | null;
-  houseNumberExtension: string | null;
-  postalCode: string | null;
-  registrationNumber: string;
-  street: string | null;
-  agreementDate: string | null;
-}
-
-export interface ToeristischeVerhuurRegistratieDetailsSourceData {
-  content: ToeristischeVerhuurRegistratieDetail[];
-}
+import {
+  LVVRegistratie,
+  LVVRegistratieSource,
+  ToeristischeVerhuurRegistratieNumberSource,
+} from './toeristische-verhuur-types';
 
 export async function fetchRegistraties(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const url = `${process.env.BFF_LVV_API_URL}/bsn`;
   const registrationNumbersResponse = await requestData<string[]>(
     getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
-      url,
+      formatUrl({ url }) {
+        return `${url}/bsn`;
+      },
       method: 'POST',
       data: JSON.stringify(authProfileAndToken.profile.id),
       transformResponse: (response) => {
@@ -71,37 +45,61 @@ export async function fetchRegistraties(
   }
 
   const registrationDetailResponses = await Promise.all(
-    registrationNumbersResponse.content?.map((num) => {
-      const url = `${process.env.BFF_LVV_API_URL}/${num}`;
-      return requestData<ToeristischeVerhuurRegistratieDetailSource>(
+    registrationNumbersResponse.content?.map((registratienummer) => {
+      return requestData<LVVRegistratieSource>(
         getApiConfig('TOERISTISCHE_VERHUUR_REGISTRATIES', {
+          formatUrl({ url }) {
+            return `${url}/${registratienummer}`;
+          },
           method: 'get',
-          url,
         }),
         requestID
       );
-    }) || []
+    }) ?? []
   );
 
   if (!registrationDetailResponses.every((r) => r.status === 'OK')) {
     return apiErrorResult('Could not retrieve all registration details', null);
   }
 
-  const registrations: ToeristischeVerhuurRegistratieDetail[] =
-    registrationDetailResponses
-      .map((response) => response.content)
-      .filter(
-        (r): r is ToeristischeVerhuurRegistratieDetailSource =>
-          r !== null && isAmsterdamAddress(r?.rentalHouse.city)
-      )
-      .map((r) => {
-        const rUpdated: ToeristischeVerhuurRegistratieDetail = {
-          ...r.rentalHouse,
-          registrationNumber: r.registrationNumber,
-          agreementDate: r.agreementDate,
+  const registrations: LVVRegistratie[] = registrationDetailResponses
+    .map((response) => response.content)
+    .filter(
+      (registrationDetails) =>
+        registrationDetails !== null &&
+        isAmsterdamAddress(registrationDetails?.rentalHouse.city)
+    )
+    .map(
+      ({
+        rentalHouse: {
+          city,
+          street,
+          houseNumber,
+          houseLetter,
+          houseNumberExtension,
+          postalCode,
+        },
+        registrationNumber,
+        agreementDate,
+      }) => {
+        const rUpdated: LVVRegistratie = {
+          address: getFullAddress({
+            straatnaam: street,
+            huisnummer: houseNumber,
+            huisnummertoevoeging: houseNumberExtension,
+            huisletter: houseLetter,
+            postcode: postalCode,
+            woonplaatsNaam: city,
+          }),
+          registrationNumber,
+          agreementDate,
+          agreementDateFormatted: agreementDate
+            ? defaultDateFormat(agreementDate)
+            : null,
         };
-        return rUpdated as ToeristischeVerhuurRegistratieDetail;
-      });
+        return rUpdated;
+      }
+    );
 
   return apiSuccessResult(registrations);
 }

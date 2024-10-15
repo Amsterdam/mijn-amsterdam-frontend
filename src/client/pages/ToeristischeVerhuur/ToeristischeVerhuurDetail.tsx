@@ -49,9 +49,7 @@ export default function ToeristischVerhuurDetail() {
               We kunnen op dit moment niet alle gegevens tonen.
             </ErrorAlert>
           )}
-          {isLoadingApi && (
-            <LoadingContent className={styles.LoadingContentInfo} />
-          )}
+          {isLoadingApi && <LoadingContent />}
         </PageContent>
       )}
       {!!vergunning && <VergunningVerhuur vergunning={vergunning} />}

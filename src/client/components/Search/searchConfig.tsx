@@ -18,7 +18,7 @@ import {
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
-import { ToeristischeVerhuurRegistratieDetail } from '../../../server/services/toeristische-verhuur/tv-lvv-registratie';
+import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/tv-lvv-registratie';
 import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/tv-vakantieverhuur-vergunning';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
@@ -230,7 +230,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
     getApiBaseItems: (apiContent: {
-      lvvRegistraties: ToeristischeVerhuurRegistratieDetail[];
+      lvvRegistraties: LVVRegistratie[];
       vakantieverhuurVergunningen: VakantieverhuurVergunning[];
       bbVergunningen: BBVergunning[];
     }) => {

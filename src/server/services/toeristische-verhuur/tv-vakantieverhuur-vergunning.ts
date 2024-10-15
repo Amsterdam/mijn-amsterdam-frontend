@@ -1,18 +1,14 @@
 import { generatePath } from 'react-router-dom';
-
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import {
   defaultDateFormat,
   isDateInPast,
 } from '../../../universal/helpers/date';
-import {
-  LinkProps,
-  StatusLineItem,
-  ZaakDetail,
-} from '../../../universal/types/App.types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
 import {
   VakantieverhuurVergunning as VakantieverhuurVergunningDecos,
   Vergunning,
@@ -20,24 +16,7 @@ import {
   fetchVergunningen,
   toeristischeVerhuurVergunningTypes,
 } from '../vergunningen/vergunningen';
-import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
-
-export interface VakantieverhuurVergunning extends ZaakDetail {
-  adres: string;
-  dateDecision?: string | null;
-  dateEnd: string;
-  dateEndFormatted: string;
-  dateReceived: string;
-  dateStart: string;
-  dateStartFormatted: string;
-  documentsUrl: string | null;
-  id: string;
-  isActual: boolean;
-  result: 'Verleend' | 'Ingetrokken' | null;
-  status: string;
-  zaaknummer: string;
-  title: 'Vergunning vakantieverhuur';
-}
+import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
 
 function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
   const isAfgehandeld =
@@ -157,8 +136,9 @@ export function transformVakantieverhuurVergunningen(
       steps,
       documentsUrl: vergunning.documentsUrl,
       link: {
-        to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'], {
+        to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
           id: idTransformed,
+          casetype: 'vakantieverhuur',
         }),
         title: vergunning.link.title,
       },
@@ -186,7 +166,7 @@ export async function fetchVakantieverhuurVergunningen(
       appRoute: (vergunning: Vergunning) => {
         switch (vergunning.caseType) {
           case CaseType.VakantieverhuurVergunning:
-            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV'];
+            return AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
           default:
             return AppRoutes['TOERISTISCHE_VERHUUR'];
         }

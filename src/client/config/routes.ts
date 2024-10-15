@@ -94,10 +94,6 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['ZORG/VOORZIENING']]: () => '/zorg-en-ondersteuning/voorziening',
 
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/BB']]: () =>
-    '/toeristische-verhuur/vergunning/bed-and-breakfast',
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/VV']]: () =>
-    '/toeristische-verhuur/vergunning/vakantieverhuur',
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: () =>
     '/toeristische-verhuur/vergunning',
 

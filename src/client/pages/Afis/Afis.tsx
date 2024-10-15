@@ -126,7 +126,7 @@ export function AfisThemaPagina() {
         },
       ]}
       pageContentTop={pageContentTop}
-      pageContentTables={
+      pageContentMain={
         <>
           {pageContentSecondary}
           {pageContentTables}
