@@ -52,7 +52,7 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
           Horeca
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Horeca vergunning exploitatie Horecabedrijf
         </h2>
@@ -65,7 +65,7 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -79,7 +79,7 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -100,7 +100,7 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
       class="_StatusLine_a12ff2 _VergunningStatus_28a267"
     >
       <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
       >
         Status
       </h4>

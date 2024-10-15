@@ -73,7 +73,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Bezwaren
         </h2>
@@ -138,7 +138,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Foutmelding
           </h2>
@@ -154,7 +154,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -198,7 +198,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -315,7 +315,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Bezwaren
         </h2>
@@ -357,7 +357,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -401,7 +401,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -518,7 +518,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Bezwaren
         </h2>
@@ -560,7 +560,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -683,7 +683,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"

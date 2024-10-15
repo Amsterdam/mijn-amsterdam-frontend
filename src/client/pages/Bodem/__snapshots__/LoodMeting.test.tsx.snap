@@ -54,7 +54,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Lood in bodem-check
         </h2>
@@ -67,7 +67,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -81,7 +81,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -101,7 +101,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Document
         </h3>
@@ -146,7 +146,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -342,7 +342,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Lood in bodem-check
         </h2>
@@ -355,7 +355,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -369,7 +369,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -390,7 +390,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -586,7 +586,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
           Bodem
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Lood in bodem-check
         </h2>
@@ -599,7 +599,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Kenmerk
         </h3>
@@ -613,7 +613,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_InfoDetail_6f1df2 _LocationInfo_28a267"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Locatie
         </h3>
@@ -634,7 +634,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
     >
       <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
@@ -820,7 +820,7 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
           Bodem
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Lood in bodem-check
         </h2>
@@ -857,7 +857,7 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Foutmelding
           </h2>

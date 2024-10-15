@@ -54,7 +54,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Vergunningen en ontheffingen
         </h2>
@@ -96,7 +96,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _SectionCollapsibleCurrent_d146a0"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="true"
@@ -2322,7 +2322,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _SectionCollapsiblePrevious_d146a0"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"

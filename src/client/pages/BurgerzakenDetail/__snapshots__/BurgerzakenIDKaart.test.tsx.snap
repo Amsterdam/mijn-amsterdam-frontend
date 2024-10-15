@@ -57,7 +57,7 @@ exports[`<BurgerzakenIDKaart /> > Matches the Full Page snapshot 1`] = `
           Burgerzaken
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Document
         </h2>
@@ -70,7 +70,7 @@ exports[`<BurgerzakenIDKaart /> > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Documentnummer
         </h3>
@@ -84,7 +84,7 @@ exports[`<BurgerzakenIDKaart /> > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Datum uitgifte
         </h3>
@@ -98,7 +98,7 @@ exports[`<BurgerzakenIDKaart /> > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Geldig tot
         </h3>
