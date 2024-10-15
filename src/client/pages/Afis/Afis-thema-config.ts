@@ -82,15 +82,6 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
       state: 'open',
     }),
   },
-  afgehandeld: {
-    title: listPageTitle.afgehandeld,
-    displayProps: displayPropsFacturenAfgehandeld,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
-    listPageLinkLabel: 'Alle afgehandelde facturen',
-    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
-      state: 'afgehandeld',
-    }),
-  },
   overgedragen: {
     title: listPageTitle.overgedragen,
     displayProps: displayPropsFacturenOvergedragen,
@@ -98,6 +89,15 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageLinkLabel: 'Alle overgedragen facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'overgedragen',
+    }),
+  },
+  afgehandeld: {
+    title: listPageTitle.afgehandeld,
+    displayProps: displayPropsFacturenAfgehandeld,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
+    listPageLinkLabel: 'Alle afgehandelde facturen',
+    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+      state: 'afgehandeld',
     }),
   },
 } as const;
