@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 
+import { AfisDisclaimer } from './Afis';
 import styles from './Afis.module.scss';
 import { useAfisListPageData } from './useAfisThemaData.hook';
 import {
@@ -27,6 +28,7 @@ export const AfisFacturen = () => {
   return (
     <ListPagePaginated<AfisFactuur>
       items={facturen}
+      body={state === 'open' ? <AfisDisclaimer /> : null}
       backLinkTitle={ThemaTitles.AFIS}
       title={listPageTableConfig.title}
       appRoute={routes.listPageFacturen}

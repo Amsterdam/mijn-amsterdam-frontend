@@ -24,6 +24,22 @@ const pageContentTop = (
   </Paragraph>
 );
 
+export function AfisDisclaimer() {
+  return (
+    <Alert severity="warning">
+      <UnorderedList>
+        <UnorderedList.Item>
+          De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
+          wijzigingen.
+        </UnorderedList.Item>
+        <UnorderedList.Item>
+          Betalingsregelingen zijn niet zichtbaar in dit overzicht.
+        </UnorderedList.Item>
+      </UnorderedList>
+    </Alert>
+  );
+}
+
 export function AfisThemaPagina() {
   const history = useHistory();
   const {
@@ -51,17 +67,7 @@ export function AfisThemaPagina() {
       >
         Betaalvoorkeuren
       </Button>
-      <Alert severity="warning">
-        <UnorderedList>
-          <UnorderedList.Item>
-            De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
-            wijzigingen.
-          </UnorderedList.Item>
-          <UnorderedList.Item>
-            Betalingsregelingen zijn niet zichtbaar in dit overzicht.
-          </UnorderedList.Item>
-        </UnorderedList>
-      </Alert>
+      <AfisDisclaimer />
     </Grid.Cell>
   );
 
