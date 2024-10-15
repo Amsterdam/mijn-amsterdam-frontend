@@ -1,6 +1,5 @@
-import styles from './ToeristischeVerhuurDetail.module.scss';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/vakantieverhuur-vergunning';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/tv-powerbrowser-bb-vergunning';
+import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/tv-vakantieverhuur-vergunning';
 import { VakantieverhuurVergunning as VakantieverhuurVergunningDecos } from '../../../server/services/vergunningen/vergunningen';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -11,13 +10,14 @@ import InfoDetail, {
 import StatusLine from '../../components/StatusLine/StatusLine';
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import { Location } from '../VergunningDetail/Location';
+import styles from './ToeristischeVerhuurDetail.module.scss';
 
 export default function VergunningVerhuur({
   vergunning,
 }: {
   vergunning: VakantieverhuurVergunning | BBVergunning;
 }) {
-  const isVakantieVerhuur = vergunning.titel === 'Vergunning vakantieverhuur';
+  const isVakantieVerhuur = vergunning.title === 'Vergunning vakantieverhuur';
 
   return (
     <>
@@ -38,46 +38,28 @@ export default function VergunningVerhuur({
           label="Gemeentelijk zaaknummer"
           value={vergunning?.zaaknummer ?? '-'}
         />
-        {(vergunning.datumVan || vergunning.datumTot) && (
+        {(vergunning.dateStartFormatted || vergunning.dateEndFormatted) && (
           <InfoDetailGroup>
             <InfoDetail
               label="Vanaf"
-              value={
-                vergunning.datumVan
-                  ? defaultDateFormat(vergunning.datumVan)
-                  : '-'
-              }
+              value={vergunning.dateStartFormatted || '-'}
             />
             <InfoDetail
               label="Tot"
-              value={
-                vergunning.datumTot
-                  ? defaultDateFormat(vergunning.datumTot)
-                  : '-'
-              }
+              value={vergunning.dateEndFormatted || '-'}
             />
           </InfoDetailGroup>
         )}
-        {vergunning.titel === 'Vergunning bed & breakfast' &&
-          vergunning.eigenaar &&
-          vergunning.aanvrager && (
-            <InfoDetailGroup>
-              <InfoDetail
-                label="Eigenaar woning"
-                value={vergunning.eigenaar ?? '-'}
-              />
-              <InfoDetail
-                label="Aanvrager vergunning"
-                value={vergunning.aanvrager ?? '-'}
-              />
-            </InfoDetailGroup>
-          )}
-        <Location label="Adres" location={vergunning.adres} />
-        {vergunning.status === 'Afgehandeld' && vergunning.resultaat && (
-          <InfoDetail label="Resultaat" value={vergunning.resultaat} />
-        )}
 
-        {vergunning.titel === 'Vergunning vakantieverhuur' && (
+        <Location label="Adres" location={vergunning.adres} />
+        {vergunning.steps.some(
+          (step) => step.isChecked && step.status == 'Afgehandeld'
+        ) &&
+          vergunning.result && (
+            <InfoDetail label="Resultaat" value={vergunning.result} />
+          )}
+
+        {vergunning.title === 'Vergunning vakantieverhuur' && (
           <DocumentDetails
             vergunning={vergunning as unknown as VakantieverhuurVergunningDecos}
             trackPath={(document) =>
@@ -85,7 +67,7 @@ export default function VergunningVerhuur({
             }
           />
         )}
-        {vergunning.titel === 'Vergunning bed & breakfast' &&
+        {vergunning.title === 'Vergunning bed & breakfast' &&
           !!vergunning.documents?.length &&
           FeatureToggle.bbDocumentDownloadsActive && (
             <InfoDetailGroup label="Documenten">
@@ -93,11 +75,11 @@ export default function VergunningVerhuur({
             </InfoDetailGroup>
           )}
       </PageContent>
-      {!!vergunning.statussen.length && (
+      {!!vergunning.steps.length && (
         <StatusLine
           className={styles.VergunningStatus}
           trackCategory="Toeristisch verhuur detail / status"
-          items={vergunning.statussen}
+          items={vergunning.steps}
           id={`toeristische-verhuur-detail-${vergunning.id}`}
         />
       )}

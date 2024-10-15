@@ -75,8 +75,8 @@ import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
-import ToeristischeVerhuur from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
-import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuurDetail/ToeristischeVerhuurDetail';
+import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
+import ToeristischeVerhuurDetail from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
 import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
@@ -287,7 +287,7 @@ function AppAuthenticated() {
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={AppRoutes.TOERISTISCHE_VERHUUR}
-              component={ToeristischeVerhuur}
+              component={ToeristscheVerhuurThema}
             />
           )}
           {FeatureToggle.afisActive && (

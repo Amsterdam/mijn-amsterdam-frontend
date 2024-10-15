@@ -40,7 +40,7 @@ export default function ToeristischVerhuurDetail() {
         }}
         isLoading={isLoading(TOERISTISCHE_VERHUUR)}
       >
-        {vergunning?.titel || 'Onbekende vergunning'}
+        {vergunning?.title || 'Vergunning Toeristische verhuur'}
       </PageHeading>
       {(isLoadingApi || hasWarning) && (
         <PageContent className={styles.DetailPageContent}>
