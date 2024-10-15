@@ -22,13 +22,11 @@ export const BffEndpoints = {
   TELEMETRY_PROXY: '/services/telemetry/v2/track',
 
   // AFIS
-  AFIS_BUSINESSPARTNER:
-    '/services/afis/businesspartner/:businessPartnerIdEncrypted',
+  AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
   AFIS_FACTUREN:
-    '/services/afis/facturen/:state(open|afgehandeld|overgedragen)/:businessPartnerIdEncrypted',
-  AFIS_FACTUREN_OVERZICHT:
-    '/services/afis/facturen/overzicht/:businessPartnerIdEncrypted',
-  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document/:id',
+    '/services/afis/facturen/:state(open|afgehandeld|overgedragen)',
+  AFIS_FACTUREN_OVERZICHT: '/services/afis/facturen/overzicht',
+  AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
 
   // Stadspas
   STADSPAS_TRANSACTIONS:

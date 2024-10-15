@@ -1,8 +1,5 @@
 import { AxiosResponse } from 'axios';
 import { Request, Response, Router } from 'express';
-
-import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
@@ -10,7 +7,11 @@ import {
 } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { sendUnauthorized } from '../../routing/route-helpers';
+import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
+import {
+  RequestWithRouteAndQueryParams,
+  sendUnauthorized,
+} from '../../routing/route-helpers';
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';
@@ -37,14 +38,18 @@ export function downloadDocumentRouteHandler(
   fetchDocument: FetchDocumenDownloadService
 ) {
   return async function handleDownloadRoute(
-    req: Request<{ id: string }>,
+    req: RequestWithRouteAndQueryParams<
+      { id: string },
+      { id: string; [key: string]: string }
+    >,
     res: Response
   ) {
     const authProfileAndToken = getAuth(req);
 
     if (authProfileAndToken) {
       const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-        req.params.id,
+        // TODO: params.id should be removed, BFF routes should use queryParams for handling route/service variables.
+        req.query.id || req.params.id,
         authProfileAndToken
       );
 
@@ -60,9 +65,7 @@ export function downloadDocumentRouteHandler(
           documentResponse.status === 'ERROR' ||
           documentResponse.status === 'POSTPONE'
         ) {
-          return res
-            .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-            .send(documentResponse);
+          return res.status(500).send(documentResponse);
         }
 
         if (
@@ -81,7 +84,7 @@ export function downloadDocumentRouteHandler(
           : res.send(documentResponse.content.data);
       }
 
-      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send(decryptResult);
+      return res.status(400).send(decryptResult);
     }
 
     return sendUnauthorized(res);
@@ -93,8 +96,5 @@ export function attachDocumentDownloadRoute(
   route: string,
   fetchDocumentService: FetchDocumenDownloadService
 ) {
-  if (!route.split('/').includes(':id')) {
-    throw new Error('Document download route requires an :id path parameter.');
-  }
   router.get(route, downloadDocumentRouteHandler(fetchDocumentService));
 }
