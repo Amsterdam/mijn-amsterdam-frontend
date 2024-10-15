@@ -22,8 +22,8 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   afzender: 'Afzender',
   factuurNummerEl: 'Factuurnummer',
-  statusDescription: 'Status',
   paymentDueDateFormatted: 'Vervaldatum',
+  statusDescription: 'Status',
 };
 
 const displayPropsFacturenAfgehandeld: DisplayProps<AfisFactuurFrontend> = {
