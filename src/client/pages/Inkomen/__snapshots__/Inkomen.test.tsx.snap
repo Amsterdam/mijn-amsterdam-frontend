@@ -351,6 +351,39 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 <td
                   class="_DisplayPropTitle_a66dcc"
                 >
+                  Bbz item
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Datum aanvraag:
+                  </span>
+                  <span>
+                    14 juli 2022
+                  </span>
+                </td>
+                <td
+                  class="_DisplayProp_a66dcc"
+                >
+                  <span
+                    class="_DisplayPropLabel_a66dcc"
+                  >
+                    Datum besluit:
+                  </span>
+                  <span>
+                    24 juli 2022
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="_TableRow_a66dcc"
+              >
+                <td
+                  class="_DisplayPropTitle_a66dcc"
+                >
                   Aanvraag inkomen item
                 </td>
                 <td
@@ -441,39 +474,6 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                   </span>
                   <span>
                     24 juli 2020
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayPropTitle_a66dcc"
-                >
-                  Bbz item
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Datum aanvraag:
-                  </span>
-                  <span>
-                    14 juli 2022
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Datum besluit:
-                  </span>
-                  <span>
-                    24 juli 2022
                   </span>
                 </td>
               </tr>

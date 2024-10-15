@@ -88,11 +88,13 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
     const d =
       v2 instanceof Date ? v2 : typeof v2 === 'string' ? parseISO(v2) : null;
 
-    if (typeof c !== 'number' || typeof d !== 'number') {
+    if (c === null || d === null) {
       return 0;
     }
 
-    return direction === 'asc' ? c - d : d - c;
+    return direction === 'asc'
+      ? c.getTime() - d.getTime()
+      : d.getTime() - c.getTime();
   };
 }
 
