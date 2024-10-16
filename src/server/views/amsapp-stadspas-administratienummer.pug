@@ -38,8 +38,14 @@ html(lang="nl")
         }
       }
 
-      document.addEventListener('DOMContentLoaded', setTimeout(performLogout, 0));
-      document.getElementById('protocol-link-button').click();
+      async function logoutAndOpenApp() {
+        await performLogout();
+        document.getElementById('protocol-link-button').click();
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(logoutAndOpenApp, 0);
+      });
   
 
 
