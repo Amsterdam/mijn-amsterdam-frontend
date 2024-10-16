@@ -6,7 +6,7 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is d
     class="_StatusLine_a12ff2"
   >
     <h4
-      class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+      class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
     >
       Status
     </h4>
@@ -153,7 +153,7 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is i
     class="_StatusLine_a12ff2"
   >
     <h4
-      class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+      class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
     >
       Status
     </h4>
@@ -295,7 +295,7 @@ exports[`BezwarenStatusLines > should render the right snapshot when status is r
     class="_StatusLine_a12ff2"
   >
     <h4
-      class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+      class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
     >
       Status
     </h4>

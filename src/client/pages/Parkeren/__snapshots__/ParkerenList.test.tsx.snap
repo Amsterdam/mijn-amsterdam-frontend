@@ -58,7 +58,7 @@ exports[`ParkerenList > should display the list of parkeervergunningen 1`] = `
           Parkeren
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Lopende aanvragen
         </h2>

@@ -53,7 +53,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Mijn gegevens
         </h2>
@@ -96,7 +96,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
@@ -117,14 +117,15 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           </p>
         </div>
       </section>
-      <section
+      <div
         class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
+        title="Adres in onderzoek"
       >
         <div
           class="ams-alert__icon"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -144,11 +145,6 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--4"
-          >
-            Adres in onderzoek
-          </h2>
           <p
             class="ams-paragraph"
           >
@@ -175,13 +171,13 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -363,7 +359,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Adres
       </h3>
@@ -461,7 +457,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -664,7 +660,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1003,7 +999,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1230,7 +1226,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1473,7 +1469,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -1735,7 +1731,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Mijn gegevens
         </h2>
@@ -1778,7 +1774,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
@@ -1799,14 +1795,15 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           </p>
         </div>
       </section>
-      <section
+      <div
         class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
+        title="Adres in onderzoek"
       >
         <div
           class="ams-alert__icon"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -1826,11 +1823,6 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--4"
-          >
-            Adres in onderzoek
-          </h2>
           <p
             class="ams-paragraph"
           >
@@ -1857,13 +1849,13 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -2045,7 +2037,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Adres
       </h3>
@@ -2143,7 +2135,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2346,7 +2338,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2685,7 +2677,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -2912,7 +2904,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -3155,7 +3147,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -3417,7 +3409,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Mijn gegevens
         </h2>
@@ -3460,7 +3452,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
@@ -3481,14 +3473,15 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           </p>
         </div>
       </section>
-      <section
+      <div
         class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
+        title="Adres in onderzoek"
       >
         <div
           class="ams-alert__icon"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -3508,11 +3501,6 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--4"
-          >
-            Adres in onderzoek
-          </h2>
           <p
             class="ams-paragraph"
           >
@@ -3539,13 +3527,13 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -3741,7 +3729,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Adres
       </h3>
@@ -3839,7 +3827,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4206,7 +4194,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4461,7 +4449,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4732,7 +4720,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -4994,7 +4982,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Mijn gegevens
         </h2>
@@ -5040,7 +5028,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
@@ -5061,14 +5049,15 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           </p>
         </div>
       </section>
-      <section
+      <div
         class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
+        title="Adres in onderzoek"
       >
         <div
           class="ams-alert__icon"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -5088,11 +5077,6 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--4"
-          >
-            Adres in onderzoek
-          </h2>
           <p
             class="ams-paragraph"
           >
@@ -5119,13 +5103,13 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -5281,7 +5265,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Adres
       </h3>
@@ -5432,7 +5416,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Mijn gegevens
         </h2>
@@ -5475,7 +5459,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
@@ -5496,14 +5480,15 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           </p>
         </div>
       </section>
-      <section
+      <div
         class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
+        title="Adres in onderzoek"
       >
         <div
           class="ams-alert__icon"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -5523,11 +5508,6 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--4"
-          >
-            Adres in onderzoek
-          </h2>
           <p
             class="ams-paragraph"
           >
@@ -5554,13 +5534,13 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -5742,7 +5722,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Adres
       </h3>
@@ -5840,7 +5820,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6043,7 +6023,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6382,7 +6362,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6609,7 +6589,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -6852,7 +6832,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -7114,7 +7094,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Mijn gegevens
         </h2>
@@ -7157,7 +7137,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Vertrokken Onbekend Waarheen
           </h2>
@@ -7178,14 +7158,15 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           </p>
         </div>
       </section>
-      <section
+      <div
         class="ams-alert ams-alert--warning _AlertAdresInOnderzoek_a22688"
+        title="Adres in onderzoek"
       >
         <div
           class="ams-alert__icon"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--size-5"
           >
             <svg
               aria-hidden="true"
@@ -7205,11 +7186,6 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--4"
-          >
-            Adres in onderzoek
-          </h2>
           <p
             class="ams-paragraph"
           >
@@ -7236,13 +7212,13 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
             .
           </p>
         </div>
-      </section>
+      </div>
     </div>
     <div
       class="_InfoPanel_37c468 _DefaultPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Persoonlijke gegevens
       </h3>
@@ -7424,7 +7400,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_InfoPanel_37c468 _DefaultPanel_a22688 _AddressPanel_a22688"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_37c468"
+        class="ams-heading ams-heading--level-3 _Title_37c468"
       >
         Adres
       </h3>
@@ -7492,7 +7468,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -7695,7 +7671,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8034,7 +8010,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8261,7 +8237,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"
@@ -8504,7 +8480,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       class="_SectionCollapsible_b93dc7 _InfoPanelCollapsible_37c468"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
       >
         <button
           aria-expanded="false"

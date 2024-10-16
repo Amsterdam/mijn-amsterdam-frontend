@@ -1,7 +1,4 @@
-import isAfter from 'date-fns/isAfter';
-import isSameDay from 'date-fns/isSameDay';
-import parseISO from 'date-fns/parseISO';
-
+import { isAfter, isSameDay, parseISO } from 'date-fns';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import {
   defaultDateFormat,

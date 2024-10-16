@@ -1,6 +1,5 @@
+import { KnownSeverityLevel } from 'applicationinsights';
 import * as appInsights from 'applicationinsights';
-import { SeverityLevel } from 'applicationinsights/out/Declarations/Contracts';
-import { Telemetry } from 'applicationinsights/out/Declarations/Contracts/TelemetryTypes/Telemetry';
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
@@ -29,35 +28,38 @@ export type Severity =
   | 'error'
   | 'critical';
 
-const severityMap: Record<Severity, SeverityLevel> = {
-  verbose: SeverityLevel.Verbose,
-  information: SeverityLevel.Information,
-  warning: SeverityLevel.Warning,
-  error: SeverityLevel.Error,
-  critical: SeverityLevel.Critical,
+const severityMap: Record<Severity, KnownSeverityLevel> = {
+  verbose: KnownSeverityLevel.Verbose,
+  information: KnownSeverityLevel.Information,
+  warning: KnownSeverityLevel.Warning,
+  error: KnownSeverityLevel.Error,
+  critical: KnownSeverityLevel.Critical,
 };
 
 export type Properties = {
-  properties?: Telemetry['properties'];
+  properties?: appInsights.Telemetry['properties'];
   severity?: Severity;
-  tags?: Telemetry['tagOverrides'];
+  tags?: appInsights.Telemetry['properties'];
 };
 
 export function captureException(error: unknown, properties?: Properties) {
   const severity = properties?.severity
     ? severityMap[properties.severity]
     : undefined;
-  const tagOverrides = properties?.tags;
   const payload = {
     exception: error as Error,
     severity,
-    tagOverrides,
     properties,
   };
 
-  IS_DEVELOPMENT
-    ? IS_DEBUG && console.log('Capture Exception', payload)
-    : client?.trackException(payload);
+  if (IS_DEVELOPMENT) {
+    // Does nothing (As expected) if development is not in debug mode.
+    if (IS_DEBUG) {
+      console.log('Capture Exception', payload);
+    }
+  } else {
+    client?.trackException(payload);
+  }
 }
 
 export function captureMessage(message: string, properties?: Properties) {
@@ -65,12 +67,20 @@ export function captureMessage(message: string, properties?: Properties) {
     ? severityMap[properties.severity]
     : undefined;
 
-  const tagOverrides = properties?.tags;
-  const payload = { message, severity, tagOverrides, properties };
+  const payload: appInsights.TraceTelemetry = {
+    message,
+    severity,
+    properties,
+  };
 
-  IS_DEVELOPMENT
-    ? IS_DEBUG && console.log('Capture message', payload)
-    : client?.trackTrace(payload);
+  if (IS_DEVELOPMENT) {
+    // Does nothing (As expected) if development is not in debug mode.
+    if (IS_DEBUG) {
+      console.log('Capture message', payload);
+    }
+  } else {
+    client?.trackTrace(payload);
+  }
 }
 
 interface TrackRequestProps {
@@ -88,19 +98,24 @@ export function trackRequest({ name, url, properties }: TrackRequestProps) {
       status: 'OK' | 'ERROR' = 'OK'
     ) => {
       if (startTime_) {
-        const payload = {
+        const payload: appInsights.Contracts.RequestTelemetry = {
           url,
           success: status === 'OK',
           name,
-          resultCode,
+          resultCode: String(resultCode),
           time: new Date(startTime_),
           duration: Date.now() - startTime_,
           properties,
         };
 
-        IS_DEVELOPMENT
-          ? IS_DEBUG && console.log('Track request', payload)
-          : client?.trackRequest(payload);
+        if (IS_DEVELOPMENT) {
+          // Does nothing (As expected) if development is not in debug mode.
+          if (IS_DEBUG) {
+            console.log('Track request', payload);
+          }
+        } else {
+          client?.trackRequest(payload);
+        }
       }
     },
   };

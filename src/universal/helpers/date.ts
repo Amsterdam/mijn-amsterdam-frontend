@@ -6,7 +6,7 @@ import {
   isThisYear,
   parseISO,
 } from 'date-fns';
-import NL_LOCALE from 'date-fns/locale/nl';
+import { nl } from 'date-fns/locale/nl';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -17,7 +17,7 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
   }
   try {
     const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
-    return format(d, fmt, { locale: NL_LOCALE });
+    return format(d, fmt, { locale: nl });
   } catch (error) {
     console.error(`Could not parse date ${datestr}`);
   }
@@ -38,7 +38,7 @@ export function dateTimeFormatYear(datestr: string | Date | number) {
 }
 
 export function formatDurationInWords(datestr: string) {
-  return formatDistanceToNow(new Date(datestr), { locale: NL_LOCALE });
+  return formatDistanceToNow(new Date(datestr), { locale: nl });
 }
 
 export function formatMonthAndYear(datestr: string | Date | number) {
@@ -80,10 +80,24 @@ export function isDateInPast(
 }
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
-  return (a: any, b: any) => {
-    const c = parseISO(a[sortKey]);
-    const d = parseISO(b[sortKey]);
-    // @ts-ignore
+  function getDateCompareValue(value: unknown) {
+    if (value instanceof Date) {
+      return value.getTime();
+    }
+    if (typeof value === 'string') {
+      return parseISO(value).getTime();
+    }
+    return null;
+  }
+
+  return (a: unknown, b: unknown) => {
+    const c = getDateCompareValue((a as Record<string, unknown>)[sortKey]);
+    const d = getDateCompareValue((b as Record<string, unknown>)[sortKey]);
+
+    if (c === null || d === null) {
+      return 0;
+    }
+
     return direction === 'asc' ? c - d : d - c;
   };
 }

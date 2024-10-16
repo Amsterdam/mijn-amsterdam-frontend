@@ -121,7 +121,7 @@ export function Dialog({
               actions={<>{actions}</>}
               onClose={() => typeof onClose === 'function' && onClose()}
               open
-              title={title}
+              heading={title ?? ''}
             >
               {children}
             </DialogComp>

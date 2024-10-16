@@ -3,7 +3,11 @@ import { marked } from 'marked';
 
 import { IS_TAP } from '../../universal/config/env';
 import { Themas } from '../../universal/config/thema';
-import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
+import {
+  ApiResponse,
+  ApiSuccessResponse,
+  apiSuccessResult,
+} from '../../universal/helpers/api';
 import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import FileCache from '../helpers/file-cache';
 import { getApiConfig } from '../helpers/source-api-helpers';
@@ -121,7 +125,9 @@ async function fetchCMSMaintenanceNotifications(
   requestID: RequestID,
   useCache: boolean = true
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
-  const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
+  const cachedData = fileCache.getKey<
+    ApiSuccessResponse<CMSMaintenanceNotification[]>
+  >('CMS_MAINTENANCE_NOTIFICATIONS');
 
   if (useCache && cachedData) {
     return Promise.resolve(cachedData);
