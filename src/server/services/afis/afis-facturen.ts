@@ -322,7 +322,7 @@ function determineFactuurStatusDescription(
     case 'in-dispuut':
       return 'In dispuut';
     case 'gedeeltelijke-betaling':
-      return `Automatische incasso - Betaal het openstaande bedrag van ${amountOwedFormatted} via bankoverschrijving`;
+      return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amountOwedFormatted} euro over onder vermelding van de gegevens op uw factuur`;
     case 'geld-terug':
       return `Het bedrag van ${amountOwedFormatted.replace('-', '')} euro wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
