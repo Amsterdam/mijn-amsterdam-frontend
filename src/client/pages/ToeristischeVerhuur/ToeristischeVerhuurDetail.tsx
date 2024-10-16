@@ -94,7 +94,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       )}
 
       <Grid.Cell span="all">
-        {!vergunning.fetchDocumentsUrl && (
+        {!vergunning.fetchDocumentsUrl && vergunning.result && (
           <Paragraph>
             Stuur een mail naar:{' '}
             <Link href="mailto:mail@amsterdam.nl" rel="noreferrer">
