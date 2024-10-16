@@ -23,6 +23,26 @@ html(lang="nl")
 
       a(href=appHref id='protocol-link-button') Open Amsterdam App
 
-    script(type='text/javascript' nonce=nonce).
-        document.getElementById('protocol-link-button').click();
+    script(type='text/javascript' nonce=nonce).       
+      const logoutUrl = '#{logoutUrl}';
+
+      async function performLogout() {
+        console.log('performLogout');
+        try {
+          const response = await fetch(logoutUrl, {
+            method: 'GET',
+            credentials: 'include'
+          });
+        } catch (error) {
+          console.error('Error during logout:', error);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', setTimeout(performLogout, 0));
+      document.getElementById('protocol-link-button').click();
+  
+
+
+
+    
 

@@ -95,11 +95,13 @@ async function sendAdministratienummerResponse(
   }
 
   const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
+  const bffApiUrl = getFromEnv('REACT_APP_BFF_API_URL')!;
   const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
   const baseRenderProps = {
     nonce,
     urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
     urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
+    logoutUrl: `${bffApiUrl}/auth/logout`,
   };
 
   if (
