@@ -7,7 +7,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
     id="DirectLinks"
   >
     <h3
-      class="ams-heading ams-heading--2"
+      class="ams-heading ams-heading--level-2"
       id="DirectLinksHeader"
     >
       Bezoek ook
@@ -222,7 +222,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
     id="DirectLinks"
   >
     <h3
-      class="ams-heading ams-heading--2"
+      class="ams-heading ams-heading--level-2"
       id="DirectLinksHeader"
     >
       Bezoek ook

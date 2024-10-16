@@ -54,7 +54,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
           AVG persoonsgegevens
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           AVG verzoek
         </h2>
@@ -91,7 +91,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Foutmelding
           </h2>
@@ -161,7 +161,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
           AVG persoonsgegevens
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           AVG verzoek
         </h2>
@@ -174,7 +174,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Nummer
         </h3>
@@ -188,7 +188,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Type verzoek
         </h3>
@@ -202,7 +202,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Onderwerp(en)
         </h3>
@@ -216,7 +216,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Toelichting
         </h3>
@@ -231,7 +231,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
       class="_StatusLine_a12ff2 _AvgStatusLines_b31fb8"
     >
       <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
       >
         Status
       </h4>

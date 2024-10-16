@@ -18,7 +18,7 @@ export function LinkToListPage({
   count,
   route,
   params,
-  translateX = '-0.9rem',
+  translateX = '-1.4rem',
 }: LinkToListPageProps) {
   const history = useHistory();
   const routeGenerated = generatePath(route, params);

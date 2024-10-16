@@ -14,6 +14,7 @@ export type FeatureType =
   | 'Polygon'
   | 'MultiPolygon'
   | 'MultiLineString';
+
 export type DatasetCategoryId = string;
 export type DatasetId = string;
 export type DatasetPropertyName = string;

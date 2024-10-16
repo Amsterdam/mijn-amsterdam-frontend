@@ -2,6 +2,7 @@ import { IS_TAP } from '../../../universal/config/env';
 import {
   DatasetFilterSelection,
   DatasetId,
+  DatasetPropertyFilter,
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/myarea-datasets';
 import {
@@ -21,7 +22,10 @@ import {
   DatasetFeatures,
   DatasetResponse,
 } from './datasets';
-import { discoverSingleDsoApiEmbeddedResponse } from './dso-helpers';
+import {
+  discoverSingleDsoApiEmbeddedResponse,
+  DsoApiResponse,
+} from './dso-helpers';
 import {
   createDynamicFilterConfig,
   datasetApiResult,
@@ -70,7 +74,7 @@ export async function fetchDataset(
   requestID: RequestID,
   datasetId: DatasetId,
   datasetConfig: DatasetConfig,
-  params: { [key: string]: any } = {},
+  params: Record<string, string> = {},
   pruneCache: boolean = false
 ) {
   let dataCache: FileCache | null = null;
@@ -79,8 +83,8 @@ export async function fetchDataset(
     dataCache = getDatasetFileCache(datasetId, datasetConfig);
 
     if (dataCache) {
-      const features = dataCache.getKey('features');
-      const filters = dataCache.getKey('filters');
+      const features = dataCache.getKey<DatasetFeatures>('features');
+      const filters = dataCache.getKey<DatasetPropertyFilter>('filters');
 
       if (features) {
         const apiData: DatasetResponse = {
@@ -272,12 +276,15 @@ export async function loadFeatureDetail(
     if (config.transformDetail) {
       try {
         // We can't provide response data here because we don't have an Url to request to.
-        const detailFeature = config.transformDetail(null, {
-          datasetId,
-          config,
-          id,
-          datasetCache: fileCache,
-        });
+        const detailFeature = config.transformDetail(
+          null as unknown as DsoApiResponse,
+          {
+            datasetId,
+            config,
+            id,
+            datasetCache: fileCache,
+          }
+        );
         return apiSuccessResult(detailFeature);
       } catch (error: unknown) {
         return apiErrorResult((error as Error).message, null);
@@ -310,7 +317,7 @@ export async function loadFeatureDetail(
 
   if (typeof config.transformDetail === 'function') {
     const transformDetail = config.transformDetail;
-    requestConfig.transformResponse = (responseData: any) =>
+    requestConfig.transformResponse = (responseData: DsoApiResponse) =>
       transformDetail(responseData, {
         datasetId,
         config,
@@ -323,11 +330,13 @@ export async function loadFeatureDetail(
     requestConfig.request = config.requestConfig.request;
   }
 
-  const response = await requestData(requestConfig, requestID);
+  const response = await requestData<DsoApiResponse>(requestConfig, requestID);
 
   if (response.status === 'OK') {
     const item = discoverSingleDsoApiEmbeddedResponse(response.content);
-
+    if (!item) {
+      return response;
+    }
     /**
      * Assign a custom ID value represented by the key specified in config.idKeyDetail.
      * For example, if we have feature data like:
@@ -350,7 +359,9 @@ export async function loadFeatureDetail(
      *
      */
     if (config.idKeyDetail) {
-      item.id = encodeURIComponent(item[config.idKeyDetail]);
+      item.id = encodeURIComponent(
+        item[config.idKeyDetail] as string | number | boolean
+      );
     }
     if (item) {
       return apiSuccessResult(item);

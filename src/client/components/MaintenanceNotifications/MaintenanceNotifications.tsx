@@ -1,13 +1,11 @@
 import { useState } from 'react';
 
-import { Alert } from '@amsterdam/design-system-react';
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './MaintenanceNotifications.module.scss';
 import { InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
-import { Button } from '../Button/Button';
-import Linkd from '../Button/Button';
-
+import Linkd, { Button } from '../Button/Button';
 
 interface MaintenanceNotificationsProps {
   page?: string;
@@ -35,7 +33,8 @@ export default function MaintenanceNotifications({
           <Alert
             key={notification.title + index}
             severity="warning"
-            title="Onderhoudsmelding"
+            heading="Onderhoudsmelding"
+            className={styles.MaintenanceNotification}
           >
             <InnerHtml className={styles.Description}>
               {notification.description}
@@ -46,7 +45,7 @@ export default function MaintenanceNotifications({
               </InnerHtml>
             )}
             {notification.moreInformation && !isMoreInformationVisible && (
-              <p>
+              <Paragraph>
                 <Button
                   variant="inline"
                   lean={true}
@@ -54,7 +53,7 @@ export default function MaintenanceNotifications({
                 >
                   Meer informatie.
                 </Button>
-              </p>
+              </Paragraph>
             )}
             {isMoreInformationVisible && notification.link && (
               <p>

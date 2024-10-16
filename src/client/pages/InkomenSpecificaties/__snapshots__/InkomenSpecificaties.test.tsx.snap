@@ -61,7 +61,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
           Inkomen
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Bijstandsuitkering
         </h2>
@@ -74,7 +74,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
       class="_Section_dac924 _TableSection_028dc4"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_dac924 _TitleWithItems_dac924"
+        class="ams-heading ams-heading--level-3 _Title_dac924 _TitleWithItems_dac924"
       >
         Jaaropgaven
       </h3>
@@ -424,7 +424,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
           Inkomen
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Bijstandsuitkering
         </h2>
@@ -437,7 +437,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
       class="_Section_dac924 _TableSection_028dc4"
     >
       <h3
-        class="ams-heading ams-heading--3 _Title_dac924 _TitleWithItems_dac924"
+        class="ams-heading ams-heading--level-3 _Title_dac924 _TitleWithItems_dac924"
       >
         Uitkeringsspecificaties
       </h3>

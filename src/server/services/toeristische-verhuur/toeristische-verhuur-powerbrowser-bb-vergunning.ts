@@ -1,4 +1,4 @@
-import isBefore from 'date-fns/isBefore';
+import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 
@@ -53,7 +53,7 @@ function fetchPowerBrowserToken_(requestID: RequestID) {
 
 const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_);
 
-async function fetchPowerBrowserData<T extends unknown>(
+async function fetchPowerBrowserData<T>(
   requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
 ) {

@@ -58,7 +58,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Parkeren
         </h2>
@@ -141,7 +141,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           class="ams-grid__cell ams-grid__cell--span-all"
         >
           <h3
-            class="ams-heading ams-heading--2"
+            class="ams-heading ams-heading--level-2"
           >
             Lopende aanvragen
           </h3>
@@ -233,7 +233,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           class="ams-grid__cell ams-grid__cell--span-all"
         >
           <h3
-            class="ams-heading ams-heading--2"
+            class="ams-heading ams-heading--level-2"
           >
             Huidige vergunningen en ontheffingen
           </h3>
@@ -258,7 +258,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           class="ams-grid__cell ams-grid__cell--span-all"
         >
           <h3
-            class="ams-heading ams-heading--2"
+            class="ams-heading ams-heading--level-2"
           >
             Eerdere en niet verleende vergunningen en ontheffingen
           </h3>

@@ -65,7 +65,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           Home
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Facturen en betalen
         </h2>

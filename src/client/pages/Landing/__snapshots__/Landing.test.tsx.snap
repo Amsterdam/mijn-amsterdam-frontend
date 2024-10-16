@@ -12,7 +12,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         class="_HeadingInner_3b337d"
       >
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Welkom op Mijn Amsterdam
         </h2>
@@ -29,7 +29,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         class="_LoginOption_39d0ac"
       >
         <h3
-          class="ams-heading ams-heading--4 _LoginOptionHeading_39d0ac"
+          class="ams-heading ams-heading--level-4 _LoginOptionHeading_39d0ac"
         >
           Voor particulieren en eenmanszaken
         </h3>
@@ -69,7 +69,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
           </a>
         </p>
         <h4
-          class="ams-heading ams-heading--4"
+          class="ams-heading ams-heading--level-4"
         >
           Hebt u nog geen DigiD? Regel dit dan eerst.
         </h4>
@@ -87,7 +87,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         class="_LoginOption_39d0ac _LoginOption--eherkenning_39d0ac"
       >
         <h3
-          class="ams-heading ams-heading--4 _LoginOptionHeading_39d0ac"
+          class="ams-heading ams-heading--level-4 _LoginOptionHeading_39d0ac"
         >
           Voor ondernemers
         </h3>
@@ -149,7 +149,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
           </a>
         </p>
         <h4
-          class="ams-heading ams-heading--4"
+          class="ams-heading ams-heading--level-4"
         >
           U heeft eHerkenning niveau 3 nodig om in te loggen.
         </h4>
@@ -165,7 +165,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         </p>
       </div>
       <h4
-        class="ams-heading ams-heading--4"
+        class="ams-heading ams-heading--level-4"
       >
         Vragen over Mijn Amsterdam?
       </h4>

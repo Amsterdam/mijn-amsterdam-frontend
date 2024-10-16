@@ -73,7 +73,7 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
           Bezwaren
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           Bezwaar
         </h2>
@@ -110,7 +110,7 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
           class="ams-alert__content"
         >
           <h2
-            class="ams-heading ams-heading--4"
+            class="ams-heading ams-heading--level-4"
           >
             Foutmelding
           </h2>
@@ -199,7 +199,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           Bezwaren
         </a>
         <h2
-          class="ams-heading ams-heading--1"
+          class="ams-heading ams-heading--level-1"
         >
           BI.21.014121.001
         </h2>
@@ -212,7 +212,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Onderwerp
         </h3>
@@ -226,7 +226,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_InfoDetail_6f1df2"
       >
         <h3
-          class="ams-heading ams-heading--4 _Label_6f1df2"
+          class="ams-heading ams-heading--level-4 _Label_6f1df2"
         >
           Reden bezwaar
         </h3>
@@ -246,7 +246,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="ams-heading ams-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--level-4 _Label_6f1df2"
             >
               Besluit waartegen u bezwaar maakt
             </h3>
@@ -260,7 +260,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="ams-heading ams-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--level-4 _Label_6f1df2"
             >
               Datum
             </h3>
@@ -282,7 +282,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="ams-heading ams-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--level-4 _Label_6f1df2"
             >
               Resultaat bezwaar
             </h3>
@@ -296,7 +296,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="_InfoDetail_6f1df2"
           >
             <h3
-              class="ams-heading ams-heading--4 _Label_6f1df2"
+              class="ams-heading ams-heading--level-4 _Label_6f1df2"
             >
               Datum
             </h3>
@@ -319,7 +319,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           class="_DocumentListHeader_839df0"
         >
           <h3
-            class="ams-heading ams-heading--4 _Label_6f1df2"
+            class="ams-heading ams-heading--level-4 _Label_6f1df2"
           >
             Documenten online aangeleverd
           </h3>
@@ -425,7 +425,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           class="_DocumentListHeader_839df0"
         >
           <h3
-            class="ams-heading ams-heading--4 _Label_6f1df2"
+            class="ams-heading ams-heading--level-4 _Label_6f1df2"
           >
             Documenten online besluitvorming
           </h3>
@@ -491,7 +491,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           class="_DocumentListHeader_839df0"
         >
           <h3
-            class="ams-heading ams-heading--4 _Label_6f1df2"
+            class="ams-heading ams-heading--level-4 _Label_6f1df2"
           >
             Documenten online procesdossier
           </h3>
@@ -555,7 +555,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
       class="_StatusLine_a12ff2"
     >
       <h4
-        class="ams-heading ams-heading--4 _ListHeading_a12ff2"
+        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
       >
         Status
       </h4>
