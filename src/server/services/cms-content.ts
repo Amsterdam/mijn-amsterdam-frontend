@@ -355,25 +355,27 @@ type SearchConfigRemote = {
   apiSearchConfigs: Record<string, ApiSearchConfig>;
 };
 
-// // Example usage:
-// const config: SearchConfigRemote = {
-//   staticSearchEntries: [
-//     {
-//       url: '/',
-//       displayTitle: 'Home - Dashboard',
-//       description:
-//         'Dashboard pagina met overzicht van wat U heeft op Mijn Amsterdam.',
-//       keywords: [],
-//     },
-//     // Add other entries here...
-//   ],
-//   apiSearchConfigs: {
-//     WPI_AANVRAGEN: {
-//       keywordsGeneratedFromProps: ['title', 'decision', 'about'],
-//     },
-//     // Add other configs here...
-//   },
-// };
+/**
+// Example usage:
+const config: SearchConfigRemote = {
+  staticSearchEntries: [
+    {
+      url: '/',
+      displayTitle: 'Home - Dashboard',
+      description:
+        'Dashboard pagina met overzicht van wat U heeft op Mijn Amsterdam.',
+      keywords: [],
+    },
+    // Add other entries here...
+  ],
+  apiSearchConfigs: {
+    WPI_AANVRAGEN: {
+      keywordsGeneratedFromProps: ['title', 'decision', 'about'],
+    },
+    // Add other configs here...
+  },
+};
+*/
 
 export async function fetchSearchConfig(
   requestID: RequestID,
