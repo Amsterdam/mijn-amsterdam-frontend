@@ -1,4 +1,7 @@
+import { Request } from 'express';
 import { Session } from 'express-openid-connect';
+
+import { OIDC_SESSION_COOKIE_NAME } from './auth-config';
 
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
@@ -23,5 +26,10 @@ export interface TokenData {
   sub: string;
   aud: string;
   sid: string;
-  [key: string]: any;
+  id: string;
+  [key: string]: unknown;
+}
+
+export interface AuthenticatedRequest extends Request {
+  [OIDC_SESSION_COOKIE_NAME]?: MaSession;
 }
