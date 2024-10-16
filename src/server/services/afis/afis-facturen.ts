@@ -324,7 +324,7 @@ function determineFactuurStatusDescription(
     case 'gedeeltelijke-betaling':
       return `Automatische incasso - Betaal het openstaande bedrag van ${amountOwedFormatted} via bankoverschrijving`;
     case 'geld-terug':
-      return `U krijgt ${amountOwedFormatted.replace('-', '')} terug`;
+      return `Het bedrag van ${amountOwedFormatted.replace('-', '')} euro wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
       return `Betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
