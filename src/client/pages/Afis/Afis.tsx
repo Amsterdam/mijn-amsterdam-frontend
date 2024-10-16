@@ -50,6 +50,30 @@ export function AfisDisclaimer() {
   );
 }
 
+export function AfisDisclaimerOvergedragenFacturen() {
+  return (
+    <Alert>
+      <Paragraph>
+        Bij het uitblijven van een betaling, wordt uw factuur door Financiën
+        overgedragen naar de afdeling Incasso & Invordering van directie
+        Belastingen. Deze afdeling is vanaf dat moment verantwoordelijk voor de
+        invordering van uw factuur en daarmee uw aanspreekpunt. De status van uw
+        factuur wordt hier niet bijgewerkt. Heeft u vragen? Afdeling Incasso &
+        Invordering is van maandag tot en met vrijdag tussen 08.00 en 18.00 uur
+        bereikbaar op{' '}
+        <Link rel="noreferrer" href="tel:0202554800">
+          020 255 4800
+        </Link>
+        . U kunt ook een e-mail sturen naar{' '}
+        <Link rel="noreferrer" href="mailto:belastingen@amsterdam.nl">
+          belastingen@amsterdam.nl
+        </Link>
+        . Noem in het onderwerp uw vorderingsnummer en team Incasso.
+      </Paragraph>
+    </Alert>
+  );
+}
+
 export function AfisThemaPagina() {
   const history = useHistory();
   const {
@@ -108,28 +132,7 @@ export function AfisThemaPagina() {
     ]) => {
       const subTitleNode =
         state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
-          ? state === 'overgedragen' && (
-              <Alert>
-                <Paragraph>
-                  Bij het uitblijven van een betaling, wordt uw factuur door
-                  Financiën overgedragen naar de afdeling Incasso & Invordering
-                  van directie Belastingen. Deze afdeling is vanaf dat moment
-                  verantwoordelijk voor de invordering van uw factuur en daarmee
-                  uw aanspreekpunt. De status van uw factuur wordt hier niet
-                  bijgewerkt. Heeft u vragen? Afdeling Incasso & Invordering is
-                  van maandag tot en met vrijdag tussen 08.00 en 18.00 uur
-                  bereikbaar op{' '}
-                  <Link rel="noreferrer" href="tel:0202554800">
-                    020 255 4800
-                  </Link>
-                  . U kunt ook een e-mail sturen naar{' '}
-                  <Link rel="noreferrer" href="mailto:belastingen@amsterdam.nl">
-                    belastingen@amsterdam.nl
-                  </Link>
-                  . Noem in het onderwerp uw vorderingsnummer en team Incasso.
-                </Paragraph>
-              </Alert>
-            )
+          ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
           : subTitle;
       return (
         <ThemaPaginaTable<AfisFactuurFrontend>

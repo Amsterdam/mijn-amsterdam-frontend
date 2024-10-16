@@ -41,7 +41,8 @@ const displayPropsFacturenOvergedragen: DisplayProps<AfisFactuurFrontend> = {
 export const listPageTitle: Record<AfisFactuurState, string> = {
   open: 'Openstaande facturen',
   afgehandeld: 'Afgehandelde facturen',
-  overgedragen: 'Overgedragen facturen',
+  overgedragen:
+    'Facturen in het incasso- en invorderingstraject van directie Belastingen',
 };
 
 export type AfisEmandateStub = ZaakDetail & Record<string, string>;
