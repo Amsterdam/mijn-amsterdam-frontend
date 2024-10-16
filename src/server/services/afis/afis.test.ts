@@ -1,5 +1,14 @@
 import { describe } from 'vitest';
 
+import { fetchIsKnownInAFIS } from './afis';
+import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
+import { fetchAfisDocument } from './afis-documents';
+import { fetchAfisFacturen } from './afis-facturen';
+import { AfisFacturenParams } from './afis-types';
+import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.json';
+import AFIS_OPENSTAAANDE_FACTUREN from './test-fixtures/openstaande-facturen.json';
+import ARC_DOC from '../../../../mocks/fixtures/afis/arc-doc-id.json';
+import DOCUMENT_DOWNLOAD_RESPONSE from '../../../../mocks/fixtures/afis/document.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 
 const mocks = vi.hoisted(() => {
@@ -23,15 +32,8 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
-import { fetchIsKnownInAFIS } from './afis';
-import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
-import { fetchAfisDocument } from './afis-documents';
-import { fetchAfisFacturen } from './afis-facturen';
-import { AfisFacturenParams } from './afis-types';
-
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
-const ADRRESS_ID = 430844;
 const BASE_ROUTE = '/afis/RESTAdapter';
 
 const ROUTES = {
@@ -330,7 +332,7 @@ describe('Afis', () => {
             content: {
               '@type': 'application/xml',
               properties: {
-                SearchEmailAddress: 'xxmail@arjanappel.nl',
+                EmailAddress: 'xxmail@arjanappel.nl',
               },
             },
           },
@@ -563,7 +565,7 @@ describe('Afis', () => {
     test('Openstaande factuur data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.openstaandeFacturen)
-        .reply(200, require('./test-fixtures/openstaande-facturen.json'));
+        .reply(200, AFIS_OPENSTAAANDE_FACTUREN);
 
       const openParams: AfisFacturenParams = {
         state: 'open',
@@ -606,7 +608,7 @@ describe('Afis', () => {
       );
 
       const inDispuutInvoice = response.content?.facturen[2];
-      expect(inDispuutInvoice?.status).toBe('automatische-incasso');
+      expect(inDispuutInvoice?.status).toBe('in-dispuut');
 
       const geldTerugInvoice = response.content?.facturen[3];
       expect(geldTerugInvoice?.status).toBe('geld-terug');
@@ -619,7 +621,7 @@ describe('Afis', () => {
     test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
       remoteApi
         .get(ROUTES.geslotenFacturen)
-        .reply(200, require('./test-fixtures/afgehandelde-facturen.json'));
+        .reply(200, AFIS_AFGEHANDELDE_FACTUREN);
 
       const closedParams: AfisFacturenParams = {
         state: 'afgehandeld',
@@ -665,12 +667,10 @@ describe('Afis', () => {
 
   describe('fetchAfisInvoiceDocument', async () => {
     test('Success response correctly formatted', async () => {
-      remoteApi
-        .get(ROUTES.documentID)
-        .reply(200, require('../../../../mocks/fixtures/afis/arc-doc-id.json'));
+      remoteApi.get(ROUTES.documentID).reply(200, ARC_DOC);
       remoteApi
         .post(ROUTES.documentDownload)
-        .reply(200, require('../../../../mocks/fixtures/afis/document.json'));
+        .reply(200, DOCUMENT_DOWNLOAD_RESPONSE);
 
       const response = await fetchAfisDocument(
         REQUEST_ID,

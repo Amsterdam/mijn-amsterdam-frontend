@@ -33,7 +33,7 @@ export function getApiConfig(
     customUrl = config.formatUrl(apiConfig);
   }
 
-  const headers = apiConfig.headers ?? {};
+  const headers = apiConfigCopy.headers ?? {};
 
   if (config.headers) {
     Object.assign(headers, config.headers);

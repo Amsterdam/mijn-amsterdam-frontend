@@ -289,7 +289,9 @@ function determineFactuurStatus(
   amountInBalanceTransacCrcyInCents: number
 ): AfisFactuur['status'] {
   switch (true) {
-    // Closed invoices
+    case !sourceInvoice.IsCleared && !!sourceInvoice.DunningBlockingReason:
+      return 'in-dispuut';
+
     case !!sourceInvoice.ReverseDocument:
       return 'geannuleerd';
 
@@ -301,7 +303,6 @@ function determineFactuurStatus(
     case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'betaald';
 
-    // Open invoices
     case amountInBalanceTransacCrcyInCents < 0:
       return 'geld-terug';
 
@@ -309,9 +310,6 @@ function determineFactuurStatus(
       isDateInPast(sourceInvoice.NetDueDate) &&
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
-
-    case sourceInvoice.DunningBlockingReason === 'D':
-      return 'in-dispuut';
 
     case sourceInvoice.DunningBlockingReason === 'BA':
       return 'gedeeltelijke-betaling';
@@ -350,13 +348,13 @@ function determineFactuurStatusDescription(
     case 'in-dispuut':
       return 'In dispuut';
     case 'gedeeltelijke-betaling':
-      return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amountOwedFormatted} euro over onder vermelding van de gegevens op uw factuur`;
+      return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amountOwedFormatted} euro over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
       return `Het bedrag van ${amountOwedFormatted.replace('-', '')} euro wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
       return `Betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
-      return `${amountOwedFormatted} wordt automatisch van uw rekening afgeschreven`;
+      return `${amountOwedFormatted} wordt automatisch van uw rekening afgeschreven.`;
     case 'overgedragen-aan-belastingen':
       return `Overgedragen aan belastingen ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     default:
