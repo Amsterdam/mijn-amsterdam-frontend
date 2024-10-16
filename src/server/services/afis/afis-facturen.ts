@@ -1,3 +1,5 @@
+import { firstBy } from 'thenby';
+
 import {
   ApiResponse,
   apiSuccessResult,
@@ -5,6 +7,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import {
+  dateSort,
   defaultDateFormat,
   isDateInPast,
 } from '../../../universal/helpers/date';
@@ -79,15 +82,19 @@ function formatFactuurRequestURL(
   };
 
   const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate`;
-  const orderBy = '$orderBy=NetDueDate asc, PostingDate asc';
+  const orderBy: Record<AfisFacturenParams['state'], string> = {
+    open: '$orderby=NetDueDate asc, PostingDate asc',
+    afgehandeld: '$orderby=ClearingDate desc',
+    overgedragen: '$orderby=ClearingDate desc',
+  };
 
-  let query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}&${select}&${orderBy}`;
+  let query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}&${select}&${orderBy[params.state]}`;
 
   if (params.top) {
     query += `&$top=${params.top}`;
   }
   const fullUrl = `${baseUrl}${baseRoute}${query}`;
-  console.log('fullUrl', fullUrl);
+
   return fullUrl;
 }
 
@@ -129,8 +136,29 @@ export async function fetchAfisFacturenOverview(
     facturenTransferredResponse
   );
 
+  let openFacturenContent: AfisFacturenResponse | null | undefined =
+    facturenOpenResult.content;
+
+  if (facturenClosedResult.status === 'OK') {
+    const openFacturenContentSorted: AfisFacturenResponse = {
+      count: facturenOpenResult.content?.count ?? 0,
+      facturen: facturenOpenResult.content?.facturen
+        ? facturenOpenResult.content.facturen.sort(
+            firstBy(function (factuur: AfisFactuur) {
+              return factuur.status === 'herinnering' ? -1 : 1;
+            })
+              .thenBy(function (factuur: AfisFactuur) {
+                return factuur.status === 'openstaand' ? -1 : 1;
+              })
+              .thenBy(dateSort('paymentDueDate', 'asc'))
+          )
+        : [],
+    };
+    openFacturenContent = openFacturenContentSorted;
+  }
+
   const facturenOverview: AfisFacturenByStateResponse = {
-    open: facturenOpenResult.content ?? null,
+    open: openFacturenContent ?? null,
     afgehandeld: facturenClosedResult.content ?? null,
     overgedragen: facturenTransferredResult.content ?? null,
   };
