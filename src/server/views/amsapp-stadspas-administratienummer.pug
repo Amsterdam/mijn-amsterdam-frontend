@@ -27,7 +27,6 @@ html(lang="nl")
       const logoutUrl = '#{logoutUrl}';
 
       async function performLogout() {
-        console.log('performLogout');
         try {
           const response = await fetch(logoutUrl, {
             method: 'GET',
@@ -43,11 +42,7 @@ html(lang="nl")
         document.getElementById('protocol-link-button').click();
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(logoutAndOpenApp, 0);
-      });
-  
-
+      document.addEventListener('DOMContentLoaded', logoutAndOpenApp);
 
 
     
