@@ -1,5 +1,4 @@
 import { isSameDay, parseISO } from 'date-fns';
-
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,

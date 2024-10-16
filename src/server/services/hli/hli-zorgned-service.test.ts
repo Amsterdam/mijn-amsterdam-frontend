@@ -8,9 +8,10 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as zorgnedService from '../zorgned/zorgned-service';
 import {
   ZorgnedAanvraagTransformed,
+  ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types';
-
+import { AV_CZM } from './status-line-items/regeling-czm';
 
 describe('hli-zorgned-service', () => {
   const authProfileAndToken: AuthProfileAndToken = {
@@ -156,7 +157,9 @@ describe('hli-zorgned-service', () => {
             isActueel: false,
             datumEindeGeldigheid: '2032-01-01',
             datumIngangGeldigheid: '2024-08-01',
-          } as ZorgnedAanvraagTransformed,
+            titel: 'test',
+            productIdentificatie: AV_CZM,
+          } as ZorgnedAanvraagWithRelatedPersonsTransformed,
         ],
         status: 'OK',
       });
@@ -175,6 +178,8 @@ describe('hli-zorgned-service', () => {
             "datumEindeGeldigheid": "2032-01-01",
             "datumIngangGeldigheid": "2024-08-01",
             "isActueel": true,
+            "productIdentificatie": "AV-CZM",
+            "titel": "Collectieve zorgverzekering",
           },
         ],
         "status": "OK",
@@ -190,7 +195,8 @@ describe('hli-zorgned-service', () => {
           {
             isActueel: true,
             datumEindeGeldigheid: '2022-01-01',
-          } as ZorgnedAanvraagTransformed,
+            titel: 'test',
+          } as ZorgnedAanvraagWithRelatedPersonsTransformed,
         ],
         status: 'OK',
       });
@@ -207,6 +213,7 @@ describe('hli-zorgned-service', () => {
           {
             "datumEindeGeldigheid": "2022-01-01",
             "isActueel": false,
+            "titel": "test",
           },
         ],
         "status": "OK",

@@ -4,6 +4,8 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
+export const AV_CZM = 'AV-CZM';
+
 const EINDE_RECHT_CZM = {
   ...EINDE_RECHT,
   description() {
