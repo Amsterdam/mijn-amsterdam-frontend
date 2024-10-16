@@ -1,4 +1,4 @@
-import { getFeedEntryProperties } from './afis-helpers';
+import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
   AfisBusinessPartnerAddressId,
@@ -19,7 +19,6 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
 function transformBusinessPartnerAddressResponse(
@@ -45,7 +44,7 @@ async function fetchBusinessPartnerFullNameAddressId(
     },
   };
 
-  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
   return requestData<AfisBusinessPartnerAddressId>(
     businessPartnerRequestConfig,
@@ -80,7 +79,7 @@ async function fetchBusinessPartnerFullName(
     },
   };
 
-  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
   return requestData<AfisBusinessPartnerDetails>(
     businessPartnerRequestConfig,
@@ -111,7 +110,7 @@ async function fetchPhoneNumber(
     },
   };
 
-  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
   return requestData<AfisBusinessPartnerPhone>(
     businessPartnerRequestConfig,
@@ -125,7 +124,7 @@ function transformEmailResponse(
   const [emailAddressEntry] = getFeedEntryProperties(response);
 
   const transformedResponse: AfisBusinessPartnerEmail = {
-    email: emailAddressEntry?.SearchEmailAddress ?? null,
+    email: emailAddressEntry?.EmailAddress ?? null,
   };
 
   return transformedResponse;
@@ -142,7 +141,7 @@ async function fetchEmail(
     },
   };
 
-  const businessPartnerRequestConfig = getApiConfig('AFIS', additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
   return requestData<AfisBusinessPartnerEmail>(
     businessPartnerRequestConfig,

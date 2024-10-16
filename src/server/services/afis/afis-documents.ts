@@ -1,4 +1,4 @@
-import { getFeedEntryProperties } from './afis-helpers';
+import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AfisArcDocID,
   AfisDocumentDownloadSource,
@@ -6,7 +6,6 @@ import {
   AfisFactuur,
 } from './afis-types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
@@ -27,7 +26,7 @@ export async function fetchAfisDocument(
     return ArchiveDocumentIDResponse;
   }
 
-  const config = getApiConfig('AFIS', {
+  const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
     },
@@ -69,7 +68,7 @@ async function fetchAfisDocumentID(
   requestID: RequestID,
   factuurDocumentId: AfisFactuur['factuurDocumentId']
 ) {
-  const config = getApiConfig('AFIS', {
+  const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurDocumentId}'&$select=ArcDocId`;
     },

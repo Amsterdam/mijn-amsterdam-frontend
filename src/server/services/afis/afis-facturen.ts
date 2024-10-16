@@ -12,12 +12,11 @@ import displayAmount, {
   capitalizeFirstLetter,
 } from '../../../universal/helpers/text';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureMessage } from '../monitoring';
-import { getFeedEntryProperties } from './afis-helpers';
+import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AfisFacturenByStateResponse,
   AfisFacturenParams,
@@ -41,7 +40,7 @@ export async function fetchAfisFacturen(
   sessionID: SessionID,
   params: AfisFacturenParams
 ): Promise<ApiResponse<AfisFacturenResponse | null>> {
-  const config = getApiConfig('AFIS', {
+  const config = await getAfisApiConfig({
     formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
     transformResponse: (responseData) =>
       transformFacturen(responseData, sessionID),
@@ -59,9 +58,9 @@ const accountingDocumentTypesByState: Record<AfisFactuurState, string[]> = {
 function getAccountingDocumentTypesFilter(state: AfisFactuurState) {
   const docTypeFilters = accountingDocumentTypesByState[state]
     .map((type) => `AccountingDocumentType eq '${type}'`)
-    .join(' OR ');
+    .join(' or ');
 
-  return `and (${docTypeFilters})`;
+  return ` and (${docTypeFilters})`;
 }
 
 function formatFactuurRequestURL(
@@ -87,8 +86,9 @@ function formatFactuurRequestURL(
   if (params.top) {
     query += `&$top=${params.top}`;
   }
-
-  return `${baseUrl}${baseRoute}${query}`;
+  const fullUrl = `${baseUrl}${baseRoute}${query}`;
+  console.log('fullUrl', fullUrl);
+  return fullUrl;
 }
 
 export async function fetchAfisFacturenOverview(

@@ -96,9 +96,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
     postponeFetch: !FeatureToggle.afisActive,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
-    headers: {
-      apiKey: process.env.BFF_ENABLEU_AFIS_API_KEY,
-    },
   },
   ZORGNED_JZD: {
     method: 'post',
