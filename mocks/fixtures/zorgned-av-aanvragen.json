@@ -893,6 +893,32 @@
                 "leveringsvorm": "zin",
                 "toewijzingen": []
               }
+            },
+            {
+              "identificatie": "901936",
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-ALG_E",
+                "omschrijving": "Regeling tegemoetkoming meerkosten"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2022-01-01",
+                "datumEindeGeldigheid": "2022-12-31",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leveringsvorm": "zin",
+                "toewijzingen": []
+              }
             }
           ]
         }

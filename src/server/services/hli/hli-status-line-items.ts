@@ -21,7 +21,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<ZorgnedAanvr
       lineItemTransformers: PCVERGOEDING,
     },
     {
-      productIdentificatie: ['AV-GOV', 'AV-OVM'],
+      productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
       lineItemTransformers: REGELING,
     },
     {
