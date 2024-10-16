@@ -11,7 +11,7 @@ import {
   PCVERGOEDING,
 } from './status-line-items/pcvergoeding';
 import { REGELING } from './status-line-items/regeling';
-import { REGELING_CZM } from './status-line-items/regeling-czm';
+import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
@@ -33,7 +33,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<ZorgnedAanvr
       lineItemTransformers: REGELING_PERIODIEK,
     },
     {
-      productIdentificatie: ['AV-CZM'],
+      productIdentificatie: [AV_CZM],
       lineItemTransformers: REGELING_CZM,
     },
   ];

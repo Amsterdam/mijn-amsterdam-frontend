@@ -15,6 +15,7 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
 } from '../zorgned/zorgned-types';
+import { AV_CZM } from './status-line-items/regeling-czm';
 
 function transformToAdministratienummer(identificatie: number): string {
   const padLength = 10;
@@ -89,6 +90,13 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
+function transformTitle(aanvraag: ZorgnedAanvraagTransformed) {
+  if (aanvraag.productIdentificatie === AV_CZM) {
+    return 'Collectieve zorgverzekering';
+  }
+  return aanvraag.titel;
+}
+
 async function fetchZorgnedAanvragenHLI_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
@@ -105,6 +113,7 @@ async function fetchZorgnedAanvragenHLI_(
         // Override isActueel for front-end.
         return {
           ...aanvraagTransformed,
+          titel: transformTitle(aanvraagTransformed),
           isActueel: isActueel(aanvraagTransformed),
         };
       });

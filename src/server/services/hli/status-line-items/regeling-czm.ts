@@ -4,6 +4,8 @@ import {
 } from '../../zorgned/zorgned-types';
 import { BESLUIT, EINDE_RECHT } from './generic';
 
+export const AV_CZM = 'AV-CZM';
+
 const EINDE_RECHT_CZM = {
   ...EINDE_RECHT,
   description() {
