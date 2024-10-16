@@ -4,6 +4,7 @@ import {
   Alert,
   Button,
   Grid,
+  Link,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
@@ -21,7 +22,10 @@ const pageContentTop = (
   <Paragraph>
     Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen
     inzake Gemeentebelastingen. Deze vindt u terug bij{' '}
-    <a href={import.meta.env.REACT_APP_SSO_URL_BELASTINGEN}>Mijn Belastingen</a>
+    <Link rel="noreferrer" href={import.meta.env.REACT_APP_SSO_URL_BELASTINGEN}>
+      Mijn Belastingen
+    </Link>
+    .
   </Paragraph>
 );
 
@@ -107,7 +111,22 @@ export function AfisThemaPagina() {
           ? state === 'overgedragen' && (
               <Alert>
                 <Paragraph>
-                  Incasso traject betalingen zijn zichtbaar in belastingen.
+                  Bij het uitblijven van een betaling, wordt uw factuur door
+                  Financiën overgedragen naar de afdeling Incasso & Invordering
+                  van directie Belastingen. Deze afdeling is vanaf dat moment
+                  verantwoordelijk voor de invordering van uw factuur en daarmee
+                  uw aanspreekpunt. De status van uw factuur wordt hier niet
+                  bijgewerkt. Heeft u vragen? Afdeling Incasso & Invordering is
+                  van maandag tot en met vrijdag tussen 08.00 en 18.00 uur
+                  bereikbaar op{' '}
+                  <Link rel="noreferrer" href="tel:0202554800">
+                    020 255 4800
+                  </Link>
+                  . U kunt ook een e-mail sturen naar{' '}
+                  <Link rel="noreferrer" href="mailto:belastingen@amsterdam.nl">
+                    belastingen@amsterdam.nl
+                  </Link>
+                  . Noem in het onderwerp uw vorderingsnummer en team Incasso.
                 </Paragraph>
               </Alert>
             )
