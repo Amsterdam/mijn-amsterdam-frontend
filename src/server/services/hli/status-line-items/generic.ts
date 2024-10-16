@@ -7,14 +7,10 @@ import {
 function getNamenBetrokkenen(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
-  const names = regeling.betrokkenPersonen
-    .map((person) => person.name)
-    .filter(Boolean);
-
-  if (names.length <= 1) {
+  const names = regeling.betrokkenPersonen.map((person) => person.name);
+  if (names.length === 1) {
     return names.join('');
   }
-
   const lastName = names.pop();
   return `${names.join(', ')} en ${lastName}`;
 }

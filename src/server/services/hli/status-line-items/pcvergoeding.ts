@@ -1,5 +1,4 @@
 import { isSameDay, parseISO } from 'date-fns';
-
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -20,7 +19,7 @@ function getBetrokkenKinderen(
       (person) =>
         `${person.name}${person.dateOfBirthFormatted ? ` (geboren op ${person.dateOfBirthFormatted})` : ''}`
     );
-  if (names.length <= 1) {
+  if (names.length === 1) {
     return names.join('');
   }
   const lastName = names.pop();
