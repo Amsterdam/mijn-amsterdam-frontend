@@ -80,21 +80,25 @@ export function isDateInPast(
 }
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
+  function getDateCompareValue(value: unknown) {
+    if (value instanceof Date) {
+      return value.getTime();
+    }
+    if (typeof value === 'string') {
+      return parseISO(value).getTime();
+    }
+    return null;
+  }
+
   return (a: unknown, b: unknown) => {
-    const v1 = (a as Record<string, unknown>)[sortKey];
-    const v2 = (b as Record<string, unknown>)[sortKey];
-    const c =
-      v1 instanceof Date ? v1 : typeof v1 === 'string' ? parseISO(v1) : null;
-    const d =
-      v2 instanceof Date ? v2 : typeof v2 === 'string' ? parseISO(v2) : null;
+    const c = getDateCompareValue((a as Record<string, unknown>)[sortKey]);
+    const d = getDateCompareValue((b as Record<string, unknown>)[sortKey]);
 
     if (c === null || d === null) {
       return 0;
     }
 
-    return direction === 'asc'
-      ? c.getTime() - d.getTime()
-      : d.getTime() - c.getTime();
+    return direction === 'asc' ? c - d : d - c;
   };
 }
 
