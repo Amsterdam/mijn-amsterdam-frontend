@@ -318,7 +318,7 @@ function determineFactuurStatusDescription(
     case 'openstaand':
       return `${amountOwedFormatted} betaal nu`;
     case 'herinnering':
-      return 'Betaaltermijn verstreken: betaal via de herinneringsbrief';
+      return 'Betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.';
     case 'in-dispuut':
       return 'In dispuut';
     case 'gedeeltelijke-betaling':
