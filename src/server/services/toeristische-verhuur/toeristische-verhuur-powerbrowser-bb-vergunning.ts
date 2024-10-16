@@ -395,12 +395,12 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
     status: 'Ontvangen',
     documents: [],
     fetchDocumentsUrl:
-      parseInt(id, 10) < 0 || !FeatureToggle.bbDocumentDownloadsActive
-        ? null
-        : generateFullApiUrlBFF(
+      parseInt(id, 10) > 0 && FeatureToggle.bbDocumentDownloadsActive
+        ? generateFullApiUrlBFF(
             BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST,
             { id: idEncrypted }
-          ),
+          )
+        : null,
     steps: [getReceivedStatusStep(pbZaak.dateReceived ?? '')],
     heeftOvergangsRecht: pbZaak.dateReceived
       ? isBefore(
