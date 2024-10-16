@@ -30,11 +30,16 @@ export function AfisDisclaimer() {
     <Alert severity="warning">
       <UnorderedList>
         <UnorderedList.Item>
-          De betaalstatus kan 3 werkdagen achterlopen op de doorgevoerde
-          wijzigingen.
+          Het verwerken van uw betaling kan tot 4 werkdagen duren.
         </UnorderedList.Item>
         <UnorderedList.Item>
-          Betalingsregelingen zijn niet zichtbaar in dit overzicht.
+          Enkel het openstaande bedrag wordt getoond.
+        </UnorderedList.Item>
+        <UnorderedList.Item>
+          Gebruik de betaallink alleen voor het voldoen van het volledige
+          factuurbedrag. Indien er sprake is van een betalingsregeling of
+          deelbetaling verzoeken we u het resterend bedrag handmatig over te
+          maken onder vermelding van de gegevens op uw factuur.
         </UnorderedList.Item>
       </UnorderedList>
     </Alert>
