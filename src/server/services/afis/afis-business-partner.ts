@@ -107,7 +107,7 @@ async function fetchPhoneNumber(
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformPhoneResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressId}'`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressId}'&$select=InternationalPhoneNumber`;
     },
   };
 
@@ -138,7 +138,7 @@ async function fetchEmail(
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformEmailResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressId}'`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressId}'&$select=EmailAddress`;
     },
   };
 
