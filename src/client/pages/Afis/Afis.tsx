@@ -20,7 +20,8 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 const pageContentTop = (
   <Paragraph>
     Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen
-    van belastingen. U kunt deze bij belastingen vinden.
+    inzake Gemeentebelastingen. Deze vindt u terug bij{' '}
+    <a href={import.meta.env.REACT_APP_SSO_URL_BELASTINGEN}>Mijn Belastingen</a>
   </Paragraph>
 );
 
