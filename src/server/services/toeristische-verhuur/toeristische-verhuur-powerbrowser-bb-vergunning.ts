@@ -251,7 +251,10 @@ async function fetchZaakAdres(
       return `${url}/Record/AdresMbtZaakOrLocatie/GFO_ZAKEN/${zaakId}`;
     },
     transformResponse(data) {
-      return data;
+      // Adds a newline before the postal code to ensure the address is displayed correctly.
+      const regExp = /[0-9]{4}[A-Z]{2}/;
+      const match = data.match(regExp);
+      return match.length > 0 ? data.replace(match[0], `\n${match[0]}`) : data;
     },
   });
   return addressResponse;
