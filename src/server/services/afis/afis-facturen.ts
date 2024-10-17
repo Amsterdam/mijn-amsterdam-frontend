@@ -29,6 +29,7 @@ import {
   AfisFactuurState,
   AfisOpenInvoiceSource,
 } from './afis-types';
+import { AppRoutes } from '../../../universal/config/routes';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 
@@ -264,6 +265,10 @@ function transformFactuur(
     documentDownloadLink: factuurDocumentIdEncrypted
       ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
       : null,
+    link: {
+      to: AppRoutes.AFIS,
+      title: factuurNummer,
+    },
   };
 }
 

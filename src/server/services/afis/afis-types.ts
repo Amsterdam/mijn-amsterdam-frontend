@@ -1,3 +1,5 @@
+import { LinkProps } from '../../../universal/types';
+
 type JaOfNee = 'Ja' | 'Nee';
 
 /** Business partner private response from external AFIS API.
@@ -123,6 +125,7 @@ export type AfisFactuur = {
   paylink: string | null;
   documentDownloadLink: string | null;
   statusDescription: string;
+  link: LinkProps;
 };
 
 type AfisFactuurStatus =

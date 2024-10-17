@@ -9,6 +9,7 @@ import type {
   KrefiaDeepLink,
   Vergunning,
 } from '../../../server/services';
+import { AfisFacturenByStateResponse } from '../../../server/services/afis/afis-types';
 import { AVGRequest } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
@@ -39,6 +40,7 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
+import { AfisFactuurFrontend } from '../../pages/Afis/Afis-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -338,6 +340,29 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
         }
         return displayPath(term, segments);
+      };
+    },
+  },
+  {
+    stateKey: 'AFIS_BAG' as AppStateKey,
+    getApiBaseItems: (data: {
+      'afis-facturen-overzicht': ApiSuccessResponse<AfisFacturenByStateResponse>;
+    }) => {
+      if (data?.['afis-facturen-overzicht']?.content) {
+        const facturen = Object.values(
+          data['afis-facturen-overzicht'].content
+        ).flatMap((byState) => byState?.facturen ?? []);
+        return facturen;
+      }
+      return [];
+    },
+    displayTitle: (item: AfisFactuurFrontend) => {
+      return (term: string) => {
+        return displayPath(term, [
+          item.factuurNummer,
+          item.paymentDueDateFormatted,
+          item.statusDescription,
+        ]);
       };
     },
   },

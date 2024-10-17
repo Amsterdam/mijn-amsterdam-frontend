@@ -690,6 +690,20 @@
       "description": "AVG Verzoeken",
       "keywords": ["AVG", "verzoek"],
       "profileTypes": ["private"]
+    },
+    {
+      "url": "/facturen-en-betalen",
+      "displayTitle": "Facturen en betalen",
+      "description": "Overzicht van uw facturen, betalingen en automatische incasso's.",
+      "keywords": [
+        "factuur",
+        "incasso",
+        "betalen",
+        "sepa",
+        "ideal",
+        "automatische incasso"
+      ],
+      "profileTypes": ["private", "commercial"]
     }
   ],
   "apiSearchConfigs": {
@@ -810,6 +824,14 @@
         "restaurant",
         "cafe"
       ]
+    },
+    "AFIS_BAG": {
+      "keywordsGeneratedFromProps": [
+        "factuurNummer",
+        "status",
+        "statusDescription"
+      ],
+      "keywords": ["factuur", "betalen", "incasso", "sepa", "ideal"]
     }
   }
 }
