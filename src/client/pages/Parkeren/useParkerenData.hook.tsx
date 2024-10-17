@@ -5,7 +5,7 @@ import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { tableConfig } from '../VergunningenV2/config';
 
-const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
+export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseType.GPK,
   CaseType.GPP,
   CaseType.BZP,
