@@ -114,6 +114,7 @@ async function fetchZaakIds(requestID: RequestID, persoonId: string) {
     },
     data: [persoonId],
   };
+
   return fetchPowerBrowserData<string[]>(requestID, requestConfig);
 }
 
@@ -464,12 +465,14 @@ export async function fetchBBVergunningen(
       return zakenIdsResponse;
     }
 
-    const zakenResponse = await fetchZakenByIds(
-      requestID,
-      authProfile.sid,
-      zakenIdsResponse.content
-    );
-    return zakenResponse;
+    if (zakenIdsResponse.content.length) {
+      const zakenResponse = await fetchZakenByIds(
+        requestID,
+        authProfile.sid,
+        zakenIdsResponse.content
+      );
+      return zakenResponse;
+    }
   }
 
   if (persoonIdResponse.status === 'ERROR') {
