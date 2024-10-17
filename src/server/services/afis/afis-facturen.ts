@@ -340,23 +340,24 @@ function determineFactuurStatusDescription(
   amountOwedFormatted: AfisFactuur['amountOwedFormatted'],
   debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
 ) {
+  const amount = amountOwedFormatted.replace('-', '');
   switch (status) {
     case 'openstaand':
-      return `${amountOwedFormatted} betaal nu`;
+      return `${amount} betaal nu`;
     case 'herinnering':
-      return `${amountOwedFormatted} betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.`;
+      return `${amount} betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.`;
     case 'in-dispuut':
-      return `${amountOwedFormatted} in dispuut`;
+      return `${amount} in dispuut`;
     case 'gedeeltelijke-betaling':
-      return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amountOwedFormatted} euro over onder vermelding van de gegevens op uw factuur.`;
+      return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amount} euro over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
-      return `Het bedrag van ${amountOwedFormatted} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
+      return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
-      return `${amountOwedFormatted} betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return `${amount} betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
-      return `${amountOwedFormatted} wordt automatisch van uw rekening afgeschreven.`;
+      return `${amount} wordt automatisch van uw rekening afgeschreven.`;
     case 'overgedragen-aan-belastingen':
-      return `${amountOwedFormatted} overgedragen aan belastingen ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return `${amount} overgedragen aan belastingen ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     default:
       return capitalizeFirstLetter(status ?? '');
   }

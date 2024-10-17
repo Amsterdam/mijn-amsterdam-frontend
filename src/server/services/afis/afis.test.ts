@@ -597,7 +597,7 @@ describe('Afis', () => {
           "paymentDueDate": "2023-12-21T00:00:00",
           "paymentDueDateFormatted": "21 december 2023",
           "status": "in-dispuut",
-          "statusDescription": "In dispuut",
+          "statusDescription": "€ 343,00 in dispuut",
         }
       `);
 
