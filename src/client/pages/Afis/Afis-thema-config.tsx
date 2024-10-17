@@ -22,8 +22,8 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
   afzender: 'Afzender',
   factuurNummerEl: 'Factuurnummer',
-  statusDescription: 'Status',
   paymentDueDateFormatted: 'Vervaldatum',
+  statusDescription: 'Status',
 };
 
 const displayPropsFacturenAfgehandeld: DisplayProps<AfisFactuurFrontend> = {
@@ -41,7 +41,8 @@ const displayPropsFacturenOvergedragen: DisplayProps<AfisFactuurFrontend> = {
 export const listPageTitle: Record<AfisFactuurState, string> = {
   open: 'Openstaande facturen',
   afgehandeld: 'Afgehandelde facturen',
-  overgedragen: 'Overgedragen facturen',
+  overgedragen:
+    'Facturen in het incasso- en invorderingstraject van directie Belastingen',
 };
 
 export type AfisEmandateStub = ZaakDetail & Record<string, string>;
@@ -60,7 +61,7 @@ export type AfisFacturenByStateFrontend = {
 
 type AfisFacturenTableConfig = {
   title: string;
-  subTitle?: string;
+  subTitle?: ReactNode;
   displayProps: DisplayProps<AfisFactuurFrontend>;
   maxItems: number;
   listPageLinkLabel: string;
@@ -82,15 +83,6 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
       state: 'open',
     }),
   },
-  afgehandeld: {
-    title: listPageTitle.afgehandeld,
-    displayProps: displayPropsFacturenAfgehandeld,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
-    listPageLinkLabel: 'Alle afgehandelde facturen',
-    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
-      state: 'afgehandeld',
-    }),
-  },
   overgedragen: {
     title: listPageTitle.overgedragen,
     displayProps: displayPropsFacturenOvergedragen,
@@ -98,6 +90,15 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageLinkLabel: 'Alle overgedragen facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'overgedragen',
+    }),
+  },
+  afgehandeld: {
+    title: listPageTitle.afgehandeld,
+    displayProps: displayPropsFacturenAfgehandeld,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
+    listPageLinkLabel: 'Alle afgehandelde facturen',
+    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+      state: 'afgehandeld',
     }),
   },
 } as const;

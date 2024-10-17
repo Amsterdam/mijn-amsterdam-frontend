@@ -36,22 +36,23 @@ export default function DocumentListV2({
             typeof document.isVisible !== 'undefined'
               ? document.isVisible
               : true
-          ).map((document) => (
-          <tr key={document.id}>
-            <td>
-              <DocumentLink
-                key={document.id}
-                document={document}
-                trackPath={trackPath}
-              />
-            </td>
-            {document.datePublished && (
+          )
+          .map((document) => (
+            <tr key={document.id}>
               <td>
-                <time>{defaultDateFormat(document.datePublished)}</time>
+                <DocumentLink
+                  key={document.id}
+                  document={document}
+                  trackPath={trackPath}
+                />
               </td>
-            )}
-          </tr>
-        ))}
+              {document.datePublished && (
+                <td>
+                  <time>{defaultDateFormat(document.datePublished)}</time>
+                </td>
+              )}
+            </tr>
+          ))}
       </tbody>
     </table>
   );

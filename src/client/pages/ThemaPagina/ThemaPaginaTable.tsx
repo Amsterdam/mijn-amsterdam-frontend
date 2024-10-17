@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 
 import { ZaakDetail } from '../../../universal/types';
@@ -12,7 +14,7 @@ interface ThemaPaginaTableProps<T> {
   maxItems?: number | -1;
   totalItems?: number;
   textNoContent?: string;
-  subTitle?: string;
+  subTitle?: ReactNode;
   title?: string;
   listPageLinkLabel?: string;
   zaken: T[];

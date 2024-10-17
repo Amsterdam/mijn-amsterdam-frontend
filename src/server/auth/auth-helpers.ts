@@ -9,7 +9,12 @@ import {
   RETURNTO_MAMS_LANDING,
 } from './auth-config';
 import { authRoutes } from './auth-routes';
-import { AuthProfile, MaSession, TokenData } from './auth-types';
+import {
+  AuthenticatedRequest,
+  AuthProfile,
+  MaSession,
+  TokenData,
+} from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
@@ -29,7 +34,6 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
     case AppRoutes.ZAAK_STATUS:
       return getReturnToUrlZaakStatus(queryParams);
     default:
-
     case RETURNTO_MAMS_LANDING:
       return authRoutes.AUTH_LOGIN_DIGID_LANDING;
   }
@@ -49,8 +53,9 @@ export function getAuthProfile(
   tokenData: TokenData
 ): AuthProfile {
   const idAttr = OIDC_TOKEN_ID_ATTRIBUTE[maSession.authMethod](tokenData);
+  const id = String(tokenData[idAttr]);
   return {
-    id: tokenData[idAttr],
+    id,
     sid: maSession.sid,
     authMethod: maSession.authMethod,
     profileType: maSession.profileType,
@@ -122,7 +127,7 @@ export function createLogoutHandler(
   postLogoutRedirectUrl: string,
   doIDPLogout: boolean = true
 ) {
-  return async (req: Request, res: Response) => {
+  return async (req: AuthenticatedRequest, res: Response) => {
     if (req.oidc.isAuthenticated() && doIDPLogout) {
       const auth = getAuth(req);
       if (auth) {
@@ -138,7 +143,7 @@ export function createLogoutHandler(
               ? auth.token
               : null,
             logout_hint: FeatureToggle.oidcLogoutHintActive
-              ? (req as any)[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
+              ? req[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
               : null,
           },
         });
@@ -146,7 +151,7 @@ export function createLogoutHandler(
     }
 
     // Destroy the session context
-    (req as any)[OIDC_SESSION_COOKIE_NAME] = undefined;
+    delete req[OIDC_SESSION_COOKIE_NAME];
     res.clearCookie(OIDC_SESSION_COOKIE_NAME);
 
     return res.redirect(postLogoutRedirectUrl);

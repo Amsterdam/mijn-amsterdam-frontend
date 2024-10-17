@@ -33,9 +33,16 @@ export function getApiConfig(
     customUrl = config.formatUrl(apiConfig);
   }
 
+  const headers = apiConfigCopy.headers ?? {};
+
+  if (config.headers) {
+    Object.assign(headers, config.headers);
+  }
+
   return Object.assign(
     apiConfigCopy,
     config,
-    customUrl ? { url: customUrl } : null
+    customUrl ? { url: customUrl } : null,
+    { headers }
   );
 }

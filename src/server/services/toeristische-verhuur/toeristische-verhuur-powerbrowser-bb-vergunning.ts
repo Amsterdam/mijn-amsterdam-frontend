@@ -114,6 +114,7 @@ async function fetchZaakIds(requestID: RequestID, persoonId: string) {
     },
     data: [persoonId],
   };
+
   return fetchPowerBrowserData<string[]>(requestID, requestConfig);
 }
 
@@ -250,7 +251,10 @@ async function fetchZaakAdres(
       return `${url}/Record/AdresMbtZaakOrLocatie/GFO_ZAKEN/${zaakId}`;
     },
     transformResponse(data) {
-      return data;
+      // Adds a newline before the postal code to ensure the address is displayed correctly.
+      const regExp = /[0-9]{4}[A-Z]{2}/;
+      const match = data.match(regExp);
+      return match.length > 0 ? data.replace(match[0], `\n${match[0]}`) : data;
     },
   });
   return addressResponse;
@@ -464,12 +468,14 @@ export async function fetchBBVergunningen(
       return zakenIdsResponse;
     }
 
-    const zakenResponse = await fetchZakenByIds(
-      requestID,
-      authProfile.sid,
-      zakenIdsResponse.content
-    );
-    return zakenResponse;
+    if (zakenIdsResponse.content.length) {
+      const zakenResponse = await fetchZakenByIds(
+        requestID,
+        authProfile.sid,
+        zakenIdsResponse.content
+      );
+      return zakenResponse;
+    }
   }
 
   if (persoonIdResponse.status === 'ERROR') {
