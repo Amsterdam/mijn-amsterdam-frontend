@@ -56,7 +56,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       label: 'Adres',
       content: (
         <>
-          <span className={styles.Adres}>{vergunning.adres}</span>
+          <span className={styles.Address}>{vergunning.adres}</span>
           <LocationModal location={vergunning.adres} />
         </>
       ),
