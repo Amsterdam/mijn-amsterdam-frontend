@@ -251,9 +251,9 @@ async function fetchZaakAdres(
     },
     transformResponse(data) {
       // Adds a newline before the postal code to ensure the address is displayed correctly.
-      const r = /[0-9]{4}[A-Z]{2}/;
-      const m = data.match(r);
-      return m.length > 0 ? data.replace(m[0], `\n${m[0]}`) : data;
+      const regExp = /[0-9]{4}[A-Z]{2}/;
+      const match = data.match(regExp);
+      return match.length > 0 ? data.replace(match[0], `\n${match[0]}`) : data;
     },
   });
   return addressResponse;
