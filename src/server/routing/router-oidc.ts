@@ -25,6 +25,7 @@ import {
   AUTH_CALLBACK,
   authRoutes,
 } from '../auth/auth-routes';
+import { AuthenticatedRequest } from '../auth/auth-types';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
 
@@ -168,13 +169,13 @@ oidcRouter.get(authRoutes.AUTH_CHECK, authCheckHandler);
 oidcRouter.get(
   authRoutes.AUTH_TOKEN_DATA,
   requiresAuth(),
-  async (req: Request, res: Response) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     if (hasSessionCookie(req)) {
       const auth = getAuth(req);
       if (auth) {
         return res.send(
           apiSuccessResult({
-            tokenData: (req as any)[OIDC_SESSION_COOKIE_NAME],
+            tokenData: req[OIDC_SESSION_COOKIE_NAME],
             token: auth.token,
             profile: auth.profile,
           })
