@@ -211,8 +211,10 @@ function transformFactuur(
   sessionID: SessionID
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
-  const factuurDocumentId = invoice.AccountingDocument;
-  const factuurNummer = factuurDocumentId || invoice.DocumentReferenceID; // NOTE: This has to be verified with proper test data.
+  const factuurDocumentId = String(invoice.AccountingDocument);
+  const factuurNummer = String(
+    factuurDocumentId || invoice.DocumentReferenceID
+  ); // NOTE: This has to be verified with proper test data.
   const factuurDocumentIdEncrypted = factuurDocumentId
     ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
     : null;
