@@ -180,13 +180,13 @@ function AppAuthenticated() {
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaStadspasActive && (
             <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
           )}
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaRegelingenActive && (
             <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
           )}
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaRegelingenActive && (
             <Route
               path={AppRoutes['HLI/REGELINGEN_LIST']}
               component={HLIRegelingen}

@@ -79,8 +79,12 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
 
     case Themas.HLI: {
-      const hasStadspas = !!HLI?.content?.stadspas?.length;
-      const hasRegelingen = !!HLI?.content?.regelingen?.length;
+      const hasStadspas =
+        !!HLI?.content?.stadspas?.length &&
+        FeatureToggle.hliThemaStadspasActive;
+      const hasRegelingen =
+        !!HLI?.content?.regelingen?.length &&
+        FeatureToggle.hliThemaRegelingenActive;
       const isLoadingHLI = isLoading(HLI);
       return (
         FeatureToggle.hliThemaActive &&
