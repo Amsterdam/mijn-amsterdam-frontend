@@ -94,7 +94,11 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     }
 
     case Themas.ZORG:
-      return !isLoading(WMO) && !!WMO.content?.length;
+      return (
+        FeatureToggle.zorgv2ThemapaginaActive &&
+        !isLoading(WMO) &&
+        !!WMO.content?.length
+      );
 
     case Themas.BELASTINGEN: {
       // Belastingen always visible if we receive an error from the api

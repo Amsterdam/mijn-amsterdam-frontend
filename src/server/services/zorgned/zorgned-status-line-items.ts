@@ -14,40 +14,42 @@ function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
   aanvraagTransformed: T,
   allAanvragenTransformed: T[]
 ) {
-  return statusLineItemsConfig.find((config) => {
-    const hasRegelingsVormMatch =
-      typeof config.leveringsVorm !== 'undefined'
-        ? aanvraagTransformed.leveringsVorm === config.leveringsVorm
-        : PASS_MATCH_DEFAULT;
+  return statusLineItemsConfig
+    .filter((config) => !config.isDisabled)
+    .find((config) => {
+      const hasRegelingsVormMatch =
+        typeof config.leveringsVorm !== 'undefined'
+          ? aanvraagTransformed.leveringsVorm === config.leveringsVorm
+          : PASS_MATCH_DEFAULT;
 
-    const hasProductSoortCodeMatch =
-      typeof config.productsoortCodes !== 'undefined'
-        ? config.productsoortCodes.includes(
-            aanvraagTransformed.productsoortCode
-          )
-        : PASS_MATCH_DEFAULT;
-
-    const hasProductIdentificatieMatch =
-      typeof config.productIdentificatie !== 'undefined'
-        ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
-          ? config.productIdentificatie.includes(
-              aanvraagTransformed.productIdentificatie
+      const hasProductSoortCodeMatch =
+        typeof config.productsoortCodes !== 'undefined'
+          ? config.productsoortCodes.includes(
+              aanvraagTransformed.productsoortCode
             )
-          : false
-        : PASS_MATCH_DEFAULT;
+          : PASS_MATCH_DEFAULT;
 
-    const isFilterMatch =
-      typeof config.filter !== 'undefined'
-        ? config.filter(aanvraagTransformed, allAanvragenTransformed)
-        : PASS_MATCH_DEFAULT;
+      const hasProductIdentificatieMatch =
+        typeof config.productIdentificatie !== 'undefined'
+          ? typeof aanvraagTransformed.productIdentificatie !== 'undefined'
+            ? config.productIdentificatie.includes(
+                aanvraagTransformed.productIdentificatie
+              )
+            : false
+          : PASS_MATCH_DEFAULT;
 
-    return (
-      isFilterMatch &&
-      hasRegelingsVormMatch &&
-      hasProductSoortCodeMatch &&
-      hasProductIdentificatieMatch
-    );
-  })?.lineItemTransformers;
+      const isFilterMatch =
+        typeof config.filter !== 'undefined'
+          ? config.filter(aanvraagTransformed, allAanvragenTransformed)
+          : PASS_MATCH_DEFAULT;
+
+      return (
+        isFilterMatch &&
+        hasRegelingsVormMatch &&
+        hasProductSoortCodeMatch &&
+        hasProductIdentificatieMatch
+      );
+    })?.lineItemTransformers;
 }
 
 export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
