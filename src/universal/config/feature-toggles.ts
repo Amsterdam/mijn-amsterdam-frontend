@@ -1,4 +1,4 @@
-import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION, IS_TAP } from './env';
+import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   afisActive: !IS_PRODUCTION,
@@ -11,8 +11,8 @@ export const FeatureToggle = {
   bodemActive: true,
   cleopatraApiActive: true,
   cmsFooterActive: true,
-  dbEnabled: IS_TAP,
-  dbSessionsEnabled: IS_TAP,
+  dbEnabled: true,
+  dbSessionsEnabled: true,
   decosServiceActive: IS_DEVELOPMENT, // TODO: Enable when working on MIJN-8914
   ehKetenmachtigingActive: !IS_PRODUCTION,
   eherkenningActive: true,
