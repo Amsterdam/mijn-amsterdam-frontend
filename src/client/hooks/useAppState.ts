@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import {
-  SetterOrUpdater,
-  atom,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
@@ -147,21 +142,25 @@ export function useAppStateRemote() {
   }, []);
 
   // The callback is fired on every incoming message from the EventSource.
-  const onEvent = useCallback((messageData: any) => {
-    if (messageData && messageData !== SSE_ERROR_MESSAGE) {
-      const transformedMessageData = transformSourceData(messageData);
-      setAppState((appState) => {
-        const appStateUpdated = {
-          ...appState,
-          ...transformedMessageData,
-        };
-        return appStateUpdated;
-      });
-    } else if (messageData === SSE_ERROR_MESSAGE) {
-      setFallbackServiceEnabled(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onEvent = useCallback(
+    (messageData: typeof SSE_ERROR_MESSAGE | object) => {
+      if (messageData && messageData !== SSE_ERROR_MESSAGE) {
+        const transformedMessageData = transformSourceData(
+          typeof messageData === 'object' ? messageData : null
+        );
+        setAppState((appState) => {
+          const appStateUpdated = {
+            ...appState,
+            ...transformedMessageData,
+          };
+          return appStateUpdated;
+        });
+      } else if (messageData === SSE_ERROR_MESSAGE) {
+        setFallbackServiceEnabled(true);
+      }
+    },
+    []
+  );
 
   useSSE({
     path: streamEndpoint,
@@ -196,9 +195,7 @@ export function isAppStateReady(
   const profileStates = Object.entries(appState).filter(
     ([appStateKey, state]) => {
       const key = appStateKey as AppStateKey;
-      const stateConfig = pristineAppState[
-        key
-      ] as unknown as ApiPristineResponse<any>;
+      const stateConfig = pristineAppState[key] as ApiPristineResponse<unknown>;
 
       const isProfileMatch =
         (isLegacyProfileType && !stateConfig?.profileTypes?.length) ||
@@ -240,14 +237,14 @@ export interface AppStateBagApiParams {
 
 // Use this hook for loading additional data that needs to be persisted in the state. For example additional data loaded if a user navigates to a detailpage
 // that requires fetching data that wasn't retrieved initially.
-export function useAppStateBagApi<T extends unknown>({
+export function useAppStateBagApi<T>({
   url,
   bagThema,
   key,
 }: AppStateBagApiParams) {
   const [appState, setAppState] = useRecoilState(appStateAtom);
   const isApiDataCached =
-    typeof appState[bagThema] !== null &&
+    appState[bagThema] !== null &&
     typeof appState[bagThema] === 'object' &&
     typeof appState[bagThema] !== 'undefined' &&
     key in appState[bagThema]!;
