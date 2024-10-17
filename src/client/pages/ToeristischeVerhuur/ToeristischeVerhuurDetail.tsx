@@ -66,19 +66,6 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       content: vergunning.result,
       isVisible: !!vergunning.result,
     },
-    {
-      label: 'Document',
-      content: (
-        <Paragraph>
-          Stuur een mail naar:{' '}
-          <Link href="mailto:mail@amsterdam.nl" rel="noreferrer">
-            mail@amsterdam.nl
-          </Link>{' '}
-          om uw document in te kunnen zien.
-        </Paragraph>
-      ),
-      isVisible: !vergunning.fetchDocumentsUrl && !!vergunning.result,
-    },
   ];
 
   const isVakantieVerhuur = vergunning.title === 'Vergunning vakantieverhuur';
@@ -107,6 +94,23 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       )}
 
       <Grid.Cell span="all">
+        <Datalist
+          rows={[
+            {
+              label: 'Document',
+              content: (
+                <Paragraph>
+                  Stuur een mail naar:{' '}
+                  <Link href="mailto:mail@amsterdam.nl" rel="noreferrer">
+                    mail@amsterdam.nl
+                  </Link>{' '}
+                  om uw document in te kunnen zien.
+                </Paragraph>
+              ),
+              isVisible: !vergunning.fetchDocumentsUrl && !!vergunning.result,
+            },
+          ]}
+        />
         {!!documentsResponseData.content?.length && (
           <DocumentListV2
             documents={documentsResponseData.content}
