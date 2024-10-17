@@ -357,7 +357,7 @@ function determineFactuurStatusDescription(
     case 'automatische-incasso':
       return `${amount} wordt automatisch van uw rekening afgeschreven.`;
     case 'overgedragen-aan-belastingen':
-      return `${amount} overgedragen aan belastingen ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return `${amount} is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     default:
       return capitalizeFirstLetter(status ?? '');
   }
