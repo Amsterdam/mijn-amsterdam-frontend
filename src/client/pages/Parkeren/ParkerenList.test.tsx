@@ -15,7 +15,7 @@ import { listPageParamKind } from '../VergunningenV2/config';
 const testState = {
   PARKEREN: {
     content: {
-      url: 'https://parkeren.amsterdam.nl',
+      url: 'https://parkeervergunningen.amsterdam.nl/',
     },
   },
   VERGUNNINGEN: {
