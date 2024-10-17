@@ -125,7 +125,13 @@ function useAfisFacturenApi(
         url,
       });
     }
-  }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
+  }, [
+    businessPartnerIdEncrypted,
+    fetchFacturen,
+    isApiDataCached,
+    state,
+    isOpenfacturenState,
+  ]);
 
   const facturenByStateApiResponseUpdated = useTransformFacturen(
     facturenByStateApiResponse

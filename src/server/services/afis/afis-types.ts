@@ -65,7 +65,7 @@ export type AfisBusinessPartnerPhoneSource = {
 };
 
 export type AfisBusinessPartnerEmailSource = {
-  SearchEmailAddress: string;
+  EmailAddress: string;
 };
 
 export type AfisBusinessPartnerDetails = {

@@ -38,8 +38,10 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   request?: <T>(requestConfig: DataRequestConfig) => Promise<AxiosResponse<T>>;
 }
 
+/* eslint-disable no-magic-numbers */
 export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
+/* eslint-enable no-magic-numbers */
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
@@ -96,9 +98,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
     postponeFetch: !FeatureToggle.afisActive,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
-    headers: {
-      apiKey: process.env.BFF_ENABLEU_AFIS_API_KEY,
-    },
   },
   ZORGNED_JZD: {
     method: 'post',
@@ -202,6 +201,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     },
   },
   CMS_CONTENT_GENERAL_INFO: {
+    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
     urls: {
       private: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
@@ -211,6 +211,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   CMS_CONTENT_FOOTER: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
+    // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },

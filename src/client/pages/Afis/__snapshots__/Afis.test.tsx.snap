@@ -83,7 +83,15 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph"
           >
-            Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen van belastingen. U kunt deze bij belastingen vinden.
+            Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen inzake Gemeentebelastingen. Deze vindt u terug bij 
+            <a
+              class="ams-link ams-link--standalone"
+              href="http://remote-api-host/sso/portaal/belastingen"
+              rel="noreferrer"
+            >
+              Mijn Belastingen
+            </a>
+            .
           </p>
         </div>
         <div

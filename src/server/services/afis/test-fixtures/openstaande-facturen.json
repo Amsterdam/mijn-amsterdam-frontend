@@ -75,7 +75,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Bedrijfje",
             "SEPAMandate": "",
             "PostingDate": "2023-08-09T00:00:00",
@@ -93,7 +93,7 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 9999,
-            "DunningBlockingReason": "ONBEKEND",
+            "DunningBlockingReason": "",
             "ProfitCenterName": "Moneymakers inc.",
             "SEPAMandate": "",
             "PostingDate": "2023-03-23T00:00:00",

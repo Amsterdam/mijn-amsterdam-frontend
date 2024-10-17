@@ -24,7 +24,12 @@ import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 
-import { BFF_PORT, IS_DEBUG } from './config/app';
+import {
+  BFF_PORT,
+  IS_DEBUG,
+  ONE_MINUTE_SECONDS,
+  ONE_SECOND_MS,
+} from './config/app';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import {
   clearRequestCache,
@@ -55,7 +60,7 @@ app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
 // Add request logging attribute (:build)
-morgan.token('build', function (req, res) {
+morgan.token('build', function () {
   return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
 });
 
@@ -158,7 +163,7 @@ app.use(function onError(
   return res.redirect(`${process.env.MA_FRONTEND_URL}/server-error-500`);
 });
 
-app.use((req: Request, res: Response) => {
+app.use((_req: Request, res: Response) => {
   if (!res.headersSent) {
     return send404(res);
   }
@@ -182,10 +187,11 @@ async function startServerBFF() {
       },
     });
   });
+
   const HEADER_TIMEOUT_SECONDS = 65;
   // From https://shuheikagawa.com/blog/2019/04/25/keep-alive-timeout/
-  server.keepAliveTimeout = 60 * 1000;
-  server.headersTimeout = HEADER_TIMEOUT_SECONDS * 1000; // This should be bigger than `keepAliveTimeout + your server's expected response time`
+  server.keepAliveTimeout = ONE_MINUTE_SECONDS;
+  server.headersTimeout = HEADER_TIMEOUT_SECONDS * ONE_SECOND_MS; // This should be bigger than `keepAliveTimeout + your server's expected response time`
 }
 
 if (
