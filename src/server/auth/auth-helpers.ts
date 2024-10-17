@@ -33,6 +33,8 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
       );
     case AppRoutes.ZAAK_STATUS:
       return getReturnToUrlZaakStatus(queryParams);
+    case RETURNTO_MAMS_LANDING_EHERKENNING:
+      return authRoutes.AUTH_LOGIN_EHERKENNING_LANDING;
     default:
     case RETURNTO_MAMS_LANDING:
       return authRoutes.AUTH_LOGIN_DIGID_LANDING;

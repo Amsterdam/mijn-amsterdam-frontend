@@ -11,6 +11,8 @@ import {
   oidcConfigDigid,
   oidcConfigEherkenning,
   openIdAuth,
+  RETURNTO_MAMS_LANDING_DIGID,
+  RETURNTO_MAMS_LANDING_EHERKENNING,
 } from '../auth/auth-config';
 import {
   createLogoutHandler,
@@ -83,7 +85,10 @@ oidcRouter.get(
   authRoutes.AUTH_LOGIN_DIGID,
   async (req: Request, res: Response) => {
     return res.oidc.login({
-      returnTo: getReturnToUrl(req.query),
+      returnTo: getReturnToUrl({
+        returnTo: RETURNTO_MAMS_LANDING_DIGID,
+        ...req.query,
+      }),
       authorizationParams: {
         redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
       },
@@ -120,7 +125,10 @@ if (FeatureToggle.eherkenningActive) {
     authRoutes.AUTH_LOGIN_EHERKENNING,
     async (req: Request, res: Response) => {
       return res.oidc.login({
-        returnTo: getReturnToUrl(req.query),
+        returnTo: getReturnToUrl({
+          returnTo: RETURNTO_MAMS_LANDING_EHERKENNING,
+          ...req.query,
+        }),
         authorizationParams: {
           redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
         },
