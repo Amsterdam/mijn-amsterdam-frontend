@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
 import { TrackingConfig } from './routes';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
@@ -282,21 +281,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
-  FeatureToggle.parkerenPatroonC
-    ? {
-        title: ThemaTitles.PARKEREN,
-        id: Themas.PARKEREN,
-        to: (appState: AppState) => appState.PARKEREN.content?.url,
-        rel: 'external',
-        profileTypes: ['private', 'commercial'],
-      }
-    : {
-        title: ThemaTitles.PARKEREN,
-        id: Themas.PARKEREN,
-        to: AppRoutes.PARKEREN,
-        profileTypes: ['private', 'commercial'],
-        hasAppStateValue: false,
-      },
+  {
+    title: ThemaTitles.PARKEREN,
+    id: Themas.PARKEREN,
+    to: AppRoutes.PARKEREN, // This will be overridden in useThemaMenuItems
+    profileTypes: ['private', 'commercial'],
+    hasAppStateValue: true,
+  },
   {
     title: ThemaTitles.OVERTREDINGEN,
     id: Themas.OVERTREDINGEN,

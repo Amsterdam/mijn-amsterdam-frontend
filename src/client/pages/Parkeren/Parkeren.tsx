@@ -7,14 +7,16 @@ import { Vergunning } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-
-
 
 export default function Parkeren() {
   const { tableConfig, parkeervergunningen, isLoading, isError } =
     useParkerenData();
+
+  const { PARKEREN } = useAppStateGetter();
+  const parkerenUrl = PARKEREN?.content?.url;
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -56,7 +58,10 @@ export default function Parkeren() {
         aanvragen of wijzigen van een parkeervergunning voor bewoners kan via
         Mijn Parkeren. U moet hier wel opnieuw inloggen.
       </Paragraph>
-      <MaLink href={'https://parkeervergunningen.amsterdam.nl'}>
+      <MaLink
+        href={`${parkerenUrl || import.meta.env.REACT_APP_SSO_URL_PARKEREN}`}
+        rel="external"
+      >
         <Button>
           Log in op Mijn Parkeren
           <Icon svg={ExternalLinkIcon} size={'level-5'} />

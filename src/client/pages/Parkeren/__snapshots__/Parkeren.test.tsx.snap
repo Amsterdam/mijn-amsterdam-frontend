@@ -80,7 +80,8 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           </p>
           <a
             class="ams-link ams-link--standalone"
-            href="https://parkeervergunningen.amsterdam.nl"
+            href="http://remote-api-host/sso/portaal/parkeren"
+            rel="external"
           >
             <button
               class="ams-button ams-button--primary"
