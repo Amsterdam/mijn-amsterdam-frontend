@@ -344,19 +344,19 @@ function determineFactuurStatusDescription(
     case 'openstaand':
       return `${amountOwedFormatted} betaal nu`;
     case 'herinnering':
-      return 'Betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.';
+      return `${amountOwedFormatted} betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.`;
     case 'in-dispuut':
-      return 'In dispuut';
+      return `${amountOwedFormatted} in dispuut`;
     case 'gedeeltelijke-betaling':
       return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amountOwedFormatted} euro over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
-      return `Het bedrag van ${amountOwedFormatted.replace('-', '')} euro wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
+      return `Het bedrag van ${amountOwedFormatted} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
-      return `Betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return `${amountOwedFormatted} betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
       return `${amountOwedFormatted} wordt automatisch van uw rekening afgeschreven.`;
     case 'overgedragen-aan-belastingen':
-      return `Overgedragen aan belastingen ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return `${amountOwedFormatted} overgedragen aan belastingen ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     default:
       return capitalizeFirstLetter(status ?? '');
   }
