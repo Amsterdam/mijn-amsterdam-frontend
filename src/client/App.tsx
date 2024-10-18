@@ -83,7 +83,6 @@ import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
 import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
 import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
-import Zorg from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgV2 from './pages/Zorg/ZorgV2';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
@@ -180,13 +179,13 @@ function AppAuthenticated() {
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaStadspasActive && (
             <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
           )}
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaRegelingenActive && (
             <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
           )}
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaRegelingenActive && (
             <Route
               path={AppRoutes['HLI/REGELINGEN_LIST']}
               component={HLIRegelingen}
@@ -225,10 +224,9 @@ function AppAuthenticated() {
               component={ZorgVoorzieningen}
             />
           )}
-          <Route
-            path={AppRoutes.ZORG}
-            component={FeatureToggle.zorgv2ThemapaginaActive ? ZorgV2 : Zorg}
-          />
+          {FeatureToggle.zorgv2ThemapaginaActive && (
+            <Route path={AppRoutes.ZORG} component={ZorgV2} />
+          )}
 
           <Route
             path={AppRoutes['BURGERZAKEN/ID-KAART']}

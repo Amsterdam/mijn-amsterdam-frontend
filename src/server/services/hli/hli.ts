@@ -23,6 +23,7 @@ import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,
 } from './status-line-items/pcvergoeding';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -142,6 +143,10 @@ async function fetchRegelingen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  if (!FeatureToggle.hliThemaRegelingenActive) {
+    return apiSuccessResult([]);
+  }
+
   const aanvragenResponse = await fetchZorgnedAanvragenHLI(
     requestID,
     authProfileAndToken

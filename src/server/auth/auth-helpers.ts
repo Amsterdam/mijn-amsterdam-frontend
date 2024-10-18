@@ -6,15 +6,11 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
-  RETURNTO_MAMS_LANDING,
+  RETURNTO_MAMS_LANDING_DIGID,
+  RETURNTO_MAMS_LANDING_EHERKENNING,
 } from './auth-config';
 import { authRoutes } from './auth-routes';
-import {
-  AuthenticatedRequest,
-  AuthProfile,
-  MaSession,
-  TokenData,
-} from './auth-types';
+import { AuthenticatedRequest, AuthProfile, MaSession, TokenData } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
@@ -33,8 +29,10 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
       );
     case AppRoutes.ZAAK_STATUS:
       return getReturnToUrlZaakStatus(queryParams);
+    case RETURNTO_MAMS_LANDING_EHERKENNING:
+      return authRoutes.AUTH_LOGIN_EHERKENNING_LANDING;
     default:
-    case RETURNTO_MAMS_LANDING:
+    case RETURNTO_MAMS_LANDING_DIGID:
       return authRoutes.AUTH_LOGIN_DIGID_LANDING;
   }
 }

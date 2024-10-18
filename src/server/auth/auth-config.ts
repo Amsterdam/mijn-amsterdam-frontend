@@ -11,7 +11,8 @@ import { getFromEnv } from '../helpers/env';
 
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
   'amsapp-stadspas-administratienummer';
-export const RETURNTO_MAMS_LANDING = 'mams-landing';
+export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
+export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
 
 // eslint-disable-next-line no-magic-numbers
 export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 16; // 16 minutes

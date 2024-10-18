@@ -80,7 +80,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           </p>
           <a
             class="ams-link ams-link--standalone"
-            href="https://parkeervergunningen.amsterdam.nl"
+            href="https://parkeervergunningen.amsterdam.nl/"
           >
             <button
               class="ams-button ams-button--primary"
