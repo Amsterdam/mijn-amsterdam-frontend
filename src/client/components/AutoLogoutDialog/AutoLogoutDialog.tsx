@@ -129,7 +129,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     return () => {
       document.title = originalTitle;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isOpen) {
@@ -142,6 +141,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       isOpen={isOpen}
       contentWidth={450}
       showCloseButton={false}
+      // eslint-disable-next-line no-magic-numbers
+      contentVerticalPosition={100 + window.scrollY}
       actions={
         <>
           {continueButtonIsVisible && (
