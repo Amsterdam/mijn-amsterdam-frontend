@@ -109,8 +109,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                 Het inzien, aanvragen of wijzigen van een parkeervergunning voor bewoners kan via Mijn Parkeren.
                 <a
                   class="ams-link ams-link--standalone"
-                  href="http://remote-api-host/sso/portaal/parkeren"
-                  rel="external"
+                  href="https://parkeervergunningen.amsterdam.nl/"
                 >
                   <button
                     class="ams-button ams-button--primary"

@@ -16,7 +16,7 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
 ]);
 
 export function useParkerenData() {
-  const { VERGUNNINGEN } = useAppStateGetter();
+  const { VERGUNNINGEN, PARKEREN } = useAppStateGetter();
   const parkeervergunningen = addLinkElementToProperty<Vergunning>(
     (VERGUNNINGEN.content ?? []).filter((vergunning) =>
       PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
@@ -28,5 +28,7 @@ export function useParkerenData() {
     parkeervergunningen,
     isLoading: isLoading(VERGUNNINGEN),
     isError: isError(VERGUNNINGEN),
+    parkerenUrlSSO: PARKEREN.content?.url,
+    isLoadingParkerenUrl: isLoading(PARKEREN),
   };
 }

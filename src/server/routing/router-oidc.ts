@@ -11,6 +11,8 @@ import {
   oidcConfigDigid,
   oidcConfigEherkenning,
   openIdAuth,
+  RETURNTO_MAMS_LANDING_DIGID,
+  RETURNTO_MAMS_LANDING_EHERKENNING,
 } from '../auth/auth-config';
 import {
   createLogoutHandler,
@@ -23,6 +25,7 @@ import {
   AUTH_CALLBACK,
   authRoutes,
 } from '../auth/auth-routes';
+import { AuthenticatedRequest } from '../auth/auth-types';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
 
@@ -83,7 +86,10 @@ oidcRouter.get(
   authRoutes.AUTH_LOGIN_DIGID,
   async (req: Request, res: Response) => {
     return res.oidc.login({
-      returnTo: getReturnToUrl(req.query),
+      returnTo: getReturnToUrl({
+        returnTo: RETURNTO_MAMS_LANDING_DIGID,
+        ...req.query,
+      }),
       authorizationParams: {
         redirect_uri: authRoutes.AUTH_CALLBACK_DIGID,
       },
@@ -120,7 +126,10 @@ if (FeatureToggle.eherkenningActive) {
     authRoutes.AUTH_LOGIN_EHERKENNING,
     async (req: Request, res: Response) => {
       return res.oidc.login({
-        returnTo: getReturnToUrl(req.query),
+        returnTo: getReturnToUrl({
+          returnTo: RETURNTO_MAMS_LANDING_EHERKENNING,
+          ...req.query,
+        }),
         authorizationParams: {
           redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
         },
@@ -160,13 +169,13 @@ oidcRouter.get(authRoutes.AUTH_CHECK, authCheckHandler);
 oidcRouter.get(
   authRoutes.AUTH_TOKEN_DATA,
   requiresAuth(),
-  async (req: Request, res: Response) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     if (hasSessionCookie(req)) {
       const auth = getAuth(req);
       if (auth) {
         return res.send(
           apiSuccessResult({
-            tokenData: (req as any)[OIDC_SESSION_COOKIE_NAME],
+            tokenData: req[OIDC_SESSION_COOKIE_NAME],
             token: auth.token,
             profile: auth.profile,
           })
