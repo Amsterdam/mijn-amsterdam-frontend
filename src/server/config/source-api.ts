@@ -258,6 +258,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   PARKEREN: {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
+    headers: {
+      host: new URL(getFromEnv('BFF_PARKEREN_API_BASE_URL') ?? '').hostname,
+    },
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${getFromEnv('BFF_LVV_API_URL')}`,
