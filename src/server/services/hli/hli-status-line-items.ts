@@ -1,3 +1,4 @@
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemsConfig,
@@ -35,5 +36,6 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<ZorgnedAanvr
     {
       productIdentificatie: [AV_CZM],
       lineItemTransformers: REGELING_CZM,
+      isDisabled: !FeatureToggle.hliRegelingEnabledCZM,
     },
   ];

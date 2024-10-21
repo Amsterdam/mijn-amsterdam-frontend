@@ -109,7 +109,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.PARKEREN]: `${ThemaTitles.PARKEREN} | overzicht`,
-  [AppRoutes['PARKEREN/LIST']]: `Vergunningen | ${ThemaTitles.PARKEREN}`,
+  [AppRoutes['PARKEREN/LIST']]: `Parkeervergunningen | ${ThemaTitles.PARKEREN}`,
   [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
   [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
   [AppRoutes.HORECA]: 'Horeca | overzicht',
