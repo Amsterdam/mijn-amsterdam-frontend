@@ -345,13 +345,17 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'AFIS_BAG' as AppStateKey,
-    getApiBaseItems: (data: {
-      'afis-facturen-overzicht': ApiSuccessResponse<AfisFacturenByStateResponse>;
-    }) => {
-      if (data?.['afis-facturen-overzicht']?.content) {
-        const facturen = Object.values(
-          data['afis-facturen-overzicht'].content
-        ).flatMap((byState) => byState?.facturen ?? []);
+    getApiBaseItems: (
+      data: Record<string, ApiSuccessResponse<AfisFacturenByStateResponse>>
+    ) => {
+      if (Object.keys(data).length) {
+        const facturen = Object.values(data).flatMap((byState) =>
+          byState.content
+            ? Object.values(byState.content).flatMap((facturenResponse) =>
+                facturenResponse ? facturenResponse.facturen : []
+              )
+            : []
+        );
         return facturen;
       }
       return [];
