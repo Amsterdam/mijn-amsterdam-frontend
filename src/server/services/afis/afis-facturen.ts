@@ -242,6 +242,10 @@ function transformFactuur(
     amountInBalanceTransacCrcyInCents
   );
 
+  const documentDownloadLink = factuurDocumentIdEncrypted
+    ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
+    : null;
+
   return {
     id: factuurDocumentId,
     afzender: invoice.ProfitCenterName || DEFAULT_PROFIT_CENTER_NAME,
@@ -262,11 +266,9 @@ function transformFactuur(
       debtClearingDateFormatted
     ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
-    documentDownloadLink: factuurDocumentIdEncrypted
-      ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
-      : null,
+    documentDownloadLink,
     link: {
-      to: AppRoutes.AFIS,
+      to: documentDownloadLink ?? AppRoutes.AFIS,
       title: factuurNummer,
     },
   };

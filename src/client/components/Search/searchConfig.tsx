@@ -137,7 +137,7 @@ export function displayPath(
           let segmentReplaced = segment;
           if (replaceTerm) {
             termSplitted.forEach((termPart) => {
-              const replaced = segmentReplaced.replace(
+              const replaced = segmentReplaced?.replace(
                 new RegExp(escapeRegex(termPart), 'ig'),
                 `<em>$&</em>`
               );
