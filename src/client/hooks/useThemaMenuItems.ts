@@ -34,7 +34,7 @@ export function useThemaMenuItems(): ThemasState {
       isLoading:
         !!appState &&
         themaItemsWithAppState.some((apiState) => {
-          const apiStateTyped = apiState as ApiResponse<any>;
+          const apiStateTyped = apiState as ApiResponse<unknown>;
           return isLoading(apiStateTyped) && !isError(apiStateTyped);
         }),
     }),

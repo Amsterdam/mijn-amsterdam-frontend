@@ -44,6 +44,7 @@ export const AppRoutes = {
     '/toeristische-verhuur/vergunning/:casetype/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
+  'PARKEREN/DETAIL': '/parkeren/:title/:id',
   PARKEREN: '/parkeren',
   'PARKEREN/LIST': '/parkeren/lijst/:kind/:page?',
   KLACHTEN: '/klachten/:page?',

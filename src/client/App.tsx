@@ -17,6 +17,7 @@ import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
+import { ThemaTitles } from './config/thema';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -246,11 +247,23 @@ function AppAuthenticated() {
           )}
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
-            component={
-              FeatureToggle.vergunningenV2Active
-                ? VergunningV2Detail
-                : VergunningDetail
-            }
+            component={function VergunningDetailWrapper() {
+              return FeatureToggle.vergunningenV2Active ? (
+                <VergunningV2Detail
+                  backLink={{
+                    to: AppRoutes.VERGUNNINGEN,
+                    title: ThemaTitles.VERGUNNINGEN,
+                  }}
+                />
+              ) : (
+                <VergunningDetail
+                  backLink={{
+                    to: AppRoutes.VERGUNNINGEN,
+                    title: ThemaTitles.VERGUNNINGEN,
+                  }}
+                />
+              );
+            }}
           />
           <Route
             path={AppRoutes.VERGUNNINGEN}
@@ -355,6 +368,26 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />
+          <Route
+            path={AppRoutes['PARKEREN/DETAIL']} // Nieuwe AppRoute
+            component={function ParkerenWrapper() {
+              return FeatureToggle.vergunningenV2Active ? (
+                <VergunningV2Detail
+                  backLink={{
+                    to: AppRoutes.PARKEREN,
+                    title: ThemaTitles.PARKEREN,
+                  }}
+                />
+              ) : (
+                <VergunningDetail
+                  backLink={{
+                    to: AppRoutes.PARKEREN,
+                    title: ThemaTitles.PARKEREN,
+                  }}
+                />
+              );
+            }}
+          />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route component={NotFound} />

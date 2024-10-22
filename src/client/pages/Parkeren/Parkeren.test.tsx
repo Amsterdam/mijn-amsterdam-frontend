@@ -17,7 +17,7 @@ const testState = {
       url: 'https://parkeervergunningen.amsterdam.nl/',
     },
   },
-  VERGUNNINGEN: {
+  VERGUNNINGENv2: {
     status: 'OK',
     content: [
       {

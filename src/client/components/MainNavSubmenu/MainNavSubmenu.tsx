@@ -31,7 +31,8 @@ export function MainNavSubmenuLink({
   Icon,
   ...rest
 }: MainNavSubmenuLinkProps) {
-  return rel && rel.indexOf('external') !== -1 ? (
+  // We treat links starting with http as external automatically
+  return rel?.includes('external') || to.startsWith('http') ? (
     <a
       href={to}
       onClick={(event: MouseEvent<HTMLAnchorElement>) => {

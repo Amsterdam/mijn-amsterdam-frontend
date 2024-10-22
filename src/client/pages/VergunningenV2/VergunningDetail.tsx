@@ -5,22 +5,23 @@ import {
   VergunningDocument,
   VergunningFrontendV2,
 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { BagThemas, ThemaTitles } from '../../config/thema';
+import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
+import { LinkProps } from '../../../universal/types';
 
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
   documents: VergunningDocument[];
+  backLink: LinkProps;
 }
 
 // TODO: Implement detailpages per case
@@ -49,7 +50,13 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
   );
 }
 
-export default function VergunningV2Detail() {
+interface VergunningV2DetailProps {
+  backLink: LinkProps;
+}
+
+export default function VergunningV2Detail({
+  backLink,
+}: VergunningV2DetailProps) {
   const appState = useAppStateGetter();
   const { VERGUNNINGENv2 } = appState;
   const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
@@ -81,12 +88,13 @@ export default function VergunningV2Detail() {
           <DetailPageContent
             vergunning={vergunningDetail}
             documents={vergunningDocuments}
+            backLink={backLink}
           />
         )
       }
       backLink={{
-        title: ThemaTitles.VERGUNNINGEN,
-        to: AppRoutes.VERGUNNINGEN,
+        title: backLink.title,
+        to: backLink.to,
       }}
       documentPathForTracking={(document) =>
         `/downloads/vergunningen/${vergunningDetail?.caseType}/${document.title.split(/\n/)[0]}`

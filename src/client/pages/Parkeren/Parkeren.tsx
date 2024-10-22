@@ -1,12 +1,12 @@
-import { Button, Icon, Paragraph } from '@amsterdam/design-system-react';
+import { Button, Icon } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router-dom';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { Vergunning } from '../../../server/services';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { LoadingContent } from '../../components';
-import { MaLink } from '../../components/MaLink/MaLink';
+import { ErrorAlert, LoadingContent } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -38,7 +38,7 @@ export default function Parkeren() {
           zaken={parkeervergunningen
             .filter(
               vergunningenListFilter as unknown as (
-                vergunning: Vergunning
+                vergunning: VergunningFrontendV2 | Vergunning
               ) => boolean
             )
             .sort(vergunningenListSort)}
@@ -54,24 +54,24 @@ export default function Parkeren() {
 
   const pageContentTop = (
     <>
-      <Paragraph className="ams-mb--sm">
-        Alle informatie over parkeren in Amsterdam vindt u op . Daar kunt u ook
-        terecht voor informatie over fietskelders, laadpalen voor elektrische
-        auto&apos;s en andere vragen die U heeft over parkeren of vervoer. Het
-        aanvragen of wijzigen van een parkeervergunning voor bewoners kan via
-        Mijn Parkeren. U moet hier wel opnieuw inloggen.
-      </Paragraph>
-      {isLoadingParkerenUrl && (
-        <LoadingContent barConfig={[['210px', '40px', '0']]} />
-      )}
-      {!isLoadingParkerenUrl && parkerenUrlSSO && (
-        <MaLink href={parkerenUrlSSO}>
-          <Button>
+      <ErrorAlert severity="info" title="Let op">
+        Het inzien, aanvragen of wijzigen van een parkeervergunning voor
+        bewoners kan via Mijn Parkeren.
+        {isLoadingParkerenUrl && (
+          <LoadingContent barConfig={[['210px', '40px', '0']]} />
+        )}
+        {!isLoadingParkerenUrl && parkerenUrlSSO && (
+          <Button
+            variant="primary"
+            onClick={() => {
+              window.location.href = parkerenUrlSSO;
+            }}
+          >
             Log in op Mijn Parkeren
             <Icon svg={ExternalLinkIcon} size={'level-5'} />
           </Button>
-        </MaLink>
-      )}
+        )}
+      </ErrorAlert>
     </>
   );
 
