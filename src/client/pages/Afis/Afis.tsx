@@ -161,10 +161,12 @@ export function AfisThemaPagina() {
   return (
     <ThemaPagina
       title={ThemaTitles.AFIS}
-      isError={isOverviewApiError && isThemaPaginaError}
+      isError={isOverviewApiError || isThemaPaginaError}
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
-      isLoading={isThemaPaginaLoading || isOverviewApiLoading}
+      isLoading={
+        !isThemaPaginaError && (isThemaPaginaLoading || isOverviewApiLoading)
+      }
       linkListItems={[
         {
           to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',

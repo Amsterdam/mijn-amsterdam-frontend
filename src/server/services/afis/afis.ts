@@ -34,7 +34,7 @@ async function fetchAfisTokenHeader_() {
           Authorization: `${response.token_type} ${response.access_token}`,
         };
       }
-      return null;
+      throw new Error('AFIS: Invalid token response');
     },
     formatUrl(config) {
       return `${config.url}/OAuthServer`;
@@ -49,6 +49,10 @@ async function fetchAfisTokenHeader_() {
   const tokenHeaderResponse = await requestData<{
     Authorization: string;
   } | null>(dataRequestConfig, AFIS_TOKEN_REQUEST_ID);
+
+  if (tokenHeaderResponse.status !== 'OK') {
+    throw new Error('AFIS: Could not fetch token');
+  }
 
   return tokenHeaderResponse.content;
 }
