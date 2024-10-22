@@ -17,10 +17,10 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseType.TouringcarJaarontheffing,
 ]);
 
-const getFilteredVergunningen = <T extends VergunningFrontendV2 | Vergunning>(
-  content: T[] | null | undefined
-) =>
-  addLinkElementToProperty<T>(
+function getFilteredVergunningen(
+  content: VergunningFrontendV2[] | Vergunning[] | null
+) {
+  return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
     (content ?? [])
       .filter((vergunning) =>
         PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
@@ -33,16 +33,21 @@ const getFilteredVergunningen = <T extends VergunningFrontendV2 | Vergunning>(
         },
       }))
   );
+}
 
 export function useParkerenData() {
   const { VERGUNNINGENv2, VERGUNNINGEN, PARKEREN } = useAppStateGetter();
-const vergunningenState = FeatureToggle.vergunningenV2Active ? VERGUNNINGENv2 : VERGUNNINGEN;
-  const parkeervergunningen = getFilteredVergunningen(vergunningenState.content);;
+  const vergunningenState = FeatureToggle.vergunningenV2Active
+    ? VERGUNNINGENv2
+    : VERGUNNINGEN;
+  const vergunningen = vergunningenState.content;
+
+  const parkeervergunningen = getFilteredVergunningen(vergunningen);
 
   return {
     tableConfig,
     parkeervergunningen,
-    isLoading:  isLoading(vergunningenState),
+    isLoading: isLoading(vergunningenState),
     isError: isError(vergunningenState),
     parkerenUrlSSO: PARKEREN.content?.url,
     isLoadingParkerenUrl: isLoading(PARKEREN),
