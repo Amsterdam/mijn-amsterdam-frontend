@@ -372,7 +372,7 @@ function AppAuthenticated() {
             component={function ParkerenWrapper() {
               return FeatureToggle.vergunningenV2Active ? (
                 <VergunningV2Detail
-                  backLink={{ to: AppRoutes.PARKEREN, title: 'Naar parkeren' }}
+                    title: ThemaTitles.PARKEREN,
                 />
               ) : (
                 <VergunningDetail
