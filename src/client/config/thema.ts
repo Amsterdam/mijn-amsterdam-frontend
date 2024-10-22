@@ -4,7 +4,9 @@ import { TrackingConfig } from './routes';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
+import { DecosCaseType } from '../../universal/types/vergunningen';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
+import { PARKEER_CASE_TYPES } from '../pages/Parkeren/useParkerenData.hook';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -284,9 +286,18 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.PARKEREN,
     id: Themas.PARKEREN,
-    to: AppRoutes.PARKEREN, // This will be overridden in useThemaMenuItems
+    to: (appState: AppState) => {
+      const hasParkerenVergunningen = (
+        appState.VERGUNNINGEN?.content ?? []
+      ).some((vergunning) =>
+        PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
+      );
+      const urlExternal =
+        appState.PARKEREN.content?.url ??
+        import.meta.env.REACT_APP_SSO_URL_PARKEREN;
+      return hasParkerenVergunningen ? AppRoutes.PARKEREN : urlExternal;
+    },
     profileTypes: ['private', 'commercial'],
-    hasAppStateValue: true,
   },
   {
     title: ThemaTitles.OVERTREDINGEN,
