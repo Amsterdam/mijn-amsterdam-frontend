@@ -46,8 +46,12 @@ export function useParkerenData() {
   return {
     tableConfig,
     parkeervergunningen,
-    isLoading: isLoading(VERGUNNINGENv2),
-    isError: isError(VERGUNNINGENv2),
+    isLoading: FeatureToggle.vergunningenV2Active
+      ? isLoading(VERGUNNINGENv2)
+      : isLoading(VERGUNNINGEN),
+    isError: FeatureToggle.vergunningenV2Active
+      ? isError(VERGUNNINGENv2)
+      : isError(VERGUNNINGEN),
     parkerenUrlSSO: PARKEREN.content?.url,
     isLoadingParkerenUrl: isLoading(PARKEREN),
   };
