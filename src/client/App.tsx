@@ -376,7 +376,7 @@ function AppAuthenticated() {
                 />
               ) : (
                 <VergunningDetail
-                  backLink={{ to: AppRoutes.PARKEREN, title: 'Naar parkeren' }}
+                    title: ThemaTitles.PARKEREN,
                 />
               );
             }}
