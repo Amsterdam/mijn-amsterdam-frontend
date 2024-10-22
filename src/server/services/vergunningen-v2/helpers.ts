@@ -107,7 +107,7 @@ export function getDecosZaakTypeFromSource(decosZaakSource: DecosZaakSource) {
   return decosZaakSource.fields.text45 as DecosCaseType;
 }
 
-export function transformBoolean(input: any) {
+export function transformBoolean(input: unknown) {
   return !!input;
 }
 

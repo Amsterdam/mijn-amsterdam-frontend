@@ -73,25 +73,33 @@ async function fetchPowerBrowserData<T>(
   return requestData<T>(dataRequestConfig, requestID);
 }
 
-async function fetchPersonIdByUid(
+type FetchPersoonOrMaatschapIdByUidOptions = {
+  profileID: AuthProfile['id'];
+  tableName: 'PERSONEN' | 'MAATSCHAP';
+  fieldName: 'BURGERSERVICENUMMER' | 'KVKNUMMER';
+};
+
+async function fetchPersoonOrMaatschapIdByUid(
   requestID: RequestID,
-  authProfile: AuthProfile
+  options: FetchPersoonOrMaatschapIdByUidOptions
 ) {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/SearchRequest`;
     },
-    transformResponse(responseData: SearchRequestResponse<'PERSONEN'>) {
+    transformResponse(
+      responseData: SearchRequestResponse<typeof options.tableName>
+    ) {
       return responseData.records?.[0]?.id ?? null;
     },
     data: {
       query: {
-        tableName: 'PERSONEN',
-        fieldNames: ['ID', 'BURGERSERVICENUMMER'],
+        tableName: options.tableName,
+        fieldNames: ['ID', options.fieldName],
         conditions: [
           {
-            fieldName: 'BURGERSERVICENUMMER',
-            fieldValue: authProfile.id,
+            fieldName: options.fieldName,
+            fieldValue: options.profileID,
             operator: 0,
             dataType: 0,
           },
@@ -101,18 +109,26 @@ async function fetchPersonIdByUid(
       pageNumber: 0,
     },
   };
-  return fetchPowerBrowserData<string>(requestID, requestConfig);
+  return fetchPowerBrowserData<string | null>(requestID, requestConfig);
 }
 
-async function fetchZaakIds(requestID: RequestID, persoonId: string) {
+type FetchZaakIdsOptions = {
+  personOrMaatschapId: string;
+  tableName: 'PERSONEN' | 'MAATSCHAP';
+};
+
+async function fetchZaakIds(
+  requestID: RequestID,
+  options: FetchZaakIdsOptions
+) {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/Link/PERSONEN/GFO_ZAKEN/Table`;
+      return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
     },
     transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
       return responseData.records.map((record) => record.id);
     },
-    data: [persoonId],
+    data: [options.personOrMaatschapId],
   };
 
   return fetchPowerBrowserData<string[]>(requestID, requestConfig);
@@ -455,14 +471,41 @@ async function fetchZakenByIds(
 export async function fetchBBVergunningen(
   requestID: RequestID,
   authProfile: AuthProfile
-) {
-  const persoonIdResponse = await fetchPersonIdByUid(requestID, authProfile);
+): Promise<ApiResponse<BBVergunning[] | null>> {
+  // Set-up the options for the PowerBrowser API request based on the profile type.
+  const optionsByProfileType: Record<
+    ProfileType,
+    FetchPersoonOrMaatschapIdByUidOptions | null
+  > = {
+    commercial: {
+      tableName: 'MAATSCHAP',
+      fieldName: 'KVKNUMMER',
+      profileID: authProfile.id,
+    },
+    private: {
+      tableName: 'PERSONEN',
+      fieldName: 'BURGERSERVICENUMMER',
+      profileID: authProfile.id,
+    },
+    'private-attributes': null,
+  };
+
+  const options = optionsByProfileType[authProfile.profileType];
+
+  if (!options) {
+    return apiErrorResult('Profile type not supported', null);
+  }
+
+  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(
+    requestID,
+    options
+  );
 
   if (persoonIdResponse.status === 'OK' && persoonIdResponse.content) {
-    const zakenIdsResponse = await fetchZaakIds(
-      requestID,
-      persoonIdResponse.content
-    );
+    const zakenIdsResponse = await fetchZaakIds(requestID, {
+      personOrMaatschapId: persoonIdResponse.content,
+      tableName: options.tableName,
+    });
 
     if (zakenIdsResponse.status !== 'OK') {
       return zakenIdsResponse;

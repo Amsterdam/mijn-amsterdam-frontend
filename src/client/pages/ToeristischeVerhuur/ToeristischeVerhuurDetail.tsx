@@ -101,8 +101,11 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
               content: (
                 <Paragraph>
                   Stuur een mail naar:{' '}
-                  <Link href="mailto:mail@amsterdam.nl" rel="noreferrer">
-                    mail@amsterdam.nl
+                  <Link
+                    href="mailto:bedandbreakfast@amsterdam.nl"
+                    rel="noreferrer"
+                  >
+                    bedandbreakfast@amsterdam.nl
                   </Link>{' '}
                   om uw document in te kunnen zien.
                 </Paragraph>
