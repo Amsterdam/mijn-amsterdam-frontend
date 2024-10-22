@@ -31,6 +31,7 @@ export function MainNavSubmenuLink({
   Icon,
   ...rest
 }: MainNavSubmenuLinkProps) {
+  // We treat links starting with http as external automatically
   return rel?.includes('external') || to.startsWith('http') ? (
     <a
       href={to}
