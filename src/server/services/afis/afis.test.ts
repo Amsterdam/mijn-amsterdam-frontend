@@ -37,6 +37,7 @@ const GENERIC_ID = '12346789';
 const BASE_ROUTE = '/afis/RESTAdapter';
 
 const ROUTES = {
+  token: `${BASE_ROUTE}/OAuthServer`,
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
   businesspartnerFullName: (uri: string) => {
@@ -76,6 +77,14 @@ const ROUTES = {
 const REQUEST_ID = '456';
 
 describe('Afis', () => {
+  beforeEach(() => {
+    remoteApi.post(ROUTES.token).reply(200, {
+      access_token: '123xyz',
+      token_type: 'bearer',
+      expires_in: 3600,
+    });
+  });
+
   describe('fetchIsKnownInAFIS ', () => {
     const RESPONSE_BODIES = {
       BSNFound: {
@@ -593,6 +602,10 @@ describe('Afis', () => {
           "factuurDocumentId": "5555555",
           "factuurNummer": "5555555",
           "id": "5555555",
+          "link": {
+            "title": "5555555",
+            "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
+          },
           "paylink": "http://localhost:3100/mocks-server/afis/paylink",
           "paymentDueDate": "2023-12-21T00:00:00",
           "paymentDueDateFormatted": "21 december 2023",
@@ -649,6 +662,10 @@ describe('Afis', () => {
           "factuurDocumentId": "INV-2023-010",
           "factuurNummer": "INV-2023-010",
           "id": "INV-2023-010",
+          "link": {
+            "title": "INV-2023-010",
+            "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
+          },
           "paylink": null,
           "paymentDueDate": "2023-12-21T00:00:00",
           "paymentDueDateFormatted": "21 december 2023",
