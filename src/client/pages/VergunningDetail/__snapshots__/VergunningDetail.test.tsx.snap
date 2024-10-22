@@ -6,7 +6,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -31,28 +31,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -300,7 +278,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -325,28 +303,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -572,7 +528,7 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -597,28 +553,6 @@ exports[`<VergunningDetail /> > <AanbiedenDiensten /> > should match the full pa
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -796,7 +730,7 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -821,28 +755,6 @@ exports[`<VergunningDetail /> > <EvenementMelding /> > should match the full pag
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -1085,7 +997,7 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -1110,28 +1022,6 @@ exports[`<VergunningDetail /> > <Flyeren /> > should match the full page snapsho
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -1393,7 +1283,7 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -1418,28 +1308,6 @@ exports[`<VergunningDetail /> > <GPP /> > should match the full page snapshot 1`
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -1660,7 +1528,7 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -1685,28 +1553,6 @@ exports[`<VergunningDetail /> > BZB - In behandeling > should match the full pag
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -1962,7 +1808,7 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -1987,28 +1833,6 @@ exports[`<VergunningDetail /> > BZB - Verleend > should match the full page snap
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -2209,7 +2033,7 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -2234,28 +2058,6 @@ exports[`<VergunningDetail /> > BZP - In behandeling > should match the full pag
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -2442,7 +2244,7 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -2467,28 +2269,6 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -2743,7 +2523,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -2768,28 +2548,6 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats > should match the full page
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -3128,7 +2886,7 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -3153,28 +2911,6 @@ exports[`<VergunningDetail /> > Eigen parkeerplaats opheffen > should match the 
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -3376,7 +3112,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -3401,28 +3137,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - In behandeling > sho
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -3671,7 +3385,7 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -3696,28 +3410,6 @@ exports[`<VergunningDetail /> > Ligplaatsvergunning (VOB) - Verleend > should ma
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -3985,7 +3677,7 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -4010,28 +3702,6 @@ exports[`<VergunningDetail /> > Nachtwerkontheffing > should match the full page
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -4293,7 +3963,7 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -4318,28 +3988,6 @@ exports[`<VergunningDetail /> > Onttrekkingsvergunning voor sloop - In behandeli
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -4527,7 +4175,7 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -4552,28 +4200,6 @@ exports[`<VergunningDetail /> > RVV hele stad - In behandeling > should match th
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -4796,7 +4422,7 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -4821,28 +4447,6 @@ exports[`<VergunningDetail /> > Samenvoegingsvergunning - In behandeling > shoul
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -5040,7 +4644,7 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -5065,28 +4669,6 @@ exports[`<VergunningDetail /> > Splitsingsvergunning - In behandeling > should m
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -5279,7 +4861,7 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -5304,28 +4886,6 @@ exports[`<VergunningDetail /> > Touringcar dagontheffing > should match the full
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -5545,7 +5105,7 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -5570,28 +5130,6 @@ exports[`<VergunningDetail /> > Touringcar jaarontheffing > should match the ful
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -5831,7 +5369,7 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -5856,28 +5394,6 @@ exports[`<VergunningDetail /> > VormenVanWoonruimte - In behandeling > should ma
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -6070,7 +5586,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -6095,28 +5611,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 1`] =
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -6348,7 +5842,7 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -6373,28 +5867,6 @@ exports[`<VergunningDetail /> > WVOS > should match the full page snapshot 2`] =
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >
@@ -6633,7 +6105,7 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
     class="_Page_47d7c0 _DetailPage_47d7c0"
   >
     <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+      class="_PageHeading_3b337d _hasIcon_3b337d"
     >
       <span
         aria-hidden="true"
@@ -6658,28 +6130,6 @@ exports[`<VergunningDetail /> > Zwaarverkeer > should match the full page snapsh
       <div
         class="_HeadingInner_3b337d"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/vergunningen"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Vergunningen en ontheffingen
-        </a>
         <h2
           class="ams-heading ams-heading--level-1"
         >

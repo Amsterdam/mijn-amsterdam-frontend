@@ -29,7 +29,7 @@ export interface Action {
 }
 
 export interface LinkProps {
-  to: string | (() => void);
+  to: string;
   title: string;
   target?: '_blank' | '_self' | '_parent' | '_top';
   rel?: string;

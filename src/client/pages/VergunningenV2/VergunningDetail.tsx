@@ -1,7 +1,5 @@
-import { useCallback } from 'react';
-
 import { Grid } from '@amsterdam/design-system-react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import {
   VergunningDocument,
@@ -18,10 +16,12 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
+import { LinkProps } from '../../../universal/types';
 
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
   documents: VergunningDocument[];
+  backLink: LinkProps;
 }
 
 // TODO: Implement detailpages per case
@@ -50,7 +50,13 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
   );
 }
 
-export default function VergunningV2Detail() {
+interface VergunningV2DetailProps {
+  backLink: LinkProps;
+}
+
+export default function VergunningV2Detail({
+  backLink,
+}: VergunningV2DetailProps) {
   const appState = useAppStateGetter();
   const { VERGUNNINGENv2 } = appState;
   const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
@@ -68,12 +74,6 @@ export default function VergunningV2Detail() {
   const vergunningDetail = vergunningDetailResponseContent?.vergunning ?? null;
   const vergunningDocuments = vergunningDetailResponseContent?.documents ?? [];
 
-  const history = useHistory();
-
-  const handleGoBack = useCallback(() => {
-    history.goBack();
-  }, [history]);
-
   return (
     <ThemaDetailPagina<VergunningFrontendV2>
       title={vergunningDetail?.title ?? 'Vergunning'}
@@ -88,12 +88,13 @@ export default function VergunningV2Detail() {
           <DetailPageContent
             vergunning={vergunningDetail}
             documents={vergunningDocuments}
+            backLink={backLink}
           />
         )
       }
       backLink={{
         title: ThemaTitles.VERGUNNINGEN,
-        to: handleGoBack,
+        to: backLink.to,
       }}
       documentPathForTracking={(document) =>
         `/downloads/vergunningen/${vergunningDetail?.caseType}/${document.title.split(/\n/)[0]}`

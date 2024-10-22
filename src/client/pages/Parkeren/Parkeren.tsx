@@ -39,7 +39,7 @@ export default function Parkeren() {
           zaken={parkeervergunningen
             .filter(
               vergunningenListFilter as unknown as (
-                vergunning: VergunningFrontendV2
+                vergunning: VergunningFrontendV2 | Vergunning
               ) => boolean
             )
             .sort(vergunningenListSort)}

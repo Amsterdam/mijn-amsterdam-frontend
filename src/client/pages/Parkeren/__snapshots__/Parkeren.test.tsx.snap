@@ -222,7 +222,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                   >
                     <a
                       class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/vergunningen/gpp/Z-24-2233516"
+                      href="/parkeren/gpp/Z-24-2233516"
                     >
                       Vergunning 1
                     </a>
@@ -246,7 +246,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                   >
                     <a
                       class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/vergunningen/gpp/Z-24-2233516"
+                      href="/parkeren/gpp/Z-24-2233516"
                     >
                       Vergunning 2
                     </a>

@@ -24,12 +24,12 @@ import { VOB } from './VOB';
 import { Woonvergunningen } from './Woonvergunningen';
 import { WVOS } from './WVOS';
 import { ZwaarVerkeer } from './ZwaarVerkeer';
-import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   isWoonvergunning,
   showDocuments,
 } from '../../../universal/helpers/vergunningen';
+import { LinkProps } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
@@ -40,10 +40,13 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
-export default function VergunningDetail() {
+interface VergunningDetailProps {
+  backLink?: LinkProps;
+}
+
+export default function VergunningDetail({ backLink }: VergunningDetailProps) {
   const { VERGUNNINGEN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const Vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
@@ -53,10 +56,7 @@ export default function VergunningDetail() {
     <DetailPage>
       <PageHeading
         icon={<ThemaIcon />}
-        backLink={{
-          to: AppRoutes.VERGUNNINGEN,
-          title: ThemaTitles.VERGUNNINGEN,
-        }}
+        backLink={backLink}
         isLoading={isLoading(VERGUNNINGEN)}
       >
         {Vergunning?.title || 'Vergunning'}

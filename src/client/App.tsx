@@ -246,11 +246,23 @@ function AppAuthenticated() {
           )}
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
-            component={
-              FeatureToggle.vergunningenV2Active
-                ? VergunningV2Detail
-                : VergunningDetail
-            }
+            component={function VergunningDetailWrapper() {
+              return FeatureToggle.vergunningenV2Active ? (
+                <VergunningV2Detail
+                  backLink={{
+                    to: AppRoutes.VERGUNNINGEN,
+                    title: 'Naar vergunningen',
+                  }}
+                />
+              ) : (
+                <VergunningDetail
+                  backLink={{
+                    to: AppRoutes.VERGUNNINGEN,
+                    title: 'Naar vergunningen',
+                  }}
+                />
+              );
+            }}
           />
           <Route
             path={AppRoutes.VERGUNNINGEN}
@@ -355,6 +367,20 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />
+          <Route
+            path={AppRoutes['PARKEREN/DETAIL']} // Nieuwe AppRoute
+            component={function ParkerenWrapper() {
+              return FeatureToggle.vergunningenV2Active ? (
+                <VergunningV2Detail
+                  backLink={{ to: AppRoutes.PARKEREN, title: 'Naar parkeren' }}
+                />
+              ) : (
+                <VergunningDetail
+                  backLink={{ to: AppRoutes.PARKEREN, title: 'Naar parkeren' }}
+                />
+              );
+            }}
+          />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route component={NotFound} />
