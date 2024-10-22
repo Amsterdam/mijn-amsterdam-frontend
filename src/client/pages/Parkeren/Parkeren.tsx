@@ -7,7 +7,6 @@ import { Vergunning } from '../../../server/services';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ErrorAlert, LoadingContent } from '../../components';
-import { MaLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -62,12 +61,15 @@ export default function Parkeren() {
           <LoadingContent barConfig={[['210px', '40px', '0']]} />
         )}
         {!isLoadingParkerenUrl && parkerenUrlSSO && (
-          <MaLink href={parkerenUrlSSO}>
-            <Button>
-              Log in op Mijn Parkeren
-              <Icon svg={ExternalLinkIcon} size={'level-5'} />
-            </Button>
-          </MaLink>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              window.location.href = parkerenUrlSSO;
+            }}
+          >
+            Log in op Mijn Parkeren
+            <Icon svg={ExternalLinkIcon} size={'level-5'} />
+          </Button>
         )}
       </ErrorAlert>
     </>

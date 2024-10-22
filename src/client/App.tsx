@@ -17,6 +17,7 @@ import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
+import { ThemaTitles } from './config/thema';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -251,7 +252,7 @@ function AppAuthenticated() {
                 <VergunningV2Detail
                   backLink={{
                     to: AppRoutes.VERGUNNINGEN,
-                    title: ThemaTitles.VERGUNNINGEN
+                    title: ThemaTitles.VERGUNNINGEN,
                   }}
                 />
               ) : (
@@ -372,11 +373,17 @@ function AppAuthenticated() {
             component={function ParkerenWrapper() {
               return FeatureToggle.vergunningenV2Active ? (
                 <VergunningV2Detail
+                  backLink={{
+                    to: AppRoutes.PARKEREN,
                     title: ThemaTitles.PARKEREN,
+                  }}
                 />
               ) : (
                 <VergunningDetail
+                  backLink={{
+                    to: AppRoutes.PARKEREN,
                     title: ThemaTitles.PARKEREN,
+                  }}
                 />
               );
             }}
