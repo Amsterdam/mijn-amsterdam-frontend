@@ -66,10 +66,10 @@ export function createToeristischeVerhuurNotification(
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = ctaLinkToAanvragen;
-        datePublished = vergunning.dateDecision
+        datePublished = vergunning.dateEnd
           ? dateFormat(
               subMonths(
-                new Date(vergunning.dateDecision),
+                new Date(vergunning.dateEnd),
                 NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END
               ),
               'yyyy-MM-dd'
