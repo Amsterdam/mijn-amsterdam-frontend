@@ -10,7 +10,7 @@ import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { BagThemas, ThemaTitles } from '../../config/thema';
+import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
@@ -93,7 +93,7 @@ export default function VergunningV2Detail({
         )
       }
       backLink={{
-        title: ThemaTitles.VERGUNNINGEN,
+        title: backLink.title,
         to: backLink.to,
       }}
       documentPathForTracking={(document) =>
