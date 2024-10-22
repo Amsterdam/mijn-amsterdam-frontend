@@ -32,6 +32,7 @@ import {
 import { AppRoutes } from '../../../universal/config/routes';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
+const AFIS_MAX_FACTUREN_TOP = 2000;
 
 export const FACTUUR_STATE_KEYS: AfisFactuurState[] = [
   'open',
@@ -89,11 +90,10 @@ function formatFactuurRequestURL(
     overgedragen: '$orderby=ClearingDate desc',
   };
 
-  let query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}&${select}&${orderBy[params.state]}`;
-
-  if (params.top) {
-    query += `&$top=${params.top}`;
-  }
+  const top = params.top
+    ? Math.max(parseInt(params.top, 10), AFIS_MAX_FACTUREN_TOP)
+    : AFIS_MAX_FACTUREN_TOP;
+  const query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}&${select}&${orderBy[params.state]}&$top=${top}`;
   const fullUrl = `${baseUrl}${baseRoute}${query}`;
 
   return fullUrl;
