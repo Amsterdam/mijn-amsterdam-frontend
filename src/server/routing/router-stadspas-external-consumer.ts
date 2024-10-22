@@ -92,12 +92,6 @@ async function sendAdministratienummerResponse(
   res: Response
 ) {
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
-  let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
-
-  if (!authProfileAndToken) {
-    apiResponseError = apiResponseErrors.DIGID_AUTH;
-  }
-
   const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
   const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
   const baseRenderProps = {
@@ -106,6 +100,13 @@ async function sendAdministratienummerResponse(
     urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
     logoutUrl: generateFullApiUrlBFF(authRoutes.AUTH_LOGOUT),
   };
+
+  let apiResponseError: ApiError = apiResponseErrors.UNKNOWN;
+  let administratienummerEncrypted: string = '';
+
+  if (!authProfileAndToken) {
+    apiResponseError = apiResponseErrors.DIGID_AUTH;
+  }
 
   if (
     authProfileAndToken?.profile.id &&
@@ -121,7 +122,7 @@ async function sendAdministratienummerResponse(
       administratienummerResponse.status === 'OK' &&
       administratienummerResponse.content !== null
     ) {
-      const [administratienummerEncrypted] = encrypt(
+      [administratienummerEncrypted] = encrypt(
         administratienummerResponse.content
       );
 
@@ -178,6 +179,9 @@ async function sendAdministratienummerResponse(
     ...baseRenderProps,
     error: apiResponseError,
     appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+    administratienummerEncrypted: !IS_PRODUCTION
+      ? administratienummerEncrypted
+      : '',
   };
   return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
