@@ -37,11 +37,7 @@ const getFilteredVergunningen = <T extends VergunningFrontendV2 | Vergunning>(
 export function useParkerenData() {
   const { VERGUNNINGENv2, VERGUNNINGEN, PARKEREN } = useAppStateGetter();
 const vergunningenState = FeatureToggle.vergunningenV2Active ? VERGUNNINGENv2 : VERGUNNINGEN;
-  let parkeervergunningen: VergunningFrontendV2[] | Vergunning[] = [];
-
-  parkeervergunningen = FeatureToggle.vergunningenV2Active
-    ? getFilteredVergunningen(VERGUNNINGENv2.content)
-    : getFilteredVergunningen(VERGUNNINGEN.content);
+  const parkeervergunningen = getFilteredVergunningen(vergunningenState.content);;
 
   return {
     tableConfig,
