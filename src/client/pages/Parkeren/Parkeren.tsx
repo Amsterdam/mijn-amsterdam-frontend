@@ -62,7 +62,7 @@ export default function Parkeren() {
         )}
         {!isLoadingParkerenUrl && parkerenUrlSSO && (
           <Button
-            variant="secondary"
+            variant="primary"
             onClick={() => {
               window.location.href = parkerenUrlSSO;
             }}
