@@ -32,6 +32,14 @@ export default function PageHeading({
     !!backLink && styles.hasBackLink,
     className
   );
+
+  const handleBackLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof backLink?.to === 'function') {
+      event.preventDefault();
+      backLink.to();
+    }
+  };
+
   return (
     <header className={classNames} {...rest}>
       {!!icon && (
@@ -44,12 +52,9 @@ export default function PageHeading({
           <Linkd
             icon={IconChevronLeft}
             className={styles.BackLink}
-            onClick={() => {
-              if (typeof backLink.to === 'function') {
-                backLink.to();
-              }
-            }}
-            href={typeof backLink.to === 'string' ? backLink.to : undefined}
+            onClick={handleBackLinkClick}
+            href={typeof backLink.to === 'string' ? backLink.to : '#'}
+            {...(typeof backLink.to === 'function' ? { role: 'button' } : {})}
           >
             {backLink.title}
           </Linkd>
