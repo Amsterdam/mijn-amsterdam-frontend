@@ -103,7 +103,7 @@ export type AfisFacturenByStateResponse = {
 };
 
 export type AfisFacturenParams = {
-  state: AfisFactuurState;
+  state: AfisFactuurState | 'deelbetalingen';
   businessPartnerID: string;
   top?: string;
 };
@@ -140,8 +140,20 @@ type AfisFactuurStatus =
   | 'herinnering'
   | 'onbekend';
 
-export type AfisOpenInvoiceSource =
+export type AfisInvoicesSource =
   AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
+
+export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
+  Pick<
+    AfisFactuurPropertiesSource,
+    | 'NetPaymentAmount'
+    | 'AmountInBalanceTransacCrcy'
+    | 'DocumentReferenceID'
+    | 'AccountingDocument'
+  >
+>;
+
+export type AccountingDocumentType = string;
 
 /** Extra property information
  *  ==========================
@@ -155,7 +167,7 @@ export type AfisOpenInvoiceSource =
  */
 export type AfisFactuurPropertiesSource = {
   AccountingDocument: string;
-  AccountingDocumentType: string;
+  AccountingDocumentType: AccountingDocumentType;
   AmountInBalanceTransacCrcy: string;
   ClearingDate?: string;
   DocumentReferenceID: string;
