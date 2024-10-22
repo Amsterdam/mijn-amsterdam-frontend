@@ -258,7 +258,7 @@ function AppAuthenticated() {
                 <VergunningDetail
                   backLink={{
                     to: AppRoutes.VERGUNNINGEN,
-                    title: 'Naar vergunningen',
+                    title: ThemaTitles.VERGUNNINGEN,
                   }}
                 />
               );
