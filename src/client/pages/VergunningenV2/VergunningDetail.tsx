@@ -1,11 +1,12 @@
+import { useCallback } from 'react';
+
 import { Grid } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import {
   VergunningDocument,
   VergunningFrontendV2,
 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
@@ -67,6 +68,12 @@ export default function VergunningV2Detail() {
   const vergunningDetail = vergunningDetailResponseContent?.vergunning ?? null;
   const vergunningDocuments = vergunningDetailResponseContent?.documents ?? [];
 
+  const history = useHistory();
+
+  const handleGoBack = useCallback(() => {
+    history.goBack();
+  }, [history]);
+
   return (
     <ThemaDetailPagina<VergunningFrontendV2>
       title={vergunningDetail?.title ?? 'Vergunning'}
@@ -86,7 +93,7 @@ export default function VergunningV2Detail() {
       }
       backLink={{
         title: ThemaTitles.VERGUNNINGEN,
-        to: AppRoutes.VERGUNNINGEN,
+        to: handleGoBack,
       }}
       documentPathForTracking={(document) =>
         `/downloads/vergunningen/${vergunningDetail?.caseType}/${document.title.split(/\n/)[0]}`

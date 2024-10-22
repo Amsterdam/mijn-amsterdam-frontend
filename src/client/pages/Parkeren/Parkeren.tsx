@@ -4,11 +4,11 @@ import { generatePath } from 'react-router-dom';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { Vergunning } from '../../../server/services';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ErrorAlert, LoadingContent } from '../../components';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
@@ -21,9 +21,6 @@ export default function Parkeren() {
     parkerenUrlSSO,
     isLoadingParkerenUrl,
   } = useParkerenData();
-
-  const { PARKEREN } = useAppStateGetter();
-  const parkerenUrl = PARKEREN?.content?.url;
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -42,7 +39,7 @@ export default function Parkeren() {
           zaken={parkeervergunningen
             .filter(
               vergunningenListFilter as unknown as (
-                vergunning: Vergunning
+                vergunning: VergunningFrontendV2
               ) => boolean
             )
             .sort(vergunningenListSort)}

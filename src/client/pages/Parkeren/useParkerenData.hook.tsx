@@ -1,4 +1,4 @@
-import { Vergunning } from '../../../server/services';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseType, DecosCaseType } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
@@ -16,9 +16,9 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
 ]);
 
 export function useParkerenData() {
-  const { VERGUNNINGEN, PARKEREN } = useAppStateGetter();
-  const parkeervergunningen = addLinkElementToProperty<Vergunning>(
-    (VERGUNNINGEN.content ?? []).filter((vergunning) =>
+  const { VERGUNNINGENv2, PARKEREN } = useAppStateGetter();
+  const parkeervergunningen = addLinkElementToProperty<VergunningFrontendV2>(
+    (VERGUNNINGENv2.content ?? []).filter((vergunning) =>
       PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
     )
   );
@@ -26,8 +26,8 @@ export function useParkerenData() {
   return {
     tableConfig,
     parkeervergunningen,
-    isLoading: isLoading(VERGUNNINGEN),
-    isError: isError(VERGUNNINGEN),
+    isLoading: isLoading(VERGUNNINGENv2),
+    isError: isError(VERGUNNINGENv2),
     parkerenUrlSSO: PARKEREN.content?.url,
     isLoadingParkerenUrl: isLoading(PARKEREN),
   };

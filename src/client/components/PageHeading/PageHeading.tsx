@@ -44,7 +44,13 @@ export default function PageHeading({
           <Linkd
             icon={IconChevronLeft}
             className={styles.BackLink}
-            href={backLink.to}
+            onClick={(event) => {
+              if (typeof backLink.to === 'function') {
+                event.preventDefault();
+                backLink.to();
+              }
+            }}
+            href={typeof backLink.to === 'string' ? backLink.to : undefined}
           >
             {backLink.title}
           </Linkd>
