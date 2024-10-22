@@ -2,9 +2,6 @@ import memoize from 'memoizee';
 
 import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
 import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning';
-import {
-  ToeristischeVerhuurVergunning,
-} from './toeristische-verhuur-types';
 import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
@@ -12,26 +9,9 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  dateSort,
-  isDateInPast,
-} from '../../../universal/helpers/date';
+import { dateSort } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-
-export function hasOtherActualVergunningOfSameType(
-  items: ToeristischeVerhuurVergunning[],
-  item: ToeristischeVerhuurVergunning,
-  dateNow: Date = new Date()
-): boolean {
-  return items.some(
-    (otherVergunning: ToeristischeVerhuurVergunning) =>
-      otherVergunning.title === item.title &&
-      otherVergunning.zaaknummer !== item.zaaknummer &&
-      !!otherVergunning.dateEnd &&
-      !isDateInPast(otherVergunning.dateEnd, dateNow)
-  );
-}
 
 async function fetchAndTransformToeristischeVerhuur(
   requestID: RequestID,

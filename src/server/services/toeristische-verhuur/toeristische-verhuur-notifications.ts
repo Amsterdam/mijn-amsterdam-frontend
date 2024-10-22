@@ -1,10 +1,7 @@
 import { subMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 
-import {
-  fetchToeristischeVerhuur,
-  hasOtherActualVergunningOfSameType,
-} from './toeristische-verhuur';
+import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
@@ -64,16 +61,15 @@ export function createToeristischeVerhuurNotification(
       // B&B + Vakantieverhuurvergunning
       case vergunning.result === 'Verleend' &&
         !!vergunning.dateEnd &&
-        isNearEndDate(vergunning) &&
-        !hasOtherActualVergunningOfSameType(items, vergunning):
+        isNearEndDate(vergunning):
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = ctaLinkToAanvragen;
-        datePublished = vergunning.dateDecision
+        datePublished = vergunning.dateEnd
           ? dateFormat(
               subMonths(
-                new Date(vergunning.dateDecision),
+                new Date(vergunning.dateEnd),
                 NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END
               ),
               'yyyy-MM-dd'
@@ -83,8 +79,7 @@ export function createToeristischeVerhuurNotification(
       // B&B + Vakantieverhuurvergunning
       case vergunning.result === 'Verleend' &&
         !!vergunning.dateEnd &&
-        isDateInPast(vergunning.dateEnd, dateNow) &&
-        !hasOtherActualVergunningOfSameType(items, vergunning):
+        isDateInPast(vergunning.dateEnd, dateNow):
         title = `Uw ${vergunningTitleLower} is verlopen`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
@@ -101,9 +96,8 @@ export function createToeristischeVerhuurNotification(
         break;
       // B&B + Vakantieverhuurvergunning
       case !!vergunning.result:
-        const result = vergunning.result?.toLowerCase() || 'afgehandeld';
-        title = `Aanvraag ${vergunningTitleLower} ${result}`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} ${result}.`;
+        title = `Aanvraag ${vergunningTitleLower} ${vergunning.result.toLowerCase()}`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} ${vergunning.result.toLowerCase()}.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished =
