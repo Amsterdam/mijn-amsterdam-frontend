@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
@@ -29,21 +29,34 @@ export function usePageChange(isAuthenticated: boolean) {
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
-  const prevPathRef = useRef(location.pathname);
+  const [pathStack, setPathStack] = useState<string[]>([location.pathname]);
 
   useEffect(() => {
-    const isNewPageNavigation = prevPathRef.current !== location.pathname;
-    if (isNewPageNavigation) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    } else {
-      history.scrollRestoration = 'auto';
-    }
+    const currentPath = location.pathname;
 
-    prevPathRef.current = location.pathname;
+    setPathStack((prevStack) => {
+      let isNewPageNavigation = true;
+      if (
+        prevStack.length > 1 &&
+        prevStack[prevStack.length - 2] === currentPath
+      ) {
+        // Going back
+        isNewPageNavigation = false;
+        prevStack = prevStack.slice(0, -1);
+      } else if (prevStack[prevStack.length - 1] !== currentPath) {
+        // New page
+        isNewPageNavigation = true;
+        prevStack = [...prevStack, currentPath];
+      } else {
+        // Same page, no change
+        isNewPageNavigation = false;
+      }
+      scrollOnPageChange(isNewPageNavigation);
+      return prevStack;
+    });
+  }, [location.pathname, pathStack]);
 
+  useEffect(() => {
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex((route) => {
       return (
@@ -129,7 +142,7 @@ export function usePageChange(isAuthenticated: boolean) {
   ]);
 }
 
-function getCustomTrackingUrl(
+export function getCustomTrackingUrl(
   pathname: string,
   trackingConfig: TrackingConfig
 ) {
@@ -150,4 +163,24 @@ function getCustomTrackingUrl(
   }
 
   return pathname;
+}
+
+export function scrollOnPageChange(isNewPageNavigation: boolean) {
+  const skipToIdAppContent = document.getElementById('skip-to-id-AppContent');
+  const isPaginated = document.querySelector('.ams-pagination__list');
+
+  if (isNewPageNavigation) {
+    if (skipToIdAppContent && isPaginated) {
+      window.scrollTo({
+        top: skipToIdAppContent.offsetTop,
+        behavior: 'instant',
+      });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'instant',
+      });
+    }
+  }
+  history.scrollRestoration = 'auto';
 }
