@@ -179,7 +179,7 @@ describe('usePageChange', () => {
     );
   });
 
-  describe.only('scrollOnPageChange', () => {
+  describe('scrollOnPageChange', () => {
     const mockScrollTo = vi.fn();
 
     beforeEach(() => {
