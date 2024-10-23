@@ -32,6 +32,7 @@ export default function PageHeading({
     !!backLink && styles.hasBackLink,
     className
   );
+
   return (
     <header className={classNames} {...rest}>
       {!!icon && (

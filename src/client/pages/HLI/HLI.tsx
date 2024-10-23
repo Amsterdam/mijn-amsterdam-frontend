@@ -5,6 +5,7 @@ import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -96,36 +97,38 @@ export default function ThemaPaginaHLI() {
     });
   }
 
-  const regelingenTables = Object.entries(tableConfig).map(
-    ([
-      kind,
-      {
-        title,
-        displayProps,
-        filter: regelingenListFilter,
-        sort: regelingenListSort,
-        maxItems,
-        className,
-      },
-    ]) => {
-      return (
-        <ThemaPaginaTable<HLIRegeling>
-          key={kind}
-          title={title}
-          className={className}
-          zaken={regelingen
-            .filter(regelingenListFilter)
-            .sort(regelingenListSort)}
-          listPageRoute={generatePath(routes.listPage, {
-            kind,
-          })}
-          displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
-          maxItems={maxItems}
-        />
-      );
-    }
-  );
+  const regelingenTables = FeatureToggle.hliThemaRegelingenActive
+    ? Object.entries(tableConfig).map(
+        ([
+          kind,
+          {
+            title,
+            displayProps,
+            filter: regelingenListFilter,
+            sort: regelingenListSort,
+            maxItems,
+            className,
+          },
+        ]) => {
+          return (
+            <ThemaPaginaTable<HLIRegeling>
+              key={kind}
+              title={title}
+              className={className}
+              zaken={regelingen
+                .filter(regelingenListFilter)
+                .sort(regelingenListSort)}
+              listPageRoute={generatePath(routes.listPage, {
+                kind,
+              })}
+              displayProps={displayProps}
+              textNoContent={`U heeft geen ${title.toLowerCase()}`}
+              maxItems={maxItems}
+            />
+          );
+        }
+      )
+    : [];
 
   return (
     <ThemaPagina

@@ -11,10 +11,13 @@ import MockApp from '../MockApp';
 import Parkeren from './Parkeren';
 import { appStateAtom } from '../../hooks/useAppState';
 
-
-
 const testState = {
-  VERGUNNINGEN: {
+  PARKEREN: {
+    content: {
+      url: 'https://parkeervergunningen.amsterdam.nl/',
+    },
+  },
+  VERGUNNINGENv2: {
     status: 'OK',
     content: [
       {

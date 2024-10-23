@@ -142,7 +142,7 @@ export function ToeristscheVerhuurThema() {
                     U heeft een vergunning voor vakantieverhuur &eacute;n bed
                     &amp; breakfast. Het is niet toegestaan om op hetzelfde
                     adres zowel aan vakantieverhuur als bed &amp; breakfast te
-                    doen. U moet daarom 1 van deze vergunningen opzeggen.
+                    doen. U moet daarom 1 van deze vergunningen opzeggen.{' '}
                     <LinkdInline
                       external={true}
                       href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
@@ -157,7 +157,7 @@ export function ToeristscheVerhuurThema() {
                   <Paragraph>
                     U heeft een vergunning voor vakantieverhuur of bed &amp;
                     breakfast. U moet daarom ook een landelijk registratienummer
-                    voor toeristische verhuur aanvragen.
+                    voor toeristische verhuur aanvragen.{' '}
                     <LinkdInline
                       external={true}
                       href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"

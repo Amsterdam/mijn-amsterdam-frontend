@@ -124,6 +124,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
+    postponeFetch: !FeatureToggle.hliThemaActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
@@ -257,6 +258,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   PARKEREN: {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
+    headers: {
+      host: new URL(getFromEnv('BFF_PARKEREN_API_BASE_URL') ?? '').hostname,
+    },
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
     url: `${getFromEnv('BFF_LVV_API_URL')}`,

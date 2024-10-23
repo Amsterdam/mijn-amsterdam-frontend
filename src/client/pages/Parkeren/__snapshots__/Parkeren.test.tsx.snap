@@ -73,37 +73,64 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
         <div
           class="ams-grid__cell ams-grid__cell--span-all"
         >
-          <p
-            class="ams-paragraph ams-mb--sm"
+          <section
+            class="ams-alert ams-alert--info"
           >
-            Alle informatie over parkeren in Amsterdam vindt u op . Daar kunt u ook terecht voor informatie over fietskelders, laadpalen voor elektrische auto's en andere vragen die U heeft over parkeren of vervoer. Het aanvragen of wijzigen van een parkeervergunning voor bewoners kan via Mijn Parkeren. U moet hier wel opnieuw inloggen.
-          </p>
-          <a
-            class="ams-link ams-link--standalone"
-            href="https://parkeervergunningen.amsterdam.nl"
-          >
-            <button
-              class="ams-button ams-button--primary"
-              type="button"
+            <div
+              class="ams-alert__icon"
             >
-              Log in op Mijn Parkeren
               <span
-                class="ams-icon ams-icon--size-5"
+                class="ams-icon ams-icon--size-4"
               >
                 <svg
                   aria-hidden="true"
                   focusable="false"
-                  viewBox="0 0 32 32"
+                  viewBox="0 0 28 28"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M19.006 0H32.01v12.992h-4.002V6.826L14.434 20.417l-2.83-2.818L25.187 3.998h-6.182zm7.002 13.991L26.018 32H.01V6.016h17.975l-3.98 3.978.02.02H4.01v17.988h18.006l-.01-10.013 4-3.998z"
+                    d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
                     fill-rule="evenodd"
                   />
                 </svg>
               </span>
-            </button>
-          </a>
+            </div>
+            <div
+              class="ams-alert__content"
+            >
+              <h2
+                class="ams-heading ams-heading--level-4"
+              >
+                Let op
+              </h2>
+              <p
+                class="ams-paragraph"
+              >
+                Het inzien, aanvragen of wijzigen van een parkeervergunning voor bewoners kan via Mijn Parkeren.
+                <button
+                  class="ams-button ams-button--primary"
+                  type="button"
+                >
+                  Log in op Mijn Parkeren
+                  <span
+                    class="ams-icon ams-icon--size-5"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 32 32"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19.006 0H32.01v12.992h-4.002V6.826L14.434 20.417l-2.83-2.818L25.187 3.998h-6.182zm7.002 13.991L26.018 32H.01V6.016h17.975l-3.98 3.978.02.02H4.01v17.988h18.006l-.01-10.013 4-3.998z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </p>
+            </div>
+          </section>
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-all"
@@ -190,7 +217,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                   >
                     <a
                       class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/vergunningen/gpp/Z-24-2233516"
+                      href="/parkeren/gpp/Z-24-2233516"
                     >
                       Vergunning 1
                     </a>
@@ -214,7 +241,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                   >
                     <a
                       class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/vergunningen/gpp/Z-24-2233516"
+                      href="/parkeren/gpp/Z-24-2233516"
                     >
                       Vergunning 2
                     </a>

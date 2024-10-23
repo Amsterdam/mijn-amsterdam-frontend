@@ -17,6 +17,7 @@ import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
+import { ThemaTitles } from './config/thema';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -83,7 +84,6 @@ import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
 import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
 import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
-import Zorg from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgV2 from './pages/Zorg/ZorgV2';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
@@ -180,13 +180,13 @@ function AppAuthenticated() {
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaStadspasActive && (
             <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
           )}
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaRegelingenActive && (
             <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
           )}
-          {FeatureToggle.hliThemaActive && (
+          {FeatureToggle.hliThemaRegelingenActive && (
             <Route
               path={AppRoutes['HLI/REGELINGEN_LIST']}
               component={HLIRegelingen}
@@ -225,10 +225,9 @@ function AppAuthenticated() {
               component={ZorgVoorzieningen}
             />
           )}
-          <Route
-            path={AppRoutes.ZORG}
-            component={FeatureToggle.zorgv2ThemapaginaActive ? ZorgV2 : Zorg}
-          />
+          {FeatureToggle.zorgv2ThemapaginaActive && (
+            <Route path={AppRoutes.ZORG} component={ZorgV2} />
+          )}
 
           <Route
             path={AppRoutes['BURGERZAKEN/ID-KAART']}
@@ -248,11 +247,23 @@ function AppAuthenticated() {
           )}
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
-            component={
-              FeatureToggle.vergunningenV2Active
-                ? VergunningV2Detail
-                : VergunningDetail
-            }
+            component={function VergunningDetailWrapper() {
+              return FeatureToggle.vergunningenV2Active ? (
+                <VergunningV2Detail
+                  backLink={{
+                    to: AppRoutes.VERGUNNINGEN,
+                    title: ThemaTitles.VERGUNNINGEN,
+                  }}
+                />
+              ) : (
+                <VergunningDetail
+                  backLink={{
+                    to: AppRoutes.VERGUNNINGEN,
+                    title: ThemaTitles.VERGUNNINGEN,
+                  }}
+                />
+              );
+            }}
           />
           <Route
             path={AppRoutes.VERGUNNINGEN}
@@ -357,6 +368,26 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />
+          <Route
+            path={AppRoutes['PARKEREN/DETAIL']} // Nieuwe AppRoute
+            component={function ParkerenWrapper() {
+              return FeatureToggle.vergunningenV2Active ? (
+                <VergunningV2Detail
+                  backLink={{
+                    to: AppRoutes.PARKEREN,
+                    title: ThemaTitles.PARKEREN,
+                  }}
+                />
+              ) : (
+                <VergunningDetail
+                  backLink={{
+                    to: AppRoutes.PARKEREN,
+                    title: ThemaTitles.PARKEREN,
+                  }}
+                />
+              );
+            }}
+          />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route component={NotFound} />

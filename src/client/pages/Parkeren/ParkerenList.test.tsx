@@ -12,10 +12,13 @@ import { ParkerenList } from './ParkerenList';
 import { appStateAtom } from '../../hooks/useAppState';
 import { listPageParamKind } from '../VergunningenV2/config';
 
-
-
 const testState = {
-  VERGUNNINGEN: {
+  PARKEREN: {
+    content: {
+      url: 'https://parkeervergunningen.amsterdam.nl/',
+    },
+  },
+  VERGUNNINGENv2: {
     status: 'OK',
     content: [
       {
