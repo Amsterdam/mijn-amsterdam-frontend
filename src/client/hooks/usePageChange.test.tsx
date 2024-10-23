@@ -1,10 +1,13 @@
+import { ReactNode } from 'react';
+
 import { renderHook } from '@testing-library/react';
 import * as rrd from 'react-router-dom';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
 
 import { trackPageViewWithCustomDimension } from './analytics.hook';
+import * as usePageChangeModule from './usePageChange';
 import { usePageChange } from './usePageChange';
-import type { TrackingConfig } from '../../client/config/routes';
+import type { TrackingConfig } from '../config/routes';
 import { NOT_FOUND_TITLE } from '../config/thema';
 
 const mocks = vi.hoisted(() => {
@@ -95,6 +98,8 @@ vi.mock('./analytics.hook', async (requireActual) => {
   };
 });
 
+vi.spyOn(usePageChangeModule, 'scrollOnPageChange').mockImplementation(vi.fn());
+
 describe('usePageChange', () => {
   // global.console.info = vi.fn(); // Hide info warnings from our own code.
 
@@ -172,5 +177,70 @@ describe('usePageChange', () => {
       'private-attributes',
       'Amsterdam'
     );
+  });
+
+  describe.only('scrollOnPageChange', () => {
+    const mockScrollTo = vi.fn();
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+      // Mock window.scrollTo
+      Object.defineProperty(window, 'scrollTo', {
+        value: mockScrollTo,
+        writable: true,
+      });
+    });
+
+    it('should scroll to top when skip-to-id-AppContent and class ams-pagination__list is not present', () => {
+      // Set up the mock to return null for getElementById
+      document.getElementById = vi.fn().mockReturnValue(null);
+
+      // @ts-ignore
+      rrd.__setPathname('/page1');
+
+      const wrapper = ({ children }: { children: ReactNode }) => (
+        <div>{children}</div>
+      );
+
+      const { rerender } = renderHook(() => usePageChange(true), { wrapper });
+
+      // set new page to trigger scroll
+      // @ts-ignore
+      rrd.__setPathname('/page2');
+
+      rerender();
+
+      expect(mockScrollTo).toHaveBeenCalledWith({
+        top: 0,
+        behavior: 'instant',
+      });
+    });
+
+    it('should scroll to skip-to-id-AppContent when class ams-pagination__list is present', () => {
+      // @ts-ignore
+      rrd.__setPathname('/page1');
+
+      document.querySelector = vi.fn().mockReturnValue({ offsetTop: 0 });
+      document.getElementById = vi.fn().mockReturnValue({ offsetTop: 100 });
+
+      const wrapper = ({ children }: { children: ReactNode }) => (
+        <div id="skip-to-id-AppContent">
+          <div className="ams-pagination__list">{children}</div>
+        </div>
+      );
+
+      const { rerender } = renderHook(() => usePageChange(true), { wrapper });
+
+      // set new page to trigger scroll
+      // @ts-ignore
+      rrd.__setPathname('/page2');
+
+      rerender();
+
+      expect(mockScrollTo).toHaveBeenCalledWith({
+        top: 100,
+        behavior: 'instant',
+      });
+    });
   });
 });
