@@ -182,17 +182,21 @@ export async function fetchAfisFacturenOverview(
       facturenDeelbetalingenResult.content
     ) {
       const deelbetalingen = facturenDeelbetalingenResult.content;
+
       facturenOpen = facturenOpen.map((factuur) => {
         const deelbetalingAmount = deelbetalingen?.[factuur.factuurNummer];
-        if (deelbetalingAmount) {
-          const amountOwedUpdated = factuur.amountOwed - deelbetalingAmount;
-          return {
-            ...factuur,
-            amountOwed: amountOwedUpdated,
-            amountOwedFormatted: `€ ${displayAmount(amountOwedUpdated)}`,
-          };
+
+        if (!deelbetalingAmount) {
+          return factuur;
         }
-        return factuur;
+
+        const amountOwedUpdated = factuur.amountOwed - deelbetalingAmount;
+
+        return {
+          ...factuur,
+          amountOwed: amountOwedUpdated,
+          amountOwedFormatted: `€ ${displayAmount(amountOwedUpdated)}`,
+        };
       });
     }
     const openFacturenContentSorted: AfisFacturenResponse = {
