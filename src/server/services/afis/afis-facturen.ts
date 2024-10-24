@@ -181,7 +181,6 @@ export async function fetchAfisFacturenOverview(
       facturenDeelbetalingenResult.status === 'OK' &&
       facturenDeelbetalingenResult.content
     ) {
-      console.dir(facturenDeelbetalingenResult.content, { depth: Infinity });
       const deelbetalingen = facturenDeelbetalingenResult.content;
       facturenOpen = facturenOpen.map((factuur) => {
         const deelbetalingAmount = deelbetalingen?.[factuur.factuurNummer];
