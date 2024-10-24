@@ -123,9 +123,9 @@ export function generateSearchIndexPageEntries(
   apiSearchConfigs: ApiSearchConfig[]
 ): SearchEntry[] {
   const apiConfigs = apiSearchConfigs.filter((apiConfig) => {
-    const hasProperAppState =
-      !isError(appState[apiConfig.stateKey]) &&
-      !!appState[apiConfig.stateKey]?.content;
+    const hasProperAppState = !apiConfig.stateKey.endsWith('_BAG')
+      ? !isError(appState[apiConfig.stateKey]) && !!appState[apiConfig.stateKey]
+      : !!appState[apiConfig.stateKey];
     const isEnabled =
       !!apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
     return (
@@ -136,7 +136,9 @@ export function generateSearchIndexPageEntries(
   });
 
   return apiConfigs.flatMap((apiConfig) => {
-    const apiContent = appState[apiConfig.stateKey]?.content;
+    const apiContent = apiConfig.stateKey.endsWith('_BAG')
+      ? appState[apiConfig.stateKey]
+      : appState[apiConfig.stateKey]?.content;
     return apiConfig
       .getApiBaseItems(apiContent)
       .map((item) => generateSearchIndexPageEntry(item, apiConfig));

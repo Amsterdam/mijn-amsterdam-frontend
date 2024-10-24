@@ -4,6 +4,7 @@ import {
   Alert,
   Button,
   Grid,
+  Heading,
   Link,
   Paragraph,
   UnorderedList,
@@ -58,9 +59,14 @@ export function AfisDisclaimerOvergedragenFacturen() {
         overgedragen naar de afdeling Incasso & Invordering van directie
         Belastingen. Deze afdeling is vanaf dat moment verantwoordelijk voor de
         invordering van uw factuur en daarmee uw aanspreekpunt. De status van uw
-        factuur wordt hier niet bijgewerkt. Heeft u vragen? Afdeling Incasso &
-        Invordering is van maandag tot en met vrijdag tussen 08.00 en 18.00 uur
-        bereikbaar op{' '}
+        factuur wordt hier niet bijgewerkt.
+      </Paragraph>
+      <Heading level={4} size="level-5">
+        Heeft u vragen?
+      </Heading>
+      <Paragraph>
+        Afdeling Incasso & Invordering is van maandag tot en met vrijdag tussen
+        08.00 en 18.00 uur bereikbaar op{' '}
         <Link rel="noreferrer" href="tel:0202554800">
           020 255 4800
         </Link>
@@ -155,10 +161,12 @@ export function AfisThemaPagina() {
   return (
     <ThemaPagina
       title={ThemaTitles.AFIS}
-      isError={isOverviewApiError && isThemaPaginaError}
+      isError={isOverviewApiError || isThemaPaginaError}
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
-      isLoading={isThemaPaginaLoading || isOverviewApiLoading}
+      isLoading={
+        !isThemaPaginaError && (isThemaPaginaLoading || isOverviewApiLoading)
+      }
       linkListItems={[
         {
           to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',

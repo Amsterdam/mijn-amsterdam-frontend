@@ -5,7 +5,7 @@ import nock from 'nock';
 import { afterAll, afterEach, expect, vi } from 'vitest';
 
 vi.mock('./server/helpers/env.ts', async (importOriginal) => {
-  const envModule = (await importOriginal()) as any;
+  const envModule: object = await importOriginal();
   return {
     ...envModule,
     // Prevent isRequired from spamming logs or throwing errors by ignoring it.
@@ -14,7 +14,9 @@ vi.mock('./server/helpers/env.ts', async (importOriginal) => {
 });
 
 vi.mock('./universal/config/feature-toggles.ts', async (importOriginal) => {
-  const featureToggleModule = (await importOriginal()) as any;
+  const featureToggleModule: {
+    FeatureToggle: Record<string, string>;
+  } = await importOriginal();
 
   let featureTogglesOn = Object.entries(featureToggleModule.FeatureToggle).map(
     ([keyName]) => {
@@ -41,8 +43,8 @@ global.matchMedia =
 
 (() => {
   if (global.window) {
-    (global.window as any).scrollTo = vi.fn();
-    (global.window as any).scrollBy = vi.fn();
+    (global.window as typeof global.window).scrollTo = vi.fn();
+    (global.window as typeof global.window).scrollBy = vi.fn();
   }
   global.console.log = vi.fn();
 })();
@@ -94,6 +96,7 @@ process.env.BFF_AFIS_API_BASE_URL = `${remoteApiHost}/afis/RESTAdapter`;
 process.env.BFF_AFIS_OAUTH_CLIENT_ID = 'mijnamsterdam';
 process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+process.env.BFF_AFIS_ENABLEU_ACTIVE = 'true';
 
 process.env.BFF_PARKEREN_API_BASE_URL = `${remoteApiHost}/parkeren`;
 process.env.BFF_PARKEREN_EXTERNAL_FALLBACK_URL = `${remoteApiHost}/parkeren/fallback`;

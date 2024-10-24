@@ -5,6 +5,25 @@ const REST_BASE = `${BASE}/RESTAdapter`;
 
 module.exports = [
   {
+    id: 'post-afis-auth-token',
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/OAuthServer`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            access_token: '123xyz',
+            token_type: 'bearer',
+            expires_in: 3600,
+          },
+        },
+      },
+    ],
+  },
+  {
     id: 'post-afis-businesspartner-bsn',
     url: `${settings.MOCK_BASE_PATH}${REST_BASE}/businesspartner/BSN`,
     method: 'POST',
