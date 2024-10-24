@@ -263,14 +263,9 @@ export async function fetchAfisFacturenDeelbetalingen(
       const deelbetalingAmountByFactuurnummer = feedProperties.reduce(
         (acc, deelbetaling) => {
           const factuurNummer = getFactuurnummer(deelbetaling);
-
-          if (!acc[factuurNummer]) {
-            acc[factuurNummer] = 0;
-          }
-
           const { amountOwed } = getAmountOwed(deelbetaling);
 
-          acc[factuurNummer] += amountOwed;
+          acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
           return acc;
         },
         {} as AfisFactuurDeelbetalingen
