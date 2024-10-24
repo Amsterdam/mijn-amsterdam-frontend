@@ -21,16 +21,17 @@
           "@type": "application/xml",
           "properties": {
             "DunningLevel": 0,
-            "DunningBlockingReason": "D",
+            "DunningBlockingReason": null,
             "ProfitCenterName": "Bedrijf: Ok",
             "SEPAMandate": "",
             "PostingDate": "2023-11-21T00:00:00",
             "NetDueDate": "2023-12-21T00:00:00",
             "NetPaymentAmount": "0.00",
             "AmountInBalanceTransacCrcy": "343.00",
-            "DocumentReferenceID": "5555555",
-            "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "DocumentReferenceID": "1234567890",
+            "AccountingDocument": "1234567890",
+            "Paylink": "http://localhost:3100/mocks-server/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -48,7 +49,8 @@
             "AmountInBalanceTransacCrcy": "343.00",
             "DocumentReferenceID": "5555555",
             "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-server/afis/paylink",
+            "IsCleared": false
           }
         }
       },
@@ -66,7 +68,8 @@
             "AmountInBalanceTransacCrcy": "5.50",
             "DocumentReferenceID": "5555555",
             "AccountingDocument": "5555555",
-            "Paylink": "http://localhost:3100/mocks-server/afis/paylink"
+            "Paylink": "http://localhost:3100/mocks-server/afis/paylink",
+            "IsCleared": false
           }
         }
       },

@@ -64,40 +64,6 @@ export const fetchAfisTokenHeader = memoizee(fetchAfisTokenHeader_, {
   maxAge: 55 * ONE_MINUTE_MS,
 });
 
-/** Returns if the person logging in, is known in the AFIS source API */
-export async function fetchIsKnownInAFIS(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const profileIdentifierType =
-    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
-
-  const additionalConfig: DataRequestConfig = {
-    method: 'post',
-    data: {
-      [profileIdentifierType]: authProfileAndToken.profile.id,
-    },
-    transformResponse: (response) =>
-      transformBusinessPartnerisKnownResponse(
-        response,
-        authProfileAndToken.profile.sid
-      ),
-    formatUrl(config) {
-      return `${config.url}/businesspartner/${profileIdentifierType}/`;
-    },
-  };
-
-  const dataRequestConfig = await getAfisApiConfig(additionalConfig);
-
-  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
-    dataRequestConfig,
-    requestID,
-    authProfileAndToken
-  );
-
-  return response;
-}
-
 function transformBusinessPartnerisKnownResponse(
   response:
     | AfisBusinessPartnerPrivateResponseSource
@@ -141,4 +107,38 @@ function transformBusinessPartnerisKnownResponse(
     isKnown,
     businessPartnerIdEncrypted,
   };
+}
+
+/** Returns if the person logging in, is known in the AFIS source API */
+export async function fetchIsKnownInAFIS(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const profileIdentifierType =
+    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
+
+  const additionalConfig: DataRequestConfig = {
+    method: 'post',
+    data: {
+      [profileIdentifierType]: authProfileAndToken.profile.id,
+    },
+    transformResponse: (response) =>
+      transformBusinessPartnerisKnownResponse(
+        response,
+        authProfileAndToken.profile.sid
+      ),
+    formatUrl(config) {
+      return `${config.url}/businesspartner/${profileIdentifierType}/`;
+    },
+  };
+
+  const dataRequestConfig = await getAfisApiConfig(additionalConfig);
+
+  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
+    dataRequestConfig,
+    requestID,
+    authProfileAndToken
+  );
+
+  return response;
 }

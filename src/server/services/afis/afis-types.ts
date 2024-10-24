@@ -102,6 +102,10 @@ export type AfisFacturenByStateResponse = {
   [key in AfisFactuurState]?: AfisFacturenResponse | null;
 };
 
+export type AfisFactuurDeelbetalingen = {
+  [factuurNummer: string]: number;
+};
+
 export type AfisFacturenParams = {
   state: AfisFactuurState | 'deelbetalingen';
   businessPartnerID: string;
@@ -197,4 +201,8 @@ export type AfisDocumentDownloadSource = {
     attachment: string;
     attachmentname: string;
   };
+};
+
+export type XmlNullable<T extends Record<string, unknown>> = {
+  [key in keyof T]: { '@null': true } | T[key];
 };

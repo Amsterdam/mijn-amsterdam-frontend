@@ -26,10 +26,12 @@ import {
   AfisFacturenParams,
   AfisFacturenResponse,
   AfisFactuur,
+  AfisFactuurDeelbetalingen,
   AfisFactuurPropertiesSource,
   AfisFactuurState,
   AfisInvoicesPartialPaymentsSource,
   AfisInvoicesSource,
+  XmlNullable,
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
 
@@ -41,20 +43,6 @@ export const FACTUUR_STATE_KEYS: AfisFactuurState[] = [
   'afgehandeld',
   'overgedragen',
 ];
-
-export async function fetchAfisFacturen(
-  requestID: RequestID,
-  sessionID: SessionID,
-  params: AfisFacturenParams
-): Promise<ApiResponse<AfisFacturenResponse | null>> {
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-    transformResponse: (responseData) =>
-      transformFacturen(responseData, sessionID),
-  });
-
-  return requestData<AfisFacturenResponse>(config, requestID);
-}
 
 const accountingDocumentTypesByState: Record<
   AfisFacturenParams['state'],
@@ -120,10 +108,6 @@ function formatFactuurRequestURL(
   return fullUrl;
 }
 
-type AfisFactuurDeelbetalingen = {
-  [factuurNummer: string]: number;
-};
-
 function transformDeelbetalingenResponse(
   responseData: AfisInvoicesPartialPaymentsSource
 ): AfisFactuurDeelbetalingen {
@@ -139,7 +123,7 @@ function transformDeelbetalingenResponse(
   }, deelbetalingAmountByFactuurnummer);
 }
 
-export async function fetchAfisFacturenDeelbetalingen(
+async function fetchAfisFacturenDeelbetalingen(
   requestID: RequestID,
   params: AfisFacturenParams
 ): Promise<ApiResponse<AfisFactuurDeelbetalingen | null>> {
@@ -148,149 +132,6 @@ export async function fetchAfisFacturenDeelbetalingen(
     transformResponse: transformDeelbetalingenResponse,
   });
   return requestData<AfisFactuurDeelbetalingen>(config, requestID);
-}
-
-export async function fetchAfisFacturenOverview(
-  requestID: RequestID,
-  sessionID: SessionID,
-  params: Omit<AfisFacturenParams, 'state' | 'top'>
-) {
-  const facturenOpenRequest = fetchAfisFacturen(requestID, sessionID, {
-    state: 'open',
-    businessPartnerID: params.businessPartnerID,
-  });
-
-  const facturenDeelbetalingenRequest = fetchAfisFacturenDeelbetalingen(
-    requestID,
-    {
-      state: 'deelbetalingen',
-      businessPartnerID: params.businessPartnerID,
-    }
-  );
-
-  const facturenClosedRequest = fetchAfisFacturen(requestID, sessionID, {
-    state: 'afgehandeld',
-    businessPartnerID: params.businessPartnerID,
-    top: '3',
-  });
-
-  const facturenTransferredRequest = fetchAfisFacturen(requestID, sessionID, {
-    state: 'overgedragen',
-    businessPartnerID: params.businessPartnerID,
-    top: '3',
-  });
-
-  const [
-    facturenOpenResponse,
-    facturenDeelbetalingenResponse,
-    facturenClosedResponse,
-    facturenTransferredResponse,
-  ] = await Promise.allSettled([
-    facturenOpenRequest,
-    facturenDeelbetalingenRequest,
-    facturenClosedRequest,
-    facturenTransferredRequest,
-  ]);
-
-  const facturenOpenResult = getSettledResult(facturenOpenResponse);
-  const facturenDeelbetalingenResult = getSettledResult(
-    facturenDeelbetalingenResponse
-  );
-  const facturenClosedResult = getSettledResult(facturenClosedResponse);
-  const facturenTransferredResult = getSettledResult(
-    facturenTransferredResponse
-  );
-
-  let openFacturenContent: AfisFacturenResponse | null | undefined =
-    facturenOpenResult.content;
-
-  if (facturenOpenResult.status === 'OK') {
-    let facturenOpen = facturenOpenResult.content?.facturen ?? [];
-    // If there are deelbetalingen, update the amount owed for each factuur
-    if (
-      facturenDeelbetalingenResult.status === 'OK' &&
-      facturenDeelbetalingenResult.content
-    ) {
-      const deelbetalingen = facturenDeelbetalingenResult.content;
-
-      facturenOpen = facturenOpen.map((factuur) => {
-        const deelbetalingAmount = deelbetalingen?.[factuur.factuurNummer];
-
-        if (!deelbetalingAmount) {
-          return factuur;
-        }
-
-        const amountOwedUpdated = factuur.amountOwed - deelbetalingAmount;
-
-        return {
-          ...factuur,
-          amountOwed: amountOwedUpdated,
-          amountOwedFormatted: `€ ${displayAmount(amountOwedUpdated)}`,
-        };
-      });
-    }
-    const openFacturenContentSorted: AfisFacturenResponse = {
-      count: facturenOpenResult.content?.count ?? 0,
-      facturen: facturenOpen.sort(
-        firstBy(function (factuur: AfisFactuur) {
-          return factuur.status === 'herinnering' ? -1 : 1;
-        })
-          .thenBy(function (factuur: AfisFactuur) {
-            return factuur.status === 'openstaand' ? -1 : 1;
-          })
-          .thenBy(dateSort('paymentDueDate', 'asc'))
-      ),
-    };
-    openFacturenContent = openFacturenContentSorted;
-  }
-
-  const facturenOverview: AfisFacturenByStateResponse = {
-    open: openFacturenContent ?? null,
-    afgehandeld: facturenClosedResult.content ?? null,
-    overgedragen: facturenTransferredResult.content ?? null,
-  };
-
-  return apiSuccessResult(
-    facturenOverview,
-    getFailedDependencies({
-      open: facturenOpenResult,
-      afgehandeld: facturenClosedResult,
-      overgedragen: facturenTransferredResult,
-    })
-  );
-}
-
-export async function fetchAfisFacturenByState(
-  requestID: RequestID,
-  sessionID: SessionID,
-  params: AfisFacturenParams
-) {
-  const facturenResponse = await fetchAfisFacturen(
-    requestID,
-    sessionID,
-    params
-  );
-  if ((await facturenResponse.status) === 'OK') {
-    return apiSuccessResult({
-      [params.state]: facturenResponse.content,
-    });
-  }
-  return facturenResponse;
-}
-
-function transformFacturen(
-  responseData: AfisInvoicesSource,
-  sessionID: SessionID
-): AfisFacturenResponse {
-  const feedProperties = getFeedEntryProperties(responseData);
-  const count = responseData?.feed?.count ?? feedProperties.length;
-  const facturenTransformed = feedProperties.map((invoiceProperties) => {
-    return transformFactuur(invoiceProperties, sessionID);
-  });
-  return {
-    count,
-    facturen: facturenTransformed,
-  };
 }
 
 function getFactuurnummer(
@@ -310,7 +151,8 @@ function getAmountOwed(
   invoice: Pick<
     AfisFactuurPropertiesSource,
     'NetPaymentAmount' | 'AmountInBalanceTransacCrcy'
-  >
+  >,
+  deelbetaling?: number
 ) {
   const MULTIPLY_WITH_100 = 100;
   const netPaymentAmountInCents =
@@ -318,9 +160,13 @@ function getAmountOwed(
   const amountInBalanceTransacCrcyInCents =
     parseFloat(invoice.AmountInBalanceTransacCrcy) * MULTIPLY_WITH_100;
 
-  const amountOwed =
+  let amountOwed =
     (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) /
     MULTIPLY_WITH_100;
+
+  if (deelbetaling) {
+    amountOwed = amountOwed - deelbetaling;
+  }
 
   return {
     amountOwed,
@@ -330,7 +176,8 @@ function getAmountOwed(
 
 function transformFactuur(
   sourceInvoice: XmlNullable<AfisFactuurPropertiesSource>,
-  sessionID: SessionID
+  sessionID: SessionID,
+  deelbetalingen?: AfisFactuurDeelbetalingen
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
   const factuurDocumentId = String(invoice.AccountingDocument);
@@ -338,12 +185,18 @@ function transformFactuur(
   const factuurDocumentIdEncrypted = factuurDocumentId
     ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
     : null;
-  const { amountOwed, amountInBalanceTransacCrcyInCents } =
-    getAmountOwed(invoice);
+
+  const deelbetalingAmount = deelbetalingen?.[factuurNummer];
+  const hasDeelbetaling = !!deelbetalingAmount;
+  const { amountOwed, amountInBalanceTransacCrcyInCents } = getAmountOwed(
+    invoice,
+    deelbetalingAmount
+  );
   const amountOwedFormatted = `€ ${amountOwed ? displayAmount(amountOwed) : 0}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
+
   if (invoice.ClearingDate) {
     debtClearingDate = invoice.ClearingDate;
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
@@ -351,7 +204,8 @@ function transformFactuur(
 
   const status = determineFactuurStatus(
     invoice,
-    amountInBalanceTransacCrcyInCents
+    amountInBalanceTransacCrcyInCents,
+    hasDeelbetaling
   );
 
   const documentDownloadLink = factuurDocumentIdEncrypted
@@ -381,14 +235,10 @@ function transformFactuur(
     documentDownloadLink,
     link: {
       to: documentDownloadLink ?? AppRoutes.AFIS,
-      title: factuurNummer,
+      title: `Factuur ${factuurNummer}`,
     },
   };
 }
-
-type XmlNullable<T extends Record<string, unknown>> = {
-  [key in keyof T]: { '@null': true } | T[key];
-};
 
 /** Replace all values that is an XML Null value with just the value `null`. */
 function replaceXmlNulls(
@@ -403,20 +253,38 @@ function replaceXmlNulls(
   return Object.fromEntries(withoutXmlNullable);
 }
 
+function transformFacturen(
+  responseData: AfisInvoicesSource,
+  sessionID: SessionID,
+  deelbetalingen?: AfisFactuurDeelbetalingen
+): AfisFacturenResponse {
+  const feedProperties = getFeedEntryProperties(responseData);
+  const count = responseData?.feed?.count ?? feedProperties.length;
+  const facturenTransformed = feedProperties.map((invoiceProperties) => {
+    return transformFactuur(invoiceProperties, sessionID, deelbetalingen);
+  });
+  return {
+    count,
+    facturen: facturenTransformed,
+  };
+}
+
 const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
 
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
-  amountInBalanceTransacCrcyInCents: number
+  amountInBalanceTransacCrcyInCents: number,
+  hasDeelbetaling: boolean
 ): AfisFactuur['status'] {
   switch (true) {
-    case !sourceInvoice.IsCleared && !!sourceInvoice.DunningBlockingReason:
+    case sourceInvoice.IsCleared === false &&
+      !!sourceInvoice.DunningBlockingReason:
       return 'in-dispuut';
 
     case !!sourceInvoice.ReverseDocument:
       return 'geannuleerd';
 
-    case sourceInvoice.IsCleared &&
+    case sourceInvoice.IsCleared === true &&
       sourceInvoice.DunningLevel ===
         DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN:
       return 'overgedragen-aan-belastingen';
@@ -432,13 +300,13 @@ function determineFactuurStatus(
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
-    case sourceInvoice.DunningBlockingReason === 'BA':
+    case hasDeelbetaling:
       return 'gedeeltelijke-betaling';
 
     case !!sourceInvoice.SEPAMandate:
       return 'automatische-incasso';
 
-    case !sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
+    case sourceInvoice.IsCleared === false && sourceInvoice.DunningLevel === 0:
       return 'openstaand';
 
     default:
@@ -483,3 +351,142 @@ function determineFactuurStatusDescription(
       return capitalizeFirstLetter(status ?? '');
   }
 }
+
+export async function fetchAfisFacturen(
+  requestID: RequestID,
+  sessionID: SessionID,
+  params: AfisFacturenParams
+): Promise<ApiResponse<AfisFacturenResponse | null>> {
+  let deelbetalingen: AfisFactuurDeelbetalingen | undefined;
+
+  if (params.state === 'open') {
+    const facturenDeelbetalingenResponse =
+      await fetchAfisFacturenDeelbetalingen(requestID, {
+        state: 'deelbetalingen',
+        businessPartnerID: params.businessPartnerID,
+      });
+
+    if (
+      facturenDeelbetalingenResponse.status === 'OK' &&
+      facturenDeelbetalingenResponse.content !== null
+    ) {
+      deelbetalingen = facturenDeelbetalingenResponse.content;
+    }
+  }
+
+  const config = await getAfisApiConfig({
+    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    transformResponse: (responseData) =>
+      transformFacturen(responseData, sessionID, deelbetalingen),
+  });
+
+  return requestData<AfisFacturenResponse>(config, requestID);
+}
+
+export async function fetchAfisFacturenOverview(
+  requestID: RequestID,
+  sessionID: SessionID,
+  params: Omit<AfisFacturenParams, 'state' | 'top'>
+) {
+  const facturenOpenRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'open',
+    businessPartnerID: params.businessPartnerID,
+  });
+
+  const facturenClosedRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'afgehandeld',
+    businessPartnerID: params.businessPartnerID,
+    top: '3',
+  });
+
+  const facturenTransferredRequest = fetchAfisFacturen(requestID, sessionID, {
+    state: 'overgedragen',
+    businessPartnerID: params.businessPartnerID,
+    top: '3',
+  });
+
+  const [
+    facturenOpenResponse,
+    facturenClosedResponse,
+    facturenTransferredResponse,
+  ] = await Promise.allSettled([
+    facturenOpenRequest,
+    facturenClosedRequest,
+    facturenTransferredRequest,
+  ]);
+
+  const facturenOpenResult = getSettledResult(facturenOpenResponse);
+  const facturenClosedResult = getSettledResult(facturenClosedResponse);
+  const facturenTransferredResult = getSettledResult(
+    facturenTransferredResponse
+  );
+
+  let openFacturenContent: AfisFacturenResponse | null | undefined =
+    facturenOpenResult.content;
+
+  if (facturenOpenResult.status === 'OK') {
+    const facturenOpen = facturenOpenResult.content?.facturen ?? [];
+    const openFacturenContentSorted: AfisFacturenResponse = {
+      count: facturenOpenResult.content?.count ?? 0,
+      facturen: facturenOpen.sort(
+        firstBy(function (factuur: AfisFactuur) {
+          return factuur.status === 'herinnering' ? -1 : 1;
+        })
+          .thenBy(function (factuur: AfisFactuur) {
+            return factuur.status === 'openstaand' ? -1 : 1;
+          })
+          .thenBy(dateSort('paymentDueDate', 'asc'))
+      ),
+    };
+    openFacturenContent = openFacturenContentSorted;
+  }
+
+  const facturenOverview: AfisFacturenByStateResponse = {
+    open: openFacturenContent ?? null,
+    afgehandeld: facturenClosedResult.content ?? null,
+    overgedragen: facturenTransferredResult.content ?? null,
+  };
+
+  return apiSuccessResult(
+    facturenOverview,
+    getFailedDependencies({
+      open: facturenOpenResult,
+      afgehandeld: facturenClosedResult,
+      overgedragen: facturenTransferredResult,
+    })
+  );
+}
+
+export async function fetchAfisFacturenByState(
+  requestID: RequestID,
+  sessionID: SessionID,
+  params: AfisFacturenParams
+) {
+  const facturenResponse = await fetchAfisFacturen(
+    requestID,
+    sessionID,
+    params
+  );
+
+  if ((await facturenResponse.status) === 'OK') {
+    return apiSuccessResult({
+      [params.state]: facturenResponse.content,
+    });
+  }
+
+  return facturenResponse;
+}
+
+export const forTesting = {
+  determineFactuurStatus,
+  determineFactuurStatusDescription,
+  fetchAfisFacturenDeelbetalingen,
+  formatFactuurRequestURL,
+  getAccountingDocumentTypesFilter,
+  getAmountOwed,
+  getFactuurnummer,
+  replaceXmlNulls,
+  transformDeelbetalingenResponse,
+  transformFacturen,
+  transformFactuur,
+};
