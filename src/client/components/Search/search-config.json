@@ -704,6 +704,48 @@
         "automatische incasso"
       ],
       "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/facturen-en-betalen/facturen/open",
+      "displayTitle": "Openstaande facturen",
+      "description": "Overzicht van uw openstaande facturen.",
+      "keywords": [
+        "factuur",
+        "openstaand",
+        "open",
+        "sepa",
+        "ideal",
+        "automatische incasso",
+        "betalen"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/facturen-en-betalen/facturen/afgehandeld",
+      "displayTitle": "Afgehandelde facturen",
+      "description": "Overzicht van uw afgehandelde facturen.",
+      "keywords": [
+        "factuur",
+        "gesloten",
+        "afgehandeld",
+        "sepa",
+        "automatische incasso"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/facturen-en-betalen/facturen/overgedragen",
+      "displayTitle": "Facturen in het incasso- en invorderingstraject van directie Belastingen",
+      "description": "Overzicht van uw facturen in het incasso- en invorderingstraject van directie Belastingen.",
+      "keywords": [
+        "factuur",
+        "belastingen",
+        "facturen",
+        "overgedragen",
+        "invordering",
+        "incasso"
+      ],
+      "profileTypes": ["private", "commercial"]
     }
   ],
   "apiSearchConfigs": {
