@@ -120,6 +120,36 @@ function formatFactuurRequestURL(
   return fullUrl;
 }
 
+type AfisFactuurDeelbetalingen = {
+  [factuurNummer: string]: number;
+};
+
+export async function fetchAfisFacturenDeelbetalingen(
+  requestID: RequestID,
+  params: AfisFacturenParams
+): Promise<ApiResponse<AfisFactuurDeelbetalingen | null>> {
+  const config = await getAfisApiConfig({
+    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    transformResponse: (responseData: AfisInvoicesPartialPaymentsSource) => {
+      const feedProperties = getFeedEntryProperties(responseData);
+      // Make a map of factuurnummers to total deelbetaling amounts
+      const deelbetalingAmountByFactuurnummer = feedProperties.reduce(
+        (acc, deelbetaling) => {
+          const factuurNummer = getFactuurnummer(deelbetaling);
+          const { amountOwed } = getAmountOwed(deelbetaling);
+
+          acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
+          return acc;
+        },
+        {} as AfisFactuurDeelbetalingen
+      );
+      return deelbetalingAmountByFactuurnummer;
+    },
+  });
+
+  return requestData<AfisFactuurDeelbetalingen>(config, requestID);
+}
+
 export async function fetchAfisFacturenOverview(
   requestID: RequestID,
   sessionID: SessionID,
@@ -246,35 +276,6 @@ export async function fetchAfisFacturenByState(
     });
   }
   return facturenResponse;
-}
-
-type AfisFactuurDeelbetalingen = {
-  [factuurNummer: string]: number;
-};
-
-export async function fetchAfisFacturenDeelbetalingen(
-  requestID: RequestID,
-  params: AfisFacturenParams
-): Promise<ApiResponse<AfisFactuurDeelbetalingen | null>> {
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-    transformResponse: (responseData: AfisInvoicesPartialPaymentsSource) => {
-      const feedProperties = getFeedEntryProperties(responseData);
-      const deelbetalingAmountByFactuurnummer = feedProperties.reduce(
-        (acc, deelbetaling) => {
-          const factuurNummer = getFactuurnummer(deelbetaling);
-          const { amountOwed } = getAmountOwed(deelbetaling);
-
-          acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
-          return acc;
-        },
-        {} as AfisFactuurDeelbetalingen
-      );
-      return deelbetalingAmountByFactuurnummer;
-    },
-  });
-
-  return requestData<AfisFactuurDeelbetalingen>(config, requestID);
 }
 
 function transformFacturen(
