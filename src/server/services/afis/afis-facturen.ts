@@ -133,17 +133,14 @@ export async function fetchAfisFacturenDeelbetalingen(
     transformResponse: (responseData: AfisInvoicesPartialPaymentsSource) => {
       const feedProperties = getFeedEntryProperties(responseData);
       // Make a map of factuurnummers to total deelbetaling amounts
-      const deelbetalingAmountByFactuurnummer = feedProperties.reduce(
-        (acc, deelbetaling) => {
-          const factuurNummer = getFactuurnummer(deelbetaling);
-          const { amountOwed } = getAmountOwed(deelbetaling);
+      const deelbetalingAmountByFactuurnummer: AfisFactuurDeelbetalingen = {};
+      return feedProperties.reduce((acc, deelbetaling) => {
+        const factuurNummer = getFactuurnummer(deelbetaling);
+        const { amountOwed } = getAmountOwed(deelbetaling);
 
-          acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
-          return acc;
-        },
-        {} as AfisFactuurDeelbetalingen
-      );
-      return deelbetalingAmountByFactuurnummer;
+        acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
+        return acc;
+      }, deelbetalingAmountByFactuurnummer);
     },
   });
 
