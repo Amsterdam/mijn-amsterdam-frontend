@@ -124,26 +124,29 @@ type AfisFactuurDeelbetalingen = {
   [factuurNummer: string]: number;
 };
 
+function transformDeelbetalingenResponse(
+  responseData: AfisInvoicesPartialPaymentsSource
+): AfisFactuurDeelbetalingen {
+  const feedProperties = getFeedEntryProperties(responseData);
+  // Make a map of factuurnummers to total deelbetaling amounts
+  const deelbetalingAmountByFactuurnummer: AfisFactuurDeelbetalingen = {};
+  return feedProperties.reduce((acc, deelbetaling) => {
+    const factuurNummer = getFactuurnummer(deelbetaling);
+    const { amountOwed } = getAmountOwed(deelbetaling);
+
+    acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
+    return acc;
+  }, deelbetalingAmountByFactuurnummer);
+}
+
 export async function fetchAfisFacturenDeelbetalingen(
   requestID: RequestID,
   params: AfisFacturenParams
 ): Promise<ApiResponse<AfisFactuurDeelbetalingen | null>> {
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-    transformResponse: (responseData: AfisInvoicesPartialPaymentsSource) => {
-      const feedProperties = getFeedEntryProperties(responseData);
-      // Make a map of factuurnummers to total deelbetaling amounts
-      const deelbetalingAmountByFactuurnummer: AfisFactuurDeelbetalingen = {};
-      return feedProperties.reduce((acc, deelbetaling) => {
-        const factuurNummer = getFactuurnummer(deelbetaling);
-        const { amountOwed } = getAmountOwed(deelbetaling);
-
-        acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
-        return acc;
-      }, deelbetalingAmountByFactuurnummer);
-    },
+    transformResponse: transformDeelbetalingenResponse,
   });
-
   return requestData<AfisFactuurDeelbetalingen>(config, requestID);
 }
 
