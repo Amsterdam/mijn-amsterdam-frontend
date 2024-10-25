@@ -136,6 +136,7 @@ export async function fetchStadspassenByAdministratienummer(
   }
 
   const pashouder = stadspasHouderResponse.content;
+
   const pashouders = [
     pashouder,
     ...(stadspasHouderResponse.content?.sub_pashouders?.filter(Boolean) ?? []),
@@ -274,13 +275,13 @@ function transformTransactions(
 ): StadspasDiscountTransaction[] {
   return transactions.map((transactie) => ({
     id: String(transactie.id),
-    title: transactie.aanbieding.communicatienaam,
+    title: transactie.aanbieding.communicatienaam ?? null,
     discountAmount: transactie.verleende_korting,
     discountAmountFormatted: `€${displayAmount(Math.abs(transactie.verleende_korting))}`,
     datePublished: transactie.transactiedatum,
     datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
-    discountTitle: transactie.aanbieding.kortingzin,
-    description: transactie.aanbieding.omschrijving,
+    discountTitle: transactie.aanbieding.kortingzin ?? null,
+    description: transactie.aanbieding.omschrijving ?? null,
   }));
 }
 
@@ -306,3 +307,13 @@ export async function fetchGpassDiscountTransactions(
     requestID
   );
 }
+
+export const forTesting = {
+  transformTransactions,
+  transformGpassAanbiedingenResponse,
+  transformGpassTransactionsResponse,
+  getHeaders,
+  getOwner,
+  transformBudget,
+  transformStadspasResponse,
+};

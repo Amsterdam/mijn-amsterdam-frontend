@@ -29,6 +29,13 @@ export interface StadspasTransactiesResponseSource {
   transacties: StadspasTransactieSource[];
 }
 
+type AanbiedingAfbeeldingSource = {
+  id: number;
+  cdn_url: string;
+  medium: string;
+  size: string;
+};
+
 // NOTE: Taken straight from the documentation; not tested for variations
 export type StadspasAanbiedingSource = {
   id: number;
@@ -55,27 +62,14 @@ export type StadspasAanbiedingSource = {
     id: number;
     aanbiedingnummer: number;
     publicatienummer: number;
-    kortingzin: string;
-    omschrijving: string;
-    communicatienaam: string;
+    kortingzin?: string;
+    omschrijving?: string;
+    communicatienaam?: string;
     pijler: string;
     aanbieder: {
       id: number;
     };
-    afbeeldingen: [
-      {
-        id: number;
-        cdn_url: string;
-        medium: string;
-        size: string;
-      },
-      {
-        id: number;
-        cdn_url: string;
-        medium: string;
-        size: string;
-      },
-    ];
+    afbeeldingen: AanbiedingAfbeeldingSource[];
   };
 };
 
@@ -204,13 +198,13 @@ export type StadspasDiscountTransactions = {
 // TODO: Determine which props are needed for this type
 export interface StadspasDiscountTransaction {
   id: string;
-  title: StadspasAanbiedingSource['aanbieding']['communicatienaam'];
-  discountTitle: StadspasAanbiedingSource['aanbieding']['kortingzin'];
+  title: StadspasAanbiedingSource['aanbieding']['communicatienaam'] | null;
+  discountTitle: StadspasAanbiedingSource['aanbieding']['kortingzin'] | null;
   discountAmount: StadspasAanbiedingSource['verleende_korting'];
   discountAmountFormatted: string;
   datePublished: StadspasAanbiedingSource['transactiedatum'];
   datePublishedFormatted: string;
-  description: StadspasAanbiedingSource['aanbieding']['omschrijving'];
+  description: StadspasAanbiedingSource['aanbieding']['omschrijving'] | null;
 }
 
 export type StadspasAdministratieNummer = string;
