@@ -40,7 +40,7 @@ export default function Parkeren() {
 
   const pageContentTop = (
     <>
-      <Alert severity="info" heading="Let op">
+      <Alert severity="info" heading="Parkeervergunning voor bewoners">
         <Paragraph>
           Het inzien, aanvragen of wijzigen van een parkeervergunning voor
           bewoners kan via Mijn Parkeren.
