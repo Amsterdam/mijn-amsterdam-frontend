@@ -45,12 +45,11 @@ export default function Parkeren() {
           Het inzien, aanvragen of wijzigen van een parkeervergunning voor
           bewoners kan via Mijn Parkeren.
         </Paragraph>
-
-        {isLoadingParkerenUrl && (
-          <LoadingContent barConfig={[['210px', '40px', '0']]} />
-        )}
-        {!isLoadingParkerenUrl && parkerenUrlSSO && (
-          <Paragraph>
+        <Paragraph>
+          {isLoadingParkerenUrl && (
+            <LoadingContent barConfig={[['210px', '40px', '0']]} />
+          )}
+          {!isLoadingParkerenUrl && parkerenUrlSSO && (
             <Button
               variant="primary"
               onClick={() => {
@@ -60,8 +59,8 @@ export default function Parkeren() {
               Log in op Mijn Parkeren
               <Icon svg={ExternalLinkIcon} size={'level-5'} />
             </Button>
-          </Paragraph>
-        )}
+          )}
+        </Paragraph>
       </Alert>
     </>
   );
