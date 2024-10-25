@@ -32,7 +32,7 @@ const stadspas: StadspasFrontend = {
   balance: 0,
 };
 
-const testState = {
+const testState: Pick<AppState, 'HLI'> = {
   HLI: {
     status: 'OK',
     content: {
@@ -77,10 +77,10 @@ const testState = {
       stadspas: [stadspas],
     },
   },
-} as unknown as AppState;
+};
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom, testState as AppState);
 }
 
 describe('<HLI />', () => {

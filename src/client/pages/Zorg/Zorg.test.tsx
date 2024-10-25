@@ -8,7 +8,7 @@ import MockApp from '../MockApp';
 import ThemaPaginaZorg from './Zorg';
 import { AppState } from '../../../universal/types';
 
-const testState = {
+const testState: Pick<AppState, 'WMO'> = {
   WMO: {
     status: 'OK',
     content: [
@@ -52,10 +52,10 @@ const testState = {
       },
     ],
   },
-} as unknown as AppState;
+};
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom, testState as AppState);
 }
 
 describe('<Zorg />', () => {
