@@ -22,3 +22,8 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
+      development-dependencies:
+        dependency-type: 'development'
+        update-types:
+          - 'minor'
+          - 'patch'
