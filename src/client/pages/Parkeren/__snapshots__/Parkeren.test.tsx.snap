@@ -101,12 +101,16 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
               <h2
                 class="ams-heading ams-heading--level-4"
               >
-                Let op
+                Parkeervergunning voor bewoners
               </h2>
               <p
                 class="ams-paragraph"
               >
                 Het inzien, aanvragen of wijzigen van een parkeervergunning voor bewoners kan via Mijn Parkeren.
+              </p>
+              <p
+                class="ams-paragraph"
+              >
                 <button
                   class="ams-button ams-button--primary"
                   type="button"
