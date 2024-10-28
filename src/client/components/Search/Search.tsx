@@ -243,7 +243,7 @@ export function Search({
       setResultsVisible(false);
       onFinish('Click result');
 
-      if (result.url.startsWith('https')) {
+      if (result.url.startsWith('http')) {
         window.location.href = result.url;
         return;
       } else if (replaceResultUrl?.(result)) {

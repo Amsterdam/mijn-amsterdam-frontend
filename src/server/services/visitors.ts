@@ -277,7 +277,7 @@ export async function loginStatsTable(req: Request, res: Response) {
   const { queryALL } = await db();
   const queries = await getQueries();
 
-  function generateHtmlTable(rows: any[]) {
+  function generateHtmlTable(rows: object[]) {
     if (rows.length === 0) {
       return '<p>No data found.</p>';
     }
@@ -313,7 +313,7 @@ export async function loginStatsTable(req: Request, res: Response) {
   const query = queries.rawOverview;
 
   // Execute the query and retrieve the results
-  const rows = (await queryALL(query)) as any[];
+  const rows = (await queryALL(query)) as object[];
 
   // Generate and display the HTML table
   const htmlTable = generateHtmlTable(rows);

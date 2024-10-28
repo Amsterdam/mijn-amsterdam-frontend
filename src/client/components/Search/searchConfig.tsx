@@ -9,6 +9,7 @@ import type {
   KrefiaDeepLink,
   Vergunning,
 } from '../../../server/services';
+import { AfisFacturenByStateResponse } from '../../../server/services/afis/afis-types';
 import { AVGRequest } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
@@ -39,6 +40,7 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
+import { AfisFactuurFrontend } from '../../pages/Afis/Afis-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -135,7 +137,7 @@ export function displayPath(
           let segmentReplaced = segment;
           if (replaceTerm) {
             termSplitted.forEach((termPart) => {
-              const replaced = segmentReplaced.replace(
+              const replaced = segmentReplaced?.replace(
                 new RegExp(escapeRegex(termPart), 'ig'),
                 `<em>$&</em>`
               );
@@ -338,6 +340,33 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           segments.push(`Besluit ${defaultDateFormat(item.datePublished)}`);
         }
         return displayPath(term, segments);
+      };
+    },
+  },
+  {
+    stateKey: 'AFIS_BAG' as AppStateKey,
+    getApiBaseItems: (
+      data: Record<string, ApiSuccessResponse<AfisFacturenByStateResponse>>
+    ) => {
+      if (Object.keys(data).length) {
+        const facturen = Object.values(data).flatMap((byState) =>
+          byState.content
+            ? Object.values(byState.content).flatMap((facturenResponse) =>
+                facturenResponse ? facturenResponse.facturen : []
+              )
+            : []
+        );
+        return facturen;
+      }
+      return [];
+    },
+    displayTitle: (item: AfisFactuurFrontend) => {
+      return (term: string) => {
+        return displayPath(term, [
+          item.factuurNummer,
+          item.paymentDueDateFormatted,
+          item.statusDescription,
+        ]);
       };
     },
   },

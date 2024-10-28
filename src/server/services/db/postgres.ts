@@ -19,26 +19,29 @@ let isConnected = false;
  * To develop against a working database you should enable the Datapunt VPN and use the credentials for the connection in your env.local file.
  */
 
-export async function query(queryString: string, values?: any[]) {
+export async function query(queryString: string, values?: unknown[]) {
   let result = null;
+
+  if (!isConnected) {
+    await pool.connect();
+    isConnected = true;
+  }
+
   try {
-    if (!isConnected) {
-      await pool.connect();
-      isConnected = true;
-    }
     result = await pool.query(queryString, values);
   } catch (error) {
     captureException(error);
   }
+
   return result;
 }
 
-export async function queryGET(queryString: string, values?: any[]) {
+export async function queryGET(queryString: string, values?: unknown[]) {
   const result = await query(queryString, values);
   return result?.rows[0] ?? null;
 }
 
-export async function queryALL(queryString: string, values?: any[]) {
+export async function queryALL(queryString: string, values?: unknown[]) {
   const result = await query(queryString, values);
   return result?.rows ?? [];
 }

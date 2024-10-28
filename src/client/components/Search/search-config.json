@@ -690,6 +690,62 @@
       "description": "AVG Verzoeken",
       "keywords": ["AVG", "verzoek"],
       "profileTypes": ["private"]
+    },
+    {
+      "url": "/facturen-en-betalen",
+      "displayTitle": "Facturen en betalen",
+      "description": "Overzicht van uw facturen, betalingen en automatische incasso's.",
+      "keywords": [
+        "factuur",
+        "incasso",
+        "betalen",
+        "sepa",
+        "ideal",
+        "automatische incasso"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/facturen-en-betalen/facturen/open",
+      "displayTitle": "Openstaande facturen",
+      "description": "Overzicht van uw openstaande facturen.",
+      "keywords": [
+        "factuur",
+        "openstaand",
+        "open",
+        "sepa",
+        "ideal",
+        "automatische incasso",
+        "betalen"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/facturen-en-betalen/facturen/afgehandeld",
+      "displayTitle": "Afgehandelde facturen",
+      "description": "Overzicht van uw afgehandelde facturen.",
+      "keywords": [
+        "factuur",
+        "gesloten",
+        "afgehandeld",
+        "sepa",
+        "automatische incasso"
+      ],
+      "profileTypes": ["private", "commercial"]
+    },
+    {
+      "url": "/facturen-en-betalen/facturen/overgedragen",
+      "displayTitle": "Facturen in het incasso- en invorderingstraject van directie Belastingen",
+      "description": "Overzicht van uw facturen in het incasso- en invorderingstraject van directie Belastingen.",
+      "keywords": [
+        "factuur",
+        "belastingen",
+        "facturen",
+        "overgedragen",
+        "invordering",
+        "incasso"
+      ],
+      "profileTypes": ["private", "commercial"]
     }
   ],
   "apiSearchConfigs": {
@@ -810,6 +866,14 @@
         "restaurant",
         "cafe"
       ]
+    },
+    "AFIS_BAG": {
+      "keywordsGeneratedFromProps": [
+        "factuurNummer",
+        "status",
+        "statusDescription"
+      ],
+      "keywords": ["factuur", "betalen", "incasso", "sepa", "ideal"]
     }
   }
 }

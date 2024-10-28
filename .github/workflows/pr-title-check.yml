@@ -17,10 +17,12 @@ jobs:
 
             // Titel moet beginnen met mijn-xxxx-chore/feature/bug! todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
             const jiraPattern = /^MIJN-\d+-(CHORE|FEATURE|BUG)/i
-            if (!jiraPattern.test(prTitle)) {
+            const dependabotPattern = /^Build\(deps(-dev)?\): bump/
+
+            if (!(jiraPattern.test(prTitle) || dependabotPattern.test(prTitle))) {
               console.log('The PR title does not match JIRA ticket format!')
               // Fails the workflow
-              core.setFailed('PR title does not match JIRA ticket format!')
+              core.setFailed('PR title not valid. Please make sure this PR uses the JIRA ticket or dependabot format.')
             } else {
               console.log('PR title format is correct.')
             }

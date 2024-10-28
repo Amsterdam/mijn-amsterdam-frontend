@@ -34,7 +34,7 @@ async function fetchAfisTokenHeader_() {
           Authorization: `${response.token_type} ${response.access_token}`,
         };
       }
-      return null;
+      throw new Error('AFIS: Invalid token response');
     },
     formatUrl(config) {
       return `${config.url}/OAuthServer`;
@@ -50,6 +50,10 @@ async function fetchAfisTokenHeader_() {
     Authorization: string;
   } | null>(dataRequestConfig, AFIS_TOKEN_REQUEST_ID);
 
+  if (tokenHeaderResponse.status !== 'OK') {
+    throw new Error('AFIS: Could not fetch token');
+  }
+
   return tokenHeaderResponse.content;
 }
 
@@ -59,40 +63,6 @@ export const fetchAfisTokenHeader = memoizee(fetchAfisTokenHeader_, {
   // eslint-disable-next-line no-magic-numbers
   maxAge: 55 * ONE_MINUTE_MS,
 });
-
-/** Returns if the person logging in, is known in the AFIS source API */
-export async function fetchIsKnownInAFIS(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const profileIdentifierType =
-    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
-
-  const additionalConfig: DataRequestConfig = {
-    method: 'post',
-    data: {
-      [profileIdentifierType]: authProfileAndToken.profile.id,
-    },
-    transformResponse: (response) =>
-      transformBusinessPartnerisKnownResponse(
-        response,
-        authProfileAndToken.profile.sid
-      ),
-    formatUrl(config) {
-      return `${config.url}/businesspartner/${profileIdentifierType}/`;
-    },
-  };
-
-  const dataRequestConfig = await getAfisApiConfig(additionalConfig);
-
-  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
-    dataRequestConfig,
-    requestID,
-    authProfileAndToken
-  );
-
-  return response;
-}
 
 function transformBusinessPartnerisKnownResponse(
   response:
@@ -137,4 +107,38 @@ function transformBusinessPartnerisKnownResponse(
     isKnown,
     businessPartnerIdEncrypted,
   };
+}
+
+/** Returns if the person logging in, is known in the AFIS source API */
+export async function fetchIsKnownInAFIS(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const profileIdentifierType =
+    authProfileAndToken.profile.profileType === 'commercial' ? 'KVK' : 'BSN';
+
+  const additionalConfig: DataRequestConfig = {
+    method: 'post',
+    data: {
+      [profileIdentifierType]: authProfileAndToken.profile.id,
+    },
+    transformResponse: (response) =>
+      transformBusinessPartnerisKnownResponse(
+        response,
+        authProfileAndToken.profile.sid
+      ),
+    formatUrl(config) {
+      return `${config.url}/businesspartner/${profileIdentifierType}/`;
+    },
+  };
+
+  const dataRequestConfig = await getAfisApiConfig(additionalConfig);
+
+  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
+    dataRequestConfig,
+    requestID,
+    authProfileAndToken
+  );
+
+  return response;
 }

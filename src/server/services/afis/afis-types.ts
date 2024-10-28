@@ -1,3 +1,5 @@
+import { LinkProps } from '../../../universal/types';
+
 type JaOfNee = 'Ja' | 'Nee';
 
 /** Business partner private response from external AFIS API.
@@ -100,8 +102,12 @@ export type AfisFacturenByStateResponse = {
   [key in AfisFactuurState]?: AfisFacturenResponse | null;
 };
 
+export type AfisFactuurDeelbetalingen = {
+  [factuurNummer: string]: number;
+};
+
 export type AfisFacturenParams = {
-  state: AfisFactuurState;
+  state: AfisFactuurState | 'deelbetalingen';
   businessPartnerID: string;
   top?: string;
 };
@@ -123,6 +129,7 @@ export type AfisFactuur = {
   paylink: string | null;
   documentDownloadLink: string | null;
   statusDescription: string;
+  link: LinkProps;
 };
 
 type AfisFactuurStatus =
@@ -137,8 +144,20 @@ type AfisFactuurStatus =
   | 'herinnering'
   | 'onbekend';
 
-export type AfisOpenInvoiceSource =
+export type AfisInvoicesSource =
   AfisApiFeedResponseSource<AfisFactuurPropertiesSource>;
+
+export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
+  Pick<
+    AfisFactuurPropertiesSource,
+    | 'NetPaymentAmount'
+    | 'AmountInBalanceTransacCrcy'
+    | 'DocumentReferenceID'
+    | 'AccountingDocument'
+  >
+>;
+
+export type AccountingDocumentType = string;
 
 /** Extra property information
  *  ==========================
@@ -152,7 +171,7 @@ export type AfisOpenInvoiceSource =
  */
 export type AfisFactuurPropertiesSource = {
   AccountingDocument: string;
-  AccountingDocumentType: string;
+  AccountingDocumentType: AccountingDocumentType;
   AmountInBalanceTransacCrcy: string;
   ClearingDate?: string;
   DocumentReferenceID: string;
@@ -182,4 +201,8 @@ export type AfisDocumentDownloadSource = {
     attachment: string;
     attachmentname: string;
   };
+};
+
+export type XmlNullable<T extends Record<string, unknown>> = {
+  [key in keyof T]: { '@null': true } | T[key];
 };

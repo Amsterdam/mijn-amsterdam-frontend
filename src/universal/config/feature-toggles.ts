@@ -22,7 +22,7 @@ export const FeatureToggle = {
   cmsFooterActive: true,
 
   // Database
-  dbEnabled: true,
+  dbEnabled: !IS_DEVELOPMENT,
   dbSessionsEnabled: true,
 
   // E-herkenning
