@@ -1,3 +1,4 @@
+import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { dateSort } from '../../../universal/helpers/date';
 
@@ -38,13 +39,14 @@ export const listPageTitle = {
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VergunningFrontendV2) => !vergunning.processed,
+    filter: (vergunning: VergunningFrontendV2 | Vergunning) =>
+      !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2) =>
+    filter: (vergunning: VergunningFrontendV2 | Vergunning) =>
       vergunning.decision === 'Verleend' &&
       'isExpired' in vergunning &&
       vergunning.isExpired !== true,
@@ -53,7 +55,8 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2) => vergunning.processed,
+    filter: (vergunning: VergunningFrontendV2 | Vergunning) =>
+      vergunning.processed,
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
   },
