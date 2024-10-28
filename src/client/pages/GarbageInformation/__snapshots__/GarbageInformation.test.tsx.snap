@@ -716,7 +716,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
         Dit zijn de afvalregels voor uw adres.
       </p>
       <section
-        class="ams-alert ams-alert--error"
+        class="ams-alert ams-alert--info"
       >
         <div
           class="ams-alert__icon"
@@ -727,14 +727,12 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
             <svg
               aria-hidden="true"
               focusable="false"
-              viewBox="0 0 36 36"
+              viewBox="0 0 28 28"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
+                fill-rule="evenodd"
               />
             </svg>
           </span>
@@ -745,7 +743,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
           <h2
             class="ams-heading ams-heading--level-4"
           >
-            Foutmelding
+            Bedrijfsafval informatie
           </h2>
           <p
             class="ams-paragraph"
@@ -1397,7 +1395,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
         Dit zijn de afvalregels voor uw adres.
       </p>
       <section
-        class="ams-alert ams-alert--error"
+        class="ams-alert ams-alert--info"
       >
         <div
           class="ams-alert__icon"
@@ -1408,14 +1406,12 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
             <svg
               aria-hidden="true"
               focusable="false"
-              viewBox="0 0 36 36"
+              viewBox="0 0 28 28"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
+                fill-rule="evenodd"
               />
             </svg>
           </span>
@@ -1426,7 +1422,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
           <h2
             class="ams-heading ams-heading--level-4"
           >
-            Foutmelding
+            Bedrijfsafval informatie
           </h2>
           <p
             class="ams-paragraph"
@@ -1608,7 +1604,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
         Dit zijn de afvalregels voor uw adres.
       </p>
       <section
-        class="ams-alert ams-alert--error"
+        class="ams-alert ams-alert--info"
       >
         <div
           class="ams-alert__icon"
@@ -1619,14 +1615,12 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
             <svg
               aria-hidden="true"
               focusable="false"
-              viewBox="0 0 36 36"
+              viewBox="0 0 28 28"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
+                fill-rule="evenodd"
               />
             </svg>
           </span>
@@ -1637,7 +1631,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
           <h2
             class="ams-heading ams-heading--level-4"
           >
-            Foutmelding
+            Bedrijfsafval informatie
           </h2>
           <p
             class="ams-paragraph"
