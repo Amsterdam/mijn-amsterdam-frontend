@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
+exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
     class="_Page_47d7c0 _OverviewPage_47d7c0"
@@ -13,23 +13,18 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
         class="_Icon_3b337d"
       >
         <svg
-          aria-label="Zorg en ondersteuning"
+          aria-label="Stadspas en regelingen bij laag inkomen"
           class="_ThemaIcon_2fc54d"
           fill="black"
-          focusable="false"
-          height="32px"
+          height="32"
           viewBox="0 0 32 32"
-          width="32px"
+          width="32"
           xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <polygon
-            id="Path"
-            points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
-          />
           <path
-            d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
-            id="Shape"
+            clip-rule="evenodd"
+            d="M24 0H8V3H24V0ZM28 6H4V9H28V6ZM0 14C0 12.8954 0.895432 12 2 12H30C31.1046 12 32 12.8954 32 14V30C32 31.1046 31.1046 32 30 32H2C0.895432 32 0 31.1046 0 30V14ZM16.375 21.4615V19.8461H12.625C12.7361 19.7424 12.8258 19.6188 12.9189 19.4905C13.0674 19.2858 13.2243 19.0694 13.4904 18.9038C15.2212 17.1538 18.1058 17.1538 19.9808 18.9038L22 17.0192C18.9712 14.3269 14.2115 14.3269 11.3269 17.0192C10.4615 17.8269 9.88461 18.7692 9.59616 19.8461H7V21.4615H9.30769V22.6731H7V24.2885H9.59616C9.88461 25.2308 10.4615 26.1731 11.3269 26.9808C14.3558 29.6731 19.1154 29.6731 22 26.9808L19.9808 25.0962C18.25 26.8462 15.3654 26.8462 13.4904 25.0962C13.2019 24.8269 12.9135 24.5577 12.7692 24.2885H16.375V22.6731H12.0481V21.4615H16.375Z"
+            fill-rule="evenodd"
           />
         </svg>
       </span>
@@ -61,7 +56,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
         <h2
           class="ams-heading ams-heading--level-1"
         >
-          Zorg en ondersteuning
+          Stadspas en regelingen bij laag inkomen
         </h2>
       </div>
     </header>
@@ -77,15 +72,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph"
           >
-            Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke ondersteuning (Wmo). Heeft u vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk: 
-            <a
-              class="ams-link ams-link--inline"
-              href="tel:08000643"
-              rel="noreferrer"
-            >
-              0800 0643
-            </a>
-             (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het Sociaal Loket.
+            Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn van een Stadspas ziet u ook de stadspasgegevens.
           </p>
         </div>
         <div
@@ -97,7 +84,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
             <li>
               <a
                 class="ams-link-list__link"
-                href="https://www.amsterdam.nl/zorg-ondersteuning/"
+                href="https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/"
                 rel="noreferrer"
               >
                 <span
@@ -115,7 +102,31 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
                     />
                   </svg>
                 </span>
-                Lees hier meer over zorg en ondersteuning
+                Meer informatie over regelingen
+              </a>
+            </li>
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="https://www.amsterdam.nl/stadspas"
+                rel="noreferrer"
+              >
+                <span
+                  class="ams-icon ams-icon--size-5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Meer informatie over Stadspas
               </a>
             </li>
           </ul>
@@ -123,16 +134,40 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
         <div
           class="ams-grid__cell ams-grid__cell--span-all"
         >
+          <ul
+            class="ams-unordered-list ams-unordered-list--no-markers"
+          >
+            <li
+              class="ams-unordered-list__item"
+            >
+              <a
+                class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+              >
+                <span
+                  class="_Stadspas_owner_2b0bd1"
+                />
+              </a>
+            </li>
+          </ul>
+          <p
+            class="ams-paragraph ams-paragraph--small"
+          >
+            De stadspas heeft een einddatum van 31 juli 2025
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
           <h3
             class="ams-heading ams-heading--level-2"
           >
-            Huidige voorzieningen
+            Huidige regelingen
           </h3>
           <div
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_14a7ab"
+              class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_2b0bd1"
             >
               <thead
                 class="ams-table__header"
@@ -140,18 +175,15 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
                 <tr
                   class="ams-table__row"
                 >
-                  <td
-                    class="ams-table__cell"
-                  />
                   <th
                     class="ams-table__header-cell"
                   >
-                    Status
+                    Regeling
                   </th>
                   <th
                     class="ams-table__header-cell"
                   >
-                    Datum
+                    Naam ontvanger
                   </th>
                 </tr>
               </thead>
@@ -168,18 +200,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
                       class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
                       href="http://example.org/ding"
                     >
-                      Wmo item 1
+                      Hli item 1
                     </a>
                   </td>
                   <td
                     class="ams-table__cell"
                   >
-                    Levering gestart
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    24 september 2020
+                    Naam Persoon 1, Naam Persoon 2
                   </td>
                 </tr>
               </tbody>
@@ -192,13 +219,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
           <h3
             class="ams-heading ams-heading--level-2"
           >
-            Eerdere en afgewezen voorzieningen
+            Eerdere en afgewezen regelingen
           </h3>
           <div
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_14a7ab"
+              class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_2b0bd1"
             >
               <tbody
                 class="ams-table__body"
@@ -208,26 +235,16 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
           <p
             class="ams-paragraph"
           >
-            U heeft geen eerdere en afgewezen voorzieningen
+            U heeft geen eerdere en afgewezen regelingen
           </p>
         </div>
       </div>
     </div>
   </main>
   <p
-    class="ams-paragraph _HistoricItemsMention_14a7ab"
+    class="ams-paragraph _HistoricItemsMention_2b0bd1"
   >
-    U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van daarvoor? Bel dan de Wmo Helpdesk: 
-    <a
-      class="ams-link ams-link--standalone"
-      href="tel:08000643"
-      rel="noreferrer"
-    >
-      0800 0643
-    </a>
-    .
-    <br />
-    U ziet ook geen begeleid thuis en beschermd verblijf (vroeger maatschappelijke opvang en beschermd wonen). Hier zijn we nog mee bezig.
+    U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.
   </p>
 </DocumentFragment>
 `;
