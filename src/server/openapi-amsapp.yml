@@ -256,12 +256,13 @@ components:
       properties:
         id:
           type: string
-        title:
-          type: string
+          nullable: true
         description:
           type: string
+          nullable: true
         discountTitle:
           type: string
+          nullable: true
         discountAmount:
           type: number
         discountAmountFormatted:
