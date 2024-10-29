@@ -152,33 +152,27 @@ export type AfisInvoicesSource =
 export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
   Pick<
     AfisFactuurPropertiesSource,
-    'NetPaymentAmount' | 'AmountInBalanceTransacCrcy' | 'InvoiceReference'
+    'AmountInBalanceTransacCrcy' | 'InvoiceReference'
   >
 >;
 
 export type AccountingDocumentType = string;
 
-export type AfisAmountPropertiesSource<T> = {
-  NetPaymentAmount: T;
-  AmountInBalanceTransacCrcy: T;
-};
-
 export type AfisFactuurDeelbetalingen = {
-  [factuurNummer: string]: AfisAmountPropertiesSource<Decimal>;
+  [factuurNummer: string]: Decimal;
 };
 
 /** Extra property information
  *  ==========================
  * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
- * `NetPaymentAmount`: Is a negative decimal number and represents money that is -
- *   already payed for this item.
  * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
  *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
  *   to the debtor.
  *  `IsCleared`: `true` means the 'factuur' is fully payed for.
  */
-export type AfisFactuurPropertiesSource = AfisAmountPropertiesSource<string> & {
+export type AfisFactuurPropertiesSource = {
   AccountingDocument: string;
+  AmountInBalanceTransacCrcy: string;
   AccountingDocumentType: AccountingDocumentType;
   ClearingDate?: string;
   DocumentReferenceID: string;

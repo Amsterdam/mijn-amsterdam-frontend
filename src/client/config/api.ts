@@ -16,7 +16,6 @@ export const BFFApiUrls = {
   BEZWAREN_DETAIL: `${BFF_API_BASE_URL}/services/bezwaren`,
   AFIS_BUSINESSPARTNER: `${BFF_API_BASE_URL}/services/afis/businesspartner`,
   AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen`,
-  AFIS_FACTUREN_OVERZICHT: `${BFF_API_BASE_URL}/services/afis/facturen/overzicht`,
 };
 
 // Urls directly used from front-end
@@ -81,7 +80,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 
 export function createErrorDisplayData(
   stateKey: string,
-  apiResponseData: ApiResponse<any> | null | string
+  apiResponseData: ApiResponse<unknown> | null | string
 ): ApiError {
   const name = ErrorNames[stateKey] || stateKey;
   const errorMessage =
@@ -118,14 +117,16 @@ export function createFailedDependenciesError(
 export function getApiErrors(appState: AppState): ApiError[] {
   if (appState) {
     const filteredResponses = Object.entries(appState).filter(
-      ([, apiResponseData]: [string, any]) => {
+      ([, apiResponseData]: [string, unknown]) => {
         return (
           typeof apiResponseData !== 'object' ||
           apiResponseData == null ||
-          apiResponseData?.status === 'ERROR' ||
-          apiResponseData?.status === 'DEPENDENCY_ERROR' ||
-          (apiResponseData?.status === 'OK' &&
-            !!apiResponseData?.failedDependencies)
+          ('status' in apiResponseData &&
+            (apiResponseData?.status === 'ERROR' ||
+              apiResponseData?.status === 'DEPENDENCY_ERROR' ||
+              (apiResponseData?.status === 'OK' &&
+                'failedDependencies' in apiResponseData &&
+                !!apiResponseData?.failedDependencies)))
         );
       }
     );
@@ -148,7 +149,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
         apiErrors.push(
           createErrorDisplayData(
             stateKey,
-            apiResponseData as ApiResponse<any> | null | string
+            apiResponseData as ApiResponse<unknown> | null | string
           )
         );
       }

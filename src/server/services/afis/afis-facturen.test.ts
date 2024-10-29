@@ -89,8 +89,7 @@ describe('afis-facturen', async () => {
             content: {
               properties: {
                 InvoiceReference: '1234567890',
-                AmountInBalanceTransacCrcy: '00.00',
-                NetPaymentAmount: '27.50',
+                AmountInBalanceTransacCrcy: '27.50',
               },
             },
           },
@@ -270,7 +269,6 @@ describe('afis-facturen', async () => {
               properties: {
                 InvoiceReference: '123',
                 AmountInBalanceTransacCrcy: '-100.10',
-                NetPaymentAmount: '-50.20',
               },
             },
           },
@@ -279,7 +277,6 @@ describe('afis-facturen', async () => {
               properties: {
                 InvoiceReference: '123',
                 AmountInBalanceTransacCrcy: '-75.40',
-                NetPaymentAmount: '-15.90',
               },
             },
           },
@@ -288,7 +285,6 @@ describe('afis-facturen', async () => {
               properties: {
                 InvoiceReference: '321',
                 AmountInBalanceTransacCrcy: '-100',
-                NetPaymentAmount: '-100.49',
               },
             },
           },
@@ -299,15 +295,8 @@ describe('afis-facturen', async () => {
 
     expect(['123', '321'].every((id) => id in result)).toBe(true);
 
-    expect(result['123'].AmountInBalanceTransacCrcy.toFixed(2)).toEqual(
-      '-175.50'
-    );
-    expect(result['123'].NetPaymentAmount.toFixed(2)).toEqual('-66.10');
-
-    expect(result['321'].AmountInBalanceTransacCrcy.toFixed(2)).toEqual(
-      '-100.00'
-    );
-    expect(result['321'].NetPaymentAmount.toFixed(2)).toEqual('-100.49');
+    expect(result['123'].toFixed(2)).toEqual('-175.50');
+    expect(result['321'].toFixed(2)).toEqual('-100.00');
   });
 
   test('replaceXmlNulls replaces XML nulls correctly', () => {
@@ -320,7 +309,6 @@ describe('afis-facturen', async () => {
       DunningBlockingReason: '',
       DunningLevel: 0,
       NetDueDate: '',
-      NetPaymentAmount: '',
       Paylink: null,
       PostingDate: { '@null': true },
       ProfitCenterName: '',
@@ -338,7 +326,6 @@ describe('afis-facturen', async () => {
         "DunningLevel": 0,
         "InvoiceReference": "",
         "NetDueDate": "",
-        "NetPaymentAmount": "",
         "Paylink": null,
         "PostingDate": null,
         "ProfitCenterName": "",
@@ -359,7 +346,6 @@ describe('afis-facturen', async () => {
       DunningLevel: 0,
       IsCleared: false,
       NetDueDate: '2023-12-21T00:00:00',
-      NetPaymentAmount: '100.00',
       Paylink: 'http://example.com/pay',
       PostingDate: '2023-11-21T00:00:00',
       ProfitCenterName: 'Profit Center 1',
@@ -383,7 +369,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: false,
         NetDueDate: '2023-12-22T00:00:00',
-        NetPaymentAmount: '200.00',
         Paylink: 'http://example.com/pay',
         PostingDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
@@ -401,7 +386,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 1,
         IsCleared: false,
         NetDueDate: '2023-12-23T00:00:00',
-        NetPaymentAmount: '300.00',
         Paylink: 'http://example.com/pay',
         PostingDate: '2023-11-23T00:00:00',
         ProfitCenterName: 'Profit Center 3',
@@ -420,7 +404,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 3,
         IsCleared: true,
         NetDueDate: '2023-12-25T00:00:00',
-        NetPaymentAmount: '500.00',
         Paylink: 'http://example.com/pay',
         PostingDate: '2023-11-25T00:00:00',
         ProfitCenterName: 'Profit Center 5',
@@ -438,7 +421,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: false,
         NetDueDate: '2023-12-26T00:00:00',
-        NetPaymentAmount: '-100.00',
         Paylink: null,
         PostingDate: '2023-11-26T00:00:00',
         ProfitCenterName: 'Profit Center 6',
@@ -456,7 +438,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: true,
         NetDueDate: '2023-12-27T00:00:00',
-        NetPaymentAmount: '0.00',
         Paylink: null,
         PostingDate: '2023-11-27T00:00:00',
         ProfitCenterName: 'Profit Center 7',
@@ -474,7 +455,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: false,
         NetDueDate: '2023-12-28T00:00:00',
-        NetPaymentAmount: '0.00',
         Paylink: null,
         PostingDate: '2023-11-28T00:00:00',
         ProfitCenterName: 'Profit Center 8',
@@ -492,7 +472,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 2,
         IsCleared: false,
         NetDueDate: '2023-12-29T00:00:00',
-        NetPaymentAmount: '600.00',
         Paylink: 'http://example.com/pay',
         PostingDate: '2023-11-29T00:00:00',
         ProfitCenterName: 'Profit Center 9',
@@ -510,7 +489,6 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: undefined,
         NetDueDate: '2023-12-30T00:00:00',
-        NetPaymentAmount: '700.00',
         Paylink: 'http://example.com/pay',
         PostingDate: '2023-11-30T00:00:00',
         ProfitCenterName: 'Profit Center 10',
@@ -592,26 +570,16 @@ describe('afis-facturen', async () => {
   test('getAmountOwed calculates amount owed correctly', () => {
     const invoice: Pick<
       AfisFactuurPropertiesSource,
-      'NetPaymentAmount' | 'AmountInBalanceTransacCrcy'
+      'AmountInBalanceTransacCrcy'
     > = {
-      NetPaymentAmount: '100.00',
       AmountInBalanceTransacCrcy: '50.00',
     };
 
     const result = forTesting.getAmountOwed(invoice);
-    expect(result).toEqual({
-      amountOwed: new Decimal(150),
-      amountInBalanceTransacCrcyInCents: new Decimal(5000),
-    });
+    expect(result).toEqual(new Decimal(50));
 
-    const resultWithDeelbetaling = forTesting.getAmountOwed(invoice, {
-      NetPaymentAmount: new Decimal(50),
-      AmountInBalanceTransacCrcy: new Decimal(0),
-    });
-    expect(resultWithDeelbetaling.amountOwed.toFixed(2)).toEqual('200.00');
-    expect(
-      resultWithDeelbetaling.amountInBalanceTransacCrcyInCents.toFixed(2)
-    ).toEqual('5000.00');
+    const amountOwed = forTesting.getAmountOwed(invoice, new Decimal(10.35));
+    expect(amountOwed.toFixed(2)).toEqual('60.35');
   });
 
   test('getFactuurnummer returns correct factuurnummer', () => {
@@ -649,7 +617,6 @@ describe('afis-facturen', async () => {
               properties: {
                 InvoiceReference: '123',
                 AmountInBalanceTransacCrcy: '100.00',
-                NetPaymentAmount: '50.00',
               },
             },
           },
@@ -677,10 +644,7 @@ describe('afis-facturen', async () => {
 
     expect(response.status).toBe('OK');
     expect(response.content).toEqual({
-      '123': {
-        NetPaymentAmount: new Decimal(50.0),
-        AmountInBalanceTransacCrcy: new Decimal(100.0),
-      },
+      '123': new Decimal(100.0),
     });
   });
 
@@ -694,7 +658,6 @@ describe('afis-facturen', async () => {
       SEPAMandate: '',
       PostingDate: '2023-11-21T00:00:00',
       NetDueDate: '2023-12-21T00:00:00',
-      NetPaymentAmount: '123.40',
       AmountInBalanceTransacCrcy: '10.00',
       DocumentReferenceID: '1234567890',
       AccountingDocument: '1234567890',

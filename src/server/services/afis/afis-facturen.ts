@@ -22,7 +22,6 @@ import { captureMessage } from '../monitoring';
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AccountingDocumentType,
-  AfisAmountPropertiesSource,
   AfisFacturenByStateResponse,
   AfisFacturenParams,
   AfisFacturenResponse,
@@ -32,7 +31,6 @@ import {
   AfisFactuurState,
   AfisInvoicesPartialPaymentsSource,
   AfisInvoicesSource,
-  InvoiceAmountOwed,
   XmlNullable,
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -57,14 +55,13 @@ const accountingDocumentTypesByState: Record<
   deelbetalingen: ['AB'],
 };
 
-const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate`;
+const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate`;
 
 const selectFieldsQueryByState: Record<AfisFacturenParams['state'], string> = {
   open: select,
   afgehandeld: select,
   overgedragen: select,
-  deelbetalingen:
-    '$select=AmountInBalanceTransacCrcy,NetPaymentAmount,InvoiceReference',
+  deelbetalingen: '$select=AmountInBalanceTransacCrcy,InvoiceReference',
 };
 
 const orderByQueryByState: Record<AfisFacturenParams['state'], string> = {
@@ -123,22 +120,11 @@ function transformDeelbetalingenResponse(
 
     if (factuurNummer) {
       if (!acc[factuurNummer]) {
-        acc[factuurNummer] = {
-          NetPaymentAmount: new Decimal(0),
-          AmountInBalanceTransacCrcy: new Decimal(0),
-        };
-      }
-
-      if (deelbetaling.NetPaymentAmount) {
-        acc[factuurNummer].NetPaymentAmount = acc[
-          factuurNummer
-        ].NetPaymentAmount.plus(deelbetaling.NetPaymentAmount);
+        acc[factuurNummer] = new Decimal(0);
       }
 
       if (deelbetaling.AmountInBalanceTransacCrcy) {
-        acc[factuurNummer].AmountInBalanceTransacCrcy = acc[
-          factuurNummer
-        ].AmountInBalanceTransacCrcy.plus(
+        acc[factuurNummer] = acc[factuurNummer].plus(
           deelbetaling.AmountInBalanceTransacCrcy
         );
       }
@@ -176,28 +162,19 @@ function getFactuurnummer(
 }
 
 function getAmountOwed(
-  invoice: AfisAmountPropertiesSource<string>,
-  deelbetaling?: AfisAmountPropertiesSource<Decimal>
-): InvoiceAmountOwed {
-  let netPaymentAmount = new Decimal(invoice.NetPaymentAmount ?? 0);
+  invoice: Pick<AfisFactuurPropertiesSource, 'AmountInBalanceTransacCrcy'>,
+  deelbetalingAmount?: Decimal
+): Decimal {
   let amountInBalanceTransacCrcy = new Decimal(
     invoice.AmountInBalanceTransacCrcy ?? 0
   );
 
-  if (deelbetaling) {
-    netPaymentAmount = netPaymentAmount.plus(deelbetaling.NetPaymentAmount);
-    amountInBalanceTransacCrcy = amountInBalanceTransacCrcy.plus(
-      deelbetaling.AmountInBalanceTransacCrcy
-    );
+  if (deelbetalingAmount) {
+    amountInBalanceTransacCrcy =
+      amountInBalanceTransacCrcy.plus(deelbetalingAmount);
   }
 
-  const amountOwed = netPaymentAmount.plus(amountInBalanceTransacCrcy);
-
-  return {
-    amountOwed,
-    // eslint-disable-next-line no-magic-numbers
-    amountInBalanceTransacCrcyInCents: amountInBalanceTransacCrcy.times(100),
-  };
+  return amountInBalanceTransacCrcy;
 }
 
 function transformFactuur(
@@ -214,10 +191,7 @@ function transformFactuur(
 
   const deelbetaling = deelbetalingen?.[factuurNummer];
   const hasDeelbetaling = !!deelbetaling;
-  const { amountOwed, amountInBalanceTransacCrcyInCents } = getAmountOwed(
-    invoice,
-    deelbetaling
-  );
+  const amountOwed = getAmountOwed(invoice, deelbetaling);
   const amountOwedFormatted = `€ ${amountOwed ? displayAmount(parseFloat(amountOwed.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
@@ -228,11 +202,7 @@ function transformFactuur(
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
-  const status = determineFactuurStatus(
-    invoice,
-    amountInBalanceTransacCrcyInCents,
-    hasDeelbetaling
-  );
+  const status = determineFactuurStatus(invoice, amountOwed, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
     ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
@@ -330,7 +300,7 @@ const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
 
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
-  amountInBalanceTransacCrcyInCents: Decimal,
+  amountOwed: Decimal,
   hasDeelbetaling: boolean
 ): AfisFactuur['status'] {
   switch (true) {
@@ -349,7 +319,7 @@ function determineFactuurStatus(
     case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'betaald';
 
-    case amountInBalanceTransacCrcyInCents.lt(0):
+    case amountOwed.lt(0):
       return 'geld-terug';
 
     case !!sourceInvoice.NetDueDate &&

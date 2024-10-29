@@ -25,7 +25,6 @@ export const BffEndpoints = {
   AFIS_BUSINESSPARTNER: '/services/afis/businesspartner',
   AFIS_FACTUREN:
     '/services/afis/facturen/:state(open|afgehandeld|overgedragen)',
-  AFIS_FACTUREN_OVERZICHT: '/services/afis/facturen/overzicht',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
 
   // Stadspas
