@@ -17,7 +17,9 @@ import { requestData } from '../../helpers/source-api-request';
 
 const AFIS_TOKEN_REQUEST_ID = 'AFIS-TOKEN-REQUEST-ID';
 
-async function fetchAfisTokenHeader_() {
+async function fetchAfisTokenHeader_(
+  requestID: RequestID = AFIS_TOKEN_REQUEST_ID
+) {
   const additionalConfig: DataRequestConfig = {
     method: 'post',
     data: qs.stringify({
@@ -48,7 +50,7 @@ async function fetchAfisTokenHeader_() {
 
   const tokenHeaderResponse = await requestData<{
     Authorization: string;
-  } | null>(dataRequestConfig, AFIS_TOKEN_REQUEST_ID);
+  } | null>(dataRequestConfig, requestID);
 
   if (tokenHeaderResponse.status !== 'OK') {
     throw new Error('AFIS: Could not fetch token');

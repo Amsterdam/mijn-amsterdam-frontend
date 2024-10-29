@@ -130,10 +130,13 @@ async function fetchAfisFacturenDeelbetalingen(
   requestID: RequestID,
   params: AfisFacturenParams
 ): Promise<ApiResponse<AfisFactuurDeelbetalingen | null>> {
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-    transformResponse: transformDeelbetalingenResponse,
-  });
+  const config = await getAfisApiConfig(
+    {
+      formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+      transformResponse: transformDeelbetalingenResponse,
+    },
+    requestID
+  );
   return requestData<AfisFactuurDeelbetalingen>(config, requestID);
 }
 
@@ -408,11 +411,14 @@ export async function fetchAfisFacturen(
     }
   }
 
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-    transformResponse: (responseData) =>
-      transformFacturen(responseData, sessionID, deelbetalingen),
-  });
+  const config = await getAfisApiConfig(
+    {
+      formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+      transformResponse: (responseData) =>
+        transformFacturen(responseData, sessionID, deelbetalingen),
+    },
+    requestID
+  );
 
   return requestData<AfisFacturenResponse>(config, requestID);
 }
