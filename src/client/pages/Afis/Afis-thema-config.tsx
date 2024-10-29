@@ -65,6 +65,7 @@ type AfisFacturenTableConfig = {
   maxItems: number;
   listPageLinkLabel: string;
   listPageRoute: string;
+  className: string;
 };
 
 type AfisFacturenTableConfigByState = Record<
@@ -81,6 +82,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'open',
     }),
+    className: 'FacturenTable--open',
   },
   overgedragen: {
     title: listPageTitle.overgedragen,
@@ -90,6 +92,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'overgedragen',
     }),
+    className: 'FacturenTable--afgehandeld',
   },
   afgehandeld: {
     title: listPageTitle.afgehandeld,
@@ -99,6 +102,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'afgehandeld',
     }),
+    className: 'FacturenTable--overgedragen',
   },
 } as const;
 

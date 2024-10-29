@@ -1,12 +1,14 @@
 import memoizee from 'memoizee';
 import qs from 'qs';
 
+import { fetchAfisFacturenOverview } from './afis-facturen';
 import { getAfisApiConfig } from './afis-helpers';
 import {
   AfisBusinessPartnerCommercialResponseSource,
   AfisBusinessPartnerKnownResponse,
   AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_MINUTE_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
@@ -108,6 +110,7 @@ function transformBusinessPartnerisKnownResponse(
   return {
     isKnown,
     businessPartnerIdEncrypted,
+    businessPartnerId,
   };
 }
 
@@ -142,5 +145,25 @@ export async function fetchIsKnownInAFIS(
     authProfileAndToken
   );
 
-  return response;
+  if (
+    response.status !== 'OK' ||
+    !response.content ||
+    !response.content.isKnown ||
+    !response.content.businessPartnerId
+  ) {
+    return response;
+  }
+
+  const facturenResponse = await fetchAfisFacturenOverview(
+    requestID,
+    authProfileAndToken.profile.sid,
+    {
+      businessPartnerID: response.content.businessPartnerId,
+    }
+  );
+
+  return apiSuccessResult({
+    ...response.content,
+    facturen: facturenResponse.content,
+  });
 }

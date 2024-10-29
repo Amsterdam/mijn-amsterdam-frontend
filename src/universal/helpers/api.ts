@@ -85,7 +85,7 @@ export function isError(
 }
 
 export function hasFailedDependency(
-  apiResponseData: ApiResponse<any>,
+  apiResponseData: ApiResponse<unknown>,
   dependencyKey: string
 ) {
   return (

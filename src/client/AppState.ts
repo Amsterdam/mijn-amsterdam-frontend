@@ -12,6 +12,7 @@ export const PRISTINE_APPSTATE: AppState = {
     {
       isKnown: false,
       businessPartnerIdEncrypted: null,
+      businessPartnerId: null,
       facturen: null,
     },
     {
