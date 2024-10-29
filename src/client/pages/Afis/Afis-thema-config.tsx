@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 
 import {
-  AfisFacturenByStateResponse,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
@@ -56,7 +55,7 @@ export type AfisFacturenResponseFrontend = AfisFacturenResponse & {
 };
 
 export type AfisFacturenByStateFrontend = {
-  [key in keyof AfisFacturenByStateResponse]: AfisFacturenResponseFrontend;
+  [key in AfisFactuurState]?: AfisFacturenResponseFrontend;
 };
 
 type AfisFacturenTableConfig = {

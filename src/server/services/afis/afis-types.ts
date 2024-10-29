@@ -37,9 +37,14 @@ export type AfisBusinessPartnerCommercialResponseSource = {
     | AfisBusinessPartnerRecordCommercial[];
 };
 
+export type AfisFacturenByStateResponse = {
+  [key in AfisFactuurState]?: AfisFacturenResponse | null;
+};
+
 export type AfisBusinessPartnerKnownResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
+  facturen: AfisFacturenByStateResponse | null;
 };
 
 export type AfisApiFeedResponseSource<T> = {
@@ -96,10 +101,6 @@ export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
 export type AfisFacturenResponse = {
   count: number;
   facturen: AfisFactuur[];
-};
-
-export type AfisFacturenByStateResponse = {
-  [key in AfisFactuurState]?: AfisFacturenResponse | null;
 };
 
 export type AfisFacturenParams = {
