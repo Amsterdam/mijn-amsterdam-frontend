@@ -63,7 +63,7 @@ const selectFieldsQueryByState: Record<AfisFacturenParams['state'], string> = {
   afgehandeld: select,
   overgedragen: select,
   deelbetalingen:
-    '$select=AmountInBalanceTransacCrcy,NetPaymentAmount,DocumentReferenceID,AccountingDocument',
+    '$select=AmountInBalanceTransacCrcy,NetPaymentAmount,InvoiceReference',
 };
 
 const orderByQueryByState: Record<AfisFacturenParams['state'], string> = {
@@ -117,10 +117,11 @@ function transformDeelbetalingenResponse(
   // Make a map of factuurnummers to total deelbetaling amounts
   const deelbetalingAmountByFactuurnummer: AfisFactuurDeelbetalingen = {};
   return feedProperties.reduce((acc, deelbetaling) => {
-    const factuurNummer = getFactuurnummer(deelbetaling);
-    const { amountOwed } = getAmountOwed(deelbetaling);
-
-    acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
+    const factuurNummer = deelbetaling.InvoiceReference;
+    if (factuurNummer) {
+      const { amountOwed } = getAmountOwed(deelbetaling);
+      acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
+    }
     return acc;
   }, deelbetalingAmountByFactuurnummer);
 }

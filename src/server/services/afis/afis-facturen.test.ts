@@ -87,8 +87,7 @@ describe('afis-facturen', async () => {
           {
             content: {
               properties: {
-                AccountingDocument: '1234567890',
-                DocumentReferenceID: '1234567890',
+                InvoiceReference: '1234567890',
                 AmountInBalanceTransacCrcy: '00.00',
                 NetPaymentAmount: '27.50',
               },
@@ -268,8 +267,7 @@ describe('afis-facturen', async () => {
           {
             content: {
               properties: {
-                AccountingDocument: '123',
-                DocumentReferenceID: '456',
+                InvoiceReference: '123',
                 AmountInBalanceTransacCrcy: '100.00',
                 NetPaymentAmount: '50.00',
               },
@@ -287,6 +285,7 @@ describe('afis-facturen', async () => {
       AccountingDocument: { '@null': true },
       DocumentReferenceID: '123',
       AccountingDocumentType: '',
+      InvoiceReference: '',
       AmountInBalanceTransacCrcy: '',
       DunningBlockingReason: '',
       DunningLevel: 0,
@@ -307,6 +306,7 @@ describe('afis-facturen', async () => {
         "DocumentReferenceID": "123",
         "DunningBlockingReason": "",
         "DunningLevel": 0,
+        "InvoiceReference": "",
         "NetDueDate": "",
         "NetPaymentAmount": "",
         "Paylink": null,
@@ -321,6 +321,7 @@ describe('afis-facturen', async () => {
     const openstaand: AfisFactuurPropertiesSource = {
       AccountingDocument: '123',
       AccountingDocumentType: 'DR',
+      InvoiceReference: '',
       AmountInBalanceTransacCrcy: '100.00',
       ClearingDate: undefined,
       DocumentReferenceID: '456',
@@ -344,6 +345,7 @@ describe('afis-facturen', async () => {
       'automatische-incasso': {
         AccountingDocument: '124',
         AccountingDocumentType: 'DG',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '200.00',
         ClearingDate: undefined,
         DocumentReferenceID: '457',
@@ -361,6 +363,7 @@ describe('afis-facturen', async () => {
       'in-dispuut': {
         AccountingDocument: '125',
         AccountingDocumentType: 'DM',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '300.00',
         ClearingDate: undefined,
         DocumentReferenceID: '458',
@@ -379,6 +382,7 @@ describe('afis-facturen', async () => {
       'overgedragen-aan-belastingen': {
         AccountingDocument: '127',
         AccountingDocumentType: 'DF',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '500.00',
         ClearingDate: undefined,
         DocumentReferenceID: '460',
@@ -396,6 +400,7 @@ describe('afis-facturen', async () => {
       'geld-terug': {
         AccountingDocument: '128',
         AccountingDocumentType: 'DV',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '-100.00',
         ClearingDate: undefined,
         DocumentReferenceID: '461',
@@ -413,6 +418,7 @@ describe('afis-facturen', async () => {
       betaald: {
         AccountingDocument: '129',
         AccountingDocumentType: 'DW',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '0.00',
         ClearingDate: '2023-12-01T00:00:00',
         DocumentReferenceID: '462',
@@ -430,6 +436,7 @@ describe('afis-facturen', async () => {
       geannuleerd: {
         AccountingDocument: '130',
         AccountingDocumentType: 'DX',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '0.00',
         ClearingDate: undefined,
         DocumentReferenceID: '463',
@@ -447,6 +454,7 @@ describe('afis-facturen', async () => {
       herinnering: {
         AccountingDocument: '131',
         AccountingDocumentType: 'DY',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '600.00',
         ClearingDate: undefined,
         DocumentReferenceID: '464',
@@ -464,6 +472,7 @@ describe('afis-facturen', async () => {
       onbekend: {
         AccountingDocument: '132',
         AccountingDocumentType: 'DZ',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '700.00',
         ClearingDate: undefined,
         DocumentReferenceID: '465',
@@ -605,8 +614,7 @@ describe('afis-facturen', async () => {
           {
             content: {
               properties: {
-                AccountingDocument: '123',
-                DocumentReferenceID: '456',
+                InvoiceReference: '123',
                 AmountInBalanceTransacCrcy: '100.00',
                 NetPaymentAmount: '50.00',
               },

@@ -150,10 +150,7 @@ export type AfisInvoicesSource =
 export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
   Pick<
     AfisFactuurPropertiesSource,
-    | 'NetPaymentAmount'
-    | 'AmountInBalanceTransacCrcy'
-    | 'DocumentReferenceID'
-    | 'AccountingDocument'
+    'NetPaymentAmount' | 'AmountInBalanceTransacCrcy' | 'InvoiceReference'
   >
 >;
 
@@ -180,6 +177,7 @@ export type AfisFactuurPropertiesSource = {
   IsCleared?: boolean;
   NetDueDate: string;
   NetPaymentAmount: string;
+  InvoiceReference: string | null;
   Paylink: string | null;
   PostingDate: string;
   ProfitCenterName: string;
