@@ -262,18 +262,7 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      const postingDate = new Date(invoiceProperties.PostingDate);
-      const now = new Date();
-      const postedToday =
-        postingDate.getDate() === now.getDate() &&
-        postingDate.getMonth() === now.getMonth() &&
-        postingDate.getFullYear() === now.getFullYear();
-
-      if (!postedToday) {
-        return true;
-      }
-      const sevenOClock = 19;
-      return postingDate.getTime() > now.setHours(sevenOClock);
+      return shouldFilterOutFactuur(invoiceProperties.PostingDate);
     })
     .map((invoiceProperties) => {
       return transformFactuur(invoiceProperties, sessionID, deelbetalingen);
@@ -282,6 +271,30 @@ function transformFacturen(
     count,
     facturen: facturenTransformed,
   };
+}
+
+function shouldFilterOutFactuur(postingDate: string): boolean {
+  const postingDateAsDate = new Date(postingDate);
+  const now = new Date();
+
+  if (postingDateAsDate.getTime() > now.getTime()) {
+    captureMessage('postingDate of invoice is in the future', {
+      severity: 'error',
+    });
+    return false;
+  }
+
+  const postedToday =
+    postingDateAsDate.getDate() === now.getDate() &&
+    postingDateAsDate.getMonth() === now.getMonth() &&
+    postingDateAsDate.getFullYear() === now.getFullYear();
+
+  if (!postedToday) {
+    return true;
+  }
+
+  const sevenOClock = 19;
+  return postedToday && now.getHours() >= sevenOClock;
 }
 
 const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
@@ -496,6 +509,7 @@ export const forTesting = {
   determineFactuurStatus,
   determineFactuurStatusDescription,
   fetchAfisFacturenDeelbetalingen,
+  shouldFilterOutFactuur,
   formatFactuurRequestURL,
   getAccountingDocumentTypesFilter,
   getAmountOwed,

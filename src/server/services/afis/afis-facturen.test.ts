@@ -260,77 +260,6 @@ describe('afis-facturen', async () => {
     );
   });
 
-  test('Filters out documents before 19:00 that were posted today', () => {
-    vi.setSystemTime('2024-10-29T00:00:00');
-    const factuurNummer = parseInt(FACTUUR_NUMMER);
-
-    const factuurToFilterOut: AfisInvoicesSource = {
-      feed: {
-        count: 1,
-        entry: [
-          // Posted today before the given time (see function and/or test description).
-          {
-            content: {
-              properties: {
-                DunningLevel: 0,
-                DunningBlockingReason: 'D',
-                ProfitCenterName: 'Trala',
-                SEPAMandate: '',
-                PostingDate: '2024-10-29T00:00:00', // <---
-                NetDueDate: '2029-01-31T00:00:00',
-                NetPaymentAmount: '0.00',
-                AmountInBalanceTransacCrcy: '121.00',
-                AccountingDocumentType: 'DR',
-                DocumentReferenceID: '5555555-E',
-                AccountingDocument: '5555555-E',
-                Paylink: 'http://localhost:3100/mocks-api/afis/paylink',
-              },
-            },
-          },
-        ],
-      },
-    };
-
-    expect(
-      forTesting.transformFacturen(factuurToFilterOut, SESSION_ID, {
-        factuurNummer,
-      }).facturen
-    ).toHaveLength(0);
-
-    const factuurToKeep: AfisInvoicesSource = {
-      // Posted the day before
-      feed: {
-        count: 1,
-        entry: [
-          {
-            content: {
-              properties: {
-                DunningLevel: 0,
-                DunningBlockingReason: 'D',
-                ProfitCenterName: 'Trala',
-                SEPAMandate: '',
-                PostingDate: '2024-10-28T23:00:00',
-                NetDueDate: '2029-01-31T00:00:00',
-                NetPaymentAmount: '0.00',
-                AmountInBalanceTransacCrcy: '121.00',
-                AccountingDocumentType: 'DR',
-                DocumentReferenceID: '5555555-E',
-                AccountingDocument: '5555555-E',
-                Paylink: 'http://localhost:3100/mocks-api/afis/paylink',
-              },
-            },
-          },
-        ],
-      },
-    };
-
-    expect(
-      forTesting.transformFacturen(factuurToKeep, SESSION_ID, {
-        factuurNummer,
-      }).facturen.length
-    ).toBeGreaterThan(0);
-  });
-
   test('transformDeelbetalingenResponse transforms response correctly', () => {
     const response: AfisInvoicesPartialPaymentsSource = {
       feed: {
@@ -709,6 +638,8 @@ describe('afis-facturen', async () => {
   });
 
   describe('fetch facturen', () => {
+    vi.setSystemTime('2024-10-01T00:00:00');
+
     const defaultProps = {
       DunningLevel: 0,
       DunningBlockingReason: null,
@@ -789,6 +720,50 @@ describe('afis-facturen', async () => {
           'afgehandeld' in response.content &&
           response.content?.afgehandeld?.facturen.length
       ).toBe(1);
+    });
+  });
+});
+
+describe('isPostedTodayAndBefore', () => {
+  // Mentioned time that it has to be is to be read inside the tested function.
+
+  describe('Should not display', () => {
+    test('Posted today but it is not yet time', () => {
+      vi.setSystemTime('2020-03-01T18:59:59');
+      const result = forTesting.shouldFilterOutFactuur('2020-03-01T18:59:59');
+      expect(result).toBe(false);
+    });
+
+    test('Posted at the start of the day while it is the start of the day', () => {
+      vi.setSystemTime('2020-03-01T00:00:00');
+      const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:00');
+      expect(result).toBe(false);
+    });
+
+    test('Posted into the future.', () => {
+      vi.setSystemTime('2020-03-01T00:00:00');
+      const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:01');
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('Should display.', () => {
+    test('Posted not today', () => {
+      vi.setSystemTime('2020-03-01T00:00:00');
+      const result = forTesting.shouldFilterOutFactuur('2020-02-28T10:00:00');
+      expect(result).toBe(true);
+    });
+
+    test('Posted at the start of the day, but its now time to display', () => {
+      vi.setSystemTime('2020-03-01T19:00:00');
+      const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:00');
+      expect(result).toBe(true);
+    });
+
+    test('Posted after time to display, but its time to display', () => {
+      vi.setSystemTime('2020-03-01T19:00:00');
+      const result = forTesting.shouldFilterOutFactuur('2020-03-01T19:00:00');
+      expect(result).toBe(true);
     });
   });
 });
