@@ -135,7 +135,7 @@ export type InvoiceAmountOwed = {
   amountInBalanceTransacCrcyInCents: Decimal;
 };
 
-type AfisFactuurStatus =
+export type AfisFactuurStatus =
   | 'openstaand'
   | 'automatische-incasso'
   | 'in-dispuut'

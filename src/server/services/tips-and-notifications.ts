@@ -7,6 +7,7 @@ import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification, MyTip } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
+import { fetchAfisNotifications } from './afis/afis-notifications';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
@@ -34,6 +35,8 @@ import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 
+const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
+
 export function sortNotifications(
   notifications: MyNotification[],
   doRandomize: boolean = true
@@ -60,7 +63,11 @@ export function sortNotifications(
   const notificationsWithTipsInserted = notificationsWithoutTips.reduce(
     (acc, notification, index) => {
       // Add tip before next notification
-      if (index !== 0 && index % 3 === 0 && notificationsWithTips.length > 0) {
+      if (
+        index !== 0 &&
+        index % INSERT_TIP_AT_EVERY_NTH_INDEX === 0 &&
+        notificationsWithTips.length > 0
+      ) {
         const tip = notificationsWithTips.shift();
         if (tip) {
           acc.push(tip);
@@ -81,7 +88,7 @@ export function sortNotifications(
 }
 
 export function getTipsAndNotificationsFromApiResults(
-  responses: Array<ApiResponse<any>>
+  responses: Array<ApiResponse<unknown>>
 ): MyNotification[] {
   const notifications: MyNotification[] = [];
   const tips: MyTip[] = [];
@@ -92,12 +99,12 @@ export function getTipsAndNotificationsFromApiResults(
       continue;
     }
     // Collection of notifications
-    if ('notifications' in content) {
+    if ('notifications' in content && Array.isArray(content.notifications)) {
       notifications.push(...content.notifications);
     }
 
     // Collection of tips
-    if ('tips' in content) {
+    if ('tips' in content && Array.isArray(content.tips)) {
       for (const tip of content.tips) {
         // Should we show the tip as Notification?
         if (tip.isNotification) {
@@ -139,7 +146,7 @@ export function getTipsAndNotificationsFromApiResults(
 type FetchNotificationFunction = (
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) => Promise<ApiResponse<any>>;
+) => Promise<ApiResponse<unknown>>;
 
 type NotificationServices = Record<string, FetchNotificationFunction>;
 
@@ -150,6 +157,7 @@ type NotificationServicesByProfileType = Record<
 
 const notificationServices: NotificationServicesByProfileType = {
   commercial: {
+    afis: fetchAfisNotifications,
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
     vergunningen: FeatureToggle.vergunningenV2Active
@@ -174,6 +182,7 @@ const notificationServices: NotificationServicesByProfileType = {
   },
   'private-attributes': {},
   private: {
+    afis: fetchAfisNotifications,
     brp: fetchBrpNotifications,
     belasting: fetchBelastingNotifications,
     milieuzone: fetchMilieuzoneNotifications,
