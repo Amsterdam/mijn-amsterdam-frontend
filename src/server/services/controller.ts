@@ -186,11 +186,6 @@ export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
 
   const notificationsWithTipsInserted = sortNotifications(notifications);
 
-  console.log(
-    'notificationsWithTipsInserted',
-    notificationsWithTipsInserted.map((n) => n.title)
-  );
-
   return apiSuccessResult(notificationsWithTipsInserted);
 };
 
