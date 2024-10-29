@@ -218,7 +218,7 @@ function transformFactuur(
     invoice,
     deelbetaling
   );
-  const amountOwedFormatted = `€ ${amountOwed ? displayAmount(parseFloat(amountOwed.toFixed(2))) : 0}`;
+  const amountOwedFormatted = `€ ${amountOwed ? displayAmount(parseFloat(amountOwed.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
