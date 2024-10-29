@@ -197,7 +197,7 @@ module.exports = [
             };
 
             const stateName = Object.entries(stateFilters).find(
-              ([name, filterValueSegment]) => {
+              ([_name, filterValueSegment]) => {
                 return req.query?.['$filter']?.includes(filterValueSegment);
               }
             )?.[0];
@@ -269,7 +269,7 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
+          middleware: (_req, res) => {
             const htmlResponse = `<h1>Afis factuur betalen</h1><button onclick="history.back()">Betaal factuur</button>`;
             res.send(htmlResponse);
           },
