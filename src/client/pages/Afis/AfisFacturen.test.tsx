@@ -15,10 +15,39 @@ const testState = {
     status: 'OK',
     content: {
       isKnown: true,
+      businessPartnerId: '1234567890',
       businessPartnerIdEncrypted,
+      facturen: {
+        open: {
+          count: 1,
+          facturen: [
+            {
+              id: '2',
+              factuurDocumentId: '2',
+              afzender: 'Company E',
+              datePublished: '2023-04-15',
+              datePublishedFormatted: '15 april 2023',
+              paymentDueDate: '2023-05-15',
+              paymentDueDateFormatted: '15 mei 2023',
+              debtClearingDate: null,
+              debtClearingDateFormatted: null,
+              amountOwed: 2500,
+              amountOwedFormatted: '€ 2.500,00',
+              factuurNummer: 'F005',
+              factuurNummerEl: 'F005',
+              status: 'openstaand',
+              statusDescription: 'Openstaand description',
+              paylink: 'https://payment.example.com/F005',
+              documentDownloadLink: 'https://download.example.com/F005',
+            },
+          ],
+        },
+        afgehandeld: { facturen: [], count: 0 },
+        overgedragen: { facturen: [], count: 0 },
+      },
     },
   },
-} as AppState;
+} as unknown as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
@@ -28,40 +57,6 @@ describe('<AfisFacturen />', () => {
   const routePath = AppRoutes['AFIS/FACTUREN'];
 
   test('Lists Open facturen', async () => {
-    bffApi
-      .get(`/services/afis/facturen/overzicht?id=${businessPartnerIdEncrypted}`)
-      .reply(200, {
-        content: {
-          open: {
-            count: 1,
-            facturen: [
-              {
-                id: '2',
-                factuurDocumentId: '2',
-                afzender: 'Company E',
-                datePublished: '2023-04-15',
-                datePublishedFormatted: '15 april 2023',
-                paymentDueDate: '2023-05-15',
-                paymentDueDateFormatted: '15 mei 2023',
-                debtClearingDate: null,
-                debtClearingDateFormatted: null,
-                amountOwed: 2500,
-                amountOwedFormatted: '€ 2.500,00',
-                factuurNummer: 'F005',
-                factuurNummerEl: 'F005',
-                status: 'openstaand',
-                statusDescription: 'Openstaand description',
-                paylink: 'https://payment.example.com/F005',
-                documentDownloadLink: 'https://download.example.com/F005',
-              },
-            ],
-          },
-          afgehandeld: { facturen: [], count: 0 },
-          overgedragen: { facturen: [], count: 0 },
-        },
-        status: 'OK',
-      });
-
     const routeEntry = generatePath(routePath, {
       state: 'open',
     });

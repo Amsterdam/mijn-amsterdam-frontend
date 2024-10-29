@@ -35,7 +35,7 @@ const ROUTES = {
 const RESPONSE_BODIES = {
   BSNFound: {
     BSN: 111111111,
-    Zakenpartnernummer: '3333333333',
+    Zakenpartnernummer: '4444444444',
     Blokkade: 'Nee',
     Gevonden: 'Ja',
   },
@@ -94,15 +94,22 @@ describe('fetchIsKnownInAFIS ', () => {
   const TRANSFORMED_RESPONSES = {
     isKnown: {
       content: {
-        isKnown: true,
+        businessPartnerId: '4444444444',
         businessPartnerIdEncrypted: mocks.MOCK_VALUE_ENCRYPTED,
+        facturen: {
+          afgehandeld: null,
+          open: null,
+          overgedragen: null,
+        },
+        isKnown: true,
       },
       status: 'OK',
     },
     isNotKnown: {
       content: {
-        isKnown: false,
+        businessPartnerId: null,
         businessPartnerIdEncrypted: null,
+        isKnown: false,
       },
       status: 'OK',
     },
@@ -209,6 +216,7 @@ describe('fetchIsKnownInAFIS ', () => {
 
       expect(response.content).toMatchInlineSnapshot(`
         {
+          "businessPartnerId": null,
           "businessPartnerIdEncrypted": null,
           "isKnown": false,
         }
