@@ -260,9 +260,24 @@ function transformFacturen(
 ): AfisFacturenResponse {
   const feedProperties = getFeedEntryProperties(responseData);
   const count = responseData?.feed?.count ?? feedProperties.length;
-  const facturenTransformed = feedProperties.map((invoiceProperties) => {
-    return transformFactuur(invoiceProperties, sessionID, deelbetalingen);
-  });
+  const facturenTransformed = feedProperties
+    .filter((invoiceProperties) => {
+      const postingDate = new Date(invoiceProperties.PostingDate);
+      const now = new Date();
+      const postedToday =
+        postingDate.getDate() === now.getDate() &&
+        postingDate.getMonth() === now.getMonth() &&
+        postingDate.getFullYear() === now.getFullYear();
+
+      if (!postedToday) {
+        return true;
+      }
+      const sevenOClock = 19;
+      return postingDate.getTime() > now.setHours(sevenOClock);
+    })
+    .map((invoiceProperties) => {
+      return transformFactuur(invoiceProperties, sessionID, deelbetalingen);
+    });
   return {
     count,
     facturen: facturenTransformed,

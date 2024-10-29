@@ -10,6 +10,7 @@ import {
   AfisFactuur,
   AfisFactuurPropertiesSource,
   AfisInvoicesPartialPaymentsSource,
+  AfisInvoicesSource,
   XmlNullable,
 } from './afis-types';
 import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.json';
@@ -257,6 +258,77 @@ describe('afis-facturen', async () => {
     expect(filter).toBe(
       " and (AccountingDocumentType eq 'DR' or AccountingDocumentType eq 'DG' or AccountingDocumentType eq 'DM' or AccountingDocumentType eq 'DE' or AccountingDocumentType eq 'DF' or AccountingDocumentType eq 'DV' or AccountingDocumentType eq 'DW')"
     );
+  });
+
+  test('Filters out documents before 19:00 that were posted today', () => {
+    vi.setSystemTime('2024-10-29T00:00:00');
+    const factuurNummer = parseInt(FACTUUR_NUMMER);
+
+    const factuurToFilterOut: AfisInvoicesSource = {
+      feed: {
+        count: 1,
+        entry: [
+          // Posted today before the given time (see function and/or test description).
+          {
+            content: {
+              properties: {
+                DunningLevel: 0,
+                DunningBlockingReason: 'D',
+                ProfitCenterName: 'Trala',
+                SEPAMandate: '',
+                PostingDate: '2024-10-29T00:00:00', // <---
+                NetDueDate: '2029-01-31T00:00:00',
+                NetPaymentAmount: '0.00',
+                AmountInBalanceTransacCrcy: '121.00',
+                AccountingDocumentType: 'DR',
+                DocumentReferenceID: '5555555-E',
+                AccountingDocument: '5555555-E',
+                Paylink: 'http://localhost:3100/mocks-api/afis/paylink',
+              },
+            },
+          },
+        ],
+      },
+    };
+
+    expect(
+      forTesting.transformFacturen(factuurToFilterOut, SESSION_ID, {
+        factuurNummer,
+      }).facturen
+    ).toHaveLength(0);
+
+    const factuurToKeep: AfisInvoicesSource = {
+      // Posted the day before
+      feed: {
+        count: 1,
+        entry: [
+          {
+            content: {
+              properties: {
+                DunningLevel: 0,
+                DunningBlockingReason: 'D',
+                ProfitCenterName: 'Trala',
+                SEPAMandate: '',
+                PostingDate: '2024-10-28T23:00:00',
+                NetDueDate: '2029-01-31T00:00:00',
+                NetPaymentAmount: '0.00',
+                AmountInBalanceTransacCrcy: '121.00',
+                AccountingDocumentType: 'DR',
+                DocumentReferenceID: '5555555-E',
+                AccountingDocument: '5555555-E',
+                Paylink: 'http://localhost:3100/mocks-api/afis/paylink',
+              },
+            },
+          },
+        ],
+      },
+    };
+
+    expect(
+      forTesting.transformFacturen(factuurToKeep, SESSION_ID, {
+        factuurNummer,
+      }).facturen.length
+    ).toBeGreaterThan(0);
   });
 
   test('transformDeelbetalingenResponse transforms response correctly', () => {
