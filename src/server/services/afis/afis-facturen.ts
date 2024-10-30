@@ -34,7 +34,7 @@ import {
   XmlNullable,
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { parseISO } from 'date-fns';
+import { isPast, isToday, parseISO } from 'date-fns';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -286,17 +286,12 @@ function isDownloadAvailable(postingDate: string): boolean {
     return false;
   }
 
-  const postedToday =
-    datePosted.getDate() === now.getDate() &&
-    datePosted.getMonth() === now.getMonth() &&
-    datePosted.getFullYear() === now.getFullYear();
-
-  if (!postedToday) {
-    return true;
+  if (isToday(datePosted)) {
+    const sevenOClock = 19;
+    return now.getHours() >= sevenOClock;
   }
 
-  const sevenOClock = 19;
-  return postedToday && now.getHours() >= sevenOClock;
+  return true;
 }
 
 const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
