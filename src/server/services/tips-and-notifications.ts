@@ -106,7 +106,6 @@ export function getTipsAndNotificationsFromApiResults(
     // Collection of tips
     if ('tips' in content && Array.isArray(content.tips)) {
       for (const tip of content.tips) {
-        // Should we show the tip as Notification?
         if (tip.isNotification) {
           notifications.push(tip);
         } else {
