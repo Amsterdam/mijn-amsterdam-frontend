@@ -697,7 +697,8 @@ describe('afis-facturen', async () => {
       const response = await fetchAfisFacturenOverview(REQUEST_ID, SESSION_ID, {
         businessPartnerID: GENERIC_ID,
       });
-      const byStateValues = Object.values(response.content);
+      const byStateValues =
+        response.content !== null ? Object.values(response.content) : [];
 
       expect(byStateValues.length).toBe(3);
       expect(

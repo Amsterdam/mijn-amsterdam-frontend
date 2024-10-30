@@ -8,7 +8,10 @@ import {
   AfisThemaResponse,
   AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  apiSuccessResult,
+  getFailedDependencies,
+} from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_MINUTE_MS } from '../../config/app';
@@ -168,8 +171,18 @@ export async function fetchIsKnownInAFIS(
     }
   );
 
-  return apiSuccessResult({
-    ...omit(response.content, ['businessPartnerId']),
-    facturen: facturenResponse.content,
+  const failedDependencies = getFailedDependencies({
+    facturenoverview: facturenResponse,
+    ...('failedDependencies' in facturenResponse
+      ? facturenResponse.failedDependencies
+      : null),
   });
+
+  return apiSuccessResult(
+    {
+      ...omit(response.content, ['businessPartnerId']),
+      facturen: facturenResponse.content,
+    },
+    failedDependencies
+  );
 }

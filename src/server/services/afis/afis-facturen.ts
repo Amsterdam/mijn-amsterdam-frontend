@@ -1,6 +1,7 @@
 import { firstBy } from 'thenby';
 
 import {
+  apiErrorResult,
   ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
@@ -477,14 +478,20 @@ export async function fetchAfisFacturenOverview(
     overgedragen: facturenTransferredResult.content ?? null,
   };
 
-  return apiSuccessResult(
-    facturenOverview,
-    getFailedDependencies({
-      open: facturenOpenResult,
-      afgehandeld: facturenClosedResult,
-      overgedragen: facturenTransferredResult,
-    })
-  );
+  const failedDependencies = getFailedDependencies({
+    open: facturenOpenResult,
+    afgehandeld: facturenClosedResult,
+    overgedragen: facturenTransferredResult,
+  });
+
+  if (
+    failedDependencies &&
+    Object.keys(facturenOverview).every((key) => key in failedDependencies)
+  ) {
+    return apiErrorResult('Facturen ophalen mislukt.', null);
+  }
+
+  return apiSuccessResult(facturenOverview, failedDependencies);
 }
 
 export async function fetchAfisFacturenByState(

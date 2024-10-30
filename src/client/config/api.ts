@@ -38,6 +38,11 @@ export const ExcludePageViewTrackingUrls = [
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   AFIS: 'Facturen en betalen',
+  AFIS_facturenoverview: 'Facturen en betalen: Overzicht van facturen',
+  AFIS_afgehandeld: 'Facturen en betalen: Afgehandelde facturen',
+  AFIS_open: 'Facturen en betalen: Openstaande facturen',
+  AFIS_overgedragen:
+    'Facturen en betalen: Facturen in het incasso- en invorderingstraject van directie Belastingen',
   AFVAL: 'Afvalgegevens rond uw adres',
   AFVALPUNTEN: 'Afvalpunten',
   ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
@@ -107,7 +112,7 @@ export function createFailedDependenciesError(
     apiErrors.push(
       createErrorDisplayData(
         `${stateKey}_${stateDependencyKey}`,
-        apiDependencyResponseData
+        apiDependencyResponseData as ApiResponse<unknown>
       )
     );
   }
@@ -149,7 +154,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
         apiErrors.push(
           createErrorDisplayData(
             stateKey,
-            apiResponseData as ApiResponse<unknown> | null | string
+            apiResponseData as ApiResponse<unknown>
           )
         );
       }
