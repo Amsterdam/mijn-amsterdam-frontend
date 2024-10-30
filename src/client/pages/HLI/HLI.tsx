@@ -11,6 +11,15 @@ import { MaRouterLink } from '../../components/MaLink/MaLink';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
+export function HistoricItemsMention() {
+  return (
+    <Paragraph className={styles.HistoricItemsMention}>
+      U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier
+      niet ziet, heeft u eerder per post ontvangen.
+    </Paragraph>
+  );
+}
+
 function StadspasListItem({ stadspas }: { stadspas: StadspasFrontend }) {
   return (
     <UnorderedList.Item>
@@ -131,20 +140,23 @@ export default function ThemaPaginaHLI() {
     : [];
 
   return (
-    <ThemaPagina
-      title={title}
-      pageContentTop={pageContentTop}
-      linkListItems={linkListItems}
-      pageContentMain={
-        <>
-          {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
-          {!!regelingen?.length && regelingenTables}
-        </>
-      }
-      isError={isError}
-      errorAlertContent={dependencyError}
-      isPartialError={!!dependencyError}
-      isLoading={isLoading}
-    />
+    <>
+      <ThemaPagina
+        title={title}
+        pageContentTop={pageContentTop}
+        linkListItems={linkListItems}
+        pageContentMain={
+          <>
+            {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
+            {!!regelingen?.length && regelingenTables}
+          </>
+        }
+        isError={isError}
+        errorAlertContent={dependencyError}
+        isPartialError={!!dependencyError}
+        isLoading={isLoading}
+      />
+      <HistoricItemsMention />
+    </>
   );
 }
