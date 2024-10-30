@@ -118,6 +118,8 @@ describe('afis-facturen', async () => {
         "afzender": "Bedrijf: Ok",
         "amount": "370.50",
         "amountFormatted": "€ 370,50",
+        "amountInitial": "343.00",
+        "amountInitialFormatted": "€ 343,00",
         "datePublished": "2023-11-21T00:00:00",
         "datePublishedFormatted": "21 november 2023",
         "debtClearingDate": null,
@@ -134,7 +136,7 @@ describe('afis-facturen', async () => {
         "paymentDueDate": "2023-12-21T00:00:00",
         "paymentDueDateFormatted": "21 december 2023",
         "status": "gedeeltelijke-betaling",
-        "statusDescription": "Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van € 370,50 euro over onder vermelding van de gegevens op uw factuur.",
+        "statusDescription": "Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 370,50 over onder vermelding van de gegevens op uw factuur.",
       }
     `);
 
@@ -178,6 +180,8 @@ describe('afis-facturen', async () => {
         "afzender": "Lisan al Gaib inc.",
         "amount": "0.00",
         "amountFormatted": "€ 0,00",
+        "amountInitial": "0.00",
+        "amountInitialFormatted": "€ 0,00",
         "datePublished": null,
         "datePublishedFormatted": null,
         "debtClearingDate": null,
@@ -516,6 +520,7 @@ describe('afis-facturen', async () => {
         const statusDescription = forTesting.determineFactuurStatusDescription(
           status as AfisFactuur['status'],
           '€ 123,40',
+          '€ 210,40',
           '16 juni 2024'
         );
         return [status, statusDescription];
@@ -536,7 +541,7 @@ describe('afis-facturen', async () => {
           ],
           [
             "gedeeltelijke-betaling",
-            "Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van € 123,40 euro over onder vermelding van de gegevens op uw factuur.",
+            "Uw factuur van € 210,40 is nog niet volledig betaald. Maak het resterend bedrag van € 123,40 over onder vermelding van de gegevens op uw factuur.",
           ],
           [
             "overgedragen-aan-belastingen",
