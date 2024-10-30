@@ -30,6 +30,9 @@ const BASE_ROUTE = '/afis/RESTAdapter';
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
+  facturen: (uri: string) => {
+    return decodeURI(uri).includes(`IsCleared eq`);
+  },
 };
 
 const RESPONSE_BODIES = {
@@ -96,9 +99,18 @@ describe('fetchIsKnownInAFIS ', () => {
       content: {
         businessPartnerIdEncrypted: mocks.MOCK_VALUE_ENCRYPTED,
         facturen: {
-          afgehandeld: null,
-          open: null,
-          overgedragen: null,
+          afgehandeld: {
+            count: 0,
+            facturen: [],
+          },
+          open: {
+            count: 0,
+            facturen: [],
+          },
+          overgedragen: {
+            count: 0,
+            facturen: [],
+          },
         },
         isKnown: true,
       },
@@ -118,6 +130,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerBSN)
         .reply(200, RESPONSE_BODIES.BSNFound);
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
@@ -132,6 +145,7 @@ describe('fetchIsKnownInAFIS ', () => {
         BSN: 123456789,
         Gevonden: 'Nee',
       });
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
@@ -145,6 +159,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKFound);
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
@@ -158,6 +173,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKNotFound);
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,

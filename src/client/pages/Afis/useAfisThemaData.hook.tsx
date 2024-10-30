@@ -120,7 +120,7 @@ function useAfisFacturenApi(
   }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
 
   const facturenByStateApiUpdated = useTransformFacturen(
-    facturenByStateApiResponse.content
+    facturenByStateApiResponse.content ?? null
   );
 
   return [

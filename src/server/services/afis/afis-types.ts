@@ -45,7 +45,7 @@ export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
   businessPartnerId?: string | null;
-  facturen: AfisFacturenByStateResponse | null;
+  facturen?: AfisFacturenByStateResponse | null;
 };
 
 export type AfisApiFeedResponseSource<T> = {
