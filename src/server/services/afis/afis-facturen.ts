@@ -464,7 +464,10 @@ export async function fetchAfisFacturenOverview(
           return factuur.status === 'herinnering' ? -1 : 1;
         })
           .thenBy(function (factuur: AfisFactuur) {
-            return factuur.status === 'openstaand' ? -1 : 1;
+            return factuur.status === 'openstaand' ||
+              factuur.status === 'herinnering'
+              ? -1
+              : 1;
           })
           .thenBy(dateSort('paymentDueDate', 'asc'))
       ),
