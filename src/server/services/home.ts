@@ -18,47 +18,44 @@ import { AuthProfileAndToken } from '../auth/auth-types';
 async function fetchPrivate(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<BAGData[] | null>> {
   const BRP = await fetchBRP(requestID, authProfileAndToken);
 
-  let MY_LOCATION: ApiResponse<(BAGData | null)[] | null>;
+  if (BRP.status === 'OK') {
+    if (isMokum(BRP.content)) {
+      const location = (await fetchBAG(requestID, BRP.content.adres))?.content;
 
-  if (BRP.status === 'OK' && isMokum(BRP.content)) {
-    const location = (await fetchBAG(requestID, BRP.content.adres))?.content;
-
-    // No BAG location found
-    if (!location?.latlng) {
-      MY_LOCATION = apiSuccessResult([
-        {
-          latlng: {
-            lat: DEFAULT_LAT,
-            lng: DEFAULT_LNG,
+      // No BAG location found
+      if (!location?.latlng) {
+        return apiSuccessResult([
+          {
+            latlng: {
+              lat: DEFAULT_LAT,
+              lng: DEFAULT_LNG,
+            },
+            address: null,
+            profileType: 'private',
           },
+        ]);
+      } else {
+        // BAG Location found!
+        return apiSuccessResult([
+          Object.assign(location, { profileType: 'private' }),
+        ]);
+      }
+    } else {
+      // Not a Mokum address
+      return apiSuccessResult([
+        {
+          latlng: null,
           address: null,
           profileType: 'private',
         },
       ]);
-    } else {
-      // BAG Location found!
-      MY_LOCATION = apiSuccessResult([
-        Object.assign(location, { profileType: 'private' }),
-      ]);
     }
-  } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
-    // Not a Mokum address
-    MY_LOCATION = apiSuccessResult([
-      {
-        latlng: null,
-        address: null,
-        profileType: 'private',
-      },
-    ]);
-  } else {
-    // Proper data concerning a Mokum location not found
-    MY_LOCATION = apiDependencyError({ BRP });
   }
 
-  return MY_LOCATION;
+  return apiDependencyError({ BRP });
 }
 
 async function fetchCommercial(
@@ -120,15 +117,13 @@ export async function fetchMyLocation(
 
       switch (true) {
         case privateAddresses.content !== null &&
-          commercialAddresses.content !== null:
-          return apiSuccessResult([
-            ...privateAddresses.content!.filter(
-              (a: BAGData | null): a is BAGData => a !== null
-            ),
-            ...commercialAddresses.content!.filter(
-              (a: BAGData | null): a is BAGData => a !== null
-            ),
-          ]);
+          commercialAddresses.content !== null: {
+          const locations: BAGData[] = [
+            ...privateAddresses.content!.filter((a) => a !== null),
+            ...commercialAddresses.content!.filter((a) => a !== null),
+          ];
+          return apiSuccessResult(locations);
+        }
         case privateAddresses.content !== null:
           return privateAddresses;
       }

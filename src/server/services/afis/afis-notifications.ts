@@ -8,6 +8,7 @@ import {
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { htmlTextContent } from '../../helpers/text';
 
 const facturenOpen: AfisFactuurStatus[] = [
   'openstaand',
@@ -32,9 +33,10 @@ export function createAfisFacturenNotification(
   ).length;
 
   const title = 'Betaal tijdig om extra kosten te voorkomen';
-  const description = `
-  U heeft ${openFacturenCount} openstaande facturen.
-  ${openFacturenHerinneringCount ? `Van ${openFacturenHerinneringCount} factuur${openFacturenHerinneringCount > 1 ? 'en' : ''} heeft u inmiddels een herinnering ontvangen per e-mail of post.` : ''}`;
+  const description = htmlTextContent(`
+    U heeft ${openFacturenCount} openstaande facturen.
+    ${openFacturenHerinneringCount ? `Van ${openFacturenHerinneringCount} factuur${openFacturenHerinneringCount > 1 ? 'en' : ''} heeft u inmiddels een herinnering ontvangen per e-mail of post.` : ''}
+  `);
 
   const datePublished = openFacturen[0]?.datePublished ?? '';
   const cta = 'Bekijk uw openstaande facturen';

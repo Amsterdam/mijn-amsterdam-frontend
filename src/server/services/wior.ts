@@ -64,6 +64,7 @@ export async function fetchWiorNotifications(
     };
   });
   const MY_LOCATION = await fetchMyLocation(requestID, authProfileAndToken);
+
   if (
     MY_LOCATION.status === 'OK' &&
     MY_LOCATION.content?.[0]?.latlng &&
@@ -91,5 +92,6 @@ export async function fetchWiorNotifications(
           : [],
     });
   }
+
   return apiDependencyError({ MY_LOCATION });
 }
