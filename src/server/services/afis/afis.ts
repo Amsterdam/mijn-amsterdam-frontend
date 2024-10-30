@@ -9,6 +9,7 @@ import {
   AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { omit } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_MINUTE_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
@@ -107,11 +108,16 @@ function transformBusinessPartnerisKnownResponse(
     );
   }
 
-  return {
+  const themaResponseContent: Omit<AfisThemaResponse, 'facturen'> = {
     isKnown,
     businessPartnerIdEncrypted,
-    businessPartnerId,
   };
+
+  if (isKnown) {
+    themaResponseContent.businessPartnerId = businessPartnerId;
+  }
+
+  return themaResponseContent;
 }
 
 /** Returns if the person logging in, is known in the AFIS source API */
@@ -163,7 +169,7 @@ export async function fetchIsKnownInAFIS(
   );
 
   return apiSuccessResult({
-    ...response.content,
+    ...omit(response.content, ['businessPartnerId']),
     facturen: facturenResponse.content,
   });
 }

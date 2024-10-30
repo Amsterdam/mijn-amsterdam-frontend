@@ -94,7 +94,6 @@ describe('fetchIsKnownInAFIS ', () => {
   const TRANSFORMED_RESPONSES = {
     isKnown: {
       content: {
-        businessPartnerId: '4444444444',
         businessPartnerIdEncrypted: mocks.MOCK_VALUE_ENCRYPTED,
         facturen: {
           afgehandeld: null,
@@ -107,7 +106,6 @@ describe('fetchIsKnownInAFIS ', () => {
     },
     isNotKnown: {
       content: {
-        businessPartnerId: null,
         businessPartnerIdEncrypted: null,
         isKnown: false,
       },
@@ -216,7 +214,6 @@ describe('fetchIsKnownInAFIS ', () => {
 
       expect(response.content).toMatchInlineSnapshot(`
         {
-          "businessPartnerId": null,
           "businessPartnerIdEncrypted": null,
           "isKnown": false,
         }
