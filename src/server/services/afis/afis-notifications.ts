@@ -14,6 +14,7 @@ const facturenOpen: AfisFactuurStatus[] = [
   'openstaand',
   'gedeeltelijke-betaling',
   'herinnering',
+  'handmatig-betalen',
 ];
 
 export function createAfisFacturenNotification(
