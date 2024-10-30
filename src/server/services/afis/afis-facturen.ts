@@ -56,7 +56,7 @@ const accountingDocumentTypesByState: Record<
   deelbetalingen: ['AB'],
 };
 
-const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate`;
+const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate,PaymentMethod`;
 
 const selectFieldsQueryByState: Record<AfisFacturenParams['state'], string> = {
   open: select,
@@ -337,8 +337,13 @@ function determineFactuurStatus(
     case sourceInvoice.IsCleared === false && hasDeelbetaling:
       return 'gedeeltelijke-betaling';
 
-    case !!sourceInvoice.SEPAMandate:
+    case !!sourceInvoice.SEPAMandate && sourceInvoice.PaymentMethod !== 'B':
       return 'automatische-incasso';
+
+    case sourceInvoice.IsCleared === false &&
+      sourceInvoice.PaymentMethod === 'B' &&
+      !sourceInvoice.Paylink:
+      return 'handmatig-betalen';
 
     case sourceInvoice.IsCleared === false && sourceInvoice.DunningLevel === 0:
       return 'openstaand';
@@ -376,6 +381,8 @@ function determineFactuurStatusDescription(
       return `${amount} in dispuut`;
     case 'gedeeltelijke-betaling':
       return `Uw factuur van ${amountInitial} is nog niet volledig betaald. Maak het resterend bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
+    case 'handmatig-betalen':
+      return `Uw factuur is nog niet betaald. Maak het bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
       return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':

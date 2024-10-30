@@ -137,6 +137,7 @@ export type AfisFactuurStatus =
   | 'automatische-incasso'
   | 'in-dispuut'
   | 'gedeeltelijke-betaling'
+  | 'handmatig-betalen'
   | 'overgedragen-aan-belastingen'
   | 'geld-terug'
   | 'betaald'
@@ -180,6 +181,7 @@ export type AfisFactuurPropertiesSource = {
   NetDueDate: string;
   InvoiceReference: string | null;
   Paylink: string | null;
+  PaymentMethod: string | null;
   PostingDate: string;
   ProfitCenterName: string;
   ReverseDocument?: string;
