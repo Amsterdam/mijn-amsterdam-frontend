@@ -734,19 +734,19 @@ describe('isPostedTodayAndBefore', () => {
   describe('Should not display', () => {
     test('Posted today but it is not yet time', () => {
       Mockdate.set('2020-03-01T18:59:59');
-      const result = forTesting.shouldFilterOutFactuur('2020-03-01T18:59:59');
+      const result = forTesting.isDownloadAvailable('2020-03-01T18:59:59');
       expect(result).toBe(false);
     });
 
     test('Posted at the start of the day while it is the start of the day', () => {
       Mockdate.set('2020-03-01T00:00:00');
-      const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:00');
+      const result = forTesting.isDownloadAvailable('2020-03-01T00:00:00');
       expect(result).toBe(false);
     });
 
     test('Posted into the future.', () => {
       Mockdate.set('2020-03-01T00:00:00');
-      const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:01');
+      const result = forTesting.isDownloadAvailable('2020-03-01T00:00:01');
       expect(result).toBe(false);
     });
   });
@@ -754,19 +754,19 @@ describe('isPostedTodayAndBefore', () => {
   describe('Should display.', () => {
     test('Posted not today', () => {
       Mockdate.set('2020-03-01T00:00:00');
-      const result = forTesting.shouldFilterOutFactuur('2020-02-28T10:00:00');
+      const result = forTesting.isDownloadAvailable('2020-02-28T10:00:00');
       expect(result).toBe(true);
     });
 
     test('Posted at the start of the day, but its now time to display', () => {
       Mockdate.set('2020-03-01T19:00:00');
-      const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:00');
+      const result = forTesting.isDownloadAvailable('2020-03-01T00:00:00');
       expect(result).toBe(true);
     });
 
     test('Posted after time to display, but its time to display', () => {
       Mockdate.set('2020-03-01T19:00:00');
-      const result = forTesting.shouldFilterOutFactuur('2020-03-01T19:00:00');
+      const result = forTesting.isDownloadAvailable('2020-03-01T19:00:00');
       expect(result).toBe(true);
     });
   });

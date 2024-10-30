@@ -263,7 +263,7 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      return shouldFilterOutFactuur(invoiceProperties.PostingDate);
+      return isDownloadAvailable(invoiceProperties.PostingDate);
     })
     .map((invoiceProperties) => {
       return transformFactuur(invoiceProperties, sessionID, deelbetalingen);
@@ -274,7 +274,7 @@ function transformFacturen(
   };
 }
 
-function shouldFilterOutFactuur(postingDate: string): boolean {
+function isDownloadAvailable(postingDate: string): boolean {
   if (!postingDate) {
     return true;
   }
@@ -511,7 +511,7 @@ export const forTesting = {
   determineFactuurStatus,
   determineFactuurStatusDescription,
   fetchAfisFacturenDeelbetalingen,
-  shouldFilterOutFactuur,
+  isDownloadAvailable,
   formatFactuurRequestURL,
   getAccountingDocumentTypesFilter,
   getAmountOwed,
