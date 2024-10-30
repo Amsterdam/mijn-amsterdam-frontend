@@ -727,6 +727,9 @@ describe('afis-facturen', async () => {
 
 describe('isPostedTodayAndBefore', () => {
   // Mentioned time that it has to be is to be read inside the tested function.
+  afterAll(() => {
+    Mockdate.reset();
+  });
 
   describe('Should not display', () => {
     test('Posted today but it is not yet time', () => {

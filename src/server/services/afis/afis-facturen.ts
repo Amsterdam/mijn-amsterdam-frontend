@@ -34,6 +34,7 @@ import {
   XmlNullable,
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
+import { parseISO } from 'date-fns';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -274,20 +275,21 @@ function transformFacturen(
 }
 
 function shouldFilterOutFactuur(postingDate: string): boolean {
+  if (!postingDate) {
+    return true;
+  }
+
   const datePosted = parseISO(postingDate);
   const now = new Date();
 
-  if (postingDateAsDate.getTime() > now.getTime()) {
-    captureMessage('postingDate of invoice is in the future', {
-      severity: 'error',
-    });
+  if (datePosted.getTime() > now.getTime()) {
     return false;
   }
 
   const postedToday =
-    postingDateAsDate.getDate() === now.getDate() &&
-    postingDateAsDate.getMonth() === now.getMonth() &&
-    postingDateAsDate.getFullYear() === now.getFullYear();
+    datePosted.getDate() === now.getDate() &&
+    datePosted.getMonth() === now.getMonth() &&
+    datePosted.getFullYear() === now.getFullYear();
 
   if (!postedToday) {
     return true;
