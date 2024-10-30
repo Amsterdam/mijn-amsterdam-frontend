@@ -329,11 +329,12 @@ function determineFactuurStatus(
       return 'geld-terug';
 
     case !!sourceInvoice.NetDueDate &&
+      sourceInvoice.IsCleared === false &&
       isDateInPast(sourceInvoice.NetDueDate) &&
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
-    case hasDeelbetaling:
+    case sourceInvoice.IsCleared === false && hasDeelbetaling:
       return 'gedeeltelijke-betaling';
 
     case !!sourceInvoice.SEPAMandate:
