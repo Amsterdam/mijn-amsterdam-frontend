@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ export function usePageChange(isAuthenticated: boolean) {
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
-  const [pathStack, setPathStack] = useState<string[]>([location.pathname]);
+  const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
     const isNewPageNavigation = prevPathRef.current !== location.pathname;
@@ -41,6 +41,8 @@ export function usePageChange(isAuthenticated: boolean) {
         window.scrollTo(0, offsetTop);
       }
     }
+    prevPathRef.current = location.pathname;
+  }, [location.pathname]);
 
   useEffect(() => {
     // Change Page title on route change
