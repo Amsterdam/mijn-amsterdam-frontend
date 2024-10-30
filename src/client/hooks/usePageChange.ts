@@ -32,29 +32,15 @@ export function usePageChange(isAuthenticated: boolean) {
   const [pathStack, setPathStack] = useState<string[]>([location.pathname]);
 
   useEffect(() => {
-    const currentPath = location.pathname;
-
-    setPathStack((prevStack) => {
-      let isNewPageNavigation = true;
-      if (
-        prevStack.length > 1 &&
-        prevStack[prevStack.length - 2] === currentPath
-      ) {
-        // Going back
-        isNewPageNavigation = false;
-        prevStack = prevStack.slice(0, -1);
-      } else if (prevStack[prevStack.length - 1] !== currentPath) {
-        // New page
-        isNewPageNavigation = true;
-        prevStack = [...prevStack, currentPath];
-      } else {
-        // Same page, no change
-        isNewPageNavigation = false;
+    const isNewPageNavigation = prevPathRef.current !== location.pathname;
+    if (isNewPageNavigation) {
+      const offsetTop =
+        document.getElementById('skip-to-id-AppContent')?.offsetTop ?? 0;
+      console.log('scrolling');
+      if (window.scrollY > offsetTop) {
+        window.scrollTo(0, offsetTop);
       }
-      scrollOnPageChange(isNewPageNavigation);
-      return prevStack;
-    });
-  }, [location.pathname, pathStack]);
+    }
 
   useEffect(() => {
     // Change Page title on route change
@@ -163,24 +149,4 @@ export function getCustomTrackingUrl(
   }
 
   return pathname;
-}
-
-export function scrollOnPageChange(isNewPageNavigation: boolean) {
-  const skipToIdAppContent = document.getElementById('skip-to-id-AppContent');
-  const isPaginated = document.querySelector('.ams-pagination__list');
-
-  if (isNewPageNavigation) {
-    if (skipToIdAppContent && isPaginated) {
-      window.scrollTo({
-        top: skipToIdAppContent.offsetTop,
-        behavior: 'instant',
-      });
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: 'instant',
-      });
-    }
-  }
-  history.scrollRestoration = 'auto';
 }
