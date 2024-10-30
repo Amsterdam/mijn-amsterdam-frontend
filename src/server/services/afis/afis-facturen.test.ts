@@ -1,3 +1,5 @@
+import Mockdate from 'mockdate';
+
 import { fetchAfisDocument } from './afis-documents';
 import {
   fetchAfisFacturen,
@@ -10,7 +12,6 @@ import {
   AfisFactuur,
   AfisFactuurPropertiesSource,
   AfisInvoicesPartialPaymentsSource,
-  AfisInvoicesSource,
   XmlNullable,
 } from './afis-types';
 import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.json';
@@ -638,7 +639,7 @@ describe('afis-facturen', async () => {
   });
 
   describe('fetch facturen', () => {
-    vi.setSystemTime('2024-10-01T00:00:00');
+    Mockdate.set('2024-10-01T00:00:00');
 
     const defaultProps = {
       DunningLevel: 0,
@@ -729,19 +730,19 @@ describe('isPostedTodayAndBefore', () => {
 
   describe('Should not display', () => {
     test('Posted today but it is not yet time', () => {
-      vi.setSystemTime('2020-03-01T18:59:59');
+      Mockdate.set('2020-03-01T18:59:59');
       const result = forTesting.shouldFilterOutFactuur('2020-03-01T18:59:59');
       expect(result).toBe(false);
     });
 
     test('Posted at the start of the day while it is the start of the day', () => {
-      vi.setSystemTime('2020-03-01T00:00:00');
+      Mockdate.set('2020-03-01T00:00:00');
       const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:00');
       expect(result).toBe(false);
     });
 
     test('Posted into the future.', () => {
-      vi.setSystemTime('2020-03-01T00:00:00');
+      Mockdate.set('2020-03-01T00:00:00');
       const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:01');
       expect(result).toBe(false);
     });
@@ -749,19 +750,19 @@ describe('isPostedTodayAndBefore', () => {
 
   describe('Should display.', () => {
     test('Posted not today', () => {
-      vi.setSystemTime('2020-03-01T00:00:00');
+      Mockdate.set('2020-03-01T00:00:00');
       const result = forTesting.shouldFilterOutFactuur('2020-02-28T10:00:00');
       expect(result).toBe(true);
     });
 
     test('Posted at the start of the day, but its now time to display', () => {
-      vi.setSystemTime('2020-03-01T19:00:00');
+      Mockdate.set('2020-03-01T19:00:00');
       const result = forTesting.shouldFilterOutFactuur('2020-03-01T00:00:00');
       expect(result).toBe(true);
     });
 
     test('Posted after time to display, but its time to display', () => {
-      vi.setSystemTime('2020-03-01T19:00:00');
+      Mockdate.set('2020-03-01T19:00:00');
       const result = forTesting.shouldFilterOutFactuur('2020-03-01T19:00:00');
       expect(result).toBe(true);
     });
