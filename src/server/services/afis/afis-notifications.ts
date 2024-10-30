@@ -38,7 +38,7 @@ export function createAfisFacturenNotification(
     ${openFacturenHerinneringCount ? `Van ${openFacturenHerinneringCount} factuur${openFacturenHerinneringCount > 1 ? 'en' : ''} heeft u inmiddels een herinnering ontvangen per e-mail of post.` : ''}
   `);
 
-  const datePublished = openFacturen[0]?.datePublished ?? '';
+  const datePublished = new Date().toISOString();
   const cta = 'Bekijk uw openstaande facturen';
   const linkTo = AppRoutes.AFIS;
 

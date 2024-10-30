@@ -1,3 +1,4 @@
+import Mockdate from 'mockdate';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
 import { fetchIsKnownInAFIS } from './afis';
@@ -48,6 +49,10 @@ function createAfisFactuur(
 }
 
 describe('createAfisFacturenNotification', () => {
+  beforeAll(() => {
+    Mockdate.set('2023-01-01');
+  });
+
   it('should return null if there are no open facturen', () => {
     const facturen: AfisFactuur[] = [];
     const notification = createAfisFacturenNotification(facturen);
@@ -100,7 +105,7 @@ describe('fetchAfisNotifications', () => {
         notifications: [
           {
             id: 'facturen-open-notification',
-            datePublished: '2023-01-01',
+            datePublished: '2023-01-01T00:00:00.000Z',
             thema: 'AFIS',
             title: 'Betaal tijdig om extra kosten te voorkomen',
             description: `U heeft 1 openstaande facturen.`,
