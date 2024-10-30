@@ -1,4 +1,4 @@
-const { httpStatusCodes } = require('../http-status-codes');
+const httpConstants = require('http2').constants;
 const settings = require('../settings');
 
 const BASE = '/afis';
@@ -203,7 +203,7 @@ module.exports = [
             )?.[0];
 
             if (!stateName) {
-              return res.status(httpStatusCodes.FORBIDDEN).end();
+              return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();
             }
 
             // DO NOT adjust this mock data (tests depend on it).
