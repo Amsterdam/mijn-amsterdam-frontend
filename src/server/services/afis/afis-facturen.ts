@@ -462,13 +462,13 @@ export async function fetchAfisFacturenOverview(
       facturen: facturenOpen.sort(
         firstBy(function (factuur: AfisFactuur) {
           return factuur.status === 'herinnering' ? -1 : 1;
-        })
+        }, 'asc')
           .thenBy(function (factuur: AfisFactuur) {
-            return factuur.status === 'openstaand' ||
-              factuur.status === 'herinnering'
-              ? -1
-              : 1;
-          })
+            return factuur.status === 'gedeeltelijke-betaling' ? -1 : 1;
+          }, 'asc')
+          .thenBy(function (factuur: AfisFactuur) {
+            return factuur.status === 'openstaand' ? -1 : 1;
+          }, 'asc')
           .thenBy(dateSort('paymentDueDate', 'asc'))
       ),
     };
