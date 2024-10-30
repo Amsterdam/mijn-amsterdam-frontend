@@ -41,7 +41,7 @@ export type AfisFacturenByStateResponse = {
   [key in AfisFactuurState]?: AfisFacturenResponse | null;
 };
 
-export type AfisBusinessPartnerKnownResponse = {
+export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
   businessPartnerId: string | null;

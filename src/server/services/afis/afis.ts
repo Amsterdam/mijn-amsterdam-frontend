@@ -5,7 +5,7 @@ import { fetchAfisFacturenOverview } from './afis-facturen';
 import { getAfisApiConfig } from './afis-helpers';
 import {
   AfisBusinessPartnerCommercialResponseSource,
-  AfisBusinessPartnerKnownResponse,
+  AfisThemaResponse,
   AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -139,7 +139,7 @@ export async function fetchIsKnownInAFIS(
 
   const dataRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
+  const response = await requestData<AfisThemaResponse | null>(
     dataRequestConfig,
     requestID,
     authProfileAndToken

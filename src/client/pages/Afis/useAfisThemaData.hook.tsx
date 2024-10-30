@@ -10,7 +10,7 @@ import {
 } from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
-  AfisBusinessPartnerKnownResponse,
+  AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
   AfisFactuurState,
@@ -96,12 +96,12 @@ function useTransformFacturen(
  */
 function useAfisFacturenApi(
   businessPartnerIdEncrypted:
-    | AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
+    | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
   state?: AfisFactuurState
 ) {
   const [facturenByStateApiResponse, fetchFacturen, isApiDataCached] =
-    useAppStateBagApi<AfisBusinessPartnerKnownResponse['facturen']>({
+    useAppStateBagApi<AfisThemaResponse['facturen']>({
       bagThema: BagThemas.AFIS,
       key: `afis-facturen-${state}`,
     });
@@ -184,7 +184,7 @@ export function useAfisThemaData() {
 
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
-    | AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
+    | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined
 ) {
   const [

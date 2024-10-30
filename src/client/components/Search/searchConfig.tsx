@@ -11,7 +11,7 @@ import type {
   Vergunning,
 } from '../../../server/services';
 import {
-  AfisBusinessPartnerKnownResponse,
+  AfisThemaResponse,
   AfisFactuur,
 } from '../../../server/services/afis/afis-types';
 import { AVGRequest } from '../../../server/services/avg/types';
@@ -331,7 +331,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'AFIS' as AppStateKey,
-    getApiBaseItems: (data: AfisBusinessPartnerKnownResponse) => {
+    getApiBaseItems: (data: AfisThemaResponse) => {
       if (data.facturen) {
         return Object.values(data.facturen).flatMap(
           (facturen) => facturen?.facturen ?? []
