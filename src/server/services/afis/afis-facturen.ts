@@ -274,7 +274,7 @@ function transformFacturen(
 }
 
 function shouldFilterOutFactuur(postingDate: string): boolean {
-  const postingDateAsDate = new Date(postingDate);
+  const datePosted = parseISO(postingDate);
   const now = new Date();
 
   if (postingDateAsDate.getTime() > now.getTime()) {
