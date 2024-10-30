@@ -1,4 +1,4 @@
-import { isToday, parseISO } from 'date-fns';
+import { isAfter, isPast, isToday, parseISO } from 'date-fns';
 import { firstBy } from 'thenby';
 
 import {
@@ -278,20 +278,14 @@ function isDownloadAvailable(postingDate: string): boolean {
   if (!postingDate) {
     return true;
   }
-
   const datePosted = parseISO(postingDate);
-  const now = new Date();
 
-  if (datePosted.getTime() > now.getTime()) {
-    return false;
-  }
+  const isInPastBeforeToday = !isToday(datePosted) && isPast(datePosted);
+  const sevenOClockEvening = 19;
+  const isTodayAfterDownloadOclock =
+    isToday(datePosted) && isAfter(datePosted, sevenOClockEvening);
 
-  if (isToday(datePosted)) {
-    const sevenOClock = 19;
-    return now.getHours() >= sevenOClock;
-  }
-
-  return true;
+  return isInPastBeforeToday || isTodayAfterDownloadOclock;
 }
 
 const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
