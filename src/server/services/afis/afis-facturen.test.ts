@@ -116,8 +116,8 @@ describe('afis-facturen', async () => {
     expect(openFactuur).toMatchInlineSnapshot(`
       {
         "afzender": "Bedrijf: Ok",
-        "amountOwed": "370.50",
-        "amountOwedFormatted": "€ 370,50",
+        "amount": "370.50",
+        "amountFormatted": "€ 370,50",
         "datePublished": "2023-11-21T00:00:00",
         "datePublishedFormatted": "21 november 2023",
         "debtClearingDate": null,
@@ -176,8 +176,8 @@ describe('afis-facturen', async () => {
     expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
       {
         "afzender": "Lisan al Gaib inc.",
-        "amountOwed": "0.00",
-        "amountOwedFormatted": "€ 0,00",
+        "amount": "0.00",
+        "amountFormatted": "€ 0,00",
         "datePublished": null,
         "datePublishedFormatted": null,
         "debtClearingDate": null,
@@ -567,7 +567,7 @@ describe('afis-facturen', async () => {
     });
   });
 
-  test('getAmountOwed calculates amount owed correctly', () => {
+  test('getInvoiceAmount calculates amount owed correctly', () => {
     const invoice: Pick<
       AfisFactuurPropertiesSource,
       'AmountInBalanceTransacCrcy'
@@ -575,11 +575,11 @@ describe('afis-facturen', async () => {
       AmountInBalanceTransacCrcy: '50.00',
     };
 
-    const result = forTesting.getAmountOwed(invoice);
+    const result = forTesting.getInvoiceAmount(invoice);
     expect(result).toEqual(new Decimal(50));
 
-    const amountOwed = forTesting.getAmountOwed(invoice, new Decimal(10.35));
-    expect(amountOwed.toFixed(2)).toEqual('60.35');
+    const amount = forTesting.getInvoiceAmount(invoice, new Decimal(10.35));
+    expect(amount.toFixed(2)).toEqual('60.35');
   });
 
   test('getFactuurnummer returns correct factuurnummer', () => {

@@ -119,8 +119,8 @@ export type AfisFactuur = {
   paymentDueDateFormatted: string;
   debtClearingDate: string | null;
   debtClearingDateFormatted: string | null;
-  amountOwed: string;
-  amountOwedFormatted: string;
+  amount: string;
+  amountFormatted: string;
   factuurNummer: string;
   factuurDocumentId: string;
   status: AfisFactuurStatus;
@@ -128,11 +128,6 @@ export type AfisFactuur = {
   documentDownloadLink: string | null;
   statusDescription: string;
   link: LinkProps;
-};
-
-export type InvoiceAmountOwed = {
-  amountOwed: Decimal;
-  amountInBalanceTransacCrcyInCents: Decimal;
 };
 
 export type AfisFactuurStatus =

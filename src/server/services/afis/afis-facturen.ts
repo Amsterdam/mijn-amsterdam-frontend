@@ -161,7 +161,7 @@ function getFactuurnummer(
   return factuurNummer;
 }
 
-function getAmountOwed(
+function getInvoiceAmount(
   invoice: Pick<AfisFactuurPropertiesSource, 'AmountInBalanceTransacCrcy'>,
   deelbetalingAmount?: Decimal
 ): Decimal {
@@ -191,8 +191,8 @@ function transformFactuur(
 
   const deelbetaling = deelbetalingen?.[factuurNummer];
   const hasDeelbetaling = !!deelbetaling;
-  const amountOwed = getAmountOwed(invoice, deelbetaling);
-  const amountOwedFormatted = `€ ${amountOwed ? displayAmount(parseFloat(amountOwed.toFixed(2))) : '0,00'}`;
+  const amount = getInvoiceAmount(invoice, deelbetaling);
+  const amountFormatted = `€ ${amount ? displayAmount(parseFloat(amount.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
@@ -202,7 +202,7 @@ function transformFactuur(
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
-  const status = determineFactuurStatus(invoice, amountOwed, hasDeelbetaling);
+  const status = determineFactuurStatus(invoice, amount, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
     ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
@@ -217,14 +217,14 @@ function transformFactuur(
     paymentDueDateFormatted: defaultDateFormat(invoice.NetDueDate),
     debtClearingDate,
     debtClearingDateFormatted,
-    amountOwed: amountOwed.toFixed(2),
-    amountOwedFormatted,
+    amount: amount.toFixed(2),
+    amountFormatted,
     factuurNummer,
     factuurDocumentId,
     status,
     statusDescription: determineFactuurStatusDescription(
       status,
-      amountOwedFormatted,
+      amountFormatted,
       debtClearingDateFormatted
     ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
@@ -300,7 +300,7 @@ const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
 
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
-  amountOwed: Decimal,
+  amount: Decimal,
   hasDeelbetaling: boolean
 ): AfisFactuur['status'] {
   switch (true) {
@@ -319,7 +319,7 @@ function determineFactuurStatus(
     case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'betaald';
 
-    case amountOwed.lt(0):
+    case amount.lt(0):
       return 'geld-terug';
 
     case !!sourceInvoice.NetDueDate &&
@@ -353,10 +353,10 @@ Source Invoice Properties that determine this are:
 
 function determineFactuurStatusDescription(
   status: AfisFactuur['status'],
-  amountOwedFormatted: AfisFactuur['amountOwedFormatted'],
+  amountFormatted: AfisFactuur['amountFormatted'],
   debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
 ) {
-  const amount = amountOwedFormatted.replace('-', '');
+  const amount = amountFormatted.replace('-', '');
   switch (status) {
     case 'openstaand':
       return `${amount} betaal nu`;
@@ -514,7 +514,7 @@ export const forTesting = {
   isDownloadAvailable,
   formatFactuurRequestURL,
   getAccountingDocumentTypesFilter,
-  getAmountOwed,
+  getInvoiceAmount,
   getFactuurnummer,
   replaceXmlNulls,
   transformDeelbetalingenResponse,

@@ -34,8 +34,8 @@ function createAfisFactuur(
     paymentDueDateFormatted: '',
     debtClearingDate: null,
     debtClearingDateFormatted: null,
-    amountOwed: '',
-    amountOwedFormatted: '',
+    amount: '',
+    amountFormatted: '',
     factuurDocumentId: '',
     paylink: null,
     documentDownloadLink: null,
@@ -75,7 +75,9 @@ describe('createAfisFacturenNotification', () => {
     ];
     const notification = createAfisFacturenNotification(facturen);
     expect(notification).not.toBeNull();
-    expect(notification?.description).toMatchInlineSnapshot(`"U heeft 2 openstaande facturen.Van 1 factuur heeft u inmiddels een herinnering ontvangen per e-mail of post."`);
+    expect(notification?.description).toMatchInlineSnapshot(
+      `"U heeft 2 openstaande facturen.Van 1 factuur heeft u inmiddels een herinnering ontvangen per e-mail of post."`
+    );
   });
 });
 
