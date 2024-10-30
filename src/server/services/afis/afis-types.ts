@@ -121,6 +121,8 @@ export type AfisFactuur = {
   debtClearingDateFormatted: string | null;
   amount: string;
   amountFormatted: string;
+  amountInitial: string;
+  amountInitialFormatted: string;
   factuurNummer: string;
   factuurDocumentId: string;
   status: AfisFactuurStatus;

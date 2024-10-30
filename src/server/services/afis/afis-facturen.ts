@@ -192,8 +192,10 @@ function transformFactuur(
 
   const deelbetaling = deelbetalingen?.[factuurNummer];
   const hasDeelbetaling = !!deelbetaling;
+  const amountInitial = getInvoiceAmount(invoice);
   const amount = getInvoiceAmount(invoice, deelbetaling);
   const amountFormatted = `€ ${amount ? displayAmount(parseFloat(amount.toFixed(2))) : '0,00'}`;
+  const amountInitialFormatted = `€ ${amountInitial ? displayAmount(parseFloat(amountInitial.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
@@ -220,12 +222,15 @@ function transformFactuur(
     debtClearingDateFormatted,
     amount: amount.toFixed(2),
     amountFormatted,
+    amountInitial: amountInitial.toFixed(2),
+    amountInitialFormatted,
     factuurNummer,
     factuurDocumentId,
     status,
     statusDescription: determineFactuurStatusDescription(
       status,
       amountFormatted,
+      amountInitialFormatted,
       debtClearingDateFormatted
     ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
@@ -355,9 +360,12 @@ Source Invoice Properties that determine this are:
 function determineFactuurStatusDescription(
   status: AfisFactuur['status'],
   amountFormatted: AfisFactuur['amountFormatted'],
+  amountInitialFormatted: AfisFactuur['amountInitialFormatted'],
   debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
 ) {
   const amount = amountFormatted.replace('-', '');
+  const amountInitial = amountInitialFormatted.replace('-', '');
+
   switch (status) {
     case 'openstaand':
       return `${amount} betaal nu`;
@@ -366,7 +374,7 @@ function determineFactuurStatusDescription(
     case 'in-dispuut':
       return `${amount} in dispuut`;
     case 'gedeeltelijke-betaling':
-      return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amount} euro over onder vermelding van de gegevens op uw factuur.`;
+      return `Uw factuur van ${amountInitial} is nog niet volledig betaald. Maak het resterend bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
       return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':

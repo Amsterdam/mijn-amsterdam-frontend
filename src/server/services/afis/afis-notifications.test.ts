@@ -37,6 +37,8 @@ function createAfisFactuur(
     debtClearingDateFormatted: null,
     amount: '',
     amountFormatted: '',
+    amountInitial: '',
+    amountInitialFormatted: '',
     factuurDocumentId: '',
     paylink: null,
     documentDownloadLink: null,
