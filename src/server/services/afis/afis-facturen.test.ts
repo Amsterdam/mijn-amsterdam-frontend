@@ -317,6 +317,7 @@ describe('afis-facturen', async () => {
       PostingDate: { '@null': true },
       ProfitCenterName: '',
       SEPAMandate: '',
+      PaymentMethod: null,
     };
 
     const result = forTesting.replaceXmlNulls(sourceInvoice);
