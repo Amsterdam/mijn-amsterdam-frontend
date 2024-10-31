@@ -274,7 +274,10 @@ function transformFacturen(
   };
 }
 
-/** Checks if a factuur is available for download. */
+/** Checks if a factuur is available for download.
+ *
+ *  A factuur can only be downloaded after the day it is posted after 19:00 hours.
+ * */
 function isDownloadAvailable(postingDate: string): boolean {
   if (!postingDate) {
     return true;
