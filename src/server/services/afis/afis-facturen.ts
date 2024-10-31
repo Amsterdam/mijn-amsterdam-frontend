@@ -283,7 +283,8 @@ function isDownloadAvailable(postingDate: string): boolean {
   const datePosted = parseISO(postingDate);
   const now = new Date();
 
-  if (datePosted.getTime() > now.getTime()) {
+  const isPostedInTheFuture = datePosted.getTime() > now.getTime();
+  if (isPostedInTheFuture) {
     return false;
   }
 
