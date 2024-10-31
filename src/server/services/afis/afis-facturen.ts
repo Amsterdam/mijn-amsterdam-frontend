@@ -274,6 +274,7 @@ function transformFacturen(
   };
 }
 
+/** Checks if a factuur is available for download. */
 function isDownloadAvailable(postingDate: string): boolean {
   if (!postingDate) {
     return true;
@@ -287,8 +288,8 @@ function isDownloadAvailable(postingDate: string): boolean {
   }
 
   if (isToday(datePosted)) {
-    const sevenOClock = 19;
-    return now.getHours() >= sevenOClock;
+    const FACTUUR_AVAILABLE_AFTER_N_OCLOCK = 19;
+    return now.getHours() >= FACTUUR_AVAILABLE_AFTER_N_OCLOCK;
   }
 
   return true;
