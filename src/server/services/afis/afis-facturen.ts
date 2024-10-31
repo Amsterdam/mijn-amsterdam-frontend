@@ -264,7 +264,7 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      return FeatureToggle.afisFilterOutUndownloadableFacturen
+      return FeatureToggle.afisFilterOutUndownloadableFacturenActive
         ? isDownloadAvailable(invoiceProperties.PostingDate)
         : true;
     })
