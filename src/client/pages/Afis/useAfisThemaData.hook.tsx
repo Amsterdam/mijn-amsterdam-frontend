@@ -136,17 +136,18 @@ export function useAfisListPageData(state: AfisFactuurState) {
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
-  const [facturenByState1, facturenByStateApiResponse] = useAfisFacturenApi(
-    businessPartnerIdEncrypted,
-    state
-  );
+  const [facturenByStateFromBAGState, facturenByStateApiResponse] =
+    useAfisFacturenApi(businessPartnerIdEncrypted, state);
 
-  const facturenByState2 = useTransformFacturen(AFIS.content?.facturen ?? null);
+  const facturenByStateFromMainState = useTransformFacturen(
+    AFIS.content?.facturen ?? null
+  );
 
   return {
     facturenListResponse:
-      (state === 'open' ? facturenByState2?.open : facturenByState1?.[state]) ??
-      null,
+      (state === 'open'
+        ? facturenByStateFromMainState?.open
+        : facturenByStateFromBAGState?.[state]) ?? null,
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),

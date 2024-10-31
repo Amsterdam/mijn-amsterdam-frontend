@@ -480,14 +480,13 @@ export async function fetchAfisFacturenOverview(
           return factuur.status === 'herinnering' ? -1 : 1;
         })
           .thenBy(function (factuur: AfisFactuur) {
-            return ['gedeeltelijke-betaling', 'handmatig-betalen'].includes(
-              factuur.status
-            )
+            return [
+              'gedeeltelijke-betaling',
+              'handmatig-betalen',
+              'openstaand',
+            ].includes(factuur.status)
               ? -1
               : 1;
-          })
-          .thenBy(function (factuur: AfisFactuur) {
-            return factuur.status === 'openstaand' ? -1 : 1;
           })
           .thenBy(dateSort('paymentDueDate', 'asc'))
       ),
