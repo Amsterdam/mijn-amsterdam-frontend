@@ -35,6 +35,7 @@ import {
   XmlNullable,
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -263,7 +264,9 @@ function transformFacturen(
   const count = responseData?.feed?.count ?? feedProperties.length;
   const facturenTransformed = feedProperties
     .filter((invoiceProperties) => {
-      return isDownloadAvailable(invoiceProperties.PostingDate);
+      return FeatureToggle.afisFilterOutUndownloadableFacturen
+        ? isDownloadAvailable(invoiceProperties.PostingDate)
+        : true;
     })
     .map((invoiceProperties) => {
       return transformFactuur(invoiceProperties, sessionID, deelbetalingen);

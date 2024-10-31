@@ -4,6 +4,7 @@ export const FeatureToggle = {
   // AFIS
   afisActive: !IS_PRODUCTION,
   afisEmandatesActive: false,
+  afisFilterOutUndownloadableFacturen: IS_OT || IS_PRODUCTION,
 
   // AVG (Smile)
   avgActive: true,
