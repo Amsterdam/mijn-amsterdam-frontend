@@ -349,7 +349,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     ) => {
       return (term: string) => {
         return displayPath(term, [
-          item.factuurNummer,
+          `Factuur ${item.factuurNummer}`,
           item.paymentDueDateFormatted,
           item.statusDescription,
         ]);
