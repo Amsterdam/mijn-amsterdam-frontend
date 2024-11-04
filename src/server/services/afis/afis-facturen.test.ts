@@ -332,6 +332,7 @@ describe('afis-facturen', async () => {
         "InvoiceReference": "",
         "NetDueDate": "",
         "Paylink": null,
+        "PaymentMethod": null,
         "PostingDate": null,
         "ProfitCenterName": "",
         "SEPAMandate": "",
