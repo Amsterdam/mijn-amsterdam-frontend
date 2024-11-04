@@ -1,3 +1,4 @@
+const httpConstants = require('http2').constants;
 const settings = require('../settings');
 
 const BASE = '/afis';
@@ -196,13 +197,13 @@ module.exports = [
             };
 
             const stateName = Object.entries(stateFilters).find(
-              ([name, filterValueSegment]) => {
+              ([_name, filterValueSegment]) => {
                 return req.query?.['$filter']?.includes(filterValueSegment);
               }
             )?.[0];
 
             if (!stateName) {
-              return res.status(500).end();
+              return res.status(httpConstants.HTTP_STATUS_FORBIDDEN).end();
             }
 
             // DO NOT adjust this mock data (tests depend on it).
@@ -268,7 +269,7 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
+          middleware: (_req, res) => {
             const htmlResponse = `<h1>Afis factuur betalen</h1><button onclick="history.back()">Betaal factuur</button>`;
             res.send(htmlResponse);
           },

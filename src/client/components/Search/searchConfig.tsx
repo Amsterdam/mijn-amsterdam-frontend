@@ -7,9 +7,13 @@ import type {
   HorecaVergunningen,
   Krefia,
   KrefiaDeepLink,
+  VakantieverhuurVergunning,
   Vergunning,
 } from '../../../server/services';
-import { AfisFacturenByStateResponse } from '../../../server/services/afis/afis-types';
+import {
+  AfisThemaResponse,
+  AfisFactuur,
+} from '../../../server/services/afis/afis-types';
 import { AVGRequest } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMeting } from '../../../server/services/bodem/types';
@@ -18,11 +22,11 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/bb-vergunning';
-import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-lvv-registratie';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-vakantieverhuur-vergunning';
+import {
+  LVVRegistratie,
+  BBVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
@@ -40,7 +44,6 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
-import { AfisFactuurFrontend } from '../../pages/Afis/Afis-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -57,14 +60,16 @@ export interface ApiSearchConfig {
   stateKey: AppStateKey;
   // Extract searchable items from the api response
   getApiBaseItems: (
-    apiContent: ApiSuccessResponse<any>['content']
+    apiContent: ApiSuccessResponse<ApiBaseItem>['content']
   ) => ApiBaseItem[];
 
   // SearchEntry properties
 
   // A description that will be used by Fuse to find matching items and is also displayed as description
   // of the SearchEntry on the Search page for Amsterdam.nl Results.
-  description: ReactNode | ((item: any, config: ApiSearchConfig) => ReactNode);
+  description:
+    | ReactNode
+    | ((item: ApiBaseItem, config: ApiSearchConfig) => ReactNode);
 
   // A list of keys of which the values are used for keywords
   keywordsGeneratedFromProps?: string[];
@@ -73,15 +78,15 @@ export interface ApiSearchConfig {
   keywords?: string[];
 
   // A function to generate additional keywords derived from the data source
-  generateKeywords?: (item: any, config: ApiSearchConfig) => string[];
+  generateKeywords?: (item: ApiBaseItem, config: ApiSearchConfig) => string[];
 
   // Return a component that acts as title in the search result list
   displayTitle:
-    | ((item: any) => ReactNode | ((term: string) => ReactNode))
+    | ((item: ApiBaseItem) => ReactNode | ((term: string) => ReactNode))
     | ReactNode;
 
   // The url to link to
-  url: string | ((item: any, config: ApiSearchConfig) => string);
+  url: string | ((item: ApiBaseItem, config: ApiSearchConfig) => string);
 
   // For which profile types this api's need to be indexed
   profileTypes: ProfileType[];
@@ -90,11 +95,10 @@ export interface ApiSearchConfig {
   isEnabled?: boolean;
 }
 
-export interface ApiBaseItem {
+export type ApiBaseItem<T extends Record<string, any> = Record<string, any>> = {
   title: string;
   link?: LinkProps;
-  [key: string]: any;
-}
+} & T;
 
 export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
   {
@@ -113,11 +117,11 @@ export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
 
       return [];
     },
-    displayTitle: (item: any) => (term: string) => {
+    displayTitle: (item: ApiBaseItem) => (term: string) => {
       return displayPath(term, [item.title]);
     },
-    url: (item: any) => item.link?.to || '/',
-    description: (item: any) => {
+    url: (item: ApiBaseItem) => item.link?.to || '/',
+    description: (item: ApiBaseItem) => {
       return `Bekijk ${item.title}`;
     },
     profileTypes: ['private'],
@@ -168,14 +172,14 @@ const getWpiConfig = (
   'stateKey' | 'displayTitle' | 'profileTypes' | 'generateKeywords'
 > => ({
   stateKey,
-  generateKeywords: (aanvraag: WpiRequestProcess) =>
+  generateKeywords: (aanvraag: ApiBaseItem) =>
     uniqueArray(
       aanvraag.steps.flatMap((step: StatusLineItem) => [
         step.description,
         step.status,
       ])
     ),
-  displayTitle: (aanvraag: WpiRequestProcess) => {
+  displayTitle: (aanvraag: ApiBaseItem) => {
     return (term: string) => {
       const segments =
         aanvraag.about === 'Bbz'
@@ -208,7 +212,7 @@ interface ToeristischRegistratieItem {
   title: string;
   identifier: string;
   link: LinkProps;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export const apiSearchConfigs: ApiSearchConfig[] = [
@@ -248,26 +252,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           };
         }
       );
-      const zaken = apiContent.vakantieverhuurVergunningen?.map(
-        (vergunning: VakantieverhuurVergunning) => {
-          const title = vergunning.titel;
-          return {
-            ...vergunning,
-            title,
-            identifier: vergunning.zaaknummer,
-          };
-        }
-      );
-      const zaken2 = apiContent.bbVergunningen?.map(
-        (vergunning: BBVergunning) => {
-          const title = vergunning.titel;
-          return {
-            ...vergunning,
-            title,
-            identifier: vergunning.zaaknummer,
-          };
-        }
-      );
+      const zaken = apiContent.vakantieverhuurVergunningen;
+      const zaken2 = apiContent.bbVergunningen;
       return [
         ...(zaken || []),
         ...(zaken2 || []),
@@ -344,23 +330,23 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'AFIS_BAG' as AppStateKey,
-    getApiBaseItems: (
-      data: Record<string, ApiSuccessResponse<AfisFacturenByStateResponse>>
-    ) => {
-      if (Object.keys(data).length) {
-        const facturen = Object.values(data).flatMap((byState) =>
-          byState.content
-            ? Object.values(byState.content).flatMap((facturenResponse) =>
-                facturenResponse ? facturenResponse.facturen : []
-              )
-            : []
+    stateKey: 'AFIS' as AppStateKey,
+    getApiBaseItems: (data: AfisThemaResponse) => {
+      if (data.facturen) {
+        return Object.values(data.facturen).flatMap(
+          (facturen) => facturen?.facturen ?? []
         );
-        return facturen;
       }
       return [];
     },
-    displayTitle: (item: AfisFactuurFrontend) => {
+    displayTitle: (
+      item: ApiBaseItem<
+        Pick<
+          AfisFactuur,
+          'factuurNummer' | 'paymentDueDateFormatted' | 'statusDescription'
+        >
+      >
+    ) => {
       return (term: string) => {
         return displayPath(term, [
           item.factuurNummer,
@@ -380,7 +366,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
       const address = getFullAddress(apiContent.adres, true);
       const name = getFullName(apiContent.persoon);
-      const brpDataItems: ApiBaseItem[] = [
+      const brpDataItems: ApiBaseItem<{ title: string; link: LinkProps }>[] = [
         {
           title: name || 'Mijn naam',
           link: {
@@ -438,7 +424,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: true,
     stateKey: 'SVWI' as AppStateKey,
-    displayTitle(item: any) {
+    displayTitle(item: { title: string }) {
       return (term: string) => displayPath(term, [item.title]);
     },
   },

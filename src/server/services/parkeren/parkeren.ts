@@ -32,6 +32,6 @@ export async function fetchSSOParkerenURL(
 
   return apiSuccessResult({
     isKnown: true,
-    url: response.content?.url ?? fallBackURL,
+    url: response.content?.url ?? fallBackURL ?? null,
   });
 }

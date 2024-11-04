@@ -4,7 +4,7 @@ import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
 
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { usePageChange } from './usePageChange';
-import type { TrackingConfig } from '../../client/config/routes';
+import type { TrackingConfig } from '../config/routes';
 import { NOT_FOUND_TITLE } from '../config/thema';
 
 const mocks = vi.hoisted(() => {
@@ -172,5 +172,48 @@ describe('usePageChange', () => {
       'private-attributes',
       'Amsterdam'
     );
+  });
+
+  describe('scrollOnPageChange', () => {
+    const mockScrollTo = vi.fn();
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+      // Mock window.scrollTo
+      Object.defineProperty(window, 'scrollTo', {
+        value: mockScrollTo,
+        writable: true,
+      });
+    });
+
+    it('should scroll to top when when scrollY is higher than skip-to-id-AppContent offsetTop', () => {
+      // Set up the mock to return null for getElementById
+      document.getElementById = vi.fn().mockReturnValue(null);
+
+      // @ts-ignore
+      rrd.__setPathname('/page1');
+
+      const wrapper = ({ children }: { children: ReactNode }) => (
+        <div>{children}</div>
+      );
+
+      const { rerender } = renderHook(() => usePageChange(true), { wrapper });
+
+      // set new page to trigger scroll
+      // @ts-ignore
+      rrd.__setPathname('/page2');
+
+      Object.defineProperty(window, 'scrollY', {
+        value: 1000,
+        writable: true,
+      });
+
+      rerender();
+
+      expect(mockScrollTo).toHaveBeenCalledWith({
+        behavior: 'instant',
+        top: 0,
+      });
+    });
   });
 });

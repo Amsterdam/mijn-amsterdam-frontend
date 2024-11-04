@@ -30,12 +30,15 @@ const BASE_ROUTE = '/afis/RESTAdapter';
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
+  facturen: (uri: string) => {
+    return decodeURI(uri).includes(`IsCleared eq`);
+  },
 };
 
 const RESPONSE_BODIES = {
   BSNFound: {
     BSN: 111111111,
-    Zakenpartnernummer: '3333333333',
+    Zakenpartnernummer: '4444444444',
     Blokkade: 'Nee',
     Gevonden: 'Ja',
   },
@@ -94,15 +97,29 @@ describe('fetchIsKnownInAFIS ', () => {
   const TRANSFORMED_RESPONSES = {
     isKnown: {
       content: {
-        isKnown: true,
         businessPartnerIdEncrypted: mocks.MOCK_VALUE_ENCRYPTED,
+        facturen: {
+          afgehandeld: {
+            count: 0,
+            facturen: [],
+          },
+          open: {
+            count: 0,
+            facturen: [],
+          },
+          overgedragen: {
+            count: 0,
+            facturen: [],
+          },
+        },
+        isKnown: true,
       },
       status: 'OK',
     },
     isNotKnown: {
       content: {
-        isKnown: false,
         businessPartnerIdEncrypted: null,
+        isKnown: false,
       },
       status: 'OK',
     },
@@ -113,6 +130,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerBSN)
         .reply(200, RESPONSE_BODIES.BSNFound);
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
@@ -127,6 +145,7 @@ describe('fetchIsKnownInAFIS ', () => {
         BSN: 123456789,
         Gevonden: 'Nee',
       });
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
@@ -140,6 +159,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKFound);
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,
@@ -153,6 +173,7 @@ describe('fetchIsKnownInAFIS ', () => {
       remoteApi
         .post(ROUTES.businesspartnerKVK)
         .reply(200, RESPONSE_BODIES.KVKNotFound);
+      remoteApi.get(ROUTES.facturen).times(4).reply(200, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,

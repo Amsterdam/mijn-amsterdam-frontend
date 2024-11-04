@@ -190,6 +190,7 @@ export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
 };
 
 // Store all services for type derivation
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SERVICES_INDEX = {
   AFIS,
   AFVAL,

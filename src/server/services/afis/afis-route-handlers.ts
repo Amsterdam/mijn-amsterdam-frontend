@@ -1,11 +1,7 @@
 import { Response } from 'express';
 
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
-import {
-  FACTUUR_STATE_KEYS,
-  fetchAfisFacturenByState,
-  fetchAfisFacturenOverview,
-} from './afis-facturen';
+import { FACTUUR_STATE_KEYS, fetchAfisFacturenByState } from './afis-facturen';
 import { AfisFactuurState } from './afis-types';
 import { getAuth } from '../../auth/auth-helpers';
 import {
@@ -95,34 +91,6 @@ export async function handleFetchAfisFacturen(
     res.locals.requestID,
     authProfileAndToken.profile.sid,
     { state: req.params.state, businessPartnerID, top }
-  );
-
-  return sendResponse(res, response);
-}
-
-export async function handleFetchAfisFacturenOverview(
-  req: RequestWithQueryParams<{ id: string }>,
-  res: Response
-) {
-  const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return sendUnauthorized(res);
-  }
-
-  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    req.query.id,
-    authProfileAndToken
-  );
-
-  if (decryptResult.status === 'ERROR') {
-    return sendResponse(res, decryptResult);
-  }
-
-  const response = await fetchAfisFacturenOverview(
-    res.locals.requestID,
-    authProfileAndToken.profile.sid,
-    { businessPartnerID: decryptResult.content }
   );
 
   return sendResponse(res, response);

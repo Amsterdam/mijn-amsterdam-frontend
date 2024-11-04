@@ -34,16 +34,16 @@ export function usePageChange(isAuthenticated: boolean) {
   useEffect(() => {
     const isNewPageNavigation = prevPathRef.current !== location.pathname;
     if (isNewPageNavigation) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    } else {
-      history.scrollRestoration = 'auto';
+      const offsetTop =
+        document.getElementById('skip-to-id-AppContent')?.offsetTop ?? 0;
+      if (window.scrollY > offsetTop) {
+        window.scrollTo({ top: offsetTop, behavior: 'instant' });
+      }
     }
-
     prevPathRef.current = location.pathname;
+  }, [location.pathname]);
 
+  useEffect(() => {
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex((route) => {
       return (
@@ -129,7 +129,7 @@ export function usePageChange(isAuthenticated: boolean) {
   ]);
 }
 
-function getCustomTrackingUrl(
+export function getCustomTrackingUrl(
   pathname: string,
   trackingConfig: TrackingConfig
 ) {

@@ -10,13 +10,12 @@ import {
 } from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
-  AfisBusinessPartnerKnownResponse,
+  AfisThemaResponse,
   AfisFacturenByStateResponse,
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import {
-  ApiResponse,
   hasFailedDependency,
   isError,
   isLoading,
@@ -28,8 +27,6 @@ import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
-
-const AFIS_OVERVIEW_STATE_KEY = 'afis-facturen-overzicht';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
@@ -70,14 +67,14 @@ function mapFactuur(factuur: AfisFactuur) {
 }
 
 function useTransformFacturen(
-  facturenByStateApiResponse: ApiResponse<AfisFacturenByStateResponse | null>
-): ApiResponse<AfisFacturenByStateFrontend | null> {
-  const facturenByStateTransfomed: AfisFacturenByStateFrontend | null =
+  facturenByState: AfisFacturenByStateResponse | null
+): AfisFacturenByStateFrontend | null {
+  const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
-      if (facturenByStateApiResponse.content) {
+      if (facturenByState) {
         return Object.fromEntries(
-          entries(facturenByStateApiResponse.content)
-            .filter(([state, facturenResponse]) => facturenResponse !== null)
+          entries(facturenByState)
+            .filter(([_state, facturenResponse]) => facturenResponse !== null)
             .map(([state, facturenResponse]) => [
               state,
               {
@@ -88,11 +85,9 @@ function useTransformFacturen(
         );
       }
       return null;
-    }, [facturenByStateApiResponse]);
+    }, [facturenByState]);
 
-  return Object.assign({}, facturenByStateApiResponse, {
-    content: facturenByStateTransfomed,
-  });
+  return facturenByStateTransformed;
 }
 
 /**
@@ -101,44 +96,36 @@ function useTransformFacturen(
  */
 function useAfisFacturenApi(
   businessPartnerIdEncrypted:
-    | AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
+    | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined,
   state?: AfisFactuurState
 ) {
-  const isOpenfacturenState = !state || state === 'open';
-
   const [facturenByStateApiResponse, fetchFacturen, isApiDataCached] =
-    useAppStateBagApi<AfisFacturenByStateResponse>({
+    useAppStateBagApi<AfisThemaResponse['facturen']>({
       bagThema: BagThemas.AFIS,
-      key: isOpenfacturenState
-        ? AFIS_OVERVIEW_STATE_KEY
-        : `afis-facturen-${state}`,
+      key: `afis-facturen-${state}`,
     });
 
   useEffect(() => {
-    if (businessPartnerIdEncrypted && !isApiDataCached) {
-      let url = `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`;
-      if (isOpenfacturenState) {
-        url = `${BFFApiUrls.AFIS_FACTUREN_OVERZICHT}?id=${businessPartnerIdEncrypted}`;
-      }
+    if (
+      businessPartnerIdEncrypted &&
+      !isApiDataCached &&
+      state &&
+      state !== 'open'
+    ) {
       fetchFacturen({
-        url,
+        url: `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`,
       });
     }
-  }, [
-    businessPartnerIdEncrypted,
-    fetchFacturen,
-    isApiDataCached,
-    state,
-    isOpenfacturenState,
-  ]);
+  }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
 
-  const facturenByStateApiResponseUpdated = useTransformFacturen(
-    facturenByStateApiResponse
+  const facturenByStateApiUpdated = useTransformFacturen(
+    facturenByStateApiResponse.content ?? null
   );
 
   return [
-    facturenByStateApiResponseUpdated,
+    facturenByStateApiUpdated,
+    facturenByStateApiResponse,
     fetchFacturen,
     isApiDataCached,
   ] as const;
@@ -149,18 +136,25 @@ export function useAfisListPageData(state: AfisFactuurState) {
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
-  const [facturenByStateApiResponse] = useAfisFacturenApi(
-    businessPartnerIdEncrypted,
-    state
+  const [facturenByStateFromBAGState, facturenByStateApiResponse] =
+    useAfisFacturenApi(businessPartnerIdEncrypted, state);
+
+  const facturenByStateFromMainState = useTransformFacturen(
+    AFIS.content?.facturen ?? null
   );
 
   return {
-    facturenListResponse: facturenByStateApiResponse.content?.[state] ?? null,
+    facturenListResponse:
+      (state === 'open'
+        ? facturenByStateFromMainState?.open
+        : facturenByStateFromBAGState?.[state]) ?? null,
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
-    isListPageError: isError(facturenByStateApiResponse, false),
-    isListPageLoading: isLoading(facturenByStateApiResponse),
+    isListPageError:
+      state !== 'open' ? isError(facturenByStateApiResponse, false) : false,
+    isListPageLoading:
+      state !== 'open' ? isLoading(facturenByStateApiResponse) : false,
     listPageTitle,
     routes,
   };
@@ -171,37 +165,27 @@ export function useAfisThemaData() {
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
-  const [facturenByStateApiResponse] = useAfisFacturenApi(
-    businessPartnerIdEncrypted
-  );
+  const facturenByState = useTransformFacturen(AFIS.content?.facturen ?? null);
 
   return {
     businessPartnerIdEncrypted,
-    facturenByState: facturenByStateApiResponse.content,
+    facturenByState,
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
     listPageTitle,
     routes,
-    isOverviewApiError: isError(facturenByStateApiResponse),
-    isOverviewApiLoading: isLoading(facturenByStateApiResponse),
     dependencyErrors: {
-      open: hasFailedDependency(facturenByStateApiResponse, 'open'),
-      afgehandeld: hasFailedDependency(
-        facturenByStateApiResponse,
-        'afgehandeld'
-      ),
-      overgedragen: hasFailedDependency(
-        facturenByStateApiResponse,
-        'overgedragen'
-      ),
+      open: hasFailedDependency(AFIS, 'open'),
+      afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
+      overgedragen: hasFailedDependency(AFIS, 'overgedragen'),
     },
   };
 }
 
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
-    | AfisBusinessPartnerKnownResponse['businessPartnerIdEncrypted']
+    | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined
 ) {
   const [

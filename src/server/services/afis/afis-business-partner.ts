@@ -44,7 +44,10 @@ async function fetchBusinessPartnerFullNameAddressId(
     },
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(
+    additionalConfig,
+    requestID
+  );
 
   return requestData<AfisBusinessPartnerAddressId>(
     businessPartnerRequestConfig,
@@ -79,7 +82,10 @@ async function fetchBusinessPartnerFullName(
     },
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(
+    additionalConfig,
+    requestID
+  );
 
   return requestData<AfisBusinessPartnerDetails>(
     businessPartnerRequestConfig,
@@ -110,7 +116,10 @@ async function fetchPhoneNumber(
     },
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(
+    additionalConfig,
+    requestID
+  );
 
   return requestData<AfisBusinessPartnerPhone>(
     businessPartnerRequestConfig,
@@ -141,7 +150,10 @@ async function fetchEmail(
     },
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
+  const businessPartnerRequestConfig = await getAfisApiConfig(
+    additionalConfig,
+    requestID
+  );
 
   return requestData<AfisBusinessPartnerEmail>(
     businessPartnerRequestConfig,
