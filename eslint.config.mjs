@@ -44,6 +44,7 @@ export default [
           detectObjects: false,
         },
       ],
+      'no-undef': 'off',
     },
   },
   {

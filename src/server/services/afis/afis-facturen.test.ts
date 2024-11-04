@@ -1,3 +1,5 @@
+import Mockdate from 'mockdate';
+
 import { fetchAfisDocument } from './afis-documents';
 import {
   fetchAfisFacturen,
@@ -637,6 +639,8 @@ describe('afis-facturen', async () => {
   });
 
   describe('fetch facturen', () => {
+    Mockdate.set('2024-10-01T00:00:00');
+
     const defaultProps = {
       DunningLevel: 0,
       DunningBlockingReason: null,
@@ -717,6 +721,53 @@ describe('afis-facturen', async () => {
           'afgehandeld' in response.content &&
           response.content?.afgehandeld?.facturen.length
       ).toBe(1);
+    });
+  });
+});
+
+describe('isPostedTodayAndBefore', () => {
+  // Mentioned time that it has to be is to be read inside the tested function.
+  afterAll(() => {
+    Mockdate.reset();
+  });
+
+  describe('Should not display', () => {
+    test('Posted today but it is not yet time', () => {
+      Mockdate.set('2020-03-01T18:59:59');
+      const result = forTesting.isDownloadAvailable('2020-03-01T18:59:59');
+      expect(result).toBe(false);
+    });
+
+    test('Posted at the start of the day while it is the start of the day', () => {
+      Mockdate.set('2020-03-01T00:00:00');
+      const result = forTesting.isDownloadAvailable('2020-03-01T00:00:00');
+      expect(result).toBe(false);
+    });
+
+    test('Posted into the future.', () => {
+      Mockdate.set('2020-03-01T00:00:00');
+      const result = forTesting.isDownloadAvailable('2020-03-01T00:00:01');
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('Should display.', () => {
+    test('Posted not today', () => {
+      Mockdate.set('2020-03-01T00:00:00');
+      const result = forTesting.isDownloadAvailable('2020-02-28T10:00:00');
+      expect(result).toBe(true);
+    });
+
+    test('Posted at the start of the day, but its now time to display', () => {
+      Mockdate.set('2020-03-01T19:00:00');
+      const result = forTesting.isDownloadAvailable('2020-03-01T00:00:00');
+      expect(result).toBe(true);
+    });
+
+    test('Posted after time to display, but its time to display', () => {
+      Mockdate.set('2020-03-01T19:00:00');
+      const result = forTesting.isDownloadAvailable('2020-03-01T19:00:00');
+      expect(result).toBe(true);
     });
   });
 });
