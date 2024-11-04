@@ -578,7 +578,7 @@ describe('afis-facturen', async () => {
           ],
           [
             "overgedragen-aan-belastingen",
-            "€ 123,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op op 16 juni 2024",
+            "€ 123,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op 16 juni 2024",
           ],
           [
             "geld-terug",
