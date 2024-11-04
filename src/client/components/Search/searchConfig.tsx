@@ -334,7 +334,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (data: AfisThemaResponse) => {
       if (data.facturen) {
         return Object.values(data.facturen).flatMap(
-          (facturen) => facturen?.facturen ?? []
+          (byState) => byState?.facturen ?? []
         );
       }
       return [];
@@ -349,7 +349,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     ) => {
       return (term: string) => {
         return displayPath(term, [
-          item.factuurNummer,
+          `Factuur ${item.factuurNummer}`,
           item.paymentDueDateFormatted,
           item.statusDescription,
         ]);
