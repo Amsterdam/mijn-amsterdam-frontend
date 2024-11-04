@@ -25,6 +25,7 @@ export interface Adres {
   einddatumVerblijf: string | null;
   adresType: 'correspondentie' | 'woon';
   aantalBewoners?: number;
+  wozWaarde?: string;
   _adresSleutel?: string;
   mokum?: boolean;
 }

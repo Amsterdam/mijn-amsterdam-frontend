@@ -72,6 +72,17 @@ export default function Profile() {
         adres: {
           ...BRP.content.adres,
           aantalBewoners: residentCount,
+          wozWaarde: (
+            <>
+              Te vinden op{' '}
+              <LinkdInline
+                external={true}
+                href="https://www.wozwaardeloket.nl/"
+              >
+                WOZ-waardeloket
+              </LinkdInline>
+            </>
+          ),
         },
       };
       return formatBrpProfileData(brpContent);
