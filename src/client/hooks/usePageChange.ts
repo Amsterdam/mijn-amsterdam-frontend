@@ -36,9 +36,8 @@ export function usePageChange(isAuthenticated: boolean) {
     if (isNewPageNavigation) {
       const offsetTop =
         document.getElementById('skip-to-id-AppContent')?.offsetTop ?? 0;
-      console.log('scrolling');
       if (window.scrollY > offsetTop) {
-        window.scrollTo(0, offsetTop);
+        window.scrollTo({ top: offsetTop, behavior: 'instant' });
       }
     }
     prevPathRef.current = location.pathname;
