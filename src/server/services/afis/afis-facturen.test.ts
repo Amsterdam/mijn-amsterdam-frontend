@@ -1,4 +1,5 @@
 import Mockdate from 'mockdate';
+import Decimal from 'decimal.js';
 
 import { fetchAfisDocument } from './afis-documents';
 import {
@@ -116,8 +117,8 @@ describe('afis-facturen', async () => {
     expect(openFactuur).toMatchInlineSnapshot(`
       {
         "afzender": "Bedrijf: Ok",
-        "amountOwed": 315.5,
-        "amountOwedFormatted": "€ 315,50",
+        "amountOwed": "370.50",
+        "amountOwedFormatted": "€ 370,50",
         "datePublished": "2023-11-21T00:00:00",
         "datePublishedFormatted": "21 november 2023",
         "debtClearingDate": null,
@@ -134,7 +135,7 @@ describe('afis-facturen', async () => {
         "paymentDueDate": "2023-12-21T00:00:00",
         "paymentDueDateFormatted": "21 december 2023",
         "status": "gedeeltelijke-betaling",
-        "statusDescription": "Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van € 315,50 euro over onder vermelding van de gegevens op uw factuur.",
+        "statusDescription": "Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van € 370,50 euro over onder vermelding van de gegevens op uw factuur.",
       }
     `);
 
@@ -176,8 +177,8 @@ describe('afis-facturen', async () => {
     expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
       {
         "afzender": "Lisan al Gaib inc.",
-        "amountOwed": 0,
-        "amountOwedFormatted": "€ 0",
+        "amountOwed": "0.00",
+        "amountOwedFormatted": "€ 0,00",
         "datePublished": null,
         "datePublishedFormatted": null,
         "debtClearingDate": null,
@@ -268,8 +269,26 @@ describe('afis-facturen', async () => {
             content: {
               properties: {
                 InvoiceReference: '123',
-                AmountInBalanceTransacCrcy: '100.00',
-                NetPaymentAmount: '50.00',
+                AmountInBalanceTransacCrcy: '-100.10',
+                NetPaymentAmount: '-50.20',
+              },
+            },
+          },
+          {
+            content: {
+              properties: {
+                InvoiceReference: '123',
+                AmountInBalanceTransacCrcy: '-75.40',
+                NetPaymentAmount: '-15.90',
+              },
+            },
+          },
+          {
+            content: {
+              properties: {
+                InvoiceReference: '321',
+                AmountInBalanceTransacCrcy: '-100',
+                NetPaymentAmount: '-100.49',
               },
             },
           },
@@ -277,7 +296,18 @@ describe('afis-facturen', async () => {
       },
     };
     const result = forTesting.transformDeelbetalingenResponse(response);
-    expect(result).toEqual({ '123': 150 });
+
+    expect(['123', '321'].every((id) => id in result)).toBe(true);
+
+    expect(result['123'].AmountInBalanceTransacCrcy.toFixed(2)).toEqual(
+      '-175.50'
+    );
+    expect(result['123'].NetPaymentAmount.toFixed(2)).toEqual('-66.10');
+
+    expect(result['321'].AmountInBalanceTransacCrcy.toFixed(2)).toEqual(
+      '-100.00'
+    );
+    expect(result['321'].NetPaymentAmount.toFixed(2)).toEqual('-100.49');
   });
 
   test('replaceXmlNulls replaces XML nulls correctly', () => {
@@ -495,7 +525,7 @@ describe('afis-facturen', async () => {
           expect(
             forTesting.determineFactuurStatus(
               sourceInvoice,
-              parseFloat(sourceInvoice.AmountInBalanceTransacCrcy),
+              new Decimal(sourceInvoice.AmountInBalanceTransacCrcy),
               statusExpected === 'gedeeltelijke-betaling'
             )
           ).toBe(statusExpected);
@@ -570,15 +600,18 @@ describe('afis-facturen', async () => {
 
     const result = forTesting.getAmountOwed(invoice);
     expect(result).toEqual({
-      amountOwed: 150,
-      amountInBalanceTransacCrcyInCents: 5000,
+      amountOwed: new Decimal(150),
+      amountInBalanceTransacCrcyInCents: new Decimal(5000),
     });
 
-    const resultWithDeelbetaling = forTesting.getAmountOwed(invoice, 50);
-    expect(resultWithDeelbetaling).toEqual({
-      amountOwed: 100,
-      amountInBalanceTransacCrcyInCents: 5000,
+    const resultWithDeelbetaling = forTesting.getAmountOwed(invoice, {
+      NetPaymentAmount: new Decimal(50),
+      AmountInBalanceTransacCrcy: new Decimal(0),
     });
+    expect(resultWithDeelbetaling.amountOwed.toFixed(2)).toEqual('200.00');
+    expect(
+      resultWithDeelbetaling.amountInBalanceTransacCrcyInCents.toFixed(2)
+    ).toEqual('5000.00');
   });
 
   test('getFactuurnummer returns correct factuurnummer', () => {
@@ -643,7 +676,12 @@ describe('afis-facturen', async () => {
     );
 
     expect(response.status).toBe('OK');
-    expect(response.content).toEqual({ '123': 150 });
+    expect(response.content).toEqual({
+      '123': {
+        NetPaymentAmount: new Decimal(50.0),
+        AmountInBalanceTransacCrcy: new Decimal(100.0),
+      },
+    });
   });
 
   describe('fetch facturen', () => {

@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 import { LinkProps } from '../../../universal/types';
 
 type JaOfNee = 'Ja' | 'Nee';
@@ -43,13 +45,11 @@ export type AfisBusinessPartnerKnownResponse = {
 export type AfisApiFeedResponseSource<T> = {
   feed?: {
     count?: number;
-    entry?: [
-      {
-        content?: {
-          properties?: T;
-        };
-      },
-    ];
+    entry?: Array<{
+      content?: {
+        properties?: T;
+      };
+    }>;
   };
 };
 
@@ -102,10 +102,6 @@ export type AfisFacturenByStateResponse = {
   [key in AfisFactuurState]?: AfisFacturenResponse | null;
 };
 
-export type AfisFactuurDeelbetalingen = {
-  [factuurNummer: string]: number;
-};
-
 export type AfisFacturenParams = {
   state: AfisFactuurState | 'deelbetalingen';
   businessPartnerID: string;
@@ -121,7 +117,7 @@ export type AfisFactuur = {
   paymentDueDateFormatted: string;
   debtClearingDate: string | null;
   debtClearingDateFormatted: string | null;
-  amountOwed: number;
+  amountOwed: string;
   amountOwedFormatted: string;
   factuurNummer: string;
   factuurDocumentId: string;
@@ -130,6 +126,11 @@ export type AfisFactuur = {
   documentDownloadLink: string | null;
   statusDescription: string;
   link: LinkProps;
+};
+
+export type InvoiceAmountOwed = {
+  amountOwed: Decimal;
+  amountInBalanceTransacCrcyInCents: Decimal;
 };
 
 type AfisFactuurStatus =
@@ -156,6 +157,15 @@ export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
 
 export type AccountingDocumentType = string;
 
+export type AfisAmountPropertiesSource<T> = {
+  NetPaymentAmount: T;
+  AmountInBalanceTransacCrcy: T;
+};
+
+export type AfisFactuurDeelbetalingen = {
+  [factuurNummer: string]: AfisAmountPropertiesSource<Decimal>;
+};
+
 /** Extra property information
  *  ==========================
  * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
@@ -166,17 +176,15 @@ export type AccountingDocumentType = string;
  *   to the debtor.
  *  `IsCleared`: `true` means the 'factuur' is fully payed for.
  */
-export type AfisFactuurPropertiesSource = {
+export type AfisFactuurPropertiesSource = AfisAmountPropertiesSource<string> & {
   AccountingDocument: string;
   AccountingDocumentType: AccountingDocumentType;
-  AmountInBalanceTransacCrcy: string;
   ClearingDate?: string;
   DocumentReferenceID: string;
   DunningBlockingReason: string;
   DunningLevel: number;
   IsCleared?: boolean;
   NetDueDate: string;
-  NetPaymentAmount: string;
   InvoiceReference: string | null;
   Paylink: string | null;
   PostingDate: string;
