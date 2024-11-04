@@ -145,6 +145,7 @@ const adres: ProfileLabels<Partial<Adres>> = {
       ) : null;
     },
   ],
+  wozWaarde: ['WOZ-waarde', (value, _item) => value],
 };
 
 function transformVerbintenisStatus(value: string) {
