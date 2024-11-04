@@ -1,7 +1,11 @@
-import { isToday, parseISO } from 'date-fns';
+import { isToday } from 'date-fns/isToday';
+import { parseISO } from 'date-fns/parseISO';
+import Decimal from 'decimal.js';
 import { firstBy } from 'thenby';
 
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
+  apiErrorResult,
   ApiResponse,
   apiSuccessResult,
   getFailedDependencies,
@@ -35,7 +39,6 @@ import {
   XmlNullable,
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -56,14 +59,13 @@ const accountingDocumentTypesByState: Record<
   deelbetalingen: ['AB'],
 };
 
-const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetPaymentAmount,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate`;
+const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate,PaymentMethod`;
 
 const selectFieldsQueryByState: Record<AfisFacturenParams['state'], string> = {
   open: select,
   afgehandeld: select,
   overgedragen: select,
-  deelbetalingen:
-    '$select=AmountInBalanceTransacCrcy,NetPaymentAmount,DocumentReferenceID,AccountingDocument',
+  deelbetalingen: '$select=AmountInBalanceTransacCrcy,InvoiceReference',
 };
 
 const orderByQueryByState: Record<AfisFacturenParams['state'], string> = {
@@ -116,11 +118,22 @@ function transformDeelbetalingenResponse(
   const feedProperties = getFeedEntryProperties(responseData);
   // Make a map of factuurnummers to total deelbetaling amounts
   const deelbetalingAmountByFactuurnummer: AfisFactuurDeelbetalingen = {};
-  return feedProperties.reduce((acc, deelbetaling) => {
-    const factuurNummer = getFactuurnummer(deelbetaling);
-    const { amountOwed } = getAmountOwed(deelbetaling);
 
-    acc[factuurNummer] = (acc[factuurNummer] || 0) + amountOwed;
+  return feedProperties.reduce((acc, deelbetaling) => {
+    const factuurNummer = deelbetaling.InvoiceReference;
+
+    if (factuurNummer) {
+      if (!acc[factuurNummer]) {
+        acc[factuurNummer] = new Decimal(0);
+      }
+
+      if (deelbetaling.AmountInBalanceTransacCrcy) {
+        acc[factuurNummer] = acc[factuurNummer].plus(
+          deelbetaling.AmountInBalanceTransacCrcy
+        );
+      }
+    }
+
     return acc;
   }, deelbetalingAmountByFactuurnummer);
 }
@@ -129,10 +142,13 @@ async function fetchAfisFacturenDeelbetalingen(
   requestID: RequestID,
   params: AfisFacturenParams
 ): Promise<ApiResponse<AfisFactuurDeelbetalingen | null>> {
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-    transformResponse: transformDeelbetalingenResponse,
-  });
+  const config = await getAfisApiConfig(
+    {
+      formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+      transformResponse: transformDeelbetalingenResponse,
+    },
+    requestID
+  );
   return requestData<AfisFactuurDeelbetalingen>(config, requestID);
 }
 
@@ -149,31 +165,20 @@ function getFactuurnummer(
   return factuurNummer;
 }
 
-function getAmountOwed(
-  invoice: Pick<
-    AfisFactuurPropertiesSource,
-    'NetPaymentAmount' | 'AmountInBalanceTransacCrcy'
-  >,
-  deelbetaling?: number
-) {
-  const MULTIPLY_WITH_100 = 100;
-  const netPaymentAmountInCents =
-    parseFloat(invoice.NetPaymentAmount) * MULTIPLY_WITH_100;
-  const amountInBalanceTransacCrcyInCents =
-    parseFloat(invoice.AmountInBalanceTransacCrcy) * MULTIPLY_WITH_100;
+function getInvoiceAmount(
+  invoice: Pick<AfisFactuurPropertiesSource, 'AmountInBalanceTransacCrcy'>,
+  deelbetalingAmount?: Decimal
+): Decimal {
+  let amountInBalanceTransacCrcy = new Decimal(
+    invoice.AmountInBalanceTransacCrcy ?? 0
+  );
 
-  let amountOwed =
-    (amountInBalanceTransacCrcyInCents + netPaymentAmountInCents) /
-    MULTIPLY_WITH_100;
-
-  if (deelbetaling) {
-    amountOwed = amountOwed - deelbetaling;
+  if (deelbetalingAmount) {
+    amountInBalanceTransacCrcy =
+      amountInBalanceTransacCrcy.plus(deelbetalingAmount);
   }
 
-  return {
-    amountOwed,
-    amountInBalanceTransacCrcyInCents,
-  };
+  return amountInBalanceTransacCrcy;
 }
 
 function transformFactuur(
@@ -188,13 +193,12 @@ function transformFactuur(
     ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
     : null;
 
-  const deelbetalingAmount = deelbetalingen?.[factuurNummer];
-  const hasDeelbetaling = !!deelbetalingAmount;
-  const { amountOwed, amountInBalanceTransacCrcyInCents } = getAmountOwed(
-    invoice,
-    deelbetalingAmount
-  );
-  const amountOwedFormatted = `€ ${amountOwed ? displayAmount(amountOwed) : 0}`;
+  const deelbetaling = deelbetalingen?.[factuurNummer];
+  const hasDeelbetaling = !!deelbetaling;
+  const amountInitial = getInvoiceAmount(invoice);
+  const amount = getInvoiceAmount(invoice, deelbetaling);
+  const amountFormatted = `€ ${amount ? displayAmount(parseFloat(amount.toFixed(2))) : '0,00'}`;
+  const amountInitialFormatted = `€ ${amountInitial ? displayAmount(parseFloat(amountInitial.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
@@ -204,11 +208,7 @@ function transformFactuur(
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
-  const status = determineFactuurStatus(
-    invoice,
-    amountInBalanceTransacCrcyInCents,
-    hasDeelbetaling
-  );
+  const status = determineFactuurStatus(invoice, amount, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
     ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
@@ -223,14 +223,17 @@ function transformFactuur(
     paymentDueDateFormatted: defaultDateFormat(invoice.NetDueDate),
     debtClearingDate,
     debtClearingDateFormatted,
-    amountOwed: amountOwed ? amountOwed : 0,
-    amountOwedFormatted,
+    amount: amount.toFixed(2),
+    amountFormatted,
+    amountInitial: amountInitial.toFixed(2),
+    amountInitialFormatted,
     factuurNummer,
     factuurDocumentId,
     status,
     statusDescription: determineFactuurStatusDescription(
       status,
-      amountOwedFormatted,
+      amountFormatted,
+      amountInitialFormatted,
       debtClearingDateFormatted
     ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
@@ -306,7 +309,7 @@ const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
 
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
-  amountInBalanceTransacCrcyInCents: number,
+  amount: Decimal,
   hasDeelbetaling: boolean
 ): AfisFactuur['status'] {
   switch (true) {
@@ -325,19 +328,25 @@ function determineFactuurStatus(
     case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'betaald';
 
-    case amountInBalanceTransacCrcyInCents < 0:
+    case amount.lt(0):
       return 'geld-terug';
 
     case !!sourceInvoice.NetDueDate &&
+      sourceInvoice.IsCleared === false &&
       isDateInPast(sourceInvoice.NetDueDate) &&
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
-    case hasDeelbetaling:
+    case sourceInvoice.IsCleared === false && hasDeelbetaling:
       return 'gedeeltelijke-betaling';
 
-    case !!sourceInvoice.SEPAMandate:
+    case !!sourceInvoice.SEPAMandate && sourceInvoice.PaymentMethod !== 'B':
       return 'automatische-incasso';
+
+    case sourceInvoice.IsCleared === false &&
+      sourceInvoice.PaymentMethod === 'B' &&
+      !sourceInvoice.Paylink:
+      return 'handmatig-betalen';
 
     case sourceInvoice.IsCleared === false && sourceInvoice.DunningLevel === 0:
       return 'openstaand';
@@ -359,10 +368,13 @@ Source Invoice Properties that determine this are:
 
 function determineFactuurStatusDescription(
   status: AfisFactuur['status'],
-  amountOwedFormatted: AfisFactuur['amountOwedFormatted'],
+  amountFormatted: AfisFactuur['amountFormatted'],
+  amountInitialFormatted: AfisFactuur['amountInitialFormatted'],
   debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
 ) {
-  const amount = amountOwedFormatted.replace('-', '');
+  const amount = amountFormatted.replace('-', '');
+  const amountInitial = amountInitialFormatted.replace('-', '');
+
   switch (status) {
     case 'openstaand':
       return `${amount} betaal nu`;
@@ -371,7 +383,9 @@ function determineFactuurStatusDescription(
     case 'in-dispuut':
       return `${amount} in dispuut`;
     case 'gedeeltelijke-betaling':
-      return `Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van ${amount} euro over onder vermelding van de gegevens op uw factuur.`;
+      return `Uw factuur van ${amountInitial} is nog niet volledig betaald. Maak het resterend bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
+    case 'handmatig-betalen':
+      return `Uw factuur is nog niet betaald. Maak het bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
       return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
@@ -379,7 +393,7 @@ function determineFactuurStatusDescription(
     case 'automatische-incasso':
       return `${amount} wordt automatisch van uw rekening afgeschreven.`;
     case 'overgedragen-aan-belastingen':
-      return `${amount} is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return `${amount} is overgedragen aan het incasso- en invorderingstraject van directie Belastingen${debtClearingDateFormatted ? ` op ${debtClearingDateFormatted}` : ''}`;
     default:
       return capitalizeFirstLetter(status ?? '');
   }
@@ -407,11 +421,14 @@ export async function fetchAfisFacturen(
     }
   }
 
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-    transformResponse: (responseData) =>
-      transformFacturen(responseData, sessionID, deelbetalingen),
-  });
+  const config = await getAfisApiConfig(
+    {
+      formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+      transformResponse: (responseData) =>
+        transformFacturen(responseData, sessionID, deelbetalingen),
+    },
+    requestID
+  );
 
   return requestData<AfisFacturenResponse>(config, requestID);
 }
@@ -466,7 +483,13 @@ export async function fetchAfisFacturenOverview(
           return factuur.status === 'herinnering' ? -1 : 1;
         })
           .thenBy(function (factuur: AfisFactuur) {
-            return factuur.status === 'openstaand' ? -1 : 1;
+            return [
+              'gedeeltelijke-betaling',
+              'handmatig-betalen',
+              'openstaand',
+            ].includes(factuur.status)
+              ? -1
+              : 1;
           })
           .thenBy(dateSort('paymentDueDate', 'asc'))
       ),
@@ -480,14 +503,20 @@ export async function fetchAfisFacturenOverview(
     overgedragen: facturenTransferredResult.content ?? null,
   };
 
-  return apiSuccessResult(
-    facturenOverview,
-    getFailedDependencies({
-      open: facturenOpenResult,
-      afgehandeld: facturenClosedResult,
-      overgedragen: facturenTransferredResult,
-    })
-  );
+  const failedDependencies = getFailedDependencies({
+    open: facturenOpenResult,
+    afgehandeld: facturenClosedResult,
+    overgedragen: facturenTransferredResult,
+  });
+
+  if (
+    failedDependencies &&
+    Object.keys(facturenOverview).every((key) => key in failedDependencies)
+  ) {
+    return apiErrorResult('Facturen ophalen mislukt.', null);
+  }
+
+  return apiSuccessResult(facturenOverview, failedDependencies);
 }
 
 export async function fetchAfisFacturenByState(
@@ -517,7 +546,7 @@ export const forTesting = {
   isDownloadAvailable,
   formatFactuurRequestURL,
   getAccountingDocumentTypesFilter,
-  getAmountOwed,
+  getInvoiceAmount,
   getFactuurnummer,
   replaceXmlNulls,
   transformDeelbetalingenResponse,

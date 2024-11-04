@@ -9,7 +9,12 @@ export const PRISTINE_APPSTATE: AppState = {
   NOTIFICATIONS: apiPristineResult([]),
 
   AFIS: apiPristineResult(
-    { isKnown: false, businessPartnerIdEncrypted: null },
+    {
+      isKnown: false,
+      businessPartnerIdEncrypted: null,
+      businessPartnerId: null,
+      facturen: null,
+    },
     {
       isActive: FeatureToggle.afisActive,
       profileTypes: ['private', 'commercial'],

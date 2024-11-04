@@ -4,22 +4,40 @@
   tr {
     th,
     td {
-      &:first-of-type {
-        display: none;
-      }
-
       &:nth-child(2) {
         white-space: normal;
         word-wrap: break-word;
-        @media screen and (max-width: $ams-breakpoint-medium) {
-          padding-inline-start: 0 !important;
+      }
+    }
+  }
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    &--afgehandeld,
+    &--overgedragen {
+      tr {
+        th,
+        td {
+          &:nth-child(1),
+          &:nth-child(2) {
+            width: 25%;
+          }
         }
       }
-      @media screen and (min-width: $ams-breakpoint-medium) {
-        &:nth-child(1),
-        &:nth-child(2) {
+    }
+  }
+  &--open {
+    tr {
+      th,
+      td {
+        @media screen and (max-width: $ams-breakpoint-medium) {
+          &:first-of-type {
+            display: none;
+          }
+          &:nth-child(2) {
+            padding-inline-start: 0 !important;
+          }
+        }
+        @media screen and (min-width: $ams-breakpoint-medium) {
           width: 25%;
-          display: table-cell;
         }
       }
     }

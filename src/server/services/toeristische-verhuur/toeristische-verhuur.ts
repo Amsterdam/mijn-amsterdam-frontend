@@ -24,6 +24,7 @@ async function fetchAndTransformToeristischeVerhuur(
       lvvRegistraties: [],
     });
   }
+
   const lvvRegistratiesRequest =
     authProfileAndToken.profile.profileType === 'commercial'
       ? Promise.resolve(apiSuccessResult([]))

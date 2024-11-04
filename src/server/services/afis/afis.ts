@@ -1,12 +1,18 @@
 import memoizee from 'memoizee';
 import qs from 'qs';
 
+import { fetchAfisFacturenOverview } from './afis-facturen';
 import { getAfisApiConfig } from './afis-helpers';
 import {
   AfisBusinessPartnerCommercialResponseSource,
-  AfisBusinessPartnerKnownResponse,
+  AfisThemaResponse,
   AfisBusinessPartnerPrivateResponseSource,
 } from './afis-types';
+import {
+  apiSuccessResult,
+  getFailedDependencies,
+} from '../../../universal/helpers/api';
+import { omit } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_MINUTE_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
@@ -17,7 +23,9 @@ import { requestData } from '../../helpers/source-api-request';
 
 const AFIS_TOKEN_REQUEST_ID = 'AFIS-TOKEN-REQUEST-ID';
 
-async function fetchAfisTokenHeader_() {
+async function fetchAfisTokenHeader_(
+  requestID: RequestID = AFIS_TOKEN_REQUEST_ID
+) {
   const additionalConfig: DataRequestConfig = {
     method: 'post',
     data: qs.stringify({
@@ -48,7 +56,7 @@ async function fetchAfisTokenHeader_() {
 
   const tokenHeaderResponse = await requestData<{
     Authorization: string;
-  } | null>(dataRequestConfig, AFIS_TOKEN_REQUEST_ID);
+  } | null>(dataRequestConfig, requestID);
 
   if (tokenHeaderResponse.status !== 'OK') {
     throw new Error('AFIS: Could not fetch token');
@@ -103,10 +111,16 @@ function transformBusinessPartnerisKnownResponse(
     );
   }
 
-  return {
+  const themaResponseContent: Omit<AfisThemaResponse, 'facturen'> = {
     isKnown,
     businessPartnerIdEncrypted,
   };
+
+  if (isKnown) {
+    themaResponseContent.businessPartnerId = businessPartnerId;
+  }
+
+  return themaResponseContent;
 }
 
 /** Returns if the person logging in, is known in the AFIS source API */
@@ -134,11 +148,41 @@ export async function fetchIsKnownInAFIS(
 
   const dataRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  const response = await requestData<AfisBusinessPartnerKnownResponse | null>(
+  const response = await requestData<AfisThemaResponse | null>(
     dataRequestConfig,
     requestID,
     authProfileAndToken
   );
 
-  return response;
+  if (
+    response.status !== 'OK' ||
+    !response.content ||
+    !response.content.isKnown ||
+    !response.content.businessPartnerId
+  ) {
+    return response;
+  }
+
+  const facturenResponse = await fetchAfisFacturenOverview(
+    requestID,
+    authProfileAndToken.profile.sid,
+    {
+      businessPartnerID: response.content.businessPartnerId,
+    }
+  );
+
+  const failedDependencies = getFailedDependencies({
+    facturenoverview: facturenResponse,
+    ...('failedDependencies' in facturenResponse
+      ? facturenResponse.failedDependencies
+      : null),
+  });
+
+  return apiSuccessResult(
+    {
+      ...omit(response.content, ['businessPartnerId']),
+      facturen: facturenResponse.content,
+    },
+    failedDependencies
+  );
 }

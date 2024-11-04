@@ -26,33 +26,36 @@ export async function fetchAfisDocument(
     return ArchiveDocumentIDResponse;
   }
 
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => {
-      return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
-    },
-    method: 'post',
-    data: {
-      Record: {
-        ArchiveDocumentID: ArchiveDocumentIDResponse.content,
-        BusinessObjectTypeName: 'BKPF',
+  const config = await getAfisApiConfig(
+    {
+      formatUrl: ({ url }) => {
+        return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
+      },
+      method: 'post',
+      data: {
+        Record: {
+          ArchiveDocumentID: ArchiveDocumentIDResponse.content,
+          BusinessObjectTypeName: 'BKPF',
+        },
+      },
+      transformResponse: (
+        data: AfisDocumentDownloadSource
+      ): DocumentDownloadData => {
+        if (typeof data?.Record?.attachment !== 'string') {
+          throw new Error(
+            'Afis document download - no valid response data provided'
+          );
+        }
+        const decodedDocument = Buffer.from(data.Record.attachment, 'base64');
+        return {
+          data: decodedDocument,
+          mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+          filename: data.Record.attachmentname ?? 'factuur.pdf',
+        };
       },
     },
-    transformResponse: (
-      data: AfisDocumentDownloadSource
-    ): DocumentDownloadData => {
-      if (typeof data?.Record?.attachment !== 'string') {
-        throw new Error(
-          'Afis document download - no valid response data provided'
-        );
-      }
-      const decodedDocument = Buffer.from(data.Record.attachment, 'base64');
-      return {
-        data: decodedDocument,
-        mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
-        filename: data.Record.attachmentname ?? 'factuur.pdf',
-      };
-    },
-  });
+    requestID
+  );
 
   return requestData<DocumentDownloadData>(config, requestID);
 }
@@ -68,18 +71,21 @@ async function fetchAfisDocumentID(
   requestID: RequestID,
   factuurDocumentId: AfisFactuur['factuurDocumentId']
 ) {
-  const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => {
-      return `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurDocumentId}'&$select=ArcDocId`;
+  const config = await getAfisApiConfig(
+    {
+      formatUrl: ({ url }) => {
+        return `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurDocumentId}'&$select=ArcDocId`;
+      },
+      transformResponse: (data: AfisDocumentIDSource) => {
+        const entryProperties = getFeedEntryProperties(data);
+        if (entryProperties.length) {
+          return entryProperties[0].ArcDocId;
+        }
+        return null;
+      },
     },
-    transformResponse: (data: AfisDocumentIDSource) => {
-      const entryProperties = getFeedEntryProperties(data);
-      if (entryProperties.length) {
-        return entryProperties[0].ArcDocId;
-      }
-      return null;
-    },
-  });
+    requestID
+  );
 
   return requestData<AfisArcDocID>(config, requestID);
 }

@@ -1,4 +1,5 @@
 import Mockdate from 'mockdate';
+import Decimal from 'decimal.js';
 
 import { fetchAfisDocument } from './afis-documents';
 import {
@@ -87,10 +88,8 @@ describe('afis-facturen', async () => {
           {
             content: {
               properties: {
-                AccountingDocument: '1234567890',
-                DocumentReferenceID: '1234567890',
-                AmountInBalanceTransacCrcy: '00.00',
-                NetPaymentAmount: '27.50',
+                InvoiceReference: '1234567890',
+                AmountInBalanceTransacCrcy: '27.50',
               },
             },
           },
@@ -117,8 +116,10 @@ describe('afis-facturen', async () => {
     expect(openFactuur).toMatchInlineSnapshot(`
       {
         "afzender": "Bedrijf: Ok",
-        "amountOwed": 315.5,
-        "amountOwedFormatted": "€ 315,50",
+        "amount": "370.50",
+        "amountFormatted": "€ 370,50",
+        "amountInitial": "343.00",
+        "amountInitialFormatted": "€ 343,00",
         "datePublished": "2023-11-21T00:00:00",
         "datePublishedFormatted": "21 november 2023",
         "debtClearingDate": null,
@@ -135,7 +136,7 @@ describe('afis-facturen', async () => {
         "paymentDueDate": "2023-12-21T00:00:00",
         "paymentDueDateFormatted": "21 december 2023",
         "status": "gedeeltelijke-betaling",
-        "statusDescription": "Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van € 315,50 euro over onder vermelding van de gegevens op uw factuur.",
+        "statusDescription": "Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 370,50 over onder vermelding van de gegevens op uw factuur.",
       }
     `);
 
@@ -177,8 +178,10 @@ describe('afis-facturen', async () => {
     expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
       {
         "afzender": "Lisan al Gaib inc.",
-        "amountOwed": 0,
-        "amountOwedFormatted": "€ 0",
+        "amount": "0.00",
+        "amountFormatted": "€ 0,00",
+        "amountInitial": "0.00",
+        "amountInitialFormatted": "€ 0,00",
         "datePublished": null,
         "datePublishedFormatted": null,
         "debtClearingDate": null,
@@ -268,10 +271,24 @@ describe('afis-facturen', async () => {
           {
             content: {
               properties: {
-                AccountingDocument: '123',
-                DocumentReferenceID: '456',
-                AmountInBalanceTransacCrcy: '100.00',
-                NetPaymentAmount: '50.00',
+                InvoiceReference: '123',
+                AmountInBalanceTransacCrcy: '-100.10',
+              },
+            },
+          },
+          {
+            content: {
+              properties: {
+                InvoiceReference: '123',
+                AmountInBalanceTransacCrcy: '-75.40',
+              },
+            },
+          },
+          {
+            content: {
+              properties: {
+                InvoiceReference: '321',
+                AmountInBalanceTransacCrcy: '-100',
               },
             },
           },
@@ -279,7 +296,11 @@ describe('afis-facturen', async () => {
       },
     };
     const result = forTesting.transformDeelbetalingenResponse(response);
-    expect(result).toEqual({ '123': 150 });
+
+    expect(['123', '321'].every((id) => id in result)).toBe(true);
+
+    expect(result['123'].toFixed(2)).toEqual('-175.50');
+    expect(result['321'].toFixed(2)).toEqual('-100.00');
   });
 
   test('replaceXmlNulls replaces XML nulls correctly', () => {
@@ -287,15 +308,16 @@ describe('afis-facturen', async () => {
       AccountingDocument: { '@null': true },
       DocumentReferenceID: '123',
       AccountingDocumentType: '',
+      InvoiceReference: '',
       AmountInBalanceTransacCrcy: '',
       DunningBlockingReason: '',
       DunningLevel: 0,
       NetDueDate: '',
-      NetPaymentAmount: '',
       Paylink: null,
       PostingDate: { '@null': true },
       ProfitCenterName: '',
       SEPAMandate: '',
+      PaymentMethod: null,
     };
 
     const result = forTesting.replaceXmlNulls(sourceInvoice);
@@ -307,9 +329,10 @@ describe('afis-facturen', async () => {
         "DocumentReferenceID": "123",
         "DunningBlockingReason": "",
         "DunningLevel": 0,
+        "InvoiceReference": "",
         "NetDueDate": "",
-        "NetPaymentAmount": "",
         "Paylink": null,
+        "PaymentMethod": null,
         "PostingDate": null,
         "ProfitCenterName": "",
         "SEPAMandate": "",
@@ -321,6 +344,7 @@ describe('afis-facturen', async () => {
     const openstaand: AfisFactuurPropertiesSource = {
       AccountingDocument: '123',
       AccountingDocumentType: 'DR',
+      InvoiceReference: '',
       AmountInBalanceTransacCrcy: '100.00',
       ClearingDate: undefined,
       DocumentReferenceID: '456',
@@ -328,8 +352,8 @@ describe('afis-facturen', async () => {
       DunningLevel: 0,
       IsCleared: false,
       NetDueDate: '2023-12-21T00:00:00',
-      NetPaymentAmount: '100.00',
       Paylink: 'http://example.com/pay',
+      PaymentMethod: 'B',
       PostingDate: '2023-11-21T00:00:00',
       ProfitCenterName: 'Profit Center 1',
       ReverseDocument: '',
@@ -344,6 +368,7 @@ describe('afis-facturen', async () => {
       'automatische-incasso': {
         AccountingDocument: '124',
         AccountingDocumentType: 'DG',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '200.00',
         ClearingDate: undefined,
         DocumentReferenceID: '457',
@@ -351,8 +376,26 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: false,
         NetDueDate: '2023-12-22T00:00:00',
-        NetPaymentAmount: '200.00',
         Paylink: 'http://example.com/pay',
+        PaymentMethod: 'X',
+        PostingDate: '2023-11-22T00:00:00',
+        ProfitCenterName: 'Profit Center 2',
+        ReverseDocument: '',
+        SEPAMandate: 'SEPA123',
+      },
+      'handmatig-betalen': {
+        AccountingDocument: '124',
+        AccountingDocumentType: 'DG',
+        InvoiceReference: '',
+        AmountInBalanceTransacCrcy: '200.00',
+        ClearingDate: undefined,
+        DocumentReferenceID: '457',
+        DunningBlockingReason: '',
+        DunningLevel: 0,
+        IsCleared: false,
+        NetDueDate: '2023-12-22T00:00:00',
+        Paylink: '',
+        PaymentMethod: 'B',
         PostingDate: '2023-11-22T00:00:00',
         ProfitCenterName: 'Profit Center 2',
         ReverseDocument: '',
@@ -361,6 +404,7 @@ describe('afis-facturen', async () => {
       'in-dispuut': {
         AccountingDocument: '125',
         AccountingDocumentType: 'DM',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '300.00',
         ClearingDate: undefined,
         DocumentReferenceID: '458',
@@ -368,8 +412,8 @@ describe('afis-facturen', async () => {
         DunningLevel: 1,
         IsCleared: false,
         NetDueDate: '2023-12-23T00:00:00',
-        NetPaymentAmount: '300.00',
         Paylink: 'http://example.com/pay',
+        PaymentMethod: 'B',
         PostingDate: '2023-11-23T00:00:00',
         ProfitCenterName: 'Profit Center 3',
         ReverseDocument: '',
@@ -379,6 +423,7 @@ describe('afis-facturen', async () => {
       'overgedragen-aan-belastingen': {
         AccountingDocument: '127',
         AccountingDocumentType: 'DF',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '500.00',
         ClearingDate: undefined,
         DocumentReferenceID: '460',
@@ -386,8 +431,8 @@ describe('afis-facturen', async () => {
         DunningLevel: 3,
         IsCleared: true,
         NetDueDate: '2023-12-25T00:00:00',
-        NetPaymentAmount: '500.00',
         Paylink: 'http://example.com/pay',
+        PaymentMethod: 'B',
         PostingDate: '2023-11-25T00:00:00',
         ProfitCenterName: 'Profit Center 5',
         ReverseDocument: '',
@@ -396,6 +441,7 @@ describe('afis-facturen', async () => {
       'geld-terug': {
         AccountingDocument: '128',
         AccountingDocumentType: 'DV',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '-100.00',
         ClearingDate: undefined,
         DocumentReferenceID: '461',
@@ -403,8 +449,8 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: false,
         NetDueDate: '2023-12-26T00:00:00',
-        NetPaymentAmount: '-100.00',
         Paylink: null,
+        PaymentMethod: 'B',
         PostingDate: '2023-11-26T00:00:00',
         ProfitCenterName: 'Profit Center 6',
         ReverseDocument: '',
@@ -413,6 +459,7 @@ describe('afis-facturen', async () => {
       betaald: {
         AccountingDocument: '129',
         AccountingDocumentType: 'DW',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '0.00',
         ClearingDate: '2023-12-01T00:00:00',
         DocumentReferenceID: '462',
@@ -420,8 +467,8 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: true,
         NetDueDate: '2023-12-27T00:00:00',
-        NetPaymentAmount: '0.00',
         Paylink: null,
+        PaymentMethod: 'B',
         PostingDate: '2023-11-27T00:00:00',
         ProfitCenterName: 'Profit Center 7',
         ReverseDocument: '',
@@ -430,6 +477,7 @@ describe('afis-facturen', async () => {
       geannuleerd: {
         AccountingDocument: '130',
         AccountingDocumentType: 'DX',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '0.00',
         ClearingDate: undefined,
         DocumentReferenceID: '463',
@@ -437,8 +485,8 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: false,
         NetDueDate: '2023-12-28T00:00:00',
-        NetPaymentAmount: '0.00',
         Paylink: null,
+        PaymentMethod: 'B',
         PostingDate: '2023-11-28T00:00:00',
         ProfitCenterName: 'Profit Center 8',
         ReverseDocument: '123',
@@ -447,6 +495,7 @@ describe('afis-facturen', async () => {
       herinnering: {
         AccountingDocument: '131',
         AccountingDocumentType: 'DY',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '600.00',
         ClearingDate: undefined,
         DocumentReferenceID: '464',
@@ -454,8 +503,8 @@ describe('afis-facturen', async () => {
         DunningLevel: 2,
         IsCleared: false,
         NetDueDate: '2023-12-29T00:00:00',
-        NetPaymentAmount: '600.00',
         Paylink: 'http://example.com/pay',
+        PaymentMethod: 'B',
         PostingDate: '2023-11-29T00:00:00',
         ProfitCenterName: 'Profit Center 9',
         ReverseDocument: '',
@@ -464,6 +513,7 @@ describe('afis-facturen', async () => {
       onbekend: {
         AccountingDocument: '132',
         AccountingDocumentType: 'DZ',
+        InvoiceReference: '',
         AmountInBalanceTransacCrcy: '700.00',
         ClearingDate: undefined,
         DocumentReferenceID: '465',
@@ -471,7 +521,7 @@ describe('afis-facturen', async () => {
         DunningLevel: 0,
         IsCleared: undefined,
         NetDueDate: '2023-12-30T00:00:00',
-        NetPaymentAmount: '700.00',
+        PaymentMethod: 'B',
         Paylink: 'http://example.com/pay',
         PostingDate: '2023-11-30T00:00:00',
         ProfitCenterName: 'Profit Center 10',
@@ -486,7 +536,7 @@ describe('afis-facturen', async () => {
           expect(
             forTesting.determineFactuurStatus(
               sourceInvoice,
-              parseFloat(sourceInvoice.AmountInBalanceTransacCrcy),
+              new Decimal(sourceInvoice.AmountInBalanceTransacCrcy),
               statusExpected === 'gedeeltelijke-betaling'
             )
           ).toBe(statusExpected);
@@ -499,6 +549,7 @@ describe('afis-facturen', async () => {
         const statusDescription = forTesting.determineFactuurStatusDescription(
           status as AfisFactuur['status'],
           '€ 123,40',
+          '€ 210,40',
           '16 juni 2024'
         );
         return [status, statusDescription];
@@ -514,16 +565,20 @@ describe('afis-facturen', async () => {
             "€ 123,40 wordt automatisch van uw rekening afgeschreven.",
           ],
           [
+            "handmatig-betalen",
+            "Uw factuur is nog niet betaald. Maak het bedrag van € 123,40 over onder vermelding van de gegevens op uw factuur.",
+          ],
+          [
             "in-dispuut",
             "€ 123,40 in dispuut",
           ],
           [
             "gedeeltelijke-betaling",
-            "Uw factuur is nog niet volledig betaald. Maak het resterend bedrag van € 123,40 euro over onder vermelding van de gegevens op uw factuur.",
+            "Uw factuur van € 210,40 is nog niet volledig betaald. Maak het resterend bedrag van € 123,40 over onder vermelding van de gegevens op uw factuur.",
           ],
           [
             "overgedragen-aan-belastingen",
-            "€ 123,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op op 16 juni 2024",
+            "€ 123,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op 16 juni 2024",
           ],
           [
             "geld-terug",
@@ -550,26 +605,19 @@ describe('afis-facturen', async () => {
     });
   });
 
-  test('getAmountOwed calculates amount owed correctly', () => {
+  test('getInvoiceAmount calculates amount owed correctly', () => {
     const invoice: Pick<
       AfisFactuurPropertiesSource,
-      'NetPaymentAmount' | 'AmountInBalanceTransacCrcy'
+      'AmountInBalanceTransacCrcy'
     > = {
-      NetPaymentAmount: '100.00',
       AmountInBalanceTransacCrcy: '50.00',
     };
 
-    const result = forTesting.getAmountOwed(invoice);
-    expect(result).toEqual({
-      amountOwed: 150,
-      amountInBalanceTransacCrcyInCents: 5000,
-    });
+    const result = forTesting.getInvoiceAmount(invoice);
+    expect(result).toEqual(new Decimal(50));
 
-    const resultWithDeelbetaling = forTesting.getAmountOwed(invoice, 50);
-    expect(resultWithDeelbetaling).toEqual({
-      amountOwed: 100,
-      amountInBalanceTransacCrcyInCents: 5000,
-    });
+    const amount = forTesting.getInvoiceAmount(invoice, new Decimal(10.35));
+    expect(amount.toFixed(2)).toEqual('60.35');
   });
 
   test('getFactuurnummer returns correct factuurnummer', () => {
@@ -605,10 +653,8 @@ describe('afis-facturen', async () => {
           {
             content: {
               properties: {
-                AccountingDocument: '123',
-                DocumentReferenceID: '456',
+                InvoiceReference: '123',
                 AmountInBalanceTransacCrcy: '100.00',
-                NetPaymentAmount: '50.00',
               },
             },
           },
@@ -635,7 +681,9 @@ describe('afis-facturen', async () => {
     );
 
     expect(response.status).toBe('OK');
-    expect(response.content).toEqual({ '123': 150 });
+    expect(response.content).toEqual({
+      '123': new Decimal(100.0),
+    });
   });
 
   describe('fetch facturen', () => {
@@ -648,7 +696,6 @@ describe('afis-facturen', async () => {
       SEPAMandate: '',
       PostingDate: '2023-11-21T00:00:00',
       NetDueDate: '2023-12-21T00:00:00',
-      NetPaymentAmount: '123.40',
       AmountInBalanceTransacCrcy: '10.00',
       DocumentReferenceID: '1234567890',
       AccountingDocument: '1234567890',
@@ -688,7 +735,8 @@ describe('afis-facturen', async () => {
       const response = await fetchAfisFacturenOverview(REQUEST_ID, SESSION_ID, {
         businessPartnerID: GENERIC_ID,
       });
-      const byStateValues = Object.values(response.content);
+      const byStateValues =
+        response.content !== null ? Object.values(response.content) : [];
 
       expect(byStateValues.length).toBe(3);
       expect(
