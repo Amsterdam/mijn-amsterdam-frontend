@@ -85,6 +85,18 @@ export type PBZaakFields =
 
 export type PBZaakRecord = PBRecord<'GFO_ZAKEN', PBZaakFields[]>;
 
+export type PBDocumentFields =
+  | PBRecordField<'ID'>
+  | PBRecordField<'OMSCHRIJVING'>
+  | PBRecordField<'CREATEDATE'>
+  | PBRecordField<'DOCUMENTNR'>;
+
+export type PBDocumentRecord = PBRecord<'DOCLINK', PBDocumentFields[]>;
+
+export type PBAdresLinkFields = PBRecordField<'FMT_CAPTION'>;
+
+export type PBAdresLinkRecord = PBRecord<'ADRESSEN', PBAdresLinkFields[]>;
+
 export type BBVergunningZaakStatus =
   | 'Ontvangen'
   | 'In behandeling'
