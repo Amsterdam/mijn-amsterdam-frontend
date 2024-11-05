@@ -12,8 +12,8 @@ To see the application quickly running locally, clone the repo and cd into the p
 
 ## Dependencies
 
-We use Node and to install the latest version, follow the instructios in this [Link](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).<br>
-Then execute the following commands in a bash terminal to install node and the rest:
+We use Node, and to install the latest version, follow the instructions in this [Link](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).<br>
+Then execute the following commands in a bash terminal to install it and the rest of our dependencies:
 
 ```bash
 cp -i .env.local.template .env.local
