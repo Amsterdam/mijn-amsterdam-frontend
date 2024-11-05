@@ -29,6 +29,7 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
+import { getFromEnv } from '../helpers/env';
 
 export const router = express.Router();
 
@@ -200,14 +201,19 @@ export async function zaakStatusHandler(
   return res.redirect(loginRouteWithReturnTo);
 }
 
+const branchName = getFromEnv('MA_GIT_CURRENT_BRANCH', true);
+
 router.get(
   [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
-  (req: Request, res: Response, next: NextFunction) => {
+  (_req: Request, res: Response) => {
     return res.json({
       status: 'OK',
       otapEnv: OTAP_ENV,
       release: RELEASE_VERSION,
       gitSha: process.env.MA_GIT_SHA ?? '-1',
+      gitCommitHistoryUrl: branchName
+        ? `https://github.com/Amsterdam/mijn-amsterdam-frontend/commits/${branchName}/`
+        : 'Error: No branchname specified in .env.local please check MA_GIT_CURRENT_BRANCH',
       buildId: process.env.MA_BUILD_ID ?? '-1',
     });
   }
