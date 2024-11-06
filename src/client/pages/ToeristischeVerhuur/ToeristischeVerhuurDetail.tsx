@@ -6,7 +6,9 @@ import { useParams } from 'react-router-dom';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { isLoading } from '../../../universal/helpers/api';
 import { GenericDocument } from '../../../universal/types';
+import { LoadingContent } from '../../components';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { LocationModal } from '../../components/LocationModal/LocationModal';
@@ -14,11 +16,11 @@ import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
-type DetailPageContentProps = {
+interface VerhuurDocumentListProps {
   vergunning: ToeristischeVerhuurVergunning;
-};
+}
 
-function DetailPageContent({ vergunning }: DetailPageContentProps) {
+function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
   const [documentsResponseData, fetch, isApiDataCached] = useAppStateBagApi<
     GenericDocument[]
   >({
@@ -26,12 +28,46 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
     key: vergunning.id,
   });
 
+  const isApiLoading = isLoading(documentsResponseData);
+  const hasResult = !!vergunning.result;
+  const hasDocuments = !!documentsResponseData.content?.length;
+  const hasDocumentsFetch = !!vergunning.fetchDocumentsUrl;
+
   useEffect(() => {
     if (vergunning.fetchDocumentsUrl && !isApiDataCached) {
       fetch({ url: vergunning.fetchDocumentsUrl });
     }
   }, [vergunning.fetchDocumentsUrl, isApiDataCached]);
 
+  if (hasDocumentsFetch && isApiLoading) {
+    return <LoadingContent />;
+  }
+
+  if ((!hasDocumentsFetch || (!isApiLoading && !hasDocuments)) && hasResult) {
+    return (
+      <Paragraph>
+        Stuur een mail naar:{' '}
+        <Link href="mailto:bedandbreakfast@amsterdam.nl" rel="noreferrer">
+          bedandbreakfast@amsterdam.nl
+        </Link>{' '}
+        om uw document in te kunnen zien.
+      </Paragraph>
+    );
+  }
+
+  return (
+    <DocumentListV2
+      documents={documentsResponseData.content ?? []}
+      columns={['', '']}
+    />
+  );
+}
+
+type DetailPageContentProps = {
+  vergunning: ToeristischeVerhuurVergunning;
+};
+
+function DetailPageContent({ vergunning }: DetailPageContentProps) {
   const rows: Array<Row | RowSet> = [
     {
       label: 'Gemeentelijk zaaknummer',
@@ -98,28 +134,10 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
           rows={[
             {
               label: 'Document',
-              content: (
-                <Paragraph>
-                  Stuur een mail naar:{' '}
-                  <Link
-                    href="mailto:bedandbreakfast@amsterdam.nl"
-                    rel="noreferrer"
-                  >
-                    bedandbreakfast@amsterdam.nl
-                  </Link>{' '}
-                  om uw document in te kunnen zien.
-                </Paragraph>
-              ),
-              isVisible: !vergunning.fetchDocumentsUrl && !!vergunning.result,
+              content: <VerhuurDocumentList vergunning={vergunning} />,
             },
           ]}
         />
-        {!!documentsResponseData.content?.length && (
-          <DocumentListV2
-            documents={documentsResponseData.content}
-            columns={['Document', '']}
-          />
-        )}
       </Grid.Cell>
     </>
   );

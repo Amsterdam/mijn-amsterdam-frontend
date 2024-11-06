@@ -1,15 +1,16 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 import { fetchBBDocumentsList } from './toeristische-verhuur-powerbrowser-bb-vergunning';
 import { getAuth } from '../../auth/auth-helpers';
-import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
 import {
-  decryptEncryptedRouteParamAndValidateSessionID,
-  SessionIDAndROuteParamIdEncrypted,
-} from '../shared/decrypt-route-param';
+  RequestWithQueryParams,
+  sendResponse,
+  sendUnauthorized,
+} from '../../routing/route-helpers';
+import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export async function handleFetchDocumentsRoute(
-  req: Request<{ id: SessionIDAndROuteParamIdEncrypted }>,
+  req: RequestWithQueryParams<{ id: string }>,
   res: Response
 ) {
   const authProfileAndToken = getAuth(req);
@@ -19,7 +20,7 @@ export async function handleFetchDocumentsRoute(
   }
 
   const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    req.params.id,
+    req.query.id,
     authProfileAndToken
   );
 

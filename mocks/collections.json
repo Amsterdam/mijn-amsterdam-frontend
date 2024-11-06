@@ -64,7 +64,7 @@
       "get-afis-factuur-id:standard",
       "get-afis-paylink:standard",
       "get-powerbrowser-bb-zaak-adres:standard",
-      "post-powerbrowser-search-person:standard",
+      "post-powerbrowser-search-requests:standard",
       "post-powerbrowser-zaak-status:standard",
       "get-powerbrowser-bb-zaak-attachment-download:standard",
       "get-powerbrowser-bb-zaak-attachments:standard",
