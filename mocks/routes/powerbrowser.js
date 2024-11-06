@@ -32,7 +32,7 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
+          middleware: (req, res) => {
             if (['MAATSCHAP', 'PERSONEN'].includes(req.body.query.tableName)) {
               return res.send(BB_SEARCH_PERSON);
             }
