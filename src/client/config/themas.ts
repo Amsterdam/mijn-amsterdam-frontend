@@ -183,11 +183,19 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.KREFIA:
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
-    case Themas.PARKEREN:
+    case Themas.PARKEREN: {
+      const hasPermit =
+        Array.isArray(appState.PARKEREN_PRODUCTS?.content?.data) &&
+        appState.PARKEREN_PRODUCTS.content?.data.length > 0;
+      const hasPermitRequest =
+        Array.isArray(appState.PARKEREN_PERMIT_REQUESTS?.content?.data) &&
+        appState.PARKEREN_PERMIT_REQUESTS.content?.data.length > 0;
       return (
-        (isAmsterdam && FeatureToggle.parkerenActive) ||
-        (!isLoading(PARKEREN) && FeatureToggle.parkerenPatroonC)
+        (hasPermit || hasPermitRequest) &&
+        ((isAmsterdam && FeatureToggle.parkerenActive) ||
+          (!isLoading(PARKEREN) && FeatureToggle.parkerenPatroonC))
       );
+    }
 
     case Themas.KLACHTEN:
       return (

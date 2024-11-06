@@ -44,6 +44,8 @@
       "get-parkeren-external-sso-url:standard",
       "get-private-active-permit-request:standard",
       "get-company-active-permit-request:standard",
+      "get-private-client-product-details:standard",
+      "get-company-client-product-details:standard",
       "get-patroon-c:standard",
       "get-toeristische-verhuur-by-number:standard",
       "post-toeristische-verhuur-with-bsn:standard",
