@@ -52,6 +52,7 @@
       "expiry_date": "2023-07-31T21:59:59.000Z",
       "heeft_budget": false,
       "vervangen": false,
+      "securitycode": "012345",
       "passoort": {
         "id": 11,
         "naam": "Digitale Stadspas"
@@ -68,6 +69,7 @@
       "expiry_date": "2024-07-31T21:59:59.000Z",
       "heeft_budget": false,
       "vervangen": false,
+      "securitycode": "012346",
       "passoort": {
         "id": 11,
         "naam": "Digitale Stadspas"
@@ -100,6 +102,7 @@
           "actief": true,
           "heeft_budget": true,
           "vervangen": false,
+          "securitycode": "012347",
           "budgetten": [
             {
               "code": "2023_AMSTEG_ENERGIE",
@@ -121,6 +124,7 @@
           "actief": false,
           "heeft_budget": false,
           "vervangen": false,
+          "securitycode": "123458",
           "budgetten": []
         }
       ]
@@ -149,6 +153,7 @@
           "actief": true,
           "heeft_budget": true,
           "vervangen": false,
+          "securitycode": "123459",
           "budgetten": [
             {
               "code": "2023_AMSTEG_12-14",
@@ -170,6 +175,7 @@
           "actief": false,
           "heeft_budget": true,
           "vervangen": false,
+          "securitycode": "123450",
           "budgetten": []
         }
       ]
@@ -198,6 +204,7 @@
           "actief": true,
           "heeft_budget": true,
           "vervangen": false,
+          "securitycode": "123440",
           "budgetten": [
             {
               "code": "2023_AMSTEG_15-17",
@@ -219,6 +226,7 @@
           "actief": false,
           "heeft_budget": false,
           "vervangen": false,
+          "securitycode": "123430",
           "budgetten": []
         }
       ]
@@ -247,6 +255,7 @@
           "actief": true,
           "heeft_budget": true,
           "vervangen": false,
+          "securitycode": "123420",
           "budgetten": [
             {
               "code": "2023_AMSTEG_2-3_KVS",
@@ -272,6 +281,7 @@
           "actief": false,
           "heeft_budget": true,
           "vervangen": false,
+          "securitycode": "123150",
           "budgetten": []
         }
       ]
@@ -300,6 +310,7 @@
           "actief": true,
           "heeft_budget": true,
           "vervangen": false,
+          "securitycode": "122450",
           "budgetten": [
             {
               "code": "AMSTEG_autom_laden_TEST",
