@@ -184,12 +184,9 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Themas.PARKEREN: {
-      const hasPermit =
-        Array.isArray(appState.PARKEREN_PRODUCTS?.content?.data) &&
-        appState.PARKEREN_PRODUCTS.content?.data.length > 0;
+      const hasPermit = appState.PARKEREN_PRODUCTS.content?.data?.length > 0;
       const hasPermitRequest =
-        Array.isArray(appState.PARKEREN_PERMIT_REQUESTS?.content?.data) &&
-        appState.PARKEREN_PERMIT_REQUESTS.content?.data.length > 0;
+        appState.PARKEREN_PERMIT_REQUESTS.content?.data?.length > 0;
       return (
         (hasPermit || hasPermitRequest) &&
         ((isAmsterdam && FeatureToggle.parkerenActive) ||
