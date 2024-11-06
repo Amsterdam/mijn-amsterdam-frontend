@@ -1,8 +1,7 @@
 import { APP_MODE, IS_OT } from '../../../universal/config/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { getFromEnv } from '../../helpers/env';
 
-export const IS_DB_ENABLED = FeatureToggle.dbEnabled;
+export const IS_DB_ENABLED = getFromEnv('BFF_DB_ENABLED') === 'true';
 
 export const IS_VERBOSE = IS_OT && APP_MODE !== 'unittest';
 
