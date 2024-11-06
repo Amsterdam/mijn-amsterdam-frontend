@@ -59,7 +59,7 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunning[] = [
       },
     ],
     fetchDocumentsUrl:
-      '/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
+      'http://bff-api-host/api/v1/services/decosjoin/listdocuments/gAAAAABfOl8BFgweMqwmY9tcEAPAxQWJ9SBWhDTQ7AJiil0gZugQ37PC4I3f2fLEwmClmh59sYy3i4olBXM2uMWNzxrigD01Xuf7vL3DFuVp4c8SK_tj6nLLrf4QyGq1SqNESYjPTW_n',
     link: {
       to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
       title: 'Bekijk hoe het met uw aanvraag staat',
@@ -112,7 +112,7 @@ const bbVergunningen: BBVergunning[] = [
       {
         id: 'xiup_IrPSXXuB6bI5sNz6Zrwl5UbqsqYoeEQXwGLrvA',
         title: 'Documentje.pdf  ',
-        url: 'http://localhost:5000/api/v1/services/toeristische-verhuur/bb/document/xiup_IrPSXXuB6bI5sNz6Zrwl5UbqsqYoeEQXwGLrvA',
+        url: 'http://bff-api-host/api/v1/services/toeristische-verhuur/bb/document/xiup_IrPSXXuB6bI5sNz6Zrwl5UbqsqYoeEQXwGLrvA',
         download: 'Documentje.pdf  ',
         external: true,
         datePublished: '',
@@ -137,11 +137,12 @@ function state(state: any) {
 }
 
 describe('<ToeristischVerhuurDetail />', () => {
-  bffApi.get(/\/relay\/decosjoin\/listdocuments\/(.*)/).reply(200, {
-    content: [],
-  });
-
   test('Vakantieverhuur vergunning', () => {
+    bffApi
+      .get((uri: string) => decodeURI(uri).includes('decosjoin/listdocuments'))
+      .reply(200, {
+        content: [],
+      });
     const vergunning = vakantieverhuurVergunningen[0];
     const routeEntry = generatePath(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
