@@ -374,30 +374,34 @@ function determineFactuurStatusDescription(
   debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted'],
   hasDeelbetaling: boolean = false
 ) {
+  // Openstaand bedrag
   const amount = amountFormatted.replace('-', '');
+  // Origineel bedrag
   const amountInitial = amountInitialFormatted.replace('-', '');
 
   switch (status) {
     case 'openstaand':
-      return `${amount} betaal nu`;
+      return `${amountInitial} betaal nu`;
     case 'herinnering':
-      return `${amount} betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.`;
+      return `${amountInitial} betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.`;
     case 'in-dispuut':
-      return `${amount} in dispuut`;
+      return `${amountInitial} in dispuut`;
     case 'gedeeltelijke-betaling':
       return `Uw factuur van ${amountInitial} is nog niet volledig betaald. Maak het resterend bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
     case 'handmatig-betalen':
-      return `Uw factuur is nog niet betaald. Maak het bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
+      return `Uw factuur is nog niet betaald. Maak het bedrag van ${amountInitial} over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
-      return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
+      return `Het bedrag van ${amountInitial} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
       return hasDeelbetaling
-        ? `Op ${debtClearingDateFormatted ?? ''} heeft u het gehele bedrag van ${amountInitial} voldaan.`
-        : `${amount} betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+        ? `Op ${debtClearingDateFormatted} heeft u het gehele bedrag van ${amountInitial} voldaan.`
+        : `${amountInitial} betaald op ${debtClearingDateFormatted}`;
     case 'automatische-incasso':
-      return `${amount} wordt automatisch van uw rekening afgeschreven.`;
+      return `${amountInitial} wordt automatisch van uw rekening afgeschreven.`;
+    case 'geannuleerd':
+      return `${amountInitial} geannuleerd op ${debtClearingDateFormatted}`;
     case 'overgedragen-aan-belastingen':
-      return `${amount} is overgedragen aan het incasso- en invorderingstraject van directie Belastingen${debtClearingDateFormatted ? ` op ${debtClearingDateFormatted}` : ''}`;
+      return `${amountInitial} is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op ${debtClearingDateFormatted}`;
     default:
       return capitalizeFirstLetter(status ?? '');
   }
