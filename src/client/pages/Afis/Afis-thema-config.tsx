@@ -88,7 +88,8 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     title: listPageTitle.overgedragen,
     displayProps: displayPropsFacturenOvergedragen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
-    listPageLinkLabel: 'Alle overgedragen facturen',
+    listPageLinkLabel:
+      'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'overgedragen',
     }),
