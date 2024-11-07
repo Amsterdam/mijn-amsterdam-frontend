@@ -86,17 +86,17 @@ describe('app', async () => {
 
     expect(
       routerProtected.handle.stack.some(
-        (x: any) => x.name === 'isAuthenticated'
+        (x: object) => 'name' in x && x.name === 'isAuthenticated'
       )
     ).toBe(true);
     expect(
       routerProtected.handle.stack.some(
-        (x: any) => x.name === 'isBlacklistedHandler'
+        (x: object) => 'name' in x && x.name === 'isBlacklistedHandler'
       )
     ).toBe(true);
     expect(
       routerProtected.handle.stack.some(
-        (x: any) => x.name === 'handleCheckProtectedRoute'
+        (x: object) => 'name' in x && x.name === 'handleCheckProtectedRoute'
       )
     ).toBe(true);
   });

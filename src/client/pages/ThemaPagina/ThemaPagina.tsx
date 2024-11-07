@@ -1,4 +1,3 @@
-
 import { ReactElement, ReactNode } from 'react';
 
 import { Grid, LinkList, Screen } from '@amsterdam/design-system-react';

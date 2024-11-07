@@ -701,7 +701,13 @@
         "betalen",
         "sepa",
         "ideal",
-        "automatische incasso"
+        "automatische incasso",
+        "openstaande facturen",
+        "facturen",
+        "betaalde facturen",
+        "facturen belastingen",
+        "gesloten facturen",
+        "andere facturen"
       ],
       "profileTypes": ["private", "commercial"]
     },
@@ -867,7 +873,7 @@
         "cafe"
       ]
     },
-    "AFIS_BAG": {
+    "AFIS": {
       "keywordsGeneratedFromProps": [
         "factuurNummer",
         "status",

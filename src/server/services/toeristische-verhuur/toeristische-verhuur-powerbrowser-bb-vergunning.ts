@@ -6,6 +6,8 @@ import {
   BBVergunning,
   BBVergunningZaakResult,
   fieldMap,
+  PBDocumentFields,
+  PBRecordField,
   PBZaakCompacted,
   PBZaakFields,
   PBZaakRecord,
@@ -151,14 +153,12 @@ function getFieldValue(
 function getZaakStatus(
   zaak: BBVergunning
 ): BBVergunning['status'] | BBVergunning['result'] {
-  if (zaak.dateEnd && isDateInPast(zaak.dateEnd)) {
-    return 'Verlopen';
-  }
-  if (zaak.result) {
-    return zaak.result;
-  }
   const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
     ?.status as BBVergunning['status'];
+
+  if (lastStepStatus !== 'Verlopen' && zaak.result) {
+    return zaak.result;
+  }
 
   return lastStepStatus ?? 'Ontvangen';
 }
@@ -232,6 +232,7 @@ function transformZaakStatusResponse(
 
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
   const statusOntvangen = zaak.steps[0];
+  const isVerlopen = zaak.dateEnd ? isDateInPast(zaak.dateEnd) : false;
 
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
@@ -245,15 +246,28 @@ function transformZaakStatusResponse(
     id: 'step-3',
     status: 'Afgehandeld',
     datePublished: dateDecision,
-    isActive: !!dateDecision,
+    isActive: !isVerlopen && !!dateDecision,
     isChecked: !!dateDecision,
   };
 
-  return [
+  const statussen = [
     { ...statusOntvangen, isActive: !datumInBehandeling && !dateDecision },
     statusInBehandeling,
     statusAfgehandeld,
   ];
+
+  if (isVerlopen) {
+    const statusVerlopen: StatusLineItem = {
+      id: 'step-5',
+      status: 'Verlopen',
+      datePublished: zaak.dateEnd ?? '',
+      isActive: true,
+      isChecked: true,
+    };
+    statussen.push(statusVerlopen);
+  }
+
+  return statussen;
 }
 
 async function fetchZaakAdres(
@@ -261,16 +275,30 @@ async function fetchZaakAdres(
   zaakId: PBZaakRecord['id']
 ): Promise<ApiResponse<string | null>> {
   const addressResponse = await fetchPowerBrowserData<string>(requestID, {
-    method: 'get',
-    responseType: 'text',
+    method: 'post',
     formatUrl({ url }) {
-      return `${url}/Record/AdresMbtZaakOrLocatie/GFO_ZAKEN/${zaakId}`;
+      return `${url}/Link/GFO_ZAKEN/ADRESSEN/Table`;
     },
-    transformResponse(data) {
+    data: [zaakId],
+    transformResponse(
+      data: SearchRequestResponse<'ADRESSEN', PBRecordField<'FMT_CAPTION'>[]>
+    ) {
+      const address =
+        data.records[0]?.fields.find((field) => {
+          return field.fieldName === 'FMT_CAPTION';
+        })?.fieldValue ?? null;
+
+      if (!address) {
+        return null;
+      }
+
       // Adds a newline before the postal code to ensure the address is displayed correctly.
       const regExp = /[0-9]{4}[A-Z]{2}/;
-      const match = data.match(regExp);
-      return match.length > 0 ? data.replace(match[0], `\n${match[0]}`) : data;
+      const match = address.match(regExp);
+
+      return match && match.length > 0
+        ? address.replace(match[0], `\n${match[0]}`)
+        : address;
     },
   });
   return addressResponse;
@@ -416,10 +444,9 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
     documents: [],
     fetchDocumentsUrl:
       parseInt(id, 10) > 0 && FeatureToggle.bbDocumentDownloadsActive
-        ? generateFullApiUrlBFF(
-            BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST,
-            { id: idEncrypted }
-          )
+        ? `${generateFullApiUrlBFF(
+            BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST
+          )}?id=${idEncrypted}`
         : null,
     steps: [getReceivedStatusStep(pbZaak.dateReceived ?? '')],
     heeftOvergangsRecht: pbZaak.dateReceived
@@ -533,65 +560,75 @@ export async function fetchBBVergunningen(
 
 const documentNamenMA_PB = {
   'Besluit toekenning': [
-    'Anoniem Besluit BB (brief)',
-    'Anoniem Besluit BB met overgangsrecht (brief)',
-    'Besluit B&B',
-    'Besluit B&B met overgangsrecht',
-    'Besluit BB vergunningvrij (brief)',
-    'Besluit verlening beslistermijn B&B (Brief)',
+    'BB Besluit vergunning bed and breakfast',
+    'BB Besluit van rechtswege',
+    'BB Besluit verlenging beslistermijn',
   ],
-  'Besluit Buiten behandeling': ['Besluit aanvraag B&B niet in behandeling '],
-  'Besluit weigering': ['Besluit B&B weigering zonder overgangsrecht'],
-  'Besluit instrekking': ['Intrekken vergunning BB (brief)'],
+  'Besluit Buiten behandeling': [
+    'BB Besluit buiten behandeling stellen',
+    'BB buiten behandeling stellen',
+  ],
+  'Besluit weigering': [
+    'Besluit weigering',
+    'BB Besluit weigeren vergunning',
+    'BB Besluit weigeren vergunning quotum',
+    'Besluit B&B weigering zonder overgangsrecht',
+  ],
+  'Besluit intrekking': [
+    'Intrekken vergunning',
+    'BB Intrekkingsbesluit nav niet voldoen aan voorwaarden',
+    'BB Intrekkingsbesluit op eigen verzoek',
+  ],
+  'Samenvatting aanvraagformulier': ['Samenvatting'],
 };
-
-interface PowerbrowserLink {
-  mainTable: string | 'DOCLINK';
-  mainId: number;
-  caption: string;
-  linkID: number;
-  note: string | 'Bijlage';
-}
 
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
-  responseData: PowerbrowserLink[]
+  responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
 ) {
+  type PBDocument = {
+    [K in PBDocumentFields['fieldName']]: string;
+  };
   return (
-    responseData
-      ?.filter(
-        (link) =>
-          link.mainTable === 'DOCLINK' &&
-          link.note === 'Bijlage' &&
-          !!link.caption?.toLowerCase().includes('.pdf')
-      )
-      .map((link) => {
-        const docIdEncrypted = encryptSessionIdWithRouteIdParam(
-          sessionID,
-          String(link.mainId)
-        );
+    responseData.records.map((documentRecord) => {
+      const document = Object.fromEntries(
+        documentRecord.fields.map((field) => {
+          return [field.fieldName, field.fieldValue];
+        })
+      ) as PBDocument;
+      const titleLower = document.OMSCHRIJVING.toLowerCase();
 
-        const [docTitleTranslated] =
-          Object.entries(documentNamenMA_PB).find(
-            ([docTitleMa, docTitlesPB]) => {
-              return docTitlesPB.some((docTitlePb) =>
-                link.caption.includes(docTitlePb)
-              );
-            }
-          ) ?? [];
+      const [docTitleTranslated] =
+        Object.entries(documentNamenMA_PB).find(
+          ([_docTitleMa, docTitlesPB]) => {
+            return docTitlesPB.some((docTitlePb) => {
+              return titleLower.includes(docTitlePb.toLowerCase());
+            });
+          }
+        ) ?? [];
 
-        return {
-          id: docIdEncrypted,
-          title: docTitleTranslated ?? link.caption,
-          url: generateFullApiUrlBFF(
-            BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD,
-            { id: docIdEncrypted }
-          ),
-          download: link.caption,
-          datePublished: '',
-        };
-      }) ?? []
-  );
+      if (!docTitleTranslated) {
+        return null;
+      }
+
+      const docIdEncrypted = encryptSessionIdWithRouteIdParam(
+        sessionID,
+        String(document.ID)
+      );
+
+      const title = docTitleTranslated ?? document.OMSCHRIJVING;
+
+      return {
+        id: docIdEncrypted,
+        title,
+        url: `${generateFullApiUrlBFF(
+          BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD
+        )}?id=${docIdEncrypted}`,
+        download: title,
+        datePublished: document.CREATEDATE,
+      };
+    }) ?? []
+  ).filter((document) => document !== null);
 }
 
 export async function fetchBBDocumentsList(
@@ -600,9 +637,24 @@ export async function fetchBBDocumentsList(
   zaakId: BBVergunning['id']
 ) {
   const dataRequestConfig: DataRequestConfig = {
-    method: 'get',
+    method: 'post',
     formatUrl({ url }) {
-      return `${url}/Link/GFO_ZAKEN/${zaakId}`;
+      return `${url}/SearchRequest`;
+    },
+    data: {
+      query: {
+        tableName: 'DOCLINK',
+        conditions: [
+          {
+            fieldName: 'GFO_ZAKEN_ID',
+            fieldValue: zaakId,
+          },
+          {
+            fieldName: 'EXTENSIE',
+            fieldValue: '.pdf',
+          },
+        ],
+      },
     },
     transformResponse(responseData) {
       return transformPowerbrowserLinksResponse(

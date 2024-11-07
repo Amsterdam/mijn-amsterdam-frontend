@@ -1,9 +1,4 @@
-import {
-  Grid,
-  Link,
-  LinkList,
-  Paragraph,
-} from '@amsterdam/design-system-react';
+import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AfisEmandateStub } from './Afis-thema-config';
 import {
@@ -61,13 +56,6 @@ function AfisBusinessPartnerDetails({
             <Grid.Cell span={6}>
               <Datalist rows={rows} rowVariant="horizontal" />
             </Grid.Cell>
-            <Grid.Cell start={7} span={3}>
-              <LinkList>
-                <LinkList.Link rel="noreferrer" href="#">
-                  Wijzigingen
-                </LinkList.Link>
-              </LinkList>
-            </Grid.Cell>
           </Grid>
         )}
       </CollapsiblePanel>
@@ -118,13 +106,17 @@ export function AfisBetaalVoorkeuren() {
       }
     );
 
+  const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
+
   const pageContentTop = (
     <>
       <Paragraph>
         Hieronder kunt u uw betaalgegevens bekijken en een automatische incasso
         instellen per afdeling van de gemeente. Wil u uw betaalgegevens
         wijzigen, stuur dan een email naar{' '}
-        <Link href="mailto:debiteurenadministratie@amsterdam.nl">
+        <Link
+          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaalgegevens wijzigen&body=${mailBody}`}
+        >
           debiteurenadministratie@amsterdam.nl
         </Link>
         .

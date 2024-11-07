@@ -88,8 +88,6 @@ export function AfisThemaPagina() {
     facturenTableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
-    isOverviewApiError,
-    isOverviewApiLoading,
     listPageTitle,
     routes,
   } = useAfisThemaData();
@@ -134,6 +132,7 @@ export function AfisThemaPagina() {
         maxItems,
         listPageLinkLabel,
         listPageRoute,
+        className,
       },
     ]) => {
       const subTitleNode =
@@ -152,7 +151,7 @@ export function AfisThemaPagina() {
           totalItems={facturenByState?.[state]?.count}
           listPageLinkLabel={listPageLinkLabel}
           listPageRoute={listPageRoute}
-          className={styles.FacturenTable}
+          className={styles[className]}
         />
       );
     }
@@ -161,12 +160,10 @@ export function AfisThemaPagina() {
   return (
     <ThemaPagina
       title={ThemaTitles.AFIS}
-      isError={isOverviewApiError || isThemaPaginaError}
+      isError={isThemaPaginaError}
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
-      isLoading={
-        !isThemaPaginaError && (isThemaPaginaLoading || isOverviewApiLoading)
-      }
+      isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       linkListItems={[
         {
           to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',

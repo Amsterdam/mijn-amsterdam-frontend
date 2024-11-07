@@ -418,6 +418,27 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
                     01 januari 1967
                   </td>
                 </tr>
+                <tr
+                  class="InfoPanelTableRow__woz-waarde"
+                >
+                  <th>
+                    <span>
+                      WOZ-waarde
+                    </span>
+                  </th>
+                  <td
+                    translate="yes"
+                  >
+                    Te vinden op 
+                    <a
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      href="https://www.wozwaardeloket.nl/"
+                      rel="external noopener noreferrer"
+                    >
+                      WOZ-waardeloket
+                    </a>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -2094,6 +2115,27 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
                     translate="yes"
                   >
                     01 januari 1967
+                  </td>
+                </tr>
+                <tr
+                  class="InfoPanelTableRow__woz-waarde"
+                >
+                  <th>
+                    <span>
+                      WOZ-waarde
+                    </span>
+                  </th>
+                  <td
+                    translate="yes"
+                  >
+                    Te vinden op 
+                    <a
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      href="https://www.wozwaardeloket.nl/"
+                      rel="external noopener noreferrer"
+                    >
+                      WOZ-waardeloket
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -3788,6 +3830,27 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
                     01 januari 1967
                   </td>
                 </tr>
+                <tr
+                  class="InfoPanelTableRow__woz-waarde"
+                >
+                  <th>
+                    <span>
+                      WOZ-waarde
+                    </span>
+                  </th>
+                  <td
+                    translate="yes"
+                  >
+                    Te vinden op 
+                    <a
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      href="https://www.wozwaardeloket.nl/"
+                      rel="external noopener noreferrer"
+                    >
+                      WOZ-waardeloket
+                    </a>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -5324,6 +5387,27 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
                     01 januari 1967
                   </td>
                 </tr>
+                <tr
+                  class="InfoPanelTableRow__woz-waarde"
+                >
+                  <th>
+                    <span>
+                      WOZ-waarde
+                    </span>
+                  </th>
+                  <td
+                    translate="yes"
+                  >
+                    Te vinden op 
+                    <a
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      href="https://www.wozwaardeloket.nl/"
+                      rel="external noopener noreferrer"
+                    >
+                      WOZ-waardeloket
+                    </a>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -5779,6 +5863,27 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
                     translate="yes"
                   >
                     01 januari 1967
+                  </td>
+                </tr>
+                <tr
+                  class="InfoPanelTableRow__woz-waarde"
+                >
+                  <th>
+                    <span>
+                      WOZ-waarde
+                    </span>
+                  </th>
+                  <td
+                    translate="yes"
+                  >
+                    Te vinden op 
+                    <a
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      href="https://www.wozwaardeloket.nl/"
+                      rel="external noopener noreferrer"
+                    >
+                      WOZ-waardeloket
+                    </a>
                   </td>
                 </tr>
               </tbody>

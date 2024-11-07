@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 import { LinkProps } from '../../../universal/types';
 
 type JaOfNee = 'Ja' | 'Nee';
@@ -35,21 +37,25 @@ export type AfisBusinessPartnerCommercialResponseSource = {
     | AfisBusinessPartnerRecordCommercial[];
 };
 
-export type AfisBusinessPartnerKnownResponse = {
+export type AfisFacturenByStateResponse = {
+  [key in AfisFactuurState]?: AfisFacturenResponse | null;
+};
+
+export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
+  businessPartnerId?: string | null;
+  facturen?: AfisFacturenByStateResponse | null;
 };
 
 export type AfisApiFeedResponseSource<T> = {
   feed?: {
     count?: number;
-    entry?: [
-      {
-        content?: {
-          properties?: T;
-        };
-      },
-    ];
+    entry?: Array<{
+      content?: {
+        properties?: T;
+      };
+    }>;
   };
 };
 
@@ -98,14 +104,6 @@ export type AfisFacturenResponse = {
   facturen: AfisFactuur[];
 };
 
-export type AfisFacturenByStateResponse = {
-  [key in AfisFactuurState]?: AfisFacturenResponse | null;
-};
-
-export type AfisFactuurDeelbetalingen = {
-  [factuurNummer: string]: number;
-};
-
 export type AfisFacturenParams = {
   state: AfisFactuurState | 'deelbetalingen';
   businessPartnerID: string;
@@ -121,8 +119,10 @@ export type AfisFactuur = {
   paymentDueDateFormatted: string;
   debtClearingDate: string | null;
   debtClearingDateFormatted: string | null;
-  amountOwed: number;
-  amountOwedFormatted: string;
+  amount: string;
+  amountFormatted: string;
+  amountInitial: string;
+  amountInitialFormatted: string;
   factuurNummer: string;
   factuurDocumentId: string;
   status: AfisFactuurStatus;
@@ -132,11 +132,12 @@ export type AfisFactuur = {
   link: LinkProps;
 };
 
-type AfisFactuurStatus =
+export type AfisFactuurStatus =
   | 'openstaand'
   | 'automatische-incasso'
   | 'in-dispuut'
   | 'gedeeltelijke-betaling'
+  | 'handmatig-betalen'
   | 'overgedragen-aan-belastingen'
   | 'geld-terug'
   | 'betaald'
@@ -150,20 +151,19 @@ export type AfisInvoicesSource =
 export type AfisInvoicesPartialPaymentsSource = AfisApiFeedResponseSource<
   Pick<
     AfisFactuurPropertiesSource,
-    | 'NetPaymentAmount'
-    | 'AmountInBalanceTransacCrcy'
-    | 'DocumentReferenceID'
-    | 'AccountingDocument'
+    'AmountInBalanceTransacCrcy' | 'InvoiceReference'
   >
 >;
 
 export type AccountingDocumentType = string;
 
+export type AfisFactuurDeelbetalingen = {
+  [factuurNummer: string]: Decimal;
+};
+
 /** Extra property information
  *  ==========================
  * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
- * `NetPaymentAmount`: Is a negative decimal number and represents money that is -
- *   already payed for this item.
  * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
  *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
  *   to the debtor.
@@ -171,16 +171,17 @@ export type AccountingDocumentType = string;
  */
 export type AfisFactuurPropertiesSource = {
   AccountingDocument: string;
-  AccountingDocumentType: AccountingDocumentType;
   AmountInBalanceTransacCrcy: string;
+  AccountingDocumentType: AccountingDocumentType;
   ClearingDate?: string;
   DocumentReferenceID: string;
   DunningBlockingReason: string;
   DunningLevel: number;
   IsCleared?: boolean;
   NetDueDate: string;
-  NetPaymentAmount: string;
+  InvoiceReference: string | null;
   Paylink: string | null;
+  PaymentMethod: string | null;
   PostingDate: string;
   ProfitCenterName: string;
   ReverseDocument?: string;

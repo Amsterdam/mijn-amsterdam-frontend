@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 
 import {
-  AfisFacturenByStateResponse,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
@@ -56,7 +55,7 @@ export type AfisFacturenResponseFrontend = AfisFacturenResponse & {
 };
 
 export type AfisFacturenByStateFrontend = {
-  [key in keyof AfisFacturenByStateResponse]: AfisFacturenResponseFrontend;
+  [key in AfisFactuurState]?: AfisFacturenResponseFrontend;
 };
 
 type AfisFacturenTableConfig = {
@@ -66,6 +65,7 @@ type AfisFacturenTableConfig = {
   maxItems: number;
   listPageLinkLabel: string;
   listPageRoute: string;
+  className: string;
 };
 
 type AfisFacturenTableConfigByState = Record<
@@ -82,6 +82,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'open',
     }),
+    className: 'FacturenTable--open',
   },
   overgedragen: {
     title: listPageTitle.overgedragen,
@@ -91,6 +92,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'overgedragen',
     }),
+    className: 'FacturenTable--afgehandeld',
   },
   afgehandeld: {
     title: listPageTitle.afgehandeld,
@@ -100,6 +102,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'afgehandeld',
     }),
+    className: 'FacturenTable--overgedragen',
   },
 } as const;
 

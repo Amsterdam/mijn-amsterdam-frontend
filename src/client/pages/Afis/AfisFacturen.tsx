@@ -48,7 +48,7 @@ export const AfisFacturen = () => {
       displayProps={listPageTableConfig.displayProps}
       isLoading={isThemaPaginaLoading || isListPageLoading}
       isError={isThemaPaginaError || isListPageError}
-      tableClassName={styles.FacturenTable}
+      tableClassName={styles[listPageTableConfig.className]}
     />
   );
 };

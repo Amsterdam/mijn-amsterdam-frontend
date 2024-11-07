@@ -6,7 +6,7 @@ export interface ApiErrorResponse<T> {
   code?: number;
 }
 
-export type FailedDependencies = Record<string, ApiErrorResponse<any>>;
+export type FailedDependencies = Record<string, ApiErrorResponse<unknown>>;
 
 export type ApiSuccessResponse<T> = {
   content: T;
@@ -48,18 +48,14 @@ export type ResponseStatus =
   | 'POSTPONE'
   | 'DEPENDENCY_ERROR';
 
-export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
-  ReturnType<T>
->;
-
 export type ApiResponse<T> =
-  | ApiErrorResponse<T>
+  | ApiErrorResponse<null>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>
   | ApiPostponeResponse
   | ApiDependencyErrorResponse;
 
-export function isLoading(apiResponseData: ApiResponse<any>) {
+export function isLoading(apiResponseData: ApiResponse<unknown>) {
   // If no responseData was found, assumes it's still loading
   return (
     (!apiResponseData && !isError(apiResponseData)) ||
@@ -67,12 +63,12 @@ export function isLoading(apiResponseData: ApiResponse<any>) {
   );
 }
 
-export function isOk(apiResponseData: ApiResponse<any>) {
+export function isOk(apiResponseData: ApiResponse<unknown>) {
   return apiResponseData?.status === 'OK';
 }
 
 export function isError(
-  apiResponseData: ApiResponse<any>,
+  apiResponseData: ApiResponse<unknown>,
   includeFailedDependencies: boolean = true
 ) {
   return (
@@ -85,7 +81,7 @@ export function isError(
 }
 
 export function hasFailedDependency(
-  apiResponseData: ApiResponse<any>,
+  apiResponseData: ApiResponse<unknown>,
   dependencyKey: string
 ) {
   return (
