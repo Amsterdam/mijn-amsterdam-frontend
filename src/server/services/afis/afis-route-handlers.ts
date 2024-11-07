@@ -50,7 +50,7 @@ function isPostiveInt(str: string) {
  *
  *  # Optional query parameters
  *
- *  top: The maximum amountPayed of invoices.
+ *  top: The maximum number of invoices.
  *    for example `$top=4` will get you four invoices out of potentially 200.
  */
 export async function handleFetchAfisFacturen(
