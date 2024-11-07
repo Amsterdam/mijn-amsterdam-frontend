@@ -83,7 +83,17 @@ export interface StadspasDiscountTransactionsResponseSource {
 
 export interface StadspasHouderPasSource {
   actief: boolean;
+  budgetten: unknown[];  // Did not see the exact shape of this data, encountered an empty array.
+  categorie: string;
+  categorie_code: string;
+  expiry_date: string;
+  heeft_budget: boolean;
+  id: number;
   pasnummer: number;
+  pasnummer_volledig: string;
+  passoort: { id: number, naam: string };
+  securitycode: string;
+  vervangen: boolean;
 }
 
 export interface StadspasHouderSource {
@@ -128,6 +138,7 @@ export interface StadspasDetailSource {
   pasnummer: number;
   pasnummer_volledig: string;
   passoort: { id: number; naam: string };
+  pashouder: StadspasHouderSource;
 }
 
 // Transformed types
