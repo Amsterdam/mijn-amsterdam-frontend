@@ -22,7 +22,7 @@ npm install -g ts-node nodemon
 npm install
 ```
 
-## Running localy
+## Running locally
 
 Put the following commands in your terminal after all dependencies are installed:
 
