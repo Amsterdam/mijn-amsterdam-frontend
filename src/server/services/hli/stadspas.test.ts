@@ -12,90 +12,103 @@ import { remoteApi } from '../../../test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
-const pashouderResponse = {
-  initialen: 'A',
-  achternaam: 'Achternaam',
-  voornaam: 'Vadertje',
-  passen: [
-    {
-      actief: false,
-      pasnummer: 444444444444,
-      securitycode: '012345',
-    },
-    {
-      actief: true,
-      pasnummer: 333333333333,
-      securitycode: '012345',
-    },
-  ],
-  sub_pashouders: [
-    {
-      initialen: 'B',
-      achternaam: 'Achternaam',
-      voornaam: 'Moedertje',
-      passen: [
-        {
-          actief: true,
-          pasnummer: 666666666666,
-          securitycode: '012345',
-        },
-        {
-          actief: false,
-          pasnummer: 555555555555,
-          securitycode: '012345',
-        },
-      ],
-    },
-    {
-      initialen: 'C',
-      achternaam: 'Achternaam',
-      voornaam: 'Kindje',
-      passen: [
-        {
-          actief: true,
-          pasnummer: 777777777777,
-          securitycode: '012345',
-        },
-        {
-          actief: false,
-          pasnummer: 888888888888,
-          securitycode: '012345',
-        },
-      ],
-    },
-  ],
-};
+function createStadspasHouderResponse() {
+  const stadspasHouderResponse = {
+    initialen: 'A',
+    achternaam: 'Achternaam',
+    voornaam: 'Vadertje',
+    passen: [createPas(false, 111111111111), createPas(true, 222222222222)],
+    sub_pashouders: [
+      {
+        initialen: 'B',
+        achternaam: 'Achternaam',
+        voornaam: 'Moedertje',
+        passen: [createPas(true, 333333333333), createPas(false, 444444444444)],
+      },
+      {
+        initialen: 'C',
+        achternaam: 'Achternaam',
+        voornaam: 'Kindje',
+        passen: [createPas(true, 555555555555), createPas(false, 666666666666)],
+      },
+    ],
+  };
+  return stadspasHouderResponse;
+}
 
-const pasResponse = {
-  actief: true,
-  balance_update_time: '2020-04-02T12:45:41.000Z',
-  budgetten: [
-    {
-      code: 'AMSTEG_10-14',
-      naam: 'Kindtegoed 10-14',
-      omschrijving: 'Kindtegoed',
-      expiry_date: '2021-08-31T21:59:59.000Z',
-      budget_assigned: 150,
-      budget_balance: 0,
-    },
-  ],
-  budgetten_actief: true,
-  categorie: 'Amsterdamse Digitale Stadspas',
-  categorie_code: 'A',
-  expiry_date: '2020-08-31T23:59:59.000Z',
-  id: 999999,
-  originele_pas: {
+function createPas(
+  actief: boolean,
+  pasnummer: number = 777777777777,
+  securitycode: string = '012345'
+) {
+  return {
+    actief,
+    securitycode,
+    balance_update_time: '2020-04-02T12:45:41.000Z',
+    budgetten: [
+      {
+        code: 'AMSTEG_10-14',
+        naam: 'Kindtegoed 10-14',
+        omschrijving: 'Kindtegoed',
+        expiry_date: '2021-08-31T21:59:59.000Z',
+        budget_assigned: 150,
+        budget_balance: 0,
+      },
+    ],
+    budgetten_actief: true,
     categorie: 'Amsterdamse Digitale Stadspas',
     categorie_code: 'A',
-    id: 888888,
-    pasnummer: 8888888888888,
-    pasnummer_volledig: '8888888888888888888',
+    expiry_date: '2020-08-31T23:59:59.000Z',
+    id: 999999,
+    originele_pas: {
+      categorie: 'Amsterdamse Digitale Stadspas',
+      categorie_code: 'A',
+      id: 888888,
+      pasnummer: 8888888888888,
+      pasnummer_volledig: '8888888888888888888',
+      passoort: { id: 11, naam: 'Digitale Stadspas' },
+    },
+    pasnummer,
+    pasnummer_volledig: '6666666666666666666',
     passoort: { id: 11, naam: 'Digitale Stadspas' },
-  },
-  pasnummer: 6666666666666,
-  pasnummer_volledig: '6666666666666666666',
-  passoort: { id: 11, naam: 'Digitale Stadspas' },
-};
+  };
+}
+
+function createTransformedPas(firstname: string, initials: string) {
+  return {
+    balance: 0,
+    balanceFormatted: '€0,00',
+    budgets: [
+      {
+        budgetAssigned: 150,
+        budgetAssignedFormatted: '€150,00',
+        budgetBalance: 0,
+        budgetBalanceFormatted: '€0,00',
+        code: 'AMSTEG_10-14',
+        dateEnd: '2021-08-31T21:59:59.000Z',
+        dateEndFormatted: '31 augustus 2021',
+        description: 'Kindtegoed',
+        title: 'Kindtegoed 10-14',
+      },
+    ],
+    dateEnd: '2020-08-31T23:59:59.000Z',
+    dateEndFormatted: '01 september 2020',
+    id: '999999',
+    owner: {
+      firstname,
+      infix: undefined,
+      initials,
+      lastname: 'Achternaam',
+    },
+    passNumber: 777777777777,
+    passNumberComplete: '6666666666666666666',
+    securityCode: '012345',
+  };
+}
+
+const pashouderResponse = createStadspasHouderResponse();
+
+const pasResponse = createPas(true);
 
 const authProfileAndToken: AuthProfileAndToken = {
   profile: {
@@ -198,45 +211,15 @@ describe('stadspas services', () => {
 
     const response = await fetchStadspassen('0912039', authProfileAndToken);
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "administratienummer": "0363000123-123",
-          "stadspassen": [
-            {
-              "balance": 0,
-              "balanceFormatted": "€0,00",
-              "budgets": [
-                {
-                  "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€150,00",
-                  "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€0,00",
-                  "code": "AMSTEG_10-14",
-                  "dateEnd": "2021-08-31T21:59:59.000Z",
-                  "dateEndFormatted": "31 augustus 2021",
-                  "description": "Kindtegoed",
-                  "title": "Kindtegoed 10-14",
-                },
-              ],
-              "dateEnd": "2020-08-31T23:59:59.000Z",
-              "dateEndFormatted": "01 september 2020",
-              "id": "999999",
-              "owner": {
-                "firstname": "Vadertje",
-                "infix": undefined,
-                "initials": "A",
-                "lastname": "Achternaam",
-              },
-              "passNumber": 6666666666666,
-              "passNumberComplete": "6666666666666666666",
-              "securityCode": "012345",
-            },
-          ],
-        },
-        "status": "OK",
-      }
-    `);
+    const expectedResponse = {
+      content: {
+        administratienummer: '0363000123-123',
+        stadspassen: [createTransformedPas('Moedertje', 'B')],
+      },
+      status: 'OK',
+    };
+
+    expect(response).toStrictEqual(expectedResponse);
 
     encryptSpy.mockRestore();
     decryptSpy.mockRestore();
@@ -271,104 +254,18 @@ describe('stadspas services', () => {
       .reply(200, pasResponse);
 
     const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
-
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "administratienummer": "0363000123-123",
-          "stadspassen": [
-            {
-              "balance": 0,
-              "balanceFormatted": "€0,00",
-              "budgets": [
-                {
-                  "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€150,00",
-                  "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€0,00",
-                  "code": "AMSTEG_10-14",
-                  "dateEnd": "2021-08-31T21:59:59.000Z",
-                  "dateEndFormatted": "31 augustus 2021",
-                  "description": "Kindtegoed",
-                  "title": "Kindtegoed 10-14",
-                },
-              ],
-              "dateEnd": "2020-08-31T23:59:59.000Z",
-              "dateEndFormatted": "01 september 2020",
-              "id": "999999",
-              "owner": {
-                "firstname": "Vadertje",
-                "infix": undefined,
-                "initials": "A",
-                "lastname": "Achternaam",
-              },
-              "passNumber": 6666666666666,
-              "passNumberComplete": "6666666666666666666",
-              "securityCode": "012345",
-            },
-            {
-              "balance": 0,
-              "balanceFormatted": "€0,00",
-              "budgets": [
-                {
-                  "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€150,00",
-                  "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€0,00",
-                  "code": "AMSTEG_10-14",
-                  "dateEnd": "2021-08-31T21:59:59.000Z",
-                  "dateEndFormatted": "31 augustus 2021",
-                  "description": "Kindtegoed",
-                  "title": "Kindtegoed 10-14",
-                },
-              ],
-              "dateEnd": "2020-08-31T23:59:59.000Z",
-              "dateEndFormatted": "01 september 2020",
-              "id": "999999",
-              "owner": {
-                "firstname": "Moedertje",
-                "infix": undefined,
-                "initials": "B",
-                "lastname": "Achternaam",
-              },
-              "passNumber": 6666666666666,
-              "passNumberComplete": "6666666666666666666",
-              "securityCode": "012345",
-            },
-            {
-              "balance": 0,
-              "balanceFormatted": "€0,00",
-              "budgets": [
-                {
-                  "budgetAssigned": 150,
-                  "budgetAssignedFormatted": "€150,00",
-                  "budgetBalance": 0,
-                  "budgetBalanceFormatted": "€0,00",
-                  "code": "AMSTEG_10-14",
-                  "dateEnd": "2021-08-31T21:59:59.000Z",
-                  "dateEndFormatted": "31 augustus 2021",
-                  "description": "Kindtegoed",
-                  "title": "Kindtegoed 10-14",
-                },
-              ],
-              "dateEnd": "2020-08-31T23:59:59.000Z",
-              "dateEndFormatted": "01 september 2020",
-              "id": "999999",
-              "owner": {
-                "firstname": "Kindje",
-                "infix": undefined,
-                "initials": "C",
-                "lastname": "Achternaam",
-              },
-              "passNumber": 6666666666666,
-              "passNumberComplete": "6666666666666666666",
-              "securityCode": "012345",
-            },
-          ],
-        },
-        "status": "OK",
-      }
-    `);
+    const expectedResponse = {
+      content: {
+        administratienummer: '0363000123-123',
+        stadspassen: [
+          createTransformedPas('Vadertje', 'A'),
+          createTransformedPas('Moedertje', 'B'),
+          createTransformedPas('Kindje', 'C'),
+        ],
+      },
+      status: 'OK',
+    };
+    expect(response).toStrictEqual(expectedResponse);
 
     encryptSpy.mockRestore();
     decryptSpy.mockRestore();
