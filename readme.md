@@ -10,7 +10,7 @@ is a portal for official communication with the municipality of Amsterdam. The a
 
 To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.local.template` inside the file AND ask one of the developers for possible additional values.
 
-## Dependencies
+## Set-up
 
 We use Node, and to install the latest version, follow the instructions in this [Link](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).<br>
 Then execute the following commands in a bash terminal to install it and the rest of our dependencies:
