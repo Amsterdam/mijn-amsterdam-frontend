@@ -1,6 +1,7 @@
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AfisEmandateStub } from './Afis-thema-config';
+import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
@@ -58,7 +59,11 @@ function AfisBusinessPartnerDetails({
         {!isLoading && !!rows.length && (
           <Grid>
             <Grid.Cell span={6}>
-              <Datalist rows={rows} rowVariant="horizontal" />
+              <Datalist
+                className={styles['Datalist--businesspartnerdetails']}
+                rows={rows}
+                rowVariant="horizontal"
+              />
             </Grid.Cell>
           </Grid>
         )}
