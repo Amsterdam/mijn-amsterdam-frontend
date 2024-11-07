@@ -77,10 +77,9 @@ export type SearchRequestResponse<
 
 export type PBZaakFields =
   | PBRecordField<'ZAAK_IDENTIFICATIE'>
-  | PBRecordField<'STARTDATUM'>
-  | PBRecordField<'EINDDATUM'>
-  | PBRecordField<'INGANGSDATUM'>
-  | PBRecordField<'DATUM_TOT'>
+  | PBRecordField<'STARTDATUM'> // Startdatum van de zaak
+  | PBRecordField<'EINDDATUM'> // Afhandeldatum zaak + Startdatum geldigheid vergunning
+  | PBRecordField<'DATUM_TOT'> // Einddatum geldigheid vergunning
   | PBRecordField<'RESULTAAT_ID'>;
 
 export type PBZaakRecord = PBRecord<'GFO_ZAKEN', PBZaakFields[]>;
@@ -131,10 +130,9 @@ export interface BBVergunning extends ZaakDetail {
 export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
   EINDDATUM: 'dateDecision',
-  INGANGSDATUM: 'dateReceived',
   DATUM_TOT: 'dateEnd',
   RESULTAAT_ID: 'result',
-  STARTDATUM: 'dateStart',
+  STARTDATUM: 'dateReceived',
 };
 
 export type PBZaakStatus =

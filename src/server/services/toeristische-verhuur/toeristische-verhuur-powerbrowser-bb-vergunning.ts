@@ -231,7 +231,7 @@ function transformZaakStatusResponse(
     getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
 
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
-  const statusOntvangen = zaak.steps[0];
+  const statusOntvangen = getReceivedStatusStep(zaak.dateReceived ?? '');
   const isVerlopen = zaak.dateEnd ? isDateInPast(zaak.dateEnd) : false;
 
   const statusInBehandeling: StatusLineItem = {
@@ -442,13 +442,12 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
     adres: null,
     status: 'Ontvangen',
     documents: [],
-    fetchDocumentsUrl:
-      parseInt(id, 10) > 0 && FeatureToggle.bbDocumentDownloadsActive
-        ? `${generateFullApiUrlBFF(
-            BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST
-          )}?id=${idEncrypted}`
-        : null,
-    steps: [getReceivedStatusStep(pbZaak.dateReceived ?? '')],
+    fetchDocumentsUrl: FeatureToggle.bbDocumentDownloadsActive
+      ? `${generateFullApiUrlBFF(
+          BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST
+        )}?id=${idEncrypted}`
+      : null,
+    steps: [],
     heeftOvergangsRecht: pbZaak.dateReceived
       ? isBefore(
           new Date(pbZaak.dateReceived),

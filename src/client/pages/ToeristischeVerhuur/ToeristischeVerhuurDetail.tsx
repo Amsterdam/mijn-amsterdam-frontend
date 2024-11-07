@@ -16,6 +16,18 @@ import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
+function DocumentInfo() {
+  return (
+    <Paragraph>
+      Ziet u niet het juiste document? Stuur een mail naar:{' '}
+      <Link href="mailto:bedandbreakfast@amsterdam.nl" rel="noreferrer">
+        bedandbreakfast@amsterdam.nl
+      </Link>{' '}
+      om uw document in te kunnen zien.
+    </Paragraph>
+  );
+}
+
 interface VerhuurDocumentListProps {
   vergunning: ToeristischeVerhuurVergunning;
 }
@@ -32,6 +44,9 @@ function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
   const hasResult = !!vergunning.result;
   const hasDocuments = !!documentsResponseData.content?.length;
   const hasDocumentsFetch = !!vergunning.fetchDocumentsUrl;
+  const hasBesluit = documentsResponseData.content?.some((document) =>
+    document.title.includes('Besluit')
+  );
 
   useEffect(() => {
     if (vergunning.fetchDocumentsUrl && !isApiDataCached) {
@@ -43,23 +58,17 @@ function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
     return <LoadingContent />;
   }
 
-  if ((!hasDocumentsFetch || (!isApiLoading && !hasDocuments)) && hasResult) {
-    return (
-      <Paragraph>
-        Stuur een mail naar:{' '}
-        <Link href="mailto:bedandbreakfast@amsterdam.nl" rel="noreferrer">
-          bedandbreakfast@amsterdam.nl
-        </Link>{' '}
-        om uw document in te kunnen zien.
-      </Paragraph>
-    );
-  }
-
   return (
-    <DocumentListV2
-      documents={documentsResponseData.content ?? []}
-      columns={['', '']}
-    />
+    <>
+      <DocumentListV2
+        documents={documentsResponseData.content ?? []}
+        columns={['', '']}
+        className="ams-mb--sm"
+      />
+      {!hasDocumentsFetch ||
+        (!isApiLoading && !hasDocuments) ||
+        (!hasBesluit && hasResult && <DocumentInfo />)}
+    </>
   );
 }
 
@@ -129,7 +138,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
         </Grid.Cell>
       )}
 
-      <Grid.Cell span="all">
+      <Grid.Cell span={8}>
         <Datalist
           rows={[
             {
