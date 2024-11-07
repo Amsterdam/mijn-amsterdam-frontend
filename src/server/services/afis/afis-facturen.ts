@@ -389,7 +389,7 @@ function determineFactuurStatusDescription(
     case 'geld-terug':
       return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
-      return `${amount} betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return `Op ${debtClearingDateFormatted ?? ''} heeft u het gehele bedrag van ${amountInitial} voldaan`;
     case 'automatische-incasso':
       return `${amount} wordt automatisch van uw rekening afgeschreven.`;
     case 'overgedragen-aan-belastingen':
