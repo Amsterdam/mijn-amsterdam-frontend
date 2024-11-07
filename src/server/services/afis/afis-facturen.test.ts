@@ -618,9 +618,9 @@ describe('afis-facturen', async () => {
 
     const amountPayed = forTesting.getInvoiceAmount(
       invoice,
-      new Decimal(10.35)
+      new Decimal('-10.35')
     );
-    expect(amountPayed.toFixed(2)).toEqual('60.35');
+    expect(amountPayed.toFixed(2)).toEqual('39.65');
   });
 
   test('getFactuurnummer returns correct factuurnummer', () => {
