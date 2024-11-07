@@ -4,6 +4,7 @@ export const FeatureToggle = {
   // AFIS
   afisActive: !IS_PRODUCTION,
   afisEmandatesActive: false,
+  afisBusinesspartnerPhoneActive: false,
   // We don't filter out the undownloadable facturen for testing purposes.
   // We want to be able to test immediately and not wait until the evening.
   afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
