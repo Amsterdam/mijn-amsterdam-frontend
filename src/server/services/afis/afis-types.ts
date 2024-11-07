@@ -177,7 +177,7 @@ export type AfisFactuurDeelbetalingen = {
 /** Extra property information
  *  ==========================
  * `ProfitCenterName`: The one requiring payment from the debtor (debiteur).
- * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amountPayed that should be payed.
+ * `AmountInBalanceTransacCrcy`: Is a decimal number and represents the amount that should be payed.
  *   When this is negative it is a 'krediet factuur' which means that money shall be returned -
  *   to the debtor.
  *  `IsCleared`: `true` means the 'factuur' is fully payed for.
