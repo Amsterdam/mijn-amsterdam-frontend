@@ -3,6 +3,7 @@ import memoizee from 'memoizee';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
+  SecurityCode,
   Stadspas,
   StadspasAanbiedingSource,
   StadspasBudget,
@@ -73,7 +74,8 @@ function transformBudget(budget: StadspasDetailBudgetSource) {
 
 function transformStadspasResponse(
   gpassStadspasResonseData: StadspasDetailSource,
-  pashouder: StadspasHouderSource
+  pashouder: StadspasHouderSource,
+  securityCode: SecurityCode
 ) {
   if (
     typeof gpassStadspasResonseData === 'object' &&
@@ -97,6 +99,7 @@ function transformStadspasResponse(
       balanceFormatted: `€${displayAmount(balance)}`,
       passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
+      securityCode
     };
 
     return stadspasTransformed;
@@ -154,7 +157,7 @@ export async function fetchStadspassenByAdministratienummer(
           ...dataRequestConfig,
           url,
           transformResponse: (stadspas) =>
-            transformStadspasResponse(stadspas, pashouder),
+            transformStadspasResponse(stadspas, pashouder, pas.securitycode),
           headers,
           params: {
             include_balance: true,

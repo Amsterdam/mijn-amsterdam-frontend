@@ -220,7 +220,6 @@ async function sendStadspassenResponse(
           return {
             ...stadspas,
             // AMSAPP wants this extra field because GPASS promises to deliver this in the fourth quarter (Q4).
-            securityCode: null,
             transactionsKeyEncrypted,
           };
         });

@@ -121,6 +121,14 @@ describe('stadspas-gpass-service', () => {
           id: 0,
           naam: '',
         },
+        pashouder: {
+          initialen: '',
+          achternaam: '',
+          tussenvoegsel: '',
+          voornaam: '',
+          passen: [],
+          volledige_naam: '',
+        },
       };
       const pashouder: StadspasHouderSource = {
         voornaam: 'John',
@@ -131,7 +139,8 @@ describe('stadspas-gpass-service', () => {
       };
       const transformedResponse = forTesting.transformStadspasResponse(
         gpassStadspasResonseData,
-        pashouder
+        pashouder,
+        '0123456'
       );
       expect(transformedResponse).toStrictEqual({
         id: '1',
@@ -160,6 +169,7 @@ describe('stadspas-gpass-service', () => {
         balanceFormatted: '€500,00',
         passNumber: 12345,
         passNumberComplete: '12345-67890',
+        securityCode: '0123456',
       });
     });
 
@@ -178,7 +188,8 @@ describe('stadspas-gpass-service', () => {
 
       const transformedResponse = forTesting.transformStadspasResponse(
         gpassStadspasResonseData,
-        pashouder
+        pashouder,
+        '0123456'
       );
       expect(transformedResponse).toEqual(gpassStadspasResonseData);
     });
@@ -458,8 +469,18 @@ describe('stadspas-gpass-service', () => {
         initialen: 'J.D.',
         passen: [
           {
-            pasnummer: 999999999,
             actief: true,
+            budgetten: [],
+            categorie: '',
+            categorie_code: '',
+            expiry_date: '',
+            heeft_budget: false,
+            id: 1,
+            pasnummer: 999999999,
+            pasnummer_volledig: '',
+            passoort: { id: 1, naam: '' },
+            securitycode: '0123456',
+            vervangen: false,
           },
         ],
       };
@@ -504,6 +525,14 @@ describe('stadspas-gpass-service', () => {
           id: 0,
           naam: '',
         },
+        pashouder: {
+          initialen: '',
+          achternaam: '',
+          tussenvoegsel: '',
+          voornaam: '',
+          passen: [],
+          volledige_naam: '',
+        },
       };
 
       (requestData as Mock)
@@ -514,7 +543,11 @@ describe('stadspas-gpass-service', () => {
         .mockResolvedValueOnce({
           status: 'OK',
           content: [
-            forTesting.transformStadspasResponse(stadspasDetail, pashouder),
+            forTesting.transformStadspasResponse(
+              stadspasDetail,
+              pashouder,
+              '0123456'
+            ),
           ],
         });
 
@@ -553,6 +586,7 @@ describe('stadspas-gpass-service', () => {
               balanceFormatted: '€500,00',
               passNumber: 999999999,
               passNumberComplete: '12345-67890',
+              securityCode: '0123456',
             },
           ],
           administratienummer: '12345',

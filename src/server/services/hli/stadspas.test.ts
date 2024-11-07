@@ -20,10 +20,12 @@ const pashouderResponse = {
     {
       actief: false,
       pasnummer: 444444444444,
+      securitycode: '012345',
     },
     {
       actief: true,
       pasnummer: 333333333333,
+      securitycode: '012345',
     },
   ],
   sub_pashouders: [
@@ -35,10 +37,12 @@ const pashouderResponse = {
         {
           actief: true,
           pasnummer: 666666666666,
+          securitycode: '012345',
         },
         {
           actief: false,
           pasnummer: 555555555555,
+          securitycode: '012345',
         },
       ],
     },
@@ -50,10 +54,12 @@ const pashouderResponse = {
         {
           actief: true,
           pasnummer: 777777777777,
+          securitycode: '012345',
         },
         {
           actief: false,
           pasnummer: 888888888888,
+          securitycode: '012345',
         },
       ],
     },
@@ -224,6 +230,7 @@ describe('stadspas services', () => {
               },
               "passNumber": 6666666666666,
               "passNumberComplete": "6666666666666666666",
+              "securityCode": "012345",
             },
           ],
         },
@@ -297,6 +304,7 @@ describe('stadspas services', () => {
               },
               "passNumber": 6666666666666,
               "passNumberComplete": "6666666666666666666",
+              "securityCode": "012345",
             },
             {
               "balance": 0,
@@ -325,6 +333,7 @@ describe('stadspas services', () => {
               },
               "passNumber": 6666666666666,
               "passNumberComplete": "6666666666666666666",
+              "securityCode": "012345",
             },
             {
               "balance": 0,
@@ -353,6 +362,7 @@ describe('stadspas services', () => {
               },
               "passNumber": 6666666666666,
               "passNumberComplete": "6666666666666666666",
+              "securityCode": "012345",
             },
           ],
         },

@@ -81,6 +81,8 @@ export interface StadspasDiscountTransactionsResponseSource {
   transacties: StadspasAanbiedingSource[];
 }
 
+export type SecurityCode = string;
+
 export interface StadspasHouderPasSource {
   actief: boolean;
   budgetten: unknown[];  // Did not see the exact shape of this data, encountered an empty array.
@@ -92,7 +94,7 @@ export interface StadspasHouderPasSource {
   pasnummer: number;
   pasnummer_volledig: string;
   passoort: { id: number, naam: string };
-  securitycode: string;
+  securitycode: SecurityCode;
   vervangen: boolean;
 }
 
@@ -171,6 +173,7 @@ export interface Stadspas {
   budgets: StadspasBudget[];
   balanceFormatted: string;
   balance: number;
+  securityCode: SecurityCode;
 }
 
 export interface StadspasFrontend extends Stadspas {
