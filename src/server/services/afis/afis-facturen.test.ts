@@ -116,10 +116,10 @@ describe('afis-facturen', async () => {
     expect(openFactuur).toMatchInlineSnapshot(`
       {
         "afzender": "Bedrijf: Ok",
-        "amountPayedFormatted": "€ 370,50",
         "amountOriginal": "343.00",
         "amountOriginalFormatted": "€ 343,00",
         "amountPayed": "370.50",
+        "amountPayedFormatted": "€ 370,50",
         "datePublished": "2023-11-21T00:00:00",
         "datePublishedFormatted": "21 november 2023",
         "debtClearingDate": null,
@@ -178,10 +178,10 @@ describe('afis-facturen', async () => {
     expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
       {
         "afzender": "Lisan al Gaib inc.",
-        "amountPayedFormatted": "€ 0,00",
         "amountOriginal": "0.00",
         "amountOriginalFormatted": "€ 0,00",
         "amountPayed": "0.00",
+        "amountPayedFormatted": "€ 0,00",
         "datePublished": null,
         "datePublishedFormatted": null,
         "debtClearingDate": null,
