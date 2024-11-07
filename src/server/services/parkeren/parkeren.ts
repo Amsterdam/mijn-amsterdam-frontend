@@ -35,7 +35,6 @@ export async function fetchSSOParkerenURL(
     (await hasPermitsOrPermitRequests(requestID, authProfileAndToken)) ||
     authProfileAndToken.profile.profileType === 'commercial';
 
-  console.log(hasParkeren, 'hasParkeren');
   return apiSuccessResult({
     isKnown: hasParkeren,
     url: response.content?.url ?? fallBackURL,
@@ -79,7 +78,5 @@ export async function hasPermitsOrPermitRequests(
   const hasPermits = (clientProductsResponse?.content?.data?.length ?? 0) > 0;
   const hasPermitRequests =
     (permitRequestsResponse?.content?.data?.length ?? 0) > 0;
-  console.log(hasPermits, 'hasPermits');
-  console.log(hasPermitRequests, 'hasPermitRequests');
   return hasPermits || hasPermitRequests;
 }
