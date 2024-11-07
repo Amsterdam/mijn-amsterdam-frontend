@@ -16,7 +16,7 @@ import {
   PBZaakResultaat,
   PowerBrowserStatusResponse,
   SearchRequestResponse,
-} from './toeristische-verhuuur-powerbrowser-bb-vergunning-types';
+} from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {

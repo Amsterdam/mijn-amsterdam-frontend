@@ -8,7 +8,7 @@ import type { TipsPredicateFN } from './tip-types';
 import type { Identiteitsbewijs, Kind } from '../../../universal/types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { HLIRegeling } from '../hli/hli-regelingen-types';
-import { BBVergunning } from '../toeristische-verhuur/toeristische-verhuuur-powerbrowser-bb-vergunning-types';
+import { BBVergunning } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 

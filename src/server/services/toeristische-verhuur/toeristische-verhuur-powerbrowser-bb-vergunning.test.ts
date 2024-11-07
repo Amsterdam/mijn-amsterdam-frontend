@@ -15,7 +15,7 @@ import {
   PBZaakFields,
   PBZaakRecord,
   SearchRequestResponse,
-} from './toeristische-verhuuur-powerbrowser-bb-vergunning-types';
+} from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { remoteApi } from '../../../test-utils';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
