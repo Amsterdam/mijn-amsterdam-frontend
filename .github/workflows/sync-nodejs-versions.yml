@@ -1,0 +1,24 @@
+name: Sync Node.js versions
+on:
+  pull_request:
+    paths:
+      - 'Dockerfile'
+jobs:
+  sync-node-version:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update .nvmrc
+        run: |
+          grep -o -P '(?<=FROM node:)\d+.?\d*.?\d*' Dockerfile > .nvmrc
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .nvmrc
+          git commit -m "chore: sync .nvmrc with Dockerfile node version" || exit 1
+          git push
