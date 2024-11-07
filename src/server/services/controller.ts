@@ -28,11 +28,7 @@ import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
-import {
-  fetchParkerenActivePermitRequests,
-  fetchParkerenClientProductDetails,
-  fetchSSOParkerenURL,
-} from './parkeren/parkeren';
+import { fetchSSOParkerenURL } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
 import {
   fetchBelasting,
@@ -132,12 +128,6 @@ const HLI = callAuthenticatedService(fetchHLI);
 const KREFIA = callAuthenticatedService(fetchKrefia);
 const KVK = callAuthenticatedService(fetchKVK);
 const PARKEREN = callAuthenticatedService(fetchSSOParkerenURL);
-const PARKEREN_PERMIT_REQUESTS = callAuthenticatedService(
-  fetchParkerenActivePermitRequests
-);
-const PARKEREN_PRODUCTS = callAuthenticatedService(
-  fetchParkerenClientProductDetails
-);
 const SVWI = callAuthenticatedService(fetchSVWI);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);
@@ -223,8 +213,6 @@ const SERVICES_INDEX = {
   NOTIFICATIONS,
   OVERTREDINGEN,
   PARKEREN,
-  PARKEREN_PERMIT_REQUESTS,
-  PARKEREN_PRODUCTS,
   PROFILE,
   SUBSIDIE,
   SVWI,
@@ -268,8 +256,6 @@ type CommercialServices = Pick<
   | 'NOTIFICATIONS'
   | 'OVERTREDINGEN'
   | 'PARKEREN'
-  | 'PARKEREN_PERMIT_REQUESTS'
-  | 'PARKEREN_PRODUCTS'
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
   | 'VERGUNNINGEN'
@@ -306,8 +292,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     NOTIFICATIONS,
     OVERTREDINGEN,
     PARKEREN,
-    PARKEREN_PERMIT_REQUESTS,
-    PARKEREN_PRODUCTS,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -343,8 +327,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     NOTIFICATIONS,
     OVERTREDINGEN,
     PARKEREN,
-    PARKEREN_PERMIT_REQUESTS,
-    PARKEREN_PRODUCTS,
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,

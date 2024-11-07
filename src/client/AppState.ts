@@ -86,24 +86,6 @@ export const PRISTINE_APPSTATE: AppState = {
       profileTypes: ['private', 'commercial'],
     }
   ),
-  PARKEREN_PRODUCTS: apiPristineResult(
-    {
-      data: [],
-    },
-    {
-      isActive: FeatureToggle.parkerenPatroonC,
-      profileTypes: ['private', 'commercial'],
-    }
-  ),
-  PARKEREN_PERMIT_REQUESTS: apiPristineResult(
-    {
-      data: [],
-    },
-    {
-      isActive: FeatureToggle.parkerenPatroonC,
-      profileTypes: ['private', 'commercial'],
-    }
-  ),
   TOERISTISCHE_VERHUUR: apiPristineResult({
     vakantieverhuurVergunningen: [],
     lvvRegistraties: [],

@@ -26,13 +26,26 @@ export async function fetchSSOParkerenURL(
 
   const fallBackURL = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
 
+  /**
+    TODO: Remove commercial user override after implementing proper hasParkeren check
+    Currently returning true for all commercial users as a temporary solution.
+    Remove: `|| authProfileAndToken.profile.profileType === 'commercial'`
+   */
+  const hasParkeren =
+    (await hasPermitsOrPermitRequests(requestID, authProfileAndToken)) ||
+    authProfileAndToken.profile.profileType === 'commercial';
+
+  console.log(hasParkeren, 'hasParkeren');
   return apiSuccessResult({
-    isKnown: true,
+    isKnown: hasParkeren,
     url: response.content?.url ?? fallBackURL,
   });
 }
 
-export async function fetchParkerenClientProductDetails(
+/**
+ * This function checks whether the user has a parkeren products or permit requests
+ */
+export async function hasPermitsOrPermitRequests(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -41,45 +54,32 @@ export async function fetchParkerenClientProductDetails(
       ? 'private'
       : 'company';
 
-  const config = getApiConfig('PARKEREN', {
+  const clientProductsConfig = getApiConfig('PARKEREN', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/${profileType}/client_product_details`;
     },
   });
 
-  const response = await requestData<{ data: unknown[] }>(config, requestID);
+  const clientProductsResponse = await requestData<{ data: unknown[] }>(
+    clientProductsConfig,
+    requestID
+  );
 
-  if (response.status === 'OK') {
-    return apiSuccessResult({
-      data: response.content?.data,
-    });
-  }
-
-  return response;
-}
-
-export async function fetchParkerenActivePermitRequests(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const profileType =
-    authProfileAndToken.profile.profileType === 'private'
-      ? 'private'
-      : 'company';
-
-  const config = getApiConfig('PARKEREN', {
+  const permitRequestsConfig = getApiConfig('PARKEREN', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/${profileType}/active_permit_request`;
     },
   });
 
-  const response = await requestData<{ data: unknown[] }>(config, requestID);
+  const permitRequestsResponse = await requestData<{ data: unknown[] }>(
+    permitRequestsConfig,
+    requestID
+  );
 
-  if (response.status === 'OK') {
-    return apiSuccessResult({
-      data: response.content?.data,
-    });
-  }
-
-  return response;
+  const hasPermits = (clientProductsResponse?.content?.data?.length ?? 0) > 0;
+  const hasPermitRequests =
+    (permitRequestsResponse?.content?.data?.length ?? 0) > 0;
+  console.log(hasPermits, 'hasPermits');
+  console.log(hasPermitRequests, 'hasPermitRequests');
+  return hasPermits || hasPermitRequests;
 }

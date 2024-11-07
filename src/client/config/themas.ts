@@ -184,11 +184,8 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Themas.PARKEREN: {
-      const hasPermit = appState.PARKEREN_PRODUCTS.content?.data?.length > 0;
-      const hasPermitRequest =
-        appState.PARKEREN_PERMIT_REQUESTS.content?.data?.length > 0;
       return (
-        (hasPermit || hasPermitRequest) &&
+        PARKEREN?.content?.isKnown &&
         ((isAmsterdam && FeatureToggle.parkerenActive) ||
           (!isLoading(PARKEREN) && FeatureToggle.parkerenPatroonC))
       );

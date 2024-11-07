@@ -25,6 +25,7 @@ describe('useTrackThemas', () => {
       PARKEREN: {
         status: 'OK',
         content: {
+          isKnown: true,
           url: 'http://localhost:3000/afspraak-maken',
         },
       },
