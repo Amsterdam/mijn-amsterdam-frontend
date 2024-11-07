@@ -3,10 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
-import {
-  BBVergunning,
-  VakantieverhuurVergunning,
-} from './toeristische-verhuur-types';
+import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
+import { BBVergunning } from './toeristische-verhuuur-powerbrowser-bb-vergunning-types';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';

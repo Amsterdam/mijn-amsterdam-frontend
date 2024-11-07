@@ -96,7 +96,7 @@ export const FeatureToggle = {
   // B&B Vergunningen actief
   powerbrowserActive: !IS_PRODUCTION,
   // B&B Downloads actief
-  bbDocumentDownloadsActive: IS_OT,
+  bbDocumentDownloadsActive: !IS_PRODUCTION,
 
   // Vergunningen V1 (met koppel api)
   vergunningenActive: true,

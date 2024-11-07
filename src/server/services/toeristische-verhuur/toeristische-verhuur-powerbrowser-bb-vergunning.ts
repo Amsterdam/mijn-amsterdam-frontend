@@ -5,6 +5,8 @@ import { generatePath } from 'react-router-dom';
 import {
   BBVergunning,
   BBVergunningZaakResult,
+  FetchPersoonOrMaatschapIdByUidOptions,
+  FetchZaakIdsOptions,
   fieldMap,
   PBDocumentFields,
   PBRecordField,
@@ -12,8 +14,9 @@ import {
   PBZaakFields,
   PBZaakRecord,
   PBZaakResultaat,
+  PowerBrowserStatusResponse,
   SearchRequestResponse,
-} from './toeristische-verhuur-types';
+} from './toeristische-verhuuur-powerbrowser-bb-vergunning-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -75,12 +78,6 @@ async function fetchPowerBrowserData<T>(
   return requestData<T>(dataRequestConfig, requestID);
 }
 
-type FetchPersoonOrMaatschapIdByUidOptions = {
-  profileID: AuthProfile['id'];
-  tableName: 'PERSONEN' | 'MAATSCHAP';
-  fieldName: 'BURGERSERVICENUMMER' | 'KVKNUMMER';
-};
-
 async function fetchPersoonOrMaatschapIdByUid(
   requestID: RequestID,
   options: FetchPersoonOrMaatschapIdByUidOptions
@@ -113,11 +110,6 @@ async function fetchPersoonOrMaatschapIdByUid(
   };
   return fetchPowerBrowserData<string | null>(requestID, requestConfig);
 }
-
-type FetchZaakIdsOptions = {
-  personOrMaatschapId: string;
-  tableName: 'PERSONEN' | 'MAATSCHAP';
-};
 
 async function fetchZaakIds(
   requestID: RequestID,
@@ -195,13 +187,6 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 
   return resultaatTransformed;
 }
-
-interface PowerBrowserStatus {
-  omschrijving: string | 'Ontvangen';
-  datum: string;
-}
-
-type PowerBrowserStatusResponse = PowerBrowserStatus[];
 
 function getReceivedStatusStep(datePublished: string): StatusLineItem {
   const statusOntvangen: StatusLineItem = {
@@ -668,7 +653,7 @@ export async function fetchBBDocumentsList(
 
 export async function fetchBBDocument(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
+  _authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
   const tokenResponse = await fetchPowerBrowserToken(requestID);
@@ -699,3 +684,23 @@ export async function fetchBBDocument(
     dataRequestConfig
   );
 }
+
+export const forTesting = {
+  fetchPowerBrowserToken_,
+  fetchPowerBrowserData,
+  fetchPersoonOrMaatschapIdByUid,
+  fetchZaakIds,
+  getFieldValue,
+  getZaakStatus,
+  getZaakResultaat,
+  getReceivedStatusStep,
+  transformZaakStatusResponse,
+  fetchZaakAdres,
+  fetchZaakStatussen,
+  fetchAndMergeZaakStatussen,
+  fetchAndMergeAdressen,
+  isZaakActual,
+  transformZaak,
+  fetchZakenByIds,
+  transformPowerbrowserLinksResponse,
+};
