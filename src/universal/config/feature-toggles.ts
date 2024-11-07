@@ -25,7 +25,6 @@ export const FeatureToggle = {
   cmsFooterActive: true,
 
   // Database
-  dbEnabled: !IS_DEVELOPMENT,
   dbSessionsEnabled: true,
 
   // E-herkenning

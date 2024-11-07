@@ -1,9 +1,10 @@
-const settings = require('../settings');
-const BB_ZAKEN = require('../fixtures/powerbrowser-bb-zaken.json');
-const BB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
+const BB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-bb-attachments.json');
 const BB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-bb-personen-zaken.json');
 const BB_SEARCH_PERSON = require('../fixtures/powerbrowser-bb-search-person.json');
-const BB_ZAAK_ATTACHMENTS = require('../fixtures/powerbrowser-bb-attachments.json');
+const BB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-bb-zaak-adres.json');
+const BB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
+const BB_ZAKEN = require('../fixtures/powerbrowser-bb-zaken.json');
+const settings = require('../settings');
 
 module.exports = [
   {
@@ -22,16 +23,22 @@ module.exports = [
     ],
   },
   {
-    id: 'post-powerbrowser-search-person',
+    id: 'post-powerbrowser-search-requests',
     url: `${settings.MOCK_BASE_PATH}/powerbrowser/SearchRequest`,
     method: 'POST',
+    delay: 5000,
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: BB_SEARCH_PERSON,
+          middleware: (req, res) => {
+            if (['MAATSCHAP', 'PERSONEN'].includes(req.body.query.tableName)) {
+              return res.send(BB_SEARCH_PERSON);
+            }
+
+            return res.send(BB_SEARCH_DOCUMENTS);
+          },
         },
       },
     ],
@@ -81,33 +88,17 @@ module.exports = [
       },
     ],
   },
-
   {
-    id: 'get-powerbrowser-bb-zaak-attachments',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/link/GFO_ZAKEN/:zaaknummer`,
-    method: 'GET',
+    id: 'get-powerbrowser-bb-zaak-adres',
+    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table`,
+    method: 'POST',
     variants: [
       {
         id: 'standard',
         type: 'json',
         options: {
           status: 200,
-          body: BB_ZAAK_ATTACHMENTS,
-        },
-      },
-    ],
-  },
-  {
-    id: 'get-powerbrowser-bb-zaak-adres',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Record/AdresMbtZaakOrLocatie/GFO_ZAKEN/:zaaknummer`,
-    method: 'GET',
-    variants: [
-      {
-        id: 'standard',
-        type: 'text',
-        options: {
-          status: 200,
-          body: 'Dingemanstraat 12-H 1234AB Amsterdam',
+          body: BB_LINK_ZAAK_ADRES,
         },
       },
     ],
