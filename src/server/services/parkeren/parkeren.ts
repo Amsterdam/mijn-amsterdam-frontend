@@ -26,14 +26,10 @@ export async function fetchSSOParkerenURL(
 
   const fallBackURL = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
 
-  /**
-    TODO: Remove commercial user override after implementing proper hasParkeren check
-    Currently returning true for all commercial users as a temporary solution.
-    Remove: `|| authProfileAndToken.profile.profileType === 'commercial'`
-   */
-  const hasParkeren =
-    (await hasPermitsOrPermitRequests(requestID, authProfileAndToken)) ||
-    authProfileAndToken.profile.profileType === 'commercial';
+  const hasParkeren = await hasPermitsOrPermitRequests(
+    requestID,
+    authProfileAndToken
+  );
 
   return apiSuccessResult({
     isKnown: hasParkeren,
@@ -48,14 +44,14 @@ export async function hasPermitsOrPermitRequests(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const profileType =
+  const userType =
     authProfileAndToken.profile.profileType === 'private'
       ? 'private'
       : 'company';
 
   const clientProductsConfig = getApiConfig('PARKEREN', {
     formatUrl(requestConfig) {
-      return `${requestConfig.url}/${profileType}/client_product_details`;
+      return `${requestConfig.url}/${userType}/client_product_details`;
     },
   });
 
@@ -66,7 +62,7 @@ export async function hasPermitsOrPermitRequests(
 
   const permitRequestsConfig = getApiConfig('PARKEREN', {
     formatUrl(requestConfig) {
-      return `${requestConfig.url}/${profileType}/active_permit_request`;
+      return `${requestConfig.url}/${userType}/active_permit_request`;
     },
   });
 
