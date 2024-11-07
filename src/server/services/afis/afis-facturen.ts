@@ -234,7 +234,8 @@ function transformFactuur(
       status,
       amountFormatted,
       amountInitialFormatted,
-      debtClearingDateFormatted
+      debtClearingDateFormatted,
+      hasDeelbetaling
     ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink,
@@ -370,7 +371,8 @@ function determineFactuurStatusDescription(
   status: AfisFactuur['status'],
   amountFormatted: AfisFactuur['amountFormatted'],
   amountInitialFormatted: AfisFactuur['amountInitialFormatted'],
-  debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
+  debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted'],
+  hasDeelbetaling: boolean = false
 ) {
   const amount = amountFormatted.replace('-', '');
   const amountInitial = amountInitialFormatted.replace('-', '');
@@ -389,7 +391,9 @@ function determineFactuurStatusDescription(
     case 'geld-terug':
       return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
-      return `Op ${debtClearingDateFormatted ?? ''} heeft u het gehele bedrag van ${amountInitial} voldaan`;
+      return hasDeelbetaling
+        ? `Op ${debtClearingDateFormatted ?? ''} heeft u het gehele bedrag van ${amountInitial} voldaan.`
+        : `${amount} betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
     case 'automatische-incasso':
       return `${amount} wordt automatisch van uw rekening afgeschreven.`;
     case 'overgedragen-aan-belastingen':
