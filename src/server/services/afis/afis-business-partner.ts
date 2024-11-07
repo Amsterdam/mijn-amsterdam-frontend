@@ -1,7 +1,7 @@
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
-  AfisBusinessPartnerAddressId,
+  AfisBusinessPartnerAddress,
   AfisBusinessPartnerAddressSource,
   AfisBusinessPartnerDetails,
   AfisBusinessPartnerDetailsSource,
@@ -11,6 +11,7 @@ import {
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
 } from './afis-types';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   ApiResponse,
@@ -18,29 +19,46 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { getFullAddress } from '../../../universal/helpers/brp';
 import { DataRequestConfig } from '../../config/source-api';
 import { requestData } from '../../helpers/source-api-request';
 
 function transformBusinessPartnerAddressResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerAddressSource>
-): string | null {
+): AfisBusinessPartnerAddress | null {
   const [addressEntry] = getFeedEntryProperties(response);
 
   if (addressEntry) {
-    return addressEntry.AddressID;
+    const includePostCodeWoonplaats = true;
+    const includeLand = true;
+    return {
+      id: addressEntry.AddressID,
+      address: getFullAddress(
+        {
+          straatnaam: addressEntry.StreetName,
+          huisnummer: addressEntry.HouseNumber?.toString() ?? '',
+          huisletter: addressEntry.StreetSuffixName, // ? TODO: check if this is correct
+          huisnummertoevoeging: addressEntry.HouseNumberSupplementText,
+          postcode: addressEntry.PostalCode,
+          woonplaatsNaam: addressEntry.CityName,
+        },
+        includePostCodeWoonplaats,
+        includeLand
+      ),
+    };
   }
 
   return null;
 }
 
-async function fetchBusinessPartnerFullNameAddressId(
+async function fetchBusinessPartnerAddress(
   requestID: RequestID,
   businessPartnerId: string
-): Promise<ApiResponse<AfisBusinessPartnerAddressId>> {
+): Promise<ApiResponse<AfisBusinessPartnerAddress>> {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerAddressResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress?$filter=BusinessPartner eq '${businessPartnerId}'&$select=AddressID`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress?$filter=BusinessPartner eq '${businessPartnerId}'&$select=AddressID,CityName,Country,HouseNumber,HouseNumberSupplementText,PostalCode,Region,StreetName,StreetPrefixName,StreetSuffixName`;
     },
   };
 
@@ -49,7 +67,7 @@ async function fetchBusinessPartnerFullNameAddressId(
     requestID
   );
 
-  return requestData<AfisBusinessPartnerAddressId>(
+  return requestData<AfisBusinessPartnerAddress>(
     businessPartnerRequestConfig,
     requestID
   );
@@ -107,13 +125,14 @@ function transformPhoneResponse(
 
 async function fetchPhoneNumber(
   requestID: RequestID,
-  addressId: AfisBusinessPartnerAddressId
+  addressId: AfisBusinessPartnerAddress['id']
 ) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformPhoneResponse,
     formatUrl(config) {
       return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressId}'&$select=InternationalPhoneNumber`;
     },
+    postponeFetch: !FeatureToggle.afisBusinesspartnerPhoneActive,
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(
@@ -141,7 +160,7 @@ function transformEmailResponse(
 
 async function fetchEmail(
   requestID: RequestID,
-  addressId: AfisBusinessPartnerAddressId
+  addressId: AfisBusinessPartnerAddress['id']
 ) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformEmailResponse,
@@ -170,25 +189,28 @@ export async function fetchAfisBusinessPartnerDetails(
     requestID,
     businessPartnerId
   );
-  const addressIdRequest = fetchBusinessPartnerFullNameAddressId(
+  const addressRequest = fetchBusinessPartnerAddress(
     requestID,
     businessPartnerId
   );
 
-  const [fullNameResult, addressIdResult] = await Promise.allSettled([
+  const [fullNameResult, addressResult] = await Promise.allSettled([
     fullNameRequest,
-    addressIdRequest,
+    addressRequest,
   ]);
 
   const fullNameResponse = getSettledResult(fullNameResult);
-  const addressIdResponse = getSettledResult(addressIdResult);
+  const addressResponse = getSettledResult(addressResult);
 
   let phoneResponse: ApiResponse<AfisBusinessPartnerPhone | null>;
   let emailResponse: ApiResponse<AfisBusinessPartnerEmail | null>;
 
-  if (addressIdResponse.status === 'OK' && !!addressIdResponse.content) {
-    const phoneRequest = fetchPhoneNumber(requestID, addressIdResponse.content);
-    const emailRequest = fetchEmail(requestID, addressIdResponse.content);
+  if (addressResponse.status === 'OK' && addressResponse.content) {
+    const phoneRequest = fetchPhoneNumber(
+      requestID,
+      addressResponse.content.id
+    );
+    const emailRequest = fetchEmail(requestID, addressResponse.content.id);
 
     const [phoneResponseSettled, emailResponseSettled] =
       await Promise.allSettled([phoneRequest, emailRequest]);
@@ -207,7 +229,8 @@ export async function fetchAfisBusinessPartnerDetails(
   }
 
   const detailsCombined: AfisBusinessPartnerDetailsTransformed = {
-    businessPartnerId,
+    businessPartnerId: businessPartnerId,
+    ...addressResponse.content,
     ...fullNameResponse.content,
     ...phoneResponse.content,
     ...emailResponse.content,
