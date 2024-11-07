@@ -1,5 +1,5 @@
-import Mockdate from 'mockdate';
 import Decimal from 'decimal.js';
+import Mockdate from 'mockdate';
 
 import { fetchAfisDocument } from './afis-documents';
 import {
@@ -116,10 +116,10 @@ describe('afis-facturen', async () => {
     expect(openFactuur).toMatchInlineSnapshot(`
       {
         "afzender": "Bedrijf: Ok",
-        "amount": "370.50",
-        "amountFormatted": "€ 370,50",
-        "amountInitial": "343.00",
-        "amountInitialFormatted": "€ 343,00",
+        "amountPayedFormatted": "€ 370,50",
+        "amountOriginal": "343.00",
+        "amountOriginalFormatted": "€ 343,00",
+        "amountPayed": "370.50",
         "datePublished": "2023-11-21T00:00:00",
         "datePublishedFormatted": "21 november 2023",
         "debtClearingDate": null,
@@ -178,10 +178,10 @@ describe('afis-facturen', async () => {
     expect(geannuleerdeInvoice).toMatchInlineSnapshot(`
       {
         "afzender": "Lisan al Gaib inc.",
-        "amount": "0.00",
-        "amountFormatted": "€ 0,00",
-        "amountInitial": "0.00",
-        "amountInitialFormatted": "€ 0,00",
+        "amountPayedFormatted": "€ 0,00",
+        "amountOriginal": "0.00",
+        "amountOriginalFormatted": "€ 0,00",
+        "amountPayed": "0.00",
         "datePublished": null,
         "datePublishedFormatted": null,
         "debtClearingDate": null,
@@ -198,7 +198,7 @@ describe('afis-facturen', async () => {
         "paymentDueDate": "2023-12-21T00:00:00",
         "paymentDueDateFormatted": "21 december 2023",
         "status": "geannuleerd",
-        "statusDescription": "Geannuleerd",
+        "statusDescription": "€ 0,00 geannuleerd op null",
       }
     `);
 
@@ -558,19 +558,19 @@ describe('afis-facturen', async () => {
         [
           [
             "openstaand",
-            "€ 123,40 betaal nu",
+            "€ 210,40 betaal nu",
           ],
           [
             "automatische-incasso",
-            "€ 123,40 wordt automatisch van uw rekening afgeschreven.",
+            "€ 210,40 wordt automatisch van uw rekening afgeschreven.",
           ],
           [
             "handmatig-betalen",
-            "Uw factuur is nog niet betaald. Maak het bedrag van € 123,40 over onder vermelding van de gegevens op uw factuur.",
+            "Uw factuur is nog niet betaald. Maak het bedrag van € 210,40 over onder vermelding van de gegevens op uw factuur.",
           ],
           [
             "in-dispuut",
-            "€ 123,40 in dispuut",
+            "€ 210,40 in dispuut",
           ],
           [
             "gedeeltelijke-betaling",
@@ -578,23 +578,23 @@ describe('afis-facturen', async () => {
           ],
           [
             "overgedragen-aan-belastingen",
-            "€ 123,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op 16 juni 2024",
+            "€ 210,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op 16 juni 2024",
           ],
           [
             "geld-terug",
-            "Het bedrag van € 123,40 wordt verrekend met openstaande facturen of teruggestort op uw rekening.",
+            "Het bedrag van € 210,40 wordt verrekend met openstaande facturen of teruggestort op uw rekening.",
           ],
           [
             "betaald",
-            "€ 123,40 betaald op 16 juni 2024",
+            "€ 210,40 betaald op 16 juni 2024",
           ],
           [
             "geannuleerd",
-            "Geannuleerd",
+            "€ 210,40 geannuleerd op 16 juni 2024",
           ],
           [
             "herinnering",
-            "€ 123,40 betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.",
+            "€ 210,40 betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.",
           ],
           [
             "onbekend",
@@ -605,7 +605,7 @@ describe('afis-facturen', async () => {
     });
   });
 
-  test('getInvoiceAmount calculates amount owed correctly', () => {
+  test('getInvoiceAmount calculates amountPayed owed correctly', () => {
     const invoice: Pick<
       AfisFactuurPropertiesSource,
       'AmountInBalanceTransacCrcy'
@@ -616,8 +616,11 @@ describe('afis-facturen', async () => {
     const result = forTesting.getInvoiceAmount(invoice);
     expect(result).toEqual(new Decimal(50));
 
-    const amount = forTesting.getInvoiceAmount(invoice, new Decimal(10.35));
-    expect(amount.toFixed(2)).toEqual('60.35');
+    const amountPayed = forTesting.getInvoiceAmount(
+      invoice,
+      new Decimal(10.35)
+    );
+    expect(amountPayed.toFixed(2)).toEqual('60.35');
   });
 
   test('getFactuurnummer returns correct factuurnummer', () => {
