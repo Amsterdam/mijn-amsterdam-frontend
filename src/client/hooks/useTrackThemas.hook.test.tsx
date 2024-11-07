@@ -28,26 +28,6 @@ describe('useTrackThemas', () => {
           url: 'http://localhost:3000/afspraak-maken',
         },
       },
-      PARKEREN_PRODUCTS: {
-        status: 'OK',
-        content: {
-          data: [
-            {
-              client_product_id: 8703,
-            },
-          ],
-        },
-      },
-      PARKEREN_PERMIT_REQUESTS: {
-        status: 'OK',
-        content: {
-          data: [
-            {
-              client_product_id: 8703,
-            },
-          ],
-        },
-      },
     } as AppState;
 
     function initializeState(snapshot: MutableSnapshot) {
