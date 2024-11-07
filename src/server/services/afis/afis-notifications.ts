@@ -34,9 +34,10 @@ export function createAfisFacturenNotification(
   ).length;
 
   const title = 'Betaal tijdig om extra kosten te voorkomen';
+  const isMulti = openFacturenCount > 1;
   const description = htmlTextContent(`
     U heeft ${openFacturenCount} openstaande facturen.
-    ${openFacturenHerinneringCount ? `Van ${openFacturenHerinneringCount} factuur${openFacturenHerinneringCount > 1 ? 'en' : ''} heeft u inmiddels een herinnering ontvangen per e-mail of post.` : ''}
+    ${openFacturenHerinneringCount ? `Van ${openFacturenHerinneringCount} ${isMulti ? 'facturen' : 'factuur'} heeft u inmiddels een herinnering ontvangen per e-mail of post.` : ''}
   `);
 
   const datePublished = new Date().toISOString();
