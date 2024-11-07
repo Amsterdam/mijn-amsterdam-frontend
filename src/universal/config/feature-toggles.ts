@@ -68,8 +68,7 @@ export const FeatureToggle = {
   cleopatraApiActive: true,
 
   // Parkeren
-  parkerenActive: IS_PRODUCTION, // Two parkeren toggles because in the middle of implementing MIJN-9097.
-  parkerenPatroonC: !IS_PRODUCTION,
+  parkerenActive: true,
 
   // Mijn Gegegvens -> aantal bewoners op adres.
   residentCountActive: true,
