@@ -1,4 +1,5 @@
 const httpConstants = require('http2').constants;
+
 const settings = require('../settings');
 
 const BASE = '/afis';
@@ -85,7 +86,17 @@ module.exports = [
                     '@type': 'application/xml',
                     properties: {
                       BusinessPartner: 515177,
-                      BusinessPartnerFullName: 'Taxon Expeditions BV',
+                      FullName: 'Taxon Expeditions BV',
+                      AddressID: 430844,
+                      CityName: 'Leiden',
+                      Country: 'NL',
+                      HouseNumber: 20,
+                      HouseNumberSupplementText: '',
+                      PostalCode: '2311 VW',
+                      Region: '',
+                      StreetName: 'Rembrandtstraat',
+                      StreetPrefixName: '',
+                      StreetSuffixName: '',
                     },
                   },
                 },
