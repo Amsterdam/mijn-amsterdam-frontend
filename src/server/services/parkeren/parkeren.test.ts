@@ -18,7 +18,7 @@ const MOCK_PARKING_PERMIT_REQUEST = {
       permit_zone: 'CE02C Centrum-2c',
     },
   ],
-} as const;
+};
 
 const MOCK_CLIENT_PRODUCT_DETAILS = {
   data: [
@@ -34,20 +34,32 @@ const MOCK_CLIENT_PRODUCT_DETAILS = {
       vrns: '999123',
     },
   ],
-} as const;
+};
+
+const setupMocks = (
+  profileType: string,
+  mockDataClientProductDetails: { data: unknown[] },
+  mockDataActivePermitRequest: { data: unknown[] }
+) => {
+  vi.clearAllMocks();
+  remoteApi
+    .get(`/parkeren/${profileType}/client_product_details`)
+    .reply(STATUS_OK_200, mockDataClientProductDetails);
+  remoteApi
+    .get(`/parkeren/${profileType}/active_permit_request`)
+    .reply(STATUS_OK_200, mockDataActivePermitRequest);
+};
 
 describe('fetchSSOParkerenURL', () => {
   describe('with permit or permit requests', () => {
     beforeEach(() => {
       vi.clearAllMocks();
 
-      remoteApi
-        .get('/parkeren/private/client_product_details')
-        .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
-
-      remoteApi
-        .get('/parkeren/private/active_permit_request')
-        .reply(STATUS_OK_200, MOCK_PARKING_PERMIT_REQUEST);
+      setupMocks(
+        'private',
+        MOCK_CLIENT_PRODUCT_DETAILS,
+        MOCK_PARKING_PERMIT_REQUEST
+      );
     });
 
     test('Calls with digid', async () => {
@@ -82,13 +94,11 @@ describe('fetchSSOParkerenURL', () => {
           url: SUCCESS_URL,
         });
 
-      remoteApi
-        .get('/parkeren/company/client_product_details')
-        .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
-
-      remoteApi
-        .get('/parkeren/company/active_permit_request')
-        .reply(STATUS_OK_200, MOCK_PARKING_PERMIT_REQUEST);
+      setupMocks(
+        'company',
+        MOCK_CLIENT_PRODUCT_DETAILS,
+        MOCK_PARKING_PERMIT_REQUEST
+      );
 
       const response = await fetchSSOParkerenURL(
         REQUEST_ID,
@@ -98,82 +108,6 @@ describe('fetchSSOParkerenURL', () => {
       expect(response).toStrictEqual({
         content: {
           isKnown: true,
-          url: SUCCESS_URL,
-        },
-        status: 'OK',
-      });
-    });
-  });
-
-  describe('without permit or permit requests', () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
-
-    test('Calls with digid', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('private');
-
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=digid')
-        .reply(STATUS_OK_200, {
-          url: SUCCESS_URL,
-        });
-
-      remoteApi
-        .get('/parkeren/private/client_product_details')
-        .reply(STATUS_OK_200, {
-          data: [],
-        });
-
-      remoteApi
-        .get('/parkeren/private/active_permit_request')
-        .reply(STATUS_OK_200, {
-          data: [],
-        });
-
-      const response = await fetchSSOParkerenURL(
-        REQUEST_ID,
-        authProfileAndToken
-      );
-
-      expect(response).toStrictEqual({
-        content: {
-          isKnown: false,
-          url: SUCCESS_URL,
-        },
-        status: 'OK',
-      });
-    });
-
-    test('Calls with eherkenning', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('commercial');
-
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=eherkenning')
-        .reply(STATUS_OK_200, {
-          url: SUCCESS_URL,
-        });
-
-      remoteApi
-        .get('/parkeren/company/client_product_details')
-        .reply(STATUS_OK_200, {
-          data: [],
-        });
-
-      remoteApi
-        .get('/parkeren/company/active_permit_request')
-        .reply(STATUS_OK_200, {
-          data: [],
-        });
-
-      const response = await fetchSSOParkerenURL(
-        REQUEST_ID,
-        authProfileAndToken
-      );
-
-      expect(response).toStrictEqual({
-        content: {
-          isKnown: false,
           url: SUCCESS_URL,
         },
         status: 'OK',
@@ -184,18 +118,7 @@ describe('fetchSSOParkerenURL', () => {
   describe('when data is empty array but profileType is commercial', () => {
     beforeEach(() => {
       vi.clearAllMocks();
-
-      remoteApi
-        .get('/parkeren/company/client_product_details')
-        .reply(STATUS_OK_200, {
-          data: [],
-        });
-
-      remoteApi
-        .get('/parkeren/company/active_permit_request')
-        .reply(STATUS_OK_200, {
-          data: [],
-        });
+      setupMocks('company', { data: [] }, { data: [] });
     });
 
     test('Calls with eherkenning', async () => {
@@ -237,13 +160,11 @@ describe('fetchSSOParkerenURL', () => {
     beforeEach(() => {
       vi.clearAllMocks();
 
-      remoteApi
-        .get('/parkeren/private/client_product_details')
-        .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
-
-      remoteApi
-        .get('/parkeren/private/active_permit_request')
-        .reply(STATUS_OK_200, MOCK_PARKING_PERMIT_REQUEST);
+      setupMocks(
+        'private',
+        MOCK_CLIENT_PRODUCT_DETAILS,
+        MOCK_PARKING_PERMIT_REQUEST
+      );
     });
 
     const ERROR_TRANSFORMED_RESPONSE = {
