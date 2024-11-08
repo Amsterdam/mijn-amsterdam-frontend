@@ -41,12 +41,7 @@ function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
   });
 
   const isApiLoading = isLoading(documentsResponseData);
-  const hasResult = !!vergunning.result;
-  const hasDocuments = !!documentsResponseData.content?.length;
   const hasDocumentsFetch = !!vergunning.fetchDocumentsUrl;
-  const hasBesluit = documentsResponseData.content?.some((document) =>
-    document.title.includes('Besluit')
-  );
 
   useEffect(() => {
     if (vergunning.fetchDocumentsUrl && !isApiDataCached) {
@@ -65,9 +60,7 @@ function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
         columns={['', '']}
         className="ams-mb--sm"
       />
-      {!hasDocumentsFetch ||
-        (!isApiLoading && !hasDocuments) ||
-        (!hasBesluit && hasResult && <DocumentInfo />)}
+      <DocumentInfo />
     </>
   );
 }
