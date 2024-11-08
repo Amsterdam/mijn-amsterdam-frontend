@@ -201,7 +201,10 @@ function transformZaakStatusResponse(
   const datumInBehandeling = getStatusDate(['In behandeling']) ?? '';
   const dateDecision: string =
     getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
-  const datumMeerInformatie = '';
+
+  const datumMeerInformatie = zaak.documents.find((document) => {
+    return document.title === documentNamesMA.MEER_INFORMATIE;
+  })?.datePublished;
 
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
   const statusOntvangen: StatusLineItem = {
@@ -212,26 +215,28 @@ function transformZaakStatusResponse(
     isChecked: true,
   };
 
-  const isVerlopen = zaak.dateEnd ? isDateInPast(zaak.dateEnd) : false;
+  const isVerlopen =
+    zaak.result === 'Verleend' && zaak.dateEnd
+      ? isDateInPast(zaak.dateEnd)
+      : false;
+  const hasInBehandeling = !!datumInBehandeling;
+  const hasDecision = !!zaak.result && !!dateDecision;
+  const hasMeerInformatieNodig = !!datumMeerInformatie;
 
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
     datePublished: datumInBehandeling,
-    isActive: !dateDecision && !datumMeerInformatie && !!datumInBehandeling,
-    isChecked: !!dateDecision || !!datumInBehandeling || !!datumMeerInformatie,
-  };
-
-  const statusAfgehandeld: StatusLineItem = {
-    id: 'step-3',
-    status: 'Afgehandeld',
-    datePublished: dateDecision,
-    isActive: !isVerlopen && !!dateDecision,
-    isChecked: !!dateDecision,
+    isActive: !hasDecision && !datumMeerInformatie && hasInBehandeling,
+    isChecked: hasDecision || hasInBehandeling || hasMeerInformatieNodig,
   };
 
   const statussen = [
-    { ...statusOntvangen, isActive: !datumInBehandeling && !dateDecision },
+    {
+      ...statusOntvangen,
+      isActive: !datumInBehandeling && !hasDecision && !datumMeerInformatie,
+    },
+    statusInBehandeling,
   ];
 
   if (datumMeerInformatie) {
@@ -239,13 +244,21 @@ function transformZaakStatusResponse(
       id: 'step-meer-info',
       status: 'Meer informatie nodig',
       datePublished: datumMeerInformatie,
-      isActive: !dateDecision && !!datumMeerInformatie,
-      isChecked: !!dateDecision || !!datumMeerInformatie,
+      isActive: !hasDecision && hasMeerInformatieNodig,
+      isChecked: hasDecision || hasMeerInformatieNodig,
     };
     statussen.push(statusMeerInformatie);
   }
 
-  statussen.push(statusInBehandeling, statusAfgehandeld);
+  const statusAfgehandeld: StatusLineItem = {
+    id: 'step-3',
+    status: 'Afgehandeld',
+    datePublished: dateDecision,
+    isActive: !isVerlopen && hasDecision,
+    isChecked: hasDecision,
+  };
+
+  statussen.push(statusAfgehandeld);
 
   if (isVerlopen) {
     const statusVerlopen: StatusLineItem = {
@@ -493,18 +506,18 @@ async function fetchZakenByIds(
       zakenResponse.content
     );
 
-    const zakenWithStatus = await fetchAndMergeZaakStatussen(
-      requestID,
-      zakenWithAddress
-    );
-
     const zakenWithDocuments = await fetchAndMergeDocuments(
       requestID,
       authProfile,
-      zakenWithStatus
+      zakenWithAddress
+    );
+    // Merge zaak statussen as last, some status steps need documents to be fetched first.
+    const zakenWithStatus = await fetchAndMergeZaakStatussen(
+      requestID,
+      zakenWithDocuments
     );
 
-    return apiSuccessResult(zakenWithDocuments);
+    return apiSuccessResult(zakenWithStatus);
   }
 
   return zakenResponse;
@@ -573,29 +586,40 @@ export async function fetchBBVergunningen(
   return apiSuccessResult([]);
 }
 
+const documentNamesMA = {
+  TOEKENNING: 'Besluit toekenning',
+  VERLENGING: 'Besluit verlenging beslistermijn',
+  WEIGERING: 'Besluit weigering',
+  BUITEN_BEHANDELING: 'Besluit Buiten behandeling',
+  INTREKKING: 'Besluit intrekking',
+  MEER_INFORMATIE: 'Verzoek aanvullende gegevens',
+  SAMENVATTING: 'Samenvatting aanvraagformulier',
+} as const;
+
 const documentNamenMA_PB = {
-  'Besluit toekenning': [
+  [documentNamesMA.TOEKENNING]: [
     'BB Besluit vergunning bed and breakfast',
     'BB Besluit van rechtswege',
-    'BB Besluit verlenging beslistermijn',
   ],
-  'Besluit Buiten behandeling': [
+  [documentNamesMA.VERLENGING]: ['BB Besluit verlenging beslistermijn'],
+  [documentNamesMA.BUITEN_BEHANDELING]: [
     'BB Besluit buiten behandeling stellen',
     'BB buiten behandeling stellen',
   ],
-  'Besluit weigering': [
+  [documentNamesMA.WEIGERING]: [
     'Besluit weigering',
     'BB Besluit weigeren vergunning',
     'BB Besluit weigeren vergunning quotum',
     'Besluit B&B weigering zonder overgangsrecht',
   ],
-  'Besluit intrekking': [
+  [documentNamesMA.INTREKKING]: [
     'Intrekken vergunning',
     'BB Intrekkingsbesluit nav niet voldoen aan voorwaarden',
     'BB Intrekkingsbesluit op eigen verzoek',
   ],
-  'Samenvatting aanvraagformulier': ['Samenvatting'],
-};
+  [documentNamesMA.MEER_INFORMATIE]: ['BB Verzoek aanvullende gegevens'],
+  [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
+} as const;
 
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
