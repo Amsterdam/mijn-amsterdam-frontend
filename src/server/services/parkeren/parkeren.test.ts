@@ -83,11 +83,11 @@ describe('fetchSSOParkerenURL', () => {
         });
 
       remoteApi
-        .get('/parkeren/private/client_product_details')
+        .get('/parkeren/company/client_product_details')
         .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
 
       remoteApi
-        .get('/parkeren/private/active_permit_request')
+        .get('/parkeren/company/active_permit_request')
         .reply(STATUS_OK_200, MOCK_PARKING_PERMIT_REQUEST);
 
       const response = await fetchSSOParkerenURL(
@@ -108,6 +108,16 @@ describe('fetchSSOParkerenURL', () => {
   describe('without permit or permit requests', () => {
     beforeEach(() => {
       vi.clearAllMocks();
+    });
+
+    test('Calls with digid', async () => {
+      const authProfileAndToken = getAuthProfileAndToken('private');
+
+      remoteApi
+        .get('/parkeren/sso/get_authentication_url?service=digid')
+        .reply(STATUS_OK_200, {
+          url: SUCCESS_URL,
+        });
 
       remoteApi
         .get('/parkeren/private/client_product_details')
@@ -119,16 +129,6 @@ describe('fetchSSOParkerenURL', () => {
         .get('/parkeren/private/active_permit_request')
         .reply(STATUS_OK_200, {
           data: [],
-        });
-    });
-
-    test('Calls with digid', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('private');
-
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=digid')
-        .reply(STATUS_OK_200, {
-          url: SUCCESS_URL,
         });
 
       const response = await fetchSSOParkerenURL(
@@ -146,12 +146,24 @@ describe('fetchSSOParkerenURL', () => {
     });
 
     test('Calls with eherkenning', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('company');
+      const authProfileAndToken = getAuthProfileAndToken('commercial');
 
       remoteApi
         .get('/parkeren/sso/get_authentication_url?service=eherkenning')
         .reply(STATUS_OK_200, {
           url: SUCCESS_URL,
+        });
+
+      remoteApi
+        .get('/parkeren/company/client_product_details')
+        .reply(STATUS_OK_200, {
+          data: [],
+        });
+
+      remoteApi
+        .get('/parkeren/company/active_permit_request')
+        .reply(STATUS_OK_200, {
+          data: [],
         });
 
       const response = await fetchSSOParkerenURL(
@@ -196,7 +208,7 @@ describe('fetchSSOParkerenURL', () => {
 
       expect(response).toStrictEqual({
         content: {
-          isKnown: true,
+          isKnown: false,
           url: FALLBACK_URL,
         },
         status: 'OK',
@@ -213,7 +225,7 @@ describe('fetchSSOParkerenURL', () => {
 
       expect(response).toStrictEqual({
         content: {
-          isKnown: true,
+          isKnown: false,
           url: FALLBACK_URL,
         },
         status: 'OK',
