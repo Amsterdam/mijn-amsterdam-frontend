@@ -49,30 +49,25 @@ export async function hasPermitsOrPermitRequests(
       ? 'private'
       : 'company';
 
-  const clientProductsConfig = getApiConfig('PARKEREN', {
-    formatUrl(requestConfig) {
-      return `${requestConfig.url}/${userType}/client_product_details`;
-    },
-  });
+  const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
+    requestData<{ data: unknown[] }>(
+      getApiConfig('PARKEREN', {
+        formatUrl: (config) =>
+          `${config.url}/${userType}/client_product_details`,
+      }),
+      requestID
+    ),
+    requestData<{ data: unknown[] }>(
+      getApiConfig('PARKEREN', {
+        formatUrl: (config) =>
+          `${config.url}/${userType}/active_permit_request`,
+      }),
+      requestID
+    ),
+  ]);
 
-  const clientProductsResponse = await requestData<{ data: unknown[] }>(
-    clientProductsConfig,
-    requestID
+  return (
+    !!clientProductsResponse?.content?.data?.length ||
+    !!permitRequestsResponse?.content?.data?.length
   );
-
-  const permitRequestsConfig = getApiConfig('PARKEREN', {
-    formatUrl(requestConfig) {
-      return `${requestConfig.url}/${userType}/active_permit_request`;
-    },
-  });
-
-  const permitRequestsResponse = await requestData<{ data: unknown[] }>(
-    permitRequestsConfig,
-    requestID
-  );
-
-  const hasPermits = (clientProductsResponse?.content?.data?.length ?? 0) > 0;
-  const hasPermitRequests =
-    (permitRequestsResponse?.content?.data?.length ?? 0) > 0;
-  return hasPermits || hasPermitRequests;
 }
