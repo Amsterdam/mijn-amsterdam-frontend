@@ -16,7 +16,7 @@ import {
   PBZaakRecord,
   SearchRequestResponse,
 } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { remoteApi } from '../../../test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
@@ -149,7 +149,7 @@ describe('B&B Vergunningen service', () => {
 
       const result = await fetchBBDocumentsList(
         requestID,
-        authProfileAndToken,
+        authProfileAndToken.profile,
         zaakId
       );
       expect(result.status).toBe('OK');
@@ -167,7 +167,7 @@ describe('B&B Vergunningen service', () => {
 
       const result = await fetchBBDocumentsList(
         requestID,
-        authProfileAndToken,
+        authProfileAndToken.profile,
         zaakId
       );
       expect(result.status).toBe('ERROR');
@@ -604,11 +604,7 @@ describe('B&B Vergunningen service', () => {
         ],
       };
 
-      const encryptSpy = vi
-        .spyOn(encryptDecrypt, 'encryptSessionIdWithRouteIdParam')
-        .mockReturnValue('test-encrypted-value');
-
-      const result = forTesting.transformZaak('test-session-id', zaak);
+      const result = forTesting.transformZaak(zaak);
       expect(result).toEqual({
         adres: null,
         dateDecision: '2024-10-17T22:00:00.0000000Z',
@@ -618,8 +614,6 @@ describe('B&B Vergunningen service', () => {
         dateStart: '2024-10-17T22:00:00.0000000Z',
         dateStartFormatted: '18 oktober 2024',
         documents: [],
-        fetchDocumentsUrl:
-          'http://bff-api-host/api/v1/services/toeristische-verhuur/bed-and-breakfast/documents/list?id=test-encrypted-value',
         heeftOvergangsRecht: false,
         id: '126088685',
         isActual: true,
@@ -633,8 +627,6 @@ describe('B&B Vergunningen service', () => {
         title: 'Vergunning bed & breakfast',
         zaaknummer: 'Z2024-WK000245',
       });
-
-      encryptSpy.mockRestore();
     });
   });
 
@@ -652,7 +644,7 @@ describe('B&B Vergunningen service', () => {
 
       const result = await forTesting.fetchZakenByIds(
         'test-request-id',
-        'test-session-id',
+        getAuthProfileAndToken().profile,
         ['test-zaak-id']
       );
       expect(result.status).toBe('OK');
@@ -666,7 +658,7 @@ describe('B&B Vergunningen service', () => {
 
       const result = await forTesting.fetchZakenByIds(
         'test-request-id',
-        'test-session-id',
+        getAuthProfileAndToken().profile,
         ['test-zaak-id']
       );
       expect(result.status).toBe('ERROR');

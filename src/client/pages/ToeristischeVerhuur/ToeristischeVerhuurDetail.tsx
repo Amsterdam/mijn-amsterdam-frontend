@@ -1,19 +1,12 @@
-import { useEffect } from 'react';
-
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
-import { isLoading } from '../../../universal/helpers/api';
-import { GenericDocument } from '../../../universal/types';
-import { LoadingContent } from '../../components';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { LocationModal } from '../../components/LocationModal/LocationModal';
-import { BagThemas } from '../../config/thema';
-import { useAppStateBagApi } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 function DocumentInfo() {
@@ -33,30 +26,10 @@ interface VerhuurDocumentListProps {
 }
 
 function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
-  const [documentsResponseData, fetch, isApiDataCached] = useAppStateBagApi<
-    GenericDocument[]
-  >({
-    bagThema: BagThemas.TOERISTISCHE_VERHUUR,
-    key: vergunning.id,
-  });
-
-  const isApiLoading = isLoading(documentsResponseData);
-  const hasDocumentsFetch = !!vergunning.fetchDocumentsUrl;
-
-  useEffect(() => {
-    if (vergunning.fetchDocumentsUrl && !isApiDataCached) {
-      fetch({ url: vergunning.fetchDocumentsUrl });
-    }
-  }, [vergunning.fetchDocumentsUrl, isApiDataCached]);
-
-  if (hasDocumentsFetch && isApiLoading) {
-    return <LoadingContent />;
-  }
-
   return (
     <>
       <DocumentListV2
-        documents={documentsResponseData.content ?? []}
+        documents={vergunning.documents}
         columns={['', '']}
         className="ams-mb--sm"
       />

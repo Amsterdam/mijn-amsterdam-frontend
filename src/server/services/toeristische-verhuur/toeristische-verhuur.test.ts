@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
-import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
 import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { remoteApi } from '../../../test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
@@ -264,7 +264,6 @@ describe('Toeristische verhuur service', () => {
       adres: 'SchniffSchnaff 4C 1234AB Amsterdam',
       title: 'Vergunning bed & breakfast',
       documents: [],
-      fetchDocumentsUrl: '/a/b/x',
       steps: [
         {
           id: 'step-1',

@@ -17,7 +17,6 @@ import {
   PowerBrowserStatusResponse,
   SearchRequestResponse,
 } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
@@ -202,6 +201,7 @@ function transformZaakStatusResponse(
   const datumInBehandeling = getStatusDate(['In behandeling']) ?? '';
   const dateDecision: string =
     getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
+  const datumMeerInformatie = '';
 
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
   const statusOntvangen: StatusLineItem = {
@@ -218,8 +218,8 @@ function transformZaakStatusResponse(
     id: 'step-2',
     status: 'In behandeling',
     datePublished: datumInBehandeling,
-    isActive: !dateDecision && !!datumInBehandeling,
-    isChecked: !!dateDecision || !!datumInBehandeling,
+    isActive: !dateDecision && !datumMeerInformatie && !!datumInBehandeling,
+    isChecked: !!dateDecision || !!datumInBehandeling || !!datumMeerInformatie,
   };
 
   const statusAfgehandeld: StatusLineItem = {
@@ -232,9 +232,20 @@ function transformZaakStatusResponse(
 
   const statussen = [
     { ...statusOntvangen, isActive: !datumInBehandeling && !dateDecision },
-    statusInBehandeling,
-    statusAfgehandeld,
   ];
+
+  if (datumMeerInformatie) {
+    const statusMeerInformatie: StatusLineItem = {
+      id: 'step-meer-info',
+      status: 'Meer informatie nodig',
+      datePublished: datumMeerInformatie,
+      isActive: !dateDecision && !!datumMeerInformatie,
+      isChecked: !!dateDecision || !!datumMeerInformatie,
+    };
+    statussen.push(statusMeerInformatie);
+  }
+
+  statussen.push(statusInBehandeling, statusAfgehandeld);
 
   if (isVerlopen) {
     const statusVerlopen: StatusLineItem = {
@@ -315,6 +326,31 @@ async function fetchZaakStatussen(
   return statusResponse;
 }
 
+async function fetchAndMergeDocuments(
+  requestID: RequestID,
+  authProfile: AuthProfile,
+  zaken: BBVergunning[]
+): Promise<BBVergunning[]> {
+  const documentRequests = zaken.map((zaak) => {
+    return fetchBBDocumentsList(requestID, authProfile, zaak.id);
+  });
+  const documentResults = await Promise.allSettled(documentRequests);
+  const zakenWithdocuments: BBVergunning[] = [];
+
+  for (let i = 0; i < zaken.length; i++) {
+    const zaak: BBVergunning = { ...zaken[i] };
+    const documentResponse = getSettledResult(documentResults[i]);
+
+    zaak.documents =
+      documentResponse.status === 'OK' && documentResponse.content !== null
+        ? documentResponse.content
+        : [];
+
+    zakenWithdocuments.push(zaak);
+  }
+  return zakenWithdocuments;
+}
+
 async function fetchAndMergeZaakStatussen(
   requestID: RequestID,
   zaken: BBVergunning[]
@@ -382,7 +418,7 @@ function isZaakActual({
   return !!dateEnd && !isDateInPast(dateEnd);
 }
 
-function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
+function transformZaak(zaak: PBZaakRecord): BBVergunning {
   const pbZaak = Object.fromEntries(
     entries(fieldMap).map(([pbFieldName, desiredName]) => {
       return [desiredName, getFieldValue(pbFieldName, zaak.fields)];
@@ -396,7 +432,6 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
     result === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
   const dateEnd = result === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
-  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, id);
 
   return {
     dateReceived: pbZaak.dateReceived,
@@ -422,11 +457,6 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
     adres: null,
     status: 'Ontvangen',
     documents: [],
-    fetchDocumentsUrl: FeatureToggle.bbDocumentDownloadsActive
-      ? `${generateFullApiUrlBFF(
-          BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST
-        )}?id=${idEncrypted}`
-      : null,
     steps: [],
     heeftOvergangsRecht: pbZaak.dateReceived
       ? isBefore(
@@ -439,7 +469,7 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
 
 async function fetchZakenByIds(
   requestID: RequestID,
-  sessionID: SessionID,
+  authProfile: AuthProfile,
   zaakIds: string[]
 ): Promise<ApiResponse<BBVergunning[] | null>> {
   const requestConfig: DataRequestConfig = {
@@ -448,7 +478,7 @@ async function fetchZakenByIds(
       return `${url}/record/GFO_ZAKEN/${zaakIds.join(',')}`;
     },
     transformResponse(responseData: PBZaakRecord[]) {
-      return responseData.map((pbZaak) => transformZaak(sessionID, pbZaak));
+      return responseData?.map(transformZaak) ?? [];
     },
   };
 
@@ -468,7 +498,13 @@ async function fetchZakenByIds(
       zakenWithAddress
     );
 
-    return apiSuccessResult(zakenWithStatus);
+    const zakenWithDocuments = await fetchAndMergeDocuments(
+      requestID,
+      authProfile,
+      zakenWithStatus
+    );
+
+    return apiSuccessResult(zakenWithDocuments);
   }
 
   return zakenResponse;
@@ -520,7 +556,7 @@ export async function fetchBBVergunningen(
     if (zakenIdsResponse.content.length) {
       const zakenResponse = await fetchZakenByIds(
         requestID,
-        authProfile.sid,
+        authProfile,
         zakenIdsResponse.content
       );
       return zakenResponse;
@@ -612,9 +648,9 @@ function transformPowerbrowserLinksResponse(
 
 export async function fetchBBDocumentsList(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
+  authProfile: AuthProfile,
   zaakId: BBVergunning['id']
-) {
+): Promise<ApiResponse<BBVergunning['documents'] | null>> {
   const dataRequestConfig: DataRequestConfig = {
     method: 'post',
     formatUrl({ url }) {
@@ -636,10 +672,7 @@ export async function fetchBBDocumentsList(
       },
     },
     transformResponse(responseData) {
-      return transformPowerbrowserLinksResponse(
-        authProfileAndToken.profile.sid,
-        responseData
-      );
+      return transformPowerbrowserLinksResponse(authProfile.sid, responseData);
     },
   };
 

@@ -89,7 +89,6 @@ export interface BBVergunning extends ZaakDetail {
   status: BBVergunningZaakStatus | BBVergunningZaakResult;
   zaaknummer: string;
   documents: GenericDocument[];
-  fetchDocumentsUrl: string | null;
   title: 'Vergunning bed & breakfast';
 }
 

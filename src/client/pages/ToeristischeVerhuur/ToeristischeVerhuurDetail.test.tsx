@@ -3,15 +3,14 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect } from 'vitest';
 
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { bffApi } from '../../../test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
-import {
-  BBVergunning,
-  VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { AppState } from '../../../universal/types';
 
 const vakantieverhuurVergunningen: VakantieverhuurVergunning[] = [
   {
@@ -107,7 +106,6 @@ const bbVergunningen: BBVergunning[] = [
     ],
     status: 'Afgehandeld',
     isActual: true,
-    fetchDocumentsUrl: null,
     documents: [
       {
         id: 'xiup_IrPSXXuB6bI5sNz6Zrwl5UbqsqYoeEQXwGLrvA',
@@ -126,9 +124,9 @@ const testState = {
     status: 'OK',
     content: { vakantieverhuurVergunningen, bbVergunningen },
   },
-};
+} as AppState;
 
-function state(state: any) {
+function state(state: AppState) {
   function initializeState(snapshot: MutableSnapshot) {
     snapshot.set(appStateAtom, state);
   }

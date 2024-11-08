@@ -11,9 +11,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { ToeristscheVerhuurThema } from './ToeristischeVerhuur';
 
-type VerhuurState = Pick<AppState, 'TOERISTISCHE_VERHUUR'>;
-
-const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
+const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
   lvvRegistraties: [
     {
       address: 'Amstel 1 1017AB Amsterdam',
@@ -310,7 +308,6 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
       },
       adres: 'Amstel 3 Amsterdam',
       title: 'Vergunning bed & breakfast',
-      fetchDocumentsUrl: null,
       steps: [
         {
           id: 'step-1',
@@ -348,7 +345,6 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
         title: 'Vergunning bed & breakfast',
       },
       adres: 'Amstel 2 Amsterdam',
-      fetchDocumentsUrl: null,
       title: 'Vergunning bed & breakfast',
       steps: [
         {
@@ -387,7 +383,6 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
         title: 'Vergunning bed & breakfast',
       },
       adres: 'Amstel 1 Amsterdam',
-      fetchDocumentsUrl: null,
       title: 'Vergunning bed & breakfast',
       steps: [
         {
@@ -413,7 +408,7 @@ const verhuurContent: VerhuurState['TOERISTISCHE_VERHUUR']['content'] = {
   ],
 };
 
-const getTestState = (): VerhuurState =>
+const getTestState = (): AppState =>
   jsonCopy({
     TOERISTISCHE_VERHUUR: {
       content: verhuurContent,
@@ -423,15 +418,15 @@ const getTestState = (): VerhuurState =>
 
 const testStateBase = getTestState();
 
-function initializeState(snapshot: MutableSnapshot, state: VerhuurState) {
-  snapshot.set(appStateAtom as any, state);
+function initializeState(snapshot: MutableSnapshot, state: AppState) {
+  snapshot.set(appStateAtom, state);
 }
 
 describe('<ToeristscheVerhuurThema />', () => {
   const routeEntry = generatePath(AppRoutes.TOERISTISCHE_VERHUUR);
   const routePath = AppRoutes.TOERISTISCHE_VERHUUR;
 
-  const Component = ({ state }: { state: VerhuurState }) => (
+  const Component = ({ state }: { state: AppState }) => (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
@@ -474,7 +469,7 @@ describe('<ToeristscheVerhuurThema />', () => {
   });
 
   it('Shows alert for missing registration numbers', () => {
-    const testState2: VerhuurState = getTestState();
+    const testState2: AppState = getTestState();
 
     testState2.TOERISTISCHE_VERHUUR.content!.lvvRegistraties = [];
 
@@ -488,7 +483,7 @@ describe('<ToeristscheVerhuurThema />', () => {
   });
 
   it('Shows B&B page', () => {
-    const testState3: VerhuurState = getTestState();
+    const testState3: AppState = getTestState();
 
     testState3.TOERISTISCHE_VERHUUR.content!.vakantieverhuurVergunningen = [];
 
@@ -509,7 +504,7 @@ describe('<ToeristscheVerhuurThema />', () => {
   });
 
   it('Shows Vakantieverhuur page', () => {
-    const testState4: VerhuurState = getTestState();
+    const testState4: AppState = getTestState();
 
     testState4.TOERISTISCHE_VERHUUR.content!.bbVergunningen = [];
 
