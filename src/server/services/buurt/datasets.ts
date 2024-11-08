@@ -165,6 +165,7 @@ export const datasetEndpoints: Record<
     idKeyDetail: 'idNummer',
     triesUntilConsiderdStale: DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
     requestConfig: {
+      cancelTimeout: 60000,
       headers: {
         'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
       },
@@ -696,7 +697,7 @@ function transformAfvalcontainersResponse(
   responseData: DsoApiResponse | WFSApiResponse
 ) {
   const features: WFSFeatureSource[] =
-    ('features' in responseData
+    (responseData && 'features' in responseData
       ? responseData.features
       : getDsoApiEmbeddedResponse(datasetId, responseData)) ?? [];
 
