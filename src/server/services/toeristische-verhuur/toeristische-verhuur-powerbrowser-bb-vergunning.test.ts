@@ -735,7 +735,7 @@ describe('B&B Vergunningen service', () => {
     Mockdate.set('2023-01-01');
     const now = new Date();
 
-    test.only('should return true if zaak is actual', () => {
+    test('should return true if zaak is actual', () => {
       const result = forTesting.isZaakActual({
         result: 'Verleend',
         dateEnd: '2023-12-31',
