@@ -1,6 +1,7 @@
+@import 'node_modules/include-media/dist/include-media';
 @import 'variables/colors';
-@import 'mixins/mixins';
 @import 'variables/layout';
 @import 'variables/breakpoints';
 @import 'z-index';
 @import '@amsterdam/design-system-css/src/common/breakpoint';
+@import 'mixins/mixins';

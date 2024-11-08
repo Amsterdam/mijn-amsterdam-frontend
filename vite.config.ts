@@ -1,7 +1,8 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import svgr from 'vite-plugin-svgr';
 import { createHash } from 'node:crypto';
+
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   server: {
@@ -41,6 +42,11 @@ export default defineConfig({
     svgr(),
   ],
   css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@use "./src/client/styles/_global.scss" as *;',
+      },
+    },
     modules: {
       scopeBehaviour: 'local',
       // Generate correct CSS name that matches the Create React App one. Some Styles depend on these generated class names.
