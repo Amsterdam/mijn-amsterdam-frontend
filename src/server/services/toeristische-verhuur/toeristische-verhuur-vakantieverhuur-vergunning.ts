@@ -60,7 +60,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
       status: isIngetrokken ? 'Ingetrokken' : 'Verlopen',
       datePublished:
         (isVerlopen && !isIngetrokken
-          ? vergunning.dateDecision ?? vergunning.dateEnd
+          ? (vergunning.dateDecision ?? vergunning.dateEnd)
           : vergunning.dateDecision) ?? '',
       description: isIngetrokken
         ? `Wij hebben uw ${vergunning.title} ingetrokken.`
@@ -78,7 +78,7 @@ function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
 function getZaakStatus(
   zaak: VakantieverhuurVergunning
 ): VakantieverhuurVergunning['status'] | VakantieverhuurVergunning['result'] {
-  if (zaak.dateEnd && isDateInPast(zaak.dateEnd)) {
+  if (zaak.dateEnd && isDateInPast(zaak.dateEnd, new Date())) {
     return 'Verlopen';
   }
   if (zaak.result) {

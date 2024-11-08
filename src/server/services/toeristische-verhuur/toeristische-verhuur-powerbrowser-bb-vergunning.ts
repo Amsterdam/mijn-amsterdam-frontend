@@ -217,7 +217,7 @@ function transformZaakStatusResponse(
 
   const isVerlopen =
     zaak.result === 'Verleend' && zaak.dateEnd
-      ? isDateInPast(zaak.dateEnd)
+      ? isDateInPast(zaak.dateEnd, new Date())
       : false;
   const hasInBehandeling = !!datumInBehandeling;
   const hasDecision = !!zaak.result && !!dateDecision;
@@ -418,9 +418,11 @@ async function fetchAndMergeAdressen(
 function isZaakActual({
   result,
   dateEnd,
+  compareDate,
 }: {
   result: BBVergunningZaakResult;
   dateEnd: string | null;
+  compareDate: string | Date | null;
 }) {
   if (!result) {
     return true;
@@ -428,7 +430,7 @@ function isZaakActual({
   if (result !== 'Verleend') {
     return false;
   }
-  return !!dateEnd && !isDateInPast(dateEnd);
+  return !!dateEnd && !!compareDate && !isDateInPast(dateEnd, compareDate);
 }
 
 function transformZaak(zaak: PBZaakRecord): BBVergunning {
@@ -464,7 +466,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
       title,
     },
     title,
-    isActual: isZaakActual({ dateEnd, result }),
+    isActual: isZaakActual({ dateEnd, result, compareDate: new Date() }),
 
     // Added after initial transform
     adres: null,
@@ -738,20 +740,21 @@ export async function fetchBBDocument(
 }
 
 export const forTesting = {
-  fetchPowerBrowserToken_,
-  fetchPowerBrowserData,
-  fetchPersoonOrMaatschapIdByUid,
-  fetchZaakIds,
-  getFieldValue,
-  getZaakStatus,
-  getZaakResultaat,
-  transformZaakStatusResponse,
-  fetchZaakAdres,
-  fetchZaakStatussen,
-  fetchAndMergeZaakStatussen,
   fetchAndMergeAdressen,
-  isZaakActual,
-  transformZaak,
+  fetchAndMergeDocuments,
+  fetchAndMergeZaakStatussen,
+  fetchPersoonOrMaatschapIdByUid,
+  fetchPowerBrowserData,
+  fetchPowerBrowserToken_,
+  fetchZaakAdres,
+  fetchZaakIds,
+  fetchZaakStatussen,
   fetchZakenByIds,
+  getFieldValue,
+  getZaakResultaat,
+  getZaakStatus,
+  isZaakActual,
   transformPowerbrowserLinksResponse,
+  transformZaak,
+  transformZaakStatusResponse,
 };

@@ -333,7 +333,7 @@ function determineFactuurStatus(
 
     case !!sourceInvoice.NetDueDate &&
       sourceInvoice.IsCleared === false &&
-      isDateInPast(sourceInvoice.NetDueDate) &&
+      isDateInPast(sourceInvoice.NetDueDate, new Date()) &&
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 

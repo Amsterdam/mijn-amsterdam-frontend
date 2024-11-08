@@ -14,6 +14,7 @@ import {
   PBDocumentFields,
   PBZaakFields,
   PBZaakRecord,
+  PowerBrowserStatusResponse,
   SearchRequestResponse,
 } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
@@ -404,20 +405,151 @@ describe('B&B Vergunningen service', () => {
   });
 
   describe('transformZaakStatusResponse', () => {
-    test('should transform zaak status response', () => {
+    test('should transform zaak status response correctly', () => {
       const zaak = {
+        id: 'test-zaak-id',
         dateReceived: '2023-01-01',
-        dateEnd: null,
+        dateDecision: '2023-02-01',
+        dateEnd: '2023-12-31',
+        result: 'Verleend',
+        documents: [
+          {
+            title: 'Verzoek aanvullende gegevens',
+            datePublished: '2023-01-15',
+          },
+        ],
       } as unknown as BBVergunning;
 
       const statusResponse = [
-        { omschrijving: 'In behandeling', datum: '2023-02-01' },
-      ];
+        { omschrijving: 'In behandeling', datum: '2023-01-10' },
+        { omschrijving: 'Afgehandeld', datum: '2023-02-01' },
+      ] as PowerBrowserStatusResponse;
+
       const result = forTesting.transformZaakStatusResponse(
         zaak,
         statusResponse
       );
-      expect(result).toHaveLength(3);
+      expect(result).toEqual([
+        {
+          id: 'step-1',
+          status: 'Ontvangen',
+          datePublished: '2023-01-01',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          id: 'step-2',
+          status: 'In behandeling',
+          datePublished: '2023-01-10',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          id: 'step-meer-info',
+          status: 'Meer informatie nodig',
+          datePublished: '2023-01-15',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          id: 'step-3',
+          status: 'Afgehandeld',
+          datePublished: '2023-02-01',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          id: 'step-5',
+          status: 'Verlopen',
+          datePublished: '2023-12-31',
+          isActive: true,
+          isChecked: true,
+        },
+      ]);
+    });
+
+    test('should handle case with no result and no documents', () => {
+      const zaak = {
+        id: 'test-zaak-id',
+        dateReceived: '2023-01-01',
+        dateDecision: null,
+        dateEnd: null,
+        result: null,
+        documents: [],
+      } as unknown as BBVergunning;
+
+      const statusResponse = [
+        { omschrijving: 'In behandeling', datum: '2023-01-10' },
+      ] as PowerBrowserStatusResponse;
+
+      const result = forTesting.transformZaakStatusResponse(
+        zaak,
+        statusResponse
+      );
+      expect(result).toEqual([
+        {
+          id: 'step-1',
+          status: 'Ontvangen',
+          datePublished: '2023-01-01',
+          isActive: false,
+          isChecked: true,
+        },
+        {
+          id: 'step-2',
+          status: 'In behandeling',
+          datePublished: '2023-01-10',
+          isActive: true,
+          isChecked: true,
+        },
+        {
+          id: 'step-3',
+          status: 'Afgehandeld',
+          datePublished: '',
+          isActive: false,
+          isChecked: false,
+        },
+      ]);
+    });
+
+    test('should handle case with no status response', () => {
+      const zaak = {
+        id: 'test-zaak-id',
+        dateReceived: '2023-01-01',
+        dateDecision: null,
+        dateEnd: null,
+        result: null,
+        documents: [],
+      } as unknown as BBVergunning;
+
+      const statusResponse = [] as PowerBrowserStatusResponse;
+
+      const result = forTesting.transformZaakStatusResponse(
+        zaak,
+        statusResponse
+      );
+      expect(result).toEqual([
+        {
+          id: 'step-1',
+          status: 'Ontvangen',
+          datePublished: '2023-01-01',
+          isActive: true,
+          isChecked: true,
+        },
+        {
+          id: 'step-2',
+          status: 'In behandeling',
+          datePublished: '',
+          isActive: false,
+          isChecked: false,
+        },
+        {
+          id: 'step-3',
+          status: 'Afgehandeld',
+          datePublished: '',
+          isActive: false,
+          isChecked: false,
+        },
+      ]);
     });
   });
 
@@ -475,6 +607,7 @@ describe('B&B Vergunningen service', () => {
         id: 'test-zaak-id',
         dateReceived: '2023-01-01',
         dateEnd: null,
+        documents: [],
       } as unknown as BBVergunning;
 
       const result = await forTesting.fetchZaakStatussen(
@@ -511,7 +644,12 @@ describe('B&B Vergunningen service', () => {
         .reply(200, [{ omschrijving: 'In behandeling', datum: '2023-02-01' }]);
 
       const zaken = [
-        { id: 'test-zaak-id', dateReceived: '2023-01-01', dateEnd: null },
+        {
+          id: 'test-zaak-id',
+          dateReceived: '2023-01-01',
+          dateEnd: null,
+          documents: [],
+        },
       ] as unknown as BBVergunning[];
 
       const result = await forTesting.fetchAndMergeZaakStatussen(
@@ -520,6 +658,53 @@ describe('B&B Vergunningen service', () => {
       );
       expect(result).toHaveLength(1);
       expect(result[0].steps).toHaveLength(3);
+    });
+  });
+
+  describe('fetchAndMergeDocuments', () => {
+    test('should fetch and merge documents successfully', async () => {
+      remoteApi.post('/powerbrowser/SearchRequest').reply(200, {
+        records: [
+          {
+            id: 'test-document-id',
+            fields: [
+              {
+                fieldName: 'OMSCHRIJVING',
+                fieldValue: 'BB Besluit vergunning bed and breakfast',
+              },
+            ],
+          },
+        ],
+      });
+
+      const zaken = [
+        { id: 'test-zaak-id', dateReceived: '2023-01-01', dateEnd: null },
+      ] as unknown as BBVergunning[];
+
+      const result = await forTesting.fetchAndMergeDocuments(
+        'test-request-id',
+        authProfile,
+        zaken
+      );
+      expect(result).toHaveLength(1);
+      expect(result[0].documents).toHaveLength(1);
+      expect(result[0].documents[0].title).toBe('Besluit toekenning');
+    });
+
+    test('should handle errors in fetching documents', async () => {
+      remoteApi.post('/powerbrowser/SearchRequest').reply(500, 'some-error');
+
+      const zaken = [
+        { id: 'test-zaak-id', dateReceived: '2023-01-01', dateEnd: null },
+      ] as unknown as BBVergunning[];
+
+      const result = await forTesting.fetchAndMergeDocuments(
+        'test-request-id',
+        authProfile,
+        zaken
+      );
+      expect(result).toHaveLength(1);
+      expect(result[0].documents).toHaveLength(0);
     });
   });
 
@@ -548,24 +733,36 @@ describe('B&B Vergunningen service', () => {
 
   describe('isZaakActual', () => {
     Mockdate.set('2023-01-01');
+    const now = new Date();
 
-    test('should return true if zaak is actual', () => {
+    test.only('should return true if zaak is actual', () => {
       const result = forTesting.isZaakActual({
         result: 'Verleend',
         dateEnd: '2023-12-31',
+        compareDate: now,
       });
       expect(result).toBe(true);
     });
 
-    test('should return false if zaak is not actual', () => {
+    test('should return false if zaak is not actual based on result', () => {
       const result = forTesting.isZaakActual({
         result: 'Niet verleend',
         dateEnd: '2023-12-31',
+        compareDate: now,
       });
       expect(result).toBe(false);
     });
 
-    vi.useRealTimers();
+    test('should return false if zaak is not actual based on date', () => {
+      const result = forTesting.isZaakActual({
+        result: 'Verleend',
+        dateEnd: '2011-12-31',
+        compareDate: now,
+      });
+      expect(result).toBe(false);
+    });
+
+    Mockdate.reset();
   });
 
   describe('transformZaak', () => {
