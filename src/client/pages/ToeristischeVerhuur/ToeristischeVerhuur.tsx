@@ -6,8 +6,8 @@ import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
 } from './useToeristischeVerhuur.hook';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
-  BBVergunning,
   LVVRegistratie,
   VakantieverhuurVergunning,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';

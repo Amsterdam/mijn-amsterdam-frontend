@@ -200,5 +200,8 @@ describe('<ToeristischVerhuurDetail />', () => {
     expect(
       screen.queryByText('Uw Vergunning vakantieverhuur is verlopen.')
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/Ziet u niet het juiste document/)
+    ).toBeInTheDocument();
   });
 });

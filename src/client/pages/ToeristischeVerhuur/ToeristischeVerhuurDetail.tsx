@@ -16,7 +16,7 @@ function DocumentInfo() {
       <Link href="mailto:bedandbreakfast@amsterdam.nl" rel="noreferrer">
         bedandbreakfast@amsterdam.nl
       </Link>{' '}
-      om uw document in te kunnen zien.
+      om uw document op te vragen.
     </Paragraph>
   );
 }
