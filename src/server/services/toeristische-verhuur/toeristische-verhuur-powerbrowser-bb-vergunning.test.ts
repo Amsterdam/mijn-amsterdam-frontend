@@ -403,19 +403,6 @@ describe('B&B Vergunningen service', () => {
     });
   });
 
-  describe('getReceivedStatusStep', () => {
-    test('should return received status step', () => {
-      const result = forTesting.getReceivedStatusStep('2023-01-01');
-      expect(result).toEqual({
-        id: 'step-1',
-        status: 'Ontvangen',
-        datePublished: '2023-01-01',
-        isActive: true,
-        isChecked: true,
-      });
-    });
-  });
-
   describe('transformZaakStatusResponse', () => {
     test('should transform zaak status response', () => {
       const zaak = {

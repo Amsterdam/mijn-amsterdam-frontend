@@ -188,18 +188,6 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
   return resultaatTransformed;
 }
 
-function getReceivedStatusStep(datePublished: string): StatusLineItem {
-  const statusOntvangen: StatusLineItem = {
-    id: 'step-1',
-    status: 'Ontvangen',
-    datePublished,
-    isActive: true,
-    isChecked: true,
-  };
-
-  return statusOntvangen;
-}
-
 function transformZaakStatusResponse(
   zaak: BBVergunning,
   statusResponse: PowerBrowserStatusResponse
@@ -216,7 +204,14 @@ function transformZaakStatusResponse(
     getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
 
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
-  const statusOntvangen = getReceivedStatusStep(zaak.dateReceived ?? '');
+  const statusOntvangen: StatusLineItem = {
+    id: 'step-1',
+    status: 'Ontvangen',
+    datePublished: zaak.dateReceived ?? '',
+    isActive: true,
+    isChecked: true,
+  };
+
   const isVerlopen = zaak.dateEnd ? isDateInPast(zaak.dateEnd) : false;
 
   const statusInBehandeling: StatusLineItem = {
@@ -693,7 +688,6 @@ export const forTesting = {
   getFieldValue,
   getZaakStatus,
   getZaakResultaat,
-  getReceivedStatusStep,
   transformZaakStatusResponse,
   fetchZaakAdres,
   fetchZaakStatussen,
