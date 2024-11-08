@@ -3,24 +3,4 @@
 @import 'variables/layout';
 @import 'variables/breakpoints';
 @import 'z-index';
-// From: https://include-media.com/
-@import 'node_modules/include-media/dist/include-media';
 @import '@amsterdam/design-system-css/src/common/breakpoint';
-
-.ma-marker-tooltip {
-  background: none;
-  border: 0;
-  color: white;
-  text-shadow:
-    -1px -1px 0 #000,
-    0 -1px 0 #000,
-    1px -1px 0 #000,
-    1px 0 0 #000,
-    1px 1px 0 #000,
-    0 1px 0 #000,
-    -1px 1px 0 #000,
-    -1px 0 0 #000;
-  font-size: 16px;
-  font-weight: 500;
-  box-shadow: none;
-}
