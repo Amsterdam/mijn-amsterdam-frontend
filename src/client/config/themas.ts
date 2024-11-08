@@ -4,6 +4,8 @@ import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
+import { DecosCaseType } from '../../universal/types/vergunningen';
+import { PARKEER_CASE_TYPES } from '../pages/Parkeren/useParkerenData.hook';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -183,11 +185,20 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.KREFIA:
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
-    case Themas.PARKEREN:
+    case Themas.PARKEREN: {
+      const hasDecosParkeerVergunningen =
+        !isLoading(VERGUNNINGEN) &&
+        (appState.VERGUNNINGEN?.content ?? []).some((vergunning) =>
+          PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
+        );
+      const hasEgisParkeerVergunningen =
+        !isLoading(PARKEREN) && !!PARKEREN?.content?.isKnown;
+
       return (
-        (isAmsterdam && FeatureToggle.parkerenActive) ||
-        (!isLoading(PARKEREN) && FeatureToggle.parkerenPatroonC)
+        FeatureToggle.parkerenActive &&
+        (hasEgisParkeerVergunningen || hasDecosParkeerVergunningen)
       );
+    }
 
     case Themas.KLACHTEN:
       return (

@@ -15,6 +15,7 @@ describe('useThemaMenuItems', () => {
     const isActive = isThemaActive(item, {
       TEST: { content: 'foo', status: 'OK' },
       BRP: { content: { persoon: { mokum: true } } },
+      PARKEREN: { content: { isKnown: false }, status: 'OK' },
     } as any);
 
     expect(isActive).toBe(false);
