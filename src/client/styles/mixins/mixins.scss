@@ -1,3 +1,6 @@
+@use 'sass:list';
+@use 'sass:map';
+
 @mixin center-flex-col {
   display: flex;
   flex-direction: column;
@@ -73,7 +76,7 @@
   $selectors: ();
 
   @each $name in $names {
-    $selectors: append($selectors, ('[class*="#{$name}"]'), comma);
+    $selectors: list.append($selectors, ('[class*="#{$name}"]'), comma);
   }
 
   #{$selectors} {
@@ -85,7 +88,7 @@
   $selectors: ();
 
   @each $name in $names {
-    $selectors: append($selectors, ('[id="#{$name}"]'), comma);
+    $selectors: list.append($selectors, ('[id="#{$name}"]'), comma);
   }
 
   #{$selectors} {
@@ -186,7 +189,7 @@
   $i: str-index($string, $separator);
 
   @if $i !=null {
-    @return append(
+    @return map.append(
       str-slice($string, 1, $i - 1),
       str-split(str-slice($string, $i + str-length($separator)), $separator)
     );

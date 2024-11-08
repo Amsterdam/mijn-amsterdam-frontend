@@ -1,4 +1,4 @@
-@import '../../styles/_global.scss';
+@use 'sass:map';
 
 $colors: (
   'grey': (
@@ -40,7 +40,7 @@ $colors: (
 );
 
 @function color-prop($color, $prop) {
-  @return map-get(map-get($colors, $color), $prop);
+  @return map.get(map.get($colors, $color), $prop);
 }
 
 @mixin colorStyle($color: grey) {
