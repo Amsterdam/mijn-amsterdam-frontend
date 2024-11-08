@@ -157,14 +157,25 @@ function transformVerbintenisStatus(value: string) {
 
 const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
   soortVerbintenisOmschrijving: [
-    (_value, item) => (!item.datumOntbinding ? 'Status' : 'Verbintenis'),
-    (value, item) =>
-      !item.datumOntbinding ? transformVerbintenisStatus(value) : value,
+    (_value, verbintenis) =>
+      !verbintenis.datumOntbinding && !verbintenis.redenOntbindingOmschrijving
+        ? 'Status'
+        : 'Verbintenis',
+    (value, verbintenis) =>
+      !verbintenis.datumOntbinding ? transformVerbintenisStatus(value) : value,
   ],
   datumSluiting: ['Vanaf', (value) => !!value && defaultDateFormat(value)],
   datumOntbinding: [
     'Einddatum',
-    (value) => !!value && defaultDateFormat(value),
+    (dateValue, verbintenis) => {
+      if (dateValue) {
+        return defaultDateFormat(dateValue);
+      }
+      if (verbintenis.redenOntbindingOmschrijving) {
+        return 'Onbekend';
+      }
+      return null;
+    },
   ],
   plaatsnaamSluitingOmschrijving: 'Plaats',
   landnaamSluiting: 'Land',
