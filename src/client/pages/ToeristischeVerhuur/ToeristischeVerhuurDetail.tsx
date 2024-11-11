@@ -1,65 +1,40 @@
-import { useEffect } from 'react';
-
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
-import { isLoading } from '../../../universal/helpers/api';
-import { GenericDocument } from '../../../universal/types';
-import { LoadingContent } from '../../components';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { LocationModal } from '../../components/LocationModal/LocationModal';
-import { BagThemas } from '../../config/thema';
-import { useAppStateBagApi } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+
+function DocumentInfo() {
+  return (
+    <Paragraph>
+      Ziet u niet het juiste document? Stuur een mail naar:{' '}
+      <Link href="mailto:bedandbreakfast@amsterdam.nl" rel="noreferrer">
+        bedandbreakfast@amsterdam.nl
+      </Link>{' '}
+      om uw document op te vragen.
+    </Paragraph>
+  );
+}
 
 interface VerhuurDocumentListProps {
   vergunning: ToeristischeVerhuurVergunning;
 }
 
 function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
-  const [documentsResponseData, fetch, isApiDataCached] = useAppStateBagApi<
-    GenericDocument[]
-  >({
-    bagThema: BagThemas.TOERISTISCHE_VERHUUR,
-    key: vergunning.id,
-  });
-
-  const isApiLoading = isLoading(documentsResponseData);
-  const hasResult = !!vergunning.result;
-  const hasDocuments = !!documentsResponseData.content?.length;
-  const hasDocumentsFetch = !!vergunning.fetchDocumentsUrl;
-
-  useEffect(() => {
-    if (vergunning.fetchDocumentsUrl && !isApiDataCached) {
-      fetch({ url: vergunning.fetchDocumentsUrl });
-    }
-  }, [vergunning.fetchDocumentsUrl, isApiDataCached]);
-
-  if (hasDocumentsFetch && isApiLoading) {
-    return <LoadingContent />;
-  }
-
-  if ((!hasDocumentsFetch || (!isApiLoading && !hasDocuments)) && hasResult) {
-    return (
-      <Paragraph>
-        Stuur een mail naar:{' '}
-        <Link href="mailto:bedandbreakfast@amsterdam.nl" rel="noreferrer">
-          bedandbreakfast@amsterdam.nl
-        </Link>{' '}
-        om uw document in te kunnen zien.
-      </Paragraph>
-    );
-  }
-
   return (
-    <DocumentListV2
-      documents={documentsResponseData.content ?? []}
-      columns={['', '']}
-    />
+    <>
+      <DocumentListV2
+        documents={vergunning.documents}
+        columns={['', '']}
+        className="ams-mb--sm"
+      />
+      <DocumentInfo />
+    </>
   );
 }
 
@@ -129,7 +104,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
         </Grid.Cell>
       )}
 
-      <Grid.Cell span="all">
+      <Grid.Cell span={8}>
         <Datalist
           rows={[
             {

@@ -5,6 +5,8 @@ import { generatePath } from 'react-router-dom';
 import {
   BBVergunning,
   BBVergunningZaakResult,
+  FetchPersoonOrMaatschapIdByUidOptions,
+  FetchZaakIdsOptions,
   fieldMap,
   PBDocumentFields,
   PBRecordField,
@@ -12,9 +14,9 @@ import {
   PBZaakFields,
   PBZaakRecord,
   PBZaakResultaat,
+  PowerBrowserStatusResponse,
   SearchRequestResponse,
-} from './toeristische-verhuur-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+} from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
@@ -75,12 +77,6 @@ async function fetchPowerBrowserData<T>(
   return requestData<T>(dataRequestConfig, requestID);
 }
 
-type FetchPersoonOrMaatschapIdByUidOptions = {
-  profileID: AuthProfile['id'];
-  tableName: 'PERSONEN' | 'MAATSCHAP';
-  fieldName: 'BURGERSERVICENUMMER' | 'KVKNUMMER';
-};
-
 async function fetchPersoonOrMaatschapIdByUid(
   requestID: RequestID,
   options: FetchPersoonOrMaatschapIdByUidOptions
@@ -113,11 +109,6 @@ async function fetchPersoonOrMaatschapIdByUid(
   };
   return fetchPowerBrowserData<string | null>(requestID, requestConfig);
 }
-
-type FetchZaakIdsOptions = {
-  personOrMaatschapId: string;
-  tableName: 'PERSONEN' | 'MAATSCHAP';
-};
 
 async function fetchZaakIds(
   requestID: RequestID,
@@ -196,25 +187,6 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
   return resultaatTransformed;
 }
 
-interface PowerBrowserStatus {
-  omschrijving: string | 'Ontvangen';
-  datum: string;
-}
-
-type PowerBrowserStatusResponse = PowerBrowserStatus[];
-
-function getReceivedStatusStep(datePublished: string): StatusLineItem {
-  const statusOntvangen: StatusLineItem = {
-    id: 'step-1',
-    status: 'Ontvangen',
-    datePublished,
-    isActive: true,
-    isChecked: true,
-  };
-
-  return statusOntvangen;
-}
-
 function transformZaakStatusResponse(
   zaak: BBVergunning,
   statusResponse: PowerBrowserStatusResponse
@@ -230,31 +202,63 @@ function transformZaakStatusResponse(
   const dateDecision: string =
     getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
 
+  const datumMeerInformatie = zaak.documents.find((document) => {
+    return document.title === documentNamesMA.MEER_INFORMATIE;
+  })?.datePublished;
+
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
-  const statusOntvangen = zaak.steps[0];
-  const isVerlopen = zaak.dateEnd ? isDateInPast(zaak.dateEnd) : false;
+  const statusOntvangen: StatusLineItem = {
+    id: 'step-1',
+    status: 'Ontvangen',
+    datePublished: zaak.dateReceived ?? '',
+    isActive: true,
+    isChecked: true,
+  };
+
+  const isVerlopen =
+    zaak.result === 'Verleend' && zaak.dateEnd
+      ? isDateInPast(zaak.dateEnd, new Date())
+      : false;
+  const hasInBehandeling = !!datumInBehandeling;
+  const hasDecision = !!zaak.result && !!dateDecision;
+  const hasMeerInformatieNodig = !!datumMeerInformatie;
 
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
     datePublished: datumInBehandeling,
-    isActive: !dateDecision && !!datumInBehandeling,
-    isChecked: !!dateDecision || !!datumInBehandeling,
+    isActive: !hasDecision && !datumMeerInformatie && hasInBehandeling,
+    isChecked: hasDecision || hasInBehandeling || hasMeerInformatieNodig,
   };
+
+  const statussen = [
+    {
+      ...statusOntvangen,
+      isActive: !datumInBehandeling && !hasDecision && !datumMeerInformatie,
+    },
+    statusInBehandeling,
+  ];
+
+  if (datumMeerInformatie) {
+    const statusMeerInformatie: StatusLineItem = {
+      id: 'step-meer-info',
+      status: 'Meer informatie nodig',
+      datePublished: datumMeerInformatie,
+      isActive: !hasDecision && hasMeerInformatieNodig,
+      isChecked: hasDecision || hasMeerInformatieNodig,
+    };
+    statussen.push(statusMeerInformatie);
+  }
 
   const statusAfgehandeld: StatusLineItem = {
     id: 'step-3',
     status: 'Afgehandeld',
     datePublished: dateDecision,
-    isActive: !isVerlopen && !!dateDecision,
-    isChecked: !!dateDecision,
+    isActive: !isVerlopen && hasDecision,
+    isChecked: hasDecision,
   };
 
-  const statussen = [
-    { ...statusOntvangen, isActive: !datumInBehandeling && !dateDecision },
-    statusInBehandeling,
-    statusAfgehandeld,
-  ];
+  statussen.push(statusAfgehandeld);
 
   if (isVerlopen) {
     const statusVerlopen: StatusLineItem = {
@@ -335,6 +339,31 @@ async function fetchZaakStatussen(
   return statusResponse;
 }
 
+async function fetchAndMergeDocuments(
+  requestID: RequestID,
+  authProfile: AuthProfile,
+  zaken: BBVergunning[]
+): Promise<BBVergunning[]> {
+  const documentRequests = zaken.map((zaak) => {
+    return fetchBBDocumentsList(requestID, authProfile, zaak.id);
+  });
+  const documentResults = await Promise.allSettled(documentRequests);
+  const zakenWithdocuments: BBVergunning[] = [];
+
+  for (let i = 0; i < zaken.length; i++) {
+    const zaak: BBVergunning = { ...zaken[i] };
+    const documentResponse = getSettledResult(documentResults[i]);
+
+    zaak.documents =
+      documentResponse.status === 'OK' && documentResponse.content !== null
+        ? documentResponse.content
+        : [];
+
+    zakenWithdocuments.push(zaak);
+  }
+  return zakenWithdocuments;
+}
+
 async function fetchAndMergeZaakStatussen(
   requestID: RequestID,
   zaken: BBVergunning[]
@@ -389,9 +418,11 @@ async function fetchAndMergeAdressen(
 function isZaakActual({
   result,
   dateEnd,
+  compareDate,
 }: {
   result: BBVergunningZaakResult;
   dateEnd: string | null;
+  compareDate: string | Date | null;
 }) {
   if (!result) {
     return true;
@@ -399,10 +430,10 @@ function isZaakActual({
   if (result !== 'Verleend') {
     return false;
   }
-  return !!dateEnd && !isDateInPast(dateEnd);
+  return !!dateEnd && !!compareDate && !isDateInPast(dateEnd, compareDate);
 }
 
-function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
+function transformZaak(zaak: PBZaakRecord): BBVergunning {
   const pbZaak = Object.fromEntries(
     entries(fieldMap).map(([pbFieldName, desiredName]) => {
       return [desiredName, getFieldValue(pbFieldName, zaak.fields)];
@@ -416,7 +447,6 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
     result === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
   const dateEnd = result === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
-  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, id);
 
   return {
     dateReceived: pbZaak.dateReceived,
@@ -436,19 +466,13 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
       title,
     },
     title,
-    isActual: isZaakActual({ dateEnd, result }),
+    isActual: isZaakActual({ dateEnd, result, compareDate: new Date() }),
 
     // Added after initial transform
     adres: null,
     status: 'Ontvangen',
     documents: [],
-    fetchDocumentsUrl:
-      parseInt(id, 10) > 0 && FeatureToggle.bbDocumentDownloadsActive
-        ? `${generateFullApiUrlBFF(
-            BffEndpoints.TOERISTISCHE_VERHUUR_BB_DOCUMENT_LIST
-          )}?id=${idEncrypted}`
-        : null,
-    steps: [getReceivedStatusStep(pbZaak.dateReceived ?? '')],
+    steps: [],
     heeftOvergangsRecht: pbZaak.dateReceived
       ? isBefore(
           new Date(pbZaak.dateReceived),
@@ -460,7 +484,7 @@ function transformZaak(sessionID: SessionID, zaak: PBZaakRecord): BBVergunning {
 
 async function fetchZakenByIds(
   requestID: RequestID,
-  sessionID: SessionID,
+  authProfile: AuthProfile,
   zaakIds: string[]
 ): Promise<ApiResponse<BBVergunning[] | null>> {
   const requestConfig: DataRequestConfig = {
@@ -469,7 +493,7 @@ async function fetchZakenByIds(
       return `${url}/record/GFO_ZAKEN/${zaakIds.join(',')}`;
     },
     transformResponse(responseData: PBZaakRecord[]) {
-      return responseData.map((pbZaak) => transformZaak(sessionID, pbZaak));
+      return responseData?.map(transformZaak) ?? [];
     },
   };
 
@@ -484,9 +508,15 @@ async function fetchZakenByIds(
       zakenResponse.content
     );
 
+    const zakenWithDocuments = await fetchAndMergeDocuments(
+      requestID,
+      authProfile,
+      zakenWithAddress
+    );
+    // Merge zaak statussen as last, some status steps need documents to be fetched first.
     const zakenWithStatus = await fetchAndMergeZaakStatussen(
       requestID,
-      zakenWithAddress
+      zakenWithDocuments
     );
 
     return apiSuccessResult(zakenWithStatus);
@@ -541,7 +571,7 @@ export async function fetchBBVergunningen(
     if (zakenIdsResponse.content.length) {
       const zakenResponse = await fetchZakenByIds(
         requestID,
-        authProfile.sid,
+        authProfile,
         zakenIdsResponse.content
       );
       return zakenResponse;
@@ -558,29 +588,40 @@ export async function fetchBBVergunningen(
   return apiSuccessResult([]);
 }
 
+const documentNamesMA = {
+  TOEKENNING: 'Besluit toekenning',
+  VERLENGING: 'Besluit verlenging beslistermijn',
+  WEIGERING: 'Besluit weigering',
+  BUITEN_BEHANDELING: 'Besluit Buiten behandeling',
+  INTREKKING: 'Besluit intrekking',
+  MEER_INFORMATIE: 'Verzoek aanvullende gegevens',
+  SAMENVATTING: 'Samenvatting aanvraagformulier',
+} as const;
+
 const documentNamenMA_PB = {
-  'Besluit toekenning': [
+  [documentNamesMA.TOEKENNING]: [
     'BB Besluit vergunning bed and breakfast',
     'BB Besluit van rechtswege',
-    'BB Besluit verlenging beslistermijn',
   ],
-  'Besluit Buiten behandeling': [
+  [documentNamesMA.VERLENGING]: ['BB Besluit verlenging beslistermijn'],
+  [documentNamesMA.BUITEN_BEHANDELING]: [
     'BB Besluit buiten behandeling stellen',
     'BB buiten behandeling stellen',
   ],
-  'Besluit weigering': [
+  [documentNamesMA.WEIGERING]: [
     'Besluit weigering',
     'BB Besluit weigeren vergunning',
     'BB Besluit weigeren vergunning quotum',
     'Besluit B&B weigering zonder overgangsrecht',
   ],
-  'Besluit intrekking': [
+  [documentNamesMA.INTREKKING]: [
     'Intrekken vergunning',
     'BB Intrekkingsbesluit nav niet voldoen aan voorwaarden',
     'BB Intrekkingsbesluit op eigen verzoek',
   ],
-  'Samenvatting aanvraagformulier': ['Samenvatting'],
-};
+  [documentNamesMA.MEER_INFORMATIE]: ['BB Verzoek aanvullende gegevens'],
+  [documentNamesMA.SAMENVATTING]: ['Samenvatting'],
+} as const;
 
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
@@ -633,9 +674,9 @@ function transformPowerbrowserLinksResponse(
 
 export async function fetchBBDocumentsList(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
+  authProfile: AuthProfile,
   zaakId: BBVergunning['id']
-) {
+): Promise<ApiResponse<BBVergunning['documents'] | null>> {
   const dataRequestConfig: DataRequestConfig = {
     method: 'post',
     formatUrl({ url }) {
@@ -657,10 +698,7 @@ export async function fetchBBDocumentsList(
       },
     },
     transformResponse(responseData) {
-      return transformPowerbrowserLinksResponse(
-        authProfileAndToken.profile.sid,
-        responseData
-      );
+      return transformPowerbrowserLinksResponse(authProfile.sid, responseData);
     },
   };
 
@@ -669,7 +707,7 @@ export async function fetchBBDocumentsList(
 
 export async function fetchBBDocument(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
+  _authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
   const tokenResponse = await fetchPowerBrowserToken(requestID);
@@ -700,3 +738,23 @@ export async function fetchBBDocument(
     dataRequestConfig
   );
 }
+
+export const forTesting = {
+  fetchAndMergeAdressen,
+  fetchAndMergeDocuments,
+  fetchAndMergeZaakStatussen,
+  fetchPersoonOrMaatschapIdByUid,
+  fetchPowerBrowserData,
+  fetchPowerBrowserToken_,
+  fetchZaakAdres,
+  fetchZaakIds,
+  fetchZaakStatussen,
+  fetchZakenByIds,
+  getFieldValue,
+  getZaakResultaat,
+  getZaakStatus,
+  isZaakActual,
+  transformPowerbrowserLinksResponse,
+  transformZaak,
+  transformZaakStatusResponse,
+};
