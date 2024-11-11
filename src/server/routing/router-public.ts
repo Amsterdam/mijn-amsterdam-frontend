@@ -201,7 +201,7 @@ export async function zaakStatusHandler(
   return res.redirect(loginRouteWithReturnTo);
 }
 
-const branchName = getFromEnv('MA_GIT_CURRENT_BRANCH', true);
+const gitSHA = getFromEnv('MA_GIT_SHA', true) ?? -1;
 
 router.get(
   [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
@@ -210,10 +210,8 @@ router.get(
       status: 'OK',
       otapEnv: OTAP_ENV,
       release: RELEASE_VERSION,
-      gitSha: process.env.MA_GIT_SHA ?? '-1',
-      gitCommitHistoryUrl: branchName
-        ? `https://github.com/Amsterdam/mijn-amsterdam-frontend/commits/${branchName}/`
-        : 'Error: No branchname specified in .env.local please check MA_GIT_CURRENT_BRANCH',
+      gitSha: gitSHA,
+      gitShaUrl: `https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${gitSHA}`,
       buildId: process.env.MA_BUILD_ID ?? '-1',
     });
   }
