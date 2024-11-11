@@ -39,6 +39,15 @@ describe('Afis Business Partner services', () => {
             '@type': 'application/xml',
             properties: {
               AddressID: 430844,
+              CityName: 'Leiden',
+              Country: 'NL',
+              HouseNumber: 20,
+              HouseNumberSupplementText: '',
+              PostalCode: '2311 VW',
+              Region: '',
+              StreetName: 'Rembrandtstraat',
+              StreetPrefixName: '',
+              StreetSuffixName: '',
             },
           },
         },
@@ -114,16 +123,18 @@ describe('Afis Business Partner services', () => {
     );
 
     expect(response).toMatchInlineSnapshot(`
-        {
-          "content": {
-            "businessPartnerId": "12346789",
-            "email": "xxmail@arjanappel.nl",
-            "fullName": "Taxon Expeditions BV",
-            "phone": "+31622030313",
-          },
-          "status": "OK",
-        }
-      `);
+      {
+        "content": {
+          "address": "Rembrandtstraat 20
+      2311 VW Leiden",
+          "businessPartnerId": "12346789",
+          "email": "xxmail@arjanappel.nl",
+          "fullName": "Taxon Expeditions BV",
+          "id": 430844,
+        },
+        "status": "OK",
+      }
+    `);
   });
 
   it('returns just the business partner fullname when there is no AddressID', async () => {

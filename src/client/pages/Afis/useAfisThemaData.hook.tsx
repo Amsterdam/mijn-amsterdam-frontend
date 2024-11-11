@@ -36,6 +36,7 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
           {capitalizeFirstLetter(factuur.status)}:{' '}
           <MaLink
             maVariant="fatNoUnderline"
+            target="_blank"
             href={factuur.paylink ?? '#missing-paylink'}
           >
             {factuur.statusDescription}

@@ -1,4 +1,5 @@
 const httpConstants = require('http2').constants;
+
 const settings = require('../settings');
 
 const BASE = '/afis';
@@ -114,6 +115,15 @@ module.exports = [
                     '@type': 'application/xml',
                     properties: {
                       AddressID: 430844,
+                      CityName: 'Leiden',
+                      Country: 'NL',
+                      HouseNumber: 20,
+                      HouseNumberSupplementText: '',
+                      PostalCode: '2311 VW',
+                      Region: '',
+                      StreetName: 'Rembrandtstraat',
+                      StreetPrefixName: '',
+                      StreetSuffixName: '',
                     },
                   },
                 },

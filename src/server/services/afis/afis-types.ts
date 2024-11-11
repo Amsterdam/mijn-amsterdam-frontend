@@ -61,6 +61,15 @@ export type AfisApiFeedResponseSource<T> = {
 
 export type AfisBusinessPartnerAddressSource = {
   AddressID: string;
+  CityName: string;
+  Country: string;
+  HouseNumber: number;
+  HouseNumberSupplementText: string;
+  PostalCode: string;
+  Region: string;
+  StreetName: string;
+  StreetPrefixName: string;
+  StreetSuffixName: string;
 };
 
 export type AfisBusinessPartnerDetailsSource = {
@@ -80,7 +89,10 @@ export type AfisBusinessPartnerDetails = {
   fullName: string;
 };
 
-export type AfisBusinessPartnerAddressId = number | null;
+export type AfisBusinessPartnerAddress = {
+  id: string;
+  address: string;
+};
 
 export type AfisBusinessPartnerPhone = {
   phone: string | null;
@@ -95,6 +107,7 @@ export type AfisBusinessPartnerDetailsTransformed = {
   email?: string | null;
   fullName?: string | null;
   phone?: string | null;
+  address?: string | null;
 };
 
 export type AfisFactuurState = 'open' | 'afgehandeld' | 'overgedragen';
@@ -119,10 +132,10 @@ export type AfisFactuur = {
   paymentDueDateFormatted: string;
   debtClearingDate: string | null;
   debtClearingDateFormatted: string | null;
-  amount: string;
-  amountFormatted: string;
-  amountInitial: string;
-  amountInitialFormatted: string;
+  amountPayed: string;
+  amountPayedFormatted: string;
+  amountOriginal: string;
+  amountOriginalFormatted: string;
   factuurNummer: string;
   factuurDocumentId: string;
   status: AfisFactuurStatus;

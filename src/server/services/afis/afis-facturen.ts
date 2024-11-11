@@ -175,7 +175,7 @@ function getInvoiceAmount(
 
   if (deelbetalingAmount) {
     amountInBalanceTransacCrcy =
-      amountInBalanceTransacCrcy.plus(deelbetalingAmount);
+      amountInBalanceTransacCrcy.plus(deelbetalingAmount); // is a negative value
   }
 
   return amountInBalanceTransacCrcy;
@@ -195,10 +195,10 @@ function transformFactuur(
 
   const deelbetaling = deelbetalingen?.[factuurNummer];
   const hasDeelbetaling = !!deelbetaling;
-  const amountInitial = getInvoiceAmount(invoice);
-  const amount = getInvoiceAmount(invoice, deelbetaling);
-  const amountFormatted = `€ ${amount ? displayAmount(parseFloat(amount.toFixed(2))) : '0,00'}`;
-  const amountInitialFormatted = `€ ${amountInitial ? displayAmount(parseFloat(amountInitial.toFixed(2))) : '0,00'}`;
+  const amountOriginal = getInvoiceAmount(invoice);
+  const amountPayed = getInvoiceAmount(invoice, deelbetaling);
+  const amountPayedFormatted = `€ ${amountPayed ? displayAmount(parseFloat(amountPayed.toFixed(2))) : '0,00'}`;
+  const amountOriginalFormatted = `€ ${amountOriginal ? displayAmount(parseFloat(amountOriginal.toFixed(2))) : '0,00'}`;
 
   let debtClearingDate = null;
   let debtClearingDateFormatted = null;
@@ -208,7 +208,7 @@ function transformFactuur(
     debtClearingDateFormatted = defaultDateFormat(debtClearingDate);
   }
 
-  const status = determineFactuurStatus(invoice, amount, hasDeelbetaling);
+  const status = determineFactuurStatus(invoice, amountPayed, hasDeelbetaling);
 
   const documentDownloadLink = factuurDocumentIdEncrypted
     ? `${generateFullApiUrlBFF(BffEndpoints.AFIS_DOCUMENT_DOWNLOAD)}?id=${factuurDocumentIdEncrypted}`
@@ -223,18 +223,19 @@ function transformFactuur(
     paymentDueDateFormatted: defaultDateFormat(invoice.NetDueDate),
     debtClearingDate,
     debtClearingDateFormatted,
-    amount: amount.toFixed(2),
-    amountFormatted,
-    amountInitial: amountInitial.toFixed(2),
-    amountInitialFormatted,
+    amountPayed: amountPayed.toFixed(2),
+    amountPayedFormatted,
+    amountOriginal: amountOriginal.toFixed(2),
+    amountOriginalFormatted,
     factuurNummer,
     factuurDocumentId,
     status,
     statusDescription: determineFactuurStatusDescription(
       status,
-      amountFormatted,
-      amountInitialFormatted,
-      debtClearingDateFormatted
+      amountPayedFormatted,
+      amountOriginalFormatted,
+      debtClearingDateFormatted,
+      hasDeelbetaling
     ),
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink,
@@ -309,7 +310,7 @@ const DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN = 3;
 
 function determineFactuurStatus(
   sourceInvoice: AfisFactuurPropertiesSource,
-  amount: Decimal,
+  amountPayed: Decimal,
   hasDeelbetaling: boolean
 ): AfisFactuur['status'] {
   switch (true) {
@@ -328,7 +329,7 @@ function determineFactuurStatus(
     case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
       return 'betaald';
 
-    case amount.lt(0):
+    case amountPayed.lt(0):
       return 'geld-terug';
 
     case !!sourceInvoice.NetDueDate &&
@@ -368,32 +369,39 @@ Source Invoice Properties that determine this are:
 
 function determineFactuurStatusDescription(
   status: AfisFactuur['status'],
-  amountFormatted: AfisFactuur['amountFormatted'],
-  amountInitialFormatted: AfisFactuur['amountInitialFormatted'],
-  debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted']
+  amountPayedFormatted: AfisFactuur['amountPayedFormatted'],
+  amountOriginalFormatted: AfisFactuur['amountOriginalFormatted'],
+  debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted'],
+  hasDeelbetaling: boolean = false
 ) {
-  const amount = amountFormatted.replace('-', '');
-  const amountInitial = amountInitialFormatted.replace('-', '');
+  // Openstaand bedrag
+  const amountPayed = amountPayedFormatted.replace('-', '');
+  // Origineel bedrag
+  const amountOriginal = amountOriginalFormatted.replace('-', '');
 
   switch (status) {
     case 'openstaand':
-      return `${amount} betaal nu`;
+      return `${amountOriginal} betaal nu`;
     case 'herinnering':
-      return `${amount} betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.`;
+      return `${amountOriginal} betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.`;
     case 'in-dispuut':
-      return `${amount} in dispuut`;
+      return `${amountOriginal} in dispuut`;
     case 'gedeeltelijke-betaling':
-      return `Uw factuur van ${amountInitial} is nog niet volledig betaald. Maak het resterend bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
+      return `Uw factuur van ${amountOriginal} is nog niet volledig betaald. Maak het resterend bedrag van ${amountPayed} over onder vermelding van de gegevens op uw factuur.`;
     case 'handmatig-betalen':
-      return `Uw factuur is nog niet betaald. Maak het bedrag van ${amount} over onder vermelding van de gegevens op uw factuur.`;
+      return `Uw factuur is nog niet betaald. Maak het bedrag van ${amountOriginal} over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
-      return `Het bedrag van ${amount} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
+      return `Het bedrag van ${amountOriginal} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
-      return `${amount} betaald ${debtClearingDateFormatted ? `op ${debtClearingDateFormatted}` : ''}`;
+      return hasDeelbetaling
+        ? `Op ${debtClearingDateFormatted} heeft u het gehele bedrag van ${amountOriginal} voldaan.`
+        : `${amountOriginal} betaald op ${debtClearingDateFormatted}`;
     case 'automatische-incasso':
-      return `${amount} wordt automatisch van uw rekening afgeschreven.`;
+      return `${amountOriginal} wordt automatisch van uw rekening afgeschreven.`;
+    case 'geannuleerd':
+      return `${amountOriginal} geannuleerd op ${debtClearingDateFormatted}`;
     case 'overgedragen-aan-belastingen':
-      return `${amount} is overgedragen aan het incasso- en invorderingstraject van directie Belastingen${debtClearingDateFormatted ? ` op ${debtClearingDateFormatted}` : ''}`;
+      return `${amountOriginal} is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op ${debtClearingDateFormatted}`;
     default:
       return capitalizeFirstLetter(status ?? '');
   }

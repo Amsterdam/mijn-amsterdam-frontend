@@ -1,6 +1,7 @@
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AfisEmandateStub } from './Afis-thema-config';
+import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
@@ -31,20 +32,24 @@ function AfisBusinessPartnerDetails({
   startCollapsed = true,
 }: AfisBusinessPartnerProps) {
   const rows = businesspartner
-    ? entries(labels).map(([key, label]) => {
-        const value = businesspartner[key as keyof typeof businesspartner];
-        return {
-          label,
-          content:
-            key === 'email' || key === 'phone' ? (
-              <Link href={`${key === 'email' ? 'mailto' : 'tel'}:${value}`}>
-                {value}
-              </Link>
-            ) : (
-              value
-            ),
-        };
-      })
+    ? entries(labels)
+        .filter(
+          ([key]) => !!businesspartner[key as keyof typeof businesspartner]
+        )
+        .map(([key, label]) => {
+          const value = businesspartner[key as keyof typeof businesspartner];
+          return {
+            label,
+            content:
+              key === 'email' || key === 'phone' ? (
+                <Link href={`${key === 'email' ? 'mailto' : 'tel'}:${value}`}>
+                  {value}
+                </Link>
+              ) : (
+                value
+              ),
+          };
+        })
     : [];
 
   return (
@@ -54,7 +59,11 @@ function AfisBusinessPartnerDetails({
         {!isLoading && !!rows.length && (
           <Grid>
             <Grid.Cell span={6}>
-              <Datalist rows={rows} rowVariant="horizontal" />
+              <Datalist
+                className={styles['Datalist--businesspartnerdetails']}
+                rows={rows}
+                rowVariant="horizontal"
+              />
             </Grid.Cell>
           </Grid>
         )}

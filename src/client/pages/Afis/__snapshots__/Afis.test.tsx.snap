@@ -308,6 +308,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                     <a
                       class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
                       href="https://payment.example.com/F001"
+                      target="_blank"
                     >
                       openstaand
                     </a>
@@ -368,6 +369,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                     <a
                       class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
                       href="https://payment.example.com/F003"
+                      target="_blank"
                     >
                       openstaand
                     </a>
