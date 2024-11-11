@@ -201,7 +201,7 @@ export async function zaakStatusHandler(
   return res.redirect(loginRouteWithReturnTo);
 }
 
-const gitSHA = getFromEnv('MA_GIT_SHA', true) ?? -1;
+const gitSHA = getFromEnv('MA_GIT_SHA', false) ?? -1;
 
 router.get(
   [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
