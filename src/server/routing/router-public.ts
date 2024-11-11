@@ -29,6 +29,7 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
+import { getFromEnv } from '../helpers/env';
 
 export const router = express.Router();
 
@@ -200,14 +201,17 @@ export async function zaakStatusHandler(
   return res.redirect(loginRouteWithReturnTo);
 }
 
+const gitSHA = getFromEnv('MA_GIT_SHA', false) ?? -1;
+
 router.get(
   [BffEndpoints.ROOT, BffEndpoints.STATUS_HEALTH],
-  (req: Request, res: Response, next: NextFunction) => {
+  (_req: Request, res: Response) => {
     return res.json({
       status: 'OK',
       otapEnv: OTAP_ENV,
       release: RELEASE_VERSION,
-      gitSha: process.env.MA_GIT_SHA ?? '-1',
+      gitSha: gitSHA,
+      gitShaUrl: `https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${gitSHA}`,
       buildId: process.env.MA_BUILD_ID ?? '-1',
     });
   }
