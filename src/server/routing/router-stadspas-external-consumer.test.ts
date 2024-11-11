@@ -216,7 +216,6 @@ describe('hli/router-external-consumer', async () => {
         content: [
           {
             foo: 'bar',
-            securityCode: null,
             transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
           },
         ],

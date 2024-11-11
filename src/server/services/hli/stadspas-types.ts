@@ -81,9 +81,21 @@ export interface StadspasDiscountTransactionsResponseSource {
   transacties: StadspasAanbiedingSource[];
 }
 
+export type SecurityCode = string;
+
 export interface StadspasHouderPasSource {
   actief: boolean;
+  budgetten: unknown[];  // Did not see the exact shape of this data, encountered an empty array.
+  categorie: string;
+  categorie_code: string;
+  expiry_date: string;
+  heeft_budget: boolean;
+  id: number;
   pasnummer: number;
+  pasnummer_volledig: string;
+  passoort: { id: number, naam: string };
+  securitycode: SecurityCode;
+  vervangen: boolean;
 }
 
 export interface StadspasHouderSource {
@@ -128,6 +140,7 @@ export interface StadspasDetailSource {
   pasnummer: number;
   pasnummer_volledig: string;
   passoort: { id: number; naam: string };
+  pashouder: StadspasHouderSource;
 }
 
 // Transformed types
@@ -160,6 +173,7 @@ export interface Stadspas {
   budgets: StadspasBudget[];
   balanceFormatted: string;
   balance: number;
+  securityCode: SecurityCode;
 }
 
 export interface StadspasFrontend extends Stadspas {
