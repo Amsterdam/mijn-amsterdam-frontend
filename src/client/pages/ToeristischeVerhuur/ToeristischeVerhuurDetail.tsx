@@ -68,7 +68,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       content: (
         <>
           <span className={styles.Address}>{vergunning.adres}</span>
-          <LocationModal location={vergunning.adres} />
+          <LocationModal address={vergunning.adres} />
         </>
       ),
     },

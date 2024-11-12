@@ -23,7 +23,7 @@ export const commonRows: Record<string, VergunningDataListRow> = {
       ? {
           label: 'Adres',
           content: (
-            <LocationModal location={vergunning.location as string}>
+            <LocationModal address={vergunning.location as string}>
               {vergunning.location}
             </LocationModal>
           ),
