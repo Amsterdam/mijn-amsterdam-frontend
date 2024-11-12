@@ -108,9 +108,10 @@ export function LocationModal({
       {hasLocationData && (
         <Modal
           isOpen={isLocationModalOpen}
-          onClose={() => setLocationModalOpen(false)}
+          onClose={() => {
+            setLocationModalOpen(false);
+          }}
           title={modalTitle ?? label ?? 'Locatie'}
-          contentWidth="62rem"
         >
           <div className={styles.LocationModalInner}>
             {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}

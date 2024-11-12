@@ -4,7 +4,23 @@ import { describe, it, expect, vi } from 'vitest';
 
 import { Modal } from './Modal';
 
+const mocks = vi.hoisted(() => {
+  return {
+    onClose: vi.fn(),
+  };
+});
+
 describe('Modal test', () => {
+  beforeAll(() => {
+    // Mock the close method of the dialog element, JSDOM does not support it
+    HTMLDialogElement.prototype.close = vi.fn(function mock(
+      this: HTMLDialogElement
+    ) {
+      this.open = false;
+      mocks.onClose();
+    });
+  });
+
   it('Renders without crashing', () => {
     render(
       <Modal isOpen={false} onClose={() => void 0}>
@@ -45,6 +61,9 @@ describe('Modal test', () => {
         </Modal>
       );
     });
+
+    //
+    mocks.onClose = close;
 
     const { rerender } = render(
       <Modal
