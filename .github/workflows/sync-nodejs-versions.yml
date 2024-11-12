@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'Dockerfile'
+permissions:
+  contents: write
 jobs:
   sync-node-version:
     runs-on: ubuntu-latest
@@ -14,11 +16,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update .nvmrc
         run: |
-          grep -o -P '(?<=FROM node:)\d+.?\d*.?\d*' Dockerfile > .nvmrc
+          echo 'Current nvmrc has version:'
+          cat .nvmrc
+          echo 'Overwriting .nvmrc with version inside updated Dockerfile'
+          grep -o -P '(?<=^FROM node:)\d+.?\d*.?\d*' Dockerfile > .nvmrc
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .nvmrc
-          git commit -m "chore: sync .nvmrc with Dockerfile node version" || exit 1
+          git commit -m "chore: sync .nvmrc with Dockerfile node version" || exit 0
           git push
+
