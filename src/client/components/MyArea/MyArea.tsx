@@ -40,8 +40,6 @@ import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
 const baseLayerOptions: TileLayerOptions = {
   subdomains: ['t1', 't2', 't3', 't4'],
   tms: true,
-  attribution:
-    '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
 };
 
 // The height of the header. If we account for it the full map will be onscreen and scrolling is only needed to reach the footer.
