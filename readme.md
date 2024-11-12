@@ -10,14 +10,23 @@ is a portal for official communication with the municipality of Amsterdam. The a
 
 To see the application quickly running locally, clone the repo and cd into the project folder. Inside the project folder create a new file called `.env.local`. Put the keys from `.env.local.template` inside the file AND ask one of the developers for possible additional values.
 
-## Running localy
+## Set-up
 
-Put the following commands in your terminal:
+We use Node, and to install the latest version, follow the instructions in this [Link](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).<br>
+Then execute the following commands in a bash terminal to install it and the rest of our dependencies:
 
 ```bash
 cp -i .env.local.template .env.local
+nvm install
 npm install -g ts-node nodemon
 npm install
+```
+
+## Running locally
+
+Put the following commands in your terminal after all dependencies are installed:
+
+```bash
 npm run serve-dev
 npm start
 ```
