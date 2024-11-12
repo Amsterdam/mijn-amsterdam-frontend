@@ -103,6 +103,7 @@ export function transformGenericApiListResponse(
       const featureGeometry = feature[geometryKey] as GeoJSON.Geometry;
       if (
         geometryKey in feature &&
+        featureGeometry &&
         'coordinates' in featureGeometry &&
         featureGeometry.coordinates
       ) {

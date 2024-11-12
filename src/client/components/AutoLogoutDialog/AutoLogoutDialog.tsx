@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
@@ -10,8 +11,8 @@ import { ComponentChildren } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import Linkd, { Button } from '../Button/Button';
-import Modal from '../Modal/Modal';
+import { Button } from '../Button/Button';
+import { Modal } from '../Modal/Modal';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -139,15 +140,11 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     <Modal
       title={TITLE}
       isOpen={isOpen}
-      contentWidth={450}
       showCloseButton={false}
-      // eslint-disable-next-line no-magic-numbers
-      contentVerticalPosition={100 + window.scrollY}
       actions={
-        <>
+        <ActionGroup>
           {continueButtonIsVisible && (
             <Button
-              tabIndex={1}
               variant="secondary"
               className="continue-button"
               onClick={continueUsingApp}
@@ -155,39 +152,33 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
               Doorgaan
             </Button>
           )}
-          <Linkd
+          <Button
             variant="secondary-inverted"
-            tabIndex={2}
-            lean={false}
-            isDisabled={!continueButtonIsVisible}
             className={classnames('logout-button', styles.LogoutButton)}
-            external={true}
-            icon=""
             onClick={() => session.logout()}
-            onKeyPress={(event) => event.key === 'Enter' && session.logout()}
-            role="button"
+            onKeyUp={(event) => event.key === 'Enter' && session.logout()}
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
               : 'Bezig met controleren van uw sessie..'}
-          </Linkd>
-        </>
+          </Button>
+        </ActionGroup>
       }
     >
       <div className={styles.AutoLogoutDialogChildren}>
-        <p>
+        <Paragraph className="ams-mb--sm">
           U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
           geweest op Mijn Amsterdam.
-        </p>
-        <p className={styles.TimerText}>
+        </Paragraph>
+        <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
             maxCount={nSettings.secondsBeforeAutoLogout}
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />
           Als u niets doet wordt u automatisch uitgelogd.
-        </p>
-        <p>Wilt u doorgaan of uitloggen?</p>
+        </Paragraph>
+        <Paragraph>Wilt u doorgaan of uitloggen?</Paragraph>
       </div>
     </Modal>
   );

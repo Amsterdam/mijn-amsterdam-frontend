@@ -9,7 +9,7 @@ import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { Button, IconButton, LinkdInline } from '../Button/Button';
-import Modal from '../Modal/Modal';
+import { Modal } from '../Modal/Modal';
 
 interface ComponentProps {
   className?: string;
@@ -34,9 +34,6 @@ export default function ErrorMessages({
     (error) => error.stateKey === ALL_ERROR_STATE_KEY
   );
   const [isModalOpen, setModalOpen] = useState(false);
-  const top = el.current
-    ? (el.current! as HTMLElement).getBoundingClientRect().top
-    : 0;
   const [isDismissed, setDismissed] = useState(false);
 
   useEffect(() => {
@@ -98,7 +95,6 @@ export default function ErrorMessages({
           </div>
         }
         title={title}
-        contentVerticalPosition={el.current ? Math.max(top, 0) : 'center'}
       >
         <div className={styles.ErrorInfo}>
           <p>Deze gegevens kunnen wij nu niet voor u ophalen:</p>

@@ -2,84 +2,95 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 
-import { Dialog } from './Modal';
+import { Modal } from './Modal';
+
+const mocks = vi.hoisted(() => {
+  return {
+    onClose: vi.fn(),
+  };
+});
 
 describe('Modal test', () => {
+  beforeAll(() => {
+    // Mock the close method of the dialog element, JSDOM does not support it
+    HTMLDialogElement.prototype.close = vi.fn(function mock(
+      this: HTMLDialogElement
+    ) {
+      this.open = false;
+      mocks.onClose();
+    });
+  });
+
   it('Renders without crashing', () => {
     render(
-      <Dialog isOpen={false} onClose={() => void 0}>
+      <Modal isOpen={false} onClose={() => void 0}>
         Testje
-      </Dialog>
+      </Modal>
     );
   });
 
   it('Places the Modal content top/10px left/10px width/100px', () => {
     const { rerender } = render(
-      <Dialog
-        contentHorizontalPosition={10}
-        contentVerticalPosition={10}
-        contentWidth={100}
-        isOpen={true}
-        onClose={() => void 0}
-      >
+      <Modal isOpen={true} onClose={() => void 0}>
         Testje
-      </Dialog>
+      </Modal>
     );
 
     expect(screen.getByText('Testje')).toBeInTheDocument();
 
     rerender(
-      <Dialog
-        contentHorizontalPosition={10}
-        contentVerticalPosition={10}
-        contentWidth={100}
-        isOpen={false}
-        onClose={() => void 0}
-      >
+      <Modal isOpen={false} onClose={() => void 0}>
         Testje
-      </Dialog>
+      </Modal>
     );
 
     expect(screen.queryByText('Testje')).toBeNull();
   });
 
   it('Opens and Closes the modal via close callback', async () => {
-    const title = 'Overlay sluiten';
+    const title = 'Modal';
 
     const close = vi.fn(() => {
       rerender(
-        <Dialog
+        <Modal
           isOpen={false}
           onClose={close}
-          actions={<button onClick={close}>Overlay sluiten</button>}
+          closeButtonLabel="Overlay sluiten"
         >
           Testje
-        </Dialog>
+        </Modal>
       );
     });
 
-    const actions = <button onClick={close}>Overlay sluiten</button>;
+    //
+    mocks.onClose = close;
 
     const { rerender } = render(
-      <Dialog isOpen={false} onClose={close} title={title} actions={actions}>
+      <Modal
+        isOpen={false}
+        onClose={close}
+        title={title}
+        closeButtonLabel="Overlay sluiten"
+      >
         Testje
-      </Dialog>
+      </Modal>
     );
 
     expect(screen.queryByText('Testje')).toBeNull();
 
     rerender(
-      <Dialog isOpen={true} onClose={close} title={title} actions={actions}>
+      <Modal
+        isOpen={true}
+        onClose={close}
+        title={title}
+        closeButtonLabel="Overlay sluiten"
+      >
         Testje
-      </Dialog>
+      </Modal>
     );
     expect(screen.getByText('Testje')).toBeInTheDocument();
 
-    await userEvent.click(
-      screen.getByText('Overlay sluiten', {
-        selector: 'button',
-      })
-    );
+    await userEvent.click(screen.getByText('Overlay sluiten'));
 
     expect(close).toHaveBeenCalled();
     expect(screen.queryByText('Testje')).toBeNull();

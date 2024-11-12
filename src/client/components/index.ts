@@ -17,7 +17,7 @@ export { default as InfoDetail } from './InfoDetail/InfoDetail';
 export { default as LoadingContent } from './LoadingContent/LoadingContent';
 export { default as MainFooter } from './MainFooter/MainFooter';
 export { default as MainHeader } from './MainHeader/MainHeader';
-export { default as Modal } from './Modal/Modal';
+export { Modal } from './Modal/Modal';
 export { default as MyThemasPanel } from './MyThemasPanel/MyThemasPanel';
 export { default as MyNotifications } from './MyNotifications/MyNotifications';
 export {
