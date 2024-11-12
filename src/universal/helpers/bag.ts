@@ -46,7 +46,11 @@ export function getLatLonByAddress(
     const result1 = getBagResult(results, bagSearchAddress, isWeesp);
 
     if (result1 && result1.adres && result1.centroid) {
-      const [lng, lat] = result1.centroid;
+      // Forced coordinates to be in the right order
+      // Using Amsterdam lat/lng 52.xxxxxx, 4.xxxxxx
+      const [A, B] = result1.centroid;
+      const lat = A < B ? B : A;
+      const lng = B > A ? A : B;
       return { lat, lng };
     }
   }
