@@ -124,7 +124,25 @@ const testState = {
     status: 'OK',
     content: { vakantieverhuurVergunningen, bbVergunningen },
   },
-} as AppState;
+  BRP: {
+    status: 'OK',
+    content: {
+      persoon: {
+        voornamen: 'Namen, Enzo',
+        geslachtsnaam: 'Dingerdons',
+        voorvoegselGeslachtsnaam: 'Van de',
+      },
+      adres: {
+        straatnaam: 'Amstel',
+        huisnummer: '1',
+        huisletter: '',
+        huisnummertoevoeging: '',
+        postcode: '1017AB',
+        woonplaats: 'Amsterdam',
+      },
+    },
+  },
+} as unknown as AppState;
 
 function state(state: AppState) {
   function initializeState(snapshot: MutableSnapshot) {
@@ -203,5 +221,12 @@ describe('<ToeristischVerhuurDetail />', () => {
     expect(
       screen.getByText(/Ziet u niet het juiste document/)
     ).toBeInTheDocument();
+    const link = screen.getByText('bedandbreakfast@amsterdam.nl');
+    expect(link.getAttribute('href')).toMatchInlineSnapshot(
+      `
+      "mailto:bedandbreakfast@amsterdam.nl?subject=Z/23/2130506 - Document opvragen&body=Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer Z/23/2130506 op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0ANamen, Enzo Van de Dingerdons%0D%0A%0D%0AAmstel 1
+      1017AB"
+    `
+    );
   });
 });
