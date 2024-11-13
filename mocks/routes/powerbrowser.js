@@ -26,7 +26,6 @@ module.exports = [
     id: 'post-powerbrowser-search-requests',
     url: `${settings.MOCK_BASE_PATH}/powerbrowser/SearchRequest`,
     method: 'POST',
-    delay: 5000,
     variants: [
       {
         id: 'standard',
