@@ -343,7 +343,7 @@ function determineFactuurStatus(
       !sourceInvoice.Paylink:
       return 'handmatig-betalen';
 
-    case hasDeelbetaling:
+    case sourceInvoice.IsCleared === false && hasDeelbetaling:
       return 'gedeeltelijke-betaling';
 
     case sourceInvoice.IsCleared === false:
