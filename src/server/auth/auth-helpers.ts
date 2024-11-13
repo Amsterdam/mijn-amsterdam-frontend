@@ -10,7 +10,12 @@ import {
   RETURNTO_MAMS_LANDING_EHERKENNING,
 } from './auth-config';
 import { authRoutes } from './auth-routes';
-import { AuthenticatedRequest, AuthProfile, MaSession, TokenData } from './auth-types';
+import {
+  AuthenticatedRequest,
+  AuthProfile,
+  MaSession,
+  TokenData,
+} from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
@@ -126,6 +131,7 @@ export function createLogoutHandler(
   doIDPLogout: boolean = true
 ) {
   return async (req: AuthenticatedRequest, res: Response) => {
+    console.log(postLogoutRedirectUrl, doIDPLogout, req.oidc.isAuthenticated());
     if (req.oidc.isAuthenticated() && doIDPLogout) {
       const auth = getAuth(req);
       if (auth) {
@@ -148,9 +154,11 @@ export function createLogoutHandler(
       }
     }
 
-    // Destroy the session context
-    delete req[OIDC_SESSION_COOKIE_NAME];
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    if (hasSessionCookie(req)) {
+      // Destroy the session context
+      delete req[OIDC_SESSION_COOKIE_NAME];
+      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    }
 
     return res.redirect(postLogoutRedirectUrl);
   };
