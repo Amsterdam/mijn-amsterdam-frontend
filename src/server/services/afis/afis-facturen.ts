@@ -100,7 +100,7 @@ function formatFactuurRequestURL(
     overgedragen: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq true and DunningLevel eq '3'`,
 
     // Deelbetalingen
-    deelbetalingen: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false`,
+    deelbetalingen: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false and InvoiceReference ne ''`,
   };
 
   const top = params.top
@@ -414,7 +414,7 @@ export async function fetchAfisFacturen(
 ): Promise<ApiResponse<AfisFacturenResponse | null>> {
   let deelbetalingen: AfisFactuurDeelbetalingen | undefined;
 
-  if (params.state === 'open') {
+  if (params.state === 'open' || params.state === 'afgehandeld') {
     const facturenDeelbetalingenResponse =
       await fetchAfisFacturenDeelbetalingen(requestID, {
         state: 'deelbetalingen',
