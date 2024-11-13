@@ -68,4 +68,3 @@ jobs:
       btdDeploy: ${{ variables.btdDeploy }}
       btdAppBFF: false
       btdAppUI: true
-      aquaScan: false

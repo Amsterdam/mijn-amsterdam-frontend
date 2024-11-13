@@ -67,4 +67,3 @@ jobs:
 
       btdAppBFF: true
       btdAppUI: false
-      aquaScan: false
