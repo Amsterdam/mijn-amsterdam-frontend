@@ -2,7 +2,7 @@ import { LatLngLiteral } from 'leaflet';
 
 import { apiErrorResult } from '../../universal/helpers/api';
 import {
-  getBagResult,
+  getMatchingBagResult,
   getBagSearchAddress,
   getLatLonByAddress,
 } from '../../universal/helpers/bag';
@@ -44,7 +44,7 @@ export async function fetchBAG(
         isWeesp
       );
 
-      const bagResult = getBagResult(
+      const bagResult = getMatchingBagResult(
         responseData?.results,
         searchAddress,
         isWeesp

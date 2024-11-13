@@ -54,6 +54,7 @@ describe('getLatLonByAddress', () => {
 
   test('Amsterdam', () => {
     expect(getLatLonByAddress(response?.results, amsterdam, false)).toEqual({
+      address: 'Herengracht 23-1',
       lat: 52.37873183842775,
       lng: 4.891968036478453,
     });
@@ -61,6 +62,7 @@ describe('getLatLonByAddress', () => {
 
   test('Weesp', () => {
     expect(getLatLonByAddress(response?.results, weesp, true)).toEqual({
+      address: 'Herengracht 23',
       lat: 52.30885683238395,
       lng: 5.039817231849981,
     });

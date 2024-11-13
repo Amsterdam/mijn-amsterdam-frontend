@@ -11,18 +11,46 @@ import {
 } from '../../../universal/config/myarea-datasets';
 import {
   extractAddress,
+  getLatLngWithAddress,
   getLatLonByAddress,
   isLocatedInWeesp,
+  LatLngWithAddress,
 } from '../../../universal/helpers/bag';
+import { BAGSearchResult, BAGSourceData } from '../../../universal/types/bag';
 import { Modal } from '../../components';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
+import { MapLocationMarker } from '../MyArea/MyArea.hooks';
+
+function transformBagSearchResultsResponse(
+  response: BAGSourceData,
+  querySearchAddress: string,
+  isWeesp: boolean
+): LatLngWithAddress[] | null {
+  const results = response?.results ?? [];
+
+  // Try to get exact match
+  const latlng = getLatLonByAddress(results, querySearchAddress, isWeesp);
+  if (latlng && results.length === 1) {
+    return [latlng];
+  }
+
+  // No exact match, return all results
+  if (results.length) {
+    return results.map((result: BAGSearchResult) =>
+      getLatLngWithAddress(result)
+    );
+  }
+
+  // No results
+  return null;
+}
 
 export interface LocationModalProps {
   // The address for determining latlng
-  location?: string | null;
+  address?: string | null;
   // Label for InfoDetail
   label?: string;
   // Title of the Modal
@@ -38,7 +66,7 @@ export interface LocationModalProps {
 
 export function LocationModal({
   // Addres
-  location = null,
+  address = null,
   latlng,
   modalTitle,
   label,
@@ -48,7 +76,7 @@ export function LocationModal({
 }: LocationModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
   const [hasLocationData, setHasLocationData] = useState(false);
-  const [bagApi, fetchBag] = useDataApi<LatLngLiteral | null>(
+  const [bagApi, fetchBag] = useDataApi<LatLngWithAddress[] | null>(
     {
       url: '',
       postpone: true,
@@ -60,28 +88,36 @@ export function LocationModal({
   );
 
   useEffect(() => {
-    if (!!location || !!latlng) {
+    if (address || latlng) {
       setHasLocationData(true);
     }
-  }, [bagApi, location, latlng]);
+  }, [bagApi, address, latlng]);
 
   useEffect(() => {
-    if (bagApi.isDirty || location === null) {
+    if (bagApi.isDirty || address === null) {
       return;
     }
     if (isLocationModalOpen) {
-      const address = extractAddress(location);
-      const isWeesp = isLocatedInWeesp(location);
+      const querySearchAddress = extractAddress(address);
+      const isWeesp = isLocatedInWeesp(address);
 
+      // Updates bagApi state
       fetchBag({
-        url: `https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=${address}`,
-        transformResponse: (response) =>
-          getLatLonByAddress(response?.results, address, isWeesp),
+        url: `https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=${querySearchAddress}`,
+        transformResponse(responseData: BAGSourceData) {
+          const latlngResults = transformBagSearchResultsResponse(
+            responseData,
+            querySearchAddress,
+            isWeesp
+          );
+
+          return latlngResults;
+        },
       });
     }
   }, [
     isLocationModalOpen,
-    location,
+    address,
     fetchBag,
     bagApi.isDirty,
     trackPageViewTitle,
@@ -93,6 +129,14 @@ export function LocationModal({
       trackPageView(trackPageViewUrl);
     }
   }, [isLocationModalOpen, trackPageViewTitle, trackPageViewUrl]);
+
+  const latlngFromBagSearch = bagApi.data?.[0];
+
+  const centerMarker: MapLocationMarker = {
+    latlng: latlng ??
+      latlngFromBagSearch ?? { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
+    label: label ?? address ?? `${latlng?.lat},${latlng?.lng}`,
+  };
 
   return (
     <>
@@ -111,7 +155,9 @@ export function LocationModal({
           onClose={() => {
             setLocationModalOpen(false);
           }}
-          title={modalTitle ?? label ?? 'Locatie'}
+          title={
+            modalTitle ?? label ?? latlngFromBagSearch?.address ?? 'Locatie'
+          }
         >
           <div className={styles.LocationModalInner}>
             {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
@@ -121,11 +167,7 @@ export function LocationModal({
                 zoom={LOCATION_ZOOM}
                 datasetIds={[]}
                 activeBaseLayerType={BaseLayerType.Aerial}
-                centerMarker={{
-                  latlng: latlng ??
-                    bagApi.data ?? { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
-                  label: label ?? location ?? `${latlng?.lat},${latlng?.lng}`,
-                }}
+                centerMarker={centerMarker}
               />
             ) : (
               <p>Adres kan niet getoond worden</p>

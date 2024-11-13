@@ -24,7 +24,7 @@ export function DatalistGeneral({
         <>
           {dossier.voorkeursadres}
           <br />
-          <LocationModal location={dossier.voorkeursadres} />
+          <LocationModal address={dossier.voorkeursadres} />
         </>
       ),
     },

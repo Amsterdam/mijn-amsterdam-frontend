@@ -1,4 +1,6 @@
-import { BAGSourceData } from '../types/bag';
+import { LatLngLiteral, LatLngTuple } from 'leaflet';
+
+import { BAGSearchResult, BAGSourceData } from '../types/bag';
 import { Adres } from '../types/brp';
 
 // Quick and dirty see also: https://stackoverflow.com/a/68401047
@@ -18,7 +20,9 @@ export function extractAddress(rawAddress: string) {
 
 export type BAGSearchAddress = string;
 
-export function getBagResult(
+export type LatLngWithAddress = LatLngLiteral & { address: string };
+
+export function getMatchingBagResult(
   results: BAGSourceData['results'] = [],
   bagSearchAddress: BAGSearchAddress,
   isWeesp: boolean
@@ -31,23 +35,39 @@ export function getBagResult(
       .toLowerCase()
       .includes(bagSearchAddress.toLowerCase());
 
-    return isWoonplaatsMatch && isAddressMatch;
+    return isWeesp ? isWoonplaatsMatch && isAddressMatch : isAddressMatch;
   });
 
   return result1 ?? null;
+}
+
+export function getLatLngWithAddress(
+  result: BAGSearchResult
+): LatLngWithAddress {
+  return {
+    address: result.adres,
+    ...(getLatLngCoordinates(result.centroid) ?? null),
+  };
+}
+
+export function getLatLngCoordinates(centroid: LatLngTuple) {
+  // Forced coordinates to be in the right order
+  // Using Amsterdam lat/lng 52.xxxxxx, 4.xxxxxx
+  const [A, B] = centroid;
+  const lat = A < B ? B : A;
+  const lng = B > A ? A : B;
+  return { lat, lng };
 }
 
 export function getLatLonByAddress(
   results: BAGSourceData['results'] = [],
   bagSearchAddress: BAGSearchAddress,
   isWeesp: boolean
-) {
+): LatLngWithAddress | null {
   if (results.length) {
-    const result1 = getBagResult(results, bagSearchAddress, isWeesp);
-
+    const result1 = getMatchingBagResult(results, bagSearchAddress, isWeesp);
     if (result1 && result1.adres && result1.centroid) {
-      const [lng, lat] = result1.centroid;
-      return { lat, lng };
+      return getLatLngWithAddress(result1);
     }
   }
   return null;

@@ -5,9 +5,11 @@ import {
   LocationModalProps,
 } from '../../components/LocationModal/LocationModal';
 
-interface LocationProps extends LocationModalProps {
+interface LocationProps extends Omit<LocationModalProps, 'address'> {
   // Text content above the "Modal open" link
   text?: string;
+  // An address
+  location: LocationModalProps['address'];
 }
 
 export function Location({
@@ -33,7 +35,7 @@ export function Location({
             modalTitle={modalTitle}
             trackPageViewTitle={trackPageViewTitle}
             trackPageViewUrl={trackPageViewUrl}
-            location={location}
+            address={location}
           />
         </>
       }
