@@ -131,7 +131,6 @@ export function createLogoutHandler(
   doIDPLogout: boolean = true
 ) {
   return async (req: AuthenticatedRequest, res: Response) => {
-    console.log(postLogoutRedirectUrl, doIDPLogout, req.oidc.isAuthenticated());
     if (req.oidc.isAuthenticated() && doIDPLogout) {
       const auth = getAuth(req);
       if (auth) {
