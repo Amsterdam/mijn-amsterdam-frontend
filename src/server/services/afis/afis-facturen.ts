@@ -326,9 +326,6 @@ function determineFactuurStatus(
         DUNNING_BLOCKING_LEVEL_OVERGEDRAGEN_AAN_BELASTINGEN:
       return 'overgedragen-aan-belastingen';
 
-    case sourceInvoice.IsCleared && sourceInvoice.DunningLevel === 0:
-      return 'betaald';
-
     case amountPayed.lt(0):
       return 'geld-terug';
 
@@ -349,8 +346,11 @@ function determineFactuurStatus(
       !sourceInvoice.Paylink:
       return 'handmatig-betalen';
 
-    case sourceInvoice.IsCleared === false && sourceInvoice.DunningLevel === 0:
+    case sourceInvoice.IsCleared === false:
       return 'openstaand';
+
+    case sourceInvoice.IsCleared === true:
+      return 'betaald';
 
     default:
       captureMessage(
