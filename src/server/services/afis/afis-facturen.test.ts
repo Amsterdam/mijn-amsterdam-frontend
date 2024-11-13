@@ -54,7 +54,9 @@ const ROUTES = {
     );
   },
   afgehandeldeFacturen: (uri: string) => {
-    return decodeURI(uri).includes('and IsCleared eq true');
+    return decodeURI(uri).includes(
+      `and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
+    );
   },
   overgedragenFacturen: (uri: string) => {
     return decodeURI(uri).includes(
@@ -67,6 +69,10 @@ const ROUTES = {
   documentID: (uri: string) => {
     return decodeURI(uri).includes('ZFI_CDS_TOA02');
   },
+  deelbetalingen: (uri: string) =>
+    decodeURI(uri).includes(
+      `IsCleared eq false and InvoiceReference ne '' and (AccountingDocumentType eq 'AB')`
+    ),
 };
 
 describe('afis-facturen', async () => {
@@ -89,7 +95,7 @@ describe('afis-facturen', async () => {
             content: {
               properties: {
                 InvoiceReference: '1234567890',
-                AmountInBalanceTransacCrcy: '27.50',
+                AmountInBalanceTransacCrcy: '-27.50',
               },
             },
           },
@@ -97,13 +103,7 @@ describe('afis-facturen', async () => {
       },
     };
 
-    remoteApi
-      .get((uri) =>
-        decodeURI(uri).includes(
-          `IsCleared eq false and (AccountingDocumentType eq 'AB')`
-        )
-      )
-      .reply(200, deelbetalingenResponse);
+    remoteApi.get(ROUTES.deelbetalingen).reply(200, deelbetalingenResponse);
 
     const response = await fetchAfisFacturen(
       REQUEST_ID,
@@ -118,8 +118,8 @@ describe('afis-facturen', async () => {
         "afzender": "Bedrijf: Ok",
         "amountOriginal": "343.00",
         "amountOriginalFormatted": "€ 343,00",
-        "amountPayed": "370.50",
-        "amountPayedFormatted": "€ 370,50",
+        "amountPayed": "315.50",
+        "amountPayedFormatted": "€ 315,50",
         "datePublished": "2023-11-21T00:00:00",
         "datePublishedFormatted": "21 november 2023",
         "debtClearingDate": null,
@@ -136,7 +136,7 @@ describe('afis-facturen', async () => {
         "paymentDueDate": "2023-12-21T00:00:00",
         "paymentDueDateFormatted": "21 december 2023",
         "status": "gedeeltelijke-betaling",
-        "statusDescription": "Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 370,50 over onder vermelding van de gegevens op uw factuur.",
+        "statusDescription": "Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 315,50 over onder vermelding van de gegevens op uw factuur.",
       }
     `);
 
@@ -158,6 +158,16 @@ describe('afis-facturen', async () => {
   });
 
   test('Afgehandelde factuur data is transformed and url is correctly formatted', async () => {
+    const deelbetalingenResponse: AfisInvoicesPartialPaymentsSource = {};
+
+    remoteApi
+      .get((uri) =>
+        decodeURI(uri).includes(
+          `IsCleared eq false and (AccountingDocumentType eq 'AB')`
+        )
+      )
+      .reply(200, deelbetalingenResponse);
+
     remoteApi
       .get(ROUTES.afgehandeldeFacturen)
       .reply(200, AFIS_AFGEHANDELDE_FACTUREN);
@@ -668,7 +678,7 @@ describe('afis-facturen', async () => {
     remoteApi
       .get((uri) =>
         decodeURI(uri).includes(
-          `IsCleared eq false and (AccountingDocumentType eq 'AB')`
+          `IsCleared eq false and InvoiceReference ne '' and (AccountingDocumentType eq 'AB')`
         )
       )
       .reply(200, deelbetalingenResponse);
@@ -717,6 +727,8 @@ describe('afis-facturen', async () => {
     });
 
     test('fetchAfisFacturenOverview', async () => {
+      // remoteApi.get(ROUTES.deelbetalingen).times(3).reply(200, {});
+
       remoteApi.get(ROUTES.openstaandeFacturen).reply(200, {
         feed: {
           entry: [factuur()],
