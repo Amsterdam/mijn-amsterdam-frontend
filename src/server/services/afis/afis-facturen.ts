@@ -335,9 +335,6 @@ function determineFactuurStatus(
       (sourceInvoice.DunningLevel == 1 || sourceInvoice.DunningLevel == 2):
       return 'herinnering';
 
-    case sourceInvoice.IsCleared === false && hasDeelbetaling:
-      return 'gedeeltelijke-betaling';
-
     case !!sourceInvoice.SEPAMandate && sourceInvoice.PaymentMethod !== 'B':
       return 'automatische-incasso';
 
@@ -345,6 +342,9 @@ function determineFactuurStatus(
       sourceInvoice.PaymentMethod === 'B' &&
       !sourceInvoice.Paylink:
       return 'handmatig-betalen';
+
+    case hasDeelbetaling:
+      return 'gedeeltelijke-betaling';
 
     case sourceInvoice.IsCleared === false:
       return 'openstaand';
