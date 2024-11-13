@@ -1,3 +1,5 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   formatBirthdate,
@@ -13,7 +15,6 @@ import {
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
-import { LinkdInline } from '../../components/Button/Button';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 
 /**
@@ -87,12 +88,12 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
       value ? (
         <>
           Voor dit adres geldt{' '}
-          <LinkdInline
-            external={true}
+          <Link
+            variant="inline"
             href="https://www.amsterdam.nl/veelgevraagd/geheimhouding-persoonsgegevens-7ed1c"
           >
             geheimhouding
-          </LinkdInline>
+          </Link>
         </>
       ) : null,
   ],

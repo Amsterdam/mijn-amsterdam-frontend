@@ -1,5 +1,6 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import GenericBase from './GenericBase';
-import { LinkdInline } from '../../../Button/Button';
 
 const afvalUrls: Record<string, string> = {
   rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval',
@@ -12,12 +13,14 @@ const afvalUrls: Record<string, string> = {
 };
 
 interface MyArePanelContentAfvalProps {
-  panelItem: any;
-  datasetId: string;
+  panelItem: {
+    fractieOmschrijving: string;
+    serienummer: string;
+    geadopteerdInd: boolean;
+  };
 }
 
 export default function MyArePanelContentAfval({
-  datasetId,
   panelItem,
 }: MyArePanelContentAfvalProps) {
   const infoUrl =
@@ -35,20 +38,20 @@ export default function MyArePanelContentAfval({
           <p>
             Deze container kunt u adopteren!
             <br />{' '}
-            <LinkdInline
-              external={true}
+            <Link
+              variant="inline"
               href="https://www.amsterdam.nl/veelgevraagd/ondergrondse-afvalcontainer-adopteren-a188d"
             >
               Lees hier hoe
-            </LinkdInline>
+            </Link>
           </p>
         )}
       {!!infoUrl && (
         <p>
           Wat mag er{' '}
-          <LinkdInline external={true} href={infoUrl}>
+          <Link variant="inline" href={infoUrl}>
             niet
-          </LinkdInline>{' '}
+          </Link>{' '}
           in de container?
         </p>
       )}

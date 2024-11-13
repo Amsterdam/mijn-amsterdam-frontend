@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { Link, Button } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './ErrorMessages.module.scss';
@@ -8,7 +9,6 @@ import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useSessionStorage } from '../../hooks/storage.hook';
-import { Button, IconButton, LinkdInline } from '../Button/Button';
 import { Modal } from '../Modal/Modal';
 
 interface ComponentProps {
@@ -55,8 +55,7 @@ export default function ErrorMessages({
         <span className={styles.MessageBarInner}>
           <IconAlert aria-hidden="true" className={styles.AlertIcon} /> {title}{' '}
           <Button
-            lean={true}
-            variant="inline"
+            variant="secondary"
             onClick={() => setModalOpen(true)}
             aria-label="Meer informatie over waarom u misschien niet alle gegevens ziet."
           >
@@ -65,7 +64,7 @@ export default function ErrorMessages({
           .
         </span>
 
-        <IconButton
+        <Button
           icon={IconClose}
           className={styles.CloseButton}
           onClick={() => setDismissed(true)}
@@ -80,13 +79,13 @@ export default function ErrorMessages({
             <p>
               Probeer het later nog eens.{' '}
               {isAllErrorMessage ? (
-                <LinkdInline
-                  external={true}
+                <Link
+                  variant="inline"
                   role="button"
                   onClick={() => session.logout()}
                 >
                   Uitloggen
-                </LinkdInline>
+                </Link>
               ) : (
                 ''
               )}

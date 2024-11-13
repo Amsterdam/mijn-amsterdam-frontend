@@ -39,7 +39,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -75,50 +75,16 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/werk-inkomen"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Algemene informatie over Werk en Inkomen
         </a>
         <br />
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/werk-inkomen/contact/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Contact Werk en Inkomen
         </a>
       </p>
@@ -590,7 +556,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                     class="_DocumentLinkWrap_81c3b4"
                   >
                     <a
-                      class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                      class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                       href="/wpi/document/id"
                     >
                       <span
@@ -715,7 +681,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                     class="_DocumentLinkWrap_81c3b4"
                   >
                     <a
-                      class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                      class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                       href="/wpi/document/id"
                     >
                       <span
@@ -792,7 +758,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -828,50 +794,16 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/werk-inkomen"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Algemene informatie over Werk en Inkomen
         </a>
         <br />
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/werk-inkomen/contact/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Contact Werk en Inkomen
         </a>
       </p>
@@ -1072,7 +1004,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                     class="_DocumentLinkWrap_81c3b4"
                   >
                     <a
-                      class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                      class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                       href="/wpi/document/id"
                     >
                       <span
@@ -1197,7 +1129,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                     class="_DocumentLinkWrap_81c3b4"
                   >
                     <a
-                      class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                      class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                       href="/wpi/document/id"
                     >
                       <span

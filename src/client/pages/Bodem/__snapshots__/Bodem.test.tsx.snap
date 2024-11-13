@@ -32,7 +32,7 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -68,26 +68,9 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over lood in de bodem.
         </a>
       </p>
@@ -165,25 +148,9 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
                     Adres:
                   </span>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/lood-meting/OL-001478"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Schipluidenlaan 12A
                   </a>
                 </td>
@@ -290,25 +257,9 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
                     Adres:
                   </span>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/lood-meting/OL-001475"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Schipluidenlaan 16A
                   </a>
                 </td>
@@ -349,25 +300,9 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
                     Adres:
                   </span>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/lood-meting/OL-001471"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Schipluidenlaan 16A
                   </a>
                 </td>
@@ -437,7 +372,7 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -473,26 +408,9 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over lood in de bodem.
         </a>
       </p>

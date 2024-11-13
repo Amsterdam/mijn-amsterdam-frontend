@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Link } from '@amsterdam/design-system-react';
 import { animated, useSpring } from '@react-spring/web';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -19,9 +19,9 @@ import { useContentDimensions } from '../../hooks/useContentDimensions';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { trackEvent } from '../../utils/monitoring';
 import { isInteralUrl } from '../../utils/utils';
-import Linkd from '../Button/Button';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import ThemaIcon from '../ThemaIcon/ThemaIcon';
+import { MaLink } from '../MaLink/MaLink';
 
 export interface MyNotification extends MyNotificationBase {
   Icon?: SVGComponent;
@@ -148,10 +148,10 @@ const Notification = ({
                     label={notification.link.title}
                   />
                 ) : (
-                  <Linkd
+                  <MaLink
                     title={`Meer informatie over de melding: ${notification.title}`}
                     href={notification.customLink ? '#' : notification.link?.to}
-                    external={isLinkExternal}
+                    isExternal={isLinkExternal}
                     onClick={() => {
                       trackItemClick(
                         notification.link?.to || '#',
@@ -173,7 +173,7 @@ const Notification = ({
                   >
                     {(notification.link || notification.customLink)?.title ||
                       'Meer informatie over ' + notification.title}
-                  </Linkd>
+                  </MaLink>
                 )}
               </p>
               {notification.isTip && notification.tipReason && (

@@ -1,9 +1,10 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -54,12 +55,9 @@ export default function Bodem() {
       <PageContent>
         <p>Op deze pagina vindt u informatie over uw lood in de bodem-check.</p>
         <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
-          >
+          <Link href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/">
             Meer informatie over lood in de bodem.
-          </Linkd>
+          </Link>
         </p>
         {isError(BODEM) && (
           <ErrorAlert>

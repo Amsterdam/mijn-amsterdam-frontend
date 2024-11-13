@@ -6,9 +6,9 @@ import composeClassNames from 'classnames';
 import styles from './PageHeading.module.scss';
 import { ComponentChildren, LinkProps } from '../../../universal/types';
 import { IconChevronLeft } from '../../assets/icons';
-import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
-
+import { ButtonBody } from '../Button/Button';
+import { MaLink } from '../MaLink/MaLink';
 export interface PageHeadingProps
   extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
   children: ComponentChildren;
@@ -42,13 +42,10 @@ export default function PageHeading({
       )}
       <div className={styles.HeadingInner}>
         {!!backLink && (
-          <Linkd
-            icon={IconChevronLeft}
-            className={styles.BackLink}
-            href={backLink.to}
-          >
+          <MaLink className={styles.BackLink} href={backLink.to}>
+            <ButtonBody icon={IconChevronLeft} iconPosition={'left'} />
             {backLink.title}
-          </Linkd>
+          </MaLink>
         )}
         <Heading level={2} size="level-1">
           {isLoading ? (

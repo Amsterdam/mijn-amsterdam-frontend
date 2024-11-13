@@ -39,7 +39,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/inkomen"
         >
           <svg
@@ -80,14 +80,19 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
       </h3>
       <button
         aria-expanded="false"
-        class="_Button_c3ab45 _Button__secondary-inverted_c3ab45 _SearchButton_028dc4"
+        class="ams-button ams-button--secondary _SearchButton_028dc4"
+        type="button"
       >
         Zoeken
-        <i
-          class="_SearchButtonIcon_028dc4"
+        <span
+          class="ams-icon ams-icon--size-5"
         >
-          ◢
-        </i>
+          <i
+            class="_SearchButtonIcon_028dc4"
+          >
+            ◢
+          </i>
+        </span>
       </button>
       <table
         class="_Table_a66dcc _SpecificationsTable_028dc4"
@@ -144,7 +149,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -205,7 +210,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -266,7 +271,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -327,7 +332,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -402,7 +407,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/inkomen"
         >
           <svg
@@ -443,14 +448,19 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
       </h3>
       <button
         aria-expanded="false"
-        class="_Button_c3ab45 _Button__secondary-inverted_c3ab45 _SearchButton_028dc4"
+        class="ams-button ams-button--secondary _SearchButton_028dc4"
+        type="button"
       >
         Zoeken
-        <i
-          class="_SearchButtonIcon_028dc4"
+        <span
+          class="ams-icon ams-icon--size-5"
         >
-          ◢
-        </i>
+          <i
+            class="_SearchButtonIcon_028dc4"
+          >
+            ◢
+          </i>
+        </span>
       </button>
       <table
         class="_Table_a66dcc _SpecificationsTable_028dc4"
@@ -524,7 +534,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -597,7 +607,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -670,7 +680,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -743,7 +753,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -816,7 +826,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -889,7 +899,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -962,7 +972,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -1035,7 +1045,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -1108,7 +1118,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span
@@ -1181,7 +1191,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                 >
                   <span

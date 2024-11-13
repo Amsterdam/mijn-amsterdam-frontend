@@ -31,7 +31,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -67,50 +67,16 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/afval/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over regels voor afval en hergebruik
         </a>
         <br />
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Doe een melding als afval is blijven liggen
         </a>
       </p>
@@ -138,9 +104,8 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
             </strong>
              Klopt dit niet? 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
-              rel="external noopener noreferrer"
             >
               Geef het door
             </a>
@@ -228,9 +193,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
               <dt>
                 Waar
               </dt>
-              <dd>
-                Aan de rand van de stoep of op de vaste plek
-              </dd>
+              <dd />
             </dl>
           </article>
           <article
@@ -368,7 +331,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -500,7 +463,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -564,7 +527,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -576,7 +539,8 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       </div>
       <p>
         <button
-          class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
+          class="ams-button ams-button--primary _ContactLink_3a64c8"
+          type="button"
         >
           Klopt de informatie niet? Geef het door
         </button>
@@ -586,25 +550,9 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       </h3>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Kaart met containers in de buurt
         </a>
       </p>
@@ -616,26 +564,9 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       >
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--standalone"
             href="http://example.org/afvalpunt"
-            rel="external noopener noreferrer"
           >
-            <svg
-              aria-hidden="true"
-              aria-label="chevron-rechts-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <polygon
-                points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-              />
-            </svg>
             De afvalpuntenweg
             <span
               class="_DistanceToHome_3a64c8"
@@ -681,7 +612,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -750,9 +681,8 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
           >
             Let op deze regels gaan over uw woonadres. Lees hier 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
-              rel="external noopener noreferrer"
             >
               regels over bedrijfsafval in Amsterdam
             </a>
@@ -762,50 +692,16 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       </section>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/afval/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over regels voor afval en hergebruik
         </a>
         <br />
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Doe een melding als afval is blijven liggen
         </a>
       </p>
@@ -907,9 +803,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
               <dt>
                 Waar
               </dt>
-              <dd>
-                Aan de rand van de stoep of op de vaste plek
-              </dd>
+              <dd />
             </dl>
           </article>
           <article
@@ -1047,7 +941,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -1179,7 +1073,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -1243,7 +1137,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -1255,7 +1149,8 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       </div>
       <p>
         <button
-          class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
+          class="ams-button ams-button--primary _ContactLink_3a64c8"
+          type="button"
         >
           Klopt de informatie niet? Geef het door
         </button>
@@ -1265,25 +1160,9 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       </h3>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Kaart met containers in de buurt
         </a>
       </p>
@@ -1295,26 +1174,9 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       >
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--standalone"
             href="http://example.org/afvalpunt"
-            rel="external noopener noreferrer"
           >
-            <svg
-              aria-hidden="true"
-              aria-label="chevron-rechts-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <polygon
-                points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-              />
-            </svg>
             De afvalpuntenweg
             <span
               class="_DistanceToHome_3a64c8"
@@ -1360,7 +1222,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -1429,9 +1291,8 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
           >
             Let op deze regels gaan over uw woonadres. Lees hier 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
-              rel="external noopener noreferrer"
             >
               regels over bedrijfsafval in Amsterdam
             </a>
@@ -1441,50 +1302,16 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
       </section>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/afval/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over regels voor afval en hergebruik
         </a>
         <br />
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Doe een melding als afval is blijven liggen
         </a>
       </p>
@@ -1512,9 +1339,8 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
             </strong>
              Klopt dit niet? 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
-              rel="external noopener noreferrer"
             >
               Geef het door
             </a>
@@ -1569,7 +1395,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -1638,9 +1464,8 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
           >
             Let op deze regels gaan over uw woonadres. Lees hier 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
-              rel="external noopener noreferrer"
             >
               regels over bedrijfsafval in Amsterdam
             </a>
@@ -1650,50 +1475,16 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       </section>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/afval/"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over regels voor afval en hergebruik
         </a>
         <br />
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Doe een melding als afval is blijven liggen
         </a>
       </p>
@@ -1721,9 +1512,8 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
             </strong>
              Klopt dit niet? 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
-              rel="external noopener noreferrer"
             >
               Geef het door
             </a>
@@ -1811,9 +1601,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
               <dt>
                 Waar
               </dt>
-              <dd>
-                Aan de rand van de stoep of op de vaste plek
-              </dd>
+              <dd />
             </dl>
           </article>
           <article
@@ -1951,7 +1739,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -2083,7 +1871,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -2147,7 +1935,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
               </dt>
               <dd>
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--standalone"
                   href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
                 >
                   Kaart met containers in de buurt
@@ -2159,7 +1947,8 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       </div>
       <p>
         <button
-          class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
+          class="ams-button ams-button--primary _ContactLink_3a64c8"
+          type="button"
         >
           Klopt de informatie niet? Geef het door
         </button>
@@ -2169,25 +1958,9 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       </h3>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Kaart met containers in de buurt
         </a>
       </p>
@@ -2199,26 +1972,9 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       >
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--standalone"
             href="http://example.org/afvalpunt"
-            rel="external noopener noreferrer"
           >
-            <svg
-              aria-hidden="true"
-              aria-label="chevron-rechts-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <polygon
-                points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-              />
-            </svg>
             De afvalpuntenweg
             <span
               class="_DistanceToHome_3a64c8"

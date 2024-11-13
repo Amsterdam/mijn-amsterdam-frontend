@@ -1,10 +1,11 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import styles from './Bezwaren.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -52,12 +53,9 @@ export default function BEZWAREN() {
       <PageContent>
         <p>Hier ziet u een overzicht van uw ingediende bezwaren.</p>
         <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          >
+          <Link href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898">
             Meer informatie over Bezwaar maken
-          </Linkd>
+          </Link>
         </p>
         {isError(BEZWAREN) && (
           <ErrorAlert>We kunnen op dit moment geen bezwaren tonen.</ErrorAlert>

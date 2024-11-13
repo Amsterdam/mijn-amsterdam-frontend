@@ -110,26 +110,10 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   class="_Action_63df5c"
                 >
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/item-1"
                     title="Meer informatie over de melding: Notification"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Linkje!
                   </a>
                 </p>
@@ -216,26 +200,10 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   class="_Action_63df5c"
                 >
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/item-2"
                     title="Meer informatie over de melding: Notification"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Linkje!
                   </a>
                 </p>
@@ -330,26 +298,10 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   class="_Action_63df5c"
                 >
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/item-3"
                     title="Meer informatie over de melding: Notification"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Linkje!
                   </a>
                 </p>
@@ -484,26 +436,10 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   class="_Action_63df5c"
                 >
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/"
+                    class="ams-link ams-link--standalone"
+                    href="#"
                     title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Laat ons weten wat u ervan vindt
                   </a>
                 </p>
@@ -525,7 +461,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </h3>
           <a
             aria-label="Dit ziet u in Mijn Amsterdam"
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _GeneralInfoLink_db9f57"
+            class="ams-link ams-link--standalone _GeneralInfoLink_db9f57"
             href="/uitleg"
           >
             <svg
@@ -742,7 +678,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
       >
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--inline"
             href="/uitleg"
             id="Uitleg"
           >
@@ -751,9 +687,8 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         </li>
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--inline"
             href="https://www.amsterdam.nl/sbl/"
-            rel="external noopener noreferrer"
           >
             <svg
               aria-hidden="true"
@@ -782,9 +717,8 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         </li>
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--inline"
             href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
-            rel="external noopener noreferrer"
           >
             <svg
               aria-hidden="true"
@@ -813,9 +747,8 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         </li>
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--inline"
             href="https://mijn.overheid.nl/berichtenbox/inbox/"
-            rel="external noopener noreferrer"
           >
             <svg
               aria-hidden="true"
@@ -844,9 +777,8 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         </li>
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--inline"
             href="https://www.amsterdam.nl"
-            rel="external noopener noreferrer"
           >
             <svg
               aria-hidden="true"
@@ -875,9 +807,8 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         </li>
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--inline"
             href="https://www.amsterdam.nl/parkeren-verkeer/taxi/"
-            rel="external noopener noreferrer"
           >
             <svg
               aria-hidden="true"
@@ -906,9 +837,8 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         </li>
         <li>
           <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+            class="ams-link ams-link--inline"
             href="https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/"
-            rel="external noopener noreferrer"
           >
             <svg
               aria-hidden="true"

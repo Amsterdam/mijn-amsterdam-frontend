@@ -7,7 +7,8 @@ import { LINKS } from './DirectLinks.constants';
 import styles from './DirectLinks.module.scss';
 import { entries } from '../../../universal/helpers/utils';
 import { IconExternalLink } from '../../assets/icons';
-import Linkd from '../Button/Button';
+import { ButtonBody } from '../Button/Button';
+import { MaLink } from '../MaLink/MaLink';
 
 export default function DirectLinks({
   id = 'DirectLinks',
@@ -31,14 +32,20 @@ export default function DirectLinks({
             const [linkName, { url, title, isExternalLink, id }] = link;
             return (
               <li key={linkName}>
-                <Linkd
-                  icon={isExternalLink ? IconExternalLink : ''}
+                <MaLink
                   id={id}
                   href={url}
-                  external={isExternalLink}
+                  isExternal={isExternalLink}
+                  variant={'inline'}
                 >
-                  {title}
-                </Linkd>
+                  {isExternalLink ? (
+                    <ButtonBody iconPosition="left" icon={IconExternalLink}>
+                      {title}
+                    </ButtonBody>
+                  ) : (
+                    title
+                  )}
+                </MaLink>
               </li>
             );
           })}

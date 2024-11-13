@@ -51,7 +51,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -87,26 +87,9 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over Bezwaar maken
         </a>
       </p>
@@ -293,7 +276,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -329,26 +312,9 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over Bezwaar maken
         </a>
       </p>
@@ -496,7 +462,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -532,26 +498,9 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--standalone"
           href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over Bezwaar maken
         </a>
       </p>
@@ -629,25 +578,9 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                     Zaaknummer:
                   </span>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     BI.21.014121.001
                   </a>
                 </td>

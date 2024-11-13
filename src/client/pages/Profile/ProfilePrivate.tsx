@@ -1,6 +1,10 @@
 import { useEffect, useMemo } from 'react';
 
-import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert as DSAlert,
+  Link,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import { formatBrpProfileData } from './formatDataPrivate';
@@ -25,7 +29,6 @@ import {
   ErrorAlert,
   InfoPanel,
   InfoPanelCollapsible,
-  LinkdInline,
   LoadingContent,
   MaintenanceNotifications,
   PageContent,
@@ -75,12 +78,9 @@ export default function Profile() {
           wozWaarde: (
             <>
               Te vinden op{' '}
-              <LinkdInline
-                external={true}
-                href="https://www.wozwaardeloket.nl/"
-              >
+              <Link variant="inline" href="https://www.wozwaardeloket.nl/">
                 WOZ-waardeloket
-              </LinkdInline>
+              </Link>
             </>
           ),
         },
@@ -171,13 +171,13 @@ export default function Profile() {
             meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen
             paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres
             zo snel mogelijk door aan de gemeente.{' '}
-            <LinkdInline
-              external={true}
+            <Link
+              variant="inline"
               aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
             >
               Meer informatie
-            </LinkdInline>
+            </Link>
           </ErrorAlert>
         )}
 
@@ -199,13 +199,13 @@ export default function Profile() {
                   dit moment onderzoeken wij op welk adres u nu woont.
                 </>
               )}{' '}
-              <LinkdInline
-                external={true}
+              <Link
+                variant="inline"
                 href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
               >
                 Kijk voor meer informatie over een adresonderzoek op
                 amsterdam.nl
-              </LinkdInline>
+              </Link>
               .
             </Paragraph>
             <Paragraph>
@@ -291,9 +291,9 @@ export default function Profile() {
             Het is helaas niet mogelijk om de gegevens van een levenloos geboren
             kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
             in{' '}
-            <LinkdInline href="https://mijn.overheid.nl" external={true}>
+            <Link variant="inline" href="https://mijn.overheid.nl">
               MijnOverheid
-            </LinkdInline>
+            </Link>
             .
           </p>
           <p className={styles.SuppressedParagraph}>

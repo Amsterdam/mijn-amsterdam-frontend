@@ -31,7 +31,7 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -188,9 +188,8 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
               >
                 U heeft een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen. 
                 <a
-                  class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                  class="ams-link ams-link--inline"
                   href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
-                  rel="external noopener noreferrer"
                 >
                   Meer informatie over voorwaarden vakantieverhuur
                 </a>

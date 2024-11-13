@@ -45,23 +45,24 @@
 }
 
 .SearchButton {
-  margin-bottom: 2rem;
+  &:global(.ams-button--secondary) {
+    margin-bottom: 2rem;
+  }
 
   @include media-q('>=phone') {
     float: right;
   }
 
   i {
-    height: 1.3rem;
     font-style: normal;
     position: relative;
-    transform: rotate(45deg) translateY(-0.6rem) scale(0.6);
+    transform: rotate(45deg) translateY(-0.5rem) scale(0.6);
     transform-origin: center;
   }
 
   &Active {
     i {
-      transform: rotate(-135deg) translateY(-0.2rem) scale(0.6)
+      transform: rotate(-135deg) scale(0.6) translateY(0.5rem)
         translateX(-0.8rem);
     }
   }

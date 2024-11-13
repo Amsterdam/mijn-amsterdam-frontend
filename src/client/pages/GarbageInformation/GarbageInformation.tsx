@@ -1,4 +1,5 @@
 import { Link } from '@amsterdam/design-system-react';
+import { Button } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './GarbageInformation.module.scss';
@@ -18,13 +19,10 @@ import {
   IconAfvalTextiel,
 } from '../../assets/icons/map';
 import {
-  Button,
   DetailPage,
   ErrorAlert,
   InfoDetail,
   InnerHtml,
-  Linkd,
-  LinkdInline,
   LoadingContent,
   MaintenanceNotifications,
   PageContent,
@@ -33,6 +31,7 @@ import {
 } from '../../components';
 import { ButtonBody, buttonStyle } from '../../components/Button/Button';
 import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
+import { MaLink } from '../../components/MaLink/MaLink';
 import { ExternalUrls } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -52,7 +51,7 @@ function ButtonLink({
   href,
   external,
 }: {
-  children: any;
+  children: React.ReactNode;
   href: string;
   external: boolean;
 }) {
@@ -166,15 +165,13 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
         <dl>
           <dt>Waar</dt>
           <dd>
-            {typeof fraction.waar === 'object' ? (
-              <LinkdInline
+            {typeof fraction.waar === 'object' && (
+              <MaLink
                 href={fraction.waar.to}
-                external={!fraction.waar.to.startsWith(AppRoutes.BUURT)}
+                isExternal={!fraction.waar.to.startsWith(AppRoutes.BUURT)}
               >
                 {fraction.waar.title}
-              </LinkdInline>
-            ) : (
-              fraction.waar
+              </MaLink>
             )}
           </dd>
         </dl>
@@ -267,25 +264,22 @@ export default function GarbageInformation() {
           <>
             <p>Dit zijn de afvalregels voor uw adres.</p>
             {!!commercialLocation && !privateIsCommercial && (
-              <ErrorAlert title="Bedrijfsafval informatie" severity="info" >
+              <ErrorAlert title="Bedrijfsafval informatie" severity="info">
                 Let op deze regels gaan over uw woonadres. Lees hier{' '}
-                <LinkdInline
-                  href={ExternalUrls.AFVAL_COMMERCIAL}
-                  external={true}
-                >
+                <Link variant="inline" href={ExternalUrls.AFVAL_COMMERCIAL}>
                   regels over bedrijfsafval in Amsterdam
-                </LinkdInline>
+                </Link>
                 .
               </ErrorAlert>
             )}
             <p>
-              <Linkd href={ExternalUrls.AFVAL} external={true}>
+              <Link href={ExternalUrls.AFVAL}>
                 Meer informatie over regels voor afval en hergebruik
-              </Linkd>
+              </Link>
               <br />
-              <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
+              <Link href={ExternalUrls.AFVAL_MELDING}>
                 Doe een melding als afval is blijven liggen
-              </Linkd>
+              </Link>
             </p>
           </>
         )}
@@ -313,13 +307,13 @@ export default function GarbageInformation() {
               .
             </p>
             <p>
-              <Linkd href={ExternalUrls.AFVAL_COMMERCIAL} external={true}>
+              <Link href={ExternalUrls.AFVAL_COMMERCIAL}>
                 Regels bedrijfsafval in Amsterdam
-              </Linkd>
+              </Link>
               <br />
-              <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
+              <Link href={ExternalUrls.AFVAL_MELDING}>
                 Doe een melding als afval is blijven liggen
-              </Linkd>
+              </Link>
             </p>
           </>
         )}
@@ -348,12 +342,12 @@ export default function GarbageInformation() {
               {heeftGeenWoonfunctie && (
                 <p className={styles.WoonFunctieWaarschuwing}>
                   <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
-                  <LinkdInline
-                    external
+                  <Link
+                    variant="inline"
                     href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
                   >
                     Geef het door
-                  </LinkdInline>
+                  </Link>
                   .
                 </p>
               )}
@@ -383,24 +377,24 @@ export default function GarbageInformation() {
             </p>
             <h3>Afvalcontainers in de buurt</h3>
             <p>
-              <Linkd
+              <Link
                 href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14`}
               >
                 Kaart met containers in de buurt
-              </Linkd>
+              </Link>
             </p>
             <h3>Adressen recyclepunten</h3>
             <ul className={styles.UnstyledList}>
-              {AFVALPUNTEN.content?.centers.map((item, index) => (
+              {AFVALPUNTEN.content?.centers.map((item) => (
                 <li key={item.title}>
-                  <Linkd href={item.website} external={true}>
+                  <Link href={item.website}>
                     {item.title}
                     {item.distance !== 0 && (
                       <span className={styles.DistanceToHome}>
                         +/-{item.distance}KM
                       </span>
                     )}
-                  </Linkd>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -2362,9 +2362,8 @@ exports[`<VergunningDetail /> > BZP - Verleend > should match the full page snap
       >
         U kunt uw kenteken 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/ontheffing-blauwe-zone-aanvragen/#hf1dde781-fd6f-462f-8e9c-6b86d42019b8"
-          rel="external noopener noreferrer"
         >
           hier
         </a>

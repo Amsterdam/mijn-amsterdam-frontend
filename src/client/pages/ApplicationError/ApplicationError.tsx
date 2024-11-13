@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Link } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import type { FallbackProps } from 'react-error-boundary';
 
@@ -8,7 +8,6 @@ import styles from './ApplicationError.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import AmsterdamLogoLarge from '../../assets/images/logo-amsterdam-large.svg?react';
 import AmsterdamLogo from '../../assets/images/logo-amsterdam.svg?react';
-import { LinkdInline } from '../../components';
 import footerStyles from '../../components/MainFooter/MainFooter.module.scss';
 import { PageContent, TextPage } from '../../components/Page/Page';
 import PageHeading from '../../components/PageHeading/PageHeading';
@@ -109,12 +108,12 @@ export default function ApplicationError({ error }: FallbackProps) {
           </Heading>
           <p>
             Kijk bij
-            <LinkdInline
-              external={true}
+            <Link
+              variant="inline"
               href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
             >
               veelgestelde vragen over Mijn Amsterdam
-            </LinkdInline>
+            </Link>
           </p>
         </PageContent>
       </TextPage>

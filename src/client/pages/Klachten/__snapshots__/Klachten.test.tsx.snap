@@ -37,7 +37,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -73,26 +73,9 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over de afhandeling van uw klacht
         </a>
       </p>
@@ -221,7 +204,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -257,26 +240,9 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over de afhandeling van uw klacht
         </a>
       </p>
@@ -354,25 +320,9 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
                     Nummer van uw klacht:
                   </span>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/klachten/klacht/36049"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     36049
                   </a>
                 </td>
@@ -413,25 +363,9 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
                     Nummer van uw klacht:
                   </span>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="/klachten/klacht/36046"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     36046
                   </a>
                 </td>
@@ -506,7 +440,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -542,26 +476,9 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
       </p>
       <p>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-          rel="external noopener noreferrer"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
           Meer informatie over de afhandeling van uw klacht
         </a>
       </p>

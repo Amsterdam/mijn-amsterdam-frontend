@@ -174,9 +174,8 @@ exports[`<Landing /> > Renders without crashing 1`] = `
       >
         Kijk bij 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
-          rel="external noopener noreferrer"
         >
           veelgestelde vragen over Mijn Amsterdam
         </a>

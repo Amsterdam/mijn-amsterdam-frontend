@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Link } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Landing.module.scss';
@@ -8,7 +8,6 @@ import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import {
-  LinkdInline,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
@@ -129,12 +128,12 @@ export default function Landing() {
         </Heading>
         <p className={styles.FaqInfo}>
           Kijk bij{' '}
-          <LinkdInline
-            external={true}
+          <Link
+            variant="inline"
             href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
           >
             veelgestelde vragen over Mijn Amsterdam
-          </LinkdInline>
+          </Link>
         </p>
       </PageContent>
     </TextPage>

@@ -32,7 +32,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/bodem"
         >
           <svg
@@ -112,7 +112,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             class="_DocumentLinkWrap_81c3b4"
           >
             <a
-              class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+              class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
               href="http://localhost:5000/api/v1/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments"
             >
               <span
@@ -320,7 +320,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/bodem"
         >
           <svg
@@ -564,7 +564,7 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/bodem"
         >
           <svg
@@ -798,7 +798,7 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/bodem"
         >
           <svg

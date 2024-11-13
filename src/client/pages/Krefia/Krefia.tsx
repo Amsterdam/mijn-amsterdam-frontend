@@ -1,5 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 
+import { Link } from '@amsterdam/design-system-react';
+
 import styles from './Krefia.module.scss';
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -7,8 +9,6 @@ import { isLoading, isError } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
   ThemaIcon,
-  Linkd,
-  LinkdInline,
   LoadingContent,
   OverviewPage,
   PageContent,
@@ -49,9 +49,9 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
         {
           ...link,
           to: (
-            <LinkdInline external={true} href={link.url}>
+            <Link variant="inline" href={link.url}>
               {linkText}
-            </LinkdInline>
+            </Link>
           ),
         },
       ];
@@ -105,23 +105,17 @@ export default function Krefia() {
         <p>
           {(isKredietbank || showText) && (
             <>
-              <Linkd
-                external={true}
-                href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
-              >
+              <Link href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/">
                 Meer informatie over Kredietbank Amsterdam
-              </Linkd>
+              </Link>
               <br />
             </>
           )}
 
           {(isFIBU || showText) && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer"
-            >
+            <Link href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer">
               Meer informatie over Budgetbeheer (FIBU)
-            </Linkd>
+            </Link>
           )}
         </p>
         {isError(KREFIA) && (

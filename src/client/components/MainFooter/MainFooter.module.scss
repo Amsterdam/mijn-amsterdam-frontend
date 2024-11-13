@@ -4,22 +4,37 @@
 }
 
 .FooterTop {
+  :global(.ams-link-list__link--on-background-dark) {
+    color: $color-white;
+
+    &:hover {
+      color: $color-white;
+      text-decoration-color: $color-white;
+      outline-offset: var(--ams-link-list-link-outline-offset);
+      text-decoration-line: var(--ams-link-standalone-text-decoration-line);
+      text-decoration-thickness: var(
+        --ams-link-standalone-text-decoration-thickness
+      );
+      text-underline-offset: var(--ams-link-standalone-text-underline-offset);
+    }
+  }
+
   .Paragraph a {
     outline-offset: var(--ams-link-list-link-outline-offset);
     text-decoration-line: var(--ams-link-standalone-text-decoration-line);
-    text-decoration-thickness: var(
-      --ams-link-standalone-text-decoration-thickness
-    );
     text-underline-offset: var(--ams-link-standalone-text-underline-offset);
+
     &:hover {
       text-decoration-thickness: var(
         --ams-link-standalone-hover-text-decoration-thickness
       );
-      text-underline-offset: var(
-        --ams-link-standalone-hover-text-underline-offset
-      );
     }
   }
+
+  :global(.ams-link-list__link) {
+    color: $color-white;
+  }
+
   .Link {
     display: flex;
     svg {

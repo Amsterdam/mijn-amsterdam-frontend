@@ -1,11 +1,11 @@
 import classnames from 'classnames';
-import { generatePath } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 
 import styles from './MyNotifications.module.scss';
 import Notification, { MyNotification } from './Notification';
 import { AppRoutes } from '../../../universal/config/routes';
-import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import { MaRouterLink } from '../MaLink/MaLink';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -62,9 +62,9 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={generatePath(AppRoutes.NOTIFICATIONS)}>
+          <MaRouterLink href={generatePath(AppRoutes.NOTIFICATIONS)}>
             Alle updates
-          </Linkd>
+          </MaRouterLink>
         </p>
       )}
     </div>

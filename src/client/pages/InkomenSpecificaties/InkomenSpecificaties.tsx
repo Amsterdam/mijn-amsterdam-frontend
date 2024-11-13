@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { Button } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { parseISO } from 'date-fns';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
@@ -10,7 +11,6 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  Button,
   ThemaIcon,
   DateInput,
   OverviewPage,
@@ -198,16 +198,14 @@ export default function InkomenSpecificaties() {
         noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
       >
         <Button
-          variant="secondary-inverted"
+          variant="secondary"
           className={classnames(
             styles.SearchButton,
             isSearchPanelActive && styles.SearchButtonActive
           )}
           onClick={toggleSearchPanel}
-          disabled={isSearchPanelActive}
-          icon={Caret}
-          iconPosition="right"
           aria-expanded={isSearchPanelActive}
+          icon={Caret}
         >
           Zoeken
         </Button>
@@ -305,11 +303,7 @@ export default function InkomenSpecificaties() {
         {!itemsFiltered.length && (
           <p>
             Zoeken heeft geen resultaten opgeleverd.{' '}
-            <Button
-              onClick={resetSearch}
-              variant="inline"
-              className={styles.ResetButton}
-            >
+            <Button onClick={resetSearch} className={styles.ResetButton}>
               Resetten
             </Button>
           </p>

@@ -17,7 +17,7 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
     >
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="/uitleg"
           id="Uitleg"
         >
@@ -26,9 +26,8 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/sbl/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -57,9 +56,8 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -88,9 +86,8 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.digitaleoverheid.nl/overzicht-van-alle-onderwerpen/berichtenbox-voor-bedrijven/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -119,9 +116,8 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -150,9 +146,8 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/parkeren-verkeer/taxi/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -181,9 +176,8 @@ exports[`<DirectLinks /> > renders commercial links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -232,7 +226,7 @@ exports[`<DirectLinks /> > renders private links 1`] = `
     >
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="/uitleg"
           id="Uitleg"
         >
@@ -241,9 +235,8 @@ exports[`<DirectLinks /> > renders private links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/sbl/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -272,9 +265,8 @@ exports[`<DirectLinks /> > renders private links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -303,9 +295,8 @@ exports[`<DirectLinks /> > renders private links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl/berichtenbox/inbox/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -334,9 +325,8 @@ exports[`<DirectLinks /> > renders private links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -365,9 +355,8 @@ exports[`<DirectLinks /> > renders private links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/parkeren-verkeer/taxi/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"
@@ -396,9 +385,8 @@ exports[`<DirectLinks /> > renders private links 1`] = `
       </li>
       <li>
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/"
-          rel="external noopener noreferrer"
         >
           <svg
             aria-hidden="true"

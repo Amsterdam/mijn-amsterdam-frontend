@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Button } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
@@ -22,7 +22,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import { Button, IconButton } from '../Button/Button';
+import { IconButton } from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {

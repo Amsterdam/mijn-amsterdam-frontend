@@ -22,8 +22,9 @@ export default function Menu({ menuItems, themas, isPhoneScreen }: Props) {
           </Heading>
           <MegaMenu.ListCategory>
             {themas.map((thema, index) => {
-              return thema.rel === 'external' ? (
+              return (
                 <MaLink
+                  isExternal={thema.rel === 'external'}
                   key={thema.id}
                   href={thema.to}
                   maVariant="noDefaultUnderline"
@@ -32,15 +33,6 @@ export default function Menu({ menuItems, themas, isPhoneScreen }: Props) {
                 >
                   {thema.title}
                 </MaLink>
-              ) : (
-                <MaRouterLink
-                  key={thema.id}
-                  href={thema.to}
-                  maVariant="noDefaultUnderline"
-                  className={styles.menuItem}
-                >
-                  {thema.title}
-                </MaRouterLink>
               );
             })}
           </MegaMenu.ListCategory>

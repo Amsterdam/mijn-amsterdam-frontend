@@ -8,6 +8,7 @@ type MaClassNameVariant = 'fatNoUnderline' | 'noDefaultUnderline';
 
 type MaLinkProps = LinkProps & {
   maVariant?: MaClassNameVariant;
+  isExternal?: boolean;
 };
 
 const maClassName: Record<MaClassNameVariant, string> = {
@@ -15,7 +16,53 @@ const maClassName: Record<MaClassNameVariant, string> = {
   noDefaultUnderline: 'MaRouterLink__no-default-underline',
 };
 
+/**
+ *
+ * MaLink is used when a link can be either internal or external
+ */
 export function MaLink({
+  href,
+  children,
+  className,
+  onClick,
+  isExternal = false,
+  ...rest
+}: MaLinkProps) {
+  return isExternal ? (
+    <Link {...rest} className={className} href={href} onClick={onClick}>
+      {children}
+    </Link>
+  ) : (
+    <MaRouterLink {...rest} href={href} onClick={onClick}>
+      {children}
+    </MaRouterLink>
+  );
+}
+
+/**
+ * MaRouterLink is used when a link is internal
+ */
+export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
+  const history = useHistory();
+  return (
+    <MaBaseLink
+      {...rest}
+      href={href}
+      onClick={(event) => {
+        if (onClick) {
+          onClick(event);
+        }
+
+        event.preventDefault();
+        history.push(href as string);
+      }}
+    >
+      {rest.children}
+    </MaBaseLink>
+  );
+}
+
+function MaBaseLink({
   href,
   children,
   className,
@@ -33,23 +80,5 @@ export function MaLink({
     <Link {...rest} className={className_} href={href} onClick={onClick}>
       {children}
     </Link>
-  );
-}
-
-export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
-  const history = useHistory();
-  return (
-    <MaLink
-      {...rest}
-      href={href}
-      onClick={(event) => {
-        if (onClick) {
-          onClick(event);
-        }
-
-        event.preventDefault();
-        history.push(href as string);
-      }}
-    />
   );
 }

@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { Link } from '@amsterdam/design-system-react';
+
 import styles from './Vergunningen.module.scss';
 import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -9,7 +11,6 @@ import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  Linkd,
   MaintenanceNotifications,
   PageContent,
   PageHeading,
@@ -110,12 +111,9 @@ export default function Vergunningen() {
           ontheffingen bij gemeente Amsterdam.
         </p>
         <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/ondernemen/vergunningen/wevos/"
-          >
+          <Link href="https://www.amsterdam.nl/ondernemen/vergunningen/wevos/">
             Ontheffing RVV en TVM aanvragen
-          </Linkd>
+          </Link>
         </p>
         <MaintenanceNotifications page="vergunningen" />
         {isError(VERGUNNINGEN) && (

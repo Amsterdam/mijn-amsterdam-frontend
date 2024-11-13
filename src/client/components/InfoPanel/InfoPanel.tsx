@@ -1,4 +1,4 @@
-import { isValidElement, useMemo } from 'react';
+import { isValidElement, ReactNode, useMemo } from 'react';
 
 import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -8,7 +8,7 @@ import styles from './InfoPanel.module.scss';
 import { personalDetailFields } from './personalDetailFields';
 import { entries } from '../../../universal/helpers/utils';
 import { Unshaped } from '../../../universal/types';
-import Linkd from '../Button/Button';
+import { MaLink } from '../MaLink/MaLink';
 import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
 
 export interface ActionLink {
@@ -20,7 +20,7 @@ export interface ActionLink {
 
 export type ActionLinksFormatter =
   | ActionLink[]
-  | ((sourceData: any) => ActionLink[]);
+  | ((sourceData: Unshaped) => ActionLink[]);
 
 export interface InfoPanelActionLinksProps {
   actionLinks: ActionLink[];
@@ -54,31 +54,31 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink) => (
         <li key={actionLink.title}>
-          <Linkd
+          <MaLink
             className={actionLink.className || ''}
             href={actionLink.url}
-            external={actionLink.external}
+            isExternal={actionLink.external}
           >
             {actionLink.title}
-          </Linkd>
+          </MaLink>
         </li>
       ))}
     </ul>
   );
 }
 
-function getValue(value: any) {
+function getValue(value: unknown): ReactNode {
   if (isValidElement(value)) {
     return value;
   }
   if (Array.isArray(value) || typeof value === 'object') {
     try {
       return JSON.stringify(value);
-    } catch (error) {
+    } catch (_error) {
       return '';
     }
   }
-  return value;
+  return String(value ?? '');
 }
 
 function filterValue(
@@ -176,7 +176,6 @@ export function InfoPanelCollapsible({
   className,
   actionLinks = [],
   panelData = {},
-  startCollapsed = true,
 }: InfoPanelCollapsibleProps) {
   return (
     <SectionCollapsible

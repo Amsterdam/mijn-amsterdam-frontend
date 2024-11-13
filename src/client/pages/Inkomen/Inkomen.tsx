@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { Link } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { generatePath } from 'react-router-dom';
 
@@ -9,7 +10,6 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  Linkd,
   MaintenanceNotifications,
   OverviewPage,
   PageContent,
@@ -19,6 +19,7 @@ import {
   ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { ExternalUrls, MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -28,7 +29,6 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
-
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',
   'intrekking',
@@ -158,13 +158,11 @@ export default function Inkomen() {
           ondersteuning die u krijgt omdat u weinig geld hebt.
         </p>
         <p>
-          <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
+          <Link href={ExternalUrls.WPI_ALGEMEEN}>
             Algemene informatie over Werk en Inkomen
-          </Linkd>
+          </Link>
           <br />
-          <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
-            Contact Werk en Inkomen
-          </Linkd>
+          <Link href={ExternalUrls.WPI_CONTACT}>Contact Werk en Inkomen</Link>
         </p>
         <MaintenanceNotifications page="inkomen" />
         {(isError(WPI_AANVRAGEN) ||
@@ -226,7 +224,9 @@ export default function Inkomen() {
         {uitkeringsspecificaties?.length &&
           uitkeringsspecificaties.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
             <p className={styles.ShowAllButtonContainer}>
-              <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
+              <MaRouterLink href={incomSpecificationsRouteMonthly}>
+                Toon alles
+              </MaRouterLink>
             </p>
           )}
       </SectionCollapsible>
@@ -252,7 +252,9 @@ export default function Inkomen() {
         {jaaropgaven?.length &&
           jaaropgaven.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
             <p className={styles.ShowAllButtonContainer}>
-              <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
+              <MaRouterLink href={incomSpecificationsRouteYearly}>
+                Toon alles
+              </MaRouterLink>
             </p>
           )}
       </SectionCollapsible>

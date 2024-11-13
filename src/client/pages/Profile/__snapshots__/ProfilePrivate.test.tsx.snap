@@ -31,7 +31,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -108,9 +108,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -150,9 +149,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           >
             U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -329,26 +327,9 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Inzien of correctie doorgeven
             </a>
           </li>
@@ -431,9 +412,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -448,26 +428,9 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Verhuizing doorgeven
             </a>
           </li>
@@ -648,26 +611,9 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -987,26 +933,9 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -1214,26 +1143,9 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -1681,9 +1593,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -1730,7 +1641,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -1807,9 +1718,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -1849,9 +1759,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -2028,26 +1937,9 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Inzien of correctie doorgeven
             </a>
           </li>
@@ -2130,9 +2022,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -2147,26 +2038,9 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Verhuizing doorgeven
             </a>
           </li>
@@ -2347,26 +2221,9 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -2686,26 +2543,9 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -2913,26 +2753,9 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -3380,9 +3203,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -3429,7 +3251,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -3506,9 +3328,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -3548,9 +3369,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -3741,26 +3561,9 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Inzien of correctie doorgeven
             </a>
           </li>
@@ -3843,9 +3646,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -3860,26 +3662,9 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Verhuizing doorgeven
             </a>
           </li>
@@ -4224,26 +4009,9 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -4479,26 +4247,9 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -4974,9 +4725,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -5023,7 +4773,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -5103,9 +4853,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -5145,9 +4894,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -5400,9 +5148,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -5417,26 +5164,9 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Verhuizing naar Amsterdam doorgeven
             </a>
           </li>
@@ -5478,7 +5208,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -5555,9 +5285,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -5597,9 +5326,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -5776,26 +5504,9 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Inzien of correctie doorgeven
             </a>
           </li>
@@ -5878,9 +5589,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -5895,26 +5605,9 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Verhuizing doorgeven
             </a>
           </li>
@@ -6095,26 +5788,9 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -6434,26 +6110,9 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -6661,26 +6320,9 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -7128,9 +6770,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -7177,7 +6818,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/"
         >
           <svg
@@ -7254,9 +6895,8 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -7296,9 +6936,8 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -7475,26 +7114,9 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Inzien of correctie doorgeven
             </a>
           </li>
@@ -7543,26 +7165,9 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
         >
           <li>
             <a
-              class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+              class="ams-link ams-link--standalone"
               href="https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/"
-              rel="external noopener noreferrer"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="chevron-rechts-icoon"
-                class="_Icon_c3ab45 _Icon__left_c3ab45"
-                fill="#000"
-                focusable="false"
-                height="14px"
-                viewBox="0 0 32 32"
-                width="14px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <polygon
-                  points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                />
-              </svg>
               Verhuizing doorgeven
             </a>
           </li>
@@ -7743,26 +7348,9 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -8082,26 +7670,9 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -8309,26 +7880,9 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
               >
                 <li>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone"
                     href="https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85"
-                    rel="external noopener noreferrer"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     Inzien of correctie doorgeven
                   </a>
                 </li>
@@ -8776,9 +8330,8 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>

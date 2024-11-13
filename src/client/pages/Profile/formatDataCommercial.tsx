@@ -1,3 +1,5 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import { ProfileSection, format } from './formatDataPrivate';
 import type {
   Aandeelhouder,
@@ -17,7 +19,6 @@ import {
   splitCapitals,
 } from '../../../universal/helpers/text';
 import { Adres } from '../../../universal/types';
-import { LinkdInline } from '../../components/Button/Button';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -128,9 +129,9 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   telefoonnummer: [
     'Telefoonnummer',
     (value: string) => (
-      <LinkdInline href={`tel:${value}`} external={true}>
+      <Link variant="inline" href={`tel:${value}`}>
         {value}
-      </LinkdInline>
+      </Link>
     ),
   ],
   websites: [
@@ -140,9 +141,9 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
         <>
           {urls.map((url) => (
             <span key={url}>
-              <LinkdInline key={url} href={url} external={true}>
+              <Link variant="inline" key={url} href={url}>
                 {url.replace(/(https?:\/\/)/, '')}
-              </LinkdInline>
+              </Link>
               <br />
             </span>
           ))}
@@ -153,9 +154,9 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
     'E-mail',
     (value: string) =>
       value ? (
-        <LinkdInline external={true} href={`mailto:${value}`}>
+        <Link variant="inline" href={`mailto:${value}`}>
           {value}
-        </LinkdInline>
+        </Link>
       ) : null,
   ],
   faxnummer: 'Fax',

@@ -1,8 +1,9 @@
+import { Link } from '@amsterdam/design-system-react';
 
 import type { BZB as BZBVergunning } from '../../../../server/services/vergunningen/vergunningen';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import { InnerHtml, LinkdInline } from '../../../components';
+import { InnerHtml } from '../../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';
@@ -27,12 +28,12 @@ function ExpirationNotifications({ id }: { id: string }) {
         <>
           <InnerHtml>{isExpiredNotification.description}</InnerHtml>
           <p>
-            <LinkdInline
-              external
+            <Link
+              variant="inline"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
             >
               Vraag een nieuwe ontheffing aan
-            </LinkdInline>
+            </Link>
           </p>
         </>
       )}
@@ -40,12 +41,12 @@ function ExpirationNotifications({ id }: { id: string }) {
         <>
           <InnerHtml>{willExpireSoonNotification.description}</InnerHtml>
           <p>
-            <LinkdInline
-              external
+            <Link
+              variant="inline"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
             >
               Vraag op tijd een nieuwe ontheffing aan
-            </LinkdInline>
+            </Link>
           </p>
         </>
       )}

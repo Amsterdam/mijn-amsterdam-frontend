@@ -1,10 +1,6 @@
 import { IS_PRODUCTION } from '../../../universal/config/env';
-import {
-  LinkdInline,
-  PageContent,
-  PageHeading,
-  TextPage,
-} from '../../components';
+import { PageContent, PageHeading, TextPage } from '../../components';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
 
 export default function Bff500Error() {
   const queryParams = new URL(location.href).searchParams;
@@ -22,7 +18,9 @@ export default function Bff500Error() {
       <PageContent id="skip-to-id-AppContent">
         <p>
           Er is een fout opgetreden in de communicatie met de server.{' '}
-          <LinkdInline href="/">Ga verder naar home.</LinkdInline>
+          <MaRouterLink variant="inline" href="/">
+            Ga verder naar home.
+          </MaRouterLink>
           {!IS_PRODUCTION && (
             <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
           )}

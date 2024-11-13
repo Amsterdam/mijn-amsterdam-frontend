@@ -51,7 +51,7 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/bezwaren"
         >
           <svg
@@ -177,7 +177,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          class="ams-link ams-link--standalone"
           href="/bezwaren"
         >
           <svg
@@ -342,7 +342,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments"
                 >
                   <span
@@ -382,7 +382,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments"
                 >
                   <span
@@ -448,7 +448,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/d0fe0ace-6f53-4342-b978-1cf12f8675be/attachments"
                 >
                   <span
@@ -514,7 +514,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 class="_DocumentLinkWrap_81c3b4"
               >
                 <a
-                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
                   href="http://localhost:5000/api/v1/services/bezwaren/736ae47e-e703-4238-a664-100cde4c90a1/attachments"
                 >
                   <span

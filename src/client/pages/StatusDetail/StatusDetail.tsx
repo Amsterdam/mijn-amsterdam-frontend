@@ -3,6 +3,7 @@ import { ReactElement, useEffect, useMemo } from 'react';
 import {
   Alert as DSAlert,
   Grid,
+  Link,
   LinkList,
   Paragraph,
   Screen,
@@ -27,10 +28,10 @@ import {
   StatusLine as StatusLineComponent,
   ThemaIcon,
 } from '../../components';
-import { LinkdInline } from '../../components/Button/Button';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { captureMessage } from '../../utils/monitoring';
+import { MaLink } from '../../components/MaLink/MaLink';
 
 export type StatusSourceItem = StatusLine;
 
@@ -125,7 +126,9 @@ export default function StatusDetail<T extends StatusLine>({
             <Grid.Cell span="all">
               <ErrorAlert>
                 We kunnen op dit moment geen gegevens tonen.{' '}
-                <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>
+                <MaLink variant="inline" href={appRoute}>
+                  Ga naar het overzicht
+                </MaLink>
                 .
               </ErrorAlert>
             </Grid.Cell>

@@ -5,9 +5,10 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { IconInfo } from '../../assets/icons';
 import { ThemaMenuItem } from '../../config/thema';
 import { ThemaIcons } from '../../config/themaIcons';
-import Linkd from '../Button/Button';
+import { ButtonBody } from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
+import { MaRouterLink } from '../MaLink/MaLink';
 import Panel from '../Panel/Panel';
 
 export interface MyThemasPanelProps {
@@ -29,14 +30,13 @@ export default function MyThemasPanel({
         <Heading size="level-1" level={3} className={styles.Title}>
           {title}
         </Heading>
-        <Linkd
+        <MaRouterLink
           className={styles.GeneralInfoLink}
           href={AppRoutes.GENERAL_INFO}
-          variant="plain"
-          icon={IconInfo}
-          lean={true}
           aria-label="Dit ziet u in Mijn Amsterdam"
-        />
+        >
+          <ButtonBody iconPosition="left" icon={IconInfo} />
+        </MaRouterLink>
       </div>
       <div className={styles.Links}>
         {items.map(({ id, to, title, rel }) => {

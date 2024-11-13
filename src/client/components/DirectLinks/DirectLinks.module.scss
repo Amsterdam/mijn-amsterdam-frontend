@@ -51,21 +51,12 @@
 
   a {
     margin: auto;
-    text-decoration: none;
     font-weight: normal;
 
     svg {
+      fill: var(--ams-link-color);
       height: 1.5rem;
       width: 1.5rem;
-    }
-
-    &:hover {
-      color: $color-primary-red;
-      text-decoration: underline;
-
-      svg path {
-        fill: $color-primary-red;
-      }
     }
   }
 

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Paragraph, Button } from '@amsterdam/design-system-react';
 
 import styles from './MaintenanceNotifications.module.scss';
 import { InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
-import Linkd, { Button } from '../Button/Button';
+import { MaRouterLink } from '../MaLink/MaLink';
 
 interface MaintenanceNotificationsProps {
   page?: string;
@@ -47,8 +47,7 @@ export default function MaintenanceNotifications({
             {notification.moreInformation && !isMoreInformationVisible && (
               <Paragraph>
                 <Button
-                  variant="inline"
-                  lean={true}
+                  variant="tertiary"
                   onClick={() => setMoreInformationVisible(true)}
                 >
                   Meer informatie.
@@ -57,9 +56,9 @@ export default function MaintenanceNotifications({
             )}
             {isMoreInformationVisible && notification.link && (
               <p>
-                <Linkd href={notification.link.to}>
+                <MaRouterLink href={notification.link.to}>
                   {notification.link.title}
-                </Linkd>
+                </MaRouterLink>
               </p>
             )}
           </Alert>

@@ -1,6 +1,6 @@
-import Linkd from '../../../Button/Button';
-import InfoDetail from '../../../InfoDetail/InfoDetail';
+import { Link } from '@amsterdam/design-system-react';
 
+import InfoDetail from '../../../InfoDetail/InfoDetail';
 interface UrlProps {
   url: string;
   label?: string;
@@ -21,9 +21,9 @@ export default function Url({
     <InfoDetail
       label={label}
       value={
-        <Linkd icon={null} external={true} href={theUrl}>
+        <Link variant="inline" href={theUrl}>
           {urlTitle || url}
-        </Linkd>
+        </Link>
       }
     />
   );
