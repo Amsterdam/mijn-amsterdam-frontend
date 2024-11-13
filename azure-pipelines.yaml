@@ -22,10 +22,6 @@ parameters:
     type: boolean
     default: true
 
-  - name: aquaScan
-    type: boolean
-    default: false
-
   - name: dtapName
     type: string
     default: t
@@ -79,4 +75,3 @@ jobs:
       btdDeploy: ${{ variables.btdDeploy }}
       btdAppBFF: ${{ variables.btdAppBFF }}
       btdAppUI: ${{ variables.btdAppUI }}
-      aquaScan: ${{ parameters.aquaScan }}
