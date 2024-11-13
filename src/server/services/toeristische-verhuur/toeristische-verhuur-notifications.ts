@@ -91,6 +91,17 @@ export function createToeristischeVerhuurNotification(
         linkTo = ctaLinkToDetail;
         datePublished = vergunning.dateReceived ?? '';
         break;
+      // B&B only
+      case vergunning.status === 'Meer informatie nodig':
+        title = `Aanvraag ${vergunningTitleLower}: meer informatie nodig`;
+        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`;
+        cta = 'Bekijk uw aanvraag';
+        linkTo = ctaLinkToDetail;
+        datePublished =
+          vergunning.steps.find(
+            (step) => step.status === 'Meer informatie nodig'
+          )?.datePublished ?? '';
+        break;
       // B&B + Vakantieverhuurvergunning
       case !!vergunning.result:
         title = `Aanvraag ${vergunningTitleLower} ${vergunning.result.toLowerCase()}`;

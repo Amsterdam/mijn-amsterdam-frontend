@@ -416,6 +416,7 @@ describe('B&B Vergunningen service', () => {
           {
             title: 'Verzoek aanvullende gegevens',
             datePublished: '2023-01-15',
+            url: 'https://example.com/document',
           },
         ],
       } as unknown as BBVergunning;
@@ -450,6 +451,8 @@ describe('B&B Vergunningen service', () => {
           datePublished: '2023-01-15',
           isActive: false,
           isChecked: true,
+          description:
+            '<p>Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.</p><p>Bekijk de <a href="https://example.com/document">brief</a> voor meer details.</p>',
         },
         {
           id: 'step-3',

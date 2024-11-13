@@ -4,16 +4,44 @@ import { useParams } from 'react-router-dom';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { LocationModal } from '../../components/LocationModal/LocationModal';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
-function DocumentInfo() {
+function getMailBody(
+  vergunning: ToeristischeVerhuurVergunning,
+  fullName: string,
+  fullAddress: string
+) {
+  return `Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.zaaknummer} op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0A${fullName}%0D%0A%0D%0A${fullAddress}`;
+}
+
+function getMailSubject(vergunning: ToeristischeVerhuurVergunning) {
+  return `${vergunning.zaaknummer} - Document opvragen`;
+}
+
+function DocumentInfo({
+  vergunning,
+}: {
+  vergunning: ToeristischeVerhuurVergunning;
+}) {
+  const appState = useAppStateGetter();
+  const fullName = appState.BRP?.content?.persoon
+    ? getFullName(appState.BRP.content.persoon)
+    : '[naam]';
+  const fullAddress = appState.BRP?.content?.adres
+    ? getFullAddress(appState.BRP.content?.adres, true)
+    : '[adres]';
   return (
     <Paragraph>
-      Ziet u niet het juiste document? Stuur een mail naar:{' '}
-      <Link href="mailto:bedandbreakfast@amsterdam.nl" rel="noreferrer">
+      <strong>Ziet u niet het juiste document?</strong> Stuur een mail naar:{' '}
+      <Link
+        href={`mailto:bedandbreakfast@amsterdam.nl?subject=${getMailSubject(vergunning)}&body=${getMailBody(vergunning, fullName, fullAddress)}`}
+        rel="noreferrer"
+      >
         bedandbreakfast@amsterdam.nl
       </Link>{' '}
       om uw document op te vragen.
@@ -33,7 +61,9 @@ function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
         columns={['', '']}
         className="ams-mb--sm"
       />
-      <DocumentInfo />
+      {vergunning.title === 'Vergunning bed & breakfast' && (
+        <DocumentInfo vergunning={vergunning} />
+      )}
     </>
   );
 }

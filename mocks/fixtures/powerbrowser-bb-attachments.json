@@ -13,13 +13,40 @@
         },
         {
           "fieldName": "OMSCHRIJVING",
-          "text": "Z2024-WK000245 BB Besluit buiten behandeling stellen",
-          "fieldValue": "Z2024-WK000245 BB Besluit buiten behandeling stellen"
+          "text": "Z2024-WK000245 BB Verzoek aanvullende gegevens",
+          "fieldValue": "Z2024-WK000245 BB Verzoek aanvullende gegevens"
         },
         {
           "fieldName": "CREATEDATE",
           "text": "31-10-2024 16:17",
           "fieldValue": "2024-10-31T15:17:06.0000000Z"
+        },
+        {
+          "fieldName": "DOCUMENTNR",
+          "text": "D2024-10-000402",
+          "fieldValue": "D2024-10-000402"
+        }
+      ]
+    },
+    {
+      "fmtCpn": "Z2024-WK000245 BB Besluit buiten behandeling stellen D2024-10-000402",
+      "mainTableName": "DOCLINK",
+      "id": "1189270",
+      "fields": [
+        {
+          "fieldName": "ID",
+          "text": "1189270",
+          "fieldValue": "1189270"
+        },
+        {
+          "fieldName": "OMSCHRIJVING",
+          "text": "Z2024-WK000245 BB Besluit verlenging beslistermijn",
+          "fieldValue": "Z2024-WK000245 BB Besluit verlenging beslistermijn"
+        },
+        {
+          "fieldName": "CREATEDATE",
+          "text": "31-10-2024 16:17",
+          "fieldValue": "2024-11-05T15:17:06.0000000Z"
         },
         {
           "fieldName": "DOCUMENTNR",

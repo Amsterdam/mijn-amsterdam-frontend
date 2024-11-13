@@ -25,6 +25,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import {
+  dateSort,
   defaultDateFormat,
   isDateInPast,
 } from '../../../universal/helpers/date';
@@ -202,9 +203,10 @@ function transformZaakStatusResponse(
   const dateDecision: string =
     getStatusDate(['Afgehandeld', 'Gereed']) ?? zaak.dateDecision ?? '';
 
-  const datumMeerInformatie = zaak.documents.find((document) => {
+  const datumMeerInformatieDocument = zaak.documents.find((document) => {
     return document.title === documentNamesMA.MEER_INFORMATIE;
-  })?.datePublished;
+  });
+  const datumMeerInformatie = datumMeerInformatieDocument?.datePublished ?? '';
 
   // Ontvangen step is added in the transformZaak function to ensure we always have a status step.
   const statusOntvangen: StatusLineItem = {
@@ -246,6 +248,7 @@ function transformZaakStatusResponse(
       datePublished: datumMeerInformatie,
       isActive: !hasDecision && hasMeerInformatieNodig,
       isChecked: hasDecision || hasMeerInformatieNodig,
+      description: `<p>Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.</p><p>Bekijk de <a href="${datumMeerInformatieDocument?.url}">brief</a> voor meer details.</p>`,
     };
     statussen.push(statusMeerInformatie);
   }
@@ -669,7 +672,9 @@ function transformPowerbrowserLinksResponse(
         datePublished: document.CREATEDATE,
       };
     }) ?? []
-  ).filter((document) => document !== null);
+  )
+    .filter((document) => document !== null)
+    .sort(dateSort('datePublished', 'desc'));
 }
 
 export async function fetchBBDocumentsList(
