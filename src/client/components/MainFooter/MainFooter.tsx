@@ -33,7 +33,7 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
-            <LinkList.Link key={link.to} onBackground="dark" href={link.to}>
+            <LinkList.Link key={link.to} inverseColor href={link.to}>
               {link.title}
             </LinkList.Link>
           ))}
@@ -65,7 +65,7 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
       case 'a':
         return (
           <Link
-            onBackground="dark"
+            inverseColor
             variant="standalone"
             href={String(astElement.attrs?.href || '#')}
             className="ams-link-list__link ams-link-list__link--on-background-dark"
