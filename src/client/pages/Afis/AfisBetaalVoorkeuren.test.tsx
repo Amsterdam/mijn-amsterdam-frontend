@@ -11,7 +11,6 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
 
-
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 
 const testState = {
@@ -33,7 +32,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
     businessPartnerId: '515177',
     fullName: 'Taxon Expeditions BV',
     phone: null,
-    email: null,
+    email: 'someone@example.org',
   };
 
   bffApi
@@ -72,6 +71,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
     const screen = render(<Component />);
 
     await waitFor(() => {
+      expect(screen.getByText('someone@example.org')).toBeInTheDocument();
       expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();
     });
 
