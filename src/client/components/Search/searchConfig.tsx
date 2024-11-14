@@ -332,7 +332,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'AFIS' as AppStateKey,
     getApiBaseItems: (data: AfisThemaResponse) => {
-      if (data.facturen) {
+      if (data?.facturen) {
         return Object.values(data.facturen).flatMap(
           (byState) => byState?.facturen ?? []
         );
