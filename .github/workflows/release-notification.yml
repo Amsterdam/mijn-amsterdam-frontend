@@ -17,20 +17,20 @@ jobs:
 
       - name: Fetch all tags
         run: git fetch --tags
-  
+
       - name: Get latest and previous tags
         id: tags
         run: |
-          all_tags=$(git tag -l --sort=-v:refname)
+          all_tags=$(git tag -l --sort=-creatordate)
           latest_tag=$(echo "$all_tags" | sed -n '1p')
           previous_tag=$(echo "$all_tags" | sed -n '2p')
           echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
           echo "previous_tag=$previous_tag" >> $GITHUB_OUTPUT
-          
+
           # Debug output
           echo "Latest tag: $latest_tag"
           echo "Previous tag: $previous_tag"
-  
+
       - name: Generate Release Notes
         run: |
           echo "Changes between ${{ steps.tags.outputs.previous_tag }} and ${{ steps.tags.outputs.latest_tag }}:" > release-notes.txt
@@ -39,7 +39,7 @@ jobs:
             echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
             echo "$RELEASE_NOTES" >> $GITHUB_ENV
             echo "EOF" >> $GITHUB_ENV
-  
+
       - name: Create or Update Release
         run: |
           if gh release view ${{ steps.tags.outputs.latest_tag }} &>/dev/null; then
@@ -58,19 +58,19 @@ jobs:
           grep -iE 'FEATURE:|MIJN-[0-9]+-FEATURE' release_notes.txt > features.txt || true
           grep -iE 'BUG:|MIJN-[0-9]+-BUG' release_notes.txt > bugs.txt || true
           grep -iE 'MIJN-[0-9]+($|[^-])' release_notes.txt > mijn.txt || true
-          
+
           echo "chores<<EOF" >> $GITHUB_OUTPUT
           cat chores.txt >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-          
+
           echo "features<<EOF" >> $GITHUB_OUTPUT
           cat features.txt >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-          
+
           echo "bugs<<EOF" >> $GITHUB_OUTPUT
           cat bugs.txt >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-          
+
           echo "mijn<<EOF" >> $GITHUB_OUTPUT
           cat mijn.txt >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
