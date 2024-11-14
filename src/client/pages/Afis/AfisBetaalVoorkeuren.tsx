@@ -40,14 +40,7 @@ function AfisBusinessPartnerDetails({
           const value = businesspartner[key as keyof typeof businesspartner];
           return {
             label,
-            content:
-              key === 'email' || key === 'phone' ? (
-                <Link href={`${key === 'email' ? 'mailto' : 'tel'}:${value}`}>
-                  {value}
-                </Link>
-              ) : (
-                value
-              ),
+            content: value,
           };
         })
     : [];
