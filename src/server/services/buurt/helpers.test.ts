@@ -1,7 +1,9 @@
+import { LatLngTuple } from 'leaflet';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
   DatasetConfig,
+  DatasetFeatures,
   DatasetResponse,
   MaPointFeature,
   MaPolylineFeature,
@@ -19,6 +21,7 @@ import {
   filterDatasetFeatures,
   filterPointFeaturesWithinBoundingBox,
   filterPolylineFeaturesWithinBoundingBox,
+  forTesting,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
   getPropertyFilters,
@@ -760,5 +763,134 @@ describe('Buurt helpers', () => {
     );
 
     expect(result).toStrictEqual(transformedResponse);
+  });
+
+  describe('flatten Tests', () => {
+    test('Flattens one array', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const input: LatLngTuple[] = [positions];
+
+      const result = forTesting.flatten(input);
+      expect(result).toStrictEqual(input);
+    });
+
+    test('Already flattened input is unchanged', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const input: LatLngTuple[] = [positions, positions, positions, positions];
+
+      const result = forTesting.flatten(input);
+      expect(result).toStrictEqual(input);
+    });
+
+    test('Flattens multiple arrays', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const input: LatLngTuple[][] = [
+        [positions, positions],
+        [positions, positions],
+      ];
+
+      const result = forTesting.flatten(input);
+      expect(result).toStrictEqual([
+        positions,
+        positions,
+        positions,
+        positions,
+      ]);
+    });
+
+    test('Flattens empty array', () => {
+      const input: LatLngTuple[] = [];
+      const result = forTesting.flatten(input);
+      expect(result).toStrictEqual(input);
+    });
+  });
+
+  describe('filterFeaturesinRadius Tests', () => {
+    test('Keeps all features inside the radius', () => {
+      const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
+      const feature: DatasetFeatures = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[coordinate]],
+        },
+        properties: {
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: '671',
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
+        },
+      };
+
+      const location = {
+        address: 'Amstel 1',
+        lat: 52.36764560318806,
+        lng: 4.90016547381895,
+      };
+      const features = [feature, feature, feature];
+      const radiusKilometer = 1;
+
+      const result = forTesting.filterFeaturesinRadius(
+        location,
+        features,
+        radiusKilometer
+      );
+
+      expect(result.length).toBe(3);
+    });
+
+    test('Filters out all features out of given radius', () => {
+      const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
+      const feature: DatasetFeatures = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[coordinate]],
+        },
+        properties: {
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: '671',
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
+        },
+      };
+
+      const outOfBoundsFeature: DatasetFeatures = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          //            -00.01 ~= 1 km     -0.00
+          coordinates: [[52.35764560318806, 4.90016547381895]],
+        },
+        properties: {
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: '671',
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
+        },
+      };
+
+      const location = {
+        address: 'Amstel 1',
+        lat: 52.36764560318806,
+        lng: 4.90016547381895,
+      };
+      const features = [feature, feature, outOfBoundsFeature];
+      const radiusKilometer = 1;
+
+      const result = forTesting.filterFeaturesinRadius(
+        location,
+        features,
+        radiusKilometer
+      );
+
+      expect(result.length).toBe(2);
+    });
   });
 });
