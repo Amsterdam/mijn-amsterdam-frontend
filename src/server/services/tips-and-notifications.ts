@@ -1,6 +1,7 @@
 import { marked } from 'marked';
 import memoize from 'memoizee';
 
+import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
@@ -181,28 +182,29 @@ const notificationServices: NotificationServicesByProfileType = {
   },
   'private-attributes': {},
   private: {
+    adoptTrashContainer: fetchAdoptableTrashContainers,
     afis: fetchAfisNotifications,
-    brp: fetchBrpNotifications,
+    avg: fetchAVGNotifications,
     belasting: fetchBelastingNotifications,
+    bezwaren: fetchBezwarenNotifications,
+    bodem: fetchLoodMetingNotifications,
+    brp: fetchBrpNotifications,
+    erfpacht: fetchErfpachtNotifications,
+    fetchKrefia: fetchKrefiaNotifications,
+    fetchSVWI: fetchSVWINotifications,
+    fetchWior: fetchWiorNotifications,
+    fetchWpi: fetchWpiNotifications,
+    horeca: fetchHorecaNotifications,
+    klachten: fetchKlachtenNotifications,
+    maintenance: (requestID: RequestID) =>
+      fetchMaintenanceNotificationsDashboard(requestID),
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
+    subsidie: fetchSubsidieNotifications,
+    toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
     vergunningen: FeatureToggle.vergunningenV2Active
       ? fetchVergunningenV2Notifications
       : fetchVergunningenNotifications,
-    erfpacht: fetchErfpachtNotifications,
-    subsidie: fetchSubsidieNotifications,
-    maintenance: (requestID: RequestID) =>
-      fetchMaintenanceNotificationsDashboard(requestID),
-    toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
-    fetchKrefia: fetchKrefiaNotifications,
-    fetchWior: fetchWiorNotifications,
-    fetchWpi: fetchWpiNotifications,
-    fetchSVWI: fetchSVWINotifications,
-    klachten: fetchKlachtenNotifications,
-    horeca: fetchHorecaNotifications,
-    avg: fetchAVGNotifications,
-    bodem: fetchLoodMetingNotifications,
-    bezwaren: fetchBezwarenNotifications,
   },
 };
 

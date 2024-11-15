@@ -96,13 +96,13 @@ export function isCoordWithingBoundingBox(
 export type LatLngPositions = Array<LatLngTuple[] | LatLngTuple>;
 
 // Flatten GeoJSON for easy processing
-function flatten(input: LatLngPositions) {
+function flatten(latLongPositions: LatLngPositions): LatLngTuple[] {
   const flattened: LatLngTuple[] = [];
-  for (const value of input) {
-    if (Array.isArray(value) && typeof value[0] === 'number') {
-      flattened.push(value as LatLngTuple);
-    } else if (Array.isArray(value)) {
-      flattened.push(...flatten(value as LatLngPositions));
+  for (const position of latLongPositions) {
+    if (Array.isArray(position) && typeof position[0] === 'number') {
+      flattened.push(position as LatLngTuple);
+    } else if (Array.isArray(position)) {
+      flattened.push(...flatten(position as LatLngPositions));
     }
   }
   return flattened;
@@ -539,7 +539,10 @@ export function filterFeaturesinRadius(
   const len = features.length;
 
   for (i; i < len; i += 1) {
-    const coords = flatten(features[i].geometry.coordinates as LatLngPositions);
+    const coords = features[i].geometry.coordinates;
+    const flattenedCoords = flatten(
+      features[i].geometry.coordinates as LatLngPositions
+    );
     const hasCoord = (coord: LatLngTuple) =>
       getDistanceFromLatLonInKm(
         coord[0],
@@ -547,7 +550,7 @@ export function filterFeaturesinRadius(
         location.lat,
         location.lng
       ) < radius;
-    if (coords.some(hasCoord)) {
+    if (flattenedCoords.some(hasCoord)) {
       featuresFiltered.push(features[i]);
     }
   }
@@ -596,3 +599,8 @@ export function toBoundLiteral(bounds: LatLngBounds): LatLngBoundsLiteral {
 export function isAmsterdamAddress(address: string | null) {
   return !!address && /Amsterdam|Weesp/gi.test(address);
 }
+
+export const forTesting = {
+  flatten,
+  filterFeaturesinRadius,
+};
