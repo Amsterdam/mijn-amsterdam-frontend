@@ -16,7 +16,7 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunning[] = [
   {
     id: 'Z-XXX-000007C',
     title: 'Vergunning vakantieverhuur',
-    dateDecision: null,
+    dateDecision: '2022-05-12',
     dateReceived: '2022-05-10',
     dateStart: '2022-08-01',
     dateStartFormatted: '01 augustus 2022',
