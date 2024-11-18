@@ -1,4 +1,5 @@
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
 
 import styles from './ToeristischeVerhuurDetail.module.scss';
@@ -106,7 +107,9 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       label: 'Adres',
       content: (
         <>
-          <span className={styles.Address}>{vergunning.adres}</span>
+          <span className={classNames(styles.Address, 'ams-mb--xs')}>
+            {vergunning.adres}
+          </span>
           <LocationModal address={vergunning.adres} />
         </>
       ),

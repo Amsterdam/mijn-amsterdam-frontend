@@ -29,6 +29,7 @@ import {
   DatasetPropertyValue,
   HOOD_ZOOM,
 } from '../../../universal/config/myarea-datasets';
+import { LatLngWithAddress } from '../../../universal/helpers/bag';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -119,7 +120,7 @@ export function useLoadingFeature() {
   return useRecoilState(loadingFeatureAtom);
 }
 
-type SelectedFeature = any;
+type SelectedFeature = unknown;
 
 // The data of the selected loading feature.
 export const selectedFeatureAtom = atom<SelectedFeature>({
@@ -182,15 +183,10 @@ export function useSelectedFeatureCSS(
   const loadingFeatureId = loadingFeature?.id;
 
   useEffect(() => {
-    if (map) {
-      for (const layer of Object.values((map as any)._layers) as any[]) {
+    if (map && '_layers' in map && Array.isArray(map._layers)) {
+      for (const layer of Object.values(map._layers)) {
         const id = layer?.feature?.properties?.id;
-        if (
-          id &&
-          loadingFeatureId &&
-          id === loadingFeatureId &&
-          layer.getElement
-        ) {
+        if (id === loadingFeatureId && layer.getElement) {
           const element = layer.getElement();
           // Add selected class to marker
           document
@@ -208,23 +204,19 @@ export function useSelectedFeatureCSS(
 export function useOnMarkerClick() {
   const [, setLoadingFeature] = useLoadingFeature();
 
-  return useCallback(
-    (event: LeafletEvent) => {
-      const isCluster =
-        event?.propagatedFrom?.feature?.properties?.cluster === true;
-      if (!isCluster) {
-        const id = event?.propagatedFrom?.feature?.properties?.id;
-        const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
+  return useCallback((event: LeafletEvent) => {
+    const isCluster =
+      event?.propagatedFrom?.feature?.properties?.cluster === true;
+    if (!isCluster) {
+      const id = event?.propagatedFrom?.feature?.properties?.id;
+      const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
-        setLoadingFeature({
-          datasetId,
-          id,
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+      setLoadingFeature({
+        datasetId,
+        id,
+      });
+    }
+  }, []);
 }
 
 type DatasetResponseContent = {
@@ -479,7 +471,7 @@ export function getQueryConfig(searchEntry: string): QueryConfig {
 
 export interface MapLocationMarker {
   type?: string;
-  latlng: LatLngLiteral;
+  latlng: LatLngLiteral | LatLngWithAddress;
   label: string;
 }
 
@@ -607,7 +599,6 @@ export function useMapLocations(
     return center;
     // Disable hook dependencies, the mapOptions only need to be determined once.
     // Using memo here because we don't need the options to cause re-renders of the <Map/> component.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
@@ -657,7 +648,6 @@ export function useSetMapCenterAtLocation(
     }
     // Disable because we don't want to re-center the map everytime the zoom level changes.
     // Whenever centerMarker changes, and a new zoom level was provided at the same time, the effect will also take new zoom into account.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customLocationMarker, homeLocationMarker, mapInstance]);
 
   useEffect(() => {
