@@ -117,7 +117,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
     {
       label: 'Resultaat',
       content: vergunning.result,
-      isVisible: !!vergunning.result,
+      isVisible: !!(vergunning.result && vergunning.dateDecision),
     },
   ];
 
