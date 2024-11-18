@@ -28,12 +28,21 @@ function DocumentInfo({
 }: {
   vergunning: ToeristischeVerhuurVergunning;
 }) {
+  const INCLUDE_WOONPLAATS = true;
+  const INCLUDE_LAND = false;
+  const SEPARATOR = '%0D%0A';
+
   const appState = useAppStateGetter();
   const fullName = appState.BRP?.content?.persoon
     ? getFullName(appState.BRP.content.persoon)
     : '[naam]';
   const fullAddress = appState.BRP?.content?.adres
-    ? getFullAddress(appState.BRP.content?.adres, true)
+    ? getFullAddress(
+        appState.BRP.content?.adres,
+        INCLUDE_WOONPLAATS,
+        INCLUDE_LAND,
+        SEPARATOR
+      )
     : '[adres]';
   return (
     <Paragraph>
