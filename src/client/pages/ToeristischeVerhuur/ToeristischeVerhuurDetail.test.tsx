@@ -16,7 +16,7 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunning[] = [
   {
     id: 'Z-XXX-000007C',
     title: 'Vergunning vakantieverhuur',
-    dateDecision: null,
+    dateDecision: '2022-05-12',
     dateReceived: '2022-05-10',
     dateStart: '2022-08-01',
     dateStartFormatted: '01 augustus 2022',
@@ -138,7 +138,7 @@ const testState = {
         huisletter: '',
         huisnummertoevoeging: '',
         postcode: '1017AB',
-        woonplaats: 'Amsterdam',
+        woonplaatsNaam: 'Amsterdam',
       },
     },
   },
@@ -224,8 +224,7 @@ describe('<ToeristischVerhuurDetail />', () => {
     const link = screen.getByText('bedandbreakfast@amsterdam.nl');
     expect(link.getAttribute('href')).toMatchInlineSnapshot(
       `
-      "mailto:bedandbreakfast@amsterdam.nl?subject=Z/23/2130506 - Document opvragen&body=Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer Z/23/2130506 op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0ANamen, Enzo Van de Dingerdons%0D%0A%0D%0AAmstel 1
-      1017AB"
+      "mailto:bedandbreakfast@amsterdam.nl?subject=Z/23/2130506 - Document opvragen&body=Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer Z/23/2130506 op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0ANamen, Enzo Van de Dingerdons%0D%0A%0D%0AAmstel 1%0D%0A1017AB Amsterdam"
     `
     );
   });
