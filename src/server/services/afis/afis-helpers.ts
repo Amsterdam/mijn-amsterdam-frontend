@@ -24,9 +24,9 @@ export async function getAfisApiConfig(
 ): Promise<DataRequestConfig> {
   // If Afis EnableU is active, token fetching is taken care of by EnableU Gateway.
   const authHeader =
-    getFromEnv('BFF_AFIS_ENABLEU_ACTIVE') === 'true'
-      ? { apiKey: getFromEnv('BFF_ENABLEU_AFIS_API_KEY') }
-      : await fetchAfisTokenHeader(requestID);
+    getFromEnv('BFF_AFIS_DIRECT_CONNECT_ENABLED') === 'true'
+      ? await fetchAfisTokenHeader(requestID)
+      : { apiKey: getFromEnv('BFF_ENABLEU_AFIS_API_KEY') };
 
   const additionalConfigWithHeader: DataRequestConfig = {
     ...(additionalConfig ?? null),
