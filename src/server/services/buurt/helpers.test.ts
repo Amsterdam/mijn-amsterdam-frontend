@@ -3,12 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   DatasetConfig,
-  DatasetFeatures,
   DatasetResponse,
+  MaFeature,
   MaPointFeature,
   MaPolylineFeature,
   datasetEndpoints,
 } from './datasets';
+import { forTesting as datasetsForTesting } from './datasets';
 import {
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
@@ -21,7 +22,7 @@ import {
   filterDatasetFeatures,
   filterPointFeaturesWithinBoundingBox,
   filterPolylineFeaturesWithinBoundingBox,
-  forTesting,
+  forTesting as helpersForTesting,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
   getPropertyFilters,
@@ -770,7 +771,7 @@ describe('Buurt helpers', () => {
       const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
       const input: LatLngTuple[] = [positions];
 
-      const result = forTesting.flatten(input);
+      const result = helpersForTesting.flatten(input);
       expect(result).toStrictEqual(input);
     });
 
@@ -778,7 +779,7 @@ describe('Buurt helpers', () => {
       const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
       const input: LatLngTuple[] = [positions, positions, positions, positions];
 
-      const result = forTesting.flatten(input);
+      const result = helpersForTesting.flatten(input);
       expect(result).toStrictEqual(input);
     });
 
@@ -789,7 +790,7 @@ describe('Buurt helpers', () => {
         [positions, positions],
       ];
 
-      const result = forTesting.flatten(input);
+      const result = helpersForTesting.flatten(input);
       expect(result).toStrictEqual([
         positions,
         positions,
@@ -800,15 +801,15 @@ describe('Buurt helpers', () => {
 
     test('Flattens empty array', () => {
       const input: LatLngTuple[] = [];
-      const result = forTesting.flatten(input);
+      const result = helpersForTesting.flatten(input);
       expect(result).toStrictEqual(input);
     });
   });
 
   describe('filterFeaturesinRadius Tests', () => {
     test('Keeps all feature objects that are inside the given radius', () => {
-      const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
-      const feature: DatasetFeatures = {
+      const coordinate = [52.36764560318806, 4.90016547381895];
+      const feature: MaFeature = {
         type: 'Feature',
         geometry: {
           type: 'Polygon',
@@ -818,7 +819,7 @@ describe('Buurt helpers', () => {
           id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
           datasetId: 'wior',
           color: '#FEC813',
-          zIndex: '671',
+          zIndex: datasetsForTesting.zIndexPane.WIOR,
           datumStartUitvoering: 'Lopende werkzaamheden',
           duur: 'Meerdaags',
         },
@@ -832,7 +833,7 @@ describe('Buurt helpers', () => {
       const features = [feature, feature, feature];
       const radiusKilometer = 1;
 
-      const result = forTesting.filterFeaturesinRadius(
+      const result = helpersForTesting.filterFeaturesinRadius(
         location,
         features,
         radiusKilometer
@@ -842,8 +843,8 @@ describe('Buurt helpers', () => {
     });
 
     test('Filters out all features outside of the given radius', () => {
-      const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
-      const feature: DatasetFeatures = {
+      const coordinate = [52.36764560318806, 4.90016547381895];
+      const feature: MaFeature = {
         type: 'Feature',
         geometry: {
           type: 'Polygon',
@@ -853,24 +854,26 @@ describe('Buurt helpers', () => {
           id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
           datasetId: 'wior',
           color: '#FEC813',
-          zIndex: '671',
+          zIndex: datasetsForTesting.zIndexPane.WIOR,
           datumStartUitvoering: 'Lopende werkzaamheden',
           duur: 'Meerdaags',
         },
       };
 
-      const outOfBoundsFeature: DatasetFeatures = {
+      // Subtractings the following moves the cooridinate a little bit more then 1km away.
+      //                           -00.01 ~= 1 km     -0.00
+      const coordinateMinusOneKM = [52.35764560318806, 4.90016547381895];
+      const outOfBoundsFeature: MaFeature = {
         type: 'Feature',
         geometry: {
           type: 'Polygon',
-          //            -00.01 ~= 1 km     -0.00
-          coordinates: [[52.35764560318806, 4.90016547381895]],
+          coordinates: [[coordinateMinusOneKM]],
         },
         properties: {
           id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
           datasetId: 'wior',
           color: '#FEC813',
-          zIndex: '671',
+          zIndex: datasetsForTesting.zIndexPane.WIOR,
           datumStartUitvoering: 'Lopende werkzaamheden',
           duur: 'Meerdaags',
         },
@@ -884,7 +887,7 @@ describe('Buurt helpers', () => {
       const features = [feature, feature, outOfBoundsFeature];
       const radiusKilometer = 1;
 
-      const result = forTesting.filterFeaturesinRadius(
+      const result = helpersForTesting.filterFeaturesinRadius(
         location,
         features,
         radiusKilometer
@@ -894,20 +897,18 @@ describe('Buurt helpers', () => {
     });
 
     test('Handles features with coordinates that do not have to be flattened', () => {
-      const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
-      const feature: DatasetFeatures = {
+      const coordinate = [52.36764560318806, 4.90016547381895];
+      const feature: MaFeature = {
         type: 'Feature',
         geometry: {
-          type: 'Polygon',
+          type: 'Point',
           coordinates: coordinate,
         },
         properties: {
-          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
-          datasetId: 'wior',
-          color: '#FEC813',
-          zIndex: '671',
-          datumStartUitvoering: 'Lopende werkzaamheden',
-          duur: 'Meerdaags',
+          id: 'REM16981',
+          datasetId: 'afvalcontainers',
+          fractie_omschrijving: 'Rest',
+          geadopteerd_ind: 'Nee',
         },
       };
 
@@ -919,7 +920,7 @@ describe('Buurt helpers', () => {
       const features = [feature, feature, feature];
       const radiusKilometer = 1;
 
-      const result = forTesting.filterFeaturesinRadius(
+      const result = helpersForTesting.filterFeaturesinRadius(
         location,
         features,
         radiusKilometer

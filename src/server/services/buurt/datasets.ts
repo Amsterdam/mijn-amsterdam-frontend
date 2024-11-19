@@ -990,3 +990,5 @@ export function transformWiorApiListResponse(
   }
   return transformGenericApiListResponse(datasetId, config, { features });
 }
+
+export const forTesting = { zIndexPane };
