@@ -34,6 +34,7 @@
       "get-gpass-stadspas:standard",
       "get-gpass-transacties:standard",
       "get-gpass-aanbiedingen-transacties:standard",
+      "get-huishoudelijk-afval:standard",
       "get-krefia:standard",
       "get-kvk:standard",
       "post-loodmetingen-auth:standard",
