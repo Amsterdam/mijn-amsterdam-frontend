@@ -88,11 +88,12 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
         >
           J.J. Cremerplein 54-1 1054 TM Amsterdam
           <br />
-          <a
-            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+          <button
+            class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
+            type="button"
           >
             Bekijk op de kaart
-          </a>
+          </button>
         </p>
       </div>
     </div>
