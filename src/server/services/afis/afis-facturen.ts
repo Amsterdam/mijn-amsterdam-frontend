@@ -234,6 +234,7 @@ function transformFactuur(
       status,
       amountPayedFormatted,
       amountOriginalFormatted,
+      !!invoice.IsCleared,
       debtClearingDateFormatted,
       hasDeelbetaling
     ),
@@ -371,6 +372,7 @@ function determineFactuurStatusDescription(
   status: AfisFactuur['status'],
   amountPayedFormatted: AfisFactuur['amountPayedFormatted'],
   amountOriginalFormatted: AfisFactuur['amountOriginalFormatted'],
+  isCleared: boolean,
   debtClearingDateFormatted: AfisFactuur['debtClearingDateFormatted'],
   hasDeelbetaling: boolean = false
 ) {
@@ -391,13 +393,15 @@ function determineFactuurStatusDescription(
     case 'handmatig-betalen':
       return `Uw factuur is nog niet betaald. Maak het bedrag van ${amountOriginal} over onder vermelding van de gegevens op uw factuur.`;
     case 'geld-terug':
-      return `Het bedrag van ${amountOriginal} wordt verrekend met openstaande facturen of teruggestort op uw rekening.`;
+      return `Het bedrag van ${amountOriginal} ${isCleared ? 'is' : 'wordt'} verrekend met openstaande facturen of teruggestort op uw rekening.`;
     case 'betaald':
       return hasDeelbetaling
         ? `Op ${debtClearingDateFormatted} heeft u het gehele bedrag van ${amountOriginal} voldaan.`
         : `${amountOriginal} betaald op ${debtClearingDateFormatted}`;
     case 'automatische-incasso':
-      return `${amountOriginal} wordt automatisch van uw rekening afgeschreven.`;
+      return isCleared
+        ? `${amountOriginal} betaald per automatische incasso.`
+        : `${amountOriginal} wordt automatisch van uw rekening afgeschreven.`;
     case 'geannuleerd':
       return `${amountOriginal} geannuleerd op ${debtClearingDateFormatted}`;
     case 'overgedragen-aan-belastingen':
