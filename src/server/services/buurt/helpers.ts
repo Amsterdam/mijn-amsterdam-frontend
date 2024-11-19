@@ -540,9 +540,14 @@ export function filterFeaturesinRadius(
 
   for (i; i < len; i += 1) {
     const coords = features[i].geometry.coordinates;
-    const flattenedCoords = flatten(
-      features[i].geometry.coordinates as LatLngPositions
-    );
+    let flattenedCoords: LatLngTuple[];
+
+    if (coords.length === 2 && coords.some((val) => typeof val === 'number')) {
+      flattenedCoords = [coords] as LatLngTuple[];
+    } else {
+      flattenedCoords = flatten(coords as LatLngPositions);
+    }
+
     const hasCoord = (coord: LatLngTuple) =>
       getDistanceFromLatLonInKm(
         coord[0],

@@ -806,7 +806,7 @@ describe('Buurt helpers', () => {
   });
 
   describe('filterFeaturesinRadius Tests', () => {
-    test('Keeps all features inside the radius', () => {
+    test('Keeps all feature objects that are inside the given radius', () => {
       const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
       const feature: DatasetFeatures = {
         type: 'Feature',
@@ -841,7 +841,7 @@ describe('Buurt helpers', () => {
       expect(result.length).toBe(3);
     });
 
-    test('Filters out all features out of given radius', () => {
+    test('Filters out all features outside of the given radius', () => {
       const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
       const feature: DatasetFeatures = {
         type: 'Feature',
@@ -891,6 +891,41 @@ describe('Buurt helpers', () => {
       );
 
       expect(result.length).toBe(2);
+    });
+
+    test('Handles features with coordinates that do not have to be flattened', () => {
+      const coordinate: LatLngTuple = [52.36764560318806, 4.90016547381895];
+      const feature: DatasetFeatures = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: coordinate,
+        },
+        properties: {
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: '671',
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
+        },
+      };
+
+      const location = {
+        address: 'Amstel 1',
+        lat: 52.36764560318806,
+        lng: 4.90016547381895,
+      };
+      const features = [feature, feature, feature];
+      const radiusKilometer = 1;
+
+      const result = forTesting.filterFeaturesinRadius(
+        location,
+        features,
+        radiusKilometer
+      );
+
+      expect(result.length).toBe(3);
     });
   });
 });
