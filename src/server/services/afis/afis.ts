@@ -104,6 +104,10 @@ function transformBusinessPartnerisKnownResponse(
     businessPartnerId = response.Zakenpartnernummer ?? null;
   }
 
+  businessPartnerId = businessPartnerId
+    ? parseInt(businessPartnerId, 10).toString()
+    : null;
+
   if (businessPartnerId) {
     businessPartnerIdEncrypted = encryptSessionIdWithRouteIdParam(
       sessionID,
