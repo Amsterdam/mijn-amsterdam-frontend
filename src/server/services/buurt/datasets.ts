@@ -697,7 +697,7 @@ function transformAfvalcontainersResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
   responseData: DsoApiResponse | WFSApiResponse
-) {
+): DatasetFeatures {
   const features: WFSFeatureSource[] =
     (responseData && 'features' in responseData
       ? responseData.features
@@ -716,6 +716,7 @@ function transformAfvalcontainersResponse(
         properties: {
           ...feature.properties,
           fractie_omschrijving,
+          geadopteerd_ind: feature.properties.geadopteerd_ind,
         },
       };
     }),

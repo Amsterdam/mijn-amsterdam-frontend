@@ -38,6 +38,7 @@ export const FeatureToggle = {
 
   // Afval api + Afval thema
   garbageInformationPage: true,
+  adopteerbareAfvalContainerMeldingen: IS_OT,
 
   // HLI Hulp bij laag inkomen //
   hliThemaActive: true,
