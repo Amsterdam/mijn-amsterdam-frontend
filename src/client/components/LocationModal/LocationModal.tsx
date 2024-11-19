@@ -1,14 +1,10 @@
 import { ReactNode, useEffect, useState } from 'react';
 
-import { Link } from '@amsterdam/design-system-react';
+import { Button, Paragraph } from '@amsterdam/design-system-react';
 import { LatLngLiteral } from 'leaflet';
 
 import styles from './LocationModal.module.scss';
-import {
-  DEFAULT_LAT,
-  DEFAULT_LNG,
-  LOCATION_ZOOM,
-} from '../../../universal/config/myarea-datasets';
+import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
 import {
   extractAddress,
   getLatLngWithAddress,
@@ -131,25 +127,27 @@ export function LocationModal({
   }, [isLocationModalOpen, trackPageViewTitle, trackPageViewUrl]);
 
   const latlngFromBagSearch = bagApi.data?.[0];
+  const latlngFound = latlng ?? latlngFromBagSearch;
 
-  const centerMarker: MapLocationMarker = {
-    latlng: latlng ??
-      latlngFromBagSearch ?? { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
-    label: label ?? address ?? `${latlng?.lat},${latlng?.lng}`,
-  };
+  const centerMarker: MapLocationMarker | null = latlngFound
+    ? {
+        latlng: latlngFound,
+        label: label ?? address ?? `${latlng?.lat},${latlng?.lng}`,
+      }
+    : null;
+
+  const hasLocationDataAndCenterMarker = hasLocationData && centerMarker;
 
   return (
-    <>
-      {hasLocationData ? (
-        <Link
+    hasLocationData && (
+      <>
+        <Button
           className={styles.LocationModalLink}
-          variant="inline"
+          variant="secondary"
           onClick={() => setLocationModalOpen(true)}
         >
           {children ?? 'Bekijk op de kaart'}
-        </Link>
-      ) : null}
-      {hasLocationData && (
+        </Button>
         <Modal
           isOpen={isLocationModalOpen}
           onClose={() => {
@@ -160,8 +158,10 @@ export function LocationModal({
           }
         >
           <div className={styles.LocationModalInner}>
-            {bagApi.isLoading && <p>Het adres wordt opgezocht..</p>}
-            {hasLocationData ? (
+            {bagApi.isLoading && (
+              <Paragraph>Het adres wordt opgezocht..</Paragraph>
+            )}
+            {hasLocationDataAndCenterMarker && (
               <MyAreaLoader
                 showPanels={false}
                 zoom={LOCATION_ZOOM}
@@ -169,12 +169,16 @@ export function LocationModal({
                 activeBaseLayerType={BaseLayerType.Aerial}
                 centerMarker={centerMarker}
               />
-            ) : (
-              <p>Adres kan niet getoond worden</p>
+            )}
+            {!bagApi.isLoading && !hasLocationDataAndCenterMarker && (
+              <Paragraph>
+                Het adres{address ? ` ${address}` : null} kan niet getoond
+                worden op de kaart.
+              </Paragraph>
             )}
           </div>
         </Modal>
-      )}
-    </>
+      </>
+    )
   );
 }

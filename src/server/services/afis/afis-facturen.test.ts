@@ -554,64 +554,85 @@ describe('afis-facturen', async () => {
       );
     });
 
-    test('determineFactuurStatus determines status correctly', () => {
-      const statusDescriptions = Object.keys(sourceInvoices).map((status) => {
-        const statusDescription = forTesting.determineFactuurStatusDescription(
-          status as AfisFactuur['status'],
-          '€ 123,40',
-          '€ 210,40',
-          '16 juni 2024'
-        );
-        return [status, statusDescription];
-      });
-      expect(statusDescriptions).toMatchInlineSnapshot(`
+    test('determineFactuurStatus determines Openstaande status description correctly', () => {
+      const statusDescriptions = Object.keys(sourceInvoices)
+        .filter((status) => !['betaald', 'geannuleerd'].includes(status))
+        .map((status) => {
+          const IS_CLEARED = false;
+          const statusDescription =
+            forTesting.determineFactuurStatusDescription(
+              status as AfisFactuur['status'],
+              '€ 123,40',
+              '€ 210,40',
+              IS_CLEARED,
+              '16 juni 2024'
+            );
+          return [status, statusDescription];
+        });
+
+      expect(statusDescriptions).toEqual([
+        ['openstaand', '€ 210,40 betaal nu'],
         [
+          'automatische-incasso',
+          '€ 210,40 wordt automatisch van uw rekening afgeschreven.',
+        ],
+        [
+          'handmatig-betalen',
+          'Uw factuur is nog niet betaald. Maak het bedrag van € 210,40 over onder vermelding van de gegevens op uw factuur.',
+        ],
+        ['in-dispuut', '€ 210,40 in dispuut'],
+        [
+          'gedeeltelijke-betaling',
+          'Uw factuur van € 210,40 is nog niet volledig betaald. Maak het resterend bedrag van € 123,40 over onder vermelding van de gegevens op uw factuur.',
+        ],
+        [
+          'overgedragen-aan-belastingen',
+          '€ 210,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op 16 juni 2024',
+        ],
+        [
+          'geld-terug',
+          'Het bedrag van € 210,40 wordt verrekend met openstaande facturen of teruggestort op uw rekening.',
+        ],
+        [
+          'herinnering',
+          '€ 210,40 betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.',
+        ],
+        ['onbekend', 'Onbekend'],
+      ]);
+    });
+
+    test('determineFactuurStatus determines Afgehandelde status description correctly', () => {
+      const IS_CLEARED = true;
+      const statusDescriptions = Object.keys(sourceInvoices)
+        .filter((status) =>
           [
-            "openstaand",
-            "€ 210,40 betaal nu",
-          ],
-          [
-            "automatische-incasso",
-            "€ 210,40 wordt automatisch van uw rekening afgeschreven.",
-          ],
-          [
-            "handmatig-betalen",
-            "Uw factuur is nog niet betaald. Maak het bedrag van € 210,40 over onder vermelding van de gegevens op uw factuur.",
-          ],
-          [
-            "in-dispuut",
-            "€ 210,40 in dispuut",
-          ],
-          [
-            "gedeeltelijke-betaling",
-            "Uw factuur van € 210,40 is nog niet volledig betaald. Maak het resterend bedrag van € 123,40 over onder vermelding van de gegevens op uw factuur.",
-          ],
-          [
-            "overgedragen-aan-belastingen",
-            "€ 210,40 is overgedragen aan het incasso- en invorderingstraject van directie Belastingen op 16 juni 2024",
-          ],
-          [
-            "geld-terug",
-            "Het bedrag van € 210,40 wordt verrekend met openstaande facturen of teruggestort op uw rekening.",
-          ],
-          [
-            "betaald",
-            "€ 210,40 betaald op 16 juni 2024",
-          ],
-          [
-            "geannuleerd",
-            "€ 210,40 geannuleerd op 16 juni 2024",
-          ],
-          [
-            "herinnering",
-            "€ 210,40 betaaltermijn verstreken: gelieve te betalen volgens de instructies in de herinneringsbrief die u per e-mail of post heeft ontvangen.",
-          ],
-          [
-            "onbekend",
-            "Onbekend",
-          ],
-        ]
-      `);
+            'betaald',
+            'automatische-incasso',
+            'geld-terug',
+            'geannuleerd',
+          ].includes(status)
+        )
+        .map((status) => {
+          const statusDescription =
+            forTesting.determineFactuurStatusDescription(
+              status as AfisFactuur['status'],
+              '€ 123,40',
+              '€ 210,40',
+              IS_CLEARED,
+              '16 juni 2024'
+            );
+          return [status, statusDescription];
+        });
+
+      expect(statusDescriptions).toStrictEqual([
+        ['automatische-incasso', '€ 210,40 betaald per automatische incasso.'],
+        [
+          'geld-terug',
+          'Het bedrag van € 210,40 is verrekend met openstaande facturen of teruggestort op uw rekening.',
+        ],
+        ['betaald', '€ 210,40 betaald op 16 juni 2024'],
+        ['geannuleerd', '€ 210,40 geannuleerd op 16 juni 2024'],
+      ]);
     });
   });
 

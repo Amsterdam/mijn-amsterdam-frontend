@@ -430,18 +430,12 @@ describe('B&B Vergunningen service', () => {
         zaak,
         statusResponse
       );
+
       expect(result).toEqual([
         {
           id: 'step-1',
           status: 'Ontvangen',
           datePublished: '2023-01-01',
-          isActive: false,
-          isChecked: true,
-        },
-        {
-          id: 'step-2',
-          status: 'In behandeling',
-          datePublished: '2023-01-10',
           isActive: false,
           isChecked: true,
         },
@@ -453,6 +447,13 @@ describe('B&B Vergunningen service', () => {
           isChecked: true,
           description:
             '<p>Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.</p><p>Bekijk de <a href="https://example.com/document">brief</a> voor meer details.</p>',
+        },
+        {
+          id: 'step-2',
+          status: 'In behandeling',
+          datePublished: '2023-01-10',
+          isActive: false,
+          isChecked: true,
         },
         {
           id: 'step-3',

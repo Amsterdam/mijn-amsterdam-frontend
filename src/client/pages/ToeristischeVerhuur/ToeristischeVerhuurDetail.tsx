@@ -1,4 +1,5 @@
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
 
 import styles from './ToeristischeVerhuurDetail.module.scss';
@@ -28,12 +29,21 @@ function DocumentInfo({
 }: {
   vergunning: ToeristischeVerhuurVergunning;
 }) {
+  const INCLUDE_WOONPLAATS = true;
+  const INCLUDE_LAND = false;
+  const SEPARATOR = '%0D%0A';
+
   const appState = useAppStateGetter();
   const fullName = appState.BRP?.content?.persoon
     ? getFullName(appState.BRP.content.persoon)
     : '[naam]';
   const fullAddress = appState.BRP?.content?.adres
-    ? getFullAddress(appState.BRP.content?.adres, true)
+    ? getFullAddress(
+        appState.BRP.content?.adres,
+        INCLUDE_WOONPLAATS,
+        INCLUDE_LAND,
+        SEPARATOR
+      )
     : '[adres]';
   return (
     <Paragraph>
@@ -97,7 +107,9 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       label: 'Adres',
       content: (
         <>
-          <span className={styles.Address}>{vergunning.adres}</span>
+          <span className={classNames(styles.Address, 'ams-mb--xs')}>
+            {vergunning.adres}
+          </span>
           <LocationModal address={vergunning.adres} />
         </>
       ),
@@ -105,7 +117,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
     {
       label: 'Resultaat',
       content: vergunning.result,
-      isVisible: !!vergunning.result,
+      isVisible: !!(vergunning.result && vergunning.dateDecision),
     },
   ];
 

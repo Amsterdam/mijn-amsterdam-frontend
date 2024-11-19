@@ -90,11 +90,12 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         >
           Schipluidenlaan 16A
           <br />
-          <a
-            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+          <button
+            class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
+            type="button"
           >
             Bekijk op de kaart
-          </a>
+          </button>
         </p>
       </div>
       <div
@@ -378,11 +379,12 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         >
           Schipluidenlaan 16A
           <br />
-          <a
-            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+          <button
+            class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
+            type="button"
           >
             Bekijk op de kaart
-          </a>
+          </button>
         </p>
       </div>
     </div>
@@ -622,11 +624,12 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
         >
           Schipluidenlaan 12A
           <br />
-          <a
-            class="ams-link ams-link--inline _LocationModalLink_ae27d7"
+          <button
+            class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
+            type="button"
           >
             Bekijk op de kaart
-          </a>
+          </button>
         </p>
       </div>
     </div>

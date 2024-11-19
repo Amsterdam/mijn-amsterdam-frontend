@@ -94,7 +94,7 @@ export function createToeristischeVerhuurNotification(
       // B&B only
       case vergunning.status === 'Meer informatie nodig':
         title = `Aanvraag ${vergunningTitleLower}: meer informatie nodig`;
-        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`;
+        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} te behandelen.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished =

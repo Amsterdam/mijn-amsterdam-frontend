@@ -224,21 +224,14 @@ function transformZaakStatusResponse(
   const hasInBehandeling = !!datumInBehandeling;
   const hasDecision = !!zaak.result && !!dateDecision;
   const hasMeerInformatieNodig = !!datumMeerInformatie;
-
-  const statusInBehandeling: StatusLineItem = {
-    id: 'step-2',
-    status: 'In behandeling',
-    datePublished: datumInBehandeling,
-    isActive: !hasDecision && !datumMeerInformatie && hasInBehandeling,
-    isChecked: hasDecision || hasInBehandeling || hasMeerInformatieNodig,
-  };
+  const isMeerInformatieStepActive =
+    hasMeerInformatieNodig && !hasDecision && !hasInBehandeling;
 
   const statussen = [
     {
       ...statusOntvangen,
       isActive: !datumInBehandeling && !hasDecision && !datumMeerInformatie,
     },
-    statusInBehandeling,
   ];
 
   if (datumMeerInformatie) {
@@ -246,12 +239,20 @@ function transformZaakStatusResponse(
       id: 'step-meer-info',
       status: 'Meer informatie nodig',
       datePublished: datumMeerInformatie,
-      isActive: !hasDecision && hasMeerInformatieNodig,
+      isActive: isMeerInformatieStepActive,
       isChecked: hasDecision || hasMeerInformatieNodig,
       description: `<p>Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.</p><p>Bekijk de <a href="${datumMeerInformatieDocument?.url}">brief</a> voor meer details.</p>`,
     };
     statussen.push(statusMeerInformatie);
   }
+
+  const statusInBehandeling: StatusLineItem = {
+    id: 'step-2',
+    status: 'In behandeling',
+    datePublished: datumInBehandeling,
+    isActive: !hasDecision && hasInBehandeling,
+    isChecked: hasDecision || hasInBehandeling,
+  };
 
   const statusAfgehandeld: StatusLineItem = {
     id: 'step-3',
@@ -261,7 +262,7 @@ function transformZaakStatusResponse(
     isChecked: hasDecision,
   };
 
-  statussen.push(statusAfgehandeld);
+  statussen.push(statusInBehandeling, statusAfgehandeld);
 
   if (isVerlopen) {
     const statusVerlopen: StatusLineItem = {

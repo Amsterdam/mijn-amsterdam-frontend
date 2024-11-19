@@ -27,7 +27,8 @@ export function getFullAddress(
     land?: string | null;
   } | null,
   includePostCodeWoonplaats = false,
-  includeLand = false
+  includeLand = false,
+  separator = '\n'
 ) {
   if (!adres?.straatnaam) {
     return 'onbekend adres';
@@ -37,9 +38,9 @@ export function getFullAddress(
         adres.huisletter || ''
       } ${adres.huisnummertoevoeging || ''}`.trim() +
         (includePostCodeWoonplaats
-          ? `\n${adres.postcode || ''}${
+          ? `${separator}${adres.postcode || ''}${
               adres.woonplaatsNaam ? ' ' + adres.woonplaatsNaam : ''
-            }` + (includeLand && adres.land ? `\n${adres.land}` : '')
+            }` + (includeLand && adres.land ? `${separator}${adres.land}` : '')
           : '')
     : 'onbekend adres';
 }
