@@ -400,7 +400,7 @@ function determineFactuurStatusDescription(
         : `${amountOriginal} betaald op ${debtClearingDateFormatted}`;
     case 'automatische-incasso':
       return isCleared
-        ? `${amountOriginal} betaald per automatische incasso.`
+        ? `${amountOriginal} is door middel van een automatisch incasso op ${debtClearingDateFormatted} van uw rekening afgeschreven.`
         : `${amountOriginal} wordt automatisch van uw rekening afgeschreven.`;
     case 'geannuleerd':
       return `${amountOriginal} geannuleerd op ${debtClearingDateFormatted}`;

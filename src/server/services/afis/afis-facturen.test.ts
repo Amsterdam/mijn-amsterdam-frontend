@@ -625,7 +625,10 @@ describe('afis-facturen', async () => {
         });
 
       expect(statusDescriptions).toStrictEqual([
-        ['automatische-incasso', '€ 210,40 betaald per automatische incasso.'],
+        [
+          'automatische-incasso',
+          '€ 210,40 is door middel van een automatisch incasso op 16 juni 2024 van uw rekening afgeschreven.',
+        ],
         [
           'geld-terug',
           'Het bedrag van € 210,40 is verrekend met openstaande facturen of teruggestort op uw rekening.',
