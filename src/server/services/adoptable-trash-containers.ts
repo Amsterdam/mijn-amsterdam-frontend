@@ -8,7 +8,11 @@ import {
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { fetchDataset } from './buurt/buurt';
-import { datasetEndpoints } from './buurt/datasets';
+import {
+  datasetEndpoints,
+  DatasetFeatureProperties,
+  MaPointFeature,
+} from './buurt/datasets';
 import { filterDatasetFeatures, filterFeaturesinRadius } from './buurt/helpers';
 import { fetchMyLocation } from './home';
 import { captureMessage } from './monitoring';
@@ -55,7 +59,6 @@ export async function fetchAdoptableTrashContainers(
     meldingen?.status === 'OK'
   ) {
     // Put all the Lat Lng coordinates in the right order.
-    // Because other functions operating on the data expect them in a certain order.
     for (const feature of meldingen.content.features) {
       if (feature.geometry.type === 'Point') {
         const { lat, lng } = getLatLngCoordinates(
@@ -77,11 +80,14 @@ export async function fetchAdoptableTrashContainers(
       WITHIN_RADIUS_KM
     );
 
-    const filteredFeatures = filterDatasetFeatures(
-      featuresInRadius,
-      [datasetId],
-      filters
-    );
+    const filteredFeatures: MaPointFeature<AfvalFeatureProperties>[] =
+      filterDatasetFeatures<AfvalFeatureProperties>(
+        featuresInRadius,
+        [datasetId],
+        filters
+      ).filter((feature) => {
+        return feature.properties.geadopteerd_ind === 'Nee';
+      });
 
     const tips: MyNotification[] =
       FeatureToggle.adopteerbareAfvalContainerMeldingen
@@ -95,3 +101,7 @@ export async function fetchAdoptableTrashContainers(
 
   return apiDependencyError({ MY_LOCATION });
 }
+
+type AfvalFeatureProperties = DatasetFeatureProperties & {
+  geadopteerd_ind: 'Ja' | 'Nee';
+};
