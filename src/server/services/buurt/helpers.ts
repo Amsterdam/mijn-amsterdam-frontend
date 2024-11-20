@@ -7,6 +7,7 @@ import {
 
 import type {
   DatasetConfig,
+  DatasetFeatureProperties,
   DatasetFeatures,
   DatasetResponse,
   MaFeature,
@@ -278,13 +279,15 @@ function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   });
 }
 
-export function filterDatasetFeatures(
+export function filterDatasetFeatures<
+  T extends DatasetFeatureProperties = DatasetFeatureProperties,
+>(
   features: DatasetFeatures,
   activeDatasetIds: DatasetId[],
   filters: DatasetFilterSelection
-) {
+): MaPointFeature<T>[] {
   return features
-    .filter((feature): feature is MaPointFeature => {
+    .filter((feature): feature is MaPointFeature<T> => {
       return activeDatasetIds.includes(feature.properties.datasetId);
     })
     .filter((feature) => {
