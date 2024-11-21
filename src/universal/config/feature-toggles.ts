@@ -1,10 +1,4 @@
-import {
-  IS_ACCEPTANCE,
-  IS_AP,
-  IS_DEVELOPMENT,
-  IS_OT,
-  IS_PRODUCTION,
-} from './env';
+import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   // AFIS
@@ -76,7 +70,7 @@ export const FeatureToggle = {
 
   // Parkeren
   parkerenActive: true,
-  parkerenCheckForProductAndPermitsActive: IS_OT || IS_ACCEPTANCE,
+  parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
 
   // Mijn Gegegvens -> aantal bewoners op adres.
   residentCountActive: true,

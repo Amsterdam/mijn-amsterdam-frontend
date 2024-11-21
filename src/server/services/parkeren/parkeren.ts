@@ -58,6 +58,10 @@ export async function hasPermitsOrPermitRequests(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
           `${config.url}/${userType}/client_product_details`,
+        method: 'POST',
+        data: {
+          token: authProfileAndToken.profile.id,
+        },
       }),
       requestID
     ),
@@ -65,6 +69,10 @@ export async function hasPermitsOrPermitRequests(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
           `${config.url}/${userType}/active_permit_request`,
+        method: 'POST',
+        data: {
+          token: authProfileAndToken.profile.id,
+        },
       }),
       requestID
     ),

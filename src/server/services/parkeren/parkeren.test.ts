@@ -43,10 +43,10 @@ const setupMocks = (
 ) => {
   vi.clearAllMocks();
   remoteApi
-    .get(`/parkeren/${profileType}/client_product_details`)
+    .post(`/parkeren/${profileType}/client_product_details`)
     .reply(STATUS_OK_200, mockDataClientProductDetails);
   remoteApi
-    .get(`/parkeren/${profileType}/active_permit_request`)
+    .post(`/parkeren/${profileType}/active_permit_request`)
     .reply(STATUS_OK_200, mockDataActivePermitRequest);
 };
 
