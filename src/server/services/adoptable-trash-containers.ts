@@ -1,5 +1,7 @@
+import { differenceInYears } from 'date-fns';
 import { LatLngTuple } from 'leaflet';
 
+import { fetchBRP } from './brp';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { Themas } from '../../universal/config/thema';
 import {
@@ -19,8 +21,6 @@ import { fetchMyLocation } from './home';
 import { captureMessage } from './monitoring';
 import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { BRPData, MyNotification } from '../../universal/types';
-import { fetchBRP } from './brp';
-import { differenceInYears } from 'date-fns';
 
 export async function fetchAdoptableTrashContainers(
   requestID: RequestID,
