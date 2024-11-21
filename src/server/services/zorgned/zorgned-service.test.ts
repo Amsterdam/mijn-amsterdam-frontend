@@ -13,7 +13,7 @@ import {
   ZorgnedResponseDataSource,
 } from './zorgned-types';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { remoteApiHost } from '../../../testing/setupTests';
+import { remoteApiHost } from '../../../testing/setup';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';

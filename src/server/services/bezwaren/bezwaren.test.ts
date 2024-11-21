@@ -10,7 +10,7 @@ import {
 import bezwarenDocumenten from '../../../../mocks/fixtures/bezwaren-documents.json';
 import bezwarenStatus from '../../../../mocks/fixtures/bezwaren-status.json';
 import bezwarenApiResponse from '../../../../mocks/fixtures/bezwaren.json';
-import { remoteApiHost } from '../../../testing/setupTests';
+import { remoteApiHost } from '../../../testing/setup';
 import { remoteApi } from '../../../testing/test-utils';
 import { range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';

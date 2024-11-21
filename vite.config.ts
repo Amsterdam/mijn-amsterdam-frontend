@@ -29,7 +29,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom', // NOTE: overridden with 'node' when testing bff application
-    setupFiles: './src/test-utils/setupTests.ts',
+    setupFiles: './src/test-utils/setup.ts',
     css: false,
   },
   plugins: [
