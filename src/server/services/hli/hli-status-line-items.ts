@@ -4,6 +4,8 @@ import {
   ZorgnedStatusLineItemsConfig,
 } from '../zorgned/zorgned-types';
 import { DECLARATIE } from './status-line-items/declaratie';
+import { REGELING } from './status-line-items/regeling';
+import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm';
 import {
   AV_PCVC,
   AV_PCVZIL,
@@ -11,15 +13,22 @@ import {
   AV_UPCZIL,
   PCVERGOEDING,
 } from './status-line-items/regeling-pcvergoeding';
-import { REGELING } from './status-line-items/regeling';
-import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
+import {
+  AV_RTM_DEEL1,
+  AV_RTM_DEEL2,
+  RTM,
+} from './status-line-items/regeling-rtm';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
   [
     {
       productIdentificatie: [AV_UPCC, AV_UPCZIL, AV_PCVC, AV_PCVZIL],
       lineItemTransformers: PCVERGOEDING,
+    },
+    {
+      productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
+      lineItemTransformers: RTM,
     },
     {
       productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],

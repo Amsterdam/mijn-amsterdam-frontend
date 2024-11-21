@@ -19,6 +19,22 @@ function getNamenBetrokkenen(
   return `${names.join(', ')} en ${lastName}`;
 }
 
+export function getBetrokkenKinderen(
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  const names = regeling.betrokkenPersonen
+    .filter((person) => !!person.name)
+    .map(
+      (person) =>
+        `${person.name}${person.dateOfBirthFormatted ? ` (geboren op ${person.dateOfBirthFormatted})` : ''}`
+    );
+  if (names.length <= 1) {
+    return names.join('');
+  }
+  const lastName = names.pop();
+  return `${names.join(', ')} en ${lastName}`;
+}
+
 export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed> =
   {
     status: 'Besluit',

@@ -7,42 +7,39 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
-export const AV_UPCC = 'AV-UPCC';
-export const AV_UPCZIL = 'AV-UPCZIL';
-export const AV_PCVC = 'AV-PCVC';
-export const AV_PCVZIL = 'AV-PCVZIL';
+// Toets voorwaarden voor een afspraak GGD
+export const AV_RTM_DEEL1 = 'AV-RTM1';
 
-function isVerzilvering(
+// Afhandeling afspraak GGD
+export const AV_RTM_DEEL2 = 'AV-RTM';
+
+function isAfspraakDeelVanDeRegeling(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
     !!aanvraag.productIdentificatie &&
-    [AV_PCVZIL, AV_UPCZIL].includes(aanvraag.productIdentificatie)
+    AV_RTM_DEEL2 === aanvraag.productIdentificatie
   );
 }
 
-function isPcVergoeding(
+function isVoorwaardenVoorEenAfspraakDeelVanDeRegeling(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
     !!aanvraag.productIdentificatie &&
-    [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
+    AV_RTM_DEEL1 === aanvraag.productIdentificatie
   );
 }
 
-function isVerzilveringVanRegeling(
+function isAfspraakDeelVanDeRegelingVanRegeling(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   const aanvraagProductId = aanvraag.productIdentificatie;
   let avCode;
 
-  if (aanvraagProductId === AV_PCVC) {
-    avCode = AV_PCVZIL;
-  }
-
-  if (aanvraagProductId === AV_UPCC) {
-    avCode = AV_UPCZIL;
+  if (aanvraagProductId === AV_RTM_DEEL1) {
+    avCode = AV_RTM_DEEL2;
   }
 
   return (
@@ -58,11 +55,8 @@ function isRegelingVanVerzilvering(
   const aanvraagProductId = aanvraag.productIdentificatie;
   let avCode;
 
-  if (aanvraagProductId === AV_PCVZIL) {
-    avCode = AV_PCVC;
-  }
-  if (aanvraagProductId === AV_UPCZIL) {
-    avCode = AV_UPCC;
+  if (aanvraagProductId === AV_RTM_DEEL2) {
+    avCode = AV_RTM_DEEL1;
   }
 
   return (
@@ -79,7 +73,7 @@ function getUpcPcvDecisionDate(
   today: Date,
   allAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  if (isVerzilvering(aanvraag)) {
+  if (isAfspraakDeelVanDeRegeling(aanvraag)) {
     const baseRegeling = allAanvragen.find((compareAanvraag) =>
       isRegelingVanVerzilvering(aanvraag, compareAanvraag)
     );
@@ -93,14 +87,14 @@ export function filterCombineUpcPcvData(
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
 
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag, index) => {
+  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
     }
 
-    // Add AV_PCVC / AV_UPCC documenten to AV_PCVZIL / AV_UPCZIL
-    if (isVerzilvering(aanvraag)) {
+    // Add AV_RTM_DEEL1 documenten to AV_RTM_DEEL2
+    if (isAfspraakDeelVanDeRegeling(aanvraag)) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
@@ -132,12 +126,12 @@ export function filterCombineUpcPcvData(
   );
 }
 
-export function isWorkshopNietGevolgd(
+export function isNietOpUitnodigingIngegaan(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
-    isPcVergoeding(regeling) &&
-    !isVerzilvering(regeling) &&
+    isVoorwaardenVoorEenAfspraakDeelVanDeRegeling(regeling) &&
+    !isAfspraakDeelVanDeRegeling(regeling) &&
     !!(
       regeling.datumEindeGeldigheid &&
       regeling.datumIngangGeldigheid &&
@@ -150,35 +144,37 @@ export function isWorkshopNietGevolgd(
   );
 }
 
-export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
+export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
   [
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
       isChecked: (stepIndex, regeling) => true,
       isActive: (stepIndex, regeling) =>
-        !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
+        !isAfspraakDeelVanDeRegeling(regeling) &&
+        regeling.resultaat === 'afgewezen',
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
         return `<p>
         ${
-          regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
+          regeling.resultaat === 'toegewezen' ||
+          isAfspraakDeelVanDeRegeling(regeling)
             ? `U krijgt een ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
             : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
         <p>
-          ${regeling.resultaat === 'toegewezen' || isVerzilvering(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
+          ${regeling.resultaat === 'toegewezen' || isAfspraakDeelVanDeRegeling(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
         </p>
       `;
       },
     },
     {
-      status: 'Workshop',
+      status: 'Uitnodiging afspraak GGD',
       isVisible: (stepIndex, regeling) =>
-        !isVerzilvering(regeling) &&
+        !isAfspraakDeelVanDeRegeling(regeling) &&
         regeling.resultaat === 'toegewezen' &&
-        !isWorkshopNietGevolgd(regeling),
+        !isNietOpUitnodigingIngegaan(regeling),
       datePublished: '',
       isChecked: (stepIndex, regeling) => true,
       isActive: (stepIndex, regeling) => true,
@@ -186,27 +182,28 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
         return `
         <p>
-         Voordat u de laptop krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
+         Voordat uw kind ${betrokkenKinderen} de ${regeling.titel} krijgt, moet u een afspraak maken bij de GGD. In de brief staat hoe u dat doet.
         </p>
       `;
       },
     },
     {
-      status: 'Workshop gevolgd',
+      status: 'Afspraak GGD afgerond',
       isVisible: (stepIndex, regeling) =>
-        isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
+        isAfspraakDeelVanDeRegeling(regeling) &&
+        regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
       isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
-        return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.</p>
+        return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u dat doet.</p>
         ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${regeling.titel} aanvragen.</p>` : ''}`;
       },
     },
     {
-      status: 'Workshop niet gevolgd',
-      isVisible: (stepIndex, regeling) => isWorkshopNietGevolgd(regeling),
+      status: 'Afspraak GGD niet gemaakt',
+      isVisible: (stepIndex, regeling) => isNietOpUitnodigingIngegaan(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
@@ -214,7 +211,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
         return `
         <p>
-         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
+         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel}. U heeft niet op tijd een afspraak bij de GGD gemaakt. U kunt een nieuwe aanvraag doen.
         </p>
         <p>
           In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.
@@ -228,7 +225,7 @@ export const forTesting = {
   getBetrokkenKinderen,
   getUpcPcvDecisionDate,
   isRegelingVanVerzilvering,
-  isVerzilvering,
-  isVerzilveringVanRegeling,
-  isWorkshopNietGevolgd,
+  isAfspraakDeelVanDeRegeling,
+  isAfspraakDeelVanDeRegelingVanRegeling,
+  isNietOpUitnodigingIngegaan,
 };
