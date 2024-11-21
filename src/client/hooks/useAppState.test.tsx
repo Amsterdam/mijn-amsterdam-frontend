@@ -25,7 +25,7 @@ import {
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import * as appStateModule from '../AppState';
-import * as Monitoring from '../utils/monitoring';
+import * as Monitoring from '../helpers/monitoring';
 import { renderRecoilHook } from '../../testing/render-recoil.hook';
 
 vi.mock('./api/useTipsApi');

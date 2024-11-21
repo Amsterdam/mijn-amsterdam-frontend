@@ -1,6 +1,6 @@
 import { AppState } from '../../universal/types/App.types';
 import { createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
-import { captureMessage } from '../utils/monitoring';
+import { captureMessage } from '../helpers/monitoring';
 
 export function transformSourceData(data: Partial<AppState> | null) {
   // Copy the pristine content to the error content so we keep our

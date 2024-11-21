@@ -17,7 +17,7 @@ import {
 import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
-import { captureMessage } from '../utils/monitoring';
+import { captureMessage } from '../helpers/monitoring';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';

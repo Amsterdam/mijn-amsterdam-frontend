@@ -10,7 +10,7 @@ import { IconAlert, IconDownload } from '../../assets/icons';
 import { trackDownload } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
-import { captureException } from '../../utils/monitoring';
+import { captureException } from '../../helpers/monitoring';
 import { MaLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 

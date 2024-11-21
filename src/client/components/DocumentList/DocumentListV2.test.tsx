@@ -8,7 +8,7 @@ import DocumentListV2 from './DocumentListV2';
 import { GenericDocument } from '../../../universal/types/App.types';
 import * as analytics from '../../hooks/analytics.hook';
 import { trackDownload } from '../../hooks/analytics.hook';
-import * as Monitoring from '../../utils/monitoring';
+import * as Monitoring from '../../helpers/monitoring';
 
 vi.mock('../../hooks/analytics.hook');
 
