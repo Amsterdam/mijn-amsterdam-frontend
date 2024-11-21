@@ -1,4 +1,5 @@
 import { isSameDay, parseISO } from 'date-fns';
+
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -130,7 +131,7 @@ export function filterCombineUpcPcvData(
         // If verzilvering is denied we treat regeling as "niet actueel"
         isActueel:
           aanvraag.resultaat === 'toegewezen'
-            ? baseRegeling?.isActueel ?? aanvraag.isActueel
+            ? (baseRegeling?.isActueel ?? aanvraag.isActueel)
             : false,
         datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],

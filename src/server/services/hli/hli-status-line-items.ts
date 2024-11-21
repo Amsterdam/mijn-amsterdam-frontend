@@ -10,7 +10,7 @@ import {
   AV_UPCC,
   AV_UPCZIL,
   PCVERGOEDING,
-} from './status-line-items/pcvergoeding';
+} from './status-line-items/regeling-pcvergoeding';
 import { REGELING } from './status-line-items/regeling';
 import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';

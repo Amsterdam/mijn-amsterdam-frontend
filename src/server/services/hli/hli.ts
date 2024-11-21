@@ -22,7 +22,7 @@ import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned
 import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,
-} from './status-line-items/pcvergoeding';
+} from './status-line-items/regeling-pcvergoeding';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 function getDisplayStatus(

@@ -1,4 +1,4 @@
-import { AV_UPCC, AV_UPCZIL, forTesting } from './pcvergoeding';
+import { AV_UPCC, AV_UPCZIL, forTesting } from './regeling-pcvergoeding';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 
 describe('pcvergoeding', () => {
