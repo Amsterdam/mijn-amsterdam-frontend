@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import footer from './amsterdam-nl-footer-data.json';
 import MainFooter from './MainFooter';
-import { bffApi } from '../../../testing/test-utils';
+import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';

@@ -13,7 +13,7 @@ import {
   sendUnauthorized,
 } from './route-helpers';
 import { bffApiHost } from '../../testing/setup';
-import { RequestMock, ResponseMock } from '../../testing/test-utils';
+import { RequestMock, ResponseMock } from '../../testing/utils';
 import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config';
 import { cache } from '../helpers/source-api-request';

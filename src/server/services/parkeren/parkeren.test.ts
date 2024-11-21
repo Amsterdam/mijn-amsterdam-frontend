@@ -1,5 +1,5 @@
 import { fetchSSOParkerenURL } from './parkeren';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { getFromEnv } from '../../helpers/env';
 
 const REQUEST_ID = '123';

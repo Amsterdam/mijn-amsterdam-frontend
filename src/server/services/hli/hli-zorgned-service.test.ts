@@ -3,7 +3,7 @@ import {
   fetchZorgnedAanvragenHLI,
   forTesting,
 } from './hli-zorgned-service';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as zorgnedService from '../zorgned/zorgned-service';
 import {

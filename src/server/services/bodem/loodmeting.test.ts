@@ -7,7 +7,7 @@ import {
 } from './loodmetingen';
 import document from '../../../../mocks/fixtures/loodmeting-rapport.json';
 import metingen from '../../../../mocks/fixtures/loodmetingen.json';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('Loodmeting', () => {

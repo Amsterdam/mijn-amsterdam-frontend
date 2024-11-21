@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 
 import { fetchSVWI } from './svwi';
 import SVWI from '../../../../mocks/fixtures/svwi.json';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 vi.mock('../../../universal/config/app', async (importOriginal) => {

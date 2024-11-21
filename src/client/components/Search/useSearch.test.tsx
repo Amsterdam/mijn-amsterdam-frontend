@@ -19,7 +19,7 @@ import {
   useSearchIndex,
 } from './useSearch';
 import type { Vergunning } from '../../../server/services';
-import { bffApi } from '../../../testing/test-utils';
+import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { getDefaultState, useDataApi } from './useDataApi';
 import { bffApiHost } from '../../../testing/setup';
-import { bffApi } from '../../../testing/test-utils';
+import { bffApi } from '../../../testing/utils';
 
 interface ResponseData {
   foo: string;

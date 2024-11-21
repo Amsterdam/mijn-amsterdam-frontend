@@ -5,7 +5,7 @@ import {
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../testing/test-utils';
+} from '../../testing/utils';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,

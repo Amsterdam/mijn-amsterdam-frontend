@@ -4,7 +4,7 @@ import { fetchErfpachtV2, fetchErfpachtV2DossiersDetail } from './erfpacht';
 import ERFPACHTv2_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHTv2_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // const mocks = vi.hoisted(() => {

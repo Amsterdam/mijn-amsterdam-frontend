@@ -13,7 +13,7 @@ import {
   transformVergunningenData,
 } from './vergunningen';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';

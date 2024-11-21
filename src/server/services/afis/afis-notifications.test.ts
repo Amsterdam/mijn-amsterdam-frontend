@@ -7,7 +7,7 @@ import {
   fetchAfisNotifications,
 } from './afis-notifications';
 import { AfisFactuur, AfisFactuurStatus } from './afis-types';
-import { getAuthProfileAndToken } from '../../../testing/test-utils';
+import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiDependencyError,
   ApiErrorResponse,

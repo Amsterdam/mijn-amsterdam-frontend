@@ -6,7 +6,7 @@ import { createToeristischeVerhuurNotification } from './toeristische-verhuur-no
 import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 

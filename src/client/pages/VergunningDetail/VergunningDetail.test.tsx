@@ -10,7 +10,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import VergunningDetail from './VergunningDetail';
-import { bffApi } from '../../../testing/test-utils';
+import { bffApi } from '../../../testing/utils';
 
 const content = transformVergunningenData(vergunningenData as any);
 

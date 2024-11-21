@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from 'vitest';
 
 import * as service from './api-service';
 import { remoteApiHost } from '../../../testing/setup';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 
 const REQUEST_ID = 'test-x';
 

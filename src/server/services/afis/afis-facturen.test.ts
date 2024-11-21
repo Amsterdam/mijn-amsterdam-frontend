@@ -19,7 +19,7 @@ import AFIS_AFGEHANDELDE_FACTUREN from './test-fixtures/afgehandelde-facturen.js
 import AFIS_OPENSTAAANDE_FACTUREN from './test-fixtures/openstaande-facturen.json';
 import ARC_DOC from '../../../../mocks/fixtures/afis/arc-doc-id.json';
 import DOCUMENT_DOWNLOAD_RESPONSE from '../../../../mocks/fixtures/afis/document.json';
-import { getAuthProfileAndToken, remoteApi } from '../../../testing/test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 const mocks = vi.hoisted(() => {
   const MOCK_VALUE_ENCRYPTED = 'xx-encrypted-xx';

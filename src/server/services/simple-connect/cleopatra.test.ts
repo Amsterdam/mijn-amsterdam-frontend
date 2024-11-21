@@ -7,7 +7,7 @@ import {
   fetchOvertredingenNotifications,
   getJSONRequestPayload,
 } from './cleopatra';
-import { remoteApi } from '../../../testing/test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 const mocks = vi.hoisted(() => {

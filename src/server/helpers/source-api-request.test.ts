@@ -19,7 +19,7 @@ import {
   requestData,
 } from './source-api-request';
 import { remoteApiHost } from '../../testing/setup';
-import { remoteApi } from '../../testing/test-utils';
+import { remoteApi } from '../../testing/utils';
 import {
   apiErrorResult,
   apiPostponeResult,
