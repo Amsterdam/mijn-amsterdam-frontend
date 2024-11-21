@@ -8,7 +8,7 @@ import { useTrackThemas } from './useTrackThemas.hook';
 import { AppState } from '../../universal/types';
 import { trackEvent } from '../helpers/monitoring';
 
-vi.mock('../utils/monitoring', () => ({
+vi.mock('../helpers/monitoring', () => ({
   trackEvent: vi.fn(),
 }));
 
