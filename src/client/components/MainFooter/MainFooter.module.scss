@@ -4,34 +4,10 @@
 }
 
 .FooterTop {
-  .Paragraph a {
-    outline-offset: var(--ams-link-list-link-outline-offset);
-    text-decoration-line: var(--ams-link-standalone-text-decoration-line);
-    text-decoration-thickness: var(
-      --ams-link-standalone-text-decoration-thickness
-    );
-    text-underline-offset: var(--ams-link-standalone-text-underline-offset);
-    &:hover {
-      text-decoration-thickness: var(
-        --ams-link-standalone-hover-text-decoration-thickness
-      );
-      text-underline-offset: var(
-        --ams-link-standalone-hover-text-underline-offset
-      );
-    }
-  }
   .Link {
-    display: flex;
+    color: var(--ams-link-inverse-color-color);
     svg {
       margin-right: 0.5rem;
-    }
-
-    span {
-      color: $color-white;
-      font-size: var(
-        --ams-paragraph-medium-font-size
-      ); // this helps to keep the font size consistent with the linklist in the middle
-      line-height: var(--ams-link-list-link-medium-line-height);
     }
   }
 }
