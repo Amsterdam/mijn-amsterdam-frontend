@@ -3,7 +3,7 @@ import { describe, expect, it, test, vi } from 'vitest';
 
 import { useMapLocations, useSetMapCenterAtLocation } from './MyArea.hooks';
 import { appStateAtom } from '../../hooks/useAppState';
-import { renderRecoilHook } from '../../../testing/renderRecoilHook';
+import { renderRecoilHook } from '../../../testing/render-recoil.hook';
 
 const mapInstanceMock = {
   setView: vi.fn(),
