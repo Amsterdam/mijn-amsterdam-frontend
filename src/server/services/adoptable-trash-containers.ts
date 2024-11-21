@@ -4,6 +4,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { Themas } from '../../universal/config/thema';
 import {
   apiDependencyError,
+  ApiResponse,
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -17,7 +18,9 @@ import { filterDatasetFeatures, filterFeaturesinRadius } from './buurt/helpers';
 import { fetchMyLocation } from './home';
 import { captureMessage } from './monitoring';
 import { getLatLngCoordinates } from '../../universal/helpers/bag';
-import { MyNotification } from '../../universal/types';
+import { BRPData, MyNotification } from '../../universal/types';
+import { fetchBRP } from './brp';
+import { differenceInYears } from 'date-fns';
 
 export async function fetchAdoptableTrashContainers(
   requestID: RequestID,
@@ -77,7 +80,12 @@ export async function fetchAdoptableTrashContainers(
       return feature.properties.geadopteerd_ind === 'Nee';
     });
 
-  return apiSuccessResult({ tips: getNotifications(filteredFeatures) });
+  return apiSuccessResult({
+    tips: getNotifications(
+      filteredFeatures,
+      await fetchBRP(requestID, authProfileAndToken)
+    ),
+  });
 }
 
 type AfvalFeatureProperties = DatasetFeatureProperties & {
@@ -85,23 +93,57 @@ type AfvalFeatureProperties = DatasetFeatureProperties & {
 };
 
 function getNotifications(
-  features: MaPointFeature<AfvalFeatureProperties>[]
+  features: MaPointFeature<AfvalFeatureProperties>[],
+  brpResponse: ApiResponse<BRPData>
 ): MyNotification[] {
   if (!FeatureToggle.adopteerbareAfvalContainerMeldingen) {
     return [];
   }
 
-  return features.map((feature) => buildNotification(feature.properties.id));
+  if (
+    brpResponse.status !== 'OK' ||
+    !brpResponse.content.persoon.geboortedatum
+  ) {
+    return [];
+  }
+
+  const birthday = new Date(brpResponse.content.persoon.geboortedatum);
+
+  const descriptionText = determineDescriptionText(birthday);
+  if (!descriptionText) {
+    return [];
+  }
+
+  return features.map((feature) =>
+    buildNotification(feature.properties.id, descriptionText)
+  );
 }
 
-function buildNotification(containerID: string): MyNotification {
+function determineDescriptionText(birthday: Date): string | undefined {
+  const age = differenceInYears(new Date(), birthday);
+  const ADULT_AGE = 18;
+  const LATE_TEEN_AGE = 16;
+
+  if (age >= ADULT_AGE) {
+    return `Help mee om uw eigen buurt schoon te houden en adopteer een afvalcontainer.
+ Liever op een andere manier bijdragen? Leen dan een afvalgrijper!`;
+  } else if (age >= LATE_TEEN_AGE) {
+    return `Help mee om je eigen buurt schoon te houden en adopteer een afvalcontainer.
+ Wil je liever iets anders doen? Leen dan een afvalgrijper!`;
+  }
+  return undefined;
+}
+
+function buildNotification(
+  containerID: string,
+  description: string
+): MyNotification {
   return {
     id: 'adoptable-trash-container-notification',
     datePublished: new Date().toISOString(),
     thema: Themas.BUURT,
     title: 'Adopteer een afvalcontainer',
-    description: `Help mee om uw eigen buurt schoon te houden en adopteer een afvalcontainer.
- Liever op een andere manier bijdragen? Leen dan een afvalgrijper!`,
+    description,
     link: {
       to: `http://localhost:3000/buurt?datasetIds=%5B%22afvalcontainers%22%5D&zoom=15&filters=&loadingFeature=%7B%22datasetId%22%3A%22afvalcontainers%22%2C%22id%22%3A%22${containerID}%22%7D&s=1`,
       title: 'Bekijk de werkzaamheden op kaart',
@@ -109,14 +151,4 @@ function buildNotification(containerID: string): MyNotification {
   };
 }
 
-type Description = {
-  adult: string;
-  teen: string;
-};
-
-const description: Description = {
-  adult: `Help mee om uw eigen buurt schoon te houden en adopteer een afvalcontainer.
- Liever op een andere manier bijdragen? Leen dan een afvalgrijper!`,
-  teen: `Help mee om je eigen buurt schoon te houden en adopteer een afvalcontainer.
- Wil je liever iets anders doen? Leen dan een afvalgrijper!`,
-};
+export const forTesting = { determineDescriptionText };
