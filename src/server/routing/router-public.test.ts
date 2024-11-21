@@ -1,5 +1,5 @@
 import { zaakStatusHandler } from './router-public';
-import { bffApiHost } from '../../setupTests';
+import { bffApiHost } from '../../testing/setupTests';
 import { RequestMock, ResponseMock } from '../../testing/test-utils';
 
 describe('router-public', () => {

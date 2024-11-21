@@ -1,5 +1,5 @@
 import { forTesting } from './router-oidc';
-import { bffApiHost } from '../../setupTests';
+import { bffApiHost } from '../../testing/setupTests';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,

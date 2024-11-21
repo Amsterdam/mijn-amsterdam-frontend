@@ -2,7 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { getDefaultState, useDataApi } from './useDataApi';
-import { bffApiHost } from '../../../setupTests';
+import { bffApiHost } from '../../../testing/setupTests';
 import { bffApi } from '../../../testing/test-utils';
 
 interface ResponseData {

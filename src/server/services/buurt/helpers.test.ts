@@ -26,7 +26,7 @@ import {
   recursiveCoordinateSwap,
   refineFilterSelection,
 } from './helpers';
-import { remoteApiHost } from '../../../setupTests';
+import { remoteApiHost } from '../../../testing/setupTests';
 import { ApiResponse } from '../../../universal/helpers/api';
 
 const DSO_API_RESULT = {
