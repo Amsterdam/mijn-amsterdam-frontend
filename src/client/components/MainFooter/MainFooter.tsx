@@ -42,7 +42,6 @@ function FooterBlock({ id, title, links, description }: FooterBlockProps) {
     </Grid.Cell>
   );
 }
-
 function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
   if (Array.isArray(astElement)) {
     return astElement.map((el, index) => {
@@ -68,7 +67,6 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
             inverseColor
             variant="standalone"
             href={String(astElement.attrs?.href || '#')}
-            className="ams-link-list__link ams-link-list__link--on-background-dark"
           >
             {children}
           </Link>
@@ -98,7 +96,7 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
         return (
           <UnorderedList.Item className={styles.Link}>
             <Icon svg={ChevronRightIcon} size="level-5" />
-            <div>{children}</div>
+            {children}
           </UnorderedList.Item>
         );
       case 'strong':

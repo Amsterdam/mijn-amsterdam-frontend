@@ -1,13 +1,6 @@
 .ZoomBar {
   margin-bottom: 16px;
   margin-top: 20px;
-
-  .Button {
-    :global(.ams-icon--size-5) {
-      block-size: var(--ams-icon-size-5-font-size);
-      inline-size: var(--ams-icon-size-5-font-size);
-    }
-  }
 }
 
 .Button {
@@ -22,10 +15,9 @@
   justify-content: center;
   height: 44px;
   width: 44px;
+  background-color: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 2px;
-
-  :global(.ams-icon--size-5) > svg {
-    block-size: var(--size-level-2);
-    inline-size: var(--size-level-2);
+  &:hover {
+    background-color: rgb(230, 230, 230);
   }
 }
