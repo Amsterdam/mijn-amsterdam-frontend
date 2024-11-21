@@ -65,7 +65,7 @@ export async function fetchAfisDocument(
  *  This ID uniquely identifies a document and can be used -
  *  to download one with our document downloading endpoint for example.
  *
- *  There can be more then one ArcDocID's pointing to the same document.
+ *  There can be more then one ArcDocID's pointing to the same document. We need the the most recent one.
  */
 async function fetchAfisDocumentID(
   requestID: RequestID,
