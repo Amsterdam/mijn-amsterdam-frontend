@@ -57,7 +57,7 @@ export async function hasPermitsOrPermitRequests(
     requestData<{ data: unknown[] }>(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
-          `${config.url}/${userType}/client_product_details`,
+          `${config.url}/v1/${userType}/client_product_details`,
         method: 'POST',
         data: {
           token: authProfileAndToken.profile.id,
@@ -68,7 +68,7 @@ export async function hasPermitsOrPermitRequests(
     requestData<{ data: unknown[] }>(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
-          `${config.url}/${userType}/active_permit_request`,
+          `${config.url}/v1/${userType}/active_permit_request`,
         method: 'POST',
         data: {
           token: authProfileAndToken.profile.id,
