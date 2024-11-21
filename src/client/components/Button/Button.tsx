@@ -1,10 +1,18 @@
-import { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
+import {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ComponentType,
+  forwardRef,
+  ReactNode,
+} from 'react';
 
 import classnames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import styles from './Button.module.scss';
-import { IconClose } from '../../assets/icons';
+import { IconChevronRight, IconClose } from '../../assets/icons';
 import { Colors } from '../../config/app';
+import { trackLink } from '../../hooks/analytics.hook';
 
 interface CustomButtonProps {
   variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain' | 'inline';
@@ -16,6 +24,13 @@ interface CustomButtonProps {
   iconSize?: string;
   lean?: boolean;
   replace?: boolean | undefined;
+}
+
+export interface LinkdProps
+  extends CustomButtonProps,
+    AnchorHTMLAttributes<HTMLAnchorElement> {
+  external?: boolean;
+  href?: string;
 }
 
 export interface ButtonProps
@@ -133,6 +148,96 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
+
+type PolymorphicType = keyof JSX.IntrinsicElements | ComponentType<any>;
+
+export default function Linkd({
+  children,
+  className,
+  isDisabled,
+  href,
+  lean = true,
+  variant = 'plain',
+  icon = IconChevronRight,
+  iconSize,
+  iconPosition = 'left',
+  external = false,
+  onClick,
+  download,
+  iconFill,
+  ...otherProps
+}: LinkdProps) {
+  const AnchorElement = 'a';
+  const LinkElement: PolymorphicType = external || !href ? AnchorElement : Link;
+
+  const relProp = {
+    ...(LinkElement === Link ? {} : { rel: 'external noopener noreferrer' }),
+  };
+
+  const urlProp = {
+    ...(LinkElement === Link ? { to: href } : { href }),
+  };
+
+  const downloadProp = {
+    ...(download ? { download } : {}),
+  };
+
+  let clickHandler = onClick;
+
+  if (!!href && external && !clickHandler) {
+    clickHandler = () => trackLink(href, otherProps.title ?? '');
+  }
+
+  return (
+    <LinkElement
+      {...otherProps}
+      {...relProp}
+      {...urlProp}
+      {...downloadProp}
+      onClick={clickHandler}
+      className={buttonStyle({
+        lean,
+        isDisabled,
+        variant,
+        className: classnames(styles.Linkd, className),
+      })}
+    >
+      <ButtonBody
+        icon={icon}
+        iconSize={iconSize}
+        iconPosition={iconPosition}
+        iconFill={iconFill}
+      >
+        {children}
+      </ButtonBody>
+    </LinkElement>
+  );
+}
+
+export function LinkdInline({
+  external,
+  children,
+  variant = 'inline',
+  lean = true,
+  icon = '',
+  iconSize,
+  className,
+  ...otherProps
+}: LinkdProps) {
+  return (
+    <Linkd
+      {...otherProps}
+      className={classnames(styles.LinkedInline, className)}
+      icon={icon}
+      iconSize={iconSize}
+      external={external}
+      variant={variant}
+      lean={lean}
+    >
+      {children}
+    </Linkd>
+  );
+}
 
 export const ButtonStyles = styles;
 

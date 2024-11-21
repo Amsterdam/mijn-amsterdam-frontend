@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 
-import { Link } from '@amsterdam/design-system-react';
-
 import styles from './Burgerzaken.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
+  Linkd,
   MaintenanceNotifications,
   OverviewPage,
   PageContent,
@@ -55,9 +54,9 @@ export default function Burgerzaken() {
       <PageContent>
         <p>Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.</p>
         <p>
-          <Link href="https://www.amsterdam.nl/burgerzaken">
+          <Linkd external={true} href="https://www.amsterdam.nl/burgerzaken">
             Overzicht en aanvragen bij burgerzaken
-          </Link>
+          </Linkd>
         </p>
         <MaintenanceNotifications page="burgerzaken" />
         {isError(BRP) && (

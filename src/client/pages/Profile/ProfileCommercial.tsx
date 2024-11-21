@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { Link } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import { formatKvkProfileData } from './formatDataCommercial';
@@ -17,6 +16,8 @@ import {
   ErrorAlert,
   InfoPanel,
   InfoPanelCollapsible,
+  Linkd,
+  LinkdInline,
   LoadingContent,
   MaintenanceNotifications,
   PageContent,
@@ -37,7 +38,7 @@ function formatInfoPanelConfig(
 
 interface InfoPanelMultiProps {
   id: string;
-  items: unknown[];
+  items: any[];
   KVKData: AppState['KVK'];
   panelConfig: PanelConfigFormatter;
   profileData: ProfileSection;
@@ -91,9 +92,13 @@ export default function ProfileCommercial() {
           gebruikt deze gegevens. Het is dus belangrijk dat uw gegevens kloppen.
         </p>
         <p>
-          <Link href="https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/">
+          <Linkd
+            href="https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/"
+            external={true}
+          >
             Geef wijzigingen door aan de Kamer van Koophandel
-          </Link>
+          </Linkd>
+          .
         </p>
 
         {isLoading(KVK) && (
@@ -213,9 +218,9 @@ export default function ProfileCommercial() {
         <p className={styles.SuppressedParagraph}>
           U kunt deze gegevens niet gebruiken als uittreksel. Een gewaarmerkt
           uittreksel vraagt u aan bij de de{' '}
-          <Link variant="inline" href="https://kvk.nl">
+          <LinkdInline href="https://kvk.nl" external={true}>
             Kamer van Koophandel
-          </Link>
+          </LinkdInline>
           .
         </p>
       </PageContent>

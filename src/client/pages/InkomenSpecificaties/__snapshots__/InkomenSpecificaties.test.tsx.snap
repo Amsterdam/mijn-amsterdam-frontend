@@ -39,7 +39,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
         class="_HeadingInner_3b337d"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/inkomen"
         >
           <svg
@@ -80,19 +80,14 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
       </h3>
       <button
         aria-expanded="false"
-        class="ams-button ams-button--secondary _SearchButton_028dc4"
-        type="button"
+        class="_Button_c3ab45 _Button__secondary-inverted_c3ab45 _SearchButton_028dc4"
       >
         Zoeken
-        <span
-          class="ams-icon ams-icon--size-5"
+        <i
+          class="_SearchButtonIcon_028dc4"
         >
-          <i
-            class="_SearchButtonIcon_028dc4"
-          >
-            ◢
-          </i>
-        </span>
+          ◢
+        </i>
       </button>
       <table
         class="_Table_a66dcc _SpecificationsTable_028dc4"
@@ -407,7 +402,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
         class="_HeadingInner_3b337d"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/inkomen"
         >
           <svg
@@ -448,19 +443,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
       </h3>
       <button
         aria-expanded="false"
-        class="ams-button ams-button--secondary _SearchButton_028dc4"
-        type="button"
+        class="_Button_c3ab45 _Button__secondary-inverted_c3ab45 _SearchButton_028dc4"
       >
         Zoeken
-        <span
-          class="ams-icon ams-icon--size-5"
+        <i
+          class="_SearchButtonIcon_028dc4"
         >
-          <i
-            class="_SearchButtonIcon_028dc4"
-          >
-            ◢
-          </i>
-        </span>
+          ◢
+        </i>
       </button>
       <table
         class="_Table_a66dcc _SpecificationsTable_028dc4"

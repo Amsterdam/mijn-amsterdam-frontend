@@ -32,7 +32,7 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/"
         >
           <svg
@@ -143,9 +143,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/1132545854"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/999999999
                   </a>
                 </td>
@@ -181,9 +197,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/3368771494"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/98798273423
                   </a>
                 </td>
@@ -219,9 +251,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/3970992213"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/789076676
                   </a>
                 </td>
@@ -257,9 +305,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/werk-en-vervoer-op-straat/871318354"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230585
                   </a>
                 </td>
@@ -295,9 +359,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/touringcar-jaarontheffing/852482654"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230478
                   </a>
                 </td>
@@ -333,9 +413,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/eigen-parkeerplaats-opheffen/1679261105"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230376
                   </a>
                 </td>
@@ -371,9 +467,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/eigen-parkeerplaats/1817502388"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230352
                   </a>
                 </td>
@@ -409,9 +521,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/3593173882"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230349
                   </a>
                 </td>
@@ -447,9 +575,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/1623553971"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2003534
                   </a>
                 </td>
@@ -485,9 +629,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/1097314015"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2003529
                   </a>
                 </td>
@@ -523,9 +683,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4069415615"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2003388
                   </a>
                 </td>
@@ -561,9 +737,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-hele-stad/1656544835"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/1809938
                   </a>
                 </td>
@@ -599,9 +791,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/vob/3229752453"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/1797716
                   </a>
                 </td>
@@ -637,9 +845,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/vob/513492494"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/1797715
                   </a>
                 </td>
@@ -675,9 +899,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/2720598005"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/123123123
                   </a>
                 </td>
@@ -713,9 +953,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/2295682720"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/19795392
                   </a>
                 </td>
@@ -751,9 +1007,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/2191426354"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1979539
                   </a>
                 </td>
@@ -789,9 +1061,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/samenvoegingsvergunning/3588461895"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1797696
                   </a>
                 </td>
@@ -827,9 +1115,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/onttrekkingsvergunning-voor-sloop/2377704102"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1797585
                   </a>
                 </td>
@@ -865,9 +1169,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/woningvormingsvergunning/4289555340"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1697574
                   </a>
                 </td>
@@ -903,9 +1223,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/splitsingsvergunning/4220998766"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1697573
                   </a>
                 </td>
@@ -941,9 +1277,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/zwaar-verkeer/2318111872"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1692013
                   </a>
                 </td>
@@ -979,9 +1331,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/zwaar-verkeer/1863159343"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1692002
                   </a>
                 </td>
@@ -1017,9 +1385,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/nachtwerkontheffing/504231399"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1691001
                   </a>
                 </td>
@@ -1055,9 +1439,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/3407608046"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1597712
                   </a>
                 </td>
@@ -1093,9 +1493,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3452781026"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597197
                   </a>
                 </td>
@@ -1131,9 +1547,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2872491299"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597196
                   </a>
                 </td>
@@ -1169,9 +1601,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3490212832"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597195
                   </a>
                 </td>
@@ -1207,9 +1655,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2909923105"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597194
                   </a>
                 </td>
@@ -1245,9 +1709,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3706696166"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597193
                   </a>
                 </td>
@@ -1283,9 +1763,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2594256166"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1592761
                   </a>
                 </td>
@@ -1321,9 +1817,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3468041544"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1592521
                   </a>
                 </td>
@@ -1359,9 +1871,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-vergunning/4081922197"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/111/000004
                   </a>
                 </td>
@@ -1397,9 +1925,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-vergunning/3073404626"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/111/000003
                   </a>
                 </td>
@@ -1435,9 +1979,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/gpp/260384730"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000009
                   </a>
                 </td>
@@ -1473,9 +2033,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-melding/4187042164"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000003
                   </a>
                 </td>
@@ -1511,9 +2087,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/e-rvv-tvm/3105266233"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000003
                   </a>
                 </td>
@@ -1549,9 +2141,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/913567999"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000001.c
                   </a>
                 </td>
@@ -1587,9 +2195,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/2331715774"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000001.b
                   </a>
                 </td>
@@ -1625,9 +2249,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/333728632"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000001
                   </a>
                 </td>
@@ -1729,9 +2369,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/2018708759"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/98989234
                   </a>
                 </td>
@@ -1767,9 +2423,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/2165183397"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/98744444423
                   </a>
                 </td>
@@ -1805,9 +2477,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/2303699528"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/92222273423
                   </a>
                 </td>
@@ -1843,9 +2531,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4198587804"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/23423409
                   </a>
                 </td>
@@ -1881,9 +2585,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/werk-en-vervoer-op-straat/3016245948"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230696
                   </a>
                 </td>
@@ -1919,9 +2639,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/touringcar-dagontheffing/2260364373"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230474
                   </a>
                 </td>
@@ -1957,9 +2693,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/1600396405"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2230346
                   </a>
                 </td>
@@ -1995,9 +2747,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/394540596"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/2003533
                   </a>
                 </td>
@@ -2033,9 +2801,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/627439937"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/200323232323
                   </a>
                 </td>
@@ -2071,9 +2855,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/vob/3689116237"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/1797714
                   </a>
                 </td>
@@ -2109,9 +2909,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/4110068165"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/123123456
                   </a>
                 </td>
@@ -2147,9 +2963,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/rvv-sloterweg/335638187"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/23/091823087
                   </a>
                 </td>
@@ -2185,9 +3017,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/302573541"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/19795384
                   </a>
                 </td>
@@ -2223,9 +3071,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/162761969"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1979538
                   </a>
                 </td>
@@ -2261,9 +3125,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/1580959320"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1978055
                   </a>
                 </td>
@@ -2299,9 +3179,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/onttrekkingsvergunning/1659133230"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1797707
                   </a>
                 </td>
@@ -2337,9 +3233,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/nachtwerkontheffing/321076396"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1691001
                   </a>
                 </td>
@@ -2375,9 +3287,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/458936654"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1597602
                   </a>
                 </td>
@@ -2413,9 +3341,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/1314482059"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1597502
                   </a>
                 </td>
@@ -2451,9 +3395,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/421733388"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1597501
                   </a>
                 </td>
@@ -2489,9 +3449,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/flyeren-sampling/239013065"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1597501
                   </a>
                 </td>
@@ -2527,9 +3503,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/aanbieden-van-diensten/1939428970"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/22/1597471
                   </a>
                 </td>
@@ -2565,9 +3557,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-bedrijven/3577730497"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/21/1600000
                   </a>
                 </td>
@@ -2603,9 +3611,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/parkeerontheffingen-blauwe-zone-particulieren/3490008162"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/21/1500000
                   </a>
                 </td>
@@ -2641,9 +3665,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/593205051"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/615500
                   </a>
                 </td>
@@ -2679,9 +3719,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/574064900"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597205
                   </a>
                 </td>
@@ -2717,9 +3773,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3607535691"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597204
                   </a>
                 </td>
@@ -2755,9 +3827,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/3276988108"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597203
                   </a>
                 </td>
@@ -2793,9 +3881,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/2804017741"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597202
                   </a>
                 </td>
@@ -2831,9 +3935,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/1324498924"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1597199
                   </a>
                 </td>
@@ -2869,9 +3989,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/tvm-rvv-object/976898368"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/20/1595179
                   </a>
                 </td>
@@ -2907,9 +4043,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-vergunning/830781715"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/111/000002
                   </a>
                 </td>
@@ -2945,9 +4097,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/gpk/1221166450"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000008
                   </a>
                 </td>
@@ -2983,9 +4151,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/evenement-melding/3446432146"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000002
                   </a>
                 </td>
@@ -3021,9 +4205,25 @@ exports[`<Vergunningen /> > Matches the Full Page snapshot 1`] = `
                   class="_DisplayPropTitle_a66dcc"
                 >
                   <a
-                    class="ams-link ams-link--standalone"
+                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
                     href="/vergunningen/omzettingsvergunning/3664304440"
                   >
+                    <svg
+                      aria-hidden="true"
+                      aria-label="chevron-rechts-icoon"
+                      class="_Icon_c3ab45 _Icon__left_c3ab45"
+                      fill="#000"
+                      focusable="false"
+                      height="14px"
+                      viewBox="0 0 32 32"
+                      width="14px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <polygon
+                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                      />
+                    </svg>
                     Z/000/000001.d
                   </a>
                 </td>

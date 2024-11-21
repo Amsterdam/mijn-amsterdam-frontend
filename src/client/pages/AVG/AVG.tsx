@@ -1,11 +1,10 @@
-import { Link } from '@amsterdam/design-system-react';
-
 import styles from './AVG.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
+  Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -62,9 +61,9 @@ const AVG = () => {
       <PageContent>
         <p>Hier ziet u een overzicht van uw ingediende AVG verzoeken.</p>
         <p>
-          <Link href="https://www.amsterdam.nl/privacy/loket/">
+          <Linkd external={true} href="https://www.amsterdam.nl/privacy/loket/">
             Loket persoonsgegevens gemeente Amsterdam
-          </Link>
+          </Linkd>
         </p>
         {isError(AVG) && (
           <ErrorAlert>

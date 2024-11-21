@@ -1,4 +1,3 @@
-import { Link } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 import styles from './Klachten.module.scss';
@@ -8,6 +7,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
+  Linkd,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -79,12 +79,12 @@ export default function Klachten() {
           gemeente Amsterdam.
         </p>
         <p>
-          <Link
-            variant="inline"
+          <Linkd
+            external={true}
             href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
           >
             Meer informatie over de afhandeling van uw klacht
-          </Link>
+          </Linkd>
         </p>
         {isError(KLACHTEN) && (
           <ErrorAlert>We kunnen op dit moment geen klachten tonen.</ErrorAlert>

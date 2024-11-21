@@ -63,12 +63,6 @@
   @include heading-small;
   font-weight: bold;
   transform: translateX(-1.9rem);
-
-  svg {
-    fill: var(--ams-link-color);
-    height: 14px;
-    width: 14px;
-  }
 }
 
 @media print {
