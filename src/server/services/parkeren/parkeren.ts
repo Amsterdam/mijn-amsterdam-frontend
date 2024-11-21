@@ -1,5 +1,7 @@
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -26,13 +28,15 @@ export async function fetchSSOParkerenURL(
 
   const fallBackURL = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
 
-  const hasParkeren = await hasPermitsOrPermitRequests(
-    requestID,
-    authProfileAndToken
-  );
+  let isKnown: boolean;
+  if (FeatureToggle.parkerenCheckForProductAndPermitsActive) {
+    isKnown = await hasPermitsOrPermitRequests(requestID, authProfileAndToken);
+  } else {
+    isKnown = true;
+  }
 
   return apiSuccessResult({
-    isKnown: hasParkeren,
+    isKnown,
     url: response.content?.url ?? fallBackURL,
   });
 }
@@ -53,14 +57,22 @@ export async function hasPermitsOrPermitRequests(
     requestData<{ data: unknown[] }>(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
-          `${config.url}/${userType}/client_product_details`,
+          `${config.url}/v1/${userType}/client_product_details`,
+        method: 'POST',
+        data: {
+          token: authProfileAndToken.profile.id,
+        },
       }),
       requestID
     ),
     requestData<{ data: unknown[] }>(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
-          `${config.url}/${userType}/active_permit_request`,
+          `${config.url}/v1/${userType}/active_permit_request`,
+        method: 'POST',
+        data: {
+          token: authProfileAndToken.profile.id,
+        },
       }),
       requestID
     ),
