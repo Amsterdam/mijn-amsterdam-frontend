@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createHash } from 'node:crypto';
 
 import react from '@vitejs/plugin-react';
@@ -29,7 +30,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom', // NOTE: overridden with 'node' when testing bff application
-    setupFiles: './src/setupTests.ts',
+    setupFiles: './src/testing/setup.ts',
     css: false,
   },
   plugins: [
@@ -63,3 +64,4 @@ export default defineConfig({
     },
   },
 });
+/* eslint-enable */

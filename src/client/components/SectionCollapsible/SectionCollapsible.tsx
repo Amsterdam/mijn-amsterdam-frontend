@@ -10,7 +10,7 @@ import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { useContentDimensions } from '../../hooks/useContentDimensions';
-import { withKeyPress } from '../../utils/utils';
+import { withKeyPress } from '../../helpers/utils';
 import LoadingContent from '../LoadingContent/LoadingContent';
 
 export interface SectionCollapsibleProps {

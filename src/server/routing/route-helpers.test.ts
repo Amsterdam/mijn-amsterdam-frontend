@@ -12,8 +12,8 @@ import {
   sendResponse,
   sendUnauthorized,
 } from './route-helpers';
-import { bffApiHost } from '../../setupTests';
-import { RequestMock, ResponseMock } from '../../test-utils';
+import { bffApiHost } from '../../testing/setup';
+import { RequestMock, ResponseMock } from '../../testing/utils';
 import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config';
 import { cache } from '../helpers/source-api-request';

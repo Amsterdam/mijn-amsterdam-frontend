@@ -17,7 +17,7 @@ import {
   PowerBrowserStatusResponse,
   SearchRequestResponse,
 } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 

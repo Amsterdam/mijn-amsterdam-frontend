@@ -30,7 +30,7 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { captureMessage } from '../../utils/monitoring';
+import { captureMessage } from '../../helpers/monitoring';
 
 export type StatusSourceItem = StatusLine;
 

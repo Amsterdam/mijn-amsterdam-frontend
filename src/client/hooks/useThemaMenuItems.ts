@@ -5,7 +5,7 @@ import { useProfileTypeValue } from './useProfileType';
 import { ApiResponse, isError, isLoading } from '../../universal/helpers/api';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItem } from '../config/thema';
-import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
+import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
 
 export interface ThemasState {
   items: ThemaMenuItem[];

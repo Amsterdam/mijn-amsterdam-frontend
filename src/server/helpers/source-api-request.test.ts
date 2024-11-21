@@ -18,8 +18,8 @@ import {
   getRequestConfigCacheKey,
   requestData,
 } from './source-api-request';
-import { remoteApiHost } from '../../setupTests';
-import { remoteApi } from '../../test-utils';
+import { remoteApiHost } from '../../testing/setup';
+import { remoteApi } from '../../testing/utils';
 import {
   apiErrorResult,
   apiPostponeResult,

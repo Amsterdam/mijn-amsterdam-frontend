@@ -14,7 +14,7 @@ import {
   NOT_FOUND_TITLE,
   PageTitleMain,
 } from '../config/thema';
-import { captureMessage } from '../utils/monitoring';
+import { captureMessage } from '../helpers/monitoring';
 
 const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {

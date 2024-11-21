@@ -1,10 +1,10 @@
-import { ThemaMenuItem } from './thema';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
 import { DecosCaseType } from '../../universal/types/vergunningen';
+import { ThemaMenuItem } from '../config/thema';
 import { PARKEER_CASE_TYPES } from '../pages/Parkeren/useParkerenData.hook';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {

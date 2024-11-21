@@ -2,8 +2,8 @@ import Mockdate from 'mockdate';
 
 import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
-import { remoteApiHost } from '../../../setupTests';
-import { remoteApi } from '../../../test-utils';
+import { remoteApiHost } from '../../../testing/setup';
+import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
 import {
