@@ -15,7 +15,7 @@ describe('determineDescriptionText Tests', () => {
     `);
   });
 
-  test('Returns teen text when teen', () => {
+  test('Returns teen text when late teen', () => {
     MockDate.set('01-01-2024');
 
     const birthday = new Date('01-01-2008');
@@ -27,7 +27,7 @@ describe('determineDescriptionText Tests', () => {
     `);
   });
 
-  test('Returns undefined when age is lower then teen', () => {
+  test('Returns undefined when age is lower then that of a late teen', () => {
     MockDate.set('01-01-2024');
 
     const birthday = new Date('01-01-2009');
