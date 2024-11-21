@@ -26,7 +26,7 @@ import {
 } from '../../universal/helpers/api';
 import * as appStateModule from '../AppState';
 import * as Monitoring from '../utils/monitoring';
-import { renderRecoilHook } from '../utils/renderRecoilHook';
+import { renderRecoilHook } from '../../testing/renderRecoilHook';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
