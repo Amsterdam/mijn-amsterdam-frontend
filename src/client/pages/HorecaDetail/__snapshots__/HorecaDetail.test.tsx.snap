@@ -30,7 +30,7 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
         class="_HeadingInner_3b337d"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
           href="/horeca/"
         >
           <svg

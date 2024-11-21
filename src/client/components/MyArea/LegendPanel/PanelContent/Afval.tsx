@@ -31,21 +31,18 @@ export default function MyArePanelContentAfval({
       title={panelItem.fractieOmschrijving || panelItem.serienummer}
       supTitle="Afvalcontainers"
     >
-      {!panelItem.geadopteerdInd &&
-        panelItem.fractieOmschrijving &&
-        // You can't adopt a Kerstboom inzamellocatie
-        !panelItem.fractieOmschrijving.startsWith('Kerst') && (
-          <p>
-            Deze container kunt u adopteren!
-            <br />{' '}
-            <Link
-              variant="inline"
-              href="https://www.amsterdam.nl/veelgevraagd/ondergrondse-afvalcontainer-adopteren-a188d"
-            >
-              Lees hier hoe
-            </Link>
-          </p>
-        )}
+      {true && (
+        <p>
+          Deze container kunt u adopteren!
+          <br />{' '}
+          <Link
+            variant="inline"
+            href="https://www.amsterdam.nl/veelgevraagd/ondergrondse-afvalcontainer-adopteren-a188d"
+          >
+            Lees hier hoe
+          </Link>
+        </p>
+      )}
       {!!infoUrl && (
         <p>
           Wat mag er{' '}

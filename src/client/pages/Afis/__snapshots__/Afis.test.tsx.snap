@@ -268,7 +268,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                       class="_DocumentLinkWrap_81c3b4"
                     >
                       <a
-                        class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
+                        class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                         href="https://download.example.com/F001"
                       >
                         <span
@@ -329,7 +329,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                       class="_DocumentLinkWrap_81c3b4"
                     >
                       <a
-                        class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
+                        class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                         href="https://download.example.com/F003"
                       >
                         <span
@@ -459,7 +459,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                       class="_DocumentLinkWrap_81c3b4"
                     >
                       <a
-                        class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
+                        class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
                         href="https://download.example.com/F002"
                       >
                         <span

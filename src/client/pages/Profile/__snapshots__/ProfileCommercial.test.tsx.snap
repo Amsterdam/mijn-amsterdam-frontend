@@ -45,11 +45,29 @@ exports[`<ProfileCommercial /> > Matches the Full Page snapshot 1`] = `
       </p>
       <p>
         <a
-          class="ams-link ams-link--standalone"
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
           href="https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/"
+          rel="external noopener noreferrer"
         >
+          <svg
+            aria-hidden="true"
+            aria-label="chevron-rechts-icoon"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
+            fill="#000"
+            focusable="false"
+            height="14px"
+            viewBox="0 0 32 32"
+            width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <polygon
+              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            />
+          </svg>
           Geef wijzigingen door aan de Kamer van Koophandel
         </a>
+        .
       </p>
     </div>
     <div
@@ -338,8 +356,9 @@ Amsterdam
                     translate="yes"
                   >
                     <a
-                      class="ams-link ams-link--inline"
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                       href="tel:+310209991362"
+                      rel="external noopener noreferrer"
                     >
                       +310209991362
                     </a>
@@ -358,8 +377,9 @@ Amsterdam
                   >
                     <span>
                       <a
-                        class="ams-link ams-link--inline"
+                        class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                         href="www.electrotechniek.amsterdam.nl"
+                        rel="external noopener noreferrer"
                       >
                         www.electrotechniek.amsterdam.nl
                       </a>
@@ -379,8 +399,9 @@ Amsterdam
                     translate="yes"
                   >
                     <a
-                      class="ams-link ams-link--inline"
+                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                       href="mailto:info@electrotechniek.amsterdam.nl"
+                      rel="external noopener noreferrer"
                     >
                       info@electrotechniek.amsterdam.nl
                     </a>
@@ -574,8 +595,9 @@ Amsterdam-Duivendrecht
                           translate="yes"
                         >
                           <a
-                            class="ams-link ams-link--inline"
+                            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                             href="tel:+310208451362"
+                            rel="external noopener noreferrer"
                           >
                             +310208451362
                           </a>
@@ -594,8 +616,9 @@ Amsterdam-Duivendrecht
                         >
                           <span>
                             <a
-                              class="ams-link ams-link--inline"
+                              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                               href="www.feestwinkel.nl"
+                              rel="external noopener noreferrer"
                             >
                               www.feestwinkel.nl
                             </a>
@@ -615,8 +638,9 @@ Amsterdam-Duivendrecht
                           translate="yes"
                         >
                           <a
-                            class="ams-link ams-link--inline"
+                            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                             href="mailto:info@feestwinkel.nl"
+                            rel="external noopener noreferrer"
                           >
                             info@feestwinkel.nl
                           </a>
@@ -750,8 +774,9 @@ Amsterdam
                           translate="yes"
                         >
                           <a
-                            class="ams-link ams-link--inline"
+                            class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
                             href="tel:+310205641954"
+                            rel="external noopener noreferrer"
                           >
                             +310205641954
                           </a>
@@ -1467,8 +1492,9 @@ Amsterdam
       >
         U kunt deze gegevens niet gebruiken als uittreksel. Een gewaarmerkt uittreksel vraagt u aan bij de de 
         <a
-          class="ams-link ams-link--inline"
+          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
           href="https://kvk.nl"
+          rel="external noopener noreferrer"
         >
           Kamer van Koophandel
         </a>

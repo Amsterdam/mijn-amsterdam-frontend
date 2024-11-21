@@ -21,19 +21,17 @@ const maClassName: Record<MaClassNameVariant, string> = {
  * MaLink is used when a link can be either internal or external
  */
 export function MaLink({
-  href,
   children,
   className,
-  onClick,
   isExternal = false,
   ...rest
 }: MaLinkProps) {
   return isExternal ? (
-    <Link {...rest} className={className} href={href} onClick={onClick}>
+    <MaBaseLink {...rest} className={className}>
       {children}
-    </Link>
+    </MaBaseLink>
   ) : (
-    <MaRouterLink {...rest} href={href} onClick={onClick}>
+    <MaRouterLink {...rest} className={className}>
       {children}
     </MaRouterLink>
   );
@@ -42,11 +40,23 @@ export function MaLink({
 /**
  * MaRouterLink is used when a link is internal
  */
-export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
+export function MaRouterLink({
+  href,
+  onClick,
+  maVariant,
+  className,
+  ...rest
+}: MaLinkProps) {
   const history = useHistory();
+  let className_ = className;
+
+  if (maVariant) {
+    className_ = classNames(className, styles[maClassName[maVariant]]);
+  }
   return (
     <MaBaseLink
       {...rest}
+      className={className_}
       href={href}
       onClick={(event) => {
         if (onClick) {

@@ -59,7 +59,7 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
             href={actionLink.url}
             isExternal={actionLink.external}
           >
-            {actionLink.title}asdf
+            {actionLink.title}
           </MaLink>
         </li>
       ))}
