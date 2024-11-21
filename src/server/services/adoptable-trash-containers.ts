@@ -81,7 +81,7 @@ export async function fetchAdoptableTrashContainers(
     });
 
   return apiSuccessResult({
-    tips: getNotifications(
+    tips: buildNotifications(
       filteredFeatures,
       await fetchBRP(requestID, authProfileAndToken)
     ),
@@ -92,7 +92,7 @@ type AfvalFeatureProperties = DatasetFeatureProperties & {
   geadopteerd_ind: 'Ja' | 'Nee';
 };
 
-function getNotifications(
+function buildNotifications(
   features: MaPointFeature<AfvalFeatureProperties>[],
   brpResponse: ApiResponse<BRPData>
 ): MyNotification[] {
