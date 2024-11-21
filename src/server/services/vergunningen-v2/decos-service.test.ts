@@ -12,7 +12,7 @@ import {
   fetchDecosZakenFromSource,
   forTesting,
 } from './decos-service';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi } from '../../../testing/test-utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 

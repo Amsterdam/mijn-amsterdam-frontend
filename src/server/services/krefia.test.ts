@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
 import KrefiaData from '../../../mocks/fixtures/krefia.json';
-import { remoteApi } from '../../test-utils';
+import { remoteApi } from '../../testing/test-utils';
 import { jsonCopy, omit } from '../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { axiosRequest } from '../helpers/source-api-request';

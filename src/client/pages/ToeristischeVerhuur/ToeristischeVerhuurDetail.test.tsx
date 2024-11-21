@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { describe, expect } from 'vitest';
 
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { bffApi } from '../../../test-utils';
+import { bffApi } from '../../../testing/test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';

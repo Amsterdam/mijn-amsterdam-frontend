@@ -9,7 +9,7 @@ import {
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../test-utils';
+} from '../../testing/test-utils';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import { cache } from '../helpers/source-api-request';
 import { addToBlackList } from '../services/session-blacklist';

@@ -2,7 +2,7 @@ import Mockdate from 'mockdate';
 
 import { fetchWmo, forTesting } from './wmo';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi } from '../../../testing/test-utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 

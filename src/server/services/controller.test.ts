@@ -15,10 +15,7 @@ import {
   getTipNotifications,
   servicesTipsByProfileType,
 } from './controller';
-import {
-  getReqMockWithOidc,
-  ResponseMock,
-} from '../../test-utils';
+import { getReqMockWithOidc, ResponseMock } from '../../testing/test-utils';
 
 const mocks = vi.hoisted(() => {
   return {

@@ -22,7 +22,7 @@ import {
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../test-utils';
+} from '../../testing/test-utils';
 import * as blacklist from '../services/session-blacklist';
 
 describe('auth-helpers', () => {

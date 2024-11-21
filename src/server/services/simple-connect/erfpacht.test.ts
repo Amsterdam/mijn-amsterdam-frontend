@@ -7,7 +7,7 @@ import {
   fetchErfpachtNotifications,
   getConfigMain,
 } from './erfpacht';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi } from '../../../testing/test-utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('simple-connect/erfpacht', () => {

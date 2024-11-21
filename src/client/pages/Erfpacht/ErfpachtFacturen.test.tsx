@@ -10,7 +10,7 @@ import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
 } from '../../../server/services/simple-connect/erfpacht';
-import { bffApi } from '../../../test-utils';
+import { bffApi } from '../../../testing/test-utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';

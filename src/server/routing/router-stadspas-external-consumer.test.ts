@@ -1,5 +1,5 @@
 import { forTesting } from './router-stadspas-external-consumer';
-import { remoteApi, RequestMock, ResponseMock } from '../../test-utils';
+import { remoteApi, RequestMock, ResponseMock } from '../../testing/test-utils';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { AuthProfile } from '../auth/auth-types';
 import * as stadspas from '../services/hli/stadspas';

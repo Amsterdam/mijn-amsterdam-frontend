@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
 
-import { AuthProfile, AuthProfileAndToken } from './server/auth/auth-types';
-import { createOIDCStub } from './server/routing/router-development';
-import { bffApiHost, remoteApiHost } from './setupTests';
-import { HTTP_STATUS_CODES } from './universal/constants/errorCodes';
+import { AuthProfile, AuthProfileAndToken } from '../server/auth/auth-types';
+import { createOIDCStub } from '../server/routing/router-development';
+import { bffApiHost, remoteApiHost } from '../setupTests';
+import { HTTP_STATUS_CODES } from '../universal/constants/errorCodes';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',

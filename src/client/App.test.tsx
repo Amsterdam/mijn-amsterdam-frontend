@@ -2,7 +2,7 @@ import { render, waitFor } from '@testing-library/react';
 import { vi, describe, it, expect } from 'vitest';
 
 import App from './App';
-import { bffApi } from '../test-utils';
+import { bffApi } from '../testing/test-utils';
 
 const mocks = vi.hoisted(() => {
   return {

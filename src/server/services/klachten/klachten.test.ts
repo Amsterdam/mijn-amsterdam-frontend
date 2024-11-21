@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import apiResponse from '../../../../mocks/fixtures/klachten.json';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi } from '../../../testing/test-utils';
 import { ApiConfig } from '../../config/source-api';
 import { AuthProfileAndToken } from './../../auth/auth-types';
 import {

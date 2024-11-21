@@ -3,9 +3,8 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { fetchHorecaNotifications, fetchHorecaVergunningen } from './horeca';
 import vergunningenMockData from '../../../mocks/fixtures/vergunningen.json';
-import { remoteApi } from '../../test-utils';
+import { remoteApi } from '../../testing/test-utils';
 import { AuthProfileAndToken } from '../auth/auth-types';
-
 
 describe('Horeca service', () => {
   const authProfileAndToken: AuthProfileAndToken = {

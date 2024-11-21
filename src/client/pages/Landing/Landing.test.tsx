@@ -3,7 +3,7 @@ import { RecoilRoot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import Landing from './Landing';
-import { bffApi } from '../../../test-utils';
+import { bffApi } from '../../../testing/test-utils';
 import { SessionState, sessionAtom } from '../../hooks/api/useSessionApi';
 
 const appState = { isAuthenticated: false } as SessionState;
