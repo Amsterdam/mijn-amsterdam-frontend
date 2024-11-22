@@ -82,6 +82,7 @@
           {
             "documentidentificatie": "B2806770",
             "omschrijving": "AV-IIT Toekenning",
+            "omschrijvingclientportaal": "AV-IIT Toekenning",
             "datumDefinitief": "2024-06-17T11:15:35.287"
           }
         ]
@@ -146,6 +147,7 @@
           {
             "documentidentificatie": "B2806765",
             "omschrijving": "AV-CZM Rapportage instroom",
+            "omschrijvingclientportaal": "AV-CZM Rapportage instroom",
             "datumDefinitief": "2024-06-17T10:47:22.25"
           },
           {
@@ -215,6 +217,7 @@
           {
             "documentidentificatie": "B2806767",
             "omschrijving": "AV-SP Rapportage verkort",
+            "omschrijvingclientportaal": "AV-SP Rapportage verkort",
             "datumDefinitief": "2024-06-17T11:01:01.083"
           },
           {
@@ -585,6 +588,7 @@
           {
             "documentidentificatie": "B2806781",
             "omschrijving": "[1] AV-UPC aanmelden workshop",
+            "omschrijvingclientportaal": "[1] AV-UPC aanmelden workshop",
             "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
@@ -654,6 +658,7 @@
           {
             "documentidentificatie": "B2806782",
             "omschrijving": "[X] AV-PCV UPC Toekenning + Verzilvering device",
+            "omschrijvingclientportaal": "[X] AV-PCV UPC Toekenning + Verzilvering device",
             "datumDefinitief": "2024-06-17T17:17:09.75"
           }
         ]
@@ -714,6 +719,7 @@
           {
             "documentidentificatie": "B2806781",
             "omschrijving": "[1] AV-UPC Besluit",
+            "omschrijvingclientportaal": "[1] AV-UPC Besluit",
             "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
@@ -787,6 +793,7 @@
           {
             "documentidentificatie": "B2806781",
             "omschrijving": "[1] AV-UPC Besluit",
+            "omschrijvingclientportaal": "[1] AV-UPC Besluit",
             "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
@@ -841,6 +848,7 @@
           {
             "documentidentificatie": "B2223473",
             "omschrijving": "AV-IIT AUT. Toekenning",
+            "omschrijvingclientportaal": "AV-IIT AUT. Toekenning",
             "datumDefinitief": "2022-02-19T16:02:44"
           },
           {
@@ -960,6 +968,7 @@
           {
             "documentidentificatie": "E610019",
             "omschrijving": "aanvraagformulier TAOV",
+            "omschrijvingclientportaal": "aanvraagformulier TAOV",
             "datumDefinitief": "2022-10-25T15:02:00"
           },
           {
@@ -1024,6 +1033,7 @@
           {
             "documentidentificatie": "B2412503",
             "omschrijving": "AV-TAOV Brief voor ouderen toekennen via batch",
+            "omschrijvingclientportaal": "AV-TAOV Brief voor ouderen toekennen via batch",
             "datumDefinitief": "2022-12-01T07:50:11.267"
           }
         ]
@@ -1079,6 +1089,7 @@
           {
             "documentidentificatie": "B2563760",
             "omschrijving": "AV-SP Vooraankondiging Verlenging",
+            "omschrijvingclientportaal": "AV-SP Vooraankondiging Verlenging",
             "datumDefinitief": "2023-06-03T18:39:05.813"
           }
         ]

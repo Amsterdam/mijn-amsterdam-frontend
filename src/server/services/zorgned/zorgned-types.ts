@@ -112,6 +112,7 @@ export interface ZorgnedDocument {
   datumDefinitief: string | null;
   documentidentificatie: string;
   omschrijving: string;
+  omschrijvingclientportaal: string;
   zaakidentificatie: string | null;
 }
 
@@ -161,6 +162,8 @@ export interface ZorgnedAanvraagWithRelatedPersonsTransformed
 export interface ZorgnedDocumentResponseSource {
   inhoud: string;
   omschrijving: string;
+  omschrijvingclientportaal: string;
+  bestandsnaam: string;
   mimetype: string;
 }
 
