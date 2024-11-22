@@ -62,6 +62,7 @@ describe('zorgned-service', () => {
         {
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
+          omschrijvingclientportaal: 'WRA beschikking Definitief',
           datumDefinitief: '2013-05-17T00:00:00',
           zaakidentificatie: null,
         },
@@ -81,6 +82,7 @@ describe('zorgned-service', () => {
         {
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
+          omschrijvingclientportaal: 'WRA beschikking Definitief',
           datumDefinitief: null,
           zaakidentificatie: null,
         },

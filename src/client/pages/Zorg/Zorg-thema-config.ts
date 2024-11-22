@@ -32,6 +32,7 @@ export const tableConfig = {
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.HuidigeRegelingen,
+    textNoContent: 'U heeft geen huidige voorzieningen.',
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
@@ -39,6 +40,8 @@ export const tableConfig = {
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.EerdereRegelingen,
+    textNoContent:
+      'U heeft geen eerdere en/of afgewezen voorzieningen. U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.',
   },
 } as const;
 
