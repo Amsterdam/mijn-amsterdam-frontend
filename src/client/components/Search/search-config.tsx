@@ -240,6 +240,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
       vakantieverhuurVergunningen: VakantieverhuurVergunning[];
@@ -336,6 +337,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'AFIS' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     getApiBaseItems: (data: AfisThemaResponse) => {
       if (data?.facturen) {
         return Object.values(data.facturen).flatMap(
@@ -421,6 +423,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.bezwarenActive,
     stateKey: 'BEZWAREN' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: Bezwaar) {
       return (term: string) =>
         displayPath(term, [`Bezwaar ${item.identificatie}`]);
@@ -436,6 +439,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.bodemActive,
     stateKey: 'BODEM' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMeting) {
       return (term: string) =>
         displayPath(term, [`Loodmeting ${item.aanvraagNummer}`]);
@@ -444,6 +448,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.avgActive,
     stateKey: 'AVG' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: AVGRequest) {
       return (term: string) => displayPath(term, [`AVG verzoek ${item.id}`]);
     },
@@ -451,6 +456,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.horecaActive,
     stateKey: 'HORECA' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: HorecaVergunningen) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
