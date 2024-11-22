@@ -159,7 +159,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
         ${
           regeling.resultaat === 'toegewezen' ||
           isAfspraakDeelVanDeRegeling(regeling)
-            ? `U krijgt een ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+            ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
             : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
@@ -197,8 +197,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
       isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
-        return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u dat doet.</p>
-        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${regeling.titel} aanvragen.</p>` : ''}`;
+        return `<p>Uw kind ${betrokkenKinderen} krijgt ${regeling.titel}. Lees in de brief meer informatie over deze regeling.</p>
+        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw ${regeling.titel} aanvragen.</p>` : ''}`;
       },
     },
     {
