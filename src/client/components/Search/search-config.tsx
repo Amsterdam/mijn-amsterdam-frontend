@@ -22,10 +22,8 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import {
-  LVVRegistratie,
-  BBVergunning,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -95,14 +93,16 @@ export interface ApiSearchConfig {
   isEnabled?: boolean;
 }
 
-export type ApiBaseItem<T extends Record<string, any> = Record<string, any>> = {
+export type ApiBaseItem<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
   title: string;
   link?: LinkProps;
 } & T;
 
 export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
   {
-    getApiBaseItems: (apiContent: ApiSuccessResponse<any>['content']) => {
+    getApiBaseItems: (apiContent: ApiSuccessResponse<unknown>['content']) => {
       // Blindly assume apiContent returns an array with objects
       if (Array.isArray(apiContent)) {
         return apiContent;
@@ -173,19 +173,24 @@ const getWpiConfig = (
 > => ({
   stateKey,
   generateKeywords: (aanvraag: ApiBaseItem) =>
-    uniqueArray(
-      aanvraag.steps.flatMap((step: StatusLineItem) => [
-        step.description,
-        step.status,
-      ])
-    ),
+    'steps' in aanvraag && Array.isArray(aanvraag.steps)
+      ? uniqueArray(
+          aanvraag.steps.flatMap((step: StatusLineItem) => [
+            step.description,
+            step.status,
+          ])
+        )
+      : [],
   displayTitle: (aanvraag: ApiBaseItem) => {
     return (term: string) => {
       const segments =
         aanvraag.about === 'Bbz'
           ? ['Uw Bbz overzicht']
           : [`Aanvraag ${aanvraag.about}`];
-      if (aanvraag.statusId === 'besluit') {
+      if (
+        aanvraag.statusId === 'besluit' &&
+        typeof aanvraag.datePublished === 'string'
+      ) {
         segments.push(`Besluit ${defaultDateFormat(aanvraag.datePublished)}`);
       }
       return displayPath(term, segments);
