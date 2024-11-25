@@ -11,7 +11,7 @@ import {
   ApiSearchConfig,
   apiSearchConfigs,
   displayPath,
-} from './searchConfig';
+} from './search-config';
 import {
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,

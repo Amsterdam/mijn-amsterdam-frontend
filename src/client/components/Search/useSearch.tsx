@@ -24,7 +24,7 @@ import {
   SearchEntry,
   apiSearchConfigs,
   displayPath,
-} from './searchConfig';
+} from './search-config';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, isError } from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
