@@ -266,7 +266,11 @@ function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   return Object.entries(filters).every(([propertyName, valueConfig]) => {
     const propertyValues = valueConfig.values;
     const propVal = feature.properties[propertyName] as string;
-    const isFilteredValue = propertyValues ? propVal in propertyValues : false;
+    const isFilteredValue = propertyValues
+      ? Object.keys(propertyValues).some(
+          (key) => key.toLowerCase() === propVal?.toLowerCase()
+        )
+      : false;
 
     return propertyValues
       ? !Object.keys(propertyValues).length || isFilteredValue
