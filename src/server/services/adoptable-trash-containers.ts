@@ -152,7 +152,7 @@ function buildNotification(
     title: 'Adopteer een afvalcontainer',
     description,
     link: {
-      to: `http://localhost:3000/buurt?datasetIds=%5B%22afvalcontainers%22%5D&zoom=15&filters=&loadingFeature=%7B%22datasetId%22%3A%22afvalcontainers%22%2C%22id%22%3A%22${containerID}%22%7D&s=1`,
+      to: `/buurt?datasetIds=%5B%22afvalcontainers%22%5D&zoom=15&filters=&loadingFeature=%7B%22datasetId%22%3A%22afvalcontainers%22%2C%22id%22%3A%22${containerID}%22%7D&s=1`,
       title: 'Bekijk de werkzaamheden op kaart',
     },
   };
