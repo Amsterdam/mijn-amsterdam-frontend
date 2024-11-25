@@ -148,7 +148,7 @@ function buildNotification(
   return {
     id: 'adoptable-trash-container-notification',
     datePublished: new Date().toISOString(),
-    thema: Themas.BUURT,
+    thema: Themas.AFVAL,
     title: 'Adopteer een afvalcontainer',
     description,
     link: {
