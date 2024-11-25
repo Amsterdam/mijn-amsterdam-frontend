@@ -1,6 +1,7 @@
 import MockDate from 'mockdate';
 
 import { forTesting } from './adoptable-trash-containers';
+import { DatasetFeatureProperties, DatasetFeatures } from './buurt/datasets';
 
 describe('determineDescriptionText Tests', () => {
   test('Returns adults text when adult', () => {
@@ -34,5 +35,31 @@ describe('determineDescriptionText Tests', () => {
 
     const result = forTesting.determineDescriptionText(birthday);
     expect(result).toBeUndefined();
+  });
+});
+
+describe('sortLatLngCoordinates Tests', () => {
+  test('All LatLng is sorted', () => {
+    const features: DatasetFeatures<DatasetFeatureProperties> = [
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [4.900165540754781, 52.36764560622835],
+        },
+        properties: {
+          id: 'REM16981',
+          datasetId: 'afvalcontainers',
+          fractie_omschrijving: 'Rest',
+          geadopteerd_ind: 'Nee',
+        },
+      },
+    ];
+
+    forTesting.sortLatLngCoordinates(features);
+
+    const [lat, lng] = features[0].geometry.coordinates;
+
+    expect(lat).toBeGreaterThan(lng as number);
   });
 });

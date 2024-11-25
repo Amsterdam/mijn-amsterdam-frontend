@@ -14,6 +14,7 @@ import { fetchDataset } from './buurt/buurt';
 import {
   datasetEndpoints,
   DatasetFeatureProperties,
+  DatasetFeatures,
   MaPointFeature,
 } from './buurt/datasets';
 import { filterDatasetFeatures, filterFeaturesinRadius } from './buurt/helpers';
@@ -49,19 +50,7 @@ export async function fetchAdoptableTrashContainers(
     return apiDependencyError({ MY_LOCATION });
   }
 
-  // Put all the Lat Lng coordinates in the right order.
-  for (const feature of meldingen.content.features) {
-    if (feature.geometry.type === 'Point') {
-      const { lat, lng } = getLatLngCoordinates(
-        feature.geometry.coordinates as LatLngTuple
-      );
-      feature.geometry.coordinates = [lat, lng];
-    } else {
-      captureMessage(`Unexpected geometry type: '${feature.geometry.type}'`, {
-        severity: 'error',
-      });
-    }
-  }
+  sortLatLngCoordinates(meldingen.content.features);
 
   const latlng = MY_LOCATION.content[0].latlng;
   const WITHIN_RADIUS_KM = 0.1;
@@ -86,6 +75,24 @@ export async function fetchAdoptableTrashContainers(
       await fetchBRP(requestID, authProfileAndToken)
     ),
   });
+}
+
+/** Put all LatLngCoordinates in the right order. */
+function sortLatLngCoordinates(
+  features: DatasetFeatures<DatasetFeatureProperties>
+): void {
+  for (const feature of features) {
+    if (feature.geometry.type === 'Point') {
+      const { lat, lng } = getLatLngCoordinates(
+        feature.geometry.coordinates as LatLngTuple
+      );
+      feature.geometry.coordinates = [lat, lng];
+    } else {
+      captureMessage(`Unexpected geometry type: '${feature.geometry.type}'`, {
+        severity: 'error',
+      });
+    }
+  }
 }
 
 type AfvalFeatureProperties = DatasetFeatureProperties & {
@@ -151,4 +158,4 @@ function buildNotification(
   };
 }
 
-export const forTesting = { determineDescriptionText };
+export const forTesting = { determineDescriptionText, sortLatLngCoordinates };
