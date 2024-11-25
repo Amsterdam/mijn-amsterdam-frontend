@@ -90,7 +90,7 @@ export const FeatureToggle = {
   subsidieActive: true,
 
   // WPI Portaal
-  svwiLinkActive: IS_DEVELOPMENT,
+  svwiLinkActive: !IS_PRODUCTION,
 
   // Toeristische verhuur
   toeristischeVerhuurActive: true,
