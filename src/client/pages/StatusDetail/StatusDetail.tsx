@@ -30,7 +30,7 @@ import {
 } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { captureMessage } from '../../utils/monitoring';
+import { captureMessage } from '../../helpers/monitoring';
 import { MaLink } from '../../components/MaLink/MaLink';
 
 export type StatusSourceItem = StatusLine;

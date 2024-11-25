@@ -22,10 +22,8 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import {
-  LVVRegistratie,
-  BBVergunning,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -95,14 +93,16 @@ export interface ApiSearchConfig {
   isEnabled?: boolean;
 }
 
-export type ApiBaseItem<T extends Record<string, any> = Record<string, any>> = {
+export type ApiBaseItem<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
   title: string;
   link?: LinkProps;
 } & T;
 
 export const API_SEARCH_CONFIG_DEFAULT: Optional<ApiSearchConfig, 'stateKey'> =
   {
-    getApiBaseItems: (apiContent: ApiSuccessResponse<any>['content']) => {
+    getApiBaseItems: (apiContent: ApiSuccessResponse<unknown>['content']) => {
       // Blindly assume apiContent returns an array with objects
       if (Array.isArray(apiContent)) {
         return apiContent;
@@ -173,19 +173,24 @@ const getWpiConfig = (
 > => ({
   stateKey,
   generateKeywords: (aanvraag: ApiBaseItem) =>
-    uniqueArray(
-      aanvraag.steps.flatMap((step: StatusLineItem) => [
-        step.description,
-        step.status,
-      ])
-    ),
+    'steps' in aanvraag && Array.isArray(aanvraag.steps)
+      ? uniqueArray(
+          aanvraag.steps.flatMap((step: StatusLineItem) => [
+            step.description,
+            step.status,
+          ])
+        )
+      : [],
   displayTitle: (aanvraag: ApiBaseItem) => {
     return (term: string) => {
       const segments =
         aanvraag.about === 'Bbz'
           ? ['Uw Bbz overzicht']
           : [`Aanvraag ${aanvraag.about}`];
-      if (aanvraag.statusId === 'besluit') {
+      if (
+        aanvraag.statusId === 'besluit' &&
+        typeof aanvraag.datePublished === 'string'
+      ) {
         segments.push(`Besluit ${defaultDateFormat(aanvraag.datePublished)}`);
       }
       return displayPath(term, segments);
@@ -235,6 +240,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
       vakantieverhuurVergunningen: VakantieverhuurVergunning[];
@@ -331,6 +337,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'AFIS' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     getApiBaseItems: (data: AfisThemaResponse) => {
       if (data?.facturen) {
         return Object.values(data.facturen).flatMap(
@@ -416,6 +423,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.bezwarenActive,
     stateKey: 'BEZWAREN' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: Bezwaar) {
       return (term: string) =>
         displayPath(term, [`Bezwaar ${item.identificatie}`]);
@@ -431,6 +439,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.bodemActive,
     stateKey: 'BODEM' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMeting) {
       return (term: string) =>
         displayPath(term, [`Loodmeting ${item.aanvraagNummer}`]);
@@ -439,6 +448,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.avgActive,
     stateKey: 'AVG' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: AVGRequest) {
       return (term: string) => displayPath(term, [`AVG verzoek ${item.id}`]);
     },
@@ -446,6 +456,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     isEnabled: FeatureToggle.horecaActive,
     stateKey: 'HORECA' as AppStateKey,
+    profileTypes: ['private', 'commercial'],
     displayTitle(item: HorecaVergunningen) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);

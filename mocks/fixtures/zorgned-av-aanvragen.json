@@ -82,6 +82,7 @@
           {
             "documentidentificatie": "B2806770",
             "omschrijving": "AV-IIT Toekenning",
+            "omschrijvingclientportaal": "AV-IIT Toekenning",
             "datumDefinitief": "2024-06-17T11:15:35.287"
           }
         ]
@@ -146,6 +147,7 @@
           {
             "documentidentificatie": "B2806765",
             "omschrijving": "AV-CZM Rapportage instroom",
+            "omschrijvingclientportaal": "AV-CZM Rapportage instroom",
             "datumDefinitief": "2024-06-17T10:47:22.25"
           },
           {
@@ -215,6 +217,7 @@
           {
             "documentidentificatie": "B2806767",
             "omschrijving": "AV-SP Rapportage verkort",
+            "omschrijvingclientportaal": "AV-SP Rapportage verkort",
             "datumDefinitief": "2024-06-17T11:01:01.083"
           },
           {
@@ -585,6 +588,7 @@
           {
             "documentidentificatie": "B2806781",
             "omschrijving": "[1] AV-UPC aanmelden workshop",
+            "omschrijvingclientportaal": "[1] AV-UPC aanmelden workshop",
             "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
@@ -654,6 +658,7 @@
           {
             "documentidentificatie": "B2806782",
             "omschrijving": "[X] AV-PCV UPC Toekenning + Verzilvering device",
+            "omschrijvingclientportaal": "[X] AV-PCV UPC Toekenning + Verzilvering device",
             "datumDefinitief": "2024-06-17T17:17:09.75"
           }
         ]
@@ -714,6 +719,7 @@
           {
             "documentidentificatie": "B2806781",
             "omschrijving": "[1] AV-UPC Besluit",
+            "omschrijvingclientportaal": "[1] AV-UPC Besluit",
             "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
@@ -787,6 +793,7 @@
           {
             "documentidentificatie": "B2806781",
             "omschrijving": "[1] AV-UPC Besluit",
+            "omschrijvingclientportaal": "[1] AV-UPC Besluit",
             "datumDefinitief": "2024-01-06T17:15:28.313"
           }
         ]
@@ -841,6 +848,7 @@
           {
             "documentidentificatie": "B2223473",
             "omschrijving": "AV-IIT AUT. Toekenning",
+            "omschrijvingclientportaal": "AV-IIT AUT. Toekenning",
             "datumDefinitief": "2022-02-19T16:02:44"
           },
           {
@@ -960,6 +968,7 @@
           {
             "documentidentificatie": "E610019",
             "omschrijving": "aanvraagformulier TAOV",
+            "omschrijvingclientportaal": "aanvraagformulier TAOV",
             "datumDefinitief": "2022-10-25T15:02:00"
           },
           {
@@ -1024,7 +1033,193 @@
           {
             "documentidentificatie": "B2412503",
             "omschrijving": "AV-TAOV Brief voor ouderen toekennen via batch",
+            "omschrijvingclientportaal": "AV-TAOV Brief voor ouderen toekennen via batch",
             "datumDefinitief": "2022-12-01T07:50:11.267"
+          }
+        ]
+      },
+      {
+        "identificatie": "123123sdfsdf123123",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-01-06",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2024-01-06",
+        "datumAanvraag": "2023-12-06",
+        "beschikking": {
+          "beschikkingNummer": "RTM-123098123098",
+          "datumAfgifte": "2024-01-06",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204597",
+              "product": {
+                "identificatie": "AV-RTM1",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming meerkosten X"
+              },
+              "productCategorie": {},
+              "resultaat": "afgewezen",
+              "toegewezenProduct": null
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806781",
+            "omschrijving": "[1] AV-RTM1 - Afgewezen",
+            "omschrijvingclientportaal": "[1] AV-RTM1 - Afgewezen",
+            "datumDefinitief": "2024-01-06T17:15:28.313"
+          }
+        ]
+      },
+      {
+        "identificatie": "1231sdfsdf23123123",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-01-06",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2024-01-06",
+        "datumAanvraag": "2023-12-06",
+        "beschikking": {
+          "beschikkingNummer": "RTM-08908098",
+          "datumAfgifte": "2024-01-06",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204597",
+              "product": {
+                "identificatie": "AV-RTM1",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming meerkosten A"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2023-12-06",
+                "datumEindeGeldigheid": "2028-01-06",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "leverancier": {
+                  "identificatie": "AV02",
+                  "omschrijving": "RTM Dingen"
+                },
+                "toelichting": "BO",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1970057",
+                    "toewijzingsDatumTijd": "2024-01-06T17:16:00.7133333",
+                    "ingangsdatum": "2024-01-06",
+                    "einddatum": "2028-07-31",
+                    "datumOpdracht": "2024-01-06T17:16:00.7133333",
+                    "leverancier": {
+                      "identificatie": "AV02",
+                      "omschrijving": "RTM Dingen"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["123123"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806781",
+            "omschrijving": "[1] AV-RTM1 - Afspraak GGD maken",
+            "omschrijvingclientportaal": "[1] AV-RTM1 - Afspraak GGD maken",
+            "datumDefinitief": "2024-01-06T17:15:28.313"
+          }
+        ]
+      },
+      {
+        "identificatie": "002707686",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-06-17",
+          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "verwijzer": {
+            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+          }
+        },
+        "datumAanmelding": "2024-06-17",
+        "datumAanvraag": "2024-06-17",
+        "beschikking": {
+          "beschikkingNummer": "RTM-123123123",
+          "datumAfgifte": "2024-06-17",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204598",
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming meerkosten B"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-08-01",
+                "datumEindeGeldigheid": "2029-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toelichting": "BO",
+                "toewijzingen": [
+                  {
+                    "toewijzingNummer": "1970057",
+                    "toewijzingsDatumTijd": "2024-01-06T17:16:00.7133333",
+                    "ingangsdatum": "2024-01-06",
+                    "einddatum": "2028-07-31",
+                    "datumOpdracht": "2024-01-06T17:16:00.7133333",
+                    "leverancier": {
+                      "identificatie": "AV02",
+                      "omschrijving": "RTM Dingen"
+                    },
+                    "leveringen": []
+                  }
+                ],
+                "betrokkenen": ["123123"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806782",
+            "omschrijving": "RTM Toekenning + afspraak voldaan",
+            "omschrijvingclientportaal": "RTM Toekenning + afspraak voldaan",
+            "datumDefinitief": "2024-06-17T17:17:09.75"
           }
         ]
       },
@@ -1079,6 +1274,7 @@
           {
             "documentidentificatie": "B2563760",
             "omschrijving": "AV-SP Vooraankondiging Verlenging",
+            "omschrijvingclientportaal": "AV-SP Vooraankondiging Verlenging",
             "datumDefinitief": "2023-06-03T18:39:05.813"
           }
         ]

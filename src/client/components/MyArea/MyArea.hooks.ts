@@ -34,7 +34,7 @@ import { getFullAddress } from '../../../universal/helpers/brp';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
-import { captureMessage } from '../../utils/monitoring';
+import { captureMessage } from '../../helpers/monitoring';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [

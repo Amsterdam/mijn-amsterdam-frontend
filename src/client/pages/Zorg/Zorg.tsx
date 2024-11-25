@@ -48,7 +48,10 @@ export default function ThemaPaginaZorg() {
   ];
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, maxItems, className }]) => {
+    ([
+      kind,
+      { title, displayProps, textNoContent, filter, maxItems, className },
+    ]) => {
       return (
         <ThemaPaginaTable<WMOVoorzieningFrontend>
           key={kind}
@@ -59,7 +62,7 @@ export default function ThemaPaginaZorg() {
             kind,
           })}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          textNoContent={textNoContent}
           maxItems={maxItems}
         />
       );

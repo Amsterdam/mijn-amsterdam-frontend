@@ -9,7 +9,7 @@ import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
-import { remoteApiHost } from '../../../setupTests';
+import { remoteApiHost } from '../../../testing/setup';
 
 const testState: any = {
   BRP: {

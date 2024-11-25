@@ -1,5 +1,5 @@
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi } from '../../../testing/utils';
 
 const REQUEST_ID = '456';
 const GENERIC_ID = '12346789';

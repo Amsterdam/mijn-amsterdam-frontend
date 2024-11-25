@@ -8,7 +8,7 @@ import {
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
 } from './stadspas-types';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 

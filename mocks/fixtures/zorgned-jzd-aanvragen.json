@@ -136,6 +136,7 @@
           {
             "documentidentificatie": "ABCDEF",
             "omschrijving": "Verzoek: om meer informatie",
+            "omschrijvingclientportaal": "Verzoek: om meer informatie",
             "datumDefinitief": "2023-05-17T00:00:00",
             "zaakidentificatie": null
           }
@@ -232,6 +233,7 @@
           {
             "documentidentificatie": "ABCDEF",
             "omschrijving": "Verzoek: om meer informatie",
+            "omschrijvingclientportaal": "Verzoek: om meer informatie",
             "datumDefinitief": "2023-05-17T00:00:00",
             "zaakidentificatie": null
           },
@@ -400,6 +402,7 @@
           {
             "documentidentificatie": "B137364",
             "omschrijving": "Besluit: WRA beschikking Definitief",
+            "omschrijvingclientportaal": "Besluit: WRA beschikking Definitief",
             "datumDefinitief": "2013-12-09T00:00:00",
             "zaakidentificatie": null
           }
@@ -527,6 +530,7 @@
           {
             "documentidentificatie": "B195848",
             "omschrijving": "Besluit: New Toekenning hulpmiddel zonder keuze",
+            "omschrijvingclientportaal": "Besluit: New Toekenning hulpmiddel zonder keuze",
             "datumDefinitief": "2014-09-10T00:00:00",
             "zaakidentificatie": null
           }
@@ -623,6 +627,7 @@
           {
             "documentidentificatie": "B196206",
             "omschrijving": "Besluit: WRA beschikking Definitief",
+            "omschrijvingclientportaal": "Besluit: WRA beschikking Definitief",
             "datumDefinitief": "2014-09-11T00:00:00",
             "zaakidentificatie": null
           }
@@ -1305,6 +1310,7 @@
           {
             "documentidentificatie": "B538689",
             "omschrijving": "Besluit: WRA beschikking Definitief",
+            "omschrijvingclientportaal": "Besluit: WRA beschikking Definitief",
             "datumDefinitief": "2018-12-27T00:00:00",
             "zaakidentificatie": null
           }
@@ -1870,6 +1876,7 @@
           {
             "documentidentificatie": "B628498",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2020-03-12T16:12:23",
             "zaakidentificatie": null
           }
@@ -1972,6 +1979,7 @@
           {
             "documentidentificatie": "B628499",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2020-03-12T16:17:07",
             "zaakidentificatie": null
           }
@@ -2074,6 +2082,7 @@
           {
             "documentidentificatie": "B628500",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2020-03-12T16:16:35",
             "zaakidentificatie": null
           }
@@ -2256,6 +2265,7 @@
           {
             "documentidentificatie": "B650917",
             "omschrijving": "Besluit: New Toekenning hulpmiddel zonder keuze",
+            "omschrijvingclientportaal": "Besluit: New Toekenning hulpmiddel zonder keuze",
             "datumDefinitief": "2020-06-18T14:20:12",
             "zaakidentificatie": null
           }
@@ -2358,6 +2368,7 @@
           {
             "documentidentificatie": "B648401",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2020-06-16T15:20:47",
             "zaakidentificatie": null
           }
@@ -2454,6 +2465,7 @@
           {
             "documentidentificatie": "B691905",
             "omschrijving": "Besluit: Opstellen beschikking grote WRA",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking grote WRA",
             "datumDefinitief": "2020-12-07T07:01:05",
             "zaakidentificatie": null
           }
@@ -2553,6 +2565,7 @@
           {
             "documentidentificatie": "B700835",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-01-09T17:26:23",
             "zaakidentificatie": null
           }
@@ -2652,6 +2665,7 @@
           {
             "documentidentificatie": "B700836",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2021-01-10T01:50:21",
             "zaakidentificatie": null
           }
@@ -2751,6 +2765,7 @@
           {
             "documentidentificatie": "B700837",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-01-09T23:06:12",
             "zaakidentificatie": null
           }
@@ -2850,6 +2865,7 @@
           {
             "documentidentificatie": "B739256",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-03-11T15:26:28",
             "zaakidentificatie": null
           }
@@ -2949,6 +2965,7 @@
           {
             "documentidentificatie": "B739257",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2021-03-11T15:29:20",
             "zaakidentificatie": null
           }
@@ -3048,6 +3065,7 @@
           {
             "documentidentificatie": "B739258",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2021-03-11T15:24:06",
             "zaakidentificatie": null
           }
@@ -3144,6 +3162,7 @@
           {
             "documentidentificatie": "B792435",
             "omschrijving": "Besluit: Opstellen beschikking grote WRA",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking grote WRA",
             "datumDefinitief": "2021-10-22T16:50:57",
             "zaakidentificatie": null
           }
@@ -3392,6 +3411,7 @@
           {
             "documentidentificatie": "B809511",
             "omschrijving": "Opstellen brief handzender",
+            "omschrijvingclientportaal": "Opstellen brief handzender",
             "datumDefinitief": "2021-12-20T14:08:20",
             "zaakidentificatie": null
           }
@@ -3491,6 +3511,7 @@
           {
             "documentidentificatie": "B2258816",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg AO/DB/LO",
             "datumDefinitief": "2022-03-14T16:12:12",
             "zaakidentificatie": null
           }
@@ -3590,6 +3611,7 @@
           {
             "documentidentificatie": "B2258817",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2022-03-14T16:11:29",
             "zaakidentificatie": null
           }
@@ -3686,6 +3708,7 @@
           {
             "documentidentificatie": "B2268406",
             "omschrijving": "Besluit: Opstellen beschikking grote WRA",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking grote WRA",
             "datumDefinitief": "2022-04-19T13:16:44",
             "zaakidentificatie": null
           }
@@ -3825,6 +3848,7 @@
           {
             "documentidentificatie": "B2391009",
             "omschrijving": "Besluit: AOV Beschikking positief",
+            "omschrijvingclientportaal": "Besluit: AOV Beschikking positief",
             "datumDefinitief": "2022-10-19T14:27:42.643",
             "zaakidentificatie": null
           }
@@ -3924,6 +3948,7 @@
           {
             "documentidentificatie": "B2510020",
             "omschrijving": "Besluit: New Toekenning hulpmiddel zonder keuze",
+            "omschrijvingclientportaal": "Besluit: New Toekenning hulpmiddel zonder keuze",
             "datumDefinitief": "2023-03-02T11:17:08.293",
             "zaakidentificatie": null
           }
@@ -4109,6 +4134,7 @@
           {
             "documentidentificatie": "B2516440",
             "omschrijving": "Besluit: Opstellen beschikking wijkzorg Hbh",
+            "omschrijvingclientportaal": "Besluit: Opstellen beschikking wijkzorg Hbh",
             "datumDefinitief": "2023-03-16T15:56:11.41",
             "zaakidentificatie": null
           }
@@ -4303,6 +4329,7 @@
           {
             "documentidentificatie": "B31242",
             "omschrijving": "Besluit: toekenning hulpmiddel",
+            "omschrijvingclientportaal": "Besluit: toekenning hulpmiddel",
             "datumDefinitief": "2012-12-04T00:00:00"
           }
         ]
@@ -4415,6 +4442,7 @@
           {
             "documentidentificatie": "B82188",
             "omschrijving": "Besluit: toekenning hulpmiddel",
+            "omschrijvingclientportaal": "Besluit: toekenning hulpmiddel",
             "datumDefinitief": "2013-06-17T00:00:00"
           },
           {
@@ -4603,6 +4631,7 @@
           {
             "documentidentificatie": "B502452",
             "omschrijving": "Besluit: toekenning WRA",
+            "omschrijvingclientportaal": "Besluit: toekenning WRA",
             "datumDefinitief": "2018-04-25T00:00:00"
           }
         ]
@@ -4683,6 +4712,7 @@
           {
             "documentidentificatie": "B779673",
             "omschrijving": "Besluit: toekenning hulpmiddel voor uw kind",
+            "omschrijvingclientportaal": "Besluit: toekenning hulpmiddel voor uw kind",
             "datumDefinitief": "2021-08-30T13:51:22"
           }
         ]
@@ -4723,6 +4753,7 @@
           {
             "documentidentificatie": "B2366765",
             "omschrijving": "Besluit: afwijzing vervoer",
+            "omschrijvingclientportaal": "Besluit: afwijzing vervoer",
             "datumDefinitief": "2022-08-16T09:30:39.58"
           }
         ]
@@ -4784,6 +4815,7 @@
           {
             "documentidentificatie": "B2366113",
             "omschrijving": "Besluit: toekenning Aanvullend openbaar vervoer",
+            "omschrijvingclientportaal": "Besluit: toekenning Aanvullend openbaar vervoer",
             "datumDefinitief": "2022-08-12T10:26:54.133"
           }
         ]
@@ -4865,6 +4897,7 @@
           {
             "documentidentificatie": "B2791921",
             "omschrijving": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
             "datumDefinitief": "2024-01-25T17:08:09.837"
           }
         ]
@@ -4953,6 +4986,7 @@
           {
             "documentidentificatie": "B2792161",
             "omschrijving": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
             "datumDefinitief": "2024-01-29T19:40:04.393"
           }
         ]
@@ -5096,6 +5130,7 @@
           {
             "documentidentificatie": "B2799339",
             "omschrijving": "Besluit: toekenning Hulp bij huishouden",
+            "omschrijvingclientportaal": "Besluit: toekenning Hulp bij huishouden",
             "datumDefinitief": "2024-03-27T14:59:54.633"
           },
           {
@@ -5177,6 +5212,7 @@
           {
             "documentidentificatie": "B2810214",
             "omschrijving": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
             "datumDefinitief": "2024-07-09T16:43:58.217"
           },
           {
@@ -5250,6 +5286,7 @@
           {
             "documentidentificatie": "B2801376",
             "omschrijving": "Besluit: toekenning scootmobiel",
+            "omschrijvingclientportaal": "Besluit: toekenning scootmobiel",
             "datumDefinitief": "2024-04-22T13:55:05.28"
           }
         ]
@@ -5307,6 +5344,7 @@
           {
             "documentidentificatie": "B2802129",
             "omschrijving": "Besluit: toekenning hulpmiddel voor uw kind",
+            "omschrijvingclientportaal": "Besluit: toekenning hulpmiddel voor uw kind",
             "datumDefinitief": "2024-04-30T14:56:51.363"
           }
         ]
@@ -5383,6 +5421,7 @@
           {
             "documentidentificatie": "B2802133",
             "omschrijving": "Besluit: toekenning hulpmiddel voor uw kind",
+            "omschrijvingclientportaal": "Besluit: toekenning hulpmiddel voor uw kind",
             "datumDefinitief": "2024-04-30T17:00:09.63"
           }
         ]
@@ -5465,6 +5504,7 @@
           {
             "documentidentificatie": "B2814517",
             "omschrijving": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
             "datumDefinitief": "2024-09-02T16:20:24.343"
           }
         ]
@@ -5524,6 +5564,7 @@
           {
             "documentidentificatie": "B2810026",
             "omschrijving": "Besluit: einde pgb Hbh/AIO/Dagbest/Logeeropvang",
+            "omschrijvingclientportaal": "Besluit: einde pgb Hbh/AIO/Dagbest/Logeeropvang",
             "datumDefinitief": "2024-07-08T16:07:42.397"
           }
         ]
@@ -5563,6 +5604,7 @@
           {
             "documentidentificatie": "B2810025",
             "omschrijving": "Besluit: afwijzing dagbesteding",
+            "omschrijvingclientportaal": "Besluit: afwijzing dagbesteding",
             "datumDefinitief": "2024-07-08T16:03:07.623"
           }
         ]
@@ -5639,6 +5681,7 @@
           {
             "documentidentificatie": "B2814016",
             "omschrijving": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
             "datumDefinitief": "2024-08-26T11:40:46.087"
           }
         ]
@@ -5704,6 +5747,7 @@
           {
             "documentidentificatie": "B2814508",
             "omschrijving": "Besluit: Naam in Inkijk-API",
+            "omschrijvingclientportaal": "Besluit: Naam in Inkijk-API",
             "datumDefinitief": "2024-08-29T16:48:11.997"
           }
         ]
@@ -5783,6 +5827,7 @@
           {
             "documentidentificatie": "B2799268",
             "omschrijving": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
+            "omschrijvingclientportaal": "Besluit: toekenning AIO/AO/Dagbest/Logeeropvang",
             "datumDefinitief": "2024-03-26T14:38:54.703"
           }
         ]

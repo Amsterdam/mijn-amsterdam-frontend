@@ -1,6 +1,6 @@
 import { Themas } from '../../universal/config/thema';
 import { ThemaMenuItem, ThemaTitles } from '../config/thema';
-import { getThemaMenuItemsAppState, isThemaActive } from '../config/themas';
+import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
 
 describe('useThemaMenuItems', () => {
   test('Parkeren is not active without an Appstate entry.', () => {

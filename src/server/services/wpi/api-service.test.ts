@@ -11,7 +11,7 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatusLabels,
 } from './wpi-types';
-import { remoteApi } from '../../../test-utils';
+import { remoteApi } from '../../../testing/utils';
 import { ApiErrorResponse } from '../../../universal/helpers/api';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';

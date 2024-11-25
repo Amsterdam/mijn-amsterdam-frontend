@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import App from './client/App';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';
-import { reactPlugin } from './client/utils/monitoring';
+import { reactPlugin } from './client/helpers/monitoring';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||

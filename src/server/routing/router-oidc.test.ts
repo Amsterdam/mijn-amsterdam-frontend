@@ -1,11 +1,11 @@
 import { forTesting } from './router-oidc';
-import { bffApiHost } from '../../setupTests';
+import { bffApiHost } from '../../testing/setup';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
   RequestMock,
   ResponseMock,
-} from '../../test-utils';
+} from '../../testing/utils';
 import {
   OIDC_SESSION_COOKIE_NAME,
   oidcConfigDigid,

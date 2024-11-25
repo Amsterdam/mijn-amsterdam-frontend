@@ -13,8 +13,8 @@ import {
   ZorgnedResponseDataSource,
 } from './zorgned-types';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { remoteApiHost } from '../../../setupTests';
-import { getAuthProfileAndToken, remoteApi } from '../../../test-utils';
+import { remoteApiHost } from '../../../testing/setup';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
 
@@ -62,6 +62,7 @@ describe('zorgned-service', () => {
         {
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
+          omschrijvingclientportaal: 'WRA beschikking Definitief',
           datumDefinitief: '2013-05-17T00:00:00',
           zaakidentificatie: null,
         },
@@ -81,6 +82,7 @@ describe('zorgned-service', () => {
         {
           documentidentificatie: 'B73199',
           omschrijving: 'WRA beschikking Definitief',
+          omschrijvingclientportaal: 'WRA beschikking Definitief',
           datumDefinitief: null,
           zaakidentificatie: null,
         },

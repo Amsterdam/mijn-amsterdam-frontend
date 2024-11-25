@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
 import styles from './Search.module.scss';
-import { SearchEntry, displayPath } from './searchConfig';
+import { SearchEntry, displayPath } from './search-config';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 import { AppRoutes } from '../../../universal/config/routes';
 import { IconSearch } from '../../assets/icons';

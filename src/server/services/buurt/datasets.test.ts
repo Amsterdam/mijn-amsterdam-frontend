@@ -6,7 +6,7 @@ import {
   transformHardlooproutesResponse,
   transformMeldingenBuurtResponse,
 } from './datasets';
-import { remoteApiHost } from '../../../setupTests';
+import { remoteApiHost } from '../../../testing/setup';
 
 describe('Custom dataset tranformations', () => {
   it('Should group distance of hardlooproute', () => {

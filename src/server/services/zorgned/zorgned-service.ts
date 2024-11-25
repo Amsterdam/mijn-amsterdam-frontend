@@ -39,7 +39,7 @@ function transformDocumenten(documenten: ZorgnedDocument[]) {
   for (const document of definitieveDocumenten) {
     const doc: GenericDocument = {
       id: document.documentidentificatie,
-      title: document.omschrijving,
+      title: document.omschrijvingclientportaal || document.omschrijving,
       url: '', // NOTE: URL added later (wmo.ts > encryptDocumentIds) because we need an ecrypted id with specific session id.
       datePublished: document.datumDefinitief!, // definitieveDocumenten is filtered by checking the existance of this property.
     };
@@ -276,7 +276,9 @@ export async function fetchDocument(
         return {
           data,
           mimetype: documentResponseData.mimetype,
-          filename: documentResponseData.omschrijving,
+          filename:
+            documentResponseData.omschrijvingclientportaal ||
+            documentResponseData.omschrijving,
         };
       },
     },

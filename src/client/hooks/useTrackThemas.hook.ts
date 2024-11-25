@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSessionStorage } from './storage.hook';
 import { useAppStateGetter } from './useAppState';
 import { useThemaMenuItems } from './useThemaMenuItems';
-import { trackEvent } from '../utils/monitoring';
+import { trackEvent } from '../helpers/monitoring';
 
 type ThemaTitleAndId = Record<'title' | 'id', string>;
 

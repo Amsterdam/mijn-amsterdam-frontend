@@ -117,6 +117,7 @@ export default function ThemaPaginaHLI() {
             sort: regelingenListSort,
             maxItems,
             className,
+            textNoContent,
           },
         ]) => {
           return (
@@ -131,7 +132,7 @@ export default function ThemaPaginaHLI() {
                 kind,
               })}
               displayProps={displayProps}
-              textNoContent={`U heeft geen ${title.toLowerCase()}`}
+              textNoContent={textNoContent}
               maxItems={maxItems}
             />
           );

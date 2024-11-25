@@ -2,7 +2,7 @@ import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import { bffApi } from '../../../test-utils';
+import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';

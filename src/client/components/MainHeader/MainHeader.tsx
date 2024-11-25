@@ -22,7 +22,7 @@ import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MegaMenu from '../MegaMenu/MegaMenu';
 import { Search } from '../Search/Search';
-import { SearchEntry } from '../Search/searchConfig';
+import { SearchEntry } from '../Search/search-config';
 import { useSearchOnPage } from '../Search/useSearch';
 
 export interface MainHeaderProps {
