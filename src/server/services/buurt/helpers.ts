@@ -279,6 +279,12 @@ function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   });
 }
 
+/** Filters out elements from the DatasetFeatures array specified with `filters`.
+ *
+ * To find out what filters you need you can look into the browser console.
+ * Go to your network tab and inspect the Payload of `datasets` and in here you can see the applied filters.
+ * This can be used to fish out a filter you want and/or gain a better understanding of the data shape.
+ */
 export function filterDatasetFeatures<
   T extends DatasetFeatureProperties = DatasetFeatureProperties,
 >(

@@ -31,7 +31,9 @@ export async function fetchAdoptableTrashContainers(
   const datasetId = 'afvalcontainers';
   const config = datasetEndpoints.afvalcontainers;
   const filters = {
-    afvalcontainers: {},
+    afvalcontainers: {
+      geadopteerd_ind: { values: { Nee: 1 } },
+    },
   };
   const meldingen = await fetchDataset(requestID, datasetId, config, {}).then(
     (result) => {
@@ -66,9 +68,7 @@ export async function fetchAdoptableTrashContainers(
       featuresInRadius,
       [datasetId],
       filters
-    ).filter((feature) => {
-      return feature.properties.geadopteerd_ind === 'Nee';
-    });
+    );
 
   return apiSuccessResult({
     tips: buildNotifications(
