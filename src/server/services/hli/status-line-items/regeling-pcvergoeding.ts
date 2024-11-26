@@ -30,27 +30,6 @@ function isPcVergoeding(
   );
 }
 
-function isVerzilveringVanRegeling(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  const aanvraagProductId = aanvraag.productIdentificatie;
-  let avCode;
-
-  if (aanvraagProductId === AV_PCVC) {
-    avCode = AV_PCVZIL;
-  }
-
-  if (aanvraagProductId === AV_UPCC) {
-    avCode = AV_UPCZIL;
-  }
-
-  return (
-    compareAanvraag.productIdentificatie === avCode &&
-    compareAanvraag.betrokkenen.some((id) => aanvraag.betrokkenen.includes(id))
-  );
-}
-
 function isRegelingVanVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -105,9 +84,14 @@ export function filterCombineUpcPcvData(
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
-      if (baseRegeling) {
-        baseRegelingIdWithVerzilvering.push(baseRegeling.id);
+
+      // If no baseRegeling is found, this must be an orphaned verzilvering.
+      if (!baseRegeling) {
+        return null;
       }
+
+      baseRegelingIdWithVerzilvering.push(baseRegeling.id);
+
       const addedDocs = baseRegeling?.documenten ?? [];
 
       return {
@@ -132,6 +116,11 @@ export function filterCombineUpcPcvData(
   );
 }
 
+/** Checks of een Workshop niet gevolgd is.
+ * 
+ * In Zorgned worden datumIngangGeldigheid en datumEindeGeledigheid gebruikt om aan te geven dat de workshop niet gevolgd is.
+ * Als de workshop niet gevolgd is, zijn de datumIngangGeldigheid en datumEindeGeledigheid gelijk aan elkaar. 
+ */
 export function isWorkshopNietGevolgd(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
@@ -229,6 +218,6 @@ export const forTesting = {
   getUpcPcvDecisionDate,
   isRegelingVanVerzilvering,
   isVerzilvering,
-  isVerzilveringVanRegeling,
   isWorkshopNietGevolgd,
+  filterCombineUpcPcvData,
 };

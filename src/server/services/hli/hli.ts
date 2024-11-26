@@ -5,6 +5,10 @@ import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
+import {
+  filterCombineRtmData,
+  heeftDeel2VanDeRegelingNietVoltooid,
+} from './status-line-items/regeling-rtm';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiSuccessResult,
@@ -35,6 +39,10 @@ function getDisplayStatus(
   switch (true) {
     // NOTE: Special status for PCVergoedingen.
     case isWorkshopNietGevolgd(aanvraag):
+      return 'Afgewezen';
+
+    // NOTE: Special status for RTM regelingen.
+    case heeftDeel2VanDeRegelingNietVoltooid(aanvraag):
       return 'Afgewezen';
 
     case (aanvraag.isActueel || !hasEindeRecht) &&
@@ -82,10 +90,19 @@ async function transformRegelingForFrontend(
     regeling: slug(aanvraag.titel),
   });
 
+  const displayStatus = getDisplayStatus(aanvraag, statusLineItems);
+
+  // Override isActueel for Afgewezen (RTM* / UPC*) regelingen.
+  let isActual = aanvraag.isActueel;
+
+  if (displayStatus === 'Afgewezen' && aanvraag.isActueel) {
+    isActual = false;
+  }
+
   const regelingFrontend: HLIRegeling = {
     id,
     title: capitalizeFirstLetter(aanvraag.titel),
-    isActual: aanvraag.isActueel,
+    isActual,
     link: {
       title: 'Meer informatie',
       to: route,
@@ -95,7 +112,7 @@ async function transformRegelingForFrontend(
     dateStart: aanvraag.datumIngangGeldigheid,
     dateEnd: aanvraag.datumEindeGeldigheid,
     decision: aanvraag.resultaat,
-    displayStatus: getDisplayStatus(aanvraag, statusLineItems),
+    displayStatus,
     receiver:
       aanvraag.betrokkenPersonen?.map((person) => person.name).join(', ') ?? '',
     documents: getDocumentsFrontend(sessionID, aanvraag.documenten),
@@ -104,14 +121,17 @@ async function transformRegelingForFrontend(
   return regelingFrontend;
 }
 
-export async function transformRegelingenForFrontend(
+async function transformRegelingenForFrontend(
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
 ): Promise<HLIRegeling[]> {
   const regelingenFrontend: HLIRegeling[] = [];
 
-  const aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
+  let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
+  aanvragenWithDocumentsCombined = filterCombineRtmData(
+    aanvragenWithDocumentsCombined
+  );
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
     const statusLineItems =
@@ -189,5 +209,9 @@ export async function fetchHLI(
 }
 
 export const forTesting = {
+  fetchRegelingen,
   getDisplayStatus,
+  getDocumentsFrontend,
+  transformRegelingenForFrontend,
+  transformRegelingForFrontend,
 };

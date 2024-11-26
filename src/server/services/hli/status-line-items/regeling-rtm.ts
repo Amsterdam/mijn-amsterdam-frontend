@@ -13,7 +13,7 @@ export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
 
-function isAfspraakDeelVanDeRegeling(
+function isDeel2VanDeRegeling(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
@@ -22,7 +22,7 @@ function isAfspraakDeelVanDeRegeling(
   );
 }
 
-function isVoorwaardenVoorEenAfspraakDeelVanDeRegeling(
+function isDeel1VanDeRegeling(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
@@ -31,24 +31,8 @@ function isVoorwaardenVoorEenAfspraakDeelVanDeRegeling(
   );
 }
 
-function isAfspraakDeelVanDeRegelingVanRegeling(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  const aanvraagProductId = aanvraag.productIdentificatie;
-  let avCode;
-
-  if (aanvraagProductId === AV_RTM_DEEL1) {
-    avCode = AV_RTM_DEEL2;
-  }
-
-  return (
-    compareAanvraag.productIdentificatie === avCode &&
-    compareAanvraag.betrokkenen.some((id) => aanvraag.betrokkenen.includes(id))
-  );
-}
-
-function isRegelingVanVerzilvering(
+// Zoek bijbehorende regelingDeel1
+function isRegelingDeel1GekoppeldAanDeel2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
@@ -68,51 +52,55 @@ function isRegelingVanVerzilvering(
   );
 }
 
-function getUpcPcvDecisionDate(
+function getRtmDecisionDate(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   today: Date,
   allAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  if (isAfspraakDeelVanDeRegeling(aanvraag)) {
-    const baseRegeling = allAanvragen.find((compareAanvraag) =>
-      isRegelingVanVerzilvering(aanvraag, compareAanvraag)
+  if (isDeel2VanDeRegeling(aanvraag)) {
+    const regelingDeel1 = allAanvragen.find((compareAanvraag) =>
+      isRegelingDeel1GekoppeldAanDeel2(aanvraag, compareAanvraag)
     );
-    return baseRegeling?.datumBesluit ?? aanvraag.datumBesluit;
+    return regelingDeel1?.datumBesluit ?? aanvraag.datumBesluit;
   }
   return aanvraag.datumBesluit;
 }
 
-export function filterCombineUpcPcvData(
+export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  const baseRegelingIdWithVerzilvering: string[] = [];
+  const baseRegelingIdWithDeel2: string[] = [];
 
   const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
-    // Exclude baseRegelingen that have verzilvering
-    if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
+    // Exclude baseRegelingen that have deel2
+    if (baseRegelingIdWithDeel2.includes(aanvraag.id)) {
       return null;
     }
 
     // Add AV_RTM_DEEL1 documenten to AV_RTM_DEEL2
-    if (isAfspraakDeelVanDeRegeling(aanvraag)) {
-      // Find first corresponding baseRegeling
-      const baseRegeling = aanvragen.find((compareAanvraag) =>
-        isRegelingVanVerzilvering(aanvraag, compareAanvraag)
+    if (isDeel2VanDeRegeling(aanvraag)) {
+      // Find first corresponding regelingDeel1
+      const regelingDeel1 = aanvragen.find((compareAanvraag) =>
+        isRegelingDeel1GekoppeldAanDeel2(aanvraag, compareAanvraag)
       );
-      if (baseRegeling) {
-        baseRegelingIdWithVerzilvering.push(baseRegeling.id);
+
+      if (!regelingDeel1) {
+        return null;
       }
-      const addedDocs = baseRegeling?.documenten ?? [];
+
+      baseRegelingIdWithDeel2.push(regelingDeel1.id);
+
+      const addedDocs = regelingDeel1?.documenten ?? [];
 
       return {
         ...aanvraag,
         // Use Basis regeling to determine actualiteit en einde geldigheid.
-        // If verzilvering is denied we treat regeling as "niet actueel"
+        // If deel2 is denied we treat regeling as "niet actueel"
         isActueel:
           aanvraag.resultaat === 'toegewezen'
-            ? (baseRegeling?.isActueel ?? aanvraag.isActueel)
+            ? (regelingDeel1?.isActueel ?? aanvraag.isActueel)
             : false,
-        datumEindeGeldigheid: baseRegeling?.datumEindeGeldigheid ?? null,
+        datumEindeGeldigheid: regelingDeel1?.datumEindeGeldigheid ?? null,
         documenten: [...aanvraag.documenten, ...addedDocs],
       };
     }
@@ -126,12 +114,12 @@ export function filterCombineUpcPcvData(
   );
 }
 
-export function isNietOpUitnodigingIngegaan(
+export function heeftDeel2VanDeRegelingNietVoltooid(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
-    isVoorwaardenVoorEenAfspraakDeelVanDeRegeling(regeling) &&
-    !isAfspraakDeelVanDeRegeling(regeling) &&
+    isDeel1VanDeRegeling(regeling) &&
+    !isDeel2VanDeRegeling(regeling) &&
     !!(
       regeling.datumEindeGeldigheid &&
       regeling.datumIngangGeldigheid &&
@@ -148,23 +136,21 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
   [
     {
       status: 'Besluit',
-      datePublished: getUpcPcvDecisionDate,
+      datePublished: getRtmDecisionDate,
       isChecked: (stepIndex, regeling) => true,
       isActive: (stepIndex, regeling) =>
-        !isAfspraakDeelVanDeRegeling(regeling) &&
-        regeling.resultaat === 'afgewezen',
+        !isDeel2VanDeRegeling(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
         return `<p>
         ${
-          regeling.resultaat === 'toegewezen' ||
-          isAfspraakDeelVanDeRegeling(regeling)
+          regeling.resultaat === 'toegewezen' || isDeel2VanDeRegeling(regeling)
             ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
             : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
         <p>
-          ${regeling.resultaat === 'toegewezen' || isAfspraakDeelVanDeRegeling(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
+          ${regeling.resultaat === 'toegewezen' || isDeel2VanDeRegeling(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
         </p>
       `;
       },
@@ -172,9 +158,9 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
     {
       status: 'Uitnodiging afspraak GGD',
       isVisible: (stepIndex, regeling) =>
-        !isAfspraakDeelVanDeRegeling(regeling) &&
+        !isDeel2VanDeRegeling(regeling) &&
         regeling.resultaat === 'toegewezen' &&
-        !isNietOpUitnodigingIngegaan(regeling),
+        !heeftDeel2VanDeRegelingNietVoltooid(regeling),
       datePublished: '',
       isChecked: (stepIndex, regeling) => true,
       isActive: (stepIndex, regeling) => true,
@@ -190,8 +176,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
     {
       status: 'Afspraak GGD afgerond',
       isVisible: (stepIndex, regeling) =>
-        isAfspraakDeelVanDeRegeling(regeling) &&
-        regeling.resultaat === 'toegewezen',
+        isDeel2VanDeRegeling(regeling) && regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
       isActive: () => true,
@@ -203,7 +188,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
     },
     {
       status: 'Afspraak GGD niet gemaakt',
-      isVisible: (stepIndex, regeling) => isNietOpUitnodigingIngegaan(regeling),
+      isVisible: (stepIndex, regeling) =>
+        heeftDeel2VanDeRegelingNietVoltooid(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
@@ -223,9 +209,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
 
 export const forTesting = {
   getBetrokkenKinderen,
-  getUpcPcvDecisionDate,
-  isRegelingVanVerzilvering,
-  isAfspraakDeelVanDeRegeling,
-  isAfspraakDeelVanDeRegelingVanRegeling,
-  isNietOpUitnodigingIngegaan,
+  getRtmDecisionDate,
+  isRegelingDeel1GekoppeldAanDeel2,
+  isDeel2VanDeRegeling,
+  heeftDeel2VanDeRegelingNietVoltooid,
 };
