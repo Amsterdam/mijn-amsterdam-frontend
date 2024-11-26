@@ -1,5 +1,5 @@
 import { differenceInYears } from 'date-fns';
-import { latLng, LatLngBoundsLiteral, LatLngTuple } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 
 import { fetchBRP } from './brp';
 import { fetchDataset } from './buurt/buurt';
@@ -9,11 +9,7 @@ import {
   DatasetFeatures,
   MaPointFeature,
 } from './buurt/datasets';
-import {
-  filterDatasetFeatures,
-  filterFeaturesinRadius,
-  getBboxFromFeatures,
-} from './buurt/helpers';
+import { filterDatasetFeatures, filterFeaturesinRadius } from './buurt/helpers';
 import { fetchMyLocation } from './home';
 import { captureMessage } from './monitoring';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
@@ -104,15 +100,17 @@ type AfvalFeatureProperties = DatasetFeatureProperties & {
   geadopteerd_ind: 'Ja' | 'Nee';
 };
 
+/** Build notifications.
+ *
+ * Only returns the last notification to prevent spam.
+ */
 function buildNotifications(
   features: MaPointFeature<AfvalFeatureProperties>[],
   brpResponse: ApiResponse<BRPData>
 ): MyNotification[] {
-  if (!FeatureToggle.adopteerbareAfvalContainerMeldingen) {
-    return [];
-  }
-
   if (
+    !FeatureToggle.adopteerbareAfvalContainerMeldingen ||
+    !features.length ||
     brpResponse.status !== 'OK' ||
     !brpResponse.content.persoon.geboortedatum
   ) {
@@ -126,10 +124,8 @@ function buildNotifications(
     return [];
   }
 
-  return features.map((feature) => {
-    const [lat, lng] = feature.geometry.coordinates;
-    return buildNotification(descriptionText, lat, lng);
-  });
+  const [lat, lng] = features[0].geometry.coordinates;
+  return [buildNotification(descriptionText, lat, lng)];
 }
 
 function determineDescriptionText(birthday: Date): string | undefined {
