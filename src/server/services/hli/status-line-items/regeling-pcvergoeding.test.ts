@@ -1,4 +1,10 @@
-import { AV_UPCC, AV_UPCZIL, forTesting } from './regeling-pcvergoeding';
+import {
+  AV_PCVC,
+  AV_PCVZIL,
+  AV_UPCC,
+  AV_UPCZIL,
+  forTesting,
+} from './regeling-pcvergoeding';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 
 describe('pcvergoeding', () => {
@@ -200,6 +206,113 @@ describe('pcvergoeding', () => {
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
       ).toMatchInlineSnapshot(`"Foo (geboren op 1 juli 2017) en Bar"`);
+    });
+  });
+
+  describe('filterCombineUpcPcvData', () => {
+    test('combines documents and updates fields correctly', () => {
+      const testData = [
+        {
+          id: '2',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          resultaat: 'toegewezen',
+          documenten: ['doc2'],
+        },
+        {
+          id: '1',
+          productIdentificatie: AV_PCVC,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-05-18',
+          isActueel: true,
+          documenten: ['doc1'],
+        },
+      ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      const result = forTesting.filterCombineUpcPcvData(testData);
+
+      expect(result).toEqual([
+        {
+          id: '2',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          resultaat: 'toegewezen',
+          isActueel: true,
+          datumEindeGeldigheid: null,
+          documenten: ['doc2', 'doc1'],
+        },
+      ]);
+    });
+
+    test('excludes baseRegelingen that have verzilvering', () => {
+      const testData = [
+        {
+          id: '3',
+          productIdentificatie: AV_PCVC,
+          betrokkenen: ['B'],
+          datumBesluit: '2024-07-18',
+          isActueel: true,
+          documenten: ['doc3'],
+        },
+        {
+          id: '2',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          resultaat: 'toegewezen',
+          documenten: ['doc2'],
+        },
+        {
+          id: '1',
+          productIdentificatie: AV_PCVC,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-05-18',
+          isActueel: true,
+          documenten: ['doc1'],
+        },
+      ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      const result = forTesting.filterCombineUpcPcvData(testData);
+
+      expect(result).toEqual([
+        {
+          id: '3',
+          productIdentificatie: AV_PCVC,
+          betrokkenen: ['B'],
+          datumBesluit: '2024-07-18',
+          isActueel: true,
+          documenten: ['doc3'],
+        },
+        {
+          id: '2',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          resultaat: 'toegewezen',
+          isActueel: true,
+          datumEindeGeldigheid: null,
+          documenten: ['doc2', 'doc1'],
+        },
+      ]);
+    });
+
+    test('handles no matching baseRegeling', () => {
+      const testData = [
+        {
+          id: '1',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-05-18',
+          resultaat: 'toegewezen',
+          documenten: ['doc1'],
+        },
+      ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      const result = forTesting.filterCombineUpcPcvData(testData);
+
+      expect(result).toEqual([]);
     });
   });
 });

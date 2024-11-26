@@ -1,6 +1,31 @@
+import { Mock } from 'vitest';
+
 import { forTesting } from './hli';
-import { StatusLineItem } from '../../../universal/types';
+import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
+import { getAuthProfileAndToken } from '../../../testing/utils';
+import {
+  apiSuccessResult,
+  apiErrorResult,
+} from '../../../universal/helpers/api';
+import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
+
+vi.mock('./hli-zorgned-service', () => ({
+  fetchZorgnedAanvragenHLI: vi.fn(),
+}));
+
+vi.mock('./stadspas', () => ({
+  fetchStadspas: vi.fn(),
+}));
+
+vi.mock('../../helpers/encrypt-decrypt', async (requireActual) => {
+  return {
+    ...((await requireActual()) as object),
+    encryptSessionIdWithRouteIdParam: () => {
+      return 'test-encrypted-id';
+    },
+  };
+});
 
 describe('HLI', () => {
   test('getDisplayStatus', () => {
@@ -88,5 +113,161 @@ describe('HLI', () => {
     } as ZorgnedAanvraagWithRelatedPersonsTransformed;
 
     expect(forTesting.getDisplayStatus(regeling8, [])).toBe('Toegewezen');
+  });
+
+  test('fetchRegelingen', async () => {
+    const requestID = 'test-request-id';
+    const authProfileAndToken = getAuthProfileAndToken('private');
+
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValue(
+      apiSuccessResult([])
+    );
+
+    const result = await forTesting.fetchRegelingen(
+      requestID,
+      authProfileAndToken
+    );
+    expect(result.status).toBe('OK');
+    expect(result.content).toEqual([]);
+
+    (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValue(
+      apiErrorResult('Error fetching aanvragen', null)
+    );
+
+    const resultError = await forTesting.fetchRegelingen(
+      requestID,
+      authProfileAndToken
+    );
+    expect(resultError.status).toBe('ERROR');
+  });
+
+  test('getDocumentsFrontend', () => {
+    const sessionID = 'test-session-id';
+    const documents: GenericDocument[] = [
+      {
+        id: 'doc1',
+        title: 'Document 1',
+        url: 'doc-url-1',
+        datePublished: '2024-11-26',
+      },
+      {
+        id: 'doc2',
+        title: 'Document 2',
+        url: 'doc-url-2',
+        datePublished: '2024-09-26',
+      },
+    ];
+
+    const result = forTesting.getDocumentsFrontend(sessionID, documents);
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toBe('test-encrypted-id');
+    expect(result[0].url).toContain(
+      'http://bff-api-host/api/v1/services/v1/stadspas-en-andere-regelingen/document/test-encrypted-id'
+    );
+  });
+
+  test('transformRegelingForFrontend', async () => {
+    const sessionID = 'test-session-id';
+    const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+      id: 'aanvraag1',
+      titel: 'Test Aanvraag',
+      isActueel: true,
+      datumBesluit: '2023-01-01',
+      datumIngangGeldigheid: '2023-01-01',
+      datumEindeGeldigheid: '2023-12-31',
+      resultaat: 'toegewezen',
+      documenten: [],
+      betrokkenPersonen: [
+        {
+          name: 'Person 1',
+          bsn: '',
+          dateOfBirth: null,
+          dateOfBirthFormatted: null,
+        },
+      ],
+      betrokkenen: [],
+      datumAanvraag: '',
+      datumBeginLevering: null,
+      datumEindeLevering: null,
+      datumOpdrachtLevering: null,
+      datumToewijzing: null,
+      leverancier: '',
+      leveringsVorm: '',
+      productsoortCode: '',
+    };
+
+    const statusLineItems: StatusLineItem[] = [
+      {
+        status: 'Toegewezen',
+        id: '',
+        datePublished: '',
+        isActive: false,
+        isChecked: false,
+      },
+    ];
+
+    const result = await forTesting.transformRegelingForFrontend(
+      sessionID,
+      aanvraag,
+      statusLineItems
+    );
+    expect(result.id).toBe('aanvraag1');
+    expect(result.title).toBe('Test Aanvraag');
+    expect(result.displayStatus).toBe('Toegewezen');
+  });
+
+  describe('transformRegelingenForFrontend', async () => {
+    const authProfileAndToken = getAuthProfileAndToken('private');
+    const aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[] = [
+      {
+        id: 'aanvraag1',
+        titel: 'Test Aanvraag',
+        isActueel: true,
+        datumBesluit: '2023-01-01',
+        datumIngangGeldigheid: '2023-01-01',
+        datumEindeGeldigheid: '2023-12-31',
+        resultaat: 'toegewezen',
+        documenten: [],
+        betrokkenPersonen: [
+          {
+            name: 'Person 1',
+            bsn: '',
+            dateOfBirth: null,
+            dateOfBirthFormatted: null,
+          },
+        ],
+        betrokkenen: [],
+        datumAanvraag: '',
+        datumBeginLevering: null,
+        datumEindeLevering: null,
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: '',
+        productIdentificatie: 'AV-UPCC',
+      },
+    ];
+    const today = new Date();
+    test('With productIdentificatie', async () => {
+      const result = await forTesting.transformRegelingenForFrontend(
+        authProfileAndToken,
+        aanvragen,
+        today
+      );
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe('aanvraag1');
+      expect(result[0].title).toBe('Test Aanvraag');
+    });
+
+    test('Without productIdentificatie', async () => {
+      const aanvragen2 = [{ ...aanvragen[0], productIdentificatie: '' }];
+      const result = await forTesting.transformRegelingenForFrontend(
+        authProfileAndToken,
+        aanvragen2,
+        today
+      );
+      expect(result).toHaveLength(0);
+    });
   });
 });

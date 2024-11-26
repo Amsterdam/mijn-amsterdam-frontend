@@ -84,9 +84,14 @@ export function filterCombineUpcPcvData(
       const baseRegeling = aanvragen.find((compareAanvraag) =>
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
+
       if (baseRegeling) {
         baseRegelingIdWithVerzilvering.push(baseRegeling.id);
+      } else {
+        // If no baseRegeling is found, this must be an orphaned verzilvering.
+        return null;
       }
+
       const addedDocs = baseRegeling?.documenten ?? [];
 
       return {
@@ -212,4 +217,5 @@ export const forTesting = {
   isRegelingVanVerzilvering,
   isVerzilvering,
   isWorkshopNietGevolgd,
+  filterCombineUpcPcvData,
 };

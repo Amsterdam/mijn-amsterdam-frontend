@@ -121,7 +121,7 @@ async function transformRegelingForFrontend(
   return regelingFrontend;
 }
 
-export async function transformRegelingenForFrontend(
+async function transformRegelingenForFrontend(
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
@@ -209,5 +209,9 @@ export async function fetchHLI(
 }
 
 export const forTesting = {
+  fetchRegelingen,
   getDisplayStatus,
+  getDocumentsFrontend,
+  transformRegelingenForFrontend,
+  transformRegelingForFrontend,
 };
