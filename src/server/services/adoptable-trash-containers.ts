@@ -1,15 +1,7 @@
 import { differenceInYears } from 'date-fns';
-import { LatLngTuple } from 'leaflet';
+import { latLng, LatLngBoundsLiteral, LatLngTuple } from 'leaflet';
 
 import { fetchBRP } from './brp';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { Themas } from '../../universal/config/thema';
-import {
-  apiDependencyError,
-  ApiResponse,
-  apiSuccessResult,
-} from '../../universal/helpers/api';
-import { AuthProfileAndToken } from '../auth/auth-types';
 import { fetchDataset } from './buurt/buurt';
 import {
   datasetEndpoints,
@@ -17,11 +9,24 @@ import {
   DatasetFeatures,
   MaPointFeature,
 } from './buurt/datasets';
-import { filterDatasetFeatures, filterFeaturesinRadius } from './buurt/helpers';
+import {
+  filterDatasetFeatures,
+  filterFeaturesinRadius,
+  getBboxFromFeatures,
+} from './buurt/helpers';
 import { fetchMyLocation } from './home';
 import { captureMessage } from './monitoring';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { AppRoutes } from '../../universal/config/routes';
+import { Themas } from '../../universal/config/thema';
+import {
+  apiDependencyError,
+  ApiResponse,
+  apiSuccessResult,
+} from '../../universal/helpers/api';
 import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { BRPData, MyNotification } from '../../universal/types';
+import { AuthProfileAndToken } from '../auth/auth-types';
 
 export async function fetchAdoptableTrashContainers(
   requestID: RequestID,
@@ -121,9 +126,10 @@ function buildNotifications(
     return [];
   }
 
-  return features.map((feature) =>
-    buildNotification(feature.properties.id, descriptionText)
-  );
+  return features.map((feature) => {
+    const [lat, lng] = feature.geometry.coordinates;
+    return buildNotification(descriptionText, lat, lng);
+  });
 }
 
 function determineDescriptionText(birthday: Date): string | undefined {
@@ -142,8 +148,9 @@ function determineDescriptionText(birthday: Date): string | undefined {
 }
 
 function buildNotification(
-  containerID: string,
-  description: string
+  description: string,
+  lat: number,
+  lng: number
 ): MyNotification {
   return {
     id: 'adoptable-trash-container-notification',
@@ -152,8 +159,8 @@ function buildNotification(
     title: 'Adopteer een afvalcontainer',
     description,
     link: {
-      to: `/buurt?datasetIds=%5B%22afvalcontainers%22%5D&zoom=15&filters=&loadingFeature=%7B%22datasetId%22%3A%22afvalcontainers%22%2C%22id%22%3A%22${containerID}%22%7D&s=1`,
-      title: 'Bekijk de werkzaamheden op kaart',
+      to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers":{"geadopteerd_ind":{"values":{"Nee":1}}}}&center={"lat":${lat},"lng":${lng}}&loadingFeature=null&s=1`,
+      title: 'Adopteer een afvalcontainer',
     },
   };
 }
