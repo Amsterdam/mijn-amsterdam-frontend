@@ -1,8 +1,14 @@
 import '@testing-library/jest-dom';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/react';
+import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
 import nock from 'nock';
 import { afterAll, afterEach, expect, vi } from 'vitest';
+
+const ENV_FILE = '.env.local.template';
+const envConfig = dotenv.config({ path: ENV_FILE });
+dotenvExpand.expand(envConfig);
 
 vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   const envModule: object = await importOriginal();
@@ -73,6 +79,7 @@ export const remoteApiHost = 'http://remote-api-host';
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;
+process.env.BFF_DATA_AMSTERDAM_API_KEY = '';
 
 process.env.BFF_DISABLE_MOCK_ADAPTER = 'true';
 process.env.BFF_REQUEST_CACHE_ENABLED = 'false';
