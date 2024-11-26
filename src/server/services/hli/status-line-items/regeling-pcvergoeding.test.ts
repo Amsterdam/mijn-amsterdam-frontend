@@ -2,33 +2,6 @@ import { AV_UPCC, AV_UPCZIL, forTesting } from './regeling-pcvergoeding';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorgned-types';
 
 describe('pcvergoeding', () => {
-  describe('isVerzilveringVanRegeling', () => {
-    const testData = [
-      {
-        productIdentificatie: AV_UPCC,
-        betrokkenen: ['A'],
-      },
-      {
-        productIdentificatie: AV_UPCZIL,
-        betrokkenen: ['A'],
-      },
-      {
-        productIdentificatie: AV_UPCZIL,
-        betrokkenen: ['B'],
-      },
-    ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
-
-    test('isVerzilveringVanRegeling', () => {
-      expect(
-        forTesting.isVerzilveringVanRegeling(testData[0], testData[1])
-      ).toBe(true);
-
-      expect(
-        forTesting.isVerzilveringVanRegeling(testData[0], testData[2])
-      ).toBe(false);
-    });
-  });
-
   describe('isRegelingVanVerzilvering', () => {
     const testData = [
       {
