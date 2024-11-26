@@ -85,12 +85,12 @@ export function filterCombineUpcPcvData(
         isRegelingVanVerzilvering(aanvraag, compareAanvraag)
       );
 
-      if (baseRegeling) {
-        baseRegelingIdWithVerzilvering.push(baseRegeling.id);
-      } else {
-        // If no baseRegeling is found, this must be an orphaned verzilvering.
+      // If no baseRegeling is found, this must be an orphaned verzilvering.
+      if (!baseRegeling) {
         return null;
       }
+
+      baseRegelingIdWithVerzilvering.push(baseRegeling.id);
 
       const addedDocs = baseRegeling?.documenten ?? [];
 

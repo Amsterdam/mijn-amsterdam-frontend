@@ -88,9 +88,8 @@ export function filterCombineRtmData(
         return null;
       }
 
-      if (regelingDeel1) {
-        baseRegelingIdWithDeel2.push(regelingDeel1.id);
-      }
+      baseRegelingIdWithDeel2.push(regelingDeel1.id);
+
       const addedDocs = regelingDeel1?.documenten ?? [];
 
       return {
