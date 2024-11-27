@@ -87,7 +87,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       : queryConfig?.loadingFeature || null;
 
     if (!isEqual(datasetIds, activeDatasetIds)) {
-      setActiveDatasetIds(datasetIds);
+      setActiveDatasetIds({ ...datasetIds });
     }
 
     if (!isEqual(filters, activeFilters)) {
@@ -141,10 +141,21 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       activeDatasetIds: DatasetId[],
       activeFilters: DatasetFilterSelection
     ) => {
+      const simplifiedFilters = Object.entries(activeFilters).reduce(
+        (acc, [datasetId, filterConfig]) => {
+          acc[datasetId] = filterConfig.category
+            ? { values: filterConfig.category.values || {} }
+            : { ...filterConfig };
+          return acc;
+        },
+        {} as DatasetFilterSelection
+      );
+      console.log('simplifiedFilters', simplifiedFilters);
       const responseContent = await fetchFeatures(
         activeDatasetIds,
-        activeFilters
+        simplifiedFilters
       );
+      console.log('activeFilters', activeFilters);
 
       if (responseContent) {
         const { errors, polylines, clusters, filters } = responseContent;

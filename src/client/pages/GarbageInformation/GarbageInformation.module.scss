@@ -115,20 +115,6 @@
   margin-right: 2rem;
 }
 
-.GarbageFractionPanelOpmerking {
-  a {
-    color: $color-primary-darkblue;
-
-    &:hover {
-      color: $color-primary-red;
-    }
-
-    &:visited {
-      color: $color-support-purple;
-    }
-  }
-}
-
 .GarbageFractionPanelHighlight {
   background-color: $color-support-focus;
   padding: 0.5rem 1rem;

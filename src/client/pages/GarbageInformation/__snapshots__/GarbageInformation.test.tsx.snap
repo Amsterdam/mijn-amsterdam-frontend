@@ -261,14 +261,17 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
             <div
               class="_GarbageFractionPanelOpmerking_3a64c8"
             >
-              <div>
+              <span>
                 Of breng het naar 
-                <a
-                  href="https://kaart.amsterdam.nl/afvalpunten"
-                >
+              </span>
+              <a
+                class="ams-link ams-link--standalone"
+                href="https://kaart.amsterdam.nl/afvalpunten"
+              >
+                <span>
                   een Afvalpunt
-                </a>
-              </div>
+                </span>
+              </a>
             </div>
           </article>
           <article
@@ -396,9 +399,9 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
             <div
               class="_GarbageFractionPanelOpmerking_3a64c8"
             >
-              <div>
+              <span>
                 Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
-              </div>
+              </span>
             </div>
           </article>
           <article
@@ -871,14 +874,17 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
             <div
               class="_GarbageFractionPanelOpmerking_3a64c8"
             >
-              <div>
+              <span>
                 Of breng het naar 
-                <a
-                  href="https://kaart.amsterdam.nl/afvalpunten"
-                >
+              </span>
+              <a
+                class="ams-link ams-link--standalone"
+                href="https://kaart.amsterdam.nl/afvalpunten"
+              >
+                <span>
                   een Afvalpunt
-                </a>
-              </div>
+                </span>
+              </a>
             </div>
           </article>
           <article
@@ -1006,9 +1012,9 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
             <div
               class="_GarbageFractionPanelOpmerking_3a64c8"
             >
-              <div>
+              <span>
                 Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
-              </div>
+              </span>
             </div>
           </article>
           <article
@@ -1669,14 +1675,17 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
             <div
               class="_GarbageFractionPanelOpmerking_3a64c8"
             >
-              <div>
+              <span>
                 Of breng het naar 
-                <a
-                  href="https://kaart.amsterdam.nl/afvalpunten"
-                >
+              </span>
+              <a
+                class="ams-link ams-link--standalone"
+                href="https://kaart.amsterdam.nl/afvalpunten"
+              >
+                <span>
                   een Afvalpunt
-                </a>
-              </div>
+                </span>
+              </a>
             </div>
           </article>
           <article
@@ -1804,9 +1813,9 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
             <div
               class="_GarbageFractionPanelOpmerking_3a64c8"
             >
-              <div>
+              <span>
                 Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
-              </div>
+              </span>
             </div>
           </article>
           <article

@@ -108,9 +108,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -150,9 +149,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           >
             U woont niet meer op het adres waarop u staat ingeschreven. Op dit moment onderzoeken wij op welk adres u nu woont. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -163,6 +161,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
+              class="ams-link ams-link--standalone"
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
               rel="external noopener noreferrer"
             >
@@ -414,9 +413,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -1596,9 +1594,8 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -1722,9 +1719,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -1764,9 +1760,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -1777,6 +1772,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
+              class="ams-link ams-link--standalone"
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
               rel="external noopener noreferrer"
             >
@@ -2028,9 +2024,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -3210,9 +3205,8 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -3336,9 +3330,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -3378,9 +3371,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -3391,6 +3383,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
+              class="ams-link ams-link--standalone"
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
               rel="external noopener noreferrer"
             >
@@ -3656,9 +3649,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -4736,9 +4728,8 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -4865,9 +4856,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -4907,9 +4897,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -4920,6 +4909,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
+              class="ams-link ams-link--standalone"
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
               rel="external noopener noreferrer"
             >
@@ -5162,9 +5152,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -5300,9 +5289,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -5342,9 +5330,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -5355,6 +5342,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
+              class="ams-link ams-link--standalone"
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
               rel="external noopener noreferrer"
             >
@@ -5606,9 +5594,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
                   >
                     Te vinden op 
                     <a
-                      class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+                      class="ams-link ams-link--inline"
                       href="https://www.wozwaardeloket.nl/"
-                      rel="external noopener noreferrer"
                     >
                       WOZ-waardeloket
                     </a>
@@ -6788,9 +6775,8 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>
@@ -6914,9 +6900,8 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
             Als u in de BRP staat met de melding ‘Vertrokken Onbekend Waarheen (VOW)’ bent u onvindbaar voor de overheid. De overheid beschouwt u dan niet langer als inwoner van Nederland en u kunt geen gebruik meer maken van overheidsdiensten. U krijgt bijvoorbeeld geen paspoort, ziektekostenverzekering of toeslagen meer. Geef uw adres zo snel mogelijk door aan de gemeente. 
             <a
               aria-label="Meer informatie over de melding \`Vertrokken Onbekend Waarheen (VOW)\`"
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Meer informatie
             </a>
@@ -6956,9 +6941,8 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           >
             Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat. 
             <a
-              class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+              class="ams-link ams-link--inline"
               href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
-              rel="external noopener noreferrer"
             >
               Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
             </a>
@@ -6969,6 +6953,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
           >
             Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar 
             <a
+              class="ams-link ams-link--standalone"
               href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
               rel="external noopener noreferrer"
             >
@@ -8351,9 +8336,8 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
       >
         Het is helaas niet mogelijk om de gegevens van een levenloos geboren kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien in 
         <a
-          class="_Button_c3ab45 _Button__inline_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _LinkedInline_c3ab45"
+          class="ams-link ams-link--inline"
           href="https://mijn.overheid.nl"
-          rel="external noopener noreferrer"
         >
           MijnOverheid
         </a>

@@ -22,6 +22,7 @@ export default function MyArePanelContentMeldingenBuurt({
   datasetId,
   panelItem,
 }: MyArePanelContentMeldingenBuurtProps) {
+  console.log('panelItem', panelItem);
   return (
     <GenericBase
       supTitle="Meldingen"

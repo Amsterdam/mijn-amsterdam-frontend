@@ -1,6 +1,7 @@
 import { Link } from '@amsterdam/design-system-react';
 import { Button } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
+import { parse } from 'html-to-ast';
 
 import styles from './GarbageInformation.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -34,6 +35,7 @@ import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { ExternalUrls } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
+import { transformAstToReact } from '../../helpers/ast-to-react';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
@@ -130,6 +132,8 @@ interface GarbageFractionPanelProps {
 }
 
 function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
+  const astOpmerking = parse(fraction.opmerking ?? '');
+
   return (
     <article className={styles.GarbageFractionPanel}>
       <h3 className={styles.GarbageFractionPanelTitle}>
@@ -178,7 +182,7 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
       )}
       {!!fraction.opmerking && (
         <div className={styles.GarbageFractionPanelOpmerking}>
-          <InnerHtml>{fraction.opmerking}</InnerHtml>
+          {transformAstToReact('opmerking', astOpmerking)}
         </div>
       )}
     </article>

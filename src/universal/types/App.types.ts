@@ -3,6 +3,7 @@ import { FunctionComponent, ReactNode, SVGProps } from 'react';
 import { ServiceID, ServicesType } from '../../server/services/controller';
 import { Thema } from '../config/thema';
 import { ApiResponse } from '../helpers/api';
+import { Attr } from 'html-to-ast/dist/types';
 
 export type BagThema = `${Thema}_BAG`;
 
@@ -121,4 +122,16 @@ export interface Match {
   params: Record<string, string>;
   path: string;
   url: string;
+}
+
+export interface AstNode {
+  type?: string;
+  text?: string;
+  content?: string;
+  voidElement?: boolean;
+  name?: string;
+  style?: string[];
+  attrs?: Attr;
+  children?: AstNode[];
+  comment?: string;
 }

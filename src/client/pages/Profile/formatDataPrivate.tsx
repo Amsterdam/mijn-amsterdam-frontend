@@ -13,8 +13,8 @@ import {
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
-import { LinkdInline } from '../../components/Button/Button';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { Link } from '@amsterdam/design-system-react';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -87,12 +87,12 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
       value ? (
         <>
           Voor dit adres geldt{' '}
-          <LinkdInline
-            external={true}
+          <Link
+            variant={'inline'}
             href="https://www.amsterdam.nl/veelgevraagd/geheimhouding-persoonsgegevens-7ed1c"
           >
             geheimhouding
-          </LinkdInline>
+          </Link>
         </>
       ) : null,
   ],

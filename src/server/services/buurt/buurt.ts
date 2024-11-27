@@ -184,7 +184,8 @@ export async function loadDatasetFeatures(
 
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
-
+    console.log('id', id);
+    console.log('config', config);
     requests.push(
       fetchDataset(requestID, id, config).then((result) => {
         return {

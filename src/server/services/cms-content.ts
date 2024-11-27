@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 import { parse } from 'html-to-ast';
-import { Attr } from 'html-to-ast/dist/types';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
 
 import { IS_TAP } from '../../universal/config/env';
@@ -14,7 +13,7 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
-import { LinkProps } from '../../universal/types/App.types';
+import { AstNode, LinkProps } from '../../universal/types/App.types';
 import { DataRequestConfig } from '../config/source-api';
 import FileCache from '../helpers/file-cache';
 import { getApiConfig } from '../helpers/source-api-helpers';
@@ -67,18 +66,6 @@ export function sanitizeCmsContent(
 interface CMSPageContent {
   title: string;
   content: string;
-}
-
-export interface AstNode {
-  type?: string;
-  text?: string;
-  content?: string;
-  voidElement?: boolean;
-  name?: string;
-  style?: string[];
-  attrs?: Attr;
-  children?: AstNode[];
-  comment?: string;
 }
 
 export interface FooterBlock {
