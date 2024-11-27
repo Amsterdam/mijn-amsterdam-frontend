@@ -18,6 +18,7 @@ import {
 } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
+import { ONE_SECOND_MS } from '../config/app';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
@@ -127,31 +128,37 @@ export function decodeToken<T extends Record<string, string>>(
   return jose.decodeJwt(jwtToken) as unknown as T;
 }
 
+function isIDPSessionExpired(expiresAt: string) {
+  return new Date(parseInt(expiresAt, 10) * ONE_SECOND_MS) < new Date();
+}
+
 export function createLogoutHandler(
   postLogoutRedirectUrl: string,
   doIDPLogout: boolean = true
 ) {
   return async (req: AuthenticatedRequest, res: Response) => {
-    if (req.oidc.isAuthenticated() && doIDPLogout) {
-      const auth = getAuth(req);
-      if (auth) {
-        // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
-        if (auth.profile.sid) {
-          await addToBlackList(auth.profile.sid);
-        }
-
-        return res.oidc.logout({
-          returnTo: postLogoutRedirectUrl,
-          logoutParams: {
-            id_token_hint: !FeatureToggle.oidcLogoutHintActive
-              ? auth.token
-              : null,
-            logout_hint: FeatureToggle.oidcLogoutHintActive
-              ? req[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
-              : null,
-          },
-        });
+    const auth = getAuth(req);
+    if (
+      auth &&
+      req.oidc.isAuthenticated() &&
+      (doIDPLogout ? isIDPSessionExpired(auth.expiresAt) : false)
+    ) {
+      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
+      if (auth.profile.sid) {
+        await addToBlackList(auth.profile.sid);
       }
+
+      return res.oidc.logout({
+        returnTo: postLogoutRedirectUrl,
+        logoutParams: {
+          id_token_hint: !FeatureToggle.oidcLogoutHintActive
+            ? auth.token
+            : null,
+          logout_hint: FeatureToggle.oidcLogoutHintActive
+            ? req[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
+            : null,
+        },
+      });
     }
 
     if (hasSessionCookie(req)) {
