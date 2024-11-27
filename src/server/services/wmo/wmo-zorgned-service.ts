@@ -11,7 +11,7 @@ import {
 } from './status-line-items/wmo-generic';
 import {
   DATE_END_NOT_OLDER_THAN,
-  REGELING_IDENTIFICATIE,
+  ZORGNED_JZD_REGELING_IDENTIFICATIE,
 } from './wmo-config-and-types';
 import { PRODUCTS_WITH_DELIVERY } from './wmo-status-line-items';
 
@@ -100,7 +100,7 @@ export async function fetchZorgnedAanvragenWMO(
 ) {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
-    regeling: REGELING_IDENTIFICATIE,
+    regeling: ZORGNED_JZD_REGELING_IDENTIFICATIE,
   };
 
   const aanvragenResponse = await fetchAanvragen(

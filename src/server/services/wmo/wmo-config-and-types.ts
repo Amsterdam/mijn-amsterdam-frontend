@@ -8,7 +8,7 @@ import {
 
 export const SINGLE_DOC_TITLE_BESLUIT = 'Brief';
 
-export const REGELING_IDENTIFICATIE = 'wmo';
+export const ZORGNED_JZD_REGELING_IDENTIFICATIE = 'wmo';
 export const BESCHIKTPRODUCT_RESULTAAT: BeschikkingsResultaat[] = [
   'toegewezen',
 ];
