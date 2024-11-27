@@ -1,9 +1,9 @@
-import styles from './AVGDetail.module.scss';
-import { AVGRequest } from '../../../server/services/avg/types';
-import { StatusLineItem } from '../../../universal/types';
-import { StatusLine } from '../../components';
+import { AVGRequestFrontend } from '../../../server/services/avg/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 
-function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
+export function useAvgStatusLines(
+  request: AVGRequestFrontend
+): StatusLineItem[] {
   const isDone = !!request.datumAfhandeling;
   const extraInfoActive = !!request.opschortenGestartOp;
   const inProgressActive = !!request.datumInBehandeling;
@@ -145,21 +145,3 @@ function useAvgStatusLines(request: AVGRequest): StatusLineItem[] {
 
   return lineItems;
 }
-
-const AVGStatusLines = ({ request }: { request: AVGRequest }) => {
-  const statusLineItems = useAvgStatusLines(request);
-
-  return (
-    <StatusLine
-      className={styles.AvgStatusLines}
-      trackCategory="AVG verzoek detail / status"
-      items={statusLineItems}
-      id={`avg-detail-${request.id}`}
-      documentPathForTracking={(document) =>
-        `/downloads/avg-verzoek/${document.title}`
-      }
-    />
-  );
-};
-
-export default AVGStatusLines;

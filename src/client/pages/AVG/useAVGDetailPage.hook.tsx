@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 
+import { useAvgStatusLines } from './useAVGStatusLines.hook';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { isError } from '../../../universal/helpers/api';
 import { isLoading } from '../../../universal/helpers/api';
@@ -13,8 +14,13 @@ export function useAVGDetailPage() {
     (verzoek) => verzoek.id === id
   ) as AVGRequestFrontend;
 
+  const statusLineItems = verzoek && useAvgStatusLines(verzoek);
+
   return {
-    verzoek,
+    verzoek: {
+      ...verzoek,
+      steps: statusLineItems,
+    },
     isLoading: isLoading(AVG),
     isError: isError(AVG),
   };

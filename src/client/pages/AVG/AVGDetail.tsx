@@ -8,25 +8,23 @@ import { ThemaTitles } from '../../config/thema';
 import { useAVGDetailPage } from '../AVG/useAVGDetailPage.hook';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
-function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
-  const rows = [];
+function getVerzoekRows(verzoek: AVGRequestFrontend) {
+  return [
+    { label: 'Nummer', content: verzoek.id },
+    { label: 'Type verzoek', content: verzoek.type },
+    { label: 'Onderwerp(en)', content: verzoek.themas?.join(', ') },
+    { label: 'Toelichting', content: verzoek.toelichting },
+  ].filter((row) => row.content);
+}
 
-  if (verzoek?.id) {
-    rows.push({ content: verzoek.id, label: 'Nummer' });
-  }
-  if (verzoek?.type) {
-    rows.push({ content: verzoek.type, label: 'Type verzoek' });
-  }
-  if (verzoek?.themas) {
-    rows.push({ content: verzoek.themas.join(', '), label: 'Onderwerp(en)' });
-  }
+const AVGDetailContent = ({ verzoek }: { verzoek: AVGRequestFrontend }) => {
+  const rows = getVerzoekRows(verzoek);
 
   return <Datalist rows={rows} />;
-}
+};
 
 const AVGDetail = () => {
   const { verzoek, isLoading, isError } = useAVGDetailPage();
-  console.log(verzoek, 'verzoek');
   return (
     <ThemaDetailPagina<AVGRequestFrontend>
       title={'AVG verzoek'}

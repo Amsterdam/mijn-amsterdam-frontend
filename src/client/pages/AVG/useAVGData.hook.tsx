@@ -14,7 +14,7 @@ function getFilteredAVGVerzoeken(
       ...avgVerzoek,
       ontvangstDatum: defaultDateFormat(avgVerzoek.ontvangstDatum),
       idAsLink: avgVerzoek.id,
-      themaString: avgVerzoek.themas.join(', '),
+      themaString: avgVerzoek?.themas?.join(', ') ?? '',
       title: ``,
       steps: [],
     })),
