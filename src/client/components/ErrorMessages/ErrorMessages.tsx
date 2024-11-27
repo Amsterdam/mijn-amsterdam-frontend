@@ -54,19 +54,21 @@ export default function ErrorMessages({
       <p className={styles.MessageBar}>
         <span className={styles.MessageBarInner}>
           <IconAlert aria-hidden="true" className={styles.AlertIcon} /> {title}{' '}
-          <Button
-            variant="secondary"
+          <Link
+            variant="inline"
             onClick={() => setModalOpen(true)}
             aria-label="Meer informatie over waarom u misschien niet alle gegevens ziet."
           >
             Meer informatie
-          </Button>
+          </Link>
           .
         </span>
 
         <Button
           icon={IconClose}
+          iconOnly
           className={styles.CloseButton}
+          variant="tertiary"
           onClick={() => setDismissed(true)}
           aria-label="Verberg bericht"
         />
