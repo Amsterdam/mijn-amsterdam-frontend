@@ -89,6 +89,7 @@ export function getAuth(req: Request) {
   return {
     token: oidcToken,
     profile,
+    expiresAt: maSession.expires_at,
   };
 }
 

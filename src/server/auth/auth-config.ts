@@ -44,8 +44,8 @@ export const oidcConfigBase: ConfigParams = {
   authorizationParams: { prompt: 'login', response_type: 'code' },
   clockTolerance: 120, // 2 minutes
   session: {
-    rolling: true,
-    rollingDuration: OIDC_SESSION_MAX_AGE_SECONDS,
+    rolling: false,
+    absoluteDuration: OIDC_SESSION_MAX_AGE_SECONDS,
     name: OIDC_SESSION_COOKIE_NAME,
     store:
       getFromEnv('MA_APP_MODE') !== 'unittest'

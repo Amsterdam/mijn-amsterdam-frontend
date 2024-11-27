@@ -15,6 +15,7 @@ export interface MaSession extends Session {
   TMASessionID: string; // TMA Session ID
   profileType: ProfileType;
   authMethod: AuthMethod;
+  expires_at: string;
 }
 
 export interface AuthProfileAndToken {
