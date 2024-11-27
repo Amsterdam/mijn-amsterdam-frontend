@@ -17,7 +17,7 @@ export function useAvgStatusLines(
   const doneDesc =
     'Uw verzoek is afgehandeld. U ontvangt hierover bericht per e-mail of per brief.';
 
-  const lineItems = [
+  const lineItems: StatusLineItem[] = [
     {
       id: 'item-1',
       status: 'Ontvangen',
@@ -30,118 +30,122 @@ export function useAvgStatusLines(
   ];
 
   if (noProgress) {
-    lineItems.push({
-      id: 'item-3',
-      status: 'In behandeling',
-      datePublished: request.datumInBehandeling || '',
-      description: '',
-      documents: [],
-      isActive: false,
-      isChecked: false,
-    });
-
-    lineItems.push({
-      id: 'last-item',
-      status: 'Afgehandeld',
-      datePublished: request.datumAfhandeling || '',
-      description: '',
-      documents: [],
-      isActive: false,
-      isChecked: false,
-    });
-
+    lineItems.push(
+      createStatusLineItem(
+        'item-3',
+        'In behandeling',
+        request.datumInBehandeling,
+        false,
+        false
+      ),
+      createStatusLineItem(
+        'last-item',
+        'Afgehandeld',
+        request.datumAfhandeling,
+        false,
+        false
+      )
+    );
     return lineItems;
   }
 
-  switch (true) {
-    case !extraInfoActive && inProgressActive:
-      lineItems.push({
-        id: 'item-3',
-        status: 'In behandeling',
-        datePublished: request.datumInBehandeling || '',
-        description: '',
-        documents: [],
-        isActive: inProgressActive && !isDone,
-        isChecked: inProgressActive,
-      });
-      break;
-
-    case extraInfoActive && !inProgressActive:
-      lineItems.push({
-        id: 'item-2',
-        status: 'Extra informatie nodig',
-        datePublished: request.opschortenGestartOp || '',
-        description: extraInfoDesc,
-        documents: [],
-        isActive: true,
-        isChecked: false,
-      });
-
-      lineItems.push({
-        id: 'item-3',
-        status: 'In behandeling',
-        datePublished: request.datumInBehandeling || '',
-        description: '',
-        documents: [],
-        isActive: false,
-        isChecked: false,
-      });
-      break;
-
-    case extraInfoActive && inProgressActive && inProgressDate <= extraInfoDate:
-      lineItems.push({
-        id: 'item-3',
-        status: 'In behandeling',
-        datePublished: request.datumInBehandeling || '',
-        description: '',
-        documents: [],
-        isActive: false,
-        isChecked: true,
-      });
-
-      lineItems.push({
-        id: 'item-2',
-        status: 'Extra informatie nodig',
-        datePublished: request.opschortenGestartOp || '',
-        description: extraInfoDesc,
-        documents: [],
-        isActive: !isDone,
-        isChecked: true,
-      });
-      break;
-
-    case extraInfoActive && inProgressActive && inProgressDate > extraInfoDate:
-      lineItems.push({
-        id: 'item-2',
-        status: 'Extra informatie nodig',
-        datePublished: request.opschortenGestartOp || '',
-        description: '',
-        documents: [],
-        isActive: false,
-        isChecked: true,
-      });
-
-      lineItems.push({
-        id: 'item-3',
-        status: 'In behandeling',
-        datePublished: request.datumInBehandeling || '',
-        description: extraInfoDesc,
-        documents: [],
-        isActive: !isDone,
-        isChecked: true,
-      });
-      break;
+  if (!extraInfoActive && inProgressActive) {
+    lineItems.push(
+      createStatusLineItem(
+        'item-3',
+        'In behandeling',
+        request.datumInBehandeling,
+        inProgressActive && !isDone,
+        inProgressActive
+      )
+    );
+  } else if (extraInfoActive && !inProgressActive) {
+    lineItems.push(
+      createStatusLineItem(
+        'item-2',
+        'Extra informatie nodig',
+        request.opschortenGestartOp,
+        true,
+        false,
+        extraInfoDesc
+      ),
+      createStatusLineItem(
+        'item-3',
+        'In behandeling',
+        request.datumInBehandeling,
+        false,
+        false
+      )
+    );
+  } else if (extraInfoActive && inProgressActive) {
+    if (inProgressDate <= extraInfoDate) {
+      lineItems.push(
+        createStatusLineItem(
+          'item-3',
+          'In behandeling',
+          request.datumInBehandeling,
+          false,
+          true
+        ),
+        createStatusLineItem(
+          'item-2',
+          'Extra informatie nodig',
+          request.opschortenGestartOp,
+          !isDone,
+          true,
+          extraInfoDesc
+        )
+      );
+    } else {
+      lineItems.push(
+        createStatusLineItem(
+          'item-2',
+          'Extra informatie nodig',
+          request.opschortenGestartOp,
+          false,
+          true
+        ),
+        createStatusLineItem(
+          'item-3',
+          'In behandeling',
+          request.datumInBehandeling,
+          !isDone,
+          true,
+          extraInfoDesc
+        )
+      );
+    }
   }
 
-  lineItems.push({
-    id: 'last-item',
-    status: 'Afgehandeld',
-    datePublished: request.datumAfhandeling || '',
-    description: isDone ? doneDesc : '',
-    documents: [],
-    isActive: isDone,
-    isChecked: isDone,
-  });
+  lineItems.push(
+    createStatusLineItem(
+      'last-item',
+      'Afgehandeld',
+      request.datumAfhandeling,
+      isDone,
+      isDone,
+      isDone ? doneDesc : ''
+    )
+  );
 
   return lineItems;
+}
+
+function createStatusLineItem(
+  id: string,
+  status: string,
+  datePublished: string,
+  isActive: boolean,
+  isChecked: boolean,
+  description: string = ''
+): StatusLineItem {
+  return {
+    id,
+    status,
+    datePublished: datePublished || '',
+    description,
+    documents: [],
+    isActive,
+    isChecked,
+  };
 }
