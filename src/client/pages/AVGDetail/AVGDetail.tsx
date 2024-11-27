@@ -1,62 +1,47 @@
-import { generatePath, useParams } from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 
-import AVGStatusLines from './AVGStatusLines';
+import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import {
-  DetailPage,
-  ErrorAlert,
-  InfoDetail,
-  PageContent,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import { ThemaIcon } from '../../components';
+import { Datalist } from '../../components/Datalist/Datalist';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAVGDetailPage } from '../AVG/useAVGDetailPage.hook';
+import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+
+function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
+  const rows = [];
+
+  if (verzoek?.id) {
+    rows.push({ content: verzoek.id, label: 'Nummer' });
+  }
+  if (verzoek?.type) {
+    rows.push({ content: verzoek.type, label: 'Type verzoek' });
+  }
+  if (verzoek?.themas) {
+    rows.push({ content: verzoek.themas.join(', '), label: 'Onderwerp(en)' });
+  }
+
+  return <Datalist rows={rows} />;
+}
 
 const AVGDetail = () => {
-  const { AVG } = useAppStateGetter();
-  const { id } = useParams<{ id: string }>();
-
-  const verzoek = AVG.content?.verzoeken?.find((verzoek) => verzoek.id === id);
-
-  const noContent = !isLoading(AVG) && !verzoek;
-
+  const { verzoek, isLoading, isError } = useAVGDetailPage();
+  console.log(verzoek, 'verzoek');
   return (
-    <DetailPage>
-      <PageHeading
-        icon={<ThemaIcon />}
-        backLink={{
-          to: generatePath(AppRoutes.AVG, {
-            page: 1,
-          }),
-          title: ThemaTitles.AVG,
-        }}
-        isLoading={isLoading(AVG)}
-      >
-        AVG verzoek
-      </PageHeading>
-
-      <PageContent>
-        {isError(AVG) || noContent ? (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
-        ) : (
-          <>
-            <InfoDetail label="Nummer" value={verzoek?.id || '-'} />
-            <InfoDetail label="Type verzoek" value={verzoek?.type || '-'} />
-            <InfoDetail
-              label="Onderwerp(en)"
-              value={verzoek?.themas?.join(', ') || '-'}
-            />
-            <InfoDetail
-              label="Toelichting"
-              value={verzoek?.toelichting || '-'}
-            />
-          </>
-        )}
-      </PageContent>
-      {verzoek && <AVGStatusLines request={verzoek} />}
-    </DetailPage>
+    <ThemaDetailPagina<AVGRequestFrontend>
+      title={'AVG verzoek'}
+      zaak={verzoek}
+      isError={isError}
+      isLoading={isLoading}
+      icon={<ThemaIcon />}
+      pageContentTop={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
+      backLink={{
+        to: generatePath(AppRoutes.AVG, {
+          page: 1,
+        }),
+        title: ThemaTitles.AVG,
+      }}
+    />
   );
 };
 

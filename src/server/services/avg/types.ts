@@ -1,4 +1,4 @@
-import { LinkProps } from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { SmileSourceResponse, SmileFieldValue } from '../smile/smile-types';
 
 export type AVGResponse = {
@@ -20,6 +20,10 @@ export type AVGRequest = {
   link: LinkProps;
   themas: string[];
 };
+
+export type AVGRequestFrontend = AVGRequest & {
+  idAsLink?: string;
+} & ZaakDetail;
 
 export type SmileAvgResponse = SmileSourceResponse<SmileAVGRequest>;
 

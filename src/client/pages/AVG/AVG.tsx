@@ -1,101 +1,51 @@
-import styles from './AVG.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import {
-  ErrorAlert,
-  Linkd,
-  OverviewPage,
-  PageContent,
-  PageHeading,
-  SectionCollapsible,
-  Table,
-  ThemaIcon,
-  addTitleLinkComponent,
-} from '../../components';
-import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { Paragraph } from '@amsterdam/design-system-react';
+import { generatePath } from 'react-router-dom';
 
-const DISPLAY_PROPS_AVG = {
-  idAsLink: 'Nummer',
-  ontvangstDatum: 'Ontvangen op',
-  themaString: 'Onderwerp',
-};
+import { useAVGData } from './useAVGData.hook';
+import { AVGRequestFrontend } from '../../../server/services/avg/types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { ThemaTitles } from '../../config/thema';
+import ThemaPagina from '../ThemaPagina/ThemaPagina';
+import ThemaPaginaTable from '../ThemaPagina/ZakenTable';
+
+const pageContentTop = (
+  <Paragraph>Hieronder ziet u een overzicht van uw AVG verzoeken.</Paragraph>
+);
 
 const AVG = () => {
-  const { AVG } = useAppStateGetter();
-
-  const avgVerzoeken = AVG.content?.verzoeken?.map((avgVerzoek) => ({
-    ...avgVerzoek,
-
-    ontvangstDatum: defaultDateFormat(avgVerzoek.ontvangstDatum),
-    idAsLink: avgVerzoek.id,
-    themaString: avgVerzoek.themas.join(', '),
-  }));
-
-  const avgVerzoekenLopend = avgVerzoeken
-    ? addTitleLinkComponent(
-        avgVerzoeken.filter((avgVerzoek) => avgVerzoek.datumAfhandeling === ''),
-        'idAsLink'
-      )
-    : [];
-  const avgVerzoekenAfgehandeld = avgVerzoeken
-    ? addTitleLinkComponent(
-        avgVerzoeken.filter((avgVerzoek) => avgVerzoek.datumAfhandeling !== ''),
-        'idAsLink'
-      )
-    : [];
+  const { tableConfig, avgVerzoeken, isLoading, isError } = useAVGData();
+  const tables = Object.entries(tableConfig).map(
+    ([kind, { title, displayProps, filter, sort }]) => {
+      return (
+        <ThemaPaginaTable<AVGRequestFrontend>
+          key={kind}
+          title={title}
+          zaken={avgVerzoeken.filter(filter).sort(sort)}
+          listPageRoute={generatePath(AppRoutes['AVG/LIST'], {
+            kind,
+          })}
+          displayProps={displayProps}
+          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+        />
+      );
+    }
+  );
 
   return (
-    <OverviewPage className={styles.AVG}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={isLoading(AVG)}
-        icon={<ThemaIcon />}
-      >
-        {ThemaTitles.AVG}
-      </PageHeading>
-      <PageContent>
-        <p>Hier ziet u een overzicht van uw ingediende AVG verzoeken.</p>
-        <p>
-          <Linkd external={true} href="https://www.amsterdam.nl/privacy/loket/">
-            Loket persoonsgegevens gemeente Amsterdam
-          </Linkd>
-        </p>
-        {isError(AVG) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen AVG verzoeken tonen.
-          </ErrorAlert>
-        )}
-      </PageContent>
-      <SectionCollapsible
-        id="SectionCollapsible-complaints"
-        title="Lopende verzoeken"
-        noItemsMessage="U heeft nog geen AVG verzoeken ingediend."
-        startCollapsed={false}
-        hasItems={!!avgVerzoekenLopend?.length}
-        isLoading={isLoading(AVG)}
-        className={styles.SectionCollapsibleFirst}
-      >
-        <Table items={avgVerzoekenLopend} displayProps={DISPLAY_PROPS_AVG} />
-      </SectionCollapsible>
-      <SectionCollapsible
-        id="SectionCollapsible-complaints"
-        title="Afgehandelde verzoeken"
-        noItemsMessage="U heeft nog geen afgehandelde AVG verzoeken."
-        startCollapsed={false}
-        hasItems={!!avgVerzoekenAfgehandeld?.length}
-        isLoading={isLoading(AVG)}
-      >
-        <Table
-          items={avgVerzoekenAfgehandeld}
-          displayProps={DISPLAY_PROPS_AVG}
-        />
-      </SectionCollapsible>
-    </OverviewPage>
+    <ThemaPagina
+      title={ThemaTitles.AVG}
+      isError={isError}
+      isPartialError={false}
+      isLoading={isLoading}
+      pageContentTop={pageContentTop}
+      pageContentMain={tables}
+      linkListItems={[
+        {
+          to: 'https://www.amsterdam.nl/privacy/loket/',
+          title: 'Loket persoonsgegevens gemeente Amsterdam',
+        },
+      ]}
+    />
   );
 };
 

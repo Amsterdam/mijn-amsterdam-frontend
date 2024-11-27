@@ -61,48 +61,59 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide ams-mb--lg"
     >
-      <section
-        class="ams-alert ams-alert--error"
+      <div
+        class="ams-grid"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          <span
-            class="ams-icon ams-icon--size-4"
+          <section
+            class="ams-alert ams-alert--error"
           >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 36 36"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="ams-alert__icon"
             >
-              <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-              />
-            </svg>
-          </span>
+              <span
+                class="ams-icon ams-icon--size-4"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 36 36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                  />
+                  <path
+                    d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="ams-alert__content"
+            >
+              <h2
+                class="ams-heading ams-heading--level-4"
+              >
+                Foutmelding
+              </h2>
+              <p
+                class="ams-paragraph"
+              >
+                We kunnen op dit moment geen gegevens tonen.
+              </p>
+            </div>
+          </section>
         </div>
-        <div
-          class="ams-alert__content"
-        >
-          <h2
-            class="ams-heading ams-heading--level-4"
-          >
-            Foutmelding
-          </h2>
-          <p
-            class="ams-paragraph"
-          >
-            We kunnen op dit moment geen gegevens tonen.
-          </p>
-        </div>
-      </section>
+      </div>
     </div>
+    <div
+      class="ams-grid"
+    />
   </main>
 </DocumentFragment>
 `;
@@ -168,209 +179,50 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide ams-mb--lg"
     >
       <div
-        class="_InfoDetail_6f1df2"
+        class="ams-grid"
       >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
+        <dl
+          class="_Datalist_08bf39"
         >
-          Nummer
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          223
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Type verzoek
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Verwijderen gegevens
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Onderwerp(en)
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Vergunningen
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Toelichting
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          -
-        </p>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Nummer
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            223
+          </dd>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Type verzoek
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Verwijderen gegevens
+          </dd>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Onderwerp(en)
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Vergunningen
+          </dd>
+        </dl>
       </div>
     </div>
     <div
-      class="_StatusLine_a12ff2 _AvgStatusLines_b31fb8"
-    >
-      <h4
-        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
-      >
-        Status
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Status aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Ontvangen
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                09 maart 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Status aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                In behandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                16 maart 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Huidige status, aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Afgehandeld
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                19 maart 2023
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
-            >
-              <div
-                class="_PanelContent_a12ff2"
-              >
-                Uw verzoek is afgehandeld. U ontvangt hierover bericht per e-mail of per brief.
-              </div>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-      </ul>
-    </div>
+      class="ams-grid"
+    />
   </main>
 </DocumentFragment>
 `;
