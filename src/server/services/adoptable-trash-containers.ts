@@ -56,7 +56,7 @@ export async function fetchAdoptableTrashContainers(
   sortLatLngCoordinates(meldingen.content.features);
 
   const latlng = MY_LOCATION.content[0].latlng;
-  const WITHIN_RADIUS_KM = 0.1;
+  const WITHIN_RADIUS_KM = 0.1; // 100m
   const featuresInRadius = filterFeaturesinRadius(
     latlng,
     meldingen.content.features,
