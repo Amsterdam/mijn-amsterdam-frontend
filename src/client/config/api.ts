@@ -1,4 +1,4 @@
-import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { IS_PRODUCTION } from '../../universal/config/env';
 import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types';
 
@@ -55,7 +55,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Mijn erfpacht',
-  ERFPACHTv2: `Erfpacht${FeatureToggle.erfpachtV2Active ? '' : ' V2 (Vernise)'}`,
+  ERFPACHTv2: `Erfpacht${!IS_PRODUCTION ? '' : ' V2 (Vernise)'}`,
   HLI_regelingen: 'Regelingen bij laag inkomen',
   HLI_stadspas: 'Stadspas, saldo en transacties',
   HORECA: 'Horeca vergunningen',
