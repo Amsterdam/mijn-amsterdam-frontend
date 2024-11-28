@@ -23,15 +23,15 @@ do
 	case $cmd in
 		"--major")
 			echo "Incrementing Major Version"
-      NEW_TAG=$(sh ./semver.sh -v major)
+      NEW_TAG=$(./scripts/semver.sh -v major)
 			;;
 		"--minor")
 			echo "Incrementing Minor Version"
-      NEW_TAG=$(sh ./semver.sh -v minor)
+      NEW_TAG=$(./scripts/semver.sh -v minor)
 			;;
 		"--patch")
 			echo "Incrementing Patch Version"
-      NEW_TAG=$(sh ./semver.sh -v patch)
+      NEW_TAG=$(./scripts/semver.sh -v patch)
 			;;
         *)
             echo "No version specified"
