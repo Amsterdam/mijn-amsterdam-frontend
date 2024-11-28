@@ -1,17 +1,14 @@
 import { differenceInYears } from 'date-fns';
-import { LatLngTuple } from 'leaflet';
 
 import { fetchBRP } from './brp';
 import { fetchDataset } from './buurt/buurt';
 import {
   datasetEndpoints,
   DatasetFeatureProperties,
-  DatasetFeatures,
   MaPointFeature,
 } from './buurt/datasets';
 import { filterDatasetFeatures, filterFeaturesinRadius } from './buurt/helpers';
 import { fetchMyLocation } from './home';
-import { captureMessage } from './monitoring';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
 import { Themas } from '../../universal/config/thema';
@@ -20,7 +17,6 @@ import {
   ApiResponse,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { BRPData, MyNotification } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
 
@@ -35,6 +31,8 @@ export async function fetchAdoptableTrashContainers(
       geadopteerd_ind: { values: { Nee: 1 } },
     },
   };
+  // RP TODO: Delete
+  // config.cache = false;
   const meldingen = await fetchDataset(requestID, datasetId, config, {}).then(
     (result) => {
       return {
@@ -53,8 +51,12 @@ export async function fetchAdoptableTrashContainers(
     return apiDependencyError({ MY_LOCATION });
   }
 
-  sortLatLngCoordinates(meldingen.content.features);
-
+  // RP TODO: Delete, this is to force a TIP to show up.
+  // DO NOT EDIT THE CACHE, FILE IS INSANELY BIG.
+  // MY_LOCATION.content[0].latlng = {
+  //   lat: 52.35619987080679,
+  //   lng: 4.926979845934051,
+  // };
   const latlng = MY_LOCATION.content[0].latlng;
   const WITHIN_RADIUS_KM = 0.1; // 100m
   const featuresInRadius = filterFeaturesinRadius(
@@ -76,24 +78,6 @@ export async function fetchAdoptableTrashContainers(
       await fetchBRP(requestID, authProfileAndToken)
     ),
   });
-}
-
-/** Put all LatLngCoordinates in the right order. */
-function sortLatLngCoordinates(
-  features: DatasetFeatures<DatasetFeatureProperties>
-): void {
-  for (const feature of features) {
-    if (feature.geometry.type === 'Point') {
-      const { lat, lng } = getLatLngCoordinates(
-        feature.geometry.coordinates as LatLngTuple
-      );
-      feature.geometry.coordinates = [lat, lng];
-    } else {
-      captureMessage(`Unexpected geometry type: '${feature.geometry.type}'`, {
-        severity: 'error',
-      });
-    }
-  }
 }
 
 type AfvalFeatureProperties = DatasetFeatureProperties & {
@@ -155,10 +139,11 @@ function buildNotification(
     title: 'Adopteer een afvalcontainer',
     description,
     link: {
+      // RP TODO: BOUNDING BOX
       to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers":{"geadopteerd_ind":{"values":{"Nee":1}}}}&center={"lat":${lat},"lng":${lng}}&loadingFeature=null&s=1`,
       title: 'Adopteer een afvalcontainer',
     },
   };
 }
 
-export const forTesting = { determineDescriptionText, sortLatLngCoordinates };
+export const forTesting = { determineDescriptionText };
