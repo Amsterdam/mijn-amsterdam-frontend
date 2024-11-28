@@ -135,6 +135,28 @@
       }
     },
     {
+      "id": 66,
+      "transactiedatum": "2020-10-05T04:01:01.0000",
+      "bedrag": -19,
+      "pashouder": { "id": 1, "hoofd_pashouder_id": 2 },
+      "pas": {
+        "id": 2,
+        "pasnummer": 6666666666666,
+        "pasnummer_volledig": "66666666666666",
+        "originele_pas": {
+          "id": 1,
+          "pasnummer": 66666666666666,
+          "pasnummer_volledig": "66666666666666"
+        }
+      },
+      "budget": {
+        "id": 44,
+        "code": "GPAS05_19",
+        "naam": "Schoolactiviteiten",
+        "aanbieder": { "id": 222222, "naam": "Fietsenwinkel - B.V. 5" }
+      }
+    },
+    {
       "id": 7,
       "transactiedatum": "2020-10-05T04:01:01.0000",
       "bedrag": 11,
