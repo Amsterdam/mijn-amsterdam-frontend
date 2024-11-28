@@ -61,346 +61,260 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide"
     >
-      <p>
-        Op deze pagina vindt u informatie over uw lood in de bodem-check.
-      </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Meer informatie over lood in de bodem.
-        </a>
-      </p>
-    </div>
-    <section
-      class="_SectionCollapsible_b93dc7"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Lopende aanvragen
-        </button>
-      </h3>
       <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
+        class="ams-grid"
       >
         <div
-          class="_PanelInner_b93dc7"
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          <table
-            class="_Table_a66dcc"
+          <p>
+            Op deze pagina vindt u informatie over uw lood in de bodem-check.
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <ul
+            class="ams-link-list"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
+                rel="noreferrer"
               >
-                <th
-                  class="_DisplayProp_a66dcc"
+                <span
+                  class="ams-icon ams-icon--size-5"
                 >
-                  Adres
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Aangevraagd
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="_TableRow_a66dcc"
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Meer informatie over lood in de bodem.
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <h3
+            class="ams-heading ams-heading--level-2"
+          >
+            Lopende aanvragen
+          </h3>
+          <div
+            class="ams-table"
+          >
+            <table
+              class="ams-table__table _TableV2_4c6825"
+            >
+              <thead
+                class="ams-table__header"
               >
-                <td
-                  class="_DisplayProp_a66dcc"
+                <tr
+                  class="ams-table__row"
                 >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  <th
+                    class="ams-table__header-cell"
                   >
-                    Adres:
-                  </span>
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/lood-meting/OL-001478"
+                    Adres
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    Aangevraagd
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="ams-table__body"
+              >
+                <tr
+                  class="ams-table__row"
+                >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    <a
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                      href="/lood-meting/OL-001478"
                     >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Schipluidenlaan 12A
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                      <svg
+                        aria-hidden="true"
+                        aria-label="chevron-rechts-icoon"
+                        class="_Icon_c3ab45 _Icon__left_c3ab45"
+                        fill="#000"
+                        focusable="false"
+                        height="14px"
+                        viewBox="0 0 32 32"
+                        width="14px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <polygon
+                          points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                        />
+                      </svg>
+                      Schipluidenlaan 12A
+                    </a>
+                  </td>
+                  <td
+                    class="ams-table__cell"
                   >
-                    Aangevraagd:
-                  </span>
-                  <span>
                     01 december 2022
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  </td>
+                  <td
+                    class="ams-table__cell"
                   >
-                    Status:
-                  </span>
-                  <span>
                     Ontvangen
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-    <section
-      class="_SectionCollapsible_b93dc7"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Eerdere aanvragen
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
-      >
-        <div
-          class="_PanelInner_b93dc7"
-        >
-          <table
-            class="_Table_a66dcc"
-          >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <th
-                  class="_DisplayProp_a66dcc"
+                  </td>
+                </tr>
+                <tr
+                  class="ams-table__row"
                 >
-                  Adres
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Aangevraagd
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  <td
+                    class="ams-table__cell"
                   >
-                    Adres:
-                  </span>
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/lood-meting/OL-001475"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <a
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                      href="/lood-meting/OL-001475"
                     >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Schipluidenlaan 16A
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                      <svg
+                        aria-hidden="true"
+                        aria-label="chevron-rechts-icoon"
+                        class="_Icon_c3ab45 _Icon__left_c3ab45"
+                        fill="#000"
+                        focusable="false"
+                        height="14px"
+                        viewBox="0 0 32 32"
+                        width="14px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <polygon
+                          points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                        />
+                      </svg>
+                      Schipluidenlaan 16A
+                    </a>
+                  </td>
+                  <td
+                    class="ams-table__cell"
                   >
-                    Aangevraagd:
-                  </span>
-                  <span>
                     29 november 2022
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  </td>
+                  <td
+                    class="ams-table__cell"
                   >
-                    Status:
-                  </span>
-                  <span>
                     Afgewezen
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <h3
+            class="ams-heading ams-heading--level-2"
+          >
+            Afgehandelde aanvragen
+          </h3>
+          <div
+            class="ams-table"
+          >
+            <table
+              class="ams-table__table _TableV2_4c6825"
+            >
+              <thead
+                class="ams-table__header"
               >
-                <td
-                  class="_DisplayProp_a66dcc"
+                <tr
+                  class="ams-table__row"
                 >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  <th
+                    class="ams-table__header-cell"
                   >
-                    Adres:
-                  </span>
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/lood-meting/OL-001471"
+                    Adres
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    Aangevraagd
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="ams-table__body"
+              >
+                <tr
+                  class="ams-table__row"
+                >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    <a
+                      class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                      href="/lood-meting/OL-001471"
                     >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Schipluidenlaan 16A
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                      <svg
+                        aria-hidden="true"
+                        aria-label="chevron-rechts-icoon"
+                        class="_Icon_c3ab45 _Icon__left_c3ab45"
+                        fill="#000"
+                        focusable="false"
+                        height="14px"
+                        viewBox="0 0 32 32"
+                        width="14px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <polygon
+                          points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+                        />
+                      </svg>
+                      Schipluidenlaan 16A
+                    </a>
+                  </td>
+                  <td
+                    class="ams-table__cell"
                   >
-                    Aangevraagd:
-                  </span>
-                  <span>
                     28 november 2022
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  </td>
+                  <td
+                    class="ams-table__cell"
                   >
-                    Status:
-                  </span>
-                  <span>
                     Afgehandeld
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 </DocumentFragment>
 `;
@@ -466,125 +380,102 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide"
     >
-      <p>
-        Op deze pagina vindt u informatie over uw lood in de bodem-check.
-      </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
-          rel="external noopener noreferrer"
+      <div
+        class="ams-grid"
+      >
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <p>
+            Op deze pagina vindt u informatie over uw lood in de bodem-check.
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <ul
+            class="ams-link-list"
           >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Meer informatie over lood in de bodem.
-        </a>
-      </p>
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/"
+                rel="noreferrer"
+              >
+                <span
+                  class="ams-icon ams-icon--size-5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Meer informatie over lood in de bodem.
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <h3
+            class="ams-heading ams-heading--level-2"
+          >
+            Lopende aanvragen
+          </h3>
+          <div
+            class="ams-table"
+          >
+            <table
+              class="ams-table__table _TableV2_4c6825"
+            >
+              <tbody
+                class="ams-table__body"
+              />
+            </table>
+          </div>
+          <p
+            class="ams-paragraph"
+          >
+            U heeft geen lopende aanvragen
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <h3
+            class="ams-heading ams-heading--level-2"
+          >
+            Afgehandelde aanvragen
+          </h3>
+          <div
+            class="ams-table"
+          >
+            <table
+              class="ams-table__table _TableV2_4c6825"
+            >
+              <tbody
+                class="ams-table__body"
+              />
+            </table>
+          </div>
+          <p
+            class="ams-paragraph"
+          >
+            U heeft geen afgehandelde aanvragen
+          </p>
+        </div>
+      </div>
     </div>
-    <section
-      class="_SectionCollapsible_b93dc7"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Lopende aanvragen
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
-      >
-        <div
-          class="_PanelInner_b93dc7"
-        >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft nog geen loodmetingen aangevraagd.
-          </p>
-        </div>
-      </div>
-    </section>
-    <section
-      class="_SectionCollapsible_b93dc7"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Eerdere aanvragen
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
-      >
-        <div
-          class="_PanelInner_b93dc7"
-        >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft geen eerdere aanvragen.
-          </p>
-        </div>
-      </div>
-    </section>
   </main>
 </DocumentFragment>
 `;
