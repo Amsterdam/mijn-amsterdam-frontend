@@ -147,17 +147,9 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
 COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
-COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.txt
+COPY src/client/public/robots.txt /usr/share/nginx/html/robots.txt
 
 CMD nginx -g 'daemon off;'
-
-########################################################################################################################
-########################################################################################################################
-# Front-end Web server image Production
-########################################################################################################################
-########################################################################################################################
-FROM deploy-frontend AS deploy-production-frontend
-COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 
 
 ########################################################################################################################
