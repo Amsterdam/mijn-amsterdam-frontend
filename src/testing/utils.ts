@@ -1,9 +1,15 @@
+import { millisecondsToSeconds } from 'date-fns';
 import { Request, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
 
 import { bffApiHost, remoteApiHost } from './setup';
-import { AuthProfile, AuthProfileAndToken } from '../server/auth/auth-types';
+import { OIDC_SESSION_COOKIE_NAME } from '../server/auth/auth-config';
+import {
+  AuthenticatedRequest,
+  AuthProfile,
+  AuthProfileAndToken,
+} from '../server/auth/auth-types';
 import { createOIDCStub } from '../server/routing/router-development';
 import { HTTP_STATUS_CODES } from '../universal/constants/errorCodes';
 
@@ -50,9 +56,10 @@ export function getAuthProfileAndToken(
 export class ResponseMock {
   statusCode: number;
   locals: { requestID: string };
+  oidc = { logout: vi.fn() };
 
   static new() {
-    return new ResponseMock() as unknown as Response;
+    return new ResponseMock() as unknown as Response & ResponseMock;
   }
 
   private constructor() {
@@ -108,9 +115,13 @@ export class RequestMock {
     return this;
   }
 
-  async createOIDCStub(authProfile: AuthProfile) {
-    const self = this as unknown as Request;
+  async createOIDCStub(authProfile: AuthProfile, expiresAt?: number) {
+    const self = this as unknown as AuthenticatedRequest;
     await createOIDCStub(self, authProfile);
+    const sessionObj = self[OIDC_SESSION_COOKIE_NAME];
+    if (sessionObj) {
+      sessionObj.expires_at = expiresAt ?? millisecondsToSeconds(Date.now());
+    }
     return this;
   }
 
@@ -119,10 +130,15 @@ export class RequestMock {
   }
 }
 
-export async function getReqMockWithOidc(profile: AuthProfile) {
+export async function getReqMockWithOidc(
+  profile: AuthProfile,
+  expiresAt?: number
+) {
   const reqMockWithOidc = RequestMock.new();
-  await reqMockWithOidc.createOIDCStub(profile);
-  return reqMockWithOidc.get();
+  await reqMockWithOidc.createOIDCStub(profile, expiresAt);
+  const mock = reqMockWithOidc.get() as unknown as AuthenticatedRequest;
+
+  return mock;
 }
 
 export const DEV_JWT =

@@ -10,12 +10,12 @@ export interface AuthProfile {
   sid: SessionID;
 }
 
-export interface MaSession extends Session {
+export interface MaSession extends Omit<Session, 'expires_at'> {
   sid: SessionID;
   TMASessionID: string; // TMA Session ID
   profileType: ProfileType;
   authMethod: AuthMethod;
-  expires_at: string;
+  expires_at: number;
 }
 
 export interface AuthProfileAndToken {

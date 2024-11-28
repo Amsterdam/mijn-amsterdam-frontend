@@ -1,3 +1,4 @@
+import { millisecondsToSeconds } from 'date-fns/millisecondsToSeconds';
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import { ParsedQs } from 'qs';
@@ -18,7 +19,6 @@ import {
 } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
-import { ONE_SECOND_MS } from '../config/app';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
@@ -128,8 +128,8 @@ export function decodeToken<T extends Record<string, string>>(
   return jose.decodeJwt(jwtToken) as unknown as T;
 }
 
-function isIDPSessionExpired(expiresAt: string) {
-  return new Date(parseInt(expiresAt, 10) * ONE_SECOND_MS) < new Date();
+function isIDPSessionExpired(expiresAtInSeconds: number) {
+  return expiresAtInSeconds < millisecondsToSeconds(Date.now());
 }
 
 export function createLogoutHandler(
@@ -139,9 +139,11 @@ export function createLogoutHandler(
   return async (req: AuthenticatedRequest, res: Response) => {
     const auth = getAuth(req);
     if (
+      doIDPLogout &&
       auth &&
-      req.oidc.isAuthenticated() &&
-      (doIDPLogout ? isIDPSessionExpired(auth.expiresAt) : false)
+      auth.expiresAt &&
+      !isIDPSessionExpired(auth.expiresAt) &&
+      req.oidc.isAuthenticated()
     ) {
       // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
       if (auth.profile.sid) {
