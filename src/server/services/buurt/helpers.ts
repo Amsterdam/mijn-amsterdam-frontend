@@ -97,8 +97,16 @@ export function isCoordWithingBoundingBox(
 export type LatLngPositions = Array<LatLngTuple[] | LatLngTuple>;
 
 // Flatten GeoJSON for easy processing
-function flatten(latLongPositions: LatLngPositions): LatLngTuple[] {
+function flatten(
+  latLongPositions: LatLngPositions | LatLngTuple
+): LatLngTuple[] {
   const flattened: LatLngTuple[] = [];
+  if (
+    typeof latLongPositions[0] === 'number' &&
+    typeof latLongPositions[1] === 'number'
+  ) {
+    return [latLongPositions] as LatLngTuple[];
+  }
   for (const position of latLongPositions) {
     if (Array.isArray(position) && typeof position[0] === 'number') {
       flattened.push(position as LatLngTuple);
@@ -546,7 +554,8 @@ function deg2rad(deg: number) {
 export function filterFeaturesinRadius(
   location: LatLngLiteral,
   features: DatasetFeatures,
-  radius: number
+  radius: number,
+  swapLatLngForDistanceComparison = false
 ) {
   const featuresFiltered = [];
   let i = 0;
@@ -554,21 +563,21 @@ export function filterFeaturesinRadius(
 
   for (i; i < len; i += 1) {
     const coords = features[i].geometry.coordinates;
-    let flattenedCoords: LatLngTuple[];
+    const flattenedCoords: LatLngTuple[] = flatten(coords as LatLngPositions);
 
-    if (coords.length === 2 && coords.some((val) => typeof val === 'number')) {
-      flattenedCoords = [coords] as LatLngTuple[];
-    } else {
-      flattenedCoords = flatten(coords as LatLngPositions);
-    }
-
-    const hasCoord = (coord: LatLngTuple) =>
-      getDistanceFromLatLonInKm(
-        coord[0],
-        coord[1],
+    const hasCoord = (coord: LatLngTuple) => {
+      const lat = swapLatLngForDistanceComparison ? coord[1] : coord[0];
+      const lng = swapLatLngForDistanceComparison ? coord[0] : coord[1];
+      const distance = getDistanceFromLatLonInKm(
+        lat,
+        lng,
         location.lat,
         location.lng
-      ) < radius;
+      );
+
+      return distance < radius;
+    };
+    // Check if any of the coordinates are within the radius. In the case of a polygon like feature, multiple coordinates are checked.
     if (flattenedCoords.some(hasCoord)) {
       featuresFiltered.push(features[i]);
     }
@@ -578,19 +587,25 @@ export function filterFeaturesinRadius(
 
 export function getBboxFromFeatures(
   features: DatasetFeatures,
-  location: LatLngLiteral
+  location: LatLngLiteral,
+  swapLatLngForDistanceComparison = false
 ) {
   const lats: Array<number> = [];
   const lngs: Array<number> = [];
-  let i = 0;
   const len = features.length;
+
   lats.push(location.lat);
   lngs.push(location.lng);
+
+  let i = 0;
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates as LatLngPositions);
+
     coords.forEach((coord) => {
-      lats.push(coord[0]);
-      lngs.push(coord[1]);
+      const lat = swapLatLngForDistanceComparison ? coord[1] : coord[0];
+      const lng = swapLatLngForDistanceComparison ? coord[0] : coord[1];
+      lats.push(lat);
+      lngs.push(lng);
     });
   }
   // calc the min and max lng and lat

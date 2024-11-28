@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useMapInstance } from '@amsterdam/react-maps';
-import { LeafletEvent, Map } from 'leaflet';
+import L, { LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
@@ -98,7 +98,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setLoadingFeature(activeFeature);
     }
 
-    if (!isEqual(bbox, currentBbox)) {
+    if (bbox) {
       map.fitBounds(bbox);
     }
 
@@ -133,7 +133,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     const url = `${AppRoutes.BUURT}?${params}`;
 
     history.replace(url);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, activeDatasetIds, activeFilters, loadingFeature]);
 
   const fetch = useCallback(
@@ -172,11 +171,20 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const reflectMapViewUrl = useCallback(
     (map: Map) => {
       const params = new URLSearchParams(search);
-      params.set('zoom', map.getZoom().toString());
-      params.set('center', JSON.stringify(map.getCenter()));
 
-      const url = `${AppRoutes.BUURT}?${params}`;
-      history.replace(url);
+      const currentZoom = map.getZoom().toString();
+      const currentCenter = JSON.stringify(map.getCenter());
+
+      if (
+        currentZoom !== params.get('zoom') &&
+        currentCenter !== params.get('center')
+      ) {
+        params.set('zoom', currentZoom);
+        params.set('center', currentCenter);
+
+        const url = `${AppRoutes.BUURT}?${params}`;
+        // history.replace(url);
+      }
     },
     [search, history]
   );
@@ -239,6 +247,20 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   // This effect will run after the features have been added to the map
   useSelectedFeatureCSS(polylineFeatures);
   useSelectedFeatureCSS(clusterFeatures);
+
+  useEffect(() => {
+    const queryConfig = getQueryConfig(history.location.search);
+    const bbox = queryConfig?.bbox;
+    if (bbox && !queryConfig?.s) {
+      console.log('draw cricles');
+      L.circle(bbox[0], { radius: 100, fill: true, fillColor: 'red' }).addTo(
+        map
+      );
+      L.circle(bbox[1], { radius: 100, fill: true, fillColor: 'red' }).addTo(
+        map
+      );
+    }
+  }, []);
 
   return (
     <>

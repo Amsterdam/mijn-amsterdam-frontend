@@ -27,14 +27,13 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-  HOOD_ZOOM,
 } from '../../../universal/config/myarea-datasets';
 import { LatLngWithAddress } from '../../../universal/helpers/bag';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { captureMessage } from '../../helpers/monitoring';
+import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -509,7 +508,7 @@ export function useMapLocations(
     return new URLSearchParams(history.location?.search);
   }, [history.location?.search]);
 
-  zoom = parseInt(`${urlQueryConfig.get('zoom') || zoom || HOOD_ZOOM}`, 10);
+  zoom = parseInt(`${urlQueryConfig.get('zoom') || zoom}`, 10);
 
   const queryCenterMarker = urlQueryConfig.get('centerMarker');
 
