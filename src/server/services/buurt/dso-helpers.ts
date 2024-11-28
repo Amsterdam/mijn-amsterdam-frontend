@@ -16,6 +16,8 @@ import {
   FeatureType,
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/myarea-datasets';
+import { getLatLngCoordinates } from '../../../universal/helpers/bag';
+import { LatLngTuple } from 'leaflet';
 
 const DEFAULT_PAGE_SIZE = 1000;
 
@@ -138,7 +140,14 @@ export function transformGenericApiListResponse(
           featureGeometry.coordinates = recursiveCoordinateSwap(
             featureGeometry.coordinates as LatLngPositions
           ) as MaFeature['geometry']['coordinates'];
+        } else if (featureGeometry.type === 'Point') {
+          const { lat, lng } = getLatLngCoordinates(
+            featureGeometry.coordinates as LatLngTuple
+          );
+          featureGeometry.coordinates[0] = lat;
+          featureGeometry.coordinates[1] = lng;
         }
+
         collection.push({
           type: 'Feature',
           geometry: featureGeometry,

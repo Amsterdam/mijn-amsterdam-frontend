@@ -538,6 +538,11 @@ function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
+/** Filters out `features` that are outside the given `radius`.
+ *
+ *  For this the coordinates inside the geometry of the feature must be -
+ *  in the order of: Latitude, Longitude.
+ */
 export function filterFeaturesinRadius(
   location: LatLngLiteral,
   features: DatasetFeatures,
