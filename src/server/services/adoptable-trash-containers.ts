@@ -27,18 +27,14 @@ const ADULT_AGE = 18;
 const LATE_TEEN_AGE = 16;
 const WITHIN_RADIUS_KM = 0.1; // 100m
 const datasetId = 'afvalcontainers';
-const config = datasetEndpoints.afvalcontainers;
+const config = datasetEndpoints[datasetId];
 const filters = {
-  afvalcontainers: {
+  [datasetId]: {
     geadopteerd_ind: { values: { Nee: 1 } },
   },
 };
 
-const filterQueryParam = encodeURIComponent(
-  JSON.stringify({
-    afvalcontainers: { geadopteerd_ind: { values: { Nee: 1 } } },
-  })
-);
+const filterQueryParam = encodeURIComponent(JSON.stringify(filters));
 
 export async function fetchAdoptableTrashContainers(
   requestID: RequestID,
@@ -139,9 +135,8 @@ function buildNotification(
     title: 'Adopteer een afvalcontainer',
     description: determineDescriptionText(age),
     link: {
-      // RP TODO: BOUNDING BOX
       to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&filters=${filterQueryParam}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
-      title: 'Adopteer een afvalcontainer',
+      title: 'Bekijk de containers op de kaart',
     },
   };
 }
