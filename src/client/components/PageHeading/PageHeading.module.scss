@@ -60,9 +60,15 @@
 }
 
 .BackLink {
-  @include heading-small;
-  font-weight: bold;
-  transform: translateX(-1.9rem);
+  margin-bottom: 0.5rem;
+
+  &:not(:hover) {
+    --ams-link-standalone-text-decoration-line: none;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
 }
 
 @media print {

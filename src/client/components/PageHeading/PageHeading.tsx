@@ -1,12 +1,12 @@
 import type { HTMLProps, ReactNode } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Icon, Link } from '@amsterdam/design-system-react';
+import { ChevronLeftIcon } from '@amsterdam/design-system-react-icons';
 import composeClassNames from 'classnames';
+import { useHistory } from 'react-router-dom';
 
 import styles from './PageHeading.module.scss';
 import { ComponentChildren, LinkProps } from '../../../universal/types';
-import { IconChevronLeft } from '../../assets/icons';
-import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 
 export interface PageHeadingProps
@@ -33,6 +33,18 @@ export default function PageHeading({
     className
   );
 
+  const history = useHistory();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (history.length > 1) {
+      history.goBack();
+    } else {
+      history.push('/');
+    }
+  };
+
   return (
     <header className={classNames} {...rest}>
       {!!icon && (
@@ -42,13 +54,10 @@ export default function PageHeading({
       )}
       <div className={styles.HeadingInner}>
         {!!backLink && (
-          <Linkd
-            icon={IconChevronLeft}
-            className={styles.BackLink}
-            href={backLink.to}
-          >
-            {backLink.title}
-          </Linkd>
+          <Link href={'/'} className={styles.BackLink} onClick={handleClick}>
+            <Icon svg={ChevronLeftIcon} size="level-5" />
+            <span>Terug</span>
+          </Link>
         )}
         <Heading level={2} size="level-1">
           {isLoading ? (

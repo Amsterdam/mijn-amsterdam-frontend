@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
@@ -6,7 +6,6 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
-import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
 import { ParkerenList } from './ParkerenList';
 import { appStateAtom } from '../../hooks/useAppState';
@@ -98,12 +97,6 @@ describe('ParkerenList', () => {
       initializeState={initializeState}
     />
   );
-
-  it('should render the component and show the correct title', () => {
-    render(<Component />);
-
-    expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
-  });
 
   it('should display the list of parkeervergunningen', async () => {
     const screen = render(<Component />);

@@ -37,26 +37,27 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/zorg-en-ondersteuning"
+          class="ams-link ams-link--standalone _BackLink_3b337d"
+          href="/"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Zorg en ondersteuning
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          <span>
+            Terug
+          </span>
         </a>
         <h2
           class="ams-heading ams-heading--level-1"
@@ -368,26 +369,27 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/zorg-en-ondersteuning"
+          class="ams-link ams-link--standalone _BackLink_3b337d"
+          href="/"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Zorg en ondersteuning
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          <span>
+            Terug
+          </span>
         </a>
         <h2
           class="ams-heading ams-heading--level-1"
@@ -699,26 +701,27 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/zorg-en-ondersteuning"
+          class="ams-link ams-link--standalone _BackLink_3b337d"
+          href="/"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Zorg en ondersteuning
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          <span>
+            Terug
+          </span>
         </a>
         <h2
           class="ams-heading ams-heading--level-1"
@@ -1030,26 +1033,27 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/zorg-en-ondersteuning"
+          class="ams-link ams-link--standalone _BackLink_3b337d"
+          href="/"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Zorg en ondersteuning
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          <span>
+            Terug
+          </span>
         </a>
         <h2
           class="ams-heading ams-heading--level-1"
@@ -1361,26 +1365,27 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
         class="_HeadingInner_3b337d"
       >
         <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/zorg-en-ondersteuning"
+          class="ams-link ams-link--standalone _BackLink_3b337d"
+          href="/"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Zorg en ondersteuning
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          <span>
+            Terug
+          </span>
         </a>
         <h2
           class="ams-heading ams-heading--level-1"
