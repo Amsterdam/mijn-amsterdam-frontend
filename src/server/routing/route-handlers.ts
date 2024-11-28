@@ -58,11 +58,13 @@ export function verifyAuthenticated(
 ) {
   return async (req: Request, res: Response) => {
     if (await isRequestAuthenticated(req, authMethod)) {
+      const auth = getAuth(req);
       return res.send(
         apiSuccessResult({
           isAuthenticated: true,
           profileType,
           authMethod,
+          expiresAt: auth?.expiresAt,
         })
       );
     }

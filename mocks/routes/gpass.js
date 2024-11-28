@@ -1,4 +1,5 @@
 const UID = require('uid-safe');
+
 const settings = require('../settings');
 const RESPONSES = {
   PASHOUDER: require('../fixtures/gpass-pashouders.json'),
@@ -29,15 +30,10 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'middleware',
+        type: 'json',
         options: {
-          middleware(req, res, next) {
-            return res.send(
-              Object.assign(RESPONSES.STADSPAS, {
-                id: `stadspas-${UID.sync(18)}`,
-              })
-            );
-          },
+          status: 200,
+          body: RESPONSES.STADSPAS,
         },
       },
     ],

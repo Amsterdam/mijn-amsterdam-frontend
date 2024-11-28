@@ -7,6 +7,7 @@ import {
   DEFAULT_TRIES_UNTIL_CONSIDERED_STALE,
   DatasetConfig,
   DatasetFeatureProperties,
+  DatasetFeatures,
 } from './datasets';
 import {
   createDynamicFilterConfig,
@@ -27,7 +28,6 @@ import {
 import { jsonCopy, omit } from '../../../universal/helpers/utils';
 import FileCache from '../../helpers/file-cache';
 import { requestData } from '../../helpers/source-api-request';
-
 
 const DUMMY_DATA_RESPONSE = apiSuccessResult([
   { properties: { foo: 'bar', bar: undefined } },
@@ -54,7 +54,7 @@ const datasetId3 = 'test-dataset-error';
 const datasetConfig: DatasetConfig = {
   listUrl: 'http://url.to/api/foo',
   detailUrl: 'http://url.to/api/detail/foo/',
-  transformList: (r: any) => r,
+  transformList: (r: unknown) => r as DatasetFeatures<DatasetFeatureProperties>,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   triesUntilConsiderdStale: 5,
@@ -63,7 +63,7 @@ const datasetConfig: DatasetConfig = {
 const datasetConfig2: DatasetConfig = {
   listUrl: 'http://url.to/api/hello',
   detailUrl: 'http://url.to/api/detail/hello/',
-  transformList: (r: any) => r,
+  transformList: (r: unknown) => r as DatasetFeatures<DatasetFeatureProperties>,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   triesUntilConsiderdStale: 5,
@@ -72,7 +72,7 @@ const datasetConfig2: DatasetConfig = {
 const datasetConfig3: DatasetConfig = {
   listUrl: 'http://url.to/api/not-found',
   detailUrl: 'http://url.to/api/not-found/hello/',
-  transformList: (r: any) => r,
+  transformList: (r: unknown) => r as DatasetFeatures<DatasetFeatureProperties>,
   featureType: 'Point',
   cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   triesUntilConsiderdStale: 5,
@@ -382,15 +382,17 @@ describe('Buurt services', () => {
     const detailItemId = 'x-detail';
 
     datasetConfig2.transformDetail = (
-      responseData: any,
+      responseData: unknown,
       options: DatasetFeatureProperties
     ) => {
-      const cachedFeatures = options.datasetCache.getKey('features');
+      const cachedFeatures = (options.datasetCache as FileCache).getKey<
+        string[]
+      >('features');
       expect(responseData).toBe(null);
       expect(options.id).toBe(detailItemId);
       expect(options.datasetId).toBe(datasetId);
       expect(cachedFeatures).toStrictEqual(features);
-      return cachedFeatures[0];
+      return cachedFeatures?.[0];
     };
 
     (getDatasetEndpointConfig as Mock).mockReturnValueOnce([

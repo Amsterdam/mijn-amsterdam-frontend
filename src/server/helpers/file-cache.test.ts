@@ -3,13 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 import FileCache from './file-cache';
 
 vi.mock('flat-cache', () => {
-  const cache: { [key: string]: any } = {};
+  const cache: { [key: string]: unknown } = {};
 
   return {
     default: vi.fn(),
     setKey: vi.fn(),
     create: () => ({
-      set: (key: string, data: any) => {
+      set: (key: string, data: unknown) => {
         cache[key] = data;
       },
       get: (key: string) => cache[key],

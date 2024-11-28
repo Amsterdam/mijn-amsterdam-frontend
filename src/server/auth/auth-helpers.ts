@@ -1,3 +1,4 @@
+import { millisecondsToSeconds } from 'date-fns/millisecondsToSeconds';
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import { ParsedQs } from 'qs';
@@ -89,6 +90,7 @@ export function getAuth(req: Request) {
   return {
     token: oidcToken,
     profile,
+    expiresAt: maSession.expires_at,
   };
 }
 
@@ -126,31 +128,39 @@ export function decodeToken<T extends Record<string, string>>(
   return jose.decodeJwt(jwtToken) as unknown as T;
 }
 
+function isIDPSessionExpired(expiresAtInSeconds: number) {
+  return expiresAtInSeconds < millisecondsToSeconds(Date.now());
+}
+
 export function createLogoutHandler(
   postLogoutRedirectUrl: string,
   doIDPLogout: boolean = true
 ) {
   return async (req: AuthenticatedRequest, res: Response) => {
-    if (req.oidc.isAuthenticated() && doIDPLogout) {
-      const auth = getAuth(req);
-      if (auth) {
-        // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
-        if (auth.profile.sid) {
-          await addToBlackList(auth.profile.sid);
-        }
-
-        return res.oidc.logout({
-          returnTo: postLogoutRedirectUrl,
-          logoutParams: {
-            id_token_hint: !FeatureToggle.oidcLogoutHintActive
-              ? auth.token
-              : null,
-            logout_hint: FeatureToggle.oidcLogoutHintActive
-              ? req[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
-              : null,
-          },
-        });
+    const auth = getAuth(req);
+    if (
+      doIDPLogout &&
+      auth &&
+      auth.expiresAt &&
+      !isIDPSessionExpired(auth.expiresAt) &&
+      req.oidc.isAuthenticated()
+    ) {
+      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
+      if (auth.profile.sid) {
+        await addToBlackList(auth.profile.sid);
       }
+
+      return res.oidc.logout({
+        returnTo: postLogoutRedirectUrl,
+        logoutParams: {
+          id_token_hint: !FeatureToggle.oidcLogoutHintActive
+            ? auth.token
+            : null,
+          logout_hint: FeatureToggle.oidcLogoutHintActive
+            ? req[OIDC_SESSION_COOKIE_NAME]?.TMASessionID
+            : null,
+        },
+      });
     }
 
     if (hasSessionCookie(req)) {
