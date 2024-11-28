@@ -95,9 +95,9 @@ export const FeatureToggle = {
   // Toeristische verhuur
   toeristischeVerhuurActive: true,
   // B&B Vergunningen actief
-  powerbrowserActive: !IS_PRODUCTION,
+  powerbrowserActive: true,
   // B&B Downloads actief
-  bbDocumentDownloadsActive: !IS_PRODUCTION,
+  bbDocumentDownloadsActive: true,
 
   // Vergunningen V1 (met koppel api)
   vergunningenActive: true,
