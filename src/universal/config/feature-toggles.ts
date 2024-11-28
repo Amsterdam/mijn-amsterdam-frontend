@@ -44,6 +44,7 @@ export const FeatureToggle = {
   hliThemaStadspasActive: true,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
+  hliRegelingEnabledRTM: !IS_PRODUCTION,
 
   // Horeca vergunningen
   horecaActive: true,
