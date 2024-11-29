@@ -50,7 +50,6 @@ export async function fetchAdoptableTrashContainers(
     new Date(),
     BRP.content?.persoon?.geboortedatum
   );
-
   if (age < LATE_TEEN_AGE) {
     return apiSuccessResult({
       tips: [],
@@ -92,8 +91,8 @@ export async function fetchAdoptableTrashContainers(
     DO_SWAP_LAT_LNG_FOR_DISTANCE_COMPARISON
   );
 
-  const filteredFeatures: MaPointFeature<AfvalFeatureProperties>[] =
-    filterDatasetFeatures<AfvalFeatureProperties>(
+  const filteredFeatures: MaPointFeature<DatasetFeatureProperties>[] =
+    filterDatasetFeatures<DatasetFeatureProperties>(
       featuresInRadius,
       [datasetId],
       filters
@@ -109,10 +108,6 @@ export async function fetchAdoptableTrashContainers(
     tips: [buildNotification(age, bbox)],
   });
 }
-
-type AfvalFeatureProperties = DatasetFeatureProperties & {
-  geadopteerd_ind: 'Ja' | 'Nee';
-};
 
 function determineDescriptionText(age: number): string {
   if (age >= ADULT_AGE) {
