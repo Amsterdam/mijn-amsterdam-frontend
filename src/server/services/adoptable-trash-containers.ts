@@ -115,13 +115,13 @@ type AfvalFeatureProperties = DatasetFeatureProperties & {
 };
 
 function determineDescriptionText(age: number): string {
-  if (age < ADULT_AGE) {
-    return `Help mee om je eigen buurt schoon te houden en adopteer een afvalcontainer.
- Wil je liever iets anders doen? Leen dan een afvalgrijper!`;
+  if (age >= ADULT_AGE) {
+    return `Help mee om uw eigen buurt schoon te houden en adopteer een afvalcontainer.
+ Liever op een andere manier bijdragen? Leen dan een afvalgrijper!`;
   }
 
-  return `Help mee om uw eigen buurt schoon te houden en adopteer een afvalcontainer.
- Liever op een andere manier bijdragen? Leen dan een afvalgrijper!`;
+  return `Help mee om je eigen buurt schoon te houden en adopteer een afvalcontainer.
+ Wil je liever iets anders doen? Leen dan een afvalgrijper!`;
 }
 
 function buildNotification(
