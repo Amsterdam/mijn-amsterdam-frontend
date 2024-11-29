@@ -15,6 +15,7 @@ import {
   getBboxFromFeatures,
 } from './buurt/helpers';
 import { fetchMyLocation } from './home';
+import { AppRoutes } from '../../universal/config/routes';
 
 const WITHIN_RADIUS_KM = 1;
 
@@ -26,7 +27,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
     link: {
-      to: `/buurt?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Binnen enkele maanden":1}},"duur":{"values":{"Meerdaags":1}}}}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
+      to: `${AppRoutes.BUURT}?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Binnen enkele maanden":1}},"duur":{"values":{"Meerdaags":1}}}}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
       title: 'Bekijk de werkzaamheden op kaart',
     },
   };
