@@ -51,7 +51,7 @@ exports[`Bodem > with results > should show the right overviewpage 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -457,7 +457,7 @@ exports[`Bodem > without results > should show the right overviewpage 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

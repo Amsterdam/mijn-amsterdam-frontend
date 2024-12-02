@@ -53,7 +53,7 @@ exports[`<StatusDetail /> > Matches different config of Full Status Detail Page 
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -282,7 +282,7 @@ exports[`<StatusDetail /> > Matches the Full Status Detail Page snapshot 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -515,7 +515,7 @@ exports[`<StatusDetail /> > Reverses the steps 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

@@ -54,7 +54,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

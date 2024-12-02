@@ -49,7 +49,7 @@ exports[`<HorecaDetail /> > <ExploitatieHorecaBedrijf /> > should match fullpage
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

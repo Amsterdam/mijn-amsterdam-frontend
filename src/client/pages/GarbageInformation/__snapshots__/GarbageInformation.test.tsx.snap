@@ -50,7 +50,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -701,7 +701,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -1381,7 +1381,7 @@ exports[`<GarbageInformation /> > Full page snapshot for Weesp address 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -1591,7 +1591,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

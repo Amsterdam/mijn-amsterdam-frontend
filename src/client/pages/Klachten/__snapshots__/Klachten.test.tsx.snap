@@ -56,7 +56,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -241,7 +241,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -527,7 +527,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

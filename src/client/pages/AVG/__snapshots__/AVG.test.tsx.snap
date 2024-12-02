@@ -51,7 +51,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -275,7 +275,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -460,7 +460,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

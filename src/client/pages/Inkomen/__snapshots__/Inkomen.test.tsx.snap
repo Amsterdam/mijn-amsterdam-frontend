@@ -58,7 +58,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -812,7 +812,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

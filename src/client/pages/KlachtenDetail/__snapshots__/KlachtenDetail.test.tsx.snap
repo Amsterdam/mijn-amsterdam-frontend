@@ -56,7 +56,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -172,7 +172,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -316,7 +316,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

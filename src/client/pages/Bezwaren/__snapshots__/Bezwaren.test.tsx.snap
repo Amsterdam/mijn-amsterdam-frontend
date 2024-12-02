@@ -70,7 +70,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -313,7 +313,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -517,7 +517,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

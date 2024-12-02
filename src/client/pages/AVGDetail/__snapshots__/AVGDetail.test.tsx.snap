@@ -51,7 +51,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -159,7 +159,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2

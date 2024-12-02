@@ -50,7 +50,7 @@ exports[`<Profile /> > Matches the Full Page snapshot "Punt adres" in onderzoek 
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -1750,7 +1750,7 @@ exports[`<Profile /> > Matches the Full Page snapshot 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -3450,7 +3450,7 @@ exports[`<Profile /> > Matches the Full Page snapshot No verbintenis 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -5045,7 +5045,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Non-Mokum 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -5501,7 +5501,7 @@ exports[`<Profile /> > Matches the Full Page snapshot Not living in Netherlands 
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
@@ -7201,7 +7201,7 @@ exports[`<Profile /> > Matches the Full Page snapshot no address known 1`] = `
             </svg>
           </span>
           <span>
-            Terug
+            Home
           </span>
         </a>
         <h2
