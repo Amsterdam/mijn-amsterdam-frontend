@@ -98,7 +98,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       setLoadingFeature(activeFeature);
     }
 
-    if (bbox) {
+    if (!isEqual(bbox, currentBbox)) {
       map.fitBounds(bbox);
     }
 
