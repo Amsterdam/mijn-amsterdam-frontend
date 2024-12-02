@@ -69,7 +69,6 @@
       "post-powerbrowser-search-requests:standard",
       "post-powerbrowser-zaak-status:standard",
       "get-powerbrowser-bb-zaak-attachment-download:standard",
-      "get-powerbrowser-bb-zaak-attachments:standard",
       "post-powerbrowser-token:standard",
       "get-powerbrowser-zaken:standard",
       "post-powerbrowser-personen-zaken:standard",
