@@ -27,6 +27,7 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
+  HOOD_ZOOM,
 } from '../../../universal/config/myarea-datasets';
 import { LatLngWithAddress } from '../../../universal/helpers/bag';
 import { getFullAddress } from '../../../universal/helpers/brp';
@@ -484,7 +485,7 @@ export interface MapLocations {
 
 export function useMapLocations(
   centerMarker?: MapLocationMarker,
-  zoom?: number
+  zoom: number = HOOD_ZOOM
 ) {
   const history = useHistory();
 
