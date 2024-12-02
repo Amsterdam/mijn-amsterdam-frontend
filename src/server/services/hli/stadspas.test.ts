@@ -308,7 +308,7 @@ describe('stadspas services', () => {
         "content": [
           {
             "amount": 34.5,
-            "amountFormatted": "- €34,50",
+            "amountFormatted": "+ €34,50",
             "budget": "budgetje",
             "budgetCode": "001",
             "datePublished": "2024-04-25",
