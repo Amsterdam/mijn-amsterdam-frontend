@@ -56,7 +56,7 @@ export default function PageHeading({
         {!!backLink && (
           <Link href={'/'} className={styles.BackLink} onClick={handleClick}>
             <Icon svg={ChevronLeftIcon} size="level-5" />
-            <span>Terug</span>
+            <span>{history.length > 1 ? 'Terug' : 'Home'}</span>
           </Link>
         )}
         <Heading level={2} size="level-1">
