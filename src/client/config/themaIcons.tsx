@@ -25,6 +25,7 @@ import {
   IconSearch,
   IconSubsidie,
   IconToeristischeVerhuur,
+  IconVaren,
   IconVergunningen,
   IconWior,
   IconZorg,
@@ -32,6 +33,7 @@ import {
 
 export const ThemaIcons: Record<Thema, SVGComponent> = {
   [Themas.AFIS]: IconAFIS,
+  [Themas.VAREN]: IconVaren,
   [Themas.AFVAL]: IconGarbage,
   [Themas.AVG]: IconAVG,
   [Themas.BELASTINGEN]: IconBelastingen,
@@ -57,6 +59,7 @@ export const ThemaIcons: Record<Thema, SVGComponent> = {
   [Themas.SUBSIDIE]: IconSubsidie,
   [Themas.SVWI]: IconInkomenSVWI,
   [Themas.TOERISTISCHE_VERHUUR]: IconToeristischeVerhuur,
+  [Themas.VAREN]: IconVaren,
   [Themas.VERGUNNINGEN]: IconVergunningen,
   [Themas.ZORG]: IconZorg,
   ALERT: IconAlert,

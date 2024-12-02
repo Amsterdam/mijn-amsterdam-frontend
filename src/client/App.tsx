@@ -88,6 +88,7 @@ import ZorgThemaPagina from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
 import { useMonitoring } from './helpers/monitoring';
+import Varen from './pages/Varen/Varen';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -302,6 +303,9 @@ function AppAuthenticated() {
               path={AppRoutes.TOERISTISCHE_VERHUUR}
               component={ToeristscheVerhuurThema}
             />
+          )}
+          {FeatureToggle.varenActive && (
+            <Route path={AppRoutes['VAREN']} component={Varen} />
           )}
           {FeatureToggle.afisActive && (
             <Route

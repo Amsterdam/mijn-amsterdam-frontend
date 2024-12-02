@@ -8,6 +8,11 @@ export const PRISTINE_APPSTATE: AppState = {
   // Generated
   NOTIFICATIONS: apiPristineResult([]),
 
+  VAREN: apiPristineResult([], {
+    isActive: FeatureToggle.varenActive,
+    profileTypes: ['commercial'],
+  }),
+
   AFIS: apiPristineResult(
     {
       isKnown: false,

@@ -53,6 +53,7 @@ export { default as IconStadspas } from './stadspas.svg?react';
 export { default as IconSubsidie } from './subsidie.svg?react';
 export { default as IconTips } from './Tip.svg?react';
 export { default as IconToeristischeVerhuur } from './toeristische-verhuur.svg?react';
+export { default as IconVaren } from './Varen.svg?react';
 export { default as IconVergunningen } from './vergunningen.svg?react';
 export { default as IconWior } from './wior.svg?react';
 export { default as IconZorg } from './zorg.svg?react';

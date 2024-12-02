@@ -42,6 +42,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
+  VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN_EERDER: 'Vergunningen',
   VERGUNNINGEN_LOPEND: 'Vergunningen',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
@@ -107,6 +108,12 @@ export const DocumentTitles: DocumentTitlesConfig = {
     `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]:
     `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
+  [AppRoutes['VAREN']]: `${ThemaTitles.VAREN} | overzicht`,
+  [AppRoutes['VAREN/LIST']]: `Vergunningen | ${ThemaTitles.VAREN}`,
+  [AppRoutes['VAREN/DETAIL-LIGPLAATS']]: `${ThemaTitles.VAREN} | Ligplaats`,
+  [AppRoutes['VAREN/DETAIL-EXPLOITATIE']]: `${ThemaTitles.VAREN} | Exploitatie`,
+  [AppRoutes['VAREN/DETAIL-BEDRIJFSGEGEVENS']]:
+    `${ThemaTitles.VAREN} | Rederij`,
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
@@ -177,6 +184,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: AppRoutes.AFIS,
     profileTypes: ['private', 'commercial'],
   },
+  {
+    title: ThemaTitles.VAREN,
+    id: Themas.VAREN,
+    to: AppRoutes.VAREN,
+    profileTypes: ['commercial'],
+  },
+
   {
     title: ThemaTitles.BEZWAREN,
     id: Themas.BEZWAREN,
