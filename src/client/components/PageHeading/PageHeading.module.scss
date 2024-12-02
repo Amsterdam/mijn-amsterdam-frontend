@@ -60,7 +60,15 @@
 }
 
 .BackLink {
-  margin-bottom: 0.5rem;
+  &:global(.ams-link-standalone) {
+    display: flex;
+    align-items: center;
+  }
+
+  > span {
+    font-size: var(--ams-text-level-4-font-size);
+    line-height: 1;
+  }
 
   &:not(:hover) {
     --ams-link-standalone-text-decoration-line: none;
@@ -68,6 +76,7 @@
 
   svg {
     margin-right: 0.5rem;
+    display: block;
   }
 }
 
