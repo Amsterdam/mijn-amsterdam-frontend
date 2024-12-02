@@ -1,81 +1,88 @@
-import { generatePath, useParams } from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 
-import LoodStatusLines from './LoodStatusLines';
+import { useBodemDetailData } from './useBodemDetailData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import {
-  DetailPage,
-  ErrorAlert,
-  InfoDetail,
-  LoadingContent,
-  PageContent,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
-import { DocumentLink } from '../../components/DocumentList/DocumentLink';
+import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { Location } from '../VergunningDetail/Location';
+import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
-export default function LoodMeting() {
-  const { BODEM } = useAppStateGetter();
-  const { id } = useParams<{ id: string }>();
+export default function LoodMetingComponent() {
+  const { meting, isLoading, isError } = useBodemDetailData();
 
-  const meting = BODEM.content?.metingen?.find(
-    (meting) => meting.kenmerk === id
-  );
-
-  const noContent = !isLoading(BODEM) && !meting;
+  const BodemDetailContent = ({ meting }) => {
+    // return <DataList rows={[]} />;
+    return <>asdfasfsa</>;
+  };
 
   return (
-    <DetailPage>
-      <PageHeading
+    <>
+      {/* <DetailPage>
+        <PageHeading
+          icon={<ThemaIcon />}
+          backLink={{
+            to: generatePath(AppRoutes.BODEM),
+            title: ThemaTitles.BODEM,
+          }}
+          isLoading={isLoading(BODEM)}
+        >
+          Lood in bodem-check
+        </PageHeading>
+
+        <PageContent>
+          {(isError(BODEM) || noContent) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen gegevens tonen.
+            </ErrorAlert>
+          )}
+          {isLoading(BODEM) && <LoadingContent />}
+          {!!meting && (
+            <>
+              <InfoDetail
+                label="Kenmerk"
+                value={meting.aanvraagNummer || '-'}
+              />
+              <Location location={meting.adres} />
+
+              {!!meting.document && (
+                <InfoDetail
+                  valueWrapperElement="div"
+                  label="Document"
+                  value={
+                    <DocumentLink
+                      document={meting.document}
+                      label={meting.document.title}
+                      trackPath={() =>
+                        `loodmeting/document/${meting.document?.title}`
+                      }
+                    ></DocumentLink>
+                  }
+                />
+              )}
+
+              {meting.redenAfwijzing && (
+                <InfoDetail
+                  label="Reden afwijzing"
+                  value={meting.redenAfwijzing}
+                />
+              )}
+            </>
+          )}
+        </PageContent>
+        {meting && <LoodStatusLines request={meting} />}
+      </DetailPage> */}
+
+      <ThemaDetailPagina
+        title={'Lood in bodem-check'}
         icon={<ThemaIcon />}
+        zaak={meting}
         backLink={{
           to: generatePath(AppRoutes.BODEM),
           title: ThemaTitles.BODEM,
         }}
-        isLoading={isLoading(BODEM)}
-      >
-        Lood in bodem-check
-      </PageHeading>
-
-      <PageContent>
-        {(isError(BODEM) || noContent) && (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
-        )}
-        {isLoading(BODEM) && <LoadingContent />}
-        {!!meting && (
-          <>
-            <InfoDetail label="Kenmerk" value={meting.aanvraagNummer || '-'} />
-            <Location location={meting.adres} />
-
-            {!!meting.document && (
-              <InfoDetail
-                valueWrapperElement="div"
-                label="Document"
-                value={
-                  <DocumentLink
-                    document={meting.document}
-                    label={meting.document.title}
-                    trackPath={() =>
-                      `loodmeting/document/${meting.document?.title}`
-                    }
-                  ></DocumentLink>
-                }
-              />
-            )}
-
-            {meting.redenAfwijzing && (
-              <InfoDetail
-                label="Reden afwijzing"
-                value={meting.redenAfwijzing}
-              />
-            )}
-          </>
-        )}
-      </PageContent>
-      {meting && <LoodStatusLines request={meting} />}
-    </DetailPage>
+        isError={isError}
+        isLoading={isLoading}
+        pageContentTop={'sdf'}
+      />
+    </>
   );
 }
