@@ -17,7 +17,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-private-active-permit-request',
+    id: 'get-parkeren-private-active-permit-request',
     url: `${settings.MOCK_BASE_PATH}/parkeren/:profileType/active_permit_request`,
     method: 'GET',
     variants: [
@@ -43,9 +43,8 @@ module.exports = [
       },
     ],
   },
-
   {
-    id: 'get-private-client-product-details',
+    id: 'get-parkeren-private-client-product-details',
     url: `${settings.MOCK_BASE_PATH}/parkeren/:profileType/client_product_details`,
     method: 'GET',
     variants: [
