@@ -18,7 +18,6 @@ import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
 import { ThemaTitles } from './config/thema';
-import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -43,7 +42,6 @@ import Bezwaren from './pages/Bezwaren/Bezwaren';
 import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
 import BFF500Error from './pages/BffError/BffError';
 import Bodem from './pages/Bodem/Bodem';
-import { BodemList } from './pages/Bodem/BodemLIst';
 import LoodMeting from './pages/Bodem/LoodMeting';
 import BurgerzakenIDKaart from './pages/BurgerzakenDetail/BurgerzakenIDKaart';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -89,6 +87,7 @@ import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import ZorgThemaPagina from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
+import { useMonitoring } from './helpers/monitoring';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -330,9 +329,6 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.avgActive && (
             <Route path={AppRoutes.AVG} component={AVG} />
-          )}
-          {FeatureToggle.bodemActive && (
-            <Route path={AppRoutes['BODEM/LIST']} component={BodemList} />
           )}
           {FeatureToggle.bodemActive && (
             <Route path={AppRoutes.BODEM} component={Bodem} />

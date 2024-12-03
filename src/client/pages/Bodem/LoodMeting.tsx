@@ -1,55 +1,81 @@
-import { Grid } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router-dom';
 
-import { useBodemDetailData } from './useBodemDetailData.hook';
-import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+import LoodStatusLines from './LoodStatusLines';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Datalist } from '../../components/Datalist/Datalist';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import {
+  DetailPage,
+  ErrorAlert,
+  InfoDetail,
+  LoadingContent,
+  PageContent,
+  PageHeading,
+  ThemaIcon,
+} from '../../components';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
-import { LocationModal } from '../../components/LocationModal/LocationModal';
-import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
 import { ThemaTitles } from '../../config/thema';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import { Location } from '../VergunningDetail/Location';
 
-export default function LoodMetingComponent() {
-  const { meting, isLoading, isError } = useBodemDetailData();
+export default function LoodMeting() {
+  const { BODEM } = useAppStateGetter();
+  const { id } = useParams<{ id: string }>();
 
-  const BodemDetailRows = (meting: LoodMetingFrontend) => {
-    return [
-      { label: 'Kenmerk', content: meting.kenmerk },
-      {
-        label: 'Locatie',
-        content: !!meting.adres && <LocationModal address={meting.adres} />,
-      },
-      {
-        label: 'Document',
-        content: !!meting.document && (
-          <DocumentLink document={meting.document} />
-        ),
-      },
-    ].filter((row) => !!row.content);
-  };
+  const meting = BODEM.content?.metingen?.find(
+    (meting) => meting.kenmerk === id
+  );
 
-  const BodemDetailContent = ({ meting }: { meting: LoodMetingFrontend }) => {
-    return (
-      <Grid.Cell span="all">
-        <Datalist rows={BodemDetailRows(meting)} />
-      </Grid.Cell>
-    );
-  };
+  const noContent = !isLoading(BODEM) && !meting;
 
   return (
-    <ThemaDetailPagina
-      title={'Lood in bodem-check'}
-      icon={<ThemaIcon />}
-      zaak={meting}
-      backLink={{
-        to: generatePath(AppRoutes.BODEM),
-        title: ThemaTitles.BODEM,
-      }}
-      isError={isError}
-      isLoading={isLoading}
-      pageContentTop={!!meting && <BodemDetailContent meting={meting} />}
-    />
+    <DetailPage>
+      <PageHeading
+        icon={<ThemaIcon />}
+        backLink={{
+          to: generatePath(AppRoutes.BODEM),
+          title: ThemaTitles.BODEM,
+        }}
+        isLoading={isLoading(BODEM)}
+      >
+        Lood in bodem-check
+      </PageHeading>
+
+      <PageContent>
+        {(isError(BODEM) || noContent) && (
+          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
+        )}
+        {isLoading(BODEM) && <LoadingContent />}
+        {!!meting && (
+          <>
+            <InfoDetail label="Kenmerk" value={meting.aanvraagNummer || '-'} />
+            <Location location={meting.adres} />
+
+            {!!meting.document && (
+              <InfoDetail
+                valueWrapperElement="div"
+                label="Document"
+                value={
+                  <DocumentLink
+                    document={meting.document}
+                    label={meting.document.title}
+                    trackPath={() =>
+                      `loodmeting/document/${meting.document?.title}`
+                    }
+                  ></DocumentLink>
+                }
+              />
+            )}
+
+            {meting.redenAfwijzing && (
+              <InfoDetail
+                label="Reden afwijzing"
+                value={meting.redenAfwijzing}
+              />
+            )}
+          </>
+        )}
+      </PageContent>
+      {meting && <LoodStatusLines request={meting} />}
+    </DetailPage>
   );
 }
