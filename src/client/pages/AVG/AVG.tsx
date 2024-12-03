@@ -6,7 +6,7 @@ import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ZakenTable';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
   <Paragraph>Hieronder ziet u een overzicht van uw AVG verzoeken.</Paragraph>

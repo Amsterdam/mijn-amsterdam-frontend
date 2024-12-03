@@ -285,7 +285,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
           <p
             class="ams-paragraph"
           >
-            U heeft geen lopende aanvragen
+            U heeft (nog) geen lopende aanvragen
           </p>
         </div>
         <div
@@ -310,7 +310,7 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
           <p
             class="ams-paragraph"
           >
-            U heeft geen afgehandelde aanvragen
+            U heeft (nog) geen afgehandelde aanvragen
           </p>
         </div>
       </div>
