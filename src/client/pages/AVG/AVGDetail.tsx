@@ -12,7 +12,7 @@ function getVerzoekRows(verzoek: AVGRequestFrontend) {
   return [
     { label: 'Nummer', content: verzoek.id },
     { label: 'Type verzoek', content: verzoek.type },
-    { label: 'Onderwerp(en)', content: verzoek.themas?.join(', ') },
+    { label: 'Onderwerp(en)', content: verzoek.themas },
     { label: 'Toelichting', content: verzoek.toelichting },
   ].filter((row) => row.content);
 }

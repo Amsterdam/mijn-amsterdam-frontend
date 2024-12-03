@@ -1,10 +1,16 @@
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { dateSort } from '../../../universal/helpers/date';
+import {
+  DisplayProps,
+  WithDetailLinkComponent,
+} from '../../components/Table/TableV2';
 
-export const displayPropsAanvragen = {
-  idAsLink: 'Nummer',
-  ontvangstDatum: 'Ontvangen op',
-  themaString: 'Onderwerp',
+export const displayPropsAanvragen: DisplayProps<
+  WithDetailLinkComponent<AVGRequestFrontend>
+> = {
+  detailLinkComponent: 'Nummer',
+  ontvangstDatumFormatted: 'Ontvangen op',
+  themas: 'Onderwerp(en)',
 };
 
 export const listPageParamKind = {

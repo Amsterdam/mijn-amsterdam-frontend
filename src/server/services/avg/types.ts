@@ -1,29 +1,24 @@
-import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types';
 import { SmileSourceResponse, SmileFieldValue } from '../smile/smile-types';
 
 export type AVGResponse = {
   aantal: number;
-  verzoeken: AVGRequest[];
+  verzoeken: AVGRequestFrontend[];
 };
 
-export type AVGRequest = {
-  id: string;
+export interface AVGRequestFrontend extends ZaakDetail {
   status: string;
   registratieDatum: string;
   type: string;
   toelichting: string;
   resultaat: string;
   ontvangstDatum: string;
+  ontvangstDatumFormatted: string;
   opschortenGestartOp: string;
   datumInBehandeling: string;
   datumAfhandeling: string;
-  link: LinkProps;
-  themas: string[];
-};
-
-export type AVGRequestFrontend = AVGRequest & {
-  idAsLink?: string;
-} & ZaakDetail;
+  themas: string;
+}
 
 export type SmileAvgResponse = SmileSourceResponse<SmileAVGRequest>;
 

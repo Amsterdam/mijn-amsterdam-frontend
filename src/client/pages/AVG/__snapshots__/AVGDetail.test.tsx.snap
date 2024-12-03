@@ -66,9 +66,49 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
       <div
         class="ams-grid"
       >
-        <dl
-          class="_Datalist_08bf39"
-        />
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <section
+            class="ams-alert ams-alert--error"
+          >
+            <div
+              class="ams-alert__icon"
+            >
+              <span
+                class="ams-icon ams-icon--size-4"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 36 36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                  />
+                  <path
+                    d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="ams-alert__content"
+            >
+              <h2
+                class="ams-heading ams-heading--level-4"
+              >
+                Foutmelding
+              </h2>
+              <p
+                class="ams-paragraph"
+              >
+                We kunnen op dit moment geen gegevens tonen.
+              </p>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
     <div
@@ -175,7 +215,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
           <dd
             class="_Datalist__description_08bf39"
           >
-            Vergunningen
+            Vergunningen, Enzo
           </dd>
         </dl>
       </div>
@@ -225,7 +265,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <time
                     class="_StatusDate_a12ff2"
                   >
-                    09 maart 2022
+                    18 maart 2023
                   </time>
                 </div>
                 <div
@@ -268,7 +308,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <time
                     class="_StatusDate_a12ff2"
                   >
-                    16 maart 2023
+                    30 mei 2023
                   </time>
                 </div>
                 <div
@@ -294,7 +334,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   class="_StatusConnection_a12ff2"
                 >
                   <span
-                    class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
+                    class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
                   />
                   <span
                     class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
@@ -306,12 +346,12 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <strong
                     class="_StatusTitle_a12ff2"
                   >
-                    Afgehandeld
+                    Extra informatie nodig
                   </strong>
                   <time
                     class="_StatusDate_a12ff2"
                   >
-                    19 maart 2023
+                    03 juni 2023
                   </time>
                 </div>
                 <div
@@ -320,8 +360,46 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   <div
                     class="_PanelContent_a12ff2"
                   >
-                    Uw verzoek is afgehandeld. U ontvangt hierover bericht per e-mail of per brief.
+                    Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
                   </div>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2"
+            >
+              <div
+                class="_ListItemInner_a12ff2"
+              >
+                <div
+                  aria-label="Toekomstige status, nog niet aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    Afgehandeld
+                  </strong>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
                 </div>
                 <div
                   class="_Panel_a12ff2 _Panel--documents_a12ff2"

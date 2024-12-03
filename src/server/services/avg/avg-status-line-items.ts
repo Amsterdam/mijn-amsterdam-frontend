@@ -1,7 +1,26 @@
-import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { StatusLineItem } from '../../../universal/types/App.types';
+import { AVGRequestFrontend } from './types';
+import { StatusLineItem } from '../../../universal/types';
 
-export function useAvgStatusLines(
+function createStatusLineItem(
+  id: string,
+  status: string,
+  datePublished: string,
+  isActive: boolean,
+  isChecked: boolean,
+  description: string = ''
+): StatusLineItem {
+  return {
+    id,
+    status,
+    datePublished: datePublished || '',
+    description,
+    documents: [],
+    isActive,
+    isChecked,
+  };
+}
+
+export function getAvgStatusLineItems(
   request: AVGRequestFrontend
 ): StatusLineItem[] {
   const isDone = !!request.datumAfhandeling;
@@ -129,23 +148,4 @@ export function useAvgStatusLines(
   );
 
   return lineItems;
-}
-
-function createStatusLineItem(
-  id: string,
-  status: string,
-  datePublished: string,
-  isActive: boolean,
-  isChecked: boolean,
-  description: string = ''
-): StatusLineItem {
-  return {
-    id,
-    status,
-    datePublished: datePublished || '',
-    description,
-    documents: [],
-    isActive,
-    isChecked,
-  };
 }

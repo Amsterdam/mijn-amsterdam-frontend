@@ -6,68 +6,28 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import AVG from './AVG';
+import { testState } from './AVGDetail.test';
+import { AVGResponse } from '../../../server/services/avg/types';
+import { AppState } from '../../../universal/types';
 
-const testState: any = {
-  AVG: {
-    status: 'OK',
-    content: {
-      verzoeken: [
-        {
-          id: '1',
-          status: 'Open',
-          registratieDatum: '',
-          type: 'Inzage',
-          thema: 'Parkeren',
-          resultaat: '',
-          ontvangstDatum: '2023-03-06T00:00:00.000Z',
-          opschortenGestartOp: '2023-03-16T00:00:00.000Z',
-          datumInBehandeling: '',
-          datumAfhandeling: '',
-          themas: ['avg thema 3'],
-          link: {
-            to: '/avg/verzoek/1',
-            title: 'AVG verzoek 1',
-          },
-        },
-        {
-          id: '223',
-          status: 'Afgehandeld',
-          registratieDatum: '16-03-2023 14:37',
-          type: 'Verwijderen gegevens',
-          thema: 'Vergunningen',
-          resultaat: '',
-          ontvangstDatum: '2022-03-09T00:00:00.000Z',
-          opschortenGestartOp: '',
-          datumInBehandeling: '2023-03-16T00:00:00.000Z',
-          datumAfhandeling: '2023-03-19T00:00:00.000Z',
-          themas: ['avg thema 4', 'avg thema 1'],
-          link: {
-            to: '/avg/verzoek/223',
-            title: 'AVG verzoek 223',
-          },
-        },
-      ],
-      aantal: 2,
-    },
-  },
-};
-
-function initializeState(testState: any) {
+function initializeState(testState: AppState) {
   return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
 }
 
-function setupTestComponent(testState: any) {
+function setupTestComponent(testState: AppState) {
   const routeEntry = generatePath(AppRoutes.AVG);
   const routePath = AppRoutes.AVG;
 
-  return () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={AVG}
-      initializeState={initializeState(testState)}
-    />
-  );
+  return function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={AVG}
+        initializeState={initializeState(testState)}
+      />
+    );
+  };
 }
 
 describe('AVG thema pagina', () => {
@@ -78,15 +38,17 @@ describe('AVG thema pagina', () => {
   });
 
   it('Matches the Full Page snapshot when there are no requests', () => {
+    const themaContent: AVGResponse = {
+      verzoeken: [],
+      aantal: 0,
+    };
     const Component = setupTestComponent({
       AVG: {
         status: 'OK',
-        content: {
-          verzoeken: [],
-          aantal: 0,
-        },
+        content: themaContent,
       },
-    });
+    } as unknown as AppState);
+
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
@@ -97,7 +59,7 @@ describe('AVG thema pagina', () => {
         status: 'ERROR',
         content: null,
       },
-    });
+    } as unknown as AppState);
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
