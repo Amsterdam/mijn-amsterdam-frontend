@@ -1,5 +1,5 @@
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
@@ -39,6 +39,27 @@ export async function fetchSSOParkerenURL(
     isKnown,
     url: response.content?.url ?? fallBackURL,
   });
+}
+
+type TokenSourceResponse = {
+  token: JWEToken;
+};
+
+type JWEToken = string;
+
+async function fetchJWEToken(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+): ApiResponse<JWEToken> {
+  const config = getApiConfig('PARKEREN', {
+    url: '/v1/jwe/create',
+    transformResponse: (responseData: TokenSourceResponse): JWEToken => {
+      return responseData.token;
+    },
+  });
+
+  const response = await requestData<TokenSourceResponse>(config, requestID);
+  return response;
 }
 
 /**
