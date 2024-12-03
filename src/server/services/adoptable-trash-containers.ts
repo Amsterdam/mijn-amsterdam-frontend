@@ -83,6 +83,7 @@ export async function fetchAdoptableTrashContainers(
 
   const latlng = MY_LOCATION.content[0].latlng;
 
+  // Incoming Coordinates are in a different format (lng,lat instead of lat,lng) than we use for comparison.
   const DO_SWAP_LAT_LNG_FOR_DISTANCE_COMPARISON = true;
 
   const featuresInRadius = filterFeaturesinRadius(
