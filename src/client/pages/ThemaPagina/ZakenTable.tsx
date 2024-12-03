@@ -6,6 +6,7 @@ import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const DISPLAY_PROPS_DEFAULT = { title: 'Titel' };
+const TEXT_NO_CONTENT_DEFAULT = 'Er zijn (nog) geen zaken gevonden.';
 
 interface ThemaPaginaTableProps<T> {
   title?: string;
@@ -21,7 +22,7 @@ export default function ThemaPaginaTable<T extends ZaakDetail>({
   title = 'Zaken',
   zaken,
   className,
-  textNoContent = 'U heeft (nog) geen zaken.',
+  textNoContent,
   displayProps = DISPLAY_PROPS_DEFAULT,
   listPageRoute,
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
@@ -36,7 +37,13 @@ export default function ThemaPaginaTable<T extends ZaakDetail>({
         className={className}
       />
 
-      {!zaken.length && <Paragraph>{textNoContent}</Paragraph>}
+      {!zaken.length && (
+        <Paragraph>
+          {(textNoContent ?? title)
+            ? `U heeft (nog) geen ${title.toLowerCase()}`
+            : TEXT_NO_CONTENT_DEFAULT}
+        </Paragraph>
+      )}
 
       <LinkToListPage count={zaken.length} route={listPageRoute} />
     </Grid.Cell>
