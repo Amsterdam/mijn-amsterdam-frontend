@@ -25,7 +25,6 @@ function AVG() {
             kind,
           })}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
       );
     }

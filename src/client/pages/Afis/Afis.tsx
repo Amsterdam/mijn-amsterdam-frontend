@@ -146,7 +146,6 @@ export function AfisThemaPagina() {
           subTitle={subTitleNode}
           zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
           maxItems={maxItems}
           totalItems={facturenByState?.[state]?.count}
           listPageLinkLabel={listPageLinkLabel}
