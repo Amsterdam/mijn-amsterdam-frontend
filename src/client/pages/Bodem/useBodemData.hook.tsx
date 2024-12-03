@@ -10,10 +10,6 @@ function getFilteredBodemItems(items: LoodMeting[] | null) {
     (items ?? [])?.map((bodemItem) => ({
       ...bodemItem,
       datumAanvraag: defaultDateFormat(bodemItem.datumAanvraag),
-      idAsLink: bodemItem.kenmerk,
-      themaString: bodemItem.kenmerk ?? '',
-      title: ``,
-      steps: [],
     })),
     'adres'
   );
