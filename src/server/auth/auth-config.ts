@@ -51,7 +51,6 @@ export const oidcConfigBase: ConfigParams = {
       getFromEnv('MA_APP_MODE') !== 'unittest'
         ? getSessionStore(openIdAuth as typeof expressSession, {
             tableName: OIDC_SESSIONS_TABLE_NAME,
-            ttlSeconds: OIDC_SESSION_MAX_AGE_SECONDS, // NOTE: Not sure if this works with rollingDuration
           })
         : undefined,
   },

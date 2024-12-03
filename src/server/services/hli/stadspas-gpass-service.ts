@@ -217,10 +217,13 @@ function transformGpassTransactionsResponse(
   if (Array.isArray(responseSource.transacties)) {
     return responseSource.transacties.map(
       (transactie: StadspasTransactieSource) => {
-        const isCredited = transactie.bedrag < 0;
+        const isCredited = transactie.bedrag > 0;
+        const displayAmountFormatted = displayAmount(
+          Math.abs(transactie.bedrag)
+        );
         const amountFormatted = isCredited
-          ? `+ €${displayAmount(Math.abs(transactie.bedrag))}`
-          : `- €${displayAmount(transactie.bedrag)}`;
+          ? `+ €${displayAmountFormatted}`
+          : `- €${displayAmountFormatted}`;
 
         const transaction: StadspasBudgetTransaction = {
           id: String(transactie.id),

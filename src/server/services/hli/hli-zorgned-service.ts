@@ -17,8 +17,6 @@ import {
 } from '../zorgned/zorgned-types';
 import { AV_CZM } from './status-line-items/regeling-czm';
 
-const ZORGNED_AV_REGELING_IDENTIFICATIE = 'Armoedevrz';
-
 function transformToAdministratienummer(identificatie: number): string {
   const padLength = 10;
   const clientnummerPadded = String(identificatie).padStart(padLength, '0');
@@ -108,7 +106,6 @@ async function fetchZorgnedAanvragenHLI_(
     authProfileAndToken,
     {
       zorgnedApiConfigKey: 'ZORGNED_AV',
-      requestBodyParams: { regeling: ZORGNED_AV_REGELING_IDENTIFICATIE },
     }
   );
 

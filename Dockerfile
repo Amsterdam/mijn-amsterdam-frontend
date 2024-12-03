@@ -30,6 +30,7 @@ WORKDIR /build-space
 COPY package-lock.json /build-space/
 COPY package.json /build-space/
 COPY vite.config.ts /build-space/
+COPY .env.local.template /build-space/
 COPY vendor /build-space/vendor
 COPY mocks/fixtures /build-space/mocks/fixtures
 
@@ -73,9 +74,6 @@ ENV MA_TEST_ACCOUNTS=$MA_TEST_ACCOUNTS
 # Statically replaced import.meta variables
 ARG REACT_APP_BFF_API_URL=/api/v1
 ENV REACT_APP_BFF_API_URL=$REACT_APP_BFF_API_URL
-
-ARG REACT_APP_SENTRY_DSN=
-ENV REACT_APP_SENTRY_DSN=$REACT_APP_SENTRY_DSN
 
 ARG REACT_APP_ANALYTICS_ID=
 ENV REACT_APP_ANALYTICS_ID=$REACT_APP_ANALYTICS_ID
@@ -147,17 +145,9 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built application files to the current image
 COPY --from=build-app-fe /build-space/build /usr/share/nginx/html
-COPY src/client/public/robots.disallow.txt /usr/share/nginx/html/robots.txt
+COPY src/client/public/robots.txt /usr/share/nginx/html/robots.txt
 
 CMD nginx -g 'daemon off;'
-
-########################################################################################################################
-########################################################################################################################
-# Front-end Web server image Production
-########################################################################################################################
-########################################################################################################################
-FROM deploy-frontend AS deploy-production-frontend
-COPY src/client/public/robots.allow.txt /usr/share/nginx/html/robots.txt
 
 
 ########################################################################################################################

@@ -7,6 +7,7 @@ import {
 
 import type {
   DatasetConfig,
+  DatasetFeatureProperties,
   DatasetFeatures,
   DatasetResponse,
   MaFeature,
@@ -95,14 +96,27 @@ export function isCoordWithingBoundingBox(
 
 export type LatLngPositions = Array<LatLngTuple[] | LatLngTuple>;
 
-// Flatten GeoJSON for easy processing
-function flatten(input: LatLngPositions) {
+/** Flatten GeoJSON for easy processing.
+ *
+ * If the array is already flat, it will be wrapped in another array.
+ * For example: `[1, 2]` becomes `[[1, 2]]`.
+ * This makes further use of the output more predictable and easier to use.
+ */
+function flatten(
+  latLongPositions: LatLngPositions | LatLngTuple
+): LatLngTuple[] {
   const flattened: LatLngTuple[] = [];
-  for (const value of input) {
-    if (Array.isArray(value) && typeof value[0] === 'number') {
-      flattened.push(value as LatLngTuple);
-    } else if (Array.isArray(value)) {
-      flattened.push(...flatten(value as LatLngPositions));
+  if (
+    typeof latLongPositions[0] === 'number' &&
+    typeof latLongPositions[1] === 'number'
+  ) {
+    return [latLongPositions] as LatLngTuple[];
+  }
+  for (const position of latLongPositions) {
+    if (Array.isArray(position) && typeof position[0] === 'number') {
+      flattened.push(position as LatLngTuple);
+    } else if (Array.isArray(position)) {
+      flattened.push(...flatten(position as LatLngPositions));
     }
   }
   return flattened;
@@ -278,13 +292,21 @@ function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   });
 }
 
-export function filterDatasetFeatures(
+/** Filters out elements from the DatasetFeatures array specified with `filters`.
+ *
+ * To find out what filters you need you can look into the browser console.
+ * Go to your network tab and inspect the Payload of `datasets` and in here you can see the applied filters.
+ * This can be used to fish out a filter you want and/or gain a better understanding of the data shape.
+ */
+export function filterDatasetFeatures<
+  T extends DatasetFeatureProperties = DatasetFeatureProperties,
+>(
   features: DatasetFeatures,
   activeDatasetIds: DatasetId[],
   filters: DatasetFilterSelection
-) {
+): MaPointFeature<T>[] {
   return features
-    .filter((feature): feature is MaPointFeature => {
+    .filter((feature): feature is MaPointFeature<T> => {
       return activeDatasetIds.includes(feature.properties.datasetId);
     })
     .filter((feature) => {
@@ -529,25 +551,39 @@ function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
+/** Filters out `features` that are outside the given `radius`.
+ *
+ *  For this the coordinates inside the geometry of the feature must be -
+ *  in the order of: Latitude, Longitude.
+ */
 export function filterFeaturesinRadius(
   location: LatLngLiteral,
   features: DatasetFeatures,
-  radius: number
+  radius: number,
+  swapLatLngForDistanceComparison = false
 ) {
   const featuresFiltered = [];
   let i = 0;
   const len = features.length;
 
   for (i; i < len; i += 1) {
-    const coords = flatten(features[i].geometry.coordinates as LatLngPositions);
-    const hasCoord = (coord: LatLngTuple) =>
-      getDistanceFromLatLonInKm(
-        coord[0],
-        coord[1],
+    const coords = features[i].geometry.coordinates;
+    const flattenedCoords: LatLngTuple[] = flatten(coords as LatLngPositions);
+
+    const hasCoord = (coord: LatLngTuple) => {
+      const lat = swapLatLngForDistanceComparison ? coord[1] : coord[0];
+      const lng = swapLatLngForDistanceComparison ? coord[0] : coord[1];
+      const distance = getDistanceFromLatLonInKm(
+        lat,
+        lng,
         location.lat,
         location.lng
-      ) < radius;
-    if (coords.some(hasCoord)) {
+      );
+
+      return distance < radius;
+    };
+    // Check if any of the coordinates are within the radius. In the case of a polygon like feature, multiple coordinates are checked.
+    if (flattenedCoords.some(hasCoord)) {
       featuresFiltered.push(features[i]);
     }
   }
@@ -556,19 +592,25 @@ export function filterFeaturesinRadius(
 
 export function getBboxFromFeatures(
   features: DatasetFeatures,
-  location: LatLngLiteral
+  location: LatLngLiteral,
+  swapLatLngForDistanceComparison = false
 ) {
   const lats: Array<number> = [];
   const lngs: Array<number> = [];
-  let i = 0;
   const len = features.length;
+
   lats.push(location.lat);
   lngs.push(location.lng);
+
+  let i = 0;
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates as LatLngPositions);
+
     coords.forEach((coord) => {
-      lats.push(coord[0]);
-      lngs.push(coord[1]);
+      const lat = swapLatLngForDistanceComparison ? coord[1] : coord[0];
+      const lng = swapLatLngForDistanceComparison ? coord[0] : coord[1];
+      lats.push(lat);
+      lngs.push(lng);
     });
   }
   // calc the min and max lng and lat
@@ -596,3 +638,8 @@ export function toBoundLiteral(bounds: LatLngBounds): LatLngBoundsLiteral {
 export function isAmsterdamAddress(address: string | null) {
   return !!address && /Amsterdam|Weesp/gi.test(address);
 }
+
+export const forTesting = {
+  flatten,
+  filterFeaturesinRadius,
+};

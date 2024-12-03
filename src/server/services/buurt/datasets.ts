@@ -695,7 +695,7 @@ function transformAfvalcontainersResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
   responseData: DsoApiResponse | WFSApiResponse
-) {
+): DatasetFeatures {
   const features: WFSFeatureSource[] =
     (responseData && 'features' in responseData
       ? responseData.features
@@ -990,3 +990,5 @@ export function transformWiorApiListResponse(
   }
   return transformGenericApiListResponse(datasetId, config, { features });
 }
+
+export const forTesting = { zIndexPane };
