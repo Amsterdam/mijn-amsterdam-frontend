@@ -1,3 +1,4 @@
+///all fake data below. Stole it from "Vergunningen.tsx" to make the Theme Varen work
 import { useMemo } from 'react';
 
 import styles from '../Vergunningen/Vergunningen.module.scss';
