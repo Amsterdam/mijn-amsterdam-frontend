@@ -23,6 +23,14 @@ export default [
     rules: {
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
+      'react/jsx-curly-brace-presence': 'error',
+      'react/function-component-definition': [
+        'warn',
+        {
+          namedComponents: 'function-declaration',
+        },
+      ],
+      'import/no-default-export': 'warn',
       'unused-imports/no-unused-imports': 'error',
       '@typescript-eslint/no-require-imports': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',

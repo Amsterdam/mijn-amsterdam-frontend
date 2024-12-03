@@ -12,7 +12,7 @@ const pageContentTop = (
   <Paragraph>Hieronder ziet u een overzicht van uw AVG verzoeken.</Paragraph>
 );
 
-const AVG = () => {
+function AVG() {
   const { tableConfig, avgVerzoeken, isLoading, isError } = useAVGData();
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort }]) => {
@@ -47,6 +47,6 @@ const AVG = () => {
       ]}
     />
   );
-};
+}
 
 export default AVG;

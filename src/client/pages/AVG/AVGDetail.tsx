@@ -17,17 +17,17 @@ function getVerzoekRows(verzoek: AVGRequestFrontend) {
   ].filter((row) => row.content);
 }
 
-const AVGDetailContent = ({ verzoek }: { verzoek: AVGRequestFrontend }) => {
+function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
   const rows = getVerzoekRows(verzoek);
 
   return <Datalist rows={rows} />;
-};
+}
 
-const AVGDetail = () => {
+function AVGDetail() {
   const { verzoek, isLoading, isError } = useAVGDetailPage();
   return (
     <ThemaDetailPagina<AVGRequestFrontend>
-      title={'AVG verzoek'}
+      title="AVG verzoek"
       zaak={verzoek}
       isError={isError}
       isLoading={isLoading}
@@ -41,6 +41,6 @@ const AVGDetail = () => {
       }}
     />
   );
-};
+}
 
 export default AVGDetail;
