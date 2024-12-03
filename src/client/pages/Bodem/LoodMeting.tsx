@@ -2,6 +2,9 @@ import { generatePath } from 'react-router-dom';
 
 import { useBodemDetailData } from './useBodemDetailData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
+import { Datalist } from '../../components/Datalist/Datalist';
+import { DocumentLink } from '../../components/DocumentList/DocumentLink';
+import { LocationModal } from '../../components/LocationModal/LocationModal';
 import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
 import { ThemaTitles } from '../../config/thema';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
@@ -9,9 +12,28 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 export default function LoodMetingComponent() {
   const { meting, isLoading, isError } = useBodemDetailData();
 
-  const BodemDetailContent = ({ meting }) => {
-    // return <DataList rows={[]} />;
-    return <>asdfasfsa</>;
+  const BodemDetailRows = (aanvraag: any) => {
+    return [
+      { label: 'Kenmerk', content: aanvraag.aanvraagNummer },
+      {
+        label: 'Locatie',
+        content: (
+          <>{aanvraag.adres && <LocationModal address={aanvraag.adres} />}</>
+        ),
+      },
+      {
+        label: 'Document',
+        content: (
+          <>
+            {aanvraag.document && <DocumentLink document={aanvraag.document} />}
+          </>
+        ),
+      },
+    ];
+  };
+
+  const BodemDetailContent = ({ meting }: { meting: any }) => {
+    return <Datalist rows={BodemDetailRows(meting)} />;
   };
 
   return (
@@ -81,7 +103,7 @@ export default function LoodMetingComponent() {
         }}
         isError={isError}
         isLoading={isLoading}
-        pageContentTop={'sdf'}
+        pageContentTop={!!meting && <BodemDetailContent meting={meting} />}
       />
     </>
   );
