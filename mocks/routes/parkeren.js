@@ -17,6 +17,26 @@ module.exports = [
     ],
   },
   {
+    id: 'get-parkeren-create-jwe-token',
+    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/jwe/create`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            result: 'success',
+            data: {
+              token: 'xxxjwetokenxxx',
+            },
+          },
+        },
+      },
+    ],
+  },
+  {
     id: 'get-parkeren-private-active-permit-request',
     url: `${settings.MOCK_BASE_PATH}/parkeren/:profileType/active_permit_request`,
     method: 'GET',
