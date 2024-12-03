@@ -22,6 +22,8 @@ export default [
       },
     },
     rules: {
+      'no-console': 'warn',
+      'dot-notation': 'error',
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       'react/jsx-curly-brace-presence': 'error',

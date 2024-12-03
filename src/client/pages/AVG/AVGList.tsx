@@ -8,7 +8,7 @@ import { ListPageParamKind } from '../VergunningenV2/config';
 
 export function AVGList() {
   const { avgVerzoeken, isLoading, isError, tableConfig } = useAVGData();
-  const appRouteBack = AppRoutes['AVG'];
+  const appRouteBack = AppRoutes.AVG;
   const params = useParams<{ kind: ListPageParamKind }>();
 
   return (
