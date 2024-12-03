@@ -110,10 +110,10 @@ export const DocumentTitles: DocumentTitlesConfig = {
     `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes['VAREN']]: `${ThemaTitles.VAREN} | overzicht`,
   [AppRoutes['VAREN/LIST']]: `Vergunningen | ${ThemaTitles.VAREN}`,
-  [AppRoutes['VAREN/DETAIL-LIGPLAATS']]: `${ThemaTitles.VAREN} | Ligplaats`,
-  [AppRoutes['VAREN/DETAIL-EXPLOITATIE']]: `${ThemaTitles.VAREN} | Exploitatie`,
-  [AppRoutes['VAREN/DETAIL-BEDRIJFSGEGEVENS']]:
-    `${ThemaTitles.VAREN} | Rederij`,
+  [generatePath(AppRoutes['VAREN/DETAIL'], { caseType: 'ligplaatsvergunning' })]:
+    `Ligplaatsvergunning | ${ThemaTitles.VAREN}`,
+  [generatePath(AppRoutes['VAREN/DETAIL'], { caseType: 'exploitatievergunning' })]:
+    `Exploitatievergunning | ${ThemaTitles.VAREN}`,
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
