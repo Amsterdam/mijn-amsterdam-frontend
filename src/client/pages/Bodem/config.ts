@@ -1,9 +1,9 @@
-import { LoodMeting } from '../../../server/services/bodem/types';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { dateSort } from '../../../universal/helpers/date';
 
 export const displayPropsAanvragen = {
-  adres: 'Adres',
-  datumAanvraag: 'Aangevraagd',
+  detailLinkComponent: 'Adres',
+  datumAanvraagFormatted: 'Aangevraagd',
   status: 'Status',
 };
 
@@ -15,13 +15,15 @@ export const listPageParamKind = {
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (bodemAanvraag: LoodMeting) => !bodemAanvraag.datumAfgehandeld,
+    filter: (bodemAanvraag: LoodMetingFrontend) =>
+      !bodemAanvraag.datumAfgehandeld,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsAanvragen,
   },
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
-    filter: (bodemAanvraag: LoodMeting) => bodemAanvraag.datumAfgehandeld,
+    filter: (bodemAanvraag: LoodMetingFrontend) =>
+      bodemAanvraag.datumAfgehandeld,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsAanvragen,
   },

@@ -71,7 +71,7 @@ export function LocationModal({
   children,
 }: LocationModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
-  const [hasLocationData, setHasLocationData] = useState(false);
+  const hasLocationData = !!(address || latlng);
   const [bagApi, fetchBag] = useDataApi<LatLngWithAddress[] | null>(
     {
       url: '',
@@ -82,12 +82,6 @@ export function LocationModal({
     },
     null
   );
-
-  useEffect(() => {
-    if (address || latlng) {
-      setHasLocationData(true);
-    }
-  }, [bagApi, address, latlng]);
 
   useEffect(() => {
     if (bagApi.isDirty || address === null) {

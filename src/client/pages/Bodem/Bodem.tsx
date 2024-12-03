@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router-dom';
 
 import { useBodemData } from './useBodemData.hook';
-import { LoodMeting } from '../../../server/services/bodem/types';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -13,7 +13,7 @@ export default function Bodem() {
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort }]) => {
       return (
-        <ThemaPaginaTable<LoodMeting>
+        <ThemaPaginaTable<LoodMetingFrontend>
           key={kind}
           title={title}
           zaken={items.filter(filter).sort(sort)}
