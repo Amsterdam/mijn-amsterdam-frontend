@@ -68,30 +68,6 @@ export default function Varen() {
     return addTitleLinkComponent(items, 'identifier');
   }, [VAREN.content]);
 
-  // const varenPrevious = useMemo(() => {
-  //   return varen
-  //     .filter((vaar) => vaar.processed)
-  //     .map((vaar) => {
-  //       if (
-  //         vaar.caseType === CaseType.WVOS &&
-  //         hasMultiplePermits(vaar)
-  //       ) {
-  //         return {
-  //           ...vaar,
-  //           decision: 'Zie besluit',
-  //         };
-  //       }
-  //       return vaar;
-  //     });
-  // }, [varen]);
-
-  // const varenActual = useMemo(() => {
-  //   return varen.filter((vaar) => !vaar.processed);
-  // }, [varen]);
-
-  // const hasActualGPK = varenActual.find(
-  //   (vaar) => vaar.caseType === CaseType.GPK
-  // );
 
   return (
     <OverviewPage className={styles.Vergunningen}>
