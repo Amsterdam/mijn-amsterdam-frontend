@@ -50,6 +50,7 @@ export async function fetchAdoptableTrashContainers(
     new Date(),
     BRP.content?.persoon?.geboortedatum
   );
+  // Business requested to not show this tip to children younger than a certain age.
   if (age < LATE_TEEN_AGE) {
     return apiSuccessResult({
       tips: [],
