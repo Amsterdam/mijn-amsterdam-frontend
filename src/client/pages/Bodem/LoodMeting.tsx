@@ -1,3 +1,4 @@
+import { Grid } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
 import { useBodemDetailData } from './useBodemDetailData.hook';
@@ -33,7 +34,11 @@ export default function LoodMetingComponent() {
   };
 
   const BodemDetailContent = ({ meting }: { meting: any }) => {
-    return <Datalist rows={BodemDetailRows(meting)} />;
+    return (
+      <Grid.Cell span="all">
+        <Datalist rows={BodemDetailRows(meting)} />
+      </Grid.Cell>
+    );
   };
 
   return (
