@@ -1,10 +1,12 @@
+import FormData from 'form-data';
+
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { captureMessage } from '../monitoring';
 
 type ParkerenUrlTransformedResponse = {
   isKnown: boolean;
@@ -41,25 +43,32 @@ export async function fetchSSOParkerenURL(
   });
 }
 
-type TokenSourceResponse = {
-  token: JWEToken;
+type JWETokenSourceResponse = {
+  token: string;
 };
-
-type JWEToken = string;
 
 async function fetchJWEToken(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): ApiResponse<JWEToken> {
+) {
+  const idNumberType =
+    authProfileAndToken.profile.profileType === 'private'
+      ? 'bsn'
+      : 'kvk_number';
+
   const config = getApiConfig('PARKEREN', {
-    url: '/v1/jwe/create',
-    transformResponse: (responseData: TokenSourceResponse): JWEToken => {
-      return responseData.token;
+    method: 'POST',
+    formatUrl: (config) => `${config.url}/v1/jwe/create`,
+    transformResponse: (response: JWETokenSourceResponse): string => {
+      return response.token;
     },
+    data: new FormData().append(
+      `data[${idNumberType}]`,
+      authProfileAndToken.profile.id
+    ),
   });
 
-  const response = await requestData<TokenSourceResponse>(config, requestID);
-  return response;
+  return await requestData<JWETokenSourceResponse>(config, requestID);
 }
 
 /**
@@ -74,6 +83,13 @@ export async function hasPermitsOrPermitRequests(
       ? 'private'
       : 'company';
 
+  const jweTokenResponse = await fetchJWEToken(requestID, authProfileAndToken);
+  if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
+    const errMsg = `Parkeren: Error in response. Content:\n${jweTokenResponse.content}`;
+    captureMessage(errMsg, { severity: 'error' });
+    return false;
+  }
+
   const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
     requestData<{ data: unknown[] }>(
       getApiConfig('PARKEREN', {
@@ -81,7 +97,7 @@ export async function hasPermitsOrPermitRequests(
           `${config.url}/v1/${userType}/client_product_details`,
         method: 'POST',
         data: {
-          token: authProfileAndToken.profile.id,
+          token: jweTokenResponse.content,
         },
       }),
       requestID
@@ -92,7 +108,7 @@ export async function hasPermitsOrPermitRequests(
           `${config.url}/v1/${userType}/active_permit_request`,
         method: 'POST',
         data: {
-          token: authProfileAndToken.profile.id,
+          token: jweTokenResponse.content,
         },
       }),
       requestID
