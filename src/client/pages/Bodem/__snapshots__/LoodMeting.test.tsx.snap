@@ -61,229 +61,235 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide ams-mb--lg"
     >
       <div
-        class="_InfoDetail_6f1df2"
+        class="ams-grid"
       >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Kenmerk
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          AV-001444
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
-      >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Locatie
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Schipluidenlaan 16A
-          <br />
-          <button
-            class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
-            type="button"
-          >
-            Bekijk op de kaart
-          </button>
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2"
-      >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Document
-        </h3>
         <div
-          class="_Value_6f1df2"
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          <span
-            class="_DocumentLinkWrap_81c3b4"
+          <dl
+            class="_Datalist_08bf39"
           >
-            <a
-              class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-              href="http://localhost:5000/api/v1/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments"
+            <dt
+              class="_Datalist__title_08bf39"
+            >
+              Kenmerk
+            </dt>
+            <dd
+              class="_Datalist__description_08bf39"
+            >
+              OL-001471
+            </dd>
+            <dt
+              class="_Datalist__title_08bf39"
+            >
+              Locatie
+            </dt>
+            <dd
+              class="_Datalist__description_08bf39"
+            >
+              <button
+                class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
+                type="button"
+              >
+                Bekijk op de kaart
+              </button>
+            </dd>
+            <dt
+              class="_Datalist__title_08bf39"
+            >
+              Document
+            </dt>
+            <dd
+              class="_Datalist__description_08bf39"
             >
               <span
-                class="_DocumentLinkIcon_81c3b4"
+                class="_DocumentLinkWrap_81c3b4"
               >
-                <span
-                  class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                <a
+                  class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                  href="http://localhost:5000/api/v1/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments"
                 >
-                  <svg
-                    aria-label="sluiten-icoon"
-                    focusable="false"
-                    height="32px"
-                    viewBox="0 0 32 32"
-                    width="32px"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  <span
+                    class="_DocumentLinkIcon_81c3b4"
                   >
-                    <path
-                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                    />
-                  </svg>
-                </span>
+                    <span
+                      class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
+                    >
+                      <svg
+                        aria-label="sluiten-icoon"
+                        focusable="false"
+                        height="32px"
+                        viewBox="0 0 32 32"
+                        width="32px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <path
+                          d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  Rapport Lood in de bodem-check
+                </a>
               </span>
-              Rapport Lood in de bodem-check
-            </a>
-          </span>
+            </dd>
+          </dl>
         </div>
       </div>
     </div>
     <div
-      class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
+      class="ams-grid"
     >
-      <h4
-        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-all"
       >
-        Status
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2"
+        <div
+          class="_StatusLine_a12ff2"
         >
-          <div
-            class="_ListItemInner_a12ff2"
+          <h4
+            class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
           >
-            <div
-              aria-label="Status aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Ontvangen
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                28 november 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            Status
+          </h4>
+          <ul
+            class="_List_a12ff2"
+          >
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Status aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                In behandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                28 november 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                <div
+                  aria-label="Status aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    Ontvangen
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    28 november 2022
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Huidige status, aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                Afgehandeld
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                28 november 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                <div
+                  aria-label="Status aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    In behandeling
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    28 november 2022
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-      </ul>
+                class="_ListItemInner_a12ff2"
+              >
+                <div
+                  aria-label="Huidige status, aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    Afgehandeld
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    28 november 2022
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -350,185 +356,195 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide ams-mb--lg"
     >
       <div
-        class="_InfoDetail_6f1df2"
+        class="ams-grid"
       >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          Kenmerk
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          AV-001446
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
-      >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Locatie
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Schipluidenlaan 16A
-          <br />
-          <button
-            class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
-            type="button"
+          <dl
+            class="_Datalist_08bf39"
           >
-            Bekijk op de kaart
-          </button>
-        </p>
+            <dt
+              class="_Datalist__title_08bf39"
+            >
+              Kenmerk
+            </dt>
+            <dd
+              class="_Datalist__description_08bf39"
+            >
+              OL-001475
+            </dd>
+            <dt
+              class="_Datalist__title_08bf39"
+            >
+              Locatie
+            </dt>
+            <dd
+              class="_Datalist__description_08bf39"
+            >
+              <button
+                class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
+                type="button"
+              >
+                Bekijk op de kaart
+              </button>
+            </dd>
+          </dl>
+        </div>
       </div>
     </div>
     <div
-      class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
+      class="ams-grid"
     >
-      <h4
-        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-all"
       >
-        Status
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2"
+        <div
+          class="_StatusLine_a12ff2"
         >
-          <div
-            class="_ListItemInner_a12ff2"
+          <h4
+            class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
           >
-            <div
-              aria-label="Status aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Ontvangen
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                29 november 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            Status
+          </h4>
+          <ul
+            class="_List_a12ff2"
+          >
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Status aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                In behandeling
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                29 november 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                <div
+                  aria-label="Status aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    Ontvangen
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    29 november 2022
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Huidige status, aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                Afgewezen
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                15 december 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                <div
+                  aria-label="Status aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    In behandeling
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    29 november 2022
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-      </ul>
+                class="_ListItemInner_a12ff2"
+              >
+                <div
+                  aria-label="Huidige status, aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--end-active_a12ff2 _ConnectLine--end-checked_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    Afgewezen
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    15 december 2022
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -595,175 +611,185 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide ams-mb--lg"
     >
       <div
-        class="_InfoDetail_6f1df2"
+        class="ams-grid"
       >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          Kenmerk
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          AV-001447
-        </p>
-      </div>
-      <div
-        class="_InfoDetail_6f1df2 _LocationInfo_28a267"
-      >
-        <h3
-          class="ams-heading ams-heading--level-4 _Label_6f1df2"
-        >
-          Locatie
-        </h3>
-        <p
-          class="_Value_6f1df2"
-        >
-          Schipluidenlaan 12A
-          <br />
-          <button
-            class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
-            type="button"
+          <dl
+            class="_Datalist_08bf39"
           >
-            Bekijk op de kaart
-          </button>
-        </p>
+            <dt
+              class="_Datalist__title_08bf39"
+            >
+              Kenmerk
+            </dt>
+            <dd
+              class="_Datalist__description_08bf39"
+            >
+              OL-001478
+            </dd>
+            <dt
+              class="_Datalist__title_08bf39"
+            >
+              Locatie
+            </dt>
+            <dd
+              class="_Datalist__description_08bf39"
+            >
+              <button
+                class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
+                type="button"
+              >
+                Bekijk op de kaart
+              </button>
+            </dd>
+          </dl>
+        </div>
       </div>
     </div>
     <div
-      class="_StatusLine_a12ff2 _LoodStatusLines_410f92"
+      class="ams-grid"
     >
-      <h4
-        class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-all"
       >
-        Status
-      </h4>
-      <ul
-        class="_List_a12ff2"
-      >
-        <li
-          class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
+        <div
+          class="_StatusLine_a12ff2"
         >
-          <div
-            class="_ListItemInner_a12ff2"
+          <h4
+            class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
           >
-            <div
-              aria-label="Huidige status, aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
-              >
-                Ontvangen
-              </strong>
-              <time
-                class="_StatusDate_a12ff2"
-              >
-                01 december 2022
-              </time>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+            Status
+          </h4>
+          <ul
+            class="_List_a12ff2"
+          >
+            <li
+              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Toekomstige status, nog niet aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                In behandeling
-              </strong>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                <div
+                  aria-label="Huidige status, aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--start_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    Ontvangen
+                  </strong>
+                  <time
+                    class="_StatusDate_a12ff2"
+                  >
+                    01 december 2022
+                  </time>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-        <li
-          class="_ListItem_a12ff2"
-        >
-          <div
-            class="_ListItemInner_a12ff2"
-          >
-            <div
-              aria-label="Toekomstige status, nog niet aangevinkt."
-              class="_StatusConnection_a12ff2"
-            >
-              <span
-                class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
-              />
-              <span
-                class="_Checkmark_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--status_a12ff2"
-            >
-              <strong
-                class="_StatusTitle_a12ff2"
+                class="_ListItemInner_a12ff2"
               >
-                Afgehandeld
-              </strong>
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--description_a12ff2"
+                <div
+                  aria-label="Toekomstige status, nog niet aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    In behandeling
+                  </strong>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+            <li
+              class="_ListItem_a12ff2"
             >
               <div
-                class="_PanelContent_a12ff2"
-              />
-            </div>
-            <div
-              class="_Panel_a12ff2 _Panel--documents_a12ff2"
-            />
-          </div>
-        </li>
-      </ul>
+                class="_ListItemInner_a12ff2"
+              >
+                <div
+                  aria-label="Toekomstige status, nog niet aangevinkt."
+                  class="_StatusConnection_a12ff2"
+                >
+                  <span
+                    class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+                  />
+                  <span
+                    class="_Checkmark_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                >
+                  <strong
+                    class="_StatusTitle_a12ff2"
+                  >
+                    Afgehandeld
+                  </strong>
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                >
+                  <div
+                    class="_PanelContent_a12ff2"
+                  />
+                </div>
+                <div
+                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -830,48 +856,23 @@ exports[`LoodMeting > without results > should show the correct detailpage 1`] =
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide ams-mb--lg"
     >
-      <section
-        class="ams-alert ams-alert--error"
+      <div
+        class="ams-grid"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          <span
-            class="ams-icon ams-icon--size-4"
-          >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 36 36"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-              />
-            </svg>
-          </span>
+          <dl
+            class="_Datalist_08bf39"
+          />
         </div>
-        <div
-          class="ams-alert__content"
-        >
-          <h2
-            class="ams-heading ams-heading--level-4"
-          >
-            Foutmelding
-          </h2>
-          <p
-            class="ams-paragraph"
-          >
-            We kunnen op dit moment geen gegevens tonen.
-          </p>
-        </div>
-      </section>
+      </div>
     </div>
+    <div
+      class="ams-grid"
+    />
   </main>
 </DocumentFragment>
 `;

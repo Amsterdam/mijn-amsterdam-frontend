@@ -1,18 +1,22 @@
-import styles from './LoodMeting.module.scss';
 import type { LoodMeting } from '../../../server/services/bodem/types';
 import { StatusLineItem } from '../../../universal/types';
 import { StatusLine } from '../../components';
 
-export default function LoodStatusLines({ request }: { request: LoodMeting }) {
-  const status = request.status.toLowerCase();
-  const isInProgress = status === 'in behandeling';
-  const isDenied = status === 'afgewezen';
-  const isDone = status === 'afgehandeld' || isDenied;
+const STATUS_RECEIVED = 'ontvangen';
+const STATUS_IN_PROGRESS = 'in behandeling';
+const STATUS_DENIED = 'afgewezen';
+const STATUS_DONE = 'afgehandeld';
 
-  const statusLines: StatusLineItem[] = [
+function getStatusLines(request: LoodMeting): StatusLineItem[] {
+  const status = request.status.toLowerCase();
+  const isInProgress = status === STATUS_IN_PROGRESS;
+  const isDenied = status === STATUS_DENIED;
+  const isDone = status === STATUS_DONE || isDenied;
+
+  return [
     {
       id: 'first-item',
-      status: 'Ontvangen',
+      status: STATUS_RECEIVED,
       datePublished: request.datumAanvraag,
       description: '',
       documents: [],
@@ -21,31 +25,32 @@ export default function LoodStatusLines({ request }: { request: LoodMeting }) {
     },
     {
       id: 'second-item',
-      status: 'In behandeling',
+      status: STATUS_IN_PROGRESS,
       datePublished:
-        // Sometimes requests are immediately declined and don't have a datumInBehandeling date. We then show datumBeoordeling (which should be there if a request is declined).
         request.datumInbehandeling || request.datumBeoordeling || '',
       description: '',
       documents: [],
       isActive: isInProgress,
       isChecked: isInProgress || isDone,
     },
+    {
+      id: 'third-item',
+      status: isDenied ? STATUS_DENIED : STATUS_DONE,
+      datePublished:
+        (isDenied ? request.datumBeoordeling : request.datumAfgehandeld) ?? '',
+      description: '',
+      documents: [],
+      isActive: isDone,
+      isChecked: isDone,
+    },
   ];
+}
 
-  statusLines.push({
-    id: 'third-item',
-    status: isDenied ? 'Afgewezen' : 'Afgehandeld',
-    datePublished:
-      (isDenied ? request.datumBeoordeling : request.datumAfgehandeld) ?? '',
-    description: '',
-    documents: [],
-    isActive: isDone,
-    isChecked: isDone,
-  });
+export default function LoodStatusLines({ request }: { request: LoodMeting }) {
+  const statusLines = getStatusLines(request);
 
   return (
     <StatusLine
-      className={styles.LoodStatusLines}
       trackCategory="Loodmeting detail / status"
       items={statusLines}
       id={`loodmeting-detail-${request.kenmerk}`}

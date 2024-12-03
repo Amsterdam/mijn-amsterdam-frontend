@@ -1,4 +1,8 @@
-import { GenericDocument, LinkProps } from '../../../universal/types';
+import {
+  GenericDocument,
+  LinkProps,
+  ZaakDetail,
+} from '../../../universal/types';
 
 export type Lood365Response = {
   '@onformdata.context': string;
@@ -64,3 +68,5 @@ export type LoodMetingDocument = {
   mimetype: string;
   documentbody: string;
 };
+
+export type LoodMetingFrontend = LoodMeting & ZaakDetail;
