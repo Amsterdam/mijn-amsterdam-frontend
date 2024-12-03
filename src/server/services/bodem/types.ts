@@ -44,12 +44,13 @@ type LoodMetingResearchLocationSource = {
 };
 
 export type LoodMetingen = {
-  metingen: LoodMeting[];
+  metingen: LoodMetingFrontend[];
 };
 
-export type LoodMeting = {
+export interface LoodMetingFrontend extends ZaakDetail {
   adres: string;
   datumAanvraag: string; // RequestedOn
+  datumAanvraagFormatted: string;
   datumInbehandeling: string | null; // Workordercreatedon
   datumAfgehandeld: string | null; // Reportsenton
   datumBeoordeling: string | null; // ReviewedOn
@@ -61,12 +62,10 @@ export type LoodMeting = {
   redenAfwijzing: string | null;
   rapportId: string | null;
   document: GenericDocument | null;
-};
+}
 
 export type LoodMetingDocument = {
   filename: string;
   mimetype: string;
   documentbody: string;
 };
-
-export type LoodMetingFrontend = LoodMeting & ZaakDetail;

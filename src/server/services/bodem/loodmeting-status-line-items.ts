@@ -1,7 +1,9 @@
-import { LoodMeting } from '../../../server/services/bodem/types';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { StatusLineItem } from '../../../universal/types';
 
-export function useBodemStatusLines(request: LoodMeting) {
+export function getBodemStatusLineItems(
+  request: LoodMetingFrontend
+): StatusLineItem[] {
   const status = request.status.toLowerCase();
   const isInProgress = status === 'in behandeling';
   const isDenied = status === 'afgewezen';

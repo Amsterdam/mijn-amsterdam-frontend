@@ -1,10 +1,10 @@
-import { LoodMeting } from '../../../server/services/bodem/types';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
 
 export const displayPropsAanvragen = {
-  adres: 'Adres',
-  datumAanvraag: 'Aangevraagd',
+  detailLinkComponent: 'Adres',
+  datumAanvraagFormatted: 'Aangevraagd',
   status: 'Status',
 };
 
