@@ -27,18 +27,15 @@ module.exports = [
         options: {
           status: 200,
           body: {
-            result: 'success',
-            data: {
-              token: 'xxxjwetokenxxx',
-            },
+            token: 'xxxjwetokenxxx',
           },
         },
       },
     ],
   },
   {
-    id: 'get-parkeren-private-active-permit-request',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/:profileType/active_permit_request`,
+    id: 'get-parkeren-active-permit-request',
+    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/:profileType/active_permit_request`,
     method: 'GET',
     variants: [
       {
@@ -48,24 +45,28 @@ module.exports = [
           status: 200,
           body: {
             result: 'success',
-            data: [
-              {
-                link: 'example.org/permits',
-                id: 8702,
-                client_id: 8702,
-                status: 'in_progress',
-                permit_name: 'Bewonersvergunning',
-                permit_zone: 'CE02C Centrum-2c',
-              },
-            ],
+            data: {
+              result: 'success',
+              count: 1,
+              data: [
+                {
+                  link: 'example.org/permits',
+                  id: 9999,
+                  client_id: 9999,
+                  status: 'in_progress',
+                  permit_name: 'Bewonersvergunning',
+                  permit_zone: 'XX02X Centrum-1x',
+                },
+              ],
+            },
           },
         },
       },
     ],
   },
   {
-    id: 'get-parkeren-private-client-product-details',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/:profileType/client_product_details`,
+    id: 'get-parkeren-client-product-details',
+    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/:profileType/client_product_details`,
     method: 'GET',
     variants: [
       {
