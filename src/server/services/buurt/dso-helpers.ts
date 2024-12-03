@@ -139,6 +139,7 @@ export function transformGenericApiListResponse(
             featureGeometry.coordinates as LatLngPositions
           ) as MaFeature['geometry']['coordinates'];
         }
+
         collection.push({
           type: 'Feature',
           geometry: featureGeometry,
