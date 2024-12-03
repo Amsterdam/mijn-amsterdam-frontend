@@ -767,6 +767,12 @@ describe('Buurt helpers', () => {
   });
 
   describe('flatten Tests', () => {
+    test('Wraps already flat array in another array', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const result = helpersForTesting.flatten(positions);
+      expect(result).toStrictEqual([positions]);
+    });
+
     test('Flattens one array', () => {
       const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
       const input: LatLngTuple[] = [positions];
@@ -807,41 +813,6 @@ describe('Buurt helpers', () => {
   });
 
   describe('filterFeaturesinRadius Tests', () => {
-    test('Keeps all feature objects that are inside the given radius', () => {
-      const coordinate = [52.36764560318806, 4.90016547381895];
-      const feature: MaFeature = {
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [[coordinate]],
-        },
-        properties: {
-          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
-          datasetId: 'wior',
-          color: '#FEC813',
-          zIndex: datasetsForTesting.zIndexPane.WIOR,
-          datumStartUitvoering: 'Lopende werkzaamheden',
-          duur: 'Meerdaags',
-        },
-      };
-
-      const location = {
-        address: 'Amstel 1',
-        lat: 52.36764560318806,
-        lng: 4.90016547381895,
-      };
-      const features = [feature, feature, feature];
-      const radiusKilometer = 1;
-
-      const result = helpersForTesting.filterFeaturesinRadius(
-        location,
-        features,
-        radiusKilometer
-      );
-
-      expect(result.length).toBe(3);
-    });
-
     test('Filters out all features outside of the given radius', () => {
       const coordinate = [52.36764560318806, 4.90016547381895];
       const feature: MaFeature = {
@@ -896,19 +867,23 @@ describe('Buurt helpers', () => {
       expect(result.length).toBe(2);
     });
 
-    test('Handles features with coordinates that do not have to be flattened', () => {
-      const coordinate = [52.36764560318806, 4.90016547381895];
+    test('Works with reversed lat long coordinates while instructed to swap them', () => {
+      // The distance will be so huge from our location if we assume this to be in the order of lat/lng.
+      // But because we will pass our swap flag this will work.
+      const coordinate = [4.90016547381895, 52.36764560318806];
       const feature: MaFeature = {
         type: 'Feature',
         geometry: {
-          type: 'Point',
-          coordinates: coordinate,
+          type: 'Polygon',
+          coordinates: [[coordinate]],
         },
         properties: {
-          id: 'REM16981',
-          datasetId: 'afvalcontainers',
-          fractie_omschrijving: 'Rest',
-          geadopteerd_ind: 'Nee',
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: datasetsForTesting.zIndexPane.WIOR,
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
         },
       };
 
@@ -917,16 +892,17 @@ describe('Buurt helpers', () => {
         lat: 52.36764560318806,
         lng: 4.90016547381895,
       };
-      const features = [feature, feature, feature];
+      const features = [feature];
       const radiusKilometer = 1;
 
       const result = helpersForTesting.filterFeaturesinRadius(
         location,
         features,
-        radiusKilometer
+        radiusKilometer,
+        true
       );
 
-      expect(result.length).toBe(3);
+      expect(result.length).toBe(1);
     });
   });
 });

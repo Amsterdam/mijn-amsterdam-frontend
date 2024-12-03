@@ -96,7 +96,12 @@ export function isCoordWithingBoundingBox(
 
 export type LatLngPositions = Array<LatLngTuple[] | LatLngTuple>;
 
-// Flatten GeoJSON for easy processing
+/** Flatten GeoJSON for easy processing.
+ *
+ * If the array is already flat, it will be wrapped in another array.
+ * For example: `[1, 2]` becomes `[[1, 2]]`.
+ * This makes further use of the output more predictable and easier to use.
+ */
 function flatten(
   latLongPositions: LatLngPositions | LatLngTuple
 ): LatLngTuple[] {
