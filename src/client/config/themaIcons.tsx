@@ -59,7 +59,6 @@ export const ThemaIcons: Record<Thema, SVGComponent> = {
   [Themas.SUBSIDIE]: IconSubsidie,
   [Themas.SVWI]: IconInkomenSVWI,
   [Themas.TOERISTISCHE_VERHUUR]: IconToeristischeVerhuur,
-  [Themas.VAREN]: IconVaren,
   [Themas.VERGUNNINGEN]: IconVergunningen,
   [Themas.ZORG]: IconZorg,
   ALERT: IconAlert,
