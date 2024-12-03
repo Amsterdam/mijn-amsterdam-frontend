@@ -305,7 +305,7 @@ function AppAuthenticated() {
             />
           )}
           {FeatureToggle.varenActive && (
-            <Route path={AppRoutes['VAREN']} component={Varen} />
+            <Route path={AppRoutes.VAREN} component={Varen} />
           )}
           {FeatureToggle.afisActive && (
             <Route
