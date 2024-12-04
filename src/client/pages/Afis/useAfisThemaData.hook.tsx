@@ -7,6 +7,7 @@ import {
   facturenTableConfig,
   listPageTitle,
   routes,
+  linkListItems,
 } from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
@@ -211,6 +212,7 @@ export function useAfisBetaalVoorkeurenData(
   ]);
 
   return {
+    linkListItems,
     businesspartnerDetails: businesspartnerDetailsApiResponse.content,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: isLoading(

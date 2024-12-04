@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { generatePath } from 'react-router-dom';
+import { generatePath, LinkProps } from 'react-router-dom';
 
 import {
   AfisFacturenResponse,
@@ -138,3 +138,14 @@ export const routes = {
   betaalVoorkeuren: AppRoutes['AFIS/BETAALVOORKEUREN'],
   themaPage: AppRoutes.AFIS,
 } as const;
+
+export const linkListItems: LinkProps[] = [
+  {
+    to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
+    title: 'Meer over facturen van de gemeente',
+  },
+  {
+    to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
+    title: 'Belastingen op Mijn Amsterdam',
+  },
+];

@@ -1,9 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
 
 import { useAVGData } from './useAVGData.hook';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -13,17 +11,16 @@ const pageContentTop = (
 );
 
 function AVG() {
-  const { tableConfig, avgVerzoeken, isLoading, isError } = useAVGData();
+  const { tableConfig, avgVerzoeken, isLoading, isError, linkListItems } =
+    useAVGData();
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort }]) => {
+    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
       return (
         <ThemaPaginaTable<AVGRequestFrontend>
           key={kind}
           title={title}
           zaken={avgVerzoeken.filter(filter).sort(sort)}
-          listPageRoute={generatePath(AppRoutes['AVG/LIST'], {
-            kind,
-          })}
+          listPageRoute={listPageRoute}
           displayProps={displayProps}
         />
       );
@@ -38,14 +35,9 @@ function AVG() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
-      linkListItems={[
-        {
-          to: 'https://www.amsterdam.nl/privacy/loket/',
-          title: 'Loket persoonsgegevens gemeente Amsterdam',
-        },
-      ]}
+      linkListItems={linkListItems}
     />
   );
 }
 
-export default AVG;
+export { AVG };

@@ -1,10 +1,8 @@
-import { generatePath } from 'react-router-dom';
+import { Grid } from '@amsterdam/design-system-react';
 
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
-import { ThemaTitles } from '../../config/thema';
 import { useAVGDetailPage } from '../AVG/useAVGDetailPage.hook';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -20,11 +18,15 @@ function getVerzoekRows(verzoek: AVGRequestFrontend) {
 function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
   const rows = getVerzoekRows(verzoek);
 
-  return <Datalist rows={rows} />;
+  return (
+    <Grid.Cell span="all">
+      <Datalist rows={rows} />
+    </Grid.Cell>
+  );
 }
 
 function AVGDetail() {
-  const { verzoek, isLoading, isError } = useAVGDetailPage();
+  const { verzoek, isLoading, isError, backLink } = useAVGDetailPage();
   return (
     <ThemaDetailPagina<AVGRequestFrontend>
       title="AVG verzoek"
@@ -33,14 +35,9 @@ function AVGDetail() {
       isLoading={isLoading}
       icon={<ThemaIcon />}
       pageContentTop={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
-      backLink={{
-        to: generatePath(AppRoutes.AVG, {
-          page: 1,
-        }),
-        title: ThemaTitles.AVG,
-      }}
+      backLink={backLink}
     />
   );
 }
 
-export default AVGDetail;
+export { AVGDetail };
