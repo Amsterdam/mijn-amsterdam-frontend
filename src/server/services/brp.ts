@@ -227,11 +227,11 @@ export async function fetchBRP(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const options = getApiConfig('BRP', {
+  const config = getApiConfig('BRP', {
     transformResponse: transformBRPData,
   });
 
-  return requestData<BRPData>(options, requestID, authProfileAndToken);
+  return requestData<BRPData>(config, requestID, authProfileAndToken);
 }
 
 export async function fetchBrpNotifications(

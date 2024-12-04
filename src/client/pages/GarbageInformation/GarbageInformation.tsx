@@ -267,7 +267,7 @@ export default function GarbageInformation() {
           <>
             <p>Dit zijn de afvalregels voor uw adres.</p>
             {!!commercialLocation && !privateIsCommercial && (
-              <ErrorAlert title="Bedrijfsafval informatie" severity="info" >
+              <ErrorAlert title="Bedrijfsafval informatie" severity="info">
                 Let op deze regels gaan over uw woonadres. Lees hier{' '}
                 <LinkdInline
                   href={ExternalUrls.AFVAL_COMMERCIAL}

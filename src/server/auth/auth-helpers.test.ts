@@ -1,3 +1,4 @@
+import { millisecondsToSeconds } from 'date-fns';
 import { Request } from 'express';
 
 import {
@@ -23,6 +24,7 @@ import {
   RequestMock,
   ResponseMock,
 } from '../../testing/utils';
+import { ONE_MINUTE_SECONDS } from '../config/app';
 import * as blacklist from '../services/session-blacklist';
 
 describe('auth-helpers', () => {
@@ -56,6 +58,7 @@ describe('auth-helpers', () => {
           aud: 'test1',
           [EH_ATTR_PRIMARY_ID]: 'EHERKENNING-KVK',
           sid: 'test',
+          id: 'xx-bsn-xx',
         } as TokenData
       );
 
@@ -123,6 +126,7 @@ describe('auth-helpers', () => {
           aud: 'test1',
           [EH_ATTR_PRIMARY_ID]: 'EH-KVK1',
           sid: 'test3',
+          id: 'xx-bsn-xx',
         } as TokenData
       );
 
@@ -146,6 +150,7 @@ describe('auth-helpers', () => {
           aud: 'test1',
           [EH_ATTR_PRIMARY_ID_LEGACY]: 'EH-KVK1',
           sid: 'test4',
+          id: 'xx-bsn-xx',
         } as TokenData
       );
 
@@ -170,6 +175,7 @@ describe('auth-helpers', () => {
           [EH_ATTR_INTERMEDIATE_PRIMARY_ID]: 'EH-KVK1',
           [EH_ATTR_INTERMEDIATE_SECONDARY_ID]: 'EH-KVK2',
           sid: 'test5',
+          id: 'xx-bsn-xx',
         } as TokenData
       );
 
@@ -192,18 +198,20 @@ describe('auth-helpers', () => {
 
     const resMock = ResponseMock.new();
 
-    (resMock as any).oidc = {
-      logout: vi.fn(),
-    };
-
     const addToBlackListSpy = vi.spyOn(blacklist, 'addToBlackList');
 
+    const nowInSeconds = millisecondsToSeconds(Date.now());
+
     beforeEach(() => {
+      resMock.oidc.logout.mockClear();
       addToBlackListSpy.mockClear();
     });
 
-    test('Authenticated IDP logout', async () => {
+    test('Authenticated IDP logout calls oidc.logout', async () => {
       const handler = createLogoutHandler('http://foo.bar');
+
+      reqMock[OIDC_SESSION_COOKIE_NAME]!.expires_at =
+        nowInSeconds + ONE_MINUTE_SECONDS; // Expires in one minute
 
       await handler(reqMock, resMock);
 
@@ -220,9 +228,20 @@ describe('auth-helpers', () => {
       );
     });
 
-    test('Local logout', async () => {
-      const handler2 = createLogoutHandler('http://foo.bar', false);
+    test('Expired authenticated IDP logout should not call oidc.logout', async () => {
+      const handler = createLogoutHandler('http://foo.bar');
 
+      reqMock[OIDC_SESSION_COOKIE_NAME]!.expires_at =
+        nowInSeconds - ONE_MINUTE_SECONDS; // Expired one minute ago
+
+      await handler(reqMock, resMock);
+
+      expect(resMock.oidc.logout).not.toHaveBeenCalled();
+      expect(addToBlackListSpy).not.toHaveBeenCalled();
+    });
+
+    test('Local logout should not call oidc.logout', async () => {
+      const handler2 = createLogoutHandler('http://foo.bar', false);
       await handler2(reqMock, resMock);
 
       expect(resMock.clearCookie).toHaveBeenCalled();
@@ -230,6 +249,7 @@ describe('auth-helpers', () => {
       expect(addToBlackListSpy).not.toHaveBeenCalled();
     });
   });
+
   describe('getReturnToUrl', () => {
     test('getReturnToUrl should return the corrent zaak-status url', () => {
       const url = getReturnToUrl({

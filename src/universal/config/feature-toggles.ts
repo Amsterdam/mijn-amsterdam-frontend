@@ -38,12 +38,14 @@ export const FeatureToggle = {
 
   // Afval api + Afval thema
   garbageInformationPage: true,
+  adopteerbareAfvalContainerMeldingen: !IS_PRODUCTION,
 
   // HLI Hulp bij laag inkomen //
   hliThemaActive: true,
   hliThemaStadspasActive: true,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
+  hliRegelingEnabledRTM: !IS_PRODUCTION,
 
   // Horeca vergunningen
   horecaActive: true,

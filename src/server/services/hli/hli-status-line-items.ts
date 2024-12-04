@@ -29,6 +29,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<ZorgnedAanvr
     {
       productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
       lineItemTransformers: RTM,
+      isDisabled: !FeatureToggle.hliRegelingEnabledRTM,
     },
     {
       productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],

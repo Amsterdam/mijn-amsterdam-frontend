@@ -99,7 +99,7 @@ function transformStadspasResponse(
       balanceFormatted: `€${displayAmount(balance)}`,
       passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
-      securityCode
+      securityCode,
     };
 
     return stadspasTransformed;
@@ -217,11 +217,19 @@ function transformGpassTransactionsResponse(
   if (Array.isArray(responseSource.transacties)) {
     return responseSource.transacties.map(
       (transactie: StadspasTransactieSource) => {
+        const isCredited = transactie.bedrag > 0;
+        const displayAmountFormatted = displayAmount(
+          Math.abs(transactie.bedrag)
+        );
+        const amountFormatted = isCredited
+          ? `+ €${displayAmountFormatted}`
+          : `- €${displayAmountFormatted}`;
+
         const transaction: StadspasBudgetTransaction = {
           id: String(transactie.id),
           title: transactie.budget.aanbieder.naam,
           amount: transactie.bedrag,
-          amountFormatted: `- €${displayAmount(Math.abs(transactie.bedrag))}`,
+          amountFormatted,
           datePublished: transactie.transactiedatum,
           datePublishedFormatted: defaultDateFormat(transactie.transactiedatum),
           budget: transactie.budget.naam,
