@@ -1,4 +1,4 @@
-import { tableConfig } from './config';
+import { tableConfig, linkListItems } from './config';
 import { LoodMeting } from '../../../server/services/bodem/types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -25,5 +25,6 @@ export function useBodemData() {
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
     items,
+    linkListItems,
   };
 }

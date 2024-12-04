@@ -8,7 +8,8 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export default function Bodem() {
-  const { items, tableConfig, isLoading, isError } = useBodemData();
+  const { items, tableConfig, isLoading, isError, linkListItems } =
+    useBodemData();
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort }]) => {
@@ -36,12 +37,7 @@ export default function Bodem() {
       }
       pageContentMain={tables}
       isPartialError={false}
-      linkListItems={[
-        {
-          title: 'Meer informatie over lood in de bodem.',
-          to: 'https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/',
-        },
-      ]}
+      linkListItems={linkListItems}
     />
   );
 }
