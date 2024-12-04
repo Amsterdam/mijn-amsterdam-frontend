@@ -1,7 +1,9 @@
 import { Paragraph } from '@amsterdam/design-system-react';
+import { generatePath } from 'react-router-dom';
 
 import { useAVGData } from './useAVGData.hook';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -14,13 +16,15 @@ function AVG() {
   const { tableConfig, avgVerzoeken, isLoading, isError, linkListItems } =
     useAVGData();
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
+    ([kind, { title, displayProps, filter, sort }]) => {
       return (
         <ThemaPaginaTable<AVGRequestFrontend>
           key={kind}
           title={title}
+          listPageRoute={generatePath(AppRoutes['AVG/LIST'], {
+            kind,
+          })}
           zaken={avgVerzoeken.filter(filter).sort(sort)}
-          listPageRoute={listPageRoute}
           displayProps={displayProps}
         />
       );
