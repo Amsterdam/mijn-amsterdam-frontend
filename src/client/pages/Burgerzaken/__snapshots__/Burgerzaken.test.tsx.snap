@@ -3,7 +3,7 @@
 exports[`<Burgerzaken /> > Renders without crashing 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0 _BurgerzakenOverviewPage_8de9f6"
+    class="_Page_47d7c0 _OverviewPage_47d7c0"
   >
     <header
       class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
@@ -64,125 +64,142 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
       </div>
     </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-screen ams-screen--wide"
     >
-      <p>
-        Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.
-      </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/burgerzaken"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Overzicht en aanvragen bij burgerzaken
-        </a>
-      </p>
-    </div>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleIdKaarten_8de9f6"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Mijn reisdocumenten
-        </button>
-      </h3>
       <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
+        class="ams-grid"
       >
         <div
-          class="_PanelInner_b93dc7"
+          class="ams-grid__cell ams-grid__cell--span-all"
         >
-          <table
-            class="_Table_a66dcc _DocumentsTable_8de9f6"
+          <p
+            class="ams-paragraph"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
+            Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.
+          </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <ul
+            class="ams-link-list"
+          >
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="https://www.amsterdam.nl/burgerzaken"
+                rel="noreferrer"
               >
-                <th
-                  class="_DisplayProp_a66dcc"
+                <span
+                  class="ams-icon ams-icon--size-5"
                 >
-                  Geldig tot
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Geldig tot:
-                  </span>
-                  <span>
+                    <path
+                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Overzicht en aanvragen bij burgerzaken
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <h3
+            class="ams-heading ams-heading--level-2"
+          >
+            Mijn reisdocumenten
+          </h3>
+          <div
+            class="ams-table"
+          >
+            <table
+              class="ams-table__table _TableV2_4c6825"
+            >
+              <thead
+                class="ams-table__header"
+              >
+                <tr
+                  class="ams-table__row"
+                >
+                  <th
+                    class="ams-table__header-cell"
+                  >
+                    Type
+                  </th>
+                  <th
+                    class="ams-table__header-cell"
+                  >
+                    Geldig tot
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="ams-table__body"
+              >
+                <tr
+                  class="ams-table__row"
+                >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    paspoort
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
                     15 oktober 2025
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
-              >
-                <td
-                  class="_DisplayProp_a66dcc"
+                  </td>
+                </tr>
+                <tr
+                  class="ams-table__row"
                 >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
+                  <td
+                    class="ams-table__cell"
                   >
-                    Geldig tot:
-                  </span>
-                  <span>
+                    europese identiteitskaart
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
                     11 september 2020
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                </tr>
+                <tr
+                  class="ams-table__row"
+                >
+                  <td
+                    class="ams-table__cell"
+                  >
+                    paspoort
+                  </td>
+                  <td
+                    class="ams-table__cell"
+                  >
+                    15 oktober 2025
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button
+            class="ams-button ams-button--tertiary"
+            style="transform: translateX(-1.4rem);"
+            type="button"
+          >
+            Toon meer
+          </button>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 </DocumentFragment>
 `;
