@@ -15,7 +15,12 @@ type ParkerenUrlTransformedResponse = {
 
 export async function fetchSSOParkerenURL(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  // Mocking this function in different ways per test has issues, so this makes testing way easier.
+  hasPermitsOrPermitRequestsFn: (
+    requestID: RequestID,
+    authProfileAndToken: AuthProfileAndToken
+  ) => Promise<boolean> = hasPermitsOrPermitRequests
 ) {
   const config = getApiConfig('PARKEREN', {
     formatUrl(requestConfig) {
@@ -32,7 +37,10 @@ export async function fetchSSOParkerenURL(
 
   let isKnown: boolean;
   if (FeatureToggle.parkerenCheckForProductAndPermitsActive) {
-    isKnown = await hasPermitsOrPermitRequests(requestID, authProfileAndToken);
+    isKnown = await hasPermitsOrPermitRequestsFn(
+      requestID,
+      authProfileAndToken
+    );
   } else {
     isKnown = true;
   }
@@ -91,7 +99,7 @@ export async function hasPermitsOrPermitRequests(
   }
 
   const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
-    requestData<{ data: unknown[] }>(
+    requestData<ClientProductDetailsSourceResponse>(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/client_product_details`,
@@ -102,7 +110,7 @@ export async function hasPermitsOrPermitRequests(
       }),
       requestID
     ),
-    requestData<{ data: unknown[] }>(
+    requestData<ActivePermitSourceResponse>(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/active_permit_request`,
@@ -120,3 +128,34 @@ export async function hasPermitsOrPermitRequests(
     !!permitRequestsResponse?.content?.data?.length
   );
 }
+
+type BaseSourceResponse<T> = {
+  result: 'success' | unknown;
+  count: number;
+  data: T;
+};
+
+type ActivePermitSourceResponse = BaseSourceResponse<
+  Array<{
+    link: string;
+    id: number;
+    client_id: number;
+    status: string;
+    permit_name: string;
+    permit_zone: string;
+  }>
+>;
+
+type ClientProductDetailsSourceResponse = BaseSourceResponse<
+  Array<{
+    client_product_id: number;
+    object: string;
+    client_id: number;
+    status: string;
+    started_at: string;
+    ended_at: string;
+    zone: string;
+    link: string;
+    vrns: string;
+  }>
+>;
