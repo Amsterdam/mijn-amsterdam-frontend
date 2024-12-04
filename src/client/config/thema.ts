@@ -113,10 +113,14 @@ export const DocumentTitles: DocumentTitlesConfig = {
     `Lopende aanvragen | ${ThemaTitles.VAREN}`,
   [generatePath(AppRoutes['VAREN/LIST'], { kind: 'afgehandelde-aanvragen' })]:
     `Afgehandelde aanvragen | ${ThemaTitles.VAREN}`,
-  [generatePath(AppRoutes['VAREN/DETAIL'], { caseType: 'ligplaatsvergunning' })]:
-    `Ligplaatsvergunning | ${ThemaTitles.VAREN}`,
-  [generatePath(AppRoutes['VAREN/DETAIL'], { caseType: 'exploitatievergunning' })]:
-    `Exploitatievergunning | ${ThemaTitles.VAREN}`,
+  [generatePath(AppRoutes['VAREN/DETAIL'], {
+    id: 1,
+    caseType: 'ligplaatsvergunning',
+  })]: `Ligplaatsvergunning | ${ThemaTitles.VAREN}`,
+  [generatePath(AppRoutes['VAREN/DETAIL'], {
+    id: 1,
+    caseType: 'exploitatievergunning',
+  })]: `Exploitatievergunning | ${ThemaTitles.VAREN}`,
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
@@ -150,6 +154,8 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['AFIS/FACTUREN']]: 'Lijst met facturen | Facturen en betalen',
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
     'Betaalvoorkeuren | Facturen en betalen',
+  '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?': '',
+  '/passagiers-en-beroepsvaart/vergunning/:caseType/:id': '',
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
