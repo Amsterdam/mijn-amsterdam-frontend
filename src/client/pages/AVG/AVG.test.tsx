@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import AVG from './AVG';
+import { AVG } from './AVG';
 import { testState } from './AVGDetail.test';
 import { AVGResponse } from '../../../server/services/avg/types';
 import { AppState } from '../../../universal/types';

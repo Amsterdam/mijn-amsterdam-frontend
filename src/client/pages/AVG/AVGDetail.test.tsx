@@ -6,7 +6,7 @@ import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import AVGDetail from './AVGDetail';
+import { AVGDetail } from './AVGDetail';
 import { AppState, StatusLineItem } from '../../../universal/types';
 
 const steps: StatusLineItem[] = [
