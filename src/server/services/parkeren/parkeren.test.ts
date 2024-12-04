@@ -1,6 +1,7 @@
-import { fetchSSOParkerenURL } from './parkeren';
+import { fetchSSOParkerenURL, hasPermitsOrPermitRequests } from './parkeren';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { getFromEnv } from '../../helpers/env';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
@@ -37,7 +38,7 @@ const MOCK_CLIENT_PRODUCT_DETAILS = {
 };
 
 const setupMocks = (
-  profileType: string,
+  profileType: AuthProfileAndToken['profile']['profileType'],
   mockDataClientProductDetails: { data: unknown[] },
   mockDataActivePermitRequest: { data: unknown[] }
 ) => {
@@ -52,16 +53,6 @@ const setupMocks = (
 
 describe('fetchSSOParkerenURL', () => {
   describe('with permit or permit requests', () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
-
-      setupMocks(
-        'private',
-        MOCK_CLIENT_PRODUCT_DETAILS,
-        MOCK_PARKING_PERMIT_REQUEST
-      );
-    });
-
     test('Calls with digid', async () => {
       const authProfileAndToken = getAuthProfileAndToken('private');
 
@@ -73,7 +64,8 @@ describe('fetchSSOParkerenURL', () => {
 
       const response = await fetchSSOParkerenURL(
         REQUEST_ID,
-        authProfileAndToken
+        authProfileAndToken,
+        async () => true
       );
 
       expect(response).toStrictEqual({
@@ -83,9 +75,15 @@ describe('fetchSSOParkerenURL', () => {
         },
         status: 'OK',
       });
+      vi.restoreAllMocks();
     });
 
     test('Calls with eherkenning', async () => {
+      setupMocks(
+        'commercial',
+        MOCK_CLIENT_PRODUCT_DETAILS,
+        MOCK_PARKING_PERMIT_REQUEST
+      );
       const authProfileAndToken = getAuthProfileAndToken('commercial');
 
       remoteApi
@@ -94,15 +92,10 @@ describe('fetchSSOParkerenURL', () => {
           url: SUCCESS_URL,
         });
 
-      setupMocks(
-        'company',
-        MOCK_CLIENT_PRODUCT_DETAILS,
-        MOCK_PARKING_PERMIT_REQUEST
-      );
-
       const response = await fetchSSOParkerenURL(
         REQUEST_ID,
-        authProfileAndToken
+        authProfileAndToken,
+        async () => true
       );
 
       expect(response).toStrictEqual({
@@ -169,7 +162,7 @@ describe('fetchSSOParkerenURL', () => {
 
     const ERROR_TRANSFORMED_RESPONSE = {
       content: {
-        isKnown: true,
+        isKnown: false,
         url: FALLBACK_URL,
       },
       status: 'OK',

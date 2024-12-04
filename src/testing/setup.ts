@@ -19,6 +19,7 @@ vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
+// Set every Featuretoggle to true.
 vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
   const featureToggleModule: {
     FeatureToggle: Record<string, string>;
