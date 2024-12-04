@@ -42,14 +42,10 @@ export const AppRoutes = {
     '/toeristische-verhuur/vergunning/list/:kind/:page?',
   'TOERISTISCHE_VERHUUR/VERGUNNING':
     '/toeristische-verhuur/vergunning/:casetype/:id',
-  VAREN: '/Passagiers-en-beroepsvaart',
-  'VAREN/LIST': '/Passagiers-en-beroepsvaart/vergunningen/:caseType/:page',
-  'VAREN/DETAIL-EXPLOITATIE':
-    '/Passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/:id',
-  'VAREN/DETAIL-LIGPLAATS':
-    '/Passagiers-en-beroepsvaart/vergunning/varen-vergunning-ligplaats/:id',
-  'VAREN/DETAIL-BEDRIJFSGEGEVENS':
-    '/Passagiers-en-beroepsvaart/vergunning/reder/:id',
+  VAREN: '/passagiers-en-beroepsvaart',
+  'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?',
+  'VAREN/DETAIL':
+    '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   'PARKEREN/DETAIL': '/parkeren/:title/:id',
