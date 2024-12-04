@@ -1,4 +1,4 @@
-import { fetchSSOParkerenURL, hasPermitsOrPermitRequests } from './parkeren';
+import { fetchParkeren, hasPermitsOrPermitRequests } from './parkeren';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { getFromEnv } from '../../helpers/env';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -62,7 +62,7 @@ describe('fetchSSOParkerenURL', () => {
           url: SUCCESS_URL,
         });
 
-      const response = await fetchSSOParkerenURL(
+      const response = await fetchParkeren(
         REQUEST_ID,
         authProfileAndToken,
         async () => true
@@ -92,7 +92,7 @@ describe('fetchSSOParkerenURL', () => {
           url: SUCCESS_URL,
         });
 
-      const response = await fetchSSOParkerenURL(
+      const response = await fetchParkeren(
         REQUEST_ID,
         authProfileAndToken,
         async () => true
@@ -117,10 +117,7 @@ describe('fetchSSOParkerenURL', () => {
     test('Calls with eherkenning', async () => {
       const authProfileAndToken = getAuthProfileAndToken('commercial');
 
-      const response = await fetchSSOParkerenURL(
-        REQUEST_ID,
-        authProfileAndToken
-      );
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
 
       expect(response).toStrictEqual({
         content: {
@@ -134,10 +131,7 @@ describe('fetchSSOParkerenURL', () => {
     test('Calls with digid', async () => {
       const authProfileAndToken = getAuthProfileAndToken('commercial');
 
-      const response = await fetchSSOParkerenURL(
-        REQUEST_ID,
-        authProfileAndToken
-      );
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
 
       expect(response).toStrictEqual({
         content: {
@@ -177,10 +171,7 @@ describe('fetchSSOParkerenURL', () => {
           url: null,
         });
 
-      const response = await fetchSSOParkerenURL(
-        REQUEST_ID,
-        authProfileAndToken
-      );
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
 
       expect(response).toStrictEqual(ERROR_TRANSFORMED_RESPONSE);
     });
@@ -192,10 +183,7 @@ describe('fetchSSOParkerenURL', () => {
         .get('/parkeren/sso/get_authentication_url?service=digid')
         .reply(200, { url: undefined });
 
-      const response = await fetchSSOParkerenURL(
-        REQUEST_ID,
-        authProfileAndToken
-      );
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
 
       expect(response).toStrictEqual(ERROR_TRANSFORMED_RESPONSE);
     });
@@ -207,10 +195,7 @@ describe('fetchSSOParkerenURL', () => {
         .get('/parkeren/sso/get_authentication_url?service=digid')
         .reply(404);
 
-      const response = await fetchSSOParkerenURL(
-        REQUEST_ID,
-        authProfileAndToken
-      );
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
 
       expect(response).toStrictEqual(ERROR_TRANSFORMED_RESPONSE);
     });
