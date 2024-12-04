@@ -1,5 +1,21 @@
 const settings = require('../settings');
 
+const NO_DATA_VARIANT = {
+  id: 'no-data',
+  type: 'json',
+  options: {
+    status: 200,
+    body: {
+      result: 'success',
+      data: {
+        result: 'success',
+        count: 0,
+        data: [],
+      },
+    },
+  },
+};
+
 module.exports = [
   {
     id: 'get-parkeren-external-sso-url',
@@ -62,6 +78,7 @@ module.exports = [
           },
         },
       },
+      NO_DATA_VARIANT,
     ],
   },
   {
@@ -92,6 +109,7 @@ module.exports = [
           },
         },
       },
+      NO_DATA_VARIANT,
     ],
   },
 ];
