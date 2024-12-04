@@ -28,7 +28,7 @@ import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
-import { fetchSSOParkerenURL } from './parkeren/parkeren';
+import { fetchParkeren } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
 import {
   fetchBelasting,
@@ -127,7 +127,7 @@ const BRP = callAuthenticatedService(fetchBRP);
 const HLI = callAuthenticatedService(fetchHLI);
 const KREFIA = callAuthenticatedService(fetchKrefia);
 const KVK = callAuthenticatedService(fetchKVK);
-const PARKEREN = callAuthenticatedService(fetchSSOParkerenURL);
+const PARKEREN = callAuthenticatedService(fetchParkeren);
 const SVWI = callAuthenticatedService(fetchSVWI);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);

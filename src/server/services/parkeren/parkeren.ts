@@ -8,33 +8,15 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
 
-type ParkerenUrlTransformedResponse = {
-  isKnown: boolean;
-  url: string | null;
-};
-
-export async function fetchSSOParkerenURL(
+export async function fetchParkeren(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   // Mocking this function in different ways per test has issues, so this makes testing way easier.
   hasPermitsOrPermitRequestsFn: (
     requestID: RequestID,
     authProfileAndToken: AuthProfileAndToken
-  ) => Promise<boolean> = hasPermitsOrPermitRequests
+  ) => Promise<boolean> = hasPermitsOrProducts
 ) {
-  const config = getApiConfig('PARKEREN', {
-    formatUrl(requestConfig) {
-      return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
-    },
-  });
-
-  const response = await requestData<ParkerenUrlTransformedResponse>(
-    config,
-    requestID
-  );
-
-  const fallBackURL = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
-
   let isKnown: boolean;
   if (FeatureToggle.parkerenCheckForProductAndPermitsActive) {
     isKnown = await hasPermitsOrPermitRequestsFn(
@@ -47,8 +29,27 @@ export async function fetchSSOParkerenURL(
 
   return apiSuccessResult({
     isKnown,
-    url: response.content?.url ?? fallBackURL,
+    url: await fetchSSOURL(requestID, authProfileAndToken),
   });
+}
+
+async function fetchSSOURL(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const config = getApiConfig('PARKEREN', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
+    },
+  });
+
+  const response = await requestData<{ url: string }>(config, requestID);
+
+  if (!response.content?.url) {
+    return getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
+  }
+
+  return response.content.url;
 }
 
 type JWETokenSourceResponse = {
@@ -82,7 +83,7 @@ async function fetchJWEToken(
 /**
  * This function checks whether the user has a parkeren products or permit requests
  */
-export async function hasPermitsOrPermitRequests(
+export async function hasPermitsOrProducts(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
