@@ -109,7 +109,10 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]:
     `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes['VAREN']]: `${ThemaTitles.VAREN} | overzicht`,
-  [AppRoutes['VAREN/LIST']]: `Vergunningen | ${ThemaTitles.VAREN}`,
+  [generatePath(AppRoutes['VAREN/LIST'], { kind: 'lopende-aanvragen' })]:
+    `Lopende aanvragen | ${ThemaTitles.VAREN}`,
+  [generatePath(AppRoutes['VAREN/LIST'], { kind: 'afgehandelde-aanvragen' })]:
+    `Afgehandelde aanvragen | ${ThemaTitles.VAREN}`,
   [generatePath(AppRoutes['VAREN/DETAIL'], { caseType: 'ligplaatsvergunning' })]:
     `Ligplaatsvergunning | ${ThemaTitles.VAREN}`,
   [generatePath(AppRoutes['VAREN/DETAIL'], { caseType: 'exploitatievergunning' })]:
