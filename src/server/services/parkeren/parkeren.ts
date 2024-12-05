@@ -2,7 +2,6 @@ import FormData from 'form-data';
 
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
