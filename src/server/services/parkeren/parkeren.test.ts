@@ -1,4 +1,4 @@
-import { fetchParkeren, hasPermitsOrPermitRequests } from './parkeren';
+import { fetchParkeren, hasParkerenPermits } from './parkeren';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { getFromEnv } from '../../helpers/env';
 import { AuthProfileAndToken } from '../../auth/auth-types';
