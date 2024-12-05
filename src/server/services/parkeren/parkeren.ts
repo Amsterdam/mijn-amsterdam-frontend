@@ -1,6 +1,5 @@
 import FormData from 'form-data';
 
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
