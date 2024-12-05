@@ -1,4 +1,4 @@
-import LoodMeting from './LoodMeting';
+import { LoodMeting } from './LoodMeting';
 import { setupMockApp } from '../setupMockApp';
 
 const testState: any = {
@@ -18,10 +18,34 @@ const testState: any = {
             title: 'Bekijk loodmeting',
           },
           document: null,
+          steps: [
+            {
+              status: 'Ontvangen',
+              id: '',
+              datePublished: '2022-12-01T09:53:11Z',
+              isActive: true,
+              isChecked: true,
+            },
+            {
+              status: 'In behandeling',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+            {
+              status: 'Afgehandeld',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+          ],
         },
         {
           adres: 'Schipluidenlaan 16A',
           datumAanvraag: '2022-11-29T09:54:22Z',
+          datumAanvraagFormatted: '29 november 2022',
           datumInbehandeling: '2022-11-29T09:54:44Z',
           datumBeoordeling: '2022-12-15T08:52:00Z',
           status: 'Afgewezen',
@@ -35,6 +59,29 @@ const testState: any = {
             title: 'Bekijk loodmeting',
           },
           document: null,
+          steps: [
+            {
+              status: 'Ontvangen',
+              id: '',
+              datePublished: '2022-11-29T09:53:11Z',
+              isActive: false,
+              isChecked: true,
+            },
+            {
+              status: 'In behandeling',
+              id: '',
+              datePublished: '2022-11-29T09:54:44Z',
+              isActive: false,
+              isChecked: true,
+            },
+            {
+              status: 'Afgewezen',
+              id: '',
+              datePublished: '2022-12-15',
+              isActive: true,
+              isChecked: true,
+            },
+          ],
         },
         {
           adres: 'Schipluidenlaan 16A',
@@ -58,6 +105,29 @@ const testState: any = {
             url: 'http://localhost:5000/api/v1/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments',
             datePublished: '2022-11-28T13:53:42Z',
           },
+          steps: [
+            {
+              status: 'Ontvangen',
+              id: '',
+              datePublished: '2022-11-28T12:14:55Z',
+              isActive: false,
+              isChecked: true,
+            },
+            {
+              status: 'In behandeling',
+              id: '',
+              datePublished: '2022-11-28T09:54:44Z',
+              isActive: false,
+              isChecked: true,
+            },
+            {
+              status: 'Afgehandeld',
+              id: '',
+              datePublished: '2022-11-28T13:53:42Z',
+              isActive: true,
+              isChecked: true,
+            },
+          ],
         },
       ],
     },

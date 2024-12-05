@@ -11,7 +11,7 @@ import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
 import { ThemaTitles } from '../../config/thema';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
-export default function LoodMetingComponent() {
+export function LoodMeting() {
   const { meting, isLoading, isError } = useBodemDetailData();
 
   const BodemDetailRows = (meting: LoodMetingFrontend) => {
@@ -30,17 +30,17 @@ export default function LoodMetingComponent() {
     ].filter((row) => !!row.content);
   };
 
-  const BodemDetailContent = ({ meting }: { meting: LoodMetingFrontend }) => {
+  function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
     return (
       <Grid.Cell span="all">
         <Datalist rows={BodemDetailRows(meting)} />
       </Grid.Cell>
     );
-  };
+  }
 
   return (
     <ThemaDetailPagina
-      title={'Lood in bodem-check'}
+      title="Lood in bodem-check"
       icon={<ThemaIcon />}
       zaak={meting}
       backLink={{

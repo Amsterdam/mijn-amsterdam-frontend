@@ -86,7 +86,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001521",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001521",
+                  "to": "/bodem/lood-meting/OL-001521",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check in behandeling",
@@ -97,7 +97,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001520",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001520",
+                  "to": "/bodem/lood-meting/OL-001520",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check afgewezen",
@@ -108,7 +108,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001518",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001518",
+                  "to": "/bodem/lood-meting/OL-001518",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check afgehandeld",
@@ -119,7 +119,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001525",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001525",
+                  "to": "/bodem/lood-meting/OL-001525",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check in behandeling",
@@ -130,7 +130,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001529",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001529",
+                  "to": "/bodem/lood-meting/OL-001529",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check afgewezen",
@@ -141,7 +141,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001522",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001522",
+                  "to": "/bodem/lood-meting/OL-001522",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check ontvangen",
@@ -152,7 +152,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001527",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001527",
+                  "to": "/bodem/lood-meting/OL-001527",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check afgewezen",
@@ -163,7 +163,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001519",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001519",
+                  "to": "/bodem/lood-meting/OL-001519",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check in behandeling",
@@ -174,7 +174,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001532",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001532",
+                  "to": "/bodem/lood-meting/OL-001532",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check ontvangen",
@@ -185,7 +185,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001528",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001528",
+                  "to": "/bodem/lood-meting/OL-001528",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check in behandeling",
@@ -196,7 +196,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001526",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001526",
+                  "to": "/bodem/lood-meting/OL-001526",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check afgehandeld",
@@ -207,7 +207,7 @@ describe('Loodmeting', () => {
                 "id": "OL-001534",
                 "link": {
                   "title": "Bekijk details",
-                  "to": "/lood-meting/OL-001534",
+                  "to": "/bodem/lood-meting/OL-001534",
                 },
                 "thema": "BODEM",
                 "title": "Aanvraag lood in de bodem-check ontvangen",

@@ -8,7 +8,7 @@ import { ListPageParamKind } from '../VergunningenV2/config';
 
 export function BodemList() {
   const { items, isLoading, isError, tableConfig } = useBodemData();
-  const appRouteBack = AppRoutes['BODEM'];
+  const appRouteBack = AppRoutes.BODEM;
   const params = useParams<{ kind: ListPageParamKind }>();
 
   return (

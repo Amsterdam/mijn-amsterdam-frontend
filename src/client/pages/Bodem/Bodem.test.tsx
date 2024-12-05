@@ -1,5 +1,5 @@
 import { setupMockApp } from '../setupMockApp';
-import Bodem from './Bodem';
+import { Bodem } from './Bodem';
 
 const testState: any = {
   BODEM: {
@@ -8,6 +8,7 @@ const testState: any = {
         {
           adres: 'Schipluidenlaan 12A',
           datumAanvraag: '2022-12-01T09:53:11Z',
+          datumAanvraagFormatted: '01 december 2022',
           status: 'Ontvangen',
           kenmerk: 'OL-001478',
           aanvraagNummer: 'AV-001447',
@@ -18,10 +19,34 @@ const testState: any = {
             title: 'Bekijk loodmeting',
           },
           document: null,
+          steps: [
+            {
+              status: 'Ontvangen',
+              id: '',
+              datePublished: '2022-12-01T09:53:11Z',
+              isActive: true,
+              isChecked: true,
+            },
+            {
+              status: 'In behandeling',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+            {
+              status: 'Afgehandeld',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+          ],
         },
         {
           adres: 'Schipluidenlaan 16A',
           datumAanvraag: '2022-11-29T09:54:22Z',
+          datumAanvraagFormatted: '29 november 2022',
           datumInbehandeling: '2022-11-29T09:54:44Z',
           datumBeoordeling: '2022-12-15T08:52:00Z',
           status: 'Afgewezen',
@@ -35,10 +60,34 @@ const testState: any = {
             title: 'Bekijk loodmeting',
           },
           document: null,
+          steps: [
+            {
+              status: 'Ontvangen',
+              id: '',
+              datePublished: '2022-12-01T09:53:11Z',
+              isActive: true,
+              isChecked: true,
+            },
+            {
+              status: 'In behandeling',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+            {
+              status: 'Afgehandeld',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+          ],
         },
         {
           adres: 'Schipluidenlaan 16A',
           datumAanvraag: '2022-11-28T12:14:55Z',
+          datumAanvraagFormatted: '28 november 2022',
           datumInbehandeling: '2022-11-28T12:24:20Z',
           datumAfgehandeld: '2022-11-28T13:53:42Z',
           datumBeoordeling: '2022-11-28T12:24:19Z',
@@ -58,6 +107,29 @@ const testState: any = {
             url: 'http://localhost:5000/api/v1/services/lood/87464b90-176f-ed11-9561-0022489fdff7/attachments',
             datePublished: '2022-11-28T13:53:42Z',
           },
+          steps: [
+            {
+              status: 'Ontvangen',
+              id: '',
+              datePublished: '2022-12-01T09:53:11Z',
+              isActive: true,
+              isChecked: true,
+            },
+            {
+              status: 'In behandeling',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+            {
+              status: 'Afgehandeld',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+          ],
         },
       ],
     },
@@ -85,7 +157,6 @@ describe('Bodem', () => {
 
     it('should show the right overviewpage', () => {
       const { asFragment } = renderBodem();
-
       expect(asFragment()).toMatchSnapshot();
     });
   });

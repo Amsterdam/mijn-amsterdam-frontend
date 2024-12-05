@@ -1,26 +1,21 @@
-import { generatePath } from 'react-router-dom';
-
 import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-export default function Bodem() {
+export function Bodem() {
   const { items, tableConfig, isLoading, isError, linkListItems } =
     useBodemData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort }]) => {
+    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
       return (
         <ThemaPaginaTable<LoodMetingFrontend>
           key={kind}
           title={title}
           zaken={items.filter(filter).sort(sort)}
-          listPageRoute={generatePath(AppRoutes['BODEM/LIST'], {
-            kind,
-          })}
+          listPageRoute={listPageRoute}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
