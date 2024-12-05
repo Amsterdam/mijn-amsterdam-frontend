@@ -1,4 +1,7 @@
+import { generatePath } from 'react-router-dom';
+
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
+import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
 import {
@@ -28,11 +31,17 @@ export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
+    listPageRoute: generatePath(AppRoutes.AVG, {
+      kind: listPageParamKind.inProgress,
+    }),
     ...tableConfigBase,
   },
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
+    listPageRoute: generatePath(AppRoutes.AVG, {
+      kind: listPageParamKind.completed,
+    }),
     ...tableConfigBase,
   },
 };
