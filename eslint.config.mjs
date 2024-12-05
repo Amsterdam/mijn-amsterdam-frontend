@@ -5,6 +5,7 @@ import pluginUnusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+// eslint-disable-next-line import/no-default-export
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   { languageOptions: { globals: globals.browser } },
@@ -21,8 +22,18 @@ export default [
       },
     },
     rules: {
+      'no-console': 'warn',
+      'dot-notation': 'error',
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
+      'react/jsx-curly-brace-presence': 'error',
+      'react/function-component-definition': [
+        'warn',
+        {
+          namedComponents: 'function-declaration',
+        },
+      ],
+      'import/no-default-export': 'warn',
       'unused-imports/no-unused-imports': 'error',
       '@typescript-eslint/no-require-imports': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',

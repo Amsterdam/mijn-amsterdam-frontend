@@ -52,6 +52,7 @@ export const AppRoutes = {
   HORECA: '/horeca/',
   'HORECA/DETAIL': '/horeca/:title/:id',
   AVG: '/avg',
+  'AVG/LIST': '/avg/lijst/:kind/:page?',
   'AVG/DETAIL': '/avg/verzoek/:id',
   BFF_500_ERROR: '/server-error-500',
   BODEM: '/bodem',

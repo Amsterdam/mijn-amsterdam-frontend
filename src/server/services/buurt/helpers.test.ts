@@ -1,12 +1,15 @@
+import { LatLngTuple } from 'leaflet';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
   DatasetConfig,
   DatasetResponse,
+  MaFeature,
   MaPointFeature,
   MaPolylineFeature,
   datasetEndpoints,
 } from './datasets';
+import { forTesting as datasetsForTesting } from './datasets';
 import {
   getDsoApiEmbeddedResponse,
   transformGenericApiListResponse,
@@ -19,6 +22,7 @@ import {
   filterDatasetFeatures,
   filterPointFeaturesWithinBoundingBox,
   filterPolylineFeaturesWithinBoundingBox,
+  forTesting as helpersForTesting,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
   getPropertyFilters,
@@ -760,5 +764,145 @@ describe('Buurt helpers', () => {
     );
 
     expect(result).toStrictEqual(transformedResponse);
+  });
+
+  describe('flatten Tests', () => {
+    test('Wraps already flat array in another array', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const result = helpersForTesting.flatten(positions);
+      expect(result).toStrictEqual([positions]);
+    });
+
+    test('Flattens one array', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const input: LatLngTuple[] = [positions];
+
+      const result = helpersForTesting.flatten(input);
+      expect(result).toStrictEqual(input);
+    });
+
+    test('Already flattened input is unchanged', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const input: LatLngTuple[] = [positions, positions, positions, positions];
+
+      const result = helpersForTesting.flatten(input);
+      expect(result).toStrictEqual(input);
+    });
+
+    test('Flattens multiple arrays', () => {
+      const positions: LatLngTuple = [4.926979845934051, 52.35619987080679];
+      const input: LatLngTuple[][] = [
+        [positions, positions],
+        [positions, positions],
+      ];
+
+      const result = helpersForTesting.flatten(input);
+      expect(result).toStrictEqual([
+        positions,
+        positions,
+        positions,
+        positions,
+      ]);
+    });
+
+    test('Flattens empty array', () => {
+      const input: LatLngTuple[] = [];
+      const result = helpersForTesting.flatten(input);
+      expect(result).toStrictEqual(input);
+    });
+  });
+
+  describe('filterFeaturesinRadius Tests', () => {
+    test('Filters out all features outside of the given radius', () => {
+      const coordinate = [52.36764560318806, 4.90016547381895];
+      const feature: MaFeature = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[coordinate]],
+        },
+        properties: {
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: datasetsForTesting.zIndexPane.WIOR,
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
+        },
+      };
+
+      // Subtractings the following moves the cooridinate a little bit more then 1km away.
+      //                           -00.01 ~= 1 km     -0.00
+      const coordinateMinusOneKM = [52.35764560318806, 4.90016547381895];
+      const outOfBoundsFeature: MaFeature = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[coordinateMinusOneKM]],
+        },
+        properties: {
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: datasetsForTesting.zIndexPane.WIOR,
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
+        },
+      };
+
+      const location = {
+        address: 'Amstel 1',
+        lat: 52.36764560318806,
+        lng: 4.90016547381895,
+      };
+      const features = [feature, feature, outOfBoundsFeature];
+      const radiusKilometer = 1;
+
+      const result = helpersForTesting.filterFeaturesinRadius(
+        location,
+        features,
+        radiusKilometer
+      );
+
+      expect(result.length).toBe(2);
+    });
+
+    test('Works with reversed lat long coordinates while instructed to swap them', () => {
+      // The distance will be so huge from our location if we assume this to be in the order of lat/lng.
+      // But because we will pass our swap flag this will work.
+      const coordinate = [4.90016547381895, 52.36764560318806];
+      const feature: MaFeature = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[coordinate]],
+        },
+        properties: {
+          id: '001ff443-584f-422c-b6a0-d8aac59c64d1',
+          datasetId: 'wior',
+          color: '#FEC813',
+          zIndex: datasetsForTesting.zIndexPane.WIOR,
+          datumStartUitvoering: 'Lopende werkzaamheden',
+          duur: 'Meerdaags',
+        },
+      };
+
+      const location = {
+        address: 'Amstel 1',
+        lat: 52.36764560318806,
+        lng: 4.90016547381895,
+      };
+      const features = [feature];
+      const radiusKilometer = 1;
+
+      const result = helpersForTesting.filterFeaturesinRadius(
+        location,
+        features,
+        radiusKilometer,
+        true
+      );
+
+      expect(result.length).toBe(1);
+    });
   });
 });

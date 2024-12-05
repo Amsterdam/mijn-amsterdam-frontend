@@ -14,7 +14,7 @@ import {
   AfisThemaResponse,
   AfisFactuur,
 } from '../../../server/services/afis/afis-types';
-import { AVGRequest } from '../../../server/services/avg/types';
+import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
@@ -448,8 +448,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: FeatureToggle.avgActive,
     stateKey: 'AVG' as AppStateKey,
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: AVGRequest) {
-      return (term: string) => displayPath(term, [`AVG verzoek ${item.id}`]);
+    displayTitle(item: AVGRequestFrontend) {
+      return (term: string) => displayPath(term, [item.title]);
     },
   },
   {

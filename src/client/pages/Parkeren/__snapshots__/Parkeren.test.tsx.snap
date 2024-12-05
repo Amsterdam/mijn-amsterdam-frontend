@@ -282,7 +282,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           <p
             class="ams-paragraph"
           >
-            U heeft geen huidige vergunningen en ontheffingen
+            U heeft (nog) geen huidige vergunningen en ontheffingen
           </p>
         </div>
         <div
@@ -307,7 +307,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
           <p
             class="ams-paragraph"
           >
-            U heeft geen eerdere en niet verleende vergunningen en ontheffingen
+            U heeft (nog) geen eerdere en niet verleende vergunningen en ontheffingen
           </p>
         </div>
       </div>

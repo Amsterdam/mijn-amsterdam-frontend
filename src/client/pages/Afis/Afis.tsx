@@ -90,6 +90,7 @@ export function AfisThemaPagina() {
     isThemaPaginaLoading,
     listPageTitle,
     routes,
+    linkListItems,
   } = useAfisThemaData();
 
   const isPartialError = entries(dependencyErrors).some(
@@ -146,7 +147,6 @@ export function AfisThemaPagina() {
           subTitle={subTitleNode}
           zaken={facturenByState?.[state]?.facturen ?? []}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
           maxItems={maxItems}
           totalItems={facturenByState?.[state]?.count}
           listPageLinkLabel={listPageLinkLabel}
@@ -164,16 +164,7 @@ export function AfisThemaPagina() {
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      linkListItems={[
-        {
-          to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
-          title: 'Meer over facturen van de gemeente',
-        },
-        {
-          to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
-          title: 'Belastingen op Mijn Amsterdam',
-        },
-      ]}
+      linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={
         <>
